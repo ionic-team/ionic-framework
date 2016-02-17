@@ -1,6 +1,6 @@
 import {Menu} from './menu';
 import {SlideEdgeGesture} from '../../gestures/slide-edge-gesture';
-
+import {SlideData} from '../../gestures/slide-gesture';
 import {assign} from '../../util/util';
 
 
@@ -17,15 +17,13 @@ export class MenuContentGesture extends SlideEdgeGesture {
       threshold: 0,
       maxEdgeStart: menu.maxEdgeStart || 75
     }, options));
-
-    this.listen();
   }
 
-  canStart(ev) {
+  canStart(ev: any) {
     let menu = this.menu;
 
-    if (!menu.isEnabled || !menu.isSwipeEnabled) {
-      console.debug('menu can not start, isEnabled:', menu.isEnabled, 'isSwipeEnabled:', menu.isSwipeEnabled, 'side:', menu.side);
+    if (!menu.enabled || !menu.swipeEnabled) {
+      console.debug('menu can not start, isEnabled:', menu.enabled, 'isSwipeEnabled:', menu.swipeEnabled, 'side:', menu.side);
       return false;
     }
 
@@ -70,20 +68,20 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   // Set CSS, then wait one frame for it to apply before sliding starts
-  onSlideBeforeStart(slide, ev) {
+  onSlideBeforeStart(slide: SlideData, ev: any) {
     console.debug('menu gesture, onSlideBeforeStart', this.menu.side);
-    this.menu.setProgressStart();
+    this.menu.swipeStart();
   }
 
-  onSlide(slide, ev) {
+  onSlide(slide: SlideData, ev: any) {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
     let stepValue = (slide.distance / z);
     console.debug('menu gesture, onSlide', this.menu.side, 'distance', slide.distance, 'min', slide.min, 'max', slide.max, 'z', z, 'stepValue', stepValue);
 
-    this.menu.setProgessStep(stepValue);
+    this.menu.swipeProgress(stepValue);
   }
 
-  onSlideEnd(slide, ev) {
+  onSlideEnd(slide: SlideData, ev: any) {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
 
     let shouldComplete = (Math.abs(ev.velocityX) > 0.2) ||
@@ -93,10 +91,10 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
     console.debug('menu gesture, onSlide', this.menu.side, 'distance', slide.distance, 'delta', slide.delta, 'velocityX', ev.velocityX, 'min', slide.min, 'max', slide.max, 'shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
-    this.menu.setProgressEnd(shouldComplete, currentStepValue);
+    this.menu.swipeEnd(shouldComplete, currentStepValue);
   }
 
-  getElementStartPos(slide, ev) {
+  getElementStartPos(slide: SlideData, ev: any) {
     if (this.menu.side === 'right') {
       // right menu
       return this.menu.isOpen ? slide.min : slide.max;

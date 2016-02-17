@@ -32,8 +32,20 @@ ion-item-options .button {
   height: 100%;
 }
 
-ion-item-sliding.active-slide {
+ion-item-options:not([icon-left]) .button-icon-left {
+  font-size: 14px;
 
+  .button-inner {
+    flex-direction: column;
+  }
+  ion-icon {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0.3em;
+  }
+}
+
+ion-item-sliding.active-slide {
 
   .item,
   .item.activated {

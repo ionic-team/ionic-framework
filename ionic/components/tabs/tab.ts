@@ -4,7 +4,7 @@ import {EventEmitter, Input, Output} from 'angular2/core';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
-import {NavController} from '../nav/nav-controller';
+import {NavController, NavOptions} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Tabs} from './tabs';
 import {TabButton} from './tab-button';
@@ -69,14 +69,8 @@ import {TabButton} from './tab-button';
  * ```
  *
  *
- * @property {Page} [root] - set the root page for this tab
- * @property {String} [tabTitle] - set the title of this tab
- * @property {String} [tabIcon] - set the icon for this tab
- * @property {Any} [tabBadge] - set the badge for this tab
- * @property {String} [tabBadgeStyle] - set the badge color for this tab
- * @property {Any} (select) - method to call when the current tab is selected
  *
- * @demo /docs/v2/demos/tabs/ 
+ * @demo /docs/v2/demos/tabs/
  */
 @Component({
   selector: 'ion-tab',
@@ -105,36 +99,40 @@ export class Tab extends NavController {
    */
   btn: TabButton;
 
-
   /**
-   * @private
+   * @input {Page} Set the root page for this tab
    */
   @Input() root: Type;
 
   /**
-   * @private
+   * @input {object} Any nav-params you want to pass to the root page of the tab
+   */
+  @Input() rootParams: any;
+
+  /**
+   * @input {string} Set the title of this tab
    */
   @Input() tabTitle: string;
 
   /**
-   * @private
+   * @input {string} Set the icon for this tab
    */
   @Input() tabIcon: string;
 
   /**
-   * @private
+   * @input {string} Set the badge for this tab
    */
   @Input() tabBadge: string;
 
   /**
-   * @private
+   * @input {string} Set the badge color for this tab
    */
   @Input() tabBadgeStyle: string;
 
   /**
-   * @private
+   * @output {Tab} Method to call when the current tab is selected
    */
-  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() select: EventEmitter<Tab> = new EventEmitter();
 
   constructor(
     @Inject(forwardRef(() => Tabs)) parentTabs: Tabs,
@@ -166,9 +164,9 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  load(opts, done?: Function) {
+  load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
-      this.push(this.root, null, opts).then(() => {
+      this.push(this.root, this.rootParams, opts).then(() => {
         done();
       });
       this._loaded = true;
@@ -182,7 +180,7 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  preload(wait) {
+  preload(wait: number) {
     this._loadTimer = setTimeout(() => {
       if (!this._loaded) {
         console.debug('Tabs, preload', this.id);
@@ -201,7 +199,7 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  loadPage(viewCtrl, navbarContainerRef, opts, done) {
+  loadPage(viewCtrl: ViewController, navbarContainerRef: any, opts: NavOptions, done: Function) {
     // by default a page's navbar goes into the shared tab's navbar section
     navbarContainerRef = this.parent.navbarContainerRef;
 
@@ -223,7 +221,7 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  setSelected(isSelected) {
+  setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
     this.hideNavbars(!isSelected);
   }
@@ -231,7 +229,7 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  hideNavbars(shouldHideNavbars) {
+  hideNavbars(shouldHideNavbars: boolean) {
     this._views.forEach(viewCtrl => {
       let navbar = viewCtrl.getNavbar();
       navbar && navbar.setHidden(shouldHideNavbars);
@@ -241,7 +239,7 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  get index() {
+  get index(): number {
     return this.parent.getIndex(this);
   }
 

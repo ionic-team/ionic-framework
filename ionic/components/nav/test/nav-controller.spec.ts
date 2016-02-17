@@ -1,4 +1,4 @@
-import {NavController, Config, ViewController} from 'ionic/ionic';
+import {NavController, Config, ViewController} from '../../../../ionic/ionic';
 
 export function run() {
   describe('NavController', () => {
@@ -291,7 +291,7 @@ export function run() {
       });
     });
 
-    describe('_transComplete', () => {
+    describe('_transFinish', () => {
 
       it('should not entering/leaving state, after transition that isnt the most recent, and state already changed', () => {
         let enteringView = new ViewController(Page1);
@@ -301,7 +301,7 @@ export function run() {
 
         nav._transIds = 2;
 
-        nav._transComplete(1, enteringView, leavingView);
+        nav._transFinish(1, enteringView, leavingView, 'forward', true);
 
         expect(enteringView.state).toBe('somethingelse');
         expect(leavingView.state).toBe('somethingelse');
@@ -315,7 +315,7 @@ export function run() {
 
         nav._transIds = 2;
 
-        nav._transComplete(1, enteringView, leavingView);
+        nav._transFinish(1, enteringView, leavingView, 'forward', true);
 
         expect(enteringView.state).toBe(STATE_INACTIVE);
         expect(leavingView.state).toBe(STATE_INACTIVE);
@@ -329,10 +329,24 @@ export function run() {
 
         nav._transIds = 1;
 
-        nav._transComplete(1, enteringView, leavingView);
+        nav._transFinish(1, enteringView, leavingView, 'forward', true);
 
         expect(enteringView.state).toBe(STATE_ACTIVE);
         expect(leavingView.state).toBe(STATE_INACTIVE);
+      });
+
+      it('should set entering inactive, leaving active, after transition has not completed', () => {
+        let enteringView = new ViewController(Page1);
+        enteringView.state = STATE_TRANS_ENTER;
+        let leavingView = new ViewController(Page2);
+        leavingView.state = STATE_TRANS_LEAVE;
+
+        nav._transIds = 1;
+
+        nav._transFinish(1, enteringView, leavingView, 'back', false);
+
+        expect(enteringView.state).toBe(STATE_INACTIVE);
+        expect(leavingView.state).toBe(STATE_ACTIVE);
       });
 
     });
@@ -541,7 +555,7 @@ export function run() {
     });
 
     it('should getByState()', () => {
-      expect(nav.getByState()).toBe(null);
+      expect(nav.getByState(null)).toBe(null);
 
       let view1 = new ViewController(Page1);
       view1.state = STATE_INIT_ENTER;
@@ -618,7 +632,7 @@ export function run() {
     });
 
     // setup stuff
-    let nav;
+    let nav: NavController;
     let config = new Config();
 
     class Page1 {}

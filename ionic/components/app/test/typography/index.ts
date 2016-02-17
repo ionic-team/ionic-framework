@@ -1,4 +1,4 @@
-import {App, IonicApp} from 'ionic/ionic';
+import {App, IonicApp} from '../../../../../ionic/ionic';
 
 
 @App({

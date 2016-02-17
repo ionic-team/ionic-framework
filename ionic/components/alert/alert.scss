@@ -52,10 +52,6 @@ ion-alert {
 
 .alert-message {
   overflow: auto;
-
-  &:empty {
-    padding: 0;
-  }
 }
 
 .alert-input {

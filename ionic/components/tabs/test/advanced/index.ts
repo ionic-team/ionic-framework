@@ -1,7 +1,7 @@
 import {ViewChild} from 'angular2/core';
 import {RouteConfig, Location} from 'angular2/router';
 
-import {App, Page, NavController, Modal, ViewController, Tabs} from 'ionic/ionic';
+import {App, Page, NavController, NavParams, Modal, ViewController, Tabs} from '../../../../../ionic/ionic';
 
 
 @Page({
@@ -27,12 +27,12 @@ import {App, Page, NavController, Modal, ViewController, Tabs} from 'ionic/ionic
   `
 })
 class SignIn {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
 
   push() {
-    this.nav.push(TabsPage);
+    this.nav.push(TabsPage, {
+      userId: 8675309
+    });
   }
 }
 
@@ -48,9 +48,7 @@ class SignIn {
   `
 })
 class ChatPage {
-  constructor(viewCtrl: ViewController) {
-    this.viewCtrl = viewCtrl;
-  }
+  constructor(private viewCtrl: ViewController) {}
 }
 
 
@@ -60,8 +58,9 @@ class ChatPage {
 class TabsPage {
   @ViewChild(Tabs) tabs: Tabs;
 
-  constructor(private nav: NavController) {
+  constructor(private nav: NavController, private params: NavParams) {
     this.tab1Root = Tab1Page1;
+    this.tab1Params = params;
     this.tab2Root = Tab2Page1;
     this.tab3Root = Tab3Page1;
   }
@@ -98,14 +97,16 @@ class TabsPage {
       '<p><button id="goToTab1Page2" (click)="push()">Go to Tab 1, Page 2</button></p>' +
       '<p><button (click)="logout()">Logout</button></p>' +
       '<p><button (click)="favoritesTab()">Favorites Tab</button></p>' +
+      '<p>UserId: {{userId}}</p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>'
 })
 class Tab1Page1 {
-  constructor(nav: NavController, tabs: Tabs) {
-    this.nav = nav;
-    this.tabs = tabs;
+  userId: string;
+
+  constructor(private nav: NavController, private tabs: Tabs, private params: NavParams) {
+    this.userId = params.get('userId');
   }
 
   push() {
@@ -135,9 +136,7 @@ class Tab1Page1 {
     '</ion-content>'
 })
 class Tab1Page2 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
 
   push() {
     this.nav.push(Tab1Page3)
@@ -157,9 +156,7 @@ class Tab1Page2 {
     '</ion-content>'
 })
 class Tab1Page3 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
 }
 
 
@@ -179,9 +176,7 @@ class Tab1Page3 {
     '</ion-content>'
 })
 class Tab2Page1 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
 
   push() {
     this.nav.push(Tab2Page2)
@@ -202,9 +197,7 @@ class Tab2Page1 {
     '</ion-content>'
 })
 class Tab2Page2 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
 
   push() {
     this.nav.push(Tab2Page3)
@@ -224,9 +217,7 @@ class Tab2Page2 {
     '</ion-content>'
 })
 class Tab2Page3 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
 }
 
 

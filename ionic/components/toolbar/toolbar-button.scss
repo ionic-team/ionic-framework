@@ -5,11 +5,7 @@
 
 .bar-button {
   position: relative;
-  display: inline-flex;
-  flex-shrink: 0;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
 
   margin: 0;
   padding: 0;
@@ -19,6 +15,7 @@
 
   text-align: center;
   text-transform: none;
+  line-height: 1;
 
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
@@ -54,7 +51,7 @@
 .back-button {
   display: none;
   &.show-back-button {
-    display: flex;
+    display: inline-block;
   }
 }
 

@@ -1,12 +1,13 @@
-import {App, Page, MenuController} from 'ionic/ionic';
+import {App, Page, MenuController} from '../../../../../ionic/ionic';
 
 
 @Page({
   templateUrl: 'page1.html'
 })
 class Page1 {
-  constructor(menu: MenuController) {
-    this.menu = menu;
+  activeMenu: string;
+
+  constructor(private menu: MenuController) {
     this.menu1Active();
   }
   menu1Active() {
@@ -26,6 +27,8 @@ class Page1 {
   templateUrl: 'main.html'
 })
 class E2EApp {
+  rootPage;
+
   constructor() {
     this.rootPage = Page1;
   }

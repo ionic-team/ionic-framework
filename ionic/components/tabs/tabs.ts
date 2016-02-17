@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer} from 'angular2/core';
+import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, Type} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {IonicApp} from '../app/app';
@@ -17,17 +17,6 @@ import {isUndefined, isTrueProperty} from '../../util/util';
 
 /**
  * @name Tabs
- * @property {any} [selectedIndex] - The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
- * @property {any} [tabbarPlacement] - set position of the tabbar, top or bottom
- * @property {any} [tabbarIcons] - set the position of the tabbar's icons: top, bottom, left, right, hide
- * @property {any} [preloadTabs] - sets whether to preload all the tabs, true or false
- * @property {any} (change) - expression you want to evaluate when the tabs chage
- * @usage
-* ```html
- * <ion-tabs>
- *   <ion-tab [root]="tabRoot"></ion-tab>
- * </ion-tabs>
- * ```
  * @description
  * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
  * of the Component docs._
@@ -36,9 +25,18 @@ import {isUndefined, isTrueProperty} from '../../util/util';
  * individual Tab components. On iOS, the TabBar is placed on the bottom of
  * the screen, while on Android it is at the top.
  *
+ * @usage
+ * ```html
+ * <ion-tabs>
+ *   <ion-tab [root]="tabRoot"></ion-tab>
+ * </ion-tabs>
+ * ```
+ *
  * @demo /docs/v2/demos/tabs/
+ *
  * @see {@link /docs/v2/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
+ *
  */
 @Component({
   selector: 'ion-tabs',
@@ -92,23 +90,27 @@ export class Tabs extends Ion {
   subPages: boolean;
 
   /**
-   * @private
+   * @input {number} The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
    */
   @Input() selectedIndex: any;
+
   /**
-   * @private
+   * @input {boolean} Sets whether to preload all the tabs, true or false
    */
   @Input() preloadTabs: any;
+
   /**
-   * @private
+   * @input {string} set the position of the tabbar's icons: top, bottom, left, right, hide
    */
   @Input() tabbarIcons: string;
+
   /**
-   * @private
+   * @input {string} Set position of the tabbar, top or bottom
    */
   @Input() tabbarPlacement: string;
+
   /**
-   * @private
+   * @input {any} expression you want to evaluate when the tabs change
    */
   @Output() change: EventEmitter<Tab> = new EventEmitter();
 
@@ -116,14 +118,20 @@ export class Tabs extends Ion {
    * @private
    */
   @ViewChild(TabHighlight) private _highlight: TabHighlight;
+
   /**
    * @private
    */
   @ViewChildren(TabButton) private _btns;
 
+  /**
+   * @private
+   */
+  parent: any
+
   constructor(
     @Optional() viewCtrl: ViewController,
-    @Optional() public parent: NavController,
+    @Optional() parent: NavController,
     private _app: IonicApp,
     private _config: Config,
     private _elementRef: ElementRef,
@@ -131,7 +139,7 @@ export class Tabs extends Ion {
     private _renderer: Renderer
   ) {
     super(_elementRef);
-
+    this.parent = parent;
     this.id = ++tabIds;
     this.subPages = _config.getBoolean('tabSubPages');
     this._useHighlight = _config.getBoolean('tabbarHighlight');
@@ -169,6 +177,9 @@ export class Tabs extends Ion {
     });
   }
 
+  /**
+   * @private
+   */
   ngAfterContentInit() {
     let selectedIndex = this.selectedIndex ? parseInt(this.selectedIndex, 10) : 0;
 
@@ -266,9 +277,9 @@ export class Tabs extends Ion {
 
   /**
    * @param {number} index Index of the tab you want to get
-   * @returns {Any} Tab Returs the tab who's index matches the one passed
+   * @returns {Tab} Returns the tab who's index matches the one passed
    */
-  getByIndex(index: number): any {
+  getByIndex(index: number): Tab {
     if (index < this._tabs.length && index > -1) {
       return this._tabs[index];
     }
@@ -276,7 +287,7 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @return {Any} Tab Returns the currently selected tab
+   * @return {Tab} Returns the currently selected tab
    */
   getSelected(): Tab {
     for (let i = 0; i < this._tabs.length; i++) {
@@ -299,7 +310,7 @@ export class Tabs extends Ion {
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
-  private _touchActive(tab) {
+  private _touchActive(tab: Tab) {
     let active = tab.getActive();
 
     if (!active) {
@@ -335,7 +346,7 @@ export class Tabs extends Ion {
    * within a NavController.
    * @returns {NavController}
    */
-  get rootNav() {
+  get rootNav(): NavController {
     let nav = this.parent;
     while (nav.parent) {
       nav = nav.parent;

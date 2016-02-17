@@ -1,7 +1,6 @@
 
 <ion-toolbar><ion-title>Toggles</ion-title></ion-toolbar>
 
-
 <ion-content>
 
   <form (submit)="doSubmit($event)" [ngFormModel]="fruitsForm">
@@ -9,33 +8,33 @@
     <ion-list>
 
       <ion-item>
-        <ion-label>Apple, value=apple, init checked</ion-label>
-        <ion-toggle value="apple" checked="true" ngControl="appleCtrl"></ion-toggle>
+        <ion-label>Apple, ngControl</ion-label>
+        <ion-toggle ngControl="appleCtrl"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Banana, init no checked/value attributes</ion-label>
+        <ion-label>Banana, ngControl</ion-label>
         <ion-toggle ngControl="bananaCtrl"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Cherry, value=cherry, init disabled</ion-label>
-        <ion-toggle value="cherry" disabled="true" ngControl="cherryCtrl"></ion-toggle>
+        <ion-label>Cherry, ngControl, disabled</ion-label>
+        <ion-toggle disabled="true" ngControl="cherryCtrl"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Grape, value=grape, init checked, disabled</ion-label>
-        <ion-toggle value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl"></ion-toggle>
+        <ion-label>Grape, ngControl, checked, disabled</ion-label>
+        <ion-toggle [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Secondary color</ion-label>
-        <ion-toggle secondary checked="true"></ion-toggle>
+        <ion-label>Kiwi, NgModel false, Secondary color</ion-label>
+        <ion-toggle secondary [(ngModel)]="kiwiModel"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>I'm an NgModel</ion-label>
-        <ion-toggle value="apple" checked="true" [(ngModel)]="myModel"></ion-toggle>
+        <ion-label>Strawberry, NgModel true</ion-label>
+        <ion-toggle [(ngModel)]="strawberryModel"></ion-toggle>
       </ion-item>
 
     </ion-list>
@@ -57,7 +56,8 @@
     <code>cherry.value: {{fruitsForm.controls.cherryCtrl.value}}</code><br>
     <code>grape.dirty: {{fruitsForm.controls.grapeCtrl.dirty}}</code><br>
     <code>grape.value: {{fruitsForm.controls.grapeCtrl.value}}</code><br>
-    <code>ngModel.value: {{myModel}}</code><br>
+    <code>kiwiModel: {{kiwiModel}}</code><br>
+    <code>strawberryModel: {{strawberryModel}}</code><br>
   </p>
 
   <pre aria-hidden="true" padding>{{formResults}}</pre>

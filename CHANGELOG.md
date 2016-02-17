@@ -1,3 +1,36 @@
+<a name="2.0.0-beta.0"></a>
+# 2.0.0-beta.0
+
+Enjoy!
+
+<3 The Ionic Team
+
+
+
+<a name="2.0.0-alpha.57"></a>
+# [2.0.0-alpha.57](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.56...v2.0.0-alpha.57) (2016-02-10)
+
+
+### Bug Fixes
+
+* **button:** bar-button uses inner span as flexbox ([38a3be4](https://github.com/driftyco/ionic/commit/38a3be4))
+
+### Features
+
+* Improved transitions and animations
+* hairlines width can be configured with a sass variable ([06b3a5b](https://github.com/driftyco/ionic/commit/06b3a5b))
+* **ion-item-sliding:** style icons on top of text in an option button ([4e57fcf](https://github.com/driftyco/ionic/commit/4e57fcf)), closes [#5352](https://github.com/driftyco/ionic/issues/5352)
+
+### Refactor
+
+* **animations:** no longer using Web Animations polyfill ([da18868](https://github.com/driftyco/ionic/commit/da18868))
+
+### Breaking Changes
+
+The Web Animations polyfill is no longer shipped with the framework and may cause build errors.  
+
+Projects will need to be [updated accordingly](https://github.com/driftyco/ionic-conference-app/commit/2ed59e6fd275c4616792c7b2e5aa9da4a20fb188).
+
 <a name="2.0.0-alpha.56"></a>
 # [2.0.0-alpha.56](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.55...v2.0.0-alpha.56) (2016-02-05)
 

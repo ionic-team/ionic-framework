@@ -120,7 +120,25 @@ import {MenuType} from './menu-types';
  * but this can be overriden using the `type` property:
  *
  * ```html
- * <ion-menu type="overlay" [content]="mycontent"></ion-menu>
+ * <ion-menu type="overlay" [content]="mycontent">...</ion-menu>
+ * ```
+ *
+ *
+ * ### Persistent Menus
+ *
+ * By default, menus, and specifically their menu toggle buttons in the navbar,
+ * only show on the root page within its `NavController`. For example, on Page 1
+ * the menu toggle will show in the navbar. However, when navigating to Page 2,
+ * because it is not the root Page for that `NavController`, the menu toggle
+ * will not show in the navbar.
+ *
+ * Not showing the menu toggle button in the navbar is commonly seen within
+ * native apps after navigating past the root Page. However, it is still possible
+ * to always show the menu toggle button in the navbar by setting
+ * `persistent="true"` on the `ion-menu` component.
+ *
+ * ```html
+ * <ion-menu persistent="true" [content]="content">...</ion-menu>
  * ```
  *
  * @demo /docs/v2/demos/menu/
@@ -137,36 +155,54 @@ export class MenuController {
    * Progamatically open the Menu.
    * @return {Promise} returns a promise when the menu is fully opened
    */
-  open(menuId?: string) {
+  open(menuId?: string): Promise<boolean> {
     let menu = this.get(menuId);
     if (menu) {
       return menu.open();
     }
+
+    return Promise.resolve(false);
   }
 
   /**
-   * Progamatically close the Menu.
+   * Progamatically close the Menu. If no `menuId` is given as the first
+   * argument then it'll close any menu which is open. If a `menuId`
+   * is given then it'll close that exact menu.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu is fully closed
    */
-  close(menuId?: string) {
-    let menu = this.get(menuId);
+  close(menuId?: string): Promise<boolean> {
+    let menu: Menu;
+
+    if (menuId) {
+      // find the menu by its id
+      menu = this.get(menuId);
+
+    } else {
+      // find the menu that is open
+      menu = this._menus.find(m => m.isOpen);
+    }
+
     if (menu) {
+      // close the menu
       return menu.close();
     }
+
+    return Promise.resolve(false);
   }
 
   /**
-   * Toggle the menu. If it's closed, it will open, and if opened, it will
-   * close.
+   * Toggle the menu. If it's closed, it will open, and if opened, it
+   * will close.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu has been toggled
    */
-  toggle(menuId?: string) {
+  toggle(menuId?: string): Promise<boolean> {
     let menu = this.get(menuId);
     if (menu) {
       return menu.toggle();
     }
+    return Promise.resolve(false);
   }
 
   /**
@@ -176,7 +212,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
-  enable(shouldEnable: boolean, menuId?: string) {
+  enable(shouldEnable: boolean, menuId?: string): Menu {
     let menu = this.get(menuId);
     if (menu) {
       return menu.enable(shouldEnable);
@@ -189,7 +225,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
-  swipeEnable(shouldEnable: boolean, menuId?: string) {
+  swipeEnable(shouldEnable: boolean, menuId?: string): Menu {
     let menu = this.get(menuId);
     if (menu) {
       return menu.swipeEnable(shouldEnable);
@@ -197,7 +233,26 @@ export class MenuController {
   }
 
   /**
-   * Used to get a menu instance.
+   * @return {boolean} Returns true if the menu is currently open, otherwise false.
+   */
+  isOpen(menuId?: string): boolean {
+    let menu = this.get(menuId);
+    return menu && menu.isOpen || false;
+  }
+
+  /**
+   * @return {boolean} Returns true if the menu is currently enabled, otherwise false.
+   */
+  isEnabled(menuId?: string): boolean {
+    let menu = this.get(menuId);
+    return menu && menu.enabled || false;
+  }
+
+  /**
+   * Used to get a menu instance. If a `menuId` is not provided then it'll return
+   * the first menu found. If a `menuId` is provided, then it'll first try to find
+   * the menu using the menu's `id` attribute. If a menu is not found using the `id`
+   * attribute, then it'll try to find the menu by its `side` name.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Menu}  Returns the instance of the menu if found, otherwise `null`.
    */
@@ -214,6 +269,14 @@ export class MenuController {
 
     // get the first menu in the array, if one exists
     return (this._menus.length ? this._menus[0] : null);
+  }
+
+
+  /**
+   * @return {Array<Menu>}  Returns an array of all menu instances.
+   */
+  getMenus(): Array<Menu> {
+    return this._menus;
   }
 
   /**

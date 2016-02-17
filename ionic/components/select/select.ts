@@ -1,5 +1,5 @@
-import {Component, Optional, ElementRef, Renderer, Input, Output, EventEmitter, HostListener, ContentChildren, QueryList} from 'angular2/core';
-import {NgControl} from 'angular2/common';
+import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forwardRef, EventEmitter, HostListener, ContentChildren, QueryList} from 'angular2/core';
+import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Alert} from '../alert/alert';
 import {Form} from '../../util/form';
@@ -7,6 +7,10 @@ import {Item} from '../item/item';
 import {merge, isTrueProperty, isBlank} from '../../util/util';
 import {NavController} from '../nav/nav-controller';
 import {Option} from '../option/option';
+
+const SELECT_VALUE_ACCESSOR = new Provider(
+    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Select), multi: true});
+
 
 /**
  * @name Select
@@ -92,12 +96,6 @@ import {Option} from '../option/option';
  *   subTitle: 'Select your toppings'
  * };
  * ```
- * @property [cancelText] - The text of the cancel button. Defatuls to 'cancel'
- * @property [okText] - The text of the ok button. Defatuls to 'OK'
- * @property [alertOptions] - Any addition options that an alert can take. Title, Subtitle, etc.
- * @property [multiple] - Whether or not the select component can accept multipl selections
- * @property [disabled] - Whether or not the select component is disabled or not
- * @property (change) - Any expression you want to evaluate when the selection has changed
  *
  * @demo /docs/v2/demos/select/
  */
@@ -116,7 +114,8 @@ import {Option} from '../option/option';
     '</button>',
   host: {
     '[class.select-disabled]': '_disabled'
-  }
+  },
+  providers: [SELECT_VALUE_ACCESSOR]
 })
 export class Select {
   private _disabled: any = false;
@@ -126,6 +125,7 @@ export class Select {
   private _values: Array<string> = [];
   private _texts: Array<string> = [];
   private _text: string = '';
+  private _fn: Function;
 
   /**
    * @private
@@ -134,16 +134,19 @@ export class Select {
 
   /**
    * @private
+   * @input {string}  The text of the cancel button. Defatuls to `Cancel`
    */
   @Input() cancelText: string = 'Cancel';
 
   /**
    * @private
+   * @input {string} The text of the ok button. Defatuls to `OK`
    */
   @Input() okText: string = 'OK';
 
   /**
    * @private
+   * @input {any} Any addition options that an alert can take. Title, Subtitle, etc.
    */
   @Input() alertOptions: any = {};
 
@@ -153,23 +156,23 @@ export class Select {
   @Input() checked: any = false;
 
   /**
-   * @private
+   * @output {any} Any expression you want to evaluate when the selection has changed
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @output {any} Any expression you want to evaluate when the selection was cancelled
+   */
+  @Output() cancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
     @Optional() private _item: Item,
-    @Optional() private _nav: NavController,
-    @Optional() ngControl: NgControl
+    @Optional() private _nav: NavController
   ) {
     this._form.register(this);
-
-    if (ngControl) {
-      ngControl.valueAccessor = this;
-    }
 
     if (_item) {
       this.id = 'sel-' + _item.registerInput('select');
@@ -198,7 +201,12 @@ export class Select {
 
     // make sure their buttons array is removed from the options
     // and we create a new array for the alert's two buttons
-    alertOptions.buttons = [this.cancelText];
+    alertOptions.buttons = [{
+      text: this.cancelText,
+      handler: () => {
+        this.cancel.emit(null);
+      }
+    }];
 
     // if the alertOptions didn't provide an title then use the label's text
     if (!alertOptions.title && this._item) {
@@ -231,7 +239,6 @@ export class Select {
     alert.addButton({
       text: this.okText,
       handler: selectedValues => {
-        this.value = selectedValues;
         this.onChange(selectedValues);
         this.change.emit(selectedValues);
       }
@@ -242,30 +249,15 @@ export class Select {
 
 
   /**
-   * @private
+   * @input {boolean} Whether or not the select component can accept multipl selections
    */
   @Input()
-  get multiple() {
+  get multiple(): any {
     return this._multi;
   }
 
-  set multiple(val) {
+  set multiple(val: any) {
     this._multi = isTrueProperty(val);
-  }
-
-
-  /**
-   * @private
-   */
-  @Input()
-  get value(): any {
-    return (this._multi ? this._values : this._values.join());
-  }
-
-  set value(val: any) {
-    // passed in value could be either an array, undefined or a string
-    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-    this.updateOptions();
   }
 
 
@@ -289,13 +281,13 @@ export class Select {
       this._values = val.toArray().filter(o => o.checked).map(o => o.value);
     }
 
-    this.updateOptions();
+    this._updOpts();
   }
 
   /**
    * @private
    */
-  private updateOptions() {
+  private _updOpts() {
     this._texts = [];
 
     if (this._options) {
@@ -311,22 +303,8 @@ export class Select {
     this._text = this._texts.join(', ');
   }
 
-
   /**
-   * @private
-   */
-  ngAfterContentInit() {
-    // using a setTimeout here to prevent
-    // "has changed after it was checked" error
-    // this will be fixed in future ng2 versions
-    setTimeout(()=> {
-      this.onChange(this._values);
-    });
-  }
-
-
-  /**
-   * @private
+   * @input {boolean} Whether or not the select component is disabled or not
    */
   @Input()
   get disabled() {
@@ -340,40 +318,48 @@ export class Select {
 
   /**
    * @private
-   * Angular2 Forms API method called by the model (Control) on change to update
-   * the checked value.
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  writeValue(val) {
-    this.value = val;
+  writeValue(val: any) {
+    console.debug('select, writeValue', val);
+    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
+    this._updOpts();
   }
 
   /**
    * @private
    */
-  onChange(val) {}
+  ngAfterContentInit() {
+    this._updOpts();
+  }
 
   /**
    * @private
    */
-  onTouched(val) {}
+  registerOnChange(fn: Function): void {
+    this._fn = fn;
+    this.onChange = (val: any) => {
+      console.debug('select, onChange', val);
+      fn(val);
+      this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
+      this._updOpts();
+      this.onTouched();
+    };
+  }
 
   /**
    * @private
-   * Angular2 Forms API method called by the view (NgControl) to register the
-   * onChange event handler that updates the model (Control).
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
-   * @param {Function} fn  the onChange event handler.
-   */
-  registerOnChange(fn) { this.onChange = fn; }
-
-  /**
-   * @private
-   * Angular2 Forms API method called by the the view (NgControl) to register
-   * the onTouched event handler that marks model (Control) as touched.
-   * @param {Function} fn  onTouched event handler.
    */
   registerOnTouched(fn) { this.onTouched = fn; }
+
+  /**
+   * @private
+   */
+  onChange(_) {}
+
+  /**
+   * @private
+   */
+  onTouched() {}
 
   /**
    * @private

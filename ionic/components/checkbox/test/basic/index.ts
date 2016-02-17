@@ -1,4 +1,4 @@
-import {App} from 'ionic/ionic';
+import {App} from '../../../../../ionic/ionic';
 import {
   Control,
   ControlGroup,
@@ -16,9 +16,17 @@ import {
   templateUrl: 'main.html'
 })
 class E2EApp {
+  fruitsForm: ControlGroup;
+  grapeDisabled: boolean;
+  grapeChecked: boolean;
+  kiwiModel: boolean;
+  strawberryModel: boolean;
+  standAloneChecked: boolean;
+  formResults: string;
+
   constructor() {
     this.fruitsForm = new ControlGroup({
-      "appleCtrl": new Control(),
+      "appleCtrl": new Control(true),
       "bananaCtrl": new Control(true),
       "cherryCtrl": new Control(false),
       "grapeCtrl": new Control(true)
@@ -27,6 +35,9 @@ class E2EApp {
     this.grapeDisabled = true;
     this.grapeChecked = true;
     this.standAloneChecked = true;
+
+    this.kiwiModel = false;
+    this.strawberryModel = true;
   }
 
   toggleGrapeChecked() {

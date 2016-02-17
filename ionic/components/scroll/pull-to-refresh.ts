@@ -18,9 +18,9 @@ import {raf, ready, CSS} from '../../util/dom';
  *  @usage
  *  ```html
  *  <ion-content>
- *    <ion-refresher (starting)="doStarting()"
- *                   (refresh)="doRefresh($event, refresher)"
- *                   (pulling)="doPulling($event, amt)">
+ *    <ion-refresher (start)="doStart($event)"
+ *                   (refresh)="doRefresh($event)"
+ *                   (pulling)="doPulling($event)">
  *    </ion-refresher>
  *
  *  </ion-content>
@@ -29,35 +29,27 @@ import {raf, ready, CSS} from '../../util/dom';
  *
  *  ```ts
  *  export class MyClass {
- *  constructor(){}
+ *
  *    doRefresh(refresher) {
- *      console.debug('Refreshing!', refresher);
+ *      console.log('Doing Refresh', refresher)
  *
  *      setTimeout(() => {
- *        console.debug('Pull to refresh complete!', refresher);
  *        refresher.complete();
- *      })
+ *        console.log("Complete");
+ *      }, 5000);
  *    }
  *
- *    doStarting() {
- *      console.debug('Pull started!');
+ *    doStart(refresher) {
+ *      console.log('Doing Start', refresher);
  *    }
  *
- *    doPulling(amt) {
- *      console.debug('You have pulled', amt);
+ *    doPulling(refresher) {
+ *      console.log('Pulling', refresher);
  *    }
+ *
  *  }
  *  ```
  *  @demo /docs/v2/demos/refresher/
- *
- *  @property {string} [pullingIcon] - the icon you want to display when you begin to pull down
- *  @property {string} [pullingText] - the text you want to display when you begin to pull down
- *  @property {string} [refreshingIcon] - the icon you want to display when performing a refresh
- *  @property {string} [refreshingText] - the text you want to display when performing a refresh
- *
- *  @property {any} (refresh) - the methond on your class you want to perform when you refreshing
- *  @property {any} (starting) - the methond on your class you want to perform when you start pulling down
- *  @property {any} (pulling) - the methond on your class you want to perform when you are pulling down
  *
  */
 @Component({
@@ -174,22 +166,22 @@ export class Refresher {
 
 
   /**
-   * @private
+   * @input {string} the icon you want to display when you begin to pull down
    */
   @Input() pullingIcon: string;
 
   /**
-   * @private
+   * @input {string} the text you want to display when you begin to pull down
    */
   @Input() pullingText: string;
 
   /**
-   * @private
+   * @input {string} the icon you want to display when performing a refresh
    */
   @Input() refreshingIcon: string;
 
   /**
-   * @private
+   * @input {string} the text you want to display when performing a refresh
    */
   @Input() refreshingText: string;
 
@@ -200,19 +192,19 @@ export class Refresher {
 
 
   /**
-   * @private
+   * @output {event} When you are pulling down
    */
-  @Output() pulling: EventEmitter<any> = new EventEmitter();
+  @Output() pulling: EventEmitter<Refresher> = new EventEmitter();
 
   /**
-   * @private
+   * @output {event} When you are refreshing
    */
-  @Output() refresh: EventEmitter<any> = new EventEmitter();
+  @Output() refresh: EventEmitter<Refresher> = new EventEmitter();
 
   /**
-   * @private
+   * @output {event} When you start pulling down
    */
-  @Output() starting: EventEmitter<any> = new EventEmitter();
+  @Output() start: EventEmitter<Refresher> = new EventEmitter();
 
 
   constructor(
@@ -313,7 +305,7 @@ export class Refresher {
   activate() {
     //this.ele.classList.add('active');
     this.isActive = true;
-    //this.starting.next();
+    this.start.emit(this);
   }
 
   /**
@@ -333,11 +325,10 @@ export class Refresher {
   /**
    * @private
    */
-  start() {
+  startRefresh() {
     // startCallback
     this.isRefreshing = true;
-    this.refresh.next(this);
-    //$scope.$onRefresh();
+    this.refresh.emit(this);
   }
 
   /**
@@ -493,8 +484,8 @@ export class Refresher {
     // overscroll according to the user's drag so far
     this.overscroll( Math.round((this.deltaY - this.dragOffset) / 3) );
 
-    // Pass an incremental pull amount to the EventEmitter
-    this.pulling.next(this.lastOverscroll);
+    // Pass the refresher to the EventEmitter
+    this.pulling.emit(this);
 
     // update the icon accordingly
     if (!this.activated && this.lastOverscroll > this.ptrThreshold) {
@@ -531,7 +522,7 @@ export class Refresher {
 
       // the user has scroll far enough to trigger a refresh
       if (this.lastOverscroll > this.ptrThreshold) {
-        this.start();
+        this.startRefresh();
         this.scrollTo(this.ptrThreshold, this.scrollTime);
 
       // the user has overscrolled but not far enough to trigger a refresh

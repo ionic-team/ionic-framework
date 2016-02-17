@@ -238,6 +238,7 @@ gulp.task('transpile', function(){
 
 function tsCompile(options, cacheName){
   return gulp.src([
+      'typings/main.d.ts',
       'ionic/**/*.ts',
       '!ionic/**/*.d.ts',
       '!ionic/components/*/test/**/*',
@@ -709,7 +710,7 @@ gulp.task('prepare', function(){
 
   //Update package.json version
   var packageJSON = require('./package.json');
-  packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'alpha');
+  packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'beta');
   fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, 2));
 
   //Update changelog

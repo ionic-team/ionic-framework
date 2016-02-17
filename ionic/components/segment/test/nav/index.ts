@@ -1,5 +1,5 @@
 import {Validators, Control, ControlGroup} from 'angular2/common';
-import {App, Page, NavController} from 'ionic/ionic';
+import {App, Page, NavController} from '../../../../../ionic/ionic';
 
 
 @Page({

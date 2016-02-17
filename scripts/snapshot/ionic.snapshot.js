@@ -130,11 +130,9 @@ var IonicSnapshot = function(options) {
                 try {
                   if (error) {
                     log(specIdString, colors.red('error posting screenshot:'), error);
-                    process.exit(1);
 
                   } else if (response.statusCode >= 400) {
                     log(specIdString, colors.red('error posting screenshot:'), response.statusCode, body);
-                    process.exit(1);
 
                   } else {
                     var rspData = JSON.parse(body);

@@ -1,4 +1,4 @@
-import {App, IonicApp, MenuController, Page, NavController, Alert} from 'ionic/ionic';
+import {App, IonicApp, MenuController, Page, NavController, Alert} from '../../../../../ionic/ionic';
 
 
 @Page({
@@ -37,10 +37,12 @@ class Page2 {
   templateUrl: 'main.html'
 })
 class E2EApp {
+  rootPage;
+  changeDetectionCount: number = 0;
+  pages: Array<{title: string, component: any}>;
 
   constructor(private app: IonicApp, private menu: MenuController) {
-    this.rootView = Page1;
-    this.changeDetectionCount = 0;
+    this.rootPage = Page1;
 
     this.pages = [
       { title: 'Page 1', component: Page1 },
@@ -56,7 +58,7 @@ class E2EApp {
     nav.setRoot(page.component).then(() => {
       // wait for the root page to be completely loaded
       // then close the menu
-      this.menu.close('left');
+      this.menu.close();
     });
   }
 

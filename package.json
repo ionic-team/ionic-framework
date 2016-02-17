@@ -1,8 +1,8 @@
 {
   "private": "true",
   "name": "ionic2",
-  "version": "2.0.0-alpha.56",
-  "license": "Apache-2.0",
+  "version": "2.0.0-beta.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/driftyco/ionic.git"
@@ -13,10 +13,10 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.2",
+    "angular2": "2.0.0-beta.6",
     "colors": "^1.1.2",
     "es6-promise": "^3.0.2",
-    "es6-shim": "0.33.6",
+    "es6-shim": "^0.33.6",
     "inquirer": "0.11.0",
     "ionicons": "3.0.0-alpha.3",
     "lodash": "3.10.1",
@@ -24,7 +24,7 @@
     "q": "1.4.1",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.0",
-    "zone.js": "0.5.10"
+    "zone.js": "0.5.14"
   },
   "devDependencies": {
     "canonical-path": "0.0.2",

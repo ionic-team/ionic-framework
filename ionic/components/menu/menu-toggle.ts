@@ -68,7 +68,17 @@ export class MenuToggle {
   */
   get isHidden() {
     if (this._inNavbar && this._viewCtrl) {
-      return !this._viewCtrl.isRoot();
+      if (this._viewCtrl.isRoot()) {
+        // this is the root view, so it should always show
+        return false;
+      }
+
+      let menu = this._menu.get(this.menuToggle);
+      if (menu) {
+        // this is not the root view, so see if this menu
+        // is configured to still be enabled if it's not the root view
+	      return !menu.persistent;
+      }
     }
     return false;
   }

@@ -29,6 +29,7 @@ $card-md-line-height:                 1.5 !default;
 $card-md-text-color:                  #222 !default;
 $card-md-title-font-size:             2.4rem !default;
 $card-md-title-padding:               8px 0 8px 0 !default;
+$card-md-title-margin:                2px 0 2px !default;
 $card-md-title-text-color:            #222 !default;
 
 $card-md-header-font-size:            1.6rem !default;
@@ -87,8 +88,11 @@ ion-card {
     font-size: 1.3rem;
   }
 
-  .card-title {
+  ion-card-title {
+    display: block;
+    line-height: 1.2;    
     padding: $card-md-title-padding;
+    margin: $card-md-title-margin;
     font-size: $card-md-title-font-size;
     color: $card-md-title-text-color;
   }

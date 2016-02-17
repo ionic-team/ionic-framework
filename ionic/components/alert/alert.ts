@@ -2,6 +2,7 @@ import {Component, ElementRef, Renderer} from 'angular2/core';
 import {NgClass, NgSwitch, NgIf, NgFor} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
+import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {isDefined} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
@@ -197,7 +198,7 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @param {object} button Alert button
+   * @param {any} button Alert button
    */
   addButton(button: any) {
     this.data.buttons.push(button);
@@ -211,7 +212,7 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @param {Object} opts Alert options
+   * @param {object} opts Alert options
    */
   static create(opts: {
     title?: string,
@@ -247,7 +248,7 @@ export class Alert extends ViewController {
         '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
         '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
       '</div>' +
-      '<div id="{{msgId}}" class="alert-message" *ngIf="d.message" [innerHTML]="d.message"></div>' +
+      '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
         '<template ngSwitchWhen="radio">' +
@@ -333,6 +334,10 @@ class AlertCmp {
 
     } else if (this.d.subTitle) {
       this.descId = this.subHdrId;
+    }
+
+    if (!this.d.message) {
+      this.d.message = '';
     }
   }
 
@@ -484,9 +489,9 @@ class AlertCmp {
 /**
  * Animations for alerts
  */
-class AlertPopIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -502,12 +507,12 @@ class AlertPopIn extends Animation {
       .add(wrapper);
   }
 }
-Animation.register('alert-pop-in', AlertPopIn);
+Transition.register('alert-pop-in', AlertPopIn);
 
 
-class AlertPopOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -523,12 +528,12 @@ class AlertPopOut extends Animation {
       .add(wrapper);
   }
 }
-Animation.register('alert-pop-out', AlertPopOut);
+Transition.register('alert-pop-out', AlertPopOut);
 
 
-class AlertMdPopIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertMdPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -544,12 +549,12 @@ class AlertMdPopIn extends Animation {
       .add(wrapper);
   }
 }
-Animation.register('alert-md-pop-in', AlertMdPopIn);
+Transition.register('alert-md-pop-in', AlertMdPopIn);
 
 
-class AlertMdPopOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertMdPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -565,6 +570,6 @@ class AlertMdPopOut extends Animation {
       .add(wrapper);
   }
 }
-Animation.register('alert-md-pop-out', AlertMdPopOut);
+Transition.register('alert-md-pop-out', AlertMdPopOut);
 
 let alertIds = -1;

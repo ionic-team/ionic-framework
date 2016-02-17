@@ -5,5 +5,5 @@ it('should toggle open menu', function() {
 
 
 it('should close menu', function() {
-  element(by.css('[menuClose=left]')).click();
+  element(by.css('.e2eCloseLeftMenu')).click();
 });

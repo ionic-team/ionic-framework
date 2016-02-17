@@ -48,17 +48,6 @@ import {Scroll} from '../scroll/scroll';
  *})
  *
  *```
- * @property {Boolean} [autoplay] - whether or not the slides should automatically change
- * @property {Boolean} [loop] - whether the slides should loop from the last slide back to the first
- * @property {Number} [index] - The slide index to start on
- * @property {Boolean} [bounce] - whether the slides should bounce
- * @property {Boolean} [pager] - Whether the slide should show the page or not
- * @property {Any} [options] - Any additional slider options you want to pass
- * @property {Number} [zoom] - Whether or not the slider can zoom in or out
- * @property {Number} [zoomDuration] - how long it should take to zoom a slide
- * @property {Number} [zoomMax] - the max scale an slide can be zoomed
- * @property {Any} (change) - expression to evaluate when a slide has been changed
- * @property {Any} (move) - expression to evaluate when a slide is moving
  * @demo /docs/v2/demos/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
@@ -166,57 +155,62 @@ export class Slides extends Ion {
 
 
   /**
-   * @private
+   * @input {boolean} whether or not the slides should automatically change
    */
   @Input() autoplay: any;
 
   /**
-   * @private
+   * @input {boolean} whether or not the slides should automatically change
    */
   @Input() loop: any;
 
   /**
-   * @private
+   * @input {number} The slide index to start on
    */
   @Input() index: any;
 
   /**
-   * @private
+   * @input {boolean} whether the slides should bounce
    */
   @Input() bounce: any;
 
   /**
-   * @private
+   * @input {boolean} Whether the slide should show the page or not
    */
   @Input() pager: any;
 
   /**
-   * @private
+   * @input {any} Any additional slider options you want to pass
    */
   @Input() options: any;
 
   /**
-   * @private
+   * @input {number} Whether or not the slider can zoom in or out
    */
   @Input() zoom: any;
 
   /**
-   * @private
+   * @input {number} how long it should take to zoom a slide
    */
   @Input() zoomDuration: any;
 
   /**
-   * @private
+   * @input {number} the max scale an slide can be zoomed
    */
   @Input() zoomMax: any;
 
   /**
-   * @private
+   * @output {any} expression to evaluate when a slide has been changed
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @output {any} expression to evaluate when a slide change starts
+   */
+  @Output() slideChangeStart: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @output {any} expression to evaluate when a slide moves
    */
   @Output() move: EventEmitter<any> = new EventEmitter();
 
@@ -276,6 +270,7 @@ export class Slides extends Ion {
       return this.options.onTransitionEnd && this.options.onTransitionEnd(swiper, e);
     };
     options.onSlideChangeStart = (swiper) => {
+      this.slideChangeStart.emit(swiper);
       return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
     };
     options.onSlideChangeEnd = (swiper) => {
@@ -464,8 +459,7 @@ export class Slides extends Ion {
 
     let zi = new Animation(this.touch.target.children[0])
       .duration(this.zoomDuration)
-      .easing('linear')
-      .fill('none');
+      .easing('linear');
 
     let zw = new Animation(this.touch.target.children[0])
       .duration(this.zoomDuration)

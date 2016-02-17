@@ -1,7 +1,7 @@
 import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, Renderer} from 'angular2/core';
 
 import {Navbar} from '../navbar/navbar';
-import {NavController} from './nav-controller';
+import {NavController, NavOptions} from './nav-controller';
 import {NavParams} from './nav-params';
 
 
@@ -21,11 +21,11 @@ import {NavParams} from './nav-params';
  *  ```
  */
 export class ViewController {
-  private _cntDir;
+  private _cntDir: any;
   private _cntRef: ElementRef;
   private _destroys: Array<Function> = [];
-  private _hdAttr = null;
-  private _leavingOpts = null;
+  private _hdAttr: string = null;
+  private _leavingOpts: NavOptions = null;
   private _loaded: boolean = false;
   private _nbDir: Navbar;
   private _nbTmpRef: TemplateRef;
@@ -33,6 +33,11 @@ export class ViewController {
   private _onDismiss: Function = null;
   private _pgRef: ElementRef;
   protected _nav: NavController;
+
+  /**
+   * @private
+   */
+  data: any;
 
   /**
    * @private
@@ -57,33 +62,39 @@ export class ViewController {
   /**
    * @private
    */
-  onReady: any;
+  onReady: Function;
 
   /**
    * @private
    */
   zIndex: number;
 
+  /**
+   * @private
+   */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public componentType?: Type, public data: any = {}) {}
+  constructor(public componentType?: Type, data: any = {}) {
+    // passed in data could be NavParams, but all we care about is its data object
+	  this.data = (data instanceof NavParams ? data.data : data);
+  }
 
-  subscribe(callback) {
-    this._emitter.subscribe(callback);
+  subscribe(generatorOrNext?: any): any {
+    return this._emitter.subscribe(generatorOrNext);
   }
 
   /**
    * @private
    */
-  emit(data) {
+  emit(data: any) {
     this._emitter.emit(data);
   }
 
-  onDismiss(callback) {
+  onDismiss(callback: Function) {
     this._onDismiss = callback;
   }
 
-  dismiss(data, role?) {
+  dismiss(data: any, role?: any) {
     this._onDismiss && this._onDismiss(data, role);
     return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts);
   }
@@ -91,28 +102,28 @@ export class ViewController {
   /**
    * @private
    */
-  setNav(navCtrl) {
+  setNav(navCtrl: NavController) {
     this._nav = navCtrl;
   }
 
   /**
    * @private
    */
-  getTransitionName(direction) {
+  getTransitionName(direction: string): string {
     return this._nav && this._nav.config.get('pageTransition');
   }
 
   /**
    * @private
    */
-  getNavParams() {
+  getNavParams(): NavParams {
     return new NavParams(this.data);
   }
 
   /**
    * @private
    */
-  setLeavingOpts(opts) {
+  setLeavingOpts(opts: NavOptions) {
     this._leavingOpts = opts;
   }
 
@@ -121,7 +132,7 @@ export class ViewController {
    * @param {boolean} Check whether or not you can go back from this page
    * @returns {boolean} Returns if it's possible to go back from this Page.
    */
-  enableBack() {
+  enableBack(): boolean {
     // update if it's possible to go back from this nav item
     if (this._nav) {
       let previousItem = this._nav.getPrevious(this);
@@ -135,14 +146,14 @@ export class ViewController {
   /**
    * @private
    */
-  setInstance(instance) {
+  setInstance(instance: any) {
     this.instance = instance;
   }
 
   /**
    * @private
    */
-  get name() {
+  get name(): string {
     return this.componentType ? this.componentType['name'] : '';
   }
 
@@ -183,7 +194,7 @@ export class ViewController {
    * @private
    */
   destroy() {
-    for (let i = 0; i < this._destroys.length; i++) {
+    for (var i = 0; i < this._destroys.length; i++) {
       this._destroys[i]();
     }
     this._destroys = [];
@@ -259,7 +270,7 @@ export class ViewController {
 
   /**
    * @private
-   * @returns {ElementRef} Returns the Page's ElementRef
+   * @returns {elementRef} Returns the Page's ElementRef
    */
   pageRef(): ElementRef {
     return this._pgRef;
@@ -274,7 +285,7 @@ export class ViewController {
 
   /**
    * @private
-   * @returns {ElementRef} Returns the Page's Content ElementRef
+   * @returns {elementRef} Returns the Page's Content ElementRef
    */
   contentRef(): ElementRef {
     return this._cntRef;
@@ -289,7 +300,7 @@ export class ViewController {
 
   /**
    * @private
-   * @returns {Component} Returns the Page's Content component reference.
+   * @returns {component} Returns the Page's Content component reference.
    */
   getContent() {
     return this._cntDir;

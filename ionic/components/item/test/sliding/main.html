@@ -31,7 +31,9 @@
       </ion-item>
       <ion-item-options>
         <button primary (click)="archive(item)">Archive</button>
-        <button danger (click)="del(item)"><ion-icon name="trash"></ion-icon></button>
+        <button danger (click)="del(item)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -53,8 +55,10 @@
         <ion-icon name="mail" item-left></ion-icon>
         One Line w/ Icon, div only text
       </ion-item>
-      <ion-item-options>
-        <button primary (click)="archive(item)">Archive</button>
+      <ion-item-options icon-left>
+        <button primary (click)="archive(item)">
+          <ion-icon name="archive"></ion-icon>Archive
+        </button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -66,7 +70,16 @@
         One Line w/ Avatar, div only text
       </ion-item>
       <ion-item-options>
-        <button primary (click)="archive(item)">Archive</button>
+        <button primary>
+          <ion-icon name="more"></ion-icon>More
+        </button>
+        <button secondary (click)="archive(item)">
+          <ion-icon name="archive"></ion-icon>Archive
+        </button>
+        <button danger (click)="del(item)">
+          <ion-icon name="trash"></ion-icon>Delete
+        </button>
+
       </ion-item-options>
     </ion-item-sliding>
 

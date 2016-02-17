@@ -1,7 +1,7 @@
 {
   "name": "ionic-framework",
   "version": "<%= ionicVersion %>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp"],
   "repository": {
     "type": "git",

@@ -94,6 +94,12 @@ ion-alert {
   text-align: $alert-ios-message-text-align;
 }
 
+.alert-message {
+  &:empty {
+    padding: 0 0 12px 0;
+  }
+}
+
 
 // iOS Alert Input
 // --------------------------------------------------

@@ -1,3 +1,41 @@
+<ion-navbar *navbar>
+  <ion-buttons end>
+    <button (click)="skip()">
+      {{continueText}}
+    </button>
+  </ion-buttons>
+  <ion-title>Slides</ion-title>
+</ion-navbar>
+
+<ion-content>
+  <ion-slides pager (change)="onSlideChanged($event)" (slideChangeStart)="onSlideChangeStart($event)" loop="true">
+    <ion-slide>
+      <h3>Thank you for choosing the Awesome App!</h3>
+      <div id="logo">
+        <img src="appicon.png" style="max-width: 128px">
+      </div>
+      <p>
+        The number one app for everything awesome.
+      </p>
+    </ion-slide>
+    <ion-slide>
+      <h3>Using Awesome</h3>
+
+       <div id="list">
+         <h5>Just three steps:</h5>
+         <ol>
+           <li>Be awesome</li>
+           <li>Stay awesome</li>
+           <li>There is no step 3</li>
+         </ol>
+       </div>
+    </ion-slide>
+    <ion-slide>
+      <h3>Any questions?</h3>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+
 <style>
 .slide {
   color: #000;
@@ -29,42 +67,3 @@
   display:none;
 }
 </style>
-<ion-navbar *navbar>
-  <ion-buttons start>
-    <button>
-      Skip
-    </button>
-  </ion-buttons>
-  <ion-buttons end>
-    <button (click)="next()">
-      Next
-    </button>
-  </ion-buttons>
-  <ion-title>Grid Icons</ion-title>
-</ion-navbar>
-<ion-slides pager (change)="onSlideChanged($event)" loop="true" autoplay="true">
-  <ion-slide>
-    <h3>Thank you for choosing the Awesome App!</h3>
-    <div id="logo">
-      <img src="appicon.png" style="max-width: 128px">
-    </div>
-    <p>
-      The number one app for everything awesome.
-    </p>
-  </ion-slide>
-  <ion-slide>
-    <h3>Using Awesome</h3>
-
-     <div id="list">
-       <h5>Just three steps:</h5>
-       <ol>
-         <li>Be awesome</li>
-         <li>Stay awesome</li>
-         <li>There is no step 3</li>
-       </ol>
-     </div>
-  </ion-slide>
-  <ion-slide>
-    <h3>Any questions?</h3>
-  </ion-slide>
-</ion-slides>

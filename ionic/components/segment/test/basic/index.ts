@@ -1,6 +1,6 @@
 import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/common';
 
-import {App, IonicApp} from 'ionic/ionic';
+import {App, IonicApp} from '../../../../../ionic/ionic';
 
 
 @App({
@@ -9,15 +9,17 @@ import {App, IonicApp} from 'ionic/ionic';
   directives: [FORM_DIRECTIVES]
 })
 class MyApp {
-  constructor(fb: FormBuilder, app: IonicApp) {
-    this.app = app;
+  relationship: string = 'enemies';
+  modelStyle: string = 'B';
+  appType: string = 'free';
+  icons: string = 'camera';
+
+  myForm;
+
+  constructor(fb: FormBuilder) {
     this.myForm = fb.group({
       mapStyle: ['hybrid', Validators.required]
     });
-
-    this.relationship = 'enemies';
-    this.modelStyle = 'B';
-    this.appType = 'free';
   }
 
   onSegmentChanged(segmentButton) {

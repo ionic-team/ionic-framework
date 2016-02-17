@@ -1,4 +1,4 @@
-  import {App, Page, NavController, Alert, Modal, ViewController} from 'ionic/ionic';
+  import {App, Page, NavController, Alert, Modal, ViewController} from '../../../../../ionic/ionic';
 
 //
 // Modal
@@ -23,9 +23,10 @@
     <ion-list>
       <ion-list-header>Tracks</ion-list-header>
 
-      <ion-toggle *ngFor="#i of items" secondary>
-        Toggle {{i}}
-      </ion-toggle>
+      <ion-item *ngFor="#i of items">
+        <ion-label>Toggle {{i}}</ion-label>
+        <ion-toggle secondary></ion-toggle>
+      </ion-item>
     </ion-list>
 
     <ion-list>

@@ -15,12 +15,12 @@
       <ion-icon name="search"></ion-icon>
     </button>
   </ion-buttons>
-  <ion-segment secondary>
-    <ion-segment-button value="something">
-      Something
+  <ion-segment [(ngModel)]="icons" secondary>
+    <ion-segment-button value="camera">
+      <ion-icon name="camera"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button value="else">
-      Else
+    <ion-segment-button value="bookmark">
+      <ion-icon name="bookmark"></ion-icon>
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
@@ -80,6 +80,15 @@
   </ion-segment>
 
   <p>Model Style: <b>Model {{ modelStyle }}</b></p>
+
+  <ion-segment [(ngModel)]="icons">
+    <ion-segment-button value="camera">
+      <ion-icon name="camera"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="bookmark">
+      <ion-icon name="bookmark"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
 </ion-content>
 
 <ion-toolbar position="bottom" primary>

@@ -2,21 +2,17 @@
 
 <ion-content>
   <ion-refresher
-    (starting)="doStarting($event)"
-    (refresh)="doRefresh($event, refresher)"
-    (pulling)="doPulling($event, amt)">
+    (start)="doStart($event)"
+    (refresh)="doRefresh($event)"
+    (pulling)="doPulling($event)"
+    pullingIcon="heart"
+    pullingText="release to refresh..."
+    refreshingIcon="star"
+    refreshingText="refreshing...">
   </ion-refresher>
-  <f></f>
-  <f></f>
-  <f></f>
-  <f></f>
-  <f></f>
-  <f></f>
-  <f></f>
+  <ion-list>
+    <ion-item *ngFor="#item of items">
+      Item {{ item.index }}
+    </ion-item>
+  </ion-list>
 </ion-content>
-
-<style>
-  f {
-    display: block; height: 400px; width: 100%; background-color: #387ef5; margin-bottom: 15px;
-  }
-</style>

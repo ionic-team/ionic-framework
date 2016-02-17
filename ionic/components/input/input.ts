@@ -129,14 +129,14 @@ export class TextInput extends InputBase {
  *  </ion-item>
  * ```
  *
- * @demo /docs/v2/demos/textarea/ 
+ * @demo /docs/v2/demos/textarea/
  */
 @Component({
   selector: 'ion-textarea',
   template:
     '<textarea [(ngModel)]="_value" [placeholder]="placeholder" class="text-input"></textarea>' +
     '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
-    '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" *ngIf="_useAssist"></div>',
+    '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
   directives: [
     NgIf,
     NextInput,

@@ -1,4 +1,4 @@
-import {Platform} from 'ionic/ionic';
+import {Platform} from '../../../ionic/ionic';
 
 export function run() {
 

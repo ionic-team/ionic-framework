@@ -14,7 +14,7 @@
 
   <ion-item>
     <ion-label>Gaming</ion-label>
-    <ion-select [(ngModel)]="gaming">
+    <ion-select [(ngModel)]="gaming" (cancel)="gamingCancel()" (change)="gamingChange($event)">
       <ion-option value="nes">NES</ion-option>
       <ion-option value="n64">Nintendo64</ion-option>
       <ion-option value="ps">PlayStation</ion-option>
@@ -31,7 +31,7 @@
       <ion-option value="lunix">Linux</ion-option>
       <ion-option value="mac7">Mac OS 7</ion-option>
       <ion-option value="mac8">Mac OS 8</ion-option>
-      <ion-option value="win3.1" checked>Windows 3.1</ion-option>
+      <ion-option value="win3.1">Windows 3.1</ion-option>
       <ion-option value="win95">Windows 95</ion-option>
       <ion-option value="win98">Windows 98</ion-option>
     </ion-select>
@@ -64,7 +64,7 @@
       <ion-option value="09">September</ion-option>
       <ion-option value="10">October</ion-option>
       <ion-option value="11">November</ion-option>
-      <ion-option value="12" checked="true">December</ion-option>
+      <ion-option value="12">December</ion-option>
     </ion-select>
     <ion-select [(ngModel)]="year">
       <ion-option>1989</ion-option>
@@ -72,7 +72,7 @@
       <ion-option>1991</ion-option>
       <ion-option>1992</ion-option>
       <ion-option>1993</ion-option>
-      <ion-option checked="true">1994</ion-option>
+      <ion-option>1994</ion-option>
       <ion-option>1995</ion-option>
       <ion-option>1996</ion-option>
       <ion-option>1997</ion-option>

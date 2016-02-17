@@ -1,6 +1,5 @@
-import {ViewController} from '../components/nav/view-controller';
 import {CSS, rafFrames, raf, transitionEnd} from '../util/dom';
-import {assign} from '../util/util';
+import {assign, isDefined} from '../util/util';
 
 
 /**
@@ -25,12 +24,14 @@ export class Animation {
   private _fOnceFns: Array<Function>;
   private _wChg: boolean = false;
   private _rv: boolean;
+  private _unregTrans: Function;
+  private _tmr;
 
   public isPlaying: boolean;
   public hasTween: boolean;
   public meta;
 
-  constructor(ele?, opts={}) {
+  constructor(ele?, opts: AnimationOptions = {}) {
     this._reset();
     this.element(ele);
 
@@ -53,6 +54,8 @@ export class Animation {
     this._pFns = [];
     this._fFns = [];
     this._fOnceFns = [];
+
+    this._clearAsync();
 
     this.isPlaying = this.hasTween = this._rv = false;
     this._el = this._easing = this._dur = null;
@@ -106,11 +109,11 @@ export class Animation {
     return this;
   }
 
-  from(prop: string, val: string): Animation {
+  from(prop: string, val): Animation {
     return this._addProp('from', prop, val);
   }
 
-  to(prop: string, val: string): Animation {
+  to(prop: string, val): Animation {
     return this._addProp('to', prop, val);
   }
 
@@ -196,12 +199,12 @@ export class Animation {
     }
   }
 
-  play() {
+  play(opts: PlayOptions = {}) {
     var self = this;
+    var i;
+    var duration = isDefined(opts.duration) ? opts.duration : self._dur;
 
-    var i, fallbackTimerId, deregTransEnd;
-
-    console.debug('Animation, play, duration', self._dur, 'easing', self._easing);
+    console.debug('Animation, play, duration', duration, 'easing', self._easing);
 
     // always default that an animation does not tween
     // a tween requires that an Animation class has an element
@@ -226,7 +229,10 @@ export class Animation {
     // will recursively stage all child elements
     self._before();
 
-    if (self._dur > 30) {
+    // ensure all past transition end events have been cleared
+    this._clearAsync();
+
+    if (duration > 30) {
       // this animation has a duration, so it should animate
       // place all the elements with their FROM properties
 
@@ -235,9 +241,9 @@ export class Animation {
 
       self._willChange(true);
 
-      // set the TRANSITION END event
+      // set the async TRANSITION END event
       // and run onFinishes when the transition ends
-      self._asyncEnd(self._dur);
+      self._asyncEnd(duration, true);
 
       // begin each animation when everything is rendered in their place
       // and the transition duration/easing is ready to go
@@ -245,7 +251,7 @@ export class Animation {
         // there's been a moment and the elements are in place
 
         // now set the TRANSITION duration/easing
-        self._setTrans(self._dur, false);
+        self._setTrans(duration, false);
 
         // wait a few moments again to wait for the transition
         // info to take hold in the DOM
@@ -264,47 +270,73 @@ export class Animation {
       // just go straight to the TO properties and call it done
       self._progress(1);
 
-      // so there was no animation, immediately run the after
+      // since there was no animation, immediately run the after
       self._after();
 
-      // so there was no animation, it's done
+      // since there was no animation, it's done
       // fire off all the onFinishes
-      self._onFinish();
+      self._onFinish(true);
     }
   }
 
-  _asyncEnd(duration: number) {
+  stop(opts: PlayOptions = {}) {
     var self = this;
-    var deregTransEnd, fallbackTimerId;
+    var duration = isDefined(opts.duration) ? opts.duration : 0;
+    var stepValue = isDefined(opts.stepValue) ? opts.stepValue : 1;
 
-    // set the TRANSITION END event
-    deregTransEnd = transitionEnd(self._transEl(), function() {
-      // transition has completed
-      console.debug('Animation, transition end');
+    // ensure all past transition end events have been cleared
+    this._clearAsync();
 
-      // cancel the fallback timer so it doesn't fire also
-      clearTimeout(fallbackTimerId);
+    // set the TO properties
+    self._progress(stepValue);
+
+    if (duration > 30) {
+      // this animation has a duration, so it should animate
+      // place all the elements with their TO properties
+
+      // now set the TRANSITION duration
+      self._setTrans(duration, true);
+
+      // set the async TRANSITION END event
+      // and run onFinishes when the transition ends
+      self._asyncEnd(duration, false);
+
+    } else {
+      // this animation does not have a duration, so it should not animate
+      // just go straight to the TO properties and call it done
+      self._after();
+
+      // since there was no animation, it's done
+      // fire off all the onFinishes
+      self._onFinish(false);
+    }
+  }
+
+  _asyncEnd(duration: number, shouldComplete: boolean) {
+    var self = this;
+
+    function onTransitionEnd(ev) {
+      console.debug('Animation async end,', (ev ? 'transitionEnd, ' + ev.target.nodeName + ', property: ' + ev.propertyName : 'fallback timeout'));
+
+      // ensure transition end events and timeouts have been cleared
+      self._clearAsync();
 
       // set the after styles
       self._after();
       self._willChange(false);
-      self._onFinish();
-    });
+      self._onFinish(shouldComplete);
+    }
+
+    // set the TRANSITION END event on one of the transition elements
+    self._unregTrans = transitionEnd(self._transEl(), onTransitionEnd);
 
     // set a fallback timeout if the transition end event never fires
-    fallbackTimerId = setTimeout(function() {
-      // fallback timeout fired instead of the transition end
-      console.debug('Animation, fallback end');
+    self._tmr = setTimeout(onTransitionEnd, duration + 300);
+  }
 
-      // deregister the transition end event listener
-      deregTransEnd();
-
-      // set the after styles
-      self._after();
-      self._willChange(false);
-      self._onFinish();
-
-    }, duration + 300);
+  _clearAsync() {
+    this._unregTrans && this._unregTrans();
+    clearTimeout(this._tmr);
   }
 
   _progress(stepValue: number) {
@@ -548,12 +580,12 @@ export class Animation {
       // for example, the left menu was dragged all the way open already
       this._after();
       this._willChange(false);
-      this._onFinish();
+      this._onFinish(shouldComplete);
 
     } else {
       // the stepValue was left off at a point when it needs to finish transition still
       // for example, the left menu was opened 75% and needs to finish opening
-      this._asyncEnd(64);
+      this._asyncEnd(64, shouldComplete);
 
       // force quick duration, linear easing
       this._setTrans(64, true);
@@ -565,7 +597,11 @@ export class Animation {
     return this;
   }
 
-  onFinish(callback: Function, onceTimeCallback: boolean = false) {
+  onFinish(callback: Function, onceTimeCallback: boolean = false, clearOnFinishCallacks: boolean = false) {
+    if (clearOnFinishCallacks) {
+      this._fFns = [];
+      this._fOnceFns = [];
+    }
     if (onceTimeCallback) {
       this._fOnceFns.push(callback);
 
@@ -575,15 +611,15 @@ export class Animation {
     return this;
   }
 
-  _onFinish() {
+  _onFinish(hasCompleted: boolean) {
     this.isPlaying = false;
     var i;
 
     for (i = 0; i < this._fFns.length; i++) {
-      this._fFns[i]();
+      this._fFns[i](hasCompleted);
     }
     for (i = 0; i < this._fOnceFns.length; i++) {
-      this._fOnceFns[i]();
+      this._fOnceFns[i](hasCompleted);
     }
     this._fOnceFns = [];
   }
@@ -625,7 +661,7 @@ export class Animation {
   /*
    STATIC CLASSES
    */
-  static create(name: string): Animation {
+  static create(name: string, opts: AnimationOptions = {}): Animation {
     let AnimationClass = AnimationRegistry[name];
 
     if (!AnimationClass) {
@@ -633,23 +669,23 @@ export class Animation {
       // fallback to just the base Animation class
       AnimationClass = Animation;
     }
-    return new AnimationClass();
-  }
-
-  static createTransition(enteringView: ViewController, leavingView: ViewController, opts: any = {}): Animation {
-    let TransitionClass = AnimationRegistry[opts.animation];
-    if (!TransitionClass) {
-      // didn't find a transition animation, default to ios-transition
-      TransitionClass = AnimationRegistry['ios-transition'];
-    }
-
-    return new TransitionClass(enteringView, leavingView, opts);
+    return new AnimationClass(null, opts);
   }
 
   static register(name: string, AnimationClass) {
     AnimationRegistry[name] = AnimationClass;
   }
 
+}
+
+export interface AnimationOptions {
+  animation?: string;
+  renderDelay?: number;
+}
+
+export interface PlayOptions {
+  duration?: number;
+  stepValue?: number;
 }
 
 const doc: any = document;

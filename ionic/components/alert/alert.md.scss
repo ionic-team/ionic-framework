@@ -1,5 +1,6 @@
 @import "../../globals.md";
 @import "./alert";
+@import "../button/button.md";
 
 // Material Design Alerts
 // --------------------------------------------------
@@ -68,6 +69,10 @@ $alert-md-buttons-justify-content:        flex-end !default;
 
 .alert-message {
   font-size: $alert-md-message-font-size;
+
+  &:empty {
+    padding: 0;
+  }
 }
 
 
@@ -226,6 +231,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
   text-align: right;
 
   &.activated {
+    background-color: $button-md-clear-active-background-color;
     opacity: 1;
   }
 }

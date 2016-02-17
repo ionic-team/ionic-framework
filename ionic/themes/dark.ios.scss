@@ -14,6 +14,19 @@ $subdued-text-ios-color:               $subdued-text-color !default;
 $font-family-ios-base:                 $font-family-base !default;
 $font-size-ios-base:                   $font-size-base !default;
 
+// iOS Outer content
+// --------------------------------------------------
+$outer-content-ios-background-color:   $background-color !default;
+
+// iOS Card
+// --------------------------------------------------
+
+$card-ios-header-color:                #ddd !default;
+
+// iOS Note
+// --------------------------------------------------
+
+$item-ios-note-color:                  map-get($colors-ios, light) !default;
 
 // iOS Toolbar
 // --------------------------------------------------
@@ -33,6 +46,15 @@ $list-ios-border-color:                $list-border-color !default;
 $list-ios-background-color:            $list-background-color !default;
 $list-ios-activated-background-color:  #d9d9d9 !default;
 
+// iOS List header
+// --------------------------------------------------
+$list-ios-header-color:                $text-color !default;
+$item-ios-divider-bg:                  #151515 !default;
+$item-ios-divider-color:               $text-color !default;
+
+ion-list-header {
+  background-color: #151515;
+}
 
 // iOS Item
 // --------------------------------------------------
@@ -46,6 +68,10 @@ $item-ios-padding-media-bottom:       10px !default;
 $item-ios-padding-icon-top:           10px !default;
 $item-ios-padding-icon-bottom:        9px !default;
 
+// iOS Toggle
+// --------------------------------------------------
+
+$toggle-ios-handle-background-color:  map-get($colors-ios, light) !default;
 
 // iOS Icon
 // --------------------------------------------------
