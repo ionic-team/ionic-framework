@@ -88,4 +88,8 @@
     <button outline item-right (click)="testClick($event)">View</button>
   </ion-item>
 
+  <button ion-item *ngFor="#data of [0,1,2,3,4]">
+    <h3>ng-for {{data}}</h3>
+  </button>
+
 </ion-content>
