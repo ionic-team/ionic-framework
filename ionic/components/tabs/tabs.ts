@@ -131,7 +131,7 @@ export class Tabs extends Ion {
 
   constructor(
     @Optional() viewCtrl: ViewController,
-    parent: NavController,
+    @Optional() parent: NavController,
     private _app: IonicApp,
     private _config: Config,
     private _elementRef: ElementRef,
