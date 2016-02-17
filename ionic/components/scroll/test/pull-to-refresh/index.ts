@@ -14,7 +14,7 @@ class E2EApp {
   }
 
   doRefresh(refresher) {
-    console.log('Refreshing', refresher)
+    console.log('Doing Refresh', refresher)
 
     // Add to the top of the list on refresh
     let firstIndex = this.items[0].index - 1;
@@ -29,8 +29,8 @@ class E2EApp {
     }, 5000);
   }
 
-  doStarting(refresher) {
-    console.log('Starting', refresher);
+  doStart(refresher) {
+    console.log('Doing Start', refresher);
   }
 
   doPulling(refresher) {

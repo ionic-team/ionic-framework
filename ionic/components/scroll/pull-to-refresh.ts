@@ -18,7 +18,7 @@ import {raf, ready, CSS} from '../../util/dom';
  *  @usage
  *  ```html
  *  <ion-content>
- *    <ion-refresher (starting)="doStarting($event)"
+ *    <ion-refresher (start)="doStart($event)"
  *                   (refresh)="doRefresh($event)"
  *                   (pulling)="doPulling($event)">
  *    </ion-refresher>
@@ -31,7 +31,7 @@ import {raf, ready, CSS} from '../../util/dom';
  *  export class MyClass {
  *
  *    doRefresh(refresher) {
- *      console.log('Refreshing', refresher)
+ *      console.log('Doing Refresh', refresher)
  *
  *      setTimeout(() => {
  *        refresher.complete();
@@ -39,8 +39,8 @@ import {raf, ready, CSS} from '../../util/dom';
  *      }, 5000);
  *    }
  *
- *    doStarting(refresher) {
- *      console.log('Starting', refresher);
+ *    doStart(refresher) {
+ *      console.log('Doing Start', refresher);
  *    }
  *
  *    doPulling(refresher) {
@@ -204,7 +204,7 @@ export class Refresher {
   /**
    * @output {event} When you start pulling down
    */
-  @Output() starting: EventEmitter<Refresher> = new EventEmitter();
+  @Output() start: EventEmitter<Refresher> = new EventEmitter();
 
 
   constructor(
@@ -305,7 +305,7 @@ export class Refresher {
   activate() {
     //this.ele.classList.add('active');
     this.isActive = true;
-    this.starting.emit(this);
+    this.start.emit(this);
   }
 
   /**
@@ -325,7 +325,7 @@ export class Refresher {
   /**
    * @private
    */
-  start() {
+  startRefresh() {
     // startCallback
     this.isRefreshing = true;
     this.refresh.emit(this);
@@ -522,7 +522,7 @@ export class Refresher {
 
       // the user has scroll far enough to trigger a refresh
       if (this.lastOverscroll > this.ptrThreshold) {
-        this.start();
+        this.startRefresh();
         this.scrollTo(this.ptrThreshold, this.scrollTime);
 
       // the user has overscrolled but not far enough to trigger a refresh
