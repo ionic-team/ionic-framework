@@ -22,7 +22,7 @@ import {Scroll} from '../scroll/scroll';
  * ```ts
  * @Page({
  *  template: `
- *     <ion-slides pager (change)="onSlideChanged($event)" loop="true" autoplay="true">
+ *     <ion-slides pager (change)="onSlideChanged($event)" (move)="onSlideMove($event)" loop="true" autoplay="true">
  *      <ion-slide>
  *        <h3>Thank you for choosing the Awesome App!</h3>
  *        <p>
@@ -210,6 +210,11 @@ export class Slides extends Ion {
   @Output() slideChangeStart: EventEmitter<any> = new EventEmitter();
 
   /**
+   * @output {any} expression to evaluate when a slide moves
+   */
+  @Output() move: EventEmitter<any> = new EventEmitter();
+
+  /**
    * @private
    * @param {ElementRef} elementRef  TODO
    */
@@ -277,6 +282,10 @@ export class Slides extends Ion {
     };
     options.onLazyImageReady = (swiper, slide, img) => {
       return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
+    };
+    options.onSliderMove = (swiper, e) => {
+      this.move.emit(swiper);
+      return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
     };
 
     setTimeout(() => {
