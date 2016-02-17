@@ -3,7 +3,7 @@ import {clamp} from '../util';
 
 
 export class SlideGesture extends DragGesture {
-  public slide: any = null;
+  public slide: SlideData = null;
 
   constructor(element, opts = {}) {
     super(element, opts);
@@ -14,7 +14,7 @@ export class SlideGesture extends DragGesture {
    * Get the min and max for the slide. pageX/pageY.
    * Only called on dragstart.
    */
-  getSlideBoundaries(slide, ev) {
+  getSlideBoundaries(slide: SlideData, ev: any) {
     return {
       min: 0,
       max: this.element.offsetWidth
@@ -26,7 +26,7 @@ export class SlideGesture extends DragGesture {
    * For example, an open side menu starts at 100% and a closed
    * sidemenu starts at 0%.
    */
-  getElementStartPos(slide, ev) {
+  getElementStartPos(slide: SlideData, ev: any) {
     return 0;
   }
 
@@ -34,7 +34,7 @@ export class SlideGesture extends DragGesture {
     return true;
   }
 
-  onDragStart(ev): boolean {
+  onDragStart(ev: any): boolean {
     if (!this.canStart(ev)) {
       return false;
     }
@@ -70,14 +70,25 @@ export class SlideGesture extends DragGesture {
     return true;
   }
 
-  onDragEnd(ev) {
+  onDragEnd(ev: any) {
     if (!this.slide || !this.slide.started) return;
     this.onSlideEnd(this.slide, ev);
     this.slide = null;
   }
 
-  onSlideBeforeStart(slide?: any, ev?: any): void {}
-  onSlideStart(slide?: any, ev?: any): void {}
-  onSlide(slide?: any, ev?: any): void {}
-  onSlideEnd(slide?: any, ev?: any): void {}
+  onSlideBeforeStart(slide?: SlideData, ev?: any): void {}
+  onSlideStart(slide?: SlideData, ev?: any): void {}
+  onSlide(slide?: SlideData, ev?: any): void {}
+  onSlideEnd(slide?: SlideData, ev?: any): void {}
+}
+
+export interface SlideData {
+  min?: number;
+  max?: number;
+  distance?: number;
+  delta?: number;
+  started?: boolean;
+  pos?: any;
+  pointerStartPos?: number;
+  elementStartPos?: number;
 }
