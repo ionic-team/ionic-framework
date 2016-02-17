@@ -32,7 +32,6 @@ export class Menu extends Ion {
   private _resizeUnreg: Function;
   private _isEnabled: boolean = true;
   private _isSwipeEnabled: boolean = true;
-  private _isListening: boolean = false;
   private _isPers: boolean = false;
   private _init: boolean = false;
 
@@ -198,21 +197,19 @@ export class Menu extends Ion {
     if (self._init) {
       // only listen/unlisten if the menu has initialized
 
-      if (self._isEnabled && self._isSwipeEnabled && !self._isListening) {
+      if (self._isEnabled && self._isSwipeEnabled && !self._cntGesture.isListening) {
         // should listen, but is not currently listening
         console.debug('menu, gesture listen', self.side);
         self._zone.runOutsideAngular(function() {
           self._cntGesture.listen();
           self._menuGesture.listen();
         });
-        self._isListening = true;
 
-      } else if (self._isListening && (!self._isEnabled || !self._isSwipeEnabled)) {
+      } else if (self._cntGesture.isListening && (!self._isEnabled || !self._isSwipeEnabled)) {
         // should not listen, but is currently listening
         console.debug('menu, gesture unlisten', self.side);
         self._cntGesture.unlisten();
         self._menuGesture.unlisten();
-        self._isListening = false;
       }
     }
   }

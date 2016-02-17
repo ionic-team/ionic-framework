@@ -8,11 +8,13 @@ import {Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL} from './hammer';
  */
 
 export class Gesture {
-  public element: HTMLElement;
-  public direction: any;
   private _hammer: any;
   private _options: any;
   private _callbacks: any = {};
+
+  public element: HTMLElement;
+  public direction: string;
+  public isListening: boolean = false;
 
   constructor(element, opts: any = {}) {
     defaults(opts, {
@@ -47,6 +49,7 @@ export class Gesture {
 
   listen() {
     this._hammer = Hammer(this.element, this._options);
+    this.isListening = true;
   }
 
   unlisten() {
@@ -60,6 +63,7 @@ export class Gesture {
       this._callbacks = {};
       this._hammer.destroy();
     }
+    this.isListening = false;
   }
 
   destroy() {
