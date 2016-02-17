@@ -46,7 +46,8 @@ export class Gesture {
   }
 
   listen() {
-    this._hammer = Hammer(this.element, this._options);
+    this._hammer = new Hammer(this.element, {recognizers: []});
+    this._hammer.add(new Hammer.Pan(this._options));
   }
 
   unlisten() {
