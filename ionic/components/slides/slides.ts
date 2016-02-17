@@ -609,6 +609,13 @@ export class Slides extends Ion {
   /**
    * @private
    */
+  slideTo(slideIndex: number, speed: number, runCallbacks: boolean) {
+    this.slider.slideTo(slideIndex, speed, runCallbacks);
+  }
+
+  /**
+   * @private
+   */
   next() {
     this.slider.slideNext();
   }
