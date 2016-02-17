@@ -124,9 +124,14 @@ export class Tabs extends Ion {
    */
   @ViewChildren(TabButton) private _btns;
 
+  /**
+   * @private
+   */
+  parent:any
+
   constructor(
     @Optional() viewCtrl: ViewController,
-    @Optional() public parent: NavController,
+    parent: any,
     private _app: IonicApp,
     private _config: Config,
     private _elementRef: ElementRef,
@@ -134,7 +139,7 @@ export class Tabs extends Ion {
     private _renderer: Renderer
   ) {
     super(_elementRef);
-
+    this.parent = parent;
     this.id = ++tabIds;
     this.subPages = _config.getBoolean('tabSubPages');
     this._useHighlight = _config.getBoolean('tabbarHighlight');
@@ -172,6 +177,9 @@ export class Tabs extends Ion {
     });
   }
 
+  /**
+   * @private
+   */
   ngAfterContentInit() {
     let selectedIndex = this.selectedIndex ? parseInt(this.selectedIndex, 10) : 0;
 
