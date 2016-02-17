@@ -1,3 +1,5 @@
+import {Component} from 'angular2/core';
+import {TestComponentBuilder, beforeEachProviders, injectAsync} from 'angular2/testing';
 import {MenuController, Menu} from 'ionic-angular';
 
 export function run() {
@@ -220,6 +222,83 @@ export function run() {
       });
 
     });
+    
+    describe('menu events', () => {
+      
+      // this fails due to a provider that is needed likely (not sure which?)
+      // it('should emit opened', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      //   return tcb.createAsync(TestComponent)
+      //     .then((rootTC) => {
+      //       rootTC.detectChanges();
+
+      //       let menuInstance = rootTC.debugElement.children[0].componentInstance;
+            
+      //       let cnt = 0;
+      //       menuInstance.opened.subscribe(() => {
+      //         cnt++;
+      //         expect(cnt).toBe(1);
+      //       });
+      //       menuInstance.open();
+      //     });
+      // }));
+      
+      // these require nativeElement to be defined
+      
+      it('should emit opened', () => {
+        let menuId = 'menu';
+        let menu = mockMenu();
+        menu.id = menuId;
+        menu._menuCtrl = menuCtrl;
+        menuCtrl.register(menu);
+
+        let cnt = 0;        
+        menu.opened.subscribe(() => {
+          cnt++;
+          expect(cnt).toBe(1);
+        });
+        menuCtrl.open(menuId);  
+      });
+
+      it('should emit closed', () => {
+        let menuId = 'menu';
+        let menu = mockMenu();
+        menu.id = menuId;
+        menu._menuCtrl = menuCtrl;
+        menuCtrl.register(menu);
+
+        let cnt = 0;        
+        menu.closed.subscribe(() => {
+          cnt++;
+          expect(cnt).toBe(1);
+        });
+        menuCtrl.close(menuId); 
+      });  
+      
+      it('should emit when toggled', () => {
+        let menuId = 'menu';
+        let menu = mockMenu();
+        menu.id = menuId;
+        menu._menuCtrl = menuCtrl;
+        menuCtrl.register(menu);
+
+        let cnt = 0;        
+        menu.opened.subscribe(() => {
+          cnt++;
+        });
+        menu.closed.subscribe(() => {
+          cnt++;
+          if (cnt === 4) {
+            // just to be sure it finishes
+            expect(cnt).toBe(4);
+          }
+        });
+        menu.toggle();
+        menu.toggle();
+        menu.toggle();
+        menu.toggle();
+      }); 
+
+    });
 
     it('should register a menu', () => {
       let menu = mockMenu();
@@ -248,3 +327,10 @@ export function run() {
 
   });
 }
+
+@Component({
+  selector: 'test-cmp',
+  directives: [Menu],
+  template: '<ion-menu></ion-menu>'
+})
+class TestComponent {}

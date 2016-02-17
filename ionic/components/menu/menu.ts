@@ -117,6 +117,12 @@ export class Menu extends Ion {
    * @private
    */
   @Output() opening: EventEmitter<number> = new EventEmitter();
+  
+  /**
+   * @private
+   */
+  @Output() opened: EventEmitter<boolean> = new EventEmitter();
+  @Output() closed: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private _menuCtrl: MenuController,
@@ -313,6 +319,12 @@ export class Menu extends Ion {
       this._prevent();
 
       this.isOpen = isOpen;
+      
+      if (isOpen) {
+        this.opened.emit(true);
+      } else {
+        this.closed.emit(false);
+      }
 
       this._cntEle.classList[isOpen ? 'add' : 'remove']('menu-content-open');
 
