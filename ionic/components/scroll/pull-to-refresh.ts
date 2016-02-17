@@ -18,7 +18,7 @@ import {raf, ready, CSS} from '../../util/dom';
  *  @usage
  *  ```html
  *  <ion-content>
- *    <ion-refresher (starting)="doStarting()"
+ *    <ion-refresher (starting)="doStarting($event)"
  *                   (refresh)="doRefresh($event)"
  *                   (pulling)="doPulling($event)">
  *    </ion-refresher>
@@ -329,7 +329,6 @@ export class Refresher {
     // startCallback
     this.isRefreshing = true;
     this.refresh.emit(this);
-    //$scope.$onRefresh();
   }
 
   /**
