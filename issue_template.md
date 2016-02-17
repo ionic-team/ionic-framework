@@ -1,25 +1,25 @@
-### Steps to reproduce
-1.
-2.
-3.
+#### Short description of the problem:
 
-### Expected behavior
-Tell us what should happen
 
-### Actual behavior
-Tell us what happens instead
+#### What behavior are you expecting?
 
-### App configuration
-**Ionic Version**
-(1.x, 2.x)
 
-**Operating system**
-(iOS 9.2, Android 4.4)
+**Steps to reproduce:**
+1. 
+2. 
+3. 
 
-### Development Computer configuration
-**Browser & Operating system**
-
-### Logs
 ```
-Insert your device or browser console logs here
+insert any relevant code between the above and below backticks
+```
+
+**Ionic Version**: 1.x / 2.x
+
+**Browser & Operating System**: iOS / Android / Chrome
+
+
+**Run `ionic info` from terminal/cmd prompt:**
+
+```
+paste output from `ionic info` here
 ```
