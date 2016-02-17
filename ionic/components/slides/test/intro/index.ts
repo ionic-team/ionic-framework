@@ -29,6 +29,10 @@ class IntroPage {
     slider.isEnd ? this.continueText = "Continue" : this.continueText = "Skip";
   }
 
+  onSlideMove(slider) {
+    console.log("Slide move", slider);
+  }
+
   skip() {
     this.nav.push(MainPage);
   }

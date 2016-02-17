@@ -284,7 +284,7 @@ export class Slides extends Ion {
       return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
     };
     options.onSliderMove = (swiper, e) => {
-      this.move.emit(swiper, e);
+      this.move.emit(swiper);
       return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
     };
 
