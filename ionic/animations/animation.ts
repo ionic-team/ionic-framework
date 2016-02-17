@@ -243,7 +243,7 @@ export class Animation {
 
       // set the async TRANSITION END event
       // and run onFinishes when the transition ends
-      self._asyncEnd(duration);
+      self._asyncEnd(duration, true);
 
       // begin each animation when everything is rendered in their place
       // and the transition duration/easing is ready to go
@@ -275,7 +275,7 @@ export class Animation {
 
       // since there was no animation, it's done
       // fire off all the onFinishes
-      self._onFinish();
+      self._onFinish(true);
     }
   }
 
@@ -299,7 +299,7 @@ export class Animation {
 
       // set the async TRANSITION END event
       // and run onFinishes when the transition ends
-      self._asyncEnd(duration);
+      self._asyncEnd(duration, false);
 
     } else {
       // this animation does not have a duration, so it should not animate
@@ -308,15 +308,15 @@ export class Animation {
 
       // since there was no animation, it's done
       // fire off all the onFinishes
-      self._onFinish();
+      self._onFinish(false);
     }
   }
 
-  _asyncEnd(duration: number) {
+  _asyncEnd(duration: number, shouldComplete: boolean) {
     var self = this;
 
     function onTransitionEnd(ev) {
-      console.debug('Animation async end,', (ev ? 'transitionEnd event' : 'fallback timeout'));
+      console.debug('Animation async end,', (ev ? 'transitionEnd, ' + ev.target.nodeName + ', property: ' + ev.propertyName : 'fallback timeout'));
 
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();
@@ -324,7 +324,7 @@ export class Animation {
       // set the after styles
       self._after();
       self._willChange(false);
-      self._onFinish();
+      self._onFinish(shouldComplete);
     }
 
     // set the TRANSITION END event on one of the transition elements
@@ -580,12 +580,12 @@ export class Animation {
       // for example, the left menu was dragged all the way open already
       this._after();
       this._willChange(false);
-      this._onFinish();
+      this._onFinish(shouldComplete);
 
     } else {
       // the stepValue was left off at a point when it needs to finish transition still
       // for example, the left menu was opened 75% and needs to finish opening
-      this._asyncEnd(64);
+      this._asyncEnd(64, shouldComplete);
 
       // force quick duration, linear easing
       this._setTrans(64, true);
@@ -611,15 +611,15 @@ export class Animation {
     return this;
   }
 
-  _onFinish() {
+  _onFinish(hasCompleted: boolean) {
     this.isPlaying = false;
     var i;
 
     for (i = 0; i < this._fFns.length; i++) {
-      this._fFns[i]();
+      this._fFns[i](hasCompleted);
     }
     for (i = 0; i < this._fOnceFns.length; i++) {
-      this._fOnceFns[i]();
+      this._fOnceFns[i](hasCompleted);
     }
     this._fOnceFns = [];
   }

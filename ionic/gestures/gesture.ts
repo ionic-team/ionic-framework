@@ -48,21 +48,23 @@ export class Gesture {
   }
 
   listen() {
-    this._hammer = Hammer(this.element, this._options);
+    if (!this.isListening) {
+      this._hammer = Hammer(this.element, this._options);
+    }
     this.isListening = true;
   }
 
   unlisten() {
     var type, i;
-    if (this._hammer) {
+    if (this._hammer && this.isListening) {
       for (type in this._callbacks) {
         for (i = 0; i < this._callbacks[type].length; i++) {
           this._hammer.off(type, this._callbacks[type]);
         }
       }
-      this._callbacks = {};
       this._hammer.destroy();
     }
+    this._callbacks = {};
     this.isListening = false;
   }
 
