@@ -21,11 +21,11 @@ import {NavParams} from './nav-params';
  *  ```
  */
 export class ViewController {
-  private _cntDir;
+  private _cntDir: any;
   private _cntRef: ElementRef;
   private _destroys: Array<Function> = [];
-  private _hdAttr = null;
-  private _leavingOpts = null;
+  private _hdAttr: string = null;
+  private _leavingOpts: NavOptions = null;
   private _loaded: boolean = false;
   private _nbDir: Navbar;
   private _nbTmpRef: TemplateRef;
@@ -79,22 +79,22 @@ export class ViewController {
 	  this.data = (data instanceof NavParams ? data.data : data);
   }
 
-  subscribe(callback) {
-    this._emitter.subscribe(callback);
+  subscribe(generatorOrNext?: any): any {
+    return this._emitter.subscribe(generatorOrNext);
   }
 
   /**
    * @private
    */
-  emit(data) {
+  emit(data: any) {
     this._emitter.emit(data);
   }
 
-  onDismiss(callback) {
+  onDismiss(callback: Function) {
     this._onDismiss = callback;
   }
 
-  dismiss(data, role?) {
+  dismiss(data: any, role?: any) {
     this._onDismiss && this._onDismiss(data, role);
     return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts);
   }
@@ -102,21 +102,21 @@ export class ViewController {
   /**
    * @private
    */
-  setNav(navCtrl) {
+  setNav(navCtrl: NavController) {
     this._nav = navCtrl;
   }
 
   /**
    * @private
    */
-  getTransitionName(direction) {
+  getTransitionName(direction: string): string {
     return this._nav && this._nav.config.get('pageTransition');
   }
 
   /**
    * @private
    */
-  getNavParams() {
+  getNavParams(): NavParams {
     return new NavParams(this.data);
   }
 
@@ -132,7 +132,7 @@ export class ViewController {
    * @param {boolean} Check whether or not you can go back from this page
    * @returns {boolean} Returns if it's possible to go back from this Page.
    */
-  enableBack() {
+  enableBack(): boolean {
     // update if it's possible to go back from this nav item
     if (this._nav) {
       let previousItem = this._nav.getPrevious(this);
@@ -146,14 +146,14 @@ export class ViewController {
   /**
    * @private
    */
-  setInstance(instance) {
+  setInstance(instance: any) {
     this.instance = instance;
   }
 
   /**
    * @private
    */
-  get name() {
+  get name(): string {
     return this.componentType ? this.componentType['name'] : '';
   }
 
