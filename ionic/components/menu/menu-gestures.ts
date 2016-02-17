@@ -70,7 +70,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
   // Set CSS, then wait one frame for it to apply before sliding starts
   onSlideBeforeStart(slide, ev) {
     console.debug('menu gesture, onSlideBeforeStart', this.menu.side);
-    this.menu.setProgressStart();
+    this.menu.swipeStart();
   }
 
   onSlide(slide, ev) {
@@ -78,7 +78,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
     let stepValue = (slide.distance / z);
     console.debug('menu gesture, onSlide', this.menu.side, 'distance', slide.distance, 'min', slide.min, 'max', slide.max, 'z', z, 'stepValue', stepValue);
 
-    this.menu.setProgessStep(stepValue);
+    this.menu.swipeProgress(stepValue);
   }
 
   onSlideEnd(slide, ev) {
@@ -91,7 +91,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
     console.debug('menu gesture, onSlide', this.menu.side, 'distance', slide.distance, 'delta', slide.delta, 'velocityX', ev.velocityX, 'min', slide.min, 'max', slide.max, 'shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
-    this.menu.setProgressEnd(shouldComplete, currentStepValue);
+    this.menu.swipeEnd(shouldComplete, currentStepValue);
   }
 
   getElementStartPos(slide, ev) {

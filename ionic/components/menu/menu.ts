@@ -256,7 +256,7 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  setProgressStart() {
+  swipeStart() {
     // user started swiping the menu open/close
     if (this._isPrevented() || !this._isEnabled || !this._isSwipeEnabled) return;
 
@@ -267,7 +267,7 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  setProgessStep(stepValue: number) {
+  swipeProgress(stepValue: number) {
     // user actively dragging the menu
     if (this._isEnabled && this._isSwipeEnabled) {
       this._prevent();
@@ -279,12 +279,12 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  setProgressEnd(shouldComplete: boolean, currentStepValue: number) {
+  swipeEnd(shouldComplete: boolean, currentStepValue: number) {
     // user has finished dragging the menu
     if (this._isEnabled && this._isSwipeEnabled) {
       this._prevent();
       this._getType().setProgressEnd(shouldComplete, currentStepValue, (isOpen) => {
-        console.debug('menu, progress end', this.side);
+        console.debug('menu, swipeEnd', this.side);
         this._after(isOpen);
       });
     }
