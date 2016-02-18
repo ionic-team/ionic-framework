@@ -802,6 +802,7 @@ export class NavController extends Ion {
       // set that it is the init leaving view
       // the first view to be removed, it should init leave
       view.state = STATE_INIT_LEAVE;
+      view.willUnload();
 
       // from the index of the leaving view, go backwards and
       // find the first view that is inactive so it can be the entering
@@ -836,7 +837,6 @@ export class NavController extends Ion {
     this._views.filter(v => v.state === STATE_REMOVE).forEach(view => {
       view.willLeave();
       view.didLeave();
-      view.didUnload();
       this._views.splice(this.indexOf(view), 1);
       view.destroy();
     });

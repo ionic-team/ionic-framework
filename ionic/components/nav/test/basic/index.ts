@@ -271,7 +271,9 @@ class AnotherPage {
   constructor(
     private nav: NavController,
     private viewCtrl: ViewController
-  ) {}
+  ) {
+    console.log('Page, AnotherPage, constructor', this.viewCtrl.id);
+  }
 
   pushFullPage() {
     this.nav.push(FullPage);
@@ -303,6 +305,34 @@ class AnotherPage {
 
     this.viewCtrl.setBackButtonText(backButtonText);
     ++this.bbCount;
+  }
+
+  onPageWillEnter() {
+    console.log('Page, AnotherPage, onPageWillEnter', this.viewCtrl.id);
+  }
+
+  onPageDidEnter() {
+    console.log('Page, AnotherPage, onPageDidEnter', this.viewCtrl.id);
+  }
+
+  onPageWillLeave() {
+    console.log('Page, AnotherPage, onPageWillLeave', this.viewCtrl.id);
+  }
+
+  onPageDidLeave() {
+    console.log('Page, AnotherPage, onPageDidLeave', this.viewCtrl.id);
+  }
+
+  onPageWillUnload() {
+    console.log('Page, AnotherPage, onPageWillUnload', this.viewCtrl.id);
+  }
+
+  onPageDidUnload() {
+    console.log('Page, AnotherPage, onPageDidUnload', this.viewCtrl.id);
+  }
+
+  ngOnDestroy() {
+    console.log('Page, AnotherPage, ngOnDestroy', this.viewCtrl.id);
   }
 }
 

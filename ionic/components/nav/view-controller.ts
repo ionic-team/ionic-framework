@@ -186,23 +186,6 @@ export class ViewController {
   /**
    * @private
    */
-  addDestroy(destroyFn: Function) {
-    this._destroys.push(destroyFn);
-  }
-
-  /**
-   * @private
-   */
-  destroy() {
-    for (var i = 0; i < this._destroys.length; i++) {
-      this._destroys[i]();
-    }
-    this._destroys = [];
-  }
-
-  /**
-   * @private
-   */
   domCache(shouldShow: boolean, renderer: Renderer) {
     // using hidden element attribute to display:none and not render views
     // renderAttr of '' means the hidden attribute will be added
@@ -489,10 +472,21 @@ export class ViewController {
 
   /**
    * @private
-   * The view has been destroyed and its elements have been removed.
    */
-  didUnload() {
+  addDestroy(destroyFn: Function) {
+    this._destroys.push(destroyFn);
+  }
+
+  /**
+   * @private
+   */
+  destroy() {
     ctrlFn(this, 'onPageDidUnload');
+
+    for (var i = 0; i < this._destroys.length; i++) {
+      this._destroys[i]();
+    }
+    this._destroys = [];
   }
 
 }
