@@ -26,6 +26,7 @@ export class Animation {
   private _rv: boolean;
   private _unregTrans: Function;
   private _tmr: any;
+  private _lastUpd: number = 0;
 
   public isPlaying: boolean;
   public hasTween: boolean;
@@ -174,7 +175,7 @@ export class Animation {
     };
 
     if (typeof val === 'string' && val.indexOf(' ') < 0) {
-      let r = val.match(/(^-?\d*\.?\d*)(.*)/);
+      let r = val.match(cssValueRegex);
       let num = parseFloat(r[1]);
 
       if (!isNaN(num)) {
@@ -600,17 +601,26 @@ export class Animation {
   }
 
   progressStep(stepValue: number) {
-    stepValue = Math.min(1, Math.max(0, stepValue));
+    let now = Date.now();
 
-    for (var i = 0; i < this._c.length; i++) {
-      this._c[i].progressStep(stepValue);
+    // only update if the last update was more than 16ms ago
+    if (now - 16 > this._lastUpd) {
+      this._lastUpd = now;
+
+      stepValue = Math.min(1, Math.max(0, stepValue));
+
+      for (var i = 0; i < this._c.length; i++) {
+        this._c[i].progressStep(stepValue);
+      }
+
+      if (this._rv) {
+        // if the animation is going in reverse then
+        // flip the step value: 0 becomes 1, 1 becomes 0
+        stepValue = ((stepValue * -1) + 1);
+      }
+
+      this._progress(stepValue);
     }
-
-    if (this._rv) {
-      stepValue = ((stepValue * -1) + 1);
-    }
-
-    this._progress(stepValue);
   }
 
   progressEnd(shouldComplete: boolean, currentStepValue: number) {
@@ -764,5 +774,7 @@ const TRANSFORMS = {
   'rotate':1, 'rotateX':1, 'rotateY':1, 'rotateZ':1,
   'skewX':1, 'skewY':1, 'perspective':1
 };
+
+const cssValueRegex = /(^-?\d*\.?\d*)(.*)/;
 
 let AnimationRegistry = {};
