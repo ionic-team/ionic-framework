@@ -14,6 +14,7 @@ export * from './platform/storage'
 export * from './util/click-block'
 export * from './util/events'
 export * from './util/keyboard'
+export * from './util/form'
 
 export * from './animations/animation'
 export * from './transitions/transition'
