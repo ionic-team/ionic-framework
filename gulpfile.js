@@ -485,10 +485,22 @@ gulp.task('tests', function() {
   * Builds Ionic demos to dist/demos, copies them to ../ionic-site and watches
   * for changes.
   */
-gulp.task('watch.demos', ['demos'], function() {
-  watch('demos/**/*', function() {
-    gulp.start('demos');
-  });
+//TODO, decide on workflow for site demos (dev and prod), vs local dev (in dist)
+var LOCAL_DEMOS = false;
+gulp.task('watch.demos', function(done) {
+  LOCAL_DEMOS = true;
+  runSequence(
+    ['build.demos', 'transpile', 'copy.libs', 'sass', 'fonts'],
+    function(){
+      watchTask('bundle.system');
+
+      watch('demos/**/*', function(file) {
+        gulp.start('build.demos');
+      });
+
+      done();
+    }
+  );
 });
 
 /**
@@ -508,6 +520,10 @@ gulp.task('demos', ['bundle.demos'], function() {
     .pipe(gulp.dest(docsConfig.sitePath + '/dist/bundles'));
 
   return merge([demosStream, cssStream]);
+ });
+
+ gulp.task('demos.dev', function() {
+
  });
 
  /**
@@ -560,10 +576,10 @@ gulp.task('build.demos', function() {
   var fs = require('fs');
   var VinylFile = require('vinyl');
 
-  var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
-  var flags = minimist(process.argv.slice(2), flagConfig);
+  var indexTemplateName = LOCAL_DEMOS ? 'index.template.dev.html' : 'index.template.html';
+  var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/' + indexTemplateName))();
 
-  if ("production" in flags) {
+  if (flags.production) {
     buildDemoSass(true);
   } else {
     buildDemoSass(false);
