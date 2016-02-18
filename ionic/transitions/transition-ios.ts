@@ -39,14 +39,14 @@ class IOSTransition extends Transition {
     if (backDirection) {
       // entering content, back direction
       enteringContent
-        .fromTo(TRANSLATEX, OFF_LEFT, CENTER)
-        .fromTo(OPACITY, OFF_OPACITY, 1);
+        .fromTo(TRANSLATEX, OFF_LEFT, CENTER, true)
+        .fromTo(OPACITY, OFF_OPACITY, 1, true);
 
     } else {
       // entering content, forward direction
       enteringContent
-        .fromTo(TRANSLATEX, OFF_RIGHT, CENTER)
-        .fromTo(OPACITY, 1, 1);
+        .before.clearStyles([OPACITY])
+        .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
     }
 
     if (enteringHasNavbar) {
@@ -71,7 +71,7 @@ class IOSTransition extends Transition {
       // set properties depending on direction
       if (backDirection) {
         // entering navbar, back direction
-        enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER);
+        enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
 
         if (enteringView.enableBack()) {
           // back direction, entering page has a back button
@@ -82,21 +82,21 @@ class IOSTransition extends Transition {
 
       } else {
         // entering navbar, forward direction
-        enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER);
+        enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
         if (leavingHasNavbar) {
           // entering navbar, forward direction, and there's a leaving navbar
           // should just fade in, no sliding
           enteringNavbarBg
-            .fromTo(TRANSLATEX, CENTER, CENTER)
+            .before.clearStyles([TRANSLATEX])
             .fadeIn();
 
         } else {
           // entering navbar, forward direction, and there's no leaving navbar
           // should just slide in, no fading in
           enteringNavbarBg
-            .fromTo(TRANSLATEX, OFF_RIGHT, CENTER)
-            .fromTo(OPACITY, 1, 1);
+            .before.clearStyles([OPACITY])
+            .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
         }
 
 
@@ -125,8 +125,8 @@ class IOSTransition extends Transition {
       if (backDirection) {
         // leaving content, back direction
         leavingContent
-          .fromTo(TRANSLATEX, CENTER, '100%')
-          .fromTo(OPACITY, 1, 1);
+          .before.clearStyles([OPACITY])
+          .fromTo(TRANSLATEX, CENTER, '100%');
 
       } else {
         // leaving content, forward direction
@@ -163,15 +163,15 @@ class IOSTransition extends Transition {
             // leaving navbar, back direction, and there's an entering navbar
             // should just fade out, no sliding
             leavingNavbarBg
-              .fromTo(TRANSLATEX, CENTER, CENTER)
+              .before.clearStyles([TRANSLATEX])
               .fadeOut();
 
           } else {
             // leaving navbar, back direction, and there's no entering navbar
             // should just slide out, no fading out
             leavingNavbarBg
-              .fromTo(TRANSLATEX, CENTER,  '100%')
-              .fromTo(OPACITY, 1, 1);
+              .before.clearStyles([OPACITY])
+              .fromTo(TRANSLATEX, CENTER,  '100%');
           }
 
           let leavingBackBtnText = new Animation(leavingView.backBtnTextRef());

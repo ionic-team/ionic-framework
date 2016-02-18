@@ -27,12 +27,12 @@ class MDTransition extends Transition {
 
     if (backDirection) {
       this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-      enteringPage.fromTo(TRANSLATEY, CENTER, CENTER);
+      enteringPage.before.clearStyles([TRANSLATEY]);
 
     } else {
       this.duration(opts.duration || 280).easing('cubic-bezier(0.36,0.66,0.04,1)');
       enteringPage
-        .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER)
+        .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER, true)
         .fadeIn();
     }
 

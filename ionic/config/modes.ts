@@ -50,7 +50,7 @@ Config.setModeConfig('md', {
   modalLeave: 'modal-md-slide-out',
 
   pageTransition: 'md-transition',
-  pageTransitionDelay: 120,
+  pageTransitionDelay: 96,
 
   tabbarHighlight: true,
   tabbarPlacement: 'top',

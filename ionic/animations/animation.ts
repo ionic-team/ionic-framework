@@ -8,15 +8,15 @@ import {assign, isDefined} from '../util/util';
 export class Animation {
   private _parent: Animation;
   private _c: Array<Animation>;
-  private _el: HTMLElement;
-  private _opts;
-  private _fx;
+  private _el: Array<HTMLElement>;
+  private _opts: AnimationOptions;
+  private _fx: {[key: string]: EffectProperty};
   private _dur: number;
   private _easing: string;
-  private _bfSty;
+  private _bfSty: any;
   private _bfAdd: Array<string>;
   private _bfRmv: Array<string>;
-  private _afSty;
+  private _afSty: any;
   private _afAdd: Array<string>;
   private _afRmv: Array<string>;
   private _pFns: Array<Function>;
@@ -25,13 +25,12 @@ export class Animation {
   private _wChg: boolean = false;
   private _rv: boolean;
   private _unregTrans: Function;
-  private _tmr;
+  private _tmr: any;
 
   public isPlaying: boolean;
   public hasTween: boolean;
-  public meta;
 
-  constructor(ele?, opts: AnimationOptions = {}) {
+  constructor(ele?: any, opts: AnimationOptions = {}) {
     this._reset();
     this.element(ele);
 
@@ -41,6 +40,7 @@ export class Animation {
   }
 
   _reset() {
+    this._el = [];
     this._c = [];
     this._fx = {};
 
@@ -58,26 +58,43 @@ export class Animation {
     this._clearAsync();
 
     this.isPlaying = this.hasTween = this._rv = false;
-    this._el = this._easing = this._dur = null;
+    this._easing = this._dur = null;
   }
 
-  element(ele): Animation {
+  element(ele: any): Animation {
+    var i;
+
     if (ele) {
-      if (ele.nativeElement) {
-        ele = ele.nativeElement
+      if (Array.isArray(ele)) {
+        for (i = 0; i < ele.length; i++) {
+          this._addEle(ele[i]);
+        }
 
       } else if (typeof ele === 'string') {
         ele = doc.querySelector(ele);
-      }
+        for (i = 0; i < ele.length; i++) {
+          this._addEle(ele[i]);
+        }
 
-      if (ele && ele.nodeType === 1) {
-        this._el = ele;
-
-        // does this element suport will-change property?
-        this._wChg = ('opacity' in ele.style);
+      } else {
+        this._addEle(ele);
       }
     }
+
     return this;
+  }
+
+  private _addEle(ele: any) {
+    if (ele.nativeElement) {
+      ele = ele.nativeElement;
+    }
+
+    if (ele.nodeType === 1) {
+      this._el.push(ele);
+
+      // does this element suport will-change property?
+      this._wChg = (typeof ele.style.willChange !== 'undefined');
+    }
   }
 
   parent(parentAnimation: Animation): Animation {
@@ -109,33 +126,48 @@ export class Animation {
     return this;
   }
 
-  from(prop: string, val): Animation {
-    return this._addProp('from', prop, val);
+  from(prop: string, val: any): Animation {
+    this._addProp('from', prop, val);
+    return this;
   }
 
-  to(prop: string, val): Animation {
-    return this._addProp('to', prop, val);
+  to(prop: string, val: any, clearProperyAfterTransition?: boolean): Animation {
+    var fx = this._addProp('to', prop, val);
+
+    if (clearProperyAfterTransition) {
+      // if this effect is a transform then clear the transform effect
+      // otherwise just clear the actual property
+      this.after.clearStyles([ fx.trans ? CSS.transform : prop]);
+    }
+
+    return this;
   }
 
-  fromTo(prop: string, fromVal, toVal): Animation {
-    return this.from(prop, fromVal).to(prop, toVal);
+  fromTo(prop: string, fromVal: any, toVal: any, clearProperyAfterTransition?: boolean): Animation {
+    return this.from(prop, fromVal).to(prop, toVal, clearProperyAfterTransition);
   }
 
-  private _addProp(state: string, prop: string, val: string): Animation {
-    if (!this._fx[prop]) {
-      this._fx[prop] = {
-        trans: (TRANSFORMS.indexOf(prop) > -1)
-      }
+  private _addProp(state: string, prop: string, val: any): EffectProperty {
+    var fxProp = this._fx[prop];
 
-      if (this._fx[prop].trans) {
-        this._fx[prop].wc = 'transform';
+    if (!fxProp) {
+      // first time we've see this EffectProperty
+      fxProp = this._fx[prop] = {
+        trans: (typeof TRANSFORMS[prop] !== 'undefined'),
+        wc: ''
+      };
+
+      // add the will-change property fo transforms or opacity
+      if (fxProp.trans) {
+        fxProp.wc = CSS.transform;
 
       } else if (prop === 'opacity') {
-        this._fx[prop].wc = prop;
+        fxProp.wc = prop;
       }
     }
 
-    var fx = this._fx[prop][state] = {
+    // add from/to EffectState to the EffectProperty
+    var fxState = fxProp[state] = {
       val: val,
       num: null,
       unit: '',
@@ -146,19 +178,19 @@ export class Animation {
       let num = parseFloat(r[1]);
 
       if (!isNaN(num)) {
-        fx.num = num;
+        fxState.num = num;
       }
-      fx.unit = (r[0] != r[2] ? r[2] : '');
+      fxState.unit = (r[0] != r[2] ? r[2] : '');
 
     } else if (typeof val === 'number') {
-      fx.num = val;
+      fxState.num = val;
     }
 
-    return this;
+    return fxProp;
   }
 
   fadeIn(): Animation {
-    return this.fromTo('opacity', 0.001, 1);
+    return this.fromTo('opacity', 0.001, 1, true);
   }
 
   fadeOut(): Animation {
@@ -178,6 +210,12 @@ export class Animation {
       setStyles: (styles): Animation => {
         this._bfSty = styles;
         return this;
+      },
+      clearStyles: (propertyNames: Array<string>) => {
+        for (var i = 0; i < propertyNames.length; i++) {
+          this._bfSty[propertyNames[i]] = '';
+        }
+        return this;
       }
     }
   }
@@ -192,8 +230,14 @@ export class Animation {
         this._afRmv.push(className);
         return this;
       },
-      setStyles: (styles): Animation => {
+      setStyles: (styles: any): Animation => {
         this._afSty = styles;
+        return this;
+      },
+      clearStyles: (propertyNames: Array<string>) => {
+        for (var i = 0; i < propertyNames.length; i++) {
+          this._afSty[propertyNames[i]] = '';
+        }
         return this;
       }
     }
@@ -255,7 +299,7 @@ export class Animation {
 
         // wait a few moments again to wait for the transition
         // info to take hold in the DOM
-        raf(function() {
+        rafFrames(2, function() {
           // browser had some time to render everything in place
           // and the transition duration/easing is set
           // now set the TO properties
@@ -347,7 +391,7 @@ export class Animation {
       this._c[i]._progress(stepValue);
     }
 
-    if (this._el) {
+    if (this._el.length) {
       // flip the number if we're going in reverse
       if (this._rv) {
         stepValue = ((stepValue * -1) + 1);
@@ -355,42 +399,43 @@ export class Animation {
       transforms = [];
 
       for (prop in this._fx) {
-        if (this._fx.hasOwnProperty(prop)) {
-          fx = this._fx[prop];
+        fx = this._fx[prop];
 
-          if (fx.from && fx.to) {
+        if (fx.from && fx.to) {
 
-            tweenEffect = (fx.from.num !== fx.to.num);
-            if (tweenEffect) {
-              this.hasTween = true;
-            }
+          tweenEffect = (fx.from.num !== fx.to.num);
+          if (tweenEffect) {
+            this.hasTween = true;
+          }
 
-            if (stepValue === 0) {
-              // FROM
-              val = fx.from.val;
+          if (stepValue === 0) {
+            // FROM
+            val = fx.from.val;
 
-            } else if (stepValue === 1) {
-              // TO
-              val = fx.to.val;
+          } else if (stepValue === 1) {
+            // TO
+            val = fx.to.val;
 
-            } else if (tweenEffect) {
-              // EVERYTHING IN BETWEEN
-              val = (((fx.to.num - fx.from.num) * stepValue) + fx.from.num) + fx.to.unit;
+          } else if (tweenEffect) {
+            // EVERYTHING IN BETWEEN
+            val = (((fx.to.num - fx.from.num) * stepValue) + fx.from.num) + fx.to.unit;
+
+          } else {
+            val = null;
+          }
+
+          if (val !== null) {
+            if (fx.trans) {
+              transforms.push(prop + '(' + val + ')');
 
             } else {
-              val = null;
-            }
-
-            if (val !== null) {
-              if (fx.trans) {
-                transforms.push(prop + '(' + val + ')');
-
-              } else {
-                this._el.style[prop] = val;
+              for (i = 0; i < this._el.length; i++) {
+                this._el[i].style[prop] = val;
               }
             }
           }
         }
+
       }
 
       // place all transforms on the same property
@@ -401,27 +446,33 @@ export class Animation {
           transforms.push('translateZ(0px)');
         }
 
-        this._el.style[CSS.transform] = transforms.join(' ');
+        for (i = 0; i < this._el.length; i++) {
+          this._el[i].style[CSS.transform] = transforms.join(' ');
+        }
       }
 
     }
 
   }
 
-  _setTrans(duration: number, forcedLinearEasing) {
+  _setTrans(duration: number, forcedLinearEasing: boolean) {
+    var i, easing;
+
     // set the TRANSITION properties inline on the element
-    for (var i = 0; i < this._c.length; i++) {
+    for (i = 0; i < this._c.length; i++) {
       this._c[i]._setTrans(duration, forcedLinearEasing);
     }
 
-    if (this._el && Object.keys(this._fx).length) {
-      // all parent/child animations should have the same duration
-      this._el.style[CSS.transitionDuration] = duration + 'ms';
+    if (Object.keys(this._fx).length) {
+      for (i = 0; i < this._el.length; i++) {
+        // all parent/child animations should have the same duration
+        this._el[i].style[CSS.transitionDuration] = duration + 'ms';
 
-      // each animation can have a different easing
-      let easing = (forcedLinearEasing ? 'linear' : this.getEasing());
-      if (easing) {
-        this._el.style[CSS.transitionTimingFn] = easing;
+        // each animation can have a different easing
+        easing = (forcedLinearEasing ? 'linear' : this.getEasing());
+        if (easing) {
+          this._el[i].style[CSS.transitionTimingFn] = easing;
+        }
       }
     }
   }
@@ -434,20 +485,18 @@ export class Animation {
     }
 
     if (this._wChg) {
+      wc = [];
 
       if (addWillChange) {
-        wc = [];
         for (prop in this._fx) {
-          if (this._fx.hasOwnProperty(prop)) {
-            if (this._fx[prop].wc !== '') {
-              wc.push(this._fx[prop].wc);
-            }
+          if (this._fx[prop].wc !== '') {
+            wc.push(this._fx[prop].wc);
           }
         }
-        this._el.style['willChange'] = wc.join(',');
+      }
 
-      } else {
-        this._el.style['willChange'] = '';
+      for (i = 0; i < this._el.length; i++) {
+        this._el[i].style['willChange'] = wc.join(',');
       }
     }
   }
@@ -455,28 +504,30 @@ export class Animation {
   _before() {
     // before the RENDER_DELAY
     // before the animations have started
-    var i, prop;
+    var i, j, prop, ele;
 
     // stage all of the child animations
     for (i = 0; i < this._c.length; i++) {
       this._c[i]._before();
     }
 
-    if (!this._rv && this._el) {
-      // css classes to add before the animation
-      for (i = 0; i < this._bfAdd.length; i++) {
-        this._el.classList.add(this._bfAdd[i]);
-      }
+    if (!this._rv) {
+      for (i = 0; i < this._el.length; i++) {
+        ele = this._el[i];
 
-      // css classes to remove before the animation
-      for (i = 0; i < this._bfRmv.length; i++) {
-        this._el.classList.remove(this._bfRmv[i]);
-      }
+        // css classes to add before the animation
+        for (j = 0; j < this._bfAdd.length; j++) {
+          ele.classList.add(this._bfAdd[j]);
+        }
 
-      // inline styles to add before the animation
-      for (prop in this._bfSty) {
-        if (this._bfSty.hasOwnProperty(prop)) {
-          this._el.style[prop] = this._bfSty[prop];
+        // css classes to remove before the animation
+        for (j = 0; j < this._bfRmv.length; j++) {
+          ele.classList.remove(this._bfRmv[j]);
+        }
+
+        // inline styles to add before the animation
+        for (prop in this._bfSty) {
+          ele.style[prop] = this._bfSty[prop];
         }
       }
     }
@@ -484,55 +535,53 @@ export class Animation {
 
   _after() {
     // after the animations have finished
-    var i, prop;
+    var i, j, prop, ele;
 
     for (i = 0; i < this._c.length; i++) {
       this._c[i]._after();
     }
 
-    if (this._el) {
+    for (i = 0; i < this._el.length; i++) {
+      ele = this._el[i];
+
       // remove the transition duration/easing
-      this._el.style[CSS.transitionDuration] = '';
-      this._el.style[CSS.transitionTimingFn] = '';
+      ele.style[CSS.transitionDuration] = '';
+      ele.style[CSS.transitionTimingFn] = '';
 
       if (this._rv) {
         // finished in reverse direction
 
         // css classes that were added before the animation should be removed
-        for (i = 0; i < this._bfAdd.length; i++) {
-          this._el.classList.remove(this._bfAdd[i]);
+        for (j = 0; j < this._bfAdd.length; j++) {
+          ele.classList.remove(this._bfAdd[j]);
         }
 
         // css classes that were removed before the animation should be added
-        for (i = 0; i < this._bfRmv.length; i++) {
-          this._el.classList.add(this._bfRmv[i]);
+        for (j = 0; j < this._bfRmv.length; j++) {
+          ele.classList.add(this._bfRmv[j]);
         }
 
         // inline styles that were added before the animation should be removed
         for (prop in this._bfSty) {
-          if (this._bfSty.hasOwnProperty(prop)) {
-            this._el.style[prop] = '';
-          }
+          ele.style[prop] = '';
         }
 
       } else {
         // finished in forward direction
 
         // css classes to add after the animation
-        for (i = 0; i < this._afAdd.length; i++) {
-          this._el.classList.add(this._afAdd[i]);
+        for (j = 0; j < this._afAdd.length; j++) {
+          ele.classList.add(this._afAdd[j]);
         }
 
         // css classes to remove after the animation
-        for (i = 0; i < this._afRmv.length; i++) {
-          this._el.classList.remove(this._afRmv[i]);
+        for (j = 0; j < this._afRmv.length; j++) {
+          ele.classList.remove(this._afRmv[j]);
         }
 
         // inline styles to add after the animation
         for (prop in this._afSty) {
-          if (this._afSty.hasOwnProperty(prop)) {
-            this._el.style[prop] = this._afSty[prop];
-          }
+          ele.style[prop] = this._afSty[prop];
         }
       }
     }
@@ -560,6 +609,7 @@ export class Animation {
     if (this._rv) {
       stepValue = ((stepValue * -1) + 1);
     }
+
     this._progress(stepValue);
   }
 
@@ -592,12 +642,12 @@ export class Animation {
     }
   }
 
-  onPlay(callback: Function) {
+  onPlay(callback: Function): Animation {
     this._pFns.push(callback);
     return this;
   }
 
-  onFinish(callback: Function, onceTimeCallback: boolean = false, clearOnFinishCallacks: boolean = false) {
+  onFinish(callback: Function, onceTimeCallback: boolean = false, clearOnFinishCallacks: boolean = false): Animation {
     if (clearOnFinishCallacks) {
       this._fFns = [];
       this._fOnceFns = [];
@@ -624,7 +674,7 @@ export class Animation {
     this._fOnceFns = [];
   }
 
-  reverse(shouldReverse: boolean = true) {
+  reverse(shouldReverse: boolean = true): Animation {
     for (var i = 0; i < this._c.length; i++) {
       this._c[i].reverse(shouldReverse);
     }
@@ -633,12 +683,17 @@ export class Animation {
   }
 
   destroy(removeElement?: boolean) {
-    for (var i = 0; i < this._c.length; i++) {
+    var i, ele;
+
+    for (i = 0; i < this._c.length; i++) {
       this._c[i].destroy(removeElement);
     }
 
-    if (removeElement && this._el) {
-      this._el.parentNode && this._el.parentNode.removeChild(this._el);
+    if (removeElement) {
+      for (i = 0; i < this._el.length; i++) {
+        ele = this._el[i];
+        ele.parentNode && ele.parentNode.removeChild(ele);
+      }
     }
 
     this._reset();
@@ -646,7 +701,7 @@ export class Animation {
 
   _transEl(): HTMLElement {
     // get the lowest level element that has an Animation
-    var targetEl, i;
+    var i, targetEl;
 
     for (i = 0; i < this._c.length; i++) {
       targetEl = this._c[i]._transEl();
@@ -655,7 +710,7 @@ export class Animation {
       }
     }
 
-    return (this.hasTween ? this._el : null);
+    return (this.hasTween && this._el.length ? this._el[0] : null);
   }
 
   /*
@@ -688,9 +743,26 @@ export interface PlayOptions {
   stepValue?: number;
 }
 
+interface EffectProperty {
+  trans: boolean;
+  wc: string;
+  to?: EffectState;
+  from?: EffectState;
+}
+
+interface EffectState {
+  val: any;
+  num: number;
+  unit: string;
+}
+
 const doc: any = document;
-const TRANSFORMS = [
-  'translateX', 'translateY', 'translateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ',
-  'rotate', 'rotateX', 'rotateY', 'rotateZ', 'skewX', 'skewY', 'perspective'];
+
+const TRANSFORMS = {
+  'translateX':1, 'translateY':1, 'translateZ':1,
+  'scale':1, 'scaleX':1, 'scaleY':1, 'scaleZ':1,
+  'rotate':1, 'rotateX':1, 'rotateY':1, 'rotateZ':1,
+  'skewX':1, 'skewY':1, 'perspective':1
+};
 
 let AnimationRegistry = {};
