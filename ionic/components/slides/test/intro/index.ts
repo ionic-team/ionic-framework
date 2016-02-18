@@ -5,6 +5,8 @@ import {App, Page, NavController} from 'ionic/ionic';
   template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
 class MyApp {
+  rootPage;
+
   constructor() {
     this.rootPage = IntroPage;
   }
@@ -15,9 +17,18 @@ class MyApp {
 })
 class IntroPage {
   continueText: string = "Skip";
+  startingIndex: number = 1;
+  mySlideOptions;
 
-  constructor(public nav: NavController) {
+  constructor(nav: NavController) {
+    this.nav = nav;
 
+    this.mySlideOptions = {
+      paginationClickable: true,
+      lazyLoading: true,
+      preloadImages: false,
+      initialSlide: this.startingIndex
+    };
   }
 
   onSlideChanged(slider) {

@@ -1,4 +1,4 @@
-<ion-slides [options]="extraOptions" id="slider" style="background-color: black" zoom>
+<ion-slides [options]="mySlideOptions" id="slider" style="background-color: black">
   <ion-slide *ngFor="#image of images">
     <img data-src="{{getImageUrl(image)}}" slide-lazy>
   </ion-slide>

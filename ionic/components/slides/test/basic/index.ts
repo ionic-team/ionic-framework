@@ -9,7 +9,7 @@ class MyApp {
     this.app = app;
     this.http = http;
 
-    this.extraOptions = {
+    this.mySlideOptions = {
       loop: true
     };
 
