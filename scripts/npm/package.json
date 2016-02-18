@@ -2,10 +2,10 @@
   "name": "ionic-framework",
   "version": "<%= ionicVersion %>",
   "license": "MIT",
-  "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp"],
+  "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp", "cordova"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/driftyco/ionic2.git"
+    "url": "https://github.com/driftyco/ionic.git#2.0`"
   },
   "main": "tooling/index.js",
   "dependencies": {
