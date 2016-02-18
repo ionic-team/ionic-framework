@@ -1,4 +1,4 @@
-## Ionic Framework Package
+## Ionic Framework 2.x
 
 The official npm package for [Ionic](http://ionicframework.com/) 2, complete with pre-built ES5 bundles, TypeScript definitions, Sass files, module-ready ES5 files, and more.
 
