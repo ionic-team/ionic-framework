@@ -154,7 +154,7 @@ export class Slides extends Ion {
   }
 
   /**
-   * @input {boolean} Whether the slide should show the page or not
+   * @input {boolean} Whether the slide should show the pager or not
    */
   @Input() pager: any;
 
@@ -166,17 +166,17 @@ export class Slides extends Ion {
   /**
    * @input {number} Whether or not the slider can zoom in or out
    */
-  // @Input() zoom: any;
+  @Input() zoom: any;
 
   /**
    * @input {number} how long it should take to zoom a slide
    */
-  // @Input() zoomDuration: any;
+  @Input() zoomDuration: any;
 
   /**
    * @input {number} the max scale an slide can be zoomed
    */
-  // @Input() zoomMax: any;
+  @Input() zoomMax: any;
 
   /**
    * @output {any} expression to evaluate when a slide has been changed
