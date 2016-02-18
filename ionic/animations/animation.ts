@@ -208,11 +208,11 @@ export class Animation {
         this._bfRmv.push(className);
         return this;
       },
-      setStyles: (styles): Animation => {
+      setStyles: (styles: any): Animation => {
         this._bfSty = styles;
         return this;
       },
-      clearStyles: (propertyNames: Array<string>) => {
+      clearStyles: (propertyNames: Array<string>): Animation => {
         for (var i = 0; i < propertyNames.length; i++) {
           this._bfSty[propertyNames[i]] = '';
         }
@@ -235,7 +235,7 @@ export class Animation {
         this._afSty = styles;
         return this;
       },
-      clearStyles: (propertyNames: Array<string>) => {
+      clearStyles: (propertyNames: Array<string>): Animation => {
         for (var i = 0; i < propertyNames.length; i++) {
           this._afSty[propertyNames[i]] = '';
         }
