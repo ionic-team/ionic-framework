@@ -1,5 +1,8 @@
 ## Ionic Framework Package
- The ionic-framework package comes with both Javascript and Sass frontend dependencies, located in the root of the package, and a Node API, located in `tooling/`.
+
+The official npm package for [Ionic](http://ionicframework.com/) 2, complete with pre-built ES5 bundles, TypeScript definitions, Sass files, module-ready ES5 files, and more.
+
+To get started with Ionic 2, please read the [Installation](http://ionicframework.com/docs/v2/getting-started/installation/) guide.
 
 ### Source files:
 
