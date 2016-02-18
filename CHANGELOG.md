@@ -44,10 +44,10 @@
 
 ### Refactor
 
-* **card:** create ion-card-title element and remove card-title ([7aabd0f](https://github.com/driftyco/ionic/commit/7aabd0f), closes [#5303](https://github.com/driftyco/ionic/issues/5303)
-* **segment:** increase icon size inside of segment buttons ([7249cb3](https://github.com/driftyco/ionic/commit/7249cb3), closes [#5330](https://github.com/driftyco/ionic/issues/5330)
-* **pull-to-refresh:** emit start event and change all events to emit refresher ([acf1894](https://github.com/driftyco/ionic/commit/acf1894), references [#5207](https://github.com/driftyco/ionic/issues/5207)
-* **slides:** remove the attributes from the slider and use options instead ([d21ae88](https://github.com/driftyco/ionic/commit/d21ae88), closes [#5189](https://github.com/driftyco/ionic/issues/5189)
+* **card:** create ion-card-title element and remove card-title ([7aabd0f](https://github.com/driftyco/ionic/commit/7aabd0f)), closes [#5303](https://github.com/driftyco/ionic/issues/5303)
+* **segment:** increase icon size inside of segment buttons ([7249cb3](https://github.com/driftyco/ionic/commit/7249cb3)), closes [#5330](https://github.com/driftyco/ionic/issues/5330)
+* **pull-to-refresh:** emit start event and change all events to emit refresher ([acf1894](https://github.com/driftyco/ionic/commit/acf1894)), references [#5207](https://github.com/driftyco/ionic/issues/5207)
+* **slides:** remove the attributes from the slider and use options instead ([d21ae88](https://github.com/driftyco/ionic/commit/d21ae88)), closes [#5189](https://github.com/driftyco/ionic/issues/5189)
 
 ### Breaking Changes
 
