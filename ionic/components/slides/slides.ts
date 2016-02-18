@@ -153,51 +153,30 @@ export class Slides extends Ion {
     zoomableHeight: number
   }
 
-
-  /**
-   * @input {boolean} whether or not the slides should automatically change
-   */
-  @Input() autoplay: any;
-
-  /**
-   * @input {boolean} whether or not the slides should automatically change
-   */
-  @Input() loop: any;
-
-  /**
-   * @input {number} The slide index to start on
-   */
-  @Input() index: any;
-
-  /**
-   * @input {boolean} whether the slides should bounce
-   */
-  @Input() bounce: any;
-
   /**
    * @input {boolean} Whether the slide should show the page or not
    */
   @Input() pager: any;
 
   /**
-   * @input {any} Any additional slider options you want to pass
+   * @input {any} Any slider options you want to configure, see swiper parameters: http://www.idangero.us/swiper/api/
    */
   @Input() options: any;
 
   /**
    * @input {number} Whether or not the slider can zoom in or out
    */
-  @Input() zoom: any;
+  // @Input() zoom: any;
 
   /**
    * @input {number} how long it should take to zoom a slide
    */
-  @Input() zoomDuration: any;
+  // @Input() zoomDuration: any;
 
   /**
    * @input {number} the max scale an slide can be zoomed
    */
-  @Input() zoomMax: any;
+  // @Input() zoomMax: any;
 
   /**
    * @output {any} expression to evaluate when a slide has been changed
@@ -234,19 +213,9 @@ export class Slides extends Ion {
     }
 
     this.showPager = isTrueProperty(this.pager);
-    this.loop = isTrueProperty(this.loop);
-
-    if (typeof(this.index) != 'undefined') {
-      this.index = parseInt(this.index);
-    }
 
     var options = defaults({
-      loop: this.loop,
-      initialSlide: this.index,
       pagination: '.swiper-pagination',
-      paginationClickable: true,
-      lazyLoading: true,
-      preloadImages: false
     }, this.options);
 
     options.onTap = (swiper, e) => {
