@@ -69,6 +69,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
 
 .alert-message {
   font-size: $alert-md-message-font-size;
+  max-height: 240px;  
 
   &:empty {
     padding: 0;
