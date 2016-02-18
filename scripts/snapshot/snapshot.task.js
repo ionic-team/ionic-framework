@@ -19,7 +19,7 @@ module.exports = function(gulp, argv, buildConfig) {
     console.log('Serving `dist` on http://localhost:' + buildConfig.protractorPort);
   });
 
-  gulp.task('snapshot', ['protractor-server'], function(done) {
+  gulp.task('snapshot', ['e2e', 'protractor-server'], function(done) {
     snapshot(done);
   });
 
