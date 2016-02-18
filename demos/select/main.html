@@ -10,14 +10,14 @@
     <ion-item>
       <ion-label>Gender</ion-label>
       <ion-select [(ngModel)]="gender">
-        <ion-option value="f" checked="true">Female</ion-option>
+        <ion-option value="f">Female</ion-option>
         <ion-option value="m">Male</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label>Gaming</ion-label>
-      <ion-select [(ngModel)]="gaming">
+      <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss">
         <ion-option value="nes">NES</ion-option>
         <ion-option value="n64">Nintendo64</ion-option>
         <ion-option value="ps">PlayStation</ion-option>
@@ -28,37 +28,11 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Operating System</ion-label>
-      <ion-select [(ngModel)]="os" submitText="Okay" cancelText="Nah">
-        <ion-option value="dos">DOS</ion-option>
-        <ion-option value="lunix">Linux</ion-option>
-        <ion-option value="mac7">Mac OS 7</ion-option>
-        <ion-option value="mac8">Mac OS 8</ion-option>
-        <ion-option value="win3.1" checked>Windows 3.1</ion-option>
-        <ion-option value="win95">Windows 95</ion-option>
-        <ion-option value="win98">Windows 98</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Music</ion-label>
-      <ion-select [(ngModel)]="music" [alertOptions]="musicAlertOpts">
-        <ion-option>Alice in Chains</ion-option>
-        <ion-option>Green Day</ion-option>
-        <ion-option>Nirvana</ion-option>
-        <ion-option>Pearl Jam</ion-option>
-        <ion-option>Smashing Pumpkins</ion-option>
-        <ion-option>Soundgarden</ion-option>
-        <ion-option (select)="stpSelect()">Stone Temple Pilots</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
       <ion-label>Date</ion-label>
-      <ion-select [(ngModel)]="month">
+      <ion-select (change)="monthChange($event)">
         <ion-option value="01">January</ion-option>
         <ion-option value="02">February</ion-option>
-        <ion-option value="03">March</ion-option>
+        <ion-option value="03" checked="true">March</ion-option>
         <ion-option value="04">April</ion-option>
         <ion-option value="05">May</ion-option>
         <ion-option value="06">June</ion-option>
@@ -67,9 +41,9 @@
         <ion-option value="09">September</ion-option>
         <ion-option value="10">October</ion-option>
         <ion-option value="11">November</ion-option>
-        <ion-option value="12" checked="true">December</ion-option>
+        <ion-option value="12">December</ion-option>
       </ion-select>
-      <ion-select [(ngModel)]="year">
+      <ion-select (change)="yearChange($event)">
         <ion-option>1989</ion-option>
         <ion-option>1990</ion-option>
         <ion-option>1991</ion-option>
@@ -92,9 +66,9 @@
     <ion-item>
       <ion-label>Toppings</ion-label>
       <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
-        <ion-option value="bacon" checked="true">Bacon</ion-option>
+        <ion-option value="bacon">Bacon</ion-option>
         <ion-option value="olives">Black Olives</ion-option>
-        <ion-option value="xcheese" checked="true">Extra Cheese</ion-option>
+        <ion-option value="xcheese">Extra Cheese</ion-option>
         <ion-option value="peppers">Green Peppers</ion-option>
         <ion-option value="mushrooms">Mushrooms</ion-option>
         <ion-option value="onions">Onions</ion-option>
@@ -106,30 +80,19 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Car Features</ion-label>
-      <ion-select [(ngModel)]="carFeatures" [multiple]="true">
-        <ion-option value="backupcamera">Backup Camera</ion-option>
-        <ion-option value="heatedseats">Headted Seats</ion-option>
-        <ion-option value="keyless">Keyless Entry</ion-option>
-        <ion-option value="navigation">Navigation</ion-option>
-        <ion-option value="parkingassist">Parking Assist</ion-option>
-        <ion-option value="sunroof">Sun Roof</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
       <ion-label>Pets</ion-label>
-      <ion-select [(ngModel)]="pets" multiple>
-        <ion-option *ngFor="#o of petOptions" [value]="o.value" [checked]="o.checked">{{o.text}}</ion-option>
+      <ion-select [(ngModel)]="pets" multiple="true" [alertOptions]="petAlertOpts">
+        <ion-option *ngFor="#o of petData" [value]="o.value">{{o.text}}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label>Disabled</ion-label>
-      <ion-select multiple disabled>
+      <ion-select multiple disabled="true">
         <ion-option checked="true">Selected Text</ion-option>
       </ion-select>
     </ion-item>
+
   </ion-list>
 
 </ion-content>
