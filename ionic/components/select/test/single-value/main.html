@@ -67,17 +67,7 @@
       <ion-option value="12">December</ion-option>
     </ion-select>
     <ion-select [(ngModel)]="year">
-      <ion-option>1989</ion-option>
-      <ion-option>1990</ion-option>
-      <ion-option>1991</ion-option>
-      <ion-option>1992</ion-option>
-      <ion-option>1993</ion-option>
-      <ion-option>1994</ion-option>
-      <ion-option>1995</ion-option>
-      <ion-option>1996</ion-option>
-      <ion-option>1997</ion-option>
-      <ion-option>1998</ion-option>
-      <ion-option>1999</ion-option>
+      <ion-option *ngFor="#yr of years">{{yr}}</ion-option>
     </ion-select>
   </ion-item>
 

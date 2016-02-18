@@ -1,8 +1,11 @@
+import {NgFor} from 'angular2/common';
+
 import {App, Page} from '../../../../../ionic/ionic';
 
 
 @Page({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  directives: [NgFor]
 })
 class E2EPage {
   musicAlertOpts;
@@ -12,6 +15,7 @@ class E2EPage {
   music: string;
   month: string;
   year: string;
+  years: Array<number>;
 
   constructor() {
     this.gaming = '';
@@ -19,6 +23,8 @@ class E2EPage {
     this.music = null;
     this.month = '12';
     this.year = '1994';
+
+    this.years = [1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999];
 
     this.musicAlertOpts = {
       title: '1994 Music',
