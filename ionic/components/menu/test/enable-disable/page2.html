@@ -1,0 +1,23 @@
+
+<ion-navbar *navbar>
+  <button [menuToggle]="activeMenu">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>
+    Multiple Menus
+  </ion-title>
+</ion-navbar>
+
+
+<ion-content padding>
+  <h3> Page 2 </h3>
+
+  <h4>Active Menu: {{ activeMenu }}</h4>
+
+  <p>
+    <button [menuToggle]="activeMenu">Toggle Menu</button>
+  </p>
+
+  <p>This page has two left menus, but only one is active at a time.</p>
+
+</ion-content>
