@@ -9,6 +9,7 @@
     <ion-list>
       <button ion-item menuClose (click)="menu1Active()">Make Menu 1 Active</button>
       <button ion-item menuClose (click)="menu2Active()">Make Menu 2 Active</button>
+      <button ion-item menuClose (click)="menu3Active()">Make Menu 3 Active</button>
       <button ion-item menuClose (click)="openPage(page1)">
         Page 1
       </button>
@@ -33,7 +34,8 @@
   <ion-content>
     <ion-list>
       <button ion-item menuClose (click)="menu1Active()">Make Menu 1 Active</button>
-      <button ion-item menuClose (click)="menu2Active()">Make Menu 2 Active</button>      
+      <button ion-item menuClose (click)="menu2Active()">Make Menu 2 Active</button>
+      <button ion-item menuClose (click)="menu3Active()">Make Menu 3 Active</button>
       <button ion-item menuClose (click)="openPage(page1)">
         Page 1
       </button>
@@ -42,6 +44,31 @@
       </button>
       <button ion-item menuClose detail-none>
         Close Menu 2
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-menu [content]="content" id="menu3">
+
+  <ion-toolbar primary>
+    <ion-title>Menu 3</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose (click)="menu1Active()">Make Menu 1 Active</button>
+      <button ion-item menuClose (click)="menu2Active()">Make Menu 2 Active</button>
+      <button ion-item menuClose (click)="menu3Active()">Make Menu 3 Active</button>
+      <button ion-item menuClose (click)="openPage(page1)">
+        Page 1
+      </button>
+      <button ion-item menuClose (click)="openPage(page2)">
+        Page 2
+      </button>
+      <button ion-item menuClose detail-none>
+        Close Menu 3
       </button>
     </ion-list>
   </ion-content>
