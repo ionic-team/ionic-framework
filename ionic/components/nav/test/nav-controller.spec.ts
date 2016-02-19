@@ -1,4 +1,4 @@
-import {NavController, Config, ViewController} from '../../../../ionic/ionic';
+import {NavController, NavOptions, Config, ViewController} from '../../../../ionic/ionic';
 
 export function run() {
   describe('NavController', () => {
@@ -225,6 +225,57 @@ export function run() {
         nav._remove(0, 1);
         expect(nav.getByIndex(0).state).toBe(STATE_INIT_LEAVE);
       });
+
+      it('should call willLeave/didLeave/destroy on views with STATE_REMOVE', () => {
+        let view1 = new ViewController(Page1);
+        view1.state = STATE_INACTIVE;
+        let view2 = new ViewController(Page2);
+        view2.state = STATE_INACTIVE;
+        let view3 = new ViewController(Page3);
+        view3.state = STATE_INACTIVE;
+        let view4 = new ViewController(Page4);
+        view4.state = STATE_ACTIVE;
+        nav._views = [view1, view2, view3, view4];
+
+        spyOn(view1, 'willLeave');
+        spyOn(view1, 'didLeave');
+        spyOn(view1, 'destroy');
+
+        spyOn(view2, 'willLeave');
+        spyOn(view2, 'didLeave');
+        spyOn(view2, 'destroy');
+
+        spyOn(view3, 'willLeave');
+        spyOn(view3, 'didLeave');
+        spyOn(view3, 'destroy');
+
+        spyOn(view4, 'willLeave');
+        spyOn(view4, 'didLeave');
+        spyOn(view4, 'destroy');
+
+        nav._remove(1, 3);
+        expect(nav.length()).toBe(2);
+        expect(view1.state).toBe(STATE_INIT_ENTER);
+        expect(view2.state).toBe(STATE_REMOVE);
+        expect(view3.state).toBe(STATE_REMOVE);
+        expect(view4.state).toBe(STATE_INIT_LEAVE);
+
+        expect(view1.willLeave).not.toHaveBeenCalled();
+        expect(view1.didLeave).not.toHaveBeenCalled();
+        expect(view1.destroy).not.toHaveBeenCalled();
+
+        expect(view2.willLeave).toHaveBeenCalled();
+        expect(view2.didLeave).toHaveBeenCalled();
+        expect(view2.destroy).toHaveBeenCalled();
+
+        expect(view3.willLeave).toHaveBeenCalled();
+        expect(view3.didLeave).toHaveBeenCalled();
+        expect(view3.destroy).toHaveBeenCalled();
+
+        expect(view4.willLeave).not.toHaveBeenCalled();
+        expect(view4.didLeave).not.toHaveBeenCalled();
+        expect(view4.destroy).not.toHaveBeenCalled();
+      });
     });
 
     describe('_cleanup', () => {
@@ -260,6 +311,118 @@ export function run() {
         nav._cleanup();
         expect(nav.length()).toBe(2);
       });
+
+      it('should call destroy for each view to be destroyed', () => {
+        let view1 = new ViewController(Page1);
+        view1.state = STATE_ACTIVE;
+        let view2 = new ViewController(Page2);
+        view2.state = STATE_INACTIVE;
+        let view3 = new ViewController(Page3);
+        view3.state = STATE_INACTIVE;
+        nav._views = [view1, view2, view3];
+
+        spyOn(view1, 'destroy');
+        spyOn(view2, 'destroy');
+        spyOn(view3, 'destroy');
+
+        nav._cleanup();
+
+        expect(nav.length()).toBe(1);
+        expect(view1.destroy).not.toHaveBeenCalled();
+        expect(view2.destroy).toHaveBeenCalled();
+        expect(view3.destroy).toHaveBeenCalled();
+      });
+    });
+
+    describe('_postRender', () => {
+      it('should immediately call done when enteringView state is inactive', () => {
+        let view1 = new ViewController(Page1);
+        view1.state = STATE_INACTIVE;
+        var wasCalled = false;
+        var done = () => {
+          wasCalled = true;
+        };
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+
+        nav._postRender(1, view1, null, false, null, done);
+
+        expect(wasCalled).toBe(true);
+      });
+
+      it('should call willEnter on entering view', () => {
+        let enteringView = new ViewController(Page1);
+        let leavingView = new ViewController(Page2);
+        var navOptions: NavOptions = {};
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+
+        spyOn(enteringView, 'willEnter');
+
+        nav._postRender(1, enteringView, leavingView, false, navOptions, done);
+
+        expect(enteringView.willEnter).toHaveBeenCalled();
+      });
+
+      it('should not call willEnter on entering view when it is being preloaded', () => {
+        let enteringView = new ViewController(Page1);
+        let leavingView = new ViewController(Page2);
+        var navOptions: NavOptions = {
+          preload: true
+        };
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+
+        spyOn(enteringView, 'willEnter');
+
+        nav._postRender(1, enteringView, leavingView, false, navOptions, done);
+
+        expect(enteringView.willEnter).not.toHaveBeenCalled();
+      });
+
+      it('should call willLeave on leaving view', () => {
+        let enteringView = new ViewController(Page1);
+        let leavingView = new ViewController(Page2);
+        var navOptions: NavOptions = {};
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+
+        spyOn(leavingView, 'willLeave');
+
+        nav._postRender(1, enteringView, leavingView, false, navOptions, done);
+
+        expect(leavingView.willLeave).toHaveBeenCalled();
+      });
+
+      it('should not call willLeave on leaving view when it is being preloaded', () => {
+        let enteringView = new ViewController(Page1);
+        let leavingView = new ViewController(Page2);
+        var navOptions: NavOptions = {
+          preload: true
+        };
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+
+        spyOn(leavingView, 'willLeave');
+
+        nav._postRender(1, enteringView, leavingView, false, navOptions, done);
+
+        expect(leavingView.willLeave).not.toHaveBeenCalled();
+      });
+
+      it('should set animate false when preloading', () => {
+        let enteringView = new ViewController(Page1);
+        let leavingView = new ViewController(Page2);
+        var navOptions: NavOptions = {
+          preload: true
+        };
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+
+        nav._postRender(1, enteringView, leavingView, false, navOptions, done);
+
+        expect(navOptions.animate).toBe(false);
+      });
+
     });
 
     describe('_setZIndex', () => {
@@ -289,6 +452,67 @@ export function run() {
         nav._setZIndex(enteringView, leavingView, 'back');
         expect(enteringView.zIndex).toEqual(0);
       });
+
+    });
+
+    describe('_afterTrans', () => {
+
+      it('should call didEnter/didLeave', () => {
+        let enteringView = new ViewController();
+        let leavingView = new ViewController();
+        let navOpts: NavOptions = {};
+        let hasCompleted = true;
+        let doneCalled = false;
+        let done = () => {doneCalled = true;}
+
+        spyOn(enteringView, 'didEnter');
+        spyOn(leavingView, 'didLeave');
+
+        nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
+
+        expect(enteringView.didEnter).toHaveBeenCalled();
+        expect(leavingView.didLeave).toHaveBeenCalled();
+        expect(doneCalled).toBe(true);
+      });
+
+      it('should not call didEnter/didLeave when preloaded', () => {
+        let enteringView = new ViewController();
+        let leavingView = new ViewController();
+        let navOpts: NavOptions = {
+          preload: true
+        };
+        let hasCompleted = true;
+        let doneCalled = false;
+        let done = () => {doneCalled = true;}
+
+        spyOn(enteringView, 'didEnter');
+        spyOn(leavingView, 'didLeave');
+
+        nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
+
+        expect(enteringView.didEnter).not.toHaveBeenCalled();
+        expect(leavingView.didLeave).not.toHaveBeenCalled();
+        expect(doneCalled).toBe(true);
+      });
+
+      it('should not call didEnter/didLeave when not hasCompleted', () => {
+        let enteringView = new ViewController();
+        let leavingView = new ViewController();
+        let navOpts: NavOptions = {};
+        let hasCompleted = false;
+        let doneCalled = false;
+        let done = () => {doneCalled = true;}
+
+        spyOn(enteringView, 'didEnter');
+        spyOn(leavingView, 'didLeave');
+
+        nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
+
+        expect(enteringView.didEnter).not.toHaveBeenCalled();
+        expect(leavingView.didLeave).not.toHaveBeenCalled();
+        expect(doneCalled).toBe(true);
+      });
+
     });
 
     describe('_transFinish', () => {
@@ -646,6 +870,20 @@ export function run() {
         nativeElement: document.createElement('div')
       };
       nav = new NavController(null, null, config, null, elementRef, null, null, null, null, null);
+
+      nav._keyboard = {
+        isOpen: function() {
+          return false;
+        }
+      };
+      nav._zone = {
+        run: function(cb) {
+          cb();
+        },
+        runOutsideAngular: function(cb) {
+          cb();
+        }
+      };
       nav._renderer = {
         setElementAttribute: function(){},
         setElementClass: function(){},
