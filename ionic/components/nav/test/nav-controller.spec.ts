@@ -573,6 +573,86 @@ export function run() {
         expect(leavingView.state).toBe(STATE_ACTIVE);
       });
 
+      it('should run cleanup when most recent transition and has completed', () => {
+        let enteringView = new ViewController(Page1);
+        enteringView.state = STATE_TRANS_ENTER;
+        let leavingView = new ViewController(Page2);
+        leavingView.state = STATE_TRANS_LEAVE;
+        let hasCompleted = true;
+
+        spyOn(nav, '_cleanup');
+
+        nav._transIds = 1;
+
+        nav._transFinish(1, enteringView, leavingView, 'back', hasCompleted);
+
+        expect(nav._cleanup).toHaveBeenCalled()
+      });
+
+      it('should not run cleanup when most not recent transition', () => {
+        let enteringView = new ViewController(Page1);
+        enteringView.state = STATE_TRANS_ENTER;
+        let leavingView = new ViewController(Page2);
+        leavingView.state = STATE_TRANS_LEAVE;
+        let hasCompleted = true;
+
+        spyOn(nav, '_cleanup');
+
+        nav._transIds = 1;
+
+        nav._transFinish(2, enteringView, leavingView, 'back', hasCompleted);
+
+        expect(nav._cleanup).not.toHaveBeenCalled()
+      });
+
+      it('should not run cleanup when it hasnt completed transition, but is the most recent', () => {
+        let enteringView = new ViewController(Page1);
+        enteringView.state = STATE_TRANS_ENTER;
+        let leavingView = new ViewController(Page2);
+        leavingView.state = STATE_TRANS_LEAVE;
+        let hasCompleted = false;
+
+        spyOn(nav, '_cleanup');
+
+        nav._transIds = 1;
+
+        nav._transFinish(1, enteringView, leavingView, 'back', hasCompleted);
+
+        expect(nav._cleanup).not.toHaveBeenCalled()
+      });
+
+      it('should set transitioning is over when most recent transition finishes', () => {
+        let enteringView = new ViewController(Page1);
+        enteringView.state = STATE_TRANS_ENTER;
+        let leavingView = new ViewController(Page2);
+        leavingView.state = STATE_TRANS_LEAVE;
+        let hasCompleted = true;
+
+        spyOn(nav, 'setTransitioning');
+
+        nav._transIds = 1;
+
+        nav._transFinish(1, enteringView, leavingView, 'back', hasCompleted);
+
+        expect(nav.setTransitioning).toHaveBeenCalledWith(false);
+      });
+
+      it('should set transitioning is not over if its not the most recent transition', () => {
+        let enteringView = new ViewController(Page1);
+        enteringView.state = STATE_TRANS_ENTER;
+        let leavingView = new ViewController(Page2);
+        leavingView.state = STATE_TRANS_LEAVE;
+        let hasCompleted = true;
+
+        spyOn(nav, 'setTransitioning');
+
+        nav._transIds = 2;
+
+        nav._transFinish(1, enteringView, leavingView, 'back', hasCompleted);
+
+        expect(nav.setTransitioning).not.toHaveBeenCalled();
+      });
+
     });
 
     describe('_insert', () => {
