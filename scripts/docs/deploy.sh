@@ -30,7 +30,7 @@ function run {
   cp tmp/sass.json $SITE_DIR/docs/v2/theming/overriding-ionic-variables/
 
   #compile API Demos
-  gulp demos --production
+  gulp demos --production=true
 
   # CD in to the site dir to commit updated docs
   cd $SITE_DIR
