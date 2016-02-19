@@ -5,6 +5,7 @@ import {Icon} from '../icon/icon';
 import {ToolbarBase} from '../toolbar/toolbar';
 import {Config} from '../../config/config';
 import {IonicApp} from '../app/app';
+import {isTrueProperty} from '../../util/util';
 import {ViewController} from '../nav/view-controller';
 import {NavController} from '../nav/nav-controller';
 
@@ -93,7 +94,7 @@ class ToolbarBackground {
   selector: 'ion-navbar',
   template:
     '<div class="toolbar-background"></div>' +
-    '<button class="back-button bar-button bar-button-default" [hidden]="hideBackButton">' +
+    '<button class="back-button bar-button bar-button-default" [hidden]="_hideBb">' +
       '<span class="button-inner">' +
         '<ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>' +
         '<span class="back-button-text">' +
@@ -117,7 +118,8 @@ class ToolbarBackground {
 export class Navbar extends ToolbarBase {
   private _bbIcon: string;
   private _bbText: string;
-  private _hidden: boolean;
+  private _hidden: boolean = false;
+  private _hideBb: boolean = false;
   private _bbRef: ElementRef;
   private _bbtRef: ElementRef;
   private _bgRef: ElementRef;
@@ -125,7 +127,13 @@ export class Navbar extends ToolbarBase {
   /**
    * @private
    */
-  @Input() hideBackButton: any;
+  @Input()
+  get hideBackButton(): boolean {
+    return this._hideBb;
+  }
+  set hideBackButton(val: boolean) {
+    this._hideBb = isTrueProperty(val);
+  }
 
   constructor(
     private _app: IonicApp,
@@ -140,16 +148,6 @@ export class Navbar extends ToolbarBase {
 
     this._bbIcon = config.get('backButtonIcon');
     this._bbText = config.get('backButtonText');
-  }
-
-  /**
-   * @private
-   */
-  ngOnInit() {
-    let hideBackButton = this.hideBackButton;
-    if (typeof hideBackButton === 'string') {
-      this.hideBackButton = (hideBackButton === '' || hideBackButton === 'true');
-    }
   }
 
   /**

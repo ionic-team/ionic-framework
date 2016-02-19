@@ -260,6 +260,14 @@ class E2EPage {
 
     this.nav.present(alert);
   }
+
+  onPageDidLeave() {
+    console.log('E2EPage, onPageDidLeave');
+  }
+
+  onPageDidEnter() {
+    console.log('E2EPage, onPageDidEnter');
+  }
 }
 
 

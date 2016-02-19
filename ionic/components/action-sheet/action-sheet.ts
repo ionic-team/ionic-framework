@@ -80,24 +80,23 @@ import {ViewController} from '../nav/view-controller';
  */
  export class ActionSheet extends ViewController {
 
-   constructor(opts: {
-     title?: string,
-     subTitle?: string,
-     cssClass?: string,
-     enableBackdropDismiss?: boolean,
-     buttons?: Array<any>
-   } = {}) {
+   constructor(opts: ActionSheetOptions = {}) {
      opts.buttons = opts.buttons || [];
      opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
      super(ActionSheetCmp, opts);
      this.viewType = 'action-sheet';
+
+    // by default, actionsheets should not fire lifecycle events of other views
+    // for example, when an actionsheets enters, the current active view should
+    // not fire its lifecycle events because it's not conceptually leaving
+    this.fireOtherLifecycles = false;
    }
 
    /**
    * @private
    */
-   getTransitionName(direction) {
+   getTransitionName(direction: string) {
      let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
      return this._nav && this._nav.config.get(key);
    }
@@ -119,7 +118,7 @@ import {ViewController} from '../nav/view-controller';
    /**
     * @param {object} button Action sheet button
     */
-   addButton(button) {
+   addButton(button: any) {
      this.data.buttons.push(button);
    }
 
@@ -148,13 +147,7 @@ import {ViewController} from '../nav/view-controller';
     *
     * @param {object} opts Action sheet options
     */
-   static create(opts: {
-     title?: string,
-     subTitle?: string,
-     cssClass?: string,
-     buttons?: Array<any>,
-     enableBackdropDismiss?: boolean
-   } = {}) {
+   static create(opts: ActionSheetOptions = {}) {
      return new ActionSheet(opts);
    }
 
@@ -294,6 +287,13 @@ class ActionSheetCmp {
   }
 }
 
+export interface ActionSheetOptions {
+  title?: string;
+  subTitle?: string;
+  cssClass?: string;
+  buttons?: Array<any>;
+  enableBackdropDismiss?: boolean;
+}
 
 
 class ActionSheetSlideIn extends Transition {

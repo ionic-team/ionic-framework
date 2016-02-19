@@ -66,6 +66,13 @@ export class ViewController {
 
   /**
    * @private
+   * If this is currently the active view, then set to false
+   * if it does not want the other views to fire their own lifecycles.
+   */
+  fireOtherLifecycles: boolean = true;
+
+  /**
+   * @private
    */
   zIndex: number;
 
@@ -86,7 +93,7 @@ export class ViewController {
   /**
    * @private
    */
-  emit(data: any) {
+  emit(data?: any) {
     this._emitter.emit(data);
   }
 
@@ -94,7 +101,7 @@ export class ViewController {
     this._onDismiss = callback;
   }
 
-  dismiss(data: any, role?: any) {
+  dismiss(data?: any, role?: any) {
     this._onDismiss && this._onDismiss(data, role);
     return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts);
   }
@@ -319,14 +326,14 @@ export class ViewController {
    *
    * @returns {boolean} Returns a boolean if this Page has a navbar or not.
    */
-  hasNavbar() {
+  hasNavbar(): boolean {
     return !!this.getNavbar();
   }
 
   /**
    * @private
    */
-  navbarRef() {
+  navbarRef(): ElementRef {
     let navbar = this.getNavbar();
     return navbar && navbar.getElementRef();
   }
@@ -334,7 +341,7 @@ export class ViewController {
   /**
    * @private
    */
-  titleRef() {
+  titleRef(): ElementRef {
     let navbar = this.getNavbar();
     return navbar && navbar.getTitleRef();
   }
@@ -342,7 +349,7 @@ export class ViewController {
   /**
    * @private
    */
-  navbarItemRefs() {
+  navbarItemRefs(): Array<ElementRef> {
     let navbar = this.getNavbar();
     return navbar && navbar.getItemRefs();
   }
@@ -350,7 +357,7 @@ export class ViewController {
   /**
    * @private
    */
-  backBtnRef() {
+  backBtnRef(): ElementRef {
     let navbar = this.getNavbar();
     return navbar && navbar.getBackButtonRef();
   }
@@ -358,7 +365,7 @@ export class ViewController {
   /**
    * @private
    */
-  backBtnTextRef() {
+  backBtnTextRef(): ElementRef {
     let navbar = this.getNavbar();
     return navbar && navbar.getBackButtonTextRef();
   }
@@ -366,7 +373,7 @@ export class ViewController {
   /**
    * @private
    */
-  navbarBgRef() {
+  navbarBgRef(): ElementRef {
     let navbar = this.getNavbar();
     return navbar && navbar.getBackgroundRef();
   }
@@ -388,7 +395,7 @@ export class ViewController {
    *
    * @param {string} backButtonText Set the back button text.
    */
-  setBackButtonText(val) {
+  setBackButtonText(val: string) {
     let navbar = this.getNavbar();
     if (navbar) {
       navbar.setBackButtonText(val);
@@ -399,7 +406,7 @@ export class ViewController {
    * Set if the back button for the current view is visible or not. Be sure to wrap this in `onPageWillEnter` to make sure the has been compleltly rendered.
    * @param {boolean} Set if this Page's back button should show or not.
    */
-  showBackButton(shouldShow) {
+  showBackButton(shouldShow: boolean) {
     let navbar = this.getNavbar();
     if (navbar) {
       navbar.hideBackButton = !shouldShow;
@@ -491,12 +498,12 @@ export class ViewController {
 
 }
 
-function ctrlFn(viewCtrl, fnName) {
+function ctrlFn(viewCtrl: ViewController, fnName: string) {
   if (viewCtrl.instance && viewCtrl.instance[fnName]) {
     try {
       viewCtrl.instance[fnName]();
     } catch(e) {
-      console.error(fnName + ': ' + e.message);
+      console.error(viewCtrl.name + ' ' + fnName + ': ' + e.message);
     }
   }
 }

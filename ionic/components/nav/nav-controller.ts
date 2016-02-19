@@ -978,8 +978,17 @@ export class NavController extends Ion {
       }
 
       // call each view's lifecycle events
-      enteringView.willEnter();
-      leavingView.willLeave();
+      if (leavingView.fireOtherLifecycles) {
+        // only fire entering lifecycle if the leaving
+        // view hasn't explicitly set not to
+        enteringView.willEnter();
+      }
+
+      if (enteringView.fireOtherLifecycles) {
+        // only fire leaving lifecycle if the entering
+        // view hasn't explicitly set not to
+        leavingView.willLeave();
+      }
 
     } else {
       // this view is being preloaded, don't call lifecycle events
@@ -1080,8 +1089,17 @@ export class NavController extends Ion {
     this._zone.run(() => {
 
       if (!opts.preload && hasCompleted) {
-        enteringView.didEnter();
-        leavingView.didLeave();
+        if (leavingView.fireOtherLifecycles) {
+          // only fire entering lifecycle if the leaving
+          // view hasn't explicitly set not to
+          enteringView.didEnter();
+        }
+
+        if (enteringView.fireOtherLifecycles) {
+          // only fire leaving lifecycle if the entering
+          // view hasn't explicitly set not to
+          leavingView.didLeave();
+        }
       }
 
       if (enteringView.state === STATE_INACTIVE) {

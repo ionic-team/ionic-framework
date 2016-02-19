@@ -119,35 +119,24 @@ import {ViewController} from '../nav/view-controller';
  */
 export class Alert extends ViewController {
 
-  constructor(opts: {
-    title?: string,
-    subTitle?: string,
-    message?: string,
-    cssClass?: string,
-    inputs?: Array<{
-      type?: string,
-      name?: string,
-      placeholder?: string,
-      value?: string,
-      label?: string,
-      checked?: boolean,
-      id?: string
-    }>,
-    buttons?: Array<any>,
-    enableBackdropDismiss?: boolean
-  } = {}) {
+  constructor(opts: AlertOptions = {}) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(AlertCmp, opts);
     this.viewType = 'alert';
+
+    // by default, alerts should not fire lifecycle events of other views
+    // for example, when an alert enters, the current active view should
+    // not fire its lifecycle events because it's not conceptually leaving
+    this.fireOtherLifecycles = false;
   }
 
   /**
   * @private
   */
-  getTransitionName(direction) {
+  getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
     return this._nav && this._nav.config.get(key);
   }
@@ -185,15 +174,7 @@ export class Alert extends ViewController {
   /**
    * @param {object} input Alert input
    */
-  addInput(input: {
-    type?: string,
-    name?: string,
-    placeholder?: string,
-    value?: string,
-    label?: string,
-    checked?: boolean,
-    id?: string
-  }) {
+  addInput(input: AlertInputOptions) {
     this.data.inputs.push(input);
   }
 
@@ -214,23 +195,7 @@ export class Alert extends ViewController {
   /**
    * @param {object} opts Alert options
    */
-  static create(opts: {
-    title?: string,
-    subTitle?: string,
-    message?: string,
-    cssClass?: string,
-    inputs?: Array<{
-      type?: string,
-      name?: string,
-      placeholder?: string,
-      value?: string,
-      label?: string,
-      checked?: boolean,
-      id?: string
-    }>,
-    buttons?: Array<any>,
-    enableBackdropDismiss?: boolean
-  } = {}) {
+  static create(opts: AlertOptions = {}) {
     return new Alert(opts);
   }
 
@@ -483,6 +448,26 @@ class AlertCmp {
   ngOnDestroy() {
     document.removeEventListener('keyup', this.keyUp);
   }
+}
+
+export interface AlertOptions {
+  title?: string;
+  subTitle?: string;
+  message?: string;
+  cssClass?: string;
+  inputs?: Array<AlertInputOptions>;
+  buttons?: Array<any>;
+  enableBackdropDismiss?: boolean;
+}
+
+export interface AlertInputOptions {
+  type?: string;
+  name?: string;
+  placeholder?: string;
+  value?: string;
+  label?: string;
+  checked?: boolean;
+  id?: string;
 }
 
 

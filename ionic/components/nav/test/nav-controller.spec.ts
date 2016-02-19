@@ -393,6 +393,42 @@ export function run() {
         expect(leavingView.willLeave).toHaveBeenCalled();
       });
 
+      it('should not call willEnter when the leaving view has fireOtherLifecycles not true', () => {
+        let enteringView = new ViewController(Page1);
+        let leavingView = new ViewController(Page2);
+        var navOptions: NavOptions = {};
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+
+        spyOn(enteringView, 'willEnter');
+        spyOn(leavingView, 'willLeave');
+
+        leavingView.fireOtherLifecycles = false;
+
+        nav._postRender(1, enteringView, leavingView, false, navOptions, done);
+
+        expect(enteringView.willEnter).not.toHaveBeenCalled();
+        expect(leavingView.willLeave).toHaveBeenCalled();
+      });
+
+      it('should not call willLeave when the entering view has fireOtherLifecycles not true', () => {
+        let enteringView = new ViewController(Page1);
+        let leavingView = new ViewController(Page2);
+        var navOptions: NavOptions = {};
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+
+        spyOn(enteringView, 'willEnter');
+        spyOn(leavingView, 'willLeave');
+
+        enteringView.fireOtherLifecycles = false;
+
+        nav._postRender(1, enteringView, leavingView, false, navOptions, done);
+
+        expect(enteringView.willEnter).toHaveBeenCalled();
+        expect(leavingView.willLeave).not.toHaveBeenCalled();
+      });
+
       it('should not call willLeave on leaving view when it is being preloaded', () => {
         let enteringView = new ViewController(Page1);
         let leavingView = new ViewController(Page2);
@@ -492,6 +528,46 @@ export function run() {
 
         expect(enteringView.didEnter).not.toHaveBeenCalled();
         expect(leavingView.didLeave).not.toHaveBeenCalled();
+        expect(doneCalled).toBe(true);
+      });
+
+      it('should not call didLeave when enteringView set fireOtherLifecycles to false', () => {
+        let enteringView = new ViewController();
+        let leavingView = new ViewController();
+        let navOpts: NavOptions = {};
+        let hasCompleted = true;
+        let doneCalled = false;
+        let done = () => {doneCalled = true;}
+
+        enteringView.fireOtherLifecycles = false;
+
+        spyOn(enteringView, 'didEnter');
+        spyOn(leavingView, 'didLeave');
+
+        nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
+
+        expect(enteringView.didEnter).toHaveBeenCalled();
+        expect(leavingView.didLeave).not.toHaveBeenCalled();
+        expect(doneCalled).toBe(true);
+      });
+
+      it('should not call didEnter when leavingView set fireOtherLifecycles to false', () => {
+        let enteringView = new ViewController();
+        let leavingView = new ViewController();
+        let navOpts: NavOptions = {};
+        let hasCompleted = true;
+        let doneCalled = false;
+        let done = () => {doneCalled = true;}
+
+        leavingView.fireOtherLifecycles = false;
+
+        spyOn(enteringView, 'didEnter');
+        spyOn(leavingView, 'didLeave');
+
+        nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
+
+        expect(enteringView.didEnter).not.toHaveBeenCalled();
+        expect(leavingView.didLeave).toHaveBeenCalled();
         expect(doneCalled).toBe(true);
       });
 
