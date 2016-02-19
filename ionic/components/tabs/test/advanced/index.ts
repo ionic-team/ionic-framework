@@ -82,6 +82,22 @@ class TabsPage {
     let modal = Modal.create(ChatPage);
     this.nav.present(modal);
   }
+
+  onPageWillEnter() {
+    console.log('TabsPage, onPageWillEnter');
+  }
+
+  onPageDidEnter() {
+    console.log('TabsPage, onPageDidEnter');
+  }
+
+  onPageWillLeave() {
+    console.log('TabsPage, onPageWillLeave');
+  }
+
+  onPageDidLeave() {
+    console.log('TabsPage, onPageDidLeave');
+  }
 }
 
 
@@ -120,6 +136,22 @@ class Tab1Page1 {
   logout() {
     this.nav.rootNav.setRoot(SignIn, null, { animate: true, direction: 'back' });
   }
+
+  onPageWillEnter() {
+    console.log('Tab1Page1, onPageWillEnter');
+  }
+
+  onPageDidEnter() {
+    console.log('Tab1Page1, onPageDidEnter');
+  }
+
+  onPageWillLeave() {
+    console.log('Tab1Page1, onPageWillLeave');
+  }
+
+  onPageDidLeave() {
+    console.log('Tab1Page1, onPageDidLeave');
+  }
 }
 
 
@@ -141,6 +173,22 @@ class Tab1Page2 {
   push() {
     this.nav.push(Tab1Page3)
   }
+
+  onPageWillEnter() {
+    console.log('Tab1Page2, onPageWillEnter');
+  }
+
+  onPageDidEnter() {
+    console.log('Tab1Page2, onPageDidEnter');
+  }
+
+  onPageWillLeave() {
+    console.log('Tab1Page2, onPageWillLeave');
+  }
+
+  onPageDidLeave() {
+    console.log('Tab1Page2, onPageDidLeave');
+  }
 }
 
 
@@ -157,6 +205,22 @@ class Tab1Page2 {
 })
 class Tab1Page3 {
   constructor(private nav: NavController) {}
+
+  onPageWillEnter() {
+    console.log('Tab1Page3, onPageWillEnter');
+  }
+
+  onPageDidEnter() {
+    console.log('Tab1Page3, onPageDidEnter');
+  }
+
+  onPageWillLeave() {
+    console.log('Tab1Page3, onPageWillLeave');
+  }
+
+  onPageDidLeave() {
+    console.log('Tab1Page3, onPageDidLeave');
+  }
 }
 
 
@@ -181,6 +245,22 @@ class Tab2Page1 {
   push() {
     this.nav.push(Tab2Page2)
   }
+
+  onPageWillEnter() {
+    console.log('Tab2Page1, onPageWillEnter');
+  }
+
+  onPageDidEnter() {
+    console.log('Tab2Page1, onPageDidEnter');
+  }
+
+  onPageWillLeave() {
+    console.log('Tab2Page1, onPageWillLeave');
+  }
+
+  onPageDidLeave() {
+    console.log('Tab2Page1, onPageDidLeave');
+  }
 }
 
 
@@ -202,6 +282,22 @@ class Tab2Page2 {
   push() {
     this.nav.push(Tab2Page3)
   }
+
+  onPageWillEnter() {
+    console.log('Tab2Page2, onPageWillEnter');
+  }
+
+  onPageDidEnter() {
+    console.log('Tab2Page2, onPageDidEnter');
+  }
+
+  onPageWillLeave() {
+    console.log('Tab2Page2, onPageWillLeave');
+  }
+
+  onPageDidLeave() {
+    console.log('Tab2Page2, onPageDidLeave');
+  }
 }
 
 
@@ -218,6 +314,22 @@ class Tab2Page2 {
 })
 class Tab2Page3 {
   constructor(private nav: NavController) {}
+
+  onPageWillEnter() {
+    console.log('Tab2Page3, onPageWillEnter');
+  }
+
+  onPageDidEnter() {
+    console.log('Tab2Page3, onPageDidEnter');
+  }
+
+  onPageWillLeave() {
+    console.log('Tab2Page3, onPageWillLeave');
+  }
+
+  onPageDidLeave() {
+    console.log('Tab2Page3, onPageDidLeave');
+  }
 }
 
 
@@ -232,7 +344,25 @@ class Tab2Page3 {
     '</ion-navbar>' +
     '<ion-content padding><h2>Tabs 3</h2></ion-content>'
 })
-class Tab3Page1 {}
+class Tab3Page1 {
+
+  onPageWillEnter() {
+    console.log('Tab3Page1, onPageWillEnter');
+  }
+
+  onPageDidEnter() {
+    console.log('Tab3Page1, onPageDidEnter');
+  }
+
+  onPageWillLeave() {
+    console.log('Tab3Page1, onPageWillLeave');
+  }
+
+  onPageDidLeave() {
+    console.log('Tab3Page1, onPageDidLeave');
+  }
+
+}
 
 
 @App()
