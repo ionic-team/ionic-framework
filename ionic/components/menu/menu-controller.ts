@@ -263,7 +263,7 @@ export class MenuController {
       if (menu) return menu;
 
       // not found by "id", next try by "side"
-      menu = this._menus.find(m => m.side === menuId);
+      menu = this._menus.find(m => m.side === menuId && m._isEnabled);
       if (menu) return menu;
     }
 
