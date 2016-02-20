@@ -54,6 +54,8 @@
 * **card:** `.card-title` class does not exist anymore, use the `ion-card-title` element instead.
 * **pull-to-refresh:** `(starting)` event has been renamed to `(start)`.
 * **slides:** many attributes have been removed, must use `options` to pass configuration the slider. See the [Swiper Parameters API](http://www.idangero.us/swiper/api).
+* **angular 2.0.0-beta.6**: if you are using typescript, update the following:
+https://github.com/driftyco/ionic-conference-app/commit/26f3393fe4be78468e1c51e0bbf5d05a2666cd20
 
 <a name="2.0.0-beta.0"></a>
 # 2.0.0-beta.0
