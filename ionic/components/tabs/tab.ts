@@ -92,7 +92,7 @@ export class Tab extends NavController {
   private _panelId: string;
   private _btnId: string;
   private _loaded: boolean;
-  private _loadTimer: any;
+  private _loadTmr: number;
 
   /**
    * @private
@@ -181,7 +181,7 @@ export class Tab extends NavController {
    * @private
    */
   preload(wait: number) {
-    this._loadTimer = setTimeout(() => {
+    this._loadTmr = setTimeout(() => {
       if (!this._loaded) {
         console.debug('Tabs, preload', this.id);
         this.load({
@@ -247,7 +247,8 @@ export class Tab extends NavController {
    * @private
    */
   ngOnDestroy() {
-    clearTimeout(this._loadTimer);
+    clearTimeout(this._loadTmr);
+    super.ngOnDestroy();
   }
 
 }

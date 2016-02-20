@@ -209,7 +209,7 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  add(tab) {
+  add(tab: Tab) {
     tab.id = this.id + '-' + (++this._ids);
     this._tabs.push(tab);
   }

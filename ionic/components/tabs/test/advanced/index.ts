@@ -49,6 +49,14 @@ class SignIn {
 })
 class ChatPage {
   constructor(private viewCtrl: ViewController) {}
+
+  onPageDidLoad() {
+    console.log('ChatPage, onPageDidLoad');
+  }
+
+  onPageDidUnload() {
+    console.log('ChatPage, onPageDidUnload');
+  }
 }
 
 
@@ -98,6 +106,10 @@ class TabsPage {
   onPageDidLeave() {
     console.log('TabsPage, onPageDidLeave');
   }
+
+  onPageDidUnload() {
+    console.log('TabsPage, onPageDidUnload');
+  }
 }
 
 
@@ -113,6 +125,7 @@ class TabsPage {
       '<p><button id="goToTab1Page2" (click)="push()">Go to Tab 1, Page 2</button></p>' +
       '<p><button (click)="logout()">Logout</button></p>' +
       '<p><button (click)="favoritesTab()">Favorites Tab</button></p>' +
+      '<p><button (click)="goBack()">Go Back</button></p>' +
       '<p>UserId: {{userId}}</p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
@@ -127,6 +140,13 @@ class Tab1Page1 {
 
   push() {
     this.nav.push(Tab1Page2)
+  }
+
+  goBack() {
+    console.log('go back begin');
+    this.nav.pop().then((val) => {
+      console.log('go back completed', val);
+    });;
   }
 
   favoritesTab() {
@@ -151,6 +171,10 @@ class Tab1Page1 {
 
   onPageDidLeave() {
     console.log('Tab1Page1, onPageDidLeave');
+  }
+
+  onPageDidUnload() {
+    console.log('Tab1Page1, onPageDidUnload');
   }
 }
 
@@ -189,6 +213,10 @@ class Tab1Page2 {
   onPageDidLeave() {
     console.log('Tab1Page2, onPageDidLeave');
   }
+
+  onPageDidUnload() {
+    console.log('Tab1Page2, onPageDidUnload');
+  }
 }
 
 
@@ -220,6 +248,10 @@ class Tab1Page3 {
 
   onPageDidLeave() {
     console.log('Tab1Page3, onPageDidLeave');
+  }
+
+  onPageDidUnload() {
+    console.log('Tab1Page3, onPageDidUnload');
   }
 }
 
@@ -261,6 +293,10 @@ class Tab2Page1 {
   onPageDidLeave() {
     console.log('Tab2Page1, onPageDidLeave');
   }
+
+  onPageDidUnload() {
+    console.log('Tab2Page1, onPageDidUnload');
+  }
 }
 
 
@@ -298,6 +334,10 @@ class Tab2Page2 {
   onPageDidLeave() {
     console.log('Tab2Page2, onPageDidLeave');
   }
+
+  onPageDidUnload() {
+    console.log('Tab2Page2, onPageDidUnload');
+  }
 }
 
 
@@ -329,6 +369,10 @@ class Tab2Page3 {
 
   onPageDidLeave() {
     console.log('Tab2Page3, onPageDidLeave');
+  }
+
+  onPageDidUnload() {
+    console.log('Tab2Page3, onPageDidUnload');
   }
 }
 
@@ -362,6 +406,9 @@ class Tab3Page1 {
     console.log('Tab3Page1, onPageDidLeave');
   }
 
+  onPageDidUnload() {
+    console.log('Tab3Page1, onPageDidUnload');
+  }
 }
 
 

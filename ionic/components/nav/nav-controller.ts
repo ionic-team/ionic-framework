@@ -7,7 +7,7 @@ import {IonicApp} from '../app/app';
 import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
 import {NavRouter} from './nav-router';
-import {pascalCaseToDashCase, isTrueProperty} from '../../util/util';
+import {pascalCaseToDashCase, isTrueProperty, isUndefined} from '../../util/util';
 import {raf} from '../../util/dom';
 import {SwipeBackGesture} from './swipe-back';
 import {Transition} from '../../transitions/transition';
@@ -119,7 +119,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  id: number;
+  id: string;
 
   /**
    * @private
@@ -163,7 +163,7 @@ export class NavController extends Ion {
     this._sbEnabled = config.getBoolean('swipeBackEnabled') || false;
     this._sbThreshold = config.get('swipeBackThreshold') || 40;
 
-    this.id = ++ctrlIds;
+    this.id = (++ctrlIds).toString();
 
     // build a new injector for child ViewControllers to use
     this.providers = Injector.resolve([
@@ -622,6 +622,12 @@ export class NavController extends Ion {
     let activeView = this.getByState(STATE_TRANS_ENTER) ||
                      this.getByState(STATE_INIT_ENTER) ||
                      this.getActive();
+
+    // if not set, by default climb up the nav controllers if
+    // there isn't a previous view in this nav controller
+    if (isUndefined(opts.climbNav)) {
+      opts.climbNav = true;
+    }
     return this.remove(this.indexOf(activeView), 1, opts);
   }
 
@@ -717,15 +723,45 @@ export class NavController extends Ion {
     if (leavingView) {
       // there is a view ready to leave, meaning that a transition needs
       // to happen and the previously active view is going to animate out
+
+      // get the view thats ready to enter
+      let enteringView = this.getByState(STATE_INIT_ENTER);
+
+      if (!enteringView) {
+        // oh knows! no entering view to go to!
+        // if there is no previous view that would enter in this nav stack
+        // and the option is set to climb up the nav parent looking
+        // for the next nav we could transition to instead
+        if (opts.climbNav) {
+          let parentNav: NavController = this.parent;
+          while (parentNav) {
+            if (!parentNav['_tabs']) {
+              // Tabs can be a parent, but it is not a collection of views
+              // only we're looking for an actual NavController w/ stack of views
+              leavingView.willLeave();
+
+              return parentNav.pop(opts).then((rtnVal: boolean) => {
+                leavingView.didLeave();
+                return rtnVal;
+              });
+            }
+            parentNav = parentNav.parent;
+          }
+        }
+
+        // there's no previous view and there's no valid parent nav
+        // to climb to so this shouldn't actually remove the leaving
+        // view because there's nothing that would enter, eww
+        leavingView.state = STATE_ACTIVE;
+        return Promise.resolve(false);
+      }
+
       let resolve;
       let promise = new Promise(res => { resolve = res; });
 
       if (!opts.animation) {
         opts.animation = leavingView.getTransitionName(opts.direction);
       }
-
-      // get the view thats ready to enter
-      let enteringView = this.getByState(STATE_INIT_ENTER);
 
       // start the transition, fire resolve when done...
       this._transition(enteringView, leavingView, opts, (hasCompleted: boolean) => {
@@ -1226,6 +1262,13 @@ export class NavController extends Ion {
 
   }
 
+  ngOnDestroy() {
+    for (var i = this._views.length - 1; i >= 0; i--) {
+      this._views[i].destroy();
+    }
+    this._views = [];
+  }
+
   /**
    * @private
    */
@@ -1266,6 +1309,8 @@ export class NavController extends Ion {
         if (!hostViewRef.destroyed && index !== -1) {
           viewContainer.remove(index);
         }
+
+        view.setInstance(null);
       });
 
       // a new ComponentRef has been created
@@ -1575,6 +1620,7 @@ export interface NavOptions {
   transitionDelay?: number;
   postLoad?: Function;
   progressAnimation?: boolean;
+  climbNav?: boolean;
 }
 
 const STATE_ACTIVE = 'active';

@@ -1,7 +1,25 @@
-import {NavController, NavOptions, Config, ViewController} from '../../../../ionic/ionic';
+import {NavController, Tabs, NavOptions, Config, ViewController} from '../../../../ionic/ionic';
 
 export function run() {
   describe('NavController', () => {
+
+    describe('pop', () => {
+
+      it('should do nothing if its the first view in the stack', () => {
+        let view1 = new ViewController(Page1);
+        view1.state = STATE_ACTIVE;
+        nav._views = [view1];
+
+        expect(nav.length()).toBe(1);
+
+        nav.pop();
+
+        expect(nav.length()).toBe(1);
+        expect(nav.getByIndex(0).state).toBe(STATE_ACTIVE);
+        expect(nav.getByIndex(0).componentType).toBe(Page1);
+      });
+
+    });
 
     describe('popToRoot', () => {
 
@@ -1022,10 +1040,15 @@ export function run() {
     class Page5 {}
 
     beforeEach(() => {
+      nav = mockNav();
+    });
+
+    function mockNav() {
       let elementRef = {
         nativeElement: document.createElement('div')
       };
-      nav = new NavController(null, null, config, null, elementRef, null, null, null, null, null);
+
+      let nav = new NavController(null, null, config, null, elementRef, null, null, null, null, null);
 
       nav._keyboard = {
         isOpen: function() {
@@ -1045,7 +1068,9 @@ export function run() {
         setElementClass: function(){},
         setElementStyle: function(){}
       };
-    });
+
+      return nav;
+    }
 
   });
 }
