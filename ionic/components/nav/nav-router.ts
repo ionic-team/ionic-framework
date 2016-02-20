@@ -97,7 +97,9 @@ export class NavRouter extends RouterOutlet {
     rules.forEach((rule) => {
 
       pathRecognizer = rule.matchers.find((matcherPathRecognizer) => {
-        return (matcherPathRecognizer.handler.componentType === componentType);
+        if (matcherPathRecognizer.handler) {
+          return (matcherPathRecognizer.handler.componentType === componentType);
+        }
       });
 
     });
