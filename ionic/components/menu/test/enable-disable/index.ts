@@ -24,7 +24,7 @@ class E2EApp {
   constructor(app: IonicApp, menu: MenuController) {
     this.app = app;
     this.menu = menu;
-    
+
     this.page1 = Page1;
     this.page2 = Page2;
 
@@ -39,13 +39,18 @@ class E2EApp {
   }
 
   menu1Active() {
-    this.activeMenu = 'menu1';
     this.menu.enable(true, 'menu1');
     this.menu.enable(false, 'menu2');
+    this.menu.enable(false, 'menu3');
   }
   menu2Active() {
-    this.activeMenu = 'menu2';
     this.menu.enable(false, 'menu1');
     this.menu.enable(true, 'menu2');
+    this.menu.enable(false, 'menu3');
+  }
+  menu3Active() {
+    this.menu.enable(false, 'menu1');
+    this.menu.enable(false, 'menu2');
+    this.menu.enable(true, 'menu3');
   }
 }
