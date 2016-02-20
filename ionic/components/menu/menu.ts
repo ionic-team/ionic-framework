@@ -370,15 +370,29 @@ export class Menu extends Ion {
 
   /**
    * Used to enable or disable a menu. For example, there could be multiple
-   * left menus, but only one of them should be able to be dragged open.
+   * left menus, but only one of them should be able to be opened at the same
+   * time. If there are multiple menus on the same side, then enabling one menu
+   * will also automatically disable all the others that are on the same side.
    * @param {boolean} shouldEnable  True if it should be enabled, false if not.
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
   enable(shouldEnable: boolean): Menu {
     this.enabled = shouldEnable;
     if (!shouldEnable && this.isOpen) {
+      // close if this menu is open, and should not be enabled
       this.close();
     }
+
+    if (shouldEnable) {
+      // if this menu should be enabled
+      // then find all the other menus on this same side
+      // and automatically disable other same side menus
+      let sameSideMenus = this._menuCtrl
+                            .getMenus()
+                            .filter(m => m.side === this.side && m !== this)
+                            .map(m => m.enabled = false);
+    }
+
     return this;
   }
 
