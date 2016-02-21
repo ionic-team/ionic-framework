@@ -10,7 +10,7 @@ $badge-ios-background-color:          map-get($colors-ios, primary) !default;
 ion-badge {
   border-radius: $badge-ios-border-radius;
   background-color: $badge-ios-background-color;
-  color: inverse($badge-ios-background-color);
+  color: color-inverse($badge-ios-background-color);
 }
 
 
@@ -21,7 +21,7 @@ ion-badge {
 
   .badge-#{$color-name} {
     background-color: $color-value;
-    color: inverse($color-value);
+    color: color-inverse($color-value);
   }
 
 }

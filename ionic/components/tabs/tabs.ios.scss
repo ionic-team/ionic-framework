@@ -117,12 +117,12 @@ ion-tabs[tabbarPlacement=top] tabbar {
     background-color: $color-value;
 
     .tab-button {
-      color: inverse($color-value);
+      color: color-inverse($color-value);
     }
 
     .tab-button:hover:not(.disable-hover),
     .tab-button[aria-selected=true] {
-      color: inverse($color-value);
+      color: color-inverse($color-value);
     }
   }
 

@@ -198,7 +198,7 @@ ion-item-divider {
 @each $color-name, $color-value in $colors-ios {
   ion-item-divider[#{$color-name}] {
     background-color: $color-value;
-    color: inverse($color-value);
+    color: color-inverse($color-value);
   }
 }
 

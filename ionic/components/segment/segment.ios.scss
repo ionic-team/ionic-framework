@@ -7,7 +7,7 @@
 $segment-button-ios-bg-color:                   transparent !default;
 $segment-button-ios-bg-color-activated:         $toolbar-ios-active-color !default;
 
-$segment-button-ios-text-color:                 inverse($segment-button-ios-bg-color-activated) !default;
+$segment-button-ios-text-color:                 color-inverse($segment-button-ios-bg-color-activated) !default;
 $segment-button-ios-activated-transition:       100ms all linear !default;
 $segment-button-ios-hover-transition:           100ms all linear !default;
 $segment-button-ios-active-transition:          100ms all linear !default;
@@ -122,7 +122,7 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
     }
 
     &.segment-activated {
-      color: inverse($color-value);
+      color: color-inverse($color-value);
       background-color: $color-value;
     }
   }

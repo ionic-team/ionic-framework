@@ -98,16 +98,16 @@ tab-highlight {
     background-color: $color-value;
 
     .tab-button {
-      color: inverse($color-value);
+      color: color-inverse($color-value);
     }
 
     .tab-button:hover:not(.disable-hover),
     .tab-button[aria-selected=true] {
-      color: inverse($color-value);
+      color: color-inverse($color-value);
     }
 
     tab-highlight {
-      background: inverse($color-value);
+      background: color-inverse($color-value);
     }
   }
 

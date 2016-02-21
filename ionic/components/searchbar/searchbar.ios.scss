@@ -196,7 +196,7 @@ ion-searchbar {
 
   .toolbar[#{$color-name}] ion-searchbar {
     .searchbar-ios-cancel {
-      color: inverse($color-value);
+      color: color-inverse($color-value);
     }
   }
 

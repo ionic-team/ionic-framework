@@ -15,7 +15,7 @@ ion-chip {
   ion-chip {
     > ion-icon [#{$color-name}] {
       background-color: $color-value;
-      color: inverse($color-value) !important;
+      color: color-inverse($color-value) !important;
     }
   }
 

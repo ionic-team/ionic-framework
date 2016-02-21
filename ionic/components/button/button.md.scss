@@ -23,7 +23,7 @@ $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4p
 
 $button-md-color:                          map-get($colors-md, primary) !default;
 $button-md-color-activated:                color-shade($button-md-color) !default;
-$button-md-text-color:                     inverse($button-md-color) !default;
+$button-md-text-color:                     color-inverse($button-md-color) !default;
 $button-md-hover-opacity:                  0.8 !default;
 
 $button-md-large-font-size:                2rem !default;
@@ -80,7 +80,7 @@ $button-md-small-icon-font-size:           1.4em !default;
   .button-#{$color-name} {
     $bg-color: $color-value;
     $bg-color-activated: color-shade($bg-color);
-    $fg-color: inverse($bg-color);
+    $fg-color: color-inverse($bg-color);
 
     color: $fg-color;
     background-color: $bg-color;

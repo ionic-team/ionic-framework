@@ -10,7 +10,7 @@ $button-ios-font-size:                1.6rem !default;
 $button-ios-height:                   2.8em !default;
 $button-ios-color:                    map-get($colors-ios, primary) !default;
 $button-ios-color-activated:          color-shade($button-ios-color) !default;
-$button-ios-text-color:               inverse($button-ios-color) !default;
+$button-ios-text-color:               color-inverse($button-ios-color) !default;
 $button-ios-hover-opacity:            0.8 !default;
 $button-ios-border-radius:            4px !default;
 
@@ -57,7 +57,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
   .button-#{$color-name} {
     $bg-color: $color-value;
     $bg-color-activated: color-shade($bg-color);
-    $fg-color: inverse($bg-color);
+    $fg-color: color-inverse($bg-color);
 
     color: $fg-color;
     background-color: $bg-color;

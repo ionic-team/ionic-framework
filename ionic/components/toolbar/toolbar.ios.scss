@@ -88,7 +88,7 @@ ion-title {
 
     .toolbar-title,
     .bar-button-default {
-      color: inverse($color-value);
+      color: color-inverse($color-value);
     }
   }
 }
@@ -163,7 +163,7 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: inverse($bar-button-ios-color);
+    color: color-inverse($bar-button-ios-color);
     background-color: $bar-button-ios-color;
   }
 }
@@ -177,7 +177,7 @@ ion-buttons[right] {
     background-color: transparent;
 
     &.activated {
-      color: inverse($fg-color);
+      color: color-inverse($fg-color);
       background-color: $fg-color;
     }
   }
@@ -189,17 +189,17 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: inverse($bar-button-ios-color);
+  color: color-inverse($bar-button-ios-color);
   background-color: $bar-button-ios-color;
 
   &:hover:not(.disable-hover) {
     opacity: 0.4;
-    color: inverse($bar-button-ios-color);
+    color: color-inverse($bar-button-ios-color);
   }
 
   &.activated {
     opacity: 0.4;
-    color: inverse($bar-button-ios-color);
+    color: color-inverse($bar-button-ios-color);
     background-color: color-shade($bar-button-ios-color);
   }
 }
@@ -207,7 +207,7 @@ ion-buttons[right] {
 @mixin ios-bar-button-solid($color-name, $color-value) {
 
   .bar-button-solid-#{$color-name} {
-    color: inverse($color-value);
+    color: color-inverse($color-value);
     background-color: $color-value;
 
     &.activated {

@@ -174,7 +174,7 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: inverse($bar-button-md-color);
+    color: color-inverse($bar-button-md-color);
     background-color: $bar-button-md-color;
   }
 }
@@ -188,7 +188,7 @@ ion-buttons[right] {
     background-color: transparent;
 
     &.activated {
-      color: inverse($fg-color);
+      color: color-inverse($fg-color);
       background-color: $fg-color;
     }
   }
@@ -200,15 +200,15 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: inverse($bar-button-md-color);
+  color: color-inverse($bar-button-md-color);
   background-color: $bar-button-md-color;
 
   &:hover:not(.disable-hover) {
-    color: inverse($bar-button-md-color);
+    color: color-inverse($bar-button-md-color);
   }
 
   &.activated {
-    color: inverse($bar-button-md-color);
+    color: color-inverse($bar-button-md-color);
     background-color: color-shade($bar-button-md-color);
   }
 }
@@ -216,7 +216,7 @@ ion-buttons[right] {
 @mixin md-bar-button-solid($color-name, $color-value) {
 
   .bar-button-solid-#{$color-name} {
-    color: inverse($color-value);
+    color: color-inverse($color-value);
     background-color: $color-value;
 
     &.activated {

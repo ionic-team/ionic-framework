@@ -2,13 +2,13 @@
 // Color Functions
 // --------------------------------------------------
 
-@function brightness($color-value) {
+@function color-brightness($color-value) {
   @return (red($color-value) * 0.299 + green($color-value) * 0.587 + blue($color-value) * 0.114) / 255 * 100%;
 }
 
 
-@function inverse($color-value, $dark: black, $light: white) {
-  $brightness: brightness($color-value);
+@function color-inverse($color-value, $dark: black, $light: white) {
+  $brightness: color-brightness($color-value);
   $red: red($color-value);
   $green: green($color-value);
 
@@ -29,7 +29,7 @@
 
 
 @function toolbar-button-inverse($color-value) {
-  @return inverse($color-value, $dark: $toolbar-md-button-color, $light: white);
+  @return color-inverse($color-value, $dark: $toolbar-md-button-color, $light: white);
 }
 
 
