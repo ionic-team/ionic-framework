@@ -13,13 +13,12 @@ import {rafFrames} from '../../util/dom';
  */
 @Injectable()
 export class IonicApp {
-  private _titleSrv: Title = new Title();
-  private _title: string = '';
+  private _cmps: {[id: string] : any} = {};
   private _disTime: number = 0;
   private _scrollTime: number = 0;
-
-  // Our component registry map
-  private components: {[id: string] : any} = {};
+  private _title: string = '';
+  private _titleSrv: Title = new Title();
+  private _isProd: boolean = false;
 
   constructor(
     private _config: Config,
@@ -32,16 +31,27 @@ export class IonicApp {
    * @param {string} val  Value to set the document title to.
    */
   setTitle(val: string) {
-    let self = this;
-    if (val !== self._title) {
-      self._title = val;
-      this._zone.runOutsideAngular(() => {
-        function setAppTitle() {
-          self._titleSrv.setTitle(self._title);
-        }
-        rafFrames(4, setAppTitle);
-      });
+    if (val !== this._title) {
+      this._title = val;
+      this._titleSrv.setTitle(val);
     }
+  }
+
+  /**
+   * Returns if the app has been set to be in be in production mode or not.
+   * Production mode can only be set within the config of `@App`. Defaults
+   * to `false`.
+   * @return {boolean}
+   */
+  isProd(): boolean {
+    return this._isProd;
+  }
+
+  /**
+   * @private
+   */
+  setProd(val: boolean) {
+    this._isProd = !!val;
   }
 
   /**
@@ -97,7 +107,7 @@ export class IonicApp {
    * @param {object} component  The component to register
    */
   register(id: string, component: any) {
-    this.components[id] = component;
+    this._cmps[id] = component;
   }
 
   /**
@@ -106,7 +116,7 @@ export class IonicApp {
    * @param {string} id  The id to use to unregister
    */
   unregister(id: string) {
-    delete this.components[id];
+    delete this._cmps[id];
   }
 
   /**
@@ -116,8 +126,8 @@ export class IonicApp {
    * @return {object} the matching component, or undefined if none was found
    */
   getRegisteredComponent(cls: any): any {
-    for (let key in this.components) {
-      const component = this.components[key];
+    for (let key in this._cmps) {
+      const component = this._cmps[key];
       if (component instanceof cls) {
         return component;
       }
@@ -127,8 +137,6 @@ export class IonicApp {
   /**
    * @private
    * Get the component for the given key.
-   * @param {string} id  TODO
-   * @return {object} TODO
    */
   getComponent(id: string): any {
     // deprecated warning
@@ -147,7 +155,7 @@ export class IonicApp {
       );
     }
 
-    return this.components[id];
+    return this._cmps[id];
   }
 
 }

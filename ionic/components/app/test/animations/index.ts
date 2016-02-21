@@ -1,4 +1,4 @@
-import {App, Page, Animation} from '../../../../../ionic/ionic';
+import {App, Page, Animation, IonicApp} from '../../../../../ionic/ionic';
 
 
 @Page({
@@ -8,9 +8,11 @@ class E2EPage {
   duration;
   easing;
 
-  constructor() {
+  constructor(app: IonicApp) {
     this.duration = '1000';
     this.easing = 'ease-in-out';
+
+    console.log('isProd', app.isProd());
   }
 
   playGreen() {
@@ -24,7 +26,8 @@ class E2EPage {
 
 
 @App({
-  template: '<ion-nav [root]="root"></ion-nav>'
+  template: '<ion-nav [root]="root"></ion-nav>',
+  prodMode: true
 })
 class E2EApp {
   root;

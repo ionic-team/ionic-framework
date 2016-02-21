@@ -1,5 +1,6 @@
 import {Component, ChangeDetectionStrategy, ViewEncapsulation, enableProdMode, Type} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
+import {IonicApp} from '../components/app/app';
 import {TapClick} from '../components/tap-click/tap-click';
 import {ionicProviders} from '../config/bootstrap';
 import {IONIC_DIRECTIVES} from '../config/directives';
@@ -57,7 +58,7 @@ export interface AppMetadata {
 * ```
 *
 * @property {object} [config] - the app's {@link /docs/v2/api/config/Config/ Config} object.
-* @property {boolean} [prodMode] - Enable Angular's production mode, which turns off assertions and other checks within the framework. Defaults to `false`.
+* @property {boolean} [prodMode] - Enable Angular's production mode, which turns off assertions and other checks within the framework. Additionally, this config sets the return value of `isProd()` which is on the `IonicApp` instance. Defaults to `false`.
 * @property {array}  [pipes] - any pipes for your app.
 * @property {array}  [providers] - any providers for your app.
 * @property {string} [template] - the template to use for the app root.
@@ -94,6 +95,8 @@ export function App(args: AppMetadata={}) {
 
     bootstrap(cls, providers).then(appRef => {
       appRef.injector.get(TapClick);
+      let app: IonicApp = appRef.injector.get(IonicApp);
+      app.setProd(args.prodMode);
     });
 
     return cls;
