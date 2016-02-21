@@ -47,8 +47,8 @@ import {RadioGroup} from './radio-group';
   }
 })
 export class RadioButton {
-  private _checked: any = false;
-  private _disabled: any = false;
+  private _checked: boolean = false;
+  private _disabled: boolean = false;
   private _labelId: string;
   private _value = null;
 
@@ -58,7 +58,7 @@ export class RadioButton {
   id: string;
 
   /**
-   * @output {any} expression to be evaluated when clicked
+   * @output {RadioButton} expression to be evaluated when selected
    */
   @Output() select: EventEmitter<RadioButton> = new EventEmitter();
 
@@ -100,11 +100,11 @@ export class RadioButton {
    * @private
    */
   @Input()
-  get checked() {
+  get checked(): boolean {
     return this._checked;
   }
 
-  set checked(isChecked) {
+  set checked(isChecked: boolean) {
     this._checked = isTrueProperty(isChecked);
 
     if (this._item) {
@@ -116,11 +116,11 @@ export class RadioButton {
    * @private
    */
   @Input()
-  get disabled() {
+  get disabled(): boolean {
     return this._disabled;
   }
 
-  set disabled(val) {
+  set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-radio-disabled', this._disabled);
   }
