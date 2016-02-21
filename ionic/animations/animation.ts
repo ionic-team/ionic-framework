@@ -23,13 +23,14 @@ export class Animation {
   private _fFns: Function[];
   private _fOnceFns: Function[];
   private _wChg: boolean = false;
-  private _rv: boolean;
+  private _rv: boolean = false;
   private _unregTrans: Function;
   private _tmr: number;
   private _lastUpd: number = 0;
 
-  public isPlaying: boolean;
-  public hasTween: boolean;
+  public isPlaying: boolean = false;
+  public hasTween: boolean = false;
+  public hasCompleted: boolean = false;
 
   constructor(ele?: any, opts: AnimationOptions = {}) {
     this._reset();
@@ -57,9 +58,6 @@ export class Animation {
     this._fOnceFns = [];
 
     this._clearAsync();
-
-    this.isPlaying = this.hasTween = this._rv = false;
-    this._easing = this._dur = null;
   }
 
   element(ele: any): Animation {
@@ -687,13 +685,14 @@ export class Animation {
 
   _onFinish(hasCompleted: boolean) {
     this.isPlaying = false;
+    this.hasCompleted = hasCompleted;
     var i: number;
 
     for (i = 0; i < this._fFns.length; i++) {
-      this._fFns[i](hasCompleted);
+      this._fFns[i](this);
     }
     for (i = 0; i < this._fOnceFns.length; i++) {
-      this._fOnceFns[i](hasCompleted);
+      this._fOnceFns[i](this);
     }
     this._fOnceFns = [];
   }

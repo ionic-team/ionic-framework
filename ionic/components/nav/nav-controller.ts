@@ -1081,13 +1081,13 @@ export class NavController extends Ion {
       }
 
       // create a callback for when the animation is done
-      transAnimation.onFinish((hasCompleted: boolean) => {
+      transAnimation.onFinish((trans: Transition) => {
         // transition animation has ended
 
         // destroy the animation and it's element references
-        transAnimation.destroy();
+        trans.destroy();
 
-        this._afterTrans(enteringView, leavingView, opts, hasCompleted, done);
+        this._afterTrans(enteringView, leavingView, opts, trans.hasCompleted, done);
       });
 
       // cool, let's do this, start the transition

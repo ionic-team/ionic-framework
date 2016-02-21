@@ -22,6 +22,35 @@ class E2EPage {
     a.easing(this.easing);
     a.play();
   }
+
+  memoryCheck() {
+    let self = this;
+    let count = 0;
+
+    function play() {
+      count++;
+      if (count >= 100) {
+        console.log('Play done');
+        return;
+      }
+
+      console.log('Play', count);
+
+      let a = new Animation('.green');
+      a.fromTo('translateX', '0px', '200px');
+      a.duration(self.duration);
+      a.easing(self.easing);
+      a.onFinish((animation) => {
+        setTimeout(() => {
+          play();
+        }, 100);
+        animation.destroy();
+      });
+      a.play();
+    }
+
+    play();
+  }
 }
 
 
