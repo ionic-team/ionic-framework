@@ -72,7 +72,7 @@ export class Animation {
         }
 
       } else if (typeof ele === 'string') {
-        ele = doc.querySelector(ele);
+        ele = doc.querySelectorAll(ele);
         for (i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }

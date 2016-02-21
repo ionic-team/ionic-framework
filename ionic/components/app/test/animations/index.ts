@@ -5,6 +5,8 @@ import {App, Page, Animation} from '../../../../../ionic/ionic';
   templateUrl: 'main.html'
 })
 class E2EPage {
+  duration;
+  easing;
 
   constructor() {
     this.duration = '1000';
@@ -25,6 +27,8 @@ class E2EPage {
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
+  root;
+
   constructor() {
     this.root = E2EPage;
   }
