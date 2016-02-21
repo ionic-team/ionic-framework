@@ -62,8 +62,8 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
   providers: [CHECKBOX_VALUE_ACCESSOR]
 })
 export class Checkbox {
-  private _checked: any = false;
-  private _disabled: any = false;
+  private _checked: boolean = false;
+  private _disabled: boolean = false;
   private _labelId: string;
   private _fn: Function;
 
@@ -105,11 +105,11 @@ export class Checkbox {
    * @input {boolean} whether or not the checkbox is checked (defaults to false)
    */
   @Input()
-  get checked() {
+  get checked(): boolean {
     return this._checked;
   }
 
-  set checked(val) {
+  set checked(val: boolean) {
     this._setChecked(isTrueProperty(val));
     this.onChange(this._checked);
   }
@@ -154,11 +154,11 @@ export class Checkbox {
    * @input {boolean} whether or not the checkbox is disabled or not.
    */
   @Input()
-  get disabled(): any {
+  get disabled(): boolean {
     return this._disabled;
   }
 
-  set disabled(val: any) {
+  set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-checkbox-disabled', this._disabled);
   }

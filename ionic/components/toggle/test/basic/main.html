@@ -28,13 +28,13 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Kiwi, NgModel false, Secondary color</ion-label>
-        <ion-toggle secondary [(ngModel)]="kiwiModel"></ion-toggle>
+        <ion-label>Kiwi, (change) Secondary color</ion-label>
+        <ion-toggle secondary (change)="kiwiChange($event)"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Strawberry, NgModel true</ion-label>
-        <ion-toggle [(ngModel)]="strawberryModel"></ion-toggle>
+        <ion-label>Strawberry, (change) [checked]="true"</ion-label>
+        <ion-toggle danger (change)="strawberryChange($event)" [checked]="true"></ion-toggle>
       </ion-item>
 
     </ion-list>
@@ -56,8 +56,8 @@
     <code>cherry.value: {{fruitsForm.controls.cherryCtrl.value}}</code><br>
     <code>grape.dirty: {{fruitsForm.controls.grapeCtrl.dirty}}</code><br>
     <code>grape.value: {{fruitsForm.controls.grapeCtrl.value}}</code><br>
-    <code>kiwiModel: {{kiwiModel}}</code><br>
-    <code>strawberryModel: {{strawberryModel}}</code><br>
+    <code>kiwiValue: {{kiwiValue}}</code><br>
+    <code>strawberryValue: {{strawberryValue}}</code><br>
   </p>
 
   <pre aria-hidden="true" padding>{{formResults}}</pre>

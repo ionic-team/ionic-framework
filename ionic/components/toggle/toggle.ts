@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, Input, Optional, Provider, forwardRef} from 'angular2/core';
+import {Component, ElementRef, Renderer, Input, Output, EventEmitter, Optional, Provider, forwardRef} from 'angular2/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Form} from '../../util/form';
@@ -76,8 +76,8 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
   providers: [TOGGLE_VALUE_ACCESSOR]
 })
 export class Toggle implements ControlValueAccessor  {
-  private _checked: any = false;
-  private _disabled: any = false;
+  private _checked: boolean = false;
+  private _disabled: boolean = false;
   private _labelId: string;
   private _activated: boolean = false;
   private _startX: number;
@@ -88,6 +88,11 @@ export class Toggle implements ControlValueAccessor  {
    * @private
    */
   id: string;
+
+  /**
+   * @output {Toggle} expression to evaluate when the toggle value changes
+   */
+  @Output() change: EventEmitter<Toggle> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -170,11 +175,11 @@ export class Toggle implements ControlValueAccessor  {
   }
 
   @Input()
-  get checked(): any {
+  get checked(): boolean {
     return this._checked;
   }
 
-  set checked(val: any) {
+  set checked(val: boolean) {
     this._setChecked(isTrueProperty(val));
     this.onChange(this._checked);
   }
@@ -183,8 +188,11 @@ export class Toggle implements ControlValueAccessor  {
    * @private
    */
   private _setChecked(isChecked: boolean) {
-    this._checked = isChecked;
-    this._item && this._item.setCssClass('item-toggle-checked', isChecked);
+    if (isChecked !== this._checked) {
+      this._checked = isChecked;
+      this.change.emit(this);
+      this._item && this._item.setCssClass('item-toggle-checked', isChecked);
+    }
   }
 
   /**
@@ -213,11 +221,11 @@ export class Toggle implements ControlValueAccessor  {
   registerOnTouched(fn) { this.onTouched = fn; }
 
   @Input()
-  get disabled(): any {
+  get disabled(): boolean {
     return this._disabled;
   }
 
-  set disabled(val: any) {
+  set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-toggle-disabled', this._disabled);
   }
@@ -225,7 +233,12 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @private
    */
-  onChange(_) {}
+  onChange(isChecked: boolean) {
+    // used when this input does not have an ngModel or ngControl
+    console.debug('toggle, onChange (no ngModel)', isChecked);
+    this._setChecked(isChecked);
+    this.onTouched();
+  }
 
   /**
    * @private
