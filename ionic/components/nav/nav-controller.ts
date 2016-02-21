@@ -692,31 +692,14 @@ export class NavController extends Ion {
       if (forcedActive) {
         // this scenario happens when a remove is going on
         // during a transition
-        let resolve;
-        let promise = new Promise(res => { resolve = res; });
-
-        if (!opts.animation) {
-          opts.animation = forcedActive.getTransitionName(opts.direction);
-        }
-
         if (this._trans) {
-          this._trans
-            .onFinish(() => {
-              opts.animate = false;
-              this._transition(forcedActive, null, opts, (hasCompleted: boolean) => {
-                // transition has completed!!
-                resolve(hasCompleted);
-              });
-            }, false, true)
-            .stop();
+          this._trans.stop();
           this._trans.destroy();
           this._trans = null;
-
-        } else {
-          resolve(false);
+          this._cleanup();
         }
 
-        return promise;
+        return Promise.resolve(false);
       }
     }
 
