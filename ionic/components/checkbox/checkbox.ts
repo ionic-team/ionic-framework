@@ -1,4 +1,4 @@
-import {Component, Optional, Input, HostListener, Provider, forwardRef} from 'angular2/core';
+import {Component, Optional, Input, Output, EventEmitter, HostListener, Provider, forwardRef} from 'angular2/core';
 import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Form} from '../../util/form';
@@ -72,6 +72,11 @@ export class Checkbox {
    */
   id: string;
 
+  /**
+   * @output {Checkbox} expression to evaluate when the checkbox value changes
+   */
+  @Output() change: EventEmitter<Checkbox> = new EventEmitter();
+
   constructor(
     private _form: Form,
     @Optional() private _item: Item
@@ -113,8 +118,11 @@ export class Checkbox {
    * @private
    */
   private _setChecked(isChecked: boolean) {
-    this._checked = isChecked;
-    this._item && this._item.setCssClass('item-checkbox-checked', isChecked);
+    if (isChecked !== this._checked) {
+      this._checked = isChecked;
+      this.change.emit(this);
+      this._item && this._item.setCssClass('item-checkbox-checked', isChecked);
+    }
   }
 
   /**
@@ -158,7 +166,12 @@ export class Checkbox {
   /**
    * @private
    */
-  onChange(_) {}
+  onChange(isChecked: boolean) {
+    // used when this input does not have an ngModel or ngControl
+    console.debug('checkbox, onChange (no ngModel)', isChecked);
+    this._setChecked(isChecked);
+    this.onTouched();
+  }
 
   /**
    * @private

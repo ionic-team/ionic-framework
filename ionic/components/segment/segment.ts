@@ -62,7 +62,7 @@ export class SegmentButton {
   @Input() value: string;
 
   /**
-   * @output {any} expression to evaluate when a segment button has been clicked
+   * @output {SegmentButton} expression to evaluate when a segment button has been clicked
    */
   @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
 

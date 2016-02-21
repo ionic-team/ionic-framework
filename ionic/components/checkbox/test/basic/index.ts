@@ -19,8 +19,8 @@ class E2EApp {
   fruitsForm: ControlGroup;
   grapeDisabled: boolean;
   grapeChecked: boolean;
-  kiwiModel: boolean;
-  strawberryModel: boolean;
+  kiwiValue: boolean;
+  strawberryValue: boolean;
   standAloneChecked: boolean;
   formResults: string;
 
@@ -35,9 +35,6 @@ class E2EApp {
     this.grapeDisabled = true;
     this.grapeChecked = true;
     this.standAloneChecked = true;
-
-    this.kiwiModel = false;
-    this.strawberryModel = true;
   }
 
   toggleGrapeChecked() {
@@ -46,6 +43,16 @@ class E2EApp {
 
   toggleGrapeDisabled() {
     this.grapeDisabled = !this.grapeDisabled;
+  }
+
+  kiwiChange(ev) {
+    console.log('kiwiChange', ev);
+    this.kiwiValue = ev.checked;
+  }
+
+  strawberryChange(ev) {
+    console.log('strawberryChange', ev);
+    this.strawberryValue = ev.checked;
   }
 
   doSubmit(ev) {

@@ -29,13 +29,13 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Kiwi, NgModel false, Secondary color</ion-label>
-        <ion-checkbox secondary [(ngModel)]="kiwiModel"></ion-checkbox>
+        <ion-label>Kiwi, (change) Secondary color</ion-label>
+        <ion-checkbox secondary (change)="kiwiChange($event)"></ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>Strawberry, NgModel true</ion-label>
-        <ion-checkbox light [(ngModel)]="strawberryModel"></ion-checkbox>
+        <ion-label>Strawberry, (change) [checked]="true"</ion-label>
+        <ion-checkbox light (change)="strawberryChange($event)" [checked]="true"></ion-checkbox>
       </ion-item>
 
     </ion-list>
@@ -62,8 +62,8 @@
     <code>cherry.value: {{fruitsForm.controls.cherryCtrl.value}}</code><br>
     <code>grape.dirty: {{fruitsForm.controls.grapeCtrl.dirty}}</code><br>
     <code>grape.value: {{fruitsForm.controls.grapeCtrl.value}}</code><br>
-    <code>kiwiModel: {{kiwiModel}}</code><br>
-    <code>strawberryModel: {{strawberryModel}}</code><br>
+    <code>kiwiValue: {{kiwiValue}}</code><br>
+    <code>strawberryValue: {{strawberryValue}}</code><br>
   </p>
 
   <pre aria-hidden="true" padding>{{formResults}}</pre>
