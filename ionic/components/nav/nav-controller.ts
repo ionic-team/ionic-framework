@@ -990,10 +990,19 @@ export class NavController extends Ion {
       } else {
         // there are no other transitions happening but this one
         // only entering/leaving should show, all others hidden
-        this._views.forEach(view => {
-          let shouldShow = (view === enteringView) || (view === leavingView);
+        // also if a view is an overlay or the previous view is an
+        // overlay then always show the overlay and the view before it
+        var view: ViewController;
+        var shouldShow: boolean;
+
+        for (var i = 0, ii = this._views.length; i < ii; i++) {
+          view = this._views[i];
+          shouldShow = (view === enteringView) ||
+                       (view === leavingView) ||
+                       view.isOverlay ||
+                       (i < ii - 1 ? this._views[i + 1].isOverlay : false);
           view.domCache(shouldShow, this._renderer);
-        });
+        }
       }
 
       // call each view's lifecycle events

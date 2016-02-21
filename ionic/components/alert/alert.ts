@@ -126,6 +126,7 @@ export class Alert extends ViewController {
 
     super(AlertCmp, opts);
     this.viewType = 'alert';
+    this.isOverlay = true;
 
     // by default, alerts should not fire lifecycle events of other views
     // for example, when an alert enters, the current active view should

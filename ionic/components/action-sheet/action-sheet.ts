@@ -78,20 +78,21 @@ import {ViewController} from '../nav/view-controller';
  * @demo /docs/v2/demos/action-sheet/
  * @see {@link /docs/v2/components#action-sheets ActionSheet Component Docs}
  */
- export class ActionSheet extends ViewController {
+export class ActionSheet extends ViewController {
 
-   constructor(opts: ActionSheetOptions = {}) {
-     opts.buttons = opts.buttons || [];
-     opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+  constructor(opts: ActionSheetOptions = {}) {
+    opts.buttons = opts.buttons || [];
+    opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-     super(ActionSheetCmp, opts);
-     this.viewType = 'action-sheet';
+    super(ActionSheetCmp, opts);
+    this.viewType = 'action-sheet';
+    this.isOverlay = true;
 
     // by default, actionsheets should not fire lifecycle events of other views
     // for example, when an actionsheets enters, the current active view should
     // not fire its lifecycle events because it's not conceptually leaving
     this.fireOtherLifecycles = false;
-   }
+  }
 
    /**
    * @private

@@ -1,4 +1,4 @@
-import {App, Page, Alert, NavController} from '../../../../../ionic/ionic';
+import {App, Page, Alert, Modal, NavController, ViewController} from '../../../../../ionic/ionic';
 
 
 @Page({
@@ -71,9 +71,20 @@ class E2EPage {
     let alert = Alert.create({
       title: 'Alert',
       subTitle: 'Subtitle',
-      message: 'This is an alert message.',
-      buttons: ['Cancel', 'Continue', 'Delete']
+      message: 'This is an alert message.'
     });
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Open Modal',
+      handler: () => {
+        let modal = Modal.create(ModalPage);
+        this.nav.present(modal);
+
+        // do not close the alert when this button is pressed
+        return false;
+      }
+    });
+    alert.addButton('Delete');
     this.nav.present(alert);
   }
 
@@ -98,6 +109,7 @@ class E2EPage {
           alert.dismiss(data);
         }, 500);
 
+        // do not close the alert when this button is pressed
         return false;
       }
     });
@@ -270,11 +282,33 @@ class E2EPage {
   }
 }
 
+@Page({
+  template: `
+    <ion-toolbar>
+      <ion-buttons>
+        <button (click)="dismiss()">Close</button>
+      </ion-buttons>
+      <ion-title>Modal</ion-title>
+    </ion-toolbar>
+    <ion-content padding>
+      Hi, I'm Bob, and I'm a modal.
+    </ion-content>
+  `
+})
+class ModalPage {
+  constructor(private viewCtrl: ViewController) {}
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+}
+
 
 @App({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
+  root;
   constructor() {
     this.root = E2EPage;
   }

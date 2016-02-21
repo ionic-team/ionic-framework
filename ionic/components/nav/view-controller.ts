@@ -74,6 +74,11 @@ export class ViewController {
   /**
    * @private
    */
+  isOverlay: boolean = false;
+
+  /**
+   * @private
+   */
   zIndex: number;
 
   /**

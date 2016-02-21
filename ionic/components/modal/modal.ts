@@ -106,6 +106,7 @@ export class Modal extends ViewController {
   constructor(componentType, data={}) {
     super(componentType, data);
     this.viewType = 'modal';
+    this.isOverlay = true;
   }
 
   /**

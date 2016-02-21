@@ -477,6 +477,73 @@ export function run() {
         expect(navOptions.animate).toBe(false);
       });
 
+      it('should set domCache true when isAlreadyTransitioning', () => {
+        let enteringView = new ViewController(Page1);
+        let leavingView = new ViewController(Page2);
+        let isAlreadyTransitioning = true;
+        var navOptions: NavOptions = {};
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+        nav._renderer = null;
+
+        spyOn(enteringView, 'domCache');
+        spyOn(leavingView, 'domCache');
+
+        nav._postRender(1, enteringView, leavingView, isAlreadyTransitioning, navOptions, done);
+
+        expect(enteringView.domCache).toHaveBeenCalledWith(true, nav._renderer);
+        expect(leavingView.domCache).toHaveBeenCalledWith(true, nav._renderer);
+      });
+
+      it('should set domCache true when isAlreadyTransitioning false for the entering/leaving views', () => {
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+        let view3 = new ViewController(Page3);
+        let isAlreadyTransitioning = false;
+        var navOptions: NavOptions = {};
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+        nav._renderer = null;
+        nav._views = [view1, view2, view3];
+
+        spyOn(view1, 'domCache');
+        spyOn(view2, 'domCache');
+        spyOn(view3, 'domCache');
+
+        nav._postRender(1, view3, view2, isAlreadyTransitioning, navOptions, done);
+
+        expect(view1.domCache).toHaveBeenCalledWith(false, nav._renderer);
+        expect(view2.domCache).toHaveBeenCalledWith(true, nav._renderer);
+        expect(view3.domCache).toHaveBeenCalledWith(true, nav._renderer);
+      });
+
+      it('should set domCache true when isAlreadyTransitioning false for views when a view has isOverlay=true', () => {
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+        let view3 = new ViewController(Page3);
+        let view4 = new ViewController(Page4);
+        let isAlreadyTransitioning = false;
+        var navOptions: NavOptions = {};
+        var done = () => {};
+        nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+        nav._renderer = null;
+        nav._views = [view1, view2, view3, view4];
+
+        view3.isOverlay = true;
+
+        spyOn(view1, 'domCache');
+        spyOn(view2, 'domCache');
+        spyOn(view3, 'domCache');
+        spyOn(view4, 'domCache');
+
+        nav._postRender(1, view4, view3, isAlreadyTransitioning, navOptions, done);
+
+        expect(view1.domCache).toHaveBeenCalledWith(false, nav._renderer);
+        expect(view2.domCache).toHaveBeenCalledWith(true, nav._renderer);
+        expect(view3.domCache).toHaveBeenCalledWith(true, nav._renderer);
+        expect(view4.domCache).toHaveBeenCalledWith(true, nav._renderer);
+      });
+
     });
 
     describe('_setZIndex', () => {
