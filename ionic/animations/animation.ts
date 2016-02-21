@@ -1,4 +1,4 @@
-import {CSS, rafFrames, raf, transitionEnd} from '../util/dom';
+import {CSS, rafFrames, transitionEnd} from '../util/dom';
 import {assign, isDefined} from '../util/util';
 
 
@@ -7,25 +7,25 @@ import {assign, isDefined} from '../util/util';
  **/
 export class Animation {
   private _parent: Animation;
-  private _c: Array<Animation>;
-  private _el: Array<HTMLElement>;
+  private _c: Animation[];
+  private _el: HTMLElement[];
   private _opts: AnimationOptions;
   private _fx: {[key: string]: EffectProperty};
   private _dur: number;
   private _easing: string;
-  private _bfSty: any;
-  private _bfAdd: Array<string>;
-  private _bfRmv: Array<string>;
-  private _afSty: any;
-  private _afAdd: Array<string>;
-  private _afRmv: Array<string>;
-  private _pFns: Array<Function>;
-  private _fFns: Array<Function>;
-  private _fOnceFns: Array<Function>;
+  private _bfSty: { [property: string]: any; };
+  private _bfAdd: string[];
+  private _bfRmv: string[];
+  private _afSty: { [property: string]: any; };
+  private _afAdd: string[];
+  private _afRmv: string[];
+  private _pFns: Function[];
+  private _fFns: Function[];
+  private _fOnceFns: Function[];
   private _wChg: boolean = false;
   private _rv: boolean;
   private _unregTrans: Function;
-  private _tmr: any;
+  private _tmr: number;
   private _lastUpd: number = 0;
 
   public isPlaying: boolean;
@@ -63,7 +63,7 @@ export class Animation {
   }
 
   element(ele: any): Animation {
-    var i;
+    var i: number;
 
     if (ele) {
       if (Array.isArray(ele)) {
@@ -133,7 +133,7 @@ export class Animation {
   }
 
   to(prop: string, val: any, clearProperyAfterTransition?: boolean): Animation {
-    var fx = this._addProp('to', prop, val);
+    var fx: EffectProperty = this._addProp('to', prop, val);
 
     if (clearProperyAfterTransition) {
       // if this effect is a transform then clear the transform effect
@@ -149,7 +149,7 @@ export class Animation {
   }
 
   private _addProp(state: string, prop: string, val: any): EffectProperty {
-    var fxProp = this._fx[prop];
+    var fxProp: EffectProperty = this._fx[prop];
 
     if (!fxProp) {
       // first time we've see this EffectProperty
@@ -208,11 +208,11 @@ export class Animation {
         this._bfRmv.push(className);
         return this;
       },
-      setStyles: (styles: any): Animation => {
+      setStyles: (styles: { [property: string]: any; }): Animation => {
         this._bfSty = styles;
         return this;
       },
-      clearStyles: (propertyNames: Array<string>): Animation => {
+      clearStyles: (propertyNames: string[]): Animation => {
         for (var i = 0; i < propertyNames.length; i++) {
           this._bfSty[propertyNames[i]] = '';
         }
@@ -231,11 +231,11 @@ export class Animation {
         this._afRmv.push(className);
         return this;
       },
-      setStyles: (styles: any): Animation => {
+      setStyles: (styles: { [property: string]: any; }): Animation => {
         this._afSty = styles;
         return this;
       },
-      clearStyles: (propertyNames: Array<string>): Animation => {
+      clearStyles: (propertyNames: string[]): Animation => {
         for (var i = 0; i < propertyNames.length; i++) {
           this._afSty[propertyNames[i]] = '';
         }
@@ -246,7 +246,7 @@ export class Animation {
 
   play(opts: PlayOptions = {}) {
     var self = this;
-    var i;
+    var i: number;
     var duration = isDefined(opts.duration) ? opts.duration : self._dur;
 
     console.debug('Animation, play, duration', duration, 'easing', self._easing);
@@ -386,7 +386,12 @@ export class Animation {
 
   _progress(stepValue: number) {
     // bread 'n butter
-    var i, prop, fx, val, transforms, tweenEffect;
+    var i: number;
+    var prop: string;
+    var fx: EffectProperty;
+    var val: any;
+    var transforms: string[];
+    var tweenEffect: boolean;
 
     for (i = 0; i < this._c.length; i++) {
       this._c[i]._progress(stepValue);
@@ -457,7 +462,8 @@ export class Animation {
   }
 
   _setTrans(duration: number, forcedLinearEasing: boolean) {
-    var i, easing;
+    var i: number;
+    var easing: string;
 
     // set the TRANSITION properties inline on the element
     for (i = 0; i < this._c.length; i++) {
@@ -479,7 +485,9 @@ export class Animation {
   }
 
   _willChange(addWillChange: boolean) {
-    var i, wc, prop;
+    var i: number;
+    var wc: string[];
+    var prop: string;
 
     for (i = 0; i < this._c.length; i++) {
       this._c[i]._willChange(addWillChange);
@@ -505,7 +513,10 @@ export class Animation {
   _before() {
     // before the RENDER_DELAY
     // before the animations have started
-    var i, j, prop, ele;
+    var i: number;
+    var j: number;
+    var prop: string;
+    var ele: HTMLElement;
 
     // stage all of the child animations
     for (i = 0; i < this._c.length; i++) {
@@ -536,7 +547,10 @@ export class Animation {
 
   _after() {
     // after the animations have finished
-    var i, j, prop, ele;
+    var i: number;
+    var j: number;
+    var prop: string;
+    var ele: HTMLElement;
 
     for (i = 0; i < this._c.length; i++) {
       this._c[i]._after();
@@ -673,7 +687,7 @@ export class Animation {
 
   _onFinish(hasCompleted: boolean) {
     this.isPlaying = false;
-    var i;
+    var i: number;
 
     for (i = 0; i < this._fFns.length; i++) {
       this._fFns[i](hasCompleted);
@@ -693,7 +707,8 @@ export class Animation {
   }
 
   destroy(removeElement?: boolean) {
-    var i, ele;
+    var i: number;
+    var ele: HTMLElement;
 
     for (i = 0; i < this._c.length; i++) {
       this._c[i].destroy(removeElement);
@@ -711,7 +726,8 @@ export class Animation {
 
   _transEl(): HTMLElement {
     // get the lowest level element that has an Animation
-    var i, targetEl;
+    var i: number;
+    var targetEl: HTMLElement;
 
     for (i = 0; i < this._c.length; i++) {
       targetEl = this._c[i]._transEl();
