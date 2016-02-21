@@ -1,15 +1,14 @@
 
 ### Creating an Issue
 
-##### [Create a new issue form](http://ionicframework.com/submit-issue/) <-- please use this form for new issues
-
 If you have a question on how something works, or its expected functionality, you might want to visit the [Ionic Forum](http://forum.ionicframework.com/) first.
 
 If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?state=open). You can search through existing issues to see if someone's reported one similar to yours.
 
 If not, then [create a codepen.io](http://codepen.io/ionic/public-list) that demonstrates the problem (try to use as little code as possible: the more minimalist, the faster we can debug it). Also, please do not group multiple topics into one issue, but instead each should be its own issue.
 
-Next, [create a new issue](http://ionicframework.com/submit-issue/) that briefly explains the problem, and provides a bit of background as to the circumstances that triggered it. Don't forget to include the link to that [codepen.io](http://codepen.io/ionic/public-list) you created!
+Next, [create a new issue](https://github.com/driftyco/ionic/issues/new) that thoroughly explains the problem, how to reproduce the issue, and provide any additional information such as code examples and error logs.
+
 
 ### Issue Etiquette Guidelines
 
