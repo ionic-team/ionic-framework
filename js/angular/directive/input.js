@@ -12,7 +12,7 @@
 * <ion-list>
 *   <ion-input>
 *     <input type="text" placeholder="First Name">
-*   <ion-input>
+*   </ion-input>
 *
 *   <ion-input>
 *     <ion-label>Username</ion-label>
