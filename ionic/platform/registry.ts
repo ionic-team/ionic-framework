@@ -70,6 +70,7 @@ Platform.register({
       // fallback to always use ripple
       return 'ripple';
     },
+    autoFocusAssist: 'immediate',
     hoverCSS: false,
     keyboardHeight: 300,
     mode: 'md',
@@ -93,6 +94,7 @@ Platform.register({
     'iphone'
   ],
   settings: {
+    autoFocusAssist: 'delay',
     clickBlock: true,
     hoverCSS: false,
     keyboardHeight: 300,

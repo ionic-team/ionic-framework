@@ -24,6 +24,9 @@ export class InputBase {
   protected _useAssist: boolean = true;
   protected _value = '';
   protected _isTouch: boolean;
+  protected _autoFocusAssist: string;
+  protected _autoComplete: string;
+  protected _autoCorrect: string;
 
   inputControl: NgControl;
 
@@ -44,6 +47,10 @@ export class InputBase {
   ) {
     this._useAssist = config.get('scrollAssist');
     this._keyboardHeight = config.get('keyboardHeight');
+
+    this._autoFocusAssist = config.get('autoFocusAssist', 'delay');
+    this._autoComplete = config.get('autocomplete', 'off');
+    this._autoCorrect = config.get('autocorrect', 'off');
 
     if (ngControl) {
       ngControl.valueAccessor = this;
@@ -176,8 +183,44 @@ export class InputBase {
     this.checkHasValue(nativeInput.getValue());
     this.disabled = this._disabled;
 
+    var ionInputEle: HTMLElement = this._elementRef.nativeElement;
+    let nativeInputEle: HTMLElement = nativeInput.element();
+
     // copy ion-input attributes to the native input element
-    copyInputAttributes(this._elementRef.nativeElement, nativeInput.element());
+    copyInputAttributes(ionInputEle, nativeInputEle);
+
+    if (ionInputEle.hasAttribute('autofocus')) {
+      // the ion-input element has the autofocus attributes
+      ionInputEle.removeAttribute('autofocus');
+
+      if (this._autoFocusAssist === 'immediate') {
+        // config says to immediate focus on the input
+        // works best on android devices
+        nativeInputEle.focus();
+
+      } else if (this._autoFocusAssist === 'delay') {
+        // config says to chill out a bit and focus on the input after transitions
+        // works best on desktop
+        setTimeout(() => {
+          nativeInputEle.focus();
+        }, 650);
+      }
+
+      // traditionally iOS has big issues with autofocus on actual devices
+      // autoFocus is disabled by default with the iOS mode config
+    }
+
+    // by default set autocomplete="off" unless specified by the input
+    if (ionInputEle.hasAttribute('autocomplete')) {
+      this._autoComplete = ionInputEle.getAttribute('autocomplete');
+    }
+    nativeInputEle.setAttribute('autocomplete', this._autoComplete);
+
+    // by default set autocomplete="off" unless specified by the input
+    if (ionInputEle.hasAttribute('autocorrect')) {
+      this._autoCorrect = ionInputEle.getAttribute('autocorrect');
+    }
+    nativeInputEle.setAttribute('autocorrect', this._autoCorrect);
   }
 
   /**

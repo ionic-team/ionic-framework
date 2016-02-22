@@ -15,6 +15,10 @@ export function run() {
         expect(util.isTrueProperty(' true  ')).toBe(true);
       });
 
+      it('should be true from string "on"', () => {
+        expect(util.isTrueProperty(true)).toBe(true);
+      });
+
       it('should be true from empty string ""', () => {
         expect(util.isTrueProperty('')).toBe(true);
         expect(util.isTrueProperty('  ')).toBe(true);
@@ -27,6 +31,10 @@ export function run() {
 
       it('should be false from boolean false', () => {
         expect(util.isTrueProperty(false)).toBe(false);
+      });
+
+      it('should be false from string "off"', () => {
+        expect(util.isTrueProperty(true)).toBe(true);
       });
 
       it('should be false from null', () => {

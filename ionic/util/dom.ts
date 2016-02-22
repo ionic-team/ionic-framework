@@ -199,13 +199,13 @@ export function hasFocusedTextInput() {
   return false;
 }
 
-const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id)$/i
+const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id|autofocus|autocomplete|autocorrect)$/i
 export function copyInputAttributes(srcElement, destElement) {
   // copy attributes from one element to another
   // however, skip over a few of them as they're already
   // handled in the angular world
-  let attrs = srcElement.attributes;
-  for (let i = 0; i < attrs.length; i++) {
+  var attrs = srcElement.attributes;
+  for (var i = 0; i < attrs.length; i++) {
     var attr = attrs[i];
     if (!skipInputAttrsReg.test(attr.name)) {
       destElement.setAttribute(attr.name, attr.value);

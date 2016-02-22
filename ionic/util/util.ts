@@ -113,7 +113,7 @@ export const isArray = Array.isArray;
 export const isTrueProperty = function(val: any): boolean {
   if (typeof val === 'string') {
     val = val.toLowerCase().trim();
-    return (val === 'true' || val === '');
+    return (val === 'true' || val === 'on' || val === '');
   }
   return !!val;
 };
