@@ -65,11 +65,12 @@ export class Gesture {
       this._hammer.destroy();
     }
     this._callbacks = {};
+    this._hammer = null;
     this.isListening = false;
   }
 
   destroy() {
     this.unlisten();
-    this._hammer = this.element = this._options = null;
+    this.element = this._options = null;
   }
 }
