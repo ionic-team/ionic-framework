@@ -31,7 +31,7 @@ export class Gesture {
     this._options = opts;
   }
 
-  options(opts = {}) {
+  options(opts: any) {
     assign(this._options, opts);
   }
 

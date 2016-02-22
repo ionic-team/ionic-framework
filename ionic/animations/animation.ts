@@ -56,8 +56,6 @@ export class Animation {
     this._pFns = [];
     this._fFns = [];
     this._fOnceFns = [];
-
-    this._clearAsync();
   }
 
   element(ele: any): Animation {
@@ -381,6 +379,7 @@ export class Animation {
     if (this._tmr) {
       this._unregTrans && this._unregTrans();
       clearTimeout(this._tmr);
+      this._tmr = 0;
     }
   }
 
@@ -722,6 +721,7 @@ export class Animation {
       }
     }
 
+    this._clearAsync();
     this._reset();
   }
 
