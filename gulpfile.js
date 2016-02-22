@@ -59,7 +59,7 @@ var babelOptions = {
   modules: 'system',
   moduleIds: true,
   getModuleId: function(name) {
-    return 'ionic/' + name;
+    return 'ionic-angular/' + name;
   }
 }
 
