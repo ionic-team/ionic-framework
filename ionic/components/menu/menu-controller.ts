@@ -46,7 +46,7 @@ import {MenuType} from './menu-types';
  * without requiring a menu ID.
  *
  * ```ts
- * import{Page, MenuController} from 'ionic/ionic';
+ * import{Page, MenuController} from 'ionic-angular';
  * @Page({...})
  * export class MyPage {
  *  constructor(menu: MenuController) {

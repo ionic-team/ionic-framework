@@ -1,7 +1,7 @@
 import {Component, Type} from 'angular2/core';
-import {App, NavController, Alert} from '../../../../../ionic/ionic';
-import {Page, Config, IonicApp} from '../../../../../ionic/ionic';
-import {NavParams, ViewController, IONIC_DIRECTIVES} from '../../../../../ionic/ionic';;
+import {App, NavController, Alert} from 'ionic-angular';
+import {Page, Config, IonicApp} from 'ionic-angular';
+import {NavParams, ViewController, IONIC_DIRECTIVES} from 'ionic-angular';;
 
 
 @Component({

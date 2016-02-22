@@ -1,4 +1,4 @@
-import {App, Page, Alert, Modal, NavController, ViewController} from '../../../../../ionic/ionic';
+import {App, Page, Alert, Modal, NavController, ViewController} from 'ionic-angular';
 
 
 @Page({
