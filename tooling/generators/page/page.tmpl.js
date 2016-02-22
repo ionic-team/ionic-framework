@@ -1,4 +1,5 @@
 import {Page, NavController} from 'ionic/ionic';
+import {Inject} from 'angular2/core';
 
 /*
   Generated class for the <%= jsClassName %> page.
@@ -10,7 +11,7 @@ import {Page, NavController} from 'ionic/ionic';
   templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html',
 })
 export class <%= jsClassName %> {
-  constructor(nav: NavController) {
+  constructor(@Inject(NavController) nav) {
     this.nav = nav;
   }
 }
