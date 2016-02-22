@@ -169,6 +169,11 @@ export class Slides extends Ion {
   @Input() zoom: any;
 
   /**
+   * @input {boolean} Whether or not the slider can loop
+   */
+  @Input() loop: any;
+
+  /**
    * @input {number} how long it should take to zoom a slide
    */
   @Input() zoomDuration: any;
@@ -217,6 +222,8 @@ export class Slides extends Ion {
     var options = defaults({
       pagination: '.swiper-pagination',
     }, this.options);
+
+    options.loop = isTrueProperty(this.loop);
 
     options.onTap = (swiper, e) => {
       this.onTap(swiper, e);
