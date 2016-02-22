@@ -1,14 +1,10 @@
 
-let win: any = window;
-let doc: any = document;
-let docEle: any = doc.documentElement;
-
-
 // RequestAnimationFrame Polyfill (Android 4.3 and below)
 /*! @author Paul Irish */
 /*! @source https://gist.github.com/paulirish/1579671 */
 (function() {
   var rafLastTime = 0;
+  const win: any = window;
   if (!win.requestAnimationFrame) {
     win.requestAnimationFrame = function(callback, element) {
       var currTime = Date.now();
@@ -28,8 +24,8 @@ let docEle: any = doc.documentElement;
   }
 })();
 
-export const raf = win.requestAnimationFrame.bind(win);
-export const cancelRaf = win.cancelAnimationFrame.bind(win);
+export const raf = window.requestAnimationFrame.bind(window);
+export const cancelRaf = window.cancelAnimationFrame.bind(window);
 
 
 export function rafFrames(framesToWait, callback) {
@@ -60,7 +56,7 @@ export let CSS: {
                  '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
   for (i = 0; i < keys.length; i++) {
-    if (docEle.style[keys[i]] !== undefined) {
+    if (document.documentElement.style[keys[i]] !== undefined) {
       CSS.transform = keys[i];
       break;
     }
@@ -69,7 +65,7 @@ export let CSS: {
   // transition
   keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
   for (i = 0; i < keys.length; i++) {
-    if (docEle.style[keys[i]] !== undefined) {
+    if (document.documentElement.style[keys[i]] !== undefined) {
       CSS.transition = keys[i];
       break;
     }
@@ -120,18 +116,18 @@ export function ready(callback?: Function) {
     promise = new Promise(resolve => { callback = resolve; });
   }
 
-  if (doc.readyState === 'complete' || doc.readyState === 'interactive') {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
     callback();
 
   } else {
     function completed() {
-      doc.removeEventListener('DOMContentLoaded', completed, false);
-      win.removeEventListener('load', completed, false);
+      document.removeEventListener('DOMContentLoaded', completed, false);
+      window.removeEventListener('load', completed, false);
       callback();
     }
 
-    doc.addEventListener('DOMContentLoaded', completed, false);
-    win.addEventListener('load', completed, false);
+    document.addEventListener('DOMContentLoaded', completed, false);
+    window.addEventListener('load', completed, false);
   }
 
   return promise;
@@ -145,16 +141,16 @@ export function windowLoad(callback?: Function) {
     promise = new Promise(resolve => { callback = resolve; });
   }
 
-  if (doc.readyState === 'complete') {
+  if (document.readyState === 'complete') {
     callback();
 
   } else {
     function completed() {
-      win.removeEventListener('load', completed, false);
+      window.removeEventListener('load', completed, false);
       callback();
     }
 
-    win.addEventListener('load', completed, false);
+    window.addEventListener('load', completed, false);
   }
 
   return promise;
@@ -181,7 +177,7 @@ export function hasPointerMoved(threshold, startCoord, endCoord) {
 }
 
 export function isActive(ele) {
-  return !!(ele && (doc.activeElement === ele));
+  return !!(ele && (document.activeElement === ele));
 }
 
 export function hasFocus(ele) {
@@ -196,7 +192,7 @@ export function isTextInput(ele) {
 }
 
 export function hasFocusedTextInput() {
-  let ele = doc.activeElement;
+  let ele = document.activeElement;
   if (isTextInput(ele)) {
     return (ele.parentElement.querySelector(':focus') === ele);
   }
@@ -220,7 +216,7 @@ export function copyInputAttributes(srcElement, destElement) {
 let matchesFn: string;
 let matchesMethods: Array<string> = ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector'];
 matchesMethods.some((fn: string) => {
-  if (typeof docEle[fn] == 'function') {
+  if (typeof document.documentElement[fn] === 'function') {
     matchesFn = fn;
     return true;
   }
@@ -275,10 +271,10 @@ export function getDimensions(ele: HTMLElement, id: string): {
 export function windowDimensions(): {width: number, height: number} {
   if (!dimensionCache.win) {
     // make sure we got good values before caching
-    if (win.innerWidth && win.innerHeight) {
+    if (window.innerWidth && window.innerHeight) {
       dimensionCache.win = {
-        width: win.innerWidth,
-        height: win.innerHeight
+        width: window.innerWidth,
+        height: window.innerHeight
       };
     } else {
       // do not cache bad values
