@@ -70,7 +70,7 @@ export class Animation {
         }
 
       } else if (typeof ele === 'string') {
-        ele = doc.querySelectorAll(ele);
+        ele = document.querySelectorAll(ele);
         for (i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
@@ -378,8 +378,10 @@ export class Animation {
   }
 
   _clearAsync() {
-    this._unregTrans && this._unregTrans();
-    clearTimeout(this._tmr);
+    if (this._tmr) {
+      this._unregTrans && this._unregTrans();
+      clearTimeout(this._tmr);
+    }
   }
 
   _progress(stepValue: number) {
@@ -780,8 +782,6 @@ interface EffectState {
   num: number;
   unit: string;
 }
-
-const doc: any = document;
 
 const TRANSFORMS = {
   'translateX':1, 'translateY':1, 'translateZ':1,
