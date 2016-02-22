@@ -7,7 +7,7 @@
     "declaration": true,
     "outDir": "dist"
   },
-  "include": [
+  "files": [
     "ionic/ionic.ts",
     "typings/main.d.ts"
   ],
