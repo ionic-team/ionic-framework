@@ -163,7 +163,7 @@ export function getQuerystring(url: string): any {
     const startIndex = url.indexOf('?');
     if (startIndex !== -1) {
       const queries = url.slice(startIndex + 1).split('&');
-      queries.forEach((param) => {
+      queries.filter((param) => { return param.indexOf('=') > 0; }).forEach((param) => {
         var split = param.split('=');
         queryParams[split[0].toLowerCase()] = split[1].split('#')[0];
       });
