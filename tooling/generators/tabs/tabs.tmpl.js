@@ -1,4 +1,4 @@
-import {NavController, Page} from 'ionic/ionic';
+import {NavController, Page} from 'ionic-angular';
 import {Inject} from 'angular2/core';
 <% _.forEach(tabs, function(tab) { %>import {<%= tab.jsClassName %>} from '../<%= tab.fileName %>/<%= tab.fileName %>';
 <% }); %>

@@ -12,7 +12,7 @@ import {Config} from '../config/config';
  *
  * @usage
  * ```ts
- * import {Platform} 'ionic/ionic';
+ * import {Platform} 'ionic-angular';
  * export MyClass {
  *    constructor(platform: Platform){
  *      this.platform = platform;
@@ -57,7 +57,7 @@ export class Platform {
    * Depending on the platform name, isPlatform will return true or flase
    *
    * ```
-   * import {Platform} 'ionic/ionic';
+   * import {Platform} 'ionic-angular';
    * export MyClass {
    *    constructor(platform: Platform){
    *      this.platform = platform;
@@ -81,7 +81,7 @@ export class Platform {
    * it would return mobile, ios, and iphone.
    *
    * ```
-   * import {Platform} 'ionic/ionic';
+   * import {Platform} 'ionic-angular';
    * export MyClass {
    *    constructor(platform: Platform){
    *      this.platform = platform;
@@ -103,7 +103,7 @@ export class Platform {
    * Returns an object containing information about the paltform
    *
    * ```
-   * import {Platform} 'ionic/ionic';
+   * import {Platform} 'ionic-angular';
    * export MyClass {
    *    constructor(platform: Platform){
    *      this.platform = platform;
@@ -142,7 +142,7 @@ export class Platform {
    * Returns a promise when the platform is ready and native functionality can be called
    *
    * ```
-   * import {Platform} 'ionic/ionic';
+   * import {Platform} 'ionic-angular';
    * export MyClass {
    *    constructor(platform: Platform){
    *      this.platform = platform;

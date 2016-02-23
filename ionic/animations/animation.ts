@@ -257,7 +257,7 @@ export class Animation {
     for (i = 0; i < self._pFns.length; i++) {
       self._pFns[i]();
     }
-    this.isPlaying = true;
+    self.isPlaying = true;
 
     // this is the top level animation and is in full control
     // of when the async play() should actually kick off
@@ -271,7 +271,7 @@ export class Animation {
     self._before();
 
     // ensure all past transition end events have been cleared
-    this._clearAsync();
+    self._clearAsync();
 
     if (duration > 30) {
       // this animation has a duration, so it should animate
@@ -280,7 +280,7 @@ export class Animation {
       // set the FROM properties
       self._progress(0);
 
-      self._willChange(true);
+      self._willChg(true);
 
       // set the async TRANSITION END event
       // and run onFinishes when the transition ends
@@ -364,7 +364,7 @@ export class Animation {
 
       // set the after styles
       self._after();
-      self._willChange(false);
+      self._willChg(false);
       self._onFinish(shouldComplete);
     }
 
@@ -372,12 +372,20 @@ export class Animation {
     self._unregTrans = transitionEnd(self._transEl(), onTransitionEnd);
 
     // set a fallback timeout if the transition end event never fires
-    self._tmr = setTimeout(onTransitionEnd, duration + 300);
+    self._tmr = setTimeout(function() {
+      // oh noz! the transition end event didn't fire in time!
+      // instead the fallback timer when first
+      // ensure the ending progress step gets rendered
+      self._progress(1);
+
+      // manually run transition end event
+      onTransitionEnd(null);
+    }, duration + 350);
   }
 
   _clearAsync() {
+    this._unregTrans && this._unregTrans();
     if (this._tmr) {
-      this._unregTrans && this._unregTrans();
       clearTimeout(this._tmr);
       this._tmr = 0;
     }
@@ -483,13 +491,13 @@ export class Animation {
     }
   }
 
-  _willChange(addWillChange: boolean) {
+  _willChg(addWillChange: boolean) {
     var i: number;
     var wc: string[];
     var prop: string;
 
     for (i = 0; i < this._c.length; i++) {
-      this._c[i]._willChange(addWillChange);
+      this._c[i]._willChg(addWillChange);
     }
 
     if (this._wChg) {
@@ -652,7 +660,7 @@ export class Animation {
       // the progress was already left off at the point that is finished
       // for example, the left menu was dragged all the way open already
       this._after();
-      this._willChange(false);
+      this._willChg(false);
       this._onFinish(shouldComplete);
 
     } else {

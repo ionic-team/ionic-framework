@@ -1,4 +1,4 @@
-import {Platform} from '../../../ionic/ionic';
+import {Platform} from 'ionic-angular';
 
 export function run() {
 

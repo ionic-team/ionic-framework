@@ -28,7 +28,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  *
  * @usage
  * ```ts
- * import {Page, Modal, NavController, NavParams} from 'ionic/ionic';
+ * import {Page, Modal, NavController, NavParams} from 'ionic-angular';
  *
  * @Page(...)
  * class HomePage {
@@ -60,7 +60,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  * modal.
  *
  * ```ts
- * import {Page, Modal, NavController} from 'ionic/ionic';
+ * import {Page, Modal, NavController} from 'ionic-angular';
  *
  * @Page(...)
  * class HomePage {
