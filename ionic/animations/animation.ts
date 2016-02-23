@@ -171,7 +171,7 @@ export class Animation {
     };
 
     if (typeof val === 'string' && val.indexOf(' ') < 0) {
-      let r = val.match(cssValueRegex);
+      let r = val.match(CSS_VALUE_REGEX);
       let num = parseFloat(r[1]);
 
       if (!isNaN(num)) {
@@ -243,7 +243,7 @@ export class Animation {
   play(opts: PlayOptions = {}) {
     var self = this;
     var i: number;
-    var duration = isDefined(opts.duration) ? opts.duration : self._dur;
+    var duration: number = isDefined(opts.duration) ? opts.duration : self._dur;
 
     console.debug('Animation, play, duration', duration, 'easing', self._easing);
 
@@ -252,12 +252,13 @@ export class Animation {
     // and that it has at least one FROM/TO effect
     // and that the FROM/TO effect can tween numeric values
     self.hasTween = false;
+    self.hasCompleted = false;
 
     // fire off all the onPlays
     for (i = 0; i < self._pFns.length; i++) {
       self._pFns[i]();
     }
-    this.isPlaying = true;
+    self.isPlaying = true;
 
     // this is the top level animation and is in full control
     // of when the async play() should actually kick off
@@ -271,7 +272,7 @@ export class Animation {
     self._before();
 
     // ensure all past transition end events have been cleared
-    this._clearAsync();
+    self._clearAsync();
 
     if (duration > 30) {
       // this animation has a duration, so it should animate
@@ -280,7 +281,8 @@ export class Animation {
       // set the FROM properties
       self._progress(0);
 
-      self._willChange(true);
+      // add the will-change or translateZ properties when applicable
+      self._willChg(true);
 
       // set the async TRANSITION END event
       // and run onFinishes when the transition ends
@@ -316,7 +318,7 @@ export class Animation {
 
       // since there was no animation, it's done
       // fire off all the onFinishes
-      self._onFinish(true);
+      self._didFinish(true);
     }
   }
 
@@ -349,7 +351,7 @@ export class Animation {
 
       // since there was no animation, it's done
       // fire off all the onFinishes
-      self._onFinish(false);
+      self._didFinish(false);
     }
   }
 
@@ -357,27 +359,57 @@ export class Animation {
     var self = this;
 
     function onTransitionEnd(ev) {
-      console.debug('Animation async end,', (ev ? 'transitionEnd, ' + ev.target.nodeName + ', property: ' + ev.propertyName : 'fallback timeout'));
+      console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName);
 
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();
 
       // set the after styles
       self._after();
-      self._willChange(false);
-      self._onFinish(shouldComplete);
+
+      // remove will change properties
+      self._willChg(false);
+
+      // transition finished
+      self._didFinish(shouldComplete);
+    }
+
+    function onTransitionFallback() {
+      console.debug('Animation onTransitionFallback');
+      // oh noz! the transition end event didn't fire in time!
+      // instead the fallback timer when first
+
+      // clear the other async end events from firing
+      self._tmr = 0;
+      self._clearAsync();
+
+      // too late to have a smooth animation, just finish it
+      self._setTrans(0, true);
+
+      // ensure the ending progress step gets rendered
+      self._progress(1);
+
+      // set the after styles
+      self._after();
+
+      // remove will change properties
+      self._willChg(false);
+
+      // transition finished
+      self._didFinish(shouldComplete);
     }
 
     // set the TRANSITION END event on one of the transition elements
     self._unregTrans = transitionEnd(self._transEl(), onTransitionEnd);
 
-    // set a fallback timeout if the transition end event never fires
-    self._tmr = setTimeout(onTransitionEnd, duration + 300);
+    // set a fallback timeout if the transition end event never fires, or is too slow
+    // transition end fallback: (animation duration + XXms)
+    self._tmr = setTimeout(onTransitionFallback, duration + 400);
   }
 
   _clearAsync() {
+    this._unregTrans && this._unregTrans();
     if (this._tmr) {
-      this._unregTrans && this._unregTrans();
       clearTimeout(this._tmr);
       this._tmr = 0;
     }
@@ -483,13 +515,13 @@ export class Animation {
     }
   }
 
-  _willChange(addWillChange: boolean) {
+  _willChg(addWillChange: boolean) {
     var i: number;
     var wc: string[];
     var prop: string;
 
     for (i = 0; i < this._c.length; i++) {
-      this._c[i]._willChange(addWillChange);
+      this._c[i]._willChg(addWillChange);
     }
 
     if (this._wChg) {
@@ -652,8 +684,8 @@ export class Animation {
       // the progress was already left off at the point that is finished
       // for example, the left menu was dragged all the way open already
       this._after();
-      this._willChange(false);
-      this._onFinish(shouldComplete);
+      this._willChg(false);
+      this._didFinish(shouldComplete);
 
     } else {
       // the stepValue was left off at a point when it needs to finish transition still
@@ -684,7 +716,7 @@ export class Animation {
     return this;
   }
 
-  _onFinish(hasCompleted: boolean) {
+  _didFinish(hasCompleted: boolean) {
     this.isPlaying = false;
     this.hasCompleted = hasCompleted;
     var i: number;
@@ -790,6 +822,6 @@ const TRANSFORMS = {
   'skewX':1, 'skewY':1, 'perspective':1
 };
 
-const cssValueRegex = /(^-?\d*\.?\d*)(.*)/;
+const CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
 
 let AnimationRegistry = {};

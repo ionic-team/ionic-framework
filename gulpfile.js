@@ -147,7 +147,7 @@ gulp.task('bundle', ['bundle.cjs', 'bundle.system']);
 /**
  * Creates CommonJS bundle from Ionic source files.
  */
-gulp.task('bundle.cjs', ['transpile'], function(done){
+gulp.task('bundle.cjs', ['transpile', 'copy.libs'], function(done){
   var config = require('./scripts/npm/ionic.webpack.config.js');
   bundle({ config: config, stats: true });
 

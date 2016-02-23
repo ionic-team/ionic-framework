@@ -317,10 +317,16 @@ export class Config {
     this.platform = platform;
   }
 
+  /**
+   * @private
+   */
   static setModeConfig(mode, config) {
     modeConfigs[mode] = config;
   }
 
+  /**
+   * @private
+   */
   static getModeConfig(mode) {
     return modeConfigs[mode] || null;
   }
