@@ -21,19 +21,19 @@ $font-size-wp-base:                   $font-size-base !default;
 
 $toolbar-wp-background:               $toolbar-background !default;
 $toolbar-wp-border-color:             $toolbar-border-color !default;
-$toolbar-wp-text-color:               #424242 !default;
+$toolbar-wp-text-color:               $toolbar-text-color !default;
 $toolbar-wp-active-color:             $toolbar-active-color !default;
 $toolbar-wp-inactive-color:           $toolbar-inactive-color !default;
-$toolbar-wp-button-color:             #424242 !default;
+$toolbar-wp-button-color:             $toolbar-text-color !default;
 
 
 // Windows List
 // --------------------------------------------------
 
 $list-wp-text-color:                  $list-text-color !default;
-$list-wp-border-color:                #dedede !default;
+$list-wp-border-color:                $list-border-color !default;
 $list-wp-background-color:            $list-background-color !default;
-$list-wp-activated-background-color:  #f1f1f1 !default;
+$list-wp-activated-background-color:  #AAAAAA !default;
 
 
 // Windows Item
