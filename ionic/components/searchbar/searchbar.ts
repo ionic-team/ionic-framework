@@ -47,6 +47,9 @@ export class SearchbarInput {
  */
 @Component({
   selector: 'ion-searchbar',
+  host: {
+    '[class.searchbar-has-value]': 'value'
+  },
   template:
     '<div class="searchbar-input-container">' +
       '<button (click)="cancelSearchbar()" (mousedown)="cancelSearchbar()" clear dark class="searchbar-md-cancel">' +
