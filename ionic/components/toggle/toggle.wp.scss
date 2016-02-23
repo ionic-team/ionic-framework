@@ -1,0 +1,147 @@
+@import "../../globals.wp";
+
+// Windows Toggle
+// --------------------------------------------------
+
+$toggle-wp-inactive-color:               #323232 !default;
+$toggle-wp-active-color:                 map-get($colors-wp, primary) !default;
+
+$toggle-wp-track-width:                  40px !default;
+$toggle-wp-track-height:                 18px !default;
+$toggle-wp-track-background-color-off:   transparent !default;
+$toggle-wp-track-background-color-on:    $toggle-wp-active-color !default;
+
+$toggle-wp-track-border-width:           2px !default;
+$toggle-wp-track-border-color-off:       $toggle-wp-inactive-color !default;
+$toggle-wp-track-border-color-on:        $toggle-wp-active-color !default;
+
+$toggle-wp-handle-width:                 10px !default;
+$toggle-wp-handle-height:                10px !default;
+$toggle-wp-handle-top:                   2px !default;
+$toggle-wp-handle-left:                  2px !default;
+$toggle-wp-handle-background-color-off:  $toggle-wp-inactive-color !default;
+$toggle-wp-handle-background-color-on:   color-inverse($toggle-wp-active-color) !default;
+$toggle-wp-handle-border-radius:         50% !default;
+
+$toggle-wp-media-margin:                 0 !default;
+$toggle-wp-media-padding:                12px ($item-wp-padding-right / 2) 12px $item-wp-padding-left !default;
+
+$toggle-wp-disabled-opacity:             0.3 !default;
+
+
+// Windows Toggle
+// -----------------------------------------
+
+ion-toggle {
+  position: relative;
+}
+
+
+// Windows Toggle Background Track: Unchecked
+// -----------------------------------------
+
+.toggle-icon {
+  position: relative;
+  display: block;
+  width: $toggle-wp-track-width;
+  height: $toggle-wp-track-height;
+  pointer-events: none;
+  border-radius: $toggle-wp-track-height;
+
+  background-color: $toggle-wp-track-background-color-off;
+  border: $toggle-wp-track-border-width solid $toggle-wp-track-border-color-off;
+}
+
+
+// Windows Toggle Inner Knob: Unchecked
+// -----------------------------------------
+
+.toggle-inner {
+  position: absolute;
+  top: $toggle-wp-handle-top;
+  left: $toggle-wp-handle-left;
+
+  width: $toggle-wp-handle-width;
+  height: $toggle-wp-handle-height;
+
+  border-radius: $toggle-wp-handle-border-radius;
+  background-color: $toggle-wp-handle-background-color-off;
+}
+
+
+// Windows Toggle Background Track: Checked
+// -----------------------------------------
+
+.toggle-checked {
+  background-color: $toggle-wp-track-background-color-on;
+  border-color: $toggle-wp-track-background-color-on;
+}
+
+
+// Windows Toggle Inner Knob: Checked
+// -----------------------------------------
+
+.toggle-checked .toggle-inner {
+  background-color: $toggle-wp-handle-background-color-on;
+  // transform: translate3d(23px, 0, 0);
+  transform: translate3d($toggle-wp-track-width - $toggle-wp-handle-width - ( $toggle-wp-track-border-width * 2 ) - ( $toggle-wp-handle-left * 2 ), 0, 0);
+}
+
+
+// Windows Toggle: Disabled
+// -----------------------------------------
+
+.toggle-disabled,
+.item-toggle-disabled ion-label {
+  opacity: $toggle-wp-disabled-opacity;
+  pointer-events: none;
+}
+
+.toggle-disabled ion-radio {
+  opacity: $toggle-wp-disabled-opacity;
+}
+
+
+// Windows Toggle Within An Item
+// -----------------------------------------
+
+.item ion-toggle {
+  margin: $toggle-wp-media-margin;
+  padding: $toggle-wp-media-padding;
+  cursor: pointer;
+}
+
+.item-toggle ion-label {
+  margin-left: 0;
+}
+
+
+// Windows Color Mixin
+// --------------------------------------------------
+
+@mixin toggle-theme-wp($color-name, $color-value) {
+
+  ion-toggle[#{$color-name}] {
+
+    .toggle-checked {
+      background-color: $color-value;
+      border-color: $color-value;
+    }
+
+    .toggle-checked .toggle-inner {
+      background-color: color-inverse($color-value);
+    }
+
+  }
+
+}
+
+
+// Generate Windows Toggle Auxiliary Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-wp {
+
+  @include toggle-theme-wp($color-name, $color-value);
+
+}
