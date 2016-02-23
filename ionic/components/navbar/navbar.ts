@@ -125,7 +125,7 @@ export class Navbar extends ToolbarBase {
   private _bgRef: ElementRef;
 
   /**
-   * @private
+   * @input {boolean} whether the back button should be shown or not
    */
   @Input()
   get hideBackButton(): boolean {
