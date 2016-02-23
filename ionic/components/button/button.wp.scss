@@ -8,18 +8,12 @@ $button-wp-margin:                         0.4rem 0.2rem !default;
 $button-wp-padding:                        0 1.1em !default;
 $button-wp-font-size:                      1.4rem !default;
 $button-wp-height:                         3.6rem !default;
-$button-wp-box-shadow:                     0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
-$button-wp-box-shadow-active:              0 3px 5px rgba(0, 0, 0, 0.14), 0 3px 5px rgba(0, 0, 0, 0.21) !default;
+$button-wp-border-width:                   3px !default;
 
-$button-wp-border-radius:                  2px !default;
-$button-wp-animation-curve:                cubic-bezier(0.4, 0, 0.2, 1) !default;
-$button-wp-transition-duration:            300ms !default;
+$button-wp-border-radius:                  0 !default;
 
 $button-wp-clear-hover-background-color:   rgba(158, 158, 158, 0.1) !default;
 $button-wp-clear-active-background-color:  rgba(158, 158, 158, 0.2) !default;
-
-$button-wp-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
-$button-wp-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1) !default;
 
 $button-wp-color:                          map-get($colors-wp, primary) !default;
 $button-wp-color-activated:                color-shade($button-wp-color) !default;
@@ -43,31 +37,21 @@ $button-wp-small-icon-font-size:           1.4em !default;
   padding: $button-wp-padding;
   height: $button-wp-height;
   border-radius: $button-wp-border-radius;
+  border: $button-wp-border-width solid transparent;
 
   font-weight: 500;
   font-size: $button-wp-font-size;
 
   color: $button-wp-text-color;
   background-color: $button-wp-color;
-  box-shadow: $button-wp-box-shadow;
-
-  text-transform: uppercase;
-
-  transition: box-shadow $button-wp-transition-duration $button-wp-animation-curve,
-              background-color $button-wp-transition-duration $button-wp-animation-curve,
-              color $button-wp-transition-duration $button-wp-animation-curve;
 
   &:hover:not(.disable-hover) {
+    border-color: $button-wp-color-activated;
     background-color: $button-wp-color;
   }
 
   &.activated {
-    box-shadow: $button-wp-box-shadow-active;
     background-color: $button-wp-color-activated;
-  }
-
-  ion-button-effect {
-    background-color: $button-wp-text-color;
   }
 }
 
@@ -86,16 +70,13 @@ $button-wp-small-icon-font-size:           1.4em !default;
     background-color: $bg-color;
 
     &:hover:not(.disable-hover) {
+      border-color: $bg-color-activated;
       background-color: $bg-color;
     }
 
     &.activated {
       opacity: 1;
       background-color: $bg-color-activated;
-    }
-
-    ion-button-effect {
-      background-color: $fg-color;
     }
   }
 
@@ -160,10 +141,6 @@ $button-wp-small-icon-font-size:           1.4em !default;
     box-shadow: none;
     background-color: transparent;
   }
-
-  ion-button-effect {
-    background-color: $button-wp-color;
-  }
 }
 
 
@@ -179,15 +156,12 @@ $button-wp-small-icon-font-size:           1.4em !default;
     color: $fg-color;
 
     &:hover:not(.disable-hover) {
+      border-color: $fg-color;
       background-color: $button-wp-clear-hover-background-color;
     }
 
     &.activated {
       background-color: transparent;
-    }
-
-    ion-button-effect {
-      background-color: $fg-color;
     }
   }
 
@@ -205,16 +179,14 @@ $button-wp-small-icon-font-size:           1.4em !default;
   color: $button-wp-color;
 
   &.activated {
+    border-color: transparent;
     background-color: $button-wp-clear-active-background-color;
     box-shadow: none;
   }
 
   &:hover:not(.disable-hover) {
+    border-color: transparent;
     background-color: $button-wp-clear-hover-background-color;
-  }
-
-  ion-button-effect {
-    background-color: #999;
   }
 }
 
@@ -256,38 +228,15 @@ $button-wp-small-icon-font-size:           1.4em !default;
 
 .button-fab {
   border-radius: 50%;
-  box-shadow: $button-wp-fab-box-shadow;
+  border-color: transparent;
 
-  transition: box-shadow $button-wp-transition-duration $button-wp-animation-curve,
-              background-color $button-wp-transition-duration $button-wp-animation-curve,
-              color $button-wp-transition-duration $button-wp-animation-curve;
-
-  &.activated {
-    box-shadow: $button-wp-fab-box-shadow-active;
+  &:hover:not(.disable-hover) {
+    border-color: transparent; 
   }
 }
 
 .button-icon-only {
   padding: 0;
-}
-
-
-// Windows Ripple Effect
-// --------------------------------------------------
-
-$ripple-background-color:       #555 !default;
-
-ion-button-effect {
-  position: absolute;
-  z-index: 0;
-  display: block;
-  border-radius: 50%;
-
-  background-color: $ripple-background-color;
-  opacity: 0.2;
-
-  pointer-events: none;
-  transition-timing-function: ease-in-out;
 }
 
 
