@@ -1,0 +1,11 @@
+@import "../../globals.wp";
+
+// Windows Modals
+// --------------------------------------------------
+
+$modal-wp-background-color:          $background-wp-color !default;
+
+
+ion-page.modal {
+  background-color: $modal-wp-background-color;
+}
