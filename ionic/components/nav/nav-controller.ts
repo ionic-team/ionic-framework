@@ -187,7 +187,7 @@ export class NavController extends Ion {
    *
    *
    *```typescript
-   * import {Page, NavController} from 'ionic/ionic'
+   * import {Page, NavController} from 'ionic-angular'
    * import {Detail} from '../detail/detail'
    * import {Info} from '../info/info'
    *
@@ -208,7 +208,7 @@ export class NavController extends Ion {
    *
    *
    *```typescript
-   * import {Page, NavController} from 'ionic/ionic'
+   * import {Page, NavController} from 'ionic-angular'
    * import {Detail} from '../detail/detail'
    *
    *  export class Home {
@@ -228,7 +228,7 @@ export class NavController extends Ion {
    *
    *
    *```typescript
-   * import {Page, NavController} from 'ionic/ionic';
+   * import {Page, NavController} from 'ionic-angular';
    * import {Info} from '../info/info';
    * import {List} from '../list/list';
    * import {Detail} from '../detail/detail';

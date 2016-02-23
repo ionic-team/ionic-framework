@@ -1,6 +1,6 @@
 import {NgFor} from 'angular2/common';
 
-import {App, Page} from '../../../../../ionic/ionic';
+import {App, Page} from 'ionic-angular';
 
 
 @Page({

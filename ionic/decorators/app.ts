@@ -45,7 +45,7 @@ export interface AppMetadata {
 *
 * @usage
 * ```ts
-* import {App} from 'ionic/ionic';
+* import {App} from 'ionic-angular';
 *
 * @App({
 *   templateUrl: 'app/app.html',
