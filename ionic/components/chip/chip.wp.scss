@@ -1,0 +1,23 @@
+@import "./chip";
+
+// Windows Chip
+// --------------------------------------------------
+
+ion-chip {
+
+}
+
+
+// Generate Windows Chip Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-wp {
+
+  ion-chip {
+    ion-icon[#{$color-name}] {
+      background-color: $color-value;
+      color: color-inverse($color-value) !important;
+    }
+  }
+
+}
