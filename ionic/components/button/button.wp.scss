@@ -231,7 +231,7 @@ $button-wp-small-icon-font-size:           1.4em !default;
   border-color: transparent;
 
   &:hover:not(.disable-hover) {
-    border-color: transparent; 
+    border-color: transparent;
   }
 }
 
@@ -239,6 +239,10 @@ $button-wp-small-icon-font-size:           1.4em !default;
   padding: 0;
 }
 
+ion-button-effect {
+  // wp does not use the button effect
+  display: none;
+}
 
 // Generate Windows Button Colors
 // --------------------------------------------------
