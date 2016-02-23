@@ -3,6 +3,32 @@ import * as util from 'ionic-angular/util';
 export function run() {
   describe('extend', function() {
 
+    describe('getQuerystring', function() {
+      it('should have no entries for empty url', () => {
+        expect(util.getQuerystring('')).toEqual({});
+      });
+
+      it('should have no entries for url with no "?" character', () => {
+        expect(util.getQuerystring('http://localhost:1234/#key1=1&key2=2')).toEqual({});
+      });
+
+      it('should contain key/value entries for all the parameters after "?" character', () => {
+        expect(util.getQuerystring('http://localhost:1234/#key0=0&key0x=0x?key1=1&key2=2')).toEqual({
+          key1: '1',
+          key2: '2'
+        });
+      });
+
+      it('should ignore empty ?& and &&', () => {
+        expect(util.getQuerystring('http://localhost:1234/#?&&')).toEqual({});
+
+        expect(util.getQuerystring('http://localhost:1234/#?&&key1=1&key2=2&&')).toEqual({
+          key1: '1',
+          key2: '2'
+        });
+      });
+    });
+
     describe('isTrueProperty', function() {
 
       it('should be true from boolean true', () => {
