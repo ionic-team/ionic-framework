@@ -22,7 +22,7 @@ $checkbox-wp-icon-checkmark-color:       $background-wp-color !default;
 $checkbox-wp-icon-border-width:          2px !default;
 $checkbox-wp-icon-border-style:          solid !default;
 $checkbox-wp-icon-border-radius:         0 !default;
-$checkbox-wp-icon-border-color-off:      darken($list-wp-border-color, 40%) !default;
+$checkbox-wp-icon-border-color-off:      #333333 !default;
 $checkbox-wp-icon-border-color-on:       map-get($colors-wp, primary) !default;
 
 $checkbox-wp-transition-duration:        280ms !default;

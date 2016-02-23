@@ -35,6 +35,9 @@ $alert-wp-button-width:                   49.5% !default;
 $alert-wp-button-margin-right:            1% !default;
 $alert-wp-button-font-weight:             300 !default;
 
+$alert-wp-checkbox-background-color:      map-get($colors-wp, primary) !default;
+$alert-wp-radio-background-color:         map-get($colors-wp, primary) !default;
+
 $alert-wp-buttons-padding:                8px 20px 20px 20px !default;
 $alert-wp-buttons-justify-content:        flex-end !default;
 
@@ -150,11 +153,10 @@ $alert-wp-buttons-justify-content:        flex-end !default;
     left: 2px;
     width: 8px;
     height: 8px;
-    background-color: $alert-wp-button-text-color;
+    background-color: $alert-wp-radio-background-color;
     border-radius: 50%;
     content: '';
-    transition: transform 280ms cubic-bezier(.4, 0, .2, 1);
-    transform: scale3d(0, 0, 0);
+    display: none;
   }
 }
 
@@ -166,7 +168,7 @@ $alert-wp-buttons-justify-content:        flex-end !default;
   }
 
   .alert-radio-icon:after {
-    transform: scale3d(1, 1, 1);
+    display: block;
   }
 }
 
@@ -197,8 +199,8 @@ $alert-wp-buttons-justify-content:        flex-end !default;
 }
 
 .alert-checkbox[aria-checked=true] .alert-checkbox-icon {
-  background-color: $alert-wp-button-text-color;
-  border-color: $alert-wp-button-text-color;
+  background-color: $alert-wp-checkbox-background-color;
+  border-color: $alert-wp-checkbox-background-color;
 
   &:after {
     position: absolute;

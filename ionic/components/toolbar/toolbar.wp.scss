@@ -18,7 +18,9 @@ $toolbar-order-wp: (
 
 $toolbar-wp-padding:                     4px !default;
 $toolbar-wp-height:                      4.6rem !default;
-$toolbar-wp-title-font-size:             2.0rem !default;
+$toolbar-wp-title-font-size:             1.5rem !default;
+$toolbar-wp-title-font-weight:           bold !default;
+$toolbar-wp-title-text-transform:        uppercase !default;
 $toolbar-wp-button-font-size:            1.4rem !default;
 $navbar-wp-height:                       $toolbar-wp-height !default;
 
@@ -58,7 +60,8 @@ ion-navbar-section {
   color: $toolbar-wp-text-color;
   padding: 0 12px;
   font-size: $toolbar-wp-title-font-size;
-  font-weight: 500;
+  font-weight: $toolbar-wp-title-font-weight;
+  text-transform: $toolbar-wp-title-text-transform;
 }
 
 @mixin wp-toolbar-theme($color-name, $color-value) {
