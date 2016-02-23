@@ -1,0 +1,71 @@
+@import "../../globals.wp";
+@import "./action-sheet";
+
+// Windows Action Sheet
+// --------------------------------------------------
+
+$action-sheet-wp-background-color:                #fafafa !default;
+
+$action-sheet-wp-title-color:                     #757575 !default;
+$action-sheet-wp-title-font-size:                 1.6rem !default;
+$action-sheet-wp-title-padding:                   19px 16px 17px !default;
+
+$action-sheet-wp-button-height:                   4.8rem !default;
+$action-sheet-wp-button-text-color:               #222 !default;
+$action-sheet-wp-button-font-size:                1.6rem !default;
+$action-sheet-wp-button-padding:                  0 16px !default;
+$action-sheet-wp-button-background-active-color:  #f1f1f1 !default;
+
+$action-sheet-wp-icon-font-size:                  2.4rem !default;
+$action-sheet-wp-icon-margin:                     0 28px 0 0 !default;
+
+
+.action-sheet-title {
+  padding: $action-sheet-wp-title-padding;
+  font-size: $action-sheet-wp-title-font-size;
+  color: $action-sheet-wp-title-color;
+  text-align: left;
+}
+
+.action-sheet-button {
+  position: relative;
+  overflow: hidden;
+  padding: $action-sheet-wp-button-padding;
+  min-height: $action-sheet-wp-button-height;
+  font-size: $action-sheet-wp-button-font-size;
+  font-weight: normal;
+  color: $action-sheet-wp-button-text-color;
+  background-color: transparent;
+  text-align: left;
+
+  &.activated {
+    background: $action-sheet-wp-button-background-active-color;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.action-sheet-icon {
+  display: inline-block;
+  margin: $action-sheet-wp-icon-margin;
+  min-width: 24px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: $action-sheet-wp-icon-font-size;
+}
+
+.action-sheet-group {
+  overflow: hidden;
+  margin: 0;
+  border-radius: 0;
+  background-color: $action-sheet-wp-background-color;
+
+  &:last-child .action-sheet-button {
+    margin-bottom: 8px;
+  }
+}
+
+.action-sheet-cancel {
+  background-color: $action-sheet-wp-background-color;
+  border: none;
+}
