@@ -25,9 +25,6 @@ $checkbox-wp-icon-border-radius:         0 !default;
 $checkbox-wp-icon-border-color-off:      #333333 !default;
 $checkbox-wp-icon-border-color-on:       map-get($colors-wp, primary) !default;
 
-$checkbox-wp-transition-duration:        280ms !default;
-$checkbox-wp-transition-easing:          cubic-bezier(.4,0,.2,1) !default;
-
 
 ion-checkbox {
   position: relative;
@@ -47,10 +44,6 @@ ion-checkbox {
   border-style: $checkbox-wp-icon-border-style;
   border-color: $checkbox-wp-icon-border-color-off;
   background-color: $checkbox-wp-icon-background-color-off;
-
-  transition-property: background;
-  transition-duration: $checkbox-wp-transition-duration;
-  transition-timing-function: $checkbox-wp-transition-easing;
 }
 
 
