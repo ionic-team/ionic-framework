@@ -24,6 +24,9 @@ $subdued-text-color:         #666 !default;
 $font-family-base:           -apple-system, "Helvetica Neue", "Roboto", sans-serif !default;
 $font-size-base:             1.4rem !default; // 1.4rem == 14px
 
+$content-padding:            16px !default;
+$content-margin:             16px !default;
+
 $toolbar-background:         #151515 !default;
 $toolbar-border-color:       map-get($colors, dark) !default;
 $toolbar-text-color:         $text-color !default;

@@ -1,0 +1,83 @@
+@import "../../globals.wp";
+@import "./content";
+
+// Windows Content
+// --------------------------------------------------
+
+$content-wp-padding:              $content-padding !default;
+$content-wp-margin:               $content-margin !default;
+
+
+ion-content {
+  background-color: $background-wp-color;
+}
+
+
+// Windows Content Padding
+// --------------------------------------------------
+
+[padding],
+[padding] > scroll-content {
+  padding: $content-wp-padding;
+}
+
+[padding-top] {
+  padding-top: $content-wp-padding;
+}
+
+[padding-left] {
+  padding-left: $content-wp-padding;
+}
+
+[padding-right] {
+  padding-right: $content-wp-padding;
+}
+
+[padding-bottom] {
+  padding-bottom: $content-wp-padding;
+}
+
+[padding-vertical] {
+  padding-top: $content-wp-padding;
+  padding-bottom: $content-wp-padding;
+}
+
+[padding-horizontal] {
+  padding-right: $content-wp-padding;
+  padding-left: $content-wp-padding;
+}
+
+
+// Windows Content Margin
+// --------------------------------------------------
+
+[margin],
+[margin] > scroll-content {
+  margin: $content-wp-margin;
+}
+
+[margin-top] {
+  margin-top: $content-wp-margin;
+}
+
+[margin-left] {
+  margin-left: $content-wp-margin;
+}
+
+[margin-right] {
+  margin-right: $content-wp-margin;
+}
+
+[margin-bottom] {
+  margin-bottom: $content-wp-margin;
+}
+
+[margin-vertical] {
+  margin-top: $content-wp-margin;
+  margin-bottom: $content-wp-margin;
+}
+
+[margin-horizontal] {
+  margin-right: $content-wp-margin;
+  margin-left: $content-wp-margin;
+}
