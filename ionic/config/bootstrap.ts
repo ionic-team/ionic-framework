@@ -81,7 +81,7 @@ function setupDom(window, document, config, platform, clickBlock, featureDetect)
   }
 
   // set the mode class name
-  // ios/md
+  // ios/md/wp
   bodyEle.classList.add(mode);
 
   // language and direction

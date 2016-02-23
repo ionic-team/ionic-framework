@@ -266,6 +266,7 @@ gulp.task('sass', function() {
   gulp.src([
     'ionic/ionic.ios.scss',
     'ionic/ionic.md.scss',
+    'ionic/ionic.wp.scss',
     'ionic/ionic.scss'
   ])
   .pipe(sass({
@@ -300,6 +301,7 @@ gulp.task('sass.themes', function() {
 
   buildTheme('ios');
   buildTheme('md');
+  buildTheme('wp');
 });
 
 /**

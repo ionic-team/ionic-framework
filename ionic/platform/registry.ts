@@ -144,7 +144,7 @@ Platform.register({
     'tablet'
   ],
   settings: {
-    mode: 'md',
+    mode: 'wp',
   },
   isMatch(p: Platform): boolean {
     return p.isPlatform('windowsphone', 'windows phone');
