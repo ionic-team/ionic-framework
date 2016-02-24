@@ -113,7 +113,7 @@ module.exports = function(currentVersion){
 
   readTypeScriptModules.basePath = path.resolve(path.resolve(__dirname, '../..'));
   readTypeScriptModules.sourceFiles = [
-    'ionic/ionic.ts'
+    'ionic/index.ts'
   ];
 })
 
