@@ -12,7 +12,7 @@ $link-wp-color:                       map-get($colors-wp, primary) !default;
 $background-wp-color:                 $background-color !default;
 $subdued-text-wp-color:               $subdued-text-color !default;
 
-$font-family-wp-base:                 "Roboto", "Helvetica Neue", sans-serif !default;
+$font-family-wp-base:                 "Segoe UI", "Noto Sans", sans-serif !default;
 $font-size-wp-base:                   $font-size-base !default;
 
 
@@ -62,5 +62,5 @@ $item-wp-padding-icon-bottom:         10px !default;
 
 // Roboto Font
 @at-root {
-  @import "../fonts/roboto";
+  @import "../fonts/noto-sans";
 }
