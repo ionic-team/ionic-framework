@@ -1,0 +1,99 @@
+@import "../../globals.wp";
+@import "./input";
+
+// Windows Input
+// --------------------------------------------------
+
+$text-input-wp-background-color:            $list-wp-background-color !default;
+$text-input-wp-border-color:                $input-wp-border-color !default;
+$text-input-wp-border-width:                2px !default;
+
+$text-input-wp-padding-vertical:            0 !default;
+$text-input-wp-padding-horizontal:          8px !default;
+$text-input-wp-line-height:                 3rem !default;
+
+$text-input-wp-highlight-color:             map-get($colors-wp, primary) !default;
+$text-input-wp-hightlight-color-valid:      map-get($colors-wp, secondary) !default;
+$text-input-wp-hightlight-color-invalid:    map-get($colors-wp, danger) !default;
+
+$text-input-wp-input-clear-icon-width:      30px !default;
+$text-input-wp-input-clear-icon-color:      $input-wp-border-color !default;
+$text-input-wp-input-clear-icon-svg:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $text-input-wp-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
+$text-input-wp-input-clear-icon-size:       22px !default;
+
+
+
+// Windows Default Input
+// --------------------------------------------------
+
+.text-input {
+  margin: $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom ($item-wp-padding-left / 2);
+  padding: $text-input-wp-padding-vertical $text-input-wp-padding-horizontal;
+  border: $text-input-wp-border-width solid $text-input-wp-border-color;
+  line-height: $text-input-wp-line-height;
+}
+
+
+// Windows Inset Input
+// --------------------------------------------------
+
+.inset-input {
+  margin: ($item-wp-padding-top / 2) $item-wp-padding-right ($item-wp-padding-bottom / 2) $item-wp-padding-left;
+  padding: ($item-wp-padding-top / 2) ($item-wp-padding-right / 2) ($item-wp-padding-bottom / 2) ($item-wp-padding-left / 2);
+}
+
+
+// Windows Highlighted Input
+// --------------------------------------------------
+
+.input-has-focus .text-input {
+  border-color: $text-input-wp-highlight-color;
+}
+
+ion-input.ng-valid.input-has-value .text-input {
+  border-color: $text-input-wp-hightlight-color-valid;
+}
+
+ion-input.ng-invalid.ng-touched .text-input {
+  border-color: $text-input-wp-hightlight-color-invalid;
+}
+
+
+// Windows Stacked & Floating Inputs
+// --------------------------------------------------
+
+.item-label-stacked .text-input,
+.item-label-floating .text-input {
+  margin-left: 0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.item-label-floating .text-input.cloned-input {
+  top: 32px;
+}
+
+.item-label-stacked .text-input.cloned-input {
+  top: 27px;
+}
+
+
+// Windows Clear Input Icon
+// --------------------------------------------------
+
+ion-input[clearInput] {
+  position: relative;
+
+  .text-input {
+    padding-right: $text-input-wp-input-clear-icon-width;
+  }
+}
+
+.text-input-clear-icon {
+  width: $text-input-wp-input-clear-icon-width;
+
+  @include svg-background-image($text-input-wp-input-clear-icon-svg);
+  background-size: $text-input-wp-input-clear-icon-size;
+  right: ($item-wp-padding-right / 2);
+  bottom: 2px;
+}
