@@ -145,6 +145,9 @@ Platform.register({
   ],
   settings: {
     mode: 'wp',
+    autoFocusAssist: 'immediate',
+    clickBlock: true,
+    hoverCSS: false
   },
   isMatch(p: Platform): boolean {
     return p.isPlatform('windowsphone', 'windows phone');
