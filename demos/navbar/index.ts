@@ -1,4 +1,4 @@
-import {App} from 'ionic/ionic';
+import {App} from 'ionic-angular';
 
 // Use the toolbar demo but pass in the demo name to change the title
 @App({

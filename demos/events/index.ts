@@ -1,4 +1,4 @@
-import {App, IonicApp, Page, Events} from 'ionic/ionic';
+import {App, IonicApp, Page, Events} from 'ionic-angular';
 
 @Page({templateUrl: 'login.html'})
 class Login {

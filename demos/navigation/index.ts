@@ -1,5 +1,5 @@
-import {App, Page, IonicApp, Config, Platform} from 'ionic/ionic';
-import {NavController, NavParams} from 'ionic/ionic';
+import {App, Page, IonicApp, Config, Platform} from 'ionic-angular';
+import {NavController, NavParams} from 'ionic-angular';
 
 var PAGE_NUM = 2;
 
@@ -44,7 +44,7 @@ export class Page2 {
 
     pop() {
       if (PAGE_NUM > 2) {
-        PAGE_NUM--;        
+        PAGE_NUM--;
       }
       this.nav.pop();
     }

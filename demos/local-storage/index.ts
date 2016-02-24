@@ -1,5 +1,5 @@
-import {App, Page, IonicApp, Config, Platform} from 'ionic/ionic';
-import {Storage, LocalStorage} from 'ionic/ionic';
+import {App, Page, IonicApp, Config, Platform} from 'ionic-angular';
+import {Storage, LocalStorage} from 'ionic-angular';
 
 
 @App({
