@@ -8,7 +8,7 @@ $alert-wp-width:                          100% !default;
 $alert-wp-border-radius:                  0 !default;
 $alert-wp-border-width:                   1px !default;
 $alert-wp-border-color:                   map-get($colors-wp, primary) !default;
-$alert-wp-background-color:               #fafafa !default;
+$alert-wp-background-color:               #E6E6E6 !default;
 
 $alert-wp-head-text-align:                left !default;
 $alert-wp-head-padding:                   20px 20px 5px 20px !default;
@@ -18,7 +18,7 @@ $alert-wp-title-font-weight:              400 !default;
 $alert-wp-sub-title-font-size:            16px !default;
 
 $alert-wp-message-font-size:              13px !default;
-$alert-wp-message-padding:                0 20px 10px 20px !default;
+$alert-wp-message-padding:                0 20px !default;
 $alert-wp-message-text-color:             #000 !default;
 
 $alert-wp-input-border-color:             $input-wp-border-color !default;
@@ -42,7 +42,7 @@ $alert-wp-checkbox-border-color:          $input-wp-border-color !default;
 $alert-wp-radio-background-color:         map-get($colors-wp, primary) !default;
 $alert-wp-radio-border-color:             $input-wp-border-color !default;
 
-$alert-wp-buttons-padding:                8px 20px 20px 20px !default;
+$alert-wp-buttons-padding:                10px 20px !default;
 $alert-wp-buttons-justify-content:        flex-end !default;
 
 
@@ -112,8 +112,8 @@ $alert-wp-buttons-justify-content:        flex-end !default;
 .alert-radio-group,
 .alert-checkbox-group {
   position: relative;
-  border-top: 1px solid $alert-wp-input-border-color;
-  border-bottom: 1px solid $alert-wp-input-border-color;
+  border-top: 0 solid $alert-wp-input-border-color;
+  border-bottom: 0 solid $alert-wp-input-border-color;
   max-height: 240px;
   overflow: auto;
 }
