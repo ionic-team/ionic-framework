@@ -18,7 +18,7 @@ import {ViewController} from '../nav/view-controller';
  * dismissed by the user before they can resume interaction with the app.
  * Dangerous (destructive) options are made obvious. There are easy
  * ways to cancel out of the action sheet, such as tapping the backdrop or
- * hitting the escape key on desktop.
+ * hitting the escape key on desktop. 
  *
  * An action sheet is created from an array of `buttons`, with each button
  * including properties for its `text`, and optionally a `handler` and `role`.
