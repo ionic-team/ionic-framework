@@ -18,7 +18,7 @@ import {ViewController} from '../nav/view-controller';
  * dismissed by the user before they can resume interaction with the app.
  * Dangerous (destructive) options are made obvious. There are easy
  * ways to cancel out of the action sheet, such as tapping the backdrop or
- * hitting the escape key on desktop.
+ * hitting the escape key on desktop. 
  *
  * An action sheet is created from an array of `buttons`, with each button
  * including properties for its `text`, and optionally a `handler` and `role`.
@@ -36,7 +36,7 @@ import {ViewController} from '../nav/view-controller';
  *
  * Its shorthand is to add all the action sheet's options from within the
  * `ActionSheet.create(opts)` first argument. Otherwise the action sheet's
- * instance has methods to add options, such as `setTitle()` or `addButton()`.
+ * instance has methods to add options, like `setTitle()` or `addButton()`.
  *
  * @usage
  * ```ts
