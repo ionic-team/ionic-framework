@@ -36,7 +36,7 @@ import {ViewController} from '../nav/view-controller';
  *
  * Its shorthand is to add all the action sheet's options from within the
  * `ActionSheet.create(opts)` first argument. Otherwise the action sheet's
- * instance has methods to add options, such as `setTitle()` or `addButton()`.
+ * instance has methods to add options, like `setTitle()` or `addButton()`.
  *
  * @usage
  * ```ts
