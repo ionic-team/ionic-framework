@@ -31,9 +31,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'ionic': path.normalize(process.cwd() + '/dist')
+      'ionic-angular': path.normalize(process.cwd() + '/dist')
     },
     extensions: ["", ".js", ".ts"]
   }
 };
-
