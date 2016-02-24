@@ -4,17 +4,21 @@
 // Windows Action Sheet
 // --------------------------------------------------
 
-$action-sheet-wp-background-color:                #fafafa !default;
+$action-sheet-wp-text-align:                      left !default;
 
-$action-sheet-wp-title-color:                     #757575 !default;
-$action-sheet-wp-title-font-size:                 1.6rem !default;
+$action-sheet-wp-background-color:                #F2F2F2 !default;
+
 $action-sheet-wp-title-padding:                   19px 16px 17px !default;
+$action-sheet-wp-title-font-size:                 1.6rem !default;
+$action-sheet-wp-title-color:                     #4D4D4D !default;
+$action-sheet-wp-title-text-align:                $action-sheet-wp-text-align !default;
 
 $action-sheet-wp-button-height:                   4.8rem !default;
-$action-sheet-wp-button-text-color:               #222 !default;
+$action-sheet-wp-button-text-color:               #4D4D4D !default;
 $action-sheet-wp-button-font-size:                1.6rem !default;
 $action-sheet-wp-button-padding:                  0 16px !default;
-$action-sheet-wp-button-background-active-color:  #f1f1f1 !default;
+$action-sheet-wp-button-text-align:               $action-sheet-wp-text-align !default;
+$action-sheet-wp-button-background-active-color:  $list-wp-activated-background-color !default;
 
 $action-sheet-wp-icon-font-size:                  2.4rem !default;
 $action-sheet-wp-icon-margin:                     0 28px 0 0 !default;
@@ -24,7 +28,7 @@ $action-sheet-wp-icon-margin:                     0 28px 0 0 !default;
   padding: $action-sheet-wp-title-padding;
   font-size: $action-sheet-wp-title-font-size;
   color: $action-sheet-wp-title-color;
-  text-align: left;
+  text-align: $action-sheet-wp-title-text-align;
 }
 
 .action-sheet-button {
@@ -36,7 +40,7 @@ $action-sheet-wp-icon-margin:                     0 28px 0 0 !default;
   font-weight: normal;
   color: $action-sheet-wp-button-text-color;
   background-color: transparent;
-  text-align: left;
+  text-align: $action-sheet-wp-button-text-align;
 
   &.activated {
     background: $action-sheet-wp-button-background-active-color;
