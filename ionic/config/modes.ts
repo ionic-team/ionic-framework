@@ -70,9 +70,9 @@ Config.setModeConfig('wp', {
   alertLeave: 'alert-md-pop-out',
 
   backButtonText: '',
-  backButtonIcon: 'md-arrow-back',
+  backButtonIcon: 'ios-arrow-back',
 
-  iconMode: 'md',
+  iconMode: 'ios',
 
   menuType: 'overlay',
 
@@ -82,7 +82,6 @@ Config.setModeConfig('wp', {
   pageTransition: 'md-transition',
   pageTransitionDelay: 96,
 
-  tabbarHighlight: true,
   tabbarPlacement: 'top',
 
   tabSubPages: true,

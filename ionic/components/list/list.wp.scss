@@ -17,7 +17,7 @@ $list-inset-wp-border-radius:    2px !default;
 
 $list-wp-header-padding:         16px $item-wp-padding-right 16px $item-wp-padding-left !default;
 $list-wp-header-font-size:       2.0rem !default;
-$list-wp-header-color:           #515151 !default;
+$list-wp-header-color:           $list-wp-text-color !default;
 
 
 /****************/

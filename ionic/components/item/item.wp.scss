@@ -6,6 +6,8 @@
 
 $item-wp-body-text-font-size:        1.4rem !default;
 $item-wp-body-text-line-height:      1.5 !default;
+$item-wp-body-background-color:      $list-wp-background-color !default;
+$item-wp-body-text-color:            $list-wp-text-color !default;
 $item-wp-paragraph-text-color:       #666 !default;
 
 $item-wp-font-size:                  1.6rem !default;
@@ -28,8 +30,8 @@ $item-wp-sliding-content-bg:         $list-wp-background-color !default;
   text-transform: none;
   font-weight: normal;
 
-  color: $list-wp-text-color;
-  background-color: $list-wp-background-color;
+  color: $item-wp-body-text-color;
+  background-color: $item-wp-body-background-color;
   box-shadow: none;
   transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms;
 
@@ -110,7 +112,7 @@ ion-icon[item-right] {
 
 ion-icon[item-left] + .item-inner,
 ion-icon[item-left] + .item-input {
-  margin-left: $item-wp-padding-left + ($item-wp-padding-left / 2);
+  margin-left: ($item-wp-padding-left / 2);
 }
 
 ion-avatar[item-left],
