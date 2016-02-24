@@ -18,7 +18,7 @@ $noto-sans-font-path: $font-path !default;
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Noto Sans'), local('Noto-Sans'), url('#{$noto-sans-font-path}/noto-sans.ttf') format('truetype');
+  src: local('Noto Sans'), local('Noto-Sans-Regular'), url('#{$noto-sans-font-path}/noto-sans-regular.ttf') format('truetype');
 }
 
 @font-face {
