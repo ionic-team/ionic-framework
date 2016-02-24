@@ -21,11 +21,13 @@ $alert-wp-message-font-size:              13px !default;
 $alert-wp-message-padding:                0 20px 10px 20px !default;
 $alert-wp-message-text-color:             #000 !default;
 
-$alert-wp-input-border-color:             #dedede !default;
+$alert-wp-input-border-color:             $input-wp-border-color !default;
 $alert-wp-input-text-color:               #000000 !default;
 $alert-wp-input-highlight-color:          map-get($colors-wp, primary) !default;
 $alert-wp-input-margin-top:               5px !default;
 $alert-wp-input-margin-bottom:            5px !default;
+$alert-wp-input-padding-vertical:         0 !default;
+$alert-wp-input-padding-horizontal:       8px !default;
 
 $alert-wp-button-padding:                 5px !default;
 $alert-wp-button-text-color:              #000 !default;
@@ -36,7 +38,9 @@ $alert-wp-button-margin-right:            1% !default;
 $alert-wp-button-font-weight:             300 !default;
 
 $alert-wp-checkbox-background-color:      map-get($colors-wp, primary) !default;
+$alert-wp-checkbox-border-color:          $input-wp-border-color !default;
 $alert-wp-radio-background-color:         map-get($colors-wp, primary) !default;
+$alert-wp-radio-border-color:             $input-wp-border-color !default;
 
 $alert-wp-buttons-padding:                8px 20px 20px 20px !default;
 $alert-wp-buttons-justify-content:        flex-end !default;
@@ -90,13 +94,14 @@ $alert-wp-buttons-justify-content:        flex-end !default;
 // --------------------------------------------------
 
 .alert-input {
-  border-bottom: 1px solid $alert-wp-input-border-color;
+  border: 2px solid $alert-wp-input-border-color;
   color: $alert-wp-input-text-color;
   margin: $alert-wp-input-margin-top 0 $alert-wp-input-margin-bottom 0;
+  padding: $alert-wp-input-padding-vertical $alert-wp-input-padding-horizontal;
+  line-height: 3rem;
 
   &:focus {
-    border-bottom: 2px solid $alert-wp-input-highlight-color;
-    margin-bottom: $alert-wp-input-margin-bottom - 1;
+    border-color: $alert-wp-input-highlight-color;
   }
 }
 
@@ -144,7 +149,7 @@ $alert-wp-buttons-justify-content:        flex-end !default;
   margin: 0;
   border-width: 2px;
   border-style: solid;
-  border-color: darken($list-wp-border-color, 40%);
+  border-color: $alert-wp-radio-border-color;
   border-radius: 50%;
 
   &:after {
@@ -194,7 +199,7 @@ $alert-wp-buttons-justify-content:        flex-end !default;
   border-radius: 2px;
   border-width: 2px;
   border-style: solid;
-  border-color: #818181;
+  border-color: $alert-wp-checkbox-border-color;
   background-color: transparent;
 }
 

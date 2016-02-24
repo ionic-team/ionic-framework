@@ -11,7 +11,7 @@ $item-wp-paragraph-text-color:       #666 !default;
 $item-wp-font-size:                  1.6rem !default;
 $item-wp-avatar-size:                4rem !default;
 $item-wp-thumbnail-size:             8rem !default;
-$item-wp-note-color:                 darken($list-wp-border-color, 10%) !default;
+$item-wp-note-color:                 $input-wp-border-color !default;
 
 $item-wp-divider-bg:                 #fff !default;
 $item-wp-divider-color:              #222 !default;

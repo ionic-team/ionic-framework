@@ -7,7 +7,7 @@
 $searchbar-wp-padding:                   0 !default;
 $searchbar-wp-background-color:          transparent !default;
 $searchbar-wp-border-width:              2px !default;
-$searchbar-wp-border-color:              #818181 !default;
+$searchbar-wp-border-color:              $input-wp-border-color !default;
 $searchbar-wp-border-color-focused:      map-get($colors-wp, primary) !default;
 
 $searchbar-wp-input-search-icon-color:   #858585 !default;
