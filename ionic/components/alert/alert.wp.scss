@@ -4,6 +4,7 @@
 // Windows Alerts
 // --------------------------------------------------
 
+$alert-wp-backdrop-color:                 white !default;
 $alert-wp-width:                          100% !default;
 $alert-wp-border-radius:                  0 !default;
 $alert-wp-border-width:                   1px !default;
@@ -45,6 +46,11 @@ $alert-wp-radio-border-color:             $input-wp-border-color !default;
 $alert-wp-buttons-padding:                10px 20px !default;
 $alert-wp-buttons-justify-content:        flex-end !default;
 
+ion-alert {
+  .backdrop {
+    background-color: $alert-wp-backdrop-color;
+  }
+}
 
 .alert-wrapper {
   width: $alert-wp-width;

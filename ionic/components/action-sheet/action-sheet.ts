@@ -18,7 +18,7 @@ import {ViewController} from '../nav/view-controller';
  * dismissed by the user before they can resume interaction with the app.
  * Dangerous (destructive) options are made obvious. There are easy
  * ways to cancel out of the action sheet, such as tapping the backdrop or
- * hitting the escape key on desktop. 
+ * hitting the escape key on desktop.
  *
  * An action sheet is created from an array of `buttons`, with each button
  * including properties for its `text`, and optionally a `handler` and `role`.
@@ -363,3 +363,36 @@ class ActionSheetMdSlideOut extends Transition {
   }
 }
 Transition.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);
+
+class ActionSheetWpSlideIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
+
+    let ele = enteringView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
+
+    backdrop.fromTo('opacity', 0.01, 0.1);
+    wrapper.fromTo('translateY', '100%', '0%');
+
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
+  }
+}
+Transition.register('action-sheet-wp-slide-in', ActionSheetWpSlideIn);
+
+
+class ActionSheetWpSlideOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
+
+    let ele = leavingView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
+
+    backdrop.fromTo('opacity', 0.1, 0);
+    wrapper.fromTo('translateY', '0%', '100%');
+
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
+  }
+}
+Transition.register('action-sheet-wp-slide-out', ActionSheetWpSlideOut);

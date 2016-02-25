@@ -14,7 +14,6 @@ $item-wp-font-size:                  1.6rem !default;
 $item-wp-avatar-size:                4rem !default;
 $item-wp-thumbnail-size:             8rem !default;
 $item-wp-note-color:                 $input-wp-border-color !default;
-$item-wp-detail-push-color:          $input-wp-border-color !default;
 
 $item-wp-divider-bg:                 #fff !default;
 $item-wp-divider-color:              #222 !default;
@@ -34,7 +33,6 @@ $item-wp-sliding-content-bg:         $list-wp-background-color !default;
   color: $item-wp-body-text-color;
   background-color: $item-wp-body-background-color;
   box-shadow: none;
-  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms;
 
   h1 {
     margin: 0 0 2px;
@@ -77,16 +75,6 @@ $item-wp-sliding-content-bg:         $list-wp-background-color !default;
 .item-inner {
   padding-right: ($item-wp-padding-right / 2);
   border-bottom: 1px solid $list-wp-border-color;
-}
-
-button.item:not([detail-none]) .item-inner,
-a.item:not([detail-none]) .item-inner,
-.item[detail-push] .item-inner {
-  @include wp-detail-push-icon($item-wp-detail-push-color);
-  background-repeat: no-repeat;
-  background-position: right ($item-wp-padding-right - 2) center;
-  background-size: 14px 14px;
-  padding-right: 32px;
 }
 
 

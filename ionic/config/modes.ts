@@ -63,8 +63,8 @@ Config.setModeConfig('md', {
 Config.setModeConfig('wp', {
   activator: 'highlight',
 
-  actionSheetEnter: 'action-sheet-md-slide-in',
-  actionSheetLeave: 'action-sheet-md-slide-out',
+  actionSheetEnter: 'action-sheet-wp-slide-in',
+  actionSheetLeave: 'action-sheet-wp-slide-out',
 
   alertEnter: 'alert-md-pop-in',
   alertLeave: 'alert-md-pop-out',

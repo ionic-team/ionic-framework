@@ -8,7 +8,7 @@ $checkbox-wp-border-bottom-style:        solid !default;
 $checkbox-wp-border-bottom-color:        $list-wp-border-color !default;
 $checkbox-wp-padding:                    $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0 !default;
 $checkbox-wp-margin:                     0 !default;
-$checkbox-wp-media-margin:               $item-wp-padding-media-top 36px $item-wp-padding-media-bottom 4px !default;
+$checkbox-wp-media-margin:               $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 4px !default;
 $checkbox-wp-disabled-opacity:           0.3 !default;
 
 $checkbox-wp-icon-background-color-off:  $list-wp-background-color !default;

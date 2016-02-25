@@ -4,10 +4,10 @@
 // Windows Card
 // --------------------------------------------------
 
-$card-wp-margin-top:                  10px !default;
-$card-wp-margin-right:                10px !default;
-$card-wp-margin-bottom:               10px !default;
-$card-wp-margin-left:                 10px !default;
+$card-wp-margin-top:                  8px !default;
+$card-wp-margin-right:                8px !default;
+$card-wp-margin-bottom:               8px !default;
+$card-wp-margin-left:                 8px !default;
 
 $card-wp-padding-top:                 13px !default;
 $card-wp-padding-right:               16px !default;
@@ -21,9 +21,9 @@ $card-wp-avatar-size:                 4rem !default;
 $card-wp-thumbnail-size:              8rem !default;
 
 $card-wp-background-color:            $list-wp-background-color !default;
-$card-wp-border-radius:               0 !default;
-$card-wp-border-width:                2px !default;
-$card-wp-border-color:                $input-wp-border-color !default;
+$card-wp-border:                      2px solid rgba(0,0,0,0.2) !default;
+$card-wp-box-shadow:                  none !default;
+$card-wp-border-radius:               4px !default;
 $card-wp-font-size:                   1.4rem !default;
 $card-wp-line-height:                 1.5 !default;
 
@@ -44,7 +44,8 @@ ion-card {
 
   background: $card-wp-background-color;
   border-radius: $card-wp-border-radius;
-  border: $card-wp-border-width solid $card-wp-border-color;
+  box-shadow: $card-wp-box-shadow;
+  border: $card-wp-border;
 
   ion-list {
     margin-bottom: 0;

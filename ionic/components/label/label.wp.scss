@@ -34,7 +34,6 @@ ion-label[stacked] {
 ion-label[floating] {
   transform-origin: left top;
   transform: translate3d(8px, 34px, 0);
-  transition: transform 150ms ease-in-out;
 }
 
 ion-label[stacked],

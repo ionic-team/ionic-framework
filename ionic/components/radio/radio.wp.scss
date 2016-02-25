@@ -6,6 +6,9 @@
 $radio-wp-color-on:               map-get($colors-wp, primary) !default;
 $radio-wp-color-off:              #333333 !default;
 
+// Places radio icon on the left of the item
+$radio-wp-order:                  -1 !default;
+
 $radio-wp-icon-width:             16px !default;
 $radio-wp-icon-height:            16px !default;
 $radio-wp-icon-border-width:      2px !default;
@@ -87,7 +90,8 @@ ion-radio {
 .item ion-radio {
   position: static;
   display: block;
-  margin: $item-wp-padding-media-top ($item-wp-padding-right / 2) $item-wp-padding-media-bottom 0;
+  margin: $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 0;
+  order: $radio-wp-order;
 }
 
 .item-radio ion-label {

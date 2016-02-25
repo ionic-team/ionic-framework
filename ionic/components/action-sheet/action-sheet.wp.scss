@@ -7,6 +7,7 @@
 $action-sheet-wp-text-align:                      left !default;
 
 $action-sheet-wp-background-color:                #F2F2F2 !default;
+$action-sheet-wp-box-shadow:                      0px -1px 0px rgba(0,0,0,0.2) !default;
 
 $action-sheet-wp-title-padding:                   19px 16px 17px !default;
 $action-sheet-wp-title-font-size:                 2.0rem !default;
@@ -23,6 +24,9 @@ $action-sheet-wp-button-background-active-color:  $list-wp-activated-background-
 $action-sheet-wp-icon-font-size:                  2.4rem !default;
 $action-sheet-wp-icon-margin:                     0 28px 0 0 !default;
 
+.action-sheet-wrapper {
+  box-shadow: $action-sheet-wp-box-shadow;
+}
 
 .action-sheet-title {
   padding: $action-sheet-wp-title-padding;
