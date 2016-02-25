@@ -397,7 +397,7 @@ gulp.task('e2e.build', function() {
   var platforms = [
     'android',
     'ios',
-    'wp'
+    'windows'
   ];
 
   // Get each test folder with gulp.src
