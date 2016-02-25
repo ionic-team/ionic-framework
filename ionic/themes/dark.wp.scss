@@ -69,7 +69,7 @@ $toggle-wp-handle-background-color-off: map-get($colors-wp, light) !default;
 // Windows Input
 // --------------------------------------------------
 
-$input-wp-border-color:                 map-get($colors-wp, light) !default;
+$input-wp-border-color:                 rgba(0,0,0,0.5) !default;
 
 
 // Windows Body
