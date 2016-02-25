@@ -1,6 +1,7 @@
 {
   "name": "ionic-angular",
   "version": "<%= ionicVersion %>",
+  "description": "An advanced HTML5 mobile app framework built on Angular2",
   "license": "MIT",
   "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp", "cordova"],
   "repository": {
