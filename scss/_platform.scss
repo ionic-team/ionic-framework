@@ -9,7 +9,7 @@
   // iOS has a status bar which sits on top of the header.
   // Bump down everything to make room for it. However, if
   // if its in Cordova, and set to fullscreen, then disregard the bump.
-  &:not(.fullscreen) {
+  &:not(.fullscreen):not(.platform-browser) {
     .bar-header:not(.bar-subheader) {
       height: $bar-height + $ios-statusbar-height;
 
