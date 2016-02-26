@@ -90,27 +90,32 @@ export class Tabs extends Ion {
   subPages: boolean;
 
   /**
-   * @input {number} The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
+   * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
    */
   @Input() selectedIndex: any;
 
   /**
-   * @input {boolean} Sets whether to preload all the tabs, true or false
+   * @input {boolean} Set whether to preload all the tabs: `true`, `false`.
    */
   @Input() preloadTabs: any;
 
   /**
-   * @input {string} set the position of the tabbar's icons: top, bottom, left, right, hide
+   * @input {string} Deprecated, use `tabbarLayout` instead. Set the position of the tabbar's icons: `top`, `bottom`, `left`, `right`, `hide`.
    */
   @Input() tabbarIcons: string;
 
   /**
-   * @input {string} Set position of the tabbar, top or bottom
+   * @input {string} Set the tabbar layout: `icon-top`, `icon-left`, `icon-right`, `icon-bottom`, `icon-hide`, `title-hide`.
+   */
+  @Input() tabbarLayout: string;
+
+  /**
+   * @input {string} Set position of the tabbar: `top`, `bottom`.
    */
   @Input() tabbarPlacement: string;
 
   /**
-   * @input {any} expression you want to evaluate when the tabs change
+   * @input {any} Expression to evaluate when the tab changes.
    */
   @Output() change: EventEmitter<Tab> = new EventEmitter();
 
@@ -162,7 +167,12 @@ export class Tabs extends Ion {
    */
   ngAfterViewInit() {
     this._setConfig('tabbarPlacement', 'bottom');
+    this._setConfig('tabbarLayout', 'icon-top');
     this._setConfig('tabbarIcons', 'top');
+
+    if (this.tabbarIcons) {
+      console.warn("DEPRECATION WARNING: 'tabbarIcons' is no longer supported and will be removed in next major release. Use 'tabbarLayout' instead. Available values: 'icon-top', 'icon-left', 'icon-right', 'icon-bottom', 'icon-hide', 'title-hide'.");
+    }
 
     if (this._useHighlight) {
       this._platform.onResize(() => {
@@ -201,7 +211,7 @@ export class Tabs extends Ion {
   private _setConfig(attrKey, fallback) {
     var val = this[attrKey];
     if (isUndefined(val)) {
-      val = this._config.get(attrKey);
+      val = this._config.get(attrKey, fallback);
     }
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attrKey, val);
   }

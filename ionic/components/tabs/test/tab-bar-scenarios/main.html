@@ -24,7 +24,7 @@
 
 
 <!-- Icons below text -->
-<ion-tabs tabbarIcons="bottom" no-navbar selectedIndex="1">
+<ion-tabs tabbarLayout="icon-bottom" no-navbar selectedIndex="1">
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -32,7 +32,7 @@
 
 
 <!-- Icons right of text -->
-<ion-tabs tabbarIcons="right" no-navbar selectedIndex="0">
+<ion-tabs tabbarLayout="icon-right" no-navbar selectedIndex="0">
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -40,7 +40,7 @@
 
 
 <!-- Icons left of text -->
-<ion-tabs tabbarIcons="left" no-navbar>
+<ion-tabs tabbarLayout="icon-left" no-navbar>
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -48,7 +48,15 @@
 
 
 <!-- No icons -->
-<ion-tabs tabbarIcons="hide" no-navbar>
+<ion-tabs tabbarLayout="icon-hide" no-navbar>
+  <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
+  <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
+  <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
+</ion-tabs>
+
+
+<!-- No title -->
+<ion-tabs tabbarLayout="title-hide" no-navbar secondary>
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -60,12 +68,4 @@
   <ion-tab tabTitle="Indiana Jones and the Raiders of the Lost Ark" [root]="root"></ion-tab>
   <ion-tab tabTitle="Indiana Jones and the Temple of Doom" [root]="root"></ion-tab>
   <ion-tab tabTitle="Indiana Jones and the Last Crusade" [root]="root"></ion-tab>
-</ion-tabs>
-
-
-<!-- primary color tabbar -->
-<ion-tabs no-navbar primary>
-  <ion-tab tabIcon="call" [root]="root"></ion-tab>
-  <ion-tab tabIcon="heart" [root]="root"></ion-tab>
-  <ion-tab tabIcon="settings" [root]="root"></ion-tab>
 </ion-tabs>

@@ -101,6 +101,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * | pageTransitionDelay        | 16                     | 120                       |
  * | tabbarPlacement            | bottom                 | top                       |
  * | tabbarHighlight            |                        | top                       |
+ * | tabbarLayout               |                        |                           |
  * | tabSubPages                |                        | true                      |
  *
 **/
