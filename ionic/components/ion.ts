@@ -1,6 +1,4 @@
 import {ElementRef} from 'angular2/core';
-import {Config} from '../config/config';
-import {isArray} from '../util';
 import * as dom from '../util/dom';
 
 let ids:number = 0;
@@ -17,24 +15,30 @@ export class Ion {
     this._id = 'i' + ids++;
   }
 
-  getElementRef() {
+  getElementRef(): ElementRef {
     return this.elementRef;
   }
 
-  getNativeElement() {
+  getNativeElement(): any {
     return this.elementRef.nativeElement;
   }
 
-  getDimensions() {
+  getDimensions(): {
+    width: number, height: number, left: number, top: number
+  } {
     return dom.getDimensions(this.elementRef.nativeElement, this._id);
   }
 
-  width() {
+  width(): number {
     return dom.getDimensions(this.elementRef.nativeElement, this._id).width;
   }
 
-  height() {
+  height(): number {
     return dom.getDimensions(this.elementRef.nativeElement, this._id).height;
+  }
+
+  ngOnDestroy() {
+    dom.clearDimensions(this._id);
   }
 
 }

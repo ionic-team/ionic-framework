@@ -45,6 +45,7 @@ export let CSS: {
   transform?: string,
   transition?: string,
   transitionDuration?: string,
+  transitionDelay?: string,
   transitionTimingFn?: string,
   transitionStart?: string,
   transitionEnd?: string,
@@ -79,6 +80,9 @@ export let CSS: {
 
   // transition timing function
   CSS.transitionTimingFn = (isWebkit ? '-webkit-' : '') + 'transition-timing-function';
+
+  // transition delay
+  CSS.transitionDelay = (isWebkit ? '-webkit-' : '') + 'transition-delay';
 
   // To be sure transitionend works everywhere, include *both* the webkit and non-webkit events
   CSS.transitionEnd = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
@@ -156,7 +160,7 @@ export function windowLoad(callback?: Function) {
   return promise;
 }
 
-export function pointerCoord(ev): {x: number, y: number} {
+export function pointerCoord(ev: any): {x: number, y: number} {
   // get coordinates for either a mouse click
   // or a touch depending on the given event
   let c = { x: 0, y: 0 };
@@ -243,7 +247,6 @@ export function closest(ele: HTMLElement, selector: string, checkSelf?: boolean)
 /**
  * Get the element offsetWidth and offsetHeight. Values are cached
  * to reduce DOM reads. Cache is cleared on a window resize.
- * @param {TODO} ele  TODO
  */
 export function getDimensions(ele: HTMLElement, id: string): {
   width: number, height: number, left: number, top: number
@@ -266,6 +269,10 @@ export function getDimensions(ele: HTMLElement, id: string): {
   }
 
   return dimensions;
+}
+
+export function clearDimensions(id: string) {
+  delete dimensionCache[id];
 }
 
 export function windowDimensions(): {width: number, height: number} {
