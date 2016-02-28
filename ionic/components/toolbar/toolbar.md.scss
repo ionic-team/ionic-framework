@@ -51,13 +51,11 @@ ion-navbar-section {
 .toolbar-content {
   flex: 1;
   order: map-get($toolbar-order-md, content);
+  max-width: 100%;
 }
 
 .toolbar-title {
   color: $toolbar-md-text-color;
-}
-
-ion-title {
   padding: 0 12px;
   font-size: $toolbar-md-title-font-size;
   font-weight: 500;
@@ -65,19 +63,27 @@ ion-title {
 
 @mixin md-toolbar-theme($color-name, $color-value) {
   .toolbar[#{$color-name}] {
+    $fg-color: toolbar-button-inverse($color-value);
 
     .toolbar-background {
       background: $color-value;
     }
 
-    .toolbar-title,
+    .bar-button-default,
+    .bar-button-outline,
+    .toolbar-title {
+      color: $fg-color;
+    }
+
     .bar-button-default,
     .bar-button-outline {
-      color: toolbar-button-inverse($color-value);
+      ion-button-effect {
+        background-color: $fg-color;
+      }
     }
 
     .bar-button-outline {
-      border-color: toolbar-button-inverse($color-value);
+      border-color: $fg-color;
     }
 
     @each $color-name, $color-value in $colors-md {
@@ -125,7 +131,7 @@ ion-buttons[right] {
   margin-left: 0.2rem;
   margin-right: 0.2rem;
   padding: 0 5px;
-  min-height: 32px;
+  height: 32px;
   border: 0;
   font-size: $toolbar-md-button-font-size;
   border-radius: $bar-button-md-border-radius;
@@ -142,12 +148,11 @@ ion-buttons[right] {
 @mixin md-bar-button-default($color-name, $color-value) {
 
   .bar-button-#{$color-name} {
-    $fg-color: $color-value;
-    color: $fg-color;
+    color: $color-value;
     background-color: transparent;
 
     &:hover:not(.disable-hover) {
-      color: $fg-color;
+      color: $color-value;
     }
   }
 
@@ -169,7 +174,7 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: inverse($bar-button-md-color);
+    color: color-inverse($bar-button-md-color);
     background-color: $bar-button-md-color;
   }
 }
@@ -183,7 +188,7 @@ ion-buttons[right] {
     background-color: transparent;
 
     &.activated {
-      color: inverse($fg-color);
+      color: color-inverse($fg-color);
       background-color: $fg-color;
     }
   }
@@ -195,15 +200,15 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: inverse($bar-button-md-color);
+  color: color-inverse($bar-button-md-color);
   background-color: $bar-button-md-color;
 
   &:hover:not(.disable-hover) {
-    color: inverse($bar-button-md-color);
+    color: color-inverse($bar-button-md-color);
   }
 
   &.activated {
-    color: inverse($bar-button-md-color);
+    color: color-inverse($bar-button-md-color);
     background-color: color-shade($bar-button-md-color);
   }
 }
@@ -211,7 +216,7 @@ ion-buttons[right] {
 @mixin md-bar-button-solid($color-name, $color-value) {
 
   .bar-button-solid-#{$color-name} {
-    color: inverse($color-value);
+    color: color-inverse($color-value);
     background-color: $color-value;
 
     &.activated {
@@ -226,7 +231,6 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-icon-left ion-icon {
-  margin-left: -0.1em;
   padding-right: 0.3em;
   font-size: 1.4em;
   line-height: 0.67;

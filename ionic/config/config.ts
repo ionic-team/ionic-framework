@@ -35,7 +35,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * @App({
  *   template: `<ion-nav [root]="root"></ion-nav>`
  *   config: {
- *     mode: md
+ *     mode: 'md'
  *   }
  * })
  * ```
@@ -101,6 +101,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * | pageTransitionDelay        | 16                     | 120                       |
  * | tabbarPlacement            | bottom                 | top                       |
  * | tabbarHighlight            |                        | top                       |
+ * | tabbarLayout               |                        |                           |
  * | tabSubPages                |                        | true                      |
  *
 **/
@@ -117,88 +118,16 @@ export class Config {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
   }
 
- /**
-  * For setting and getting multiple config values
-  */
 
-/**
- * @private
- * @name settings()
- * @description
- */
-  settings() {
-    const args = arguments;
-
-    switch (args.length) {
-
-      case 0:
-        return this._s;
-
-      case 1:
-        // settings({...})
-        this._s = args[0];
-        this._c = {}; // clear cache
-        break;
-
-      case 2:
-        // settings('ios', {...})
-        this._s.platforms = this._s.platforms || {};
-        this._s.platforms[args[0]] = args[1];
-        this._c = {}; // clear cache
-        break;
-    }
-
-    return this;
-  }
-
-
-/**
- * @name set
- * @description
- * Sets a single config value.
- *
- * @param {String} [platform] - The platform (either 'ios' or 'android') that the config value should apply to. Leaving this blank will apply the config value to all platforms.
- * @param {String} [key] - The key used to look up the value at a later point in time.
- * @param {String} [value] - The config value being stored.
- */
-  set() {
-    const args = arguments;
-    const arg0 = args[0];
-    const arg1 = args[1];
-
-    switch (args.length) {
-      case 2:
-        // set('key', 'value') = set key/value pair
-        // arg1 = value
-        this._s[arg0] = arg1;
-        delete this._c[arg0]; // clear cache
-        break;
-
-      case 3:
-        // setting('ios', 'key', 'value') = set key/value pair for platform
-        // arg0 = platform
-        // arg1 = key
-        // arg2 = value
-        this._s.platforms = this._s.platforms || {};
-        this._s.platforms[arg0] = this._s.platforms[arg0] || {};
-        this._s.platforms[arg0][arg1] = args[2];
-        delete this._c[arg1]; // clear cache
-        break;
-
-    }
-
-    return this;
-  }
-
-
-/**
- * @name get
- * @description
- * Returns a single config value, given a key.
- *
- * @param {String} [key] - the key for the config value
- */
-  get(key: string): any {
+  /**
+   * @name get
+   * @description
+   * Returns a single config value, given a key.
+   *
+   * @param {string} [key] - the key for the config value
+   * @param {any} [fallbackValue] - a fallback value to use when the config value was not found, or is config value is `null`. Fallback value defaults to `null`.
+   */
+  get(key: string, fallbackValue: any = null): any {
 
     if (!isDefined(this._c[key])) {
       if (!isDefined(key)) {
@@ -289,23 +218,97 @@ export class Config {
     // or it was from the users platform configs
     // or it was from the default platform configs
     // in that order
+    let rtnVal;
     if (isFunction(this._c[key])) {
-      return this._c[key](this.platform);
+      rtnVal = this._c[key](this.platform);
+
+    } else {
+      rtnVal = this._c[key];
     }
 
-    return this._c[key];
+    return (rtnVal !== null ? rtnVal : fallbackValue);
   }
+
 
   /**
    * @name getBoolean
    * @description
    * Same as `get()`, however always returns a boolean value.
    *
-   * @param {String} [key] - the key for the config value
+   * @param {string} [key] - the key for the config value
    */
   getBoolean(key: string): boolean {
     let val = this.get(key);
     return (val || val === 'true') ? true : false;
+  }
+
+
+  /**
+   * @name set
+   * @description
+   * Sets a single config value.
+   *
+   * @param {string} [platform] - The platform (either 'ios' or 'android') that the config value should apply to. Leaving this blank will apply the config value to all platforms.
+   * @param {string} [key] - The key used to look up the value at a later point in time.
+   * @param {string} [value] - The config value being stored.
+   */
+  set() {
+    const args = arguments;
+    const arg0 = args[0];
+    const arg1 = args[1];
+
+    switch (args.length) {
+      case 2:
+        // set('key', 'value') = set key/value pair
+        // arg1 = value
+        this._s[arg0] = arg1;
+        delete this._c[arg0]; // clear cache
+        break;
+
+      case 3:
+        // setting('ios', 'key', 'value') = set key/value pair for platform
+        // arg0 = platform
+        // arg1 = key
+        // arg2 = value
+        this._s.platforms = this._s.platforms || {};
+        this._s.platforms[arg0] = this._s.platforms[arg0] || {};
+        this._s.platforms[arg0][arg1] = args[2];
+        delete this._c[arg1]; // clear cache
+        break;
+
+    }
+
+    return this;
+  }
+
+  /**
+   * @private
+   * @name settings()
+   * @description
+   */
+  settings() {
+    const args = arguments;
+
+    switch (args.length) {
+
+      case 0:
+        return this._s;
+
+      case 1:
+        // settings({...})
+        this._s = args[0];
+        this._c = {}; // clear cache
+        break;
+
+      case 2:
+        // settings('ios', {...})
+        this._s.platforms = this._s.platforms || {};
+        this._s.platforms[args[0]] = args[1];
+        this._c = {}; // clear cache
+        break;
+    }
+
+    return this;
   }
 
   /**
@@ -315,10 +318,16 @@ export class Config {
     this.platform = platform;
   }
 
+  /**
+   * @private
+   */
   static setModeConfig(mode, config) {
     modeConfigs[mode] = config;
   }
 
+  /**
+   * @private
+   */
   static getModeConfig(mode) {
     return modeConfigs[mode] || null;
   }

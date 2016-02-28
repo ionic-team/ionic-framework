@@ -1,0 +1,79 @@
+
+<ion-menu [content]="content" id="menu1">
+
+  <ion-toolbar secondary>
+    <ion-title>Menu 1</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose (click)="menu1Active()">Make Menu 1 Active</button>
+      <button ion-item menuClose (click)="menu2Active()">Make Menu 2 Active</button>
+      <button ion-item menuClose (click)="menu3Active()">Make Menu 3 Active</button>
+      <button ion-item menuClose (click)="openPage(page1)">
+        Page 1
+      </button>
+      <button ion-item menuClose (click)="openPage(page2)">
+        Page 2
+      </button>
+      <button ion-item menuClose detail-none>
+        Close Menu 1
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+
+<ion-menu [content]="content" id="menu2">
+
+  <ion-toolbar danger>
+    <ion-title>Menu 2</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose (click)="menu1Active()">Make Menu 1 Active</button>
+      <button ion-item menuClose (click)="menu2Active()">Make Menu 2 Active</button>
+      <button ion-item menuClose (click)="menu3Active()">Make Menu 3 Active</button>
+      <button ion-item menuClose (click)="openPage(page1)">
+        Page 1
+      </button>
+      <button ion-item menuClose (click)="openPage(page2)">
+        Page 2
+      </button>
+      <button ion-item menuClose detail-none>
+        Close Menu 2
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-menu [content]="content" id="menu3">
+
+  <ion-toolbar primary>
+    <ion-title>Menu 3</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose (click)="menu1Active()">Make Menu 1 Active</button>
+      <button ion-item menuClose (click)="menu2Active()">Make Menu 2 Active</button>
+      <button ion-item menuClose (click)="menu3Active()">Make Menu 3 Active</button>
+      <button ion-item menuClose (click)="openPage(page1)">
+        Page 1
+      </button>
+      <button ion-item menuClose (click)="openPage(page2)">
+        Page 2
+      </button>
+      <button ion-item menuClose detail-none>
+        Close Menu 3
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+
+<ion-nav id="nav" [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>

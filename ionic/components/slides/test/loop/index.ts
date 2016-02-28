@@ -1,4 +1,4 @@
-import {App, IonicApp} from 'ionic/ionic';
+import {App, IonicApp} from 'ionic-angular';
 
 @App({
   templateUrl: 'main.html'
@@ -23,6 +23,11 @@ class MyApp {
     ];
 
     this.startingIndex = 2;
+
+    this.myTopSlideOptions = {
+      index: this.startingIndex,
+      loop: true
+    };
   }
 
   onSlideChanged(slider) {

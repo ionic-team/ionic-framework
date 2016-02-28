@@ -70,6 +70,7 @@ export class Scroll extends Ion {
   }
 
   /**
+   * @private
    * Add a scroll event handler to the scroll element if it exists.
    * @param {Function} handler  The scroll handler to add to the scroll element.
    * @returns {?Function} a function to remove the specified handler, otherwise

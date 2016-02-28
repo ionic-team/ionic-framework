@@ -15,7 +15,7 @@ var connect = require('gulp-connect');
 var docsConfig = require('./scripts/config.json');
 
 var flagConfig = {
-  string: ['port', 'animations'],
+  string: ['port'],
   boolean: ['debug', 'typecheck'],
   alias: {'p': 'port'},
   default: { 'port': 8000, 'debug': true, 'typecheck': false }
@@ -59,7 +59,7 @@ var babelOptions = {
   modules: 'system',
   moduleIds: true,
   getModuleId: function(name) {
-    return 'ionic/' + name;
+    return 'ionic-angular/' + name;
   }
 }
 
@@ -147,12 +147,7 @@ gulp.task('bundle', ['bundle.cjs', 'bundle.system']);
 /**
  * Creates CommonJS bundle from Ionic source files.
  */
-gulp.task('bundle.cjs', ['transpile'], function(done){
-  //TODO
-  //   if (flags.animations == 'polyfill') {
-  //     prepend.push('window.Element.prototype.animate=undefined;');
-  //   }
-
+gulp.task('bundle.cjs', ['transpile', 'copy.libs'], function(done){
   var config = require('./scripts/npm/ionic.webpack.config.js');
   bundle({ config: config, stats: true });
 
@@ -243,6 +238,7 @@ gulp.task('transpile', function(){
 
 function tsCompile(options, cacheName){
   return gulp.src([
+      'typings/main.d.ts',
       'ionic/**/*.ts',
       '!ionic/**/*.d.ts',
       '!ionic/components/*/test/**/*',
@@ -334,8 +330,7 @@ gulp.task('copy.scss', function() {
  */
 gulp.task('copy.libs', function() {
   var merge = require('merge2');
-  var webAnimations = gulp.src([
-      'scripts/resources/web-animations-js/web-animations.min.js',
+  var extModules = gulp.src([
       'node_modules/es6-shim/es6-shim.min.js',
       'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js',
       'node_modules/systemjs/dist/system.src.js',
@@ -354,7 +349,7 @@ gulp.task('copy.libs', function() {
     ])
     .pipe(gulp.dest('dist'));
 
-  return merge([webAnimations, libs]);
+  return merge([extModules, libs]);
 });
 
 
@@ -490,10 +485,22 @@ gulp.task('tests', function() {
   * Builds Ionic demos to dist/demos, copies them to ../ionic-site and watches
   * for changes.
   */
-gulp.task('watch.demos', ['demos'], function() {
-  watch('demos/**/*', function() {
-    gulp.start('demos');
-  });
+//TODO, decide on workflow for site demos (dev and prod), vs local dev (in dist)
+var LOCAL_DEMOS = false;
+gulp.task('watch.demos', function(done) {
+  LOCAL_DEMOS = true;
+  runSequence(
+    ['build.demos', 'transpile', 'copy.libs', 'sass', 'fonts'],
+    function(){
+      watchTask('bundle.system');
+
+      watch('demos/**/*', function(file) {
+        gulp.start('build.demos');
+      });
+
+      done();
+    }
+  );
 });
 
 /**
@@ -513,6 +520,10 @@ gulp.task('demos', ['bundle.demos'], function() {
     .pipe(gulp.dest(docsConfig.sitePath + '/dist/bundles'));
 
   return merge([demosStream, cssStream]);
+ });
+
+ gulp.task('demos.dev', function() {
+
  });
 
  /**
@@ -565,15 +576,15 @@ gulp.task('build.demos', function() {
   var fs = require('fs');
   var VinylFile = require('vinyl');
 
-  var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
-  var flags = minimist(process.argv.slice(2), flagConfig);
+  var indexTemplateName = LOCAL_DEMOS ? 'index.template.dev.html' : 'index.template.html';
+  var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/' + indexTemplateName))();
 
-  if ("production" in flags) {
+  if (flags.production) {
     buildDemoSass(true);
   } else {
     buildDemoSass(false);
   }
-  
+
   var tsResult = gulp.src(['demos/**/*.ts'])
     .pipe(cache('demos.ts'))
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
@@ -715,7 +726,7 @@ gulp.task('prepare', function(){
 
   //Update package.json version
   var packageJSON = require('./package.json');
-  packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'alpha');
+  packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'beta');
   fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, 2));
 
   //Update changelog

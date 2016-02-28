@@ -2,6 +2,7 @@ import {Component, Renderer, ElementRef} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
+import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {isDefined} from '../../util/util';
@@ -17,7 +18,7 @@ import {ViewController} from '../nav/view-controller';
  * dismissed by the user before they can resume interaction with the app.
  * Dangerous (destructive) options are made obvious. There are easy
  * ways to cancel out of the action sheet, such as tapping the backdrop or
- * hitting the escape key on desktop.
+ * hitting the escape key on desktop. 
  *
  * An action sheet is created from an array of `buttons`, with each button
  * including properties for its `text`, and optionally a `handler` and `role`.
@@ -35,7 +36,7 @@ import {ViewController} from '../nav/view-controller';
  *
  * Its shorthand is to add all the action sheet's options from within the
  * `ActionSheet.create(opts)` first argument. Otherwise the action sheet's
- * instance has methods to add options, such as `setTitle()` or `addButton()`.
+ * instance has methods to add options, like `setTitle()` or `addButton()`.
  *
  * @usage
  * ```ts
@@ -77,26 +78,26 @@ import {ViewController} from '../nav/view-controller';
  * @demo /docs/v2/demos/action-sheet/
  * @see {@link /docs/v2/components#action-sheets ActionSheet Component Docs}
  */
- export class ActionSheet extends ViewController {
+export class ActionSheet extends ViewController {
 
-   constructor(opts: {
-     title?: string,
-     subTitle?: string,
-     cssClass?: string,
-     enableBackdropDismiss?: boolean,
-     buttons?: Array<any>
-   } = {}) {
-     opts.buttons = opts.buttons || [];
-     opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+  constructor(opts: ActionSheetOptions = {}) {
+    opts.buttons = opts.buttons || [];
+    opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-     super(ActionSheetCmp, opts);
-     this.viewType = 'action-sheet';
-   }
+    super(ActionSheetCmp, opts);
+    this.viewType = 'action-sheet';
+    this.isOverlay = true;
+
+    // by default, actionsheets should not fire lifecycle events of other views
+    // for example, when an actionsheets enters, the current active view should
+    // not fire its lifecycle events because it's not conceptually leaving
+    this.fireOtherLifecycles = false;
+  }
 
    /**
    * @private
    */
-   getTransitionName(direction) {
+   getTransitionName(direction: string) {
      let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
      return this._nav && this._nav.config.get(key);
    }
@@ -118,19 +119,36 @@ import {ViewController} from '../nav/view-controller';
    /**
     * @param {object} button Action sheet button
     */
-   addButton(button) {
+   addButton(button: any) {
      this.data.buttons.push(button);
    }
 
    /**
+    * Open an action sheet with the following options
+    *
+    * | Option                | Type       | Description                                                     |
+    * |-----------------------|------------|-----------------------------------------------------------------|
+    * | title                 |`string`    | The title for the actionsheet                                   |
+    * | subTitle              |`string`    | The sub-title for the actionsheet                               |
+    * | cssClass              |`string`    | An additional class for custom styles                           |
+    * | enableBackdropDismiss |`boolean`   | If the actionsheet should close when the user taps the backdrop |
+    * | buttons               |`array<any>`| An array of buttons to display                                  |
+    *
+    * For the buttons:
+    *
+    * | Option   | Type     | Description                                                                                                                                      |
+    * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+    * | text     | `string` | The buttons text                                                                                                                                 |
+    * | icon     | `icon`   | The buttons icons                                                                                                                                |
+    * | handler  | `any`    | An express the button shoule evaluate                                                                                                            |
+    * | cssClass | `string` | An additional class for custom styles                                                                                                            |
+    * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles |
+    *
+    *
+    *
     * @param {object} opts Action sheet options
     */
-   static create(opts: {
-     title?: string,
-     subTitle?: string,
-     cssClass?: string,
-     buttons?: Array<any>
-   } = {}) {
+   static create(opts: ActionSheetOptions = {}) {
      return new ActionSheet(opts);
    }
 
@@ -151,12 +169,14 @@ import {ViewController} from '../nav/view-controller';
           '<button (click)="click(b)" *ngFor="#b of d.buttons" class="action-sheet-button disable-hover" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{b.text}}' +
+            '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
         '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
           '<button (click)="click(d.cancelButton)" class="action-sheet-button action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
             '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{d.cancelButton.text}}' +
+            '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
       '</div>' +
@@ -268,11 +288,18 @@ class ActionSheetCmp {
   }
 }
 
+export interface ActionSheetOptions {
+  title?: string;
+  subTitle?: string;
+  cssClass?: string;
+  buttons?: Array<any>;
+  enableBackdropDismiss?: boolean;
+}
 
 
-class ActionSheetSlideIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetSlideIn extends Transition {
+  constructor(enteringView, leavingView, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -281,15 +308,15 @@ class ActionSheetSlideIn extends Animation {
     backdrop.fromTo('opacity', 0.01, 0.4);
     wrapper.fromTo('translateY', '100%', '0%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-slide-in', ActionSheetSlideIn);
+Transition.register('action-sheet-slide-in', ActionSheetSlideIn);
 
 
-class ActionSheetSlideOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetSlideOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -298,15 +325,15 @@ class ActionSheetSlideOut extends Animation {
     backdrop.fromTo('opacity', 0.4, 0);
     wrapper.fromTo('translateY', '0%', '100%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-slide-out', ActionSheetSlideOut);
+Transition.register('action-sheet-slide-out', ActionSheetSlideOut);
 
 
-class ActionSheetMdSlideIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetMdSlideIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -315,15 +342,15 @@ class ActionSheetMdSlideIn extends Animation {
     backdrop.fromTo('opacity', 0.01, 0.26);
     wrapper.fromTo('translateY', '100%', '0%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
+Transition.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
 
 
-class ActionSheetMdSlideOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetMdSlideOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -332,7 +359,7 @@ class ActionSheetMdSlideOut extends Animation {
     backdrop.fromTo('opacity', 0.26, 0);
     wrapper.fromTo('translateY', '0%', '100%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);
+Transition.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);

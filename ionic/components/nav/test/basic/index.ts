@@ -1,7 +1,7 @@
 import {Component, Type} from 'angular2/core';
-import {App, NavController, Alert} from 'ionic/ionic';
-import {Page, Config, IonicApp} from 'ionic/ionic';
-import {NavParams, ViewController, IONIC_DIRECTIVES} from 'ionic/ionic';
+import {App, NavController, Alert} from 'ionic-angular';
+import {Page, Config, IonicApp} from 'ionic-angular';
+import {NavParams, ViewController, IONIC_DIRECTIVES} from 'ionic-angular';;
 
 
 @Component({
@@ -20,7 +20,7 @@ class MyCmpTest{}
         <button><ion-icon name="star"></ion-icon></button>
       </ion-buttons>
       <ion-buttons end>
-        <button>S1</button>
+        <button>S1g</button>
       </ion-buttons>
     </ion-navbar>
     <ion-content>
@@ -74,7 +74,7 @@ class FirstPage {
 
   setPages() {
     let items = [
-      {page: PrimaryHeaderPage}
+      { page: PrimaryHeaderPage }
     ];
 
     this.nav.setPages(items);
@@ -89,7 +89,7 @@ class FirstPage {
   }
 
   pushFullPage() {
-    this.nav.push(FullPage, { id: 8675309, myData: [1,2,3,4] } );
+    this.nav.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] });
   }
 
   pushAnother() {
@@ -139,8 +139,8 @@ class FullPage {
 
   setPages() {
     let items = [
-      {page: FirstPage},
-      {page: PrimaryHeaderPage}
+      { page: FirstPage },
+      { page: PrimaryHeaderPage }
     ];
 
     this.nav.setPages(items);
@@ -190,6 +190,9 @@ class FullPage {
   template: `
     <ion-navbar *navbar primary>
       <ion-title>Primary Color Page Header</ion-title>
+      <ion-buttons end>
+        <button>S1g</button>
+      </ion-buttons>
     </ion-navbar>
     <ion-content padding>
       <p><button class="e2eFrom3To2" (click)="nav.pop()">Pop</button></p>
@@ -218,7 +221,7 @@ class PrimaryHeaderPage {
   }
 
   pushFullPage() {
-    this.nav.push(FullPage, { id: 8675309, myData: [1,2,3,4] } );
+    this.nav.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] });
   }
 
   insert() {
@@ -268,7 +271,9 @@ class AnotherPage {
   constructor(
     private nav: NavController,
     private viewCtrl: ViewController
-  ) {}
+  ) {
+    console.log('Page, AnotherPage, constructor', this.viewCtrl.id);
+  }
 
   pushFullPage() {
     this.nav.push(FullPage);
@@ -300,6 +305,34 @@ class AnotherPage {
 
     this.viewCtrl.setBackButtonText(backButtonText);
     ++this.bbCount;
+  }
+
+  onPageWillEnter() {
+    console.log('Page, AnotherPage, onPageWillEnter', this.viewCtrl.id);
+  }
+
+  onPageDidEnter() {
+    console.log('Page, AnotherPage, onPageDidEnter', this.viewCtrl.id);
+  }
+
+  onPageWillLeave() {
+    console.log('Page, AnotherPage, onPageWillLeave', this.viewCtrl.id);
+  }
+
+  onPageDidLeave() {
+    console.log('Page, AnotherPage, onPageDidLeave', this.viewCtrl.id);
+  }
+
+  onPageWillUnload() {
+    console.log('Page, AnotherPage, onPageWillUnload', this.viewCtrl.id);
+  }
+
+  onPageDidUnload() {
+    console.log('Page, AnotherPage, onPageDidUnload', this.viewCtrl.id);
+  }
+
+  ngOnDestroy() {
+    console.log('Page, AnotherPage, ngOnDestroy', this.viewCtrl.id);
   }
 }
 

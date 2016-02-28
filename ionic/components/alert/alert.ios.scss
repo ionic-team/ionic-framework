@@ -1,6 +1,5 @@
 @import "../../globals.ios";
 @import "./alert";
-@import "../checkbox/checkbox.ios";
 
 // iOS Alerts
 // --------------------------------------------------
@@ -38,17 +37,17 @@ $alert-ios-button-border-radius:                0 !default;
 $alert-ios-button-border-color:                 #dbdbdf !default;
 $alert-ios-button-activated-background-color:   #e9e9e9 !default;
 
-$alert-checkbox-ios-icon-size:                  $checkbox-ios-icon-size !default;
-$alert-checkbox-ios-icon-border-radius:         $checkbox-ios-icon-border-radius !default;
-$alert-checkbox-ios-icon-border-width:          $checkbox-ios-icon-border-width !default;
-$alert-checkbox-ios-icon-border-style:          $checkbox-ios-icon-border-style !default;
-$alert-checkbox-ios-icon-border-color-off:      $checkbox-ios-icon-border-color-off !default;
-$alert-checkbox-ios-icon-border-color-on:       $checkbox-ios-icon-border-color-on !default;
-$alert-checkbox-ios-background-color-off:       $checkbox-ios-background-color-off !default;
-$alert-checkbox-ios-background-color-on:        $checkbox-ios-background-color-on !default;
-$alert-checkbox-ios-icon-checkmark-width:       $checkbox-ios-icon-checkmark-width !default;
-$alert-checkbox-ios-icon-checkmark-style:       $checkbox-ios-icon-checkmark-style !default;
-$alert-checkbox-ios-icon-checkmark-color:       $checkbox-ios-icon-checkmark-color !default;
+$alert-checkbox-ios-icon-size:                  21px !default;
+$alert-checkbox-ios-icon-border-radius:         50% !default;
+$alert-checkbox-ios-icon-border-width:          1px !default;
+$alert-checkbox-ios-icon-border-style:          solid !default;
+$alert-checkbox-ios-icon-border-color-off:      $list-ios-border-color !default;
+$alert-checkbox-ios-icon-border-color-on:       map-get($colors-ios, primary) !default;
+$alert-checkbox-ios-background-color-off:       $list-ios-background-color !default;
+$alert-checkbox-ios-background-color-on:        map-get($colors-ios, primary) !default;
+$alert-checkbox-ios-icon-checkmark-width:       $alert-checkbox-ios-icon-border-width !default;
+$alert-checkbox-ios-icon-checkmark-style:       $alert-checkbox-ios-icon-border-style !default;
+$alert-checkbox-ios-icon-checkmark-color:       $background-ios-color !default;
 
 
 ion-alert {
@@ -92,6 +91,14 @@ ion-alert {
   font-size: $alert-ios-message-font-size;
   color: $alert-ios-message-text-color;
   text-align: $alert-ios-message-text-align;
+}
+
+.alert-message {
+  max-height: 240px;
+
+  &:empty {
+    padding: 0 0 12px 0;
+  }
 }
 
 
@@ -222,7 +229,7 @@ ion-alert {
   flex: 1 1 auto;
   min-width: 50%;
   font-size: $alert-ios-button-font-size;
-  min-height: $alert-ios-button-min-height;
+  height: $alert-ios-button-min-height;
   border-radius: $alert-ios-button-border-radius;
   border-top: 1px solid $alert-ios-button-border-color;
   border-right: 1px solid $alert-ios-button-border-color;
@@ -247,15 +254,15 @@ ion-alert {
 &.hairlines {
   .alert-radio-group,
   .alert-checkbox-group {
-    border-width: 0.55px;
+    border-width: $hairlines-width;
   }
 
   .alert-input {
-    border-width: 0.55px;
+    border-width: $hairlines-width;
   }
 
   .alert-button {
-    border-top-width: 0.55px;
-    border-right-width: 0.55px;
+    border-top-width: $hairlines-width;
+    border-right-width: $hairlines-width;
   }
 }

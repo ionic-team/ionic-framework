@@ -2,64 +2,52 @@ import {raf, rafFrames} from '../../util/dom';
 
 
 export class Activator {
-  public activatedClass: any;
-  public queue: Array<any> = [];
-  public active: Array<any> = [];
-  public x: number = 0;
-  public y: number = 0;
+  protected _css: string;
+  protected _queue: Array<HTMLElement> = [];
+  protected _active: Array<HTMLElement> = [];
 
-  constructor(public app, config, public zone) {
-    this.activatedClass = config.get('activatedClass') || 'activated';
+  constructor(protected app, config, protected _zone) {
+    this._css = config.get('activatedClass') || 'activated';
   }
 
   downAction(ev, activatableEle, pointerX, pointerY) {
     // the user just pressed down
-
     let self = this;
     if (self.disableActivated(ev)) {
-      return false;
+      return;
     }
-
-    // remember where they pressed
-    self.x = pointerX;
-    self.y = pointerY;
 
     // queue to have this element activated
-    self.queue.push(activatableEle);
+    self._queue.push(activatableEle);
 
-    function activateCss() {
-      let activatableEle;
-      for (let i = 0; i < self.queue.length; i++) {
-        activatableEle = self.queue[i];
-        if (activatableEle && activatableEle.parentNode) {
-          self.active.push(activatableEle);
-          activatableEle.classList.add(self.activatedClass);
+    this._zone.runOutsideAngular(() => {
+      rafFrames(2, function() {
+        let activatableEle;
+        for (let i = 0; i < self._queue.length; i++) {
+          activatableEle = self._queue[i];
+          if (activatableEle && activatableEle.parentNode) {
+            self._active.push(activatableEle);
+            activatableEle.classList.add(self._css);
+          }
         }
-      }
-      self.queue = [];
-    }
-
-    this.zone.runOutsideAngular(() => {
-      rafFrames(2, activateCss);
+        self._queue = [];
+      });
     });
-
-    return true;
   }
 
-  upAction() {
+  upAction(ev: UIEvent, activatableEle: HTMLElement, pointerX: number, pointerY: number) {
     // the user was pressing down, then just let up
     let self = this;
     function activateUp() {
       self.clearState();
     }
-    this.zone.runOutsideAngular(() => {
+    this._zone.runOutsideAngular(() => {
       rafFrames(CLEAR_STATE_DEFERS, activateUp);
     });
   }
 
   clearState() {
     // all states should return to normal
-
     if (!this.app.isEnabled()) {
       // the app is actively disabled, so don't bother deactivating anything.
       // this makes it easier on the GPU so it doesn't have to redraw any
@@ -77,16 +65,14 @@ export class Activator {
   deactivate() {
     // remove the active class from all active elements
     let self = this;
-    self.queue = [];
+    self._queue = [];
 
-    function deactivate() {
-      for (let i = 0; i < self.active.length; i++) {
-        self.active[i].classList.remove(self.activatedClass);
+    rafFrames(2, function() {
+      for (var i = 0; i < self._active.length; i++) {
+        self._active[i].classList.remove(self._css);
       }
-      self.active = [];
-    }
-
-    rafFrames(2, deactivate);
+      self._active = [];
+    });
   }
 
   disableActivated(ev) {

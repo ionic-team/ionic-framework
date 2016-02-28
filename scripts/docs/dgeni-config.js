@@ -20,6 +20,7 @@ module.exports = function(currentVersion){
 .processor(require('./processors/jekyll'))
 .processor(require('./processors/remove-private-members'))
 .processor(require('./processors/hide-private-api'))
+.processor(require('./processors/collect-inputs-outputs'))
 
 
 // for debugging docs
@@ -29,7 +30,8 @@ module.exports = function(currentVersion){
 //     $runBefore: ['rendering-docs'],
 //     $process: function(docs){
 //       docs.forEach(function(doc){
-//         if (doc.members && doc.name == "IonicApp"){
+//         if (doc.name == "Searchbar"){
+//           console.log(doc.input);
 //           doc.members.forEach(function(method){
 //             if (method.name === "load") {
 //               console.log(method);
@@ -111,7 +113,7 @@ module.exports = function(currentVersion){
 
   readTypeScriptModules.basePath = path.resolve(path.resolve(__dirname, '../..'));
   readTypeScriptModules.sourceFiles = [
-    'ionic/ionic.ts'
+    'ionic/index.ts'
   ];
 })
 
@@ -173,4 +175,3 @@ module.exports = function(currentVersion){
 })
 
 }
-

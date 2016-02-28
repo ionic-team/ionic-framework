@@ -1,0 +1,37 @@
+<ion-navbar *navbar>
+  <ion-title>Animations</ion-title>
+</ion-navbar>
+
+<ion-content>
+
+  <div style="position:relative; margin: 20px auto; width: 250px; height: 50px; background: #ddd;">
+
+    <div class="green" style="position:absolute; height: 50px; width: 50px; background:green;"></div>
+
+  </div>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Duration:</ion-label>
+      <ion-input [(ngModel)]="duration"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Easing</ion-label>
+      <ion-select [(ngModel)]="easing">
+        <ion-option>linear</ion-option>
+        <ion-option>ease-in-out</ion-option>
+        <ion-option>cubic-bezier(0.36,0.66,0.04,1</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <button ion-item (click)="playGreen()">
+      Play
+    </button>
+
+    <button ion-item (click)="memoryCheck()">
+      Memory Check
+    </button>
+  </ion-list>
+
+</ion-content>

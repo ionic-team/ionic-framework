@@ -1,4 +1,4 @@
-import * as util from 'ionic/util';
+import * as util from 'ionic-angular/util';
 
 export function run() {
   describe('extend', function() {
@@ -15,6 +15,10 @@ export function run() {
         expect(util.isTrueProperty(' true  ')).toBe(true);
       });
 
+      it('should be true from string "on"', () => {
+        expect(util.isTrueProperty(true)).toBe(true);
+      });
+
       it('should be true from empty string ""', () => {
         expect(util.isTrueProperty('')).toBe(true);
         expect(util.isTrueProperty('  ')).toBe(true);
@@ -29,6 +33,10 @@ export function run() {
         expect(util.isTrueProperty(false)).toBe(false);
       });
 
+      it('should be false from string "off"', () => {
+        expect(util.isTrueProperty(true)).toBe(true);
+      });
+
       it('should be false from null', () => {
         expect(util.isTrueProperty(null)).toBe(false);
       });
@@ -41,11 +49,6 @@ export function run() {
         expect(util.isTrueProperty('false')).toBe(false);
         expect(util.isTrueProperty(' FALSE ')).toBe(false);
         expect(util.isTrueProperty('doesnt actually matter')).toBe(false);
-      });
-
-      it('should be false from number less than 1', () => {
-        expect(util.isTrueProperty(0)).toBe(false);
-        expect(util.isTrueProperty(-1)).toBe(false);
       });
 
     });

@@ -4,10 +4,10 @@ import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {Platform} from '../../platform/platform';
 import {Keyboard} from '../../util/keyboard';
-import * as gestures from  './menu-gestures';
-import {Gesture} from '../../gestures/gesture';
+import {MenuContentGesture, MenuTargetGesture} from  './menu-gestures';
 import {MenuController} from './menu-controller';
 import {MenuType} from './menu-types';
+import {isTrueProperty} from '../../util/util';
 
 
 /**
@@ -16,36 +16,29 @@ import {MenuType} from './menu-types';
 @Component({
   selector: 'ion-menu',
   host: {
-    'role': 'navigation',
-    '[attr.side]': 'side',
-    '[attr.type]': 'type',
-    '[attr.swipeEnabled]': 'swipeEnabled'
+    'role': 'navigation'
   },
-  template: '<ng-content></ng-content><div tappable disable-activated class="backdrop"></div>',
+  template:
+    '<ng-content></ng-content>' +
+    '<div tappable disable-activated class="backdrop"></div>',
   directives: [forwardRef(() => MenuBackdrop)]
 })
 export class Menu extends Ion {
   private _preventTime: number = 0;
   private _cntEle: HTMLElement;
-  private _gesture: Gesture;
-  private _targetGesture: Gesture;
+  private _cntGesture: MenuTargetGesture;
+  private _menuGesture: MenuContentGesture;
   private _type: MenuType;
-
+  private _resizeUnreg: Function;
+  private _isEnabled: boolean = true;
+  private _isSwipeEnabled: boolean = true;
+  private _isPers: boolean = false;
+  private _init: boolean = false;
 
   /**
    * @private
    */
   isOpen: boolean = false;
-
-  /**
-   * @private
-   */
-  isEnabled: boolean = true;
-
-  /**
-   * @private
-   */
-  isSwipeEnabled: boolean = true;
 
   /**
    * @private
@@ -56,7 +49,6 @@ export class Menu extends Ion {
    * @private
    */
   onContentClick: EventListener;
-
 
   /**
    * @private
@@ -81,17 +73,50 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  @Input() swipeEnabled: any;
+  @Input()
+  get enabled(): boolean {
+    return this._isEnabled;
+  }
+
+  set enabled(val: boolean) {
+    this._isEnabled = isTrueProperty(val);
+    this._setListeners();
+  }
 
   /**
    * @private
    */
-  @Input() maxEdgeStart;
+  @Input()
+  get swipeEnabled(): boolean {
+    return this._isSwipeEnabled;
+  }
+
+  set swipeEnabled(val: boolean) {
+    this._isSwipeEnabled = isTrueProperty(val);
+    this._setListeners();
+  }
 
   /**
    * @private
    */
-  @Output() opening: EventEmitter<any> = new EventEmitter();
+  @Input()
+  get persistent(): boolean {
+    return this._isPers;
+  }
+
+  set persistent(val: boolean) {
+    this._isPers = isTrueProperty(val);
+  }
+
+  /**
+   * @private
+   */
+  @Input() maxEdgeStart: number;
+
+  /**
+   * @private
+   */
+  @Output() opening: EventEmitter<number> = new EventEmitter();
 
   constructor(
     private _menuCtrl: MenuController,
@@ -110,79 +135,94 @@ export class Menu extends Ion {
    */
   ngOnInit() {
     let self = this;
+    self._init = true;
+
     let content = self.content;
     self._cntEle = (content instanceof Node) ? content : content && content.getNativeElement && content.getNativeElement();
 
+    // requires content element
     if (!self._cntEle) {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
     }
 
+    // normalize the "side"
     if (self.side !== 'left' && self.side !== 'right') {
       self.side = 'left';
     }
     self._renderer.setElementAttribute(self._elementRef.nativeElement, 'side', self.side);
 
-    if (self.swipeEnabled === 'false') {
-      self.isSwipeEnabled = false;
+    // normalize the "type"
+    if (!self.type) {
+      self.type = self._config.get('menuType');
     }
+    self._renderer.setElementAttribute(self._elementRef.nativeElement, 'type', self.type);
 
-    this._menuCtrl.register(self);
+    // add the gestures
+    self._cntGesture = new MenuContentGesture(self, self.getContentElement());
+    self._menuGesture = new MenuTargetGesture(self, self.getNativeElement());
 
-    self._initGesture();
-    self._initType(self.type);
+    // register listeners if this menu is enabled
+    // check if more than one menu is on the same side
+	  let hasEnabledSameSideMenu = self._menuCtrl.getMenus().some(m => {
+      return m.side === self.side && m.enabled;
+    });
+    if (hasEnabledSameSideMenu) {
+      // auto-disable if another menu on the same side is already enabled
+      self._isEnabled = false;
+    }
+    self._setListeners();
 
-    self._cntEle.classList.add('menu-content');
-    self._cntEle.classList.add('menu-content-' + self.type);
-
+    // create a reusable click handler on this instance, but don't assign yet
     self.onContentClick = function(ev: UIEvent) {
-      if (self.isEnabled) {
+      if (self._isEnabled) {
         ev.preventDefault();
         ev.stopPropagation();
         self.close();
       }
     };
+
+    self._cntEle.classList.add('menu-content');
+    self._cntEle.classList.add('menu-content-' + self.type);
+
+    // register this menu with the app's menu controller
+    self._menuCtrl.register(self);
   }
 
   /**
    * @private
    */
-  private _initGesture() {
-    this._zone.runOutsideAngular(() => {
-      switch(this.side) {
-        case 'right':
-          this._gesture = new gestures.RightMenuGesture(this);
-          break;
+  private _setListeners() {
+    let self = this;
 
-        case 'left':
-          this._gesture = new gestures.LeftMenuGesture(this);
-          break;
+    if (self._init) {
+      // only listen/unlisten if the menu has initialized
+
+      if (self._isEnabled && self._isSwipeEnabled && !self._cntGesture.isListening) {
+        // should listen, but is not currently listening
+        console.debug('menu, gesture listen', self.side);
+        self._zone.runOutsideAngular(function() {
+          self._cntGesture.listen();
+          self._menuGesture.listen();
+        });
+
+      } else if (self._cntGesture.isListening && (!self._isEnabled || !self._isSwipeEnabled)) {
+        // should not listen, but is currently listening
+        console.debug('menu, gesture unlisten', self.side);
+        self._cntGesture.unlisten();
+        self._menuGesture.unlisten();
       }
-      this._targetGesture = new gestures.TargetGesture(this);
-    });
-  }
-
-  /**
-   * @private
-   */
-  private _initType(type) {
-    type = type && type.trim().toLowerCase();
-    if (!type) {
-      type = this._config.get('menuType');
     }
-    this.type = type;
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'menuType', type);
   }
 
   /**
    * @private
    */
-  private _getType() {
+  private _getType(): MenuType {
     if (!this._type) {
       this._type = MenuController.create(this.type, this);
 
       if (this._config.get('animate') === false) {
-        this._type.open.duration(33);
-        this._type.close.duration(33);
+        this._type.ani.duration(0);
       }
     }
     return this._type;
@@ -193,52 +233,55 @@ export class Menu extends Ion {
    * @param {boolean} shouldOpen  If the Menu is open or not.
    * @return {Promise} returns a promise once set
    */
-  setOpen(shouldOpen) {
+  setOpen(shouldOpen: boolean): Promise<boolean> {
     // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the menuToggle button
     if ((shouldOpen && this.isOpen) || this._isPrevented()) {
-      return Promise.resolve();
+      return Promise.resolve(this.isOpen);
     }
 
     this._before();
 
-    return this._getType().setOpen(shouldOpen).then(() => {
-      this._after(shouldOpen);
+    return new Promise(resolve => {
+      this._getType().setOpen(shouldOpen, () => {
+        this._after(shouldOpen);
+        resolve(this.isOpen);
+      });
     });
   }
 
   /**
    * @private
    */
-  setProgressStart() {
+  swipeStart() {
     // user started swiping the menu open/close
-    if (this._isPrevented() || !this.isEnabled || !this.isSwipeEnabled) return;
+    if (this._isPrevented() || !this._isEnabled || !this._isSwipeEnabled) return;
 
     this._before();
-
     this._getType().setProgressStart(this.isOpen);
   }
 
   /**
    * @private
    */
-  setProgess(value) {
+  swipeProgress(stepValue: number) {
     // user actively dragging the menu
-    if (this.isEnabled && this.isSwipeEnabled) {
+    if (this._isEnabled && this._isSwipeEnabled) {
       this._prevent();
-      this._getType().setProgess(value);
-      this.opening.next(value);
+      this._getType().setProgessStep(stepValue);
+      this.opening.next(stepValue);
     }
   }
 
   /**
    * @private
    */
-  setProgressEnd(shouldComplete) {
+  swipeEnd(shouldComplete: boolean, currentStepValue: number) {
     // user has finished dragging the menu
-    if (this.isEnabled && this.isSwipeEnabled) {
+    if (this._isEnabled && this._isSwipeEnabled) {
       this._prevent();
-      this._getType().setProgressEnd(shouldComplete).then(isOpen => {
+      this._getType().setProgressEnd(shouldComplete, currentStepValue, (isOpen) => {
+        console.debug('menu, swipeEnd', this.side);
         this._after(isOpen);
       });
     }
@@ -250,7 +293,7 @@ export class Menu extends Ion {
   private _before() {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
-    if (this.isEnabled) {
+    if (this._isEnabled) {
       this.getNativeElement().classList.add('show-menu');
       this.getBackdropElement().classList.add('show-backdrop');
 
@@ -262,11 +305,11 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  private _after(isOpen) {
+  private _after(isOpen: boolean) {
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
-    if ((this.isEnabled && isOpen) || !isOpen) {
+    if ((this._isEnabled && isOpen) || !isOpen) {
       this._prevent();
 
       this.isOpen = isOpen;
@@ -302,24 +345,24 @@ export class Menu extends Ion {
   }
 
   /**
-   * Progamatically open the Menu
-   * @return {Promise} returns a promise when the menu is fully opened
+   * Progamatically open the Menu.
+   * @return {Promise} returns a promise when the menu is fully opened.
    */
   open() {
     return this.setOpen(true);
   }
 
   /**
-   * Progamatically close the Menu
-   * @return {Promise} returns a promise when the menu is fully closed
+   * Progamatically close the Menu.
+   * @return {Promise} returns a promise when the menu is fully closed.
    */
   close() {
     return this.setOpen(false);
   }
 
   /**
-   * Toggle the menu. If it's closed, it will open, and if opened, it will close
-   * @return {Promise} returns a promise when the menu has been toggled
+   * Toggle the menu. If it's closed, it will open, and if opened, it will close.
+   * @return {Promise} returns a promise when the menu has been toggled.
    */
   toggle() {
     return this.setOpen(!this.isOpen);
@@ -327,15 +370,29 @@ export class Menu extends Ion {
 
   /**
    * Used to enable or disable a menu. For example, there could be multiple
-   * left menus, but only one of them should be able to be dragged open.
+   * left menus, but only one of them should be able to be opened at the same
+   * time. If there are multiple menus on the same side, then enabling one menu
+   * will also automatically disable all the others that are on the same side.
    * @param {boolean} shouldEnable  True if it should be enabled, false if not.
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
-  enable(shouldEnable: boolean) {
-    this.isEnabled = shouldEnable;
+  enable(shouldEnable: boolean): Menu {
+    this.enabled = shouldEnable;
     if (!shouldEnable && this.isOpen) {
+      // close if this menu is open, and should not be enabled
       this.close();
     }
+
+    if (shouldEnable) {
+      // if this menu should be enabled
+      // then find all the other menus on this same side
+      // and automatically disable other same side menus
+      let sameSideMenus = this._menuCtrl
+                            .getMenus()
+                            .filter(m => m.side === this.side && m !== this)
+                            .map(m => m.enabled = false);
+    }
+
     return this;
   }
 
@@ -344,29 +401,29 @@ export class Menu extends Ion {
    * @param {boolean} shouldEnable  True if it should be swipe-able, false if not.
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
-  swipeEnable(shouldEnable: boolean) {
-    this.isSwipeEnabled = shouldEnable;
+  swipeEnable(shouldEnable: boolean): Menu {
+    this.swipeEnabled = shouldEnable;
     return this;
   }
 
   /**
    * @private
    */
-  getMenuElement() {
+  getMenuElement(): HTMLElement {
     return this.getNativeElement();
   }
 
   /**
    * @private
    */
-  getContentElement() {
+  getContentElement(): HTMLElement {
     return this._cntEle;
   }
 
   /**
    * @private
    */
-  getBackdropElement() {
+  getBackdropElement(): HTMLElement {
     return this.backdrop.elementRef.nativeElement;
   }
 
@@ -375,9 +432,10 @@ export class Menu extends Ion {
    */
   ngOnDestroy() {
     this._menuCtrl.unregister(this);
-    this._gesture && this._gesture.destroy();
-    this._targetGesture && this._targetGesture.destroy();
-    this._type && this._type.ngOnDestroy();
+    this._cntGesture && this._cntGesture.destroy();
+    this._menuGesture && this._menuGesture.destroy();
+    this._type && this._type.destroy();
+    this._resizeUnreg && this._resizeUnreg();
     this._cntEle = null;
   }
 

@@ -1,4 +1,4 @@
-import {Config, Platform, ionicProviders} from 'ionic/ionic';
+import {Config, Platform, ionicProviders} from 'ionic-angular';
 
 export function run() {
 
@@ -434,6 +434,14 @@ export function run() {
     });
     expect(config.get('name')).toEqual('Doc Brown');
     expect(config.get('occupation')).toEqual('Weather Man');
+  });
+
+  it('should get a fallback value', () => {
+    let config = new Config({
+      name: 'Doc Brown'
+    });
+    expect(config.get('name', 'Marty')).toEqual('Doc Brown');
+    expect(config.get('occupation', 'Weather Man')).toEqual('Weather Man');
   });
 
   it('should get settings object', () => {

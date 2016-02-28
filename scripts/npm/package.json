@@ -1,13 +1,13 @@
 {
-  "name": "ionic-framework",
+  "name": "ionic-angular",
   "version": "<%= ionicVersion %>",
-  "license": "Apache-2.0",
-  "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp"],
+  "description": "An advanced HTML5 mobile app framework built on Angular2",
+  "license": "MIT",
+  "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp", "cordova"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/driftyco/ionic2.git"
+    "url": "https://github.com/driftyco/ionic.git#2.0`"
   },
-  "main": "tooling/index.js",
   "dependencies": {
     "colors": "^1.1.2",
     "inquirer": "0.11.0",

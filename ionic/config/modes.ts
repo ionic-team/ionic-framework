@@ -25,6 +25,8 @@ Config.setModeConfig('ios', {
   pageTransition: 'ios-transition',
   pageTransitionDelay: 16,
 
+  spinner: 'ios',
+
   tabbarPlacement: 'bottom',
 });
 
@@ -50,7 +52,9 @@ Config.setModeConfig('md', {
   modalLeave: 'modal-md-slide-out',
 
   pageTransition: 'md-transition',
-  pageTransitionDelay: 120,
+  pageTransitionDelay: 96,
+
+  spinner: 'crescent',
 
   tabbarHighlight: true,
   tabbarPlacement: 'top',

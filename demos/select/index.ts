@@ -1,30 +1,54 @@
-import {App, Page} from 'ionic/ionic';
-
-@App({
-  template: '<ion-nav [root]="root"></ion-nav>'
-})
-class ApiDemoApp {
-  constructor() {
-    this.root = MainPage;
-  }
-}
+import {App, Page} from 'ionic-angular';
 
 @Page({
   templateUrl: 'main.html'
 })
 class MainPage {
+  gender: string;
+  gaming: string;
+  toppings: Array<string>;
+  petAlertOpts;
+  petData;
+  pets: Array<string>;
+
   constructor() {
-    this.musicAlertOpts = {
-      title: '1994 Music',
+    this.gender = 'f';
+    this.gaming = 'n64';
+
+    this.petAlertOpts = {
+      title: 'Like Pets?',
       subTitle: 'Select your favorite'
     };
 
-    this.petOptions = [
+    this.toppings = ['bacon', 'xcheese'];
+
+    this.petData = [
       { text: 'Bird', value: 'bird' },
-      { text: 'Cat', value: 'cat', checked: true },
-      { text: 'Dog', value: 'dog', checked: true },
+      { text: 'Cat', value: 'cat' },
+      { text: 'Dog', value: 'dog' },
       { text: 'Honey Badger', value: 'honeybadger' },
-      { text: 'Pig', value: 'pig' },
     ];
+
+    this.pets = ['cat', 'dog'];
+  }
+
+  monthChange(val) {
+    console.log('Month Change:', val);
+  }
+
+  yearChange(val) {
+    console.log('Year Change:', val);
+  }
+}
+
+
+@App({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+class ApiDemoApp {
+  root;
+
+  constructor() {
+    this.root = MainPage;
   }
 }

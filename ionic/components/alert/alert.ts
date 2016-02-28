@@ -2,6 +2,7 @@ import {Component, ElementRef, Renderer} from 'angular2/core';
 import {NgClass, NgSwitch, NgIf, NgFor} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
+import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {isDefined} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
@@ -118,35 +119,25 @@ import {ViewController} from '../nav/view-controller';
  */
 export class Alert extends ViewController {
 
-  constructor(opts: {
-    title?: string,
-    subTitle?: string,
-    message?: string,
-    cssClass?: string,
-    inputs?: Array<{
-      type?: string,
-      name?: string,
-      placeholder?: string,
-      value?: string,
-      label?: string,
-      checked?: boolean,
-      id?: string
-    }>,
-    buttons?: Array<any>,
-    enableBackdropDismiss?: boolean
-  } = {}) {
+  constructor(opts: AlertOptions = {}) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(AlertCmp, opts);
     this.viewType = 'alert';
+    this.isOverlay = true;
+
+    // by default, alerts should not fire lifecycle events of other views
+    // for example, when an alert enters, the current active view should
+    // not fire its lifecycle events because it's not conceptually leaving
+    this.fireOtherLifecycles = false;
   }
 
   /**
   * @private
   */
-  getTransitionName(direction) {
+  getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
     return this._nav && this._nav.config.get(key);
   }
@@ -184,20 +175,12 @@ export class Alert extends ViewController {
   /**
    * @param {object} input Alert input
    */
-  addInput(input: {
-    type?: string,
-    name?: string,
-    placeholder?: string,
-    value?: string,
-    label?: string,
-    checked?: boolean,
-    id?: string
-  }) {
+  addInput(input: AlertInputOptions) {
     this.data.inputs.push(input);
   }
 
   /**
-   * @param {object} button Alert button
+   * @param {any} button Alert button
    */
   addButton(button: any) {
     this.data.buttons.push(button);
@@ -211,33 +194,17 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @param {Object} opts Alert options
+   * @param {object} opts Alert options
    */
-  static create(opts: {
-    title?: string,
-    subTitle?: string,
-    message?: string,
-    cssClass?: string,
-    inputs?: Array<{
-      type?: string,
-      name?: string,
-      placeholder?: string,
-      value?: string,
-      label?: string,
-      checked?: boolean,
-      id?: string
-    }>,
-    buttons?: Array<any>,
-    enableBackdropDismiss?: boolean
-  } = {}) {
+  static create(opts: AlertOptions = {}) {
     return new Alert(opts);
   }
 
 }
 
 /**
-* @private
-*/
+ * @private
+ */
 @Component({
   selector: 'ion-alert',
   template:
@@ -247,7 +214,7 @@ export class Alert extends ViewController {
         '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
         '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
       '</div>' +
-      '<div id="{{msgId}}" class="alert-message" *ngIf="d.message" [innerHTML]="d.message"></div>' +
+      '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
         '<template ngSwitchWhen="radio">' +
@@ -284,6 +251,7 @@ export class Alert extends ViewController {
       '<div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">' +
         '<button *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass" class="alert-button">' +
           '{{b.text}}' +
+          '<ion-button-effect></ion-button-effect>' +
         '</button>' +
       '</div>' +
     '</div>',
@@ -332,6 +300,10 @@ class AlertCmp {
 
     } else if (this.d.subTitle) {
       this.descId = this.subHdrId;
+    }
+
+    if (!this.d.message) {
+      this.d.message = '';
     }
   }
 
@@ -479,13 +451,33 @@ class AlertCmp {
   }
 }
 
+export interface AlertOptions {
+  title?: string;
+  subTitle?: string;
+  message?: string;
+  cssClass?: string;
+  inputs?: Array<AlertInputOptions>;
+  buttons?: Array<any>;
+  enableBackdropDismiss?: boolean;
+}
+
+export interface AlertInputOptions {
+  type?: string;
+  name?: string;
+  placeholder?: string;
+  value?: string;
+  label?: string;
+  checked?: boolean;
+  id?: string;
+}
+
 
 /**
  * Animations for alerts
  */
-class AlertPopIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -497,15 +489,16 @@ class AlertPopIn extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
-Animation.register('alert-pop-in', AlertPopIn);
+Transition.register('alert-pop-in', AlertPopIn);
 
 
-class AlertPopOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -517,15 +510,16 @@ class AlertPopOut extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
-Animation.register('alert-pop-out', AlertPopOut);
+Transition.register('alert-pop-out', AlertPopOut);
 
 
-class AlertMdPopIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertMdPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -537,15 +531,16 @@ class AlertMdPopIn extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
-Animation.register('alert-md-pop-in', AlertMdPopIn);
+Transition.register('alert-md-pop-in', AlertMdPopIn);
 
 
-class AlertMdPopOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertMdPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -557,9 +552,10 @@ class AlertMdPopOut extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
-Animation.register('alert-md-pop-out', AlertMdPopOut);
+Transition.register('alert-md-pop-out', AlertMdPopOut);
 
 let alertIds = -1;

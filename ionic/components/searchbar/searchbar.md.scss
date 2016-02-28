@@ -119,7 +119,7 @@ ion-searchbar {
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-focused {
+.searchbar-focused:not(.searchbar-hide-cancel) {
   .searchbar-search-icon {
     display: none;
   }

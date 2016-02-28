@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager, Renderer, Type, ViewChild} from 'angular2/core';
+import {Component, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager, Renderer, Type} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -98,7 +98,7 @@ import {ViewController} from './view-controller';
  *   </pre>
  * </div>
  *
- * @demo /docs/v2/demos/navigation/ 
+ * @demo /docs/v2/demos/navigation/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
 @Component({
@@ -111,11 +111,6 @@ export class Nav extends NavController {
    * @private
    */
   @Input() root: Type;
-
-  /**
-   * @private
-   */
-  @Input() swipeBackEnabled: any;
 
   constructor(
     @Optional() hostNavCtrl: NavController,
@@ -149,9 +144,6 @@ export class Nav extends NavController {
       }
       this.push(this.root);
     }
-
-    // default the swipe back to be enabled
-    this.isSwipeBackEnabled( (this.swipeBackEnabled || '').toString() !== 'false' );
   }
 
 }

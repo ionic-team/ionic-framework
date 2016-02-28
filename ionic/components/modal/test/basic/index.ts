@@ -1,14 +1,14 @@
-import {App, Page, Config, Platform} from 'ionic/ionic';
-import {Modal, ActionSheet, NavController, NavParams, Animation, ViewController} from 'ionic/ionic';
+import {App, Page, Config, Platform} from 'ionic-angular';
+import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from 'ionic-angular';;
 
 
 @Page({
   templateUrl: 'main.html'
 })
 class E2EPage {
+  platforms;
 
-  constructor(nav: NavController, config: Config, platform: Platform) {
-    this.nav = nav;
+  constructor(private nav: NavController, config: Config, platform: Platform) {
     console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
@@ -55,6 +55,14 @@ class E2EPage {
     });
   }
 
+  presentModalWithInputs() {
+	  let modal = Modal.create(ModalWithInputs);
+    modal.onDismiss((data) => {
+      console.log('Modal with inputs data:', data);
+    });
+    this.nav.present(modal);
+  }
+
   presentModalCustomAnimation() {
     let modal = Modal.create(ContactUs);
     this.nav.present(modal, {
@@ -85,12 +93,13 @@ class E2EPage {
   `
 })
 class ModalPassData {
-  constructor(params: NavParams, viewCtrl: ViewController) {
+  data;
+
+  constructor(params: NavParams, private viewCtrl: ViewController) {
     this.data = {
       userId: params.get('userId'),
       name: 'Jenny'
     };
-    this.viewCtrl = viewCtrl;
   }
 
   submit() {
@@ -118,9 +127,7 @@ class ModalPassData {
 })
 class ToolbarModal {
 
-  constructor(viewCtrl: ViewController) {
-    this.viewCtrl = viewCtrl;
-  }
+  constructor(private viewCtrl: ViewController) {}
 
   dismiss() {
     this.viewCtrl.emit({
@@ -133,12 +140,66 @@ class ToolbarModal {
 
 
 @Page({
-  template: '<ion-nav [root]="rootView"></ion-nav>'
+  template: `
+    <ion-toolbar secondary>
+      <ion-buttons start>
+        <button (click)="dismiss()">Close</button>
+      </ion-buttons>
+      <ion-title>Modal w/ Inputs</ion-title>
+    </ion-toolbar>
+    <ion-content>
+      <form #addForm="ngForm" (submit)="save($event)" novalidate>
+        <ion-list>
+          <ion-item>
+            <ion-label floating>Title <span [hidden]="title.valid">(Required)</span></ion-label>
+            <ion-input ngControl="title" type="text" [(ngModel)]="data.title" #title="ngForm" required autofocus></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Note <span [hidden]="note.valid">(Required)</span></ion-label>
+            <ion-input ngControl="note" type="text" [(ngModel)]="data.note" #note="ngForm" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Icon</ion-label>
+            <ion-input ngControl="icon" type="text" [(ngModel)]="data.icon" #icon="ngForm" autocomplete="on" autocorrect="on"></ion-input>
+          </ion-item>
+        </ion-list>
+        <div padding>
+          <button block large type="submit" [disabled]="!addForm.valid">Save</button>
+        </div>
+      </form>
+    </ion-content>
+  `
+})
+class ModalWithInputs {
+  data;
+
+  constructor(private viewCtrl: ViewController) {
+    this.data = {
+      title: 'Title',
+      note: 'Note',
+      icon: 'home'
+    };
+  }
+
+  public save(ev) {
+    this.viewCtrl.dismiss(this.data);
+  }
+
+  public dismiss() {
+    this.viewCtrl.dismiss(null);
+  }
+}
+
+
+@Page({
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ContactUs {
+  root;
+
   constructor() {
     console.log('ContactUs constructor');
-    this.rootView = ModalFirstPage;
+    this.root = ModalFirstPage;
   }
   onPageLoaded() {
     console.log('ContactUs onPageLoaded');
@@ -185,9 +246,7 @@ class ContactUs {
   `
 })
 class ModalFirstPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
 
   push() {
     let page = ModalSecondPage;
@@ -265,10 +324,9 @@ class ModalFirstPage {
 })
 class ModalSecondPage {
   constructor(
-    nav: NavController,
+    private nav: NavController,
     params: NavParams
   ) {
-    this.nav = nav;
     console.log('Second page params:', params);
   }
 }
@@ -278,16 +336,19 @@ class ModalSecondPage {
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
+  root;
+
   constructor() {
     this.root = E2EPage;
   }
 }
 
 
-class FadeIn extends Animation {
-  constructor(enteringView, leavingView) {
-    super(enteringView.pageRef());
+class FadeIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
     this
+      .element(enteringView.pageRef())
       .easing('ease')
       .duration(1000)
       .fromTo('translateY', '0%', '0%')
@@ -295,16 +356,17 @@ class FadeIn extends Animation {
       .before.addClass('show-page');
   }
 }
-Animation.register('my-fade-in', FadeIn);
+Transition.register('my-fade-in', FadeIn);
 
-class FadeOut extends Animation {
-  constructor(enteringView, leavingView) {
-    super(leavingView.pageRef());
+class FadeOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
     this
+      .element(leavingView.pageRef())
       .easing('ease')
       .duration(500)
       .fadeOut()
       .before.addClass('show-page');
   }
 }
-Animation.register('my-fade-out', FadeOut);
+Transition.register('my-fade-out', FadeOut);

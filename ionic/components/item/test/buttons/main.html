@@ -88,4 +88,8 @@
     <button outline item-right (click)="testClick($event)">View</button>
   </ion-item>
 
+  <button ion-item *ngFor="#data of [0,1,2,3,4]; #i = index" [class.activated]="i == 1">
+    <h3>ng-for {{i}}</h3>
+  </button>
+
 </ion-content>

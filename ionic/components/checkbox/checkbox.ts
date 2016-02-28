@@ -1,20 +1,22 @@
-import {Component, Optional, Input, HostListener} from 'angular2/core';
-import {NgControl} from 'angular2/common';
+import {Component, Optional, Input, Output, EventEmitter, HostListener, Provider, forwardRef} from 'angular2/core';
+import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
 import {isTrueProperty} from '../../util/util';
+
+const CHECKBOX_VALUE_ACCESSOR = new Provider(
+    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Checkbox), multi: true});
+
 
 /**
  * The checkbox is no different than the HTML checkbox input, except
  * it's styled accordingly to the the platform and design mode, such
  * as iOS or Material Design.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/core/Form-interface.html) for more info on forms and input.
+ * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
+ * for more info on forms and inputs.
  *
- * @property [checked] - whether or not the checkbox is checked (defaults to false)
- * @property [value] - the value of the checkbox component
- * @property [disabled] - whether or not the checkbox is disabled or not.
  *
  * @usage
  * ```html
@@ -23,17 +25,17 @@ import {isTrueProperty} from '../../util/util';
  *
  *    <ion-item>
  *      <ion-label>Pepperoni</ion-label>
- *      <ion-checkbox value="pepperoni" checked="true"></ion-checkbox>
+ *      <ion-checkbox [(ngModel)]="pepperoni"></ion-checkbox>
  *    </ion-item>
  *
  *    <ion-item>
  *      <ion-label>Sausage</ion-label>
- *      <ion-checkbox value="sausage" disabled="true"></ion-checkbox>
+ *      <ion-checkbox [(ngModel)]="sausage" disabled="true"></ion-checkbox>
  *    </ion-item>
  *
  *    <ion-item>
  *      <ion-label>Mushrooms</ion-label>
- *      <ion-checkbox value="mushrooms"></ion-checkbox>
+ *      <ion-checkbox [(ngModel)]="mushrooms"></ion-checkbox>
  *    </ion-item>
  *
  *  </ion-list>
@@ -56,12 +58,14 @@ import {isTrueProperty} from '../../util/util';
     '</button>',
   host: {
     '[class.checkbox-disabled]': '_disabled'
-  }
+  },
+  providers: [CHECKBOX_VALUE_ACCESSOR]
 })
 export class Checkbox {
-  private _checked: any = false;
-  private _disabled: any = false;
+  private _checked: boolean = false;
+  private _disabled: boolean = false;
   private _labelId: string;
+  private _fn: Function;
 
   /**
    * @private
@@ -69,20 +73,15 @@ export class Checkbox {
   id: string;
 
   /**
-   * @private
+   * @output {Checkbox} expression to evaluate when the checkbox value changes
    */
-  @Input() value: string = '';
+  @Output() change: EventEmitter<Checkbox> = new EventEmitter();
 
   constructor(
     private _form: Form,
-    @Optional() private _item: Item,
-    @Optional() ngControl: NgControl
+    @Optional() private _item: Item
   ) {
     _form.register(this);
-
-    if (ngControl) {
-      ngControl.valueAccessor = this;
-    }
 
     if (_item) {
       this.id = 'chk-' + _item.registerInput('checkbox');
@@ -93,37 +92,73 @@ export class Checkbox {
 
   /**
    * @private
-   * Toggle the checked state of the checkbox. Calls onChange to pass the updated checked state to the model (Control).
    */
-  toggle() {
-    this.checked = !this.checked;
+  @HostListener('click', ['$event'])
+  private _click(ev) {
+    console.debug('checkbox, checked');
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.onChange(!this._checked);
+  }
+
+  /**
+   * @input {boolean} whether or not the checkbox is checked (defaults to false)
+   */
+  @Input()
+  get checked(): boolean {
+    return this._checked;
+  }
+
+  set checked(val: boolean) {
+    this._setChecked(isTrueProperty(val));
+    this.onChange(this._checked);
   }
 
   /**
    * @private
    */
-  @Input()
-  get checked() {
-    return this._checked;
-  }
-
-  set checked(val) {
-    if (!this._disabled) {
-      this._checked = isTrueProperty(val);
-      this.onChange(this._checked);
-      this._item && this._item.setCssClass('item-checkbox-checked', this._checked);
+  private _setChecked(isChecked: boolean) {
+    if (isChecked !== this._checked) {
+      this._checked = isChecked;
+      this.change.emit(this);
+      this._item && this._item.setCssClass('item-checkbox-checked', isChecked);
     }
   }
 
   /**
    * @private
    */
+  writeValue(val: any) {
+    this._setChecked( isTrueProperty(val) );
+  }
+
+  /**
+   * @private
+   */
+  registerOnChange(fn: Function): void {
+    this._fn = fn;
+    this.onChange = (isChecked: boolean) => {
+      console.debug('checkbox, onChange', isChecked);
+      fn(isChecked);
+      this._setChecked(isChecked);
+      this.onTouched();
+    };
+  }
+
+  /**
+   * @private
+   */
+  registerOnTouched(fn) { this.onTouched = fn; }
+
+  /**
+   * @input {boolean} whether or not the checkbox is disabled or not.
+   */
   @Input()
-  get disabled() {
+  get disabled(): boolean {
     return this._disabled;
   }
 
-  set disabled(val) {
+  set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-checkbox-disabled', this._disabled);
   }
@@ -131,56 +166,17 @@ export class Checkbox {
   /**
    * @private
    */
-  @HostListener('click', ['$event'])
-  private _click(ev) {
-    console.debug('checkbox, checked', this.value);
-    ev.preventDefault();
-    ev.stopPropagation();
-    this.toggle();
-  }
-
-  /**
-   * @private
-   * Angular2 Forms API method called by the model (Control) on change to update
-   * the checked value.
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
-   */
-  writeValue(val) {
-    if (val !== null) {
-      this.checked = val;
-    }
+  onChange(isChecked: boolean) {
+    // used when this input does not have an ngModel or ngControl
+    console.debug('checkbox, onChange (no ngModel)', isChecked);
+    this._setChecked(isChecked);
+    this.onTouched();
   }
 
   /**
    * @private
    */
-  onChange(val) {
-    // TODO: figure the whys and the becauses
-  }
-
-  /**
-   * @private
-   */
-  onTouched(val) {
-    // TODO: figure the whys and the becauses
-  }
-
-  /**
-   * @private
-   * Angular2 Forms API method called by the view (NgControl) to register the
-   * onChange event handler that updates the model (Control).
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
-   * @param {Function} fn  the onChange event handler.
-   */
-  registerOnChange(fn) { this.onChange = fn; }
-
-  /**
-   * @private
-   * Angular2 Forms API method called by the the view (NgControl) to register
-   * the onTouched event handler that marks model (Control) as touched.
-   * @param {Function} fn  onTouched event handler.
-   */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  onTouched() {}
 
   /**
    * @private

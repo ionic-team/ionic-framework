@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {IONIC_DIRECTIVES} from 'ionic/ionic';
+import {IONIC_DIRECTIVES} from 'ionic-angular';
 
 /*
   Generated class for the <%= jsClassName %> component.

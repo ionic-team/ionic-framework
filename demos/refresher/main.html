@@ -1,33 +1,20 @@
 <ion-toolbar>
-  <ion-title>Refresher</ion-title>
+  <ion-title>Pull To Refresh</ion-title>
 </ion-toolbar>
 
 
 <ion-content>
-  <ion-refresher (starting)="doStarting()" (refresh)="doRefresh($event, refresher)" (pulling)="doPulling($event, amt)">
+  <ion-refresher (refresh)="doRefresh($event)" (pulling)="doPulling($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh..."
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
   </ion-refresher>
 
   <ion-list>
-    <ion-item>Item 1</ion-item>
-    <ion-item>Item 2</ion-item>
-    <ion-item>Item 3</ion-item>
-    <ion-item>Item 4</ion-item>
-    <ion-item>Item 5</ion-item>
-    <ion-item>Item 6</ion-item>
-    <ion-item>Item 7</ion-item>
-    <ion-item>Item 8</ion-item>
-    <ion-item>Item 9</ion-item>
-    <ion-item>Item 10</ion-item>
-    <ion-item>Item 11</ion-item>
-    <ion-item>Item 12</ion-item>
-    <ion-item>Item 13</ion-item>
-    <ion-item>Item 14</ion-item>
-    <ion-item>Item 15</ion-item>
-    <ion-item>Item 16</ion-item>
-    <ion-item>Item 17</ion-item>
-    <ion-item>Item 18</ion-item>
-    <ion-item>Item 19</ion-item>
-    <ion-item>Item 20</ion-item>
+    <ion-item *ngFor="#item of items">
+      {{ item }}
+    </ion-item>
   </ion-list>
 
 </ion-content>

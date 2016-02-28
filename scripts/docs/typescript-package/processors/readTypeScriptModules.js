@@ -4,8 +4,9 @@ var _ = require('lodash');
 var ts = require('typescript');
 
 module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
+                                                getDirectiveInfo,
                                                 getExportDocType, getContent,
-                                                getDirectiveInfo, log) {
+                                                createDocMessage, log) {
 
   return {
     $runAfter: ['files-read'],
@@ -61,13 +62,26 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
 
           // If the symbol is an Alias then for most things we want the original resolved symbol
           var resolvedExport = exportSymbol.resolvedSymbol || exportSymbol;
+
+          // If the resolved symbol contains no declarations then it is invalid
+          // (probably an abstract class)
+          // For the moment we are just going to ignore such exports
+          // TODO: find a way of generating docs for them
+          if (!resolvedExport.declarations) return;
+
           var exportDoc = createExportDoc(exportSymbol.name, resolvedExport, moduleDoc, basePath, parseInfo.typeChecker);
           log.debug('>>>> EXPORT: ' + exportDoc.name + ' (' + exportDoc.docType + ') from ' + moduleDoc.id);
+
+          // Add this export doc to its module doc
+          moduleDoc.exports.push(exportDoc);
+          docs.push(exportDoc);
+
+          exportDoc.members = [];
+          exportDoc.statics = [];
 
           // Generate docs for each of the export's members
           if (resolvedExport.flags & ts.SymbolFlags.HasMembers) {
 
-            exportDoc.members = [];
             for(var memberName in resolvedExport.members) {
               // FIXME(alexeagle): why do generic type params appear in members?
               if (memberName === 'T') {
@@ -92,26 +106,40 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
                 exportDoc.newMember = memberDoc;
               }
             }
+          }
 
-            if (sortClassMembers) {
-              exportDoc.members.sort(function(a, b) {
-                if (a.name > b.name) return 1;
-                if (a.name < b.name) return -1;
-                return 0;
-              });
+          if (exportDoc.docType === 'enum') {
+            for(var memberName in resolvedExport.exports) {
+              log.silly('>>>>>> member: ' + memberName + ' from ' + exportDoc.id + ' in ' + moduleDoc.id);
+              var memberSymbol = resolvedExport.exports[memberName];
+              var memberDoc = createMemberDoc(memberSymbol, exportDoc, basePath, parseInfo.typeChecker);
+              docs.push(memberDoc);
+              exportDoc.members.push(memberDoc);
+            }
+          } else if (resolvedExport.flags & ts.SymbolFlags.HasExports) {
+            for (var exported in resolvedExport.exports) {
+              if (exported === 'prototype') continue;
+              if (hidePrivateMembers && exported.charAt(0) === '_') continue;
+              var memberSymbol = resolvedExport.exports[exported];
+              var memberDoc = createMemberDoc(memberSymbol, exportDoc, basePath, parseInfo.typeChecker);
+              memberDoc.isStatic = true;
+              docs.push(memberDoc);
+              exportDoc.statics.push(memberDoc);
             }
           }
 
-          if (exportDoc.docType == 'enum') {
-            exportDoc.members = [];
-            for (var etype in resolvedExport.exports) {
-              exportDoc.members.push(etype);
-            }
+          if (sortClassMembers) {
+            exportDoc.members.sort(function(a, b) {
+              if (a.name > b.name) return 1;
+              if (a.name < b.name) return -1;
+              return 0;
+            });
+            exportDoc.statics.sort(function(a, b) {
+              if (a.name > b.name) return 1;
+              if (a.name < b.name) return -1;
+              return 0;
+            });
           }
-
-          // Add this export doc to its module doc
-          moduleDoc.exports.push(exportDoc);
-          docs.push(exportDoc);
         });
       });
     }
@@ -120,10 +148,12 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
 
   function createModuleDoc(moduleSymbol, basePath) {
     var id = moduleSymbol.name.replace(/^"|"$/g, '');
+    var name = id.split('/').pop();
     var moduleDoc = {
       docType: 'module',
+      name: name,
       id: id,
-      aliases: [id],
+      aliases: [id, name],
       moduleTree: moduleSymbol,
       content: getContent(moduleSymbol),
       exports: [],
@@ -136,12 +166,17 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
   function createExportDoc(name, exportSymbol, moduleDoc, basePath, typeChecker) {
     var typeParamString = '';
     var heritageString = '';
+    var typeDefinition = '';
 
     exportSymbol.declarations.forEach(function(decl) {
       var sourceFile = ts.getSourceFileOfNode(decl);
 
       if (decl.typeParameters) {
         typeParamString = '<' + getText(sourceFile, decl.typeParameters) + '>';
+      }
+
+      if (decl.symbol.flags & ts.SymbolFlags.TypeAlias) {
+        typeDefinition = getText(sourceFile, decl.type);
       }
 
       if (decl.heritageClauses) {
@@ -173,10 +208,12 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
 
     var exportDoc = {
       docType: getExportDocType(exportSymbol),
+      exportSymbol: exportSymbol,
       name: name,
       id: moduleDoc.id + '/' + name,
       typeParams: typeParamString,
       heritage: heritageString,
+      decorators: getDecorators(exportSymbol),
       aliases: aliasNames,
       moduleDoc: moduleDoc,
       content: getContent(exportSymbol),
@@ -185,12 +222,30 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
       directiveInfo: getDirectiveInfo(exportSymbol)
     };
 
+    if (exportDoc.docType === 'var' || exportDoc.docType === 'const' || exportDoc.docType === 'let') {
+      exportDoc.symbolTypeName = exportSymbol.valueDeclaration.type &&
+                                 exportSymbol.valueDeclaration.type.typeName &&
+                                 exportSymbol.valueDeclaration.type.typeName.text;
+    }
+
+    if (exportDoc.docType === 'type-alias') {
+      exportDoc.returnType = getReturnType(typeChecker, exportSymbol);
+    }
+
     if(exportSymbol.flags & ts.SymbolFlags.Function) {
       exportDoc.parameters = getParameters(typeChecker, exportSymbol);
     }
     if(exportSymbol.flags & ts.SymbolFlags.Value) {
       exportDoc.returnType = getReturnType(typeChecker, exportSymbol);
     }
+    if (exportSymbol.flags & ts.SymbolFlags.TypeAlias) {
+      exportDoc.typeDefinition = typeDefinition;
+    }
+
+    // Compute the original module name from the relative file path
+    exportDoc.originalModule = exportDoc.fileInfo.relativePath
+        .replace(new RegExp('\.' + exportDoc.fileInfo.extension + '$'), '');
+
     return exportDoc;
   }
 
@@ -199,6 +254,7 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
       docType: 'member',
       classDoc: classDoc,
       name: memberSymbol.name,
+      decorators: getDecorators(memberSymbol),
       content: getContent(memberSymbol),
       fileInfo: getFileInfo(memberSymbol, basePath),
       location: getLocation(memberSymbol)
@@ -242,6 +298,45 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
     return memberDoc;
   }
 
+
+  function getDecorators(symbol) {
+
+    var declaration = symbol.valueDeclaration || symbol.declarations[0];
+    var sourceFile = ts.getSourceFileOfNode(declaration);
+
+    var decorators = declaration.decorators && declaration.decorators.map(function(decorator) {
+      decorator = decorator.expression;
+      return {
+        name: decorator.expression ? decorator.expression.text : decorator.text,
+        arguments: decorator.arguments && decorator.arguments.map(function(argument) {
+          return getText(sourceFile, argument).trim();
+        }),
+        argumentInfo: decorator.arguments && decorator.arguments.map(function(argument) {
+          return parseArgument(argument);
+        }),
+        expression: decorator
+      };
+    });
+    return decorators;
+  }
+
+  function parseProperties(properties) {
+    var result = {};
+    _.forEach(properties, function(property) {
+      result[property.name.text] = parseArgument(property.initializer);
+    });
+    return result;
+  }
+
+  function parseArgument(argument) {
+    if (argument.text) return argument.text;
+    if (argument.properties) return parseProperties(argument.properties);
+    if (argument.elements) return argument.elements.map(function(element) { return element.text; });
+    var sourceFile = ts.getSourceFileOfNode(argument);
+    var text = getText(sourceFile, argument).trim();
+    return text;
+  }
+
   function getParameters(typeChecker, symbol) {
     var declaration = symbol.valueDeclaration || symbol.declarations[0];
     var sourceFile = ts.getSourceFileOfNode(declaration);
@@ -252,7 +347,11 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
         ' at line ' + location.start.line);
     }
     return declaration.parameters.map(function(parameter) {
-      var paramText = getText(sourceFile, parameter.name);
+      var paramText = '';
+      if (parameter.dotDotDotToken) {
+        paramText += '...';
+      }
+      paramText += getText(sourceFile, parameter.name);
       if (parameter.questionToken || parameter.initializer) {
         paramText += '?';
       }
@@ -260,6 +359,9 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
         paramText += ':' + getType(sourceFile, parameter.type);
       } else {
         paramText += ': any';
+        if (parameter.dotDotDotToken) {
+          paramText += '[]';
+        }
       }
       return paramText.trim();
     });
@@ -280,6 +382,14 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
     var sourceFile = ts.getSourceFileOfNode(declaration);
     if (declaration.type) {
       return getType(sourceFile, declaration.type).trim();
+    } else if (declaration.initializer) {
+      // The symbol does not have a "type" but it is being initialized
+      // so we can deduce the type of from the initializer (mostly).
+      if (declaration.initializer.expression) {
+        return declaration.initializer.expression.text.trim();
+      } else {
+        return getType(sourceFile, declaration.initializer).trim();
+      }
     }
   }
 
@@ -302,8 +412,8 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
   function getType(sourceFile, type) {
     var text = getText(sourceFile, type);
     while (text.indexOf(".") >= 0) {
-      // Keep namespaced symbols in Rx
-      if (text.match(/^\s*Rx\./)) break;
+      // Keep namespaced symbols in RxNext
+      if (text.match(/^\s*RxNext\./)) break;
       // handle the case List<thing.stuff> -> List<stuff>
       text = text.replace(/([^.<]*)\.([^>]*)/, "$2");
     }

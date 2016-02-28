@@ -10,7 +10,7 @@ $button-ios-font-size:                1.6rem !default;
 $button-ios-height:                   2.8em !default;
 $button-ios-color:                    map-get($colors-ios, primary) !default;
 $button-ios-color-activated:          color-shade($button-ios-color) !default;
-$button-ios-text-color:               inverse($button-ios-color) !default;
+$button-ios-text-color:               color-inverse($button-ios-color) !default;
 $button-ios-hover-opacity:            0.8 !default;
 $button-ios-border-radius:            4px !default;
 
@@ -30,7 +30,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
   margin: $button-ios-margin;
   padding: $button-ios-padding;
 
-  min-height: $button-ios-height;
+  height: $button-ios-height;
   font-size: $button-ios-font-size;
 
   border-radius: $button-ios-border-radius;
@@ -57,7 +57,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
   .button-#{$color-name} {
     $bg-color: $color-value;
     $bg-color-activated: color-shade($bg-color);
-    $fg-color: inverse($bg-color);
+    $fg-color: color-inverse($bg-color);
 
     color: $fg-color;
     background-color: $bg-color;
@@ -75,13 +75,13 @@ $button-ios-small-icon-font-size:     1.3em !default;
 
 .button-large {
   padding: 0 $button-ios-large-padding;
-  min-height: $button-ios-large-height;
+  height: $button-ios-large-height;
   font-size: $button-ios-large-font-size;
 }
 
 .button-small {
   padding: 0 $button-ios-small-padding;
-  min-height: $button-ios-small-height;
+  height: $button-ios-small-height;
   font-size: $button-ios-small-font-size;
 }
 
@@ -93,13 +93,9 @@ $button-ios-small-icon-font-size:     1.3em !default;
 // --------------------------------------------------
 
 .button-block {
-  // This fixes an issue with flexbox and button on iOS Safari. See #225
-  display: block;
-  line-height: $button-ios-height;
   margin-left: 0;
   margin-right: 0;
 }
-
 
 // iOS Full Button
 // --------------------------------------------------
@@ -108,10 +104,9 @@ $button-ios-small-icon-font-size:     1.3em !default;
   margin-right: 0;
   margin-left: 0;
   border-radius: 0;
-  border-left: none;
-  border-right: none;
+  border-right-width: 0;
+  border-left-width: 0;
 }
-
 
 // iOS Outline Button
 // --------------------------------------------------
@@ -131,6 +126,9 @@ $button-ios-small-icon-font-size:     1.3em !default;
   }
 }
 
+&.hairlines .button-outline {
+  border-width: $hairlines-width;
+}
 
 // iOS Outline Button Color Mixin
 // --------------------------------------------------
@@ -200,6 +198,12 @@ $button-ios-small-icon-font-size:     1.3em !default;
 .button-round {
   padding: $button-round-padding;
   border-radius: $button-round-border-radius;
+}
+
+
+ion-button-effect {
+  // iOS does not use the button effect
+  display: none;
 }
 
 

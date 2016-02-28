@@ -1,4 +1,4 @@
-import {App} from 'ionic/ionic';
+import {App} from 'ionic-angular';
 import {
   Control,
   ControlGroup,
@@ -16,9 +16,17 @@ import {
   templateUrl: 'main.html'
 })
 class E2EApp {
+  fruitsForm: ControlGroup;
+  grapeDisabled: boolean;
+  grapeChecked: boolean;
+  kiwiValue: boolean;
+  strawberryValue: boolean;
+  standAloneChecked: boolean;
+  formResults: string;
+
   constructor() {
     this.fruitsForm = new ControlGroup({
-      "appleCtrl": new Control(),
+      "appleCtrl": new Control(true),
       "bananaCtrl": new Control(true),
       "cherryCtrl": new Control(false),
       "grapeCtrl": new Control(true)
@@ -35,6 +43,16 @@ class E2EApp {
 
   toggleGrapeDisabled() {
     this.grapeDisabled = !this.grapeDisabled;
+  }
+
+  kiwiChange(ev) {
+    console.log('kiwiChange', ev);
+    this.kiwiValue = ev.checked;
+  }
+
+  strawberryChange(ev) {
+    console.log('strawberryChange', ev);
+    this.strawberryValue = ev.checked;
   }
 
   doSubmit(ev) {

@@ -7,9 +7,9 @@
   <ion-item>
     <ion-label>Toppings</ion-label>
     <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!" class="e2eSelectToppings">
-      <ion-option value="bacon" checked="true">Bacon</ion-option>
+      <ion-option value="bacon">Bacon</ion-option>
       <ion-option value="olives">Black Olives</ion-option>
-      <ion-option value="xcheese" checked="true">Extra Cheese</ion-option>
+      <ion-option value="xcheese">Extra Cheese</ion-option>
       <ion-option value="peppers">Green Peppers</ion-option>
       <ion-option value="mushrooms">Mushrooms</ion-option>
       <ion-option value="onions">Onions</ion-option>
@@ -35,7 +35,7 @@
   <ion-item>
     <ion-label>Pets</ion-label>
     <ion-select [(ngModel)]="pets" multiple>
-      <ion-option *ngFor="#o of petOptions" [value]="o.value" [checked]="o.checked">{{o.text}}</ion-option>
+      <ion-option *ngFor="#o of petOptions" [value]="o.value">{{o.text}}</ion-option>
     </ion-select>
   </ion-item>
 

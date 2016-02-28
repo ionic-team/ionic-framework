@@ -12,7 +12,7 @@ import {Config} from '../config/config';
  *
  * @usage
  * ```ts
- * import {Platform} 'ionic/ionic';
+ * import {Platform} 'ionic-angular';
  * export MyClass {
  *    constructor(platform: Platform){
  *      this.platform = platform;
@@ -30,11 +30,11 @@ export class Platform {
   private _qs: any;
   private _ua: string;
   private _bPlt: string;
-  private _onResizes: Array<any>=[];
+  private _onResizes: Array<Function>=[];
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
   private _engineReady: any;
-  private _resizeTimer: any;
+  private _resizeTm: any;
 
   /**
    * @private
@@ -52,12 +52,12 @@ export class Platform {
 
   /**
    * @param {string} platformName
-   * @returns {bool} returns true/false based on platform you place
+   * @returns {boolean} returns true/false based on platform you place
    * @description
    * Depending on the platform name, isPlatform will return true or flase
    *
    * ```
-   * import {Platform} 'ionic/ionic';
+   * import {Platform} 'ionic-angular';
    * export MyClass {
    *    constructor(platform: Platform){
    *      this.platform = platform;
@@ -81,7 +81,7 @@ export class Platform {
    * it would return mobile, ios, and iphone.
    *
    * ```
-   * import {Platform} 'ionic/ionic';
+   * import {Platform} 'ionic-angular';
    * export MyClass {
    *    constructor(platform: Platform){
    *      this.platform = platform;
@@ -103,7 +103,7 @@ export class Platform {
    * Returns an object containing information about the paltform
    *
    * ```
-   * import {Platform} 'ionic/ionic';
+   * import {Platform} 'ionic-angular';
    * export MyClass {
    *    constructor(platform: Platform){
    *      this.platform = platform;
@@ -142,7 +142,7 @@ export class Platform {
    * Returns a promise when the platform is ready and native functionality can be called
    *
    * ```
-   * import {Platform} 'ionic/ionic';
+   * import {Platform} 'ionic-angular';
    * export MyClass {
    *    constructor(platform: Platform){
    *      this.platform = platform;
@@ -361,9 +361,9 @@ export class Platform {
   */
   windowResize() {
     let self = this;
-    clearTimeout(self._resizeTimer);
+    clearTimeout(self._resizeTm);
 
-    self._resizeTimer = setTimeout(() => {
+    self._resizeTm = setTimeout(() => {
       flushDimensionCache();
 
       for (let i = 0; i < self._onResizes.length; i++) {
@@ -373,14 +373,23 @@ export class Platform {
           console.error(e);
         }
       }
-    }, 250);
+    }, 200);
   }
 
   /**
-  * @private
-  */
-  onResize(cb: Function) {
-    this._onResizes.push(cb);
+   * @private
+   * @returns Unregister function
+   */
+  onResize(cb: Function): Function {
+    let self = this;
+    self._onResizes.push(cb);
+
+    return function() {
+      let index = self._onResizes.indexOf(cb);
+      if (index > -1) {
+        self._onResizes.splice(index, 1);
+      }
+    };
   }
 
 
@@ -602,11 +611,12 @@ function insertSuperset(platformNode: PlatformNode) {
 
 
 class PlatformNode {
-  private c: any;
-  public parent: PlatformNode;
-  public child: PlatformNode;
-  public isEngine: boolean;
-  public depth: number;
+  private c;
+
+  parent: PlatformNode;
+  child: PlatformNode;
+  isEngine: boolean;
+  depth: number;
 
   constructor(platformName: string) {
     this.c = Platform.get(platformName);

@@ -1,0 +1,21 @@
+<ion-toolbar><ion-title>Pull To Refresh</ion-title></ion-toolbar>
+
+<ion-content>
+
+  <ion-refresher (start)="doStart($event)" (pulling)="doPulling($event)" (refresh)="doRefresh($event)">
+
+    <ion-refresher-content
+      pullingText="Pull to refresh..."
+      refreshingSpinner="bubbles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+
+  </ion-refresher>
+
+  <ion-list>
+    <ion-item *ngFor="#item of items">
+      {{ item }}
+    </ion-item>
+  </ion-list>
+
+</ion-content>

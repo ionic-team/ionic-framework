@@ -1,4 +1,4 @@
-import {App, Page, ActionSheet, NavController} from 'ionic/ionic';
+import {App, Page, ActionSheet, Modal, NavController, ViewController} from 'ionic-angular';
 
 
 @Page({
@@ -31,9 +31,10 @@ class E2EPage {
           }
         },
         {
-          text: 'No close',
+          text: 'Open Modal',
           handler: () => {
-            console.log('do not close clicked');
+            let modal = Modal.create(ModalPage);
+            this.nav.present(modal);
 
             // returning false does not allow the actionsheet to be closed
             return false;
@@ -88,6 +89,27 @@ class E2EPage {
     this.nav.present(actionSheet);
   }
 
+}
+
+@Page({
+  template: `
+    <ion-toolbar>
+      <ion-buttons>
+        <button (click)="dismiss()">Close</button>
+      </ion-buttons>
+      <ion-title>Modal</ion-title>
+    </ion-toolbar>
+    <ion-content padding>
+      Hi, I'm Bob, and I'm a modal.
+    </ion-content>
+  `
+})
+class ModalPage {
+  constructor(private viewCtrl: ViewController) {}
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
 }
 
 

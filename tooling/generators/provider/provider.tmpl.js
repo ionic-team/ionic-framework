@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable, Inject} from 'angular2/core';
 import {Http} from 'angular2/http';
 
 /*
@@ -9,7 +9,7 @@ import {Http} from 'angular2/http';
 */
 @Injectable()
 export class <%= jsClassName %> {
-  constructor(http: Http) {
+  constructor(@Inject(Http) http) {
     this.http = http;
     this.data = null;
   }

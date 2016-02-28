@@ -1,7 +1,32 @@
-import {Component} from 'angular2/core'
+import {Component, ChangeDetectionStrategy, ViewEncapsulation, Type} from 'angular2/core'
 import {IONIC_DIRECTIVES} from '../config/directives';
 
 const _reflect: any=Reflect;
+
+export interface PageMetadata {
+  selector?: string;
+  inputs?: string[];
+  outputs?: string[];
+  properties?: string[];
+  events?: string[];
+  host?: {
+      [key: string]: string;
+  };
+  providers?: any[];
+  directives?: Array<Type | any[]>;
+  pipes?: Array<Type | any[]>;
+  exportAs?: string;
+  queries?: {
+      [key: string]: any;
+  };
+  template?: string;
+  templateUrl?: string;
+  moduleId?: string;
+  styleUrls?: string[];
+  styles?: string[];
+  changeDetection?: ChangeDetectionStrategy;
+  encapsulation?: ViewEncapsulation;
+}
 
 /**
  * @name Page
@@ -36,7 +61,7 @@ const _reflect: any=Reflect;
  * In this case, you would add `IONIC_DIRECTIVES` to your directives array.
  *
  * ```ts
- * import {IONIC_DIRECTIVES} from 'ionic/ionic';
+ * import {IONIC_DIRECTIVES} from 'ionic-angular';
  * @Component({
  *   selector: 'my-component'
  *   template: `<div class="my-style">
@@ -50,7 +75,7 @@ const _reflect: any=Reflect;
  * Alternatively, you could:
  *
  * ```ts
- * import {Checkbox, Icon} from 'ionic/ionic'
+ * import {Checkbox, Icon} from 'ionic-angular'
  * ```
  *
  * along with any other components and add them individually:
@@ -71,7 +96,7 @@ const _reflect: any=Reflect;
  *
  * For more information on how pages are created, see the [NavController API reference](../../components/nav/NavController/#creating_pages)
  */
-export function Page(config: any={}) {
+export function Page(config: PageMetadata) {
   return function(cls) {
     config.selector = 'ion-page';
     config.directives = config.directives ? config.directives.concat(IONIC_DIRECTIVES) : IONIC_DIRECTIVES;

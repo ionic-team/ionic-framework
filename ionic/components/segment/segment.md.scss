@@ -11,9 +11,11 @@ $segment-button-md-border-bottom-width:        2px !default;
 $segment-button-md-border-bottom-color:        rgba(#000000, 0.10) !default;
 
 $segment-button-md-padding:                    0 6px !default;
-$segment-button-md-min-height:                 4.0rem !default;
+$segment-button-md-height:                     4.2rem !default;
 $segment-button-md-line-height:                4.0rem !default;
 $segment-button-md-font-size:                  1.2rem !default;
+$segment-button-md-icon-size:                  2.6rem !default;
+$segment-button-md-icon-line-height:           $segment-button-md-line-height !default;
 
 
 .segment-button {
@@ -22,7 +24,7 @@ $segment-button-md-font-size:                  1.2rem !default;
   border-bottom-style: solid;
   border-bottom-color: $segment-button-md-border-bottom-color;
 
-  min-height: $segment-button-md-min-height;
+  height: $segment-button-md-height;
   line-height: $segment-button-md-line-height;
 
   font-size: $segment-button-md-font-size;
@@ -33,6 +35,11 @@ $segment-button-md-font-size:                  1.2rem !default;
   color: $segment-button-md-text-color-activated;
   background-color: transparent;
   transition: 100ms all linear;
+
+  ion-icon {
+    font-size: $segment-button-md-icon-size;
+    line-height: $segment-button-md-icon-line-height;
+  }
 
   &.activated,
   &.segment-activated {

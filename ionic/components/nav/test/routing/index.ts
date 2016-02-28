@@ -1,6 +1,6 @@
 import {RouteConfig, Location} from 'angular2/router';
 
-import {App, Page, NavParams, ViewController} from 'ionic/ionic';
+import {App, Page, NavParams, ViewController} from 'ionic-angular';
 
 
 @Page({templateUrl: 'view1.html'})

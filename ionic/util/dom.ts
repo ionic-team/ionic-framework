@@ -1,11 +1,32 @@
 
-let win: any = window;
-let doc: any = document;
-let docEle: any = doc.documentElement;
+// RequestAnimationFrame Polyfill (Android 4.3 and below)
+/*! @author Paul Irish */
+/*! @source https://gist.github.com/paulirish/1579671 */
+(function() {
+  var rafLastTime = 0;
+  const win: any = window;
+  if (!win.requestAnimationFrame) {
+    win.requestAnimationFrame = function(callback, element) {
+      var currTime = Date.now();
+      var timeToCall = Math.max(0, 16 - (currTime - rafLastTime));
 
-// requestAnimationFrame is polyfilled for old Android
-// within the web-animations polyfill
-export const raf = win.requestAnimationFrame;
+      var id = window.setTimeout(function() {
+        callback(currTime + timeToCall);
+      }, timeToCall);
+
+      rafLastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+
+  if (!win.cancelAnimationFrame) {
+    win.cancelAnimationFrame = function(id) { clearTimeout(id); };
+  }
+})();
+
+export const raf = window.requestAnimationFrame.bind(window);
+export const cancelRaf = window.cancelAnimationFrame.bind(window);
+
 
 export function rafFrames(framesToWait, callback) {
   framesToWait = Math.ceil(framesToWait);
@@ -21,11 +42,11 @@ export function rafFrames(framesToWait, callback) {
 }
 
 export let CSS: {
-  animationStart?: string,
-  animationEnd?: string,
   transform?: string,
   transition?: string,
   transitionDuration?: string,
+  transitionDelay?: string,
+  transitionTimingFn?: string,
   transitionStart?: string,
   transitionEnd?: string,
 } = {};
@@ -36,7 +57,7 @@ export let CSS: {
                  '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
   for (i = 0; i < keys.length; i++) {
-    if (docEle.style[keys[i]] !== undefined) {
+    if (document.documentElement.style[keys[i]] !== undefined) {
       CSS.transform = keys[i];
       break;
     }
@@ -45,7 +66,7 @@ export let CSS: {
   // transition
   keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
   for (i = 0; i < keys.length; i++) {
-    if (docEle.style[keys[i]] !== undefined) {
+    if (document.documentElement.style[keys[i]] !== undefined) {
       CSS.transition = keys[i];
       break;
     }
@@ -57,57 +78,41 @@ export let CSS: {
   // transition duration
   CSS.transitionDuration = (isWebkit ? '-webkit-' : '') + 'transition-duration';
 
+  // transition timing function
+  CSS.transitionTimingFn = (isWebkit ? '-webkit-' : '') + 'transition-timing-function';
+
+  // transition delay
+  CSS.transitionDelay = (isWebkit ? '-webkit-' : '') + 'transition-delay';
+
   // To be sure transitionend works everywhere, include *both* the webkit and non-webkit events
   CSS.transitionEnd = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
 })();
 
-if (win.onanimationend === undefined && win.onwebkitanimationend !== undefined) {
-  CSS.animationStart = 'webkitAnimationStart animationstart';
-  CSS.animationEnd = 'webkitAnimationEnd animationend';
-} else {
-  CSS.animationStart = 'animationstart';
-  CSS.animationEnd = 'animationend';
-}
 
-export function transitionEnd(el: HTMLElement) {
-  return cssPromise(el, CSS.transitionEnd);
-}
-
-export function animationStart(el: HTMLElement, animationName: string) {
-  return cssPromise(el, CSS.animationStart, animationName);
-}
-
-export function animationEnd(el: HTMLElement, animationName: string) {
-  return cssPromise(el, CSS.animationEnd, animationName);
-}
-
-function cssPromise(el: HTMLElement, eventNames: string, animationName?: string) {
-  return new Promise(resolve => {
-    eventNames.split(' ').forEach(eventName => {
-      el.addEventListener(eventName, onEvent);
-    })
-    function onEvent(ev) {
-      if (ev.animationName && animationName) {
-        // do not resolve if a bubbled up ev.animationName
-        // is not the same as the passed in animationName arg
-        if (ev.animationName !== animationName) {
-          return;
-        }
-      } else if (ev.target !== el) {
-        // do not resolve if the event's target element is not
-        // the same as the element the listener was added to
-        return;
-      }
-      ev.stopPropagation();
-      eventNames.split(' ').forEach(eventName => {
+export function transitionEnd(el: HTMLElement, callback: Function) {
+  if (el) {
+    function unregister() {
+      CSS.transitionEnd.split(' ').forEach(eventName => {
         el.removeEventListener(eventName, onEvent);
-      })
-      resolve(ev);
+      });
     }
-  });
+
+    function onEvent(ev) {
+      if (el === ev.target) {
+        unregister();
+        callback(ev);
+      }
+    }
+
+    CSS.transitionEnd.split(' ').forEach(eventName => {
+      el.addEventListener(eventName, onEvent);
+    });
+
+    return unregister;
+  }
 }
 
-export function ready(callback) {
+export function ready(callback?: Function) {
   let promise = null;
 
   if (!callback) {
@@ -115,24 +120,24 @@ export function ready(callback) {
     promise = new Promise(resolve => { callback = resolve; });
   }
 
-  if (doc.readyState === 'complete' || doc.readyState === 'interactive') {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
     callback();
 
   } else {
     function completed() {
-      doc.removeEventListener('DOMContentLoaded', completed, false);
-      win.removeEventListener('load', completed, false);
+      document.removeEventListener('DOMContentLoaded', completed, false);
+      window.removeEventListener('load', completed, false);
       callback();
     }
 
-    doc.addEventListener('DOMContentLoaded', completed, false);
-    win.addEventListener('load', completed, false);
+    document.addEventListener('DOMContentLoaded', completed, false);
+    window.addEventListener('load', completed, false);
   }
 
   return promise;
 }
 
-export function windowLoad(callback) {
+export function windowLoad(callback?: Function) {
   let promise = null;
 
   if (!callback) {
@@ -140,22 +145,22 @@ export function windowLoad(callback) {
     promise = new Promise(resolve => { callback = resolve; });
   }
 
-  if (doc.readyState === 'complete') {
+  if (document.readyState === 'complete') {
     callback();
 
   } else {
     function completed() {
-      win.removeEventListener('load', completed, false);
+      window.removeEventListener('load', completed, false);
       callback();
     }
 
-    win.addEventListener('load', completed, false);
+    window.addEventListener('load', completed, false);
   }
 
   return promise;
 }
 
-export function pointerCoord(ev): {x: number, y: number} {
+export function pointerCoord(ev: any): {x: number, y: number} {
   // get coordinates for either a mouse click
   // or a touch depending on the given event
   let c = { x: 0, y: 0 };
@@ -176,7 +181,7 @@ export function hasPointerMoved(threshold, startCoord, endCoord) {
 }
 
 export function isActive(ele) {
-  return !!(ele && (doc.activeElement === ele));
+  return !!(ele && (document.activeElement === ele));
 }
 
 export function hasFocus(ele) {
@@ -191,20 +196,20 @@ export function isTextInput(ele) {
 }
 
 export function hasFocusedTextInput() {
-  let ele = doc.activeElement;
+  let ele = document.activeElement;
   if (isTextInput(ele)) {
     return (ele.parentElement.querySelector(':focus') === ele);
   }
   return false;
 }
 
-const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id)$/i
+const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id|autofocus|autocomplete|autocorrect)$/i
 export function copyInputAttributes(srcElement, destElement) {
   // copy attributes from one element to another
   // however, skip over a few of them as they're already
   // handled in the angular world
-  let attrs = srcElement.attributes;
-  for (let i = 0; i < attrs.length; i++) {
+  var attrs = srcElement.attributes;
+  for (var i = 0; i < attrs.length; i++) {
     var attr = attrs[i];
     if (!skipInputAttrsReg.test(attr.name)) {
       destElement.setAttribute(attr.name, attr.value);
@@ -215,7 +220,7 @@ export function copyInputAttributes(srcElement, destElement) {
 let matchesFn: string;
 let matchesMethods: Array<string> = ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector'];
 matchesMethods.some((fn: string) => {
-  if (typeof docEle[fn] == 'function') {
+  if (typeof document.documentElement[fn] === 'function') {
     matchesFn = fn;
     return true;
   }
@@ -238,15 +243,10 @@ export function closest(ele: HTMLElement, selector: string, checkSelf?: boolean)
   return null;
 }
 
-export function removeElement(ele) {
-  ele && ele.parentNode && ele.parentNode.removeChild(ele);
-}
-
 
 /**
  * Get the element offsetWidth and offsetHeight. Values are cached
  * to reduce DOM reads. Cache is cleared on a window resize.
- * @param {TODO} ele  TODO
  */
 export function getDimensions(ele: HTMLElement, id: string): {
   width: number, height: number, left: number, top: number
@@ -271,13 +271,17 @@ export function getDimensions(ele: HTMLElement, id: string): {
   return dimensions;
 }
 
-export function windowDimensions() {
+export function clearDimensions(id: string) {
+  delete dimensionCache[id];
+}
+
+export function windowDimensions(): {width: number, height: number} {
   if (!dimensionCache.win) {
     // make sure we got good values before caching
-    if (win.innerWidth && win.innerHeight) {
+    if (window.innerWidth && window.innerHeight) {
       dimensionCache.win = {
-        width: win.innerWidth,
-        height: win.innerHeight
+        width: window.innerWidth,
+        height: window.innerHeight
       };
     } else {
       // do not cache bad values
@@ -292,60 +296,3 @@ export function flushDimensionCache() {
 }
 
 let dimensionCache:any = {};
-
-function isStaticPositioned(element) {
-  return (element.style.position || 'static') === 'static';
-}
-
-/**
- * returns the closest, non-statically positioned parentOffset of a given element
- * @param element
- */
-export function parentOffsetEl(element) {
-  var offsetParent = element.offsetParent || doc;
-  while (offsetParent && offsetParent !== doc && isStaticPositioned(offsetParent)) {
-    offsetParent = offsetParent.offsetParent;
-  }
-  return offsetParent || doc;
-};
-
-/**
- * Get the current coordinates of the element, relative to the offset parent.
- * Read-only equivalent of [jQuery's position function](http://api.jquery.com/position/).
- * @param {element} element The element to get the position of.
- * @returns {object} Returns an object containing the properties top, left, width and height.
- */
-export function position(element) {
-  var elBCR = offset(element);
-  var offsetParentBCR = { top: 0, left: 0 };
-  var offsetParentEl = parentOffsetEl(element);
-  if (offsetParentEl != doc) {
-    offsetParentBCR = offset(offsetParentEl);
-    offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
-    offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
-  }
-
-  var boundingClientRect = element.getBoundingClientRect();
-  return {
-    width: boundingClientRect.width || element.offsetWidth,
-    height: boundingClientRect.height || element.offsetHeight,
-    top: elBCR.top - offsetParentBCR.top,
-    left: elBCR.left - offsetParentBCR.left
-  };
-}
-
-/**
-* Get the current coordinates of the element, relative to the doc.
-* Read-only equivalent of [jQuery's offset function](http://api.jquery.com/offset/).
-* @param {element} element The element to get the offset of.
-* @returns {object} Returns an object containing the properties top, left, width and height.
-*/
-export function offset(element) {
- var boundingClientRect = element.getBoundingClientRect();
- return {
-   width: boundingClientRect.width || element.offsetWidth,
-   height: boundingClientRect.height || element.offsetHeight,
-   top: boundingClientRect.top + (win.pageYOffset || docEle.scrollTop),
-   left: boundingClientRect.left + (win.pageXOffset || docEle.scrollLeft)
- };
-}

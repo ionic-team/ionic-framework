@@ -1,14 +1,10 @@
-**Please do not manually create issues on GitHub, instead use [this form](http://ionicframework.com/submit-issue/).**
-
 ### Creating an Issue
-
-#### [Create a new issue form](http://ionicframework.com/submit-issue/) <-- please use this form for new issues
 
 If you have a question on how something works, or its expected functionality, you might want to visit the [Ionic Forum](http://forum.ionicframework.com/) first.
 
 If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?state=open). You can search through existing issues to see if someone's reported one similar to yours.
 
-Next, [create a new issue](http://ionicframework.com/submit-issue/) that briefly explains the problem, and provides a bit of background as to the circumstances that triggered it.
+Next [create a new issue](https://github.com/driftyco/ionic/issues/new) that thoroughly explains the problem, how to reproduce the issue, and provide any additional information such as code examples and error logs.
 
 ### Issue Etiquette Guidelines
 

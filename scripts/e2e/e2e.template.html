@@ -36,11 +36,22 @@
   <script src="../../../js/es6-shim.min.js"></script>
   <script src="../../../js/es6-module-loader.src.js"></script>
   <script src="../../../js/system.src.js"></script>
+  <script>
+    System.config({
+      map: {
+        'angular2': '/angular2'
+      },
+      packages: {
+        'ionic-angular': {
+          main: 'index'
+        }
+      }
+    });
+  </script>
   <script src="../../../js/angular2-polyfills.js"></script>
   <script src="../../../js/angular2.dev.js"></script>
   <script src="../../../js/router.dev.js"></script>
   <script src="../../../js/http.dev.js"></script>
-  <script src="../../../js/web-animations.min.js"></script>
   <script src="../../../bundles/ionic.system.js"></script>
   <script src="../../../js/Rx.js"></script>
 
@@ -60,7 +71,7 @@
       -webkit-transition-duration: 0ms !important;
       transition-duration: 0ms !important;
     }
-    .snapshot md-ripple {
+    .snapshot ion-button-effect {
       display: none !important;
     }
 
@@ -101,6 +112,7 @@
     } else {
       document.body.classList.remove('rtl');
     }
+
 
     System.import('index.js').then(function(m) {}, console.error.bind(console));
   </script>

@@ -8,11 +8,13 @@ import {Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL} from './hammer';
  */
 
 export class Gesture {
-  public element: HTMLElement;
-  public direction: any;
   private _hammer: any;
   private _options: any;
   private _callbacks: any = {};
+
+  public element: HTMLElement;
+  public direction: string;
+  public isListening: boolean = false;
 
   constructor(element, opts: any = {}) {
     defaults(opts, {
@@ -29,11 +31,11 @@ export class Gesture {
     this._options = opts;
   }
 
-  options(opts = {}) {
+  options(opts: any) {
     assign(this._options, opts);
   }
 
-  on(type, cb) {
+  on(type: string, cb: Function) {
     if(type == 'pinch' || type == 'rotate') {
       this._hammer.get('pinch').set({enable: true});
     }
@@ -41,28 +43,34 @@ export class Gesture {
     (this._callbacks[type] || (this._callbacks[type] = [])).push(cb);
   }
 
-  off(type, cb) {
+  off(type: string, cb: Function) {
     this._hammer.off(type, this._callbacks[type] ? cb : null);
   }
 
   listen() {
-    this._hammer = Hammer(this.element, this._options);
+    if (!this.isListening) {
+      this._hammer = Hammer(this.element, this._options);
+    }
+    this.isListening = true;
   }
 
   unlisten() {
-    if (this._hammer) {
-      for (let type in this._callbacks) {
-        for (let i = 0; i < this._callbacks[type].length; i++) {
+    var type, i;
+    if (this._hammer && this.isListening) {
+      for (type in this._callbacks) {
+        for (i = 0; i < this._callbacks[type].length; i++) {
           this._hammer.off(type, this._callbacks[type]);
         }
       }
       this._hammer.destroy();
-      this._hammer = null;
-      this._callbacks = {};
     }
+    this._callbacks = {};
+    this._hammer = null;
+    this.isListening = false;
   }
 
   destroy() {
-    this.unlisten()
+    this.unlisten();
+    this.element = this._options = null;
   }
 }

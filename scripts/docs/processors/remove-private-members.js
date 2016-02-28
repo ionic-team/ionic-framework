@@ -5,15 +5,20 @@ module.exports = function removePrivateMembers() {
     $runAfter: ['tags-parsed'],
     $runBefore: ['rendering-docs'],
     $process: function(docs) {
-      docs.forEach(function(doc){
+      docs.forEach(function(doc) {
         if (doc.members) {
-          doc.members = doc.members.filter(function(member){
-            return !member.tags.tagsByName.get("private");
-          })
+          doc.members = doc.members.filter(function(member) {
+            return !member.tags.tagsByName.get('private');
+          });
         }
-      })
+        if (doc.statics) {
+          doc.statics = doc.statics.filter(function(staticMethod) {
+            return !staticMethod.tags.tagsByName.get('private');
+          });
+        }
+      });
 
       return docs;
     }
-  }
+  };
 };

@@ -94,7 +94,7 @@ ion-icon[item-right] {
 
 .item-button {
   padding: 0 0.6em;
-  min-height: 25px;
+  height: 25px;
   font-size: 1.2rem;
 }
 
@@ -165,7 +165,7 @@ ion-item-divider {
 @each $color-name, $color-value in $colors-md {
   ion-item-divider[#{$color-name}] {
     background-color: $color-value;
-    color: inverse($color-value);
+    color: color-inverse($color-value);
   }
 }
 

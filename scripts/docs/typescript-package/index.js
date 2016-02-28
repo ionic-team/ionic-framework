@@ -1,5 +1,3 @@
-//require('../../tools/transpiler/index.js').init();
-
 var basePackage = require('dgeni-packages/base');
 var Package = require('dgeni').Package;
 var path = require('canonical-path');
@@ -16,6 +14,8 @@ module.exports = new Package('typescript-parsing', [basePackage])
 .factory(require('./services/tsParser/getContent'))
 .factory(require('./services/tsParser/getDirectiveInfo'))
 
+.factory(require('./services/convertPrivateClassesToInterfaces'))
+
 .factory('EXPORT_DOC_TYPES', function() {
   return [
     'class',
@@ -23,6 +23,7 @@ module.exports = new Package('typescript-parsing', [basePackage])
     'function',
     'var',
     'const',
+    'let',
     'enum',
     'type-alias'
   ];
@@ -45,16 +46,18 @@ module.exports = new Package('typescript-parsing', [basePackage])
   computeIdsProcessor.idTemplates.push({
     docTypes: ['member'],
     idTemplate: '${classDoc.id}.${name}',
-    getAliases: function(doc) { return [doc.id]; }
+    getAliases: function(doc) {
+      return doc.classDoc.aliases.map(function(alias) { return alias + '.' + doc.name; });
+    }
   });
 
   computePathsProcessor.pathTemplates.push({
     docTypes: ['member'],
-    pathTemplate: '${classDoc.path}/${name}',
+    pathTemplate: '${classDoc.path}#${name}',
     getOutputPath: function() {} // These docs are not written to their own file, instead they are part of their class doc
   });
 
-  var MODULES_DOCS_PATH = 'docs';
+  var MODULES_DOCS_PATH = 'partials/modules';
 
   computePathsProcessor.pathTemplates.push({
     docTypes: ['module'],

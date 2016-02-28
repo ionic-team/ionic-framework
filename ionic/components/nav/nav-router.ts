@@ -16,7 +16,7 @@ import {ViewController} from './view-controller';
   selector: 'ion-nav'
 })
 export class NavRouter extends RouterOutlet {
-  private _activeViewId;
+  private _lastUrl: string;
 
   constructor(
     _elementRef: ElementRef,
@@ -33,11 +33,6 @@ export class NavRouter extends RouterOutlet {
     _nav.registerRouter(this);
   }
 
-  /**
-   * @private
-   * TODO
-   * @param {ComponentInstruction} instruction  TODO
-   */
   activate(nextInstruction: ComponentInstruction): Promise<any> {
     var previousInstruction = this['_currentInstruction'];
     this['_currentInstruction'] = nextInstruction;
@@ -45,10 +40,16 @@ export class NavRouter extends RouterOutlet {
     var childRouter = this['_parentRouter'].childRouter(componentType);
 
     // prevent double navigations to the same view
-    var lastView = this._nav.last();
-    if (this._nav.isTransitioning() || lastView && lastView.componentType === componentType && lastView.data === nextInstruction.params) {
-      return Promise.resolve();
+    let instruction = new ResolvedInstruction(nextInstruction, null, null);
+    let url: string;
+    if (instruction) {
+      url = instruction.toRootUrl();
+      if (url === this._lastUrl) {
+        return Promise.resolve();
+      }
     }
+
+    console.debug('NavRouter, activate:', componentType.name, 'url:', url);
 
     // tell the NavController which componentType, and it's params, to navigate to
     return this._nav.push(componentType, nextInstruction.params);
@@ -58,19 +59,13 @@ export class NavRouter extends RouterOutlet {
     return Promise.resolve();
   }
 
-  /**
-   * Called by Ionic after a transition has completed.
-   * @param {string} direction  The direction of the state change
-   * @param {ViewController} viewCtrl  The entering ViewController
-   */
   stateChange(direction: string, viewCtrl: ViewController) {
     // stateChange is called by Ionic's NavController
     // type could be "push" or "pop"
     // viewCtrl is Ionic's ViewController class, which has the properties "componentType" and "params"
 
     // only do an update if there's an actual view change
-    if (!viewCtrl || this._activeViewId === viewCtrl.id) return;
-    this._activeViewId = viewCtrl.id;
+    if (!viewCtrl) return;
 
     // get the best PathRecognizer for this view's componentType
     let pathRecognizer = this.getPathRecognizerByComponent(viewCtrl.componentType);
@@ -81,16 +76,19 @@ export class NavRouter extends RouterOutlet {
 
       // create a ResolvedInstruction from the componentInstruction
       let instruction = new ResolvedInstruction(componentInstruction, null, null);
+      if (instruction) {
+        let url = instruction.toRootUrl();
+        if (url === this._lastUrl) return;
 
-      this['_parentRouter'].navigateByInstruction(instruction);
+        this._lastUrl = url;
+
+        this['_parentRouter'].navigateByInstruction(instruction);
+
+        console.debug('NavRouter, stateChange, name:', viewCtrl.name, 'id:', viewCtrl.id, 'url:', url);
+      }
     }
   }
 
-  /**
-   * TODO
-   * @param {TODO} componentType  TODO
-   * @returns {TODO} TODO
-   */
   getPathRecognizerByComponent(componentType) {
     // given a componentType, figure out the best PathRecognizer to use
     let rules = this['_parentRouter'].registry._rules;

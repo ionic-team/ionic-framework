@@ -1,7 +1,6 @@
 import {Validators, Control, ControlGroup} from 'angular2/common';
 import {Http} from 'angular2/http';
-import {App, Page, IonicApp, NavController} from 'ionic/ionic';
-import _ from 'lodash';
+import {App, Page, IonicApp, NavController} from 'ionic-angular';
 
 
 @Page({

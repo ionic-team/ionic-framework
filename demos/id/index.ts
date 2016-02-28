@@ -1,4 +1,4 @@
-import {App, Page, MenuController} from 'ionic/ionic';
+import {App, Page, MenuController} from 'ionic-angular';
 
 @Page({templateUrl: 'page1.html'})
 class Page1 {

@@ -102,7 +102,7 @@ ion-searchbar {
 
 .searchbar-ios-cancel {
   transition: $searchbar-ios-cancel-transition;
-  min-height: 30px;
+  height: 30px;
 
   margin-left: 0;
   margin-right: 0;
@@ -175,7 +175,7 @@ ion-searchbar {
 // -----------------------------------------
 
 &.hairlines ion-searchbar {
-  border-bottom-width: 0.55px;
+  border-bottom-width: $hairlines-width;
 }
 
 
@@ -196,7 +196,7 @@ ion-searchbar {
 
   .toolbar[#{$color-name}] ion-searchbar {
     .searchbar-ios-cancel {
-      color: inverse($color-value);
+      color: color-inverse($color-value);
     }
   }
 

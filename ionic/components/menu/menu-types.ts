@@ -3,79 +3,60 @@ import {Animation} from '../../animations/animation';
 
 
 /**
+ * @private
  * Menu Type
  * Base class which is extended by the various types. Each
  * type will provide their own animations for open and close
  * and registers itself with Menu.
- * @private
  */
 export class MenuType {
-  open: Animation = new Animation();
-  close: Animation = new Animation();
+  ani: Animation = new Animation();
   isOpening: boolean;
-  seek: Animation;
 
-  setOpen(shouldOpen) {
-    return new Promise(resolve => {
-      if (shouldOpen) {
-        this.open.playbackRate(1).onFinish(resolve, true).play();
-      } else {
-        this.close.playbackRate(1).onFinish(resolve, true).play();
-      }
-    });
+  setOpen(shouldOpen: boolean, done: Function) {
+    this.ani
+        .onFinish(done, true)
+        .reverse(!shouldOpen)
+        .play();
   }
 
-  setProgressStart(isOpen) {
+  setProgressStart(isOpen: boolean) {
     this.isOpening = !isOpen;
 
-    this.seek && this.seek.dispose();
-
-    // clone the correct animation depending on open/close
-    if (this.isOpening) {
-      this.seek = this.open.clone();
-    } else {
-      this.seek = this.close.clone();
-    }
-
     // the cloned animation should not use an easing curve during seek
-    this.seek.easing('linear').progressStart();
+    this.ani
+        .reverse(isOpen)
+        .progressStart();
   }
 
-  setProgess(value) {
+  setProgessStep(stepValue: number) {
     // adjust progress value depending if it opening or closing
-    if (!this.isOpening) {
-      value = 1 - value;
-    }
-    this.seek.progress(value);
+    this.ani.progressStep(stepValue);
   }
 
-  setProgressEnd(shouldComplete) {
-    let resolve;
-    let promise = new Promise(res => { resolve = res });
-
+  setProgressEnd(shouldComplete: boolean, currentStepValue: number, done: Function) {
     let isOpen = (this.isOpening && shouldComplete);
     if (!this.isOpening && !shouldComplete) {
       isOpen = true;
     }
 
-    this.seek.progressEnd(shouldComplete).then(() => {
+    this.ani.onFinish(() => {
       this.isOpening = false;
-      resolve(isOpen);
-    });
+      done(isOpen);
+    }, true);
 
-    return promise;
+    this.ani.progressEnd(shouldComplete, currentStepValue);
   }
 
-  ngOnDestroy() {
-    this.open && this.open.dispose();
-    this.close && this.close.dispose();
-    this.seek && this.seek.dispose();
+  destroy() {
+    this.ani && this.ani.destroy();
   }
 
 }
 
 
 /**
+ * @private
  * Menu Reveal Type
  * The content slides over to reveal the menu underneath.
  * The menu itself, which is under the content, does not move.
@@ -84,27 +65,22 @@ class MenuRevealType extends MenuType {
   constructor(menu) {
     super();
 
-    let easing = 'ease';
-    let duration = 250;
-
     let openedX = (menu.width() * (menu.side == 'right' ? -1 : 1)) + 'px';
-    let closedX = '0px'
 
-    this.open.easing(easing).duration(duration);
-    this.close.easing(easing).duration(duration);
+    this.ani
+        .easing('ease')
+        .duration(250);
 
     let contentOpen = new Animation(menu.getContentElement());
-    contentOpen.fromTo(TRANSLATE_X, closedX, openedX);
-    this.open.add(contentOpen);
-
-    let contentClose = new Animation(menu.getContentElement());
-    contentClose.fromTo(TRANSLATE_X, openedX, closedX);
-    this.close.add(contentClose);
+    contentOpen.fromTo('translateX', '0px', openedX);
+    this.ani.add(contentOpen);
   }
 }
 MenuController.registerType('reveal', MenuRevealType);
 
+
 /**
+ * @private
  * Menu Push Type
  * The content slides over to reveal the menu underneath.
  * The menu itself also slides over to reveal its bad self.
@@ -113,8 +89,9 @@ class MenuPushType extends MenuType {
   constructor(menu) {
     super();
 
-    let easing = 'ease';
-    let duration = 250;
+    this.ani
+        .easing('ease')
+        .duration(250);
 
     let contentOpenedX, menuClosedX, menuOpenedX;
 
@@ -127,31 +104,21 @@ class MenuPushType extends MenuType {
       menuOpenedX = '0px';
       menuClosedX = -menu.width() + 'px';
     }
-    // left side
 
-    this.open.easing(easing).duration(duration);
-    this.close.easing(easing).duration(duration);
+    let menuAni = new Animation(menu.getMenuElement());
+    menuAni.fromTo('translateX', menuClosedX, menuOpenedX);
+    this.ani.add(menuAni);
 
-    let menuOpen = new Animation(menu.getMenuElement());
-    menuOpen.fromTo(TRANSLATE_X, menuClosedX, menuOpenedX);
-    this.open.add(menuOpen);
-
-    let contentOpen = new Animation(menu.getContentElement());
-    contentOpen.fromTo(TRANSLATE_X, '0px', contentOpenedX);
-    this.open.add(contentOpen);
-
-    let menuClose = new Animation(menu.getMenuElement());
-    menuClose.fromTo(TRANSLATE_X, menuOpenedX, menuClosedX);
-    this.close.add(menuClose);
-
-    let contentClose = new Animation(menu.getContentElement());
-    contentClose.fromTo(TRANSLATE_X, contentOpenedX, '0px');
-    this.close.add(contentClose);
+    let contentApi = new Animation(menu.getContentElement());
+    contentApi.fromTo('translateX', '0px', contentOpenedX);
+    this.ani.add(contentApi);
   }
 }
 MenuController.registerType('push', MenuPushType);
 
+
 /**
+ * @private
  * Menu Overlay Type
  * The menu slides over the content. The content
  * itself, which is under the menu, does not move.
@@ -160,9 +127,9 @@ class MenuOverlayType extends MenuType {
   constructor(menu) {
     super();
 
-    let easing = 'ease';
-    let duration = 250;
-    let backdropOpacity = 0.35;
+    this.ani
+        .easing('ease')
+        .duration(250);
 
     let closedX, openedX;
     if (menu.side == 'right') {
@@ -176,28 +143,13 @@ class MenuOverlayType extends MenuType {
       openedX = '8px';
     }
 
-    this.open.easing(easing).duration(duration);
-    this.close.easing(easing).duration(duration);
+    let menuAni = new Animation(menu.getMenuElement());
+    menuAni.fromTo('translateX', closedX, openedX);
+    this.ani.add(menuAni);
 
-    let menuOpen = new Animation(menu.getMenuElement());
-    menuOpen.fromTo(TRANSLATE_X, closedX, openedX);
-    this.open.add(menuOpen);
-
-    let backdropOpen = new Animation(menu.getBackdropElement());
-    backdropOpen.fromTo(OPACITY, 0.01, backdropOpacity);
-    this.open.add(backdropOpen);
-
-    let menuClose = new Animation(menu.getMenuElement());
-    menuClose.fromTo(TRANSLATE_X, openedX, closedX);
-    this.close.add(menuClose);
-
-    let backdropClose = new Animation(menu.getBackdropElement());
-    backdropClose.fromTo(OPACITY, backdropOpacity, 0.01);
-    this.close.add(backdropClose);
+    let backdropApi = new Animation(menu.getBackdropElement());
+    backdropApi.fromTo('opacity', 0.01, 0.35);
+    this.ani.add(backdropApi);
   }
 }
 MenuController.registerType('overlay', MenuOverlayType);
-
-
-const OPACITY = 'opacity';
-const TRANSLATE_X = 'translateX';

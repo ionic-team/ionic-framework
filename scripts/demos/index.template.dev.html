@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- https://www.chromium.org/developers/design-documents/chromium-graphics/how-to-get-gpu-rasterization -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <link rel="stylesheet" type="text/css" href="/dist/demos/scrollbar-fix.css">
+  <link ios-href="../output.ios.css" rel="stylesheet">
+  <link md-href="../output.md.css" rel="stylesheet">
+  <script type="text/javascript" src="/dist/demos/scrollbar-fix.js"></script>
+  <script src="../../js/es6-shim.min.js"></script>
+  <script src="../../js/es6-module-loader.src.js"></script>
+  <script src="../../js/system.src.js"></script>
+  <script>
+    System.config({
+      map: {
+        'angular2': '/angular2'
+      },
+      packages: {
+        'ionic-angular': {
+          main: 'index'
+        }
+      }
+    });
+  </script>
+  <script src="../../js/angular2-polyfills.js"></script>
+  <script src="../../js/angular2.dev.js"></script>
+  <script src="../../js/router.dev.js"></script>
+  <script src="../../js/http.dev.js"></script>
+  <script src="../../bundles/ionic.system.js"></script>
+  <script src="../../js/Rx.js"></script>
+</head>
+<body>
+  <ion-app>
+    <ion-loading-icon></ion-loading-icon>
+  </ion-app>
+
+  <script>
+    System.import('index.js').then(function(m) {}, console.error.bind(console));
+  </script>
+
+</body>
+</html>

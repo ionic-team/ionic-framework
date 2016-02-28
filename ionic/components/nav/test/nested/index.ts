@@ -1,5 +1,5 @@
-import {App, NavParams, NavController, ViewController, MenuController} from 'ionic/ionic';
-import {Page, Config, IonicApp} from 'ionic/ionic';
+import {App, NavParams, NavController, ViewController, MenuController} from 'ionic-angular';
+import {Page, Config, IonicApp} from 'ionic-angular';
 
 
 @Page({

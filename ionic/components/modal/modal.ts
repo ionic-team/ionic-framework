@@ -1,5 +1,6 @@
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
+import {Transition, TransitionOptions} from '../../transitions/transition';
 
 /**
  * @name Modal
@@ -25,9 +26,9 @@ import {Animation} from '../../animations/animation';
  * "modal" logic within it, but uses `NavParams` no differently than a
  * standard page.
  *
- *  * @usage
+ * @usage
  * ```ts
- * import {Modal, NavController, NavParams} from 'ionic/ionic';
+ * import {Page, Modal, NavController, NavParams} from 'ionic-angular';
  *
  * @Page(...)
  * class HomePage {
@@ -58,9 +59,8 @@ import {Animation} from '../../animations/animation';
  * the submit button could pass the updated profile data, then dismiss the
  * modal.
  *
- * @usage
  * ```ts
- * import {Modal, NavController} from 'ionic/ionic';
+ * import {Page, Modal, NavController} from 'ionic-angular';
  *
  * @Page(...)
  * class HomePage {
@@ -106,6 +106,7 @@ export class Modal extends ViewController {
   constructor(componentType, data={}) {
     super(componentType, data);
     this.viewType = 'modal';
+    this.isOverlay = true;
   }
 
   /**
@@ -117,8 +118,8 @@ export class Modal extends ViewController {
   }
 
   /**
-   * @param {Any} componentType Modal
-   * @param {Object} data Modal options
+   * @param {any} componentType Modal
+   * @param {object} data Modal options
    */
   static create(componentType, data={}) {
     return new Modal(componentType, data);
@@ -130,10 +131,11 @@ export class Modal extends ViewController {
 /**
  * Animations for modals
  */
-class ModalSlideIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(enteringView.pageRef(), opts);
+class ModalSlideIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
     this
+      .element(enteringView.pageRef())
       .easing('cubic-bezier(0.36,0.66,0.04,1)')
       .duration(400)
       .fromTo('translateY', '100%', '0%')
@@ -147,25 +149,27 @@ class ModalSlideIn extends Animation {
     }
   }
 }
-Animation.register('modal-slide-in', ModalSlideIn);
+Transition.register('modal-slide-in', ModalSlideIn);
 
 
-class ModalSlideOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(leavingView.pageRef(), opts);
+class ModalSlideOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
     this
+      .element(leavingView.pageRef())
       .easing('ease-out')
       .duration(250)
       .fromTo('translateY', '0%', '100%');
   }
 }
-Animation.register('modal-slide-out', ModalSlideOut);
+Transition.register('modal-slide-out', ModalSlideOut);
 
 
-class ModalMDSlideIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(enteringView.pageRef(), opts);
+class ModalMDSlideIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
     this
+      .element(enteringView.pageRef())
       .easing('cubic-bezier(0.36,0.66,0.04,1)')
       .duration(280)
       .fromTo('translateY', '40px', '0px')
@@ -180,17 +184,18 @@ class ModalMDSlideIn extends Animation {
     }
   }
 }
-Animation.register('modal-md-slide-in', ModalMDSlideIn);
+Transition.register('modal-md-slide-in', ModalMDSlideIn);
 
 
-class ModalMDSlideOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(leavingView.pageRef(), opts);
+class ModalMDSlideOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
     this
+      .element(leavingView.pageRef())
       .duration(200)
       .easing('cubic-bezier(0.47,0,0.745,0.715)')
       .fromTo('translateY', '0px', '40px')
       .fadeOut();
   }
 }
-Animation.register('modal-md-slide-out', ModalMDSlideOut);
+Transition.register('modal-md-slide-out', ModalMDSlideOut);

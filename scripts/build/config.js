@@ -18,8 +18,7 @@ module.exports = {
     'node_modules/angular2/bundles/router.dev.js',
     'node_modules/angular2/bundles/http.dev.js',
     'node_modules/es6-shim/es6-shim.min.js',
-    'dist/js/ionic.js',
-    'scripts/resources/web-animations-js/web-animations.min.js'
+    'dist/js/ionic.js'
   ],
 
   protractorPort: 8876,

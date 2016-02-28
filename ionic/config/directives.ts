@@ -10,7 +10,8 @@ import {Button} from '../components/button/button';
 import {Blur} from '../components/blur/blur';
 import {Content} from '../components/content/content';
 import {Scroll} from '../components/scroll/scroll';
-import {Refresher} from '../components/scroll/pull-to-refresh';
+import {Refresher} from '../components/refresher/refresher';
+import {RefresherContent} from '../components/refresher/refresher-content';
 import {Slides, Slide, SlideLazy} from '../components/slides/slides';
 import {Tabs} from '../components/tabs/tabs';
 import {Tab} from '../components/tabs/tab';
@@ -19,6 +20,7 @@ import {Item} from '../components/item/item';
 import {ItemSliding} from '../components/item/item-sliding';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
 import {Icon} from '../components/icon/icon';
+import {Spinner} from '../components/spinner/spinner';
 import {Checkbox} from '../components/checkbox/checkbox';
 import {Select} from '../components/select/select';
 import {Option} from '../components/option/option';
@@ -57,6 +59,7 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * -  Content
  * -  Scroll
  * -  Refresher
+ * -  RefresherContent
  *
  * **Lists**
  * -  List
@@ -80,6 +83,7 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  *
  * **Media**
  * -  Icon
+ * -  Spinner
  *
  * **Forms**
  * -  Searchbar
@@ -123,6 +127,7 @@ export const IONIC_DIRECTIVES = [
   Content,
   Scroll,
   Refresher,
+  RefresherContent,
 
   // Lists
   List,
@@ -146,6 +151,7 @@ export const IONIC_DIRECTIVES = [
 
   // Media
   Icon,
+  Spinner,
 
   // Forms
   Searchbar,

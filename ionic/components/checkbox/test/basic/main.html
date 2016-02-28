@@ -9,33 +9,33 @@
     <ion-list>
 
       <ion-item>
-        <ion-label>Apple, value=apple, init checked</ion-label>
-        <ion-checkbox value="apple" checked="true" ngControl="appleCtrl"></ion-checkbox>
+        <ion-label>Apple, ngControl</ion-label>
+        <ion-checkbox ngControl="appleCtrl"></ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>Banana, init no checked/value attributes</ion-label>
+        <ion-label>Banana, ngControl</ion-label>
         <ion-checkbox ngControl="bananaCtrl"></ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>Cherry, value=cherry, init disabled</ion-label>
-        <ion-checkbox value="cherry" disabled="true" ngControl="cherryCtrl"></ion-checkbox>
+        <ion-label>Cherry, ngControl, disabled</ion-label>
+        <ion-checkbox disabled="true" ngControl="cherryCtrl"></ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>Grape, value=grape, init checked, disabled</ion-label>
-        <ion-checkbox value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl"></ion-checkbox>
+        <ion-label>Grape, ngControl, checked, disabled</ion-label>
+        <ion-checkbox [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl"></ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>secondary color</ion-label>
-        <ion-checkbox secondary checked="false"></ion-checkbox>
+        <ion-label>Kiwi, (change) Secondary color</ion-label>
+        <ion-checkbox secondary (change)="kiwiChange($event)"></ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>light color</ion-label>
-        <ion-checkbox light checked></ion-checkbox>
+        <ion-label>Strawberry, (change) [checked]="true"</ion-label>
+        <ion-checkbox light (change)="strawberryChange($event)" [checked]="true"></ion-checkbox>
       </ion-item>
 
     </ion-list>
@@ -62,6 +62,8 @@
     <code>cherry.value: {{fruitsForm.controls.cherryCtrl.value}}</code><br>
     <code>grape.dirty: {{fruitsForm.controls.grapeCtrl.dirty}}</code><br>
     <code>grape.value: {{fruitsForm.controls.grapeCtrl.value}}</code><br>
+    <code>kiwiValue: {{kiwiValue}}</code><br>
+    <code>strawberryValue: {{strawberryValue}}</code><br>
   </p>
 
   <pre aria-hidden="true" padding>{{formResults}}</pre>

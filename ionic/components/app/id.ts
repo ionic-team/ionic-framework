@@ -6,7 +6,7 @@ import {IonicApp} from './app';
  * @name Id
  * @description
  * IdRef is an easy way to identify unique components in an app and access them
- * no matter where in the UI heirarchy you are. For example, this makes toggling
+ * no matter where in the UI hierarchy you are. For example, this makes toggling
  * a global side menu feasible from any place in the application.
  *
  * See the [Menu section](http://ionicframework.com/docs/v2/components/#menus) of
@@ -18,7 +18,7 @@ import {IonicApp} from './app';
  * <ion-checkbox id="myCheckbox"></ion-checkbox>
  * ```
  *
- * To get a reference to the registered component, inject the [IonicApp](../app/IonicApp/)
+ * To get a reference to the registered component, inject the [IonicApp](../IonicApp/)
  * service:
  * ```ts
  * constructor(app: IonicApp) {

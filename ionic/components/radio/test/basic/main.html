@@ -16,7 +16,7 @@
 
       <ion-item>
         <ion-label>Apple</ion-label>
-        <ion-radio value="apple" checked="true"></ion-radio>
+        <ion-radio value="apple"></ion-radio>
       </ion-item>
 
       <ion-item>
@@ -56,7 +56,7 @@
       </ion-list-header>
       <ion-item *ngFor="#currency of currencies">
         <ion-label>{{currency}}</ion-label>
-        <ion-radio [checked]="currency==selectedCurrency" [value]="currency"></ion-radio>
+        <ion-radio [value]="currency"></ion-radio>
       </ion-item>
     </ion-list>
   </form>
@@ -82,7 +82,7 @@
 
   <div radio-group [(ngModel)]="pet" (change)="petChange($event)">
     <p>
-      <ion-radio checked (select)="dogSelect($event)"></ion-radio>
+      <ion-radio (select)="dogSelect($event)"></ion-radio>
       Dogs
     </p>
     <p>
@@ -97,6 +97,20 @@
 
   <div padding>
     <code><b>pet:</b> {{pet}}</code>
+  </div>
+
+  <ion-list radio-group [(ngModel)]="someNumber">
+    <ion-item *ngFor="#item of items">
+      <ion-label>
+        {{ item.description }}
+      </ion-label>
+​
+      <ion-radio [value]="item.value"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <code><b>someNumber:</b> {{someNumber}}</code>
   </div>
 
 </ion-content>

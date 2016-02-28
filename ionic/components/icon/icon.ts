@@ -30,15 +30,7 @@ import {Config} from '../../config/config';
  * <ion-icon name="logo-twitter"></ion-icon>
  * ```
  *
- * @property {string} [name] - Use the appropriate icon for the mode.
- * @property {string} [ios] - Explicitly set the icon to use on iOS.
- * @property {string} [md] - Explicitly set the icon to use on Android.
- * @property {boolean} [isActive] - Whether or not the icon has an "active"
- * appearance. On iOS an active icon is filled in or full appearance, and an
- * inactive icon on iOS will use an outlined version of the icon same icon.
- * Material Design icons do not change appearance depending if they're active
- * or not. The `isActive` property is largely used by the tabbar.
- * @demo /docs/v2/demos/icon/ 
+ * @demo /docs/v2/demos/icon/
  * @see {@link /docs/v2/components#icons Icon Component Docs}
  *
  */
@@ -85,7 +77,7 @@ export class Icon {
   }
 
   /**
-   * @private
+   * @input {string} Icon to use. Will load the appropriate icon for each mode
    */
   @Input()
   get name(): string {
@@ -103,7 +95,7 @@ export class Icon {
   }
 
   /**
-   * @private
+   * @input {string} Explicitly set the icon to use on iOS
    */
   @Input()
   get ios(): string {
@@ -116,7 +108,7 @@ export class Icon {
   }
 
   /**
-   * @private
+   * @input {string} Explicitly set the icon to use on MD
    */
   @Input()
   get md(): string {
@@ -128,8 +120,9 @@ export class Icon {
     this.update();
   }
 
+
   /**
-   * @private
+   * @input {bool} Whether or not the icon has an "active" appearance. On iOS an active icon is filled in or full appearance, and an inactive icon on iOS will use an outlined version of the icon same icon. Material Design icons do not change appearance depending if they're active or not. The `isActive` property is largely used by the tabbar.
    */
   @Input()
   get isActive(): boolean {

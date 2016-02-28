@@ -81,13 +81,13 @@ ion-action-sheet {
 }
 
 .action-sheet-cancel {
-  font-weight: bold;
+  font-weight: 600;
   background: $action-sheet-ios-cancel-button-background-color;
 }
 
 &.hairlines {
   .action-sheet-title,
   .action-sheet-button {
-    border-bottom-width: 0.55px;
+    border-bottom-width: $hairlines-width;
   }
 }

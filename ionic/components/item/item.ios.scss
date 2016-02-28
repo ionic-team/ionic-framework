@@ -86,7 +86,7 @@ $item-ios-sliding-content-bg:         $list-ios-background-color !default;
 }
 
 &.hairlines .item-inner {
-  border-bottom-width: 0.55px;
+  border-bottom-width: $hairlines-width;
 }
 
 
@@ -121,7 +121,7 @@ ion-thumbnail[item-right] {
 .item-button {
   padding: 0 0.5em;
   font-size: 1.3rem;
-  min-height: 24px;
+  height: 24px;
 }
 
 .item-button.button-icon-only ion-icon,
@@ -198,7 +198,7 @@ ion-item-divider {
 @each $color-name, $color-value in $colors-ios {
   ion-item-divider[#{$color-name}] {
     background-color: $color-value;
-    color: inverse($color-value);
+    color: color-inverse($color-value);
   }
 }
 

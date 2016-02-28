@@ -8,11 +8,9 @@
     "outDir": "dist"
   },
   "files": [
-    "ionic/ionic.ts"
+    "ionic/index.ts",
+    "typings/main.d.ts"
   ],
   "compileOnSave" : false,
-  "buildOnSave": false,
-  "exclude": [
-    "node_modules"
-  ]
+  "buildOnSave": false
 }

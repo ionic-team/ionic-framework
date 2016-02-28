@@ -1,6 +1,6 @@
 module.exports = {
   entry: [
-    "./dist/ionic.js"
+    "./dist/index.js"
   ],
   output: {
     path: 'dist/bundles',

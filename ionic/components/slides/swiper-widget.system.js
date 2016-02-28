@@ -1,4 +1,4 @@
-System.register('ionic/components/slides/swiper-widget',[],function(_export){ /**
+System.register('ionic-angular/components/slides/swiper-widget',[],function(_export){ /**
  * Swiper 3.1.2
  * Most modern mobile touch slider and framework with hardware accelerated transitions
  *

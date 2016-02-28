@@ -58,17 +58,22 @@ module.exports = function createCompilerHost(log) {
         return ts.sys.newLine;
       },
       fileExists: function(fileName) {
-        var resolvedPath = path.resolve(baseDir, fileName);
-        try {
-          fs.statSync(resolvedPath);
-          return true;
-        } catch (e) {
-          return false;
+        var text, resolvedPath, resolvedPathWithExt;
+
+        // Strip off the extension and resolve relative to the baseDir
+        baseFilePath = fileName.replace(/\.[^.]+$/, '');
+        resolvedPath = path.resolve(baseDir, baseFilePath);
+
+        // Iterate through each possible extension and return the first source file that is actually found
+        for(var i=0; i<extensions.length; i++) {
+          // Try reading the content from files using each of the given extensions
+          resolvedPathWithExt = resolvedPath + extensions[i];
+          if (fs.existsSync(resolvedPathWithExt)) return true;
         }
+        return false;
       },
       readFile: function(fileName) {
-        var resolvedPath = path.resolve(baseDir, fileName);
-        return fs.readFileSync(resolvedPath, { encoding: options.charset });
+        console.log('readFile - NOT IMPLEMENTED', fileName);
       }
     };
   };

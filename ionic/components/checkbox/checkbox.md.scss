@@ -115,7 +115,7 @@ ion-checkbox + .item-inner ion-label {
     border-color: $bg-on;
 
     .checkbox-inner {
-      border-color: inverse($bg-on);
+      border-color: color-inverse($bg-on);
     }
   }
 

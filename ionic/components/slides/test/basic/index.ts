@@ -1,4 +1,4 @@
-import {App, IonicApp} from 'ionic/ionic';
+import {App, IonicApp} from 'ionic-angular';
 import {Http} from 'angular2/http';
 
 @App({
@@ -9,7 +9,7 @@ class MyApp {
     this.app = app;
     this.http = http;
 
-    this.extraOptions = {
+    this.mySlideOptions = {
       loop: true
     };
 
@@ -22,14 +22,13 @@ class MyApp {
 
     this.http.get(baseUrl + '?method=flickr.groups.pools.getPhotos&group_id=1463451@N25&safe_search=1&api_key='
                   + FLICKR_API_KEY + '&nojsoncallback=1&format=json&tags=' + tags)
-       .map(res => res.json())
       .subscribe(data => {
-        this.images = data.photos.photo.slice(0, 20);
+        this.images = data.json().photos.photo.slice(0, 20);
         setTimeout(() => {
           this.slider.update();
         });
     }, (err) => {
-      alert('Unable to load images');
+      console.info('Unable to load images');
       console.error(err);
     })
   }

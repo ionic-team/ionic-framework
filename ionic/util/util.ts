@@ -1,5 +1,3 @@
-// Simple noop function
-export function noop() {};
 
 /**
  * Given a min and max, restrict the given number
@@ -60,7 +58,7 @@ function _baseExtend(dst, objs, deep) {
   return dst;
 }
 
-export function debounce(func: any, wait: number, immediate = false) {
+export function debounce(fn: Function, wait: number, immediate: boolean = false): any {
  var timeout, args, context, timestamp: number, result;
  return function() {
    context = this;
@@ -72,14 +70,14 @@ export function debounce(func: any, wait: number, immediate = false) {
        timeout = setTimeout(later, wait - last);
      } else {
        timeout = null;
-       if (!immediate) result = func.apply(context, args);
+       if (!immediate) result = fn.apply(context, args);
      }
    };
    var callNow = immediate && !timeout;
    if (!timeout) {
      timeout = setTimeout(later, wait);
    }
-   if (callNow) result = func.apply(context, args);
+   if (callNow) result = fn.apply(context, args);
    return result;
  };
 }
@@ -112,27 +110,25 @@ export const isBlank = val => val === undefined || val === null;
 export const isObject = val => typeof val === 'object';
 export const isArray = Array.isArray;
 
-export const isTrueProperty = function(val) {
-  if (typeof val === 'boolean') return val;
+export const isTrueProperty = function(val: any): boolean {
   if (typeof val === 'string') {
     val = val.toLowerCase().trim();
-    return (val === 'true' || val === '');
+    return (val === 'true' || val === 'on' || val === '');
   }
-  if (typeof val === 'number') return (val > 0);
   return !!val;
 };
 
 /**
  * Convert a string in the format thisIsAString to a slug format this-is-a-string
  */
-export function pascalCaseToDashCase(str = '') {
-  return str.charAt(0).toLowerCase() + str.substring(1).replace(/[A-Z]/g, match => {
+export function pascalCaseToDashCase(val: string = ''): string {
+  return val.charAt(0).toLowerCase() + val.substring(1).replace(/[A-Z]/g, match => {
     return '-' + match.toLowerCase();
   });
 }
 
 let uid = 0;
-export function nextUid() {
+export function nextUid(): number {
   return ++uid;
 }
 
@@ -180,7 +176,7 @@ export function getQuerystring(url: string): any {
  * Throttle the given fun, only allowing it to be
  * called at most every `wait` ms.
  */
-export function throttle(func, wait, options) {
+export function throttle(fn: Function, wait: number, options: any): any {
   var context, args, result;
   var timeout = null;
   var previous = 0;
@@ -188,7 +184,7 @@ export function throttle(func, wait, options) {
   var later = function() {
     previous = options.leading === false ? 0 : Date.now();
     timeout = null;
-    result = func.apply(context, args);
+    result = fn.apply(context, args);
   };
   return function() {
     var now = Date.now();
@@ -200,7 +196,7 @@ export function throttle(func, wait, options) {
       clearTimeout(timeout);
       timeout = null;
       previous = now;
-      result = func.apply(context, args);
+      result = fn.apply(context, args);
     } else if (!timeout && options.trailing !== false) {
       timeout = setTimeout(later, remaining);
     }

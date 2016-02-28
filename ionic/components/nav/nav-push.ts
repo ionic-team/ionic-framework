@@ -50,7 +50,15 @@ import {NavRegistry} from './nav-registry';
   }
 })
 export class NavPush {
+
+  /**
+  * @input {page} the page you want to push
+  */
   @Input() navPush;
+
+  /**
+  * @input {any} Any parameters you want to pass along
+  */
   @Input() navParams;
 
   constructor(
