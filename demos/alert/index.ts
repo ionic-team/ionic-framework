@@ -213,8 +213,4 @@ export class InitialPage {
     this.nav.present(alert);
   }
 
-  doCustomAnimation() {
-
-  }
-
 }
