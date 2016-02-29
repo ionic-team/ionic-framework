@@ -210,6 +210,9 @@ export class Refresher {
         console.warn('<ion-refresher> property "' + attrName + '" should now be placed on the inner <ion-refresher-content> component instead of <ion-refresher>. Please review the Refresher docs for API updates.');
       }
     });
+    if (!ele.children.length) {
+      console.warn('<ion-refresher> should now have an inner <ion-refresher-content> component. Please review the Refresher docs for API updates.');
+    }
   }
 
   private _onStart(ev: TouchEvent): any {
