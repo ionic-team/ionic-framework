@@ -1,0 +1,44 @@
+@import "../../globals.core";
+
+// Infinite Scroll
+// --------------------------------------------------
+
+$infinite-scroll-loading-margin:         0px 0px 32px 0px !default;
+$infinite-scroll-loading-color:          #666 !default;
+$infinite-scroll-loading-text-margin:    4px 32px 0 32px !default;
+
+
+ion-infinite {
+  display: block;
+  width: 100%;
+}
+
+
+// Infinite Scroll Content
+// --------------------------------------------------
+
+ion-infinite-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.infinite-loading {
+  width: 100%;
+  margin: $infinite-scroll-loading-margin;
+}
+
+.infinite-loading-text {
+  margin: $infinite-scroll-loading-text-margin;
+  color: $infinite-scroll-loading-color;
+}
+
+
+// Infinite Scroll Content States
+// --------------------------------------------------
+
+ion-infinite-content[state=disabled] .infinite-loading {
+  display: none;
+}

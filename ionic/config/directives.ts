@@ -10,6 +10,8 @@ import {Button} from '../components/button/button';
 import {Blur} from '../components/blur/blur';
 import {Content} from '../components/content/content';
 import {Scroll} from '../components/scroll/scroll';
+import {InfiniteScroll} from '../components/infinite-scroll/infinite-scroll';
+import {InfiniteScrollContent} from '../components/infinite-scroll/infinite-scroll-content';
 import {Refresher} from '../components/refresher/refresher';
 import {RefresherContent} from '../components/refresher/refresher-content';
 import {Slides, Slide, SlideLazy} from '../components/slides/slides';
@@ -58,6 +60,8 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * -  Blur
  * -  Content
  * -  Scroll
+ * -  InfiniteScroll
+ * -  InfiniteScrollContent
  * -  Refresher
  * -  RefresherContent
  *
@@ -126,6 +130,8 @@ export const IONIC_DIRECTIVES = [
   Blur,
   Content,
   Scroll,
+  InfiniteScroll,
+  InfiniteScrollContent,
   Refresher,
   RefresherContent,
 

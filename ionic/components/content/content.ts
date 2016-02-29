@@ -35,8 +35,8 @@ import {ScrollTo} from '../../animations/scroll-to';
 })
 export class Content extends Ion {
   private _padding: number = 0;
-  private _onScroll: any;
   private _scrollTo: ScrollTo;
+  private _scLsn: Function;
 
   /**
    * @private
@@ -65,13 +65,11 @@ export class Content extends Ion {
     let self = this;
     self.scrollElement = self._elementRef.nativeElement.children[0];
 
-    self._onScroll = function(ev) {
-      self._app.setScrolling();
-    };
-
     if (self._config.get('tapPolyfill') === true) {
       self._zone.runOutsideAngular(function() {
-        self.scrollElement.addEventListener('scroll', self._onScroll);
+        self._scLsn = self.addScrollListener(function() {
+          self._app.setScrolling();
+        });
       });
     }
   }
@@ -80,8 +78,8 @@ export class Content extends Ion {
    * @private
    */
   ngOnDestroy() {
-    this.scrollElement.removeEventListener('scroll', this._onScroll.bind(this));
-    this.scrollElement = null;
+    this._scLsn && this._scLsn();
+    this.scrollElement = this._scLsn = null;
   }
 
   /**
@@ -298,7 +296,6 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
    * Returns the content and scroll elements' dimensions.
    * @returns {object} dimensions  The content and scroll elements' dimensions
    * {number} dimensions.contentHeight  content offsetHeight
@@ -334,7 +331,7 @@ export class Content extends Ion {
       scrollWidth: _scrollEle.scrollWidth,
       scrollLeft: _scrollEle.scrollLeft,
       scrollRight: _scrollEle.scrollLeft + _scrollEle.scrollWidth,
-    }
+    };
   }
 
   /**
