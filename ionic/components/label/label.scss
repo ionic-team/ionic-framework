@@ -7,13 +7,20 @@ ion-label {
   display: block;
   font-size: inherit;
   white-space: nowrap;
+  margin: 0;
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
-
 
 .item-input ion-label {
   max-width: 200px;
   flex: initial;
   pointer-events: none;
+}
+
+[text-wrap] ion-label {
+  white-space: normal;
 }
 
 
