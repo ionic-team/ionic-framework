@@ -401,8 +401,8 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
     var backView = $ionicHistory.backView();
 
-    if (backView && (enableMenuWithBackViews || enableMenuSwipeWithBackViews)) {
-      dragIsWithinBounds = startX > 45 && startX < self.content.element.offsetWidth - 45;
+    if (backView && (enableMenuWithBackViews || enableMenuSwipeWithBackViews) && self.content.element.offsetWidth > 45) {
+      dragIsWithinBounds = 45 < startX && startX < self.content.element.offsetWidth - 45;
     } else {
       dragIsWithinBounds = !shouldOnlyAllowEdgeDrag ||
         startX <= self.edgeThreshold ||
@@ -418,7 +418,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     return ($scope.dragContent || self.isOpen()) &&
       dragIsWithinBounds &&
       !e.gesture.srcEvent.defaultPrevented &&
-      menuEnabled &&
+      //menuEnabled &&
       !e.target.tagName.match(/input|textarea|select|object|embed/i) &&
       !e.target.isContentEditable &&
       !(e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-scroll') == 'true');
