@@ -8,30 +8,30 @@ class E2EApp {
   items = [];
 
   constructor() {
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 15; i++) {
       this.items.push( getRandomData() );
     }
   }
 
   doRefresh(refresher) {
-    console.log('Begin async operation');
+    console.info('Begin async operation');
 
     getAsyncData().then(newData => {
       for (var i = 0; i < newData.length; i++) {
         this.items.unshift( newData[i] );
       }
 
-      console.log('Finished receiving data, async operation complete');
+      console.info('Finished receiving data, async operation complete');
       refresher.endRefreshing();
     });
   }
 
   doStart(refresher) {
-    console.log('Refresher, start');
+    console.info('Refresher, start');
   }
 
   doPulling(refresher) {
-    console.log('Pulling', refresher.progress);
+    console.info('Pulling', refresher.progress);
   }
 
 }
