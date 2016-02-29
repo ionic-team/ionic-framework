@@ -184,9 +184,9 @@ describe('Refresher', () => {
       expect(results).toEqual(2);
     });
 
-    it('should not run if state=ending', () => {
+    it('should not run if state=completing', () => {
       refresher.startY = 100;
-      refresher.state = 'ending';
+      refresher.state = 'completing';
       var results = refresher._onMove( touchEv(88) );
       expect(results).toEqual(2);
     });
@@ -244,7 +244,8 @@ describe('Refresher', () => {
       nativeElement: {
         classList: { add: function(){}, remove: function(){} },
         scrollTop: 0,
-        hasAttribute: function(){}
+        hasAttribute: function(){},
+        children: {length: 1 }
       }
     }
   }

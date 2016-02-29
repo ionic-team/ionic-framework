@@ -21,7 +21,7 @@ class ApiDemoApp {
         this.items.unshift( newData[i] );
       }
 
-      refresher.endRefreshing();
+      refresher.complete();
     });
   }
 

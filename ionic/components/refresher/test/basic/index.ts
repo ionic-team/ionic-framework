@@ -22,7 +22,7 @@ class E2EApp {
       }
 
       console.info('Finished receiving data, async operation complete');
-      refresher.endRefreshing();
+      refresher.complete();
     });
   }
 

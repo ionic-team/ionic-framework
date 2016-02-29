@@ -102,7 +102,7 @@ ion-refresher-content[state=cancelling] {
   }
 }
 
-ion-refresher-content[state=ending] {
+ion-refresher-content[state=completing] {
   .refresher-refreshing {
     display: block;
   }
