@@ -406,7 +406,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     } else {
       dragIsWithinBounds = !shouldOnlyAllowEdgeDrag ||
         startX <= self.edgeThreshold ||
-        startX >= self.content.element.offsetWidth - self.edgeThreshold
+        startX >= self.content.element.offsetWidth - self.edgeThreshold;
     }
 
     var menuEnabled = enableMenuWithBackViews || enableMenuSwipeWithBackViews ? true : !backView;
