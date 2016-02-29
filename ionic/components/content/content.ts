@@ -279,18 +279,30 @@ export class Content extends Ion {
     return this._scrollTo.start(0, 0, 300, 0);
   }
 
+  /**
+   * @private
+   */
   getScrollTop(): number {
     return this.getNativeElement().scrollTop;
   }
 
+  /**
+   * @private
+   */
   addCssClass(className: string) {
     this.getNativeElement().classList.add(className);
   }
 
+  /**
+   * @private
+   */
   removeCssClass(className: string) {
     this.getNativeElement().classList.remove(className);
   }
 
+  /**
+   * @private
+   */
   setScrollElementStyle(prop: string, val: any) {
     this.scrollElement.style[prop] = val;
   }
