@@ -31,7 +31,8 @@ function getTscOptions(name) {
     experimentalDecorators: true,
     target: "es5",
     module: "commonjs",
-    isolatedModules: true
+    isolatedModules: true,
+    typescript: require('typescript')
   }
 
   if (name === "typecheck") {
