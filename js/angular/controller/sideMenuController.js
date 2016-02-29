@@ -402,7 +402,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     var backView = $ionicHistory.backView();
 
     if (backView && (enableMenuWithBackViews || enableMenuSwipeWithBackViews) && self.content.element.offsetWidth > 45) {
-      dragIsWithinBounds = 45 < startX && startX < self.content.element.offsetWidth - 45;
+      dragIsWithinBounds = startX > 45 && startX < self.content.element.offsetWidth - 45;
     } else {
       dragIsWithinBounds = !shouldOnlyAllowEdgeDrag ||
         startX <= self.edgeThreshold ||
