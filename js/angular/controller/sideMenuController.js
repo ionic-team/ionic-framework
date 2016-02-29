@@ -14,6 +14,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
   var rightShowing, leftShowing, isDragging;
   var startX, lastX, offsetX, isAsideExposed;
   var enableMenuWithBackViews = true;
+  var enableMenuSwipeWithBackViews = true;
 
   self.$scope = $scope;
 
@@ -294,6 +295,13 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     return enableMenuWithBackViews;
   };
 
+  self.enableMenuSwipeWithBackViews = function(val) {
+    if (arguments.length) {
+      enableMenuSwipeWithBackViews = !!val;
+    }
+    return enableMenuSwipeWithBackViews;
+  };
+
   self.isAsideExposed = function() {
     return !!isAsideExposed;
   };
@@ -389,12 +397,19 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     var startX = e.gesture.startEvent && e.gesture.startEvent.center &&
       e.gesture.startEvent.center.pageX;
 
-    var dragIsWithinBounds = !shouldOnlyAllowEdgeDrag ||
-      startX <= self.edgeThreshold ||
-      startX >= self.content.element.offsetWidth - self.edgeThreshold;
+    var dragIsWithinBounds = false;
 
     var backView = $ionicHistory.backView();
-    var menuEnabled = enableMenuWithBackViews ? true : !backView;
+
+    if (backView && (enableMenuWithBackViews || enableMenuSwipeWithBackViews)) {
+      dragIsWithinBounds = startX > 45 && startX < self.content.element.offsetWidth - 45;
+    } else {
+      dragIsWithinBounds = !shouldOnlyAllowEdgeDrag ||
+        startX <= self.edgeThreshold ||
+        startX >= self.content.element.offsetWidth - self.edgeThreshold
+    }
+
+    var menuEnabled = enableMenuWithBackViews || enableMenuSwipeWithBackViews ? true : !backView;
     if (!menuEnabled) {
       var currentView = $ionicHistory.currentView() || {};
       return (dragIsWithinBounds && (backView.historyId !== currentView.historyId));
