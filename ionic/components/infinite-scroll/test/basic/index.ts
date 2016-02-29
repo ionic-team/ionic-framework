@@ -22,7 +22,7 @@ class E2EApp {
       }
 
       console.log('Finished receiving data, async operation complete');
-      infiniteScroll.endLoading();
+      infiniteScroll.complete();
 
       if (this.items.length > 90) {
         infiniteScroll.enable(false);

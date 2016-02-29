@@ -8,7 +8,7 @@ $infinite-scroll-loading-color:          #666 !default;
 $infinite-scroll-loading-text-margin:    4px 32px 0 32px !default;
 
 
-ion-infinite {
+ion-infinite-scroll {
   display: block;
   width: 100%;
 }
@@ -17,7 +17,7 @@ ion-infinite {
 // Infinite Scroll Content
 // --------------------------------------------------
 
-ion-infinite-content {
+ion-infinite-scroll-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,6 +39,6 @@ ion-infinite-content {
 // Infinite Scroll Content States
 // --------------------------------------------------
 
-ion-infinite-content[state=disabled] .infinite-loading {
+ion-infinite-scroll-content[state=disabled] .infinite-loading {
   display: none;
 }

@@ -10,7 +10,7 @@ import {Spinner} from '../spinner/spinner';
  * @private
  */
 @Component({
-  selector: 'ion-infinite-content',
+  selector: 'ion-infinite-scroll-content',
   template:
     '<div class="infinite-loading">' +
       '<div class="infinite-loading-spinner" *ngIf="loadingSpinner">' +

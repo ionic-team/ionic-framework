@@ -8,11 +8,11 @@
     </ion-item>
   </ion-list>
 
-  <ion-infinite (infinite)="doInfinite($event)" threshold="100px">
-    <ion-infinite-content
+  <ion-infinite-scroll (infinite)="doInfinite($event)" threshold="100px">
+    <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Loading more data...">
-    </ion-infinite-content>
-  </ion-infinite>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>
