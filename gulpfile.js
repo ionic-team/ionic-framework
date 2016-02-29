@@ -251,7 +251,6 @@ function tsCompile(options, cacheName){
     .pipe(tsc(options, undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
-      this.emit('end');
     });
 }
 
@@ -406,7 +405,6 @@ gulp.task('e2e.build', function() {
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
-      this.emit('end');
     })
     .pipe(gulpif(/index.js$/, createIndexHTML()))
     .pipe(gulpif(/e2e.js$/, createPlatformTests()))
@@ -590,7 +588,6 @@ gulp.task('build.demos', function() {
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
-      this.emit('end');
     })
     .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
 
