@@ -332,7 +332,8 @@ gulp.task('copy.libs', function() {
   var merge = require('merge2');
   var extModules = gulp.src([
       'node_modules/es6-shim/es6-shim.min.js',
-      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js',
+      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js', //npm2
+      'node_modules/es6-module-loader/dist/es6-module-loader.src.js', //npm3
       'node_modules/systemjs/dist/system.src.js',
       'node_modules/angular2/bundles/angular2-polyfills.js',
       'node_modules/angular2/bundles/angular2.dev.js',
