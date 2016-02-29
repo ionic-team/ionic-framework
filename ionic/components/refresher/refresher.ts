@@ -302,12 +302,13 @@ export class Refresher {
       // this refresh is not already actively pulling down
 
       // get the content's scrollTop
-      let scrollHostScrollTop = this._content.scrollElement.scrollTop;
+      let scrollHostScrollTop = this._content.getContentDimensions().scrollTop;
 
       // if the scrollTop is greater than zero then it's
       // not possible to pull the content down yet
       if (scrollHostScrollTop > 0) {
         this.progress = 0;
+        this.startY = null;
         return 7;
       }
 

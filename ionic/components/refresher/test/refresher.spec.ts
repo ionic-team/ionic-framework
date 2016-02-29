@@ -119,6 +119,8 @@ describe('Refresher', () => {
       let result = refresher._onMove( touchEv(125) );
 
       expect(refresher.state).toEqual('inactive');
+      expect(refresher.progress).toEqual(0);
+      expect(refresher.startY).toEqual(null);
       expect(result).toEqual(7);
     });
 
@@ -153,13 +155,16 @@ describe('Refresher', () => {
     });
 
     it('should set the deltaY', () => {
+      setContentScrollTop(1);
       refresher.startY = 100;
       refresher._onMove( touchEv(133) );
       expect(refresher.deltaY).toEqual(33);
 
       refresher._lastCheck = 0; // force allow next check
+      refresher.startY = 100;
 
-      refresher._onMove( touchEv(50) );
+      var results = refresher._onMove( touchEv(50) );
+      expect(results).toEqual(6);
       expect(refresher.deltaY).toEqual(-50);
     });
 
@@ -245,7 +250,11 @@ describe('Refresher', () => {
   }
 
   function setContentScrollTop(scrollTop) {
-    contentElementRef.nativeElement.scrollTop = scrollTop;
+    content.getContentDimensions = function() {
+      return {
+        scrollTop: scrollTop
+      };
+    };
   }
 
   function getScrollElementStyles() {
