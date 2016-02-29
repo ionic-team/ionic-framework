@@ -14,7 +14,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
   var rightShowing, leftShowing, isDragging;
   var startX, lastX, offsetX, isAsideExposed;
   var enableMenuWithBackViews = true;
-  var enableMenuSwipeWithBackViews = true;
+  var enableMenuSwipeWithBackViews = false;
 
   self.$scope = $scope;
 
