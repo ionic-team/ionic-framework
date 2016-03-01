@@ -53,7 +53,7 @@ export class SearchbarInput {
 @Component({
   selector: 'ion-searchbar',
   host: {
-    '[class.searchbar-has-value]': 'value'
+    '[class.searchbar-has-value]': 'value',
     '[class.searchbar-hide-cancel]': 'hideCancelButton'
   },
   template:
