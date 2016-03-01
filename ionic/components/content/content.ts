@@ -3,7 +3,7 @@ import {Component, ElementRef, Optional, NgZone} from 'angular2/core';
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
-import {raf}  from '../../util/dom';
+import {raf, transitionEnd}  from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
 import {ScrollTo} from '../../animations/scroll-to';
@@ -11,15 +11,15 @@ import {ScrollTo} from '../../animations/scroll-to';
 /**
  * @name Content
  * @description
- * The Content component provides an easy to use content area that can be configured to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
+ * The Content component provides an easy to use content area with some useful
+ * methods to control the scrollable area.
  *
- * While we recommend using the custom Scroll features in Ionic in most cases, sometimes (for performance reasons) only the browser's native overflow scrolling will suffice, and so we've made it easy to toggle between the Ionic scroll implementation and overflow scrolling.
- *
- * You can implement pull-to-refresh with the [Refresher](../../scroll/Refresher) component.
+ * The content area can also implement pull-to-refresh with the
+ * [Refresher](../../scroll/Refresher) component.
  *
  * @usage
  * ```html
- * <ion-content id="myContent">
+ * <ion-content>
  *   Add your content here!
  * </ion-content>
  * ```
@@ -30,22 +30,19 @@ import {ScrollTo} from '../../animations/scroll-to';
   template:
     '<scroll-content>' +
       '<ng-content></ng-content>' +
-    '</scroll-content>'
+    '</scroll-content>' +
+    '<ng-content select="ion-refresher"></ng-content>'
 })
 export class Content extends Ion {
   private _padding: number = 0;
-  private _onScroll: any;
   private _scrollTo: ScrollTo;
+  private _scLsn: Function;
 
   /**
    * @private
    */
   scrollElement: HTMLElement;
 
-  /**
-   * @param {elementRef} elementRef  A reference to the component's DOM element.
-   * @param {config} config  The config object to change content's default settings.
-   */
   constructor(
     private _elementRef: ElementRef,
     private _config: Config,
@@ -68,13 +65,11 @@ export class Content extends Ion {
     let self = this;
     self.scrollElement = self._elementRef.nativeElement.children[0];
 
-    self._onScroll = function(ev) {
-      self._app.setScrolling();
-    };
-
     if (self._config.get('tapPolyfill') === true) {
       self._zone.runOutsideAngular(function() {
-        self.scrollElement.addEventListener('scroll', self._onScroll);
+        self._scLsn = self.addScrollListener(function() {
+          self._app.setScrolling();
+        });
       });
     }
   }
@@ -83,7 +78,8 @@ export class Content extends Ion {
    * @private
    */
   ngOnDestroy() {
-    this.scrollElement.removeEventListener('scroll', this._onScroll);
+    this._scLsn && this._scLsn();
+    this.scrollElement = this._scLsn = null;
   }
 
   /**
@@ -112,28 +108,70 @@ export class Content extends Ion {
    * @param {Function} handler  The method you want perform when scrolling
    * @returns {Function} A function that removes the scroll handler.
    */
-  addScrollEventListener(handler) {
-    if (!this.scrollElement) {
-      return;
-    }
+  addScrollListener(handler) {
+    return this._addListener('scroll', handler);
+  }
+
+  /**
+   * @private
+   */
+  addTouchStartListener(handler) {
+    return this._addListener('touchstart', handler);
+  }
+
+  /**
+   * @private
+   */
+  addTouchMoveListener(handler) {
+    return this._addListener('touchmove', handler);
+  }
+
+  /**
+   * @private
+   */
+  addTouchEndListener(handler) {
+    return this._addListener('touchend', handler);
+  }
+
+  /**
+   * @private
+   */
+  addMouseDownListener(handler) {
+    return this._addListener('mousedown', handler);
+  }
+
+  /**
+   * @private
+   */
+  addMouseUpListener(handler) {
+    return this._addListener('mouseup', handler);
+  }
+
+  /**
+   * @private
+   */
+  addMouseMoveListener(handler) {
+    return this._addListener('mousemove', handler);
+  }
+
+  private _addListener(type: string, handler: any): Function {
+    if (!this.scrollElement) { return; }
 
     // ensure we're not creating duplicates
-    this.scrollElement.removeEventListener('scroll', handler);
-
-    this.scrollElement.addEventListener('scroll', handler);
+    this.scrollElement.removeEventListener(type, handler);
+    this.scrollElement.addEventListener(type, handler);
 
     return () => {
-      this.scrollElement.removeEventListener('scroll', handler);
+      this.scrollElement.removeEventListener(type, handler);
     }
   }
 
-
   /**
+   * @private
    * Call a method when scrolling has stopped
-   *
    * @param {Function} callback The method you want perform when scrolling has ended
    */
-  onScrollEnd(callback) {
+  onScrollEnd(callback: Function) {
     let lastScrollTop = null;
     let framesUnchanged = 0;
     let _scrollEle = this.scrollElement;
@@ -163,43 +201,8 @@ export class Content extends Ion {
     setTimeout(next, 100);
   }
 
-  /**
-   * @private
-   * Adds the specified touchmove handler to the content's scroll element.
-   *
-   * ```ts
-   * @Page({
-   *   template: `<ion-content id="my-content"></ion-content>`
-   * )}
-   * export class MyPage{
-   *    constructor(app: IonicApp){
-   *        this.app = app;
-   *    }
-   *   // Need to wait until the component has been initialized
-   *   ngAfterViewInit() {
-   *     // Here 'my-content' is the ID of my ion-content
-   *     this.content = this.app.getComponent('my-content');
-   *     this.content.addTouchMoveListener(this.touchHandler);
-   *   }
-   *    touchHandler() {
-   *      console.log("I'm touching all the magazines!!");
-   *    }
-   * }
-   * ```
-   * @param {Function} handler  The method you want to perform when touchmove is firing
-   * @returns {Function} A function that removes the touchmove handler.
-   */
-  addTouchMoveListener(handler) {
-    if (!this.scrollElement) { return; }
-
-    // ensure we're not creating duplicates
-    this.scrollElement.removeEventListener('touchmove', handler);
-
-    this.scrollElement.addEventListener('touchmove', handler);
-
-    return () => {
-      this.scrollElement.removeEventListener('touchmove', handler);
-    }
+  onScrollElementTransitionEnd(callback: Function) {
+    transitionEnd(this.scrollElement, callback);
   }
 
   /**
@@ -278,6 +281,33 @@ export class Content extends Ion {
 
   /**
    * @private
+   */
+  getScrollTop(): number {
+    return this.getNativeElement().scrollTop;
+  }
+
+  /**
+   * @private
+   */
+  addCssClass(className: string) {
+    this.getNativeElement().classList.add(className);
+  }
+
+  /**
+   * @private
+   */
+  removeCssClass(className: string) {
+    this.getNativeElement().classList.remove(className);
+  }
+
+  /**
+   * @private
+   */
+  setScrollElementStyle(prop: string, val: any) {
+    this.scrollElement.style[prop] = val;
+  }
+
+  /**
    * Returns the content and scroll elements' dimensions.
    * @returns {object} dimensions  The content and scroll elements' dimensions
    * {number} dimensions.contentHeight  content offsetHeight
@@ -313,7 +343,7 @@ export class Content extends Ion {
       scrollWidth: _scrollEle.scrollWidth,
       scrollLeft: _scrollEle.scrollLeft,
       scrollRight: _scrollEle.scrollLeft + _scrollEle.scrollWidth,
-    }
+    };
   }
 
   /**

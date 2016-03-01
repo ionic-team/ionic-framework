@@ -49,13 +49,13 @@ tabbar {
   min-width: $tabbar-md-item-icon-size + 5;
 }
 
-[tabbarIcons=bottom] .tab-button {
+[tabbarLayout=icon-bottom] .tab-button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-[tabbarIcons=right] .tab-button,
-[tabbarIcons=left] .tab-button {
+[tabbarLayout=icon-right] .tab-button,
+[tabbarLayout=icon-left] .tab-button {
   padding-bottom: 10px;
 
   ion-icon {
@@ -63,6 +63,8 @@ tabbar {
   }
 }
 
+[tabbarLayout=icon-hide] .tab-button,
+[tabbarLayout=title-hide] .tab-button,
 .tab-button.icon-only,
 .tab-button.has-title-only {
   padding: 6px 10px 6px 10px;

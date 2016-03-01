@@ -1,22 +1,31 @@
-import {App, Page, IonicApp} from 'ionic-angular';
+import {App, Page, Refresher} from 'ionic-angular';
+import {MockProvider} from './mock-provider';
+
 
 @App({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  providers: [MockProvider]
 })
 class ApiDemoApp {
-  doRefresh(refresher) {
-    console.log('DOREFRESH', refresher)
+  items: string[];
 
-    setTimeout(() => {
+  constructor(private mockProvider: MockProvider) {
+    this.items = mockProvider.getData();
+  }
+
+  doRefresh(refresher: Refresher) {
+    console.log('DOREFRESH', refresher);
+
+    this.mockProvider.getAsyncData().then((newData) => {
+      for (var i = 0; i < newData.length; i++) {
+        this.items.unshift( newData[i] );
+      }
+
       refresher.complete();
-    })
+    });
   }
 
-  doStarting() {
-    console.log('DOSTARTING');
-  }
-
-  doPulling(amt) {
-    console.log('DOPULLING', amt);
+  doPulling(refresher: Refresher) {
+    console.log('DOPULLING', refresher.progress);
   }
 }

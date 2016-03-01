@@ -1,19 +1,21 @@
-import {Directive, ElementRef, Renderer, Attribute, NgZone, Input} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Attribute, NgZone} from 'angular2/core';
 
 import {Ion} from '../ion';
-import {ListVirtualScroll} from './virtual';
 import {ItemSlidingGesture} from '../item/item-sliding-gesture';
 import {isDefined} from '../../util';
 
 /**
- * The List is a widely used interface element in almost any mobile app, and can include
- * content ranging from basic text all the way to buttons, toggles, icons, and thumbnails.
+ * The List is a widely used interface element in almost any mobile app,
+ * and can include content ranging from basic text all the way to
+ * buttons, toggles, icons, and thumbnails.
  *
- * Both the list, which contains items, and the list items themselves can be any HTML
- * element.
+ * Both the list, which contains items, and the list items themselves
+ * can be any HTML element.
  *
  * Using the List and Item components make it easy to support various
- * interaction modes such as swipe to edit, drag to reorder, and removing items.
+ * interaction modes such as swipe to edit, drag to reorder, and
+ * removing items.
+ *
  * @demo /docs/v2/demos/list/
  * @see {@link /docs/v2/components#lists List Component Docs}
  *
@@ -23,7 +25,6 @@ import {isDefined} from '../../util';
 })
 export class List extends Ion {
   private _enableSliding: boolean = false;
-  private _virtualScrollingManager: ListVirtualScroll;
 
   /**
    * @private
@@ -33,28 +34,7 @@ export class List extends Ion {
   /**
    * @private
    */
-  itemTemplate: any;
-
-  /**
-   * @private
-   */
   slidingGesture: ItemSlidingGesture;
-
-
-  /**
-   * @private
-   */
-  @Input() items;
-
-  /**
-   * @private
-   */
-  @Input() virtual;
-
-  /**
-   * @private
-   */
-  @Input() content;
 
   constructor(elementRef: ElementRef, private _zone: NgZone) {
     super(elementRef);
@@ -64,39 +44,9 @@ export class List extends Ion {
   /**
    * @private
    */
-  ngOnInit() {
-    if (isDefined(this.virtual)) {
-      console.debug('Content', this.content);
-      console.debug('Virtual?', this.virtual);
-      console.debug('Items?', this.items.length, 'of \'em');
-      this._initVirtualScrolling();
-    }
-  }
-
-  /**
-   * @private
-   */
   ngOnDestroy() {
-    this.ele = null;
-    this.slidingGesture && this.slidingGesture.unlisten();
-  }
-
-  /**
-   * @private
-   */
-  _initVirtualScrolling() {
-    if(!this.content) {
-      return;
-    }
-
-    this._virtualScrollingManager = new ListVirtualScroll(this);
-  }
-
-  /**
-   * @private
-   */
-  setItemTemplate(item: any) {
-    this.itemTemplate = item;
+    this.slidingGesture && this.slidingGesture.destroy();
+    this.ele = this.slidingGesture = null;
   }
 
   /**

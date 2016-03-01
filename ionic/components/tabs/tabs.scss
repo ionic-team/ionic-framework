@@ -108,13 +108,13 @@ tab-highlight {
   display: none;
 }
 
-[tabbarIcons=bottom] .tab-button {
+[tabbarLayout=icon-bottom] .tab-button {
   .tab-button-icon {
     order: 10;
   }
 }
 
-[tabbarIcons=left] .tab-button {
+[tabbarLayout=icon-left] .tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -123,7 +123,7 @@ tab-highlight {
   }
 }
 
-[tabbarIcons=right] .tab-button {
+[tabbarLayout=icon-right] .tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -133,7 +133,11 @@ tab-highlight {
   }
 }
 
-[tabbarIcons=hide] .tab-button-icon {
+[tabbarLayout=icon-hide] .tab-button-icon {
+  display: none;
+}
+
+[tabbarLayout=title-hide] .tab-button-text {
   display: none;
 }
 
@@ -155,8 +159,9 @@ tab-highlight {
   right: calc(50% - 30px);
 }
 
-[tabbarIcons=bottom] .tab-badge,
-[tabbarIcons=left] .tab-badge,
-[tabbarIcons=right] .tab-badge {
+[tabbarLayout=icon-hide] .tab-badge,
+[tabbarLayout=icon-bottom] .tab-badge,
+[tabbarLayout=icon-left] .tab-badge,
+[tabbarLayout=icon-right] .tab-badge {
   right: calc(50% - 50px);
 }

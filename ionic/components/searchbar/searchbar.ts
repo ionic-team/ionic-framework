@@ -39,7 +39,12 @@ export class SearchbarInput {
  *
  * @usage
  * ```html
- * <ion-searchbar [(ngModel)]="defaultSearch" (input)="triggerInput($event)" (cancel)="onCancelSearchbar($event)" (clear)="onClearSearchbar($event)"></ion-searchbar>
+ * <ion-searchbar
+ *   [(ngModel)]="myInput"
+ *   [hideCancelButton]="shouldHideCancel"
+ *   (input)="onInput($event)"
+ *   (cancel)="onCancel($event)">
+ * </ion-searchbar>
  * ```
  *
  * @demo /docs/v2/demos/searchbar/
@@ -49,10 +54,11 @@ export class SearchbarInput {
   selector: 'ion-searchbar',
   host: {
     '[class.searchbar-has-value]': 'value'
+    '[class.searchbar-hide-cancel]': 'hideCancelButton'
   },
   template:
     '<div class="searchbar-input-container">' +
-      '<button (click)="cancelSearchbar()" (mousedown)="cancelSearchbar()" clear dark class="searchbar-md-cancel">' +
+      '<button (click)="cancelSearchbar()" (mousedown)="cancelSearchbar()" [hidden]="hideCancelButton" clear dark class="searchbar-md-cancel">' +
         '<ion-icon name="arrow-back"></ion-icon>' +
       '</button>' +
       '<div class="searchbar-search-icon"></div>' +

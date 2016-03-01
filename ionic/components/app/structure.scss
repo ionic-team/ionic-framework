@@ -9,6 +9,9 @@ $z-index-menu-backdrop:          79;
 $z-index-overlay:                1000;
 $z-index-click-block:            9999;
 
+$z-index-scroll-content:         1;
+$z-index-refresher:              0;
+
 $z-index-navbar-section:         10;
 
 $z-index-toolbar:                10;
@@ -129,6 +132,7 @@ ion-content {
 
 scroll-content {
   position: absolute;
+  z-index: $z-index-scroll-content;
   top: 0;
   right: 0;
   bottom: 0;

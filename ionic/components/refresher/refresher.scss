@@ -1,0 +1,112 @@
+@import "../../globals.core";
+
+// Refresher
+// --------------------------------------------------
+
+$refresher-height:             60px !default;
+
+$refresher-icon-color:         #000 !default;
+$refresher-icon-font-size:     30px !default;
+
+$refresher-text-color:         #000 !default;
+$refresher-text-font-size:     16px !default;
+
+
+ion-refresher {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-refresher;
+  width: 100%;
+  height: $refresher-height;
+  display: none;
+
+  &.refresher-active {
+    display: block;
+  }
+}
+
+.has-refresher > scroll-content {
+  // when the refresher is let go or has completed
+  // this transition is what is used to put the
+  // scroll content back into it's original location
+  transition: all 320ms cubic-bezier(0.36,0.66,0.04,1);
+  border-top: 1px solid #ddd;
+  margin-top: -1px;
+}
+
+
+// Refresher Content
+// --------------------------------------------------
+
+ion-refresher-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.refresher-pulling,
+.refresher-refreshing {
+  display: none;
+  width: 100%;
+}
+
+.refresher-pulling-icon,
+.refresher-refreshing-icon {
+  text-align: center;
+  color: $refresher-icon-color;
+  font-size: $refresher-icon-font-size;
+  transition: 200ms;
+  transform-origin: center;
+}
+
+.refresher-pulling-text,
+.refresher-refreshing-text {
+  text-align: center;
+  color: $refresher-text-color;
+  font-size: $refresher-text-font-size;
+}
+
+
+// Refresher Content States
+// --------------------------------------------------
+
+ion-refresher-content[state=pulling] {
+  .refresher-pulling {
+    display: block;
+  }
+}
+
+ion-refresher-content[state=ready] {
+  .refresher-pulling {
+    display: block;
+  }
+  .refresher-pulling-icon {
+    transform: rotate(180deg);
+  }
+}
+
+ion-refresher-content[state=refreshing] {
+  .refresher-refreshing {
+    display: block;
+  }
+}
+
+ion-refresher-content[state=cancelling] {
+  .refresher-pulling {
+    display: block;
+  }
+  .refresher-pulling-icon {
+    transform: scale(0);
+  }
+}
+
+ion-refresher-content[state=completing] {
+  .refresher-refreshing {
+    display: block;
+  }
+  .refresher-refreshing-icon {
+    transform: scale(0);
+  }
+}

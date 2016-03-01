@@ -31,7 +31,8 @@ function getTscOptions(name) {
     experimentalDecorators: true,
     target: "es5",
     module: "commonjs",
-    isolatedModules: true
+    isolatedModules: true,
+    typescript: require('typescript')
   }
 
   if (name === "typecheck") {
@@ -251,7 +252,6 @@ function tsCompile(options, cacheName){
     .pipe(tsc(options, undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
-      this.emit('end');
     });
 }
 
@@ -334,7 +334,8 @@ gulp.task('copy.libs', function() {
   var merge = require('merge2');
   var extModules = gulp.src([
       'node_modules/es6-shim/es6-shim.min.js',
-      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js',
+      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js', //npm2
+      'node_modules/es6-module-loader/dist/es6-module-loader.src.js', //npm3
       'node_modules/systemjs/dist/system.src.js',
       'node_modules/angular2/bundles/angular2-polyfills.js',
       'node_modules/angular2/bundles/angular2.dev.js',
@@ -409,7 +410,6 @@ gulp.task('e2e.build', function() {
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
-      this.emit('end');
     })
     .pipe(gulpif(/index.js$/, createIndexHTML()))
     .pipe(gulpif(/e2e.js$/, createPlatformTests()))
@@ -593,7 +593,6 @@ gulp.task('build.demos', function() {
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
-      this.emit('end');
     })
     .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
 

@@ -1,0 +1,55 @@
+
+<ion-toolbar>
+  <ion-title>Spinners</ion-title>
+</ion-toolbar>
+
+<ion-content padding>
+
+  <table style="border-collapse:initial; border-spacing: 20px">
+    <tr>
+      <td>Platform Default</td>
+      <td>
+        <ion-spinner [paused]="paused"></ion-spinner>
+      </td>
+    </tr>
+    <tr>
+      <td>ios</td>
+      <td>
+        <ion-spinner name="ios" duration="1000" [paused]="paused"></ion-spinner>
+      </td>
+    </tr>
+    <tr>
+      <td>ios-small</td>
+      <td>
+        <ion-spinner name="ios-small" duration="1000" [paused]="paused"></ion-spinner>
+      </td>
+    </tr>
+    <tr>
+      <td>bubbles</td>
+      <td>
+        <ion-spinner name="bubbles" [paused]="paused"></ion-spinner>
+      </td>
+    </tr>
+    <tr>
+      <td>circles</td>
+      <td>
+        <ion-spinner name="circles" [paused]="paused"></ion-spinner>
+      </td>
+    </tr>
+    <tr>
+      <td>crescent</td>
+      <td>
+        <ion-spinner name="crescent" [paused]="paused"></ion-spinner>
+      </td>
+    </tr>
+    <tr>
+      <td>dots</td>
+      <td>
+        <ion-spinner name="dots" [paused]="paused"></ion-spinner>
+      </td>
+    </tr>
+  </table>
+
+  <button (click)="toggleState()">Toggle Paused</button>
+
+</ion-content>

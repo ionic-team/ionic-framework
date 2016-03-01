@@ -438,7 +438,7 @@ export class InputBase {
     if (this._useAssist && this._scrollView) {
       setTimeout(() => {
         this.deregScrollMove();
-        this._deregScroll = this._scrollView.addScrollEventListener(this._scrollMove);
+        this._deregScroll = this._scrollView.addScrollListener(this._scrollMove);
       }, 80);
     }
   }

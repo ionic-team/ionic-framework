@@ -5,5 +5,9 @@ import {App} from 'ionic-angular';
   templateUrl: 'main.html'
 })
 class E2EApp {
-  // TODO
+  paused: boolean = false;
+
+  toggleState() {
+    this.paused = !this.paused;
+  }
 }

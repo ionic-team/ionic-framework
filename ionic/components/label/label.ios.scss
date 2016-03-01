@@ -5,13 +5,14 @@
 // --------------------------------------------------
 
 $label-ios-text-color:         #7f7f7f !default;
+$label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0 !default;
 
 
 // iOS Default Label
 // --------------------------------------------------
 
 ion-label {
-  margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
+  margin: $label-ios-margin;
 }
 
 

@@ -16,11 +16,13 @@
 @import
   "components/grid/grid",
   "components/icon/icon",
+  "components/infinite-scroll/infinite-scroll",
   "components/menu/menu",
   "components/modal/modal",
+  "components/refresher/refresher",
   "components/scroll/scroll",
-  "components/scroll/pull-to-refresh",
-  "components/slides/slides";
+  "components/slides/slides",
+  "components/spinner/spinner";
 
 
 // Ionicons (to be replaced with SVGs)
