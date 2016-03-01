@@ -199,7 +199,7 @@ button.item.item-complex {
 .item-radio .item-content {
   position: relative;
   z-index: $z-index-item;
-  padding: $item-padding (ceil( ($item-padding * 3) + ($item-padding / 3) ) - 5) $item-padding $item-padding;
+  padding: $item-padding $item-padding $item-padding $item-padding;
   border: none;
   background-color: $item-default-bg;
 }
