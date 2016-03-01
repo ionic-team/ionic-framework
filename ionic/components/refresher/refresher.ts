@@ -10,12 +10,12 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
 /**
  * @name Refresher
  * @description
- * Allows you to add Pull-To-Refresh to an Content component.
- * Place `ion-refresher` as the first child of your `ion-content` element.
+ * The Refresher provides pull-to-refresh functionality on a content component.
+ * Place the `ion-refresher` as the first child of your `ion-content` element.
  *
- * Pages can then can listen to the refreshers various output events. The
- * `refresh` output event is the one that's fired when the user has pulled
- * down far enough to kick off the refreshing process. Once the async operation
+ * Pages can then listen to the refresher's various output events. The
+ * `refresh` output event is fired when the user has pulled down far
+ * enough to kick off the refreshing process. Once the async operation
  * has completed and the refreshing should end, call `complete()`.
  *
  * @usage
@@ -71,13 +71,14 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
  *
  * ## Further Customizing Refresher Content
  *
- * The `ion-refresh` component holds the refresh logic, and it requires a
- * child refresher content component for its display. The `ion-refresher-content`
- * component is Ionic's default that shows the actual display of the refresher
- * and changes its look depending on the refresher's state. With this separation,
- * it also allows developers to create their own refresher content components.
- * Ideas include having some cool SVG or CSS animations that are customized to
- * your app and animates the various refresher states to your liking.
+ * The `ion-refresher` component holds the refresh logic. 
+ * It requires a child component in order to display the content. 
+ * Ionic uses `ion-refresher-content` by default. This component
+ * displays the refresher and changes the look depending
+ * on the refresher's state. Separating these components
+ * allows developers to create their own refresher content 
+ * components. You could replace our default content with 
+ * custom SVG or CSS animations.
  *
  * @demo /docs/v2/demos/refresher/
  *

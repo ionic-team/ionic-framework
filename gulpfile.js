@@ -525,10 +525,6 @@ gulp.task('demos', ['bundle.demos'], function() {
   return merge([demosStream, cssStream]);
  });
 
- gulp.task('demos.dev', function() {
-
- });
-
  /**
   * Builds necessary files for each demo then bundles them using webpack. Unlike
   * e2e tests, demos are bundled for performance (but have a slower build).
@@ -545,7 +541,7 @@ gulp.task('bundle.demos', ['build.demos', 'transpile', 'copy.libs', 'sass', 'fon
 
       // add our bundle entry, removing previous if necessary
       // since config is cached
-      if (config.entry.length > 4) {
+      if (config.entry.length > 3) {
         config.entry.pop();
       }
       config.entry.push('./' + file);
@@ -637,6 +633,7 @@ function buildDemoSass(isProductionMode) {
   (function combineSass() {
     gulp.src([
         sassVars,
+        'demos/app.variables.scss',
         'demos/app.ios.scss'
       ])
     .pipe(concat('output.ios.scss'))
@@ -644,6 +641,7 @@ function buildDemoSass(isProductionMode) {
 
     gulp.src([
         sassVars,
+        'demos/app.variables.scss',
         'demos/app.md.scss'
       ])
     .pipe(concat('output.md.scss'))
