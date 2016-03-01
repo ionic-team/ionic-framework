@@ -52,6 +52,7 @@ ion-navbar-section {
   flex: 1;
   order: map-get($toolbar-order-md, content);
   max-width: 100%;
+  min-width: 0;
 }
 
 .toolbar-title {
