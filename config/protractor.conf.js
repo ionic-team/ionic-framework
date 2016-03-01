@@ -8,7 +8,7 @@ exports.config = {
   // include glob patterns.
   specs: [
     path.resolve(projectRoot, 'test/css/**/*.scenario.js'),
-    path.resolve(projectRoot, 'dist/ionic-demo/**/*.scenario.js'),
+    path.resolve(projectRoot, 'demos/**/*.scenario.js'),
   ],
 
   // Options to be passed to Jasmine-node.

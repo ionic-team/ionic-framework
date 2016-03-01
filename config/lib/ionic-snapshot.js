@@ -24,7 +24,7 @@ var IonicSnapshot = function(options) {
     self.height = browser.params.height || -1;
     self.highestMismatch = 0;
     self.screenshotRequestPromises = [];
-    self.ptor = protractor.getInstance();
+    // browser = protractor.getInstance();
 
     self.flow = protractor.promise.controlFlow();
 
@@ -74,7 +74,7 @@ var IonicSnapshot = function(options) {
 
       browser.waitForAngular().then(function(){
 
-        self.ptor.getCurrentUrl().then(function(currentUrl) {
+        browser.getCurrentUrl().then(function(currentUrl) {
 
           browser.sleep(self.sleepBetweenSpecs).then(function(){
 
