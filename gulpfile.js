@@ -634,6 +634,7 @@ function buildDemoSass(isProductionMode) {
   (function combineSass() {
     gulp.src([
         sassVars,
+        'demos/app.variables.scss',
         'demos/app.ios.scss'
       ])
     .pipe(concat('output.ios.scss'))
@@ -641,6 +642,7 @@ function buildDemoSass(isProductionMode) {
 
     gulp.src([
         sassVars,
+        'demos/app.variables.scss',
         'demos/app.md.scss'
       ])
     .pipe(concat('output.md.scss'))
