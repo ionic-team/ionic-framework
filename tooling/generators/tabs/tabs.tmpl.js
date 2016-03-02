@@ -1,5 +1,4 @@
 import {NavController, Page} from 'ionic-angular';
-import {Inject} from 'angular2/core';
 <% _.forEach(tabs, function(tab) { %>import {<%= tab.jsClassName %>} from '../<%= tab.fileName %>/<%= tab.fileName %>';
 <% }); %>
 
@@ -7,7 +6,11 @@ import {Inject} from 'angular2/core';
   templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html'
 })
 export class <%= jsClassName %> {
-  constructor(@Inject(NavController) nav) {
+  static get parameters() {
+    return [[NavController]];
+  }
+
+  constructor(nav) {
     // set the root pages for each tab
     <% _.forEach(tabs, function(tab, i) { %>this.tab<%= ++i %>Root = <%= tab.jsClassName %>;
     <% }); %>
