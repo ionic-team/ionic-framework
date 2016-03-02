@@ -8,13 +8,14 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     files: [
-      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.js',
+      'node_modules/es6-module-loader/dist/es6-module-loader.js',
       'node_modules/systemjs/dist/system.js',
       'scripts/karma/system.config.js',
       'node_modules/angular2/bundles/angular2-polyfills.min.js',
       'node_modules/angular2/bundles/angular2.min.js',
       'node_modules/angular2/bundles/router.min.js',
       'node_modules/angular2/bundles/http.min.js',
+      'node_modules/angular2/bundles/testing.dev.js',
       'node_modules/rxjs/bundles/Rx.min.js',
       'dist/bundles/ionic.system.js',
       //'node_modules/angular2/bundles/test_lib.js',
