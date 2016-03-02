@@ -674,7 +674,7 @@ gulp.task('karma', ['tests'], function() {
   return karma.start({ configFile: __dirname + '/scripts/karma/karma.conf.js' })
 });
 
-gulp.task('karma-watch', function() {
+gulp.task('karma-watch', ['tests'], function() {
   var karma = require('karma').server;
   return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js' })
 });
