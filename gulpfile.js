@@ -668,6 +668,7 @@ function buildDemoSass(isProductionMode) {
  */
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
+// requires bundle.system to be run once
 gulp.task('karma', ['tests'], function() {
   var karma = require('karma').server;
   return karma.start({ configFile: __dirname + '/scripts/karma/karma.conf.js' })
