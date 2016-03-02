@@ -1,4 +1,4 @@
-import * as tapClick from 'ionic-angular';
+import * as tapClick from '../../../../ionic';
 
 export function run() {
 

@@ -1,4 +1,4 @@
-import {Refresher, Content, Config, Ion} from 'ionic-angular';
+import {Refresher, Content, Config, Ion} from '../../../../ionic';
 
 export function run() {
 

@@ -1,4 +1,4 @@
-import {TextInput} from 'ionic-angular';
+import {TextInput} from '../../../../ionic';
 
 export function run() {
 
