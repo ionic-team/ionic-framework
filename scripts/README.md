@@ -37,10 +37,10 @@ From `ionic` directory:
 
 From your app directory:
 
-1. `npm link ionic-framework`
+1. `npm link ionic-angular`
 2. `ionic serve` or `ionic run` or `ionic emulate`
 
-To remove the linked version of `ionic-framework` do `npm rm ionic-framework`, and then reinstall using `npm install ionic-framework`.
+To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and then reinstall using `npm install ionic-angular`.
 
 
 ### Running Snapshot
