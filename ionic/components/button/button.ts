@@ -7,26 +7,29 @@ import {Toolbar} from '../toolbar/toolbar';
 /**
   * @name Button
   * @module ionic
-  * @property [outline] - for an unfilled outline button
-  * @property [clear] - for a transparent button that only shows text and icons
-  * @property [round] - for a button with rounded corners
-  * @property [block] - for a block button that fills it's parent container
-  * @property [full] - for a full width button
-  * @property [small] - sets button size to small
-  * @property [large] - sets button size to large
-  * @property [disabled] - disables the button
-  * @property [fab] - for a floating action button
-  * @property [fab-left] - position a fab button to the left
-  * @property [fab-right] - position a fab button to the right
-  * @property [fab-center] - position a fab button towards the center
-  * @property [fab-top] - position a fab button towards the top
-  * @property [fab-bottom] - position a fab button towards the bottom
-  * @property [color] - Dynamically set which color attribute this button should use.
+  *
   * @description
-  * Buttons are simple components in Ionic, can consist of text, an icon, or both, and can be enhanced with a wide range of attributes.
+  * Buttons are simple components in Ionic. They can consist of text and icons
+  * and be enhanced by a wide range of attributes.
+  *
+  * @property [outline] - A transparent button with a border.
+  * @property [clear] - A transparent button without a border.
+  * @property [round] - A button with rounded corners.
+  * @property [block] - A button that fills its parent container with a border-radius.
+  * @property [full] - A button that fills its parent container without a border-radius or borders on the left/right.
+  * @property [small] - A button with size small.
+  * @property [large] - A button with size large.
+  * @property [disabled] - A disabled button.
+  * @property [fab] - A floating action button.
+  * @property [fab-left] - Position a fab button to the left.
+  * @property [fab-right] - Position a fab button to the right.
+  * @property [fab-center] - Position a fab button towards the center.
+  * @property [fab-top] - Position a fab button towards the top.
+  * @property [fab-bottom] - Position a fab button towards the bottom.
+  * @property [color] - Dynamically set which color attribute this button should use.
+  *
   * @demo /docs/v2/demos/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
-
  */
 @Component({
   selector: 'button:not([ion-item]),[button]',

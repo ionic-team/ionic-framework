@@ -5,9 +5,9 @@ import {IonicApp} from './app';
 /**
  * @name Id
  * @description
- * IdRef is an easy way to identify unique components in an app and access them
+ * The `id` attribute is an easy way to identify unique components in an app and access them
  * no matter where in the UI hierarchy you are. For example, this makes toggling
- * a global side menu feasible from any place in the application.
+ * a global side menu possible from any place in the application.
  *
  * See the [Menu section](http://ionicframework.com/docs/v2/components/#menus) of
  * the Component docs for an example of how Menus rely on ID's.
