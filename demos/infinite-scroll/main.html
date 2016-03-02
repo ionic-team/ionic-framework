@@ -1,0 +1,20 @@
+<ion-toolbar>
+  <ion-title>Infinite Scroll</ion-title>
+</ion-toolbar>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item *ngFor="#item of items">
+      {{ item }}
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (infinite)="doInfinite($event)" threshold="100px">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

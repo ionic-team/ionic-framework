@@ -10,13 +10,13 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
 /**
  * @name Refresher
  * @description
- * Allows you to add Pull-To-Refresh to an Content component.
- * Place `ion-refresher` as the first child of your `ion-content` element.
+ * The Refresher provides pull-to-refresh functionality on a content component.
+ * Place the `ion-refresher` as the first child of your `ion-content` element.
  *
- * Pages can then can listen to the refreshers various output events. The
- * `refresh` output event is the one that's fired when the user has pulled
- * down far enough to kick off the refreshing process. Once the async operation
- * has completed and the refreshing should end, call `endRefreshing()`.
+ * Pages can then listen to the refresher's various output events. The
+ * `refresh` output event is fired when the user has pulled down far
+ * enough to kick off the refreshing process. Once the async operation
+ * has completed and the refreshing should end, call `complete()`.
  *
  * @usage
  * ```html
@@ -38,7 +38,7 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
  *
  *     setTimeout(() => {
  *       console.log('Async operation has ended');
- *       refresher.endRefreshing();
+ *       refresher.complete();
  *     }, 2000);
  *   }
  *
@@ -71,13 +71,14 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
  *
  * ## Further Customizing Refresher Content
  *
- * The `ion-refresh` component holds the refresh logic, and it requires a
- * child refresher content component for its display. The `ion-refresher-content`
- * component is Ionic's default that shows the actual display of the refresher
- * and changes its look depending on the refresher's state. With this separation,
- * it also allows developers to create their own refresher content components.
- * Ideas include having some cool SVG or CSS animations that are customized to
- * your app and animates the various refresher states to your liking.
+ * The `ion-refresher` component holds the refresh logic. 
+ * It requires a child component in order to display the content. 
+ * Ionic uses `ion-refresher-content` by default. This component
+ * displays the refresher and changes the look depending
+ * on the refresher's state. Separating these components
+ * allows developers to create their own refresher content 
+ * components. You could replace our default content with 
+ * custom SVG or CSS animations.
  *
  * @demo /docs/v2/demos/refresher/
  *
@@ -108,8 +109,8 @@ export class Refresher {
    * - `pulling` - The user is actively pulling down the refresher, but has not reached the point yet that if the user lets go, it'll refresh.
    * - `cancelling` - The user pulled down the refresher and let go, but did not pull down far enough to kick off the `refreshing` state. After letting go, the refresher is in the `cancelling` state while it is closing, and will go back to the `inactive` state once closed.
    * - `ready` - The user has pulled down the refresher far enough that if they let go, it'll begin the `refreshing` state.
-   * - `refreshing` - The refresher is actively waiting on the async operation to end. Once the refresh handler calls `endRefreshing()` it will begin the `ending` state.
-   * - `ending` - The `refreshing` state has finished and the refresher is in the process of closing itself. Once closed, the refresher will go back to the `inactive` state.
+   * - `refreshing` - The refresher is actively waiting on the async operation to end. Once the refresh handler calls `complete()` it will begin the `completing` state.
+   * - `completing` - The `refreshing` state has finished and the refresher is in the process of closing itself. Once closed, the refresher will go back to the `inactive` state.
    */
   state: string = STATE_INACTIVE;
 
@@ -180,7 +181,7 @@ export class Refresher {
    * @output {event} When the user lets go and has pulled down far enough, which would be
    * farther than the `pullMin`, then your refresh hander if fired and the state is
    * updated to `refreshing`. From within your refresh handler, you must call the
-   * `endRefreshing()` method when your async operation has completed.
+   * `complete()` method when your async operation has completed.
    */
   @Output() refresh: EventEmitter<Refresher> = new EventEmitter();
 
@@ -210,6 +211,9 @@ export class Refresher {
         console.warn('<ion-refresher> property "' + attrName + '" should now be placed on the inner <ion-refresher-content> component instead of <ion-refresher>. Please review the Refresher docs for API updates.');
       }
     });
+    if (!ele.children.length) {
+      console.warn('<ion-refresher> should now have an inner <ion-refresher-content> component. Please review the Refresher docs for API updates.');
+    }
   }
 
   private _onStart(ev: TouchEvent): any {
@@ -253,7 +257,7 @@ export class Refresher {
     // do nothing if it's actively refreshing
     // or it's in the process of closing
     // or this was never a startY
-    if (this.startY === null || this.state === STATE_REFRESHING || this.state === STATE_CANCELLING || this.state === STATE_ENDING) {
+    if (this.startY === null || this.state === STATE_REFRESHING || this.state === STATE_CANCELLING || this.state === STATE_COMPLETING) {
       return 2;
     }
 
@@ -299,15 +303,16 @@ export class Refresher {
     }
 
     if (this.state === STATE_INACTIVE) {
-      // this refresh is not alreadying actively pulling down
+      // this refresh is not already actively pulling down
 
       // get the content's scrollTop
-      let scrollHostScrollTop = this._content.getScrollTop();
+      let scrollHostScrollTop = this._content.getContentDimensions().scrollTop;
 
       // if the scrollTop is greater than zero then it's
       // not possible to pull the content down yet
       if (scrollHostScrollTop > 0) {
         this.progress = 0;
+        this.startY = null;
         return 7;
       }
 
@@ -383,7 +388,7 @@ export class Refresher {
         // set the content back to it's original location
         // and close the refresher
         // set that the refresh is actively cancelling
-        this.cancelRefreshing();
+        this.cancel();
       });
     }
 
@@ -411,32 +416,23 @@ export class Refresher {
   }
 
   /**
-   * Call `endRefreshing()` when your async operation has completed.
+   * Call `complete()` when your async operation has completed.
    * For example, the `refreshing` state is while the app is performing
    * an asynchronous operation, such as receiving more data from an
    * AJAX request. Once the data has been received, you then call this
    * method to signify that the refreshing has completed and to close
    * the refresher. This method also changes the refresher's state from
-   * `refreshing` to `ending`.
+   * `refreshing` to `completing`.
    */
-  endRefreshing() {
-    this._close(STATE_ENDING, '120ms');
+  complete() {
+    this._close(STATE_COMPLETING, '120ms');
   }
 
   /**
    * Changes the refresher's state from `refreshing` to `cancelling`.
    */
-  cancelRefreshing() {
+  cancel() {
     this._close(STATE_CANCELLING, '');
-  }
-
-  /**
-   * @private
-   */
-  private complete() {
-    // deprecated warning
-    console.warn('refresher completed() deprecated, please update to endRefreshing()');
-    this.endRefreshing();
   }
 
   private _close(state: string, delay: string) {
@@ -546,4 +542,4 @@ const STATE_PULLING = 'pulling';
 const STATE_READY = 'ready';
 const STATE_REFRESHING = 'refreshing';
 const STATE_CANCELLING = 'cancelling';
-const STATE_ENDING = 'ending';
+const STATE_COMPLETING = 'completing';

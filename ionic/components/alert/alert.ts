@@ -12,8 +12,8 @@ import {ViewController} from '../nav/view-controller';
 /**
  * @name Alert
  * @description
- * An Alert is a dialog that presents users with either information, or used
- * to receive information from the user using inputs. An alert appears on top
+ * An Alert is a dialog that presents users with information or collects
+ * information from the user using inputs. An alert appears on top
  * of the app's content, and must be manually dismissed by the user before
  * they can resume interaction with the app.
  *
@@ -31,11 +31,11 @@ import {ViewController} from '../nav/view-controller';
  * by tapping the backdrop, then it will fire the handler from the button
  * with a cancel role.
  *
- * Alerts can also include inputs whos data can be passed back to the app.
+ * Alerts can also include inputs whose data can be passed back to the app.
  * Inputs can be used to prompt users for information.
  *
- * Its shorthand is to add all the alert's options from within the
- * `Alert.create(opts)` first argument. Otherwise the alert's instance
+ * You can pass all of the alert's options in the first argument of
+ * the create method: `Alert.create(opts)`. Otherwise the alert's instance
  * has methods to add options, such as `setTitle()` or `addButton()`.
  *
  * @usage

@@ -8,7 +8,7 @@ import {MenuType} from './menu-types';
  * _For basic Menu usage, see the [Menu section](../../../../components/#menus)
  * of the Component docs._
  *
- * Menu is a side-menu interface that can be dragged out or toggled to open or closed.
+ * Menu is a side-menu interface that can be dragged and toggled to open or close.
  * An Ionic app can have numerous menus, all of which can be controlled within
  * template HTML, or programmatically.
  *

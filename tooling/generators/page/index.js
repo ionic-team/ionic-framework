@@ -28,9 +28,9 @@ Generator.prototype.renderTemplates = function renderTemplates() {
   }, this);
 
   console.log(('\nDon\'t forget to add an import for ' + scssName + ' ' + 'in ' +
-               path.join('app', 'themes', 'app.core.scss') + ':\n\n  @import ' +
+               path.join('app', 'themes', 'app.core.scss') + ':\n\n  @import "' +
                path.relative(path.join(this.appDirectory, 'app', 'themes'), scssPath) +
-               '\n').green);
+               '";\n').green);
 }
 
 

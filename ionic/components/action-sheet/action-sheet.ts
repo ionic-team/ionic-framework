@@ -16,9 +16,9 @@ import {ViewController} from '../nav/view-controller';
  * An Action Sheet is a dialog that lets the user choose from a set of
  * options. It appears on top of the app's content, and must be manually
  * dismissed by the user before they can resume interaction with the app.
- * Dangerous (destructive) options are made obvious. There are easy
+ * Dangerous (destructive) options are made obvious in `ios` mode. There are easy
  * ways to cancel out of the action sheet, such as tapping the backdrop or
- * hitting the escape key on desktop. 
+ * hitting the escape key on desktop.
  *
  * An action sheet is created from an array of `buttons`, with each button
  * including properties for its `text`, and optionally a `handler` and `role`.
@@ -26,16 +26,16 @@ import {ViewController} from '../nav/view-controller';
  * action sheet can also optionally have a `title` and a `subTitle`.
  *
  * A button's `role` property can either be `destructive` or `cancel`. Buttons
- * without a role property will have a default look for its platform. Buttons
+ * without a role property will have the default look for the platform. Buttons
  * with the `cancel` role will always load as the bottom button, no matter where
- * it shows up in the array. All other buttons will show up in the order they
+ * they are in the array. All other buttons will be displayed in the order they
  * have been added to the `buttons` array. Note: We recommend that `destructive`
- * buttons show be the first button in the array, making it the button on top.
+ * buttons are always the first button in the array, making them the top button.
  * Additionally, if the action sheet is dismissed by tapping the backdrop, then
  * it will fire the handler from the button with the cancel role.
  *
- * Its shorthand is to add all the action sheet's options from within the
- * `ActionSheet.create(opts)` first argument. Otherwise the action sheet's
+ * You can pass all of the action sheet's options in the first argument of
+ * the create method: `ActionSheet.create(opts)`. Otherwise the action sheet's
  * instance has methods to add options, like `setTitle()` or `addButton()`.
  *
  * @usage

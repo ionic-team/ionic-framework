@@ -11,7 +11,7 @@ In the root of the package are ES5 sources in the CommonJS module format, their 
 Usually, the only Javascript file required by the user is `ionic.js`, as everything from Ionic can be imported from this file:
 
 ```
-  import {App, Page} from 'ionic-framework/ionic';
+  import {App, Page} from 'ionic-angular';
 ```
 
 ### Bundles
@@ -20,7 +20,7 @@ Minified and unminified CommonJS and System.register module format bundles, as w
 
 ### Installation and More
 
-To use Ionic 2, we recommend installing and utilizing the Ionic CLI which will help you create pre-configured Ionic apps. 
+To use Ionic 2, we recommend installing and utilizing the Ionic CLI which will help you create pre-configured Ionic apps.
 
 For full instructions on using Ionic 2, please visit the [Ionic 2 Documentation](http://ionicframework.com/docs/v2/)
 

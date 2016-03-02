@@ -103,11 +103,6 @@ ion-icon[item-right] {
    padding: 0 1px;
  }
 
-[text-wrap] ion-label {
-  font-size: $item-md-body-text-font-size;
-  line-height: $item-md-body-text-line-height;
-}
-
 ion-icon[item-left] + .item-inner,
 ion-icon[item-left] + .item-input {
   margin-left: $item-md-padding-left + ($item-md-padding-left / 2);

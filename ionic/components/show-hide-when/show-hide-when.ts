@@ -65,7 +65,25 @@ export class DisplayWhen {
  * Complements the [hideWhen attribute](../HideWhen).
  * @usage
  * ```html
- * <div showWhen="ios">I am only visible on iOS!</div>
+ * <div showWhen="android">
+ *  I am visible on Android!
+ * </div>
+ *
+ * <div showWhen="ios">
+ *  I am visible on iOS!
+ * </div>
+ *
+ * <div showWhen="android,ios">
+ *  I am visible on Android and iOS!
+ * </div>
+ *
+ * <div showWhen="portrait">
+ *  I am visible on Portrait!
+ * </div>
+ *
+ * <div showWhen="landscape">
+ *  I am visible on Landscape!
+ * </div>
  * ```
  * @demo /docs/v2/demos/show-when/
  * @see {@link ../HideWhen HideWhen API Docs}
@@ -103,8 +121,27 @@ export class ShowWhen extends DisplayWhen {
  * Complements the [showWhen attribute](../ShowWhen).
  * @usage
  * ```html
- * <div hideWhen="android">I am hidden on Android!</div>
+ * <div hideWhen="android">
+ *  I am hidden on Android!
+ * </div>
+ *
+ * <div hideWhen="ios">
+ *  I am hidden on iOS!
+ * </div>
+ *
+ * <div hideWhen="android,ios">
+ *  I am hidden on Android and iOS!
+ * </div>
+ *
+ * <div hideWhen="portrait">
+ *  I am hidden on Portrait!
+ * </div>
+ *
+ * <div hideWhen="landscape">
+ *  I am hidden on Landscape!
+ * </div>
  * ```
+ *
  * @demo /docs/v2/demos/hide-when/
  * @see {@link ../ShowWhen ShowWhen API Docs}
  */

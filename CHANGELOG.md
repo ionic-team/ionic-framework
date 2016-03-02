@@ -1,3 +1,101 @@
+<a name="2.0.0-beta.2"></a>
+# [2.0.0-beta.2](https://github.com/driftyco/ionic/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2016-03-01)
+
+
+### Bug Fixes
+
+* **alert:** add max height to alert body so it will overflow ([9c0eebd](https://github.com/driftyco/ionic/commit/9c0eebd)), closes [#5316](https://github.com/driftyco/ionic/issues/5316)
+* **animation:** ensure final inline styles applied when fallback runs ([4524e5a](https://github.com/driftyco/ionic/commit/4524e5a)), closes [#5484](https://github.com/driftyco/ionic/issues/5484)
+* **generate:** output correct Sass import for pages ([3784f47](https://github.com/driftyco/ionic/commit/3784f47)), closes [#5641](https://github.com/driftyco/ionic/issues/5641)
+* **menu:** fix enabled check ([8564d79](https://github.com/driftyco/ionic/commit/8564d79))
+* **nav:** immediately stop if view removed before trans finished ([4fabade](https://github.com/driftyco/ionic/commit/4fabade))
+* **overlay:** do not dom cache views before overlays ([4cae151](https://github.com/driftyco/ionic/commit/4cae151)), closes [#5483](https://github.com/driftyco/ionic/issues/5483)
+* **refresher:** get scrollTop from the scroll element to prevent refreshing when dragging up ([ea884de](https://github.com/driftyco/ionic/commit/ea884de)), closes [#5207](https://github.com/driftyco/ionic/issues/5207)
+* **sass:** rename brightness/inverse sass functions ([892b007](https://github.com/driftyco/ionic/commit/892b007)), closes [#5542](https://github.com/driftyco/ionic/issues/5542)
+* **tabs:** pop tab page to parent nav ([b9eec24](https://github.com/driftyco/ionic/commit/b9eec24)), closes [#5196](https://github.com/driftyco/ionic/issues/5196)
+* **toolbar:** add a min-width to the toolbar content so that it won't overlap buttons ([5fb1e08](https://github.com/driftyco/ionic/commit/5fb1e08)), closes [#5657](https://github.com/driftyco/ionic/issues/5657)
+
+### Features
+
+* **checkbox:** add change event ([2596731](https://github.com/driftyco/ionic/commit/2596731))
+* **infiniteScroll:** add infinite scroll ([0480fa3](https://github.com/driftyco/ionic/commit/0480fa3)), closes [#5415](https://github.com/driftyco/ionic/issues/5415)
+* **input:** default autocomplete/autocorrect=off, fix autofocus ([b53d707](https://github.com/driftyco/ionic/commit/b53d707))
+* **menu:** grab the menu by side only if it is enabled ([a2b7a21](https://github.com/driftyco/ionic/commit/a2b7a21))
+* **NavController:** prevent other lifecycle events from firing ([6b9e59d](https://github.com/driftyco/ionic/commit/6b9e59d)), closes [#5516](https://github.com/driftyco/ionic/issues/5516)
+* **prodMode:** set isProd() when prodMode set in @App config ([3c8daa0](https://github.com/driftyco/ionic/commit/3c8daa0))
+* **spinner:** SVG spinners ([6c73446](https://github.com/driftyco/ionic/commit/6c73446))
+* **toggle:** add change event ([730cccd](https://github.com/driftyco/ionic/commit/730cccd))
+
+### Refactor
+
+* **alert:** remove tabbarIcons and add tabbarLayout which accepts different values ([8cfebe1](https://github.com/driftyco/ionic/commit/8cfebe1)), closes [#5625](https://github.com/driftyco/ionic/issues/5625)
+* **menu:** improve menu get lookup ([004e635](https://github.com/driftyco/ionic/commit/004e635)), closes [#5535](https://github.com/driftyco/ionic/issues/5535)
+* **tabs:** remove duplicated styles from imports ([d5ebf3f](https://github.com/driftyco/ionic/commit/d5ebf3f)), closes [#5624](https://github.com/driftyco/ionic/issues/5624)
+* **searchbar:** add class to searchbar when hideCancel is passed ([a0f0004](https://github.com/driftyco/ionic/commit/a0f0004))
+
+### Breaking Changes
+
+#### New npm module
+
+The npm module has been renamed from `ionic-framework` to `ionic-angular`.
+
+Update package.json to reflect this:
+
+```
+"ionic-angular": "2.0.0-beta.2",
+```
+
+imports from the framework were:
+
+```js
+  import {Platform} from 'ionic-framework/ionic';
+```
+
+and are now:
+
+```js
+  import {Platform} from 'ionic-angular';
+```
+
+#### Infinite Scroll
+
+Infinite Scroll has been added: [docs](http://ionicframework.com/docs/v2/api/components/infinite-scroll/InfiniteScroll/)
+
+#### Refresher:
+
+- `<ion-refresher>` now takes a child `<ion-refresher-content>`
+component.
+- Custom refresh content components can now be replaced for Ionic's
+default refresher content.
+- Properties `pullingIcon`, `pullingText` and `refreshingText` have
+been moved to the `<ion-refresher-content>` component.
+- `spinner` property has been renamed to `refreshingSpinner` and now
+goes on the `<ion-refresher-content>` component.
+- `refreshingIcon` property is no longer an input, but instead
+`refreshingSpinner` should be used.
+
+Was:
+
+```
+<ion-refresher (refresh)="doRefresh($event)"
+pullingIcon="arrow-dropdown">
+</ion-refresher>
+```
+
+Now:
+
+```
+<ion-refresher (refresh)="doRefresh($event)">
+  <ion-refresher-content
+pullingIcon="arrow-dropdown"></ion-refresher-content>
+</ion-refresher>
+```
+
+#### Tabs
+
+Input property `tabbarIcons` has been replaced by `tabbarLayout` and accepts the following values: `icon-top`, `icon-left`, `icon-right`, `icon-bottom`, `icon-hide`, `title-hide`.
+
+
 <a name="2.0.0-beta.1"></a>
 # [2.0.0-beta.1](https://github.com/driftyco/ionic/compare/v2.0.0-beta.0...v2.0.0-beta.1) (2016-02-18)
 

@@ -13,7 +13,8 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * @name Config
  * @demo /docs/v2/demos/config/
  * @description
- * Config lets you change multiple or a single value in an apps mode configuration. Things such as tab placement, icon changes, and view animations can be set here.
+ * The Config lets you configure your entire app or specific platforms.
+ * You can set the tab placement, icon mode, animations, and more here.
  *
  * ```ts
  * @App({
@@ -29,7 +30,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * })
  * ```
  *
- * Or change the whole mode
+ * To change the mode to always use Material Design (md).
  *
  * ```ts
  * @App({
@@ -40,7 +41,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * })
  * ```
  *
- * Config can be overwritting at multiple levels, allowing deeper configuration. Taking the example from earlier, we can override any setting we want based on a platform.
+ * Config can be overwritten at multiple levels allowing for more configuration. Taking the example from earlier, we can override any setting we want based on a platform.
  * ```ts
  * @App({
  *   template: `<ion-nav [root]="root"></ion-nav>`
@@ -62,8 +63,6 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  *    <ion-tab tabTitle="Dash" tabIcon="pulse" [root]="tabRoot"></ion-tab>
  *  </ion-tabs>
  * ```
- *
- * The property will override anything else set in the apps.
  *
  * The last way we could configure is through URL query strings. This is useful for testing while in the browser.
  * Simply add `?ionic<PROPERTYNAME>=<value>` to the url.

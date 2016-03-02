@@ -1,3 +1,4 @@
+import {App, InfiniteScroll} from 'ionic-angular';
 import {Injectable} from 'angular2/core';
 
 /**
@@ -9,7 +10,7 @@ export class MockProvider {
   getData() {
     // return mock data synchronously
     let data = [];
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 20; i++) {
       data.push( this._getRandomData() );
     }
     return data;
@@ -57,5 +58,33 @@ export class MockProvider {
     'Kick-Ass',
     'Drive Angry',
   ];
+
+}
+
+
+@App({
+  templateUrl: 'main.html',
+  providers: [MockProvider]
+})
+class ApiDemoApp {
+  items: string[];
+
+  constructor(private mockProvider: MockProvider) {
+    this.items = mockProvider.getData();
+  }
+
+  doInfinite(infiniteScroll: InfiniteScroll) {
+    this.mockProvider.getAsyncData().then((newData) => {
+      for (var i = 0; i < newData.length; i++) {
+        this.items.push( newData[i] );
+      }
+
+      infiniteScroll.complete();
+
+      if (this.items.length > 90) {
+        infiniteScroll.enable(false);
+      }
+    });
+  }
 
 }
