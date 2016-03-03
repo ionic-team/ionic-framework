@@ -4,10 +4,10 @@
 // iOS Segment
 // --------------------------------------------------
 
-$segment-button-ios-bg-color:                   transparent !default;
-$segment-button-ios-bg-color-activated:         $toolbar-ios-active-color !default;
+$segment-button-ios-background-color:                   transparent !default;
+$segment-button-ios-background-color-activated:         $toolbar-ios-active-color !default;
 
-$segment-button-ios-text-color:                 color-inverse($segment-button-ios-bg-color-activated) !default;
+$segment-button-ios-text-color:                 color-inverse($segment-button-ios-background-color-activated) !default;
 $segment-button-ios-activated-transition:       100ms all linear !default;
 $segment-button-ios-hover-transition:           100ms all linear !default;
 $segment-button-ios-active-transition:          100ms all linear !default;
@@ -37,10 +37,10 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
   border-width: $segment-button-ios-border-width;
   border-style: solid;
-  border-color: $segment-button-ios-bg-color-activated;
+  border-color: $segment-button-ios-background-color-activated;
 
-  color: $segment-button-ios-bg-color-activated;
-  background-color: $segment-button-ios-bg-color;
+  color: $segment-button-ios-background-color-activated;
+  background-color: $segment-button-ios-background-color;
 
   flex: 1;
   width: 0;  
@@ -53,17 +53,17 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   &.segment-activated {
     opacity: 1;
     color: $segment-button-ios-text-color;
-    background-color: $segment-button-ios-bg-color-activated;
+    background-color: $segment-button-ios-background-color-activated;
     transition: $segment-button-ios-activated-transition;
   }
 
   &:hover:not(.segment-activated) {
-    background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-hover-opacity);
+    background-color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-hover-opacity);
     transition: $segment-button-ios-hover-transition;
   }
 
   &:active:not(.segment-activated) {
-    background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-active-opacity);
+    background-color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-active-opacity);
     transition: $segment-button-ios-active-transition;
   }
 

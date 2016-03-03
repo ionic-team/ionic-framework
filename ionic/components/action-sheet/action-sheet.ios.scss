@@ -4,85 +4,91 @@
 // iOS Action Sheet
 // --------------------------------------------------
 
-$action-sheet-ios-group-margin:                   10px !default;
-$action-sheet-ios-background-color:               #f9f9f9 !default;
+$action-sheet-ios-text-align:                           center !default;
+$action-sheet-ios-padding:                              0 10px !default;
+$action-sheet-ios-group-margin-bottom:                  10px !default;
+$action-sheet-ios-background:                           #f9f9f9 !default;
 
-$action-sheet-ios-border-color:                   #d6d6da !default;
-$action-sheet-ios-border-radius:                  13px !default;
+$action-sheet-ios-border-color:                         #d6d6da !default;
+$action-sheet-ios-border-radius:                        13px !default;
 
-$action-sheet-ios-title-color:                    #8f8f8f !default;
-$action-sheet-ios-title-font-size:                1.3rem !default;
+$action-sheet-ios-title-padding:                        1.5rem !default;
+$action-sheet-ios-title-color:                          #8f8f8f !default;
+$action-sheet-ios-title-font-size:                      1.3rem !default;
+$action-sheet-ios-title-font-weight:                    400 !default;
+$action-sheet-ios-title-border-radius:                  0 !default;
 
-$action-sheet-ios-button-height:                  5.6rem !default;
-$action-sheet-ios-button-padding:                 18px !default;
-$action-sheet-ios-button-text-color:              #007aff !default;
-$action-sheet-ios-button-font-size:               2rem !default;
-$action-sheet-ios-button-border-color:            #d1d3d6 !default;
-$action-sheet-ios-button-background-active-color: #ebebeb !default;
+$action-sheet-ios-button-min-height:                    5.6rem !default;
+$action-sheet-ios-button-padding:                       18px !default;
+$action-sheet-ios-button-text-color:                    #007aff !default;
+$action-sheet-ios-button-font-size:                     2rem !default;
+$action-sheet-ios-button-border-width:                  1px !default;
+$action-sheet-ios-button-border-style:                  solid !default;
+$action-sheet-ios-button-border-color:                  #d1d3d6 !default;
+$action-sheet-ios-button-background:                    transparent !default;
+$action-sheet-ios-button-background-activated:          #ebebeb !default;
 
-$action-sheet-ios-destructive-button-text-color:  #f53d3d !default;
-$action-sheet-ios-cancel-button-background-color: #fff !default;
+$action-sheet-ios-button-destructive-text-color:        #f53d3d !default;
+$action-sheet-ios-button-cancel-background:             #fff !default;
+$action-sheet-ios-button-cancel-font-weight:            600 !default;
 
 
 ion-action-sheet {
-  text-align: center;
+  text-align: $action-sheet-ios-text-align;
 }
 
 .action-sheet-container {
-  padding: 0 $action-sheet-ios-group-margin;
+  padding: $action-sheet-ios-padding;
 }
 
 .action-sheet-group {
   overflow: hidden;
-  margin-bottom: $action-sheet-ios-group-margin - 2;
+  margin-bottom: $action-sheet-ios-group-margin-bottom - 2;
   border-radius: $action-sheet-ios-border-radius;
-  background: $action-sheet-ios-background-color;
+  background: $action-sheet-ios-background;
 
   &:last-child {
-    margin-bottom: $action-sheet-ios-group-margin;
+    margin-bottom: $action-sheet-ios-group-margin-bottom;
   }
 }
 
 .action-sheet-title {
-  padding: 1.5rem;
+  padding: $action-sheet-ios-title-padding;
   font-size: $action-sheet-ios-title-font-size;
-  font-weight: 400;
   color: $action-sheet-ios-title-color;
-  border-radius: 0;
-  text-align: center;
-}
-
-.action-sheet-title {
-  border-bottom: 1px solid $action-sheet-ios-border-color;
+  font-weight: $action-sheet-ios-title-font-weight;
+  border-radius: $action-sheet-ios-title-border-radius;
+  text-align: $action-sheet-ios-text-align;
+  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
 }
 
 .action-sheet-button {
   padding: $action-sheet-ios-button-padding;
-  min-height: $action-sheet-ios-button-height;
-  border-bottom: 1px solid $action-sheet-ios-border-color;
+  min-height: $action-sheet-ios-button-min-height;
+  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
   font-size: $action-sheet-ios-button-font-size;
   color: $action-sheet-ios-button-text-color;
-  background: transparent;
+  background: $action-sheet-ios-button-background;
 
   &:last-child {
     border-bottom: 0;
   }
 
   &.activated {
-    margin-top:-1px;
-    background: $action-sheet-ios-button-background-active-color;
-    border-bottom-color: $action-sheet-ios-button-background-active-color;
-    border-top:1px solid $action-sheet-ios-button-background-active-color;
+    margin-top: -$action-sheet-ios-button-border-width;
+    background: $action-sheet-ios-button-background-activated;
+    border-bottom-color: $action-sheet-ios-button-background-activated;
+    border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
   }
 }
 
 .action-sheet-destructive {
-  color: $action-sheet-ios-destructive-button-text-color;
+  color: $action-sheet-ios-button-destructive-text-color;
 }
 
 .action-sheet-cancel {
-  font-weight: 600;
-  background: $action-sheet-ios-cancel-button-background-color;
+  font-weight: $action-sheet-ios-button-cancel-font-weight;
+  background: $action-sheet-ios-button-cancel-background;
 }
 
 &.hairlines {

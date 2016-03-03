@@ -98,7 +98,7 @@ export class Content extends Ion {
    *   ngAfterViewInit() {
    *     // Here 'my-content' is the ID of my ion-content
    *     this.content = this.app.getComponent('my-content');
-   *     this.content.addScrollEventListener(this.myScroll);
+   *     this.content.addScrollListener(this.myScroll);
    *   }
    *     myScroll() {
    *      console.info('They see me scrolling...');

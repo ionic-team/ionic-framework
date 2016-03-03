@@ -1,5 +1,7 @@
 var buildConfig = require('../build/config');
 
+
+
 module.exports = function(config) {
   config.set({
     singleRun: true,
@@ -8,7 +10,8 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     files: [
-      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.js',
+      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.js', //npm2
+      'node_modules/es6-module-loader/dist/es6-module-loader.src.js', //npm3
       'node_modules/systemjs/dist/system.js',
       'scripts/karma/system.config.js',
       'node_modules/angular2/bundles/angular2-polyfills.min.js',

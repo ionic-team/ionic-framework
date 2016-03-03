@@ -7,7 +7,7 @@ import {hasFocusedTextInput, raf, rafFrames} from './dom';
 /**
  * @name Keyboard
  * @description
- * The `Keyboard` class allows you to work with the keyboard events provide by the Ionic keyboard plugin.
+ * The `Keyboard` class allows you to work with the keyboard events provided by the Ionic keyboard plugin.
  *
  * @usage
  * ```ts

@@ -4,45 +4,33 @@
 // --------------------------------------------------
 
 $action-sheet-width:                             100% !default;
-$action-sheet-max-width:                         520px !default;
+$action-sheet-max-width:                         500px !default;
 
 
 ion-action-sheet {
   position: absolute;
+  width: $action-sheet-width;
+  height: $action-sheet-width;
+  z-index: $z-index-overlay;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   display: block;
-  z-index: $z-index-overlay;
 }
 
 .action-sheet-wrapper {
   position: absolute;
+  width: $action-sheet-width;
+  max-width: $action-sheet-max-width;
   z-index: $z-index-overlay-wrapper;
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
   display: block;
-  max-width: 500px;
   margin: auto;
 
   transform: translate3d(0, 100%, 0);
 }
 
-.action-sheet-container {
-  width: auto;
-  overflow: hidden;
-}
-
 .action-sheet-button {
-  display: block;
-  width: 100%;
-  margin: 0;
-  border-radius: 0;
-
-  &.activated {
-    box-shadow: none;
-  }
+  width: $action-sheet-width;
 }

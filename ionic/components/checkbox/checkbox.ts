@@ -10,9 +10,12 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
 
 
 /**
- * The checkbox is no different than the HTML checkbox input, except
- * it's styled accordingly to the the platform and design mode, such
- * as iOS or Material Design.
+ * @name Checkbox
+ * @module ionic
+ *
+ * @description
+ * The Checkbox is a simple component styled based on the mode. It can be
+ * placed in an `ion-item` or used as a stand-alone checkbox.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
  * for more info on forms and inputs.
@@ -40,6 +43,7 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
  *
  *  </ion-list>
  * ```
+ *
  * @demo /docs/v2/demos/checkbox/
  * @see {@link /docs/v2/components#checkbox Checkbox Component Docs}
  */

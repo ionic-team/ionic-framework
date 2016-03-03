@@ -63,17 +63,14 @@ class ToolbarBackground {
  * @name Navbar
  * @description
  * Navbar is a global level toolbar that gets updated every time a page gets
- * loaded. You can pass the navbar a `ion-title` or any number of buttons.
+ * loaded. You can pass the navbar an `ion-title`, any number of buttons, a segment, or a searchbar.
  *
  * @usage
  * ```html
  * <ion-navbar *navbar>
- *
- *   <ion-buttons start>
- *     <button (click)="toggleItems()">
- *       toggle
- *     </button>
- *   </ion-buttons>
+ *   <button menuToggle>
+ *     <ion-icon name="menu"></ion-icon>
+ *   </button>
  *
  *   <ion-title>
  *     Page Title
@@ -81,7 +78,7 @@ class ToolbarBackground {
  *
  *   <ion-buttons end>
  *     <button (click)="openModal()">
- *       Modal
+ *       <ion-icon name="options"></ion-icon>
  *     </button>
  *   </ion-buttons>
  * </ion-navbar>

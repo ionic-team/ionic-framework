@@ -25,6 +25,14 @@ export class InitialPage {
       var androidSheet = {
         title: 'Albums',
         buttons: [
+          {
+            text: 'Delete',
+            style: 'destructive',
+            icon: 'md-trash',
+            handler: () => {
+              console.log('Destructive clicked');
+            }
+          },
           { text: 'Share',
             icon: 'share',
             handler: () => {
@@ -44,14 +52,6 @@ export class InitialPage {
             }
           },
           {
-            text: 'Delete',
-            style: 'destructive',
-            icon: 'md-trash',
-            handler: () => {
-              console.log('Destructive clicked');
-            }
-          },
-          {
             text: 'Cancel',
             style: 'cancel',
             icon: 'md-close',
@@ -65,6 +65,13 @@ export class InitialPage {
 
     let actionSheet = ActionSheet.create( androidSheet || {
       buttons: [
+        {
+          text: 'Delete',
+          style: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },
         {
           text: 'Share',
           handler: () => {
@@ -81,13 +88,6 @@ export class InitialPage {
           text: 'Favorite',
           handler: () => {
             console.log('Favorite clicked');
-          }
-        },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          handler: () => {
-            console.log('Destructive clicked');
           }
         },
         {

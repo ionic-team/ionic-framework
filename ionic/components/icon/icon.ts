@@ -10,12 +10,12 @@ import {Config} from '../../config/config';
  * For a full list of available icons, check out the
  * [Ionicons resource docs](../../../../resources/ionicons).
  *
- * One feature of Ionicons is that when icon names are set, the actual icon
+ * One feature of Ionicons in Ionic is when icon names are set, the actual icon
  * which is rendered can change slightly depending on the mode the app is
  * running from. For example, by setting the icon name of `alarm`, on iOS the
  * icon will automatically apply `ios-alarm`, and on Material Design it will
- * automatically apply `md-alarm`. This allow the developer to write the
- * markup once, and let Ionic automatically apply the appropriate icon.
+ * automatically apply `md-alarm`. This allows the developer to write the
+ * markup once while Ionic applies the appropriate icon based on the mode.
  *
  * @usage
  * ```html

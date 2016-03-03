@@ -1,4 +1,4 @@
-import {InfiniteScroll, Content, Config} from 'ionic-angular';
+import {InfiniteScroll, Content, Config} from '../../../../ionic';
 
 export function run() {
 

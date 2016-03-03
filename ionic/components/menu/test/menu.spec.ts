@@ -1,4 +1,4 @@
-import {MenuController, Menu} from 'ionic-angular';
+import {MenuController, Menu} from '../../../../ionic';
 
 export function run() {
   describe('MenuController', () => {

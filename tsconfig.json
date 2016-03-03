@@ -7,8 +7,10 @@
     "declaration": true,
     "outDir": "dist"
   },
-  "files": [
-    "ionic/index.ts",
+  "exclude": [
+    "node_modules",
+    "scripts",
+    "typings/main",
     "typings/main.d.ts"
   ],
   "compileOnSave" : false,

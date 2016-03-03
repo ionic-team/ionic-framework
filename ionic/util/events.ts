@@ -1,8 +1,9 @@
 /**
  * @name Events
  * @description
- * Events is a pub/sub style event system for sending and responding to application-level
+ * Events is a publish-subscribe style event system for sending and responding to application-level
  * events across your app.
+ *
  * @usage
  * ```ts
  * // first page (publish an event when a user is created)

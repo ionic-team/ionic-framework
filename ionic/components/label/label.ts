@@ -4,10 +4,8 @@ import {Directive, ElementRef, Renderer, Input, Optional, Attribute} from 'angul
 /**
  * @name Label
  * @description
- * Labels describe the data that the user should enter in to an input
- * element. You can give `ion-label` attributes to tell it how to
- * handle its display type, which is especially useful for an
- * `ion-item` which contains a text input.
+ * Labels are placed inside of an `ion-item` element and can be used
+ * to describe an `ion-input`, `ion-toggle`, `ion-checkbox`, and more.
  *
  * @property [fixed] - a persistant label that sits next the the input
  * @property [floating] - a label that will float about the input if the input is empty of looses focus
@@ -22,7 +20,7 @@ import {Directive, ElementRef, Renderer, Input, Optional, Attribute} from 'angul
  *  </ion-item>
  *
  *  <ion-item>
- *    <ion-labe fixed>Website</ion-label>
+ *    <ion-label fixed>Website</ion-label>
  *    <ion-input type="url"></ion-input>
  *  </ion-item>
  *
@@ -36,6 +34,15 @@ import {Directive, ElementRef, Renderer, Input, Optional, Attribute} from 'angul
  *    <ion-input type="tel"></ion-input>
  *  </ion-item>
  *
+ *  <ion-item>
+ *    <ion-label>Toggle</ion-label>
+ *    <ion-toggle></ion-toggle>
+ *  </ion-item>
+ *
+ *  <ion-item>
+ *    <ion-label>Checkbox</ion-label>
+ *    <ion-checkbox></ion-checkbox>
+ *  </ion-item>
  * ```
  *
  * @demo /docs/v2/demos/label/

@@ -1,4 +1,4 @@
-import {Button, Config} from 'ionic-angular';
+import {Button, Config} from '../../../../ionic';
 
 export function run() {
 
