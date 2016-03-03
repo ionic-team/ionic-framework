@@ -330,6 +330,10 @@ IonicModule
       };
     };
 
+    function broadcastCompleteEvent() {
+      $scope.$broadcast('scroll.refreshComplete');
+    }
+
     function activate() {
       $element[0].classList.add('active');
       $scope.$onPulling();
@@ -350,9 +354,7 @@ IonicModule
       var q = $scope.$onRefresh();
 
       if (q && q.then) {
-        q['finally'](function() {
-          $scope.$broadcast('scroll.refreshComplete');
-        });
+        q.then(broadcastCompleteEvent, broadcastCompleteEvent);
       }
     }
 
