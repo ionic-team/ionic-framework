@@ -1,0 +1,86 @@
+@import "../../globals.wp";
+@import "./segment";
+
+// Windows Segment
+// --------------------------------------------------
+
+$segment-button-wp-text-color-activated:       $toolbar-wp-text-color !default;
+
+$segment-button-wp-padding:                    0 6px !default;
+$segment-button-wp-height:                     4.0rem !default;
+$segment-button-wp-line-height:                4.0rem !default;
+$segment-button-wp-font-size:                  1.3rem !default;
+$segment-button-wp-text-transform:             uppercase !default;
+$segment-button-wp-font-weight:                bold !default;
+$segment-button-wp-icon-size:                  2.6rem !default;
+$segment-button-wp-icon-line-height:           $segment-button-wp-line-height !default;
+$segment-button-wp-background-color:           transparent !default;
+
+$segment-button-wp-opacity:                    0.5 !default;
+$segment-button-wp-opacity-activated:          1.0 !default;
+
+$segment-button-wp-buttons-justify-content:    flex-start !default;
+
+ion-segment {
+  justify-content: $segment-button-wp-buttons-justify-content;
+}
+
+.segment-button {
+  padding: $segment-button-wp-padding;
+
+  height: $segment-button-wp-height;
+  line-height: $segment-button-wp-line-height;
+
+  font-size: $segment-button-wp-font-size;
+  text-transform: $segment-button-wp-text-transform;
+  font-weight: $segment-button-wp-font-weight;
+
+  opacity: $segment-button-wp-opacity;
+  color: $segment-button-wp-text-color-activated;
+  background-color: $segment-button-wp-background-color;
+
+  ion-icon {
+    font-size: $segment-button-wp-icon-size;
+    line-height: $segment-button-wp-icon-line-height;
+  }
+}
+
+.toolbar {
+
+  ion-segment {
+    margin: 0 auto;
+  }
+
+  .segment-button.activated,
+  .segment-button.segment-activated {
+    opacity: $segment-button-wp-opacity-activated;
+  }
+
+}
+
+
+// Windows Segment Button Mixin
+// --------------------------------------------------
+
+@mixin wp-segment-button($color-name, $color-value) {
+
+  ion-segment[#{$color-name}] .segment-button {
+    color: $color-value;
+
+    &.activated,
+    &.segment-activated {
+      opacity: $segment-button-wp-opacity-activated;
+      border-color: $color-value;
+      color: $color-value;
+    }
+  }
+
+}
+
+
+// Windows Segment Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-wp {
+  @include wp-segment-button($color-name, $color-value);
+}

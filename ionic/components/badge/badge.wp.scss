@@ -1,0 +1,27 @@
+@import "./badge";
+
+// Windows Badge
+// --------------------------------------------------
+
+$badge-wp-border-radius:            0 !default;
+$badge-wp-background-color:         map-get($colors-wp, primary) !default;
+
+
+ion-badge {
+  border-radius: $badge-wp-border-radius;
+  background-color: $badge-wp-background-color;
+  color: color-inverse($badge-wp-background-color);
+}
+
+
+// Generate Windows Badge Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-wp {
+
+  .badge-#{$color-name} {
+    background-color: $color-value;
+    color: color-inverse($color-value);
+  }
+
+}

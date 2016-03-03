@@ -8,6 +8,7 @@
   <!-- using relative paths in order for snapshot e2e tests to also work -->
   <link id="iosLink" ios-href="../../../bundles/ionic.ios.css" rel="stylesheet">
   <link id="mdLink" md-href="../../../bundles/ionic.md.css" rel="stylesheet">
+  <link id="wpLink" wp-href="../../../bundles/ionic.wp.css" rel="stylesheet">
 
   <script>
     if (location.href.indexOf('snapshot=true') > -1) {
@@ -30,6 +31,8 @@
       link.setAttribute('ios-href', link.getAttribute('ios-href').replace('.css', '.dark.css'));
       link = document.getElementById('mdLink');
       link.setAttribute('md-href', link.getAttribute('md-href').replace('.css', '.dark.css'));
+      link = document.getElementById('wpLink');
+      link.setAttribute('wp-href', link.getAttribute('wp-href').replace('.css', '.dark.css'));
     }
   </script>
 

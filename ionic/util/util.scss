@@ -11,89 +11,6 @@ root-anchor {
   display: none !important;
 }
 
-
-// Content Padding
-// --------------------------------------------------
-
-$content-padding:    16px !default;
-
-
-[padding],
-[padding] > scroll-content {
-  padding: $content-padding;
-}
-
-[padding-top] {
-  padding-top: $content-padding;
-}
-
-[padding-right] {
-  padding-right: $content-padding;
-}
-
-[padding-bottom] {
-  padding-bottom: $content-padding;
-}
-
-[padding-left] {
-  padding-left: $content-padding;
-}
-
-[padding-vertical] {
-  padding-top: $content-padding;
-  padding-bottom: $content-padding;
-}
-
-[padding-horizontal] {
-  padding-right: $content-padding;
-  padding-left: $content-padding;
-}
-
-[no-padding] {
-  padding: 0;
-}
-
-// Content Margin
-// --------------------------------------------------
-
-$content-margin:    16px !default;
-
-
-[margin],
-[margin] > scroll-content {
-  margin: $content-margin;
-}
-
-[margin-top] {
-  margin-top: $content-margin;
-}
-
-[margin-right] {
-  margin-right: $content-margin;
-}
-
-[margin-bottom] {
-  margin-bottom: $content-margin;
-}
-
-[margin-left] {
-  margin-left: $content-margin;
-}
-
-[margin-vertical] {
-  margin-top: $content-margin;
-  margin-bottom: $content-margin;
-}
-
-[margin-horizontal] {
-  margin-right: $content-margin;
-  margin-left: $content-margin;
-}
-
-[no-margin] {
-  margin: 0;
-}
-
 // Focus Outline
 // --------------------------------------------------
 
@@ -169,7 +86,6 @@ $backdrop-color:      #000 !default;
   display: block;
   transform: translateZ(0);
 }
-
 
 
 // Click Block

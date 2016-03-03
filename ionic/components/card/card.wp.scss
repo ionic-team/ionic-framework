@@ -1,0 +1,136 @@
+@import "../../globals.wp";
+@import "./card";
+
+// Windows Card
+// --------------------------------------------------
+
+$card-wp-margin-top:                  8px !default;
+$card-wp-margin-right:                8px !default;
+$card-wp-margin-bottom:               8px !default;
+$card-wp-margin-left:                 8px !default;
+
+$card-wp-padding-top:                 13px !default;
+$card-wp-padding-right:               16px !default;
+$card-wp-padding-bottom:              13px !default;
+$card-wp-padding-left:                16px !default;
+
+$card-wp-padding-media-top:           10px !default;
+$card-wp-padding-media-bottom:        10px !default;
+
+$card-wp-avatar-size:                 4rem !default;
+$card-wp-thumbnail-size:              8rem !default;
+
+$card-wp-background-color:            $list-wp-background-color !default;
+$card-wp-box-shadow:                  0px 1px 1px 1px rgba(0, 0, 0, 0.2) !default;
+$card-wp-border-radius:               1px !default;
+$card-wp-font-size:                   1.4rem !default;
+$card-wp-line-height:                 1.5 !default;
+
+$card-wp-text-color:                  #222 !default;
+$card-wp-title-font-size:             2.4rem !default;
+$card-wp-title-padding:               8px 0 8px 0 !default;
+$card-wp-title-margin:                2px 0 2px !default;
+$card-wp-title-text-color:            #222 !default;
+
+$card-wp-header-font-size:            1.6rem !default;
+$card-wp-header-padding:              16px !default;
+$card-wp-header-color:                #222 !default;
+
+
+ion-card {
+  margin: $card-wp-margin-top $card-wp-margin-right $card-wp-margin-bottom $card-wp-margin-left;
+  font-size: $card-wp-font-size;
+
+  background: $card-wp-background-color;
+  border-radius: $card-wp-border-radius;
+  box-shadow: $card-wp-box-shadow;
+
+  ion-list {
+    margin-bottom: 0;
+
+    ion-label {
+      padding: 0;
+    }
+
+    .item-inner {
+      border-bottom: 1px solid $list-wp-border-color;
+    }
+
+    > .item:last-child,
+    > ion-item-sliding:last-child .item {
+      border-bottom: none;
+    }
+  }
+
+  .item-inner {
+    border: none;
+  }
+
+  ion-card-content {
+    padding: $card-wp-padding-top $card-wp-padding-right $card-wp-padding-bottom $card-wp-padding-left;
+    font-size: $card-wp-font-size;
+    line-height: $card-wp-line-height;
+  }
+
+  ion-card-header {
+    padding: $card-wp-header-padding;
+    font-size: $card-wp-header-font-size;
+    color: $card-wp-header-color;
+  }
+
+  ion-card-header + ion-card-content,
+  .item + ion-card-content {
+    padding-top: 0;
+  }
+
+  ion-note[item-left],
+  ion-note[item-right], {
+    font-size: 1.3rem;
+  }
+
+  ion-card-title {
+    display: block;
+    line-height: 1.2;
+    padding: $card-wp-title-padding;
+    margin: $card-wp-title-margin;
+    font-size: $card-wp-title-font-size;
+    color: $card-wp-title-text-color;
+  }
+
+  h1 {
+    margin: 0 0 2px;
+    font-size: 2.4rem;
+    font-weight: normal;
+    color: $card-wp-text-color;
+  }
+
+  h2 {
+    margin: 2px 0 2px;
+    font-size: 1.6rem;
+    font-weight: normal;
+    color: $card-wp-text-color;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 2px 0 2px;
+    font-size: 1.4rem;
+    font-weight: normal;
+    color: $card-wp-text-color;
+  }
+
+  p {
+    font-size: 1.4rem;
+    margin: 0 0 2px;
+    line-height: 1.5;
+    font-weight: normal;
+    color: $card-wp-text-color;
+  }
+
+}
+
+ion-card + ion-card {
+  margin-top: 0;
+}

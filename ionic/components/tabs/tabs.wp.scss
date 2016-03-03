@@ -1,0 +1,103 @@
+@import "../../globals.wp";
+@import "./tabs";
+
+// Windows Tabs
+// --------------------------------------------------
+
+$tabbar-wp-background:               $toolbar-wp-background !default;
+$tabbar-wp-item-padding:             12px 10px 5px 10px !default;
+$tabbar-wp-item-font-size:           1.2rem !default;
+$tabbar-wp-item-font-weight:         normal !default;
+$tabbar-wp-item-icon-size:           2.4rem !default;
+$tabbar-wp-item-height:              4.8rem !default;
+
+$tab-button-wp-active-color:         $toolbar-wp-active-color !default;
+$tab-button-wp-inactive-color:       $toolbar-wp-inactive-color !default;
+
+
+tabbar {
+  background: $tabbar-wp-background;
+}
+
+
+.tab-button {
+  padding: $tabbar-wp-item-padding;
+  min-height: $tabbar-wp-item-height;
+  font-size: $tabbar-wp-item-font-size;
+  font-weight: $tabbar-wp-item-font-weight;
+  opacity: 0.7;
+
+  box-shadow: none;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  color: $tab-button-wp-inactive-color;
+
+  &[aria-selected=true] {
+    opacity: 1.0;
+    color: $tab-button-wp-active-color;
+    border-bottom: 2px solid $tab-button-wp-active-color;
+  }
+
+  &.activated {
+    background: rgba(0,0,0,0.1);
+  }
+}
+
+.tab-button-text {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.tab-button-icon {
+  font-size: $tabbar-wp-item-icon-size;
+  min-width: $tabbar-wp-item-icon-size;
+}
+
+[tabbarIcons=bottom] .tab-button {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+[tabbarIcons=right] .tab-button,
+[tabbarIcons=left] .tab-button {
+  padding-bottom: 10px;
+
+  ion-icon {
+    min-width: 24px;
+  }
+}
+
+.tab-button.icon-only,
+.tab-button.has-title-only {
+  padding: 6px 10px 6px 10px;
+}
+
+
+// Windows Tabbar Color Mixin
+// --------------------------------------------------
+
+@mixin tabbar-wp($color-name, $color-value) {
+
+  ion-tabs[#{$color-name}] tabbar {
+    background-color: $color-value;
+
+    .tab-button {
+      color: color-inverse($color-value);
+    }
+
+    .tab-button:hover:not(.disable-hover),
+    .tab-button[aria-selected=true] {
+      color: color-inverse($color-value);
+      border-color: color-inverse($color-value);
+    }
+  }
+
+}
+
+
+// Windows Tabbar Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-wp {
+  @include tabbar-wp($color-name, $color-value);
+}

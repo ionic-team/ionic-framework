@@ -137,17 +137,20 @@ Platform.register({
 
 
 Platform.register({
-  name: 'windowsphone',
+  name: 'windows',
   superset: 'mobile',
   subsets: [
     'phablet',
     'tablet'
   ],
   settings: {
-    mode: 'md',
+    mode: 'wp',
+    autoFocusAssist: 'immediate',
+    clickBlock: true,
+    hoverCSS: false
   },
   isMatch(p: Platform): boolean {
-    return p.isPlatform('windowsphone', 'windows phone');
+    return p.isPlatform('windows', 'windows');
   },
   versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/Windows Phone (\d+).(\d+)?/);

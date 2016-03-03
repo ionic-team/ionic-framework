@@ -1,0 +1,257 @@
+@import "../../globals.wp";
+@import "./button";
+
+// Windows Button
+// --------------------------------------------------
+
+$button-wp-margin:                                    0.4rem 0.2rem !default;
+$button-wp-padding:                                   0 1.1em !default;
+$button-wp-font-size:                                 1.4rem !default;
+$button-wp-height:                                    3.6rem !default;
+$button-wp-border-color:                              transparent !default;
+$button-wp-border-width:                              3px !default;
+$button-wp-border-radius:                             0 !default;
+
+// Regular button
+$button-wp-background-color:                          map-get($colors-wp, primary) !default;
+$button-wp-background-color-activated:                color-shade($button-wp-background-color) !default;
+$button-wp-text-color:                                color-inverse($button-wp-background-color) !default;
+
+// Clear button
+$button-wp-clear-background-color-hover:              rgba(158, 158, 158, 0.1) !default;
+$button-wp-clear-background-color-activated:          rgba(158, 158, 158, 0.2) !default;
+$button-wp-clear-background-color:                    transparent !default;
+$button-wp-clear-text-color:                          $button-wp-background-color !default;
+
+// Outline button
+$button-wp-outline-background-color:                  transparent !default;
+$button-wp-outline-background-color-activated:        $button-wp-background-color !default;
+$button-wp-outline-background-color-opacity:          0.16 !default;
+$button-wp-outline-border-width:                      1px !default;
+$button-wp-outline-border-color:                      $button-wp-background-color !default;
+$button-wp-outline-text-color:                        $button-wp-background-color !default;
+
+// Large button
+$button-wp-large-font-size:                           2rem !default;
+$button-wp-large-height:                              2.8em !default;
+$button-wp-large-padding:                             0 1.0em !default;
+
+// Small button
+$button-wp-small-font-size:                           1.3rem !default;
+$button-wp-small-height:                              2.1em !default;
+$button-wp-small-padding:                             0 0.9em !default;
+$button-wp-small-icon-font-size:                      1.4em !default;
+
+// FAB button
+$button-wp-fab-border-radius:                         50% !default;
+
+// Windows Default Button
+// --------------------------------------------------
+
+.button {
+  margin: $button-wp-margin;
+  padding: $button-wp-padding;
+  height: $button-wp-height;
+  border-radius: $button-wp-border-radius;
+  border: $button-wp-border-width solid $button-wp-border-color;
+
+  font-size: $button-wp-font-size;
+
+  color: $button-wp-text-color;
+  background-color: $button-wp-background-color;
+
+  &:hover:not(.disable-hover) {
+    border-color: $button-wp-background-color-activated;
+    background-color: $button-wp-background-color;
+  }
+
+  &.activated {
+    background-color: $button-wp-background-color-activated;
+  }
+}
+
+
+// Windows Default Button Color Mixin
+// --------------------------------------------------
+
+@mixin wp-button-default($color-name, $color-value) {
+
+  .button-#{$color-name} {
+    $bg-color: $color-value;
+    $bg-color-activated: color-shade($bg-color);
+    $fg-color: color-inverse($bg-color);
+
+    color: $fg-color;
+    background-color: $bg-color;
+
+    &:hover:not(.disable-hover) {
+      border-color: $bg-color-activated;
+      background-color: $bg-color;
+    }
+
+    &.activated {
+      background-color: $bg-color-activated;
+    }
+  }
+
+}
+
+
+// Windows Button Sizes
+// --------------------------------------------------
+
+.button-large {
+  padding: $button-wp-large-padding;
+  height: $button-wp-large-height;
+  font-size: $button-wp-large-font-size;
+}
+
+.button-small {
+  padding: $button-wp-small-padding;
+  height: $button-wp-small-height;
+  font-size: $button-wp-small-font-size;
+}
+
+.button-small.button-icon-only ion-icon {
+  font-size: $button-wp-small-icon-font-size;
+}
+
+// Windows Block Button
+// --------------------------------------------------
+
+.button-block {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+// Windows Full Button
+// --------------------------------------------------
+
+.button-full {
+  margin-right: 0;
+  margin-left: 0;
+  border-radius: 0;
+  border-right-width: 0;
+  border-left-width: 0;
+}
+
+// Windows Outline Button
+// --------------------------------------------------
+
+.button-outline {
+  border-width: $button-wp-outline-border-width;
+  border-style: solid;
+  border-color: $button-wp-outline-border-color;
+  background-color: $button-wp-outline-background-color;
+  color: $button-wp-outline-text-color;
+
+  &:hover:not(.disable-hover) {
+    background-color: $button-wp-clear-background-color-hover;
+  }
+
+  &.activated {
+    background-color: rgba($button-wp-outline-background-color-activated, $button-wp-outline-background-color-opacity);
+  }
+}
+
+
+// Windows Outline Button Color Mixin
+// --------------------------------------------------
+
+@mixin wp-button-outline($color-name, $color-value) {
+
+  .button-outline-#{$color-name} {
+    $fg-color: color-shade($color-value, 5%);
+    border-color: $fg-color;
+    color: $fg-color;
+
+    &:hover:not(.disable-hover) {
+      border-color: $fg-color;
+      background-color: $button-wp-clear-background-color-hover;
+    }
+
+    &.activated {
+      background-color: rgba($fg-color, $button-wp-outline-background-color-opacity);
+    }
+  }
+
+}
+
+
+// Windows Clear Button
+// --------------------------------------------------
+
+.button-clear {
+  background-color: $button-wp-clear-background-color;
+  color: $button-wp-clear-text-color;
+
+  &.activated {
+    background-color: $button-wp-clear-background-color-activated;
+  }
+
+  &:hover:not(.disable-hover) {
+    background-color: $button-wp-clear-background-color-hover;
+  }
+}
+
+
+// Windows Clear Button Color Mixin
+// --------------------------------------------------
+
+@mixin wp-button-clear($color-name, $color-value) {
+
+  .button-clear-#{$color-name} {
+    $fg-color: $color-value;
+    color: $fg-color;
+
+    &.activated {
+      background-color: $button-wp-clear-background-color-activated;
+    }
+
+    &:hover:not(.disable-hover) {
+      color: $fg-color;
+    }
+  }
+}
+
+
+// Windows Round Button
+// --------------------------------------------------
+
+.button-round {
+  padding: $button-round-padding;
+  border-radius: $button-round-border-radius;
+}
+
+
+// Windows FAB Button
+// --------------------------------------------------
+
+.button-fab {
+  border-radius: $button-wp-fab-border-radius;
+}
+
+.button-icon-only {
+  padding: 0;
+}
+
+ion-button-effect {
+  // wp does not use the button effect
+  display: none;
+}
+
+// Generate Windows Button Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-wp {
+  @include wp-button-default($color-name, $color-value);
+  @include wp-button-outline($color-name, $color-value);
+  @include wp-button-clear($color-name, $color-value);
+}
+
+
+// Core Button Overrides
+// --------------------------------------------------
+
+@import "./button-fab";
+@import "./button-icon";

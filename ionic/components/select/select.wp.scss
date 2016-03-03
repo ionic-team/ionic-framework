@@ -1,0 +1,50 @@
+@import "../../globals.wp";
+@import "./select";
+
+// Windows Select
+// --------------------------------------------------
+
+$select-wp-padding-top:         ($item-wp-padding-top / 2) !default;
+$select-wp-padding-right:       ($item-wp-padding-right / 2) !default;
+$select-wp-padding-bottom:      ($item-wp-padding-bottom / 2) !default;
+$select-wp-padding-left:        ($item-wp-padding-left / 2) !default;
+
+$select-wp-border-width:        2px !default;
+$select-wp-border-color:        #B5B5B5 !default;
+
+$select-wp-icon-width:          18px !default;
+$select-wp-icon-arrow-width:    2px !default;
+$select-wp-icon-color:          $select-wp-border-color !default;
+
+
+ion-select {
+  padding: $select-wp-padding-top $select-wp-padding-right $select-wp-padding-bottom $select-wp-padding-left;
+  border: $select-wp-border-width solid $select-wp-border-color;
+}
+
+.item-select ion-label {
+  margin-left: 0;
+}
+
+.select-icon {
+  position: relative;
+  width: $select-wp-icon-width;
+  height: $select-wp-icon-width;
+}
+
+.select-icon .select-icon-inner {
+  position: absolute;
+  display: block;
+
+  width: ($select-wp-icon-width / 2);
+  height: ($select-wp-icon-width / 2);
+
+  left: 5px;
+  top: 3px;
+
+  border-top: $select-wp-icon-arrow-width solid $select-wp-icon-color;
+  border-right: $select-wp-icon-arrow-width solid $select-wp-icon-color;
+
+  transform: rotate(135deg);
+  pointer-events: none;
+}

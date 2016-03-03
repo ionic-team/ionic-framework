@@ -213,9 +213,9 @@ export function run() {
     expect(config.get('mode')).toEqual('ios');
   });
 
-  it('should get md mode for windowsphone platform', () => {
+  it('should get md mode for windows platform', () => {
     let config = new Config();
-    let platform = new Platform(['mobile', 'windowsphone']);
+    let platform = new Platform(['mobile', 'windows']);
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');

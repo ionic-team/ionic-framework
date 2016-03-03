@@ -23,7 +23,7 @@ class E2EPage {
     console.log('tablet', platform.is('tablet'));
     console.log('ios', platform.is('ios'));
     console.log('android', platform.is('android'));
-    console.log('windows phone', platform.is('windowsphone'));
+    console.log('windows phone', platform.is('windows'));
 
     platform.ready().then(() => {
       console.log('platform.ready');

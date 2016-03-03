@@ -61,3 +61,32 @@ Config.setModeConfig('md', {
 
   tabSubPages: true,
 });
+
+
+// Windows Mode Settings
+Config.setModeConfig('wp', {
+  activator: 'highlight',
+
+  actionSheetEnter: 'action-sheet-wp-slide-in',
+  actionSheetLeave: 'action-sheet-wp-slide-out',
+
+  alertEnter: 'alert-md-pop-in',
+  alertLeave: 'alert-md-pop-out',
+
+  backButtonText: '',
+  backButtonIcon: 'ios-arrow-back',
+
+  iconMode: 'ios',
+
+  menuType: 'overlay',
+
+  modalEnter: 'modal-md-slide-in',
+  modalLeave: 'modal-md-slide-out',
+
+  pageTransition: 'md-transition',
+  pageTransitionDelay: 96,
+
+  tabbarPlacement: 'top',
+
+  tabSubPages: true,
+});

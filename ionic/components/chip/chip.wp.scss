@@ -1,6 +1,6 @@
 @import "./chip";
 
-// Material Design Chip
+// Windows Chip
 // --------------------------------------------------
 
 ion-chip {
@@ -8,10 +8,10 @@ ion-chip {
 }
 
 
-// Generate Material Design Chip Colors
+// Generate Windows Chip Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
+@each $color-name, $color-value in $colors-wp {
 
   ion-chip {
     ion-icon[#{$color-name}] {

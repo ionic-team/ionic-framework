@@ -1,0 +1,65 @@
+@import "../../globals.wp";
+@import "./label";
+
+// Windows Label
+// --------------------------------------------------
+
+$label-wp-text-color:                 #999 !default;
+$label-wp-text-color-focused:         map-get($colors-wp, primary) !default;
+
+
+// Windows Default Label
+// --------------------------------------------------
+
+ion-label {
+  margin: $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0;
+}
+
+
+// Windows Default Label Inside An Input Item
+// --------------------------------------------------
+
+.item-input ion-label {
+  color: $label-wp-text-color;
+}
+
+
+// Windows Stacked & Floating Labels
+// --------------------------------------------------
+
+ion-label[stacked] {
+  font-size: 1.2rem;
+}
+
+ion-label[floating] {
+  transform-origin: left top;
+  transform: translate3d(8px, 34px, 0);
+}
+
+ion-label[stacked],
+ion-label[floating] {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.input-has-focus ion-label[stacked],
+.input-has-focus ion-label[floating] {
+  color: $label-wp-text-color-focused;
+}
+
+.input-has-focus ion-label[floating],
+.input-has-value ion-label[floating]  {
+  transform: translate3d(0, 0, 0) scale(0.8);
+}
+
+
+// Generate Windows Label colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-wp {
+
+  ion-label[#{$color-name}] {
+    color: $color-value !important;
+  }
+
+}

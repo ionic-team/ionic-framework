@@ -1,0 +1,125 @@
+@import "../../globals.wp";
+
+// Windows Radio
+// --------------------------------------------------
+
+$radio-wp-color-on:               map-get($colors-wp, primary) !default;
+$radio-wp-color-off:              #333333 !default;
+
+// Places radio icon on the left of the item
+$radio-wp-order:                  -1 !default;
+
+$radio-wp-icon-width:             16px !default;
+$radio-wp-icon-height:            16px !default;
+$radio-wp-icon-border-width:      2px !default;
+$radio-wp-icon-border-style:      solid !default;
+$radio-wp-icon-border-radius:     50% !default;
+
+$radio-wp-disabled-opacity:       0.3 !default;
+
+
+ion-radio {
+  position: relative;
+  display: inline-block;
+}
+
+
+// Windows Radio Outer Circle: Unchecked
+// -----------------------------------------
+
+.radio-icon {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  width: $radio-wp-icon-width;
+  height: $radio-wp-icon-height;
+  margin: 0;
+  border-width: $radio-wp-icon-border-width;
+  border-style: $radio-wp-icon-border-style;
+  border-color: $radio-wp-color-off;
+  border-radius: $radio-wp-icon-border-radius;
+}
+
+
+// Windows Radio Inner Circle: Unchecked
+// -----------------------------------------
+
+.radio-inner  {
+  position: absolute;
+  top: $radio-wp-icon-border-width;
+  left: $radio-wp-icon-border-width;
+  width: $radio-wp-icon-width / 2;
+  height: $radio-wp-icon-height / 2;
+  background-color: $radio-wp-color-off;
+  border-radius: 50%;
+  display: none;
+}
+
+
+// Windows Radio Outer Circle: Checked
+// -----------------------------------------
+
+.radio-checked {
+  border-color: $radio-wp-color-on;
+}
+
+
+// Windows Radio Inner Circle: Checked
+// -----------------------------------------
+
+.radio-checked .radio-inner {
+  // transform: scale3d(1, 1, 1);
+  display: block;
+}
+
+
+// Windows Radio: Disabled
+// -----------------------------------------
+
+.radio-disabled,
+.item-radio-disabled ion-label {
+  opacity: $radio-wp-disabled-opacity;
+  pointer-events: none;
+}
+
+
+// Windows Radio Within An Item
+// -----------------------------------------
+
+.item ion-radio {
+  position: static;
+  display: block;
+  margin: $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 0;
+  order: $radio-wp-order;
+}
+
+.item-radio ion-label {
+  margin-left: 0;
+}
+
+
+// Windows Radio Color Mixin
+// --------------------------------------------------
+
+@mixin radio-theme-wp($color-name, $color-value) {
+
+  ion-radio[#{$color-name}] {
+
+    .radio-checked {
+      border-color: $color-value;
+    }
+
+  }
+
+}
+
+
+// Generate Windows Radio Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-wp {
+
+  @include radio-theme-wp($color-name, $color-value);
+
+}

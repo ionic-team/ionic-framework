@@ -4,6 +4,7 @@
 // --------------------------------------------------
 
 ion-chip {
+
 }
 
 
@@ -13,7 +14,7 @@ ion-chip {
 @each $color-name, $color-value in $colors-ios {
 
   ion-chip {
-    > ion-icon[#{$color-name}] {
+    ion-icon[#{$color-name}] {
       background-color: $color-value;
       color: color-inverse($color-value) !important;
     }

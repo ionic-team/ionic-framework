@@ -14,3 +14,10 @@
   @import "components.md";
   @include md-body();
 }
+
+// Windows Components
+.wp {
+  @import "components.wp";
+  @include wp-body();
+}
+

@@ -1,0 +1,11 @@
+@import "../../globals.wp";
+
+// Windows Menu
+// --------------------------------------------------
+
+$menu-wp-background:            #F2F2F2 !default;
+
+
+ion-menu {
+  background: $menu-wp-background;
+}

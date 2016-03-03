@@ -1,0 +1,13 @@
+/*! Ionic: Windows */
+@charset "UTF-8";
+
+// Core Components
+@import "components.core";
+
+// Windows Components
+@import "components.wp";
+
+// Windows Body
+body {
+  @include wp-body();
+}
