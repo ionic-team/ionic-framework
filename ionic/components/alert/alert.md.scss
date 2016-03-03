@@ -18,19 +18,36 @@ $alert-md-sub-title-font-size:                16px !default;
 $alert-md-message-font-size:                  15px !default;
 $alert-md-message-padding:                    0 24px 24px 24px !default;
 $alert-md-message-text-color:                 rgba(0,0,0,.5) !default;
+$alert-md-message-padding-empty:              0 !default;
 
+$alert-md-content-max-height:                 240px !default;
+
+$alert-md-input-border-width:                 1px !default;
+$alert-md-input-border-style:                 solid !default;
 $alert-md-input-border-color:                 #dedede !default;
 $alert-md-input-text-color:                   #000000 !default;
-$alert-md-input-highlight-color:              map-get($colors-md, primary) !default;
-$alert-md-input-margin-top:                   5px !default;
-$alert-md-input-margin-bottom:                5px !default;
 
+$alert-md-input-border-width-focused:         2px !default;
+$alert-md-input-border-style-focused:         $alert-md-input-border-style !default;
+$alert-md-input-border-color-focused:         map-get($colors-md, primary) !default;
+
+$alert-md-input-margin-top:                   5px !default;
+$alert-md-input-margin-right:                 0 !default;
+$alert-md-input-margin-bottom:                5px !default;
+$alert-md-input-margin-left:                  0 !default;
+
+$alert-md-button-group-flex-wrap:             wrap-reverse !default;
+$alert-md-button-group-padding:               8px 8px 8px 24px !default;
+$alert-md-button-group-justify-content:       flex-end !default;
+
+$alert-md-button-padding:                     10px !default;
+$alert-md-button-font-weight:                 500 !default;
 $alert-md-button-text-color:                  map-get($colors-md, primary) !default;
 $alert-md-button-background-color:            transparent !default;
 $alert-md-button-background-color-activated:  rgba(158, 158, 158, 0.2) !default;
 $alert-md-button-border-radius:               2px !default;
-$alert-md-buttons-padding:                    8px 8px 8px 24px !default;
-$alert-md-buttons-justify-content:            flex-end !default;
+$alert-md-button-text-transform:              uppercase !default;
+$alert-md-button-text-align:                  right !default;
 
 
 .alert-wrapper {
@@ -69,10 +86,10 @@ $alert-md-buttons-justify-content:            flex-end !default;
 
 .alert-message {
   font-size: $alert-md-message-font-size;
-  max-height: 240px;
+  max-height: $alert-md-content-max-height;
 
   &:empty {
-    padding: 0;
+    padding: $alert-md-message-padding-empty;
   }
 }
 
@@ -81,12 +98,12 @@ $alert-md-buttons-justify-content:            flex-end !default;
 // --------------------------------------------------
 
 .alert-input {
-  border-bottom: 1px solid $alert-md-input-border-color;
+  border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
   color: $alert-md-input-text-color;
-  margin: $alert-md-input-margin-top 0 $alert-md-input-margin-bottom 0;
+  margin: $alert-md-input-margin-top $alert-md-input-margin-right $alert-md-input-margin-bottom $alert-md-input-margin-left;
 
   &:focus {
-    border-bottom: 2px solid $alert-md-input-highlight-color;
+    border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
     margin-bottom: $alert-md-input-margin-bottom - 1;
   }
 }
@@ -100,7 +117,7 @@ $alert-md-buttons-justify-content:            flex-end !default;
   position: relative;
   border-top: 1px solid $alert-md-input-border-color;
   border-bottom: 1px solid $alert-md-input-border-color;
-  max-height: 240px;
+  max-height: $alert-md-content-max-height;
   overflow: auto;
 }
 
@@ -215,24 +232,25 @@ $alert-md-buttons-justify-content:            flex-end !default;
 // --------------------------------------------------
 
 .alert-button-group {
-  padding: $alert-md-buttons-padding;
-  justify-content: $alert-md-buttons-justify-content;
-  flex-wrap: wrap-reverse;
+  padding: $alert-md-button-group-padding;
+  justify-content: $alert-md-button-group-justify-content;
+  flex-wrap: $alert-md-button-group-flex-wrap;
 }
 
 .alert-button {
-  position: relative;
-  overflow: hidden;
-  padding: 10px;
-  font-weight: 500;
+  padding: $alert-md-button-padding;
+  font-weight: $alert-md-button-font-weight;
   color: $alert-md-button-text-color;
   background-color: $alert-md-button-background-color;
   border-radius: $alert-md-button-border-radius;
-  text-transform: uppercase;
-  text-align: right;
+  text-transform: $alert-md-button-text-transform;
+  text-align: $alert-md-button-text-align;
+
+  // necessary for ripple to work properly
+  position: relative;
+  overflow: hidden;
 
   &.activated {
     background-color: $alert-md-button-background-color-activated;
-    opacity: 1;
   }
 }
