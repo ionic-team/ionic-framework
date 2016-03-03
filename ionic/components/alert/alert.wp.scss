@@ -48,6 +48,7 @@ $alert-wp-button-font-weight:                  300 !default;
 
 $alert-wp-checkbox-background:                 map-get($colors-wp, primary) !default;
 $alert-wp-checkbox-border-color:               $input-wp-border-color !default;
+$alert-wp-checkbox-border-radius:              0 !default;
 $alert-wp-radio-background:                    map-get($colors-wp, primary) !default;
 $alert-wp-radio-border-color:                  $input-wp-border-color !default;
 
@@ -218,7 +219,7 @@ ion-alert {
   left: 13px;
   width: 16px;
   height: 16px;
-  border-radius: 2px;
+  border-radius: $alert-wp-checkbox-border-radius;
   border-width: 2px;
   border-style: solid;
   border-color: $alert-wp-checkbox-border-color;

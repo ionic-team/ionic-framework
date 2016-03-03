@@ -150,7 +150,7 @@ ion-searchbar {
 
 @each $color-name, $color-value in $colors-wp {
 
-  ion-searchbar[#{$color-name}] .searchbar-focused {
+  ion-searchbar[#{$color-name}].searchbar-focused {
     border-color: $color-value;
   }
 

@@ -21,9 +21,8 @@ $card-wp-avatar-size:                 4rem !default;
 $card-wp-thumbnail-size:              8rem !default;
 
 $card-wp-background-color:            $list-wp-background-color !default;
-$card-wp-border:                      2px solid rgba(0,0,0,0.2) !default;
-$card-wp-box-shadow:                  none !default;
-$card-wp-border-radius:               4px !default;
+$card-wp-box-shadow:                  0px 1px 1px 1px rgba(0, 0, 0, 0.2) !default;
+$card-wp-border-radius:               1px !default;
 $card-wp-font-size:                   1.4rem !default;
 $card-wp-line-height:                 1.5 !default;
 
@@ -45,7 +44,6 @@ ion-card {
   background: $card-wp-background-color;
   border-radius: $card-wp-border-radius;
   box-shadow: $card-wp-box-shadow;
-  border: $card-wp-border;
 
   ion-list {
     margin-bottom: 0;

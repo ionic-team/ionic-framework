@@ -35,6 +35,11 @@ tabbar {
   &[aria-selected=true] {
     opacity: 1.0;
     color: $tab-button-wp-active-color;
+    border-bottom: 2px solid $tab-button-wp-active-color;
+  }
+
+  &.activated {
+    background: rgba(0,0,0,0.1);
   }
 }
 
@@ -45,7 +50,7 @@ tabbar {
 
 .tab-button-icon {
   font-size: $tabbar-wp-item-icon-size;
-  min-width: $tabbar-wp-item-icon-size + 5;
+  min-width: $tabbar-wp-item-icon-size;
 }
 
 [tabbarIcons=bottom] .tab-button {
@@ -83,6 +88,7 @@ tabbar {
     .tab-button:hover:not(.disable-hover),
     .tab-button[aria-selected=true] {
       color: color-inverse($color-value);
+      border-color: color-inverse($color-value);
     }
   }
 
