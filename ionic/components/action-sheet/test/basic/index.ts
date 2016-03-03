@@ -18,7 +18,7 @@ class E2EPage {
         {
           text: 'Delete',
           role: 'destructive',
-          icon: this.platform.is('android') ? 'trash' : null,
+          icon: !this.platform.is('ios') ? 'trash' : null,
           handler: () => {
             console.log('Delete clicked');
             this.result = 'Deleted';
@@ -26,7 +26,7 @@ class E2EPage {
         },
         {
           text: 'Share',
-          icon: this.platform.is('android') ? 'share' : null,
+          icon: !this.platform.is('ios') ? 'share' : null,
           handler: () => {
             console.log('Share clicked');
             this.result = 'Shared';
@@ -34,7 +34,7 @@ class E2EPage {
         },
         {
           text: 'Play',
-          icon: this.platform.is('android') ? 'arrow-dropright-circle' : null,
+          icon: !this.platform.is('ios') ? 'arrow-dropright-circle' : null,
           handler: () => {
             let modal = Modal.create(ModalPage);
             this.nav.present(modal);
@@ -45,7 +45,7 @@ class E2EPage {
         },
         {
           text: 'Favorite',
-          icon: this.platform.is('android') ? 'heart' : null,
+          icon: !this.platform.is('ios') ? 'heart' : null,
           handler: () => {
             console.log('Favorite clicked');
             this.result = 'Favorited';
@@ -54,7 +54,7 @@ class E2EPage {
         {
           text: 'Cancel',
           role: 'cancel', // will always sort to be on the bottom
-          icon: this.platform.is('android') ? 'close' : null,
+          icon: !this.platform.is('ios') ? 'close' : null,
           handler: () => {
             console.log('Cancel clicked');
             this.result = 'Canceled';

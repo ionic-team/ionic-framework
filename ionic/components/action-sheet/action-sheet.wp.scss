@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 $action-sheet-wp-text-align:                      left !default;
-
-$action-sheet-wp-background-color:                #ffffff !default;
+$action-sheet-wp-background:                      #ffffff !default;
 $action-sheet-wp-box-shadow:                      0px -1px 0px rgba(0,0,0,0.2) !default;
+$action-sheet-wp-group-margin-bottom:             8px !default;
 
 $action-sheet-wp-title-padding:                   19px 16px 17px !default;
 $action-sheet-wp-title-font-size:                 2.0rem !default;
@@ -19,10 +19,15 @@ $action-sheet-wp-button-text-color:               #4D4D4D !default;
 $action-sheet-wp-button-font-size:                1.5rem !default;
 $action-sheet-wp-button-padding:                  0 16px !default;
 $action-sheet-wp-button-text-align:               $action-sheet-wp-text-align !default;
-$action-sheet-wp-button-background-active-color:  $list-wp-activated-background-color !default;
+$action-sheet-wp-button-background:               transparent !default;
+$action-sheet-wp-button-background-activated:     $list-wp-activated-background-color !default;
 
+$action-sheet-wp-icon-min-width:                  24px !default;
+$action-sheet-wp-icon-text-align:                 center !default;
+$action-sheet-wp-icon-vertical-align:             middle !default;
 $action-sheet-wp-icon-font-size:                  2.4rem !default;
-$action-sheet-wp-icon-margin:                     0 28px 0 0 !default;
+$action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
+
 
 .action-sheet-wrapper {
   box-shadow: $action-sheet-wp-box-shadow;
@@ -36,44 +41,34 @@ $action-sheet-wp-icon-margin:                     0 28px 0 0 !default;
 }
 
 .action-sheet-button {
-  position: relative;
-  overflow: hidden;
   padding: $action-sheet-wp-button-padding;
   min-height: $action-sheet-wp-button-height;
   font-size: $action-sheet-wp-button-font-size;
-  font-weight: normal;
   color: $action-sheet-wp-button-text-color;
-  background-color: transparent;
+  background: $action-sheet-wp-button-background;
   text-align: $action-sheet-wp-button-text-align;
 
   &.activated {
-    background: $action-sheet-wp-button-background-active-color;
-    border-radius: 0;
-    box-shadow: none;
+    background: $action-sheet-wp-button-background-activated;
   }
 }
 
 .action-sheet-icon {
-  display: inline-block;
   margin: $action-sheet-wp-icon-margin;
-  min-width: 24px;
-  text-align: center;
-  vertical-align: middle;
+  min-width: $action-sheet-wp-icon-min-width;
+  text-align: $action-sheet-wp-icon-text-align;
+  vertical-align: $action-sheet-wp-icon-vertical-align;
   font-size: $action-sheet-wp-icon-font-size;
 }
 
 .action-sheet-group {
-  overflow: hidden;
-  margin: 0;
-  border-radius: 0;
-  background-color: $action-sheet-wp-background-color;
+  background: $action-sheet-wp-background;
 
   &:last-child .action-sheet-button {
-    margin-bottom: 8px;
+    margin-bottom: $action-sheet-wp-group-margin-bottom;
   }
 }
 
 .action-sheet-cancel {
-  background-color: $action-sheet-wp-background-color;
-  border: none;
+  background: $action-sheet-wp-button-background;
 }
