@@ -55,15 +55,15 @@ $button-ios-small-icon-font-size:     1.3em !default;
 @mixin ios-button-default($color-name, $color-value) {
 
   .button-#{$color-name} {
-    $bg-color: $color-value;
-    $bg-color-activated: color-shade($bg-color);
-    $fg-color: color-inverse($bg-color);
+    $background-color: $color-value;
+    $background-color-activated: color-shade($background-color);
+    $fg-color: color-inverse($background-color);
 
     color: $fg-color;
-    background-color: $bg-color;
+    background-color: $background-color;
 
     &.activated {
-      background-color: $bg-color-activated;
+      background-color: $background-color-activated;
     }
   }
 
