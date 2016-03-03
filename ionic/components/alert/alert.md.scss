@@ -41,6 +41,7 @@ $alert-md-button-group-padding:               8px 8px 8px 24px !default;
 $alert-md-button-group-justify-content:       flex-end !default;
 
 $alert-md-button-padding:                     10px !default;
+$alert-md-button-margin:                      0 8px 0 0 !default;
 $alert-md-button-font-weight:                 500 !default;
 $alert-md-button-text-color:                  map-get($colors-md, primary) !default;
 $alert-md-button-background-color:            transparent !default;
@@ -239,6 +240,7 @@ $alert-md-button-text-align:                  right !default;
 
 .alert-button {
   padding: $alert-md-button-padding;
+  margin: $alert-md-button-margin;
   font-weight: $alert-md-button-font-weight;
   color: $alert-md-button-text-color;
   background-color: $alert-md-button-background-color;
