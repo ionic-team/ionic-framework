@@ -1,6 +1,6 @@
 <ion-content>
   <h5 padding-left> Search - Default </h5>
-  <ion-searchbar [(ngModel)]="defaultSearch" (input)="triggerInput($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" (cancel)="onCancelSearchbar($event)" (clear)="onClearSearchbar($event)" class="e2eDefaultFloatingSearchbar"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="defaultSearch" debounce="500" (input)="triggerInput($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" (cancel)="onCancelSearchbar($event)" (clear)="onClearSearchbar($event)" class="e2eDefaultFloatingSearchbar"></ion-searchbar>
 
   <p padding-left>
     defaultSearch: <b>{{ defaultSearch }}</b>

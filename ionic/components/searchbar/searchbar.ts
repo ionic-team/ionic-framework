@@ -5,7 +5,7 @@ import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {Button} from '../button/button';
-import {isDefined} from '../../util/util';
+import {isDefined, debounce} from '../../util/util';
 
 
 /**
@@ -20,14 +20,12 @@ export class SearchbarInput {
    * @private
    * Don't send the input's input event
    */
-  private stopInput(event) {
-    event.preventDefault();
-    event.stopPropagation();
+  private stopInput(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
   }
 
-  constructor(private _elementRef: ElementRef) {
-
-  }
+  constructor(private _elementRef: ElementRef) {}
 }
 
 
@@ -69,6 +67,8 @@ export class SearchbarInput {
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, SearchbarInput]
 })
 export class Searchbar extends Ion {
+  private _tmr: number;
+
   /**
    * @private
    */
@@ -83,6 +83,11 @@ export class Searchbar extends Ion {
    * @input {boolean} Hides the cancel button
    */
   @Input() hideCancelButton: any;
+
+  /**
+   * @input {number} How long, in milliseconds, to wait to trigger the `input` event after each keystroke. Default `250`.
+   */
+  @Input() debounce: number = 250;
 
   /**
    * @input {string} Sets input placeholder to the value passed in
@@ -253,9 +258,14 @@ export class Searchbar extends Ion {
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev) {
-    this.value = ev.target.value;
-    this.onChange(this.value);
-    this.input.emit(this);
+    let value = ev.target.value;
+
+    clearTimeout(this._tmr);
+    this._tmr = setTimeout(() => {
+      this.value = value;
+      this.onChange(value);
+      this.input.emit(this);
+    }, Math.round(this.debounce));
   }
 
   /**
