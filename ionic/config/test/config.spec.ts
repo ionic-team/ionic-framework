@@ -218,7 +218,7 @@ export function run() {
     let platform = new Platform(['mobile', 'windows']);
     config.setPlatform(platform);
 
-    expect(config.get('mode')).toEqual('md');
+    expect(config.get('mode')).toEqual('wp');
   });
 
   it('should get md mode for android platform', () => {
