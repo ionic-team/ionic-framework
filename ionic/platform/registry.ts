@@ -77,7 +77,7 @@ Platform.register({
     scrollAssist: true,
   },
   isMatch(p: Platform): boolean {
-    return p.isPlatform('android', 'android|silk');
+    return p.isPlatformMatch('android', ['android', 'silk'], ['windows phone']);
   },
   versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/Android (\d+).(\d+)?/);
@@ -105,7 +105,7 @@ Platform.register({
     tapPolyfill: isIOSDevice,
   },
   isMatch(p: Platform): boolean {
-    return p.isPlatform('ios', 'iphone|ipad|ipod');
+    return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod']);
   },
   versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/OS (\d+)_(\d+)?/);
@@ -120,7 +120,7 @@ Platform.register({
     keyboardHeight: 500,
   },
   isMatch(p: Platform): boolean {
-    return p.isPlatform('ios', 'ipad');
+    return p.isPlatformMatch('ipad');
   }
 });
 
@@ -131,7 +131,7 @@ Platform.register({
     'phablet'
   ],
   isMatch(p: Platform): boolean {
-    return p.isPlatform('ios', 'iphone');
+    return p.isPlatformMatch('iphone');
   }
 });
 
@@ -150,7 +150,7 @@ Platform.register({
     hoverCSS: false
   },
   isMatch(p: Platform): boolean {
-    return p.isPlatform('windows', 'windows');
+    return p.isPlatformMatch('windows', ['windows phone']);
   },
   versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/Windows Phone (\d+).(\d+)?/);

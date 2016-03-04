@@ -463,14 +463,6 @@ export class Platform {
   /**
    * @private
    */
-  testUserAgent(userAgentExpression): boolean {
-    let rgx = new RegExp(userAgentExpression, 'i');
-    return rgx.test(this._ua || '');
-  }
-
-  /**
-   * @private
-   */
   testNavigatorPlatform(navigatorPlatformExpression: string): boolean {
     let rgx = new RegExp(navigatorPlatformExpression, 'i');
     return rgx.test(this._bPlt);
@@ -494,17 +486,28 @@ export class Platform {
   /**
    * @private
    */
-  isPlatform(queryTestValue: string, userAgentExpression: string): boolean {
-    if (!userAgentExpression) {
-      userAgentExpression = queryTestValue;
-    }
-
+  isPlatformMatch(queryStringName: string, userAgentAtLeastHas?: string[], userAgentMustNotHave: string[] = []): boolean {
     let queryValue = this.query('ionicplatform');
     if (queryValue) {
-      return this.testQuery(queryValue, queryTestValue);
+      return this.testQuery(queryValue, queryStringName);
     }
 
-    return this.testUserAgent(userAgentExpression);
+    userAgentAtLeastHas = userAgentAtLeastHas || [queryStringName];
+
+    let userAgent = this._ua.toLowerCase();
+
+    for (var i = 0; i < userAgentAtLeastHas.length; i++) {
+      if (userAgent.indexOf(userAgentAtLeastHas[i]) > -1) {
+        for (var j = 0; j < userAgentMustNotHave.length; j++) {
+          if (userAgent.indexOf(userAgentMustNotHave[j]) > -1) {
+            return false;
+          }
+        }
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
