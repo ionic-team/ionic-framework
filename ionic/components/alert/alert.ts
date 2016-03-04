@@ -558,4 +558,47 @@ class AlertMdPopOut extends Transition {
 }
 Transition.register('alert-md-pop-out', AlertMdPopOut);
 
+
+
+class AlertWpPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
+
+    let ele = enteringView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
+
+    wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
+    backdrop.fromTo('opacity', '0.01', '0.5');
+
+    this
+      .easing('cubic-bezier(0, 0, 0.05, 1)')
+      .duration(200)
+      .add(backdrop)
+      .add(wrapper);
+  }
+}
+Transition.register('alert-wp-pop-in', AlertWpPopIn);
+
+
+class AlertWpPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
+
+    let ele = leavingView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
+
+    wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');
+    backdrop.fromTo('opacity', '0.5', '0');
+
+    this
+      .easing('ease-out')
+      .duration(150)
+      .add(backdrop)
+      .add(wrapper);
+  }
+}
+Transition.register('alert-wp-pop-out', AlertWpPopOut);
+
 let alertIds = -1;

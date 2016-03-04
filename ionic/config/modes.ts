@@ -70,8 +70,8 @@ Config.setModeConfig('wp', {
   actionSheetEnter: 'action-sheet-wp-slide-in',
   actionSheetLeave: 'action-sheet-wp-slide-out',
 
-  alertEnter: 'alert-md-pop-in',
-  alertLeave: 'alert-md-pop-out',
+  alertEnter: 'alert-wp-pop-in',
+  alertLeave: 'alert-wp-pop-out',
 
   backButtonText: '',
   backButtonIcon: 'ios-arrow-back',
