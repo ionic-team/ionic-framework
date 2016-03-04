@@ -83,7 +83,7 @@ Config.setModeConfig('wp', {
   modalEnter: 'modal-md-slide-in',
   modalLeave: 'modal-md-slide-out',
 
-  pageTransition: 'md-transition',
+  pageTransition: 'wp-transition',
   pageTransitionDelay: 96,
 
   tabbarPlacement: 'top',
