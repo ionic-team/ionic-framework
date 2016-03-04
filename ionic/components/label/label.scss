@@ -39,6 +39,12 @@ ion-label[fixed] {
   flex-wrap: wrap;
 }
 
+.item-label-stacked [item-right],
+.item-label-floating [item-right] {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 ion-label[stacked],
 ion-label[floating] {
   align-self: stretch;
