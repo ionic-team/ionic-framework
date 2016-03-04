@@ -122,6 +122,16 @@ input[type="submit"] {
   cursor: pointer; // 3
 }
 
+// remove 300ms delay
+a,
+button,
+[tappable],
+input,
+textarea {
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
 button {
   border: 0;
   line-height: 1;
