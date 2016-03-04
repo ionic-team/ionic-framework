@@ -32,7 +32,7 @@
 
 
 <!-- Icons right of text -->
-<ion-tabs tabbarLayout="icon-right" no-navbar>
+<ion-tabs tabbarLayout="icon-right" primary no-navbar>
   <ion-tab tabTitle="Recents" tabIcon="call"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" tabBadge="1030" tabBadgeStyle="light"></ion-tab>
@@ -43,6 +43,21 @@
   <ion-tab tabTitle="Recents" tabIcon="call" tabBadge="32" tabBadgeStyle="danger"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings"></ion-tab>
+</ion-tabs>
+
+<!-- No icons -->
+<ion-tabs no-navbar tabbarLayout="icon-hide">
+  <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
+  <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root" tabBadge="4"></ion-tab>
+  <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
+</ion-tabs>
+
+
+<!-- No title -->
+<ion-tabs tabbarLayout="title-hide" secondary no-navbar>
+  <ion-tab tabTitle="Recents" tabIcon="call" [root]="root" tabBadge="7" tabBadgeStyle="light"></ion-tab>
+  <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
+  <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
 </ion-tabs>
 
 <!-- Dynamic Badge -->

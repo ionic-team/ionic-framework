@@ -29,6 +29,7 @@ export class TabButton extends Ion {
   private hasTitleOnly: boolean;
   private hasIconOnly: boolean;
   private hasBadge: boolean;
+  private _layout: string;
 
   @Input() tab: Tab;
   @Output() select: EventEmitter<Tab> = new EventEmitter();
@@ -36,12 +37,15 @@ export class TabButton extends Ion {
   constructor(config: Config, elementRef: ElementRef) {
     super(elementRef);
     this.disHover = (config.get('hoverCSS') === false);
+    this._layout = config.get('tabbarLayout');
   }
 
   ngOnInit() {
     this.tab.btn = this;
+    this._layout = this.tab.parent.tabbarLayout || this._layout;
+
     this.hasTitle = !!this.tab.tabTitle;
-    this.hasIcon = !!this.tab.tabIcon;
+    this.hasIcon = !!this.tab.tabIcon && this._layout != 'icon-hide';
     this.hasTitleOnly = (this.hasTitle && !this.hasIcon);
     this.hasIconOnly = (this.hasIcon && !this.hasTitle);
     this.hasBadge = !!this.tab.tabBadge;
