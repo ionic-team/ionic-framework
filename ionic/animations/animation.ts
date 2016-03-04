@@ -56,6 +56,8 @@ export class Animation {
     this._pFns = [];
     this._fFns = [];
     this._fOnceFns = [];
+
+    this._easing = this._dur = null;
   }
 
   element(ele: any): Animation {
