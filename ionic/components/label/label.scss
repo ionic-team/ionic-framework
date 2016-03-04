@@ -34,10 +34,9 @@ ion-label[fixed] {
   max-width: 200px;
 }
 
-.item-label-stacked,
-.item-label-floating {
-  flex-direction: column;
-  align-items: flex-start;
+.item-label-stacked .item-inner,
+.item-label-floating .item-inner {
+  flex-wrap: wrap;
 }
 
 ion-label[stacked],
@@ -45,6 +44,7 @@ ion-label[floating] {
   align-self: stretch;
   margin-bottom: 0;
   max-width: 100%;
+  flex-basis: 100%;
 }
 
 ion-label[stacked],
