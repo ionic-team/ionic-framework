@@ -20,6 +20,6 @@ Ionic 2 takes everything you know and loved about Ionic 1, and builds on top of 
 
 In the API docs, you'll find two kinds of doc pages: Component and Service APIs.
 
-The Component APIs include classes like `Menu`, `Nav` or `Checkbox` and show you how to use them, in addition to listing their selectors, available properties and events.
+The Component APIs include classes like `Checkbox`, `Toggle` or `Item` and show you how to use them, in addition to listing their selectors, available properties and events.
 
-The Service APIs are classes like `NavController`, `NavParams`, `Config` or `Platform`. These are services provided by Ionic 2 that can be injected into your classes.
+The Service APIs are classes like `MenuController`, `Config` or `Platform`. These are services provided by Ionic 2 that can be injected into your classes.
