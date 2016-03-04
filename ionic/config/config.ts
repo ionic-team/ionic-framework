@@ -251,8 +251,7 @@ export class Config {
    * @param {string} [key] - The key used to look up the value at a later point in time.
    * @param {string} [value] - The config value being stored.
    */
-  set() {
-    const args = arguments;
+  set(...args: any[]) {
     const arg0 = args[0];
     const arg1 = args[1];
 
