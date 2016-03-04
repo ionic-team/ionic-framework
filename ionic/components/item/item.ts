@@ -143,7 +143,9 @@ export class Item {
   @ContentChildren(Button)
   private set _buttons(buttons) {
     buttons.toArray().forEach(button => {
-      if (!button.isItem) {
+      // Don't add the item-button class if the user specifies
+      // a different size button
+      if (!button.isItem && !button._size) {
         button.addClass('item-button');
       }
     });

@@ -41,7 +41,7 @@ import {Toolbar} from '../toolbar/toolbar';
 })
 export class Button {
   private _role: string = 'button'; // bar-button/item-button
-  private _size: string = null; // large/small
+  private _size: string = null; // large/small/default
   private _style: string = 'default'; // outline/clear/solid
   private _shape: string = null; // round/fab
   private _display: string = null; // block/full
@@ -242,7 +242,7 @@ export class Button {
 
 }
 
-const BUTTON_SIZE_ATTRS = ['large', 'small'];
+const BUTTON_SIZE_ATTRS = ['large', 'small', 'default'];
 const BUTTON_STYLE_ATTRS = ['clear', 'outline', 'solid'];
 const BUTTON_SHAPE_ATTRS = ['round', 'fab'];
 const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
