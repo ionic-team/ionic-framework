@@ -15,7 +15,7 @@ import {StorageEngine} from './storage';
  *
  * @usage
  * ```ts
- * import {Page, Storage, LocalStorage} from 'ionic-angular';
+ * import {Page, Storage, LocalStorage} from 'ionic-framework/ionic';
  * @Page({
  *   template: `<ion-content></ion-content>`
  * });
@@ -37,6 +37,7 @@ export class LocalStorage extends StorageEngine {
 /**
  * Get the value of a key in LocalStorage
  * @param {String} key the key you want to lookup in LocalStorage
+ * @returns {Promise}
  */
   get(key: string): Promise<string> {
     return new Promise((resolve, reject) => {
