@@ -7,9 +7,8 @@ import {rafFrames} from '../../util/dom';
 
 
 /**
- * @private
- * Component registry service.  For more information on registering
- * components see the [IdRef API reference](../id/IdRef/).
+ * App utility service.  Allows you to look up components that have been
+ * registered using the [Id directive](../Id/).
  */
 @Injectable()
 export class IonicApp {
@@ -92,7 +91,6 @@ export class IonicApp {
   }
 
   /**
-   * @private
    * Boolean if the app is actively scrolling or not.
    * @return {boolean}
    */
@@ -135,7 +133,6 @@ export class IonicApp {
   }
 
   /**
-   * @private
    * Get the component for the given key.
    */
   getComponent(id: string): any {
