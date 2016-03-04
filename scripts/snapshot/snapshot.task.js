@@ -92,7 +92,7 @@ module.exports = function(gulp, argv, buildConfig) {
   }
 
   function generateTestId() {
-    var chars = 'abcdefghijklmnopqrstuvwxyz';
+    var chars = 'abcdefghijkmnpqrstuvwxyz';
     var id = chars.charAt(Math.floor(Math.random() * chars.length));
     chars += '0123456789';
     while (id.length < 3) {
