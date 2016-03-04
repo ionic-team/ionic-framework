@@ -26,6 +26,7 @@ ion-infinite-scroll-content {
 }
 
 .infinite-loading {
+  opacity: 0;
   width: 100%;
   margin: $infinite-scroll-loading-margin;
 }
@@ -39,6 +40,10 @@ ion-infinite-scroll-content {
 // Infinite Scroll Content States
 // --------------------------------------------------
 
-ion-infinite-scroll-content[state=disabled] .infinite-loading {
+ion-infinite-scroll-content[state=loading] .infinite-loading {
+  opacity: 1;
+}
+
+ion-infinite-scroll-content[state=disabled] {
   display: none;
 }
