@@ -22,7 +22,7 @@ import {Scroll} from '../scroll/scroll';
  * ```ts
  * @Page({
  *  template: `
- *     <ion-slides pager (change)="onSlideChanged($event)" (move)="onSlideMove($event)" loop="true" autoplay="true">
+ *     <ion-slides pager (change)="onSlideChanged($event)" (move)="onSlideMove($event)">
  *      <ion-slide>
  *        <h3>Thank you for choosing the Awesome App!</h3>
  *        <p>
