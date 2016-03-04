@@ -34,12 +34,14 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
 }
 
 .action-sheet-button {
+  position: relative;
   padding: $action-sheet-md-button-padding;
   min-height: $action-sheet-md-button-min-height;
   font-size: $action-sheet-md-button-font-size;
   color: $action-sheet-md-button-text-color;
   background: $action-sheet-md-button-background;
   text-align: $action-sheet-md-text-align;
+  overflow: hidden;
 
   &.activated {
     background: $action-sheet-md-button-background-activated;
