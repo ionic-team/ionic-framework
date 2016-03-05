@@ -2,6 +2,7 @@ import {Component, ElementRef, Renderer, Attribute, Optional, Input} from 'angul
 
 import {Config} from '../../config/config';
 import {Toolbar} from '../toolbar/toolbar';
+import {isTrueProperty} from '../../util/util';
 
 
 /**
@@ -45,10 +46,10 @@ export class Button {
   private _style: string = 'default'; // outline/clear/solid
   private _shape: string = null; // round/fab
   private _display: string = null; // block/full
-  private _lastColor: string = null;
   private _colors: Array<string> = []; // primary/secondary
   private _icon: string = null; // left/right/only
   private _disabled: boolean = false; // disabled
+  private _init: boolean;
 
   /**
    * @private
@@ -56,9 +57,97 @@ export class Button {
   isItem: boolean;
 
   /**
-   * @private
+   * @input {string} Large button.
    */
-  @Input() color: string;
+  @Input()
+  set large(val: boolean) {
+    this._attr('_size', 'large', val);
+  }
+
+  /**
+   * @input {string} Small button.
+   */
+  @Input()
+  set small(val: boolean) {
+    this._attr('_size', 'small', val);
+  }
+
+  /**
+   * @input {string} Default button.
+   */
+  @Input()
+  set default(val: boolean) {
+    this._attr('_size', 'default', val);
+  }
+
+  /**
+   * @input {string} A transparent button with a border.
+   */
+  @Input()
+  set outline(val: boolean) {
+    this._attr('_style', 'outline', val);
+  }
+
+  /**
+   * @input {string} A transparent button without a border.
+   */
+  @Input()
+  set clear(val: boolean) {
+    this._attr('_style', 'clear', val);
+  }
+
+  /**
+   * @input {string} Force a solid button. Useful for buttons within an item.
+   */
+  @Input()
+  set solid(val: boolean) {
+    this._attr('_style', 'solid', val);
+  }
+
+  /**
+   * @input {string} A button with rounded corners.
+   */
+  @Input()
+  set round(val: boolean) {
+    this._attr('_shape', 'round', val);
+  }
+
+  /**
+   * @input {string} A button that fills its parent container with a border-radius.
+   */
+  @Input()
+  set block(val: boolean) {
+    this._attr('_display', 'block', val);
+  }
+
+  /**
+   * @input {string} A button that fills its parent container without a border-radius or borders on the left/right.
+   */
+  @Input()
+  set full(val: boolean) {
+    this._attr('_display', 'full', val);
+  }
+
+  _attr(type: string, attrName: string, attrValue: boolean) {
+    this._setClass(this[type], false);
+    if (isTrueProperty(attrValue)) {
+      this[type] = attrName;
+      this._setClass(attrName, true);
+
+    } else {
+      this[type] = null;
+    }
+  }
+
+  /**
+   * @input {string} Dynamically set which color attribute this button should use.
+   */
+  @Input()
+  set color(val: string) {
+    this._assignCss(false);
+    this._colors = [val];
+    this._assignCss(true);
+  }
 
   constructor(
     config: Config,
@@ -92,24 +181,9 @@ export class Button {
    * @private
    */
   ngAfterContentInit() {
-    this._lastColor = this.color;
-    if (this.color) {
-      this._colors = [this.color];
-    }
+    this._init = true;
     this._readIcon(this._elementRef.nativeElement);
     this._assignCss(true);
-  }
-
-  /**
-   * @private
-   */
-  ngAfterContentChecked() {
-    if (this._lastColor !== this.color) {
-      this._assignCss(false);
-      this._lastColor = this.color;
-      this._colors = [this.color];
-      this._assignCss(true);
-    }
   }
 
   /**
@@ -225,7 +299,7 @@ export class Button {
    * @private
    */
   private _setClass(type: string, assignCssClass: boolean) {
-    if (type) {
+    if (type && this._init) {
       this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type, assignCssClass);
     }
   }

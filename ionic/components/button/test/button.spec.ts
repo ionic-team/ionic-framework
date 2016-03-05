@@ -179,7 +179,7 @@ export function run() {
 
   });
 
-  function mockButton(attrs, config) {
+  function mockButton(attrs?, config?) {
     config = config || new Config();
     let elementRef = {
       nativeElement: document.createElement('button')
@@ -189,12 +189,14 @@ export function run() {
         elementRef.nativeElement.setAttribute(attrs[i], '');
       }
     }
-    let renderer = {
+    let renderer: any = {
       setElementClass: function(nativeElement, className, shouldAdd) {
         nativeElement.classList[shouldAdd ? 'add' : 'remove'](className);
       }
     };
-    return new Button(config, elementRef, renderer, null);
+    let b = new Button(config, elementRef, renderer, null);
+    b._init = true;
+    return b;
   }
 
   function hasClass(button, className) {
