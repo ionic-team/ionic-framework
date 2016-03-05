@@ -142,7 +142,7 @@ export class RadioButton {
    * @private
    */
   ngOnInit() {
-    if (this._group && isDefined(this._group.value) && this._group.value === this.value) {
+    if (this._group && isDefined(this._group.value) && this._group.value == this.value) {
       this.checked = true;
     }
   }

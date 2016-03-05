@@ -14,6 +14,7 @@ class E2EApp {
   items: Array<{description: string, value: any}>;
   relationship: string;
   pet: string;
+  selectedTime: number = 60;
 
   constructor() {
     this.fruits = new Control('apple');

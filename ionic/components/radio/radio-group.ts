@@ -148,7 +148,7 @@ export class RadioGroup {
 
       // check this radiobutton if its value is
       // the same as the radiogroups value
-      radioButton.checked = (radioButton.value === this.value);
+      radioButton.checked = (radioButton.value == this.value);
 
       if (radioButton.checked) {
         // if this button is checked, then set it as
@@ -183,7 +183,7 @@ export class RadioGroup {
   remove(button: RadioButton) {
     let index = this._btns.indexOf(button);
     if (index > -1) {
-      if (button.value === this.value) {
+      if (button.value == this.value) {
         this.value = null;
       }
       this._btns.splice(index, 1);

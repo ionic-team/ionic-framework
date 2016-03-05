@@ -99,7 +99,7 @@
     <code><b>pet:</b> {{pet}}</code>
   </div>
 
-  <ion-list radio-group [(ngModel)]="someNumber">
+  <ion-list radio-group [(ngModel)]="someValue">
     <ion-item *ngFor="#item of items">
       <ion-label>
         {{ item.description }}
@@ -110,7 +110,21 @@
   </ion-list>
 
   <div padding>
-    <code><b>someNumber:</b> {{someNumber}}</code>
+    <code><b>someValue:</b> {{someValue}}</code>
   </div>
+
+  <ion-list radio-group [(ngModel)]="selectedTime">
+    <ion-list-header>
+      Time
+    </ion-list-header>
+    <ion-item>
+      <ion-label>60 minutes</ion-label>
+      <ion-radio value="60"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>30 minutes</ion-label>
+      <ion-radio value="30"></ion-radio>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
