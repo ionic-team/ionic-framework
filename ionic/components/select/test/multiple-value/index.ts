@@ -1,4 +1,5 @@
 import {App, Page} from 'ionic-angular';
+import {Control, ControlGroup} from 'angular2/common';
 
 
 @Page({
@@ -9,6 +10,7 @@ class E2EPage {
   carFeatures: Array<string>;
   pets: Array<string>;
   petOptions: Array<{text: string, value: string}>;
+  authForm: ControlGroup;
 
   constructor() {
     this.toppings = ['bacon', 'xcheese'];
@@ -21,10 +23,19 @@ class E2EPage {
       { text: 'Honey Badger', value: 'honeybadger' },
       { text: 'Pig', value: 'pig' },
     ];
+
+    this.authForm = new ControlGroup({
+      name: new Control(''),
+      select: new Control('')
+    });
   }
 
   carChange(selectedValues) {
     console.log('carChange', selectedValues);
+  }
+
+  onSubmit(data) {
+    console.log('onSubmit', data);
   }
 
 }

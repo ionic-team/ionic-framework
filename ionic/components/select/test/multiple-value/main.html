@@ -52,4 +52,21 @@
     <code>pets: {{pets}}</code><br>
   </p>
 
+  <form [ngFormModel]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+    <ion-list padding-vertical>
+      <ion-item>
+        <ion-input ngControl="name" type="text"></ion-input>
+      </ion-item>
+      <ion-item class="no-border">
+        <ion-label>Select</ion-label>
+        <ion-select multiple="true" ngControl="select">
+          <ion-option>1</ion-option>
+          <ion-option>2</ion-option>
+          <ion-option>3</ion-option>
+        </ion-select>
+      </ion-item>
+      <button full block class="no-margin" type="submit">Submit</button>
+    </ion-list>
+  </form>
+
 </ion-content>

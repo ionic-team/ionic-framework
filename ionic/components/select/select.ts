@@ -126,6 +126,7 @@ export class Select {
   private _texts: Array<string> = [];
   private _text: string = '';
   private _fn: Function;
+  private _isOpen: boolean = false;
 
   /**
    * @private
@@ -185,14 +186,25 @@ export class Select {
     }
   }
 
-  /**
-   * @private
-   */
   @HostListener('click', ['$event'])
   private _click(ev) {
+    if (ev.detail === 0) {
+      // do not continue if the click event came from a form submit
+      return;
+    }
     ev.preventDefault();
     ev.stopPropagation();
+    this._open();
+  }
 
+  @HostListener('keyup.space', ['$event'])
+  private _keyup(ev) {
+    if (!this._isOpen) {
+      this._open();
+    }
+  }
+
+  private _open() {
     if (this._disabled) return;
     console.debug('select, open alert');
 
@@ -245,6 +257,11 @@ export class Select {
     });
 
     this._nav.present(alert, alertOptions);
+
+    this._isOpen = true;
+    alert.onDismiss(() => {
+      this._isOpen = false;
+    });
   }
 
 
