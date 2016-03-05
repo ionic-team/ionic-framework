@@ -477,7 +477,7 @@ export function run() {
         expect(navOptions.animate).toBe(false);
       });
 
-      it('should set domCache true when isAlreadyTransitioning', () => {
+      it('should set domShow true when isAlreadyTransitioning', () => {
         let enteringView = new ViewController(Page1);
         let leavingView = new ViewController(Page2);
         let isAlreadyTransitioning = true;
@@ -486,16 +486,16 @@ export function run() {
         nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
         nav._renderer = null;
 
-        spyOn(enteringView, 'domCache');
-        spyOn(leavingView, 'domCache');
+        spyOn(enteringView, 'domShow');
+        spyOn(leavingView, 'domShow');
 
         nav._postRender(1, enteringView, leavingView, isAlreadyTransitioning, navOptions, done);
 
-        expect(enteringView.domCache).toHaveBeenCalledWith(true, nav._renderer);
-        expect(leavingView.domCache).toHaveBeenCalledWith(true, nav._renderer);
+        expect(enteringView.domShow).toHaveBeenCalledWith(true, nav._renderer);
+        expect(leavingView.domShow).toHaveBeenCalledWith(true, nav._renderer);
       });
 
-      it('should set domCache true when isAlreadyTransitioning false for the entering/leaving views', () => {
+      it('should set domShow true when isAlreadyTransitioning false for the entering/leaving views', () => {
         let view1 = new ViewController(Page1);
         let view2 = new ViewController(Page2);
         let view3 = new ViewController(Page3);
@@ -506,18 +506,18 @@ export function run() {
         nav._renderer = null;
         nav._views = [view1, view2, view3];
 
-        spyOn(view1, 'domCache');
-        spyOn(view2, 'domCache');
-        spyOn(view3, 'domCache');
+        spyOn(view1, 'domShow');
+        spyOn(view2, 'domShow');
+        spyOn(view3, 'domShow');
 
         nav._postRender(1, view3, view2, isAlreadyTransitioning, navOptions, done);
 
-        expect(view1.domCache).toHaveBeenCalledWith(false, nav._renderer);
-        expect(view2.domCache).toHaveBeenCalledWith(true, nav._renderer);
-        expect(view3.domCache).toHaveBeenCalledWith(true, nav._renderer);
+        expect(view1.domShow).toHaveBeenCalledWith(false, nav._renderer);
+        expect(view2.domShow).toHaveBeenCalledWith(true, nav._renderer);
+        expect(view3.domShow).toHaveBeenCalledWith(true, nav._renderer);
       });
 
-      it('should set domCache true when isAlreadyTransitioning false for views when a view has isOverlay=true', () => {
+      it('should set domShow true when isAlreadyTransitioning false for views when a view has isOverlay=true', () => {
         let view1 = new ViewController(Page1);
         let view2 = new ViewController(Page2);
         let view3 = new ViewController(Page3);
@@ -531,17 +531,17 @@ export function run() {
 
         view3.isOverlay = true;
 
-        spyOn(view1, 'domCache');
-        spyOn(view2, 'domCache');
-        spyOn(view3, 'domCache');
-        spyOn(view4, 'domCache');
+        spyOn(view1, 'domShow');
+        spyOn(view2, 'domShow');
+        spyOn(view3, 'domShow');
+        spyOn(view4, 'domShow');
 
         nav._postRender(1, view4, view3, isAlreadyTransitioning, navOptions, done);
 
-        expect(view1.domCache).toHaveBeenCalledWith(false, nav._renderer);
-        expect(view2.domCache).toHaveBeenCalledWith(true, nav._renderer);
-        expect(view3.domCache).toHaveBeenCalledWith(true, nav._renderer);
-        expect(view4.domCache).toHaveBeenCalledWith(true, nav._renderer);
+        expect(view1.domShow).toHaveBeenCalledWith(false, nav._renderer);
+        expect(view2.domShow).toHaveBeenCalledWith(true, nav._renderer);
+        expect(view3.domShow).toHaveBeenCalledWith(true, nav._renderer);
+        expect(view4.domShow).toHaveBeenCalledWith(true, nav._renderer);
       });
 
     });
@@ -812,6 +812,31 @@ export function run() {
         nav._transFinish(1, enteringView, leavingView, 'back', hasCompleted);
 
         expect(nav.setTransitioning).not.toHaveBeenCalled();
+      });
+
+      it('should set not run domShow when when any view in the stack has isOverlay=true', () => {
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+        let view3 = new ViewController(Page3);
+        let view4 = new ViewController(Page4);
+        let hasCompleted = true;
+        nav._views = [view1, view2, view3, view4];
+
+        view1.isOverlay = true;
+
+        nav._transIds = 1;
+
+        spyOn(view1, 'domShow');
+        spyOn(view2, 'domShow');
+        spyOn(view3, 'domShow');
+        spyOn(view4, 'domShow');
+
+        nav._transFinish(1, view4, view3, 'forward', hasCompleted);
+
+        expect(view1.domShow).not.toHaveBeenCalled();
+        expect(view2.domShow).not.toHaveBeenCalled();
+        expect(view3.domShow).not.toHaveBeenCalled();
+        expect(view4.domShow).toHaveBeenCalled();
       });
 
     });

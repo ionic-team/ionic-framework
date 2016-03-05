@@ -198,7 +198,7 @@ export class ViewController {
   /**
    * @private
    */
-  domCache(shouldShow: boolean, renderer: Renderer) {
+  domShow(shouldShow: boolean, renderer: Renderer) {
     // using hidden element attribute to display:none and not render views
     // renderAttr of '' means the hidden attribute will be added
     // renderAttr of null means the hidden attribute will be removed

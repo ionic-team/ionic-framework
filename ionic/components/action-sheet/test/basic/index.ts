@@ -1,4 +1,4 @@
-import {App, Page, ActionSheet, Modal, NavController, ViewController, Platform} from 'ionic-angular';
+import {App, Page, ActionSheet, Alert, Modal, NavController, ViewController, Platform} from 'ionic-angular';
 
 
 @Page({
@@ -93,6 +93,54 @@ class E2EPage {
           handler: () => {
             console.log('Destructive clicked');
             this.result = 'Destructive';
+          }
+        }
+      ]
+    });
+
+    this.nav.present(actionSheet);
+  }
+
+  presentActionSheet3(ev) {
+    this.result = '';
+
+    let actionSheet = ActionSheet.create({
+      buttons: [
+        {
+          text: 'Open Alert',
+          handler: () => {
+            this.result = 'Opened alert';
+
+            let alert = Alert.create();
+            alert.setTitle('Alert!');
+            alert.setMessage('Alert opened from an action sheet');
+            alert.addButton({
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                this.result = 'pressed Cancel button in alert from action sheet';
+              }
+            });
+            alert.addButton({
+              text: 'Okay',
+              handler: () => {
+                this.result = 'pressed Okay button in alert from action sheet';
+              }
+            });
+
+            this.nav.present(alert).then(() => {
+              this.result = 'Alert from action sheet opened';
+            });
+
+            // do not close the action sheet yet
+            return false;
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            this.result = 'Canceled';
           }
         }
       ]

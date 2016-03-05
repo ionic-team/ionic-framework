@@ -984,8 +984,8 @@ export class NavController extends Ion {
         // the previous transition was still going when this one started
         // so to be safe, only update showing the entering/leaving
         // don't hide the others when they could still be transitioning
-        enteringView.domCache(true, this._renderer);
-        leavingView.domCache(true, this._renderer);
+        enteringView.domShow(true, this._renderer);
+        leavingView.domShow(true, this._renderer);
 
       } else {
         // there are no other transitions happening but this one
@@ -1001,7 +1001,7 @@ export class NavController extends Ion {
                        (view === leavingView) ||
                        view.isOverlay ||
                        (i < ii - 1 ? this._views[i + 1].isOverlay : false);
-          view.domCache(shouldShow, this._renderer);
+          view.domShow(shouldShow, this._renderer);
         }
       }
 
@@ -1182,11 +1182,20 @@ export class NavController extends Ion {
 
         // make sure only this entering view and PREVIOUS view are the
         // only two views that are not display:none
+        // do not make any changes to the stack's current visibility
+        // if there is an overlay somewhere in the stack
         leavingView = this.getPrevious(enteringView);
-        this._views.forEach(view => {
-          let shouldShow = (view === enteringView) || (view === leavingView);
-          view.domCache(shouldShow, this._renderer);
-        });
+        if (this.hasOverlay()) {
+          // ensure the entering view is showing
+          enteringView.domShow(true, this._renderer);
+
+        } else {
+          // only possibly hide a view if there are no overlays in the stack
+          this._views.forEach(view => {
+            let shouldShow = (view === enteringView) || (view === leavingView);
+            view.domShow(shouldShow, this._renderer);
+          });
+        }
 
         // this check only needs to happen once, which will add the css
         // class to the nav when it's finished its first transition
@@ -1474,6 +1483,19 @@ export class NavController extends Ion {
    */
   setTransitioning(isTransitioning: boolean, fallback: number = 700) {
     this._trnsTime = (isTransitioning ? Date.now() + fallback : 0);
+  }
+
+  /**
+   * @private
+   * @returns {boolean}
+   */
+  hasOverlay(): boolean {
+    for (var i = this._views.length - 1; i >= 0; i--) {
+      if (this._views[i].isOverlay) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
