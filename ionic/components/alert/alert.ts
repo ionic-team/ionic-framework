@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer} from 'angular2/core';
+import {Component, ElementRef, Renderer, HostListener} from 'angular2/core';
 import {NgClass, NgSwitch, NgIf, NgFor} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
@@ -271,7 +271,6 @@ class AlertCmp {
   subHdrId: string;
   msgId: string;
   inputType: string;
-  keyUp: any;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -342,26 +341,24 @@ class AlertCmp {
     if (checkedInput) {
       this.activeId = checkedInput.id;
     }
+  }
 
-    let self = this;
-    self.keyUp = function(ev) {
-      if (ev.keyCode === 13) {
-        console.debug('alert, enter button');
-        let button = self.d.buttons[self.d.buttons.length - 1];
-        self.btnClick(button);
+  @HostListener('body:keyup', ['$event'])
+  private _keyUp(ev: KeyboardEvent) {
+    if (ev.keyCode === 13) {
+      console.debug('alert, enter button');
+      let button = this.d.buttons[this.d.buttons.length - 1];
+      this.btnClick(button);
 
-      } else if (ev.keyCode === 27) {
-        console.debug('alert, escape button');
-        self.bdClick();
-      }
-    };
-
-    document.addEventListener('keyup', this.keyUp);
+    } else if (ev.keyCode === 27) {
+      console.debug('alert, escape button');
+      this.bdClick();
+    }
   }
 
   onPageDidEnter() {
     let activeElement: any = document.activeElement;
-    if (activeElement) {
+    if (document.activeElement) {
       activeElement.blur();
     }
 
@@ -440,14 +437,6 @@ class AlertCmp {
       values[i.name] = i.value;
     });
     return values;
-  }
-
-  onPageWillLeave() {
-    document.removeEventListener('keyup', this.keyUp);
-  }
-
-  ngOnDestroy() {
-    document.removeEventListener('keyup', this.keyUp);
   }
 }
 
