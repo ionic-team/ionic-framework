@@ -345,14 +345,16 @@ class AlertCmp {
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
-    if (ev.keyCode === 13) {
-      console.debug('alert, enter button');
-      let button = this.d.buttons[this.d.buttons.length - 1];
-      this.btnClick(button);
+    if (this._viewCtrl.isLast()) {
+      if (ev.keyCode === 13) {
+        console.debug('alert, enter button');
+        let button = this.d.buttons[this.d.buttons.length - 1];
+        this.btnClick(button);
 
-    } else if (ev.keyCode === 27) {
-      console.debug('alert, escape button');
-      this.bdClick();
+      } else if (ev.keyCode === 27) {
+        console.debug('alert, escape button');
+        this.bdClick();
+      }
     }
   }
 
@@ -362,11 +364,9 @@ class AlertCmp {
       activeElement.blur();
     }
 
-    if (this.d.inputs.length) {
-      let firstInput = this._elementRef.nativeElement.querySelector('input');
-      if (firstInput) {
-        firstInput.focus();
-      }
+    let focusableEle = this._elementRef.nativeElement.querySelector('input,button');
+    if (focusableEle) {
+      focusableEle.focus();
     }
   }
 

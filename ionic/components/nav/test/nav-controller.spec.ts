@@ -1077,21 +1077,35 @@ export function run() {
     it('should get first()', () => {
       expect(nav.first()).toBe(null);
       let view1 = new ViewController(Page1);
+      view1.setNav(nav);
       let view2 = new ViewController(Page2);
+      view2.setNav(nav);
       nav._views = [view1];
+
       expect(nav.first()).toBe(view1);
+      expect(view1.isFirst()).toBe(true);
+
       nav._views = [view1, view2];
       expect(nav.first()).toBe(view1);
+      expect(view1.isFirst()).toBe(true);
+      expect(view2.isFirst()).toBe(false);
     });
 
     it('should get last()', () => {
       expect(nav.last()).toBe(null);
       let view1 = new ViewController(Page1);
+      view1.setNav(nav);
       let view2 = new ViewController(Page2);
+      view2.setNav(nav);
       nav._views = [view1];
+
       expect(nav.last()).toBe(view1);
+      expect(view1.isLast()).toBe(true);
+
       nav._views = [view1, view2];
       expect(nav.last()).toBe(view2);
+      expect(view1.isLast()).toBe(false);
+      expect(view2.isLast()).toBe(true);
     });
 
     it('should get indexOf()', () => {

@@ -68,8 +68,8 @@ export class MenuToggle {
   */
   get isHidden() {
     if (this._inNavbar && this._viewCtrl) {
-      if (this._viewCtrl.isRoot()) {
-        // this is the root view, so it should always show
+      if (this._viewCtrl.isFirst()) {
+        // this is the first view, so it should always show
         return false;
       }
 

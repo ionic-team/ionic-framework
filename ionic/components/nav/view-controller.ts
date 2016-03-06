@@ -189,10 +189,26 @@ export class ViewController {
   }
 
   /**
-   * @returns {boolean} Returns if this Page is the root page of the NavController.
+   * @private
    */
-  isRoot(): boolean {
-    return (this.index === 0);
+  private isRoot(): boolean {
+    // deprecated warning
+    console.warn('ViewController isRoot() has been renamed to isFirst()');
+    return this.isFirst();
+  }
+
+  /**
+   * @returns {boolean} Returns if this Page is the first in the stack of pages within its NavController.
+   */
+  isFirst(): boolean {
+    return (this._nav ? this._nav.first() === this : false);
+  }
+
+  /**
+   * @returns {boolean} Returns if this Page is the last in the stack of pages within its NavController.
+   */
+  isLast(): boolean {
+    return (this._nav ? this._nav.last() === this : false);
   }
 
   /**

@@ -1,4 +1,4 @@
-import {Component, Renderer, ElementRef} from 'angular2/core';
+import {Component, Renderer, ElementRef, HostListener} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
@@ -188,19 +188,18 @@ export class ActionSheet extends ViewController {
 })
 class ActionSheetCmp {
   private d: any;
-  private keyUp: EventListener;
 
   constructor(
     private _viewCtrl: ViewController,
     private _config: Config,
-    elementRef: ElementRef,
+    private _elementRef: ElementRef,
     params: NavParams,
     renderer: Renderer
   ) {
     this.d = params.data;
 
     if (this.d.cssClass) {
-      renderer.setElementClass(elementRef.nativeElement, this.d.cssClass, true);
+      renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
     }
   }
 
@@ -234,16 +233,28 @@ class ActionSheetCmp {
     });
 
     this.d.buttons = buttons;
+  }
 
-    let self = this;
-    self.keyUp = function(ev: KeyboardEvent) {
+  onPageDidEnter() {
+    let activeElement: any = document.activeElement;
+    if (document.activeElement) {
+      activeElement.blur();
+    }
+
+    let focusableEle = this._elementRef.nativeElement.querySelector('button');
+    if (focusableEle) {
+      focusableEle.focus();
+    }
+  }
+
+  @HostListener('body:keyup', ['$event'])
+  private _keyUp(ev: KeyboardEvent) {
+    if (this._viewCtrl.isLast()) {
       if (ev.keyCode === 27) {
         console.debug('actionsheet escape');
-        self.bdClick();
+        this.bdClick();
       }
-    };
-
-    document.addEventListener('keyup', this.keyUp);
+    }
   }
 
   click(button, dismissDelay?) {
@@ -277,14 +288,6 @@ class ActionSheetCmp {
 
   dismiss(role): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
-  }
-
-  onPageWillLeave() {
-    document.removeEventListener('keyup', this.keyUp);
-  }
-
-  ngOnDestroy() {
-    document.removeEventListener('keyup', this.keyUp);
   }
 }
 
