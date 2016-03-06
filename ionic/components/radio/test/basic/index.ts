@@ -13,7 +13,6 @@ class E2EApp {
   currencies: Array<string>;
   items: Array<{description: string, value: any}>;
   relationship: string;
-  pet: string;
   selectedTime: number = 60;
 
   constructor() {

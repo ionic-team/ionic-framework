@@ -80,7 +80,7 @@
     <code><b>relationship:</b> {{relationship}}</code>
   </div>
 
-  <div radio-group [(ngModel)]="pet" (change)="petChange($event)">
+  <div radio-group (change)="petChange($event)">
     <p>
       <ion-radio (select)="dogSelect($event)"></ion-radio>
       Dogs
@@ -93,10 +93,6 @@
       <ion-radio (select)="turtleSelect($event)"></ion-radio>
       Turtles
     </p>
-  </div>
-
-  <div padding>
-    <code><b>pet:</b> {{pet}}</code>
   </div>
 
   <ion-list radio-group [(ngModel)]="someValue">

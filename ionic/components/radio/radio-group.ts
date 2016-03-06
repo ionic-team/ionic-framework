@@ -125,6 +125,7 @@ export class RadioGroup {
   registerOnChange(fn: Function): void {
     this._fn = fn;
     this.onChange = (val: any) => {
+      // onChange used when there's an ngControl
       console.debug('radio group, onChange', val);
       fn(val);
       this.value = val;
@@ -206,7 +207,14 @@ export class RadioGroup {
   /**
    * @private
    */
-  onChange(_) {}
+  onChange(val: any) {
+    // onChange used when there is not an ngControl
+    console.debug('radio group, onChange w/out ngControl', val);
+    this.value = val;
+    this._update();
+    this.onTouched();
+    this.change.emit(val);
+  }
 
   /**
    * @private
