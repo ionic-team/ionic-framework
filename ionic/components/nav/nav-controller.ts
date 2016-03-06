@@ -1261,8 +1261,18 @@ export class NavController extends Ion {
       view.destroy();
     });
 
+    // if any z-index goes under 0, then reset them all
+    let shouldResetZIndex = this._views.some(v => v.zIndex < 0);
+    if (shouldResetZIndex) {
+      this._views.forEach(view => {
+        view.setZIndex( view.zIndex + INIT_ZINDEX + 1, this._renderer );
+      });
+    }
   }
 
+  /**
+   * @private
+   */
   ngOnDestroy() {
     for (var i = this._views.length - 1; i >= 0; i--) {
       this._views[i].destroy();

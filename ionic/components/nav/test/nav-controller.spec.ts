@@ -350,6 +350,30 @@ export function run() {
         expect(view2.destroy).toHaveBeenCalled();
         expect(view3.destroy).toHaveBeenCalled();
       });
+
+      it('should reset zIndexes if their is a negative zindex', () => {
+        let view1 = new ViewController(Page1);
+        view1.setPageRef( getElementRef() );
+        view1.state = STATE_INACTIVE;
+        view1.zIndex = -1;
+
+        let view2 = new ViewController(Page2);
+        view2.setPageRef( getElementRef() );
+        view2.state = STATE_INACTIVE;
+        view2.zIndex = 0;
+
+        let view3 = new ViewController(Page3);
+        view3.setPageRef( getElementRef() );
+        view3.state = STATE_ACTIVE;
+        view3.zIndex = 1;
+
+        nav._views = [view1, view2, view3];
+        nav._cleanup();
+
+        expect(view1.zIndex).toEqual(10);
+        expect(view2.zIndex).toEqual(11);
+        expect(view3.zIndex).toEqual(12);
+      });
     });
 
     describe('_postRender', () => {
@@ -747,7 +771,7 @@ export function run() {
 
         nav._transFinish(1, enteringView, leavingView, 'back', hasCompleted);
 
-        expect(nav._cleanup).toHaveBeenCalled()
+        expect(nav._cleanup).toHaveBeenCalled();
       });
 
       it('should not run cleanup when most not recent transition', () => {
@@ -763,7 +787,7 @@ export function run() {
 
         nav._transFinish(2, enteringView, leavingView, 'back', hasCompleted);
 
-        expect(nav._cleanup).not.toHaveBeenCalled()
+        expect(nav._cleanup).not.toHaveBeenCalled();
       });
 
       it('should not run cleanup when it hasnt completed transition, but is the most recent', () => {
@@ -779,7 +803,7 @@ export function run() {
 
         nav._transFinish(1, enteringView, leavingView, 'back', hasCompleted);
 
-        expect(nav._cleanup).not.toHaveBeenCalled()
+        expect(nav._cleanup).not.toHaveBeenCalled();
       });
 
       it('should set transitioning is over when most recent transition finishes', () => {
@@ -1150,9 +1174,7 @@ export function run() {
     });
 
     function mockNav() {
-      let elementRef = {
-        nativeElement: document.createElement('div')
-      };
+      let elementRef = getElementRef();
 
       let nav = new NavController(null, null, config, null, elementRef, null, null, null, null, null);
 
@@ -1176,6 +1198,12 @@ export function run() {
       };
 
       return nav;
+    }
+
+    function getElementRef() {
+      return {
+        nativeElement: document.createElement('div')
+      }
     }
 
   });
