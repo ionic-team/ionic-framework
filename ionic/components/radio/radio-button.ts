@@ -1,7 +1,7 @@
 import {Component, Optional, Input, Output, HostListener, EventEmitter} from 'angular2/core';
 
 import {Form} from '../../util/form';
-import {isTrueProperty, isDefined, isBlank} from '../../util/util';
+import {isTrueProperty, isPresent, isBlank} from '../../util/util';
 import {Item} from '../item/item';
 import {ListHeader} from '../list/list';
 import {RadioGroup} from './radio-group';
@@ -142,7 +142,7 @@ export class RadioButton {
    * @private
    */
   ngOnInit() {
-    if (this._group && isDefined(this._group.value) && this._group.value == this.value) {
+    if (this._group && isPresent(this._group.value) && this._group.value == this.value) {
       this.checked = true;
     }
   }

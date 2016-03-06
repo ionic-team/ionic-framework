@@ -2,7 +2,6 @@ import {Directive, ElementRef, Renderer, Attribute, NgZone} from 'angular2/core'
 
 import {Ion} from '../ion';
 import {ItemSlidingGesture} from '../item/item-sliding-gesture';
-import {isDefined} from '../../util';
 
 /**
  * The List is a widely used interface element in almost any mobile app,

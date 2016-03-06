@@ -5,7 +5,7 @@ import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
-import {isDefined} from '../../util/util';
+import {isPresent} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -82,7 +82,7 @@ export class ActionSheet extends ViewController {
 
   constructor(opts: ActionSheetOptions = {}) {
     opts.buttons = opts.buttons || [];
-    opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(ActionSheetCmp, opts);
     this.viewType = 'action-sheet';

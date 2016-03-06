@@ -4,7 +4,7 @@ import {NgClass, NgSwitch, NgIf, NgFor} from 'angular2/common';
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
-import {isDefined} from '../../util/util';
+import {isPresent} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -122,7 +122,7 @@ export class Alert extends ViewController {
   constructor(opts: AlertOptions = {}) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
-    opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(AlertCmp, opts);
     this.viewType = 'alert';
@@ -326,9 +326,9 @@ class AlertCmp {
     data.inputs = data.inputs.map((input, index) => {
       return {
         type: input.type || 'text',
-        name: isDefined(input.name) ? input.name : index,
-        placeholder: isDefined(input.placeholder) ? input.placeholder : '',
-        value: isDefined(input.value) ? input.value : '',
+        name: isPresent(input.name) ? input.name : index,
+        placeholder: isPresent(input.placeholder) ? input.placeholder : '',
+        value: isPresent(input.value) ? input.value : '',
         label: input.label,
         checked: !!input.checked,
         id: 'alert-input-' + this.id + '-' + index

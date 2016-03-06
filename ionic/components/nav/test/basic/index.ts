@@ -45,6 +45,7 @@ class MyCmpTest{}
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="nav.pop()">Pop</button>
+        <button ion-item (click)="viewDismiss()">View Dismiss</button>
         <button ion-item (click)="quickPush()">New push during transition</button>
         <button ion-item (click)="quickPop()">New pop during transition</button>
         <button ion-item (click)="reload()">Reload</button>
@@ -62,8 +63,7 @@ class FirstPage {
 
   constructor(
     private nav: NavController,
-    app: IonicApp,
-    config: Config
+    private view: ViewController
   ) {
     this.pushPage = FullPage;
 
@@ -108,6 +108,10 @@ class FirstPage {
     setTimeout(() => {
       this.nav.remove(1, 1);
     }, 250);
+  }
+
+  viewDismiss() {
+    this.view.dismiss();
   }
 
   reload() {

@@ -12,7 +12,7 @@ import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Icon} from '../icon/icon';
 import {rafFrames} from '../../util/dom';
-import {isUndefined, isTrueProperty} from '../../util/util';
+import {isBlank, isTrueProperty} from '../../util/util';
 
 
 /**
@@ -193,7 +193,7 @@ export class Tabs extends Ion {
   ngAfterContentInit() {
     let selectedIndex = this.selectedIndex ? parseInt(this.selectedIndex, 10) : 0;
 
-    let preloadTabs = (isUndefined(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
+    let preloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
 
     this._tabs.forEach((tab, index) => {
       if (index === selectedIndex) {
@@ -210,7 +210,7 @@ export class Tabs extends Ion {
    */
   private _setConfig(attrKey, fallback) {
     var val = this[attrKey];
-    if (isUndefined(val)) {
+    if (isBlank(val)) {
       val = this._config.get(attrKey, fallback);
     }
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attrKey, val);

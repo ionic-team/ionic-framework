@@ -74,6 +74,20 @@ export function run() {
 
     });
 
+    describe('remove', () => {
+
+      it('should create opts if passed in arg is undefined or null', () => {
+        let view1 = new ViewController(Page1);
+        view1.state = STATE_INACTIVE;
+        let view2 = new ViewController(Page2);
+        view2.state = STATE_ACTIVE;
+        nav._views = [view1, view2];
+
+        nav.remove(1, 1, null);
+      });
+
+    });
+
     describe('_remove', () => {
 
       it('should reassign activily transitioning leave that isnt getting removed, to become force active', () => {

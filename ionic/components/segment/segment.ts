@@ -1,7 +1,7 @@
 import {Directive, Component, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
-import {isDefined} from '../../util/util';
+import {isPresent} from '../../util/util';
 
 
 /**
@@ -82,7 +82,7 @@ export class SegmentButton {
    * @private
    */
   ngOnInit() {
-    if (!isDefined(this.value)) {
+    if (!isPresent(this.value)) {
       console.warn('<ion-segment-button> requires a "value" attribute');
     }
   }
@@ -174,7 +174,7 @@ export class Segment {
    * Write a new value to the element.
    */
   writeValue(value) {
-    this.value = isDefined(value) ? value : '';
+    this.value = isPresent(value) ? value : '';
     if (this._buttons) {
       let buttons = this._buttons.toArray();
       for (let button of buttons) {
@@ -195,7 +195,7 @@ export class Segment {
        this.change.emit(selectedButton);
      });
 
-     if (isDefined(this.value)) {
+     if (isPresent(this.value)) {
        button.isActive = (button.value === this.value);
      }
    }

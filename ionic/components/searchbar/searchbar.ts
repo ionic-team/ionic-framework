@@ -5,7 +5,7 @@ import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {Button} from '../button/button';
-import {isDefined, debounce} from '../../util/util';
+import {isPresent, debounce} from '../../util/util';
 
 
 /**
@@ -206,7 +206,7 @@ export class Searchbar extends Ion {
   ngAfterViewInit() {
     // If the user passes an undefined variable to ngModel this will warn
     // and set the value to an empty string
-    if (!isDefined(this.value)) {
+    if (!isPresent(this.value)) {
       console.warn('Searchbar was passed an undefined value in ngModel. Please make sure the variable is defined.');
       this.value = '';
       this.onChange(this.value);

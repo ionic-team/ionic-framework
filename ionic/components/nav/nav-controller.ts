@@ -7,7 +7,7 @@ import {IonicApp} from '../app/app';
 import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
 import {NavRouter} from './nav-router';
-import {pascalCaseToDashCase, isTrueProperty, isUndefined} from '../../util/util';
+import {pascalCaseToDashCase, isTrueProperty, isBlank} from '../../util/util';
 import {raf} from '../../util/dom';
 import {SwipeBackGesture} from './swipe-back';
 import {Transition} from '../../transitions/transition';
@@ -178,7 +178,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when done
    */
-  setRoot(page: Type, params: any = {}, opts: NavOptions = {}): Promise<any> {
+  setRoot(page: Type, params?: any, opts?: NavOptions): Promise<any> {
     return this.setPages([{page, params}], opts);
   }
 
@@ -255,9 +255,13 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass
    * @returns {Promise} Returns a promise when the pages are set
    */
-  setPages(pages: Array<{page: Type, params?: any}>, opts: NavOptions = {}): Promise<any> {
+  setPages(pages: Array<{page: Type, params?: any}>, opts?: NavOptions): Promise<any> {
     if (!pages || !pages.length) {
       return Promise.resolve(false);
+    }
+
+    if (isBlank(opts)) {
+      opts = {};
     }
 
     // deprecated warning
@@ -303,7 +307,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private setViews(components, opts: NavOptions = {}) {
+  private setViews(components, opts?: NavOptions) {
     console.warn('setViews() deprecated, use setPages() instead');
     return this.setPages(components, opts);
   }
@@ -373,7 +377,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise, which resolves when the transition has completed
    */
-  push(page: Type, params: any = {}, opts: NavOptions = {}) {
+  push(page: Type, params?: any, opts?: NavOptions) {
     return this.insertPages(-1, [{page: page, params: params}], opts);
   }
 
@@ -402,7 +406,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise, which resolves when the transition has completed
    */
-  present(enteringView: ViewController, opts: NavOptions = {}): Promise<any> {
+  present(enteringView: ViewController, opts?: NavOptions): Promise<any> {
     let rootNav = this.rootNav;
 
     if (rootNav['_tabs']) {
@@ -410,6 +414,10 @@ export class NavController extends Ion {
       // https://github.com/angular/angular/issues/5481
       console.error('A parent <ion-nav> is required for ActionSheet/Alert/Modal');
       return;
+    }
+
+    if (isBlank(opts)) {
+      opts = {};
     }
 
     enteringView.setNav(rootNav);
@@ -454,7 +462,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the page has been inserted into the navigation stack
    */
-  insert(insertIndex: number, page: Type, params: any = {}, opts: NavOptions = {}): Promise<any> {
+  insert(insertIndex: number, page: Type, params?: any, opts?: NavOptions): Promise<any> {
     return this.insertPages(insertIndex, [{page: page, params: params}], opts);
   }
 
@@ -486,14 +494,18 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the pages have been inserted into the navigation stack
    */
-  insertPages(insertIndex: number, insertPages: Array<{page: Type, params?: any}>, opts: NavOptions = {}): Promise<any> {
+  insertPages(insertIndex: number, insertPages: Array<{page: Type, params?: any}>, opts?: NavOptions): Promise<any> {
     let views = insertPages.map(p => new ViewController(p.page, p.params));
     return this._insertViews(insertIndex, views, opts);
   }
 
-  private _insertViews(insertIndex: number, insertViews: Array<ViewController>, opts: NavOptions = {}): Promise<any> {
+  private _insertViews(insertIndex: number, insertViews: Array<ViewController>, opts?: NavOptions): Promise<any> {
     if (!insertViews || !insertViews.length) {
       return Promise.reject('invalid pages');
+    }
+
+    if (isBlank(opts)) {
+      opts = {};
     }
 
     // insert the new page into the stack
@@ -616,16 +628,20 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the transition is completed
    */
-  pop(opts: NavOptions = {}): Promise<any> {
+  pop(opts?: NavOptions): Promise<any> {
     // get the index of the active view
     // which will become the view to be leaving
     let activeView = this.getByState(STATE_TRANS_ENTER) ||
                      this.getByState(STATE_INIT_ENTER) ||
                      this.getActive();
 
+    if (isBlank(opts)) {
+      opts = {};
+    }
+
     // if not set, by default climb up the nav controllers if
     // there isn't a previous view in this nav controller
-    if (isUndefined(opts.climbNav)) {
+    if (isBlank(opts.climbNav)) {
       opts.climbNav = true;
     }
     return this.remove(this.indexOf(activeView), 1, opts);
@@ -635,7 +651,7 @@ export class NavController extends Ion {
    * Similar to `pop()`, this method let's you navigate back to the root of the stack, no matter how many views that is
    * @param {object} [opts={}] Any options you want to use pass to transtion
    */
-  popToRoot(opts: NavOptions = {}): Promise<any> {
+  popToRoot(opts?: NavOptions): Promise<any> {
     return this.popTo(this.first(), opts);
   }
 
@@ -644,7 +660,7 @@ export class NavController extends Ion {
    * @param {ViewController} view  to pop to
    * @param {object} [opts={}]  Any options you want to use pass to transtion
    */
-  popTo(view: ViewController, opts: NavOptions = {}): Promise<any> {
+  popTo(view: ViewController, opts?: NavOptions): Promise<any> {
     let startIndex = this.indexOf(view);
     let activeView = this.getByState(STATE_TRANS_ENTER) ||
                      this.getByState(STATE_INIT_ENTER) ||
@@ -673,12 +689,16 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion.
    * @returns {Promise} Returns a promise when the page has been removed.
    */
-  remove(startIndex: number = -1, removeCount: number = 1, opts: NavOptions = {}): Promise<any> {
+  remove(startIndex: number = -1, removeCount: number = 1, opts?: NavOptions): Promise<any> {
     if (startIndex === -1) {
       startIndex = this._views.length - 1;
 
     } else if (startIndex < 0 || startIndex >= this._views.length) {
       return Promise.reject("remove index out of range");
+    }
+
+    if (isBlank(opts)) {
+      opts = {};
     }
 
     // default the direction to "back"
@@ -878,8 +898,11 @@ export class NavController extends Ion {
     // lets time this sucker, ready go
     let wtfScope = wtfStartTimeRange('NavController#_transition', (enteringView && enteringView.name));
 
-    if (this.config.get('animate') === false ||
-        (this._views.length === 1 && !this._init)) {
+    if (isBlank(opts)) {
+      opts = {};
+    }
+
+    if (this.config.get('animate') === false || (this._views.length === 1 && !this._init)) {
       opts.animate = false;
     }
 

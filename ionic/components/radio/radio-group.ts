@@ -3,7 +3,7 @@ import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {RadioButton} from './radio-button';
 import {ListHeader} from '../list/list';
-import {isDefined} from '../../util/util';
+import {isPresent} from '../../util/util';
 
 const RADIO_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => RadioGroup), multi: true});

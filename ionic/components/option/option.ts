@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Input, Output, EventEmitter} from 'angular2/core';
 
-import {isDefined, isTrueProperty} from '../../util/util';
+import {isPresent, isTrueProperty} from '../../util/util';
 
 /**
  * @name Option
@@ -40,7 +40,7 @@ export class Option {
    */
   @Input()
   get value() {
-    if (isDefined(this._value)) {
+    if (isPresent(this._value)) {
       return this._value;
     }
     return this.text;
