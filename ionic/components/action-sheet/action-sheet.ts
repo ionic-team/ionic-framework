@@ -164,8 +164,8 @@ export class ActionSheet extends ViewController {
     '<div class="action-sheet-wrapper">' +
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group">' +
-          '<div class="action-sheet-title" *ngIf="d.title">{{d.title}}</div>' +
-          '<div class="action-sheet-sub-title" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
+          '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
+          '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
           '<button (click)="click(b)" *ngFor="#b of d.buttons" class="action-sheet-button disable-hover" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{b.text}}' +
@@ -182,12 +182,17 @@ export class ActionSheet extends ViewController {
       '</div>' +
     '</div>',
   host: {
-    'role': 'dialog'
+    'role': 'dialog',
+    '[attr.aria-labelledby]': 'hdrId',
+    '[attr.aria-describedby]': 'descId'
   },
   directives: [NgFor, NgIf, Icon]
 })
 class ActionSheetCmp {
   private d: any;
+  private descId: string;
+  private hdrId: string;
+  private id: number;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -200,6 +205,14 @@ class ActionSheetCmp {
 
     if (this.d.cssClass) {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
+    }
+
+    this.id = (++actionSheetIds);
+    if (this.d.title) {
+      this.hdrId = 'acst-hdr-' + this.id;
+    }
+    if (this.d.subTitle) {
+      this.descId = 'acst-subhdr-' + this.id;
     }
   }
 
@@ -399,3 +412,5 @@ class ActionSheetWpSlideOut extends Transition {
   }
 }
 Transition.register('action-sheet-wp-slide-out', ActionSheetWpSlideOut);
+
+let actionSheetIds = -1;
