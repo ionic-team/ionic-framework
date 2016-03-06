@@ -370,9 +370,9 @@ export function run() {
         nav._views = [view1, view2, view3];
         nav._cleanup();
 
-        expect(view1.zIndex).toEqual(10);
-        expect(view2.zIndex).toEqual(11);
-        expect(view3.zIndex).toEqual(12);
+        expect(view1.zIndex).toEqual(100);
+        expect(view2.zIndex).toEqual(101);
+        expect(view3.zIndex).toEqual(102);
       });
     });
 
@@ -575,7 +575,7 @@ export function run() {
         let enteringView = new ViewController();
         enteringView.setPageRef({});
         nav._setZIndex(enteringView, null, 'forward');
-        expect(enteringView.zIndex).toEqual(10);
+        expect(enteringView.zIndex).toEqual(100);
       });
 
       it('should set zIndex 1 on second entering view', () => {

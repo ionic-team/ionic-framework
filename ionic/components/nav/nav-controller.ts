@@ -1656,6 +1656,6 @@ const STATE_TRANS_LEAVE = 'trans_leave';
 const STATE_REMOVE = 'remove';
 const STATE_REMOVE_AFTER_TRANS = 'remove_after_trans';
 const STATE_FORCE_ACTIVE = 'force_active';
-const INIT_ZINDEX = 10;
+const INIT_ZINDEX = 100;
 
 let ctrlIds = -1;
