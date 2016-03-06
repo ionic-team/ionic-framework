@@ -140,7 +140,6 @@ button ion-label,
 [tappable] ion-label,
 input,
 textarea {
-  -ms-touch-action: manipulation;
   touch-action: manipulation;
 }
 
