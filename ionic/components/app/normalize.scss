@@ -124,8 +124,20 @@ input[type="submit"] {
 
 // remove 300ms delay
 a,
+a div,
+a span,
+a ion-icon,
+a ion-label,
 button,
+button div,
+button span,
+button ion-icon,
+button ion-label,
 [tappable],
+[tappable] div,
+[tappable] span,
+[tappable] ion-icon,
+[tappable] ion-label,
 input,
 textarea {
   -ms-touch-action: manipulation;
