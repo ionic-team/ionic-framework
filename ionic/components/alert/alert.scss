@@ -78,3 +78,14 @@ ion-alert {
   line-height: $alert-button-line-height;
   font-size: $alert-button-font-size;
 }
+
+.alert-tappable {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-size: inherit;
+  line-height: initial;
+  text-align: left;
+  background: transparent;
+  -webkit-appearance: none;
+}
