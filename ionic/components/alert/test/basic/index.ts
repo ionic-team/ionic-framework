@@ -99,6 +99,12 @@ class E2EPage {
       value: 'hello',
       placeholder: 'Placeholder 2'
     });
+    alert.addInput({
+      name: 'name3',
+      value: 'http://ionicframework.com',
+      type: 'url',
+      placeholder: 'Favorite site ever'
+    });
     alert.addButton({
       text: 'Cancel',
       handler: data => {
