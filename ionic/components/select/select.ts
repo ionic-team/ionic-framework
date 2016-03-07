@@ -4,7 +4,7 @@ import {NG_VALUE_ACCESSOR} from 'angular2/common';
 import {Alert} from '../alert/alert';
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
-import {merge, isTrueProperty, isBlank} from '../../util/util';
+import {merge, isTrueProperty, isBlank, isCheckedProperty} from '../../util/util';
 import {NavController} from '../nav/nav-controller';
 import {Option} from '../option/option';
 
@@ -310,7 +310,10 @@ export class Select {
     if (this._options) {
       this._options.toArray().forEach(option => {
         // check this option if the option's value is in the values array
-        option.checked = (this._values.indexOf(option.value) > -1);
+        option.checked = this._values.some(selectValue => {
+          return isCheckedProperty(selectValue, option.value);
+        });
+
         if (option.checked) {
           this._texts.push(option.text);
         }
@@ -371,7 +374,13 @@ export class Select {
   /**
    * @private
    */
-  onChange(_) {}
+  onChange(val: any) {
+    // onChange used when there is not an ngControl
+    console.debug('select, onChange w/out ngControl', val);
+    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
+    this._updOpts();
+    this.onTouched();
+  }
 
   /**
    * @private

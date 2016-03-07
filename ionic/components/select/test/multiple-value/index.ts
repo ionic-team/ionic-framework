@@ -26,7 +26,7 @@ class E2EPage {
 
     this.authForm = new ControlGroup({
       name: new Control(''),
-      select: new Control('')
+      select: new Control([1, '3'])
     });
   }
 
