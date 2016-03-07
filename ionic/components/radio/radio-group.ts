@@ -3,7 +3,7 @@ import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {RadioButton} from './radio-button';
 import {ListHeader} from '../list/list';
-import {isPresent} from '../../util/util';
+import {isPresent, isCheckedProperty} from '../../util/util';
 
 const RADIO_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => RadioGroup), multi: true});
@@ -145,16 +145,18 @@ export class RadioGroup {
    */
   private _update() {
     // loop through each of the radiobuttons
+    let hasChecked = false;
     this._btns.forEach(radioButton => {
 
       // check this radiobutton if its value is
       // the same as the radiogroups value
-      radioButton.checked = (radioButton.value == this.value);
+      radioButton.checked = isCheckedProperty(this.value, radioButton.value) && !hasChecked;
 
       if (radioButton.checked) {
         // if this button is checked, then set it as
         // the radiogroup's active descendant
         this._setActive(radioButton);
+        hasChecked = true;
       }
     });
   }

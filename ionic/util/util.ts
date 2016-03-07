@@ -119,6 +119,24 @@ export const isTrueProperty = function(val: any): boolean {
   return !!val;
 };
 
+export const isCheckedProperty = function(a: any, b: any): boolean {
+  if (a === undefined || a === null || a === '') {
+    return (b === undefined || b === null || b === '');
+
+  } else if (a === true || a === 'true') {
+    return (b === true || b === 'true');
+
+  } else if (a === false || a === 'false') {
+    return (b === false || b === 'false');
+
+  } else if (a === 0 || a === '0') {
+    return (b === 0 || b === '0');
+  }
+
+  // not using strict comparison on purpose
+  return (a == b);
+};
+
 /**
  * Convert a string in the format thisIsAString to a slug format this-is-a-string
  */

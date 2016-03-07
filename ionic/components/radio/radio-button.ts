@@ -1,7 +1,7 @@
 import {Component, Optional, Input, Output, HostListener, EventEmitter} from 'angular2/core';
 
 import {Form} from '../../util/form';
-import {isTrueProperty, isPresent, isBlank} from '../../util/util';
+import {isTrueProperty, isPresent, isBlank, isCheckedProperty} from '../../util/util';
 import {Item} from '../item/item';
 import {ListHeader} from '../list/list';
 import {RadioGroup} from './radio-group';
@@ -50,7 +50,7 @@ export class RadioButton {
   private _checked: boolean = false;
   private _disabled: boolean = false;
   private _labelId: string;
-  private _value = null;
+  private _value: any = null;
 
   /**
    * @private
@@ -58,9 +58,9 @@ export class RadioButton {
   id: string;
 
   /**
-   * @output {RadioButton} expression to be evaluated when selected
+   * @output {any} expression to be evaluated when selected
    */
-  @Output() select: EventEmitter<RadioButton> = new EventEmitter();
+  @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -87,12 +87,12 @@ export class RadioButton {
    * @private
    */
   @Input()
-  get value() {
+  get value(): any {
     // if the value is not defined then use it's unique id
     return isBlank(this._value) ? this.id : this._value;
   }
 
-  set value(val) {
+  set value(val: any) {
     this._value = val;
   }
 
@@ -142,8 +142,8 @@ export class RadioButton {
    * @private
    */
   ngOnInit() {
-    if (this._group && isPresent(this._group.value) && this._group.value == this.value) {
-      this.checked = true;
+    if (this._group && isPresent(this._group.value)) {
+      this.checked = isCheckedProperty(this._group.value, this.value);
     }
   }
 

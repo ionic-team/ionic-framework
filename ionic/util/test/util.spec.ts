@@ -3,6 +3,235 @@ import * as util from '../../../ionic/util';
 export function run() {
   describe('extend', function() {
 
+    describe('isCheckedProperty', function() {
+
+      it('should test a=undefined', () => {
+        expect(util.isCheckedProperty(undefined, undefined)).toBe(true);
+        expect(util.isCheckedProperty(undefined, null)).toBe(true);
+        expect(util.isCheckedProperty(undefined, '')).toBe(true);
+        expect(util.isCheckedProperty(undefined, 'string')).toBe(false);
+        expect(util.isCheckedProperty(undefined, 0)).toBe(false);
+        expect(util.isCheckedProperty(undefined, '0')).toBe(false);
+        expect(util.isCheckedProperty(undefined, 1000)).toBe(false);
+        expect(util.isCheckedProperty(undefined, '1000')).toBe(false);
+        expect(util.isCheckedProperty(undefined, -1)).toBe(false);
+        expect(util.isCheckedProperty(undefined, true)).toBe(false);
+        expect(util.isCheckedProperty(undefined, false)).toBe(false);
+        expect(util.isCheckedProperty(undefined, 'true')).toBe(false);
+        expect(util.isCheckedProperty(undefined, 'false')).toBe(false);
+      });
+
+      it('should test a=null', () => {
+        expect(util.isCheckedProperty(null, undefined)).toBe(true);
+        expect(util.isCheckedProperty(null, null)).toBe(true);
+        expect(util.isCheckedProperty(null, '')).toBe(true);
+        expect(util.isCheckedProperty(null, 'string')).toBe(false);
+        expect(util.isCheckedProperty(null, 0)).toBe(false);
+        expect(util.isCheckedProperty(null, '0')).toBe(false);
+        expect(util.isCheckedProperty(null, 1000)).toBe(false);
+        expect(util.isCheckedProperty(null, '1000')).toBe(false);
+        expect(util.isCheckedProperty(null, -1)).toBe(false);
+        expect(util.isCheckedProperty(null, true)).toBe(false);
+        expect(util.isCheckedProperty(null, false)).toBe(false);
+        expect(util.isCheckedProperty(null, 'true')).toBe(false);
+        expect(util.isCheckedProperty(null, 'false')).toBe(false);
+      });
+
+      it('should test a=""', () => {
+        expect(util.isCheckedProperty('', undefined)).toBe(true);
+        expect(util.isCheckedProperty('', null)).toBe(true);
+        expect(util.isCheckedProperty('', '')).toBe(true);
+        expect(util.isCheckedProperty('', 'string')).toBe(false);
+        expect(util.isCheckedProperty('', 0)).toBe(false);
+        expect(util.isCheckedProperty('', '0')).toBe(false);
+        expect(util.isCheckedProperty('', 1000)).toBe(false);
+        expect(util.isCheckedProperty('', '1000')).toBe(false);
+        expect(util.isCheckedProperty('', -1)).toBe(false);
+        expect(util.isCheckedProperty('', true)).toBe(false);
+        expect(util.isCheckedProperty('', false)).toBe(false);
+        expect(util.isCheckedProperty('', 'true')).toBe(false);
+        expect(util.isCheckedProperty('', 'false')).toBe(false);
+      });
+
+      it('should test a=true', () => {
+        expect(util.isCheckedProperty(true, undefined)).toBe(false);
+        expect(util.isCheckedProperty(true, null)).toBe(false);
+        expect(util.isCheckedProperty(true, '')).toBe(false);
+        expect(util.isCheckedProperty(true, 'string')).toBe(false);
+        expect(util.isCheckedProperty(true, 0)).toBe(false);
+        expect(util.isCheckedProperty(true, '0')).toBe(false);
+        expect(util.isCheckedProperty(true, 1000)).toBe(false);
+        expect(util.isCheckedProperty(true, '1000')).toBe(false);
+        expect(util.isCheckedProperty(true, -1)).toBe(false);
+        expect(util.isCheckedProperty(true, true)).toBe(true);
+        expect(util.isCheckedProperty(true, false)).toBe(false);
+        expect(util.isCheckedProperty(true, 'true')).toBe(true);
+        expect(util.isCheckedProperty(true, 'false')).toBe(false);
+      });
+
+      it('should test a="true"', () => {
+        expect(util.isCheckedProperty('true', undefined)).toBe(false);
+        expect(util.isCheckedProperty('true', null)).toBe(false);
+        expect(util.isCheckedProperty('true', '')).toBe(false);
+        expect(util.isCheckedProperty('true', 'string')).toBe(false);
+        expect(util.isCheckedProperty('true', 0)).toBe(false);
+        expect(util.isCheckedProperty('true', '0')).toBe(false);
+        expect(util.isCheckedProperty('true', 1000)).toBe(false);
+        expect(util.isCheckedProperty('true', '1000')).toBe(false);
+        expect(util.isCheckedProperty('true', -1)).toBe(false);
+        expect(util.isCheckedProperty('true', true)).toBe(true);
+        expect(util.isCheckedProperty('true', false)).toBe(false);
+        expect(util.isCheckedProperty('true', 'true')).toBe(true);
+        expect(util.isCheckedProperty('true', 'false')).toBe(false);
+      });
+
+      it('should test a=false', () => {
+        expect(util.isCheckedProperty(false, undefined)).toBe(false);
+        expect(util.isCheckedProperty(false, null)).toBe(false);
+        expect(util.isCheckedProperty(false, '')).toBe(false);
+        expect(util.isCheckedProperty(false, 'string')).toBe(false);
+        expect(util.isCheckedProperty(false, 0)).toBe(false);
+        expect(util.isCheckedProperty(false, '0')).toBe(false);
+        expect(util.isCheckedProperty(false, 1000)).toBe(false);
+        expect(util.isCheckedProperty(false, '1000')).toBe(false);
+        expect(util.isCheckedProperty(false, -1)).toBe(false);
+        expect(util.isCheckedProperty(false, true)).toBe(false);
+        expect(util.isCheckedProperty(false, false)).toBe(true);
+        expect(util.isCheckedProperty(false, 'true')).toBe(false);
+        expect(util.isCheckedProperty(false, 'false')).toBe(true);
+      });
+
+      it('should test a="false"', () => {
+        expect(util.isCheckedProperty('false', undefined)).toBe(false);
+        expect(util.isCheckedProperty('false', null)).toBe(false);
+        expect(util.isCheckedProperty('false', '')).toBe(false);
+        expect(util.isCheckedProperty('false', 'string')).toBe(false);
+        expect(util.isCheckedProperty('false', 0)).toBe(false);
+        expect(util.isCheckedProperty('false', '0')).toBe(false);
+        expect(util.isCheckedProperty('false', 1000)).toBe(false);
+        expect(util.isCheckedProperty('false', '1000')).toBe(false);
+        expect(util.isCheckedProperty('false', -1)).toBe(false);
+        expect(util.isCheckedProperty('false', true)).toBe(false);
+        expect(util.isCheckedProperty('false', false)).toBe(true);
+        expect(util.isCheckedProperty('false', 'true')).toBe(false);
+        expect(util.isCheckedProperty('false', 'false')).toBe(true);
+      });
+
+      it('should test a=0', () => {
+        expect(util.isCheckedProperty(0, undefined)).toBe(false);
+        expect(util.isCheckedProperty(0, null)).toBe(false);
+        expect(util.isCheckedProperty(0, '')).toBe(false);
+        expect(util.isCheckedProperty(0, 'string')).toBe(false);
+        expect(util.isCheckedProperty(0, 0)).toBe(true);
+        expect(util.isCheckedProperty(0, '0')).toBe(true);
+        expect(util.isCheckedProperty(0, 1000)).toBe(false);
+        expect(util.isCheckedProperty(0, '1000')).toBe(false);
+        expect(util.isCheckedProperty(0, -1)).toBe(false);
+        expect(util.isCheckedProperty(0, true)).toBe(false);
+        expect(util.isCheckedProperty(0, false)).toBe(false);
+        expect(util.isCheckedProperty(0, 'true')).toBe(false);
+        expect(util.isCheckedProperty(0, 'false')).toBe(false);
+      });
+
+      it('should test a="0"', () => {
+        expect(util.isCheckedProperty('0', undefined)).toBe(false);
+        expect(util.isCheckedProperty('0', null)).toBe(false);
+        expect(util.isCheckedProperty('0', '')).toBe(false);
+        expect(util.isCheckedProperty('0', 'string')).toBe(false);
+        expect(util.isCheckedProperty('0', 0)).toBe(true);
+        expect(util.isCheckedProperty('0', '0')).toBe(true);
+        expect(util.isCheckedProperty('0', 1000)).toBe(false);
+        expect(util.isCheckedProperty('0', '1000')).toBe(false);
+        expect(util.isCheckedProperty('0', -1)).toBe(false);
+        expect(util.isCheckedProperty('0', true)).toBe(false);
+        expect(util.isCheckedProperty('0', false)).toBe(false);
+        expect(util.isCheckedProperty('0', 'true')).toBe(false);
+        expect(util.isCheckedProperty('0', 'false')).toBe(false);
+      });
+
+      it('should test a=1000', () => {
+        expect(util.isCheckedProperty(1000, undefined)).toBe(false);
+        expect(util.isCheckedProperty(1000, null)).toBe(false);
+        expect(util.isCheckedProperty(1000, '')).toBe(false);
+        expect(util.isCheckedProperty(1000, 'string')).toBe(false);
+        expect(util.isCheckedProperty(1000, 0)).toBe(false);
+        expect(util.isCheckedProperty(1000, '0')).toBe(false);
+        expect(util.isCheckedProperty(1000, 1000)).toBe(true);
+        expect(util.isCheckedProperty(1000, '1000')).toBe(true);
+        expect(util.isCheckedProperty(1000, -1)).toBe(false);
+        expect(util.isCheckedProperty(1000, true)).toBe(false);
+        expect(util.isCheckedProperty(1000, false)).toBe(false);
+        expect(util.isCheckedProperty(1000, 'true')).toBe(false);
+        expect(util.isCheckedProperty(1000, 'false')).toBe(false);
+      });
+
+      it('should test a="1000"', () => {
+        expect(util.isCheckedProperty('1000', undefined)).toBe(false);
+        expect(util.isCheckedProperty('1000', null)).toBe(false);
+        expect(util.isCheckedProperty('1000', '')).toBe(false);
+        expect(util.isCheckedProperty('1000', 'string')).toBe(false);
+        expect(util.isCheckedProperty('1000', 0)).toBe(false);
+        expect(util.isCheckedProperty('1000', '0')).toBe(false);
+        expect(util.isCheckedProperty('1000', 1000)).toBe(true);
+        expect(util.isCheckedProperty('1000', '1000')).toBe(true);
+        expect(util.isCheckedProperty('1000', -1)).toBe(false);
+        expect(util.isCheckedProperty('1000', true)).toBe(false);
+        expect(util.isCheckedProperty('1000', false)).toBe(false);
+        expect(util.isCheckedProperty('1000', 'true')).toBe(false);
+        expect(util.isCheckedProperty('1000', 'false')).toBe(false);
+      });
+
+      it('should test a=-1', () => {
+        expect(util.isCheckedProperty(-1, undefined)).toBe(false);
+        expect(util.isCheckedProperty(-1, null)).toBe(false);
+        expect(util.isCheckedProperty(-1, '')).toBe(false);
+        expect(util.isCheckedProperty(-1, 'string')).toBe(false);
+        expect(util.isCheckedProperty(-1, 0)).toBe(false);
+        expect(util.isCheckedProperty(-1, '0')).toBe(false);
+        expect(util.isCheckedProperty(-1, 1000)).toBe(false);
+        expect(util.isCheckedProperty(-1, '1000')).toBe(false);
+        expect(util.isCheckedProperty(-1, -1)).toBe(true);
+        expect(util.isCheckedProperty(-1, true)).toBe(false);
+        expect(util.isCheckedProperty(-1, false)).toBe(false);
+        expect(util.isCheckedProperty(-1, 'true')).toBe(false);
+        expect(util.isCheckedProperty(-1, 'false')).toBe(false);
+      });
+
+      it('should test a="-1"', () => {
+        expect(util.isCheckedProperty('-1', undefined)).toBe(false);
+        expect(util.isCheckedProperty('-1', null)).toBe(false);
+        expect(util.isCheckedProperty('-1', '')).toBe(false);
+        expect(util.isCheckedProperty('-1', 'string')).toBe(false);
+        expect(util.isCheckedProperty('-1', 0)).toBe(false);
+        expect(util.isCheckedProperty('-1', '0')).toBe(false);
+        expect(util.isCheckedProperty('-1', 1000)).toBe(false);
+        expect(util.isCheckedProperty('-1', '1000')).toBe(false);
+        expect(util.isCheckedProperty('-1', -1)).toBe(true);
+        expect(util.isCheckedProperty('-1', true)).toBe(false);
+        expect(util.isCheckedProperty('-1', false)).toBe(false);
+        expect(util.isCheckedProperty('-1', 'true')).toBe(false);
+        expect(util.isCheckedProperty('-1', 'false')).toBe(false);
+      });
+
+      it('should test a="string"', () => {
+        expect(util.isCheckedProperty('string', undefined)).toBe(false);
+        expect(util.isCheckedProperty('string', null)).toBe(false);
+        expect(util.isCheckedProperty('string', '')).toBe(false);
+        expect(util.isCheckedProperty('string', 'string')).toBe(true);
+        expect(util.isCheckedProperty('string', 'otherstring')).toBe(false);
+        expect(util.isCheckedProperty('string', 0)).toBe(false);
+        expect(util.isCheckedProperty('string', '0')).toBe(false);
+        expect(util.isCheckedProperty('string', 1000)).toBe(false);
+        expect(util.isCheckedProperty('string', '1000')).toBe(false);
+        expect(util.isCheckedProperty('string', -1)).toBe(false);
+        expect(util.isCheckedProperty('string', true)).toBe(false);
+        expect(util.isCheckedProperty('string', false)).toBe(false);
+        expect(util.isCheckedProperty('string', 'true')).toBe(false);
+        expect(util.isCheckedProperty('string', 'false')).toBe(false);
+      });
+
+    });
+
     describe('isTrueProperty', function() {
 
       it('should be true from boolean true', () => {
