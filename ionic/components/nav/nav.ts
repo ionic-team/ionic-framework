@@ -106,11 +106,8 @@ import {ViewController} from './view-controller';
   template: '<div #contents></div>'
 })
 export class Nav extends NavController {
-
-  /**
-   * @private
-   */
-  @Input() root: Type;
+  private _root: Type;
+  private _hasInit: boolean = false;
 
   constructor(
     @Optional() hostNavCtrl: NavController,
@@ -135,14 +132,31 @@ export class Nav extends NavController {
   }
 
   /**
+   * @input {Page} The Page component to load as the root page within this nav.
+   */
+  @Input()
+  get root(): Type {
+    return this._root;
+  }
+  set root(page: Type) {
+    this._root = page;
+
+    if (this._hasInit) {
+      this.setRoot(page);
+    }
+  }
+
+  /**
    * @private
    */
   ngOnInit() {
-    if (this.root) {
-      if (typeof this.root !== 'function') {
+    this._hasInit = true;
+
+    if (this._root) {
+      if (typeof this._root !== 'function') {
         throw 'The [root] property in <ion-nav> must be given a reference to a component class from within the constructor.';
       }
-      this.push(this.root);
+      this.push(this._root);
     }
   }
 
