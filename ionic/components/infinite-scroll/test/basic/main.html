@@ -3,9 +3,9 @@
 <ion-content>
 
   <ion-list>
-    <ion-item *ngFor="#item of items">
+    <button ion-item (click)="goToPage2()" *ngFor="#item of items">
       {{ item }}
-    </ion-item>
+    </button>
   </ion-list>
 
   <ion-infinite-scroll (infinite)="doInfinite($event)" threshold="100px">
