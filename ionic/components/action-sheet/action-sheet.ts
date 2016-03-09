@@ -240,6 +240,8 @@ class ActionSheetCmp {
       } else {
         if (button.role === 'destructive') {
           button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-destructive';
+        } else if (button.role === 'selected') {
+          button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-selected';
         }
         buttons.push(button);
       }

@@ -82,6 +82,11 @@ ion-action-sheet {
   }
 }
 
+.action-sheet-selected {
+  font-weight: bold;
+  background: white;
+}
+
 .action-sheet-destructive {
   color: $action-sheet-ios-button-destructive-text-color;
 }
