@@ -54,7 +54,8 @@ ion-label[floating] {
 
 .item-label-stacked [item-right],
 .item-label-floating [item-right] {
-  margin-top: $item-wp-padding-media-top + 2;
+  margin-top: $item-wp-padding-media-top + 4;
+  margin-bottom: $item-wp-padding-media-top + 4;
 }
 
 

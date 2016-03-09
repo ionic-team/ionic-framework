@@ -52,7 +52,8 @@ ion-label[floating] {
 
 .item-label-stacked [item-right],
 .item-label-floating [item-right] {
-  margin-top: $item-ios-padding-media-top + 2;
+  margin-top: $item-ios-padding-media-top - 2;
+  margin-bottom: $item-ios-padding-media-bottom - 2;
 }
 
 
