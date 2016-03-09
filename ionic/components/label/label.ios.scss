@@ -50,6 +50,11 @@ ion-label[floating] {
   transform: translate3d(0, 0, 0) scale(0.8);
 }
 
+.item-label-stacked [item-right],
+.item-label-floating [item-right] {
+  margin-top: $item-ios-padding-media-top + 2;
+}
+
 
 // Generate iOS Label colors
 // --------------------------------------------------

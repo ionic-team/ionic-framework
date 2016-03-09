@@ -38,6 +38,16 @@
   align-self: stretch;
 }
 
+.input-wrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .item[no-lines],
 .item[no-lines] .item-inner {
   border: none;
