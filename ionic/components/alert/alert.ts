@@ -207,7 +207,42 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @param {object} opts Alert options
+   *
+   *  Alert options
+   *
+   *  | Property              | Type      | Description                                                               |
+   *  |-----------------------|-----------|---------------------------------------------------------------------------|
+   *  | title                 | `string`  | The string for the alert (optional)                                       |
+   *  | subTitle              | `string`  | The subtitle for the alert (optional)                                     |
+   *  | message               | `string`  | The message for the alert (optional)                                      |
+   *  | cssClass              | `string`  | Any additional class for the alert (optional)                             |
+   *  | inputs                | `array`   | An array of inputs for the alert. See input options. (optional)           |
+   *  | buttons               | `array`   | An array of buttons for the alert. See buttons options. (optional)        |
+   *  | enableBackdropDismiss | `boolean` | Wheather the alert should be dismissed by tapping the backdrop (optional) |
+   *
+   *
+   *  Input options
+   *
+   *  | Property    | Type      | Description                                                     |
+   *  |-------------|-----------|-----------------------------------------------------------------|
+   *  | type        | `string`  | The type the input should be, text, tel, number, etc (optional) |
+   *  | name        | `string`  | The name for the input (optional)                               |
+   *  | placeHolder | `string`  | The input's placeholder (optional)                              |
+   *  | value       | `string`  | The input's value (optional)                                    |
+   *  | label       | `string`  | The input's label (optional)                                    |
+   *  | chacked     | `boolean` | Whether or not the input is checked or not (optional)           |
+   *  | id          | `string`  | The input's id (optional)                                       |
+   *
+   *  Button options
+   *
+   *  | Property | Type     | Description                                                    |
+   *  |----------|----------|----------------------------------------------------------------|
+   *  | text     | `string` | The buttons displayed text                                     |
+   *  | handler  | `any`    | Expression that should be evaluated when the button is pressed |
+   *  | cssClass | `string` | An additional CSS class for the button                         |
+   *  | role     | `string` | The buttons role, null or `cancel`                             |
+   *
+   * @param {object} opts Alert. See the tabel above
    */
   static create(opts: AlertOptions = {}) {
     return new Alert(opts);

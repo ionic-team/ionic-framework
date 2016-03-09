@@ -85,6 +85,66 @@
 * **sass:** update windows action sheet sass to use variables ([a51268cd](https://github.com/driftyco/ionic/commit/a51268cd)), references [#5651](https://github.com/driftyco/ionic/issues/5651)
 * **sass:** update windows alert sass to use variables ([1e73a34](https://github.com/driftyco/ionic/commit/1e73a34)), references [#5651](https://github.com/driftyco/ionic/issues/5651)
 
+### Breaking Changes
+
+#### Windows Mode
+
+Windows platform support has been added to Ionic! The Windows mode is abbreviated as `wp`. Please go through the following steps to get your app working with the Windows mode:
+
+1. Add this line to your project's `www/index.html` file:
+ 
+  ```
+  <link wp-href="build/css/app.wp.css" rel="stylesheet">
+  ```
+
+2. Add a new file named `app.wp.scss` to your project's `app/theme/` folder and then add the following code to it:
+  
+  ```
+  // http://ionicframework.com/docs/v2/theming/
+  
+  
+  // App Shared Variables
+  // --------------------------------------------------
+  // Shared Sass variables go in the app.variables.scss file
+  @import 'app.variables';
+  
+  
+  // App Windows Variables
+  // --------------------------------------------------
+  // Windows only Sass variables can go here
+  
+  
+  // Ionic Windows Sass
+  // --------------------------------------------------
+  // Custom App variables must be declared before importing Ionic.
+  // Ionic will use its default values when a custom variable isn't provided.
+  @import "ionic.wp";
+  
+  
+  // App Shared Sass
+  // --------------------------------------------------
+  // All Sass files that make up this app goes into the app.core.scss file.
+  // For simpler CSS overrides, custom app CSS must come after Ionic's CSS.
+  @import 'app.core';
+  
+  
+  // App Windows Only Sass
+  // --------------------------------------------------
+  // CSS that should only apply to the Windows app
+  ```
+  
+3. Modify the `ionic.config.js` file to add the `wp` mode on line 9:
+  
+  ```
+  sass: {
+    src: ['app/theme/app.+(ios|md|wp).scss'],
+    dest: 'www/build/css',
+    include: [
+      'node_modules/ionic-angular',
+      'node_modules/ionicons/dist/scss'
+    ]
+  },
+  ```
 
 <a name="2.0.0-beta.2"></a>
 # [2.0.0-beta.2](https://github.com/driftyco/ionic/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2016-03-01)

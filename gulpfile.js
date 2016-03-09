@@ -578,6 +578,7 @@ gulp.task('build.demos', function() {
   var indexTemplateName = LOCAL_DEMOS ? 'index.template.dev.html' : 'index.template.html';
   var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/' + indexTemplateName))();
 
+  console.log(flags);
   if (flags.production) {
     buildDemoSass(true);
   } else {
