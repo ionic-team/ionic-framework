@@ -28,21 +28,10 @@ ion-label {
 // --------------------------------------------------
 
 ion-label[fixed] {
-  flex: 0 0 30%;
-  width: 30%;
+  flex: 0 0 100px;
+  width: 100px;
   min-width: 100px;
   max-width: 200px;
-}
-
-.item-label-stacked .item-inner,
-.item-label-floating .item-inner {
-  flex-wrap: wrap;
-}
-
-.item-label-stacked [item-right],
-.item-label-floating [item-right] {
-  margin-top: 0;
-  margin-bottom: 0;
 }
 
 ion-label[stacked],
@@ -51,10 +40,11 @@ ion-label[floating] {
   margin-bottom: 0;
   max-width: 100%;
   flex-basis: 100%;
+  width: auto;
 }
 
-ion-label[stacked],
-ion-label[floating] {
-  align-self: stretch;
-  width: auto;
+.item-label-stacked .input-wrapper,
+.item-label-floating .input-wrapper {
+  flex: 1;
+  flex-direction: column;
 }
