@@ -37,7 +37,10 @@
 
     <ion-item>
       <ion-label stacked>Label 6</ion-label>
-      <ion-input value="email6@email.com" type="email"></ion-input>
+      <ion-select [(ngModel)]="gender">
+        <ion-option value="f" checked="true">Female</ion-option>
+        <ion-option value="m">Male</ion-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>

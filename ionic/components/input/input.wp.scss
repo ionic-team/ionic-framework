@@ -69,6 +69,13 @@ ion-input.ng-invalid.ng-touched .text-input {
   margin-bottom: 8px;
 }
 
+.item-label-stacked ion-select,
+.item-label-floating ion-select {
+  padding-left: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 .item-label-floating .text-input.cloned-input {
   top: 32px;
 }

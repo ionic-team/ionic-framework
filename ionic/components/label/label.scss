@@ -48,3 +48,13 @@ ion-label[floating] {
   flex: 1;
   flex-direction: column;
 }
+
+.item-label-stacked ion-select,
+.item-label-floating ion-select {
+  width: 100%;
+  max-width: 100%;
+}
+
+.item-select ion-label[floating] {
+  transform: translate3d(0, 0, 0) scale(0.8);
+}
