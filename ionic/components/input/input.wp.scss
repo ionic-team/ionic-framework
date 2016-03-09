@@ -89,6 +89,10 @@ ion-input.ng-invalid.ng-touched .text-input {
   top: 27px;
 }
 
+.item-label-stacked [item-right],
+.item-label-floating [item-right] {
+  align-self: flex-end;
+}
 
 // Windows Clear Input Icon
 // --------------------------------------------------
