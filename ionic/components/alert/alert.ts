@@ -230,7 +230,7 @@ export class Alert extends ViewController {
    *  | placeHolder | `string`  | The input's placeholder (optional)                              |
    *  | value       | `string`  | The input's value (optional)                                    |
    *  | label       | `string`  | The input's label (optional)                                    |
-   *  | chacked     | `boolean` | Whether or not the input is checked or not (optional)           |
+   *  | checked     | `boolean` | Whether or not the input is checked or not (optional)           |
    *  | id          | `string`  | The input's id (optional)                                       |
    *
    *  Button options
