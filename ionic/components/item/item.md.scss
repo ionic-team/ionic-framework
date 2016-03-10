@@ -13,11 +13,11 @@ $item-md-avatar-size:                4rem !default;
 $item-md-thumbnail-size:             8rem !default;
 $item-md-note-color:                 darken($list-md-border-color, 10%) !default;
 
-$item-md-divider-bg:                 #fff !default;
+$item-md-divider-background:         #fff !default;
 $item-md-divider-color:              #222 !default;
 $item-md-divider-padding:            5px 15px !default;
 
-$item-md-sliding-content-bg:         $list-md-background-color !default;
+$item-md-sliding-content-background: $list-md-background-color !default;
 
 
 .item {
@@ -149,7 +149,7 @@ ion-note {
 
 ion-item-divider {
   padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
-  background-color: $item-md-divider-bg;
+  background-color: $item-md-divider-background;
   color: $item-md-divider-color;
 }
 
@@ -169,5 +169,5 @@ ion-item-divider {
 // --------------------------------------------------
 
 ion-item-sliding {
-  background-color: $item-md-sliding-content-bg;
+  background-color: $item-md-sliding-content-background;
 }

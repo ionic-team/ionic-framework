@@ -12,11 +12,11 @@ $item-ios-thumbnail-size:             5.6rem !default;
 $item-ios-note-color:                 darken($list-ios-border-color, 10%) !default;
 $item-ios-detail-push-color:          $list-ios-border-color !default;
 
-$item-ios-divider-bg:                 #f7f7f7 !default;
+$item-ios-divider-background:         #f7f7f7 !default;
 $item-ios-divider-color:              #222 !default;
 $item-ios-divider-padding:            5px 15px !default;
 
-$item-ios-sliding-content-bg:         $list-ios-background-color !default;
+$item-ios-sliding-content-background: $list-ios-background-color !default;
 
 
 // iOS Item
@@ -188,7 +188,7 @@ ion-item-group {
 ion-item-divider {
   padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
   color: $item-ios-divider-color;
-  background-color: $item-ios-divider-bg;
+  background-color: $item-ios-divider-background;
 }
 
 
@@ -207,7 +207,7 @@ ion-item-divider {
 // --------------------------------------------------
 
 ion-item-sliding {
-  background-color: $item-ios-sliding-content-bg;
+  background-color: $item-ios-sliding-content-background;
 }
 
 // iOS item right-to-left

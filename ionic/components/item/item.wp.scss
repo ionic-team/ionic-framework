@@ -15,11 +15,11 @@ $item-wp-avatar-size:                4rem !default;
 $item-wp-thumbnail-size:             8rem !default;
 $item-wp-note-color:                 $input-wp-border-color !default;
 
-$item-wp-divider-bg:                 #fff !default;
+$item-wp-divider-background:         #fff !default;
 $item-wp-divider-color:              #222 !default;
 $item-wp-divider-padding:            5px 15px !default;
 
-$item-wp-sliding-content-bg:         $list-wp-background-color !default;
+$item-wp-sliding-content-background: $list-wp-background-color !default;
 
 
 .item {
@@ -155,7 +155,7 @@ ion-note {
 
 ion-item-divider {
   padding: $item-wp-padding-top $item-wp-padding-right $item-wp-padding-bottom $item-wp-padding-left;
-  background-color: $item-wp-divider-bg;
+  background-color: $item-wp-divider-background;
   color: $item-wp-divider-color;
 }
 
@@ -175,5 +175,5 @@ ion-item-divider {
 // --------------------------------------------------
 
 ion-item-sliding {
-  background-color: $item-wp-sliding-content-bg;
+  background-color: $item-wp-sliding-content-background;
 }
