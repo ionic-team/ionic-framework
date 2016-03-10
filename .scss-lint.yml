@@ -13,13 +13,16 @@ linters:
 
       # Box
 
-      - display
       - position
       - top
       - right
       - bottom
       - left
-
+      - z-index
+      - display
+      - float
+      - clear
+      -
       - flex
       - flex-basis
       - flex-direction
@@ -32,30 +35,25 @@ linters:
       - align-self
       - justify-content
       - order
-
-      - width
-      - min-width
-      - max-width
-
-      - height
-      - min-height
-      - max-height
-
+      -
       - margin
       - margin-top
       - margin-right
       - margin-bottom
       - margin-left
-
       - padding
       - padding-top
       - padding-right
       - padding-bottom
       - padding-left
-
-      - float
-      - clear
-
+      -
+      - width
+      - min-width
+      - max-width
+      - height
+      - min-height
+      - max-height
+      -
       - columns
       - column-gap
       - column-fill
@@ -63,17 +61,6 @@ linters:
       - column-span
       - column-count
       - column-width
-
-      - transform
-      - transform-box
-      - transform-origin
-      - transform-style
-
-      - transition
-      - transition-delay
-      - transition-duration
-      - transition-property
-      - transition-timing-function
 
       # Border
 
@@ -112,19 +99,7 @@ linters:
       - outline-style
       - outline-width
 
-      # Background
-
-      - background
-      - background-attachment
-      - background-color
-      - background-image
-      - background-repeat
-      - background-position
-      - background-size
-
       # Text
-
-      - color
 
       - font
       - font-family
@@ -137,7 +112,6 @@ linters:
       - letter-spacing
       - line-height
       - list-style
-
       - text-align
       - text-decoration
       - text-indent
@@ -149,6 +123,18 @@ linters:
 
       - white-space
       - word-spacing
+
+      - color
+
+      # Background
+
+      - background
+      - background-attachment
+      - background-color
+      - background-image
+      - background-repeat
+      - background-position
+      - background-size
 
       # Other
 
@@ -166,7 +152,19 @@ linters:
       - table-layout
       - vertical-align
       - visibility
-      - z-index
+
+      # Transforms
+
+      - transform
+      - transform-box
+      - transform-origin
+      - transform-style
+
+      - transition
+      - transition-delay
+      - transition-duration
+      - transition-property
+      - transition-timing-function
 
   StringQuotes:
     enabled: true
