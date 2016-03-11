@@ -30,9 +30,13 @@
         </p>
       </ion-item>
       <ion-item-options>
-        <button primary (click)="archive(item)">Archive</button>
+        <button primary (click)="archive(item)">
+          <ion-icon name="mail"></ion-icon>
+          Archive
+        </button>
         <button danger (click)="del(item)">
           <ion-icon name="trash"></ion-icon>
+          Delete
         </button>
       </ion-item-options>
     </ion-item-sliding>

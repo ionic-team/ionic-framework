@@ -7,7 +7,8 @@
 $alert-md-max-width:                          280px !default;
 $alert-md-border-radius:                      2px !default;
 $alert-md-background-color:                   #fafafa !default;
-$alert-md-box-shadow:                         0px 16px 20px rgba(0, 0, 0, 0.4) !default;
+$alert-md-box-shadow-color:                   rgba(0, 0, 0, .4) !default;
+$alert-md-box-shadow:                         0 16px 20px $alert-md-box-shadow-color !default;
 
 $alert-md-head-text-align:                    left !default;
 $alert-md-head-padding:                       24px 24px 20px 24px !default;
@@ -17,7 +18,7 @@ $alert-md-sub-title-font-size:                16px !default;
 
 $alert-md-message-font-size:                  15px !default;
 $alert-md-message-padding:                    0 24px 24px 24px !default;
-$alert-md-message-text-color:                 rgba(0,0,0,.5) !default;
+$alert-md-message-text-color:                 rgba(0, 0, 0, .5) !default;
 $alert-md-message-padding-empty:              0 !default;
 
 $alert-md-content-max-height:                 240px !default;
@@ -25,7 +26,7 @@ $alert-md-content-max-height:                 240px !default;
 $alert-md-input-border-width:                 1px !default;
 $alert-md-input-border-style:                 solid !default;
 $alert-md-input-border-color:                 #dedede !default;
-$alert-md-input-text-color:                   #000000 !default;
+$alert-md-input-text-color:                   #000 !default;
 
 $alert-md-input-border-width-focused:         2px !default;
 $alert-md-input-border-style-focused:         $alert-md-input-border-style !default;
@@ -45,7 +46,7 @@ $alert-md-button-margin:                      0 8px 0 0 !default;
 $alert-md-button-font-weight:                 500 !default;
 $alert-md-button-text-color:                  map-get($colors-md, primary) !default;
 $alert-md-button-background-color:            transparent !default;
-$alert-md-button-background-color-activated:  rgba(158, 158, 158, 0.2) !default;
+$alert-md-button-background-color-activated:  rgba(158, 158, 158, .2) !default;
 $alert-md-button-border-radius:               2px !default;
 $alert-md-button-text-transform:              uppercase !default;
 $alert-md-button-text-align:                  right !default;
@@ -63,8 +64,8 @@ $alert-md-button-text-align:                  right !default;
 // --------------------------------------------------
 
 .alert-head {
-  text-align: $alert-md-head-text-align;
   padding: $alert-md-head-padding;
+  text-align: $alert-md-head-text-align;
 }
 
 .alert-title {
@@ -86,8 +87,8 @@ $alert-md-button-text-align:                  right !default;
 }
 
 .alert-message {
-  font-size: $alert-md-message-font-size;
   max-height: $alert-md-content-max-height;
+  font-size: $alert-md-message-font-size;
 
   &:empty {
     padding: $alert-md-message-padding-empty;
@@ -99,13 +100,13 @@ $alert-md-button-text-align:                  right !default;
 // --------------------------------------------------
 
 .alert-input {
+  margin: $alert-md-input-margin-top $alert-md-input-margin-right $alert-md-input-margin-bottom $alert-md-input-margin-left;
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
   color: $alert-md-input-text-color;
-  margin: $alert-md-input-margin-top $alert-md-input-margin-right $alert-md-input-margin-bottom $alert-md-input-margin-left;
 
   &:focus {
-    border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
     margin-bottom: $alert-md-input-margin-bottom - 1;
+    border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
   }
 }
 
@@ -116,16 +117,16 @@ $alert-md-button-text-align:                  right !default;
 .alert-radio-group,
 .alert-checkbox-group {
   position: relative;
+  overflow: auto;
+  max-height: $alert-md-content-max-height;
   border-top: 1px solid $alert-md-input-border-color;
   border-bottom: 1px solid $alert-md-input-border-color;
-  max-height: $alert-md-content-max-height;
-  overflow: auto;
 }
 
 .alert-tappable {
   position: relative;
-  overflow: hidden;
   display: flex;
+  overflow: hidden;
   min-height: 44px;
 }
 
@@ -134,11 +135,11 @@ $alert-md-button-text-align:                  right !default;
 // --------------------------------------------------
 
 .alert-radio-label {
-  flex: 1;
-  text-align: auto;
-  padding: 13px 26px;
-  text-overflow: ellipsis;
   overflow: hidden;
+  flex: 1;
+  padding: 13px 26px;
+  text-align: auto;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -147,25 +148,25 @@ $alert-md-button-text-align:                  right !default;
   top: 13px;
   left: 13px;
   display: block;
+  margin: 0;
   width: 16px;
   height: 16px;
-  margin: 0;
   border-width: 2px;
   border-style: solid;
-  border-color: darken($list-md-border-color, 40%);
   border-radius: 50%;
+  border-color: darken($list-md-border-color, 40%);
 
-  &:after {
+  &::after {
     position: absolute;
     top: 2px;
     left: 2px;
     width: 8px;
     height: 8px;
-    background-color: $alert-md-button-text-color;
     border-radius: 50%;
-    content: '';
-    transition: transform 280ms cubic-bezier(.4, 0, .2, 1);
+    background-color: $alert-md-button-text-color;
+    content: "";
     transform: scale3d(0, 0, 0);
+    transition: transform 280ms cubic-bezier(.4, 0, .2, 1);
   }
 }
 
@@ -176,7 +177,7 @@ $alert-md-button-text-align:                  right !default;
     border-color: $alert-md-button-text-color;
   }
 
-  .alert-radio-icon:after {
+  .alert-radio-icon::after {
     transform: scale3d(1, 1, 1);
   }
 }
@@ -186,11 +187,11 @@ $alert-md-button-text-align:                  right !default;
 // --------------------------------------------------
 
 .alert-checkbox-label {
-  flex: 1;
-  text-align: auto;
-  padding: 13px 26px;
-  text-overflow: ellipsis;
   overflow: hidden;
+  flex: 1;
+  padding: 13px 26px;
+  text-align: auto;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -200,29 +201,29 @@ $alert-md-button-text-align:                  right !default;
   left: 13px;
   width: 16px;
   height: 16px;
-  border-radius: 2px;
   border-width: 2px;
   border-style: solid;
+  border-radius: 2px;
   border-color: darken($list-md-border-color, 40%);
   background-color: transparent;
 }
 
 .alert-checkbox[aria-checked=true] .alert-checkbox-icon {
-  background-color: $alert-md-button-text-color;
   border-color: $alert-md-button-text-color;
+  background-color: $alert-md-button-text-color;
 
-  &:after {
+  &::after {
     position: absolute;
-    border-width: 2px;
-    border-style: solid;
-    border-color: $alert-md-background-color;
     top: 0;
     left: 3px;
     width: 4px;
     height: 8px;
-    border-left: none;
-    border-top: none;
-    content: '';
+    border-width: 2px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-style: solid;
+    border-color: $alert-md-background-color;
+    content: "";
     transform: rotate(45deg);
   }
 }
@@ -232,24 +233,24 @@ $alert-md-button-text-align:                  right !default;
 // --------------------------------------------------
 
 .alert-button-group {
-  padding: $alert-md-button-group-padding;
-  justify-content: $alert-md-button-group-justify-content;
   flex-wrap: $alert-md-button-group-flex-wrap;
+  justify-content: $alert-md-button-group-justify-content;
+  padding: $alert-md-button-group-padding;
 }
 
 .alert-button {
-  padding: $alert-md-button-padding;
-  margin: $alert-md-button-margin;
-  font-weight: $alert-md-button-font-weight;
-  color: $alert-md-button-text-color;
-  background-color: $alert-md-button-background-color;
-  border-radius: $alert-md-button-border-radius;
-  text-transform: $alert-md-button-text-transform;
-  text-align: $alert-md-button-text-align;
-
   // necessary for ripple to work properly
   position: relative;
   overflow: hidden;
+
+  margin: $alert-md-button-margin;
+  padding: $alert-md-button-padding;
+  border-radius: $alert-md-button-border-radius;
+  font-weight: $alert-md-button-font-weight;
+  text-align: $alert-md-button-text-align;
+  text-transform: $alert-md-button-text-transform;
+  color: $alert-md-button-text-color;
+  background-color: $alert-md-button-background-color;
 
   &.activated {
     background-color: $alert-md-button-background-color-activated;

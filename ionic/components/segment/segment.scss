@@ -6,20 +6,20 @@
 
 ion-segment {
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
-  flex: 1;
   width: 100%;
 }
 
 .segment-button {
   position: relative;
   display: block;
-
-  margin-left: 0;
-  margin-right: 0;
-
   overflow: hidden;
+
+  margin-right: 0;
+  margin-left: 0;
+
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;

@@ -25,13 +25,13 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   padding-right: 0;
   padding-left: ($item-md-padding-left);
   font-size: $item-md-font-size;
-  text-transform: none;
   font-weight: normal;
+  text-transform: none;
 
   color: $list-md-text-color;
   background-color: $list-md-background-color;
   box-shadow: none;
-  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms;
+  transition: background-color 300ms cubic-bezier(.4, 0, .2, 1), transform 300ms;
 
   h1 {
     margin: 0 0 2px;
@@ -40,7 +40,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   }
 
   h2 {
-    margin: 2px 0 2px;
+    margin: 2px 0;
     font-size: 1.6rem;
     font-weight: normal;
   }
@@ -49,17 +49,17 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   h4,
   h5,
   h6 {
-    line-height: normal;
-    margin: 2px 0 2px;
+    margin: 2px 0;
     font-size: 1.4rem;
     font-weight: normal;
+    line-height: normal;
   }
 
   p {
+    margin: 0 0 2px;
+    font-size: 1.4rem;
     line-height: normal;
     color: $item-md-paragraph-text-color;
-    font-size: 1.4rem;
-    margin: 0 0 2px;
   }
 }
 
@@ -93,15 +93,15 @@ ion-icon[item-right] {
 }
 
 .item-button {
-  padding: 0 0.6em;
+  padding: 0 .6em;
   height: 25px;
   font-size: 1.2rem;
 }
 
 .item-button.button-icon-only ion-icon,
 .item-button.button-icon-only {
-   padding: 0 1px;
- }
+  padding: 0 1px;
+}
 
 ion-icon[item-left] + .item-inner,
 ion-icon[item-left] + .item-input {
@@ -149,8 +149,8 @@ ion-note {
 
 ion-item-divider {
   padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
-  background-color: $item-md-divider-background;
   color: $item-md-divider-color;
+  background-color: $item-md-divider-background;
 }
 
 
@@ -159,8 +159,8 @@ ion-item-divider {
 
 @each $color-name, $color-value in $colors-md {
   ion-item-divider[#{$color-name}] {
-    background-color: $color-value;
     color: color-inverse($color-value);
+    background-color: $color-value;
   }
 }
 

@@ -10,7 +10,7 @@ $radio-ios-icon-height:            21px !default;
 $radio-ios-icon-border-width:      2px !default;
 $radio-ios-icon-border-style:      solid !default;
 
-$radio-ios-disabled-opacity:       0.3 !default;
+$radio-ios-disabled-opacity:       .3 !default;
 
 
 ion-radio {
@@ -35,15 +35,15 @@ ion-radio {
 
 .radio-checked .radio-inner {
   position: absolute;
-  border-width: $radio-ios-icon-border-width;
-  border-style: $radio-ios-icon-border-style;
-  border-color: $radio-ios-color-on;
   top: 4px;
   left: 7px;
   width: 5px;
   height: 12px;
-  border-left: none;
-  border-top: none;
+  border-width: $radio-ios-icon-border-width;
+  border-style: $radio-ios-icon-border-style;
+  border-color: $radio-ios-color-on;
+  border-top-width: 0;
+  border-left-width: 0;
   transform: rotate(45deg);
 }
 

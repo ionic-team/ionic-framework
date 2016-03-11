@@ -4,7 +4,7 @@
 // Windows Alerts
 // --------------------------------------------------
 
-$alert-wp-backdrop-background:                 white !default;
+$alert-wp-backdrop-background:                 #fff !default;
 
 $alert-wp-width:                               100% !default;
 $alert-wp-max-width:                           520px !default;
@@ -12,7 +12,7 @@ $alert-wp-border-radius:                       0 !default;
 $alert-wp-border-width:                        1px !default;
 $alert-wp-border-style:                        solid !default;
 $alert-wp-border-color:                        map-get($colors-wp, primary) !default;
-$alert-wp-background:                          #E6E6E6 !default;
+$alert-wp-background:                          #e6e6e6 !default;
 
 $alert-wp-head-text-align:                     left !default;
 $alert-wp-head-padding:                        20px 22px 5px 22px !default;
@@ -31,7 +31,7 @@ $alert-wp-content-max-height:                  240px !default;
 $alert-wp-input-border-width:                  2px !default;
 $alert-wp-input-border-style:                  $alert-wp-border-style !default;
 $alert-wp-input-border-color:                  $input-wp-border-color !default;
-$alert-wp-input-text-color:                    #000000 !default;
+$alert-wp-input-text-color:                    #000 !default;
 $alert-wp-input-margin:                        5px 0 5px 0 !default;
 $alert-wp-input-padding:                       0 8px !default;
 $alert-wp-input-line-height:                   3rem !default;
@@ -40,7 +40,7 @@ $alert-wp-input-border-color-focused:          map-get($colors-wp, primary) !def
 
 $alert-wp-button-padding:                      5px !default;
 $alert-wp-button-text-color:                   #000 !default;
-$alert-wp-button-background:                   #B8B8B8 !default;
+$alert-wp-button-background:                   #b8b8b8 !default;
 $alert-wp-button-border-radius:                0 !default;
 $alert-wp-button-width:                        49.5% !default;
 $alert-wp-button-margin-right:                 1% !default;
@@ -68,17 +68,17 @@ ion-alert {
 .alert-wrapper {
   width: $alert-wp-width;
   max-width: $alert-wp-max-width;
+  border: $alert-wp-border-width $alert-wp-border-style $alert-wp-border-color;
   border-radius: $alert-wp-border-radius;
   background: $alert-wp-background;
-  border: $alert-wp-border-width $alert-wp-border-style $alert-wp-border-color;
 }
 
 // Windows Alert Header
 // --------------------------------------------------
 
 .alert-head {
-  text-align: $alert-wp-head-text-align;
   padding: $alert-wp-head-padding;
+  text-align: $alert-wp-head-text-align;
 }
 
 .alert-title {
@@ -101,8 +101,8 @@ ion-alert {
 }
 
 .alert-message {
-  font-size: $alert-wp-message-font-size;
   max-height: $alert-wp-content-max-height;
+  font-size: $alert-wp-message-font-size;
 
   &:empty {
     padding: $alert-wp-message-padding-empty;
@@ -114,11 +114,11 @@ ion-alert {
 // --------------------------------------------------
 
 .alert-input {
-  border: $alert-wp-input-border-width $alert-wp-input-border-style $alert-wp-input-border-color;
-  color: $alert-wp-input-text-color;
   margin: $alert-wp-input-margin;
   padding: $alert-wp-input-padding;
+  border: $alert-wp-input-border-width $alert-wp-input-border-style $alert-wp-input-border-color;
   line-height: $alert-wp-input-line-height;
+  color: $alert-wp-input-text-color;
 
   &:focus {
     border-color: $alert-wp-input-border-color-focused;
@@ -132,16 +132,16 @@ ion-alert {
 .alert-radio-group,
 .alert-checkbox-group {
   position: relative;
+  overflow: auto;
+  max-height: $alert-wp-content-max-height;
   border-top: 0 solid $alert-wp-input-border-color;
   border-bottom: 0 solid $alert-wp-input-border-color;
-  max-height: $alert-wp-content-max-height;
-  overflow: auto;
 }
 
 .alert-tappable {
   position: relative;
-  overflow: hidden;
   display: flex;
+  overflow: hidden;
   min-height: 44px;
 }
 
@@ -150,11 +150,11 @@ ion-alert {
 // --------------------------------------------------
 
 .alert-radio-label {
-  flex: 1;
-  text-align: auto;
-  padding: 13px 26px;
-  text-overflow: ellipsis;
   overflow: hidden;
+  flex: 1;
+  padding: 13px 26px;
+  text-align: auto;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -163,24 +163,24 @@ ion-alert {
   top: 13px;
   left: 13px;
   display: block;
+  margin: 0;
   width: 16px;
   height: 16px;
-  margin: 0;
   border-width: 2px;
   border-style: solid;
-  border-color: $alert-wp-radio-border-color;
   border-radius: 50%;
+  border-color: $alert-wp-radio-border-color;
 
-  &:after {
+  &::after {
     position: absolute;
     top: 2px;
     left: 2px;
+    display: none;
     width: 8px;
     height: 8px;
-    background: $alert-wp-radio-background;
     border-radius: 50%;
-    content: '';
-    display: none;
+    background: $alert-wp-radio-background;
+    content: "";
   }
 }
 
@@ -191,7 +191,7 @@ ion-alert {
     border-color: $alert-wp-radio-border-color;
   }
 
-  .alert-radio-icon:after {
+  .alert-radio-icon::after {
     display: block;
   }
 }
@@ -201,11 +201,11 @@ ion-alert {
 // --------------------------------------------------
 
 .alert-checkbox-label {
-  flex: 1;
-  text-align: auto;
-  padding: 13px 26px;
-  text-overflow: ellipsis;
   overflow: hidden;
+  flex: 1;
+  padding: 13px 26px;
+  text-align: auto;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -218,9 +218,9 @@ ion-alert {
   left: 13px;
   width: 16px;
   height: 16px;
-  border-radius: $alert-wp-checkbox-border-radius;
   border-width: 2px;
   border-style: solid;
+  border-radius: $alert-wp-checkbox-border-radius;
   border-color: $alert-wp-checkbox-border-color;
   background: transparent;
 }
@@ -229,22 +229,22 @@ ion-alert {
 // --------------------------------------------------
 
 .alert-checkbox[aria-checked=true] .alert-checkbox-icon {
-  background: $alert-wp-checkbox-background;
   border-color: $alert-wp-checkbox-background;
+  background: $alert-wp-checkbox-background;
 }
 
 .alert-checkbox[aria-checked=true] .alert-checkbox-inner {
   position: absolute;
-  border-width: 1px;
-  border-style: solid;
-  border-color: $alert-wp-background;
   top: -2px;
   left: 3px;
   width: 6px;
   height: 12px;
-  border-left: none;
-  border-top: none;
-  content: '';
+  border-width: 1px;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-style: solid;
+  border-color: $alert-wp-background;
+  content: "";
   transform: rotate(45deg);
 }
 
@@ -253,13 +253,13 @@ ion-alert {
 // --------------------------------------------------
 
 .alert-button-group {
-  padding: $alert-wp-button-group-padding;
-  justify-content: $alert-wp-button-group-justify-content;
   flex-wrap: $alert-wp-button-group-flex-wrap;
+  justify-content: $alert-wp-button-group-justify-content;
+  padding: $alert-wp-button-group-padding;
 
   &.vertical .alert-button {
-    width: $alert-wp-button-group-vertical-width;
     margin-top: $alert-wp-button-group-vertical-margin-top;
+    width: $alert-wp-button-group-vertical-width;
 
     &:first-child:not(:only-child) {
       margin-top: 0;
@@ -269,11 +269,11 @@ ion-alert {
 
 .alert-button {
   padding: $alert-wp-button-padding;
+  width: $alert-wp-button-width;
+  border-radius: $alert-wp-button-border-radius;
+  font-weight: $alert-wp-button-font-weight;
   color: $alert-wp-button-text-color;
   background: $alert-wp-button-background;
-  border-radius: $alert-wp-button-border-radius;
-  width: $alert-wp-button-width;
-  font-weight: $alert-wp-button-font-weight;
 
   &:first-child:not(:only-child) {
     margin-right: $alert-wp-button-margin-right;

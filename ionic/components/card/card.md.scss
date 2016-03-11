@@ -21,7 +21,7 @@ $card-md-avatar-size:                 4rem !default;
 $card-md-thumbnail-size:              8rem !default;
 
 $card-md-background-color:            $list-md-background-color !default;
-$card-md-box-shadow:                  0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
+$card-md-box-shadow:                  0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
 $card-md-border-radius:               2px !default;
 $card-md-font-size:                   1.4rem !default;
 $card-md-line-height:                 1.5 !default;
@@ -39,11 +39,11 @@ $card-md-header-color:                #222 !default;
 
 ion-card {
   margin: $card-md-margin-top $card-md-margin-right $card-md-margin-bottom $card-md-margin-left;
+  border-radius: $card-md-border-radius;
   font-size: $card-md-font-size;
 
   background: $card-md-background-color;
   box-shadow: $card-md-box-shadow;
-  border-radius: $card-md-border-radius;
 
   ion-list {
     margin-bottom: 0;
@@ -58,12 +58,12 @@ ion-card {
 
     > .item:last-child,
     > ion-item-sliding:last-child .item {
-      border-bottom: none;
+      border-bottom: 0;
     }
   }
 
   .item-inner {
-    border: none;
+    border: 0;
   }
 
   ion-card-content {
@@ -90,10 +90,10 @@ ion-card {
 
   ion-card-title {
     display: block;
-    line-height: 1.2;    
-    padding: $card-md-title-padding;
     margin: $card-md-title-margin;
+    padding: $card-md-title-padding;
     font-size: $card-md-title-font-size;
+    line-height: 1.2;
     color: $card-md-title-text-color;
   }
 
@@ -105,7 +105,7 @@ ion-card {
   }
 
   h2 {
-    margin: 2px 0 2px;
+    margin: 2px 0;
     font-size: 1.6rem;
     font-weight: normal;
     color: $card-md-text-color;
@@ -115,17 +115,17 @@ ion-card {
   h4,
   h5,
   h6 {
-    margin: 2px 0 2px;
+    margin: 2px 0;
     font-size: 1.4rem;
     font-weight: normal;
     color: $card-md-text-color;
   }
 
   p {
-    font-size: 1.4rem;
     margin: 0 0 2px;
-    line-height: 1.5;
+    font-size: 1.4rem;
     font-weight: normal;
+    line-height: 1.5;
     color: $card-md-text-color;
   }
 

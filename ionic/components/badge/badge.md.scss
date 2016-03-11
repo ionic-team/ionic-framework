@@ -9,8 +9,8 @@ $badge-md-background-color:         map-get($colors-md, primary) !default;
 
 ion-badge {
   border-radius: $badge-md-border-radius;
-  background-color: $badge-md-background-color;
   color: color-inverse($badge-md-background-color);
+  background-color: $badge-md-background-color;
 }
 
 
@@ -20,8 +20,8 @@ ion-badge {
 @each $color-name, $color-value in $colors-md {
 
   .badge-#{$color-name} {
-    background-color: $color-value;
     color: color-inverse($color-value);
+    background-color: $color-value;
   }
 
 }

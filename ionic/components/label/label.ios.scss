@@ -34,20 +34,20 @@ ion-label + ion-textarea .text-input {
 // --------------------------------------------------
 
 ion-label[stacked] {
-  font-size: 1.2rem;
   margin-bottom: 4px;
+  font-size: 1.2rem;
 }
 
 ion-label[floating] {
   margin-bottom: 0;
-  transform-origin: left top;
   transform: translate3d(0, 27px, 0);
+  transform-origin: left top;
   transition: transform 150ms ease-in-out;
 }
 
 .input-has-focus ion-label[floating],
 .input-has-value ion-label[floating] {
-  transform: translate3d(0, 0, 0) scale(0.8);
+  transform: translate3d(0, 0, 0) scale(.8);
 }
 
 .item-label-stacked [item-right],
@@ -63,7 +63,7 @@ ion-label[floating] {
 @each $color-name, $color-value in $colors-ios {
 
   ion-label[#{$color-name}] {
-    color: $color-value !important;
+    color: $color-value;
   }
 
 }

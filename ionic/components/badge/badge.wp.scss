@@ -9,8 +9,8 @@ $badge-wp-background-color:         map-get($colors-wp, primary) !default;
 
 ion-badge {
   border-radius: $badge-wp-border-radius;
-  background-color: $badge-wp-background-color;
   color: color-inverse($badge-wp-background-color);
+  background-color: $badge-wp-background-color;
 }
 
 
@@ -20,8 +20,8 @@ ion-badge {
 @each $color-name, $color-value in $colors-wp {
 
   .badge-#{$color-name} {
-    background-color: $color-value;
     color: color-inverse($color-value);
+    background-color: $color-value;
   }
 
 }

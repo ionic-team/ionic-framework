@@ -16,19 +16,19 @@ $list-inset-wp-margin-left:      16px !default;
 $list-inset-wp-border-radius:    2px !default;
 
 $list-wp-header-padding:         16px $item-wp-padding-right 16px $item-wp-padding-left !default;
-$list-wp-header-font-size:       2.0rem !default;
+$list-wp-header-font-size:       2rem !default;
 $list-wp-header-color:           $list-wp-text-color !default;
 
 
-/****************/
-/* DEFAULT LIST */
-/****************/
+//
+// DEFAULT LIST
+//
 
 ion-list-header,
 ion-item-divider {
-  border-bottom: 1px solid $list-wp-border-color;
   margin-left: 0;
   padding: $list-wp-header-padding;
+  border-bottom: 1px solid $list-wp-border-color;
   font-size: $list-wp-header-font-size;
   color: $list-wp-header-color;
 }
@@ -51,29 +51,27 @@ ion-list {
 
     .item-inner,
     ion-label {
-      border-bottom: none;
+      border-bottom: 0;
     }
   }
 
-  > ion-input:last-child:after {
+  > ion-input:last-child::after {
     left: 0;
   }
 
-  ion-item-options {
-    button, [button] {
-      height: calc(100% - 2px);
-      margin: 1px 0 1px 0;
-      box-shadow: none;
+  ion-item-options button,
+  ion-item-options [button] {
+    display: inline-flex;
+    align-items: center;
+    margin: 1px 0;
+    height: calc(100% - 2px);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
 
-      border: none;
-      border-radius: 0;
-      display: inline-flex;
-      align-items: center;
-      box-sizing: border-box;
-
-      &:before{
-        margin: 0 auto;
-      }
+    &::before {
+      margin: 0 auto;
     }
   }
 
@@ -96,9 +94,9 @@ ion-list {
 }
 
 
-/**************/
-/* INSET LIST */
-/**************/
+//
+// INSET LIST
+//
 
 ion-list[inset] {
   margin: $list-inset-wp-margin-top $list-inset-wp-margin-right $list-inset-wp-margin-bottom $list-inset-wp-margin-left;
@@ -106,14 +104,14 @@ ion-list[inset] {
 
   .item:first-child {
     border-top-width: 0;
-    border-top-right-radius: $list-inset-wp-border-radius;
     border-top-left-radius: $list-inset-wp-border-radius;
+    border-top-right-radius: $list-inset-wp-border-radius;
   }
 
   .item:last-child {
     border-bottom-width: 0;
-    border-bottom-right-radius: $list-inset-wp-border-radius;
     border-bottom-left-radius: $list-inset-wp-border-radius;
+    border-bottom-right-radius: $list-inset-wp-border-radius;
   }
 
   .item-input {
@@ -131,9 +129,9 @@ ion-list[inset] {
 }
 
 
-/*****************/
-/* NO LINES LIST */
-/*****************/
+//
+// NO LINES LIST
+//
 
 ion-list[no-lines] {
   .item,

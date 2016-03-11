@@ -18,7 +18,8 @@ $card-ios-padding-media-top:           10px !default;
 $card-ios-padding-media-bottom:        9px !default;
 
 $card-ios-background-color:            $list-ios-background-color !default;
-$card-ios-box-shadow:                  0 1px 2px rgba(0,0,0,.3) !default;
+$card-ios-box-shadow-color:            rgba(0, 0, 0, .3) !default;
+$card-ios-box-shadow:                  0 1px 2px $card-ios-box-shadow-color !default;
 $card-ios-border-radius:               2px !default;
 $card-ios-font-size:                   1.4rem !default;
 
@@ -36,11 +37,11 @@ $card-ios-header-color:                #333 !default;
 
 ion-card {
   margin: $card-ios-margin-top $card-ios-margin-right $card-ios-margin-bottom $card-ios-margin-left;
+  border-radius: $card-ios-border-radius;
   font-size: $card-ios-font-size;
 
   background: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
-  border-radius: $card-ios-border-radius;
 
   ion-list {
     margin-bottom: 0;
@@ -55,12 +56,12 @@ ion-card {
 
     > .item:last-child,
     > ion-item-sliding:last-child .item {
-      border-bottom: none;
+      border-bottom: 0;
     }
   }
 
   .item-inner {
-    border: none;
+    border: 0;
   }
 
   ion-card-content {
@@ -88,10 +89,10 @@ ion-card {
 
   ion-card-title {
     display: block;
-    line-height: 1.2;
-    padding: $card-ios-title-padding;
     margin: $card-ios-title-margin;
+    padding: $card-ios-title-padding;
     font-size: $card-ios-title-font-size;
+    line-height: 1.2;
     color: $card-ios-title-text-color;
   }
 
@@ -102,7 +103,7 @@ ion-card {
   }
 
   h2 {
-    margin: 2px 0 2px;
+    margin: 2px 0;
     font-size: 1.6rem;
     font-weight: normal;
   }
@@ -111,14 +112,14 @@ ion-card {
   h4,
   h5,
   h6 {
-    margin: 2px 0 2px;
+    margin: 2px 0;
     font-size: 1.4rem;
     font-weight: normal;
   }
 
   p {
-    font-size: 1.4rem;
     margin: 0 0 2px;
+    font-size: 1.4rem;
     color: $card-ios-text-color;
   }
 

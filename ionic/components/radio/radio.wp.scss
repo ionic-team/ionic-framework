@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 $radio-wp-color-on:               map-get($colors-wp, primary) !default;
-$radio-wp-color-off:              #333333 !default;
+$radio-wp-color-off:              #333 !default;
 
 // Places radio icon on the left of the item
 $radio-wp-order:                  -1 !default;
@@ -15,7 +15,7 @@ $radio-wp-icon-border-width:      2px !default;
 $radio-wp-icon-border-style:      solid !default;
 $radio-wp-icon-border-radius:     50% !default;
 
-$radio-wp-disabled-opacity:       0.3 !default;
+$radio-wp-disabled-opacity:       .3 !default;
 
 
 ion-radio {
@@ -32,28 +32,28 @@ ion-radio {
   top: 0;
   left: 0;
   display: block;
+  margin: 0;
   width: $radio-wp-icon-width;
   height: $radio-wp-icon-height;
-  margin: 0;
   border-width: $radio-wp-icon-border-width;
   border-style: $radio-wp-icon-border-style;
-  border-color: $radio-wp-color-off;
   border-radius: $radio-wp-icon-border-radius;
+  border-color: $radio-wp-color-off;
 }
 
 
 // Windows Radio Inner Circle: Unchecked
 // -----------------------------------------
 
-.radio-inner  {
+.radio-inner {
   position: absolute;
   top: $radio-wp-icon-border-width;
   left: $radio-wp-icon-border-width;
+  display: none;
   width: $radio-wp-icon-width / 2;
   height: $radio-wp-icon-height / 2;
-  background-color: $radio-wp-color-off;
   border-radius: 50%;
-  display: none;
+  background-color: $radio-wp-color-off;
 }
 
 
@@ -90,8 +90,8 @@ ion-radio {
 .item ion-radio {
   position: static;
   display: block;
-  margin: $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 0;
   order: $radio-wp-order;
+  margin: $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 0;
 }
 
 .item-radio ion-label {

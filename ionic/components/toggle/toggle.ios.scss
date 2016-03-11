@@ -16,7 +16,7 @@ $toggle-ios-background-color-on:       map-get($colors-ios, primary) !default;
 $toggle-ios-handle-width:              $toggle-ios-height - ($toggle-ios-border-width * 2) !default;
 $toggle-ios-handle-height:             $toggle-ios-handle-width !default;
 $toggle-ios-handle-border-radius:      $toggle-ios-handle-height / 2 !default;
-$toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.1) !default;
+$toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, .16), 0 3px 1px rgba(0, 0, 0, .1) !default;
 
 $toggle-ios-handle-background-color:   $toggle-ios-background-color-off !default;
 
@@ -25,7 +25,7 @@ $toggle-ios-media-padding:             6px ($item-ios-padding-right / 2) 5px ($i
 
 $toggle-ios-transition-duration:       300ms !default;
 
-$toggle-ios-disabled-opacity:          0.3 !default;
+$toggle-ios-disabled-opacity:          .3 !default;
 
 
 // iOS Toggle
@@ -45,27 +45,27 @@ ion-toggle {
   width: $toggle-ios-width;
   height: $toggle-ios-height;
   border-radius: $toggle-ios-border-radius;
-  pointer-events: none;
 
   background-color: $toggle-ios-border-color-off;
   transition: background-color $toggle-ios-transition-duration;
+  pointer-events: none;
 }
 
 
 // iOS Toggle Background Oval: Unchecked
 // -----------------------------------------
 
-.toggle-icon:before {
-  content: '';
+.toggle-icon::before {
   position: absolute;
   top: $toggle-ios-border-width;
   right: $toggle-ios-border-width;
-  left: $toggle-ios-border-width;
   bottom: $toggle-ios-border-width;
+  left: $toggle-ios-border-width;
 
   border-radius: $toggle-ios-border-radius;
   background-color: $toggle-ios-background-color-off;
 
+  content: "";
   transform: scale3d(1, 1, 1);
   transition: transform $toggle-ios-transition-duration;
 }
@@ -101,8 +101,8 @@ ion-toggle {
 // iOS Toggle Background Oval: Activated or Checked
 // -----------------------------------------
 
-.toggle-activated:before,
-.toggle-checked:before {
+.toggle-activated::before,
+.toggle-checked::before {
   transform: scale3d(0, 0, 0);
 }
 
@@ -118,7 +118,7 @@ ion-toggle {
 // iOS Toggle Background Oval: Activated and Checked
 // -----------------------------------------
 
-.toggle-activated.toggle-checked:before {
+.toggle-activated.toggle-checked::before {
   transform: scale3d(0, 0, 0);
 }
 
@@ -152,15 +152,6 @@ ion-toggle {
 
 .toggle-disabled ion-radio {
   opacity: $toggle-ios-disabled-opacity;
-}
-
-
-// iOS Toggle within an item
-// -----------------------------------------
-
-.item ion-toggle {
-  margin: $toggle-ios-media-margin;
-  padding: $toggle-ios-media-padding;
 }
 
 

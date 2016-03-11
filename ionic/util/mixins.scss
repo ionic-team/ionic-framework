@@ -24,13 +24,15 @@
   &::-moz-placeholder { // Firefox 19+
     color: $color;
   }
+
   &:-ms-input-placeholder {
     color: $color;
   }
+
   &::-webkit-input-placeholder {
-    color: $color;
     // Safari placeholder margin issue
     text-indent: $text-indent;
+    color: $color;
   }
 }
 

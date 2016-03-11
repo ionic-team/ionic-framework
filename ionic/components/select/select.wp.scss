@@ -35,13 +35,12 @@ ion-select {
 
 .select-icon .select-icon-inner {
   position: absolute;
+  top: 3px;
+  left: 5px;
   display: block;
 
   width: ($select-wp-icon-width / 2);
   height: ($select-wp-icon-width / 2);
-
-  left: 5px;
-  top: 3px;
 
   border-top: $select-wp-icon-arrow-width solid $select-wp-icon-color;
   border-right: $select-wp-icon-arrow-width solid $select-wp-icon-color;

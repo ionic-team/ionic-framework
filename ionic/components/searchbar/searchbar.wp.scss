@@ -20,7 +20,7 @@ $searchbar-wp-input-height:              auto !default;
 $searchbar-wp-input-line-height:         3rem !default;
 $searchbar-wp-input-placeholder-color:   #858585 !default;
 $searchbar-wp-input-text-color:          #141414 !default;
-$searchbar-wp-input-background-color:    #FFFFFF !default;
+$searchbar-wp-input-background-color:    #fff !default;
 $searchbar-wp-input-border-radius:       0 !default;
 $searchbar-wp-input-font-size:           1.4rem !default;
 $searchbar-wp-input-font-weight:         400 !default;
@@ -35,8 +35,8 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 
 ion-searchbar {
   padding: $searchbar-wp-padding;
-  background: $searchbar-wp-background-color;
   border: $searchbar-wp-border-width solid $searchbar-wp-border-color;
+  background: $searchbar-wp-background-color;
 }
 
 
@@ -44,15 +44,17 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-search-icon {
-  width: $searchbar-wp-input-search-icon-size + 1;
-  height: $searchbar-wp-input-search-icon-size + 1;
+  @include svg-background-image($searchbar-wp-input-search-icon-svg);
+
+  position: absolute;
   top: 5px;
   right: $searchbar-wp-input-padding-horizontal;
-  background-size: $searchbar-wp-input-search-icon-size;
-  background-repeat: no-repeat;
-  position: absolute;
 
-  @include svg-background-image($searchbar-wp-input-search-icon-svg);
+  width: $searchbar-wp-input-search-icon-size + 1;
+  height: $searchbar-wp-input-search-icon-size + 1;
+
+  background-repeat: no-repeat;
+  background-size: $searchbar-wp-input-search-icon-size;
 
   &.activated {
     background-color: transparent;
@@ -64,20 +66,19 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-input {
+  @include placeholder($searchbar-wp-input-placeholder-color);
+
   padding: $searchbar-wp-input-padding-vertical $searchbar-wp-input-padding-horizontal;
-
   height: $searchbar-wp-input-height;
-  line-height: $searchbar-wp-input-line-height;
-
+  border-radius: $searchbar-wp-input-border-radius;
   font-size: $searchbar-wp-input-font-size;
   font-weight: $searchbar-wp-input-font-weight;
 
-  border-radius: $searchbar-wp-input-border-radius;
+  line-height: $searchbar-wp-input-line-height;
   color: $searchbar-wp-input-text-color;
+
   background-color: $searchbar-wp-input-background-color;
   background-position: $searchbar-wp-input-padding-horizontal center;
-
-  @include placeholder($searchbar-wp-input-placeholder-color);
 }
 
 
@@ -85,17 +86,19 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-clear-icon {
+  @include svg-background-image($searchbar-wp-input-clear-icon-svg);
+
+  position: absolute;
+  top: 0;
+  right: $searchbar-wp-input-padding-horizontal;
+
+  padding: 0;
   width: $searchbar-wp-input-clear-icon-size;
   height: 100%;
-  padding: 0;
 
-  @include svg-background-image($searchbar-wp-input-clear-icon-svg);
-  background-size: $searchbar-wp-input-clear-icon-size;
   background-repeat: no-repeat;
   background-position: center;
-  position: absolute;
-  right: $searchbar-wp-input-padding-horizontal;
-  top: 0;
+  background-size: $searchbar-wp-input-clear-icon-size;
 
   &.activated {
     background-color: transparent;
@@ -116,16 +119,6 @@ ion-searchbar {
 
 .searchbar-has-value .searchbar-search-icon {
   display: none;
-}
-
-
-// Searchbar in Toolbar
-// -----------------------------------------
-
-.toolbar {
-  ion-searchbar {
-
-  }
 }
 
 

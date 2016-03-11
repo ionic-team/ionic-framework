@@ -7,50 +7,49 @@
 
 .item {
   display: flex;
-  justify-content: space-between;
+  overflow: hidden;
   align-items: center;
+  justify-content: space-between;
 
   margin: 0;
   padding: 0;
-  border: 0;
   width: 100%;
   min-height: 4.4rem;
-  overflow: hidden;
+  border: 0;
 
-  text-align: initial;
   font-weight: normal;
   line-height: normal;
+  text-align: initial;
   text-decoration: none;
   color: inherit;
 }
 
 .item-inner {
   display: flex;
-  margin: 0;
-  padding: 0;
-  border: 0;
   overflow: hidden;
-  min-height: inherit;
-
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
+  margin: 0;
+  padding: 0;
+  min-height: inherit;
+  border: 0;
 }
 
 .input-wrapper {
   display: flex;
+  overflow: hidden;
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
   text-overflow: ellipsis;
-  overflow: hidden;
 }
 
 .item[no-lines],
 .item[no-lines] .item-inner {
-  border: none;
+  border: 0;
 }
 
 ion-item-group {
@@ -58,15 +57,15 @@ ion-item-group {
 }
 
 ion-item-divider {
-  display: block;
-  min-height: 30px;
-  width: 100%;
   z-index: 1000;
+  display: block;
+  width: 100%;
+  min-height: 30px;
 
   &[sticky] {
     position: -webkit-sticky;
     position: sticky;
-  	top: 0px;
+    top: 0;
   }
 }
 

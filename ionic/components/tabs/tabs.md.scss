@@ -23,18 +23,17 @@ tabbar {
 .tab-button {
   padding: $tabbar-md-item-padding;
   min-height: $tabbar-md-item-height;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
   font-size: $tabbar-md-item-font-size;
   font-weight: $tabbar-md-item-font-weight;
-  opacity: 0.7;
-
-  box-shadow: none;
-  border-radius: 0;
-  border-bottom: 2px solid transparent;
   color: $tab-button-md-inactive-color;
+  box-shadow: none;
+  opacity: .7;
 
   &[aria-selected=true] {
-    opacity: 1.0;
     color: $tab-button-md-active-color;
+    opacity: 1;
   }
 }
 
@@ -45,8 +44,8 @@ tabbar {
 }
 
 .tab-button-icon {
-  font-size: $tabbar-md-item-icon-size;
   min-width: $tabbar-md-item-icon-size + 5;
+  font-size: $tabbar-md-item-icon-size;
 }
 
 [tabbarLayout=icon-bottom] .tab-button {
@@ -67,19 +66,19 @@ tabbar {
 [tabbarLayout=title-hide] .tab-button,
 .tab-button.icon-only,
 .tab-button.has-title-only {
-  padding: 6px 10px 6px 10px;
+  padding: 6px 10px;
 }
 
 tab-highlight {
   position: absolute;
-  display: block;
-  height: 2px;
-  width: 1px;
   bottom: 0;
   left: 0;
+  display: block;
+  width: 1px;
+  height: 2px;
   background: $tab-button-md-active-color;
-  transform-origin: 0 0;
   transform: translateZ(0);
+  transform-origin: 0 0;
 
   &.animate {
     transition-duration: 300ms;

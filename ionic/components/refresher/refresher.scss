@@ -11,15 +11,17 @@ $refresher-icon-font-size:     30px !default;
 $refresher-text-color:         #000 !default;
 $refresher-text-font-size:     16px !default;
 
+$refresher-border-color:       #ddd !default;
+
 
 ion-refresher {
   position: absolute;
   top: 0;
   left: 0;
   z-index: $z-index-refresher;
+  display: none;
   width: 100%;
   height: $refresher-height;
-  display: none;
 
   &.refresher-active {
     display: block;
@@ -30,9 +32,9 @@ ion-refresher {
   // when the refresher is let go or has completed
   // this transition is what is used to put the
   // scroll content back into it's original location
-  transition: all 320ms cubic-bezier(0.36,0.66,0.04,1);
-  border-top: 1px solid #ddd;
   margin-top: -1px;
+  border-top: 1px solid $refresher-border-color;
+  transition: all 320ms cubic-bezier(.36, .66, .04, 1);
 }
 
 
@@ -54,18 +56,18 @@ ion-refresher-content {
 
 .refresher-pulling-icon,
 .refresher-refreshing-icon {
+  font-size: $refresher-icon-font-size;
   text-align: center;
   color: $refresher-icon-color;
-  font-size: $refresher-icon-font-size;
-  transition: 200ms;
   transform-origin: center;
+  transition: 200ms;
 }
 
 .refresher-pulling-text,
 .refresher-refreshing-text {
+  font-size: $refresher-text-font-size;
   text-align: center;
   color: $refresher-text-color;
-  font-size: $refresher-text-font-size;
 }
 
 
@@ -82,6 +84,7 @@ ion-refresher-content[state=ready] {
   .refresher-pulling {
     display: block;
   }
+
   .refresher-pulling-icon {
     transform: rotate(180deg);
   }
@@ -97,6 +100,7 @@ ion-refresher-content[state=cancelling] {
   .refresher-pulling {
     display: block;
   }
+
   .refresher-pulling-icon {
     transform: scale(0);
   }
@@ -106,6 +110,7 @@ ion-refresher-content[state=completing] {
   .refresher-refreshing {
     display: block;
   }
+
   .refresher-refreshing-icon {
     transform: scale(0);
   }

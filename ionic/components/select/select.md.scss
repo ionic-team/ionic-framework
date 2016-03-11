@@ -9,6 +9,8 @@ $select-md-padding-right:       ($item-md-padding-right / 2) !default;
 $select-md-padding-bottom:      $item-md-padding-bottom !default;
 $select-md-padding-left:        $item-md-padding-left !default;
 
+$select-md-icon-color:          #999 !default;
+
 
 ion-select {
   padding: $select-md-padding-top $select-md-padding-right $select-md-padding-bottom $select-md-padding-left;
@@ -34,6 +36,6 @@ ion-select {
   border-top: 5px solid;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
-  color: #999;
+  color: $select-md-icon-color;
   pointer-events: none;
 }

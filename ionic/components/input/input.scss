@@ -29,15 +29,16 @@ ion-textarea {
 // --------------------------------------------------
 
 .text-input {
+  @include placeholder();
+
   display: inline-block;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
   flex: 1;
   width: 92%;
   width: calc(100% - 10px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   -webkit-appearance: none;
-  @include placeholder();
 }
 
 textarea.text-input {
@@ -45,7 +46,7 @@ textarea.text-input {
 }
 
 .text-input[disabled] {
-  opacity: 0.4;
+  opacity: .4;
 }
 
 
@@ -92,9 +93,9 @@ input.text-input:-webkit-autofill {
 [next-input] {
   position: absolute;
   bottom: 1px;
+  padding: 0;
   width: 1px;
   height: 1px;
-  padding: 0;
   border: 0;
   background: transparent;
   pointer-events: none;

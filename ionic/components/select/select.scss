@@ -10,12 +10,12 @@ ion-select {
 }
 
 .select-text {
+  overflow: hidden;
   flex: 1;
   min-width: 16px;
   font-size: inherit;
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .item-multiple-inputs ion-select {
@@ -24,6 +24,6 @@ ion-select {
 
 .select-disabled,
 .item-select-disabled ion-label {
-  opacity: 0.4;
+  opacity: .4;
   pointer-events: none;
 }

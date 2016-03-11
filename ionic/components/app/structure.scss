@@ -56,43 +56,45 @@ html {
 }
 
 body {
+  @include user-select-none();
+
   position: fixed;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
   margin: 0;
   padding: 0;
-  word-wrap: break-word;
 
-  touch-action: manipulation;
-
-  -webkit-user-drag: none;
-  -ms-content-zooming: none;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
 
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
+
   text-rendering: optimizeLegibility;
+  -webkit-user-drag: none;
+
+  -ms-content-zooming: none;
+  touch-action: manipulation;
+
+  word-wrap: break-word;
 
   -webkit-text-size-adjust: none;
   -moz-text-size-adjust: none;
   text-size-adjust: none;
-
-  @include user-select-none();
 }
 
 ion-app,
 ion-nav,
 ion-tabs {
-  display: flex;
-  flex-direction: column;
   position: absolute;
   top: 0;
   left: 0;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 ion-navbar-section {
@@ -102,19 +104,19 @@ ion-navbar-section {
 }
 
 ion-content-section {
+  position: relative;
   display: block;
   flex: 1;
-  position: relative;
   width: 100%;
   height: 100%;
 }
 
 ion-page {
-  display: none;
-  flex-direction: column;
   position: absolute;
   top: 0;
   left: 0;
+  display: none;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 
@@ -126,42 +128,42 @@ ion-page {
 ion-content {
   position: relative;
   display: block;
+  flex: 1;
   width: 100%;
   height: 100%;
-  flex: 1;
 }
 
 scroll-content {
   position: absolute;
-  z-index: $z-index-scroll-content;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: $z-index-scroll-content;
   display: block;
-  overflow-y: scroll;
   overflow-x: hidden;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
 }
 
 ion-tabbar {
-  display: block;
   position: absolute;
   top: 0;
   left: 0;
+  display: block;
   width: 100%;
   min-height: 50px;
 }
 
 ion-tab-section {
-  display: block;
   position: relative;
   top: 0;
   left: 0;
+  display: block;
+  overflow: hidden;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 ion-page.tab-subpage {
@@ -170,13 +172,13 @@ ion-page.tab-subpage {
 }
 
 ion-navbar {
-  display: block;
   position: absolute;
   top: 0;
   left: 0;
+  z-index: $z-index-navbar-section;
+  display: block;
   width: 100%;
   min-height: 50px;
-  z-index: $z-index-navbar-section;
 }
 
 ion-navbar-section ion-navbar.toolbar {

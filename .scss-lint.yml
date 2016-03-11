@@ -1,8 +1,13 @@
 # Default application configuration that all configurations inherit from.
 
-# See https://github.com/brigade/scss-lint/blob/master/config/default.yml for config
+# See config at https://github.com/brigade/scss-lint/blob/master/config/default.yml
+
+exclude: 'ionic/components/slides/**'
 
 linters:
+  MergeableSelector:
+    enabled: true
+    force_nesting: false
 
   PropertySortOrder:
     enabled: true
@@ -20,6 +25,7 @@ linters:
       - left
       - z-index
       - display
+      - overflow
       - float
       - clear
       -
@@ -146,7 +152,6 @@ linters:
       - cursor
       - empty-cells
       - opacity
-      - overflow
       - quotes
       - speak
       - table-layout
@@ -165,6 +170,18 @@ linters:
       - transition-duration
       - transition-property
       - transition-timing-function
+
+  # This doesn't allow chaining between elements and attributes, ids or classes
+  # if we turn this on it breaks a lot of components
+  QualifyingElement:
+    enabled: false
+    allow_element_with_attribute: false
+    allow_element_with_class: false
+    allow_element_with_id: false
+
+  SelectorFormat:
+    enabled: false
+    convention: hyphenated_lowercase # or 'strict_BEM', or 'hyphenated_BEM', or 'snake_case', or 'camel_case', or a regex pattern
 
   StringQuotes:
     enabled: true

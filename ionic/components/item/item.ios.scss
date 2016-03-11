@@ -26,8 +26,8 @@ $item-ios-sliding-content-background: $list-ios-background-color !default;
   position: relative;
 
   padding-left: $item-ios-padding-left;
-  font-size: $item-ios-body-text-font-size;
   border-radius: 0;
+  font-size: $item-ios-body-text-font-size;
   color: $list-ios-text-color;
   background-color: $list-ios-background-color;
   transition-duration: 200ms;
@@ -48,17 +48,17 @@ $item-ios-sliding-content-background: $list-ios-background-color !default;
   h4,
   h5,
   h6 {
-    line-height: normal;
-    margin: 0 0 3px 0;
+    margin: 0 0 3px;
     font-size: 1.4rem;
     font-weight: normal;
+    line-height: normal;
   }
 
   p {
+    margin: 0 0 2px;
+    font-size: 1.2rem;
     line-height: normal;
     color: $item-ios-paragraph-text-color;
-    font-size: 1.2rem;
-    margin: 0 0 2px;
   }
 
   h2:last-child,
@@ -119,15 +119,15 @@ ion-thumbnail[item-right] {
 }
 
 .item-button {
-  padding: 0 0.5em;
-  font-size: 1.3rem;
+  padding: 0 .5em;
   height: 24px;
+  font-size: 1.3rem;
 }
 
 .item-button.button-icon-only ion-icon,
 .item-button.button-icon-only {
-   padding: 0 1px;
- }
+  padding: 0 1px;
+}
 
 ion-avatar {
   min-width: $item-ios-avatar-size;
@@ -158,10 +158,11 @@ button.item:not([detail-none]) .item-inner,
 a.item:not([detail-none]) .item-inner,
 .item[detail-push] .item-inner {
   @include ios-detail-push-icon($item-ios-detail-push-color);
+
+  padding-right: 32px;
   background-repeat: no-repeat;
   background-position: right ($item-ios-padding-right - 2) center;
   background-size: 14px 14px;
-  padding-right: 32px;
 }
 
 
@@ -176,8 +177,8 @@ ion-item-group {
   }
 
   .item:last-child .item-inner,
-  ion-item-sliding:last-child .item .item-inner {
-    border: none;
+  ion-item-sliding:last-child .item-inner {
+    border: 0;
   }
 }
 
@@ -197,8 +198,8 @@ ion-item-divider {
 
 @each $color-name, $color-value in $colors-ios {
   ion-item-divider[#{$color-name}] {
-    background-color: $color-value;
     color: color-inverse($color-value);
+    background-color: $color-value;
   }
 }
 

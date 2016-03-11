@@ -14,7 +14,7 @@ $headings-line-height:         1.2 !default;
 $h1-font-size:                 2.6rem !default;
 $h2-font-size:                 2.4rem !default;
 $h3-font-size:                 2.2rem !default;
-$h4-font-size:                 2.0rem !default;
+$h4-font-size:                 2rem !default;
 $h5-font-size:                 1.8rem !default;
 $h6-font-size:                 1.6rem !default;
 
@@ -28,20 +28,30 @@ a {
 }
 
 .enable-hover a:hover {
-  opacity: 0.7;
+  opacity: .7;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: $headings-font-weight;
-  line-height: $headings-line-height;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 1.6rem;
   margin-bottom: 1rem;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
 }
 
 [padding] {
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     &:first-child {
-      margin-top: -0.3rem;
+      margin-top: -.3rem;
     }
   }
 }
@@ -49,17 +59,17 @@ h1, h2, h3, h4, h5, h6 {
 h1 + h2,
 h1 + h3,
 h2 + h3 {
-  margin-top: -0.3rem;
+  margin-top: -.3rem;
 }
 
 h1 {
-  font-size: $h1-font-size;
   margin-top: 2rem;
+  font-size: $h1-font-size;
 }
 
 h2 {
-  font-size: $h2-font-size;
   margin-top: 1.8rem;
+  font-size: $h2-font-size;
 }
 
 h3 {
@@ -84,18 +94,18 @@ small {
 
 sub,
 sup {
+  position: relative;
   font-size: 75%;
   line-height: 0;
-  position: relative;
   vertical-align: baseline;
 }
 
 sup {
-  top: -0.5em;
+  top: -.5em;
 }
 
 sub {
-  bottom: -0.25em;
+  bottom: -.25em;
 }
 
 // Text Alignment

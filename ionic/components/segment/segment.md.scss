@@ -8,35 +8,34 @@ $segment-button-md-text-color-activated:       $toolbar-md-active-color !default
 $segment-button-md-border-color-activated:     $toolbar-md-active-color !default;
 
 $segment-button-md-border-bottom-width:        2px !default;
-$segment-button-md-border-bottom-color:        rgba(#000000, 0.10) !default;
+$segment-button-md-border-bottom-color:        rgba(#000, .10) !default;
 
 $segment-button-md-padding:                    0 6px !default;
 $segment-button-md-height:                     4.2rem !default;
-$segment-button-md-line-height:                4.0rem !default;
+$segment-button-md-line-height:                4rem !default;
 $segment-button-md-font-size:                  1.2rem !default;
 $segment-button-md-icon-size:                  2.6rem !default;
 $segment-button-md-icon-line-height:           $segment-button-md-line-height !default;
 
 
 .segment-button {
+  flex: 1;
   padding: $segment-button-md-padding;
+  width: 0;
+  height: $segment-button-md-height;
+
   border-bottom-width: $segment-button-md-border-bottom-width;
   border-bottom-style: solid;
   border-bottom-color: $segment-button-md-border-bottom-color;
 
-  height: $segment-button-md-height;
-  line-height: $segment-button-md-line-height;
-
   font-size: $segment-button-md-font-size;
-  text-transform: uppercase;
   font-weight: 500;
+  line-height: $segment-button-md-line-height;
+  text-transform: uppercase;
 
-  flex: 1;
-  width: 0;  
-
-  opacity: 0.7;
   color: $segment-button-md-text-color-activated;
   background-color: transparent;
+  opacity: .7;
   transition: 100ms all linear;
 
   ion-icon {
@@ -74,9 +73,9 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 
     &.activated,
     &.segment-activated {
-      opacity: 1;
       border-color: $color-value;
       color: $color-value;
+      opacity: 1;
     }
   }
 

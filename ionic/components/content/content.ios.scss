@@ -4,22 +4,22 @@
 // iOS Content
 // --------------------------------------------------
 
-$content-ios-outer-background-color:    #efeff4 !default;
+$content-ios-outer-background:          #efeff4 !default;
 $content-ios-padding:                   $content-padding !default;
 $content-ios-margin:                    $content-margin !default;
-
+$content-ios-has-views-background:      #000 !default;
 
 ion-content {
   background-color: $background-ios-color;
 }
 
 .outer-content {
-  background: $content-ios-outer-background-color;
+  background: $content-ios-outer-background;
 }
 
 ion-nav.has-views,
 ion-tab.has-views {
-  background: #000;
+  background: $content-ios-has-views-background;
 }
 
 

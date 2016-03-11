@@ -19,7 +19,7 @@ $checkbox-ios-icon-checkmark-color:       $background-ios-color !default;
 
 $checkbox-ios-media-margin:               $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom 2px !default;
 
-$checkbox-ios-disabled-opacity:           0.3 !default;
+$checkbox-ios-disabled-opacity:           .3 !default;
 
 
 ion-checkbox {
@@ -35,9 +35,9 @@ ion-checkbox {
   position: relative;
   width: $checkbox-ios-icon-size;
   height: $checkbox-ios-icon-size;
-  border-radius: $checkbox-ios-icon-border-radius;
   border-width: $checkbox-ios-icon-border-width;
   border-style: $checkbox-ios-icon-border-style;
+  border-radius: $checkbox-ios-icon-border-radius;
   border-color: $checkbox-ios-icon-border-color-off;
   background-color: $checkbox-ios-background-color-off;
 }
@@ -47,8 +47,8 @@ ion-checkbox {
 // -----------------------------------------
 
 .checkbox-checked {
-  background-color: $checkbox-ios-background-color-on;
   border-color: $checkbox-ios-icon-border-color-on;
+  background-color: $checkbox-ios-background-color-on;
 }
 
 
@@ -57,15 +57,15 @@ ion-checkbox {
 
 .checkbox-checked .checkbox-inner {
   position: absolute;
-  border-width: $checkbox-ios-icon-checkmark-width;
-  border-style: $checkbox-ios-icon-checkmark-style;
-  border-color: $checkbox-ios-icon-checkmark-color;
   top: 4px;
   left: 7px;
   width: 4px;
   height: 9px;
-  border-left: none;
-  border-top: none;
+  border-width: $checkbox-ios-icon-checkmark-width;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-style: $checkbox-ios-icon-checkmark-style;
+  border-color: $checkbox-ios-icon-checkmark-color;
   transform: rotate(45deg);
 }
 
@@ -96,8 +96,8 @@ ion-checkbox {
 @mixin checkbox-theme-ios($color-name, $bg-on) {
 
   ion-checkbox[#{$color-name}] .checkbox-checked {
-    background-color: $bg-on;
     border-color: $bg-on;
+    background-color: $bg-on;
 
     .checkbox-inner {
       border-color: color-inverse($bg-on);

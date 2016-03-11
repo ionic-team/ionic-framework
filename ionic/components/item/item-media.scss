@@ -17,18 +17,18 @@
 
 .item > ion-icon,
 .item-inner > ion-icon {
-  line-height: 1;
-  font-size: 2.4rem;
   min-height: 2.4rem;
+  font-size: 2.4rem;
+  line-height: 1;
 
   &[large] {
-    font-size: 3.2rem;
     min-height: 3.2rem;
+    font-size: 3.2rem;
   }
 
   &[small] {
-    font-size: 1.8rem;
     min-height: 1.8rem;
+    font-size: 1.8rem;
   }
 }
 
@@ -43,11 +43,11 @@ ion-thumbnail {
 }
 
 .item-cover {
-  cursor: pointer;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: transparent;
+  cursor: pointer;
 }

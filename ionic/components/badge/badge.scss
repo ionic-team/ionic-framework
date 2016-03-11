@@ -13,13 +13,13 @@ ion-badge {
   padding: 3px 8px;
   min-width: 10px;
 
-  vertical-align: baseline;
-  text-align: center;
-  white-space: nowrap;
-
   font-size: $badge-font-size;
   font-weight: $badge-font-weight;
   line-height: 1;
+
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
 
   &:empty {
     display: none;

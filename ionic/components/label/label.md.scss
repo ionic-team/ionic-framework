@@ -37,15 +37,15 @@ ion-label[stacked] {
 }
 
 ion-label[floating] {
-  transform-origin: left top;
   transform: translate3d(0, 27px, 0);
+  transform-origin: left top;
   transition: transform 150ms ease-in-out;
 }
 
 ion-label[stacked],
 ion-label[floating] {
-  margin-left: 0;
   margin-bottom: 0;
+  margin-left: 0;
 }
 
 .input-has-focus ion-label[stacked],
@@ -54,8 +54,8 @@ ion-label[floating] {
 }
 
 .input-has-focus ion-label[floating],
-.input-has-value ion-label[floating]  {
-  transform: translate3d(0, 0, 0) scale(0.8);
+.input-has-value ion-label[floating] {
+  transform: translate3d(0, 0, 0) scale(.8);
 }
 
 .item-label-stacked [item-right],
@@ -71,7 +71,7 @@ ion-label[floating] {
 @each $color-name, $color-value in $colors-md {
 
   ion-label[#{$color-name}] {
-    color: $color-value !important;
+    color: $color-value;
   }
 
 }

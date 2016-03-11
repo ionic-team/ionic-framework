@@ -20,15 +20,15 @@ $list-md-header-font-size:       1.4rem !default;
 $list-md-header-color:           #858585 !default;
 
 
-/****************/
-/* DEFAULT LIST */
-/****************/
+//
+// DEFAULT LIST
+//
 
 ion-list-header,
 ion-item-divider {
-  border-bottom: 1px solid $list-md-border-color;
   margin-left: 0;
   padding: $list-md-header-padding;
+  border-bottom: 1px solid $list-md-border-color;
   font-size: $list-md-header-font-size;
   color: $list-md-header-color;
 }
@@ -51,29 +51,27 @@ ion-list {
 
     .item-inner,
     ion-label {
-      border-bottom: none;
+      border-bottom: 0;
     }
   }
 
-  > ion-input:last-child:after {
+  > ion-input:last-child::after {
     left: 0;
   }
 
-  ion-item-options {
-    button, [button] {
-      height: calc(100% - 2px);
-      margin: 1px 0 1px 0;
-      box-shadow: none;
+  ion-item-options button,
+  ion-item-options [button] {
+    display: inline-flex;
+    align-items: center;
+    margin: 1px 0;
+    height: calc(100% - 2px);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
 
-      border: none;
-      border-radius: 0;
-      display: inline-flex;
-      align-items: center;
-      box-sizing: border-box;
-
-      &:before{
-        margin: 0 auto;
-      }
+    &::before {
+      margin: 0 auto;
     }
   }
 
@@ -96,9 +94,9 @@ ion-list {
 }
 
 
-/**************/
-/* INSET LIST */
-/**************/
+//
+// INSET LIST
+//
 
 ion-list[inset] {
   margin: $list-inset-md-margin-top $list-inset-md-margin-right $list-inset-md-margin-bottom $list-inset-md-margin-left;
@@ -106,14 +104,14 @@ ion-list[inset] {
 
   .item:first-child {
     border-top-width: 0;
-    border-top-right-radius: $list-inset-md-border-radius;
     border-top-left-radius: $list-inset-md-border-radius;
+    border-top-right-radius: $list-inset-md-border-radius;
   }
 
   .item:last-child {
     border-bottom-width: 0;
-    border-bottom-right-radius: $list-inset-md-border-radius;
     border-bottom-left-radius: $list-inset-md-border-radius;
+    border-bottom-right-radius: $list-inset-md-border-radius;
   }
 
   .item-input {
@@ -131,9 +129,9 @@ ion-list[inset] {
 }
 
 
-/*****************/
-/* NO LINES LIST */
-/*****************/
+//
+// NO LINES LIST
+//
 
 ion-list[no-lines] {
   .item,

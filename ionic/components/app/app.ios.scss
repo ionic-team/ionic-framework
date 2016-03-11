@@ -17,7 +17,7 @@ a {
 }
 
 hr {
-  background-color: rgba(0, 0, 0, 0.12);
+  background-color: rgba(0, 0, 0, .12);
 }
 
 &.hairlines hr {
@@ -25,7 +25,12 @@ hr {
 }
 
 @each $color-name, $color-value in $colors-ios {
-  h1, h2, h3, h4, h5, h6,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
   p,
   span,
   a:not([button]),

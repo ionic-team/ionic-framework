@@ -9,7 +9,7 @@ $checkbox-wp-border-bottom-color:        $list-wp-border-color !default;
 $checkbox-wp-padding:                    $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0 !default;
 $checkbox-wp-margin:                     0 !default;
 $checkbox-wp-media-margin:               $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 4px !default;
-$checkbox-wp-disabled-opacity:           0.3 !default;
+$checkbox-wp-disabled-opacity:           .3 !default;
 
 $checkbox-wp-icon-background-color-off:  $list-wp-background-color !default;
 $checkbox-wp-icon-background-color-on:   map-get($colors-wp, primary) !default;
@@ -22,7 +22,7 @@ $checkbox-wp-icon-checkmark-color:       $background-wp-color !default;
 $checkbox-wp-icon-border-width:          2px !default;
 $checkbox-wp-icon-border-style:          solid !default;
 $checkbox-wp-icon-border-radius:         0 !default;
-$checkbox-wp-icon-border-color-off:      #333333 !default;
+$checkbox-wp-icon-border-color-off:      #333 !default;
 $checkbox-wp-icon-border-color-on:       map-get($colors-wp, primary) !default;
 
 
@@ -39,9 +39,9 @@ ion-checkbox {
   position: relative;
   width: $checkbox-wp-icon-size;
   height: $checkbox-wp-icon-size;
-  border-radius: $checkbox-wp-icon-border-radius;
   border-width: $checkbox-wp-icon-border-width;
   border-style: $checkbox-wp-icon-border-style;
+  border-radius: $checkbox-wp-icon-border-radius;
   border-color: $checkbox-wp-icon-border-color-off;
   background-color: $checkbox-wp-icon-background-color-off;
 }
@@ -51,8 +51,8 @@ ion-checkbox {
 // -----------------------------------------
 
 .checkbox-checked {
-  background-color: $checkbox-wp-icon-background-color-on;
   border-color: $checkbox-wp-icon-border-color-on;
+  background-color: $checkbox-wp-icon-background-color-on;
 }
 
 
@@ -61,15 +61,15 @@ ion-checkbox {
 
 .checkbox-checked .checkbox-inner {
   position: absolute;
-  border-width: $checkbox-wp-icon-checkmark-width;
-  border-style: $checkbox-wp-icon-checkmark-style;
-  border-color: $checkbox-wp-icon-checkmark-color;
   top: -2px;
   left: 3px;
   width: 6px;
   height: 12px;
-  border-left: none;
-  border-top: none;
+  border-width: $checkbox-wp-icon-checkmark-width;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-style: $checkbox-wp-icon-checkmark-style;
+  border-color: $checkbox-wp-icon-checkmark-color;
   transform: rotate(45deg);
 }
 
@@ -104,8 +104,8 @@ ion-checkbox + .item-inner ion-label {
 @mixin checkbox-theme-wp($color-name, $bg-on) {
 
   ion-checkbox[#{$color-name}] .checkbox-checked {
-    background-color: $bg-on;
     border-color: $bg-on;
+    background-color: $bg-on;
 
     .checkbox-inner {
       border-color: color-inverse($bg-on);

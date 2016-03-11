@@ -9,25 +9,24 @@ $action-sheet-max-width:                         500px !default;
 
 ion-action-sheet {
   position: absolute;
-  width: $action-sheet-width;
-  height: $action-sheet-width;
-  z-index: $z-index-overlay;
   top: 0;
   left: 0;
+  z-index: $z-index-overlay;
   display: block;
+  width: $action-sheet-width;
+  height: $action-sheet-width;
 }
 
 .action-sheet-wrapper {
   position: absolute;
-  width: $action-sheet-width;
-  max-width: $action-sheet-max-width;
-  z-index: $z-index-overlay-wrapper;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
+  z-index: $z-index-overlay-wrapper;
   display: block;
   margin: auto;
-
+  width: $action-sheet-width;
+  max-width: $action-sheet-max-width;
   transform: translate3d(0, 100%, 0);
 }
 

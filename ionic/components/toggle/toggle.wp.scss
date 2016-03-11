@@ -26,7 +26,7 @@ $toggle-wp-handle-border-radius:         50% !default;
 $toggle-wp-media-margin:                 0 !default;
 $toggle-wp-media-padding:                12px ($item-wp-padding-right / 2) 12px $item-wp-padding-left !default;
 
-$toggle-wp-disabled-opacity:             0.3 !default;
+$toggle-wp-disabled-opacity:             .3 !default;
 
 
 // Windows Toggle
@@ -45,11 +45,10 @@ ion-toggle {
   display: block;
   width: $toggle-wp-track-width;
   height: $toggle-wp-track-height;
-  pointer-events: none;
-  border-radius: $toggle-wp-track-height;
-
-  background-color: $toggle-wp-track-background-color-off;
   border: $toggle-wp-track-border-width solid $toggle-wp-track-border-color-off;
+  border-radius: $toggle-wp-track-height;
+  background-color: $toggle-wp-track-background-color-off;
+  pointer-events: none;
 }
 
 
@@ -73,8 +72,8 @@ ion-toggle {
 // -----------------------------------------
 
 .toggle-checked {
-  background-color: $toggle-wp-track-background-color-on;
   border-color: $toggle-wp-track-background-color-on;
+  background-color: $toggle-wp-track-background-color-on;
 }
 
 
@@ -84,7 +83,7 @@ ion-toggle {
 .toggle-checked .toggle-inner {
   background-color: $toggle-wp-handle-background-color-on;
   // transform: translate3d(23px, 0, 0);
-  transform: translate3d($toggle-wp-track-width - $toggle-wp-handle-width - ( $toggle-wp-track-border-width * 2 ) - ( $toggle-wp-handle-left * 2 ), 0, 0);
+  transform: translate3d($toggle-wp-track-width - $toggle-wp-handle-width - ($toggle-wp-track-border-width * 2) - ($toggle-wp-handle-left * 2), 0, 0);
 }
 
 
@@ -124,8 +123,8 @@ ion-toggle {
   ion-toggle[#{$color-name}] {
 
     .toggle-checked {
-      background-color: $color-value;
       border-color: $color-value;
+      background-color: $color-value;
     }
 
     .toggle-checked .toggle-inner {

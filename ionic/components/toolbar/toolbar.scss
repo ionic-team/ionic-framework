@@ -9,27 +9,26 @@
   z-index: $z-index-toolbar;
 
   display: flex;
+  overflow: hidden;
+  flex: 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   order: $flex-order-toolbar-top;
-  flex: 0;
-
   width: 100%;
-  overflow: hidden;
 }
 
 .toolbar-background {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
+  z-index: $z-index-toolbar-background;
   width: 100%;
   height: 100%;
-  z-index: $z-index-toolbar-background;
 
   border: 0;
+  transform: translateZ(0);
   pointer-events: none;
-  transform: translateZ(0px);
 }
 
 .toolbar[position=bottom] {
@@ -37,25 +36,25 @@
 }
 
 ion-title {
-  flex: 1;
   display: flex;
+  flex: 1;
   align-items: center;
-  transform: translateZ(0px);
+  transform: translateZ(0);
 }
 
 .toolbar-title {
   display: block;
-  width: 100%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 ion-buttons {
   display: block;
-  margin: 0 0.2rem;
+  margin: 0 .2rem;
+  transform: translateZ(0);
   pointer-events: none;
-  transform: translateZ(0px);
 }
 
 ion-buttons button,
@@ -70,26 +69,26 @@ ion-buttons div {
 // --------------------------------------------------
 
 .toolbar[transparent] .toolbar-background {
-  background: transparent;
   border-color: transparent;
+  background: transparent;
 }
 
 
 // TODO this is a temp hack to fix segment overlapping ion-nav-item
 ion-buttons,
 .bar-button-menutoggle {
-  transform: translateZ(0px);
   z-index: 99;
+  transform: translateZ(0);
 }
 
 // Navbar
 // --------------------------------------------------
 
 ion-navbar.toolbar {
-  transform: translateZ(0px);
   display: flex;
-
   opacity: 0;
+  transform: translateZ(0);
+
   &.show-navbar {
     opacity: 1;
   }

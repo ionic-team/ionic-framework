@@ -27,8 +27,8 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   padding-right: 0;
   padding-left: ($item-wp-padding-left);
   font-size: $item-wp-font-size;
-  text-transform: none;
   font-weight: normal;
+  text-transform: none;
 
   color: $item-wp-body-text-color;
   background-color: $item-wp-body-background-color;
@@ -41,7 +41,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   }
 
   h2 {
-    margin: 2px 0 2px;
+    margin: 2px 0;
     font-size: 1.6rem;
     font-weight: normal;
   }
@@ -50,17 +50,17 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   h4,
   h5,
   h6 {
-    line-height: normal;
-    margin: 2px 0 2px;
+    margin: 2px 0;
     font-size: 1.4rem;
     font-weight: normal;
+    line-height: normal;
   }
 
   p {
+    margin: 0 0 2px;
+    font-size: 1.4rem;
     line-height: normal;
     color: $item-wp-paragraph-text-color;
-    font-size: 1.4rem;
-    margin: 0 0 2px;
   }
 }
 
@@ -94,15 +94,15 @@ ion-icon[item-right] {
 }
 
 .item-button {
-  padding: 0 0.6em;
+  padding: 0 .6em;
   height: 25px;
   font-size: 1.2rem;
 }
 
 .item-button.button-icon-only ion-icon,
 .item-button.button-icon-only {
-   padding: 0 1px;
- }
+  padding: 0 1px;
+}
 
 [text-wrap] ion-label {
   font-size: $item-wp-body-text-font-size;
@@ -155,8 +155,8 @@ ion-note {
 
 ion-item-divider {
   padding: $item-wp-padding-top $item-wp-padding-right $item-wp-padding-bottom $item-wp-padding-left;
-  background-color: $item-wp-divider-background;
   color: $item-wp-divider-color;
+  background-color: $item-wp-divider-background;
 }
 
 
@@ -165,8 +165,8 @@ ion-item-divider {
 
 @each $color-name, $color-value in $colors-wp {
   ion-item-divider[#{$color-name}] {
-    background-color: $color-value;
     color: color-inverse($color-value);
+    background-color: $color-value;
   }
 }
 

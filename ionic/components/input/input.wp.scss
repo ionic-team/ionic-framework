@@ -64,17 +64,17 @@ ion-input.ng-invalid.ng-touched .text-input {
 
 .item-label-stacked .text-input,
 .item-label-floating .text-input {
-  margin-left: 0;
   margin-top: 8px;
   margin-bottom: 8px;
+  margin-left: 0;
 }
 
 .item-label-stacked ion-select,
 .item-label-floating ion-select {
-  padding-top: 0;
-  padding-bottom: 0;
   margin-top: 8px;
   margin-bottom: 8px;
+  padding-top: 0;
+  padding-bottom: 0;
 
   .select-icon {
     margin-top: 5px;
@@ -106,10 +106,10 @@ ion-input[clearInput] {
 }
 
 .text-input-clear-icon {
-  width: $text-input-wp-input-clear-icon-width;
-
   @include svg-background-image($text-input-wp-input-clear-icon-svg);
-  background-size: $text-input-wp-input-clear-icon-size;
+
   right: ($item-wp-padding-right / 2);
   bottom: 2px;
+  width: $text-input-wp-input-clear-icon-width;
+  background-size: $text-input-wp-input-clear-icon-size;
 }

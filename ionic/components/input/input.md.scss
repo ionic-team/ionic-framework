@@ -10,7 +10,7 @@ $text-input-md-hightlight-color-valid:      map-get($colors-md, secondary) !defa
 $text-input-md-hightlight-color-invalid:    map-get($colors-md, danger) !default;
 
 $text-input-md-input-clear-icon-width:      30px !default;
-$text-input-md-input-clear-icon-color:      #5B5B5B !default;
+$text-input-md-input-clear-icon-color:      #5b5b5b !default;
 $text-input-md-input-clear-icon-svg:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $text-input-md-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
 $text-input-md-input-clear-icon-size:       22px !default;
 
@@ -37,26 +37,26 @@ $text-input-md-input-clear-icon-size:       22px !default;
 // Material Design Highlighted Input
 // --------------------------------------------------
 
-ion-input:after {
+ion-input::after {
   position: absolute;
-  bottom: 0;
   right: 0;
+  bottom: 0;
   left: $item-md-padding-left;
   border-bottom-width: 2px;
   border-bottom-style: solid;
   border-bottom-color: transparent;
-  content: '';
+  content: "";
 }
 
-.input-has-focus:after {
+.input-has-focus::after {
   border-bottom-color: $text-input-md-highlight-color;
 }
 
-ion-input.ng-valid.input-has-value:after {
+ion-input.ng-valid.input-has-value::after {
   border-bottom-color: $text-input-md-hightlight-color-valid;
 }
 
-ion-input.ng-invalid.ng-touched:after {
+ion-input.ng-invalid.ng-touched::after {
   border-bottom-color: $text-input-md-hightlight-color-invalid;
 }
 
@@ -66,16 +66,16 @@ ion-input.ng-invalid.ng-touched:after {
 
 .item-label-stacked .text-input,
 .item-label-floating .text-input {
-  margin-left: 0;
   margin-top: 8px;
   margin-bottom: 8px;
+  margin-left: 0;
 }
 
 .item-label-stacked ion-select,
 .item-label-floating ion-select {
-  padding-left: 0;
   padding-top: 8px;
   padding-bottom: 8px;
+  padding-left: 0;
 }
 
 .item-label-floating .text-input.cloned-input {
@@ -99,10 +99,10 @@ ion-input[clearInput] {
 }
 
 .text-input-clear-icon {
-  width: $text-input-md-input-clear-icon-width;
-
   @include svg-background-image($text-input-md-input-clear-icon-svg);
-  background-size: $text-input-md-input-clear-icon-size;
+
   right: ($item-md-padding-right / 2);
   bottom: 2px;
+  width: $text-input-md-input-clear-icon-width;
+  background-size: $text-input-md-input-clear-icon-size;
 }

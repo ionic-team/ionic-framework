@@ -1,4 +1,4 @@
-/*! normalize.css v3.0.2 | MIT License | github.com/necolas/normalize.css */
+// ! normalize.css v3.0.2 | MIT License | github.com/necolas/normalize.css
 
 
 // HTML5 display definitions
@@ -35,8 +35,8 @@ strong {
 
 // Remove border when inside `a` element in IE 8/9/10.
 img {
-  border: 0;
   max-width: 100%;
+  border: 0;
 }
 
 // Correct overflow not hidden in IE 9/10/11.
@@ -54,9 +54,9 @@ figure {
 }
 
 hr {
-  box-sizing: content-box;
   height: 1px;
   border-width: 0;
+  box-sizing: content-box;
 }
 
 // Contain overflow in all browsers.
@@ -90,13 +90,13 @@ label,
 input,
 select,
 textarea {
-  line-height: normal;
   font-family: inherit;
+  line-height: normal;
 }
 
 textarea {
-  height: auto;
   overflow: auto;
+  height: auto;
   font: inherit;
   color: inherit;
 }
@@ -105,9 +105,9 @@ form,
 input,
 optgroup,
 select {
-  color: inherit; // 1
-  font: inherit; // 2
   margin: 0; // 3
+  font: inherit; // 2
+  color: inherit; // 1
 }
 
 // 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
@@ -118,8 +118,8 @@ select {
 html input[type="button"], // 1
 input[type="reset"],
 input[type="submit"] {
-  -webkit-appearance: button; // 2
   cursor: pointer; // 3
+  -webkit-appearance: button; // 2
 }
 
 // remove 300ms delay
@@ -145,18 +145,18 @@ textarea {
 
 button {
   border: 0;
-  line-height: 1;
   font-family: inherit;
-  font-variant: inherit;
   font-style: inherit;
+  font-variant: inherit;
+  line-height: 1;
   text-transform: none;
-  -webkit-appearance: button;
   cursor: pointer;
+  -webkit-appearance: button;
 }
 
 // Re-set default cursor for disabled elements.
 a[disabled],
-button[disabled]
+button[disabled],
 html input[disabled] {
   cursor: default;
 }
@@ -164,8 +164,8 @@ html input[disabled] {
 // Remove inner padding and border in Firefox 4+.
 button::-moz-focus-inner,
 input::-moz-focus-inner {
-  border: 0;
   padding: 0;
+  border: 0;
 }
 
 // Firefox's implementation doesn't respect box-sizing, padding, or width.
@@ -173,8 +173,8 @@ input::-moz-focus-inner {
 // 2. Remove excess padding in IE 8/9/10.
 input[type="checkbox"],
 input[type="radio"] {
-  box-sizing: border-box; // 1
   padding: 0; // 2
+  box-sizing: border-box; // 1
 }
 
 // Fix the cursor style for Chrome's increment/decrement buttons. For certain

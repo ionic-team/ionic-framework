@@ -3,10 +3,6 @@
 // Windows Chip
 // --------------------------------------------------
 
-ion-chip {
-
-}
-
 
 // Generate Windows Chip Colors
 // --------------------------------------------------
@@ -15,8 +11,8 @@ ion-chip {
 
   ion-chip {
     ion-icon[#{$color-name}] {
+      color: color-inverse($color-value);
       background-color: $color-value;
-      color: color-inverse($color-value) !important;
     }
   }
 

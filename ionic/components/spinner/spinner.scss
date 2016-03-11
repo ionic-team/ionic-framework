@@ -4,8 +4,8 @@
 // --------------------------------------------------
 
 ion-spinner {
-  display: inline-block;
   position: relative;
+  display: inline-block;
   width: 28px;
   height: 28px;
 }
@@ -29,7 +29,7 @@ ion-spinner.spinner-paused svg {
 
 .spinner-ios line,
 .spinner-ios-small line {
-  stroke: #69717d;;
+  stroke: #69717d;
   stroke-width: 4px;
   stroke-linecap: round;
 }
@@ -89,8 +89,8 @@ ion-spinner.spinner-paused svg {
 }
 
 .spinner-dots svg {
-  animation: spinner-dots 1s linear infinite;
   transform-origin: center;
+  animation: spinner-dots 1s linear infinite;
 }
 
 
@@ -113,7 +113,7 @@ ion-spinner.spinner-paused svg {
 }
 
 @keyframes spinner-dots {
-  0% { opacity: 0.9; transform: scale(1, 1); }
-  50% { opacity: 0.3; transform: scale(0.4, 0.4); }
-  100% { opacity: 0.9; transform: scale(1, 1); }
+  0% { opacity: .9; transform: scale(1, 1); }
+  50% { opacity: .3; transform: scale(.4, .4); }
+  100% { opacity: .9; transform: scale(1, 1); }
 }

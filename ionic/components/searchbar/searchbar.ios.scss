@@ -6,36 +6,37 @@
 
 $searchbar-ios-padding-top-bottom:        0 !default;
 $searchbar-ios-padding-left-right:        8px !default;
-$searchbar-ios-background-color:          rgba(0, 0, 0, 0.2) !default;
-$searchbar-ios-border-color:              rgba(0, 0, 0, 0.05) !default;
+$searchbar-ios-background-color:          rgba(0, 0, 0, .2) !default;
+$searchbar-ios-border-color:              rgba(0, 0, 0, .05) !default;
 $searchbar-ios-min-height:                44px !default;
 
-$searchbar-ios-input-search-icon-color:   rgba(0, 0, 0, 0.5) !default;
+$searchbar-ios-input-search-icon-color:   rgba(0, 0, 0, .5) !default;
 $searchbar-ios-input-search-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'><path fill='" + $searchbar-ios-input-search-icon-color + "' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/><line stroke='" + $searchbar-ios-input-search-icon-color + "' stroke-miterlimit='10' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>" !default;
 $searchbar-ios-input-search-icon-size:    13px !default;
 
 $searchbar-ios-input-height:              3rem !default;
 $searchbar-ios-input-line-height:         $searchbar-ios-input-height !default;
-$searchbar-ios-input-placeholder-color:   rgba(0, 0, 0, 0.5) !default;
+$searchbar-ios-input-placeholder-color:   rgba(0, 0, 0, .5) !default;
 $searchbar-ios-input-text-color:          #000 !default;
-$searchbar-ios-input-background-color:    #FFFFFF !default;
+$searchbar-ios-input-background-color:    #fff !default;
 $searchbar-ios-input-transition:          all 400ms cubic-bezier(.25, .45, .05, 1) !default;
 $searchbar-ios-cancel-transition:         all 400ms cubic-bezier(.25, .45, .05, 1) !default;
 
-$searchbar-ios-input-clear-icon-color:    rgba(0, 0, 0, 0.5) !default;
+$searchbar-ios-input-clear-icon-color:    rgba(0, 0, 0, .5) !default;
 $searchbar-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $searchbar-ios-input-clear-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
 $searchbar-ios-input-clear-icon-size:     18px !default;
 
+$searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 // Searchbar
 // -----------------------------------------
 
 ion-searchbar {
   padding: $searchbar-ios-padding-top-bottom $searchbar-ios-padding-left-right;
-  background: $searchbar-ios-background-color;
+  min-height: $searchbar-ios-min-height;
   border-top: 1px solid transparent;
   border-bottom: 1px solid $searchbar-ios-border-color;
-  min-height: $searchbar-ios-min-height;
+  background: $searchbar-ios-background-color;
 }
 
 
@@ -43,17 +44,19 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-search-icon {
+  @include svg-background-image($searchbar-ios-input-search-icon-svg);
+  @include calc(margin-left, "50% - 60px");
+
+  position: absolute;
+  top: 9px;
+  left: 9px;
+
   width: $searchbar-ios-input-search-icon-size + 1;
   height: $searchbar-ios-input-search-icon-size + 1;
 
-  @include svg-background-image($searchbar-ios-input-search-icon-svg);
-  background-size: $searchbar-ios-input-search-icon-size;
   background-repeat: no-repeat;
-  position: absolute;
-  left: 9px;
-  top: 9px;
+  background-size: $searchbar-ios-input-search-icon-size;
 
-  @include calc(margin-left, "50% - 60px");
   transition: $searchbar-ios-input-transition;
 }
 
@@ -62,20 +65,19 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-input {
-  height: $searchbar-ios-input-height;
-  line-height: $searchbar-ios-input-line-height;
-  padding: 0 28px;
+  @include placeholder($searchbar-ios-input-placeholder-color);
+  @include calc(padding-left, "50% - 28px");
 
+  padding: 0 28px;
+  height: $searchbar-ios-input-height;
+  border-radius: 5px;
   font-size: 1.4rem;
   font-weight: 400;
+  line-height: $searchbar-ios-input-line-height;
 
-  border-radius: 5px;
   color: $searchbar-ios-input-text-color;
   background-color: $searchbar-ios-input-background-color;
 
-  @include placeholder($searchbar-ios-input-placeholder-color);
-
-  @include calc(padding-left, "50% - 28px");
   transition: $searchbar-ios-input-transition;
 }
 
@@ -84,16 +86,18 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-clear-icon {
+  @include svg-background-image($searchbar-ios-input-clear-icon-svg);
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
   width: 30px;
   height: 100%;
 
-  @include svg-background-image($searchbar-ios-input-clear-icon-svg);
-  background-size: $searchbar-ios-input-clear-icon-size;
   background-repeat: no-repeat;
   background-position: center;
-  position: absolute;
-  right: 0;
-  top: 0;
+  background-size: $searchbar-ios-input-clear-icon-size;
 }
 
 
@@ -101,16 +105,15 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-ios-cancel {
-  transition: $searchbar-ios-cancel-transition;
-  height: 30px;
-
-  margin-left: 0;
+  flex: 0 0 0%;
   margin-right: 0;
+  margin-left: 0;
   padding: 0;
 
+  height: 30px;
   visibility: hidden;
   transform: translateX(calc(100% + #{$searchbar-ios-padding-left-right}));
-  flex: 0 0 0%;
+  transition: $searchbar-ios-cancel-transition;
 }
 
 
@@ -121,6 +124,7 @@ ion-searchbar {
   .searchbar-search-icon {
     margin-left: 0;
   }
+
   .searchbar-input {
     padding-left: 30px;
   }
@@ -131,10 +135,10 @@ ion-searchbar {
 
 .searchbar-focused {
   .searchbar-ios-cancel {
-    transform: translateX(0);
     flex: 0 0 auto;
     padding-left: 8px;
     visibility: visible;
+    transform: translateX(0);
   }
 }
 
@@ -144,11 +148,11 @@ ion-searchbar {
 .toolbar {
 
   ion-searchbar {
-    background: transparent;
     border-bottom-width: 0;
+    background: transparent;
 
     .searchbar-input {
-      background-color: rgba(0, 0, 0, 0.08);
+      background: $searchbar-ios-toolbar-input-background;
     }
 
     .searchbar-ios-cancel {

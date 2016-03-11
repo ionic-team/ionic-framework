@@ -54,16 +54,16 @@ ion-navbar-section {
 .toolbar-content {
   flex: 1;
   order: map-get($toolbar-order-wp, content);
-  max-width: 100%;
   min-width: 0;
+  max-width: 100%;
 }
 
 .toolbar-title {
-  color: $toolbar-wp-text-color;
   padding: $toolbar-wp-title-padding;
   font-size: $toolbar-wp-title-font-size;
   font-weight: $toolbar-wp-title-font-weight;
   text-transform: $toolbar-wp-title-text-transform;
+  color: $toolbar-wp-text-color;
 }
 
 @mixin wp-toolbar-theme($color-name, $color-value) {
@@ -105,7 +105,7 @@ ion-navbar-section {
 
 ion-buttons {
   order: map-get($toolbar-order-wp, buttons-start);
-  transform: translateZ(0px);
+  transform: translateZ(0);
 }
 
 ion-buttons[left] {
@@ -117,13 +117,13 @@ ion-buttons[left] .bar-button:first-child {
 }
 
 ion-buttons[end] {
-  text-align: right;
   order: map-get($toolbar-order-wp, buttons-end);
+  text-align: right;
 }
 
 ion-buttons[right] {
-  text-align: right;
   order: map-get($toolbar-order-wp, buttons-right);
+  text-align: right;
 }
 
 
@@ -132,16 +132,16 @@ ion-buttons[right] {
 
 .bar-button {
   margin-top: 0;
+  margin-right: .2rem;
   margin-bottom: 0;
-  margin-left: 0.2rem;
-  margin-right: 0.2rem;
+  margin-left: .2rem;
   padding: 0 5px;
   height: 32px;
   border: 0;
-  font-size: $toolbar-wp-button-font-size;
   border-radius: $bar-button-wp-border-radius;
-  text-transform: uppercase;
+  font-size: $toolbar-wp-button-font-size;
   font-weight: 500;
+  text-transform: uppercase;
 }
 
 .bar-button-solid,
@@ -175,7 +175,7 @@ ion-buttons[right] {
   background-color: transparent;
 
   &:hover:not(.disable-hover) {
-    opacity: 0.4;
+    opacity: .4;
   }
 
   &.activated {
@@ -236,16 +236,16 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-icon-left ion-icon {
-  padding-right: 0.3em;
+  padding-right: .3em;
   font-size: 1.4em;
-  line-height: 0.67;
+  line-height: .67;
   pointer-events: none;
 }
 
 .bar-button-icon-right ion-icon {
-  padding-left: 0.4em;
+  padding-left: .4em;
   font-size: 1.4em;
-  line-height: 0.67;
+  line-height: .67;
   pointer-events: none;
 }
 
@@ -253,10 +253,10 @@ ion-buttons[right] {
   padding: 0;
 
   ion-icon {
-    padding: 0 0.1em;
-    font-size: 1.8em;
-    line-height: 0.67;
+    padding: 0 .1em;
     min-width: 28px;
+    font-size: 1.8em;
+    line-height: .67;
     pointer-events: none;
   }
 }
@@ -283,10 +283,10 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-menutoggle {
+  order: map-get($toolbar-order-wp, menu-toggle-start);
   margin: 0 6px;
   padding: 0 2px;
   min-width: 44px;
-  order: map-get($toolbar-order-wp, menu-toggle-start);
 
   ion-icon {
     padding: 0 6px;
@@ -296,9 +296,9 @@ ion-buttons[right] {
 
 .bar-button-menutoggle[end],
 .bar-button-menutoggle[right] {
+  order: map-get($toolbar-order-wp, menu-toggle-end);
   margin: 0 2px;
   min-width: 28px;
-  order: map-get($toolbar-order-wp, menu-toggle-end);
 }
 
 

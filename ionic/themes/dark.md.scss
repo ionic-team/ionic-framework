@@ -69,7 +69,7 @@ $toggle-md-handle-background-color-off: map-get($colors-md, light) !default;
 // --------------------------------------------------
 
 @function ripple-background-color($button-color) {
-  @return rgba( red($button-color), green($button-color), blue($button-color), 0.1);
+  @return rgba(red($button-color), green($button-color), blue($button-color), .1);
 }
 
 

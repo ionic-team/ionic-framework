@@ -12,15 +12,15 @@ $alert-button-font-size:          14px !default;
 
 ion-alert {
   position: absolute;
-  z-index: $z-index-overlay;
   top: 0;
-  left: 0;
-  bottom: 0;
   right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-overlay;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   input {
     width: 100%;
@@ -29,12 +29,10 @@ ion-alert {
 
 .alert-wrapper {
   z-index: $z-index-overlay-wrapper;
-  min-width: $alert-min-width;
-  max-height: $alert-max-height;
-
   display: flex;
   flex-direction: column;
-
+  min-width: $alert-min-width;
+  max-height: $alert-max-height;
   opacity: 0;
 }
 
@@ -44,7 +42,7 @@ ion-alert {
 }
 
 .alert-sub-title {
-  margin: 5px 0 0 0;
+  margin: 5px 0 0;
   padding: 0;
   font-weight: normal;
 }
@@ -56,9 +54,9 @@ ion-alert {
 .alert-input {
   @include placeholder();
 
+  padding: 10px 0;
   border: 0;
   background: inherit;
-  padding: 10px 0;
 }
 
 .alert-button-group {
@@ -72,11 +70,11 @@ ion-alert {
 }
 
 .alert-button {
+  z-index: 0;
   display: block;
   margin: 0;
-  z-index: 0;
-  line-height: $alert-button-line-height;
   font-size: $alert-button-font-size;
+  line-height: $alert-button-line-height;
 }
 
 .alert-tappable {

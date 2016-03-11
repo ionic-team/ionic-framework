@@ -14,12 +14,12 @@ ion-menu {
   bottom: 0;
   left: 0;
 
-  width: $menu-width;
-
   display: flex;
   flex-direction: column;
 
-  transform: translate3d(-9999px, 0px, 0px);
+  width: $menu-width;
+
+  transform: translate3d(-9999px, 0, 0);
 }
 
 ion-menu[side=right] {
@@ -33,7 +33,7 @@ ion-menu .backdrop {
 }
 
 .menu-content {
-  transform: translate3d(0px, 0px, 0px);
+  transform: translate3d(0, 0, 0);
 }
 
 .menu-content-open ion-pane,
@@ -60,7 +60,7 @@ ion-menu .backdrop {
 // The menu itself, which is under the content, does not move.
 
 ion-menu[type=reveal].show-menu {
-  transform: translate3d(0px, 0px, 0px);
+  transform: translate3d(0, 0, 0);
 }
 
 
@@ -70,18 +70,18 @@ ion-menu[type=reveal].show-menu {
 // itself, which is under the menu, does not move.
 
 ion-menu[type=overlay] {
-  z-index: $z-index-menu-overlay;
   left: -8px; // make up for the box-shadow hanging over on the left
+  z-index: $z-index-menu-overlay;
 
   .backdrop {
-    display: block;
-    transform: translate3d(-9999px, 0px, 0px);
-    opacity: 0.01;
     left: -3000px;
+    display: block;
     width: 6000px;
+    opacity: .01;
+    transform: translate3d(-9999px, 0, 0);
 
     &.show-backdrop {
-      transform: translate3d(0px, 0px, 0px);
+      transform: translate3d(0, 0, 0);
     }
   }
 }
@@ -91,5 +91,5 @@ ion-menu[type=overlay][side=right] {
 }
 
 ion-menu[type=push][side=right] {
-  left: 0px;
+  left: 0;
 }

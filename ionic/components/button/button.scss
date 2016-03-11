@@ -8,44 +8,45 @@ $button-round-border-radius:      64px !default;
 
 
 .button {
-  position: relative;
-  display: inline-block;
-  transition: background-color, opacity 100ms linear;
-  z-index: 0;
+  @include user-select-none();
+  @include appearance(none);
 
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  position: relative;
+  z-index: 0;
+  display: inline-block;
   overflow: hidden;
 
   text-align: center;
+  text-overflow: ellipsis;
   text-transform: none;
-  font-kerning: none;
 
+  white-space: nowrap;
+  cursor: pointer;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 
-  cursor: pointer;
-  @include user-select-none();
-  @include appearance(none);
+  transition: background-color, opacity 100ms linear;
+  font-kerning: none;
 }
 
 .button-inner {
   display: flex;
-  flex-shrink: 0;
   flex-flow: row nowrap;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
 }
 
-a.button, a[button] {
+a.button,
+a[button] {
   text-decoration: none;
 }
 
 .button[disabled] {
-  opacity: 0.4;
-  cursor: default !important;
+  cursor: default;
+  opacity: .4;
   pointer-events: none;
 }
 
@@ -58,7 +59,7 @@ a.button, a[button] {
   clear: both;
   width: 100%;
 
-  &:after {
+  &::after {
     clear: both;
   }
 }
@@ -70,6 +71,14 @@ a.button, a[button] {
 .button-full {
   display: block;
   width: 100%;
+
+  // Full Outline Button
+  // --------------------------------------------------
+  &.button-outline {
+    border-right-width: 0;
+    border-left-width: 0;
+    border-radius: 0;
+  }
 }
 
 
@@ -79,13 +88,4 @@ a.button, a[button] {
 .button-round {
   padding: $button-round-padding;
   border-radius: $button-round-border-radius;
-}
-
-// Full Outline Button
-// --------------------------------------------------
-
-.button-full.button-outline {
-  border-left-width: 0;
-  border-right-width: 0;
-  border-radius: 0;
 }

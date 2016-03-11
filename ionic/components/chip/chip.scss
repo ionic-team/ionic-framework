@@ -3,33 +3,30 @@
 // Chip
 // --------------------------------------------------
 
-$chip-background-color:      rgba(0,0,0,0.12) !default;
+$chip-background-color:      rgba(0, 0, 0, .12) !default;
 $chip-font-size:             13px !default;
 $chip-height:                32px !default;
 $chip-border-radius:         16px !default;
 $chip-padding:               0 12px !default;
 $chip-margin:                2px 0 !default;
 
-$chip-label-color:           rgba(0,0,0,0.87) !default;
-
-$chip-icon-color:            rgba(0,0,0,0.87) !default;
+$chip-label-color:           rgba(0, 0, 0, .87) !default;
+$chip-icon-color:            rgba(0, 0, 0, .87) !default;
 
 ion-chip {
-  background: $chip-background-color;
-  display: inline-block;
-  height: $chip-height;
-  line-height: $chip-height;
-  border-radius: $chip-border-radius;
-  padding: $chip-padding;
-  margin: $chip-margin;
-
-  box-sizing: border-box;
-  vertical-align: middle;
   display: inline-flex;
   align-self: center;
-
+  margin: $chip-margin;
+  padding: $chip-padding;
+  height: $chip-height;
+  border-radius: $chip-border-radius;
   font-size: $chip-font-size;
   font-weight: normal;
+  line-height: $chip-height;
+  background: $chip-background-color;
+
+  vertical-align: middle;
+  box-sizing: border-box;
 
   ion-label {
     margin: 0;
@@ -38,23 +35,23 @@ ion-chip {
 
   > ion-icon,
   > ion-avatar {
+    margin-left: -12px;
     width: 32px;
     height: 32px;
-    margin-left: -12px;
-    vertical-align: top;
     border-radius: 50%;
-    text-align: center;
-    line-height: 32px;
-    color: $chip-icon-color;
     font-size: 18px;
+    line-height: 32px;
+    text-align: center;
+    color: $chip-icon-color;
+    vertical-align: top;
 
     img {
-      max-width: 100%;
-      max-height: 100%;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
       display: block;
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      max-height: 100%;
+      border-radius: 50%;
     }
 
     + ion-label {
@@ -68,9 +65,9 @@ ion-chip {
   }
 
   .button {
-    height: inherit;
     margin: 0;
     margin-right: -4px;
+    height: inherit;
   }
 
   ion-icon[name="close-circle"] {

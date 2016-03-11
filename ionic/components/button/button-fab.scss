@@ -8,18 +8,15 @@ $button-fab-size:           56px !default;
 
 .button-fab {
   position: absolute;
-  width: $button-fab-size;
-  height: $button-fab-size;
-  line-height: $button-fab-size;
-  min-width: 0;
-  vertical-align: middle;
-
-  border-radius: 50%;
-  background-clip: padding-box;
-
   overflow: hidden;
-
+  width: $button-fab-size;
+  min-width: 0;
+  height: $button-fab-size;
+  border-radius: 50%;
   font-size: 14px;
+  line-height: $button-fab-size;
+  vertical-align: middle;
+  background-clip: padding-box;
 
   ion-icon {
     flex: 1;

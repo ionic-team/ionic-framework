@@ -4,22 +4,22 @@
 // iOS Button
 // --------------------------------------------------
 
-$button-ios-margin:                   0.4rem 0.2rem !default;
+$button-ios-margin:                   .4rem .2rem !default;
 $button-ios-padding:                  0 1em !default;
 $button-ios-font-size:                1.6rem !default;
 $button-ios-height:                   2.8em !default;
 $button-ios-color:                    map-get($colors-ios, primary) !default;
 $button-ios-color-activated:          color-shade($button-ios-color) !default;
 $button-ios-text-color:               color-inverse($button-ios-color) !default;
-$button-ios-hover-opacity:            0.8 !default;
+$button-ios-hover-opacity:            .8 !default;
 $button-ios-border-radius:            4px !default;
 
 $button-ios-large-font-size:          2rem !default;
 $button-ios-large-height:             2.8em !default;
-$button-ios-large-padding:            1.0em !default;
+$button-ios-large-padding:            1em !default;
 $button-ios-small-font-size:          1.3rem !default;
 $button-ios-small-height:             2.1em !default;
-$button-ios-small-padding:            0.9em !default;
+$button-ios-small-padding:            .9em !default;
 $button-ios-small-icon-font-size:     1.3em !default;
 
 
@@ -31,20 +31,20 @@ $button-ios-small-icon-font-size:     1.3em !default;
   padding: $button-ios-padding;
 
   height: $button-ios-height;
+  border-radius: $button-ios-border-radius;
   font-size: $button-ios-font-size;
 
-  border-radius: $button-ios-border-radius;
   color: $button-ios-text-color;
   background-color: $button-ios-color;
 
   &:hover:not(.disable-hover) {
-    opacity: $button-ios-hover-opacity;
     text-decoration: none;
+    opacity: $button-ios-hover-opacity;
   }
 
   &.activated {
-    opacity: 1;
     background-color: $button-ios-color-activated;
+    opacity: 1;
   }
 }
 
@@ -83,18 +83,18 @@ $button-ios-small-icon-font-size:     1.3em !default;
   padding: 0 $button-ios-small-padding;
   height: $button-ios-small-height;
   font-size: $button-ios-small-font-size;
-}
 
-.button-small.button-icon-only ion-icon {
-  font-size: $button-ios-small-icon-font-size;
+  &.button-icon-only ion-icon {
+    font-size: $button-ios-small-icon-font-size;
+  }
 }
 
 // iOS Block Button
 // --------------------------------------------------
 
 .button-block {
-  margin-left: 0;
   margin-right: 0;
+  margin-left: 0;
 }
 
 // iOS Full Button
@@ -103,9 +103,9 @@ $button-ios-small-icon-font-size:     1.3em !default;
 .button-full {
   margin-right: 0;
   margin-left: 0;
-  border-radius: 0;
   border-right-width: 0;
   border-left-width: 0;
+  border-radius: 0;
 }
 
 // iOS Outline Button
@@ -114,15 +114,15 @@ $button-ios-small-icon-font-size:     1.3em !default;
 .button-outline {
   border-width: 1px;
   border-style: solid;
+  border-radius: 4px;
   border-color: $button-ios-color;
   color: $button-ios-color;
   background-color: transparent;
-  border-radius: 4px;
 
   &.activated {
-    opacity: 1;
     color: $background-ios-color;
     background-color: $button-ios-color;
+    opacity: 1;
   }
 }
 
@@ -159,13 +159,13 @@ $button-ios-small-icon-font-size:     1.3em !default;
   background-color: transparent;
 
   &.activated {
-    opacity: 0.4;
     background-color: transparent;
+    opacity: .4;
   }
 
   &:hover:not(.disable-hover) {
-    opacity: 0.6;
     color: $button-ios-color;
+    opacity: .6;
   }
 }
 
@@ -178,11 +178,11 @@ $button-ios-small-icon-font-size:     1.3em !default;
   .button-clear-#{$color-name} {
     $fg-color: $color-value;
     border-color: transparent;
-    background-color: transparent;
     color: $fg-color;
+    background-color: transparent;
 
     &.activated {
-      opacity: 0.4;
+      opacity: .4;
     }
 
     &:hover:not(.disable-hover) {

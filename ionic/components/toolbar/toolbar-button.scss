@@ -4,35 +4,35 @@
 // --------------------------------------------------
 
 .bar-button {
+  @include user-select-none();
+  @include appearance(none);
+
   position: relative;
   display: inline-block;
 
   margin: 0;
   padding: 0;
 
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-  text-align: center;
-  text-transform: none;
   line-height: 1;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+
+  cursor: pointer;
 
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
-
-  cursor: pointer;
-  @include user-select-none();
-  @include appearance(none);
 }
 
-.bar-button:after {
+.bar-button::after {
   // used to make the button's hit area larger
   position: absolute;
-  content: '';
   top: -7px;
   right: -2px;
   bottom: -6px;
   left: -2px;
+  content: "";
 }
 
 
@@ -50,6 +50,7 @@
 
 .back-button {
   display: none;
+
   &.show-back-button {
     display: inline-block;
   }

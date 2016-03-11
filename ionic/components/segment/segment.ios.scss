@@ -4,19 +4,19 @@
 // iOS Segment
 // --------------------------------------------------
 
-$segment-button-ios-background-color:                   transparent !default;
-$segment-button-ios-background-color-activated:         $toolbar-ios-active-color !default;
+$segment-button-ios-background-color:           transparent !default;
+$segment-button-ios-background-color-activated: $toolbar-ios-active-color !default;
 
 $segment-button-ios-text-color:                 color-inverse($segment-button-ios-background-color-activated) !default;
 $segment-button-ios-activated-transition:       100ms all linear !default;
 $segment-button-ios-hover-transition:           100ms all linear !default;
 $segment-button-ios-active-transition:          100ms all linear !default;
-$segment-button-ios-hover-opacity:              0.1 !default;
-$segment-button-ios-active-opacity:             0.16 !default;
+$segment-button-ios-hover-opacity:              .1 !default;
+$segment-button-ios-active-opacity:             .16 !default;
 
 $segment-button-ios-border-width:               1px !default;
 $segment-button-ios-height:                     3.2rem !default;
-$segment-button-ios-line-height:                3.0rem !default;
+$segment-button-ios-line-height:                3rem !default;
 $segment-button-ios-font-size:                  1.3rem !default;
 $segment-button-ios-border-radius:              4px !default;
 $segment-button-ios-icon-size:                  2.6rem !default;
@@ -31,19 +31,19 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
 
 .segment-button {
-  height: $segment-button-ios-height;
-  line-height: $segment-button-ios-line-height;
-  font-size: $segment-button-ios-font-size;
+  flex: 1;
+  width: 0;
 
+  height: $segment-button-ios-height;
   border-width: $segment-button-ios-border-width;
   border-style: solid;
   border-color: $segment-button-ios-background-color-activated;
 
+  font-size: $segment-button-ios-font-size;
+  line-height: $segment-button-ios-line-height;
+
   color: $segment-button-ios-background-color-activated;
   background-color: $segment-button-ios-background-color;
-
-  flex: 1;
-  width: 0;  
 
   ion-icon {
     font-size: $segment-button-ios-icon-size;
@@ -51,9 +51,9 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   }
 
   &.segment-activated {
-    opacity: 1;
     color: $segment-button-ios-text-color;
     background-color: $segment-button-ios-background-color-activated;
+    opacity: 1;
     transition: $segment-button-ios-activated-transition;
   }
 
@@ -68,8 +68,8 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   }
 
   &:first-of-type {
-    border-radius: $segment-button-ios-border-radius 0 0 $segment-button-ios-border-radius;
     margin-right: 0;
+    border-radius: $segment-button-ios-border-radius 0 0 $segment-button-ios-border-radius;
   }
 
   &:not(:first-of-type) {
@@ -77,9 +77,9 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   }
 
   &:last-of-type {
+    margin-left: 0;
     border-left-width: 0;
     border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
-    margin-left: 0;
   }
 }
 
@@ -87,17 +87,17 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
   ion-segment {
     position: absolute;
-    left: 0;
-    right: 0;
     top: 0;
+    right: 0;
     bottom: 0;
+    left: 0;
   }
 
   .segment-button {
     max-width: $segment-button-ios-toolbar-button-max-width;
     height: $segment-button-ios-toolbar-button-height;
-    line-height: $segment-button-ios-toolbar-line-height;
     font-size: $segment-button-ios-toolbar-font-size;
+    line-height: $segment-button-ios-toolbar-line-height;
 
     ion-icon {
       font-size: $segment-button-ios-toolbar-icon-size;

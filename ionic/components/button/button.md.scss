@@ -4,34 +4,35 @@
 // Material Design Button
 // --------------------------------------------------
 
-$button-md-margin:                         0.4rem 0.2rem !default;
+$button-md-margin:                         .4rem .2rem !default;
 $button-md-padding:                        0 1.1em !default;
 $button-md-font-size:                      1.4rem !default;
 $button-md-height:                         3.6rem !default;
-$button-md-box-shadow:                     0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
-$button-md-box-shadow-active:              0 3px 5px rgba(0, 0, 0, 0.14), 0 3px 5px rgba(0, 0, 0, 0.21) !default;
+$button-md-box-shadow:                     0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
+$button-md-box-shadow-active:              0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21) !default;
 
 $button-md-border-radius:                  2px !default;
-$button-md-animation-curve:                cubic-bezier(0.4, 0, 0.2, 1) !default;
+$button-md-animation-curve:                cubic-bezier(.4, 0, .2, 1) !default;
 $button-md-transition-duration:            300ms !default;
 
-$button-md-clear-hover-background-color:   rgba(158, 158, 158, 0.1) !default;
-$button-md-clear-active-background-color:  rgba(158, 158, 158, 0.2) !default;
+$button-md-clear-hover-background-color:   rgba(158, 158, 158, .1) !default;
+$button-md-clear-active-background-color:  rgba(158, 158, 158, .2) !default;
+$button-md-clear-ripple-background-color:  #999 !default;
 
-$button-md-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
-$button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1) !default;
+$button-md-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, .14), 0 4px 5px rgba(0, 0, 0, .1) !default;
+$button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, .4), 0 4px 7px 0 rgba(0, 0, 0, .1) !default;
 
 $button-md-color:                          map-get($colors-md, primary) !default;
 $button-md-color-activated:                color-shade($button-md-color) !default;
 $button-md-text-color:                     color-inverse($button-md-color) !default;
-$button-md-hover-opacity:                  0.8 !default;
+$button-md-hover-opacity:                  .8 !default;
 
 $button-md-large-font-size:                2rem !default;
 $button-md-large-height:                   2.8em !default;
-$button-md-large-padding:                  1.0em !default;
+$button-md-large-padding:                  1em !default;
 $button-md-small-font-size:                1.3rem !default;
 $button-md-small-height:                   2.1em !default;
-$button-md-small-padding:                  0.9em !default;
+$button-md-small-padding:                  .9em !default;
 $button-md-small-icon-font-size:           1.4em !default;
 
 
@@ -44,14 +45,13 @@ $button-md-small-icon-font-size:           1.4em !default;
   height: $button-md-height;
   border-radius: $button-md-border-radius;
 
-  font-weight: 500;
   font-size: $button-md-font-size;
+  font-weight: 500;
 
+  text-transform: uppercase;
   color: $button-md-text-color;
   background-color: $button-md-color;
   box-shadow: $button-md-box-shadow;
-
-  text-transform: uppercase;
 
   transition: box-shadow $button-md-transition-duration $button-md-animation-curve,
               background-color $button-md-transition-duration $button-md-animation-curve,
@@ -62,8 +62,8 @@ $button-md-small-icon-font-size:           1.4em !default;
   }
 
   &.activated {
-    box-shadow: $button-md-box-shadow-active;
     background-color: $button-md-color-activated;
+    box-shadow: $button-md-box-shadow-active;
   }
 
   ion-button-effect {
@@ -90,8 +90,8 @@ $button-md-small-icon-font-size:           1.4em !default;
     }
 
     &.activated {
-      opacity: 1;
       background-color: $background-color-activated;
+      opacity: 1;
     }
 
     ion-button-effect {
@@ -115,18 +115,18 @@ $button-md-small-icon-font-size:           1.4em !default;
   padding: 0 $button-md-small-padding;
   height: $button-md-small-height;
   font-size: $button-md-small-font-size;
-}
 
-.button-small.button-icon-only ion-icon {
-  font-size: $button-md-small-icon-font-size;
+  &.button-icon-only ion-icon {
+    font-size: $button-md-small-icon-font-size;
+  }
 }
 
 // Material Design Block Button
 // --------------------------------------------------
 
 .button-block {
-  margin-left: 0;
   margin-right: 0;
+  margin-left: 0;
 }
 
 // Material Design Full Button
@@ -135,9 +135,9 @@ $button-md-small-icon-font-size:           1.4em !default;
 .button-full {
   margin-right: 0;
   margin-left: 0;
-  border-radius: 0;
   border-right-width: 0;
   border-left-width: 0;
+  border-radius: 0;
 }
 
 // Material Design Outline Button
@@ -147,8 +147,8 @@ $button-md-small-icon-font-size:           1.4em !default;
   border-width: 1px;
   border-style: solid;
   border-color: $button-md-color;
-  background-color: transparent;
   color: $button-md-color;
+  background-color: transparent;
   box-shadow: none;
 
   &:hover:not(.disable-hover) {
@@ -156,9 +156,9 @@ $button-md-small-icon-font-size:           1.4em !default;
   }
 
   &.activated {
-    opacity: 1;
-    box-shadow: none;
     background-color: transparent;
+    box-shadow: none;
+    opacity: 1;
   }
 
   ion-button-effect {
@@ -175,8 +175,8 @@ $button-md-small-icon-font-size:           1.4em !default;
   .button-outline-#{$color-name} {
     $fg-color: color-shade($color-value, 5%);
     border-color: $fg-color;
-    background-color: transparent;
     color: $fg-color;
+    background-color: transparent;
 
     &:hover:not(.disable-hover) {
       background-color: $button-md-clear-hover-background-color;
@@ -199,10 +199,10 @@ $button-md-small-icon-font-size:           1.4em !default;
 
 .button-clear {
   border-color: transparent;
-  opacity: 1;
-  box-shadow: none;
-  background-color: transparent;
   color: $button-md-color;
+  background-color: transparent;
+  box-shadow: none;
+  opacity: 1;
 
   &.activated {
     background-color: $button-md-clear-active-background-color;
@@ -214,7 +214,7 @@ $button-md-small-icon-font-size:           1.4em !default;
   }
 
   ion-button-effect {
-    background-color: #999;
+    background-color: $button-md-clear-ripple-background-color;
   }
 }
 
@@ -227,8 +227,8 @@ $button-md-small-icon-font-size:           1.4em !default;
   .button-clear-#{$color-name} {
     $fg-color: $color-value;
     border-color: transparent;
-    background-color: transparent;
     color: $fg-color;
+    background-color: transparent;
 
     &.activated {
       background-color: $button-md-clear-active-background-color;
@@ -284,10 +284,10 @@ ion-button-effect {
   border-radius: 50%;
 
   background-color: $ripple-background-color;
-  opacity: 0.2;
+  opacity: .2;
 
-  pointer-events: none;
   transition-timing-function: ease-in-out;
+  pointer-events: none;
 }
 
 

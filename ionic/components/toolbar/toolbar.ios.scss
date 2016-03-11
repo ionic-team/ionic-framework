@@ -64,27 +64,27 @@ ion-navbar-section {
   font-size: $toolbar-ios-title-font-size;
   font-weight: 600;
   text-align: center;
-  pointer-events: auto;
   color: $toolbar-ios-text-color;
+  pointer-events: auto;
 }
 
 ion-title {
   position: absolute;
   top: 0;
   left: 0;
+  padding: 0 90px 1px;
   width: 100%;
   height: 100%;
-  padding: 0px 90px 1px 90px;
+  transform: translateZ(0);
   pointer-events: none;
-  transform: translateZ(0px);
 }
 
 @mixin ios-toolbar-theme($color-name, $color-value) {
   .toolbar[#{$color-name}] {
 
     .toolbar-background {
-      background: $color-value;
       border-color: darken($color-value, 10%);
+      background: $color-value;
     }
 
     .toolbar-title,
@@ -101,7 +101,7 @@ ion-title {
 ion-buttons {
   flex: 1;
   order: map-get($toolbar-order-ios, buttons-start);
-  transform: translateZ(0px);
+  transform: translateZ(0);
 }
 
 ion-buttons[left] {
@@ -109,13 +109,13 @@ ion-buttons[left] {
 }
 
 ion-buttons[end] {
-  text-align: right;
   order: map-get($toolbar-order-ios, buttons-end);
+  text-align: right;
 }
 
 ion-buttons[right] {
-  text-align: right;
   order: map-get($toolbar-order-ios, buttons-right);
+  text-align: right;
 }
 
 
@@ -126,8 +126,8 @@ ion-buttons[right] {
   padding: 0 5px;
   height: 32px;
   border: 0;
-  font-size: $toolbar-ios-button-font-size;
   border-radius: $bar-button-ios-border-radius;
+  font-size: $toolbar-ios-button-font-size;
 }
 
 @mixin ios-bar-button-default($color-name, $color-value) {
@@ -142,7 +142,7 @@ ion-buttons[right] {
     }
 
     &.activated {
-      opacity: 0.4;
+      opacity: .4;
     }
   }
 
@@ -160,7 +160,7 @@ ion-buttons[right] {
   background-color: transparent;
 
   &:hover:not(.disable-hover) {
-    opacity: 0.4;
+    opacity: .4;
   }
 
   &.activated {
@@ -194,14 +194,14 @@ ion-buttons[right] {
   background-color: $bar-button-ios-color;
 
   &:hover:not(.disable-hover) {
-    opacity: 0.4;
     color: color-inverse($bar-button-ios-color);
+    opacity: .4;
   }
 
   &.activated {
-    opacity: 0.4;
     color: color-inverse($bar-button-ios-color);
     background-color: color-shade($bar-button-ios-color);
+    opacity: .4;
   }
 }
 
@@ -223,27 +223,27 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-icon-left ion-icon {
-  padding-right: 0.3em;
+  padding-right: .3em;
   font-size: 1.4em;
-  line-height: 0.67;
+  line-height: .67;
   pointer-events: none;
 }
 
 .bar-button-icon-right ion-icon {
-  padding-left: 0.4em;
+  padding-left: .4em;
   font-size: 1.4em;
-  line-height: 0.67;
+  line-height: .67;
   pointer-events: none;
 }
 
 .bar-button-icon-only {
   padding: 0;
-  min-width: 0.9em;
+  min-width: .9em;
 
   ion-icon {
-    padding: 0 0.1em;
+    padding: 0 .1em;
     font-size: 1.8em;
-    line-height: 0.67;
+    line-height: .67;
     pointer-events: none;
   }
 }
@@ -253,12 +253,12 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .back-button {
+  overflow: visible;
+  order: map-get($toolbar-order-ios, back-button);
   margin: 0;
   min-height: 3.2rem;
   line-height: 1;
-  order: map-get($toolbar-order-ios, back-button);
-  overflow: visible;
-  transform: translateZ(0px);
+  transform: translateZ(0);
 }
 
 .back-button-icon {
@@ -270,7 +270,7 @@ ion-buttons[right] {
 }
 
 .back-button-text {
-  letter-spacing: -0.01em;
+  letter-spacing: -.01em;
 }
 
 
@@ -278,10 +278,10 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-menutoggle {
+  order: map-get($toolbar-order-ios, menu-toggle-start);
   margin: 0 6px;
   padding: 0;
   min-width: 36px;
-  order: map-get($toolbar-order-ios, menu-toggle-start);
 
   ion-icon {
     padding: 0 6px;
@@ -291,7 +291,7 @@ ion-buttons[right] {
   // TODO remove the !important flag - temporary hack until we can remove the element style
   // on transition
   &.activated {
-    opacity: 0.4 !important;
+    opacity: .4 !important;
   }
 }
 

@@ -6,8 +6,8 @@
 
 
 ion-item-sliding {
-  display: block;
   position: relative;
+  display: block;
   overflow: hidden;
 
   .item {
@@ -16,20 +16,20 @@ ion-item-sliding {
 }
 
 ion-item-options {
-  display: none;
   position: absolute;
   top: 0;
   right: 0;
   z-index: $z-index-item-options;
+  display: none;
   height: 100%;
   visibility: hidden;
 }
 
 ion-item-options .button {
   margin: 0;
+  height: 100%;
   border-radius: 0;
   box-shadow: none;
-  height: 100%;
 }
 
 ion-item-options:not([icon-left]) .button-icon-left {
@@ -38,10 +38,11 @@ ion-item-options:not([icon-left]) .button-icon-left {
   .button-inner {
     flex-direction: column;
   }
+
   ion-icon {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    padding-bottom: 0.3em;
+    padding-right: 0;
+    padding-bottom: .3em;
+    padding-left: 0;
   }
 }
 
@@ -52,7 +53,7 @@ ion-item-sliding.active-slide {
     position: relative;
     z-index: $z-index-item-options + 1;
     opacity: 1;
-    transition: all 300ms cubic-bezier(0.36,0.66,0.04,1);
+    transition: all 300ms cubic-bezier(.36, .66, .04, 1);
     pointer-events: none;
 
   }
