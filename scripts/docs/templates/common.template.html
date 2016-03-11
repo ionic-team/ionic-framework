@@ -124,7 +124,7 @@ angular_controller: APIDemoCtrl <@ endif @>
 <@ block header @>
 
 <h1 class="api-title">
-<a name="<$ doc.name | dashCase $>"></a>
+<a class="anchor" name="<$ doc.name | dashCase $>" href="#<$ doc.name | dashCase $>"></a>
 <@ if doc.docType == "directive" @>
 <$ doc.name | dashCase $>
 <@ else @>
@@ -163,13 +163,13 @@ Improve this doc
 
 
 <@- if doc.directiveInfo @>
-<h2><a name="<$ doc.directiveInfo.type $>"></a><$ doc.directiveInfo.type $></h2>
+<h2><a class="anchor" name="<$ doc.directiveInfo.type $>" href="#<$ doc.directiveInfo.type $>"></a><$ doc.directiveInfo.type $></h2>
 <h3><$ doc.directiveInfo.properties[0].name $>: <code><$ doc.directiveInfo.properties[0].values $></code></h3>
 <@ endif -@>
 
 <!-- @usage tag -->
 <@ if doc.usage @>
-<h2><a name="usage"></a>Usage</h2>
+<h2><a class="anchor" name="usage" href="#usage"></a>Usage</h2>
 <@ block usage @>
 <$ doc.usage | marked $>
 <@ endblock @>
@@ -177,7 +177,7 @@ Improve this doc
 
 <!-- @property tags -->
 <@ if doc.properties @>
-<h2><a name="attributes"></a>Attributes:</h2>
+<h2><a class="anchor" name="attributes" href="#attributes"></a>Attributes:</h2>
 <table class="table" style="margin:0;">
 <thead>
 <tr>
@@ -220,7 +220,7 @@ Improve this doc
 
 
 <@- if doc.statics.length -@>
-<h2><a name="static-methods"></a>Static Methods</h2>
+<h2><a class="anchor" name="static-methods" href="#static-methods"></a>Static Methods</h2>
 <@- for method in doc.statics @><@ if not method.internal @>
 <div id="<$ method.name $>"></div>
 <h3><$ functionSyntax(method) $></h3>
@@ -238,7 +238,7 @@ Improve this doc
 <@ endif @>
 
 <@ if method.returns @>
-<div class="return-value">
+<div class="anchor" class="return-value">
 <i class="icon ion-arrow-return-left"></i>
 <b>Returns:</b> <$ typeInfo(method.returns) $>
 </div>
@@ -251,7 +251,7 @@ Improve this doc
 <!-- instance methods on the class -->
 <@- if doc.members and doc.members.length @>
 
-<h2><a name="instance-methods"></a>Instance Methods</h2>
+<h2><a class="anchor" name="instance-methods" href="#instance-methods"></a>Instance Methods</h2>
 <@- for method in doc.members @>
 
 <div id="<$ method.name $>"></div>
@@ -286,13 +286,13 @@ Improve this doc
 
 <@- if doc.inputs and doc.inputs.length @>
 <!-- input methods on the class -->
-<h2><a name="input-properties"></a>Input Properties</h2>
+<h2><a class="anchor" name="input-properties" href="#input-properties"></a>Input Properties</h2>
 <$ inputTable(doc.inputs) $>
 <@- endif -@>
 
 <@- if doc.outputs and doc.outputs.length @>
 <!-- output events on the class -->
-<h2><a name="output-events"></a>Output Events</h2>
+<h2><a class="anchor" name="output-events" href="#output-events"></a>Output Events</h2>
 <$ outputTable(doc.outputs) $>
 <@- endif -@>
 
@@ -300,7 +300,7 @@ Improve this doc
 <!-- related link -->
 <@- if doc.see @>
 
-<h2><a name="related"></a>Related</h2>
+<h2><a class="anchor" name="related" href="#related"></a>Related</h2>
 <@ for s in doc.see @>
 <$ s | safe $>
 <@- endfor -@>
