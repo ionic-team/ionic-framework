@@ -648,11 +648,20 @@ function buildDemoSass(isProductionMode) {
     .pipe(concat('output.md.scss'))
     .pipe(gulp.dest('demos/'))
 
+    gulp.src([
+        sassVars,
+        'demos/app.variables.scss',
+        'demos/app.wp.scss'
+      ])
+    .pipe(concat('output.wp.scss'))
+    .pipe(gulp.dest('demos/'))
+
   })();
 
   gulp.src([
     'demos/output.ios.scss',
-    'demos/output.md.scss'
+    'demos/output.md.scss',
+    'demos/output.wp.scss'
   ])
 
   .pipe(sass({
