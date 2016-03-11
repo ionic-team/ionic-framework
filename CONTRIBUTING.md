@@ -46,8 +46,9 @@ Always use two spaces, no tabs. This goes for any HTML, CSS, or Javascript.
 Run [Sass Linter](https://github.com/brigade/scss-lint) to ensure the css/sass matches our conventions (requires Ruby)
 
 1. Install the linter: `gem install scss_lint`
-2. For all component Sass files: `scss-lint ionic/**/**/*.scss`
-3. For a specific Sass file: `scss-lint ionic/components/toolbar/toolbar.ios.scss`
+2. Make sure to run the linter at the root of the repository where the `.scss-lint.yml` file is located
+3. For all component Sass files: `scss-lint ionic/**/**/*.scss`
+4. For a specific Sass file: `scss-lint ionic/components/toolbar/toolbar.ios.scss`
 
 
 ##### Variable Naming Conventions
