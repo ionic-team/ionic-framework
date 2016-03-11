@@ -98,7 +98,7 @@ module.exports = function(currentVersion){
       docPath += doc.name + '/index.md';
       var path = config.v2DocsDir + '/' + (versionData.current.folder || '') +
                      '/api/' +  docPath;
-
+      path = path.replace('/home/ubuntu/ionic/ionic', '')
                     return path;
     }
   }];
