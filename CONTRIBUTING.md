@@ -39,6 +39,79 @@ It's always best to create two smaller PRs than one big one.
 
 Always use two spaces, no tabs. This goes for any HTML, CSS, or Javascript.
 
+#### Sass Guidelines
+
+##### Sass Linter
+
+Run [Sass Linter](https://github.com/brigade/scss-lint) to ensure the css/sass matches our conventions (requires Ruby)
+
+1. Install the linter: `gem install scss_lint`
+2. For all component Sass files: `scss-lint ionic/**/**/*.scss`
+3. For a specific Sass file: `scss-lint ionic/components/toolbar/toolbar.ios.scss`
+
+
+##### Variable Naming Conventions
+
+The Sass variable should start with the component name:
+
+```
+$alert
+$action-sheet
+$badge
+$toolbar
+```
+
+Then it should use the mode abbreviation (ios, md, wp):
+
+```
+$alert-md
+$action-sheet-ios
+$badge-md
+$toolbar-wp
+```
+
+Next should be the css property it is affecting, for example:
+
+```
+$alert-md-max-width
+$action-sheet-ios-background
+$badge-md-border-radius
+$toolbar-wp-padding
+```
+
+If it is affecting a component inside of the top level component, that should come next instead of the css property:
+
+```
+$alert-md-title
+$alert-md-sub-title
+$alert-md-message
+$action-sheet-ios-title
+$action-sheet-ios-button
+```
+
+Followed by the css property of that component:
+
+```
+$alert-md-title-font-size
+$alert-md-sub-title-font-size
+$alert-md-message-padding
+$action-sheet-ios-title-color
+$action-sheet-ios-button-background
+```
+
+If the variable only applies to a specific state, that should come last (hover, focused, activated, etc):
+
+```
+$action-sheet-ios-button-background-activated
+$alert-md-input-border-width-focused
+```
+
+**Should I use `background` or `bg`?**
+`background`
+
+**Should I use `background` or `background-color`?**
+`background` so users can override backgrounds in Sass variables using images and etc
+
 ### License
 
 By contributing your code to the driftyco/ionic GitHub Repository, you agree to license your contribution under the MIT license.
