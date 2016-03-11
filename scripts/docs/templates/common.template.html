@@ -223,7 +223,7 @@ Improve this doc
 <h2><a class="anchor" name="static-methods" href="#static-methods"></a>Static Methods</h2>
 <@- for method in doc.statics @><@ if not method.internal @>
 <div id="<$ method.name $>"></div>
-<h3><$ functionSyntax(method) $></h3>
+<h3><a class="anchor" name="<$ method.name $>" href="#<$ method.name $>"></a><$ functionSyntax(method) $></h3>
 
 <$ method.description $>
 
@@ -257,6 +257,7 @@ Improve this doc
 <div id="<$ method.name $>"></div>
 
 <h3>
+<a class="anchor" name="<$ method.name $>" href="#<$ method.name $>"></a>
 <$ functionSyntax(method) $>
 </h3>
 
