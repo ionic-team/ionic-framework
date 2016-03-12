@@ -220,6 +220,10 @@ export class InfiniteScroll {
     this._setListeners(shouldEnable);
   }
 
+  resetHighestY() {
+    this._highestY = 0;
+  }
+
   private _setListeners(shouldListen: boolean) {
     if (this._init) {
       if (shouldListen) {
