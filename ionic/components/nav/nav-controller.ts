@@ -1641,7 +1641,19 @@ export class NavController extends Ion {
     if (enteringView) {
       // get the leaving view, which could be in various states
       if (!leavingView || !leavingView.isLoaded()) {
-        enteringView.setZIndex(INIT_ZINDEX, this._renderer);
+        // the leavingView is a mocked view, either we're
+        // actively transitioning or it's the initial load
+
+        var previousView = this.getPrevious(enteringView);
+        if (previousView && previousView.isLoaded()) {
+          // we found a better previous view to reference
+          // use this one instead
+          enteringView.setZIndex(previousView.zIndex + 1, this._renderer);
+
+        } else {
+          // this is the initial view
+          enteringView.setZIndex(INIT_ZINDEX, this._renderer);
+        }
 
       } else if (direction === 'back') {
         // moving back

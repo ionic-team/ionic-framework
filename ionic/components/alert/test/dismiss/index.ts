@@ -14,10 +14,6 @@ export class E2EPage {
       message: 'Sign in to continue.',
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
           text: 'Sign in',
           handler: () => {
             console.log('Sign in');
@@ -45,7 +41,39 @@ export class E2EPage {
     </ion-content>
   `
 })
-class AnotherPage {}
+class AnotherPage {
+
+  constructor(private nav: NavController) {}
+
+  onPageDidEnter() {
+    this.showConfirm();
+  }
+
+  showConfirm() {
+    const alert = Alert.create({
+      title: `Hi there`,
+      buttons: [
+        {
+          text: 'Go Back',
+          role: 'cancel',
+          handler: () => {
+            alert.dismiss().then(() => {
+              this.nav.pop();
+            })
+          }
+        },
+        {
+          text: 'Stay Here',
+          handler: () => {
+            console.log('Stay Here');
+          }
+        }
+      ]
+    });
+    this.nav.present(alert);
+  }
+
+}
 
 
 @App({

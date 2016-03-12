@@ -585,7 +585,33 @@ export function run() {
     });
 
     describe('_setZIndex', () => {
-      it('should set zIndex 10 on first entering view', () => {
+
+      it('should set zIndex off of the previous view to the entering view  is loaded and the leavingView is not loaded', () => {
+        let leavingView = new ViewController();
+        leavingView.zIndex = 100;
+        leavingView._loaded = true;
+        let enteringView = new ViewController();
+        enteringView.setPageRef({});
+
+        nav._views = [leavingView, enteringView];
+
+        nav._setZIndex(enteringView, leavingView, 'forward');
+        expect(enteringView.zIndex).toEqual(101);
+      });
+
+      it('should set zIndex 100 when leaving view is not loaded', () => {
+        let leavingView = new ViewController();
+        leavingView._loaded = false;
+        let enteringView = new ViewController();
+        enteringView.setPageRef({});
+
+        nav._views = [leavingView, enteringView];
+
+        nav._setZIndex(enteringView, leavingView, 'forward');
+        expect(enteringView.zIndex).toEqual(100);
+      });
+
+      it('should set zIndex 100 on first entering view', () => {
         let enteringView = new ViewController();
         enteringView.setPageRef({});
         nav._setZIndex(enteringView, null, 'forward');
