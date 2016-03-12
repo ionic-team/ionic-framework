@@ -108,8 +108,10 @@ export class ViewController {
   }
 
   dismiss(data?: any, role?: any) {
-    this._onDismiss && this._onDismiss(data, role);
-    return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts);
+    return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts).then(() => {
+      this._onDismiss && this._onDismiss(data, role);
+      return data;
+    });
   }
 
   /**
