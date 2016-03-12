@@ -59,7 +59,8 @@ class AnotherPage {
           handler: () => {
             alert.dismiss().then(() => {
               this.nav.pop();
-            })
+            });
+            return false;
           }
         },
         {
