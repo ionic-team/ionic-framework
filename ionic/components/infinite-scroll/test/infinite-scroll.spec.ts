@@ -11,7 +11,6 @@ describe('Infinite Scroll', () => {
       content.getContentDimensions = function() {
         return { scrollHeight: 1000, scrollTop: 350, contentHeight: 500 };
       };
-      inf._highestY = 0;
       inf.threshold = '100px';
 
       setInfiniteScrollTop(300);
@@ -25,25 +24,12 @@ describe('Infinite Scroll', () => {
       content.getContentDimensions = function() {
         return { scrollHeight: 1000, scrollTop: 500, contentHeight: 500 };
       };
-      inf._highestY = 0;
       inf.threshold = '100px';
 
       setInfiniteScrollTop(300);
 
       var result = inf._onScroll(scrollEv());
       expect(result).toEqual(5);
-    });
-
-    it('should not continue if the scrolltop is <= the highest Y', () => {
-      inf._highestY = 100;
-      setInfiniteScrollTop(50);
-      setInfiniteScrollHeight(100);
-      content.getContentDimensions = function() {
-        return { scrollTop: 50 };
-      };
-
-      var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(4);
     });
 
     it('should not run if there is not infinite element height', () => {
