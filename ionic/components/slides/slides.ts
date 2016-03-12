@@ -11,7 +11,7 @@ import {debounce, isTrueProperty, defaults} from '../../util/util'
 
 import {Swiper} from './swiper-widget';
 import {Scroll} from '../scroll/scroll';
-
+import {SlidesController} from './slides-controller'
 
 /**
  * @name Slides
@@ -154,6 +154,11 @@ export class Slides extends Ion {
   }
 
   /**
+   * @private
+   */
+  @Input() id: string;
+
+  /**
    * @input {boolean} Whether the slide should show the pager or not
    */
   @Input() pager: any;
@@ -197,7 +202,7 @@ export class Slides extends Ion {
    * @private
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(elementRef: ElementRef) {
+  constructor(private _slidesController: SlidesController, elementRef: ElementRef) {
     super(elementRef);
     this.rapidUpdate = debounce(() => {
       this.update();
@@ -208,6 +213,7 @@ export class Slides extends Ion {
    * @private
    */
   ngOnInit() {
+    let self = this;
     if (!this.options) {
       this.options = {};
     }
@@ -260,6 +266,7 @@ export class Slides extends Ion {
     setTimeout(() => {
       var swiper = new Swiper(this.getNativeElement().children[0], options);
       this.slider = swiper;
+      this._slidesController.register(self)
     });
 
     /*
@@ -654,6 +661,13 @@ export class Slides extends Ion {
    */
   getSliderWidget() {
     return this.slider;
+  }
+
+  /**
+   * @private
+   */
+  ngOnDestroy() {
+    this._slidesController.unregister(this);
   }
 }
 
