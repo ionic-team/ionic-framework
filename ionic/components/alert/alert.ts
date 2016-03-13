@@ -327,6 +327,7 @@ class AlertCmp {
   private msgId: string;
   private inputType: string;
   private created: number;
+  private lastClick: number;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -350,6 +351,7 @@ class AlertCmp {
     this.msgId = 'alert-msg-' + this.id;
     this.activeId = '';
     this.created = Date.now();
+    this.lastClick = 0;
 
     if (this.d.message) {
       this.descId = this.msgId;
@@ -418,9 +420,15 @@ class AlertCmp {
   private _keyUp(ev: KeyboardEvent) {
     if (this.isEnabled() && this._viewCtrl.isLast()) {
       if (ev.keyCode === 13) {
-        console.debug('alert, enter button');
-        let button = this.d.buttons[this.d.buttons.length - 1];
-        this.btnClick(button);
+        if (this.lastClick + 1000 < Date.now()) {
+          // do not fire this click if there recently was already a click
+          // this can happen when the button has focus and used the enter
+          // key to click the button. However, both the click handler and
+          // this keyup event will fire, so only allow one of them to go.
+          console.debug('alert, enter button');
+          let button = this.d.buttons[this.d.buttons.length - 1];
+          this.btnClick(button);
+        }
 
       } else if (ev.keyCode === 27) {
         console.debug('alert, escape button');
@@ -445,6 +453,9 @@ class AlertCmp {
     if (!this.isEnabled()) {
       return;
     }
+
+    // keep the time of the most recent button click
+    this.lastClick = Date.now();
 
     let shouldDismiss = true;
 
