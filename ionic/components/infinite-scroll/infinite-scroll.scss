@@ -22,13 +22,14 @@ ion-infinite-scroll-content {
   flex-direction: column;
   justify-content: center;
   height: 100%;
+  min-height: 84px;
   text-align: center;
 }
 
 .infinite-loading {
+  display: none;
   margin: $infinite-scroll-loading-margin;
   width: 100%;
-  opacity: 0;
 }
 
 .infinite-loading-text {
@@ -41,7 +42,7 @@ ion-infinite-scroll-content {
 // --------------------------------------------------
 
 ion-infinite-scroll-content[state=loading] .infinite-loading {
-  opacity: 1;
+  display: block;
 }
 
 ion-infinite-scroll-content[state=disabled] {
