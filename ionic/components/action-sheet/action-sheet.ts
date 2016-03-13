@@ -310,7 +310,8 @@ class ActionSheetCmp {
   }
 
   isEnabled() {
-    return (this.created + 750 < Date.now());
+    let tm = this._config.getNumber('overlayCreatedDiff', 750);
+    return (this.created + tm < Date.now());
   }
 }
 
