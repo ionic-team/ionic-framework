@@ -193,6 +193,7 @@ class ActionSheetCmp {
   private descId: string;
   private hdrId: string;
   private id: number;
+  private created: number;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -202,6 +203,7 @@ class ActionSheetCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
+    this.created = Date.now();
 
     if (this.d.cssClass) {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
@@ -262,15 +264,19 @@ class ActionSheetCmp {
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
-    if (this._viewCtrl.isLast()) {
+    if (this.isEnabled() && this._viewCtrl.isLast()) {
       if (ev.keyCode === 27) {
-        console.debug('actionsheet escape');
+        console.debug('actionsheet, escape button');
         this.bdClick();
       }
     }
   }
 
   click(button, dismissDelay?) {
+    if (!this.isEnabled()) {
+      return;
+    }
+
     let shouldDismiss = true;
 
     if (button.handler) {
@@ -289,7 +295,7 @@ class ActionSheetCmp {
   }
 
   bdClick() {
-    if (this.d.enableBackdropDismiss) {
+    if (this.isEnabled() && this.d.enableBackdropDismiss) {
       if (this.d.cancelButton) {
         this.click(this.d.cancelButton, 1);
 
@@ -301,6 +307,10 @@ class ActionSheetCmp {
 
   dismiss(role): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
+  }
+
+  isEnabled() {
+    return (this.created + 750 < Date.now());
   }
 }
 

@@ -1,4 +1,5 @@
 import { Alert, NavController, App, Page } from 'ionic-angular/index';
+import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from 'angular2/common';
 
 
 @Page({
@@ -37,13 +38,45 @@ export class E2EPage {
       <ion-title>Another Page</ion-title>
     </ion-navbar>
     <ion-content padding>
-      Welcome!
+      <form [ngFormModel]="form" (ngSubmit)="submit(form.value)">
+    		<ion-list>
+    			<ion-item [class.error]="!form.controls.name.valid && form.controls.name.touched">
+    				<ion-label>Name</ion-label>
+    				<ion-input type="text" [(ngFormControl)]="form.controls.name"></ion-input>
+    			</ion-item>
+  			</ion-list>
+  			<div padding style="padding-top: 0 !important;">
+    			<button list-item primary block>
+      			Submit
+      		</button>
+    		</div>
+			</form>
     </ion-content>
   `
 })
 class AnotherPage {
+  form: ControlGroup;
 
-  constructor(private nav: NavController) {}
+	constructor(private nav: NavController, private builder: FormBuilder) {
+		this.form = builder.group({
+			name: builder.control('', Validators.compose([
+			    Validators.required,
+			    Validators.minLength(5)
+			]))
+		});
+	}
+
+	submit(value: any): void {
+		if (this.form.valid) {
+			console.log(value);
+		} else {
+			this.nav.present(Alert.create({
+				title: 'Invalid input data',
+				subTitle: "Please correct the errors and resubmit the data.",
+				buttons: [ 'OK' ]
+			}));
+		}
+	}
 
   onPageDidEnter() {
     this.showConfirm();

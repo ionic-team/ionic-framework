@@ -311,9 +311,9 @@ export class Alert extends ViewController {
   directives: [NgClass, NgSwitch, NgIf, NgFor]
 })
 class AlertCmp {
-  activeId: string;
-  descId: string;
-  d: {
+  private activeId: string;
+  private descId: string;
+  private d: {
     cssClass?: string;
     message?: string;
     subTitle?: string;
@@ -321,11 +321,12 @@ class AlertCmp {
     inputs?: any[];
     enableBackdropDismiss?: boolean;
   };
-  hdrId: string;
-  id: number;
-  subHdrId: string;
-  msgId: string;
-  inputType: string;
+  private hdrId: string;
+  private id: number;
+  private subHdrId: string;
+  private msgId: string;
+  private inputType: string;
+  private created: number;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -348,6 +349,7 @@ class AlertCmp {
     this.subHdrId = 'alert-subhdr-' + this.id;
     this.msgId = 'alert-msg-' + this.id;
     this.activeId = '';
+    this.created = Date.now();
 
     if (this.d.message) {
       this.descId = this.msgId;
@@ -414,7 +416,7 @@ class AlertCmp {
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
-    if (this._viewCtrl.isLast()) {
+    if (this.isEnabled() && this._viewCtrl.isLast()) {
       if (ev.keyCode === 13) {
         console.debug('alert, enter button');
         let button = this.d.buttons[this.d.buttons.length - 1];
@@ -440,6 +442,10 @@ class AlertCmp {
   }
 
   btnClick(button, dismissDelay?) {
+    if (!this.isEnabled()) {
+      return;
+    }
+
     let shouldDismiss = true;
 
     if (button.handler) {
@@ -459,18 +465,22 @@ class AlertCmp {
   }
 
   rbClick(checkedInput) {
-    this.d.inputs.forEach(input => {
-      input.checked = (checkedInput === input);
-    });
-    this.activeId = checkedInput.id;
+    if (this.isEnabled()) {
+      this.d.inputs.forEach(input => {
+        input.checked = (checkedInput === input);
+      });
+      this.activeId = checkedInput.id;
+    }
   }
 
   cbClick(checkedInput) {
-    checkedInput.checked = !checkedInput.checked;
+    if (this.isEnabled()) {
+      checkedInput.checked = !checkedInput.checked;
+    }
   }
 
   bdClick() {
-    if (this.d.enableBackdropDismiss) {
+    if (this.isEnabled() && this.d.enableBackdropDismiss) {
       let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {
         this.btnClick(cancelBtn, 1);
@@ -506,6 +516,10 @@ class AlertCmp {
       values[i.name] = i.value;
     });
     return values;
+  }
+
+  isEnabled() {
+    return (this.created + 750 < Date.now());
   }
 }
 
