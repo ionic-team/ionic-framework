@@ -124,7 +124,9 @@ export class Config {
    * Returns a single config value, given a key.
    *
    * @param {string} [key] - the key for the config value
-   * @param {any} [fallbackValue] - a fallback value to use when the config value was not found, or is config value is `null`. Fallback value defaults to `null`.
+   * @param {any} [fallbackValue] - a fallback value to use when the config
+   * value was not found, or is config value is `null`. Fallback value
+   *  defaults to `null`.
    */
   get(key: string, fallbackValue: any = null): any {
 
@@ -232,13 +234,42 @@ export class Config {
   /**
    * @name getBoolean
    * @description
-   * Same as `get()`, however always returns a boolean value.
-   *
+   * Same as `get()`, however always returns a boolean value. If the
+   * value from `get()` is `null`, then it'll return the `fallbackValue`
+   * which defaults to `false`. Otherwise, `getBoolean()` will return
+   * if the config value is truthy or not. It also returns `true` if
+   * the config value was the string value `"true"`.
    * @param {string} [key] - the key for the config value
+   * @param {boolean} [fallbackValue] - a fallback value to use when the config
+   * value was `null`. Fallback value defaults to `false`.
    */
-  getBoolean(key: string): boolean {
+  getBoolean(key: string, fallbackValue: boolean = false): boolean {
     let val = this.get(key);
-    return (val || val === 'true') ? true : false;
+    if (val === null) {
+      return fallbackValue;
+    }
+    if (typeof val === 'string') {
+      return val === 'true';
+    }
+    return !!val;
+  }
+
+
+  /**
+   * @name getNumber
+   * @description
+   * Same as `get()`, however always returns a number value. Uses `parseFloat()`
+   * on the value received from `get()`. If the result from the parse is `NaN`,
+   * then it will return the value passed to `fallbackValue`. If no fallback
+   * value was provided then it'll default to returning `NaN` when the result
+   * is not a valid number.
+   * @param {string} [key] - the key for the config value
+   * @param {number} [fallbackValue] - a fallback value to use when the config
+   * value turned out to be `NaN`. Fallback value defaults to `NaN`.
+   */
+  getNumber(key: string, fallbackValue: number = NaN): number {
+    let val = parseFloat( this.get(key) );
+    return isNaN(val) ? fallbackValue : val;
   }
 
 
@@ -284,24 +315,22 @@ export class Config {
    * @name settings()
    * @description
    */
-  settings() {
-    const args = arguments;
-
-    switch (args.length) {
+  settings(arg0?: any, arg1?: any) {
+    switch (arguments.length) {
 
       case 0:
         return this._s;
 
       case 1:
         // settings({...})
-        this._s = args[0];
+        this._s = arg0;
         this._c = {}; // clear cache
         break;
 
       case 2:
         // settings('ios', {...})
         this._s.platforms = this._s.platforms || {};
-        this._s.platforms[args[0]] = args[1];
+        this._s.platforms[arg0] = arg1;
         this._c = {}; // clear cache
         break;
     }

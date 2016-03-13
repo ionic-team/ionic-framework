@@ -444,6 +444,80 @@ export function run() {
     expect(config.get('occupation', 'Weather Man')).toEqual('Weather Man');
   });
 
+  it('should get a boolean value with a boolean config value', () => {
+    let config = new Config({
+      key1: true,
+      key2: false
+    });
+    expect(config.getBoolean('key1')).toEqual(true);
+    expect(config.getBoolean('key2')).toEqual(false);
+  });
+
+  it('should get a boolean value with a string config value', () => {
+    let config = new Config({
+      key1: 'true',
+      key2: 'false',
+      key3: 'whatever'
+    });
+    expect(config.getBoolean('key1')).toEqual(true);
+    expect(config.getBoolean('key2')).toEqual(false);
+    expect(config.getBoolean('key3')).toEqual(false);
+    expect(config.getBoolean('key4')).toEqual(false);
+    expect(config.getBoolean('key5', true)).toEqual(true);
+  });
+
+  it('should get a boolean value with a number config value', () => {
+    let config = new Config({
+      key1: 0,
+      key2: 1,
+      key3: 'whatever'
+    });
+    expect(config.getBoolean('key1')).toEqual(false);
+    expect(config.getBoolean('key2')).toEqual(true);
+  });
+
+  it('should get a number value with a number config value', () => {
+    let config = new Config({
+      key: 6
+    });
+    expect(config.getNumber('key')).toEqual(6);
+  });
+
+  it('should get a number value with a string config value', () => {
+    let config = new Config({
+      key: '6',
+      numThenString: '6baymax',
+      stringThenNum: 'baymax6'
+    });
+    expect(config.getNumber('key', 5)).toEqual(6);
+    expect(config.getNumber('numThenString', 4)).toEqual(6);
+    expect( isNaN(config.getNumber('stringThenNum')) ).toEqual(true);
+  });
+
+  it('should get a number NaN value with a NaN config value', () => {
+    let config = new Config({
+      allString: 'allstring',
+      imNull: null,
+      imUndefined: undefined
+    });
+    expect( isNaN(config.getNumber('notfound'))).toEqual(true);
+    expect( isNaN(config.getNumber('allString'))).toEqual(true);
+    expect( isNaN(config.getNumber('imNull'))).toEqual(true);
+    expect( isNaN(config.getNumber('imUndefined'))).toEqual(true);
+  });
+
+  it('should get a number fallback value with a NaN config value', () => {
+    let config = new Config({
+      allString: 'allstring',
+      imNull: null,
+      imUndefined: undefined
+    });
+    expect( config.getNumber('notfound', 6)).toEqual(6);
+    expect( config.getNumber('allString', 6)).toEqual(6);
+    expect( config.getNumber('imNull', 6)).toEqual(6);
+    expect( config.getNumber('imUndefined', 6)).toEqual(6);
+  });
+
   it('should get settings object', () => {
     let config = new Config({
       name: 'Doc Brown',
