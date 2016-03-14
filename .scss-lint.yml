@@ -13,7 +13,7 @@ linters:
     enabled: true
     ignore_unspecified: false
     min_properties: 2
-    separate_groups: false
+    separate_groups: true
     order:
 
       # Box

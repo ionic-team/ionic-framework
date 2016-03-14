@@ -268,7 +268,7 @@ export class Alert extends ViewController {
         '<template ngSwitchWhen="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
             '<button *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
-              '<div class="alert-radio-icon"></div>' +
+              '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
               '<div class="alert-radio-label">' +
                 '{{i.label}}' +
               '</div>' +
