@@ -49,7 +49,10 @@ ion-list {
   > .item:last-child,
   > ion-item-sliding:last-child .item {
     border-bottom: 1px solid $list-ios-border-color;
+  }
 
+  > .item:last-child,
+  > ion-item-sliding:last-child {
     .item-inner {
       border-bottom: 0;
     }

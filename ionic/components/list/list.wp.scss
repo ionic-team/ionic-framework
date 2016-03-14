@@ -49,9 +49,12 @@ ion-list {
   > .item:last-child,
   > ion-item-sliding:last-child .item {
     border-bottom: 1px solid $list-wp-border-color;
+  }
 
-    .item-inner,
-    ion-label {
+  > .item:last-child,
+  > ion-item-sliding:last-child {
+    ion-label,
+    .item-inner {
       border-bottom: 0;
     }
   }

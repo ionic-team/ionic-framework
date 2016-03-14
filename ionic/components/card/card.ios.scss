@@ -54,11 +54,11 @@ ion-card {
     ion-label {
       padding: 0;
     }
+  }
 
-    > .item:last-child,
-    > ion-item-sliding:last-child .item {
-      border-bottom: 0;
-    }
+  > .item:last-child,
+  > ion-item-sliding:last-child .item {
+    border-bottom: 0;
   }
 
   .item-inner {
