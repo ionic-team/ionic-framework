@@ -21,10 +21,11 @@ ion-label {
   line-height: $item-md-body-text-line-height;
 }
 
-// Material Design Default Label Inside An Input Item
+// Material Design Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-input ion-label {
+.item-input ion-label,
+.item-select ion-label {
   color: $label-md-text-color;
 }
 

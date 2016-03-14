@@ -16,10 +16,11 @@ ion-label {
 }
 
 
-// iOS Default Label Inside An Input Item
+// iOS Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-input ion-label {
+.item-input ion-label,
+.item-select ion-label {
   color: $label-ios-text-color;
 }
 

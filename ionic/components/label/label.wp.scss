@@ -16,10 +16,11 @@ ion-label {
 }
 
 
-// Windows Default Label Inside An Input Item
+// Windows Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-input ion-label {
+.item-input ion-label,
+.item-select ion-label {
   color: $label-wp-text-color;
 }
 
