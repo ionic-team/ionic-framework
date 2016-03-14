@@ -1,13 +1,8 @@
 @import "../globals.core";
 
-.no-transition {
-  transition: none !important;
-}
-
 .hide,
 [hidden],
-template,
-root-anchor {
+template {
   display: none !important;
 }
 
@@ -35,13 +30,6 @@ $focus-outline-box-shadow:     0 0 8px 0 $focus-outline-border-color !default;
     border-color: $focus-outline-border-color;
     outline: thin solid $focus-outline-border-color;
     box-shadow: $focus-outline-box-shadow;
-  }
-
-  ion-input.input-has-focus,
-  button[ion-item]:focus,
-  a[ion-item]:focus {
-    border-color: $focus-outline-border-color;
-    box-shadow: inset $focus-outline-box-shadow !important;
   }
 
   ion-input :focus {

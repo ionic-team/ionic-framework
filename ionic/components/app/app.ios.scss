@@ -43,7 +43,7 @@ hr {
   sup,
   ion-icon {
     &[#{$color-name}] {
-      color: $color-value !important;
+      color: $color-value;
     }
   }
 }

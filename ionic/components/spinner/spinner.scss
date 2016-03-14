@@ -47,7 +47,7 @@ ion-spinner.spinner-paused svg {
 // --------------------------------------------------
 
 .spinner-bubbles circle {
-  fill: black;
+  fill: #000;
 }
 
 .spinner-bubbles svg {
@@ -72,7 +72,7 @@ ion-spinner.spinner-paused svg {
 
 .spinner-crescent circle {
   fill: transparent;
-  stroke: black;
+  stroke: #000;
   stroke-width: 4px;
   stroke-dasharray: 128px;
   stroke-dashoffset: 82px;

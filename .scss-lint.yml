@@ -2,9 +2,15 @@
 
 # See config at https://github.com/brigade/scss-lint/blob/master/config/default.yml
 
-exclude: 'ionic/components/slides/**'
+exclude:
+  - 'ionic/components/slides/**'
+  - 'ionic/components.*.scss'
+
 
 linters:
+  ColorVariable:
+    enabled: false
+
   DuplicateProperty:
     enabled: false
 
