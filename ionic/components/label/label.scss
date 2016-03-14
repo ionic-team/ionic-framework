@@ -59,7 +59,8 @@ ion-label[floating] {
 
 .item-label-stacked ion-select,
 .item-label-floating ion-select {
-  width: 100%;
+  align-self: stretch;
+
   max-width: 100%;
 }
 
