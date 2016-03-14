@@ -25,6 +25,7 @@ ion-radio {
 .radio-icon {
   position: relative;
   display: block;
+
   width: $radio-ios-icon-width;
   height: $radio-ios-icon-height;
 }
@@ -42,10 +43,10 @@ ion-radio {
   height: 12px;
 
   border-width: $radio-ios-icon-border-width;
-  border-style: $radio-ios-icon-border-style;
-  border-color: $radio-ios-color-on;
   border-top-width: 0;
   border-left-width: 0;
+  border-style: $radio-ios-icon-border-style;
+  border-color: $radio-ios-color-on;
   transform: rotate(45deg);
 }
 
@@ -56,6 +57,7 @@ ion-radio {
 .radio-disabled,
 .item-radio-disabled ion-label {
   opacity: $radio-ios-disabled-opacity;
+
   pointer-events: none;
 }
 
@@ -66,6 +68,7 @@ ion-radio {
 .item ion-radio {
   position: static;
   display: block;
+
   margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
 }
 

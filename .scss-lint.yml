@@ -5,6 +5,9 @@
 exclude: 'ionic/components/slides/**'
 
 linters:
+  DuplicateProperty:
+    enabled: false
+
   MergeableSelector:
     enabled: true
     force_nesting: false

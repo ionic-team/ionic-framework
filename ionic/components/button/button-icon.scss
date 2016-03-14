@@ -6,26 +6,33 @@
 
 .button-icon-left ion-icon {
   padding-right: .3em;
+
   font-size: 1.4em;
   line-height: .67;
+
   pointer-events: none;
 }
 
 .button-icon-right ion-icon {
   padding-left: .4em;
+
   font-size: 1.4em;
   line-height: .67;
+
   pointer-events: none;
 }
 
 .button-icon-only {
   padding: 0;
+
   min-width: .9em;
 
   ion-icon {
     padding: 0 .5em;
+
     font-size: 1.8em;
     line-height: .67;
+
     pointer-events: none;
   }
 }

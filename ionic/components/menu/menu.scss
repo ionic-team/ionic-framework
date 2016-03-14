@@ -15,6 +15,7 @@ ion-menu {
   left: 0;
 
   display: flex;
+
   flex-direction: column;
 
   width: $menu-width;
@@ -76,7 +77,9 @@ ion-menu[type=overlay] {
   .backdrop {
     left: -3000px;
     display: block;
+
     width: 6000px;
+
     opacity: .01;
     transform: translate3d(-9999px, 0, 0);
 

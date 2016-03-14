@@ -39,6 +39,7 @@ h5,
 h6 {
   margin-top: 1.6rem;
   margin-bottom: 1rem;
+
   font-weight: $headings-font-weight;
   line-height: $headings-line-height;
 }
@@ -64,11 +65,13 @@ h2 + h3 {
 
 h1 {
   margin-top: 2rem;
+
   font-size: $h1-font-size;
 }
 
 h2 {
   margin-top: 1.8rem;
+
   font-size: $h2-font-size;
 }
 
@@ -95,6 +98,7 @@ small {
 sub,
 sup {
   position: relative;
+
   font-size: 75%;
   line-height: 0;
   vertical-align: baseline;

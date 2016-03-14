@@ -32,9 +32,11 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
 .segment-button {
   flex: 1;
+
   width: 0;
 
   height: $segment-button-ios-height;
+
   border-width: $segment-button-ios-border-width;
   border-style: solid;
   border-color: $segment-button-ios-background-color-activated;
@@ -69,6 +71,7 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
   &:first-of-type {
     margin-right: 0;
+
     border-radius: $segment-button-ios-border-radius 0 0 $segment-button-ios-border-radius;
   }
 
@@ -78,6 +81,7 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
   &:last-of-type {
     margin-left: 0;
+
     border-left-width: 0;
     border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
   }
@@ -96,6 +100,7 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   .segment-button {
     max-width: $segment-button-ios-toolbar-button-max-width;
     height: $segment-button-ios-toolbar-button-height;
+
     font-size: $segment-button-ios-toolbar-font-size;
     line-height: $segment-button-ios-toolbar-line-height;
 

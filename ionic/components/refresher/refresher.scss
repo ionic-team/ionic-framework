@@ -20,6 +20,7 @@ ion-refresher {
   left: 0;
   z-index: $z-index-refresher;
   display: none;
+
   width: 100%;
   height: $refresher-height;
 
@@ -33,6 +34,7 @@ ion-refresher {
   // this transition is what is used to put the
   // scroll content back into it's original location
   margin-top: -1px;
+
   border-top: 1px solid $refresher-border-color;
   transition: all 320ms cubic-bezier(.36, .66, .04, 1);
 }
@@ -43,14 +45,17 @@ ion-refresher {
 
 ion-refresher-content {
   display: flex;
+
   flex-direction: column;
   justify-content: center;
+
   height: 100%;
 }
 
 .refresher-pulling,
 .refresher-refreshing {
   display: none;
+
   width: 100%;
 }
 

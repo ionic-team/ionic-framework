@@ -6,18 +6,22 @@
 ion-list-header {
   display: block;
   overflow: hidden;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 ion-list {
   display: block;
+
   margin: 0;
   padding: 0;
+
   list-style-type: none;
 }
 
 ion-list[inset] {
   overflow: hidden;
+
   transform: translateZ(0);
 }

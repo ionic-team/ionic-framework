@@ -12,22 +12,26 @@
 .item > ion-icon:first-child,
 .item-inner > ion-icon:first-child {
   min-width: 24px;
+
   text-align: center;
 }
 
 .item > ion-icon,
 .item-inner > ion-icon {
   min-height: 2.4rem;
+
   font-size: 2.4rem;
   line-height: 1;
 
   &[large] {
     min-height: 3.2rem;
+
     font-size: 3.2rem;
   }
 
   &[small] {
     min-height: 1.8rem;
+
     font-size: 1.8rem;
   }
 }
@@ -35,6 +39,7 @@
 ion-avatar,
 ion-thumbnail {
   display: block;
+
   line-height: 1;
 
   img {
@@ -46,8 +51,10 @@ ion-thumbnail {
   position: absolute;
   top: 0;
   left: 0;
+
   width: 100%;
   height: 100%;
+
   background: transparent;
   cursor: pointer;
 }

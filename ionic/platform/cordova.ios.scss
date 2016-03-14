@@ -29,6 +29,7 @@ $cordova-ios-toolbar-padding:    20px   !default;
   ion-page.modal > ion-toolbar:first-child ion-title,
   ion-page.modal > ion-toolbar:first-child ion-segment, {
     padding-top: $toolbar-ios-padding + $cordova-ios-toolbar-padding;
+
     height: $toolbar-ios-height + $cordova-ios-toolbar-padding;
     min-height: $toolbar-ios-height + $cordova-ios-toolbar-padding;
   }

@@ -22,8 +22,10 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
 .item {
   position: relative;
+
   padding-right: 0;
   padding-left: ($item-md-padding-left);
+
   font-size: $item-md-font-size;
   font-weight: normal;
   text-transform: none;
@@ -35,12 +37,14 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
   h1 {
     margin: 0 0 2px;
+
     font-size: 2.4rem;
     font-weight: normal;
   }
 
   h2 {
     margin: 2px 0;
+
     font-size: 1.6rem;
     font-weight: normal;
   }
@@ -50,6 +54,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   h5,
   h6 {
     margin: 2px 0;
+
     font-size: 1.4rem;
     font-weight: normal;
     line-height: normal;
@@ -57,6 +62,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
   p {
     margin: 0 0 2px;
+
     font-size: 1.4rem;
     line-height: normal;
     color: $item-md-paragraph-text-color;
@@ -73,6 +79,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
 .item-inner {
   padding-right: ($item-md-padding-right / 2);
+
   border-bottom: 1px solid $list-md-border-color;
 }
 
@@ -94,7 +101,9 @@ ion-icon[item-right] {
 
 .item-button {
   padding: 0 .6em;
+
   height: 25px;
+
   font-size: 1.2rem;
 }
 
@@ -125,6 +134,7 @@ ion-avatar {
   img {
     max-width: $item-md-avatar-size;
     max-height: $item-md-avatar-size;
+
     border-radius: $item-md-avatar-size / 2;
   }
 }
@@ -149,6 +159,7 @@ ion-note {
 
 ion-item-divider {
   padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
+
   color: $item-md-divider-color;
   background-color: $item-md-divider-background;
 }

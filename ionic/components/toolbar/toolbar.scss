@@ -10,11 +10,13 @@
 
   display: flex;
   overflow: hidden;
+
   flex: 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   order: $flex-order-toolbar-top;
+
   width: 100%;
 }
 
@@ -23,11 +25,13 @@
   top: 0;
   left: 0;
   z-index: $z-index-toolbar-background;
+
   width: 100%;
   height: 100%;
 
   border: 0;
   transform: translateZ(0);
+
   pointer-events: none;
 }
 
@@ -37,23 +41,30 @@
 
 ion-title {
   display: flex;
+
   flex: 1;
   align-items: center;
+
   transform: translateZ(0);
 }
 
 .toolbar-title {
   display: block;
   overflow: hidden;
+
   width: 100%;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 ion-buttons {
   display: block;
+
   margin: 0 .2rem;
+
   transform: translateZ(0);
+
   pointer-events: none;
 }
 
@@ -78,6 +89,7 @@ ion-buttons div {
 ion-buttons,
 .bar-button-menutoggle {
   z-index: 99;
+
   transform: translateZ(0);
 }
 
@@ -86,6 +98,7 @@ ion-buttons,
 
 ion-navbar.toolbar {
   display: flex;
+
   opacity: 0;
   transform: translateZ(0);
 

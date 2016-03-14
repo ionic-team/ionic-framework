@@ -24,8 +24,10 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item {
   position: relative;
+
   padding-right: 0;
   padding-left: ($item-wp-padding-left);
+
   font-size: $item-wp-font-size;
   font-weight: normal;
   text-transform: none;
@@ -36,12 +38,14 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
   h1 {
     margin: 0 0 2px;
+
     font-size: 2.4rem;
     font-weight: normal;
   }
 
   h2 {
     margin: 2px 0;
+
     font-size: 1.6rem;
     font-weight: normal;
   }
@@ -51,6 +55,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   h5,
   h6 {
     margin: 2px 0;
+
     font-size: 1.4rem;
     font-weight: normal;
     line-height: normal;
@@ -58,6 +63,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
   p {
     margin: 0 0 2px;
+
     font-size: 1.4rem;
     line-height: normal;
     color: $item-wp-paragraph-text-color;
@@ -74,6 +80,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-inner {
   padding-right: ($item-wp-padding-right / 2);
+
   border-bottom: 1px solid $list-wp-border-color;
 }
 
@@ -95,7 +102,9 @@ ion-icon[item-right] {
 
 .item-button {
   padding: 0 .6em;
+
   height: 25px;
+
   font-size: 1.2rem;
 }
 
@@ -131,6 +140,7 @@ ion-avatar {
   img {
     max-width: $item-wp-avatar-size;
     max-height: $item-wp-avatar-size;
+
     border-radius: $item-wp-avatar-size / 2;
   }
 }
@@ -155,6 +165,7 @@ ion-note {
 
 ion-item-divider {
   padding: $item-wp-padding-top $item-wp-padding-right $item-wp-padding-bottom $item-wp-padding-left;
+
   color: $item-wp-divider-color;
   background-color: $item-wp-divider-background;
 }

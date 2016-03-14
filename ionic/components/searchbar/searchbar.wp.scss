@@ -35,6 +35,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 
 ion-searchbar {
   padding: $searchbar-wp-padding;
+
   border: $searchbar-wp-border-width solid $searchbar-wp-border-color;
   background: $searchbar-wp-background-color;
 }
@@ -69,7 +70,9 @@ ion-searchbar {
   @include placeholder($searchbar-wp-input-placeholder-color);
 
   padding: $searchbar-wp-input-padding-vertical $searchbar-wp-input-padding-horizontal;
+
   height: $searchbar-wp-input-height;
+
   border-radius: $searchbar-wp-input-border-radius;
   font-size: $searchbar-wp-input-font-size;
   font-weight: $searchbar-wp-input-font-weight;
@@ -93,6 +96,7 @@ ion-searchbar {
   right: $searchbar-wp-input-padding-horizontal;
 
   padding: 0;
+
   width: $searchbar-wp-input-clear-icon-size;
   height: 100%;
 

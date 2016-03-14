@@ -7,7 +7,9 @@ ion-input,
 ion-textarea {
   position: relative;
   display: block;
+
   flex: 1;
+
   width: 100%;
 }
 
@@ -32,12 +34,16 @@ ion-textarea {
   @include placeholder();
 
   display: inline-block;
+
   flex: 1;
+
   width: 92%;
   width: calc(100% - 10px);
+
   border: 0;
   border-radius: 0;
   background: transparent;
+
   -webkit-appearance: none;
 }
 
@@ -71,6 +77,7 @@ input.text-input:-webkit-autofill {
   position: absolute;
   top: 0;
   left: 0;
+
   width: 100%;
   height: 100%;
 }
@@ -93,11 +100,15 @@ input.text-input:-webkit-autofill {
 [next-input] {
   position: absolute;
   bottom: 1px;
+
   padding: 0;
+
   width: 1px;
   height: 1px;
+
   border: 0;
   background: transparent;
+
   pointer-events: none;
 }
 
@@ -107,6 +118,7 @@ input.text-input:-webkit-autofill {
 
 .text-input-clear-icon {
   position: absolute;
+
   margin: 0;
   padding: 0;
 
@@ -121,6 +133,7 @@ input.text-input:-webkit-autofill {
 .text-input.cloned-input {
   position: absolute;
   top: 0;
+
   pointer-events: none;
 }
 

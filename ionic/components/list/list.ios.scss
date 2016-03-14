@@ -28,7 +28,9 @@ $list-ios-header-color:               #333 !default;
 
 ion-list-header {
   position: relative;
+
   padding: $list-ios-header-padding;
+
   border-bottom: 1px solid $list-ios-border-color;
   font-size: $list-ios-header-font-size;
   font-weight: $list-ios-header-font-weight;
@@ -72,13 +74,17 @@ ion-list {
   ion-item-options button,
   ion-item-options [button] {
     display: inline-flex;
+
     align-items: center;
+
     margin: 0;
+
     height: 100%;
     min-height: 100%;
 
     border: 0;
     border-radius: 0;
+
     box-sizing: border-box;
 
     &::before {
@@ -131,6 +137,7 @@ ion-list + ion-list {
 
 ion-list[inset] {
   margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
+
   border-radius: $list-inset-ios-border-radius;
 
   ion-list-header {

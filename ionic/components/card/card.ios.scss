@@ -37,6 +37,7 @@ $card-ios-header-color:                #333 !default;
 
 ion-card {
   margin: $card-ios-margin-top $card-ios-margin-right $card-ios-margin-bottom $card-ios-margin-left;
+
   border-radius: $card-ios-border-radius;
   font-size: $card-ios-font-size;
 
@@ -66,12 +67,14 @@ ion-card {
 
   ion-card-content {
     padding: $card-ios-padding-top $card-ios-padding-right $card-ios-padding-bottom $card-ios-padding-left;
+
     font-size: $card-ios-font-size;
     line-height: 1.4;
   }
 
   ion-card-header {
     padding: $card-ios-header-padding;
+
     font-size: $card-ios-header-font-size;
     font-weight: $card-ios-header-font-weight;
     color: $card-ios-header-color;
@@ -89,8 +92,10 @@ ion-card {
 
   ion-card-title {
     display: block;
+
     margin: $card-ios-title-margin;
     padding: $card-ios-title-padding;
+
     font-size: $card-ios-title-font-size;
     line-height: 1.2;
     color: $card-ios-title-text-color;
@@ -98,12 +103,14 @@ ion-card {
 
   h1 {
     margin: 0 0 2px;
+
     font-size: 2.4rem;
     font-weight: normal;
   }
 
   h2 {
     margin: 2px 0;
+
     font-size: 1.6rem;
     font-weight: normal;
   }
@@ -113,12 +120,14 @@ ion-card {
   h5,
   h6 {
     margin: 2px 0;
+
     font-size: 1.4rem;
     font-weight: normal;
   }
 
   p {
     margin: 0 0 2px;
+
     font-size: 1.4rem;
     color: $card-ios-text-color;
   }

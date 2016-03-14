@@ -42,12 +42,15 @@ ion-toggle {
 .toggle-icon {
   position: relative;
   display: block;
+
   width: $toggle-ios-width;
   height: $toggle-ios-height;
+
   border-radius: $toggle-ios-border-radius;
 
   background-color: $toggle-ios-border-color-off;
   transition: background-color $toggle-ios-transition-duration;
+
   pointer-events: none;
 }
 
@@ -147,6 +150,7 @@ ion-toggle {
 .toggle-disabled,
 .item-toggle-disabled ion-label {
   opacity: $toggle-ios-disabled-opacity;
+
   pointer-events: none;
 }
 

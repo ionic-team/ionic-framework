@@ -26,6 +26,7 @@ ion-label {
 ion-label + ion-input .text-input,
 ion-label + ion-textarea .text-input {
   margin-left: $item-ios-padding-left;
+
   width: calc(100% - #{$item-ios-padding-left});
 }
 
@@ -35,11 +36,13 @@ ion-label + ion-textarea .text-input {
 
 ion-label[stacked] {
   margin-bottom: 4px;
+
   font-size: 1.2rem;
 }
 
 ion-label[floating] {
   margin-bottom: 0;
+
   transform: translate3d(0, 27px, 0);
   transform-origin: left top;
   transition: transform 150ms ease-in-out;

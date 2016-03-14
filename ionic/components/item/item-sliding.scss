@@ -21,13 +21,17 @@ ion-item-options {
   right: 0;
   z-index: $z-index-item-options;
   display: none;
+
   height: 100%;
+
   visibility: hidden;
 }
 
 ion-item-options .button {
   margin: 0;
+
   height: 100%;
+
   border-radius: 0;
   box-shadow: none;
 }
@@ -52,8 +56,10 @@ ion-item-sliding.active-slide {
   .item.activated {
     position: relative;
     z-index: $z-index-item-options + 1;
+
     opacity: 1;
     transition: all 300ms cubic-bezier(.36, .66, .04, 1);
+
     pointer-events: none;
 
   }

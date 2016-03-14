@@ -43,7 +43,9 @@ ion-action-sheet {
 
 .action-sheet-group {
   overflow: hidden;
+
   margin-bottom: $action-sheet-ios-group-margin-bottom - 2;
+
   border-radius: $action-sheet-ios-border-radius;
   background: $action-sheet-ios-background;
 
@@ -54,6 +56,7 @@ ion-action-sheet {
 
 .action-sheet-title {
   padding: $action-sheet-ios-title-padding;
+
   border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
   border-radius: $action-sheet-ios-title-border-radius;
   font-size: $action-sheet-ios-title-font-size;
@@ -64,7 +67,9 @@ ion-action-sheet {
 
 .action-sheet-button {
   padding: $action-sheet-ios-button-padding;
+
   min-height: $action-sheet-ios-button-min-height;
+
   border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
   font-size: $action-sheet-ios-button-font-size;
   color: $action-sheet-ios-button-text-color;
@@ -76,6 +81,7 @@ ion-action-sheet {
 
   &.activated {
     margin-top: -$action-sheet-ios-button-border-width;
+
     border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
     border-bottom-color: $action-sheet-ios-button-background-activated;
     background: $action-sheet-ios-button-background-activated;

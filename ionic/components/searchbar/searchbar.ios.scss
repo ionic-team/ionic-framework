@@ -33,7 +33,9 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 ion-searchbar {
   padding: $searchbar-ios-padding-top-bottom $searchbar-ios-padding-left-right;
+
   min-height: $searchbar-ios-min-height;
+
   border-top: 1px solid transparent;
   border-bottom: 1px solid $searchbar-ios-border-color;
   background: $searchbar-ios-background-color;
@@ -69,7 +71,9 @@ ion-searchbar {
   @include calc(padding-left, "50% - 28px");
 
   padding: 0 28px;
+
   height: $searchbar-ios-input-height;
+
   border-radius: 5px;
   font-size: 1.4rem;
   font-weight: 400;
@@ -106,11 +110,13 @@ ion-searchbar {
 
 .searchbar-ios-cancel {
   flex: 0 0 0%;
+
   margin-right: 0;
   margin-left: 0;
   padding: 0;
 
   height: 30px;
+
   visibility: hidden;
   transform: translateX(calc(100% + #{$searchbar-ios-padding-left-right}));
   transition: $searchbar-ios-cancel-transition;
@@ -136,7 +142,9 @@ ion-searchbar {
 .searchbar-focused {
   .searchbar-ios-cancel {
     flex: 0 0 auto;
+
     padding-left: 8px;
+
     visibility: visible;
     transform: translateX(0);
   }

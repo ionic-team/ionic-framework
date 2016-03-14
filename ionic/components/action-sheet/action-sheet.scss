@@ -13,6 +13,7 @@ ion-action-sheet {
   left: 0;
   z-index: $z-index-overlay;
   display: block;
+
   width: $action-sheet-width;
   height: $action-sheet-width;
 }
@@ -24,9 +25,12 @@ ion-action-sheet {
   left: 0;
   z-index: $z-index-overlay-wrapper;
   display: block;
+
   margin: auto;
+
   width: $action-sheet-width;
   max-width: $action-sheet-max-width;
+
   transform: translate3d(0, 100%, 0);
 }
 

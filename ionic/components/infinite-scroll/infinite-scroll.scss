@@ -10,6 +10,7 @@ $infinite-scroll-loading-text-margin:    4px 32px 0 32px !default;
 
 ion-infinite-scroll {
   display: block;
+
   width: 100%;
 }
 
@@ -19,21 +20,27 @@ ion-infinite-scroll {
 
 ion-infinite-scroll-content {
   display: flex;
+
   flex-direction: column;
   justify-content: center;
+
   height: 100%;
   min-height: 84px;
+
   text-align: center;
 }
 
 .infinite-loading {
   display: none;
+
   margin: $infinite-scroll-loading-margin;
+
   width: 100%;
 }
 
 .infinite-loading-text {
   margin: $infinite-scroll-loading-text-margin;
+
   color: $infinite-scroll-loading-color;
 }
 

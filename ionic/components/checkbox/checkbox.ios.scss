@@ -33,8 +33,10 @@ ion-checkbox {
 
 .checkbox-icon {
   position: relative;
+
   width: $checkbox-ios-icon-size;
   height: $checkbox-ios-icon-size;
+
   border-width: $checkbox-ios-icon-border-width;
   border-style: $checkbox-ios-icon-border-style;
   border-radius: $checkbox-ios-icon-border-radius;
@@ -59,8 +61,10 @@ ion-checkbox {
   position: absolute;
   top: 4px;
   left: 7px;
+
   width: 4px;
   height: 9px;
+
   border-width: $checkbox-ios-icon-checkmark-width;
   border-top-width: 0;
   border-left-width: 0;
@@ -76,6 +80,7 @@ ion-checkbox {
 .checkbox-disabled,
 .item-checkbox-disabled ion-label {
   opacity: $checkbox-ios-disabled-opacity;
+
   pointer-events: none;
 }
 
@@ -86,6 +91,7 @@ ion-checkbox {
 .item ion-checkbox {
   position: static;
   display: block;
+
   margin: $checkbox-ios-media-margin;
 }
 

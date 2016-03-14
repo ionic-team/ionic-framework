@@ -26,15 +26,18 @@ $button-round-border-radius:      64px !default;
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 
   transition: background-color, opacity 100ms linear;
+
   font-kerning: none;
 }
 
 .button-inner {
   display: flex;
+
   flex-flow: row nowrap;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+
   width: 100%;
   height: 100%;
 }
@@ -47,6 +50,7 @@ a[button] {
 .button[disabled] {
   cursor: default;
   opacity: .4;
+
   pointer-events: none;
 }
 
@@ -57,6 +61,7 @@ a[button] {
 .button-block {
   display: block;
   clear: both;
+
   width: 100%;
 
   &::after {
@@ -70,6 +75,7 @@ a[button] {
 
 .button-full {
   display: block;
+
   width: 100%;
 
   // Full Outline Button
@@ -87,5 +93,6 @@ a[button] {
 
 .button-round {
   padding: $button-round-padding;
+
   border-radius: $button-round-border-radius;
 }

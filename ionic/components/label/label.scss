@@ -6,8 +6,11 @@
 ion-label {
   display: block;
   overflow: hidden;
+
   flex: 1;
+
   margin: 0;
+
   font-size: inherit;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -15,7 +18,9 @@ ion-label {
 
 .item-input ion-label {
   flex: initial;
+
   max-width: 200px;
+
   pointer-events: none;
 }
 
@@ -29,6 +34,7 @@ ion-label {
 
 ion-label[fixed] {
   flex: 0 0 100px;
+
   width: 100px;
   min-width: 100px;
   max-width: 200px;
@@ -38,7 +44,9 @@ ion-label[stacked],
 ion-label[floating] {
   flex-basis: 100%;
   align-self: stretch;
+
   margin-bottom: 0;
+
   width: auto;
   max-width: 100%;
 }

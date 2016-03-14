@@ -39,12 +39,15 @@ ion-toggle {
 .toggle-icon {
   position: relative;
   display: block;
+
   width: $toggle-md-track-width;
   height: $toggle-md-track-height;
+
   border-radius: $toggle-md-track-height;
   background-color: $toggle-md-track-background-color-off;
 
   transition: background-color $toggle-md-transition-duration;
+
   pointer-events: none;
 }
 
@@ -93,6 +96,7 @@ ion-toggle {
 .toggle-disabled,
 .item-toggle-disabled ion-label {
   opacity: $toggle-md-disabled-opacity;
+
   pointer-events: none;
 }
 
@@ -107,6 +111,7 @@ ion-toggle {
 .item ion-toggle {
   margin: $toggle-md-media-margin;
   padding: $toggle-md-media-padding;
+
   cursor: pointer;
 }
 

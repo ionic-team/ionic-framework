@@ -29,6 +29,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
 ion-searchbar {
   padding: $searchbar-md-padding;
+
   background: $searchbar-md-background-color;
 }
 
@@ -41,6 +42,7 @@ ion-searchbar {
 
   top: 11px;
   left: 16px;
+
   width: $searchbar-md-input-search-icon-size + 1;
   height: $searchbar-md-input-search-icon-size + 1;
 }
@@ -53,7 +55,9 @@ ion-searchbar {
   top: 0;
   left: 10px;
   display: none;
+
   margin: 0;
+
   width: $searchbar-md-input-search-icon-size + 1;
   height: 100%;
 }
@@ -64,6 +68,7 @@ ion-searchbar {
 .searchbar-search-icon,
 .searchbar-md-cancel {
   position: absolute;
+
   background-repeat: no-repeat;
   background-size: $searchbar-md-input-search-icon-size;
 
@@ -80,7 +85,9 @@ ion-searchbar {
   @include placeholder($searchbar-md-input-placeholder-color);
 
   padding: 6px 55px;
+
   height: $searchbar-md-input-height;
+
   border-radius: $searchbar-md-input-border-radius;
 
   font-size: 1.6rem;
@@ -104,6 +111,7 @@ ion-searchbar {
   position: absolute;
   top: 0;
   right: 13px;
+
   padding: 0;
 
   width: $searchbar-md-input-clear-icon-size;

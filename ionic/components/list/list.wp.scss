@@ -28,6 +28,7 @@ ion-list-header,
 ion-item-divider {
   margin-left: 0;
   padding: $list-wp-header-padding;
+
   border-bottom: 1px solid $list-wp-border-color;
   font-size: $list-wp-header-font-size;
   color: $list-wp-header-color;
@@ -62,12 +63,17 @@ ion-list {
   ion-item-options button,
   ion-item-options [button] {
     display: inline-flex;
+
     align-items: center;
+
     margin: 1px 0;
+
     height: calc(100% - 2px);
+
     border: 0;
     border-radius: 0;
     box-shadow: none;
+
     box-sizing: border-box;
 
     &::before {
@@ -100,6 +106,7 @@ ion-list {
 
 ion-list[inset] {
   margin: $list-inset-wp-margin-top $list-inset-wp-margin-right $list-inset-wp-margin-bottom $list-inset-wp-margin-left;
+
   border-radius: $list-inset-wp-border-radius;
 
   .item:first-child {

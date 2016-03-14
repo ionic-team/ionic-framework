@@ -51,7 +51,9 @@ $button-wp-fab-border-radius:                         50% !default;
 .button {
   margin: $button-wp-margin;
   padding: $button-wp-padding;
+
   height: $button-wp-height;
+
   border: $button-wp-border-width solid $button-wp-border-color;
   border-radius: $button-wp-border-radius;
 
@@ -102,13 +104,17 @@ $button-wp-fab-border-radius:                         50% !default;
 
 .button-large {
   padding: $button-wp-large-padding;
+
   height: $button-wp-large-height;
+
   font-size: $button-wp-large-font-size;
 }
 
 .button-small {
   padding: $button-wp-small-padding;
+
   height: $button-wp-small-height;
+
   font-size: $button-wp-small-font-size;
 
   &.button-icon-only ion-icon {
@@ -130,6 +136,7 @@ $button-wp-fab-border-radius:                         50% !default;
 .button-full {
   margin-right: 0;
   margin-left: 0;
+
   border-right-width: 0;
   border-left-width: 0;
   border-radius: 0;
@@ -220,6 +227,7 @@ $button-wp-fab-border-radius:                         50% !default;
 
 .button-round {
   padding: $button-round-padding;
+
   border-radius: $button-round-border-radius;
 }
 

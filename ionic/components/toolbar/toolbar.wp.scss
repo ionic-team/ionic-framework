@@ -31,6 +31,7 @@ $bar-button-wp-border-radius:            2px !default;
 
 .toolbar {
   padding: $toolbar-wp-padding;
+
   min-height: $toolbar-wp-height;
 }
 
@@ -54,12 +55,14 @@ ion-navbar-section {
 .toolbar-content {
   flex: 1;
   order: map-get($toolbar-order-wp, content);
+
   min-width: 0;
   max-width: 100%;
 }
 
 .toolbar-title {
   padding: $toolbar-wp-title-padding;
+
   font-size: $toolbar-wp-title-font-size;
   font-weight: $toolbar-wp-title-font-weight;
   text-transform: $toolbar-wp-title-text-transform;
@@ -105,6 +108,7 @@ ion-navbar-section {
 
 ion-buttons {
   order: map-get($toolbar-order-wp, buttons-start);
+
   transform: translateZ(0);
 }
 
@@ -118,11 +122,13 @@ ion-buttons[left] .bar-button:first-child {
 
 ion-buttons[end] {
   order: map-get($toolbar-order-wp, buttons-end);
+
   text-align: right;
 }
 
 ion-buttons[right] {
   order: map-get($toolbar-order-wp, buttons-right);
+
   text-align: right;
 }
 
@@ -136,7 +142,9 @@ ion-buttons[right] {
   margin-bottom: 0;
   margin-left: .2rem;
   padding: 0 5px;
+
   height: 32px;
+
   border: 0;
   border-radius: $bar-button-wp-border-radius;
   font-size: $toolbar-wp-button-font-size;
@@ -237,15 +245,19 @@ ion-buttons[right] {
 
 .bar-button-icon-left ion-icon {
   padding-right: .3em;
+
   font-size: 1.4em;
   line-height: .67;
+
   pointer-events: none;
 }
 
 .bar-button-icon-right ion-icon {
   padding-left: .4em;
+
   font-size: 1.4em;
   line-height: .67;
+
   pointer-events: none;
 }
 
@@ -254,9 +266,12 @@ ion-buttons[right] {
 
   ion-icon {
     padding: 0 .1em;
+
     min-width: 28px;
+
     font-size: 1.8em;
     line-height: .67;
+
     pointer-events: none;
   }
 }
@@ -267,12 +282,15 @@ ion-buttons[right] {
 
 .back-button {
   margin: 0 0 0 12px;
+
   box-shadow: none;
 }
 
 .back-button-icon {
   margin: 0;
+
   min-width: 30px;
+
   font-size: 2.4rem;
   font-weight: normal;
   text-align: left;
@@ -284,12 +302,15 @@ ion-buttons[right] {
 
 .bar-button-menutoggle {
   order: map-get($toolbar-order-wp, menu-toggle-start);
+
   margin: 0 6px;
   padding: 0 2px;
+
   min-width: 44px;
 
   ion-icon {
     padding: 0 6px;
+
     font-size: 2.4rem;
   }
 }
@@ -297,7 +318,9 @@ ion-buttons[right] {
 .bar-button-menutoggle[end],
 .bar-button-menutoggle[right] {
   order: map-get($toolbar-order-wp, menu-toggle-end);
+
   margin: 0 2px;
+
   min-width: 28px;
 }
 

@@ -32,9 +32,12 @@ ion-radio {
   top: 0;
   left: 0;
   display: block;
+
   margin: 0;
+
   width: $radio-md-icon-width;
   height: $radio-md-icon-height;
+
   border-width: $radio-md-icon-border-width;
   border-style: $radio-md-icon-border-style;
   border-radius: $radio-md-icon-border-radius;
@@ -49,8 +52,10 @@ ion-radio {
   position: absolute;
   top: $radio-md-icon-border-width;
   left: $radio-md-icon-border-width;
+
   width: $radio-md-icon-width / 2;
   height: $radio-md-icon-height / 2;
+
   border-radius: 50%;
   background-color: $radio-md-color-on;
   transform: scale3d(0, 0, 0);
@@ -80,6 +85,7 @@ ion-radio {
 .radio-disabled,
 .item-radio-disabled ion-label {
   opacity: $radio-md-disabled-opacity;
+
   pointer-events: none;
 }
 
@@ -90,6 +96,7 @@ ion-radio {
 .item ion-radio {
   position: static;
   display: block;
+
   margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom 0;
 }
 

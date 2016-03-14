@@ -15,6 +15,7 @@ ion-scroll {
   &[center] {
     scroll-content {
       display: flex;
+
       align-items: center;
       justify-content: center;
     }
@@ -26,6 +27,7 @@ ion-scroll {
     right: 0;
     bottom: 0;
     left: 0;
+
     overflow-y: hidden;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;

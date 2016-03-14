@@ -28,6 +28,7 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
 
 .action-sheet-title {
   padding: $action-sheet-md-title-padding;
+
   font-size: $action-sheet-md-title-font-size;
   text-align: $action-sheet-md-text-align;
   color: $action-sheet-md-title-color;
@@ -36,8 +37,11 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
 .action-sheet-button {
   position: relative;
   overflow: hidden;
+
   padding: $action-sheet-md-button-padding;
+
   min-height: $action-sheet-md-button-min-height;
+
   font-size: $action-sheet-md-button-font-size;
   text-align: $action-sheet-md-text-align;
   color: $action-sheet-md-button-text-color;
@@ -50,7 +54,9 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
 
 .action-sheet-icon {
   margin: $action-sheet-md-icon-margin;
+
   min-width: $action-sheet-md-icon-min-width;
+
   font-size: $action-sheet-md-icon-font-size;
   text-align: $action-sheet-md-icon-text-align;
   vertical-align: $action-sheet-md-icon-vertical-align;
@@ -58,6 +64,7 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
 
 .action-sheet-group {
   overflow: hidden;
+
   background: $action-sheet-md-background;
 
   &:last-child .action-sheet-button {

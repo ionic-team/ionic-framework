@@ -7,10 +7,12 @@
 ion-tabs {
   display: flex;
   overflow: hidden;
+
   flex-direction: column;
 
   margin: 0;
   padding: 0;
+
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -25,7 +27,9 @@ ion-tab {
   left: 0;
   display: none;
   overflow: hidden;
+
   flex-direction: column;
+
   width: 100%;
   height: 100%;
 
@@ -40,6 +44,7 @@ ion-tabs > ion-navbar-section {
 
 ion-tabbar-section {
   position: relative;
+
   order: $flex-order-tabbar-bottom;
 }
 
@@ -51,6 +56,7 @@ tabbar {
   position: relative;
   display: flex;
   overflow: hidden;
+
   justify-content: center;
 }
 
@@ -61,6 +67,7 @@ tabbar {
   z-index: 0;
   display: flex;
   overflow: hidden;
+
   flex: 1;
   flex-direction: column;
   align-items: center;
@@ -68,6 +75,7 @@ tabbar {
   justify-content: center;
 
   margin: 0;
+
   border: 0;
   border-radius: 0;
 
@@ -119,6 +127,7 @@ tab-highlight {
 
   .tab-button-icon {
     padding-right: 8px;
+
     text-align: right;
   }
 }
@@ -128,7 +137,9 @@ tab-highlight {
 
   .tab-button-icon {
     order: 10;
+
     padding-left: 8px;
+
     text-align: left;
   }
 }
@@ -149,8 +160,11 @@ tab-highlight {
   top: 6%;
   right: 4%;
   right: calc(50% - 50px);
+
   padding: 1px 6px;
+
   height: auto;
+
   font-size: 12px;
   line-height: 16px;
 }

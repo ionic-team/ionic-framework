@@ -16,6 +16,7 @@ video {
 // Remove excess height in iOS 5 devices.
 audio:not([controls]) {
   display: none;
+
   height: 0;
 }
 
@@ -36,6 +37,7 @@ strong {
 // Remove border when inside `a` element in IE 8/9/10.
 img {
   max-width: 100%;
+
   border: 0;
 }
 
@@ -55,7 +57,9 @@ figure {
 
 hr {
   height: 1px;
+
   border-width: 0;
+
   box-sizing: content-box;
 }
 
@@ -96,7 +100,9 @@ textarea {
 
 textarea {
   overflow: auto;
+
   height: auto;
+
   font: inherit;
   color: inherit;
 }
@@ -106,6 +112,7 @@ input,
 optgroup,
 select {
   margin: 0; // 3
+
   font: inherit; // 2
   color: inherit; // 1
 }
@@ -119,6 +126,7 @@ html input[type="button"], // 1
 input[type="reset"],
 input[type="submit"] {
   cursor: pointer; // 3
+
   -webkit-appearance: button; // 2
 }
 
@@ -151,6 +159,7 @@ button {
   line-height: 1;
   text-transform: none;
   cursor: pointer;
+
   -webkit-appearance: button;
 }
 
@@ -165,6 +174,7 @@ html input[disabled] {
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   padding: 0;
+
   border: 0;
 }
 
@@ -174,6 +184,7 @@ input::-moz-focus-inner {
 input[type="checkbox"],
 input[type="radio"] {
   padding: 0; // 2
+
   box-sizing: border-box; // 1
 }
 

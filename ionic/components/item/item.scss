@@ -8,13 +8,16 @@
 .item {
   display: flex;
   overflow: hidden;
+
   align-items: center;
   justify-content: space-between;
 
   margin: 0;
   padding: 0;
+
   width: 100%;
   min-height: 4.4rem;
+
   border: 0;
 
   font-weight: normal;
@@ -27,23 +30,29 @@
 .item-inner {
   display: flex;
   overflow: hidden;
+
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
+
   margin: 0;
   padding: 0;
+
   min-height: inherit;
+
   border: 0;
 }
 
 .input-wrapper {
   display: flex;
   overflow: hidden;
+
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
+
   text-overflow: ellipsis;
 }
 
@@ -59,11 +68,11 @@ ion-item-group {
 ion-item-divider {
   z-index: 1000;
   display: block;
+
   width: 100%;
   min-height: 30px;
 
   &[sticky] {
-    position: -webkit-sticky;
     position: sticky;
     top: 0;
   }

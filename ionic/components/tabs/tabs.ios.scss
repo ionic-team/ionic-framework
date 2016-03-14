@@ -28,6 +28,7 @@ ion-tabs[tabbarPlacement=top] tabbar {
 
 .tab-button {
   padding: $tabbar-ios-item-padding;
+
   min-width: $tab-button-ios-min-width;
   max-width: $tab-button-ios-max-width;
   min-height: $tabbar-ios-height;
@@ -43,7 +44,9 @@ ion-tabs[tabbarPlacement=top] tabbar {
 .tab-button-text {
   margin-top: 0;
   margin-bottom: 0;
+
   min-height: $tabbar-ios-item-font-size + 1;
+
   font-size: $tabbar-ios-item-font-size;
 }
 
@@ -54,6 +57,7 @@ ion-tabs[tabbarPlacement=top] tabbar {
 .tab-button-icon {
   min-width: $tabbar-ios-item-icon-size + 5;
   height: $tabbar-ios-item-icon-size;
+
   font-size: $tabbar-ios-item-icon-size;
 
   &::before {
@@ -72,6 +76,7 @@ ion-tabs[tabbarPlacement=top] tabbar {
   ion-icon {
     min-width: 24px;
     height: 26px;
+
     font-size: 24px;
   }
 }
@@ -82,6 +87,7 @@ ion-tabs[tabbarPlacement=top] tabbar {
 
   .tab-button-text {
     margin: 2px 0;
+
     font-size: 1.4rem;
     line-height: 1.1;
   }

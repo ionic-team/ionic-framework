@@ -23,7 +23,9 @@ tabbar {
 
 .tab-button {
   padding: $tabbar-wp-item-padding;
+
   min-height: $tabbar-wp-item-height;
+
   border-bottom: 2px solid transparent;
   border-radius: 0;
   font-size: $tabbar-wp-item-font-size;
@@ -50,6 +52,7 @@ tabbar {
 
 .tab-button-icon {
   min-width: $tabbar-wp-item-icon-size;
+
   font-size: $tabbar-wp-item-icon-size;
 }
 

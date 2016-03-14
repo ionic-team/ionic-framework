@@ -22,7 +22,9 @@ tabbar {
 
 .tab-button {
   padding: $tabbar-md-item-padding;
+
   min-height: $tabbar-md-item-height;
+
   border-bottom: 2px solid transparent;
   border-radius: 0;
   font-size: $tabbar-md-item-font-size;
@@ -40,11 +42,13 @@ tabbar {
 .tab-button-text {
   margin-top: 5px;
   margin-bottom: 5px;
+
   text-transform: uppercase;
 }
 
 .tab-button-icon {
   min-width: $tabbar-md-item-icon-size + 5;
+
   font-size: $tabbar-md-item-icon-size;
 }
 
@@ -74,8 +78,10 @@ tab-highlight {
   bottom: 0;
   left: 0;
   display: block;
+
   width: 1px;
   height: 2px;
+
   background: $tab-button-md-active-color;
   transform: translateZ(0);
   transform-origin: 0 0;
