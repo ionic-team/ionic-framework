@@ -105,7 +105,7 @@ Platform.register({
     tapPolyfill: isIOSDevice,
   },
   isMatch(p: Platform): boolean {
-    return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod']);
+    return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
   },
   versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/OS (\d+)_(\d+)?/);
