@@ -2,8 +2,8 @@ import {StorageEngine} from './storage';
 
 import {defaults, assign} from '../../util/util';
 
-const DB_NAME :string = '__ionicstorage';
-const win :any = window;
+const DB_NAME: string = '__ionicstorage';
+const win: any = window;
 
 /**
  * SqlStorage uses SQLite or WebSQL (development only!) to store data in a
@@ -36,13 +36,13 @@ const win :any = window;
  *
  */
 export class SqlStorage extends StorageEngine {
-  static BACKUP_LOCAL =  2;
+  static BACKUP_LOCAL = 2;
   static BACKUP_LIBRARY = 1;
   static BACKUP_DOCUMENTS = 0;
 
   private _db: any;
 
-  constructor(options={}) {
+  constructor(options = {}) {
     super();
 
     let dbOptions = defaults(options, {
@@ -68,8 +68,8 @@ export class SqlStorage extends StorageEngine {
     this._tryInit();
   }
 
-  _getBackupLocation(dbFlag: number) {
-    switch(dbFlag) {
+  _getBackupLocation(dbFlag: number): number {
+    switch (dbFlag) {
       case SqlStorage.BACKUP_LOCAL:
         return 2;
       case SqlStorage.BACKUP_LIBRARY:
@@ -83,11 +83,8 @@ export class SqlStorage extends StorageEngine {
 
   // Initialize the DB with our required tables
   _tryInit() {
-    this._db.transaction((tx) => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS kv (key text primary key, value text)', [], (tx, res) => {
-      }, (tx, err) => {
-        console.error('Storage: Unable to create initial storage tables', tx, err);
-      });
+    this.query('CREATE TABLE IF NOT EXISTS kv (key text primary key, value text)').catch(err => {
+      console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
     });
   }
 
@@ -100,26 +97,17 @@ export class SqlStorage extends StorageEngine {
    * @param {array} params the additional params to use for query placeholders
    * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
    */
-  query(query, params=[]): Promise<any> {
+  query(query: string, params = []): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         this._db.transaction((tx) => {
-          tx.executeSql(query, params, (tx, res) => {
-            resolve({
-              tx: tx,
-              res: res
-            });
-          }, (tx, err) => {
-            reject({
-              tx: tx,
-              err: err
-            });
-          })
-        }, err => {
-          reject(err);
-        });
-      } catch(e) {
-        reject(e);
+          tx.executeSql(query, params,
+            (tx, res) => resolve({ tx: tx, res: res }),
+            (tx, err) => reject({ tx: tx, err: err }));
+        },
+          (err) => reject({ err: err }));
+      } catch (err) {
+        reject({ err: err });
       }
     })
   }
@@ -130,28 +118,9 @@ export class SqlStorage extends StorageEngine {
    * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
    */
   get(key: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      try {
-
-        this._db.transaction(tx => {
-          tx.executeSql("select key, value from kv where key = ? limit 1", [key], (tx, res) => {
-            if (res.rows.length > 0) {
-              let item = res.rows.item(0);
-              resolve(item.value);
-            }
-            resolve(null);
-          }, (tx, err) => {
-            reject({
-              tx: tx,
-              err: err
-            });
-          })
-        }, err => {
-          reject(err);
-        });
-
-      } catch(e) {
-        reject(e);
+    return this.query('select key, value from kv where key = ? limit 1', [key]).then(data => {
+      if (data.res.rows.length > 0) {
+        return data.res.rows.item(0);
       }
     });
   }
@@ -163,24 +132,7 @@ export class SqlStorage extends StorageEngine {
   * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
   */
   set(key: string, value: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      try {
-        this._db.transaction(tx => {
-          tx.executeSql('insert or replace into kv(key, value) values (?, ?)', [key, value], (tx, res) => {
-            resolve();
-          }, (tx, err) => {
-            reject({
-              tx: tx,
-              err: err
-            });
-          })
-        }, err => {
-          reject(err);
-        });
-      } catch(e) {
-        reject(e);
-      }
-    });
+    return this.query('insert or replace into kv(key, value) values (?, ?)', [key, value]);
   }
 
   /**
@@ -189,24 +141,10 @@ export class SqlStorage extends StorageEngine {
   * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
   */
   remove(key: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      try {
-        this._db.transaction(tx => {
-          tx.executeSql('delete from kv where key = ?', [key], (tx, res) => {
-            resolve();
-          }, (tx, err) => {
-            reject({
-              tx: tx,
-              err: err
-            });
-          })
-        }, err => {
-          reject(err);
-        });
-      } catch(e) {
-        reject(e);
-      }
-    });
+    return this.query('delete from kv where key = ?', [key]);
+  }
 
+  clear(): Promise<any> {
+    return this.query('delete from kv');
   }
 }

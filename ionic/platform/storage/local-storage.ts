@@ -30,51 +30,62 @@ import {StorageEngine} from './storage';
  * @see {@link /docs/v2/platform/storage/ Storage Platform Docs}
  */
 export class LocalStorage extends StorageEngine {
-  constructor(options={}) {
+  constructor(options = {}) {
     super();
   }
 
-/**
- * Get the value of a key in LocalStorage
- * @param {String} key the key you want to lookup in LocalStorage
- */
+  /**
+   * Get the value of a key in LocalStorage
+   * @param {String} key the key you want to lookup in LocalStorage
+   */
   get(key: string): Promise<string> {
     return new Promise((resolve, reject) => {
       try {
         let value = window.localStorage.getItem(key);
         resolve(value);
-      } catch(e) {
+      } catch (e) {
         reject(e);
       }
     });
   }
 
-/**
- * Set a key value pair and save it to LocalStorage
- * @param {String} key the key you want to save to LocalStorage
- * @param {Any} value the value of the key you're saving
- */
+  /**
+   * Set a key value pair and save it to LocalStorage
+   * @param {String} key the key you want to save to LocalStorage
+   * @param {Any} value the value of the key you're saving
+   */
   set(key: string, value: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         window.localStorage.setItem(key, value);
         resolve();
-      } catch(e) {
+      } catch (e) {
         reject(e);
       }
     });
   }
 
-/**
- * Remove a key from LocalStorage
- * @param {String} key the key you want to remove from LocalStorage
- */
+  /**
+   * Remove a key from LocalStorage
+   * @param {String} key the key you want to remove from LocalStorage
+   */
   remove(key: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         window.localStorage.removeItem(key);
         resolve();
-      } catch(e) {
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  clear(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      try {
+        window.localStorage.clear();
+        resolve();
+      } catch (e) {
         reject(e);
       }
     });
