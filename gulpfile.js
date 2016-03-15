@@ -471,13 +471,20 @@ gulp.task('e2e.build', function() {
  */
 gulp.task('tests', function() {
   return gulp.src('ionic/**/test/**/*.spec.ts')
+    .pipe(cache('tests'))
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .pipe(rename(function(file) {
       var regex = new RegExp(path.sep + 'test(' + path.sep + '|$)');
       file.dirname = file.dirname.replace(regex, path.sep);
     }))
     .pipe(gulp.dest('dist/tests'))
-})
+});
+
+gulp.task('watch.tests', ['tests'], function(){
+  watch('ionic/**/test/**/*.spec.ts', function(){
+    gulp.start('tests');
+  });
+});
 
 
 /**
@@ -687,7 +694,7 @@ gulp.task('karma', ['tests'], function() {
   return karma.start({ configFile: __dirname + '/scripts/karma/karma.conf.js' })
 });
 
-gulp.task('karma-watch', ['tests', 'watch'], function() {
+gulp.task('karma-watch', ['watch.tests', 'watch'], function() {
   var karma = require('karma').server;
   return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js' })
 });
