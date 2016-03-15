@@ -147,7 +147,9 @@ function($timeout, $ionicGesture, $window) {
 
             // freeze our scroll container if we have one
             var scrollScope = content.scope();
-            scrollScope.scrollCtrl && scrollScope.scrollCtrl.freezeScrollShut(!canScroll);
+            scrollScope &&
+              scrollScope.scrollCtrl &&
+              scrollScope.scrollCtrl.freezeScrollShut(!canScroll);
           },
           getTranslateX: function() {
             return $scope.sideMenuContentTranslateX || 0;
