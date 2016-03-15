@@ -28,7 +28,7 @@ ion-label + ion-input .text-input,
 ion-label + ion-textarea .text-input {
   margin-left: $item-ios-padding-left;
 
-  width: calc(100% - #{$item-ios-padding-left});
+  width: calc(100% - (#{$item-ios-padding-right} / 2) - #{$item-ios-padding-left});
 }
 
 

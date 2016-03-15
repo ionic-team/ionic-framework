@@ -8,6 +8,10 @@ $text-input-wp-background-color:            $list-wp-background-color !default;
 $text-input-wp-border-color:                $input-wp-border-color !default;
 $text-input-wp-border-width:                2px !default;
 
+$text-input-wp-margin-top:                  $item-wp-padding-top !default;
+$text-input-wp-margin-right:                ($item-wp-padding-right / 2) !default;
+$text-input-wp-margin-bottom:               $item-wp-padding-bottom !default;
+$text-input-wp-margin-left:                 ($item-wp-padding-left / 2) !default;
 $text-input-wp-padding-vertical:            0 !default;
 $text-input-wp-padding-horizontal:          8px !default;
 $text-input-wp-line-height:                 3rem !default;
@@ -27,8 +31,10 @@ $text-input-wp-input-clear-icon-size:       22px !default;
 // --------------------------------------------------
 
 .text-input {
-  margin: $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom ($item-wp-padding-left / 2);
+  margin: $text-input-wp-margin-top $text-input-wp-margin-right $text-input-wp-margin-bottom $text-input-wp-margin-left;
   padding: $text-input-wp-padding-vertical $text-input-wp-padding-horizontal;
+
+  width: calc(100% - #{$text-input-wp-margin-right} - #{$text-input-wp-margin-left});
 
   border: $text-input-wp-border-width solid $text-input-wp-border-color;
   line-height: $text-input-wp-line-height;
@@ -70,6 +76,8 @@ ion-input.ng-invalid.ng-touched .text-input {
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 0;
+
+  width: calc(100% - #{$text-input-wp-margin-right});
 }
 
 .item-label-floating .text-input.cloned-input {

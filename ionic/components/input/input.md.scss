@@ -9,6 +9,11 @@ $text-input-md-highlight-color:             map-get($colors-md, primary) !defaul
 $text-input-md-hightlight-color-valid:      map-get($colors-md, secondary) !default;
 $text-input-md-hightlight-color-invalid:    map-get($colors-md, danger) !default;
 
+$text-input-md-margin-top:                  $item-md-padding-top !default;
+$text-input-md-margin-right:                ($item-md-padding-right / 2) !default;
+$text-input-md-margin-bottom:               $item-md-padding-bottom !default;
+$text-input-md-margin-left:                 ($item-md-padding-left / 2) !default;
+
 $text-input-md-input-clear-icon-width:      30px !default;
 $text-input-md-input-clear-icon-color:      #5b5b5b !default;
 $text-input-md-input-clear-icon-svg:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $text-input-md-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
@@ -20,8 +25,10 @@ $text-input-md-input-clear-icon-size:       22px !default;
 // --------------------------------------------------
 
 .text-input {
-  margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom ($item-md-padding-left / 2);
+  margin: $text-input-md-margin-top $text-input-md-margin-right $text-input-md-margin-bottom $text-input-md-margin-left;
   padding: 0;
+
+  width: calc(100% - #{$text-input-md-margin-right} - #{$text-input-md-margin-left});
 }
 
 
@@ -70,6 +77,8 @@ ion-input.ng-invalid.ng-touched::after {
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 0;
+
+  width: calc(100% - #{$text-input-md-margin-right});
 }
 
 .item-label-stacked ion-select,
