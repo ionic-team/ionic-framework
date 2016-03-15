@@ -31,7 +31,7 @@
  * ```js
  * $scope.options = {
  *   loop: false,
- *   effect: fade,
+ *   effect: 'fade',
  *   speed: 500,
  * }
  * $scope.data = {};
