@@ -136,7 +136,10 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
         forEach(ITEM_TYPES, function(itemType) {
           headerBarInstance.removeItem(itemType);
         });
-        containerEle.scope().$destroy();
+
+        var scope = containerEle.scope();
+        scope && scope.$destroy();
+
         for (var n in navEle) {
           if (navEle[n]) {
             navEle[n].removeData();
