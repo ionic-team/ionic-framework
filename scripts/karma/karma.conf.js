@@ -22,6 +22,7 @@ module.exports = function(config) {
       'dist/bundles/ionic.system.js',
       //'node_modules/angular2/bundles/test_lib.js',
       { pattern: 'dist/tests/**/*.spec.js', included: false },
+      { pattern: 'dist/**/*.js', included: false, served: false },
       'scripts/karma/test-main.js'
     ],
 
