@@ -120,7 +120,7 @@ export class SqlStorage extends StorageEngine {
   get(key: string): Promise<any> {
     return this.query('select key, value from kv where key = ? limit 1', [key]).then(data => {
       if (data.res.rows.length > 0) {
-        return data.res.rows.item(0);
+        return data.res.rows.item(0).value;
       }
     });
   }
