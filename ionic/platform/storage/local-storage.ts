@@ -79,4 +79,15 @@ export class LocalStorage extends StorageEngine {
       }
     });
   }
+
+  clear(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      try {
+        window.localStorage.clear();
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
 }

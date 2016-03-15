@@ -142,6 +142,9 @@ export class SqlStorage extends StorageEngine {
   */
   remove(key: string): Promise<any> {
     return this.query('delete from kv where key = ?', [key]);
+  }
 
+  clear(): Promise<any> {
+    return this.query('delete from kv');
   }
 }

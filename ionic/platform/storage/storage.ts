@@ -51,6 +51,10 @@ export class Storage {
   query(query: string, params?: any) {
     return this._strategy.query(query, params);
   }
+
+  clear() {
+    return this._strategy.clear();
+  }
 }
 
 export interface IStorageEngine {
@@ -74,5 +78,8 @@ export class StorageEngine {
   }
   query(query: string, params?: any): Promise<any> {
     throw Error("query() not implemented for this storage engine");
+  }
+  clear(): Promise<any> {
+    throw Error("clear() not implemented for this storage engine");
   }
 }
