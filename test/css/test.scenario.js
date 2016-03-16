@@ -48,6 +48,8 @@ describe('css', function() {
     "search-ios",
     "search",
     "split-pane",
+    "tabs-active-color-ios",
+    "tabs-active-color-android",
     "tabs-and-cards",
     "tabs-android",
     "tabs-default",
