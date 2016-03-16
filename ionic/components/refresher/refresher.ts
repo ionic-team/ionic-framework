@@ -18,6 +18,10 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
  * enough to kick off the refreshing process. Once the async operation
  * has completed and the refreshing should end, call `complete()`.
  *
+ * Note: Do not wrap the `ion-refresher` in a `*ngIf`. It will not render
+ * properly this way. Please use the `enabled` property instead to
+ * display or hide the refresher.
+ *
  * @usage
  * ```html
  * <ion-content>
@@ -71,13 +75,13 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
  *
  * ## Further Customizing Refresher Content
  *
- * The `ion-refresher` component holds the refresh logic. 
- * It requires a child component in order to display the content. 
+ * The `ion-refresher` component holds the refresh logic.
+ * It requires a child component in order to display the content.
  * Ionic uses `ion-refresher-content` by default. This component
  * displays the refresher and changes the look depending
  * on the refresher's state. Separating these components
- * allows developers to create their own refresher content 
- * components. You could replace our default content with 
+ * allows developers to create their own refresher content
+ * components. You could replace our default content with
  * custom SVG or CSS animations.
  *
  * @demo /docs/v2/demos/refresher/
@@ -165,7 +169,7 @@ export class Refresher {
   @Input() snapbackDuration: number = 280;
 
   /**
-   * @input {boolean} If the refresher is enabled or not. Default is `true`.
+   * @input {boolean} If the refresher is enabled or not. This should be used in place of an `ngIf`. Default is `true`.
    */
   @Input()
   get enabled(): boolean {
