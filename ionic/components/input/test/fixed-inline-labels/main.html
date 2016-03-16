@@ -9,7 +9,11 @@
 
     <ion-item>
       <ion-label fixed>To</ion-label>
-      <ion-input [(ngModel)]="input1"></ion-input>
+      <ion-input [(ngModel)]="input1"
+        (blur)="onEvent($event)"
+        (input)="onEvent($event)"
+        (focus)="onEvent($event)">
+      </ion-input>
     </ion-item>
 
     <ion-item>
@@ -29,7 +33,11 @@
 
     <ion-item>
       <ion-label fixed>Comments</ion-label>
-      <ion-textarea value="Comment value"></ion-textarea>
+      <ion-textarea value="Comment value"
+        (blur)="onEvent($event)"
+        (input)="onEvent($event)"
+        (focus)="onEvent($event)">
+      </ion-textarea>
     </ion-item>
 
     <ion-item>

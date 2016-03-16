@@ -33,6 +33,8 @@ export class InputBase {
   @Input() clearInput;
   @Input() placeholder: string = '';
   @ViewChild(NativeInput) protected _native: NativeInput;
+  @Output() blur: EventEmitter<Event> = new EventEmitter;
+  @Output() focus: EventEmitter<Event> = new EventEmitter;
 
   constructor(
     config: Config,

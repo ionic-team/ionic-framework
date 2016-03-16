@@ -1,4 +1,4 @@
-import {Component, Optional, ElementRef} from 'angular2/core';
+import {Component, Optional, ElementRef, ViewChild} from 'angular2/core';
 import {NgIf, NgControl} from 'angular2/common';
 
 import {Button} from '../button/button';
@@ -65,7 +65,7 @@ import {Platform} from '../../platform/platform';
 @Component({
   selector: 'ion-input',
   template:
-    '<input [type]="type" [(ngModel)]="_value" [placeholder]="placeholder" class="text-input">' +
+    '<input [type]="type" [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input">' +
     '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<button clear *ngIf="clearInput && value" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
@@ -89,6 +89,20 @@ export class TextInput extends InputBase {
     @Optional() ngControl: NgControl
   ) {
     super(config, form, item, app, platform, elementRef, scrollView, nav, ngControl);
+  }
+
+  /**
+   * @private
+   */
+  inputBlurred(event) {
+    this.blur.emit(event);
+  }
+
+  /**
+   * @private
+   */
+  inputFocused(event) {
+    this.focus.emit(event);
   }
 }
 
@@ -134,7 +148,7 @@ export class TextInput extends InputBase {
 @Component({
   selector: 'ion-textarea',
   template:
-    '<textarea [(ngModel)]="_value" [placeholder]="placeholder" class="text-input"></textarea>' +
+    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input"></textarea>' +
     '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
   directives: [
@@ -166,5 +180,19 @@ export class TextArea extends InputBase {
     if (this._item) {
       this._item.setCssClass('item-textarea', true);
     }
+  }
+
+  /**
+   * @private
+   */
+  inputBlurred(event) {
+    this.blur.emit(event);
+  }
+
+  /**
+   * @private
+   */
+  inputFocused(event) {
+    this.focus.emit(event);
   }
 }
