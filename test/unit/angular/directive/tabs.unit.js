@@ -313,6 +313,19 @@ describe('tabs', function() {
       expect($state.includes).toHaveBeenCalledWith('def');
     }));
 
+    it('.stateMatchesViewParents', inject(function($state) {
+      spyOn($state, 'includes').andReturn(111);
+      var attr = {};
+      var ctrl = setup(attr);
+
+      expect(ctrl.stateMatchesViewParents()).toBeFalsy();
+      expect($state.includes).not.toHaveBeenCalled();
+
+      attr.viewParents = 'a';
+      expect(ctrl.stateMatchesViewParents()).toBe(111);
+      expect($state.includes).toHaveBeenCalledWith('a');
+    }));
+
     it('.navNameMatchesState', inject(function($ionicHistory) {
       spyOn($ionicHistory, 'isCurrentStateNavView').andReturn(123);
 
