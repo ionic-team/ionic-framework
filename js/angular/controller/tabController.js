@@ -21,7 +21,7 @@ function($scope, $ionicHistory, $attrs, $location, $state) {
     return this.navViewName && $ionicHistory.isCurrentStateNavView(this.navViewName);
   };
   this.stateMatchesViewParents = function() {
-    if(typeof $attrs.viewParents == undefined) {
+    if(typeof $attrs.viewParents == 'undefined') {
       return false;
     }
     this.viewParentMatched = false;
