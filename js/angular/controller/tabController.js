@@ -26,7 +26,7 @@ function($scope, $ionicHistory, $attrs, $location, $state) {
     }
     this.viewParentMatched = false;
     this.viewParents = $attrs.viewParents.split(' ');
-    for(var i=0; i<this.viewParents.length; i++) {
+    for(var i = 0; i < this.viewParents.length; i++) {
       if($state.includes(this.viewParents[i])) {
         this.viewParentMatched = true;
       }
