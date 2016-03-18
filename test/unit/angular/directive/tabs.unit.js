@@ -322,7 +322,7 @@ describe('tabs', function() {
       expect($state.includes).not.toHaveBeenCalled();
 
       attr.viewParents = 'a';
-      expect(ctrl.stateMatchesViewParents()).toBe(111);
+      expect(ctrl.stateMatchesViewParents()).toBe(true);
       expect($state.includes).toHaveBeenCalledWith('a');
     }));
 
