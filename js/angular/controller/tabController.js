@@ -21,14 +21,17 @@ function($scope, $ionicHistory, $attrs, $location, $state) {
     return this.navViewName && $ionicHistory.isCurrentStateNavView(this.navViewName);
   };
   this.stateMatchesViewParents = function() {
-    if(typeof $attrs.viewParents == undefined)
+    if(typeof $attrs.viewParents == undefined) {
       return false;
-    this.viewParentMatched = false; this.viewParents = $attrs.viewParents.split(' ');
-    for(var i=0; i<this.viewParents.length; i++) {
-      if($state.includes(this.viewParents[i]))
-        this.viewParentMatched = true;
     }
-    return this.viewParentMatched
+    this.viewParentMatched = false;
+    this.viewParents = $attrs.viewParents.split(' ');
+    for(var i=0; i<this.viewParents.length; i++) {
+      if($state.includes(this.viewParents[i])) {
+        this.viewParentMatched = true;
+      }
+    }
+    return this.viewParentMatched;
   };
   this.tabMatchesState = function() {
     return this.hrefMatchesState() || this.srefMatchesState() || this.navNameMatchesState() || this.stateMatchesViewParents();
