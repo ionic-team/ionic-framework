@@ -140,7 +140,7 @@ export class ActionSheet extends ViewController {
     * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
     * | text     | `string` | The buttons text                                                                                                                                 |
     * | icon     | `icon`   | The buttons icons                                                                                                                                |
-    * | handler  | `any`    | An express the button shoule evaluate                                                                                                            |
+    * | handler  | `any`    | An express the button should evaluate                                                                                                            |
     * | cssClass | `string` | An additional class for custom styles                                                                                                            |
     * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles |
     *
