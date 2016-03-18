@@ -44,7 +44,7 @@ export class Login {
      </ion-content>
     </ion-menu>
 
-    <ion-nav id="account-nav" [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>
+    <ion-nav id="account-nav" [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
   `
 })
 export class Account {
@@ -135,7 +135,7 @@ export class Profile {
 
 
 @App({
-  template: `<ion-nav id="root-nav" [root]="rootPage" swipe-back-enabled="false"></ion-nav>`
+  template: `<ion-nav id="root-nav" [root]="rootPage" swipeBackEnabled="false"></ion-nav>`
 })
 class E2EApp {
   constructor() {
