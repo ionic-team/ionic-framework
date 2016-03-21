@@ -67,7 +67,7 @@ ion-action-sheet {
 
 .action-sheet-button {
   padding: $action-sheet-ios-button-padding;
-
+  margin: 0;
   min-height: $action-sheet-ios-button-min-height;
 
   border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
