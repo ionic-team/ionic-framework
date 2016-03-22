@@ -108,9 +108,9 @@ export class NavController extends Ion {
   private _init = false;
   private _trans: Transition;
   private _sbGesture: SwipeBackGesture;
-  private _sbEnabled: boolean;
   private _sbThreshold: number;
 
+  protected _sbEnabled: boolean;
   protected _ids: number = -1;
   protected _trnsDelay: any;
   protected _trnsTime: number = 0;
@@ -1288,7 +1288,7 @@ export class NavController extends Ion {
     let shouldResetZIndex = this._views.some(v => v.zIndex < 0);
     if (shouldResetZIndex) {
       this._views.forEach(view => {
-        view.setZIndex( view.zIndex + INIT_ZINDEX + 1, this._renderer );
+        view.setZIndex(view.zIndex + INIT_ZINDEX + 1, this._renderer);
       });
     }
   }
@@ -1401,7 +1401,7 @@ export class NavController extends Ion {
       // start the transition, fire callback when done...
       this._transition(enteringView, leavingView, opts, (hasCompleted: boolean) => {
         // swipe back has finished!!
-	      console.debug('swipeBack, hasCompleted', hasCompleted);
+        console.debug('swipeBack, hasCompleted', hasCompleted);
       });
     }
   }
@@ -1463,18 +1463,6 @@ export class NavController extends Ion {
         this._sbGesture.unlisten();
       }
     }
-  }
-
-  /**
-   * @input {boolean} Whether it's possible to swipe-to-go-back on this nav controller or not.
-   */
-  @Input()
-  get swipeBackEnabled(): boolean {
-    return this._sbEnabled;
-  }
-
-  set swipeBackEnabled(val: boolean) {
-    this._sbEnabled = isTrueProperty(val);
   }
 
   /**
@@ -1572,7 +1560,7 @@ export class NavController extends Ion {
    * @returns {viewController}
    */
   getPrevious(view: ViewController): ViewController {
-    return this.getByIndex( this.indexOf(view) - 1 );
+    return this.getByIndex(this.indexOf(view) - 1);
   }
 
   /**

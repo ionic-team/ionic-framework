@@ -3,6 +3,7 @@ import {Component, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
+import {isTrueProperty} from '../../util/util';
 import {NavController} from './nav-controller';
 import {ViewController} from './view-controller';
 
@@ -42,10 +43,10 @@ import {ViewController} from './view-controller';
  * Nav will automatically add a back button to it if there is a page
  * before the one you are navigating to in the navigation stack.
  *
- * Additionally, specifying the `swipe-back-enabled` property will allow you to
+ * Additionally, specifying the `swipeBackEnabled` property will allow you to
  * swipe to go back:
  * ```html
- * <ion-nav swipe-back-enabled="false" [root]="rootPage"></ion-nav>
+ * <ion-nav swipeBackEnabled="false" [root]="rootPage"></ion-nav>
  * ```
  *
  * Here is a diagram of how Nav animates smoothly between pages:
@@ -144,6 +145,18 @@ export class Nav extends NavController {
     if (this._hasInit) {
       this.setRoot(page);
     }
+  }
+
+  /**
+   * @input {boolean} Whether it's possible to swipe-to-go-back on this nav controller or not.
+   */
+  @Input()
+  get swipeBackEnabled(): boolean {
+    return this._sbEnabled;
+  }
+
+  set swipeBackEnabled(val: boolean) {
+    this._sbEnabled = isTrueProperty(val);
   }
 
   /**
