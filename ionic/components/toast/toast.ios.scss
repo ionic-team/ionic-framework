@@ -1,0 +1,39 @@
+// iOS Toast
+// --------------------------------------------------
+$toast-ios-text-align:                            left !default;
+$toast-ios-background:                            rgba(0, 0, 0, 0.70) !default;
+$toast-ios-border-radius:                         0.65rem !default;
+
+$toast-ios-title-color:                           #fff !default;
+$toast-ios-title-font-size:                       1.4rem !default;
+$toast-ios-title-padding:                         1.5rem !default;
+
+ion-toast {
+  display: block;
+  height: $toast-width;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: $toast-width;
+  z-index: $z-index-overlay;
+}
+
+.toast-wrapper {
+  background: $toast-ios-background;
+  border-radius: $toast-ios-border-radius;
+  bottom: 10px;
+  display: block;
+  left: 10px;
+  margin: auto;
+  max-width: $toast-max-width;
+  position: absolute;
+  right: 10px;
+  transform: translate3d(0, 100%, 0);
+  z-index: $z-index-overlay-wrapper;
+}
+
+.toast-message {
+  color: $toast-ios-title-color;
+  font-size: $toast-ios-title-font-size;
+  padding: $toast-ios-title-padding;
+}

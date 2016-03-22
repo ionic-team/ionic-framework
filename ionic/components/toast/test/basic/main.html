@@ -1,0 +1,11 @@
+<ion-navbar *navbar>
+  <ion-title>Toasts</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+  <button block (click)="showToast()">Show Toast</button>
+  <button block (click)="showLongToast()">Show Long Toast</button>
+  <br />
+  <button block (click)="showDismissDurationToast()">Custom (1.5s) Duration</button>
+  <button block (click)="showToastWithCloseButton()">With closeButtonText</button>
+</ion-content>
