@@ -99,22 +99,22 @@ tab-highlight {
 // Material Design  Tabbar Color Mixin
 // --------------------------------------------------
 
-@mixin tabbar-md($color-name, $color-value) {
+@mixin tabbar-md($color-name, $color-base, $color-contrast) {
 
   ion-tabs[#{$color-name}] tabbar {
-    background-color: $color-value;
+    background-color: $color-base;
 
     .tab-button {
-      color: color-inverse($color-value);
+      color: $color-contrast;
     }
 
     .tab-button:hover:not(.disable-hover),
     .tab-button[aria-selected=true] {
-      color: color-inverse($color-value);
+      color: $color-contrast;
     }
 
     tab-highlight {
-      background: color-inverse($color-value);
+      background: $color-contrast;
     }
   }
 
@@ -124,6 +124,6 @@ tab-highlight {
 // Material Design Tabbar Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
-  @include tabbar-md($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  @include tabbar-md($color-name, $color-base, $color-contrast);
 }

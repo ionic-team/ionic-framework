@@ -141,9 +141,10 @@
 // map key | map value | hex color not in map
 // --------------------------------------------------
 //
+// @param {Boolean} $toolbar-button - MD toolbar button
 // @return {Color}
 // --------------------------------------------------
-@function color-contrast($colors, $value) {
+@function color-contrast($colors, $value, $toolbar-button: null) {
   $color-value: null;
 
   // If the value is a color (i.e. #fff)
@@ -162,6 +163,8 @@
   // If the value is a map
   @if(type-of($color-value) == map) {
     $color-value: map-get($color-value, contrast);
+  } @elseif ($toolbar-button) {
+    $color-value: toolbar-button-inverse($color-value);
   } @else {
     $color-value: color-inverse($color-value);
   }

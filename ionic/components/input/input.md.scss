@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 $text-input-md-background-color:            $list-md-background-color !default;
-$text-input-md-highlight-color:             map-get($colors-md, primary) !default;
-$text-input-md-hightlight-color-valid:      map-get($colors-md, secondary) !default;
-$text-input-md-hightlight-color-invalid:    map-get($colors-md, danger) !default;
+$text-input-md-highlight-color:             color($colors-md, primary) !default;
+$text-input-md-hightlight-color-valid:      color($colors-md, secondary) !default;
+$text-input-md-hightlight-color-invalid:    color($colors-md, danger) !default;
 
 $text-input-md-margin-top:                  $item-md-padding-top !default;
 $text-input-md-margin-right:                ($item-md-padding-right / 2) !default;

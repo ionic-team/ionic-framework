@@ -47,6 +47,7 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 
   &.activated,
   &.segment-activated {
+    opacity: 1;    
     border-color: $segment-button-md-border-color-activated;
   }
 }
@@ -68,15 +69,15 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 // Material Design Segment Button Mixin
 // --------------------------------------------------
 
-@mixin md-segment-button($color-name, $color-value) {
+@mixin md-segment-button($color-name, $color-base, $color-contrast) {
 
   ion-segment[#{$color-name}] .segment-button {
-    color: $color-value;
+    color: $color-base;
 
     &.activated,
     &.segment-activated {
-      border-color: $color-value;
-      color: $color-value;
+      border-color: $color-base;
+      color: $color-base;
       opacity: 1;
     }
   }
@@ -87,6 +88,6 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 // Material Design Segment Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
-  @include md-segment-button($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  @include md-segment-button($color-name, $color-base, $color-contrast);
 }

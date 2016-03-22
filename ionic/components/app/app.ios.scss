@@ -25,7 +25,6 @@ hr {
 }
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-
   h1,
   h2,
   h3,

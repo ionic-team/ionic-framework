@@ -3,12 +3,12 @@
 // Material Design Dark Theme
 // ----------------------------------
 
-$colors-md: map-merge($colors, ()) !default;
+$colors-md: copy-colors($colors) !default;
 
 
 $text-md-color:                       $text-color !default;
 $paragraph-md-color:                  $paragraph-color !default;
-$link-md-color:                       map-get($colors-md, primary) !default;
+$link-md-color:                       color($colors-md, primary) !default;
 $background-md-color:                 $background-color !default;
 $subdued-text-md-color:               $subdued-text-color !default;
 
@@ -58,11 +58,11 @@ $item-md-padding-media-bottom:        9px !default;
 $item-md-padding-icon-top:            11px !default;
 $item-md-padding-icon-bottom:         10px !default;
 $item-md-divider-background:          #151515 !default;
-$item-md-divider-color:               map-get($colors-md, light) !default;
+$item-md-divider-color:               color($colors-md, light) !default;
 
 // Material Design Toggle
 // ---------------------------------------------------
-$toggle-md-handle-background-color-off: map-get($colors-md, light) !default;
+$toggle-md-handle-background-color-off: color($colors-md, light) !default;
 
 
 // Ripple Color

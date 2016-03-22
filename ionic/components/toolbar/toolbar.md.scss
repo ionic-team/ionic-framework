@@ -65,12 +65,12 @@ ion-navbar-section {
   color: $toolbar-md-text-color;
 }
 
-@mixin md-toolbar-theme($color-name, $color-value) {
+@mixin md-toolbar-theme($color-name, $color-base, $color-contrast) {
   .toolbar[#{$color-name}] {
-    $fg-color: toolbar-button-inverse($color-value);
+    $fg-color: color-contrast($colors-md, $color-base, true);
 
     .toolbar-background {
-      background: $color-value;
+      background: $color-base;
     }
 
     .bar-button-default,
@@ -90,10 +90,10 @@ ion-navbar-section {
       border-color: $fg-color;
     }
 
-    @each $color-name, $color-value in $colors-md {
-      @include md-bar-button-default($color-name, $color-value);
-      @include md-bar-button-outline($color-name, $color-value);
-      @include md-bar-button-solid($color-name, $color-value);
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+      @include md-bar-button-default($color-name, $color-base, $color-contrast);
+      @include md-bar-button-outline($color-name, $color-base, $color-contrast);
+      @include md-bar-button-solid($color-name, $color-base, $color-contrast);
     }
   }
 }
@@ -154,14 +154,14 @@ ion-buttons[right] {
   overflow: hidden;
 }
 
-@mixin md-bar-button-default($color-name, $color-value) {
+@mixin md-bar-button-default($color-name, $color-base, $color-contrast) {
 
   .bar-button-#{$color-name} {
-    color: $color-value;
+    color: $color-base;
     background-color: transparent;
 
     &:hover:not(.disable-hover) {
-      color: $color-value;
+      color: $color-base;
     }
   }
 
@@ -183,21 +183,21 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: color-inverse($bar-button-md-color);
+    color: color-contrast($colors-md, $bar-button-md-color);
     background-color: $bar-button-md-color;
   }
 }
 
-@mixin md-bar-button-outline($color-name, $color-value) {
+@mixin md-bar-button-outline($color-name, $color-base, $color-contrast) {
 
   .bar-button-outline-#{$color-name} {
-    $fg-color: color-shade($color-value);
+    $fg-color: color-shade($color-base);
     border-color: $fg-color;
     color: $fg-color;
     background-color: transparent;
 
     &.activated {
-      color: color-inverse($fg-color);
+      color: $color-contrast;
       background-color: $fg-color;
     }
   }
@@ -209,27 +209,28 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: color-inverse($bar-button-md-color);
+  color: color-contrast($colors-md, $bar-button-md-color);
   background-color: $bar-button-md-color;
 
   &:hover:not(.disable-hover) {
-    color: color-inverse($bar-button-md-color);
+    color: color-contrast($colors-md, $bar-button-md-color);
   }
 
   &.activated {
-    color: color-inverse($bar-button-md-color);
+    color: color-contrast($colors-md, $bar-button-md-color);
     background-color: color-shade($bar-button-md-color);
   }
 }
 
-@mixin md-bar-button-solid($color-name, $color-value) {
+@mixin md-bar-button-solid($color-name, $color-base, $color-contrast) {
 
   .bar-button-solid-#{$color-name} {
-    color: color-inverse($color-value);
-    background-color: $color-value;
+    color: $color-contrast;
+    background-color: $color-base;
 
     &.activated {
-      background-color: color-shade($color-value);
+      color: $color-contrast;       
+      background-color: color-shade($color-base);
     }
   }
 
@@ -324,11 +325,11 @@ ion-buttons[right] {
 // Material Design Toolbar Color Generation
 // --------------------------------------------------
 
-@include md-bar-button-default(default, $bar-button-md-color);
+@include md-bar-button-default(default, $bar-button-md-color, color-contrast($colors-md, $bar-button-md-color));
 
-@each $color-name, $color-value in $colors-md {
-  @include md-toolbar-theme($color-name, $color-value);
-  @include md-bar-button-default($color-name, $color-value);
-  @include md-bar-button-outline($color-name, $color-value);
-  @include md-bar-button-solid($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  @include md-toolbar-theme($color-name, $color-base, $color-contrast);
+  @include md-bar-button-default($color-name, $color-base, $color-contrast);
+  @include md-bar-button-outline($color-name, $color-base, $color-contrast);
+  @include md-bar-button-solid($color-name, $color-base, $color-contrast);
 }
