@@ -7,7 +7,7 @@
 $segment-button-ios-background-color:           transparent !default;
 $segment-button-ios-background-color-activated: $toolbar-ios-active-color !default;
 
-$segment-button-ios-text-color:                 color-inverse($segment-button-ios-background-color-activated) !default;
+$segment-button-ios-text-color:                 color-contrast($colors-ios, $segment-button-ios-background-color-activated) !default;
 $segment-button-ios-activated-transition:       100ms all linear !default;
 $segment-button-ios-hover-transition:           100ms all linear !default;
 $segment-button-ios-active-transition:          100ms all linear !default;
@@ -115,23 +115,23 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 // iOS Segment Button Mixin
 // --------------------------------------------------
 
-@mixin ios-segment-button($color-name, $color-value) {
+@mixin ios-segment-button($color-name, $color-base, $color-contrast) {
 
   ion-segment[#{$color-name}] .segment-button {
-    border-color: $color-value;
-    color: $color-value;
+    border-color: $color-base;
+    color: $color-base;
 
     &:hover:not(.segment-activated) {
-      background-color: rgba($color-value, $segment-button-ios-hover-opacity);
+      background-color: rgba($color-base, $segment-button-ios-hover-opacity);
     }
 
     &:active:not(.segment-activated) {
-      background-color: rgba($color-value, $segment-button-ios-active-opacity);
+      background-color: rgba($color-base, $segment-button-ios-active-opacity);
     }
 
     &.segment-activated {
-      color: color-inverse($color-value);
-      background-color: $color-value;
+      color: $color-contrast;
+      background-color: $color-base;
     }
   }
 
@@ -141,10 +141,11 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 // iOS Segment Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
-  @include ios-segment-button($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  @include ios-segment-button($color-name, $color-base, $color-contrast);
 
   .toolbar[#{$color-name}] .segment-button.segment-activated {
-    color: $color-value;
+    color: $color-base;
   }
 }

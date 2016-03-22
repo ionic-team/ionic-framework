@@ -3,13 +3,14 @@
 // iOS Badge
 // --------------------------------------------------
 
-$badge-ios-border-radius:             10px !default;
-$badge-ios-background-color:          map-get($colors-ios, primary) !default;
+$badge-ios-border-radius:      10px !default;
+$badge-ios-background-color:   color($colors-ios, primary) !default;
+$badge-ios-text-color:         color-contrast($colors-ios, $badge-ios-background-color) !default;
 
 
 ion-badge {
   border-radius: $badge-ios-border-radius;
-  color: color-inverse($badge-ios-background-color);
+  color: $badge-ios-text-color;
   background-color: $badge-ios-background-color;
 }
 
@@ -17,11 +18,11 @@ ion-badge {
 // Generate iOS Badge Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
   .badge-#{$color-name} {
-    color: color-inverse($color-value);
-    background-color: $color-value;
+    color: $color-contrast;
+    background-color: $color-base;
   }
 
 }

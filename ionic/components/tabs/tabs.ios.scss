@@ -114,19 +114,19 @@ ion-tabs[tabbarPlacement=top] tabbar {
 // iOS Tabbar Color Mixin
 // --------------------------------------------------
 
-@mixin tabbar-ios($color-name, $color-value) {
+@mixin tabbar-ios($color-name, $color-base, $color-contrast) {
 
   ion-tabs[#{$color-name}] tabbar {
-    border-color: darken($color-value, 10%);
-    background-color: $color-value;
+    border-color: darken($color-base, 10%);
+    background-color: $color-base;
 
     .tab-button {
-      color: color-inverse($color-value);
+      color: $color-contrast;
     }
 
     .tab-button:hover:not(.disable-hover),
     .tab-button[aria-selected=true] {
-      color: color-inverse($color-value);
+      color: $color-contrast;
     }
   }
 
@@ -136,6 +136,7 @@ ion-tabs[tabbarPlacement=top] tabbar {
 // iOS Tabbar Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
-  @include tabbar-ios($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  @include tabbar-ios($color-name, $color-base, $color-contrast);
 }

@@ -86,17 +86,17 @@ ion-title {
   pointer-events: none;
 }
 
-@mixin ios-toolbar-theme($color-name, $color-value) {
+@mixin ios-toolbar-theme($color-name, $color-base, $color-contrast) {
   .toolbar[#{$color-name}] {
 
     .toolbar-background {
-      border-color: darken($color-value, 10%);
-      background: $color-value;
+      border-color: darken($color-base, 10%);
+      background: $color-base;
     }
 
     .toolbar-title,
     .bar-button-default {
-      color: color-inverse($color-value);
+      color: $color-contrast;
     }
   }
 }
@@ -142,15 +142,14 @@ ion-buttons[right] {
   font-size: $toolbar-ios-button-font-size;
 }
 
-@mixin ios-bar-button-default($color-name, $color-value) {
+@mixin ios-bar-button-default($color-name, $color-base, $color-contrast) {
 
   .bar-button-#{$color-name} {
-    $fg-color: $color-value;
-    color: $fg-color;
+    color: $color-base;
     background-color: transparent;
 
     &:hover:not(.disable-hover) {
-      color: $fg-color;
+      color: $color-base;
     }
 
     &.activated {
@@ -176,21 +175,21 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: color-inverse($bar-button-ios-color);
+    color: color-contrast($colors-ios, $bar-button-ios-color);
     background-color: $bar-button-ios-color;
   }
 }
 
-@mixin ios-bar-button-outline($color-name, $color-value) {
+@mixin ios-bar-button-outline($color-name, $color-base, $color-contrast) {
 
   .bar-button-outline-#{$color-name} {
-    $fg-color: color-shade($color-value);
+    $fg-color: color-shade($color-base);
     border-color: $fg-color;
     color: $fg-color;
     background-color: transparent;
 
     &.activated {
-      color: color-inverse($fg-color);
+      color: $color-contrast;
       background-color: $fg-color;
     }
   }
@@ -202,29 +201,30 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: color-inverse($bar-button-ios-color);
+  color: color-contrast($colors-ios, $bar-button-ios-color);
   background-color: $bar-button-ios-color;
 
   &:hover:not(.disable-hover) {
-    color: color-inverse($bar-button-ios-color);
+    color: color-contrast($colors-ios, $bar-button-ios-color);
     opacity: .4;
   }
 
   &.activated {
-    color: color-inverse($bar-button-ios-color);
+    color: color-contrast($colors-ios, $bar-button-ios-color);
     background-color: color-shade($bar-button-ios-color);
     opacity: .4;
   }
 }
 
-@mixin ios-bar-button-solid($color-name, $color-value) {
+@mixin ios-bar-button-solid($color-name, $color-base, $color-contrast) {
 
   .bar-button-solid-#{$color-name} {
-    color: color-inverse($color-value);
-    background-color: $color-value;
+    color: $color-contrast;
+    background-color: $color-base;
 
     &.activated {
-      background-color: color-shade($color-value);
+      color: $color-contrast;
+      background-color: color-shade($color-base);
     }
   }
 
@@ -327,11 +327,11 @@ ion-buttons[right] {
 // iOS Toolbar Color Generation
 // --------------------------------------------------
 
-@include ios-bar-button-default(default, $bar-button-ios-color);
+@include ios-bar-button-default(default, $bar-button-ios-color, color-contrast($colors-ios, $bar-button-ios-color));
 
-@each $color-name, $color-value in $colors-ios {
-  @include ios-toolbar-theme($color-name, $color-value);
-  @include ios-bar-button-default($color-name, $color-value);
-  @include ios-bar-button-outline($color-name, $color-value);
-  @include ios-bar-button-solid($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+  @include ios-toolbar-theme($color-name, $color-base, $color-contrast);
+  @include ios-bar-button-default($color-name, $color-base, $color-contrast);
+  @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
+  @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
 }

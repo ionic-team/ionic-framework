@@ -4,18 +4,18 @@
 // --------------------------------------------------
 
 $checkbox-ios-background-color-off:       $list-ios-background-color !default;
-$checkbox-ios-background-color-on:        map-get($colors-ios, primary) !default;
+$checkbox-ios-background-color-on:        color($colors-ios, primary) !default;
 
 $checkbox-ios-icon-size:                  21px !default;
-$checkbox-ios-icon-border-color-on:       map-get($colors-ios, primary) !default;
 $checkbox-ios-icon-border-color-off:      $list-ios-border-color !default;
+$checkbox-ios-icon-border-color-on:       $checkbox-ios-background-color-on !default;
 $checkbox-ios-icon-border-width:          1px !default;
 $checkbox-ios-icon-border-style:          solid !default;
 $checkbox-ios-icon-border-radius:         50% !default;
 
 $checkbox-ios-icon-checkmark-width:       1px !default;
 $checkbox-ios-icon-checkmark-style:       solid !default;
-$checkbox-ios-icon-checkmark-color:       $background-ios-color !default;
+$checkbox-ios-icon-checkmark-color:       color-contrast($colors-ios, $checkbox-ios-background-color-on) !default;
 
 $checkbox-ios-media-margin:               $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom 2px !default;
 
@@ -99,14 +99,14 @@ ion-checkbox {
 // iOS Checkbox Color Mixin
 // --------------------------------------------------
 
-@mixin checkbox-theme-ios($color-name, $bg-on) {
+@mixin checkbox-theme-ios($color-name, $color-base, $color-contrast) {
 
   ion-checkbox[#{$color-name}] .checkbox-checked {
-    border-color: $bg-on;
-    background-color: $bg-on;
+    border-color: $color-base;
+    background-color: $color-base;
 
     .checkbox-inner {
-      border-color: color-inverse($bg-on);
+      border-color: $color-contrast;
     }
   }
 
@@ -116,6 +116,6 @@ ion-checkbox {
 // Generate iOS Checkbox Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
-  @include checkbox-theme-ios($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+  @include checkbox-theme-ios($color-name, $color-base, $color-contrast);
 }

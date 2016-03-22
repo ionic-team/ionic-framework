@@ -8,7 +8,7 @@ $colors-ios: copy-colors($colors) !default;
 
 $text-ios-color:                       $text-color !default;
 $paragraph-ios-color:                  $paragraph-color !default;
-$link-ios-color:                       map-get($colors-ios, primary) !default;
+$link-ios-color:                       color($colors-ios, primary) !default;
 $background-ios-color:                 $background-color !default;
 $subdued-text-ios-color:               $subdued-text-color !default;
 

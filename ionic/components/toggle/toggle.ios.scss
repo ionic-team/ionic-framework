@@ -11,7 +11,7 @@ $toggle-ios-border-radius:             $toggle-ios-height / 2 !default;
 $toggle-ios-background-color-off:      $list-ios-background-color !default;
 $toggle-ios-border-color-off:          grayscale(lighten($list-ios-border-color, 11%)) !default;
 
-$toggle-ios-background-color-on:       map-get($colors-ios, primary) !default;
+$toggle-ios-background-color-on:       color($colors-ios, primary) !default;
 
 $toggle-ios-handle-width:              $toggle-ios-height - ($toggle-ios-border-width * 2) !default;
 $toggle-ios-handle-height:             $toggle-ios-handle-width !default;
@@ -171,10 +171,10 @@ ion-toggle {
 // iOS Toggle Color Mixin
 // --------------------------------------------------
 
-@mixin ios-toggle-theme($color-name, $color-value) {
+@mixin ios-toggle-theme($color-name, $color-base) {
 
   ion-toggle[#{$color-name}] .toggle-checked {
-    background-color: $color-value;
+    background-color: $color-base;
   }
 
 }
@@ -183,8 +183,8 @@ ion-toggle {
 // Generate iOS Toggle Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  @include ios-toggle-theme($color-name, $color-value);
+  @include ios-toggle-theme($color-name, $color-base);
 
 }

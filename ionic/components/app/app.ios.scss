@@ -24,7 +24,8 @@ hr {
   height: $hairlines-width;
 }
 
-@each $color-name, $color-value in $colors-ios {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
   h1,
   h2,
   h3,
@@ -43,7 +44,7 @@ hr {
   sup,
   ion-icon {
     &[#{$color-name}] {
-      color: $color-value;
+      color: $color-base;
     }
   }
 }
