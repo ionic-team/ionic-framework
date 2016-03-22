@@ -19,7 +19,7 @@ hr {
   background-color: rgba(0, 0, 0, .08);
 }
 
-@each $color-name, $color-value in $colors-md {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
   h1,
   h2,
   h3,
@@ -38,7 +38,7 @@ hr {
   sup,
   ion-icon {
     &[#{$color-name}] {
-      color: $color-value;
+      color: $color-base;
     }
   }
 }

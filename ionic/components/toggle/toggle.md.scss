@@ -3,7 +3,7 @@
 // Material Design Toggle
 // --------------------------------------------------
 
-$toggle-md-active-color:                 map-get($colors-md, primary) !default;
+$toggle-md-active-color:                 color($colors-md, primary) !default;
 
 $toggle-md-track-width:                  36px !default;
 $toggle-md-track-height:                 14px !default;
@@ -123,16 +123,16 @@ ion-toggle {
 // Material Design Color Mixin
 // --------------------------------------------------
 
-@mixin toggle-theme-md($color-name, $color-value) {
+@mixin toggle-theme-md($color-name, $color-base) {
 
   ion-toggle[#{$color-name}] {
 
     .toggle-checked {
-      background-color: lighten($color-value, 25%);
+      background-color: lighten($color-base, 25%);
     }
 
     .toggle-checked .toggle-inner {
-      background-color: $color-value;
+      background-color: $color-base;
     }
 
   }
@@ -143,8 +143,8 @@ ion-toggle {
 // Generate Material Design Toggle Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  @include toggle-theme-md($color-name, $color-value);
+  @include toggle-theme-md($color-name, $color-base);
 
 }

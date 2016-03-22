@@ -1,18 +1,18 @@
 @import "./chip";
 
-// Material Design Chip
+// iOS Chip
 // --------------------------------------------------
 
 
-// Generate Material Design Chip Colors
+// Generate iOS Chip Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
   ion-chip {
     ion-icon[#{$color-name}] {
-      color: color-inverse($color-value);
-      background-color: $color-value;
+      color: $color-contrast;
+      background-color: $color-base;
     }
   }
 

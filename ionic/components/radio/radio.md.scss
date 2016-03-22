@@ -3,7 +3,7 @@
 // Material Design Radio
 // --------------------------------------------------
 
-$radio-md-color-on:               map-get($colors-md, primary) !default;
+$radio-md-color-on:               color($colors-md, primary) !default;
 $radio-md-color-off:              darken($list-md-border-color, 40%) !default;
 
 $radio-md-icon-width:             16px !default;
@@ -116,16 +116,16 @@ ion-radio {
 // Material Design Radio Color Mixin
 // --------------------------------------------------
 
-@mixin radio-theme-md($color-name, $color-value) {
+@mixin radio-theme-md($color-name, $color-base, $color-contrast) {
 
   ion-radio[#{$color-name}] {
 
     .radio-checked {
-      border-color: $color-value;
+      border-color: $color-base;
     }
 
     .radio-inner {
-      background-color: $color-value;
+      background-color: $color-base;
     }
 
   }
@@ -136,8 +136,8 @@ ion-radio {
 // Generate Material Design Radio Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  @include radio-theme-md($color-name, $color-value);
+  @include radio-theme-md($color-name, $color-base, $color-contrast);
 
 }

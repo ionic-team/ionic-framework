@@ -12,18 +12,18 @@ $checkbox-md-media-margin:               $item-md-padding-media-top 36px $item-m
 $checkbox-md-disabled-opacity:           .3 !default;
 
 $checkbox-md-icon-background-color-off:  $list-md-background-color !default;
-$checkbox-md-icon-background-color-on:   map-get($colors-md, primary) !default;
+$checkbox-md-icon-background-color-on:   color($colors-md, primary) !default;
 $checkbox-md-icon-size:                  16px !default;
 
 $checkbox-md-icon-checkmark-width:       2px !default;
 $checkbox-md-icon-checkmark-style:       solid !default;
-$checkbox-md-icon-checkmark-color:       $background-md-color !default;
+$checkbox-md-icon-checkmark-color:       color-contrast($colors-md, $checkbox-md-icon-background-color-on) !default;
 
 $checkbox-md-icon-border-width:          2px !default;
 $checkbox-md-icon-border-style:          solid !default;
 $checkbox-md-icon-border-radius:         2px !default;
 $checkbox-md-icon-border-color-off:      darken($list-md-border-color, 40%) !default;
-$checkbox-md-icon-border-color-on:       map-get($colors-md, primary) !default;
+$checkbox-md-icon-border-color-on:       color($colors-md, primary) !default;
 
 $checkbox-md-transition-duration:        280ms !default;
 $checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1) !default;
@@ -114,14 +114,14 @@ ion-checkbox + .item-inner ion-label {
 // Material Design Checkbox Color Mixin
 // --------------------------------------------------
 
-@mixin checkbox-theme-md($color-name, $bg-on) {
+@mixin checkbox-theme-md($color-name, $color-base, $color-contrast) {
 
   ion-checkbox[#{$color-name}] .checkbox-checked {
-    border-color: $bg-on;
-    background-color: $bg-on;
+    border-color: $color-base;
+    background-color: $color-base;
 
     .checkbox-inner {
-      border-color: color-inverse($bg-on);
+      border-color: $color-contrast;
     }
   }
 
@@ -131,6 +131,6 @@ ion-checkbox + .item-inner ion-label {
 // Generate Material Design Checkbox Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
-  @include checkbox-theme-md($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  @include checkbox-theme-md($color-name, $color-base, $color-contrast);
 }

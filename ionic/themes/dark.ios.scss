@@ -3,30 +3,34 @@
 // iOS Dark Theme
 // ----------------------------------
 
-$colors-ios: map-merge($colors, ()) !default;
+$colors-ios: copy-colors($colors) !default;
 
 $text-ios-color:                       $text-color !default;
 $paragraph-ios-color:                  $paragraph-color !default;
-$link-ios-color:                       map-get($colors-ios, primary) !default;
+$link-ios-color:                       color($colors-ios, primary) !default;
 $background-ios-color:                 $background-color !default;
 $subdued-text-ios-color:               $subdued-text-color !default;
 
 $font-family-ios-base:                 $font-family-base !default;
 $font-size-ios-base:                   $font-size-base !default;
 
+
 // iOS Outer content
 // --------------------------------------------------
-$outer-content-ios-background-color:   $background-color !default;
+$content-ios-outer-background:         $background-color !default;
+
 
 // iOS Card
 // --------------------------------------------------
 
 $card-ios-header-color:                #ddd !default;
 
+
 // iOS Note
 // --------------------------------------------------
 
-$item-ios-note-color:                  map-get($colors-ios, light) !default;
+$item-ios-note-color:                  color($colors-ios, light) !default;
+
 
 // iOS Toolbar
 // --------------------------------------------------
@@ -46,15 +50,13 @@ $list-ios-border-color:                $list-border-color !default;
 $list-ios-background-color:            $list-background-color !default;
 $list-ios-activated-background-color:  #d9d9d9 !default;
 
+
 // iOS List header
 // --------------------------------------------------
 $list-ios-header-color:                $text-color !default;
 $item-ios-divider-background:          #151515 !default;
 $item-ios-divider-color:               $text-color !default;
 
-ion-list-header {
-  background-color: $item-ios-divider-background;
-}
 
 // iOS Item
 // --------------------------------------------------
@@ -68,10 +70,12 @@ $item-ios-padding-media-bottom:       10px !default;
 $item-ios-padding-icon-top:           10px !default;
 $item-ios-padding-icon-bottom:        9px !default;
 
+
 // iOS Toggle
 // --------------------------------------------------
 
-$toggle-ios-handle-background-color:  map-get($colors-ios, light) !default;
+$toggle-ios-handle-background-color:  color($colors-ios, light) !default;
+
 
 // iOS Icon
 // --------------------------------------------------

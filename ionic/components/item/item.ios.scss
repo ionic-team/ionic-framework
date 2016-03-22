@@ -207,10 +207,10 @@ ion-item-divider {
 // Generate iOS Item Divider Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   ion-item-divider[#{$color-name}] {
-    color: color-inverse($color-value);
-    background-color: $color-value;
+    color: $color-contrast;
+    background-color: $color-base;
   }
 }
 

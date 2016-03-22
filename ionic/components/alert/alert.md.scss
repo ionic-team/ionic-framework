@@ -31,7 +31,7 @@ $alert-md-input-text-color:                   #000 !default;
 
 $alert-md-input-border-width-focused:         2px !default;
 $alert-md-input-border-style-focused:         $alert-md-input-border-style !default;
-$alert-md-input-border-color-focused:         map-get($colors-md, primary) !default;
+$alert-md-input-border-color-focused:         color($colors-md, primary) !default;
 
 $alert-md-input-margin-top:                   5px !default;
 $alert-md-input-margin-right:                 0 !default;
@@ -45,7 +45,7 @@ $alert-md-button-group-justify-content:       flex-end !default;
 $alert-md-button-padding:                     10px !default;
 $alert-md-button-margin:                      0 8px 0 0 !default;
 $alert-md-button-font-weight:                 500 !default;
-$alert-md-button-text-color:                  map-get($colors-md, primary) !default;
+$alert-md-button-text-color:                  color($colors-md, primary) !default;
 $alert-md-button-background-color:            transparent !default;
 $alert-md-button-background-color-activated:  rgba(158, 158, 158, .2) !default;
 $alert-md-button-border-radius:               2px !default;
@@ -94,8 +94,8 @@ $alert-md-checkbox-icon-width:                6px !default;
 $alert-md-checkbox-icon-height:               10px !default;
 $alert-md-checkbox-icon-border-width:         2px !default;
 $alert-md-checkbox-icon-border-style:         solid !default;
+$alert-md-checkbox-icon-border-color:         color-contrast($colors-md, $alert-md-checkbox-border-color-on) !default;
 $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
-
 
 .alert-wrapper {
   max-width: $alert-md-max-width;
@@ -304,7 +304,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   border-top-width: 0;
   border-left-width: 0;
   border-style: $alert-md-checkbox-icon-border-style;
-  border-color: $alert-md-background-color;
+  border-color: $alert-md-checkbox-icon-border-color;
   transform: $alert-md-checkbox-icon-transform;
 }
 

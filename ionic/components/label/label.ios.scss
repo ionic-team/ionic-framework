@@ -64,10 +64,10 @@ ion-label[floating] {
 // Generate iOS Label colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
   ion-label[#{$color-name}] {
-    color: $color-value;
+    color: $color-base;
   }
 
 }

@@ -63,15 +63,15 @@ ion-segment {
 // Windows Segment Button Mixin
 // --------------------------------------------------
 
-@mixin wp-segment-button($color-name, $color-value) {
+@mixin wp-segment-button($color-name, $color-base) {
 
   ion-segment[#{$color-name}] .segment-button {
-    color: $color-value;
+    color: $color-base;
 
     &.activated,
     &.segment-activated {
-      border-color: $color-value;
-      color: $color-value;
+      border-color: $color-base;
+      color: $color-base;
       opacity: $segment-button-wp-opacity-activated;
     }
   }
@@ -82,6 +82,6 @@ ion-segment {
 // Windows Segment Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-wp {
-  @include wp-segment-button($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  @include wp-segment-button($color-name, $color-base);
 }

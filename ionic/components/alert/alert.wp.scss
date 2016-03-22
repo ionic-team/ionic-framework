@@ -10,7 +10,7 @@ $alert-wp-width:                               100% !default;
 $alert-wp-max-width:                           520px !default;
 $alert-wp-border-width:                        1px !default;
 $alert-wp-border-style:                        solid !default;
-$alert-wp-border-color:                        map-get($colors-wp, primary) !default;
+$alert-wp-border-color:                        color($colors-wp, primary) !default;
 $alert-wp-border-radius:                       0 !default;
 $alert-wp-background:                          #e6e6e6 !default;
 
@@ -34,7 +34,7 @@ $alert-wp-input-padding:                       0 8px !default;
 $alert-wp-input-border-width:                  2px !default;
 $alert-wp-input-border-style:                  $alert-wp-border-style !default;
 $alert-wp-input-border-color:                  $input-wp-border-color !default;
-$alert-wp-input-border-color-focused:          map-get($colors-wp, primary) !default;
+$alert-wp-input-border-color-focused:          color($colors-wp, primary) !default;
 $alert-wp-input-line-height:                   3rem !default;
 $alert-wp-input-text-color:                    #000 !default;
 
@@ -54,7 +54,7 @@ $alert-wp-button-group-flex-wrap:              wrap-reverse !default;
 $alert-wp-button-group-vertical-width:         100% !default;
 $alert-wp-button-group-vertical-margin-top:    5px !default;
 
-$alert-wp-radio-background:                    map-get($colors-wp, primary) !default;
+$alert-wp-radio-background:                    color($colors-wp, primary) !default;
 $alert-wp-radio-border-color:                  $input-wp-border-color !default;
 
 $alert-wp-radio-label-padding:                 13px 26px !default;
@@ -85,7 +85,7 @@ $alert-wp-checkbox-border-style:               solid !default;
 $alert-wp-checkbox-border-radius:              0 !default;
 $alert-wp-checkbox-border-color:               $input-wp-border-color !default;
 $alert-wp-checkbox-background-off:             transparent !default;
-$alert-wp-checkbox-background-on:              map-get($colors-wp, primary) !default;
+$alert-wp-checkbox-background-on:              color($colors-wp, primary) !default;
 
 $alert-wp-checkbox-icon-top:                   -2px !default;
 $alert-wp-checkbox-icon-left:                  3px !default;
@@ -93,7 +93,7 @@ $alert-wp-checkbox-icon-width:                 6px !default;
 $alert-wp-checkbox-icon-height:                12px !default;
 $alert-wp-checkbox-icon-border-width:          1px !default;
 $alert-wp-checkbox-icon-border-style:          solid !default;
-$alert-wp-checkbox-icon-border-color:          $alert-wp-background !default;
+$alert-wp-checkbox-icon-border-color:          color-contrast($colors-wp, $alert-wp-checkbox-background-on) !default;
 $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
 

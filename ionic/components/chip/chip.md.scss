@@ -7,12 +7,12 @@
 // Generate Material Design Chip Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
   ion-chip {
     ion-icon[#{$color-name}] {
-      color: color-inverse($color-value);
-      background-color: $color-value;
+      color: $color-contrast;
+      background-color: $color-base;
     }
   }
 

@@ -4,12 +4,13 @@
 // --------------------------------------------------
 
 $badge-wp-border-radius:            0 !default;
-$badge-wp-background-color:         map-get($colors-wp, primary) !default;
+$badge-wp-background-color:         color($colors-wp, primary) !default;
+$badge-wp-text-color:               color-contrast($colors-wp, $badge-wp-background-color) !default;
 
 
 ion-badge {
   border-radius: $badge-wp-border-radius;
-  color: color-inverse($badge-wp-background-color);
+  color: $badge-wp-text-color;
   background-color: $badge-wp-background-color;
 }
 
@@ -17,11 +18,11 @@ ion-badge {
 // Generate Windows Badge Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-wp {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
   .badge-#{$color-name} {
-    color: color-inverse($color-value);
-    background-color: $color-value;
+    color: $color-contrast;
+    background-color: $color-base;
   }
 
 }

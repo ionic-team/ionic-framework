@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 $label-md-text-color:                 #999 !default;
-$label-md-text-color-focused:         map-get($colors-md, primary) !default;
+$label-md-text-color-focused:         color($colors-md, primary) !default;
 $label-md-margin:                     $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0 !default;
 
 
@@ -69,10 +69,10 @@ ion-label[floating] {
 // Generate Material Design Label colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
   ion-label[#{$color-name}] {
-    color: $color-value;
+    color: $color-base;
   }
 
 }

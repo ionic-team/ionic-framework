@@ -3,7 +3,7 @@
 // iOS Radio
 // --------------------------------------------------
 
-$radio-ios-color-on:               map-get($colors-ios, primary) !default;
+$radio-ios-color-on:               color($colors-ios, primary) !default;
 
 $radio-ios-icon-width:             16px !default;
 $radio-ios-icon-height:            21px !default;
@@ -88,13 +88,13 @@ ion-radio {
 // iOS Radio Color Mixin
 // --------------------------------------------------
 
-@mixin radio-theme-ios($color-name, $color-value) {
+@mixin radio-theme-ios($color-name, $color-base) {
 
   ion-radio[#{$color-name}] .radio-checked {
-    color: $color-value;
+    color: $color-base;
 
     .radio-inner {
-      border-color: $color-value;
+      border-color: $color-base;
     }
 
   }
@@ -105,8 +105,8 @@ ion-radio {
 // Generate iOS Radio Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  @include radio-theme-ios($color-name, $color-value);
+  @include radio-theme-ios($color-name, $color-base);
 
 }

@@ -8,7 +8,7 @@ $colors-wp: copy-colors($colors) !default;
 
 $text-wp-color:                       $text-color !default;
 $paragraph-wp-color:                  $paragraph-color !default;
-$link-wp-color:                       map-get($colors-wp, primary) !default;
+$link-wp-color:                       color($colors-wp, primary) !default;
 $background-wp-color:                 $background-color !default;
 $subdued-text-wp-color:               $subdued-text-color !default;
 

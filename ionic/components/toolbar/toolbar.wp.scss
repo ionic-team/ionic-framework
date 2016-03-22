@@ -69,12 +69,12 @@ ion-navbar-section {
   color: $toolbar-wp-text-color;
 }
 
-@mixin wp-toolbar-theme($color-name, $color-value) {
+@mixin wp-toolbar-theme($color-name, $color-base, $color-contrast) {
   .toolbar[#{$color-name}] {
-    $fg-color: color-inverse($color-value);
+    $fg-color: $color-contrast;
 
     .toolbar-background {
-      background: $color-value;
+      background: $color-base;
     }
 
     .bar-button-default,
@@ -94,10 +94,10 @@ ion-navbar-section {
       border-color: $fg-color;
     }
 
-    @each $color-name, $color-value in $colors-wp {
-      @include wp-bar-button-default($color-name, $color-value);
-      @include wp-bar-button-outline($color-name, $color-value);
-      @include wp-bar-button-solid($color-name, $color-value);
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+      @include wp-bar-button-default($color-name, $color-base, $color-contrast);
+      @include wp-bar-button-outline($color-name, $color-base, $color-contrast);
+      @include wp-bar-button-solid($color-name, $color-base, $color-contrast);
     }
   }
 }
@@ -158,14 +158,14 @@ ion-buttons[right] {
   overflow: hidden;
 }
 
-@mixin wp-bar-button-default($color-name, $color-value) {
+@mixin wp-bar-button-default($color-name, $color-base, $color-contrast) {
 
   .bar-button-#{$color-name} {
-    color: $color-value;
+    color: $color-base;
     background-color: transparent;
 
     &:hover:not(.disable-hover) {
-      color: $color-value;
+      color: $color-base;
     }
   }
 
@@ -187,21 +187,21 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: color-inverse($bar-button-wp-color);
+    color: color-contrast($colors-wp, $bar-button-wp-color);
     background-color: $bar-button-wp-color;
   }
 }
 
-@mixin wp-bar-button-outline($color-name, $color-value) {
+@mixin wp-bar-button-outline($color-name, $color-base, $color-contrast) {
 
   .bar-button-outline-#{$color-name} {
-    $fg-color: color-shade($color-value);
+    $fg-color: color-shade($color-base);
     border-color: $fg-color;
     color: $fg-color;
     background-color: transparent;
 
     &.activated {
-      color: color-inverse($fg-color);
+      color: $color-contrast;
       background-color: $fg-color;
     }
   }
@@ -213,27 +213,28 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: color-inverse($bar-button-wp-color);
+  color: color-contrast($colors-wp, $bar-button-wp-color);
   background-color: $bar-button-wp-color;
 
   &:hover:not(.disable-hover) {
-    color: color-inverse($bar-button-wp-color);
+    color: color-contrast($colors-wp, $bar-button-wp-color);
   }
 
   &.activated {
-    color: color-inverse($bar-button-wp-color);
+    color: color-contrast($colors-wp, $bar-button-wp-color);
     background-color: color-shade($bar-button-wp-color);
   }
 }
 
-@mixin wp-bar-button-solid($color-name, $color-value) {
+@mixin wp-bar-button-solid($color-name, $color-base, $color-contrast) {
 
   .bar-button-solid-#{$color-name} {
-    color: color-inverse($color-value);
-    background-color: $color-value;
+    color: $color-contrast;
+    background-color: $color-base;
 
     &.activated {
-      background-color: color-shade($color-value);
+      color: $color-contrast;
+      background-color: color-shade($color-base);
     }
   }
 
@@ -328,11 +329,11 @@ ion-buttons[right] {
 // Windows Toolbar Color Generation
 // --------------------------------------------------
 
-@include wp-bar-button-default(default, $bar-button-wp-color);
+@include wp-bar-button-default(default, $bar-button-wp-color, color-contrast($colors-wp, $bar-button-wp-color));
 
-@each $color-name, $color-value in $colors-wp {
-  @include wp-toolbar-theme($color-name, $color-value);
-  @include wp-bar-button-default($color-name, $color-value);
-  @include wp-bar-button-outline($color-name, $color-value);
-  @include wp-bar-button-solid($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  @include wp-toolbar-theme($color-name, $color-base, $color-contrast);
+  @include wp-bar-button-default($color-name, $color-base, $color-contrast);
+  @include wp-bar-button-outline($color-name, $color-base, $color-contrast);
+  @include wp-bar-button-solid($color-name, $color-base, $color-contrast);
 }

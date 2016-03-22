@@ -194,21 +194,21 @@ ion-searchbar {
 // Generate Default Search Bar Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
   ion-searchbar[#{$color-name}] {
     .searchbar-ios-cancel {
-      color: $color-value;
+      color: $color-base;
 
       &:hover:not(.disable-hover) {
-        color: color-shade($color-value);
+        color: color-shade($color-base);
       }
     }
   }
 
   .toolbar[#{$color-name}] ion-searchbar {
     .searchbar-ios-cancel {
-      color: color-inverse($color-value);
+      color: $color-contrast;
     }
   }
 

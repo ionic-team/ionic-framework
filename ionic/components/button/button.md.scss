@@ -22,9 +22,9 @@ $button-md-clear-ripple-background-color:  #999 !default;
 $button-md-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, .14), 0 4px 5px rgba(0, 0, 0, .1) !default;
 $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, .4), 0 4px 7px 0 rgba(0, 0, 0, .1) !default;
 
-$button-md-color:                          map-get($colors-md, primary) !default;
+$button-md-color:                          color($colors-md, primary) !default;
 $button-md-color-activated:                color-shade($button-md-color) !default;
-$button-md-text-color:                     color-inverse($button-md-color) !default;
+$button-md-text-color:                     color-contrast($colors-md, $button-md-color) !default;
 $button-md-hover-opacity:                  .8 !default;
 
 $button-md-large-font-size:                2rem !default;
@@ -77,12 +77,12 @@ $button-md-small-icon-font-size:           1.4em !default;
 // Material Design Default Button Color Mixin
 // --------------------------------------------------
 
-@mixin md-button-default($color-name, $color-value) {
+@mixin md-button-default($color-name, $color-base, $color-contrast) {
 
   .button-#{$color-name} {
-    $background-color: $color-value;
+    $background-color: $color-base;
     $background-color-activated: color-shade($background-color);
-    $fg-color: color-inverse($background-color);
+    $fg-color: $color-contrast;
 
     color: $fg-color;
     background-color: $background-color;
@@ -177,10 +177,10 @@ $button-md-small-icon-font-size:           1.4em !default;
 // Material Design Outline Button Color Mixin
 // --------------------------------------------------
 
-@mixin md-button-outline($color-name, $color-value) {
+@mixin md-button-outline($color-name, $color-base, $color-contrast) {
 
   .button-outline-#{$color-name} {
-    $fg-color: color-shade($color-value, 5%);
+    $fg-color: color-shade($color-base, 5%);
     border-color: $fg-color;
     color: $fg-color;
     background-color: transparent;
@@ -229,10 +229,10 @@ $button-md-small-icon-font-size:           1.4em !default;
 // Material Design Clear Button Color Mixin
 // --------------------------------------------------
 
-@mixin md-button-clear($color-name, $color-value) {
+@mixin md-button-clear($color-name, $color-base, $color-contrast) {
 
   .button-clear-#{$color-name} {
-    $fg-color: $color-value;
+    $fg-color: $color-base;
     border-color: transparent;
     color: $fg-color;
     background-color: transparent;
@@ -304,10 +304,10 @@ ion-button-effect {
 // Generate Material Design Button Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
-  @include md-button-default($color-name, $color-value);
-  @include md-button-outline($color-name, $color-value);
-  @include md-button-clear($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  @include md-button-default($color-name, $color-base, $color-contrast);
+  @include md-button-outline($color-name, $color-base, $color-contrast);
+  @include md-button-clear($color-name, $color-base, $color-contrast);
 }
 
 

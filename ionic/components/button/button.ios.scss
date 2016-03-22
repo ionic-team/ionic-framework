@@ -8,9 +8,9 @@ $button-ios-margin:                   .4rem .2rem !default;
 $button-ios-padding:                  0 1em !default;
 $button-ios-font-size:                1.6rem !default;
 $button-ios-height:                   2.8em !default;
-$button-ios-color:                    map-get($colors-ios, primary) !default;
+$button-ios-color:                    color($colors-ios, primary) !default;
 $button-ios-color-activated:          color-shade($button-ios-color) !default;
-$button-ios-text-color:               color-inverse($button-ios-color) !default;
+$button-ios-text-color:               color-contrast($colors-ios, $button-ios-color) !default;
 $button-ios-hover-opacity:            .8 !default;
 $button-ios-border-radius:            4px !default;
 
@@ -53,12 +53,12 @@ $button-ios-small-icon-font-size:     1.3em !default;
 // iOS Default Button Color Mixin
 // --------------------------------------------------
 
-@mixin ios-button-default($color-name, $color-value) {
+@mixin ios-button-default($color-name, $color-base, $color-contrast) {
 
   .button-#{$color-name} {
-    $background-color: $color-value;
+    $background-color: $color-base;
     $background-color-activated: color-shade($background-color);
-    $fg-color: color-inverse($background-color);
+    $fg-color: $color-contrast;
 
     color: $fg-color;
     background-color: $background-color;
@@ -126,7 +126,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
   background-color: transparent;
 
   &.activated {
-    color: $background-ios-color;
+    color: color-contrast($colors-ios, $button-ios-color);
     background-color: $button-ios-color;
     opacity: 1;
   }
@@ -139,17 +139,16 @@ $button-ios-small-icon-font-size:     1.3em !default;
 // iOS Outline Button Color Mixin
 // --------------------------------------------------
 
-@mixin ios-button-outline($color-name, $color-value) {
+@mixin ios-button-outline($color-name, $color-base, $color-contrast) {
 
   .button-outline-#{$color-name} {
-    $fg-color: color-shade($color-value, 5%);
-    border-color: $fg-color;
-    color: $fg-color;
+    border-color: $color-base;
+    color: $color-base;
     background-color: transparent;
 
     &.activated {
-      color: $background-ios-color;
-      background-color: $fg-color;
+      color: $color-contrast;
+      background-color: $color-base;
     }
   }
 
@@ -179,10 +178,10 @@ $button-ios-small-icon-font-size:     1.3em !default;
 // iOS Clear Button Color Mixin
 // --------------------------------------------------
 
-@mixin ios-button-clear($color-name, $color-value) {
+@mixin ios-button-clear($color-name, $color-base, $color-contrast) {
 
   .button-clear-#{$color-name} {
-    $fg-color: $color-value;
+    $fg-color: $color-base;
     border-color: transparent;
     color: $fg-color;
     background-color: transparent;
@@ -217,10 +216,10 @@ ion-button-effect {
 // Generate iOS Button Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
-  @include ios-button-default($color-name, $color-value);
-  @include ios-button-outline($color-name, $color-value);
-  @include ios-button-clear($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+  @include ios-button-default($color-name, $color-base, $color-contrast);
+  @include ios-button-outline($color-name, $color-base, $color-contrast);
+  @include ios-button-clear($color-name, $color-base, $color-contrast);
 }
 
 
