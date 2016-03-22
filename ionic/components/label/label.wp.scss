@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 $label-wp-text-color:                 #999 !default;
-$label-wp-text-color-focused:         map-get($colors-wp, primary) !default;
+$label-wp-text-color-focused:         color($colors-wp, primary) !default;
 
 
 // Windows Default Label
@@ -63,10 +63,10 @@ ion-label[floating] {
 // Generate Windows Label colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-wp {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
   ion-label[#{$color-name}] {
-    color: $color-value;
+    color: $color-base;
   }
 
 }

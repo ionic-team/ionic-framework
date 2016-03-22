@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 $toggle-wp-inactive-color:               #323232 !default;
-$toggle-wp-active-color:                 map-get($colors-wp, primary) !default;
+$toggle-wp-active-color:                 color($colors-wp, primary) !default;
 
 $toggle-wp-track-width:                  40px !default;
 $toggle-wp-track-height:                 18px !default;
@@ -20,7 +20,7 @@ $toggle-wp-handle-height:                10px !default;
 $toggle-wp-handle-top:                   2px !default;
 $toggle-wp-handle-left:                  2px !default;
 $toggle-wp-handle-background-color-off:  $toggle-wp-inactive-color !default;
-$toggle-wp-handle-background-color-on:   color-inverse($toggle-wp-active-color) !default;
+$toggle-wp-handle-background-color-on:   color-contrast($colors-wp, $toggle-wp-active-color) !default;
 $toggle-wp-handle-border-radius:         50% !default;
 
 $toggle-wp-media-margin:                 0 !default;
@@ -123,17 +123,17 @@ ion-toggle {
 // Windows Color Mixin
 // --------------------------------------------------
 
-@mixin toggle-theme-wp($color-name, $color-value) {
+@mixin toggle-theme-wp($color-name, $color-base) {
 
   ion-toggle[#{$color-name}] {
 
     .toggle-checked {
-      border-color: $color-value;
-      background-color: $color-value;
+      border-color: $color-base;
+      background-color: $color-base;
     }
 
     .toggle-checked .toggle-inner {
-      background-color: color-inverse($color-value);
+      background-color: $color-contrast;
     }
 
   }
@@ -144,8 +144,8 @@ ion-toggle {
 // Generate Windows Toggle Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-wp {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  @include toggle-theme-wp($color-name, $color-value);
+  @include toggle-theme-wp($color-name, $color-base);
 
 }

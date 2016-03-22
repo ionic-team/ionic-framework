@@ -12,18 +12,18 @@ $checkbox-wp-media-margin:               $item-wp-padding-media-top $item-wp-pad
 $checkbox-wp-disabled-opacity:           .3 !default;
 
 $checkbox-wp-icon-background-color-off:  $list-wp-background-color !default;
-$checkbox-wp-icon-background-color-on:   map-get($colors-wp, primary) !default;
+$checkbox-wp-icon-background-color-on:   color($colors-wp, primary) !default;
 $checkbox-wp-icon-size:                  16px !default;
 
 $checkbox-wp-icon-checkmark-width:       1px !default;
 $checkbox-wp-icon-checkmark-style:       solid !default;
-$checkbox-wp-icon-checkmark-color:       $background-wp-color !default;
+$checkbox-wp-icon-checkmark-color:       color-contrast($colors-wp, $checkbox-wp-icon-background-color-on) !default;
 
 $checkbox-wp-icon-border-width:          2px !default;
 $checkbox-wp-icon-border-style:          solid !default;
 $checkbox-wp-icon-border-radius:         0 !default;
 $checkbox-wp-icon-border-color-off:      #333 !default;
-$checkbox-wp-icon-border-color-on:       map-get($colors-wp, primary) !default;
+$checkbox-wp-icon-border-color-on:       color($colors-wp, primary) !default;
 
 
 ion-checkbox {
@@ -107,14 +107,14 @@ ion-checkbox + .item-inner ion-label {
 // Windows Checkbox Color Mixin
 // --------------------------------------------------
 
-@mixin checkbox-theme-wp($color-name, $bg-on) {
+@mixin checkbox-theme-wp($color-name, $color-base, $color-contrast) {
 
   ion-checkbox[#{$color-name}] .checkbox-checked {
-    border-color: $bg-on;
-    background-color: $bg-on;
+    border-color: $color-base;
+    background-color: $color-base;
 
     .checkbox-inner {
-      border-color: color-inverse($bg-on);
+      border-color: $color-contrast;
     }
   }
 
@@ -124,6 +124,6 @@ ion-checkbox + .item-inner ion-label {
 // Generate Windows Checkbox Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-wp {
-  @include checkbox-theme-wp($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  @include checkbox-theme-wp($color-name, $color-base, $color-contrast);
 }

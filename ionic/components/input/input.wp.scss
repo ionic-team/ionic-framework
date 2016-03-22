@@ -16,9 +16,9 @@ $text-input-wp-padding-vertical:            0 !default;
 $text-input-wp-padding-horizontal:          8px !default;
 $text-input-wp-line-height:                 3rem !default;
 
-$text-input-wp-highlight-color:             map-get($colors-wp, primary) !default;
-$text-input-wp-hightlight-color-valid:      map-get($colors-wp, secondary) !default;
-$text-input-wp-hightlight-color-invalid:    map-get($colors-wp, danger) !default;
+$text-input-wp-highlight-color:             color($colors-wp, primary) !default;
+$text-input-wp-hightlight-color-valid:      color($colors-wp, secondary) !default;
+$text-input-wp-hightlight-color-invalid:    color($colors-wp, danger) !default;
 
 $text-input-wp-input-clear-icon-width:      30px !default;
 $text-input-wp-input-clear-icon-color:      $input-wp-border-color !default;

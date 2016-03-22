@@ -3,7 +3,7 @@
 // Windows Radio
 // --------------------------------------------------
 
-$radio-wp-color-on:               map-get($colors-wp, primary) !default;
+$radio-wp-color-on:               color($colors-wp, primary) !default;
 $radio-wp-color-off:              #333 !default;
 
 // Places radio icon on the left of the item
@@ -110,12 +110,12 @@ ion-radio {
 // Windows Radio Color Mixin
 // --------------------------------------------------
 
-@mixin radio-theme-wp($color-name, $color-value) {
+@mixin radio-theme-wp($color-name, $color-base) {
 
   ion-radio[#{$color-name}] {
 
     .radio-checked {
-      border-color: $color-value;
+      border-color: $color-base;
     }
 
   }
@@ -126,8 +126,8 @@ ion-radio {
 // Generate Windows Radio Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-wp {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  @include radio-theme-wp($color-name, $color-value);
+  @include radio-theme-wp($color-name, $color-base);
 
 }

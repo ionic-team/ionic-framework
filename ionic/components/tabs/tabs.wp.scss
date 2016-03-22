@@ -79,19 +79,19 @@ tabbar {
 // Windows Tabbar Color Mixin
 // --------------------------------------------------
 
-@mixin tabbar-wp($color-name, $color-value) {
+@mixin tabbar-wp($color-name, $color-base) {
 
   ion-tabs[#{$color-name}] tabbar {
-    background-color: $color-value;
+    background-color: $color-base;
 
     .tab-button {
-      color: color-inverse($color-value);
+      color: $color-contrast;
     }
 
     .tab-button:hover:not(.disable-hover),
     .tab-button[aria-selected=true] {
-      border-color: color-inverse($color-value);
-      color: color-inverse($color-value);
+      border-color: $color-contrast;
+      color: $color-contrast;
     }
   }
 
@@ -101,6 +101,6 @@ tabbar {
 // Windows Tabbar Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-wp {
-  @include tabbar-wp($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  @include tabbar-wp($color-name, $color-base);
 }

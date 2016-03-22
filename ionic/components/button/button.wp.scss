@@ -13,9 +13,9 @@ $button-wp-border-width:                              3px !default;
 $button-wp-border-radius:                             0 !default;
 
 // Regular button
-$button-wp-background-color:                          map-get($colors-wp, primary) !default;
+$button-wp-background-color:                          color($colors-wp, primary) !default;
 $button-wp-background-color-activated:                color-shade($button-wp-background-color) !default;
-$button-wp-text-color:                                color-inverse($button-wp-background-color) !default;
+$button-wp-text-color:                                color-contrast($colors-wp, $button-wp-background-color) !default;
 
 // Clear button
 $button-wp-clear-background-color-hover:              rgba(158, 158, 158, .1) !default;
@@ -76,12 +76,12 @@ $button-wp-fab-border-radius:                         50% !default;
 // Windows Default Button Color Mixin
 // --------------------------------------------------
 
-@mixin wp-button-default($color-name, $color-value) {
+@mixin wp-button-default($color-name, $color-base, $color-contrast) {
 
   .button-#{$color-name} {
-    $bg-color: $color-value;
+    $bg-color: $color-base;
     $bg-color-activated: color-shade($bg-color);
-    $fg-color: color-inverse($bg-color);
+    $fg-color: $color-contrast;
 
     color: $fg-color;
     background-color: $bg-color;
@@ -165,10 +165,10 @@ $button-wp-fab-border-radius:                         50% !default;
 // Windows Outline Button Color Mixin
 // --------------------------------------------------
 
-@mixin wp-button-outline($color-name, $color-value) {
+@mixin wp-button-outline($color-name, $color-base, $color-contrast) {
 
   .button-outline-#{$color-name} {
-    $fg-color: color-shade($color-value, 5%);
+    $fg-color: color-shade($color-base, 5%);
     border-color: $fg-color;
     color: $fg-color;
 
@@ -205,10 +205,10 @@ $button-wp-fab-border-radius:                         50% !default;
 // Windows Clear Button Color Mixin
 // --------------------------------------------------
 
-@mixin wp-button-clear($color-name, $color-value) {
+@mixin wp-button-clear($color-name, $color-base, $color-contrast) {
 
   .button-clear-#{$color-name} {
-    $fg-color: $color-value;
+    $fg-color: $color-base;
     color: $fg-color;
 
     &.activated {
@@ -251,10 +251,10 @@ ion-button-effect {
 // Generate Windows Button Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-wp {
-  @include wp-button-default($color-name, $color-value);
-  @include wp-button-outline($color-name, $color-value);
-  @include wp-button-clear($color-name, $color-value);
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  @include wp-button-default($color-name, $color-base, $color-contrast);
+  @include wp-button-outline($color-name, $color-base, $color-contrast);
+  @include wp-button-clear($color-name, $color-base, $color-contrast);
 }
 
 
