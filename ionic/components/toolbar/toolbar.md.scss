@@ -229,7 +229,7 @@ ion-buttons[right] {
     background-color: $color-base;
 
     &.activated {
-      color: $color-contrast;       
+      color: $color-contrast;
       background-color: color-shade($color-base);
     }
   }

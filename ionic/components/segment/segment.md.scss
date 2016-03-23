@@ -47,8 +47,8 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 
   &.activated,
   &.segment-activated {
-    opacity: 1;    
     border-color: $segment-button-md-border-color-activated;
+    opacity: 1;
   }
 }
 
