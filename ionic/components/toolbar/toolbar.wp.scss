@@ -282,15 +282,16 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .back-button {
-  margin: 0 0 0 12px;
+  margin: 0 6px;
+
+  min-width: 44px;
 
   box-shadow: none;
 }
 
 .back-button-icon {
   margin: 0;
-
-  min-width: 30px;
+  padding: 0 6px;
 
   font-size: 2.4rem;
   font-weight: normal;
