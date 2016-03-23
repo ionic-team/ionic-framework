@@ -4,7 +4,7 @@
 // Windows Searchbar
 // --------------------------------------------------
 
-$searchbar-wp-padding:                   0 !default;
+$searchbar-wp-padding:                   8px !default;
 $searchbar-wp-background-color:          transparent !default;
 $searchbar-wp-border-width:              2px !default;
 $searchbar-wp-border-color:              $input-wp-border-color !default;
@@ -36,10 +36,12 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 ion-searchbar {
   padding: $searchbar-wp-padding;
 
-  border: $searchbar-wp-border-width solid $searchbar-wp-border-color;
   background: $searchbar-wp-background-color;
 }
 
+.searchbar-input-container {
+  border: $searchbar-wp-border-width solid $searchbar-wp-border-color;
+}
 
 // Searchbar Search Icon
 // -----------------------------------------
