@@ -115,7 +115,7 @@ ion-searchbar {
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-focused {
+.searchbar-focused .searchbar-input-container {
   border-color: $searchbar-wp-border-color-focused;
 }
 
@@ -143,13 +143,22 @@ ion-searchbar {
   display: none;
 }
 
+// Searchbar in Toolbar
+// -----------------------------------------
+
+.toolbar {
+  ion-searchbar {
+    padding: 2px;
+  }
+}
+
 
 // Generate Default Windows Search Bar Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  ion-searchbar[#{$color-name}].searchbar-focused {
+  ion-searchbar[#{$color-name}].searchbar-focused .searchbar-input-container {
     border-color: $color-base;
   }
 
