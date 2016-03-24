@@ -300,7 +300,7 @@ export class Button {
    */
   private _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
-      this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type, assignCssClass);
+      this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type.toLowerCase(), assignCssClass);
     }
   }
 
