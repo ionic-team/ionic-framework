@@ -1,3 +1,10 @@
+<a name"1.2.5"></a>
+### 1.2.5 "Lyon" (2016-03-24)
+
+#### Features
+
+* **list** directive ionSwipeButton that handles swipe-to-dismiss features on ion-item
+
 <a name"1.2.4"></a>
 ### 1.2.4 "Copenhagen" (2016-01-03)
 

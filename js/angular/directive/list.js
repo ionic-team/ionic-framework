@@ -63,6 +63,24 @@
 * </ion-list>
 * ```
 *
+* Other advanced Usage: Swipe to dismiss item (not compatible with ionOptionButton or ionReorderButton)
+*
+*```html
+* <ion-list ng-controller="MyCtrl"
+*           can-swipe="listCanSwipe">
+*   <ion-item ng-repeat="item in items"
+*             class="item-thumbnail-left">
+*
+*     {% raw %}<img ng-src="{{item.img}}">
+*     <h2>{{item.title}}</h2>
+*     <p>{{item.description}}</p>{% endraw %}
+*     <ion-swipe-button on-swiped="items.splice($index, 1)">
+*     </ion-swipe-button>
+*
+*   </ion-item>
+* </ion-list>
+*```
+*
 *```javascript
 * app.controller('MyCtrl', function($scope) {
 *  $scope.shouldShowDelete = false;
