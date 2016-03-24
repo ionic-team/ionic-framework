@@ -9,7 +9,7 @@ var ITEM_TPL_OPTION_SWIPE =
 * @restrict E
 * @description
 * Creates an swipable event for a list item, that is visible when the item is swiped
-* to the left or to the right by the user.  
+* to the left or to the right by the user.
 *
 * See {@link ionic.directive:ionList} for a complete example & explanation.
 *
@@ -32,7 +32,7 @@ IonicModule.directive('ionSwipeButton', ['$parse', function ($parse) {
         restrict: 'E',
         require: '^ionItem',
         priority: Number.MAX_VALUE,
-        compile: function ($element, $attr) {
+        compile: function () {
             return function ($scope, $element, $attr, itemCtrl) {
                 var onSwipedFn = $parse($attr.onSwiped);
 

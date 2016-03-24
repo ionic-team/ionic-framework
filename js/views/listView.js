@@ -18,10 +18,9 @@
       return false;
     }
   };
-  
+
 
   /// ********** SWIPE DRAG ********** ///
-
   var SwipeDrag = function (opts) {
       this.dragThresholdX = opts.dragThresholdX || 10;
       this.onSwiped = opts.onSwiped;
@@ -538,7 +537,7 @@
 
       opts = ionic.extend({
         onReorder: function() {},
-        onSwiped: function () { }, 
+        onSwiped: function () {},
         virtualRemoveThreshold: -200,
         virtualAddThreshold: 200,
         canSwipe: function() {
@@ -710,7 +709,7 @@
       else if (!self._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
 
         item = self._getItem(e.target);
-                
+
         // Make sure this is an item with buttons
         if (item && item.querySelector('.item-options')) {
           self._dragOp = new SlideDrag({
@@ -723,7 +722,7 @@
           self.isScrollFreeze = self.scrollView.freeze(true);
         }
       }
-      
+
       // or with full swipe
       if (item && item.querySelector('.item-swipe')) {
           self._dragOp = new SwipeDrag({
