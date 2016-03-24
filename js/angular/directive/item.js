@@ -38,7 +38,7 @@ IonicModule
                      isDefined($attrs.uiSref);
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
-        /ion-(delete|option|reorder)-button/i.test($element.html());
+        /ion-(delete|option|swipe|reorder)-button/i.test($element.html());
 
       if (isComplexItem) {
         var innerElement = jqLite(isAnchor ? '<a></a>' : '<div></div>');

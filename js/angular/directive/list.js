@@ -120,6 +120,17 @@ function($timeout) {
                 });
               }
             },
+            onSwiped: function (el) {
+                var itemScope = jqLite(el).scope();
+                if (itemScope && itemScope.$onSwiped) {
+                    // Make sure onSwiped is called in apply cycle,
+                    // but also make sure it has no conflicts by doing
+                    // $evalAsync
+                    $timeout(function () {
+                        itemScope.$onSwiped();
+                    });
+                }
+            },
             canSwipe: function() {
               return listCtrl.canSwipeItems();
             }
