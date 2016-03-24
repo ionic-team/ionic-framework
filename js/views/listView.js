@@ -20,168 +20,168 @@
   };
   
 
-/// ********** SWIPE DRAG ********** ///
+  /// ********** SWIPE DRAG ********** ///
 
-var SwipeDrag = function (opts) {
-    this.dragThresholdX = opts.dragThresholdX || 10;
-    this.onSwiped = opts.onSwiped;
-    this.el = opts.el;
-    this.item = opts.item;
-    this.canSwipe = opts.canSwipe;
-};
+  var SwipeDrag = function (opts) {
+      this.dragThresholdX = opts.dragThresholdX || 10;
+      this.onSwiped = opts.onSwiped;
+      this.el = opts.el;
+      this.item = opts.item;
+      this.canSwipe = opts.canSwipe;
+  };
 
-SwipeDrag.prototype = new DragOp();
+  SwipeDrag.prototype = new DragOp();
 
-SwipeDrag.prototype.start = function (e) {
-    var content, offsetX, element;
+  SwipeDrag.prototype.start = function (e) {
+      var content, offsetX, element;
 
-    if (!this.canSwipe()) {
-        return;
-    }
+      if (!this.canSwipe()) {
+          return;
+      }
 
-    if (e.target.classList.contains(ITEM_CONTENT_CLASS)) {
-        content = e.target;
-    } else if (e.target.classList.contains(ITEM_CLASS)) {
-        content = e.target.querySelector('.' + ITEM_CONTENT_CLASS);
-    } else {
-        content = ionic.DomUtil.getParentWithClass(e.target, ITEM_CONTENT_CLASS);
-    }
+      if (e.target.classList.contains(ITEM_CONTENT_CLASS)) {
+          content = e.target;
+      } else if (e.target.classList.contains(ITEM_CLASS)) {
+          content = e.target.querySelector('.' + ITEM_CONTENT_CLASS);
+      } else {
+          content = ionic.DomUtil.getParentWithClass(e.target, ITEM_CONTENT_CLASS);
+      }
 
-    // If we don't have a content area as one of our children (or ourselves), skip
-    if (!content) {
-        return;
-    }
+      // If we don't have a content area as one of our children (or ourselves), skip
+      if (!content) {
+          return;
+      }
 
-    // Make sure we aren't animating as we slide
-    content.classList.remove(ITEM_SLIDING_CLASS);
+      // Make sure we aren't animating as we slide
+      content.classList.remove(ITEM_SLIDING_CLASS);
 
-    // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
-    offsetX = parseFloat(content.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
+      // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
+      offsetX = parseFloat(content.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
 
-    // Grab the buttons
-    element = content.parentNode.querySelector('.item-swipe');
-    if (!element) {
-        return;
-    }
+      // Grab the buttons
+      element = content.parentNode.querySelector('.item-swipe');
+      if (!element) {
+          return;
+      }
 
-    element.classList.remove('invisible');
+      element.classList.remove('invisible');
 
-    this._currentDrag = {
-        element: element,
-        elementWidth: element.offsetWidth,
-        content: content,
-        startOffsetX: offsetX
-    };
-};
+      this._currentDrag = {
+          element: element,
+          elementWidth: element.offsetWidth,
+          content: content,
+          startOffsetX: offsetX
+      };
+  };
 
-/**
- * Check if this is the same item that was previously dragged.
- */
-SwipeDrag.prototype.isSameItem = function (op) {
-    if (op._lastDrag && this._currentDrag) {
-        return this._currentDrag.content == op._lastDrag.content;
-    }
-    return false;
-};
+  /**
+   * Check if this is the same item that was previously dragged.
+   */
+  SwipeDrag.prototype.isSameItem = function (op) {
+      if (op._lastDrag && this._currentDrag) {
+          return this._currentDrag.content == op._lastDrag.content;
+      }
+      return false;
+  };
 
-SwipeDrag.prototype.clean = function (isInstant) {
-    var lastDrag = this._lastDrag;
+  SwipeDrag.prototype.clean = function (isInstant) {
+      var lastDrag = this._lastDrag;
 
-    if (!lastDrag || !lastDrag.content) return;
+      if (!lastDrag || !lastDrag.content) return;
 
-    lastDrag.content.style[ionic.CSS.TRANSITION] = '';
-    lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
-    if (isInstant) {
-        lastDrag.content.style[ionic.CSS.TRANSITION] = 'none';
-        makeInvisible();
-        ionic.requestAnimationFrame(function () {
-            lastDrag.content.style[ionic.CSS.TRANSITION] = '';
-        });
-    } else {
-        ionic.requestAnimationFrame(function () {
-            setTimeout(makeInvisible, 250);
-        });
-    }
-    function makeInvisible() {
-        lastDrag.element && lastDrag.element.classList.add('invisible');
-    }
-};
+      lastDrag.content.style[ionic.CSS.TRANSITION] = '';
+      lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
+      if (isInstant) {
+          lastDrag.content.style[ionic.CSS.TRANSITION] = 'none';
+          makeInvisible();
+          ionic.requestAnimationFrame(function () {
+              lastDrag.content.style[ionic.CSS.TRANSITION] = '';
+          });
+      } else {
+          ionic.requestAnimationFrame(function () {
+              setTimeout(makeInvisible, 250);
+          });
+      }
+      function makeInvisible() {
+          lastDrag.element && lastDrag.element.classList.add('invisible');
+      }
+  };
 
-SwipeDrag.prototype.drag = ionic.animationFrameThrottle(function (e) {
-    // We really aren't dragging
-    if (!this._currentDrag) {
-        return;
-    }
+  SwipeDrag.prototype.drag = ionic.animationFrameThrottle(function (e) {
+      // We really aren't dragging
+      if (!this._currentDrag) {
+          return;
+      }
 
-    // Check if we should start dragging. Check if we've dragged past the threshold,
-    // or we are starting from the open state.
-    if (!this._isDragging &&
-        ((Math.abs(e.gesture.deltaX) > this.dragThresholdX) ||
-        (Math.abs(this._currentDrag.startOffsetX) > 0))) {
-        this._isDragging = true;
-    }
+      // Check if we should start dragging. Check if we've dragged past the threshold,
+      // or we are starting from the open state.
+      if (!this._isDragging &&
+          ((Math.abs(e.gesture.deltaX) > this.dragThresholdX) ||
+          (Math.abs(this._currentDrag.startOffsetX) > 0))) {
+          this._isDragging = true;
+      }
 
-    if (this._isDragging) {
+      if (this._isDragging) {
 
-        // Grab the new X point, both directions
-        var newX = this._currentDrag.startOffsetX + e.gesture.deltaX;
+          // Grab the new X point, both directions
+          var newX = this._currentDrag.startOffsetX + e.gesture.deltaX;
 
-        this._currentDrag.content.$$ionicOptionsOpen = newX !== 0;
+          this._currentDrag.content.$$ionicOptionsOpen = newX !== 0;
 
-        this._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px, 0, 0)';
-        this._currentDrag.content.style[ionic.CSS.TRANSITION] = 'none';
-    }
-});
+          this._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px, 0, 0)';
+          this._currentDrag.content.style[ionic.CSS.TRANSITION] = 'none';
+      }
+  });
 
-SwipeDrag.prototype.end = function (e, doneCallback) {
-    var self = this;
+  SwipeDrag.prototype.end = function (e, doneCallback) {
+      var self = this;
 
-    // There is no drag, just end immediately
-    if (!self._currentDrag) {
-        doneCallback && doneCallback();
-        return;
-    }
-
-
-    // If we are currently dragging, we want to finish the dragging or come back in place
-    // The final resting point X will be the width of the element (left or right)
-    var restingPoint = e.gesture.deltaX > 0 ? self._currentDrag.elementWidth : -self._currentDrag.elementWidth;
-
-    // Check if the drag was less than half the width both ways -> cancels
-    if (Math.abs(e.gesture.deltaX) < Math.abs(self._currentDrag.elementWidth / 2)) {
-        restingPoint = 0;
-    } else { // swiped!
-        this.onSwiped && this.onSwiped(this.item);
-    }
-
-    ionic.requestAnimationFrame(function () {
-        if (restingPoint === 0) {
-            self._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
-            var element = self._currentDrag.element;
-            setTimeout(function () {
-                element && element.classList.add('invisible');
-            }, 250);
-        } else {
-            self._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px,0,0)';
-        }
-        self._currentDrag.content.style[ionic.CSS.TRANSITION] = '';
+      // There is no drag, just end immediately
+      if (!self._currentDrag) {
+          doneCallback && doneCallback();
+          return;
+      }
 
 
-        // Kill the current drag
-        if (!self._lastDrag) {
-            self._lastDrag = {};
-        }
-            ionic.extend(self._lastDrag, self._currentDrag);
-        if (self._currentDrag) {
-            self._currentDrag.element = null;
-            self._currentDrag.content = null;
-        }
-        self._currentDrag = null;
+      // If we are currently dragging, we want to finish the dragging or come back in place
+      // The final resting point X will be the width of the element (left or right)
+      var restingPoint = e.gesture.deltaX > 0 ? self._currentDrag.elementWidth : -self._currentDrag.elementWidth;
 
-        // We are done, notify caller
-        doneCallback && doneCallback();
-    });
-};
+      // Check if the drag was less than half the width both ways -> cancels
+      if (Math.abs(e.gesture.deltaX) < Math.abs(self._currentDrag.elementWidth / 2)) {
+          restingPoint = 0;
+      } else { // swiped!
+          this.onSwiped && this.onSwiped(this.item);
+      }
+
+      ionic.requestAnimationFrame(function () {
+          if (restingPoint === 0) {
+              self._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
+              var element = self._currentDrag.element;
+              setTimeout(function () {
+                  element && element.classList.add('invisible');
+              }, 250);
+          } else {
+              self._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px,0,0)';
+          }
+          self._currentDrag.content.style[ionic.CSS.TRANSITION] = '';
+
+
+          // Kill the current drag
+          if (!self._lastDrag) {
+              self._lastDrag = {};
+          }
+              ionic.extend(self._lastDrag, self._currentDrag);
+          if (self._currentDrag) {
+              self._currentDrag.element = null;
+              self._currentDrag.content = null;
+          }
+          self._currentDrag = null;
+
+          // We are done, notify caller
+          doneCallback && doneCallback();
+      });
+  };
 
 
   /// ********** SLIDEDRAG ********** ///
