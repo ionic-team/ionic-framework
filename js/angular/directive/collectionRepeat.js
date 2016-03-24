@@ -85,7 +85,8 @@ IonicModule
 .factory('$ionicCollectionManager', RepeatManagerFactory);
 
 var ONE_PX_TRANSPARENT_IMG_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-var WIDTH_HEIGHT_REGEX = /height:.*?px;\s*width:.*?px/;
+var WIDTH_REGEX = /width:.*?px/;
+var HEIGHT_REGEX = /height:.*?px/;
 var DEFAULT_RENDER_BUFFER = 3;
 
 CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF', '$rootScope', '$timeout'];
@@ -441,9 +442,8 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     var TRANSLATE_TEMPLATE_STR = isVertical ?
       'translate3d(SECONDARYpx,PRIMARYpx,0)' :
       'translate3d(PRIMARYpx,SECONDARYpx,0)';
-    var WIDTH_HEIGHT_TEMPLATE_STR = isVertical ?
-      'height: PRIMARYpx; width: SECONDARYpx;' :
-      'height: SECONDARYpx; width: PRIMARYpx;';
+    var WIDTH_TEMPLATE_STR = isVertical ? 'width: SECONDARYpx;' : 'width: PRIMARYpx;';
+    var HEIGHT_TEMPLATE_STR = isVertical ? 'height: PRIMARYpx;' : 'height: SECONDARYpx;';
 
     var estimatedHeight;
     var estimatedWidth;
@@ -647,12 +647,16 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
             .replace(SECONDARY, (item.secondaryPos = dim.secondaryPos));
         }
         if (item.secondarySize !== dim.secondarySize || item.primarySize !== dim.primarySize) {
+          //TODO fix item.primarySize + 1 hack
+          var primarySize = (item.primarySize = dim.primarySize) + 1;
+          var secondarySize = (item.secondarySize = dim.secondarySize);
+
+          var widthTemplateCompiled = WIDTH_TEMPLATE_STR.replace(PRIMARY, primarySize).replace(SECONDARY, secondarySize);
+          var heightTemplateCompiled = HEIGHT_TEMPLATE_STR.replace(PRIMARY, primarySize).replace(SECONDARY, secondarySize);
+
           item.node.style.cssText = item.node.style.cssText
-            .replace(WIDTH_HEIGHT_REGEX, WIDTH_HEIGHT_TEMPLATE_STR
-              //TODO fix item.primarySize + 1 hack
-              .replace(PRIMARY, (item.primarySize = dim.primarySize) + 1)
-              .replace(SECONDARY, (item.secondarySize = dim.secondarySize))
-            );
+            .replace(WIDTH_REGEX, widthTemplateCompiled)
+            .replace(HEIGHT_REGEX, heightTemplateCompiled);
         }
 
       }
