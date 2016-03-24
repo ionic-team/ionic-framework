@@ -487,27 +487,28 @@ IonicModule
   provider.transitions.views.android = function(enteringEle, leavingEle, direction, shouldAnimate) {
     shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
-    function setStyles(ele, x) {
+    function setStyles(ele, x, opacity) {
       var css = {};
       css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
       css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
+      css.opacity = opacity;
       ionic.DomUtil.cachedStyles(ele, css);
     }
 
     var d = {
       run: function(step) {
         if (direction == 'forward') {
-          setStyles(enteringEle, (1 - step) * 99); // starting at 98% prevents a flicker
-          setStyles(leavingEle, step * -100);
+          setStyles(enteringEle, (1 - step) * 99, 1); // starting at 98% prevents a flicker
+          setStyles(leavingEle, step * -100, 1);
 
         } else if (direction == 'back') {
-          setStyles(enteringEle, (1 - step) * -100);
-          setStyles(leavingEle, step * 100);
+          setStyles(enteringEle, (1 - step) * -100, 1);
+          setStyles(leavingEle, step * 100, 1);
 
         } else {
           // swap, enter, exit
-          setStyles(enteringEle, 0);
-          setStyles(leavingEle, 0);
+          setStyles(enteringEle, 0, 1);
+          setStyles(leavingEle, 0, 0);
         }
       },
       shouldAnimate: shouldAnimate
