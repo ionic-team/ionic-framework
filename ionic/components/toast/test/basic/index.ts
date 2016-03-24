@@ -43,30 +43,7 @@ class E2EPage {
 
     this.nav.present(toast);
   }
-
 }
-
-@Page({
-  template: `
-    <ion-toolbar>
-      <ion-buttons start>
-        <button (click)="dismiss()">Close</button>
-      </ion-buttons>
-      <ion-title>Toast</ion-title>
-    </ion-toolbar>
-    <ion-content padding>
-      Hi, I'm Bob, and I'm a modal.
-    </ion-content>
-  `
-})
-class ToastPage {
-  constructor(private viewCtrl: ViewController) { }
-
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
-}
-
 
 @App({
   template: '<ion-nav [root]="root"></ion-nav>'

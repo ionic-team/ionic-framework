@@ -121,6 +121,7 @@ class ToastCmp {
   private hdrId: string;
   private id: number;
   private created: number;
+  private dismissTimeout: number = undefined;
 
   constructor(
     private _nav: NavController,
@@ -158,8 +159,7 @@ class ToastCmp {
     }
 
     // if there's a `duration` set, automatically dismiss.
-    setTimeout(() => this.dismiss('backdrop'), this.d.duration ? this.d.duration : 3000)
-
+    this.dismissTimeout = setTimeout(() => this.dismiss('backdrop'), this.d.duration ? this.d.duration : 3000)
   }
 
   click(button, dismissDelay?) {
@@ -182,6 +182,8 @@ class ToastCmp {
   }
 
   dismiss(role): Promise<any> {
+    clearTimeout(this.dismissTimeout);
+    this.dismissTimeout = undefined;
     return this._viewCtrl.dismiss(null, role);
   }
 
@@ -254,10 +256,51 @@ class ToastMdSlideOut extends Transition {
   }
 }
 
+class ToastWpPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
+
+    let ele = enteringView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
+
+    wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
+    backdrop.fromTo('opacity', 0, 0);
+
+    this
+      .easing('cubic-bezier(0,0 0.05,1)')
+      .duration(200)
+      .add(backdrop)
+      .add(wrapper);
+  }
+}
+
+class ToastWpPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
+
+    let ele = leavingView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
+
+    wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');
+    backdrop.fromTo('opacity', 0, 0);
+
+    this
+      .easing('ease-out')
+      .duration(150)
+      .add(backdrop)
+      .add(wrapper);
+  }
+}
+
+
 Transition.register('toast-slide-in', ToastSlideIn);
 Transition.register('toast-slide-out', ToastSlideOut);
 Transition.register('toast-md-slide-in', ToastMdSlideIn);
 Transition.register('toast-md-slide-out', ToastMdSlideOut);
+Transition.register('toast-wp-slide-out', ToastWpPopOut);
+Transition.register('toast-wp-slide-in', ToastWpPopIn);
 
 
 let toastIds = -1;
