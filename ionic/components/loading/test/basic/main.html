@@ -1,0 +1,24 @@
+
+<ion-navbar *navbar>
+  <ion-title>Loading</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+  <button block (click)="showLoadingIos()">iOS Spinner</button>
+  <button block (click)="showLoadingDots()">Dots Spinner</button>
+  <button block (click)="showLoadingBubbles()">Bubbles Spinner</button>
+  <button block (click)="showLoadingCircles()">Circles Spinner</button>
+  <button block (click)="showLoadingCrescent()">Crescent Spinner 1500 Duration</button>
+  <button block (click)="showLoadingDefault()" secondary class="e2eLoadingDefaultSpinner">Default Spinner</button>
+  <button block (click)="showLoadingCustom()" danger>Custom Spinner</button>
+  <button block (click)="showLoadingText()" dark>Content Only</button>
+</ion-content>
+
+<ion-toolbar position="bottom">
+  <ion-buttons end>
+    <button (click)="goToPage2()">
+      Navigate
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>

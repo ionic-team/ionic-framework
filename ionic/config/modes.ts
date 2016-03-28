@@ -17,6 +17,9 @@ Config.setModeConfig('ios', {
 
   iconMode: 'ios',
 
+  loadingEnter: 'loading-pop-in',
+  loadingLeave: 'loading-pop-out',
+
   menuType: 'reveal',
 
   modalEnter: 'modal-slide-in',
@@ -45,6 +48,9 @@ Config.setModeConfig('md', {
   backButtonIcon: 'md-arrow-back',
 
   iconMode: 'md',
+
+  loadingEnter: 'loading-md-pop-in',
+  loadingLeave: 'loading-md-pop-out',
 
   menuType: 'overlay',
 
@@ -78,6 +84,9 @@ Config.setModeConfig('wp', {
 
   iconMode: 'ios',
 
+  loadingEnter: 'loading-wp-pop-in',
+  loadingLeave: 'loading-wp-pop-out',
+
   menuType: 'overlay',
 
   modalEnter: 'modal-md-slide-in',
@@ -85,6 +94,8 @@ Config.setModeConfig('wp', {
 
   pageTransition: 'wp-transition',
   pageTransitionDelay: 96,
+
+  spinner: 'circles',
 
   tabbarPlacement: 'top',
 
