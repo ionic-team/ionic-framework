@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from 'angular2/core';
+import {Injectable, Injector, NgZone} from 'angular2/core';
 import {Title} from 'angular2/platform/browser';
 
 import {Config} from '../../config/config';
@@ -18,6 +18,7 @@ export class IonicApp {
   private _title: string = '';
   private _titleSrv: Title = new Title();
   private _isProd: boolean = false;
+  private _appInjector: Injector;
 
   constructor(
     private _config: Config,
@@ -155,4 +156,19 @@ export class IonicApp {
     return this._cmps[id];
   }
 
+  /**
+   * Set the global app injector that contains references to all of the instantiated providers
+   * @param injector
+   */
+  setAppInjector(injector: Injector) {
+    this._appInjector = injector;
+  }
+
+  /**
+   * Get an instance of the global app injector that contains references to all of the instantiated providers
+   * @returns {Injector}
+   */
+  getAppInjector(): Injector {
+    return this._appInjector;
+  }
 }

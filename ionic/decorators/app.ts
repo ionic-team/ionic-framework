@@ -96,6 +96,7 @@ export function App(args: AppMetadata={}) {
     bootstrap(cls, providers).then(appRef => {
       appRef.injector.get(TapClick);
       let app: IonicApp = appRef.injector.get(IonicApp);
+      app.setAppInjector(appRef.injector);
       app.setProd(args.prodMode);
     });
 
