@@ -38,6 +38,8 @@ $card-ios-header-color:                #333 !default;
 ion-card {
   margin: $card-ios-margin-top $card-ios-margin-right $card-ios-margin-bottom $card-ios-margin-left;
 
+  width: calc(100% - #{($card-ios-margin-right + $card-ios-margin-left)});
+
   border-radius: $card-ios-border-radius;
   font-size: $card-ios-font-size;
 

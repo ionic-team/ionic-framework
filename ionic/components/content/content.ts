@@ -162,6 +162,7 @@ export class Content extends Ion {
     this.scrollElement.addEventListener(type, handler);
 
     return () => {
+      if (!this.scrollElement) { return; }
       this.scrollElement.removeEventListener(type, handler);
     }
   }
