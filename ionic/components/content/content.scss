@@ -18,3 +18,12 @@
 [no-margin] {
   margin: 0;
 }
+
+// Content Fixed
+// --------------------------------------------------
+
+ion-fixed {
+  position: absolute;
+  transform: translateZ(0);
+  z-index: $z-index-fixed-content;
+}
