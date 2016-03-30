@@ -1,4 +1,3 @@
-
 /**
  * @ngdoc directive
  * @name ionSlides
@@ -95,18 +94,18 @@ function($animate, $timeout, $compile) {
         return _this.__slider;
       };
 
-      var options = $scope.options || {};
-
-      var newOptions = angular.extend({
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        lazyLoading: true,
-        preloadImages: false
-      }, options);
-
-      this._options = newOptions;
-
       $timeout(function() {
+        var options = $scope.options || {};
+
+        var newOptions = angular.extend({
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            lazyLoading: true,
+            preloadImages: false
+          }, options);
+
+        _this._options = newOptions;
+
         var slider = new ionic.views.Swiper($element.children()[0], newOptions, $scope, $compile);
 
         _this.__slider = slider;
