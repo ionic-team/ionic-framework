@@ -4,9 +4,9 @@ export declare class Swiper {
   activeIndex: number;
   isEnd: boolean;
   isBeginning: boolean;
-  
-  update();
-  slideNext();
-  slidePrev();
-  
+
+  update():any;
+  slideNext():any;
+  slidePrev():any;
+
 }
