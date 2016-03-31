@@ -251,7 +251,6 @@ export class Refresher {
     // this method can get called like a bazillion times per second,
     // so it's built to be as efficient as possible, and does its
     // best to do any DOM read/writes only when absolutely necessary
-    console.debug('Pull-to-refresh, onMove', ev.type);
 
     // if multitouch then get out immediately
     if (ev.touches && ev.touches.length > 1) {
