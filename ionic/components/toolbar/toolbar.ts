@@ -92,7 +92,8 @@ export class ToolbarBase extends Ion {
  *
  *  ```
  *
- * @property {any} [position] - set position of the toolbar, top or bottom. If not set, defautls to top.
+ * @property {any} [position] - set position of the toolbar, `top` or `bottom`.
+ * Default `top`.
  * @demo /docs/v2/demos/toolbar/
  * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */
