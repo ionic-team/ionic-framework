@@ -91,24 +91,24 @@ export let CSS: {
 
 export function transitionEnd(el: HTMLElement, callback: Function) {
   if (el) {
-    function unregister() {
-      CSS.transitionEnd.split(' ').forEach(eventName => {
-        el.removeEventListener(eventName, onEvent);
-      });
-    }
-
-    function onEvent(ev) {
-      if (el === ev.target) {
-        unregister();
-        callback(ev);
-      }
-    }
-
     CSS.transitionEnd.split(' ').forEach(eventName => {
       el.addEventListener(eventName, onEvent);
     });
 
     return unregister;
+  }
+
+  function unregister() {
+    CSS.transitionEnd.split(' ').forEach(eventName => {
+      el.removeEventListener(eventName, onEvent);
+    });
+  }
+
+  function onEvent(ev) {
+    if (el === ev.target) {
+      unregister();
+      callback(ev);
+    }
   }
 }
 
@@ -124,17 +124,17 @@ export function ready(callback?: Function) {
     callback();
 
   } else {
-    function completed() {
-      document.removeEventListener('DOMContentLoaded', completed, false);
-      window.removeEventListener('load', completed, false);
-      callback();
-    }
-
     document.addEventListener('DOMContentLoaded', completed, false);
     window.addEventListener('load', completed, false);
   }
 
   return promise;
+
+  function completed() {
+    document.removeEventListener('DOMContentLoaded', completed, false);
+    window.removeEventListener('load', completed, false);
+    callback();
+  }
 }
 
 export function windowLoad(callback?: Function) {
@@ -149,15 +149,16 @@ export function windowLoad(callback?: Function) {
     callback();
 
   } else {
-    function completed() {
-      window.removeEventListener('load', completed, false);
-      callback();
-    }
 
     window.addEventListener('load', completed, false);
   }
 
   return promise;
+
+  function completed() {
+    window.removeEventListener('load', completed, false);
+    callback();
+  }
 }
 
 export function pointerCoord(ev: any): {x: number, y: number} {
