@@ -40,8 +40,7 @@ ion-segment {
   background-color: $segment-button-wp-background-color;
   opacity: $segment-button-wp-opacity;
   
-  .activated,
-  .segment-activated {
+  &.segment-activated {
     opacity: $segment-button-wp-opacity-activated;
   }
 
