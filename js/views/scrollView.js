@@ -1425,6 +1425,24 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__refreshTailTime = 100;
     self.__minSpinTime = 600;
   },
+  
+  
+  /**
+   * Remove pull-to-refresh.
+   */
+  removePullToRefresh: function() {
+    var self = this;
+    
+    self.__refreshHeight = null;
+    self.__refreshActivate = null;
+    self.__refreshDeactivate = null;
+    self.__refreshStart = null;
+    self.__refreshShow = null;
+    self.__refreshHide = null;
+    self.__refreshTail = null;
+    self.__refreshTailTime = null;
+    self.__minSpinTime = null;
+  },
 
 
   /**
