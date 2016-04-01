@@ -16,6 +16,8 @@ function run {
   ARGS="--branch=${BRANCH:-master}"
   if [[ "$DEPTH" != "" ]]; then
     ARGS="$ARGS --depth=$DEPTH"
+  else
+    ARGS="$ARGS --depth=2"
   fi
   git clone https://driftyco:$GH_TOKEN@github.com/$REPOSITORY $DIRECTORY $ARGS
   cd $DIRECTORY
