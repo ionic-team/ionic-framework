@@ -411,12 +411,12 @@ IonicModule
     var d = {
       run: function(step) {
         if (direction == 'forward') {
-          setStyles(enteringEle, 1, (1 - step) * 99, 1 - step); // starting at 98% prevents a flicker
-          setStyles(leavingEle, (1 - 0.1 * step), step * -33, -1);
+          setStyles(enteringEle, (0.1 + 0.9 * step), (1 - step) * 99, 1 - step); // starting at 98% prevents a flicker
+          setStyles(leavingEle, (1 - 1 * step), step * -33, -1);
 
         } else if (direction == 'back') {
-          setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33, -1);
-          setStyles(leavingEle, 1, step * 100, 1 - step);
+          setStyles(enteringEle, (0.1 + 0.9 * step), (1 - step) * -33, -1);
+          setStyles(leavingEle, (1 - (0.1 + 0.9 * step)), step * 100, 1 - step);
 
         } else {
           // swap, enter, exit
