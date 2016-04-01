@@ -178,7 +178,6 @@ export class InfiniteScroll {
     let distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - reloadY;
     if (distanceFromInfinite < 0) {
       this._zone.run(() => {
-        console.debug('infinite scroll');
         this.state = STATE_LOADING;
         this.infinite.emit(this);
       });
