@@ -23,7 +23,7 @@ module.exports = function jekyll(renderDocsProcessor) {
                                     .replace('//', '/');
         if (docs[i].relativePath) {
           docs[i].relativePath = doc.relativePath
-                                    .replace('//home/ubuntu/ionic', '');
+                                    .replace('/home/ubuntu/ionic', '');
         }
       });
 
