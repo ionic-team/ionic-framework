@@ -51,12 +51,12 @@ Generator.prototype.loadTemplates = function() {
       return;
     }
 	
-	//If not using typescript, ignore .ts files
-	if(!this.isTS && template.indexOf('.ts') != -1){
+    //If not using typescript, ignore .ts files
+    if(!this.isTS && template.indexOf('.ts') != -1){
       return;
     }
 	
-	//If using typescript, ignore .js files
+    //If using typescript, ignore .js files
     if(this.isTS && template.indexOf('.js') != -1){
       return;
     }
