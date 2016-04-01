@@ -207,6 +207,10 @@ class FullPage {
       <p><button id="insert" (click)="insert()">Insert first page into history before this</button></p>
       <p><button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
+      <ion-fixed style="bottom:0">
+        <button (click)="presentAlert()">fixed button (alert)</button>
+      </ion-fixed>
+      <ion-fixed style="pointer-events: none; top:0; bottom:0; right:0; width:50%; background: rgba(0,0,0,0.5);"></ion-fixed>
     </ion-content>
   `
 })
@@ -240,6 +244,12 @@ class PrimaryHeaderPage {
     this.nav.setRoot(AnotherPage);
   }
 
+  presentAlert() {
+    let alert = Alert.create();
+    alert.setTitle('Hello Alert');
+    alert.addButton({ text: 'Dismiss', role: 'cancel', });
+    this.nav.present(alert);
+  }
 }
 
 
