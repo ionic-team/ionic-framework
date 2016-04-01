@@ -15,10 +15,9 @@ import {ViewController} from '../nav/view-controller';
  * @description
  * An overlay that can be used to indicate activity while blocking user
  * interaction. The loading indicator appears on top of the app's content,
- * and can be automatically dismissed by the app or manually dismissed by
- * the user to resume interaction with the app. It includes an optional
- * backdrop, which can optionally be clicked to dismiss the loading
- * indicator.
+ * and can be dismissed by the app to resume user interaction with
+ * the app. It includes an optional backdrop, which can be disabled
+ * by setting `showBackdrop: false` upon creation.
  *
  * ### Creating
  * You can pass all of the loading options in the first argument of
@@ -27,20 +26,17 @@ import {ViewController} from '../nav/view-controller';
  * in the `content` property. If you do not pass a value to `spinner`
  * the loading indicator will use the spinner specified by the mode. To
  * set the spinner name across the app, set the value of `loadingSpinner`
- * in your app's config. To hide the spinner, you can set
- * `loadingSpinner: 'hide'` or pass `spinner: 'hide'` in the loading
+ * in your app's config. To hide the spinner, set `loadingSpinner: 'hide'`
+ * in the apps' config or pass `spinner: 'hide'` in the loading
  * options. See the create method below for all available options.
  *
  * ### Dismissing
  * The loading indicator can be dismissed automatically after a specific
  * amount of time by passing the number of milliseconds to display it in
- * the `duration` of the loading options. It can also be dismissed by
- * clicking on the backdrop or pressing the escape key if
- * `enableBackdropDismiss` is set to `true` in the loading options. By
- * default the loading indicator will show even during page changes,
- * but this can be disabled by setting `dismissOnPageChange` to `true`.
- * To dismiss the loading indicator after creation, call the `dismiss()`
- * method on the Loading instance.
+ * the `duration` of the loading options. By default the loading indicator
+ * will show even during page changes, but this can be disabled by setting
+ * `dismissOnPageChange` to `true`. To dismiss the loading indicator after
+ * creation, call the `dismiss()` method on the Loading instance.
  *
  * ### Limitations
  * The element is styled to appear on top of other content by setting its
@@ -102,7 +98,6 @@ import {ViewController} from '../nav/view-controller';
 export class Loading extends ViewController {
 
   constructor(opts: LoadingOptions = {}) {
-    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : false;
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
 
     super(LoadingCmp, opts);
@@ -133,7 +128,6 @@ export class Loading extends ViewController {
     * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
     * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
     * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
-    * | enableBackdropDismiss |`boolean`   | If the loading should close when the user taps the backdrop. Default false.                                      |
     * | delay                 |`number`    | How many milliseconds to delay showing the indicator. Default 0.                                                 |
     * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `hide()` is called.    |
     *
@@ -152,7 +146,7 @@ export class Loading extends ViewController {
 @Component({
   selector: 'ion-loading',
   template:
-    '<div (click)="bdClick()" tappable disable-activated class="backdrop" [class.hide-backdrop]="!d.showBackdrop" role="presentation"></div>' +
+    '<div disable-activated class="backdrop" [class.hide-backdrop]="!d.showBackdrop" role="presentation"></div>' +
     '<div class="loading-wrapper">' +
       '<div *ngIf="showSpinner" class="loading-spinner">' +
         '<ion-spinner [name]="d.spinner"></ion-spinner>' +
@@ -208,22 +202,6 @@ class LoadingCmp {
     this.d.duration ? setTimeout(() => this.dismiss('backdrop'), this.d.duration) : null;
   }
 
-  @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
-    if (this.isEnabled() && this._viewCtrl.isLast()) {
-      if (ev.keyCode === 27) {
-        console.debug('loading, escape button');
-        this.bdClick();
-      }
-    }
-  }
-
-  bdClick() {
-    if (this.isEnabled() && this.d.enableBackdropDismiss) {
-      this.dismiss('backdrop');
-    }
-  }
-
   dismiss(role): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
   }
@@ -239,7 +217,6 @@ export interface LoadingOptions {
   content?: string;
   showBackdrop?: boolean;
   dismissOnPageChange?: boolean;
-  enableBackdropDismiss?: boolean;
   delay?: number;
   duration?: number;
 }

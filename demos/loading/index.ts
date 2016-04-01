@@ -10,9 +10,8 @@ class E2EPage {
   presentLoadingIos() {
     let loading = Loading.create({
       spinner: 'ios',
-      content: 'This will dismiss after 5 seconds, or you can click the backdrop to dismiss it now.',
-      enableBackdropDismiss: true,
-      duration: 5000
+      content: 'This is the "ios" spinner. It will dismiss after 3 seconds.',
+      duration: 3000
     });
 
     this.nav.present(loading);
@@ -21,9 +20,8 @@ class E2EPage {
   presentLoadingDots() {
     let loading = Loading.create({
       spinner: 'dots',
-      content: 'This will dismiss after 5 seconds, or you can click the backdrop to dismiss it now.',
-      enableBackdropDismiss: true,
-      duration: 5000
+      content: 'This is the "dots" spinner. It will dismiss after 3 seconds.',
+      duration: 3000
     });
 
     this.nav.present(loading);
@@ -32,9 +30,8 @@ class E2EPage {
   presentLoadingBubbles() {
     let loading = Loading.create({
       spinner: 'bubbles',
-      content: 'This will dismiss after 5 seconds, or you can click the backdrop to dismiss it now.',
-      enableBackdropDismiss: true,
-      duration: 5000
+      content: 'This is the "bubbles" spinner. It will dismiss after 3 seconds.',
+      duration: 3000
     });
 
     this.nav.present(loading);
@@ -43,9 +40,8 @@ class E2EPage {
   presentLoadingCircles() {
     let loading = Loading.create({
       spinner: 'circles',
-      content: 'This will dismiss after 5 seconds, or you can click the backdrop to dismiss it now.',
-      enableBackdropDismiss: true,
-      duration: 5000
+      content: 'This is the "circles" spinner. It will dismiss after 3 seconds.',
+      duration: 3000
     });
 
     this.nav.present(loading);
@@ -54,9 +50,8 @@ class E2EPage {
   presentLoadingCrescent() {
     let loading = Loading.create({
       spinner: 'crescent',
-      content: 'This will dismiss after 5 seconds, or you can click the backdrop to dismiss it now.',
-      enableBackdropDismiss: true,
-      duration: 5000
+      content: 'This is the "crescent" spinner. It will dismiss after 3 seconds.',
+      duration: 3000
     });
 
     this.nav.present(loading);
@@ -64,9 +59,8 @@ class E2EPage {
 
   presentLoadingDefault() {
     let loading = Loading.create({
-      content: 'This will dismiss after 5 seconds, or you can click the backdrop to dismiss it now.',
-      enableBackdropDismiss: true,
-      duration: 5000
+      content: 'This is the mode specific spinner. It will dismiss after 3 seconds.',
+      duration: 3000
     });
 
     this.nav.present(loading);
@@ -79,9 +73,8 @@ class E2EPage {
         <div class="custom-spinner-container">
           <div class="custom-spinner-box"></div>
         </div>
-        <div>This will dismiss after 5 seconds, or you can click the backdrop to dismiss it now.</div>`,
-      enableBackdropDismiss: true,
-      duration: 5000
+        <div>This is a custom spinner. It will dismiss after 3 seconds.</div>`,
+      duration: 3000
     });
 
     this.nav.present(loading);
@@ -90,9 +83,8 @@ class E2EPage {
   presentLoadingText() {
     let loading = Loading.create({
       spinner: 'hide',
-      content: 'This will dismiss after 5 seconds, or you can click the backdrop to dismiss it now.',
-      enableBackdropDismiss: true,
-      duration: 5000
+      content: 'This has no spinner, only text. It will dismiss after 3 seconds.',
+      duration: 3000
     });
 
     this.nav.present(loading);

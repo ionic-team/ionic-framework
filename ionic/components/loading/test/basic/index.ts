@@ -10,7 +10,7 @@ class E2EPage {
   presentLoadingIos() {
     let loading = Loading.create({
       spinner: 'ios',
-      enableBackdropDismiss: true
+      duration: 2000
     });
 
     this.nav.present(loading);
@@ -20,7 +20,7 @@ class E2EPage {
     let loading = Loading.create({
       spinner: 'dots',
       content: 'Loading...',
-      enableBackdropDismiss: true
+      duration: 2000
     });
 
     this.nav.present(loading);
@@ -30,7 +30,7 @@ class E2EPage {
     let loading = Loading.create({
       spinner: 'bubbles',
       content: 'Loading...',
-      enableBackdropDismiss: true
+      duration: 2000
     });
 
     this.nav.present(loading);
@@ -40,7 +40,7 @@ class E2EPage {
     let loading = Loading.create({
       spinner: 'circles',
       content: 'Loading...',
-      enableBackdropDismiss: true
+      duration: 2000
     });
 
     this.nav.present(loading);
@@ -50,7 +50,6 @@ class E2EPage {
     let loading = Loading.create({
       spinner: 'crescent',
       content: 'Please wait...',
-      enableBackdropDismiss: true,
       duration: 1500
     });
 
@@ -60,7 +59,6 @@ class E2EPage {
   presentLoadingDefault() {
     let loading = Loading.create({
       content: 'Please wait...',
-      enableBackdropDismiss: true,
     });
 
     this.nav.present(loading);
@@ -77,7 +75,7 @@ class E2EPage {
         <div class="custom-spinner-container">
           <div class="custom-spinner-box"></div>
         </div>`,
-      enableBackdropDismiss: true
+      duration: 2000
     });
 
     this.nav.present(loading);
@@ -97,7 +95,7 @@ class E2EPage {
 
     setTimeout(() => {
       loading.dismiss();
-    }, 5000);
+    }, 2000);
   }
 
   goToPage2() {
