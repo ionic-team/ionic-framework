@@ -60,6 +60,10 @@
   -ms-content-zooming: none;
 }
 
+.selectable-text {
+  @include user-select(text!important);
+}
+
 // Fill the screen to block clicks (a better pointer-events: none) for the body
 // to avoid full-page reflows and paints which can cause flickers
 .click-block {
