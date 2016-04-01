@@ -39,6 +39,10 @@ ion-segment {
   color: $segment-button-wp-text-color-activated;
   background-color: $segment-button-wp-background-color;
   opacity: $segment-button-wp-opacity;
+  
+  &.segment-activated {
+    opacity: $segment-button-wp-opacity-activated;
+  }
 
   ion-icon {
     font-size: $segment-button-wp-icon-size;
@@ -51,12 +55,6 @@ ion-segment {
   ion-segment {
     margin: 0 auto;
   }
-
-  .segment-button.activated,
-  .segment-button.segment-activated {
-    opacity: $segment-button-wp-opacity-activated;
-  }
-
 }
 
 
