@@ -21,6 +21,8 @@ module.exports = function jekyll(renderDocsProcessor) {
                                     .replace('/index.md','')
                                     .replace('//home/ubuntu/ionic/ionic', '')
                                     .replace('//', '/');
+        docs[i].relativePath = doc.relativePath
+                                  .replace('//home/ubuntu/ionic', '');
       });
 
       docs.push({
