@@ -247,7 +247,7 @@ export class Content extends Ion {
   }
 
   /**
-   * Scroll to the specified position.
+   * Scroll to the top of the content component.
    *
    * ```ts
    * @Page({
@@ -265,7 +265,7 @@ export class Content extends Ion {
    *     this.content = this.app.getComponent('my-content');
    *   }
    *    scrollTop() {
-   *      this.content.scrollTop();
+   *      this.content.scrollToTop();
    *    }
    * }
    * ```
