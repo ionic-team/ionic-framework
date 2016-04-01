@@ -91,15 +91,11 @@ class E2EPage {
 
     setTimeout(() => {
       this.nav.push(Page2);
-    }, 3000);
-
-    setTimeout(() => {
-      this.nav.push(Page3);
-    }, 3000);
+    }, 1000);
 
     setTimeout(() => {
       loading.dismiss();
-    }, 2000);
+    }, 5000);
   }
 
   goToPage2() {
@@ -125,6 +121,12 @@ class E2EPage {
 })
 class Page2 {
   constructor(private nav: NavController, private platform: Platform) {}
+
+  onPageLoaded() {
+    setTimeout(() => {
+      this.nav.push(Page3);
+    }, 1000);
+  }
 
   goToPage3() {
     this.nav.push(Page3);
