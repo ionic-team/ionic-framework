@@ -150,7 +150,7 @@ Platform.register({
     hoverCSS: false
   },
   isMatch(p: Platform): boolean {
-    return p.isPlatformMatch('windows', ['windows phone']);
+    return p.isPlatformMatch('windows', ['windows phone', 'edge'], ['ios', 'android']);
   },
   versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/Windows Phone (\d+).(\d+)?/);
