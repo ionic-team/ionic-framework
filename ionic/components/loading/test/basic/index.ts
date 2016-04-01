@@ -7,18 +7,18 @@ import {App, Page, ActionSheet, Loading, NavController, ViewController, Platform
 class E2EPage {
   constructor(private nav: NavController, private platform: Platform) {}
 
-  showLoadingIos() {
+  presentLoadingIos() {
     let loading = Loading.create({
-      icon: 'ios',
+      spinner: 'ios',
       enableBackdropDismiss: true
     });
 
     this.nav.present(loading);
   }
 
-  showLoadingDots() {
+  presentLoadingDots() {
     let loading = Loading.create({
-      icon: 'dots',
+      spinner: 'dots',
       content: 'Loading...',
       enableBackdropDismiss: true
     });
@@ -26,9 +26,9 @@ class E2EPage {
     this.nav.present(loading);
   }
 
-  showLoadingBubbles() {
+  presentLoadingBubbles() {
     let loading = Loading.create({
-      icon: 'bubbles',
+      spinner: 'bubbles',
       content: 'Loading...',
       enableBackdropDismiss: true
     });
@@ -36,9 +36,9 @@ class E2EPage {
     this.nav.present(loading);
   }
 
-  showLoadingCircles() {
+  presentLoadingCircles() {
     let loading = Loading.create({
-      icon: 'circles',
+      spinner: 'circles',
       content: 'Loading...',
       enableBackdropDismiss: true
     });
@@ -46,9 +46,9 @@ class E2EPage {
     this.nav.present(loading);
   }
 
-  showLoadingCrescent() {
+  presentLoadingCrescent() {
     let loading = Loading.create({
-      icon: 'crescent',
+      spinner: 'crescent',
       content: 'Please wait...',
       enableBackdropDismiss: true,
       duration: 1500
@@ -57,18 +57,22 @@ class E2EPage {
     this.nav.present(loading);
   }
 
-  showLoadingDefault() {
+  presentLoadingDefault() {
     let loading = Loading.create({
-      icon: 'platform',
       content: 'Please wait...',
       enableBackdropDismiss: true,
     });
 
     this.nav.present(loading);
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 5000);
   }
 
-  showLoadingCustom() {
+  presentLoadingCustom() {
     let loading = Loading.create({
+      spinner: 'hide',
       content: `
         <div class="custom-spinner-container">
           <div class="custom-spinner-box"></div>
@@ -79,13 +83,21 @@ class E2EPage {
     this.nav.present(loading);
   }
 
-  showLoadingText() {
+  presentLoadingText() {
     let loading = Loading.create({
-      content: 'Loading Please Wait...',
-      enableBackdropDismiss: true
+      spinner: 'hide',
+      content: 'Loading Please Wait...'
     });
 
     this.nav.present(loading);
+
+    setTimeout(() => {
+      this.goToPage2();
+    }, 1000);
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 5000);
   }
 
   goToPage2() {

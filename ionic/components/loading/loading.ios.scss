@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 $loading-ios-padding:                   24px 34px !default;
+$loading-ios-max-width:                 270px !default;
 $loading-ios-max-height:                90% !default;
 $loading-ios-border-radius:             8px !default;
 $loading-ios-text-color:                #000 !default;
@@ -24,6 +25,7 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 .loading-wrapper {
   padding: $loading-ios-padding;
 
+  max-width: $loading-ios-max-width;
   max-height: $loading-ios-max-height;
 
   border-radius: $loading-ios-border-radius;

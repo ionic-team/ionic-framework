@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 $loading-wp-padding:                   20px !default;
+$loading-wp-max-width:                 280px !default;
 $loading-wp-max-height:                90% !default;
 $loading-wp-border-radius:             2px !default;
 $loading-wp-text-color:                #fff !default;
@@ -22,6 +23,7 @@ $loading-wp-spinner-dots-color:        $loading-wp-spinner-color !default;
 .loading-wrapper {
   padding: $loading-wp-padding;
 
+  max-width: $loading-wp-max-width;
   max-height: $loading-wp-max-height;
 
   border-radius: $loading-wp-border-radius;
