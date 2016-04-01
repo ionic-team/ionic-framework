@@ -90,8 +90,12 @@ class E2EPage {
     this.nav.present(loading);
 
     setTimeout(() => {
-      this.goToPage2();
-    }, 1000);
+      this.nav.push(Page2);
+    }, 3000);
+
+    setTimeout(() => {
+      this.nav.push(Page3);
+    }, 3000);
 
     setTimeout(() => {
       loading.dismiss();
@@ -109,9 +113,33 @@ class E2EPage {
       <ion-title>Page 2</ion-title>
     </ion-navbar>
     <ion-content padding>Some content</ion-content>
+    <ion-toolbar position="bottom">
+      <ion-buttons end>
+        <button (click)="goToPage3()">
+          Navigate
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
   `
 })
 class Page2 {
+  constructor(private nav: NavController, private platform: Platform) {}
+
+  goToPage3() {
+    this.nav.push(Page3);
+  }
+}
+
+@Page({
+  template: `
+    <ion-navbar *navbar>
+      <ion-title>Page 3</ion-title>
+    </ion-navbar>
+    <ion-content padding>Some content</ion-content>
+  `
+})
+class Page3 {
   constructor(private nav: NavController, private platform: Platform) {}
 }
 
