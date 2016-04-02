@@ -10,13 +10,9 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class <%= jsClassName %> {
-  private http;
-  private data;
+  data: any = null;
 
-  constructor(http: Http) {
-    this.http = http;
-    this.data = null;
-  }
+  constructor(public http: Http) {}
 
   load() {
     if (this.data) {

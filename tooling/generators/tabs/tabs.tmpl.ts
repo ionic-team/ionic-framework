@@ -7,7 +7,7 @@ import {NavController, Page} from 'ionic-angular';
 })
 export class <%= jsClassName %> {
 
-  constructor(nav: NavController) {
+  constructor(public nav: NavController) {
     // set the root pages for each tab
     <% _.forEach(tabs, function(tab, i) { %>this.tab<%= ++i %>Root = <%= tab.jsClassName %>;
     <% }); %>

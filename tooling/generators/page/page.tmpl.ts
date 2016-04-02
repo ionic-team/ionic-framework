@@ -10,9 +10,7 @@ import {Page, NavController} from 'ionic-angular';
   templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html',
 })
 export class <%= jsClassName %> {
-  public nav;
-
-  constructor(nav: NavController) {
+  constructor(public nav: NavController) {
     this.nav = nav;
   }
 }

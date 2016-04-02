@@ -14,7 +14,7 @@ export class <%= jsClassName %> {
   /*
     Takes a value and makes it lowercase.
    */
-  transform(value:string, args: any[]) {
+  transform(value: string, args: any[]) {
     value = value + ''; // make sure it's a string
     return value.toLowerCase();
   }
