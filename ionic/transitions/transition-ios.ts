@@ -94,7 +94,7 @@ class IOSTransition extends Transition {
         } else {
           // entering navbar, forward direction, and there's no leaving navbar
           // should just slide in, no fading in
-          enteringNavbarBg
+          enteringNavBar
             .before.clearStyles([OPACITY])
             .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
         }
@@ -169,7 +169,7 @@ class IOSTransition extends Transition {
           } else {
             // leaving navbar, back direction, and there's no entering navbar
             // should just slide out, no fading out
-            leavingNavbarBg
+            leavingNavBar
               .before.clearStyles([OPACITY])
               .fromTo(TRANSLATEX, CENTER,  '100%');
           }
