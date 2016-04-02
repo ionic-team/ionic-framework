@@ -31,6 +31,7 @@ import {ScrollTo} from '../../animations/scroll-to';
     '<scroll-content>' +
       '<ng-content></ng-content>' +
     '</scroll-content>' +
+    '<ng-content select="ion-fixed"></ng-content>' +
     '<ng-content select="ion-refresher"></ng-content>'
 })
 export class Content extends Ion {

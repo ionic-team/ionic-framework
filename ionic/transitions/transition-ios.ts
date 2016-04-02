@@ -171,7 +171,7 @@ class IOSTransition extends Transition {
             // should just slide out, no fading out
             leavingNavbarBg
               .before.clearStyles([OPACITY])
-              .fromTo(TRANSLATEX, CENTER,  '100%');
+              .fromTo(TRANSLATEX, CENTER, '100%');
           }
 
           let leavingBackBtnText = new Animation(leavingView.backBtnTextRef());
