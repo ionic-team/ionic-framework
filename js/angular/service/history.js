@@ -186,6 +186,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           url = $location.url(),
           tmp, x, ele;
 
+      var savedLastStateId = lastStateId;
       if (lastStateId !== currentStateId) {
         lastStateId = currentStateId;
         stateChangeCounter++;
@@ -208,11 +209,12 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           direction = DIRECTION_BACK;
 
         } else if (currentView) {
-          direction = DIRECTION_EXIT;
+          // default: go back for different history
+          direction = DIRECTION_BACK;
 
           tmp = getHistoryById(backView.historyId);
           if (tmp && tmp.parentHistoryId === currentView.historyId) {
-            direction = DIRECTION_ENTER;
+            direction = DIRECTION_BACK;
 
           } else {
             tmp = getHistoryById(currentView.historyId);
@@ -263,7 +265,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
         tmp = getHistoryById(currentView.historyId);
         if (tmp && tmp.parentHistoryId === historyId) {
-          direction = DIRECTION_EXIT;
+          // forward from tab to other page
+          direction = DIRECTION_FORWARD;
 
         } else {
           tmp = getHistoryById(historyId);
@@ -285,7 +288,6 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
         // create an element from the viewLocals template
         ele = $ionicViewSwitcher.createViewEle(viewLocals);
         if (this.isAbstractEle(ele, viewLocals)) {
-          console.log('VIEW', 'abstractView', DIRECTION_NONE, viewHistory.currentView);
           return {
             action: 'abstractView',
             direction: DIRECTION_NONE,
@@ -334,7 +336,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
             } else {
               tmp = getHistoryById(tmp.parentHistoryId);
               if (tmp && tmp.historyId === hist.historyId) {
-                direction = DIRECTION_EXIT;
+                // forward from tab to other page
+                direction = DIRECTION_FORWARD;
               }
             }
           }
@@ -406,9 +409,11 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
         }
       }
 
-      console.log('VIEW', action, direction, viewHistory.currentView);
-
       hist.cursor = viewHistory.currentView.index;
+
+      //if (savedLastStateId && savedLastStateId.indexOf('tab') == 0 && currentStateId.indexOf('tab') == 0) {
+      //  direction = (savedLastStateId[4] < currentStateId[4]) ? DIRECTION_FORWARD : DIRECTION_BACK;
+      //}
 
       return {
         viewId: viewId,
@@ -603,7 +608,15 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     enabledBack: function(view) {
       var backView = getBackView(view);
-      return !!(backView && backView.historyId === view.historyId);
+      if (!backView) {
+          return false;
+      }
+      if (backView && backView.historyId === view.historyId) {
+          return true;
+      }
+      var hist = getHistoryById(backView.historyId);
+      // enable back from some page to tab
+      return hist.parentHistoryId === view.historyId;
     },
 
     /**
