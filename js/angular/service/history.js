@@ -325,6 +325,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
             direction = DIRECTION_FORWARD;
 
           } else if (currentView.historyId !== hist.historyId) {
+            // DB: this is a new view in a different tab
             direction = DIRECTION_ENTER;
 
             tmp = getHistoryById(currentView.historyId);
@@ -354,7 +355,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           viewId: viewId,
           index: hist.stack.length,
           historyId: hist.historyId,
-          backViewId: (currentView && currentView.viewId ? currentView.viewId : null),
+          backViewId: (currentView && currentView.viewId && (currentView.historyId === hist.historyId || currentView.historyId === hist.parentHistoryId) ? currentView.viewId : null),
           forwardViewId: null,
           stateId: currentStateId,
           stateName: this.currentStateName(),

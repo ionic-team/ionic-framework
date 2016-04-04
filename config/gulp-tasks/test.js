@@ -10,10 +10,15 @@ var uuid = require('node-uuid');
 
 var projectRoot = path.resolve(__dirname, '../..');
 
-var karmaConf = require('../karma.conf.js');
 var karmaSauceConf = require('../karma-sauce.conf.js');
 
 module.exports = function(gulp, argv) {
+
+  var includeCodeCoverage = true;
+  if ( argv.skipCoverage ){
+    includeCodeCoverage = false;
+  }
+  var karmaConf = require('../karma.conf')(includeCodeCoverage);
 
   /*
    * Connect to Saucelabs

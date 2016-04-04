@@ -231,10 +231,9 @@ describe('Ionic History', function() {
     currentView = ionicHistory.currentView();
     backView = ionicHistory.backView();
     forwardView = ionicHistory.forwardView();
-    expect(currentView.backViewId).toEqual(tab1view1Reg.viewId);
+    expect(currentView.backViewId).toEqual(null);
     expect(currentView.forwardViewId).toEqual(null);
-    expect(backView.viewId).toEqual(tab1view1Reg.viewId);
-    expect(backView.forwardViewId).toEqual(currentView.viewId);
+    expect(backView).toEqual(null);
 
     expect(ionicHistory.viewHistory().histories.root.cursor).toEqual(2);
     expect(ionicHistory.viewHistory().histories.root.stack.length).toEqual(3);
@@ -689,7 +688,7 @@ describe('Ionic History', function() {
     expect(registerData.action).toEqual('moveBack');
     expect(registerData.direction).toEqual('swap');
     currentView = ionicHistory.currentView();
-    expect(currentView.backViewId).toEqual(tab1view2ViewId);
+    expect(currentView.backViewId).toEqual(null);
     expect(currentView.forwardViewId).toEqual(null);
 
     // should be remembered at the tab 1 view 2
