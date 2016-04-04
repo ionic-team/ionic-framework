@@ -56,7 +56,7 @@
  * is now the default, replacing rotating font icons. Set to `none` to disable both the
  * spinner and the icon.
  * @param {string=} refreshing-icon The font icon to display after user lets go of the
- * refresher. This is depreicated in favor of the SVG {@link ionic.directive:ionSpinner}.
+ * refresher. This is deprecated in favor of the SVG {@link ionic.directive:ionSpinner}.
  * @param {boolean=} disable-pulling-rotation Disables the rotation animation of the pulling
  * icon when it reaches its activated threshold. To be used with a custom `pulling-icon`.
  *

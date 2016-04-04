@@ -1,3 +1,9 @@
+**Note: for support questions, please use one of these channels:** 
+
+https://forum.ionicframework.com/
+http://ionicworldwide.herokuapp.com/
+
+
 #### Short description of the problem:
 
 
@@ -13,13 +19,11 @@
 insert any relevant code between the above and below backticks
 ```
 
-**Ionic Version**: 1.x / 2.x
+**Other information:** (e.g. stacktraces, related issues, suggestions how to fix, stackoverflow links, forum links, etc)
+ 
 
-**Browser & Operating System**: iOS / Android / Chrome
+**Which Ionic Version?** 1.x or 2.x
 
 
-**Run `ionic info` from terminal/cmd prompt:**
+**Run `ionic info` from terminal/cmd prompt:** (paste output below)
 
-```
-paste output from `ionic info` here
-```

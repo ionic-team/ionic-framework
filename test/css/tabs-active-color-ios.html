@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+
+<head>
+  <script src="../../dist/js/ionic.bundle.js"></script>
+  <meta charset="utf-8">
+  <title>Tabs: Android Colors</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <link href="../../dist/css/ionic.css" rel="stylesheet">
+  <style>
+    .tabs,
+    .view,
+    .bar-header {
+      position: relative !important;
+    }
+
+    .tabs-top > .tabs,
+    .tabs.tabs-top {
+      top: 0
+    }
+    /* .spacer{ */
+    /*   margin-top: 100px; */
+    /* } */
+  </style>
+</head>
+
+<body class="platform-android">
+  <ion-header-bar>
+    <h1 class="title">IOS Active Color</h1>
+  </ion-header-bar>
+
+  <ion-tabs class="tabs-light tabs-icon-top tabs-color-active-positive">
+    <ion-tab href="#" icon="ion-ios-game-controller-a" title="Fun"></ion-tab>
+    <ion-tab icon="ion-locked" title="Security"></ion-tab>
+    <ion-tab icon="ion-leaf" badge="3" badge-style="badge-assertive" title="Light"></ion-tab>
+    <ion-tab icon="ion-close" disabled title="Inactive"></ion-tab>
+  </ion-tabs>
+
+  <ion-tabs class="tabs-light tabs-icon-top tabs-color-active-calm">
+    <ion-tab href="#" icon="ion-ios-game-controller-a" title="Fun"></ion-tab>
+    <ion-tab icon="ion-locked" title="Security"></ion-tab>
+    <ion-tab icon="ion-leaf" badge="3" badge-style="badge-assertive" title="Light"></ion-tab>
+    <ion-tab icon="ion-close" disabled title="Inactive"></ion-tab>
+  </ion-tabs>
+
+  <ion-tabs class="tabs-light tabs-icon-top tabs-color-active-balanced">
+    <ion-tab href="#" icon="ion-ios-game-controller-a" title="Fun"></ion-tab>
+    <ion-tab icon="ion-locked" title="Security"></ion-tab>
+    <ion-tab icon="ion-leaf" badge="3" badge-style="badge-assertive" title="Light"></ion-tab>
+    <ion-tab icon="ion-close" disabled title="Inactive"></ion-tab>
+  </ion-tabs>
+
+
+  <ion-tabs class="tabs-light tabs-icon-top tabs-color-active-energized">
+    <ion-tab href="#" icon="ion-ios-game-controller-a" title="Fun"></ion-tab>
+    <ion-tab icon="ion-locked" title="Security"></ion-tab>
+    <ion-tab icon="ion-leaf" badge="3" badge-style="badge-assertive" title="Light"></ion-tab>
+    <ion-tab icon="ion-close" disabled title="Inactive"></ion-tab>
+  </ion-tabs>
+
+  <ion-tabs class="tabs-light tabs-icon-top tabs-color-active-assertive">
+    <ion-tab href="#" icon="ion-ios-game-controller-a" title="Fun"></ion-tab>
+    <ion-tab icon="ion-locked" title="Security"></ion-tab>
+    <ion-tab icon="ion-leaf" badge="3" badge-style="badge-assertive" title="Light"></ion-tab>
+    <ion-tab icon="ion-close" disabled title="Inactive"></ion-tab>
+  </ion-tabs>
+
+  <ion-tabs class="tabs-light tabs-icon-top tabs-color-active-royal">
+    <ion-tab href="#" icon="ion-ios-game-controller-a" title="Fun"></ion-tab>
+    <ion-tab icon="ion-locked" title="Security"></ion-tab>
+    <ion-tab icon="ion-leaf" badge="3" badge-style="badge-assertive" title="Light"></ion-tab>
+    <ion-tab icon="ion-close" disabled title="Inactive"></ion-tab>
+  </ion-tabs>
+
+  <ion-tabs class="tabs-positive tabs-icon-top tabs-color-active-light">
+    <ion-tab href="#" icon="ion-ios-game-controller-a" title="Fun"></ion-tab>
+    <ion-tab icon="ion-locked" title="Security"></ion-tab>
+    <ion-tab icon="ion-leaf" badge="3" badge-style="badge-assertive" title="Light"></ion-tab>
+    <ion-tab icon="ion-close" disabled title="Inactive"></ion-tab>
+  </ion-tabs>
+
+  <ion-tabs class="tabs-positive tabs-icon-top tabs-color-active-stable">
+    <ion-tab href="#" icon="ion-ios-game-controller-a" title="Fun"></ion-tab>
+    <ion-tab icon="ion-locked" title="Security"></ion-tab>
+    <ion-tab icon="ion-leaf" badge="3" badge-style="badge-assertive" title="Light"></ion-tab>
+    <ion-tab icon="ion-close" disabled title="Inactive"></ion-tab>
+  </ion-tabs>
+
+  <script>
+    angular.module('ionicApp', ['ionic'])
+      .run(function() {
+        ionic.Platform.setPlatform('ios')
+      })
+  </script>
+</body>
+
+</html>
