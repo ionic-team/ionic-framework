@@ -6,8 +6,7 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
-import {NavRouter} from './nav-router';
-import {pascalCaseToDashCase, isTrueProperty, isBlank} from '../../util/util';
+import {pascalCaseToDashCase, isBlank} from '../../util/util';
 import {Portal} from './nav-portal';
 import {raf} from '../../util/dom';
 import {SwipeBackGesture} from './swipe-back';
@@ -131,7 +130,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  router: NavRouter;
+  routers: any[] = [];
 
   /**
    * @private
@@ -1254,9 +1253,12 @@ export class NavController extends Ion {
       this._app && this._app.setEnabled(true);
       this.setTransitioning(false);
 
-      if (this.router && direction !== null && hasCompleted) {
+      if (direction !== null && hasCompleted && this._portal) {
         // notify router of the state change if a direction was provided
-        this.router.stateChange(direction, enteringView);
+        // multiple routers can exist and each should be notified
+        this.routers.forEach(router => {
+          router.stateChange(direction, enteringView);
+        });
       }
 
       // see if we should add the swipe back gesture listeners or not
@@ -1630,10 +1632,9 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * @param {TODO} router  TODO
    */
-  registerRouter(router) {
-    this.router = router;
+  registerRouter(router: any) {
+    this.routers.push(router);
   }
 
   /**
