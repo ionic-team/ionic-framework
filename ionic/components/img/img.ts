@@ -1,6 +1,7 @@
 import {Component, Input, HostBinding, ViewChild, ElementRef} from 'angular2/core';
 
 import {isPresent} from '../../util/util';
+import {Platform} from '../../platform/platform';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class Img {
   private _h: string;
   private _enabled: boolean = true;
 
-  constructor(private _elementRef: ElementRef) {}
+  constructor(private _elementRef: ElementRef, private _platform: Platform) {}
 
   @ViewChild('imgA') private _imgA: ElementRef;
   @ViewChild('imgB') private _imgB: ElementRef;
@@ -39,7 +40,7 @@ export class Img {
   }
 
   private _update() {
-    if (this._enabled) {
+    if (this._enabled && this.isVisible()) {
       if (this._useA) {
         this._srcA = this._src;
 
@@ -52,6 +53,11 @@ export class Img {
   enable(shouldEnable: boolean) {
     this._enabled = shouldEnable;
     this._update();
+  }
+
+  isVisible() {
+    let bounds = this._elementRef.nativeElement.getBoundingClientRect();
+    return bounds.bottom > 0 && bounds.top < this._platform.height();
   }
 
   @HostBinding('class.img-loaded')
