@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="/dist/css/ionic.min.css" rel="stylesheet">
+    <script src="/dist/js/ionic.bundle.js"></script>
+  </head>
+  <body ng-app="app">
+    <ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">Awesome App</h1>
+      </ion-header-bar>
+      <ion-content>
+
+          <ion-checkbox ng-model="test">test -- {{test}}</ion-checkbox>
+          <br>
+          <ion-checkbox ng-model="nested.test">nested.test - {{nested.test}}</ion-checkbox>
+          <hr>
+          <div ng-repeat="msg in log track by $index">{{msg}}</div>
+
+      </ion-content>
+    </ion-pane>
+  </body>
+  <script>
+  angular.module('app', ['ionic'])
+    .run(function ($rootScope, $interval) {
+
+      $rootScope.log = [];
+      $rootScope.test = true;
+      $rootScope.nested = { test: true };
+
+      $rootScope.$watch('test', function () {
+        $rootScope.log.push('test watch');
+      });
+
+      $rootScope.$watch('nested.test', function () {
+        $rootScope.log.push('nested.test watch');
+      });
+
+      $interval(function(){
+        //$rootScope.test = ! $rootScope.test;
+        //console.log("Value of $rootScope.test is: ", $rootScope.test);
+        //console.log("Value of $rootScope.nested.test is: ", $rootScope.nested.test);
+      }, 500);
+
+    });
+
+  </script>
+</html>
