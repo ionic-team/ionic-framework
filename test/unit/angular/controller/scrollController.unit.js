@@ -32,10 +32,12 @@ describe('$ionicScroll Controller', function() {
 
     it('should register with no handle', inject(function ($ionicScrollDelegate) {
       nativeScrolling = nativeScrollingSetting;
-      spyOn($ionicScrollDelegate, '_registerInstance');
+      var deregisterSpy = jasmine.createSpy('deregister');
+      spyOn($ionicScrollDelegate, '_registerInstance').andCallFake(function(){
+        return deregisterSpy;
+      });
       var el = setup();
-      expect($ionicScrollDelegate._registerInstance)
-        .toHaveBeenCalledWith(ctrl, undefined, jasmine.any(Function));
+      expect($ionicScrollDelegate._registerInstance).toHaveBeenCalledWith(ctrl, undefined, jasmine.any(Function));
     }));
 
     it('should register with given handle and deregister on destroy', inject(function ($ionicScrollDelegate) {
