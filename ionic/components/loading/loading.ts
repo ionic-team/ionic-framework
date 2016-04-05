@@ -130,7 +130,6 @@ export class Loading extends ViewController {
     * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
     * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
     * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
-    * | delay                 |`number`    | How many milliseconds to delay showing the indicator. Default 0.                                                 |
     * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `hide()` is called.    |
     *
     *
