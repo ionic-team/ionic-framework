@@ -9,6 +9,7 @@ function Generator(options) {
   this.name = options.name;
   this.type = options.generator;
   this.appDirectory = options.appDirectory;
+  this.isTS = options.isTS;
 
   //templateVars
   this.fileName = _.kebabCase(this.name);
@@ -47,6 +48,16 @@ Generator.prototype.loadTemplates = function() {
     // Go through all the files in the folder, grab the templates, read in the file contents
     // return as template type, contents
     if (template.indexOf('.tmpl') == -1) {
+      return;
+    }
+	
+    //If not using typescript, ignore .ts files
+    if(!this.isTS && template.indexOf('.ts') != -1){
+      return;
+    }
+	
+    //If using typescript, ignore .js files
+    if(this.isTS && template.indexOf('.js') != -1){
       return;
     }
 
