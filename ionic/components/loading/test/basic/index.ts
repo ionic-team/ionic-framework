@@ -10,7 +10,7 @@ class E2EPage {
   presentLoadingIos() {
     let loading = Loading.create({
       spinner: 'ios',
-      duration: 2000
+      duration: 1000
     });
 
     this.nav.present(loading);
@@ -20,7 +20,7 @@ class E2EPage {
     let loading = Loading.create({
       spinner: 'dots',
       content: 'Loading...',
-      duration: 2000
+      duration: 1000
     });
 
     this.nav.present(loading);
@@ -30,7 +30,7 @@ class E2EPage {
     let loading = Loading.create({
       spinner: 'bubbles',
       content: 'Loading...',
-      duration: 2000
+      duration: 1000
     });
 
     this.nav.present(loading);
@@ -40,7 +40,7 @@ class E2EPage {
     let loading = Loading.create({
       spinner: 'circles',
       content: 'Loading...',
-      duration: 2000
+      duration: 1000
     });
 
     this.nav.present(loading);
@@ -50,7 +50,7 @@ class E2EPage {
     let loading = Loading.create({
       spinner: 'crescent',
       content: 'Please wait...',
-      duration: 1500
+      duration: 1000
     });
 
     this.nav.present(loading);
@@ -75,7 +75,7 @@ class E2EPage {
         <div class="custom-spinner-container">
           <div class="custom-spinner-box"></div>
         </div>`,
-      duration: 2000
+      duration: 1000
     });
 
     this.nav.present(loading);
@@ -101,6 +101,80 @@ class E2EPage {
   goToPage2() {
     this.nav.push(Page2);
   }
+  
+  presentLoadingMultiple() {
+    let loading = Loading.create({
+      spinner: 'hide',
+      content: 'Loading 1 Please Wait...'
+    });
+
+    this.nav.present(loading);
+    
+    let loading2 = Loading.create({
+      spinner: 'hide',
+      content: 'Loading 2 Please Wait...'
+    });
+
+    setTimeout(() => {
+      this.nav.present(loading2);
+    }, 1000);
+    
+    let loading3 = Loading.create({
+      spinner: 'hide',
+      content: 'Loading 3 Please Wait...'
+    });
+
+    setTimeout(() => {
+      this.nav.present(loading3);
+      
+      setTimeout(() => {
+        loading3.dismiss();
+      }, 1000);
+      
+      setTimeout(() => {
+        loading2.dismiss();
+      }, 2000);  
+      
+      setTimeout(() => {
+        loading.dismiss();
+      }, 3000);               
+    }, 2000);
+   
+  }
+  
+  presentLoadingMultipleNav() {
+    let loading = Loading.create({
+      spinner: 'hide',
+      content: 'Loading 1 Please Wait...',
+      dismissOnPageChange: true
+    });
+
+    this.nav.present(loading);
+    
+    let loading2 = Loading.create({
+      spinner: 'hide',
+      content: 'Loading 2 Please Wait...',
+      dismissOnPageChange: true
+    });
+
+    setTimeout(() => {
+      this.nav.present(loading2);
+    }, 500);
+    
+    let loading3 = Loading.create({
+      spinner: 'hide',
+      content: 'Loading 3 Please Wait...',
+      dismissOnPageChange: true
+    });
+
+    setTimeout(() => {
+      this.nav.present(loading3);
+      
+      setTimeout(() => {
+        this.nav.push(Page2);
+      }, 1000);         
+    }, 1000);   
+  }  
 }
 
 @Page({
