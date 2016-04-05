@@ -20,6 +20,9 @@
  * - This example assumes your modal is in your main index file or another template file. If it is in its own
  * template file, remove the script tags and call it by file name.
  *
+ * - Since version 1.7.7 you should not warap the template in a script tag. Reference: 
+ * http://stackoverflow.com/questions/32552896/ionic-modal-not-showing#answer-33292269
+ *
  * @usage
  * ```html
  * <script id="my-modal.html" type="text/ng-template">
