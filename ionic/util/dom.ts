@@ -24,9 +24,12 @@
   }
 })();
 
-export const raf = window.requestAnimationFrame.bind(window);
+// use native raf rather than the zone wrapped one
+export const raf = (window[window['Zone']['__symbol__']('requestAnimationFrame')] || window[window['Zone']['__symbol__']('webkitRequestAnimationFrame')])['bind'](window);
 export const cancelRaf = window.cancelAnimationFrame.bind(window);
 
+export const nativeTimeout = window[window['Zone']['__symbol__']('setTimeout')]['bind'](window);
+export const clearNativeTimeout = window[window['Zone']['__symbol__']('clearTimeout')]['bind'](window);
 
 export function rafFrames(framesToWait, callback) {
   framesToWait = Math.ceil(framesToWait);
@@ -35,9 +38,9 @@ export function rafFrames(framesToWait, callback) {
     raf(callback);
 
   } else {
-    setTimeout(() => {
+    nativeTimeout(() => {
       raf(callback);
-    }, (framesToWait - 1) * 17);
+    }, (framesToWait - 1) * 16.6667);
   }
 }
 
