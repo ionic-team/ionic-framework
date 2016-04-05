@@ -103,6 +103,11 @@ Platform.register({
     swipeBackEnabled: isIOSDevice,
     swipeBackThreshold: 40,
     tapPolyfill: isIOSDevice,
+    virtualScrollEventAssist: function() {
+      // UIWebView needs help getting scroll events
+      // WKWebView does not (WKWebView supports indexDB)
+      return !(window.indexedDB);
+    }
   },
   isMatch(p: Platform): boolean {
     return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);

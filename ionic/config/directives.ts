@@ -9,6 +9,7 @@ import {Badge} from '../components/badge/badge';
 import {Button} from '../components/button/button';
 import {Blur} from '../components/blur/blur';
 import {Content} from '../components/content/content';
+import {Img} from '../components/img/img';
 import {Scroll} from '../components/scroll/scroll';
 import {InfiniteScroll} from '../components/infinite-scroll/infinite-scroll';
 import {InfiniteScrollContent} from '../components/infinite-scroll/infinite-scroll-content';
@@ -20,6 +21,8 @@ import {Tab} from '../components/tabs/tab';
 import {List, ListHeader} from '../components/list/list';
 import {Item} from '../components/item/item';
 import {ItemSliding} from '../components/item/item-sliding';
+import {VirtualScroll} from '../components/virtual-scroll/virtual-scroll';
+import {VirtualItem, VirtualHeader, VirtualFooter} from '../components/virtual-scroll/virtual-item';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
 import {Icon} from '../components/icon/icon';
 import {Spinner} from '../components/spinner/spinner';
@@ -70,6 +73,8 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * -  ListHeader
  * -  Item
  * -  ItemSliding
+ * -  VirtualScroll
+ * -  VirtualFor
  *
  * **Slides**
  * -  Slides
@@ -134,12 +139,17 @@ export const IONIC_DIRECTIVES = [
   InfiniteScrollContent,
   Refresher,
   RefresherContent,
+  Img,
 
   // Lists
   List,
   ListHeader,
   Item,
   ItemSliding,
+  VirtualScroll,
+  VirtualItem,
+  VirtualHeader,
+  VirtualFooter,
 
   // Slides
   Slides,
