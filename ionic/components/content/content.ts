@@ -3,10 +3,10 @@ import {Component, ElementRef, Optional, NgZone} from 'angular2/core';
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
-import {raf, transitionEnd}  from '../../util/dom';
+import {raf, transitionEnd, pointerCoord}  from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
-import {ScrollTo} from '../../animations/scroll-to';
+import {ScrollView} from '../../util/scroll-view';
 
 /**
  * @name Content
@@ -36,7 +36,7 @@ import {ScrollTo} from '../../animations/scroll-to';
 })
 export class Content extends Ion {
   private _padding: number = 0;
-  private _scrollTo: ScrollTo;
+  private _scroll: ScrollView;
   private _scLsn: Function;
 
   /**
@@ -66,13 +66,15 @@ export class Content extends Ion {
     let self = this;
     self.scrollElement = self._elementRef.nativeElement.children[0];
 
-    if (self._config.get('tapPolyfill') === true) {
-      self._zone.runOutsideAngular(function() {
+    self._zone.runOutsideAngular(function() {
+      self._scroll = new ScrollView(self.scrollElement);
+
+      if (self._config.getBoolean('tapPolyfill')) {
         self._scLsn = self.addScrollListener(function() {
           self._app.setScrolling();
         });
-      });
-    }
+      }
+    });
   }
 
   /**
@@ -80,6 +82,7 @@ export class Content extends Ion {
    */
   ngOnDestroy() {
     this._scLsn && this._scLsn();
+    this._scroll && this._scroll.destroy();
     this.scrollElement = this._scLsn = null;
   }
 
@@ -233,17 +236,10 @@ export class Content extends Ion {
    * @param {number} x  The x-value to scroll to.
    * @param {number} y  The y-value to scroll to.
    * @param {number} duration  Duration of the scroll animation in ms.
-   * @param {TODO} tolerance  TODO
    * @returns {Promise} Returns a promise when done
    */
-  scrollTo(x: number, y: number, duration: number, tolerance?: number): Promise<any> {
-    if (this._scrollTo) {
-      this._scrollTo.dispose();
-    }
-
-    this._scrollTo = new ScrollTo(this.scrollElement);
-
-    return this._scrollTo.start(x, y, duration, tolerance);
+  scrollTo(x: number, y: number, duration: number): Promise<any> {
+    return this._scroll.scrollTo(x, y, duration);
   }
 
   /**
@@ -271,21 +267,29 @@ export class Content extends Ion {
    * ```
    * @returns {Promise} Returns a promise when done
    */
-  scrollToTop() {
-    if (this._scrollTo) {
-      this._scrollTo.dispose();
-    }
+  scrollToTop(duration: number = 300) {
+    return this.scrollTo(0, 0, duration);
+  }
 
-    this._scrollTo = new ScrollTo(this.scrollElement);
-
-    return this._scrollTo.start(0, 0, 300, 0);
+  /**
+   * @private
+   */
+  jsScroll(onScrollCallback: Function): Function {
+    return this._scroll.jsScroll(onScrollCallback);
   }
 
   /**
    * @private
    */
   getScrollTop(): number {
-    return this.getNativeElement().scrollTop;
+    return this._scroll.getTop();
+  }
+
+  /**
+   * @private
+   */
+  setScrollTop(top: number) {
+    this._scroll.setTop(top);
   }
 
   /**

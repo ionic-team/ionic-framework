@@ -158,6 +158,17 @@ scroll-content {
   will-change: scroll-position;
 }
 
+ion-content.js-scroll > scroll-content {
+  position: relative;
+
+  min-height: 100%;
+
+  overflow-x: initial;
+  overflow-y: initial;
+  -webkit-overflow-scrolling: auto;
+  will-change: initial;
+}
+
 ion-tabbar {
   position: absolute;
   top: 0;

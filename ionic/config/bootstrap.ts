@@ -13,7 +13,7 @@ import {MenuController} from '../components/menu/menu-controller';
 import {NavRegistry} from '../components/nav/nav-registry';
 import {Platform} from '../platform/platform';
 import {ready, closest} from '../util/dom';
-import {ScrollTo} from '../animations/scroll-to';
+import {ScrollView} from '../util/scroll-view';
 import {TapClick} from '../components/tap-click/tap-click';
 import {Translate} from '../translation/translate';
 
@@ -144,8 +144,8 @@ function bindEvents(window, document, platform, events) {
 
     var content = closest(el, 'scroll-content');
     if (content) {
-      var scrollTo = new ScrollTo(content);
-      scrollTo.start(0, 0, 300, 0);
+      var scroll = new ScrollView(content);
+      scroll.scrollTo(0, 0, 300);
     }
   });
 
