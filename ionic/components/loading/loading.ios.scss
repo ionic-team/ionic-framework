@@ -1,0 +1,73 @@
+@import "../../globals.core";
+@import "./loading";
+
+// iOS Loading Indicator
+// --------------------------------------------------
+
+$loading-ios-padding:                   24px 34px !default;
+$loading-ios-max-width:                 270px !default;
+$loading-ios-max-height:                90% !default;
+$loading-ios-border-radius:             8px !default;
+$loading-ios-text-color:                #000 !default;
+$loading-ios-background:                #f8f8f8 !default;
+
+$loading-ios-content-font-weight:       bold !default;
+
+$loading-ios-spinner-color:             #69717d !default;
+
+$loading-ios-spinner-ios-color:         $loading-ios-spinner-color !default;
+$loading-ios-spinner-bubbles-color:     $loading-ios-spinner-color !default;
+$loading-ios-spinner-circles-color:     $loading-ios-spinner-color !default;
+$loading-ios-spinner-crescent-color:    $loading-ios-spinner-color !default;
+$loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
+
+
+.loading-wrapper {
+  padding: $loading-ios-padding;
+
+  max-width: $loading-ios-max-width;
+  max-height: $loading-ios-max-height;
+
+  border-radius: $loading-ios-border-radius;
+  color: $loading-ios-text-color;
+  background: $loading-ios-background;
+}
+
+
+// iOS Loading Content
+// -----------------------------------------
+
+.loading-content {
+  font-weight: $loading-ios-content-font-weight;
+}
+
+.loading-spinner + .loading-content {
+  margin-left: 16px;
+}
+
+
+// iOS Loading Spinner fill colors
+// -----------------------------------------
+
+.loading-spinner {
+  .spinner-ios line,
+  .spinner-ios-small line {
+    stroke: $loading-ios-spinner-ios-color;
+  }
+
+  .spinner-bubbles circle {
+    fill: $loading-ios-spinner-bubbles-color;
+  }
+
+  .spinner-circles circle {
+    fill: $loading-ios-spinner-circles-color;
+  }
+
+  .spinner-crescent circle {
+    stroke: $loading-ios-spinner-crescent-color;
+  }
+
+  .spinner-dots circle {
+    fill: $loading-ios-spinner-dots-color;
+  }
+}

@@ -1,0 +1,35 @@
+@import "../../globals.core";
+
+// Loading Indicator
+// --------------------------------------------------
+
+
+ion-loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-overlay;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-wrapper {
+  z-index: $z-index-overlay-wrapper;
+  display: flex;
+
+  align-items: center;
+
+  opacity: 0;
+}
+
+// Loading Backdrop
+// -----------------------------------------
+
+.hide-backdrop {
+  display: none;
+}

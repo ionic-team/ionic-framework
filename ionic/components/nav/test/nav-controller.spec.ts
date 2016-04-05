@@ -1236,6 +1236,8 @@ export function run() {
         setElementClass: function(){},
         setElementStyle: function(){}
       };
+      
+      nav._portal = new NavController(null, null, config, null, elementRef, null, null, null, null, null);
 
       return nav;
     }

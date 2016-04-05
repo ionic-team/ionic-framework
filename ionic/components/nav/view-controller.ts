@@ -80,6 +80,11 @@ export class ViewController {
   /**
    * @private
    */
+  usePortal: boolean = false;
+
+  /**
+   * @private
+   */
   zIndex: number;
 
   /**

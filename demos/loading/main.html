@@ -1,0 +1,57 @@
+<ion-toolbar>
+  <ion-title>Loading</ion-title>
+</ion-toolbar>
+
+<ion-content class="outer-content">
+  <ion-list>
+    <ion-list-header>
+      Spinner Loading Indicators
+    </ion-list-header>
+    <button ion-item (click)="presentLoadingIos()">
+      <ion-spinner item-left name="ios"></ion-spinner>
+      Preview iOS
+    </button>
+    <button ion-item (click)="presentLoadingDots()">
+      <ion-spinner item-left name="dots"></ion-spinner>
+      Preview Dots
+    </button>
+    <button ion-item (click)="presentLoadingBubbles()">
+      <ion-spinner item-left name="bubbles"></ion-spinner>
+      Preview Bubbles
+    </button>
+    <button ion-item (click)="presentLoadingCircles()">
+      <ion-spinner item-left name="circles"></ion-spinner>
+      Preview Circles
+    </button>
+    <button ion-item (click)="presentLoadingCrescent()">
+      <ion-spinner item-left name="crescent"></ion-spinner>
+      Preview Crescent
+    </button>
+    <button ion-item (click)="presentLoadingDefault()">
+      <ion-spinner item-left></ion-spinner>
+      Preview Default
+    </button>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      Custom Loading Indicators
+    </ion-list-header>
+    <button ion-item (click)="presentLoadingCustom()">
+      Preview Custom
+    </button>
+    <button ion-item (click)="presentLoadingText()">
+      Preview Text Only
+    </button>
+  </ion-list>
+
+</ion-content>
+
+<ion-toolbar position="bottom">
+  <ion-buttons end>
+    <button (click)="goToPage2()">
+      Navigate
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>

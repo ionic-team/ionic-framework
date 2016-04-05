@@ -1,0 +1,26 @@
+
+<ion-navbar *navbar>
+  <ion-title>Loading</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+  <button block (click)="presentLoadingIos()">iOS Spinner</button>
+  <button block (click)="presentLoadingDots()">Dots Spinner</button>
+  <button block (click)="presentLoadingBubbles()">Bubbles Spinner</button>
+  <button block (click)="presentLoadingCircles()">Circles Spinner</button>
+  <button block (click)="presentLoadingCrescent()">Crescent Spinner</button>
+  <button block (click)="presentLoadingDefault()" secondary class="e2eLoadingDefaultSpinner">Default Spinner</button>
+  <button block (click)="presentLoadingCustom()" light>Custom Spinner</button>
+  <button block (click)="presentLoadingText()" dark>Content Only w/ Nav</button>
+  <button block (click)="presentLoadingMultiple()" danger>Multiple Loading</button>
+  <button block (click)="presentLoadingMultipleNav()" danger>Multiple Nav Loading</button>
+</ion-content>
+
+<ion-toolbar position="bottom">
+  <ion-buttons end>
+    <button (click)="goToPage2()">
+      Navigate
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>

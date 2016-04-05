@@ -1,10 +1,11 @@
-import {Component, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager, Renderer, Type} from 'angular2/core';
+import {Component, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager, Renderer, Type, ViewChild} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
 import {isTrueProperty} from '../../util/util';
 import {NavController} from './nav-controller';
+import {Portal} from './nav-portal';
 import {ViewController} from './view-controller';
 
 /**
@@ -104,7 +105,8 @@ import {ViewController} from './view-controller';
  */
 @Component({
   selector: 'ion-nav',
-  template: '<div #contents></div>'
+  template: '<div #contents></div><div portal></div>',
+  directives: [Portal]
 })
 export class Nav extends NavController {
   private _root: Type;
@@ -172,5 +174,9 @@ export class Nav extends NavController {
       this.push(this._root);
     }
   }
-
+  
+  @ViewChild(Portal) 
+  private set _navPortal(val: Portal) {
+    this.setPortal(val);
+  }
 }

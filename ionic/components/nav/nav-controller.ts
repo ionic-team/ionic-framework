@@ -8,6 +8,7 @@ import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
 import {NavRouter} from './nav-router';
 import {pascalCaseToDashCase, isTrueProperty, isBlank} from '../../util/util';
+import {Portal} from './nav-portal';
 import {raf} from '../../util/dom';
 import {SwipeBackGesture} from './swipe-back';
 import {Transition} from '../../transitions/transition';
@@ -109,6 +110,7 @@ export class NavController extends Ion {
   private _trans: Transition;
   private _sbGesture: SwipeBackGesture;
   private _sbThreshold: number;
+  private _portal: Portal;
 
   protected _sbEnabled: boolean;
   protected _ids: number = -1;
@@ -169,6 +171,10 @@ export class NavController extends Ion {
     this.providers = Injector.resolve([
       provide(NavController, {useValue: this})
     ]);
+  }
+  
+  setPortal(val: Portal) {
+    this._portal = val;
   }
 
   /**
@@ -412,7 +418,7 @@ export class NavController extends Ion {
     if (rootNav['_tabs']) {
       // TODO: must have until this goes in
       // https://github.com/angular/angular/issues/5481
-      console.error('A parent <ion-nav> is required for ActionSheet/Alert/Modal');
+      console.error('A parent <ion-nav> is required for ActionSheet/Alert/Modal/Loading');
       return;
     }
 
@@ -433,7 +439,12 @@ export class NavController extends Ion {
       keyboardClose: false,
       direction: 'back',
       animation: enteringView.getTransitionName('back')
-    });
+    });    
+    
+    if (enteringView.usePortal && this._portal) {
+      this._portal.present(enteringView);
+      return;
+    }
 
     // start the transition
     return rootNav._insertViews(-1, [enteringView], opts);
@@ -534,7 +545,7 @@ export class NavController extends Ion {
 
         if (this._views[i] === enteringView) {
           // cool, so the last valid view is also our entering view!!
-          // this means we should animate that bad boy in so its the active view
+          // this means we should animate that bad boy in so it's the active view
           // return a promise and resolve when the transition has completed
 
           // get the leaving view which the _insert() already set
@@ -730,8 +741,8 @@ export class NavController extends Ion {
       // get the view thats ready to enter
       let enteringView = this.getByState(STATE_INIT_ENTER);
 
-      if (!enteringView) {
-        // oh knows! no entering view to go to!
+      if (!enteringView && this._portal) {
+        // oh nos! no entering view to go to!
         // if there is no previous view that would enter in this nav stack
         // and the option is set to climb up the nav parent looking
         // for the next nav we could transition to instead
@@ -1248,6 +1259,14 @@ export class NavController extends Ion {
 
       // see if we should add the swipe back gesture listeners or not
       this._sbCheck();
+      
+      if (this._portal) {
+        this._portal._views.forEach(view => {
+          if (view.data && view.data.dismissOnPageChange) {
+            view.dismiss();
+          }
+        });
+      }
 
     } else {
       // darn, so this wasn't the most recent transition
@@ -1640,7 +1659,7 @@ export class NavController extends Ion {
 
         } else {
           // this is the initial view
-          enteringView.setZIndex(INIT_ZINDEX, this._renderer);
+          enteringView.setZIndex(this._portal ? INIT_ZINDEX : PORTAL_ZINDEX, this._renderer);
         }
 
       } else if (direction === 'back') {
@@ -1680,5 +1699,6 @@ const STATE_REMOVE = 'remove';
 const STATE_REMOVE_AFTER_TRANS = 'remove_after_trans';
 const STATE_FORCE_ACTIVE = 'force_active';
 const INIT_ZINDEX = 100;
+const PORTAL_ZINDEX = 9999;
 
 let ctrlIds = -1;
