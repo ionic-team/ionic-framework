@@ -56,9 +56,12 @@ class E2EPage {
     this.nav.present(loading);
   }
 
+  // Pass the fixed-spinner class so we can turn off
+  // spinner animation for the e2e test
   presentLoadingDefault() {
     let loading = Loading.create({
       content: 'Please wait...',
+      cssClass: 'fixed-spinner'
     });
 
     this.nav.present(loading);
@@ -101,7 +104,7 @@ class E2EPage {
   goToPage2() {
     this.nav.push(Page2);
   }
-  
+
   presentLoadingMultiple() {
     let loading = Loading.create({
       spinner: 'hide',
@@ -109,7 +112,7 @@ class E2EPage {
     });
 
     this.nav.present(loading);
-    
+
     let loading2 = Loading.create({
       spinner: 'hide',
       content: 'Loading 2 Please Wait...'
@@ -118,7 +121,7 @@ class E2EPage {
     setTimeout(() => {
       this.nav.present(loading2);
     }, 1000);
-    
+
     let loading3 = Loading.create({
       spinner: 'hide',
       content: 'Loading 3 Please Wait...'
@@ -126,22 +129,22 @@ class E2EPage {
 
     setTimeout(() => {
       this.nav.present(loading3);
-      
+
       setTimeout(() => {
         loading3.dismiss();
       }, 1000);
-      
+
       setTimeout(() => {
         loading2.dismiss();
-      }, 2000);  
-      
+      }, 2000);
+
       setTimeout(() => {
         loading.dismiss();
-      }, 3000);               
+      }, 3000);
     }, 2000);
-   
+
   }
-  
+
   presentLoadingMultipleNav() {
     let loading = Loading.create({
       spinner: 'hide',
@@ -150,7 +153,7 @@ class E2EPage {
     });
 
     this.nav.present(loading);
-    
+
     let loading2 = Loading.create({
       spinner: 'hide',
       content: 'Loading 2 Please Wait...',
@@ -160,7 +163,7 @@ class E2EPage {
     setTimeout(() => {
       this.nav.present(loading2);
     }, 500);
-    
+
     let loading3 = Loading.create({
       spinner: 'hide',
       content: 'Loading 3 Please Wait...',
@@ -169,12 +172,12 @@ class E2EPage {
 
     setTimeout(() => {
       this.nav.present(loading3);
-      
+
       setTimeout(() => {
         this.nav.push(Page2);
-      }, 1000);         
-    }, 1000);   
-  }  
+      }, 1000);
+    }, 1000);
+  }
 }
 
 @Page({

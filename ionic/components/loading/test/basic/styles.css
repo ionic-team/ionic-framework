@@ -1,3 +1,8 @@
+/* Fix the spinner used in e2e */
+.fixed-spinner svg {
+  animation: none;
+}
+
 .custom-spinner-container {
   position: relative;
   display: inline-block;
