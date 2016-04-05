@@ -316,6 +316,7 @@ function keyboardFocusIn(e) {
   if (!e.target ||
       e.target.readOnly ||
       !ionic.tap.isKeyboardElement(e.target) ||
+      (window.webkit && window.indexedDB) ||
       !(scrollView = ionic.DomUtil.getParentWithClass(e.target, SCROLL_CONTAINER_CSS))) {
     if (keyboardActiveElement) {
         lastKeyboardActiveElement = keyboardActiveElement;
