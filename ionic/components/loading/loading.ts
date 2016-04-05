@@ -99,10 +99,12 @@ export class Loading extends ViewController {
 
   constructor(opts: LoadingOptions = {}) {
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
+    opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
 
     super(LoadingCmp, opts);
     this.viewType = 'loading';
     this.isOverlay = true;
+    this.usePortal = true;
 
     // by default, loading indicators should not fire lifecycle events of other views
     // for example, when an loading indicators enters, the current active view should
