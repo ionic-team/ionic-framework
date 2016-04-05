@@ -172,7 +172,7 @@ export class NavController extends Ion {
       provide(NavController, {useValue: this})
     ]);
   }
-  
+
   setPortal(val: Portal) {
     this._portal = val;
   }
@@ -439,8 +439,8 @@ export class NavController extends Ion {
       keyboardClose: false,
       direction: 'back',
       animation: enteringView.getTransitionName('back')
-    });    
-    
+    });
+
     if (enteringView.usePortal && this._portal) {
       this._portal.present(enteringView);
       return;
@@ -1098,7 +1098,9 @@ export class NavController extends Ion {
       this._trans && this._trans.destroy();
       this._trans = transAnimation;
 
-      if (opts.animate === false) {
+      // Portal elements should always animate
+      // so ignore this if it is a portal
+      if (opts.animate === false && this._portal) {
         // force it to not animate the elements, just apply the "to" styles
         transAnimation.duration(0);
       }
@@ -1259,7 +1261,7 @@ export class NavController extends Ion {
 
       // see if we should add the swipe back gesture listeners or not
       this._sbCheck();
-      
+
       if (this._portal) {
         this._portal._views.forEach(view => {
           if (view.data && view.data.dismissOnPageChange) {
