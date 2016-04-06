@@ -62,9 +62,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     $scope.$on('$ionicTabs.leave', onTabsLeave);
 
     ionic.Platform.ready(function() {
-      if (ionic.Platform.isWebView() && $ionicConfig.views.swipeBackEnabled()) {
-        self.initSwipeBack();
-      }
+      self.initSwipeBack();
     });
 
     return viewData;
@@ -354,6 +352,10 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
     function onDragStart(ev) {
       if (!isPrimary) return;
+
+      if ( !$ionicConfig.views.swipeBackEnabled() || ! ionic.Platform.isIOS() ){
+        return;
+      }
 
       startDragX = getDragX(ev);
       if (startDragX > swipeBackHitWidth) return;
