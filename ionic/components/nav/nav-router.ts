@@ -17,20 +17,28 @@ import {ViewController} from './view-controller';
 })
 export class NavRouter extends RouterOutlet {
   private _lastUrl: string;
+  private _nav: Nav;
+  private _parent: Router;
 
   constructor(
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
-    private parentRouter: Router,
+    parentRouter: Router,
     @Attribute('name') nameAttr: string,
-    private _nav: Nav
+    nav: Nav
   ) {
+    if (nav.parent) {
+      parentRouter = parentRouter.childRouter(nav);
+    }
     super(elementRef, loader, parentRouter, nameAttr);
+
+    this._nav = nav;
+    this._parent = parentRouter;
 
     // register this router with Ionic's NavController
     // Ionic's NavController will call this NavRouter's "stateChange"
     // method when the NavController has...changed its state
-    _nav.registerRouter(this);
+    nav.registerRouter(this);
   }
 
   stateChange(direction: string, viewCtrl: ViewController) {
@@ -57,7 +65,7 @@ export class NavRouter extends RouterOutlet {
 
         this._lastUrl = url;
 
-        this['_parentRouter'].navigateByInstruction(instruction);
+        this._parent.navigateByInstruction(instruction);
 
         console.debug('NavRouter, stateChange, name:', viewCtrl.name, 'id:', viewCtrl.id, 'url:', url);
       }
@@ -68,7 +76,7 @@ export class NavRouter extends RouterOutlet {
     var previousInstruction = this['_currentInstruction'];
     this['_currentInstruction'] = nextInstruction;
     var componentType = nextInstruction.componentType;
-    var childRouter = this['_parentRouter'].childRouter(componentType);
+    var childRouter = this._parent.childRouter(componentType);
 
     // prevent double navigations to the same view
     let instruction = new ResolvedInstruction(nextInstruction, null, null);
@@ -92,7 +100,7 @@ export class NavRouter extends RouterOutlet {
 
   getPathRecognizerByComponent(componentType) {
     // given a componentType, figure out the best PathRecognizer to use
-    let rules = this.parentRouter.registry['_rules'];
+    let rules = this._parent.registry['_rules'];
 
     let pathRecognizer = null;
     rules.forEach((rule) => {

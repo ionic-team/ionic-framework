@@ -13,9 +13,7 @@ import {Page, Config, IonicApp} from 'ionic-angular';
   `
 })
 export class Login {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
 
   goToAccount() {
     this.nav.push(Account);
@@ -48,9 +46,9 @@ export class Login {
   `
 })
 export class Account {
-  constructor(app: IonicApp, menu: MenuController) {
-    this.app = app;
-    this.menu = menu;
+  rootPage;
+
+  constructor(private app: IonicApp, private menu: MenuController) {
     this.rootPage = Dashboard;
   }
 
@@ -87,10 +85,8 @@ export class Account {
   `
 })
 export class Dashboard {
-  constructor(app: IonicApp, nav: NavController) {
-    this.app = app;
-    this.nav = nav;
-  }
+  constructor(private app: IonicApp, private nav: NavController) {}
+
   goToProfile() {
     this.nav.push(Profile);
   }
@@ -118,10 +114,8 @@ export class Dashboard {
   `
 })
 export class Profile {
-  constructor(app: IonicApp, nav: NavController) {
-    this.app = app;
-    this.nav = nav;
-  }
+  constructor(private app: IonicApp, private nav: NavController) {}
+
   goToDashboard() {
     this.nav.push(Dashboard);
   }
@@ -138,6 +132,8 @@ export class Profile {
   template: `<ion-nav id="root-nav" [root]="rootPage" swipeBackEnabled="false"></ion-nav>`
 })
 class E2EApp {
+  rootPage;
+
   constructor() {
     this.rootPage = Login;
   }
