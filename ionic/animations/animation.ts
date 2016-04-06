@@ -1,4 +1,4 @@
-import {CSS, rafFrames, transitionEnd} from '../util/dom';
+import {CSS, rafFrames, transitionEnd, nativeTimeout} from '../util/dom';
 import {assign, isDefined} from '../util/util';
 
 
@@ -406,7 +406,7 @@ export class Animation {
 
     // set a fallback timeout if the transition end event never fires, or is too slow
     // transition end fallback: (animation duration + XXms)
-    self._tmr = setTimeout(onTransitionFallback, duration + 400);
+    self._tmr = nativeTimeout(onTransitionFallback, duration + 400);
   }
 
   _clearAsync() {

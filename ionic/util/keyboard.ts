@@ -2,7 +2,7 @@ import {Injectable, NgZone} from 'angular2/core';
 
 import {Config} from '../config/config';
 import {Form} from './form';
-import {hasFocusedTextInput, raf, rafFrames} from './dom';
+import {hasFocusedTextInput, raf, rafFrames, nativeTimeout} from './dom';
 
 /**
  * @name Keyboard
@@ -82,26 +82,23 @@ export class Keyboard {
       promise = new Promise(resolve => { callback = resolve; });
     }
 
-    self._zone.runOutsideAngular(() => {
-
-      function checkKeyboard() {
-        console.debug('keyboard isOpen', self.isOpen(), checks);
-        if (!self.isOpen() || checks > 100) {
-          rafFrames(30, () => {
-            self._zone.run(() => {
-              console.debug('keyboard closed');
-              callback();
-            });
+    function checkKeyboard() {
+      console.debug('keyboard isOpen', self.isOpen(), checks);
+      if (!self.isOpen() || checks > 100) {
+        rafFrames(30, () => {
+          self._zone.run(() => {
+            console.debug('keyboard closed');
+            callback();
           });
+        });
 
-        } else {
-          setTimeout(checkKeyboard, pollingInternval);
-        }
-        checks++;
+      } else {
+        nativeTimeout(checkKeyboard, pollingInternval);
       }
+      checks++;
+    }
 
-      setTimeout(checkKeyboard, pollingInternval);
-    });
+    nativeTimeout(checkKeyboard, pollingInternval);
 
     return promise;
   }
