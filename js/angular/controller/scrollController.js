@@ -86,8 +86,15 @@ function($scope,
     angular.element($window).off('resize', resize);
     if ( $element ){
       $element.off('scroll', scrollFunc);
-      scrollView = self.scrollView = scrollViewOptions = self._scrollViewOptions = scrollViewOptions.el = self._scrollViewOptions.el = $element = self.$element = element = null;
     }
+    if ( self._scrollViewOptions ){
+      self._scrollViewOptions.el = null;
+    }
+    if ( scrollViewOptions ){
+        scrollViewOptions.el = null;
+    }
+
+    scrollView = self.scrollView = scrollViewOptions = self._scrollViewOptions = element = self.$element = $element = null;
   });
 
   $timeout(function() {
