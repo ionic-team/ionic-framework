@@ -56,11 +56,16 @@ export class ScrollView {
 
     return new Promise(resolve => {
       let startTime: number;
+      let attempts = 0;
 
       // scroll loop
       function step() {
-        if (!self._el || !self.isPlaying) {
-          return resolve();
+        attempts++;
+
+        if (!self._el || !self.isPlaying || attempts > 200) {
+          self.isPlaying = false;
+          resolve();
+          return;
         }
 
         let time = Math.min(1, ((Date.now() - startTime) / duration));
@@ -74,10 +79,10 @@ export class ScrollView {
         }
 
         if (fromX != x) {
-          self._el.scrollLeft = Math.round((easedT * (x - fromX)) + fromX);
+          self._el.scrollLeft = Math.floor((easedT * (x - fromX)) + fromX);
         }
 
-        if (time < 1 && self.isPlaying) {
+        if (easedT < 1) {
           raf(step);
 
         } else {
