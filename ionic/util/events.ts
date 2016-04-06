@@ -6,6 +6,10 @@
  *
  * @usage
  * ```ts
+ * import {Events} from 'ionic-angular';
+ * 
+ * constructor(public events: Event) {}
+ * 
  * // first page (publish an event when a user is created)
  * function createUser(user) {
  *   console.log('User created!')
