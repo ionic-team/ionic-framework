@@ -641,11 +641,11 @@ export function run() {
       it('should set zIndex 9999 on first entering portal view', () => {
         let enteringView = new ViewController();
         enteringView.setPageRef({});
-        nav._portal = null;
+        nav.isPortal = true;
         nav._setZIndex(enteringView, null, 'forward');
         expect(enteringView.zIndex).toEqual(9999);
       });
-      
+
       it('should set zIndex 10000 on second entering portal view', () => {
         let leavingView = new ViewController();
         leavingView.zIndex = 9999;
@@ -655,8 +655,8 @@ export function run() {
         nav._portal = null;
         nav._setZIndex(enteringView, leavingView, 'forward');
         expect(enteringView.zIndex).toEqual(10000);
-      });   
-      
+      });
+
       it('should set zIndex 9999 on entering portal view going back', () => {
         let leavingView = new ViewController();
         leavingView.zIndex = 10000;
@@ -666,7 +666,52 @@ export function run() {
         nav._portal = null;
         nav._setZIndex(enteringView, leavingView, 'back');
         expect(enteringView.zIndex).toEqual(9999);
-      });         
+      });
+
+    });
+
+    describe('_setAnimate', () => {
+
+      it('should be unchanged when the nav is a portal', () => {
+        nav._views = [new ViewController()];
+        nav._init = false;
+        nav.isPortal = true;
+        let opts: NavOptions = {};
+        nav._setAnimate(opts);
+        expect(opts.animate).toBeUndefined();
+      });
+
+      it('should not animate when theres only 1 view, and nav hasnt initialized yet', () => {
+        nav._views = [new ViewController()];
+        nav._init = false;
+        let opts: NavOptions = {};
+        nav._setAnimate(opts);
+        expect(opts.animate).toEqual(false);
+      });
+
+      it('should be unchanged when theres only 1 view, and nav has already initialized', () => {
+        nav._views = [new ViewController()];
+        nav._init = true;
+        let opts: NavOptions = {};
+        nav._setAnimate(opts);
+        expect(opts.animate).toBeUndefined();
+      });
+
+      it('should not animate with config animate = false, and has initialized', () => {
+        config.set('animate', false);
+        nav._init = true;
+        let opts: NavOptions = {};
+        nav._setAnimate(opts);
+        expect(opts.animate).toEqual(false);
+      });
+
+      it('should not animate with config animate = false, and has not initialized', () => {
+        config.set('animate', false);
+        nav._init = false;
+        let opts: NavOptions = {};
+        nav._setAnimate(opts);
+        expect(opts.animate).toEqual(false);
+      });
 
     });
 
@@ -1134,25 +1179,25 @@ export function run() {
         let enteringView = new ViewController();
         enteringView.setPageRef({});
         enteringView.usePortal = true;
-        
+
         expect(nav._portal.length()).toBe(0);
         expect(nav.length()).toBe(0);
         nav.present(enteringView);
         expect(nav._portal.length()).toBe(1);
         expect(nav.length()).toBe(0);
       });
-      
+
       it('should present in main nav', () => {
         let enteringView = new ViewController();
         enteringView.setPageRef({});
         enteringView.usePortal = false;
-        
+
         expect(nav._portal.length()).toBe(0);
         expect(nav.length()).toBe(0);
         nav.present(enteringView);
         expect(nav._portal.length()).toBe(0);
         expect(nav.length()).toBe(1);
-      });      
+      });
 
     });
 
@@ -1294,7 +1339,7 @@ export function run() {
         setElementClass: function(){},
         setElementStyle: function(){}
       };
-      
+
       nav._portal = new NavController(null, null, config, null, elementRef, null, null, null, null, null);
 
       return nav;

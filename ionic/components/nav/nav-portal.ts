@@ -26,5 +26,6 @@ export class Portal extends NavController {
     renderer: Renderer
   ) {
     super(hostNavCtrl, app, config, keyboard, elementRef, null, compiler, viewManager, zone, renderer);
+    this.isPortal = true;
   }
 }
