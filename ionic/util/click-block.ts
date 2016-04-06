@@ -1,3 +1,6 @@
+import {nativeTimeout} from './dom';
+
+
 const CSS_CLICK_BLOCK = 'click-block-active';
 const DEFAULT_EXPIRE = 330;
 let cbEle, fallbackTimerId;
@@ -34,7 +37,7 @@ export class ClickBlock {
 
 function show(expire) {
   clearTimeout(fallbackTimerId);
-  fallbackTimerId = setTimeout(hide, expire || DEFAULT_EXPIRE);
+  fallbackTimerId = nativeTimeout(hide, expire || DEFAULT_EXPIRE);
 
   if (!isShowing) {
     cbEle.classList.add(CSS_CLICK_BLOCK);
