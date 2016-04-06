@@ -19,18 +19,49 @@ export class NavRouter extends RouterOutlet {
   private _lastUrl: string;
 
   constructor(
-    _elementRef: ElementRef,
-    _loader: DynamicComponentLoader,
-    _parentRouter: Router,
+    elementRef: ElementRef,
+    loader: DynamicComponentLoader,
+    private parentRouter: Router,
     @Attribute('name') nameAttr: string,
     private _nav: Nav
   ) {
-    super(_elementRef, _loader, _parentRouter, nameAttr);
+    super(elementRef, loader, parentRouter, nameAttr);
 
     // register this router with Ionic's NavController
     // Ionic's NavController will call this NavRouter's "stateChange"
     // method when the NavController has...changed its state
     _nav.registerRouter(this);
+  }
+
+  stateChange(direction: string, viewCtrl: ViewController) {
+    // stateChange is called by Ionic's NavController
+    // viewCtrl is Ionic's ViewController class, which has the properties "componentType" and "params"
+
+    // only do an update if there's an actual view change
+    if (!viewCtrl) {
+      return;
+    }
+
+    // get the best PathRecognizer for this view's componentType
+    let pathRecognizer = this.getPathRecognizerByComponent(viewCtrl.componentType);
+    if (pathRecognizer) {
+
+      // generate a componentInstruction from the view's PathRecognizer and params
+      let componentInstruction = pathRecognizer.generate(viewCtrl.data);
+
+      // create a ResolvedInstruction from the componentInstruction
+      let instruction = new ResolvedInstruction(componentInstruction, null, null);
+      if (instruction) {
+        let url = instruction.toRootUrl();
+        if (url === this._lastUrl) return;
+
+        this._lastUrl = url;
+
+        this['_parentRouter'].navigateByInstruction(instruction);
+
+        console.debug('NavRouter, stateChange, name:', viewCtrl.name, 'id:', viewCtrl.id, 'url:', url);
+      }
+    }
   }
 
   activate(nextInstruction: ComponentInstruction): Promise<any> {
@@ -59,47 +90,15 @@ export class NavRouter extends RouterOutlet {
     return Promise.resolve();
   }
 
-  stateChange(direction: string, viewCtrl: ViewController) {
-    // stateChange is called by Ionic's NavController
-    // type could be "push" or "pop"
-    // viewCtrl is Ionic's ViewController class, which has the properties "componentType" and "params"
-
-    // only do an update if there's an actual view change
-    if (!viewCtrl) return;
-
-    // get the best PathRecognizer for this view's componentType
-    let pathRecognizer = this.getPathRecognizerByComponent(viewCtrl.componentType);
-    if (pathRecognizer) {
-
-      // generate a componentInstruction from the view's PathRecognizer and params
-      let componentInstruction = pathRecognizer.generate(viewCtrl.data);
-
-      // create a ResolvedInstruction from the componentInstruction
-      let instruction = new ResolvedInstruction(componentInstruction, null, null);
-      if (instruction) {
-        let url = instruction.toRootUrl();
-        if (url === this._lastUrl) return;
-
-        this._lastUrl = url;
-
-        this['_parentRouter'].navigateByInstruction(instruction);
-
-        console.debug('NavRouter, stateChange, name:', viewCtrl.name, 'id:', viewCtrl.id, 'url:', url);
-      }
-    }
-  }
-
   getPathRecognizerByComponent(componentType) {
     // given a componentType, figure out the best PathRecognizer to use
-    let rules = this['_parentRouter'].registry._rules;
+    let rules = this.parentRouter.registry['_rules'];
 
     let pathRecognizer = null;
     rules.forEach((rule) => {
-
-      pathRecognizer = rule.matchers.find((matcherPathRecognizer) => {
-        return (matcherPathRecognizer.handler.componentType === componentType);
+      pathRecognizer = rule.rules.find(function(routeRule) {
+        return routeRule.handler.componentType === componentType;
       });
-
     });
 
     return pathRecognizer;
