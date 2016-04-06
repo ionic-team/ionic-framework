@@ -15,24 +15,21 @@ import {Img} from '../img/img';
 /**
  * @name VirtualScroll
  * @description
- * Virtual scroll allows an app to render large lists of items more
- * performantly than `ngFor`. The difference is that virtual scroll
- * only renders a small amount of elements within the DOM, relative to
- * the actual number of items within the dataset.
+ * Virtual Scroll displays a virtual, "infinite" list. An array of records
+ * is passed to the virtual scroll containing the data to create templates
+ * for. The template created for each record, referred to as a cell, can
+ * consist of items, headers, and footers.
  *
- * Basically, instead of rendering potentionally thousands of elements
- * within the DOM, it'll only render the few that are currently viewable
- * (and a few extra for good measure). Not only does it render item data,
- * but it can also dynamically insert section headers and footers based
- * off of user-provided functions.
- *
+ * For performance reasons, not every record in the list is rendered at once;
+ * instead a small subset of records (enough to fill the viewport) are rendered
+ * and reused as the user scrolls.
  *
  * ### The Basics
  *
- * The data given to the `virtualScroll` property must be an array. Note
- * that the `virtualScroll` property can be added to any element, not
- * just `ion-list`. Next, within the virtual scroll directive you must
- * provide an item template, using the `*virtualItem` attribute.
+ * The array of records should be passed to the `virtualScroll` property.
+ * The data given to the `virtualScroll` property must be an array. An item
+ * template with the `*virtualItem` property is required in the `virtualScroll`.
+ * The `virtualScroll` and `*virtualItem` properties can be added to any element.
  *
  * ```html
  * <ion-list [virtualScroll]="items">
@@ -47,13 +44,12 @@ import {Img} from '../img/img';
  *
  * ### Section Headers and Footers
  *
- * Section headers and footers, and the data used within their given
- * templates, can be dynamically created using custom user-defined functions.
- * For example, a large list of contacts usually has dividers between each
- * letter in the alphabet. App's can provide their own custom function
- * which is called on each record within the dataset. The logic within
- * the custom functions can decide if a section template should be used,
- * and what data to provide to the template. The custom function must
+ * Section headers and footers are optional. They can be dynamically created
+ * from developer-defined functions. For example, a large list of contacts
+ * usually has a divider for each letter in the alphabet. Developers provide
+ * their own custom function to be called on each record. The logic in the
+ * custom function should determine whether to create the section template
+ * and what data to provide to the template. The custom function should
  * return `null` if a template shouldn't be created.
  *
  * ```html
@@ -70,13 +66,13 @@ import {Img} from '../img/img';
  * </ion-list>
  * ```
  *
- * Below is the user-defined function called on every record. Its
- * arguments are passed the individual record, the record's index number,
- * and the entire record dataset (think `Array.forEach`). In this example,
- * after every 20 items a header will be inserted. So between the 19th
- * and 20th records, between the 39th and 40th, and so on, a
- * `<ion-item-divider>` will be created and the template's data will come
- * from the function's returned data.
+ * Below is an example of a custom function called on every record. It
+ * gets passed the individual record, the record's index number,
+ * and the entire array of records. In this example, after every 20
+ * records a header will be inserted. So between the 19th and 20th records,
+ * between the 39th and 40th, and so on, a `<ion-item-divider>` will
+ * be created and the template's data will come from the function's
+ * returned data.
  *
  * ```ts
  * myHeaderFn(record, recordIndex, records) {
@@ -100,28 +96,25 @@ import {Img} from '../img/img';
  * slightly different heights between platforms, which is perfectly fine.
  * An exact pixel-perfect size is not necessary, but a good estimation
  * is important. Basically if each item is roughly 500px tall, rather than
- * the default of 40px tall, that's extremely important to know for virtual
+ * the default of 40px tall, it's extremely important to know for virtual
  * scroll to calculate a good height.
  *
  *
  * ### Images Within Virtual Scroll
  *
- * With images, the moment the `<img>` tag hits the DOM, it immediately
- * makes a HTTP request for the image file in the `src` attribute. HTTP
- * requests, along with image decoding and image rendering, are great
- * sources of scroll jank. For virtual scrolling and these poor performance
- * implications, the natural effect of the `<img>` are not a desirable
- * features. A user's device shouldn't be firing up hundreds of
- * HTTP requests, image decoding and rendering, when they're mostly unnecessary
- * as the user scrolls pass many of them.
- *
- * Ionic provides `<ion-img>` so it can better manage HTTP requests and rendering.
+ * Ionic provides `<ion-img>` to manage HTTP requests and image rendering.
  * Additionally, it includes a customizable placeholder element which shows
  * before the image has finished loading. While scrolling through items
- * quickly, `<ion-img>` knows not to make any images requests, and only loads
+ * quickly, `<ion-img>` knows not to make any image requests, and only loads
  * the images that are viewable after scrolling. It's also important for app
  * developers to ensure image sizes are locked in, and after images have fully
  * loaded they do not change size and affect any other element sizes.
+ *
+ * We recommend using our `<ion-img>` element over the native `<img>` element
+ * because when an `<img>` element is added to the DOM, it immediately
+ * makes a HTTP request for the image file. HTTP requests, image
+ * decoding, and image rendering can cause issues while scrolling. For virtual
+ * scrolling, the natural effects of the `<img>` are not desirable features.
  *
  * ```html
  * <ion-list [virtualScroll]="items">
@@ -144,11 +137,11 @@ import {Img} from '../img/img';
  * - Image sizes should be locked in, meaning the size of any element
  *   should not change after the image has loaded.
  * - Provide an approximate width and height so the virtual scroll can
- *   best calculate its height.
+ *   best calculate the cell height.
  * - Changing the dataset requires the entire virtual scroll to be
  *   reset, which is an expensive operation and should be avoided
  *   if possible.
- * - Do not performan any DOM manipulation within section header and
+ * - Do not perform any DOM manipulation within section header and
  *   footer functions. These functions are called for every record in the
  *   dataset, so please make sure they're performant.
  *
@@ -182,8 +175,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @ContentChildren(Img) private _imgs: QueryList<Img>;
 
   /**
-   * @input {array} The data that builds the items within the virtual scroll.
-   * This as the same data that you'd pass to `ngFor`. It's important to note
+   * @input {array} The data that builds the templates within the virtual scroll.
+   * This is the same data that you'd pass to `ngFor`. It's important to note
    * that when this data has changed, then the entire virtual scroll is reset,
    * which is an expensive operation and should be avoided if possible.
    */
@@ -198,9 +191,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   /**
    * @input {number} The buffer ratio is used to decide how many cells
    * should get created when initially rendered. The number is a
-   * multipler against the viewable area's height. For example, if it
+   * multiplier against the viewable area's height. For example, if it
    * takes `20` cells to fill up the height of the viewable area, then
-   * with  a buffer ratio of `2` it'll create `40` cells that are
+   * with a buffer ratio of `2` it will create `40` cells that are
    * available for reuse while scrolling. For better performance, it's
    * better to have more cells than what are required to fill the
    * viewable area. Default is `2`.
