@@ -353,7 +353,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     function onDragStart(ev) {
       if (!isPrimary) return;
 
-      if ( !$ionicConfig.views.swipeBackEnabled() || ! ionic.Platform.isIOS() ){
+      if (!$ionicConfig.views.swipeBackEnabled() || !ionic.Platform.isIOS() ) {
         return;
       }
 
