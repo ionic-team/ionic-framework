@@ -25,5 +25,12 @@ insert any relevant code between the above and below backticks
 **Which Ionic Version?** 1.x or 2.x
 
 
+####Plunker that shows an example of your issue
+
+**For Ionic 1 issues** - http://plnkr.co/edit/jnOrQRtE8rN2WCXDQYQY?p=info
+
+**For Ionic 2 issues** - http://plnkr.co/edit/TW20lftdc5s622pcJPkp?p=info
+
+
 **Run `ionic info` from terminal/cmd prompt:** (paste output below)
 
