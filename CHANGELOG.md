@@ -1,3 +1,149 @@
+<a name="2.0.0-beta.4"></a>
+# [2.0.0-beta.4](https://github.com/driftyco/ionic/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2016-04-07)
+
+
+### Bug Fixes
+
+* **action-sheet:** action sheet button shortens when activated in Safari ([6d55abc](https://github.com/driftyco/ionic/commit/6d55abc)), closes [#5828](https://github.com/driftyco/ionic/issues/5828)
+* **alert:** disable listeners until ready ([5844703](https://github.com/driftyco/ionic/commit/5844703)), closes [#5821](https://github.com/driftyco/ionic/issues/5821)
+* **alert:** prevent both click and enter keyup from firing ([2000b1e](https://github.com/driftyco/ionic/commit/2000b1e))
+* **build:** output.css needs to exist prior to doc gen ([7dfbb9d](https://github.com/driftyco/ionic/commit/7dfbb9d))
+* **button:** normalize generated button class names ([5f621ab](https://github.com/driftyco/ionic/commit/5f621ab))
+* **card:** maintain card width when absolute positioned ([349c577](https://github.com/driftyco/ionic/commit/349c577))
+* **config:** improve getBoolean() and getNumber() ([d44f8f6](https://github.com/driftyco/ionic/commit/d44f8f6))
+* **generators:** add tabs Sass file ([80109b8](https://github.com/driftyco/ionic/commit/80109b8))
+* **generators:** add TS tabs generator ([3ad15b1](https://github.com/driftyco/ionic/commit/3ad15b1))
+* **img:** only load ion-img when visible ([0701338](https://github.com/driftyco/ionic/commit/0701338))
+* **input:** add event emitters for blur and focus to the ion-input component ([3e88fe9](https://github.com/driftyco/ionic/commit/3e88fe9)), closes [#5487](https://github.com/driftyco/ionic/issues/5487)
+* **input:** align item right to the bottom for windows mode ([b3bea83](https://github.com/driftyco/ionic/commit/b3bea83))
+* **input:** update width of inputs so they don't exceed the item ([4d4f1d4](https://github.com/driftyco/ionic/commit/4d4f1d4)), closes [#5835](https://github.com/driftyco/ionic/issues/5835)
+* **infinite-scroll:** always check on scroll change ([fe04c51](https://github.com/driftyco/ionic/commit/fe04c51))
+* **infinite-scroll:** Fix error leaving page ([05823f9](https://github.com/driftyco/ionic/commit/05823f9))
+* **label:** add color to label in a select ([8fff76e](https://github.com/driftyco/ionic/commit/8fff76e))
+* **loading:** fix animation for loading the first time ([6cd90ee](https://github.com/driftyco/ionic/commit/6cd90ee))
+* **nav:** correctly set zIndex when there's a previous view ([1dd73aa](https://github.com/driftyco/ionic/commit/1dd73aa))
+* **nav:** portal nav should always animate ([86fc741](https://github.com/driftyco/ionic/commit/86fc741)), closes [#6059](https://github.com/driftyco/ionic/issues/6059)
+* **nav:** fixes swipeBackEnabled as attribute ([17c3886](https://github.com/driftyco/ionic/commit/17c3886)), closes [#5653](https://github.com/driftyco/ionic/issues/5653)
+* **nav:** call onDismiss after transition ends ([24443c3](https://github.com/driftyco/ionic/commit/24443c3)), closes [#5818](https://github.com/driftyco/ionic/issues/5818)
+* **platform:** windows UA should not trigger iOS ([6dae784](https://github.com/driftyco/ionic/commit/6dae784))
+* **router:** fix nested ion-nav router ([b063566](https://github.com/driftyco/ionic/commit/b063566))
+* **router:** update path recognizer ([3df5989](https://github.com/driftyco/ionic/commit/3df5989)), closes [#5997](https://github.com/driftyco/ionic/issues/5997)
+* **sass:** change map-get to use color function in default themes ([30bb005](https://github.com/driftyco/ionic/commit/30bb005))
+* **scroll:** correctly resolve when scrolling finishes ([35a3357](https://github.com/driftyco/ionic/commit/35a3357))
+* **searchbar:** add padding around the floating searchbar wp ([5ca6bf4](https://github.com/driftyco/ionic/commit/5ca6bf4)), closes [#5921](https://github.com/driftyco/ionic/issues/5921)
+* **searchbar:** call the input changed event on input not keyup ([94707bf](https://github.com/driftyco/ionic/commit/94707bf)), closes [#5584](https://github.com/driftyco/ionic/issues/5584)
+* **searchbar:** fix the border color and toolbar padding ([0e91a69](https://github.com/driftyco/ionic/commit/0e91a69))
+* **select:** change windows border colors for selects to match input ([6063932](https://github.com/driftyco/ionic/commit/6063932))
+* **select:** fix select styling on windows mode ([a4fc96d](https://github.com/driftyco/ionic/commit/a4fc96d)), closes [#5787](https://github.com/driftyco/ionic/issues/5787)
+* **select:** make select full width when with a stacked/floating label ([4e37524](https://github.com/driftyco/ionic/commit/4e37524)), closes [#5715](https://github.com/driftyco/ionic/issues/5715)
+* **toolbar:** fix back button for md mode ([7dc58ef](https://github.com/driftyco/ionic/commit/7dc58ef)), closes [#5923](https://github.com/driftyco/ionic/issues/5923)
+* **toolbar:** fix wp back button in toolbar ([9a23a92](https://github.com/driftyco/ionic/commit/9a23a92))
+* **toolbar:** reduce min width on back button for wp mode ([96375b6](https://github.com/driftyco/ionic/commit/96375b6)), closes [#5759](https://github.com/driftyco/ionic/issues/5759)
+
+
+### Features
+
+#### Virtual Scroll - [#5418](https://github.com/driftyco/ionic/issues/5418)
+
+Virtual Scroll is useful for displaying large lists of data. For performance reasons, not every record in the list is rendered at once; instead a small subset of records (enough to fill the viewport) are rendered and reused as the user scrolls.
+
+This feature was known as [Collection Repeat](http://ionicframework.com/docs/api/directive/collectionRepeat/) in v1 of Ionic.
+
+For more information on Virtual Scroll, check out the [API docs](http://ionicframework.com/docs/v2/api/components/virtual-scroll/VirtualScroll/).
+
+
+#### Loading Indicator - [#5426](https://github.com/driftyco/ionic/issues/5426)
+
+An overlay that can be used to indicate activity while blocking user interaction. The loading indicator appears on top of the app's content, and can be dismissed by the app to resume user interaction with the app.
+
+For more information on the Loading component, check out the [API docs](http://ionicframework.com/docs/v2/api/components/loading/Loading/).
+
+* **img:** create ion-img ([7a82727](https://github.com/driftyco/ionic/commit/7a82727))
+* **ion-content:** adds <ion-fixed> for non-scrollable page content ([442d135](https://github.com/driftyco/ionic/commit/442d135)), closes [#5987](https://github.com/driftyco/ionic/issues/5987)
+* **loading:** add ability to hide spinner in the config or options ([dae37e7](https://github.com/driftyco/ionic/commit/dae37e7))
+* **loading:** add internal stack for the loading service ([d3fa29f](https://github.com/driftyco/ionic/commit/d3fa29f))
+* **loading:** add loading indicator component and styles ([a485cd0](https://github.com/driftyco/ionic/commit/a485cd0))
+* **router:** allow multiple routers ([3733ebc](https://github.com/driftyco/ionic/commit/3733ebc))
+* **sass:** add support for contrast color in MD mode colors map ([9efa3ea](https://github.com/driftyco/ionic/commit/9efa3ea))
+* **sass:** add support for contrast in color map for wp mode ([5f2e737](https://github.com/driftyco/ionic/commit/5f2e737))
+* **sass:** add the ability to pass a contrast color in the colors map to iOS ([ff1a8ac](https://github.com/driftyco/ionic/commit/ff1a8ac))
+* **storage:** clear() removes all entries in the storage engine ([6e7cc97](https://github.com/driftyco/ionic/commit/6e7cc97))
+* **virtualScroll:** init virtual scroll ([7679ac0](https://github.com/driftyco/ionic/commit/7679ac0)), closes [#5418](https://github.com/driftyco/ionic/issues/5418)
+
+### Performance Improvements
+
+* **infinite-scroll:** display none svg until needed ([085088e](https://github.com/driftyco/ionic/commit/085088e)), closes [#5776](https://github.com/driftyco/ionic/issues/5776)
+
+
+### BREAKING CHANGES
+
+#### Theming with Base / Contrast Colors - [#5445](https://github.com/driftyco/ionic/issues/5445)
+
+You can now further customize your app by passing a `base` and `contrast` to the Sass `$colors` map.
+
+Depending on the component, these values will be used for different things, but in general the `base` color is used as a background color, and `contrast` is used as a text color. This makes it easier than ever to change the colors of components to match your theme. For example, this is a valid `$colors` map:
+
+```scss
+$colors: (
+  primary: (
+    base: #327eff,
+    contrast: #ffff00
+  ),
+  secondary: (
+    base: #32db64,
+    contrast: #ff69b4
+  ),
+  danger: #d91e18,
+  light: #f4f4f4,
+  dark: #222
+);
+```
+
+###### Important
+
+If you are using the function `color` anywhere in your app to get a color from the map, it has changed to require the `$colors` map as the first argument. Therefore, this:
+
+```scss
+color: color(primary);
+```
+
+has become this:
+
+```scss
+color: color($colors, primary);
+```
+
+If you'd like to grab the `contrast` color you can use:
+
+```scss
+color: color($colors, primary, contrast);
+```
+
+###### Note
+
+If you include a `base` you must include a `contrast` and vice-versa. If you don't provide a `base` and `contrast`, such as `light: #f4f4f4` above, we use the given color as the base, and a custom function to determine the contrast color.
+
+
+#### Angular Update to Beta 13 - [#6026](https://github.com/driftyco/ionic/issues/6026)
+
+Angular has been updated to 2.0.0-beta.13. Issue [#5060](https://github.com/driftyco/ionic/issues/5060) has been fixed and content projection is now working as expected. As a result of this update, many of the dependencies will need to be updated in your `package.json`:
+
+```json
+"dependencies": {
+  "angular2": "2.0.0-beta.13",
+  "es6-promise": "3.0.2",
+  "es6-shim": "^0.35.0",
+  "ionic-angular": "2.0.0-beta.4",
+  "ionic-native": "^1.1.0",
+  "ionicons": "3.0.0-alpha.3",
+  "reflect-metadata": "0.1.2",
+  "rxjs": "5.0.0-beta.2",
+  "zone.js": "0.6.6"
+}
+```
+
+
+
 <a name="2.0.0-beta.3"></a>
 # [2.0.0-beta.3](https://github.com/driftyco/ionic/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2016-03-07)
 
@@ -92,49 +238,49 @@
 Windows platform support has been added to Ionic! The Windows mode is abbreviated as `wp`. Please go through the following steps to get your app working with the Windows mode:
 
 1. Add this line to your project's `www/index.html` file:
- 
+
   ```
   <link wp-href="build/css/app.wp.css" rel="stylesheet">
   ```
 
 2. Add a new file named `app.wp.scss` to your project's `app/theme/` folder and then add the following code to it:
-  
+
   ```
   // http://ionicframework.com/docs/v2/theming/
-  
-  
+
+
   // App Shared Variables
   // --------------------------------------------------
   // Shared Sass variables go in the app.variables.scss file
   @import 'app.variables';
-  
-  
+
+
   // App Windows Variables
   // --------------------------------------------------
   // Windows only Sass variables can go here
-  
-  
+
+
   // Ionic Windows Sass
   // --------------------------------------------------
   // Custom App variables must be declared before importing Ionic.
   // Ionic will use its default values when a custom variable isn't provided.
   @import "ionic.wp";
-  
-  
+
+
   // App Shared Sass
   // --------------------------------------------------
   // All Sass files that make up this app goes into the app.core.scss file.
   // For simpler CSS overrides, custom app CSS must come after Ionic's CSS.
   @import 'app.core';
-  
-  
+
+
   // App Windows Only Sass
   // --------------------------------------------------
   // CSS that should only apply to the Windows app
   ```
-  
+
 3. Modify the `ionic.config.js` file to add the `wp` mode on line 9:
-  
+
   ```
   sass: {
     src: ['app/theme/app.+(ios|md|wp).scss'],
