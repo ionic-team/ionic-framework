@@ -142,6 +142,29 @@ Angular has been updated to 2.0.0-beta.13. Issue [#5060](https://github.com/drif
 }
 ```
 
+#### Webpack Users
+
+Update your `webpack.config.js` from:
+
+```js
+entry: [
+  path.normalize('es6-shim/es6-shim.min'),
+  'reflect-metadata',
+  path.normalize('zone.js/dist/zone-microtask'),
+  path.resolve('app/app')
+],
+```
+
+to:
+
+```js
+entry: [
+  path.normalize('es6-shim/es6-shim.min'),
+  'reflect-metadata',
+  path.normalize('zone.js/dist/zone'),
+  path.resolve('app/app')
+],
+```
 
 
 <a name="2.0.0-beta.3"></a>
