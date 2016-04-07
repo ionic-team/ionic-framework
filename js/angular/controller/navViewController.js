@@ -11,6 +11,7 @@ IonicModule
   '$ionicViewSwitcher',
   '$ionicConfig',
   '$ionicScrollDelegate',
+  '$ionicSideMenuDelegate',
 function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher, $ionicConfig, $ionicScrollDelegate) {
 
   var DATA_ELE_IDENTIFIER = '$eleId';
@@ -62,7 +63,9 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     $scope.$on('$ionicTabs.leave', onTabsLeave);
 
     ionic.Platform.ready(function() {
-      self.initSwipeBack();
+      if (ionic.Platform.isIOS()) {
+        self.initSwipeBack();
+      }
     });
 
     return viewData;
@@ -353,7 +356,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     function onDragStart(ev) {
       if (!isPrimary) return;
 
-      if (!$ionicConfig.views.swipeBackEnabled() || !ionic.Platform.isIOS() ) {
+      if (!$ionicConfig.views.swipeBackEnabled() || $ionicSideMenuDelegate.isOpenRight() ) {
         return;
       }
 
