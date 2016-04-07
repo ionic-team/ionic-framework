@@ -37,7 +37,8 @@ TabsGenerator.prototype.run = function(){
         var pageGenerator = new PageGenerator({
           name: tabName,
           generator: 'page',
-          appDirectory: this.appDirectory
+          appDirectory: this.appDirectory,
+          isTS: this.isTS
         });
 
         pageGenerator.run();
