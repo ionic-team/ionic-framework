@@ -74,11 +74,11 @@ export class ScrollView {
         // fraction based on the easing method
         let easedT = (--time) * time * time + 1;
 
-        if (fromY != y) {
+        if (fromY !== y) {
           self.setTop((easedT * (y - fromY)) + fromY);
         }
 
-        if (fromX != x) {
+        if (fromX !== x) {
           self._el.scrollLeft = Math.floor((easedT * (x - fromX)) + fromX);
         }
 

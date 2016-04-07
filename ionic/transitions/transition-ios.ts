@@ -8,7 +8,7 @@ const OPACITY = 'opacity';
 const TRANSLATEX = 'translateX';
 const OFF_RIGHT = '99.5%';
 const OFF_LEFT = '-33%';
-const CENTER = '0%'
+const CENTER = '0%';
 const OFF_OPACITY = 0.8;
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 

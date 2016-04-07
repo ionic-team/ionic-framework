@@ -876,3 +876,17 @@ gulp.task('tooling', function(){
       .pipe(gulp.dest('dist'));
   })
 });
+
+
+/**
+ * TS LINT
+ */
+gulp.task("tslint", function() {
+  var tslint = require("gulp-tslint");
+  gulp.src([
+    'ionic/**/*.ts',
+    '!ionic/components/*/test/**/*',
+    '!ionic/util/test/*'
+  ]).pipe(tslint())
+    .pipe(tslint.report('verbose'));
+});

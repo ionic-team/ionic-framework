@@ -4,7 +4,7 @@ import {ViewController} from '../components/nav/view-controller';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
-const CENTER = '0px'
+const CENTER = '0px';
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 

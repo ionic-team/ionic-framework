@@ -20,7 +20,7 @@ import {Translate} from '../translation/translate';
 /**
  * @private
  */
-export function ionicProviders(args: any={}) {
+export function ionicProviders(args: any = {}) {
   let platform = new Platform();
   let navRegistry = new NavRegistry(args.pages);
 

@@ -134,7 +134,9 @@ export const isCheckedProperty = function(a: any, b: any): boolean {
   }
 
   // not using strict comparison on purpose
+  /* tslint:disable */
   return (a == b);
+  /* tslint:enable */
 };
 
 /**
@@ -170,7 +172,7 @@ export const array = {
     arr.splice(index, 1);
     return true;
   }
-}
+};
 
 /**
  * Grab all query strings keys and values.

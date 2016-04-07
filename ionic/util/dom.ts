@@ -194,9 +194,9 @@ export function hasFocus(ele) {
 
 export function isTextInput(ele) {
   return !!ele &&
-         (ele.tagName == 'TEXTAREA' ||
+         (ele.tagName === 'TEXTAREA' ||
           ele.contentEditable === 'true' ||
-          (ele.tagName == 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset|color|image|button)$/i).test(ele.type)));
+          (ele.tagName === 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset|color|image|button)$/i).test(ele.type)));
 }
 
 export function hasFocusedTextInput() {
@@ -207,7 +207,7 @@ export function hasFocusedTextInput() {
   return false;
 }
 
-const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id|autofocus|autocomplete|autocorrect)$/i
+const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id|autofocus|autocomplete|autocorrect)$/i;
 export function copyInputAttributes(srcElement, destElement) {
   // copy attributes from one element to another
   // however, skip over a few of them as they're already
@@ -222,7 +222,7 @@ export function copyInputAttributes(srcElement, destElement) {
 }
 
 let matchesFn: string;
-let matchesMethods: Array<string> = ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector'];
+let matchesMethods: Array<string> = ['matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector'];
 matchesMethods.some((fn: string) => {
   if (typeof document.documentElement[fn] === 'function') {
     matchesFn = fn;
@@ -299,4 +299,4 @@ export function flushDimensionCache() {
   dimensionCache = {};
 }
 
-let dimensionCache:any = {};
+let dimensionCache: any = {};

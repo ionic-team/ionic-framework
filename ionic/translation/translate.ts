@@ -45,7 +45,7 @@ export class Translate {
 
   translate(key, lang) {
     // If the language isn't specified and we have no overridden one, return the string passed.
-    if(!lang && !this._language) {
+    if (!lang && !this._language) {
       return key;
     }
 
@@ -53,7 +53,7 @@ export class Translate {
 
     let map = this.getTranslations(setLanguage);
 
-    if(!map) {
+    if (!map) {
       console.warn('I18N: No translation for key', key, 'using language', setLanguage);
       return '';
     }

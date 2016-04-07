@@ -25,14 +25,14 @@ import {Config} from '../config/config';
  */
 export class Platform {
   private _platforms: Array<string>;
-  private _versions: any={};
+  private _versions: any = {};
   private _dir: string;
   private _lang: string;
   private _url: string;
   private _qs: any;
   private _ua: string;
   private _bPlt: string;
-  private _onResizes: Array<Function>=[];
+  private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
   private _engineReady: any;
@@ -43,7 +43,7 @@ export class Platform {
    */
   platformOverride: string;
 
-  constructor(platforms=[]) {
+  constructor(platforms = []) {
     this._platforms = platforms;
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }

@@ -16,14 +16,14 @@ import {Translate} from './translate';
 @Pipe({name: 'translate'})
 @Injectable()
 export class TranslatePipe implements PipeTransform {
-  private translate :any = {};
+  private translate: any = {};
 
   constructor(translate: Translate) {
     this.translate = translate;
   }
   transform(value, args) {
     let lang;
-    if(args.length > 0) {
+    if (args.length > 0) {
       lang = args[0];
     }
     return this.translate.translate(value, lang);

@@ -1,3 +1,4 @@
+/* tslint:disable */
 import {assign} from '../util/util';
 
 const win: any = window;

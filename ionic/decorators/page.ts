@@ -1,7 +1,7 @@
-import {Component, ChangeDetectionStrategy, ViewEncapsulation, Type} from 'angular2/core'
+import {Component, ChangeDetectionStrategy, ViewEncapsulation, Type} from 'angular2/core';
 import {IONIC_DIRECTIVES} from '../config/directives';
 
-const _reflect: any=Reflect;
+const _reflect: any = Reflect;
 
 export interface PageMetadata {
   selector?: string;
@@ -107,5 +107,5 @@ export function Page(config: PageMetadata) {
     annotations.push(new Component(config));
     _reflect.defineMetadata('annotations', annotations, cls);
     return cls;
-  }
+  };
 }

@@ -5,7 +5,7 @@ import {TapClick} from '../components/tap-click/tap-click';
 import {ionicProviders} from '../config/bootstrap';
 import {IONIC_DIRECTIVES} from '../config/directives';
 
-const _reflect: any=Reflect;
+const _reflect: any = Reflect;
 
 export interface AppMetadata {
   prodMode?: boolean;
@@ -64,7 +64,7 @@ export interface AppMetadata {
 * @property {string} [template] - the template to use for the app root.
 * @property {string} [templateUrl] - a relative URL pointing to the template to use for the app root.
 */
-export function App(args: AppMetadata={}) {
+export function App(args: AppMetadata = {}) {
 
   return function(cls) {
     // get current annotations
@@ -100,5 +100,5 @@ export function App(args: AppMetadata={}) {
     });
 
     return cls;
-  }
+  };
 }
