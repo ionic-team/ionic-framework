@@ -32,7 +32,7 @@ describe('Scroll View', function() {
     expect(sv.__frozenShut).toEqual(false);
   });
 
-  it('Should shut down event completely on frozen shut', function(){
+  it('Should shut down event completely when view is frozen shut', function(){
     var sv = new ionic.views.ScrollNative({
       el: sc
     });
@@ -51,7 +51,7 @@ describe('Scroll View', function() {
     expect(mockEvent.stopPropagation.callCount).toEqual(1);
   });
 
-  it('Should shut down event completely on frozen shut', function(){
+  it('Should prevent default on event when view is frozen', function(){
     var sv = new ionic.views.ScrollNative({
       el: sc
     });
