@@ -103,7 +103,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  */
 export class Modal extends ViewController {
 
-  constructor(componentType, data={}) {
+  constructor(componentType, data = {}) {
     super(componentType, data);
     this.viewType = 'modal';
     this.isOverlay = true;
@@ -121,7 +121,7 @@ export class Modal extends ViewController {
    * @param {any} componentType Modal
    * @param {object} data Modal options
    */
-  static create(componentType, data={}) {
+  static create(componentType, data = {}) {
     return new Modal(componentType, data);
   }
 

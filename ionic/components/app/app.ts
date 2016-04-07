@@ -12,7 +12,7 @@ import {rafFrames} from '../../util/dom';
  */
 @Injectable()
 export class IonicApp {
-  private _cmps: {[id: string] : any} = {};
+  private _cmps: {[id: string]: any} = {};
   private _disTime: number = 0;
   private _scrollTime: number = 0;
   private _title: string = '';
@@ -65,7 +65,7 @@ export class IonicApp {
    * it will automatically enable the app again. It's basically a fallback incase
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
-  setEnabled(isEnabled: boolean, duration: number=700) {
+  setEnabled(isEnabled: boolean, duration: number = 700) {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
     if (duration > 32 || isEnabled) {

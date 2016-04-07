@@ -227,10 +227,10 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
       };
 
       totalNodes = nodes.push(availableNode);
-      //console.debug(`VirtrualScroll, new node, tmpl ${cell.tmpl}, height ${cell.height}`);
+      // console.debug(`VirtrualScroll, new node, tmpl ${cell.tmpl}, height ${cell.height}`);
     }
 
-    //console.debug(`node was cell ${availableNode.cell} but is now ${cellIndex}, was top: ${cell.top}`);
+    // console.debug(`node was cell ${availableNode.cell} but is now ${cellIndex}, was top: ${cell.top}`);
 
     // assign who's the new cell index for this node
     availableNode.cell = cellIndex;
@@ -238,8 +238,8 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
     // apply the cell's data to this node
     availableNode.view.setLocal('\$implicit', cell.data || records[cell.record]);
     availableNode.view.setLocal('index', cellIndex);
-    availableNode.view.setLocal('even', (cellIndex % 2 == 0));
-    availableNode.view.setLocal('odd', (cellIndex % 2 == 1));
+    availableNode.view.setLocal('even', (cellIndex % 2 === 0));
+    availableNode.view.setLocal('odd', (cellIndex % 2 === 1));
     availableNode.hasChanges = true;
     availableNode.lastTransform = null;
     madeChanges = true;
@@ -504,7 +504,7 @@ export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
     }
   }
 
-  //console.log(`adjustRendered topCell: ${data.topCell}, bottomCell: ${data.bottomCell}, cellsRenderHeight: ${cellsRenderHeight}, data.renderHeight: ${data.renderHeight}`);
+  // console.log(`adjustRendered topCell: ${data.topCell}, bottomCell: ${data.bottomCell}, cellsRenderHeight: ${cellsRenderHeight}, data.renderHeight: ${data.renderHeight}`);
 }
 
 

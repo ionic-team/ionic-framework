@@ -109,7 +109,7 @@ export class SqlStorage extends StorageEngine {
       } catch (err) {
         reject({ err: err });
       }
-    })
+    });
   }
 
   /**

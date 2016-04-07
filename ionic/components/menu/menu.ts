@@ -163,7 +163,7 @@ export class Menu extends Ion {
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side
-	  let hasEnabledSameSideMenu = self._menuCtrl.getMenus().some(m => {
+    let hasEnabledSameSideMenu = self._menuCtrl.getMenus().some(m => {
       return m.side === self.side && m.enabled;
     });
     if (hasEnabledSameSideMenu) {

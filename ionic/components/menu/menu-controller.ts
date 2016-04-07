@@ -326,4 +326,4 @@ export class MenuController {
 
 }
 
-let menuTypes:{ [name: string]: new(...args: any[]) => MenuType } = {};
+let menuTypes: { [name: string]: new(...args: any[]) => MenuType } = {};

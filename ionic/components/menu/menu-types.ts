@@ -65,7 +65,7 @@ class MenuRevealType extends MenuType {
   constructor(menu) {
     super();
 
-    let openedX = (menu.width() * (menu.side == 'right' ? -1 : 1)) + 'px';
+    let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
 
     this.ani
         .easing('ease')
@@ -95,10 +95,11 @@ class MenuPushType extends MenuType {
 
     let contentOpenedX, menuClosedX, menuOpenedX;
 
-    if (menu.side == 'right') {
+    if (menu.side === 'right') {
       contentOpenedX = -menu.width() + 'px';
       menuOpenedX = (menu._platform.width() - menu.width()) + 'px';
       menuClosedX = menu._platform.width() + 'px';
+
     } else {
       contentOpenedX = menu.width() + 'px';
       menuOpenedX = '0px';
@@ -132,7 +133,7 @@ class MenuOverlayType extends MenuType {
         .duration(250);
 
     let closedX, openedX;
-    if (menu.side == 'right') {
+    if (menu.side === 'right') {
       // right side
       closedX = menu._platform.width() + 'px';
       openedX = (menu._platform.width() - menu.width() - 8) + 'px';

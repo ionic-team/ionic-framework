@@ -94,7 +94,7 @@ export class ViewController {
 
   constructor(public componentType?: Type, data?: any) {
     // passed in data could be NavParams, but all we care about is its data object
-	  this.data = (data instanceof NavParams ? data.data : isPresent(data) ? data : {});
+    this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
   }
 
   subscribe(generatorOrNext?: any): any {
@@ -531,7 +531,7 @@ function ctrlFn(viewCtrl: ViewController, fnName: string) {
   if (viewCtrl.instance && viewCtrl.instance[fnName]) {
     try {
       viewCtrl.instance[fnName]();
-    } catch(e) {
+    } catch (e) {
       console.error(viewCtrl.name + ' ' + fnName + ': ' + e.message);
     }
   }

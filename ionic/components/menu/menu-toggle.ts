@@ -30,7 +30,7 @@ import {MenuController} from './menu-controller';
   selector: '[menuToggle]',
   host: {
     '[hidden]': 'isHidden',
-    'menuToggle': '' //ensures the attr is there for css when using [menuToggle]
+    'menuToggle': '' // ensures the attr is there for css when using [menuToggle]
   }
 })
 export class MenuToggle {
@@ -77,7 +77,7 @@ export class MenuToggle {
       if (menu) {
         // this is not the root view, so see if this menu
         // is configured to still be enabled if it's not the root view
-	      return !menu.persistent;
+        return !menu.persistent;
       }
     }
     return false;

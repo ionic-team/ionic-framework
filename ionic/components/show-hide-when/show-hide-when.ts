@@ -1,4 +1,4 @@
-import {Directive, Attribute, NgZone} from 'angular2/core'
+import {Directive, Attribute, NgZone} from 'angular2/core';
 
 import {Platform} from '../../platform/platform';
 
@@ -42,12 +42,12 @@ export class DisplayWhen {
   orientation(): boolean {
     for (let i = 0; i < this.conditions.length; i++) {
 
-      if (this.conditions[i] == 'portrait') {
+      if (this.conditions[i] === 'portrait') {
         this.isMatch = this.platform.isPortrait();
         return true;
       }
 
-      if (this.conditions[i] == 'landscape') {
+      if (this.conditions[i] === 'landscape') {
         this.isMatch = this.platform.isLandscape();
         return true;
       }

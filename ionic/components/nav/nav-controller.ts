@@ -708,7 +708,7 @@ export class NavController extends Ion {
       startIndex = this._views.length - 1;
 
     } else if (startIndex < 0 || startIndex >= this._views.length) {
-      return Promise.reject("remove index out of range");
+      return Promise.reject('remove index out of range');
     }
 
     if (isBlank(opts)) {

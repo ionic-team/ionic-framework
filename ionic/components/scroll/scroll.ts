@@ -77,13 +77,13 @@ export class Scroll extends Ion {
    * undefined if the scroll element doesn't exist.
    */
   addScrollEventListener(handler) {
-    if(!this.scrollElement) { return; }
+    if (!this.scrollElement) { return; }
 
     this.scrollElement.addEventListener('scroll', handler);
 
     return () => {
       this.scrollElement.removeEventListener('scroll', handler);
-    }
+    };
   }
 
 }

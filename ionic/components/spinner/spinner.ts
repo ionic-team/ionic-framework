@@ -185,7 +185,7 @@ export class Spinner {
   }
 
   _loadEle(spinner: any, index: number, total: number) {
-    let duration = this._dur || spinner.dur
+    let duration = this._dur || spinner.dur;
     let data = spinner.fn(duration, index, total);
     data.style.animationDuration = duration + 'ms';
     return data;
@@ -206,7 +206,7 @@ const SPINNERS = {
           transform: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
           animationDelay: -(dur - ((dur / total) * index)) + 'ms'
         }
-      }
+      };
     }
   },
 
@@ -221,7 +221,7 @@ const SPINNERS = {
           transform: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
           animationDelay: -(dur - ((dur / total) * index)) + 'ms'
         }
-      }
+      };
     }
   },
 
@@ -236,7 +236,7 @@ const SPINNERS = {
           left: 9 * Math.cos(2 * Math.PI * index / total),
           animationDelay: -(dur - ((dur / total) * index)) + 'ms'
         }
-      }
+      };
     }
   },
 
@@ -251,7 +251,7 @@ const SPINNERS = {
           left: 9 * Math.cos(2 * Math.PI * index / total),
           animationDelay: -(dur - ((dur / total) * index)) + 'ms'
         }
-      }
+      };
     }
   },
 
@@ -262,7 +262,7 @@ const SPINNERS = {
       return {
         r: 26,
         style: {}
-      }
+      };
     }
   },
 
@@ -276,7 +276,7 @@ const SPINNERS = {
           left: (9 - (9 * index)),
           animationDelay: -(110 * index) + 'ms'
         }
-      }
+      };
     }
   }
 

@@ -168,7 +168,7 @@ export class Content extends Ion {
     return () => {
       if (!this.scrollElement) { return; }
       this.scrollElement.removeEventListener(type, handler);
-    }
+    };
   }
 
   /**

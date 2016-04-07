@@ -398,7 +398,7 @@ export class InputBase {
     * @private
    */
   clearTextInput() {
-    console.debug("Should clear input");
+    console.debug('Should clear input');
   }
 
   /**
@@ -578,7 +578,6 @@ export class InputBase {
 const SCROLL_ASSIST_SPEED = 0.3;
 
 function getScrollAssistDuration(distanceToScroll) {
-  //return 3000;
   distanceToScroll = Math.abs(distanceToScroll);
   let duration = distanceToScroll / SCROLL_ASSIST_SPEED;
   return Math.min(400, Math.max(150, duration));

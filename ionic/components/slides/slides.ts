@@ -7,7 +7,7 @@ import {Gesture} from '../../gestures/gesture';
 import {DragGesture} from '../../gestures/drag-gesture';
 import {dom} from '../../util';
 import {CSS} from '../../util/dom';
-import {debounce, isTrueProperty, defaults} from '../../util/util'
+import {debounce, isTrueProperty, defaults} from '../../util/util';
 
 import {Swiper} from './swiper-widget';
 import {Scroll} from '../scroll/scroll';
@@ -151,7 +151,7 @@ export class Slides extends Ion {
     zoomable: HTMLElement,
     zoomableWidth: number,
     zoomableHeight: number
-  }
+  };
 
   /**
    * @input {boolean} Whether the slide should show the pager or not
@@ -356,13 +356,13 @@ export class Slides extends Ion {
     this.zoomGesture.on('pinch', (e) => {
       this.scale = Math.max(1, Math.min(last_scale * e.scale, 10));
       console.debug('Scaling', this.scale);
-      this.zoomElement.style[CSS.transform] = 'scale(' + this.scale + ')'
+      this.zoomElement.style[CSS.transform] = 'scale(' + this.scale + ')';
 
       zoomRect = this.zoomElement.getBoundingClientRect();
     });
 
-    this.zoomGesture.on('pinchend', (e) => {
-      //last_scale = Math.max(1, Math.min(last_scale * e.scale, 10));
+    this.zoomGesture.on('pinchend', () => {
+      // last_scale = Math.max(1, Math.min(last_scale * e.scale, 10));
       if (this.scale > this.maxScale) {
         let za = new Animation(this.zoomElement)
           .duration(this.zoomDuration)
@@ -438,31 +438,31 @@ export class Slides extends Ion {
     za.add(zi);
 
     if (this.scale > 1) {
-      // Zoom out
+      // zoom out
 
-      //zw.fromTo('translateX', posX + 'px', '0px');
-      //zw.fromTo('translateY', posY + 'px', '0px');
+      // zw.fromTo('translateX', posX + 'px', '0px');
+      // zw.fromTo('translateY', posY + 'px', '0px');
 
       zi.from('scale', this.scale);
       zi.to('scale', 1);
       za.play();
 
-      //posX = 0;
-      //posY = 0;
+      // posX = 0;
+      // posY = 0;
 
       this.scale = 1;
     } else {
-      // Zoom in
+      // zoom in
 
-      //zw.fromTo('translateX', posX + 'px', tx + 'px');
-      //zw.fromTo('translateY', posY + 'px', ty + 'px');
+      // zw.fromTo('translateX', posX + 'px', tx + 'px');
+      // zw.fromTo('translateY', posY + 'px', ty + 'px');
 
       zi.from('scale', this.scale);
       zi.to('scale', this.maxScale);
       za.play();
 
-      //posX = tx;
-      //posY = ty;
+      // posX = tx;
+      // posY = ty;
 
       this.scale = this.maxScale;
     }
@@ -485,7 +485,7 @@ export class Slides extends Ion {
   onTouchStart(e) {
     console.debug('Touch start', e);
 
-    //TODO: Support mice as well
+    // TODO: Support mice as well
 
     let target = ((dom.closest(e.target, '.slide').children[0] as HTMLElement).children[0] as HTMLElement);
 
@@ -502,11 +502,10 @@ export class Slides extends Ion {
       zoomable: target,
       zoomableWidth: target.offsetWidth,
       zoomableHeight: target.offsetHeight
-    }
+    };
     console.debug('Target', this.touch.target);
 
-    //TODO: android prevent default
-
+    // TODO: android prevent default
   }
 
   /**
@@ -521,9 +520,9 @@ export class Slides extends Ion {
     let zoomableScaledWidth = this.touch.zoomableWidth * this.scale;
     let zoomableScaledHeight = this.touch.zoomableHeight * this.scale;
 
-    let x1 = Math.min((this.viewportWidth / 2) - zoomableScaledWidth/2, 0)
+    let x1 = Math.min((this.viewportWidth / 2) - zoomableScaledWidth / 2, 0);
     let x2 = -x1;
-    let y1 = Math.min((this.viewportHeight / 2) - zoomableScaledHeight/2, 0)
+    let y1 = Math.min((this.viewportHeight / 2) - zoomableScaledHeight / 2, 0);
     let y2 = -y1;
 
     console.debug('BOUNDS', x1, x2, y1, y2);
@@ -534,24 +533,24 @@ export class Slides extends Ion {
 
     console.debug('PAN', e);
 
-    // Move image
+    // move image
     this.touch.x = this.touch.deltaX + this.touch.lastX;
     this.touch.y = this.touch.deltaY + this.touch.lastY;
 
     if (this.touch.x < x1) {
       console.debug('OUT ON LEFT');
     }
-    if (this.touch.x > x2 ){
+    if (this.touch.x > x2 ) {
       console.debug('OUT ON RIGHT');
     }
 
     if (this.touch.x > this.viewportWidth) {
-      // Too far on the left side, let the event bubble up (to enable slider on edges, for example)
+      // too far on the left side, let the event bubble up (to enable slider on edges, for example)
     } else if (-this.touch.x > this.viewportWidth) {
-      // Too far on the right side, let the event bubble up (to enable slider on edges, for example)
+      // too far on the right side, let the event bubble up (to enable slider on edges, for example)
     } else {
       console.debug('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
-      //this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
+      // this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
       this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
       e.preventDefault();
       e.stopPropagation();

@@ -10,7 +10,7 @@ import {rafFrames} from '../../util/dom';
 })
 export class TabHighlight {
   private _init: boolean;
-  
+
   constructor(private _elementRef: ElementRef) {}
 
   select(tab) {

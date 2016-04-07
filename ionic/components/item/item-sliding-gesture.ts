@@ -13,7 +13,7 @@ export class ItemSlidingGesture extends DragGesture {
   onMouseOut;
   preventDrag: boolean = false;
   dragEnded: boolean = true;
-  
+
   constructor(public list: List, public listEle: HTMLElement) {
     super(listEle, {
       direction: 'x',
@@ -196,7 +196,7 @@ export class ItemSlidingGesture extends DragGesture {
       if (openAmount) {
         isItemActive(itemContainerEle, true);
         this.on('tap', this.onTap);
-        
+
       } else {
         this.off('tap', this.onTap);
       }

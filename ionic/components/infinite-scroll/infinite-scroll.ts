@@ -172,7 +172,7 @@ export class InfiniteScroll {
     if (this._thrPc) {
       reloadY += (reloadY * this._thrPc);
     } else {
-      reloadY += this._thrPx
+      reloadY += this._thrPx;
     }
 
     let distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - reloadY;

@@ -78,7 +78,7 @@ export class NavPush {
 
     if (this.navPush instanceof Array) {
       if (this.navPush.length > 2) {
-        throw 'Too many [navPush] arguments, expects [View, { params }]'
+        throw 'Too many [navPush] arguments, expects [View, { params }]';
       }
       destination = this.navPush[0];
       params = this.navPush[1] || this.navParams;
@@ -88,7 +88,7 @@ export class NavPush {
       params = this.navParams;
     }
 
-    if (typeof destination === "string") {
+    if (typeof destination === 'string') {
       destination = this.registry.get(destination);
     }
 

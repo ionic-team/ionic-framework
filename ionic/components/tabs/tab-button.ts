@@ -45,7 +45,7 @@ export class TabButton extends Ion {
     this._layout = this.tab.parent.tabbarLayout || this._layout;
 
     this.hasTitle = !!this.tab.tabTitle;
-    this.hasIcon = !!this.tab.tabIcon && this._layout != 'icon-hide';
+    this.hasIcon = !!this.tab.tabIcon && this._layout !== 'icon-hide';
     this.hasTitleOnly = (this.hasTitle && !this.hasIcon);
     this.hasIconOnly = (this.hasIcon && !this.hasTitle);
     this.hasBadge = !!this.tab.tabBadge;

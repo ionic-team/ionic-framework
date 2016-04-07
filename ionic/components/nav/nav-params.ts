@@ -25,7 +25,7 @@
  * @see {@link ../NavPush/ NavPush API Docs}
  */
 export class NavParams {
-  
+
   /**
    * @private
    * @param {TODO} data  TODO

@@ -132,7 +132,7 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  parent: any
+  parent: any;
 
   constructor(
     @Optional() viewCtrl: ViewController,
@@ -171,7 +171,7 @@ export class Tabs extends Ion {
     this._setConfig('tabbarIcons', 'top');
 
     if (this.tabbarIcons) {
-      console.warn("DEPRECATION WARNING: 'tabbarIcons' is no longer supported and will be removed in next major release. Use 'tabbarLayout' instead. Available values: 'icon-top', 'icon-left', 'icon-right', 'icon-bottom', 'icon-hide', 'title-hide'.");
+      console.warn('DEPRECATION WARNING: "tabbarIcons" is no longer supported and will be removed in next major release. Use "tabbarLayout" instead. Available values: "icon-top", "icon-left", "icon-right", "icon-bottom", "icon-hide", "title-hide".');
     }
 
     if (this._useHighlight) {
@@ -342,7 +342,7 @@ export class Tabs extends Ion {
 
     // Otherwise, if the page we're on is not our real root, reset it to our
     // default root type
-    if (tab.root != active.componentType) {
+    if (tab.root !== active.componentType) {
       return tab.setRoot(tab.root);
     }
 

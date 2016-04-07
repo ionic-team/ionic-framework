@@ -174,8 +174,8 @@ export class Nav extends NavController {
       this.push(this._root);
     }
   }
-  
-  @ViewChild(Portal) 
+
+  @ViewChild(Portal)
   private set _navPortal(val: Portal) {
     this.setPortal(val);
   }

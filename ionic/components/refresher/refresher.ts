@@ -1,4 +1,4 @@
-import {Directive, ElementRef, EventEmitter, Host, Input, Output, NgZone} from 'angular2/core'
+import {Directive, ElementRef, EventEmitter, Host, Input, Output, NgZone} from 'angular2/core';
 import {NgIf, NgClass} from 'angular2/common';
 
 import {Content} from '../content/content';
@@ -411,7 +411,7 @@ export class Refresher {
     this.state = STATE_REFRESHING;
 
     // place the content in a hangout position while it thinks
-    this._setCss(this.pullMin,( this.snapbackDuration + 'ms'), true, '');
+    this._setCss(this.pullMin, (this.snapbackDuration + 'ms'), true, '');
 
     // emit "refresh" because it was pulled down far enough
     // and they let go to begin refreshing

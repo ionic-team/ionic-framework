@@ -47,7 +47,7 @@ import {Label} from '../label/label';
       '<div class="input-wrapper">' +
         '<ng-content select="ion-label"></ng-content>' +
         '<ion-label *ngIf="_viewLabel">' +
-          '<ng-content></ng-content>'+
+          '<ng-content></ng-content>' +
         '</ion-label>' +
         '<ng-content select="ion-select,ion-input,ion-textarea"></ng-content>' +
       '</div>' +

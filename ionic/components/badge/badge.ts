@@ -38,7 +38,7 @@ export class Badge {
       attrName = elementAttrs[i].name;
 
       // Ignore attributes item-left, item-right
-      if (attrName.indexOf('item') == -1) {
+      if (attrName.indexOf('item') === -1) {
         this._setClass(attrName);
       }
     }

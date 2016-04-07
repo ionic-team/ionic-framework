@@ -186,7 +186,7 @@ export class RadioGroup {
   remove(button: RadioButton) {
     let index = this._btns.indexOf(button);
     if (index > -1) {
-      if (button.value == this.value) {
+      if (button.value === this.value) {
         this.value = null;
       }
       this._btns.splice(index, 1);

@@ -1,4 +1,4 @@
-import {Component, Input} from 'angular2/core'
+import {Component, Input} from 'angular2/core';
 import {NgIf} from 'angular2/common';
 
 import {Config} from '../../config/config';

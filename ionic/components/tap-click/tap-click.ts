@@ -27,10 +27,10 @@ export class TapClick {
   ) {
     let self = this;
 
-    if (config.get('activator') == 'ripple') {
+    if (config.get('activator') === 'ripple') {
       self.activator = new RippleActivator(app, config, zone);
 
-    } else if (config.get('activator') == 'highlight') {
+    } else if (config.get('activator') === 'highlight') {
       self.activator = new Activator(app, config, zone);
     }
 

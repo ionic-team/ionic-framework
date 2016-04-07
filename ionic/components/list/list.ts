@@ -115,7 +115,7 @@ export class List extends Ion {
 export class ListHeader {
   private _id: string;
 
-  constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') id:string) {
+  constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') id: string) {
     this._id = id;
   }
 

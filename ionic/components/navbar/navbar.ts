@@ -202,7 +202,7 @@ export class Navbar extends ToolbarBase {
   didEnter() {
     try {
       this._app.setTitle(this.getTitleText());
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     }
   }
