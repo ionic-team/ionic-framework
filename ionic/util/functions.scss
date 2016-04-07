@@ -192,7 +192,7 @@
       $color-contrast: color-inverse($color-value);
     }
 
-    $colors-list: append($colors-list, ( $color-name, $color-base, $color-contrast ), comma);
+    $colors-list: append($colors-list, ($color-name, $color-base, $color-contrast), comma);
   }
 
   @return $colors-list;
