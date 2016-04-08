@@ -1,9 +1,10 @@
-import {Injectable, NgZone} from 'angular2/core';
+import {Injectable} from 'angular2/core';
 import {Title} from 'angular2/platform/browser';
 
 import {Config} from '../../config/config';
 import {ClickBlock} from '../../util/click-block';
-import {rafFrames} from '../../util/dom';
+import {Nav} from '../nav/nav';
+import {Tabs} from '../tabs/tabs';
 
 
 /**
@@ -18,11 +19,11 @@ export class IonicApp {
   private _title: string = '';
   private _titleSrv: Title = new Title();
   private _isProd: boolean = false;
+  private _rootNav: any = null;
 
   constructor(
     private _config: Config,
-    private _clickBlock: ClickBlock,
-    private _zone: NgZone
+    private _clickBlock: ClickBlock
   ) {}
 
   /**
@@ -96,6 +97,38 @@ export class IonicApp {
    */
   isScrolling(): boolean {
     return (this._scrollTime + 64 > Date.now());
+  }
+
+  /**
+   * @private
+   */
+  getActiveNav(): Nav | Tabs {
+    var nav = this._rootNav || null;
+    var activeChildNav;
+
+    while (nav) {
+      activeChildNav = nav.getActiveChildNav();
+      if (!activeChildNav) {
+        break;
+      }
+      nav = activeChildNav;
+    }
+
+    return nav;
+  }
+
+  /**
+   * @private
+   */
+  getRootNav(): any {
+    return this._rootNav;
+  }
+
+  /**
+   * @private
+   */
+  setRootNav(nav: any) {
+    this._rootNav = nav;
   }
 
   /**

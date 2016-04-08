@@ -110,6 +110,7 @@ export class NavController extends Ion {
   private _sbGesture: SwipeBackGesture;
   private _sbThreshold: number;
   private _portal: Portal;
+  private _children: any[] = [];
 
   protected _sbEnabled: boolean;
   protected _ids: number = -1;
@@ -166,8 +167,8 @@ export class NavController extends Ion {
 
     this._trnsDelay = config.get('pageTransitionDelay');
 
-    this._sbEnabled = config.getBoolean('swipeBackEnabled') || false;
-    this._sbThreshold = config.get('swipeBackThreshold') || 40;
+    this._sbEnabled = config.getBoolean('swipeBackEnabled');
+    this._sbThreshold = config.getNumber('swipeBackThreshold', 40);
 
     this.id = (++ctrlIds).toString();
 
@@ -1322,6 +1323,21 @@ export class NavController extends Ion {
     }
   }
 
+  getActiveChildNav(): any {
+    return this._children[this._children.length - 1];
+  }
+
+  registerChildNav(nav: any) {
+    this._children.push(nav);
+  }
+
+  unregisterChildNav(nav: any) {
+    let index = this._children.indexOf(nav);
+    if (index > -1) {
+      this._children.splice(index, 1);
+    }
+  }
+
   /**
    * @private
    */
@@ -1329,7 +1345,11 @@ export class NavController extends Ion {
     for (var i = this._views.length - 1; i >= 0; i--) {
       this._views[i].destroy();
     }
-    this._views = [];
+    this._views.length = 0;
+
+    if (this.parent) {
+      this.parent.unregisterChildNav(this);
+    }
   }
 
   /**

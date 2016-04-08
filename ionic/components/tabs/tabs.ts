@@ -135,8 +135,8 @@ export class Tabs extends Ion {
   parent: any;
 
   constructor(
-    @Optional() viewCtrl: ViewController,
     @Optional() parent: NavController,
+    @Optional() viewCtrl: ViewController,
     private _app: IonicApp,
     private _config: Config,
     private _elementRef: ElementRef,
@@ -148,6 +148,15 @@ export class Tabs extends Ion {
     this.id = ++tabIds;
     this.subPages = _config.getBoolean('tabSubPages');
     this._useHighlight = _config.getBoolean('tabbarHighlight');
+
+    if (parent) {
+      // this Tabs has a parent Nav
+      parent.registerChildNav(this);
+
+    } else if (this._app) {
+      // this is the root navcontroller for the entire app
+      this._app.setRootNav(this);
+    }
 
     // Tabs may also be an actual ViewController which was navigated to
     // if Tabs is static and not navigated to within a NavController
@@ -306,6 +315,13 @@ export class Tabs extends Ion {
       }
     }
     return null;
+  }
+
+  /**
+   * @private
+   */
+  getActiveChildNav() {
+    return this.getSelected();
   }
 
   /**
