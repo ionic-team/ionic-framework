@@ -2,7 +2,6 @@ var buildConfig = require('./build.config.js');
 var path = require('canonical-path');
 
 module.exports = function(includeCodeCoverage){
-  console.log("in the function");
   var config = {};
 
   config.files = [
