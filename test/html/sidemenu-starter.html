@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="/dist/css/ionic.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="/dist/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+  </head>
+
+  <body ng-app="starter">
+    <ion-nav-view></ion-nav-view>
+  </body>
+
+  <script id="templates/browse.html" type="text/ng-template">
+    <ion-view view-title="Browse">
+      <ion-content>
+        <h1>Browse</h1>
+      </ion-content>
+    </ion-view>
+  </script>
+
+  <script id="templates/login.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar>
+        <h1 class="title">Login</h1>
+        <div class="buttons">
+          <button class="button button-clear" ng-click="closeLogin()">Close</button>
+        </div>
+      </ion-header-bar>
+      <ion-content>
+        <form ng-submit="doLogin()">
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">Username</span>
+              <input type="text" ng-model="loginData.username">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password" ng-model="loginData.password">
+            </label>
+            <label class="item">
+              <button class="button button-block button-positive" type="submit">Log in</button>
+            </label>
+          </div>
+        </form>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+
+  <script id="templates/menu.html" type="text/ng-template">
+    <ion-side-menus enable-menu-with-back-views="false">
+      <ion-side-menu-content>
+        <ion-nav-bar class="bar-stable">
+          <ion-nav-back-button>
+          </ion-nav-back-button>
+
+          <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+          </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+      </ion-side-menu-content>
+
+      <ion-side-menu side="left">
+        <ion-header-bar class="bar-stable">
+          <h1 class="title">Left</h1>
+        </ion-header-bar>
+        <ion-content>
+          <ion-list>
+            <ion-item menu-close ng-click="login()">
+              Login
+            </ion-item>
+            <ion-item menu-close href="#/app/search">
+              Search
+            </ion-item>
+            <ion-item menu-close href="#/app/browse">
+              Browse
+            </ion-item>
+            <ion-item menu-close href="#/app/playlists">
+              Playlists
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-side-menu>
+    </ion-side-menus>
+  </script>
+
+  <script id="templates/playlist.html" type="text/ng-template">
+    <ion-view view-title="Playlist">
+      <ion-content has-header="true">
+        <ion-list show-delete="false" type="card">
+          <ion-item class="rs-item item-icon-right" ng-repeat="contact in contacts">
+            <div style="display:inline">
+                <ion-checkbox ng-model="contact.checked" ng-checked="contact.checked">
+                  <img ng-src={{contact.avatar}}>
+                  <p>{{contact.displayName}}</p>
+                </ion-checkbox>
+                <!--<p>{{contact.displayName}}</p>-->
+            </div>
+            <ion-option-button style="background-color: #666;" ng-click="edit(item)"> Edit </ion-option-button>
+            <ion-delete-button ng-click="onItemDelete(item)"></ion-delete-button>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-view>
+  </script>
+
+  <script id="templates/playlists.html" type="text/ng-template">
+    <ion-view view-title="Playlists">
+      <ion-content>
+        <ion-list>
+          <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+            {{playlist.title}}
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-view>
+  </script>
+
+  <script id="templates/search.html" type="text/ng-template">
+    <ion-view view-title="Search">
+      <ion-content>
+        <h1>Search</h1>
+      </ion-content>
+    </ion-view>
+  </script>
+
+  <script>
+  angular.module('starter', ['ionic', 'starter.controllers'])
+
+  .run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if (window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.disableScroll(true);
+
+    }
+    if (window.StatusBar) {
+      // org.apache.cordova.statusbar required
+      StatusBar.styleDefault();
+    }
+  });
+  })
+
+  .config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+
+    .state('app', {
+    url: '/app',
+    abstract: true,
+    templateUrl: 'templates/menu.html',
+    controller: 'AppCtrl'
+  })
+
+  .state('app.search', {
+    url: '/search',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/search.html'
+      }
+    }
+  })
+
+  .state('app.browse', {
+      url: '/browse',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/browse.html'
+        }
+      }
+    })
+    .state('app.playlists', {
+      url: '/playlists',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/playlists.html',
+          controller: 'PlaylistsCtrl'
+        }
+      }
+    })
+
+  .state('app.single', {
+    url: '/playlists/:playlistId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/playlist.html',
+        controller: 'PlaylistCtrl'
+      }
+    }
+  });
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/app/playlists');
+  });
+
+  angular.module('starter.controllers', [])
+
+  .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+
+    // With the new view caching in Ionic, Controllers are only called
+    // when they are recreated or on app start, instead of every page change.
+    // To listen for when this page is active (for example, to refresh data),
+    // listen for the $ionicView.enter event:
+    //$scope.$on('$ionicView.enter', function(e) {
+    //});
+
+    // Form data for the login modal
+    $scope.loginData = {};
+
+    // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/login.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+
+    // Triggered in the login modal to close it
+    $scope.closeLogin = function() {
+      $scope.modal.hide();
+    };
+
+    // Open the login modal
+    $scope.login = function() {
+      $scope.modal.show();
+    };
+
+    // Perform the login action when the user submits the login form
+    $scope.doLogin = function() {
+      console.log('Doing login', $scope.loginData);
+
+      // Simulate a login delay. Remove this and replace with your login
+      // code if using a login system
+      $timeout(function() {
+        $scope.closeLogin();
+      }, 1000);
+    };
+  })
+
+  .controller('PlaylistsCtrl', function($scope) {
+    $scope.playlists = [
+      { title: 'Reggae', id: 1 },
+      { title: 'Chill', id: 2 },
+      { title: 'Dubstep', id: 3 },
+      { title: 'Indie', id: 4 },
+      { title: 'Rap', id: 5 },
+      { title: 'Cowbell', id: 6 }
+    ];
+  })
+
+  .controller('PlaylistCtrl', function($scope, $stateParams) {
+
+    var contacts = [];
+    contacts.push({displayName:"Item One"});
+    contacts.push({displayName:"Item Two"});
+    contacts.push({displayName:"Item Three"});
+    $scope.contacts = contacts;
+
+  });
+
+  </script>
+</html>
