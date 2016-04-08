@@ -88,6 +88,16 @@
  * @returns {boolean}
  */
 
+ /**
+  * @ngdoc method
+  * @name $ionicConfigProvider#views.swipeBackEnabled
+  * @description  By default on iOS devices, swipe to go back functionality is enabled by default.
+  * This method can be used to disable it globally, or on a per-view basis.
+  * Note: This functionality is only supported on iOS.
+  * @param {boolean} value
+  * @returns {boolean}
+  */
+
 /**
  * @ngdoc method
  * @name $ionicConfigProvider#scrolling.jsScrolling
