@@ -84,13 +84,13 @@ function($scope,
     deregisterInstance();
     scrollView && scrollView.__cleanup && scrollView.__cleanup();
     angular.element($window).off('resize', resize);
-    if ( $element ){
+    if ( $element ) {
       $element.off('scroll', scrollFunc);
     }
-    if ( self._scrollViewOptions ){
+    if ( self._scrollViewOptions ) {
       self._scrollViewOptions.el = null;
     }
-    if ( scrollViewOptions ){
+    if ( scrollViewOptions ) {
         scrollViewOptions.el = null;
     }
 

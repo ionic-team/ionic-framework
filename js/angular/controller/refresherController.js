@@ -306,7 +306,7 @@ IonicModule
     };
 
     function destroy() {
-      if ( scrollChild ){
+      if ( scrollChild ) {
         ionic.off(touchStartEvent, handleTouchstart, scrollChild);
         ionic.off(touchMoveEvent, handleTouchmove, scrollChild);
         ionic.off(touchEndEvent, handleTouchend, scrollChild);
@@ -314,7 +314,7 @@ IonicModule
         ionic.off('mousemove', handleTouchmove, scrollChild);
         ionic.off('mouseup', handleTouchend, scrollChild);
       }
-      if ( scrollParent ){
+      if ( scrollParent ) {
         ionic.off('scroll', handleScroll, scrollParent);
       }
       scrollParent = null;
