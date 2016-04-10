@@ -1,6 +1,7 @@
-import {getQuerystring, assign} from '../util/util';
-import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
 import {Config} from '../config/config';
+import {EventEmitter} from 'angular2/core';
+import {getQuerystring} from '../util/util';
+import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
 
 /**
  * @name Platform
@@ -25,7 +26,7 @@ import {Config} from '../config/config';
  */
 export class Platform {
   private _platforms: Array<string>;
-  private _versions: any = {};
+  private _versions: {[name: string]: PlatformVersion} = {};
   private _dir: string;
   private _lang: string;
   private _url: string;
@@ -35,13 +36,7 @@ export class Platform {
   private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
-  private _engineReady: any;
   private _resizeTm: any;
-
-  /**
-   * @private
-   */
-  platformOverride: string;
 
   constructor(platforms = []) {
     this._platforms = platforms;
@@ -124,7 +119,7 @@ export class Platform {
 
 
   /**
-   * Returns an object containing information about the paltform
+   * Returns an object containing information about the platforms.
    *
    * ```
    * import {Platform} from 'ionic-angular';
@@ -132,8 +127,7 @@ export class Platform {
    * @Page({...})
    * export MyPage {
    *    constructor(platform: Platform) {
-   *      this.platform = platform;
-   *      console.log(this.platform.versions());
+   *      console.log(platform.versions());
    *    }
    * }
    * ```
@@ -142,12 +136,7 @@ export class Platform {
    * @returns {object} An object with various platform info
    *
    */
-  versions(platformName: string): any {
-    if (arguments.length) {
-      // get a specific platform's version
-      return this._versions[platformName];
-    }
-
+  versions(): {[name: string]: PlatformVersion} {
     // get all the platforms that have a valid parsed version
     return this._versions;
   }
@@ -155,7 +144,7 @@ export class Platform {
   /**
    * @private
    */
-  version(): any {
+  version(): PlatformVersion {
     for (let platformName in this._versions) {
       if (this._versions[platformName]) {
         return this._versions[platformName];
@@ -165,7 +154,11 @@ export class Platform {
   }
 
   /**
-   * Returns a promise when the platform is ready and native functionality can be called
+   * Returns a promise when the platform is ready and native functionality
+   * can be called. If the app is running from within a web browser, then
+   * the promise will resolve when the DOM is ready. When the app is running
+   * from an application engine such as Cordova, then the promise
+   * will resolve when Cordova triggers the `deviceready` event.
    *
    * ```
    * import {Platform} from 'ionic-angular';
@@ -173,39 +166,37 @@ export class Platform {
    * @Page({...})
    * export MyPage {
    *    constructor(platform: Platform) {
-   *      this.platform = platform;
-   *      this.platform.ready().then(() => {
+   *      platform.ready().then(() => {
    *        console.log('Platform ready');
    *        // The platform is now ready, execute any native code you want
    *       });
    *    }
    * }
    * ```
-   * @returns {promise} Returns a promsie when device ready has fired
+   * @returns {promise}
    */
   ready(): Promise<any> {
+    // this is the default if it's not replaced by the engine
+    // if there was no custom ready method from the engine
+    // then use the default DOM ready
     return this._readyPromise;
   }
 
   /**
    * @private
    */
-  prepareReady(config: Config) {
-    let self = this;
+  triggerReady() {
+    this._readyResolve();
+  }
 
-    function resolve() {
-      self._readyResolve(config);
-    }
-
-    if (this._engineReady) {
-      // the engine provide a ready promise, use this instead
-      this._engineReady(resolve);
-
-    } else {
-      // there is no custom ready method from the engine
-      // use the default dom ready
-      ready(resolve);
-    }
+  /**
+   * @private
+   */
+  prepareReady() {
+    // this is the default prepareReady if it's not replaced by the engine
+    // if there was no custom ready method from the engine
+    // then use the default DOM ready
+    ready(this.triggerReady.bind(this));
   }
 
   /**
@@ -276,31 +267,30 @@ export class Platform {
   // Methods meant to be overridden by the engine
   // **********************************************
   // Provided NOOP methods so they do not error when
-  // called by engines (the browser) doesn't provide them
-  /**
-  * @private
-  */
-  on() {}
-  /**
-  * @private
-  */
-  onHardwareBackButton() {}
-  /**
-  * @private
-  */
-  registerBackButtonAction() {}
+  // called by engines (the browser)that do not provide them
+
   /**
   * @private
   */
   exitApp() {}
+
+  // Events meant to be triggered by the engine
+  // **********************************************
+
   /**
   * @private
   */
-  fullScreen() {}
+  backButton: EventEmitter<any> = new EventEmitter();
+
   /**
   * @private
   */
-  showStatusBar() {}
+  pause: EventEmitter<any> = new EventEmitter();
+
+  /**
+  * @private
+  */
+  resume: EventEmitter<any> = new EventEmitter();
 
 
   // Getter/Setter Methods
@@ -427,21 +417,21 @@ export class Platform {
   /**
    * @private
    */
-  static register(platformConfig) {
+  static register(platformConfig: PlatformConfig) {
     platformRegistry[platformConfig.name] = platformConfig;
   }
 
   /**
   * @private
   */
-  static registry(): any {
+  static registry() {
     return platformRegistry;
   }
 
   /**
    * @private
    */
-  static get(platformName: string): any {
+  static get(platformName: string): PlatformConfig {
     return platformRegistry[platformName] || {};
   }
 
@@ -513,15 +503,13 @@ export class Platform {
   /**
    * @private
    */
-  load(platformOverride?: string) {
-    let rootPlatformNode = null;
-    let engineNode = null;
+  load(config: Config) {
+    let rootPlatformNode: PlatformNode;
+    let enginePlatformNode: PlatformNode;
     let self = this;
 
-    this.platformOverride = platformOverride;
-
     // figure out the most specific platform and active engine
-    let tmpPlatform = null;
+    let tmpPlatform: PlatformNode;
     for (let platformName in platformRegistry) {
 
       tmpPlatform = this.matchPlatform(platformName);
@@ -532,7 +520,7 @@ export class Platform {
         if (tmpPlatform.isEngine) {
           // because it matched then this should be the active engine
           // you cannot have more than one active engine
-          engineNode = tmpPlatform;
+          enginePlatformNode = tmpPlatform;
 
         } else if (!rootPlatformNode || tmpPlatform.depth > rootPlatformNode.depth) {
           // only find the root node for platforms that are not engines
@@ -553,20 +541,13 @@ export class Platform {
     if (rootPlatformNode) {
 
       // check if we found an engine node (cordova/node-webkit/etc)
-      if (engineNode) {
+      if (enginePlatformNode) {
         // add the engine to the first in the platform hierarchy
         // the original rootPlatformNode now becomes a child
         // of the engineNode, which is not the new root
-        engineNode.child = rootPlatformNode;
-        rootPlatformNode.parent = engineNode;
-        rootPlatformNode = engineNode;
-
-        // add any events which the engine would provide
-        // for example, Cordova provides its own ready event
-        let engineMethods = engineNode.methods();
-        engineMethods._engineReady = engineMethods.ready;
-        delete engineMethods.ready;
-        assign(this, engineMethods);
+        enginePlatformNode.child = rootPlatformNode;
+        rootPlatformNode.parent = enginePlatformNode;
+        rootPlatformNode = enginePlatformNode;
       }
 
       let platformNode = rootPlatformNode;
@@ -585,12 +566,14 @@ export class Platform {
 
       platformNode = rootPlatformNode;
       while (platformNode) {
+        platformNode.initialize(this, config);
+
         // set the array of active platforms with
         // the last one in the array the most important
-        this._platforms.push(platformNode.name());
+        this._platforms.push(platformNode.name);
 
         // get the platforms version if a version parser was provided
-        this._versions[platformNode.name()] = platformNode.version(this);
+        this._versions[platformNode.name] = platformNode.version(this);
 
         // go to the next platform child
         platformNode = platformNode.child;
@@ -605,7 +588,7 @@ export class Platform {
   /**
    * @private
    */
-  matchPlatform(platformName: string): any {
+  private matchPlatform(platformName: string): PlatformNode {
     // build a PlatformNode and assign config data to it
     // use it's getRoot method to build up its hierarchy
     // depending on which platforms match
@@ -640,22 +623,22 @@ function insertSuperset(platformNode: PlatformNode) {
   }
 }
 
-
+/**
+ * @private
+ */
 class PlatformNode {
-  private c;
+  private c: PlatformConfig;
 
   parent: PlatformNode;
   child: PlatformNode;
+  name: string;
   isEngine: boolean;
   depth: number;
 
   constructor(platformName: string) {
     this.c = Platform.get(platformName);
+    this.name = platformName;
     this.isEngine = this.c.isEngine;
-  }
-
-  name(): string {
-    return this.c.name;
   }
 
   settings(): any {
@@ -666,22 +649,15 @@ class PlatformNode {
     return this.c.superset;
   }
 
-  methods(): any {
-    return this.c.methods || {};
-  }
-
   isMatch(p: Platform): boolean {
-    if (p.platformOverride && !this.isEngine) {
-      return (p.platformOverride === this.c.name);
-
-    } else if (!this.c.isMatch) {
-      return false;
-    }
-
-    return this.c.isMatch(p);
+    return this.c.isMatch && this.c.isMatch(p) || false;
   }
 
-  version(p: Platform): any {
+  initialize(platform: Platform, config: Config) {
+    this.c.initialize && this.c.initialize(platform, config);
+  }
+
+  version(p: Platform): PlatformVersion {
     if (this.c.versionParser) {
       let v = this.c.versionParser(p);
       if (v) {
@@ -699,7 +675,7 @@ class PlatformNode {
   getRoot(p: Platform): PlatformNode {
     if (this.isMatch(p)) {
 
-      let parents = this.getSubsetParents(this.name());
+      let parents = this.getSubsetParents(this.name);
 
       if (!parents.length) {
         return this;
@@ -742,5 +718,23 @@ class PlatformNode {
 
 }
 
-let platformRegistry = {};
-let platformDefault = null;
+let platformRegistry: {[name: string]: PlatformConfig} = {};
+let platformDefault: string = null;
+
+export interface PlatformConfig {
+  name?: string;
+  isEngine?: boolean;
+  initialize?: Function;
+  isMatch?: Function;
+  superset?: string;
+  subsets?: string[];
+  settings?: any;
+  versionParser?: any;
+}
+
+export interface PlatformVersion {
+  str?: string;
+  num?: number;
+  major?: number;
+  minor?: number
+}

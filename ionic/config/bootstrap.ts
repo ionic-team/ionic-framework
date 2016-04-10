@@ -33,7 +33,7 @@ export function ionicProviders(args: any = {}) {
   platform.setUrl(window.location.href);
   platform.setUserAgent(window.navigator.userAgent);
   platform.setNavigatorPlatform(window.navigator.platform);
-  platform.load();
+  platform.load(config);
   config.setPlatform(platform);
 
   let clickBlock = new ClickBlock();
@@ -45,7 +45,7 @@ export function ionicProviders(args: any = {}) {
   bindEvents(window, document, platform, events);
 
   // prepare the ready promise to fire....when ready
-  platform.prepareReady(config);
+  platform.prepareReady();
 
   return [
     IonicApp,
