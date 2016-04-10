@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, Attribute, Optional, Input} from 'angular2/core';
+import {Component, ElementRef, Renderer, Attribute, Optional, Input, ChangeDetectionStrategy} from 'angular2/core';
 
 import {Config} from '../../config/config';
 import {Toolbar} from '../toolbar/toolbar';
@@ -38,7 +38,8 @@ import {isTrueProperty} from '../../util/util';
     '<span class="button-inner">' +
       '<ng-content></ng-content>' +
     '</span>' +
-    '<ion-button-effect></ion-button-effect>'
+    '<ion-button-effect></ion-button-effect>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Button {
   private _role: string = 'button'; // bar-button/item-button

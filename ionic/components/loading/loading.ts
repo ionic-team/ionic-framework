@@ -1,4 +1,4 @@
-import {Component, Renderer, ElementRef, HostListener} from 'angular2/core';
+import {Component, Renderer, ElementRef, HostListener, ChangeDetectionStrategy} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
@@ -157,7 +157,8 @@ export class Loading extends ViewController {
   host: {
     'role': 'dialog'
   },
-  directives: [NgIf, Spinner]
+  directives: [NgIf, Spinner],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class LoadingCmp {
   private d: any;

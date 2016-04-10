@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, HostListener} from 'angular2/core';
+import {Component, ElementRef, Renderer, HostListener, ChangeDetectionStrategy} from 'angular2/core';
 import {NgClass, NgSwitch, NgIf, NgFor} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
@@ -308,7 +308,8 @@ export class Alert extends ViewController {
     '[attr.aria-labelledby]': 'hdrId',
     '[attr.aria-describedby]': 'descId'
   },
-  directives: [NgClass, NgSwitch, NgIf, NgFor]
+  directives: [NgClass, NgSwitch, NgIf, NgFor],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class AlertCmp {
   private activeId: string;

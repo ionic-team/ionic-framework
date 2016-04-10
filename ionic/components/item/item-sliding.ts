@@ -1,4 +1,4 @@
-import {Component, ElementRef, Optional} from 'angular2/core';
+import {Component, ElementRef, Optional, ChangeDetectionStrategy} from 'angular2/core';
 
 import {List} from '../list/list';
 
@@ -23,7 +23,7 @@ import {List} from '../list/list';
  *   </ion-item-sliding>
  * </ion-list>
  * ```
- * @demo /docs/v2/demos/item-sliding/  
+ * @demo /docs/v2/demos/item-sliding/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  */
@@ -31,7 +31,8 @@ import {List} from '../list/list';
   selector: 'ion-item-sliding',
   template:
     '<ng-content select="ion-item,[ion-item]"></ng-content>' +
-    '<ng-content select="ion-item-options"></ng-content>'
+    '<ng-content select="ion-item-options"></ng-content>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemSliding {
 

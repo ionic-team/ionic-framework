@@ -1,4 +1,4 @@
-import {Directive, Component, ElementRef, Host, EventEmitter, Input, Output} from 'angular2/core';
+import {Directive, Component, ElementRef, Host, EventEmitter, Input, Output, ChangeDetectionStrategy} from 'angular2/core';
 import {NgClass} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -71,7 +71,8 @@ import {Scroll} from '../scroll/scroll';
       '</div>' +
       '<div [class.hide]="!showPager" class="swiper-pagination"></div>' +
     '</div>',
-  directives: [NgClass]
+  directives: [NgClass],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Slides extends Ion {
 
@@ -666,7 +667,8 @@ export class Slides extends Ion {
   */
 @Component({
   selector: 'ion-slide',
-  template: '<div class="slide-zoom"><ng-content></ng-content></div>'
+  template: '<div class="slide-zoom"><ng-content></ng-content></div>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Slide {
 
