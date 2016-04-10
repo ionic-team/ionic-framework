@@ -1,4 +1,4 @@
-import {IonicApp, Nav, Tabs, Tab, NavOptions, Config, ViewController} from '../../../../ionic';
+import {IonicApp, Nav, Tabs, Tab, NavOptions, Config, ViewController, Platform} from '../../../../ionic';
 
 export function run() {
 
@@ -88,6 +88,7 @@ describe('IonicApp', () => {
 
   var app: IonicApp;
   var config: Config;
+  var platform: Platform;
 
   function mockNav(): Nav {
     return new Nav(null,null,null,config,null,null,null,null,null,null);
@@ -103,7 +104,8 @@ describe('IonicApp', () => {
 
   beforeEach(() => {
     config = new Config();
-    app = new IonicApp(config, null);
+    platform = new Platform();
+    app = new IonicApp(config, null, platform);
   });
 
 });
