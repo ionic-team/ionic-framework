@@ -103,6 +103,8 @@ function($scope, $element, $ionicHistory) {
           uiSref: tab.uiSref
         });
       }
+
+      $scope.$broadcast("tabSelected", { selectedTab: tab, selectedTabIndex: tabIndex});
     }
   };
 
