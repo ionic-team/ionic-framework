@@ -30,6 +30,12 @@
   "components/toolbar/toolbar.wp";
 
 
-  // Windows w/ iOS Platform
-  @import
-    "platform/cordova.wp";
+// Windows w/ iOS Platform
+@import
+  "platform/cordova.wp";
+
+
+// Noto Sans Font
+@at-root {
+  @import "./fonts/noto-sans";
+}
