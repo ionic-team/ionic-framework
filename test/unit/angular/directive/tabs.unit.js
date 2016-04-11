@@ -649,14 +649,21 @@ describe('tabs', function() {
     it('should change classes based on active', function() {
       var el = setup('icon-on="{{true}}" icon-off="{{false}}"');
 
-      el.isolateScope().isTabActive = function() { return true; };
+      tabsCtrl.selectedTab = function(){
+          return tabCtrl.$scope;
+      }
       el.isolateScope().$apply();
+      el.isolateScope().$broadcast("tabSelected", {});
       expect(el.hasClass('tab-item-active')).toBe(true);
       expect(el.find('.icon.true').length).toBe(1);
       expect(el.find('.icon.false').length).toBe(0);
 
+      tabsCtrl.selectedTab = function(){
+          return "somenthing that isn't the selected tab";
+      }
       el.isolateScope().isTabActive = function() { return false; };
       el.isolateScope().$apply();
+      el.isolateScope().$broadcast("tabSelected", {});
       expect(el.hasClass('tab-item-active')).toBe(false);
       expect(el.find('.icon.true').length).toBe(0);
       expect(el.find('.icon.false').length).toBe(1);
