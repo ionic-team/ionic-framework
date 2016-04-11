@@ -3,19 +3,19 @@
 // iOS Cordova
 // --------------------------------------------------
 
-$cordova-ios-toolbar-padding:    20px   !default;
+$cordova-ios-statusbar-padding:    20px   !default;
 
 
 &.platform-cordova.platform-ios {
 
   ion-navbar-section {
-    height: $toolbar-ios-height + $cordova-ios-toolbar-padding;
-    min-height: $toolbar-ios-height + $cordova-ios-toolbar-padding;
+    height: calc(#{$toolbar-ios-height} + #{$cordova-ios-statusbar-padding});
+    min-height: calc(#{$toolbar-ios-height} + #{$cordova-ios-statusbar-padding});
   }
 
   ion-navbar ion-title,
   ion-navbar ion-segment, {
-    padding-top: $cordova-ios-toolbar-padding;
+    padding-top: $cordova-ios-statusbar-padding;
   }
 
   ion-navbar,
@@ -28,10 +28,10 @@ $cordova-ios-toolbar-padding:    20px   !default;
   ion-page.modal > ion-toolbar:first-child,
   ion-page.modal > ion-toolbar:first-child ion-title,
   ion-page.modal > ion-toolbar:first-child ion-segment, {
-    padding-top: $toolbar-ios-padding + $cordova-ios-toolbar-padding;
+    padding-top: calc(#{$toolbar-ios-padding} + #{$cordova-ios-statusbar-padding});
 
-    height: $toolbar-ios-height + $cordova-ios-toolbar-padding;
-    min-height: $toolbar-ios-height + $cordova-ios-toolbar-padding;
+    height: calc(#{$toolbar-ios-height} + #{$cordova-ios-statusbar-padding});
+    min-height: calc(#{$toolbar-ios-height} + #{$cordova-ios-statusbar-padding});
   }
 
 }

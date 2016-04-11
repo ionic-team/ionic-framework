@@ -1,0 +1,26 @@
+@import "../globals.core";
+
+// iOS Cordova
+// --------------------------------------------------
+
+$cordova-ios-statusbar-padding:    20px   !default;
+
+
+&.platform-cordova.platform-ios {
+
+  ion-navbar-section {
+    height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
+    min-height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
+  }
+
+  ion-navbar,
+  ion-app > ion-toolbar:first-child,
+  ion-menu > ion-toolbar:first-child,
+  ion-page.modal > ion-toolbar:first-child {
+    padding-top: calc(#{$toolbar-md-padding} + #{$cordova-ios-statusbar-padding});
+
+    height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
+    min-height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
+  }
+
+}
