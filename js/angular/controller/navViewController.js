@@ -11,7 +11,8 @@ IonicModule
   '$ionicViewSwitcher',
   '$ionicConfig',
   '$ionicScrollDelegate',
-function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher, $ionicConfig, $ionicScrollDelegate) {
+  '$ionicSideMenuDelegate',
+function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher, $ionicConfig, $ionicScrollDelegate, $ionicSideMenuDelegate) {
 
   var DATA_ELE_IDENTIFIER = '$eleId';
   var DATA_DESTROY_ELE = '$destroyEle';
@@ -353,7 +354,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     var cancelData = {};
 
     function onDragStart(ev) {
-      if (!isPrimary || !$ionicConfig.views.swipeBackEnabled() ) return;
+      if (!isPrimary || !$ionicConfig.views.swipeBackEnabled() || $ionicSideMenuDelegate.isOpenRight() ) return;
 
 
       startDragX = getDragX(ev);
