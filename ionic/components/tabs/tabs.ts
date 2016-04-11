@@ -18,12 +18,68 @@ import {isBlank, isTrueProperty} from '../../util/util';
 /**
  * @name Tabs
  * @description
- * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
- * of the Component docs._
+ * Tabs make it easy to navigate between different pages or functional
+ * aspects of an app. The Tabs component, written as `<ion-tabs>`, is
+ * a container of individual [Tab](../Tab/) components.
  *
- * The Tabs component is a container with a TabBar and any number of
- * individual Tab components. On iOS, the TabBar is placed on the bottom of
- * the screen, while on Android it is at the top.
+ * ### Placement
+ *
+ * The position of the tabs relative to the content varies based on
+ * the mode. By default the tabs are placed at the bottom of the screen
+ * in `ios` mode, and at the top for `wp` and `md` mode. You can
+ * configure the position using the `tabbarPlacement` property on the
+ * `<ion-tabs>` element, or in your app's [config](../../config/Config/).
+ * See the [Input Properties](#input-properties) below for the available
+ * values of `tabbarPlacement`.
+ *
+ * ### Layout
+ *
+ * The layout for all of the tabs can be defined using the `tabbarLayout`
+ * property. If the individual tab has a title and icon, the icons will
+ * show on top of the title in a tab. All tabs can be changed by setting
+ * the value of `tabbarLayout` on the `<ion-tabs>` element, or in your
+ * app's [config](../../config/Config/). For example, this is useful if
+ * you want to show tabs with a title only on Android, but show icons
+ * and a title for iOS. See the [Input Properties](#input-properties)
+ * below for the available values of `tabbarLayout`.
+ *
+ * ### Selecting a Tab
+ *
+ * There are different ways you can select a specific tab from the tabs
+ * component. You can use the `selectedIndex` property to set the index
+ * on creation of the tabs:
+ *
+ * ```html
+ * <ion-tabs selectedIndex="2">
+ *   <ion-tab [root]="tab1Root"></ion-tab>
+ *   <ion-tab [root]="tab2Root"></ion-tab>
+ *   <ion-tab [root]="tab3Root"></ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * Since the index starts at `0`, this will select the 3rd tab which has
+ * root set to `tab3Root`. You can also grab the `Tabs` instance and call
+ * the `select()` method. This requires the `<ion-tab>` element to have an
+ * `id`. For example, set the `id` to `myTabs`:
+ *
+ * ```html
+ * <ion-tabs id="myTabs">
+ *   <ion-tab [root]="tab1Root"></ion-tab>
+ *   <ion-tab [root]="tab2Root"></ion-tab>
+ *   <ion-tab [root]="tab3Root"></ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * Then in your JavaScript you can grab the `Tabs` instance and call `select()`.
+ * In the following code `app` is of type `IonicApp`:
+ *
+ *```js
+ * onPageDidEnter() {
+ *   let tabs = this.app.getComponent('myTabs');
+ *   tabs.select(2);
+ * }
+ *```
+ *
  *
  * @usage
  * ```html
@@ -36,6 +92,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  *
  * @see {@link /docs/v2/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
+ * @see {@link ../../config/Config Config API Docs}
  *
  */
 @Component({
