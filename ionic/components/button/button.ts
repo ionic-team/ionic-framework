@@ -27,7 +27,7 @@ import {isTrueProperty} from '../../util/util';
   * @property [fab-center] - Position a fab button towards the center.
   * @property [fab-top] - Position a fab button towards the top.
   * @property [fab-bottom] - Position a fab button towards the bottom.
-  * @property [color] - Dynamically set which color attribute this button should use.
+  * @property [color] - Dynamically set which predefined color this button should use (e.g. default, secondary, danger, etc).
   *
   * @demo /docs/v2/demos/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
@@ -142,7 +142,7 @@ export class Button {
   }
 
   /**
-   * @input {string} Dynamically set which color attribute this button should use.
+   * @input {string} Dynamically set which predefined color this button should use (e.g. default, secondary, danger, etc).
    */
   @Input()
   set color(val: string) {
