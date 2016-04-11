@@ -226,7 +226,7 @@ describe('Refresher', () => {
   beforeEach(() => {
     contentElementRef = mockElementRef();
     content = new Content(contentElementRef, config, null, null, null);
-    content.scrollElement = document.createElement('scroll-content');
+    content._scrollEle = document.createElement('scroll-content');
 
     refresher = new Refresher(content, zone, mockElementRef());
   });
@@ -259,7 +259,7 @@ describe('Refresher', () => {
   }
 
   function getScrollElementStyles() {
-    return content.scrollElement.style;
+    return content._scrollEle.style;
   }
 
 });
