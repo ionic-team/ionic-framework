@@ -1,0 +1,23 @@
+<ion-navbar *navbar primary>
+  <ion-segment [(ngModel)]="sort" light>
+    <ion-segment-button value="all">All</ion-segment-button>
+    <ion-segment-button value="favorites">Favorites</ion-segment-button>
+  </ion-segment>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-buttons end>
+    <button>
+      <ion-icon name="funnel"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+<ion-content padding>
+
+  <p>
+    The <code>platform-ios</code> and <code>platform-cordova</code> class is added to the body of this test.
+    This is to simulate how each mode will look on iOS with the iOS status bar padding.
+  </p>
+
+  <button [navPush]="page2" class="e2eCordovaPage2">Go to Page 2</button>
+</ion-content>
