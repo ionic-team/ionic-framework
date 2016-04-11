@@ -1,4 +1,4 @@
-import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input, Output, Renderer, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input, Output, Renderer, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -23,6 +23,7 @@ import {isTrueProperty} from '../../util/util';
     '<div tappable disable-activated class="backdrop"></div>',
   directives: [forwardRef(() => MenuBackdrop)],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class Menu extends Ion {
   private _preventTime: number = 0;

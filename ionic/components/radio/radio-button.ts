@@ -1,4 +1,4 @@
-import {Component, Optional, Input, Output, HostListener, EventEmitter} from 'angular2/core';
+import {Component, Optional, Input, Output, HostListener, EventEmitter, ViewEncapsulation} from 'angular2/core';
 
 import {Form} from '../../util/form';
 import {isTrueProperty, isPresent, isBlank, isCheckedProperty} from '../../util/util';
@@ -44,7 +44,8 @@ import {RadioGroup} from './radio-group';
     '</button>',
   host: {
     '[class.radio-disabled]': '_disabled'
-  }
+  },
+  encapsulation: ViewEncapsulation.None,
 })
 export class RadioButton {
   private _checked: boolean = false;

@@ -1,4 +1,4 @@
-import {Component, Renderer, ElementRef, HostListener, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, Renderer, ElementRef, HostListener, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
@@ -188,6 +188,7 @@ export class ActionSheet extends ViewController {
   },
   directives: [NgFor, NgIf, Icon],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 class ActionSheetCmp {
   private d: any;

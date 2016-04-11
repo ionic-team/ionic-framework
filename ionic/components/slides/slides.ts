@@ -1,4 +1,4 @@
-import {Directive, Component, ElementRef, Host, EventEmitter, Input, Output, ChangeDetectionStrategy} from 'angular2/core';
+import {Directive, Component, ElementRef, Host, EventEmitter, Input, Output, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 import {NgClass} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -73,6 +73,7 @@ import {Scroll} from '../scroll/scroll';
     '</div>',
   directives: [NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class Slides extends Ion {
 
@@ -669,6 +670,7 @@ export class Slides extends Ion {
   selector: 'ion-slide',
   template: '<div class="slide-zoom"><ng-content></ng-content></div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class Slide {
 

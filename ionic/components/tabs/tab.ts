@@ -1,4 +1,4 @@
-import {Component, Directive, Host, Inject, forwardRef, ElementRef, Compiler, AppViewManager, NgZone, Renderer, Type} from 'angular2/core';
+import {Component, Directive, Host, Inject, forwardRef, ElementRef, Compiler, AppViewManager, NgZone, Renderer, Type, ViewEncapsulation} from 'angular2/core';
 import {EventEmitter, Input, Output} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
@@ -80,7 +80,8 @@ import {TabButton} from './tab-button';
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
-  template: '<div #contents></div>'
+  template: '<div #contents></div>',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Tab extends NavController {
 

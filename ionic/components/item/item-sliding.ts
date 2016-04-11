@@ -1,4 +1,4 @@
-import {Component, ElementRef, Optional, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, ElementRef, Optional, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 
 import {List} from '../list/list';
 
@@ -33,6 +33,7 @@ import {List} from '../list/list';
     '<ng-content select="ion-item,[ion-item]"></ng-content>' +
     '<ng-content select="ion-item-options"></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class ItemSliding {
 

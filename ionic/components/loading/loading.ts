@@ -1,4 +1,4 @@
-import {Component, Renderer, ElementRef, HostListener, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, Renderer, ElementRef, HostListener, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
@@ -159,6 +159,7 @@ export class Loading extends ViewController {
   },
   directives: [NgIf, Spinner],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 class LoadingCmp {
   private d: any;

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager, Renderer, Type, ViewChild} from 'angular2/core';
+import {Component, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager, Renderer, Type, ViewChild, ViewEncapsulation} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -106,7 +106,8 @@ import {ViewController} from './view-controller';
 @Component({
   selector: 'ion-nav',
   template: '<div #contents></div><div portal></div>',
-  directives: [Portal]
+  directives: [Portal],
+  encapsulation: ViewEncapsulation.None,
 })
 export class Nav extends NavController {
   private _root: Type;

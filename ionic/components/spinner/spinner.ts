@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 import {NgStyle} from 'angular2/common';
 
 import {Config} from '../../config/config';
@@ -112,6 +112,7 @@ import {Config} from '../../config/config';
     '[class.spinner-paused]': 'paused'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class Spinner {
   private _c: any[];

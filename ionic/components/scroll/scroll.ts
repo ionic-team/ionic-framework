@@ -1,4 +1,4 @@
-import {Component, ElementRef, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, ElementRef, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {Gesture} from '../../gestures/gesture';
@@ -44,6 +44,7 @@ import * as util from '../../util';
       '</div>' +
     '</scroll-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class Scroll extends Ion {
   /**

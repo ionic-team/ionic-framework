@@ -1,4 +1,4 @@
-import {Component, Input, HostBinding, ViewChild, ElementRef} from 'angular2/core';
+import {Component, Input, HostBinding, ViewChild, ElementRef, ViewEncapsulation} from 'angular2/core';
 
 import {isPresent} from '../../util/util';
 import {Platform} from '../../platform/platform';
@@ -10,7 +10,8 @@ import {Platform} from '../../platform/platform';
     '<div *ngIf="_useA" class="img-placeholder" [style.height]="_h" [style.width]="_w"></div>' +
     '<img #imgA *ngIf="_useA" (load)="_onLoad()" [src]="_srcA" [style.height]="_h" [style.width]="_w">' +
     '<div *ngIf="!_useA" class="img-placeholder" [style.height]="_h" [style.width]="_w"></div>' +
-    '<img #imgB *ngIf="!_useA" (load)="_onLoad()" [src]="_srcB" [style.height]="_h" [style.width]="_w">'
+    '<img #imgB *ngIf="!_useA" (load)="_onLoad()" [src]="_srcB" [style.height]="_h" [style.width]="_w">',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Img {
   private _src: string = '';

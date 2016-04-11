@@ -1,4 +1,4 @@
-import {Component, ElementRef, Optional, NgZone, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, ElementRef, Optional, NgZone, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -34,6 +34,7 @@ import {ScrollView} from '../../util/scroll-view';
     '<ng-content select="ion-fixed"></ng-content>' +
     '<ng-content select="ion-refresher"></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class Content extends Ion {
   private _padding: number = 0;

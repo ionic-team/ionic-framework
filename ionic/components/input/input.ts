@@ -1,4 +1,4 @@
-import {Component, Optional, ElementRef, ViewChild} from 'angular2/core';
+import {Component, Optional, ElementRef, ViewChild, ViewEncapsulation} from 'angular2/core';
 import {NgIf, NgControl} from 'angular2/common';
 
 import {Button} from '../button/button';
@@ -74,7 +74,8 @@ import {Platform} from '../../platform/platform';
     NextInput,
     NativeInput,
     Button
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TextInput extends InputBase {
   constructor(
@@ -155,7 +156,8 @@ export class TextInput extends InputBase {
     NgIf,
     NextInput,
     NativeInput
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TextArea extends InputBase {
   constructor(

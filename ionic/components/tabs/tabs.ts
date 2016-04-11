@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, Type} from 'angular2/core';
+import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, Type, ViewEncapsulation} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {IonicApp} from '../app/app';
@@ -65,7 +65,8 @@ import {isBlank, isTrueProperty} from '../../util/util';
     TabButton,
     TabHighlight,
     forwardRef(() => TabNavBarAnchor)
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class Tabs extends Ion {
   private _ids: number = -1;

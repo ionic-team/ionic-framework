@@ -1,4 +1,4 @@
-import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {MenuToggle} from '../menu/menu-toggle';
@@ -147,6 +147,7 @@ export class Toolbar extends ToolbarBase {
       '<ng-content></ng-content>' +
     '</div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class ToolbarTitle extends Ion {
   constructor(
