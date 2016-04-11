@@ -52,8 +52,8 @@ ion-navbar-section {
 }
 
 .toolbar[position=bottom] .toolbar-background {
-  border-bottom-width: 0;
   border-top-width: 1px;
+  border-bottom-width: 0;
 }
 
 &.hairlines .toolbar[position=bottom] .toolbar-background {
