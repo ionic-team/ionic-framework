@@ -56,7 +56,7 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
     '<div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">' +
       '<div class="toggle-inner"></div>' +
     '</div>' +
-    '<button role="checkbox" ' +
+    '<button type="button" role="checkbox" ' +
             'type="button" ' +
             '[id]="id" ' +
             '[attr.aria-checked]="_checked" ' +
