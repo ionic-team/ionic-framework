@@ -1,5 +1,6 @@
+import {EventEmitter, NgZone} from 'angular2/core';
+
 import {Config} from '../config/config';
-import {EventEmitter} from 'angular2/core';
 import {getQuerystring} from '../util/util';
 import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
 
@@ -37,6 +38,7 @@ export class Platform {
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
   private _resizeTm: any;
+  private _zone: NgZone;
 
   constructor(platforms = []) {
     this._platforms = platforms;
@@ -186,16 +188,19 @@ export class Platform {
    * @private
    */
   triggerReady() {
-    this._readyResolve();
+    this._zone.run(() => {
+      this._readyResolve();
+    })
   }
 
   /**
    * @private
    */
-  prepareReady() {
+  prepareReady(zone: NgZone) {
     // this is the default prepareReady if it's not replaced by the engine
     // if there was no custom ready method from the engine
     // then use the default DOM ready
+    this._zone = zone;
     ready(this.triggerReady.bind(this));
   }
 

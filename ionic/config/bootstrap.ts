@@ -1,4 +1,4 @@
-import {provide, Provider} from 'angular2/core';
+import {provide, Provider, ComponentRef, NgZone} from 'angular2/core';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
@@ -44,9 +44,6 @@ export function ionicProviders(args: any = {}) {
   setupDom(window, document, config, platform, clickBlock, featureDetect);
   bindEvents(window, document, platform, events);
 
-  // prepare the ready promise to fire....when ready
-  platform.prepareReady();
-
   return [
     IonicApp,
     provide(ClickBlock, {useValue: clickBlock}),
@@ -64,6 +61,16 @@ export function ionicProviders(args: any = {}) {
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
     HTTP_PROVIDERS,
   ];
+}
+
+
+export function postBootstrap(appRef: ComponentRef, prodMode: boolean) {
+  appRef.injector.get(TapClick);
+  let app: IonicApp = appRef.injector.get(IonicApp);
+  let platform = appRef.injector.get(Platform);
+  let zone = appRef.injector.get(NgZone);
+  platform.prepareReady(zone);
+  app.setProd(prodMode);
 }
 
 
