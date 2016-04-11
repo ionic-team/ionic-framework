@@ -40,11 +40,7 @@ export class Content extends Ion {
   private _padding: number = 0;
   private _scroll: ScrollView;
   private _scLsn: Function;
-
-  /**
-   * @private
-   */
-  scrollElement: HTMLElement;
+  private _scrollEle: HTMLElement;
 
   constructor(
     private _elementRef: ElementRef,
@@ -66,10 +62,10 @@ export class Content extends Ion {
    */
   ngOnInit() {
     let self = this;
-    self.scrollElement = self._elementRef.nativeElement.children[0];
+    self._scrollEle = self._elementRef.nativeElement.children[0];
 
     self._zone.runOutsideAngular(function() {
-      self._scroll = new ScrollView(self.scrollElement);
+      self._scroll = new ScrollView(self._scrollEle);
 
       if (self._config.getBoolean('tapPolyfill')) {
         self._scLsn = self.addScrollListener(function() {
@@ -85,7 +81,7 @@ export class Content extends Ion {
   ngOnDestroy() {
     this._scLsn && this._scLsn();
     this._scroll && this._scroll.destroy();
-    this.scrollElement = this._scLsn = null;
+    this._scrollEle = this._scLsn = null;
   }
 
   /**
@@ -161,15 +157,16 @@ export class Content extends Ion {
   }
 
   private _addListener(type: string, handler: any): Function {
-    if (!this.scrollElement) { return; }
+    if (!this._scrollEle) { return; }
 
     // ensure we're not creating duplicates
-    this.scrollElement.removeEventListener(type, handler);
-    this.scrollElement.addEventListener(type, handler);
+    this._scrollEle.removeEventListener(type, handler);
+    this._scrollEle.addEventListener(type, handler);
 
     return () => {
-      if (!this.scrollElement) { return; }
-      this.scrollElement.removeEventListener(type, handler);
+      if (this._scrollEle) {
+        this._scrollEle.removeEventListener(type, handler);
+      }
     };
   }
 
@@ -181,7 +178,7 @@ export class Content extends Ion {
   onScrollEnd(callback: Function) {
     let lastScrollTop = null;
     let framesUnchanged = 0;
-    let _scrollEle = this.scrollElement;
+    let _scrollEle = this._scrollEle;
 
     function next() {
       let currentScrollTop = _scrollEle.scrollTop;
@@ -209,7 +206,7 @@ export class Content extends Ion {
   }
 
   onScrollElementTransitionEnd(callback: Function) {
-    transitionEnd(this.scrollElement, callback);
+    transitionEnd(this._scrollEle, callback);
   }
 
   /**
@@ -312,7 +309,7 @@ export class Content extends Ion {
    * @private
    */
   setScrollElementStyle(prop: string, val: any) {
-    this.scrollElement.style[prop] = val;
+    this._scrollEle.style[prop] = val;
   }
 
   /**
@@ -332,7 +329,7 @@ export class Content extends Ion {
    * {number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
    */
   getContentDimensions() {
-    let _scrollEle = this.scrollElement;
+    let _scrollEle = this._scrollEle;
     let parentElement = _scrollEle.parentElement;
 
     return {
@@ -364,7 +361,7 @@ export class Content extends Ion {
       console.debug('content addScrollPadding', newPadding);
 
       this._padding = newPadding;
-      this.scrollElement.style.paddingBottom = newPadding + 'px';
+      this._scrollEle.style.paddingBottom = newPadding + 'px';
     }
   }
 
