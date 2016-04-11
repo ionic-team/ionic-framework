@@ -42,13 +42,22 @@ ion-navbar-section {
 
 .toolbar-background {
   border-bottom-width: 1px;
-  border-bottom-style: solid;
+  border-style: solid;
   border-color: $toolbar-ios-border-color;
   background: $toolbar-ios-background;
 }
 
 &.hairlines .toolbar-background {
   border-bottom-width: $hairlines-width;
+}
+
+.toolbar[position=bottom] .toolbar-background {
+  border-bottom-width: 0;
+  border-top-width: 1px;
+}
+
+&.hairlines .toolbar[position=bottom] .toolbar-background {
+  border-top-width: $hairlines-width;
 }
 
 
