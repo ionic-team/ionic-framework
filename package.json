@@ -13,7 +13,7 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.13",
+    "angular2": "2.0.0-beta.14",
     "colors": "^1.1.2",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.35.0",
@@ -24,7 +24,7 @@
     "q": "1.4.1",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
-    "zone.js": "^0.6.6"
+    "zone.js": "^0.6.10"
   },
   "devDependencies": {
     "canonical-path": "0.0.2",
