@@ -25,8 +25,8 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * ### Placement
  *
  * The position of the tabs relative to the content varies based on
- * the mode. By default the tabs are placed at the bottom of the screen
- * in `ios` mode, and at the top for `wp` and `md` mode. You can
+ * the mode. By default, the tabs are placed at the bottom of the screen
+ * for `ios` mode, and at the top for the `md` and `wp` modes. You can
  * configure the position using the `tabbarPlacement` property on the
  * `<ion-tabs>` element, or in your app's [config](../../config/Config/).
  * See the [Input Properties](#input-properties) below for the available
@@ -36,7 +36,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  *
  * The layout for all of the tabs can be defined using the `tabbarLayout`
  * property. If the individual tab has a title and icon, the icons will
- * show on top of the title in a tab. All tabs can be changed by setting
+ * show on top of the title by default. All tabs can be changed by setting
  * the value of `tabbarLayout` on the `<ion-tabs>` element, or in your
  * app's [config](../../config/Config/). For example, this is useful if
  * you want to show tabs with a title only on Android, but show icons
@@ -60,7 +60,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * Since the index starts at `0`, this will select the 3rd tab which has
  * root set to `tab3Root`. You can also grab the `Tabs` instance and call
  * the `select()` method. This requires the `<ion-tabs>` element to have
- * an `id`. For example, set the `id` to `myTabs`:
+ * an `id`. For example, set the value of `id` to `myTabs`:
  *
  * ```html
  * <ion-tabs id="myTabs">
@@ -70,8 +70,9 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * </ion-tabs>
  * ```
  *
- * Then in your JavaScript you can grab the `Tabs` instance and call `select()`.
- * In the following code `app` is of type [`IonicApp`](../../app/IonicApp/):
+ * Then in your JavaScript you can grab the `Tabs` instance and call `select()`,
+ * passing the index of the tab as the argument. In the following code `app` is
+ * of type [`IonicApp`](../../app/IonicApp/):
  *
  *```js
  * constructor(app: IonicApp) {
@@ -164,11 +165,6 @@ export class Tabs extends Ion {
   @Input() preloadTabs: any;
 
   /**
-   * @input {string} Deprecated, use `tabbarLayout` instead. Set the position of the tabbar's icons: `top`, `bottom`, `left`, `right`, `hide`.
-   */
-  @Input() tabbarIcons: string;
-
-  /**
    * @input {string} Set the tabbar layout: `icon-top`, `icon-left`, `icon-right`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
   @Input() tabbarLayout: string;
@@ -241,11 +237,6 @@ export class Tabs extends Ion {
   ngAfterViewInit() {
     this._setConfig('tabbarPlacement', 'bottom');
     this._setConfig('tabbarLayout', 'icon-top');
-    this._setConfig('tabbarIcons', 'top');
-
-    if (this.tabbarIcons) {
-      console.warn('DEPRECATION WARNING: "tabbarIcons" is no longer supported and will be removed in next major release. Use "tabbarLayout" instead. Available values: "icon-top", "icon-left", "icon-right", "icon-bottom", "icon-hide", "title-hide".');
-    }
 
     if (this._useHighlight) {
       this._platform.onResize(() => {

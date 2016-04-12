@@ -361,9 +361,9 @@ Windows platform support has been added to Ionic! The Windows mode is abbreviate
 
 ### Refactor
 
-* **alert:** remove tabbarIcons and add tabbarLayout which accepts different values ([8cfebe1](https://github.com/driftyco/ionic/commit/8cfebe1)), closes [#5625](https://github.com/driftyco/ionic/issues/5625)
 * **menu:** improve menu get lookup ([004e635](https://github.com/driftyco/ionic/commit/004e635)), closes [#5535](https://github.com/driftyco/ionic/issues/5535)
 * **tabs:** remove duplicated styles from imports ([d5ebf3f](https://github.com/driftyco/ionic/commit/d5ebf3f)), closes [#5624](https://github.com/driftyco/ionic/issues/5624)
+* **tabs:** remove tabbarIcons and add tabbarLayout which accepts different values ([8cfebe1](https://github.com/driftyco/ionic/commit/8cfebe1)), closes [#5625](https://github.com/driftyco/ionic/issues/5625)
 * **searchbar:** add class to searchbar when hideCancel is passed ([a0f0004](https://github.com/driftyco/ionic/commit/a0f0004))
 
 ### Breaking Changes
