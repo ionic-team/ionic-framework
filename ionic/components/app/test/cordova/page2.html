@@ -8,10 +8,14 @@
       <ion-icon name="funnel"></ion-icon>
     </button>
   </ion-buttons>
+  <button menuToggle="right" right>
+    <ion-icon name="menu"></ion-icon>
+  </button>  
 </ion-navbar>
 
 <ion-content padding>
   <h1>This is Page 2</h1>
 
   <button (click)="openModal()" class="e2eCordovaOpenModal">Open Modal</button>
+  <button [navPush]="page3">Go to Page 3</button>
 </ion-content>

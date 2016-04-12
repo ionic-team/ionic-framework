@@ -12,7 +12,7 @@ import {App, NavController, Page, IonicApp, Modal} from 'ionic-angular';
       <button>
         <ion-icon name="funnel"></ion-icon>
       </button>
-    </ion-buttons>    
+    </ion-buttons>
   </ion-toolbar>
   <ion-content>
     The modal should have status bar padding, too because it is a toolbar.
@@ -38,6 +38,8 @@ class Page1 {
   templateUrl: 'page2.html'
 })
 class Page2 {
+  page3 = Page3;
+
   constructor(private nav: NavController) {
 
   }
@@ -49,8 +51,23 @@ class Page2 {
 }
 
 
+@Page({
+  templateUrl: 'page3.html'
+})
+class Page3 {
+
+  constructor(private nav: NavController) {
+
+  }
+
+  goBack() {
+    this.nav.pop();
+  }
+}
+
+
 @App({
-  template: `<ion-nav [root]="root"></ion-nav>`
+  templateUrl: `./app.html`
 })
 class E2EApp {
   root = Page1;
