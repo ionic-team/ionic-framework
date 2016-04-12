@@ -91,7 +91,19 @@ class E2EPage {
   }
 
   goToPage2() {
-    this.nav.push(Page2);
+    let loading = Loading.create({
+      content: 'This will navigate to the next page and then dismiss after 3 seconds.'
+    });
+
+    this.nav.present(loading);
+
+    setTimeout(() => {
+      this.nav.push(Page2);
+    }, 1000);
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 4000);
   }
 }
 
@@ -100,7 +112,7 @@ class E2EPage {
     <ion-navbar *navbar>
       <ion-title>Page 2</ion-title>
     </ion-navbar>
-    <ion-content padding>Some content</ion-content>
+    <ion-content padding>This is another page!</ion-content>
   `
 })
 class Page2 {
