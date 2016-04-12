@@ -4,15 +4,15 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
-import {raf, transitionEnd}  from '../../util/dom';
+import {raf, nativeTimeout, transitionEnd}  from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
 import {ScrollView} from '../../util/scroll-view';
 
 /**
  * @name Content
  * @description
- * The Content component provides an easy to use content area with some useful
- * methods to control the scrollable area.
+ * The Content component provides an easy to use content area with
+ * some useful methods to control the scrollable area.
  *
  * The content area can also implement pull-to-refresh with the
  * [Refresher](../../scroll/Refresher) component.
@@ -22,6 +22,23 @@ import {ScrollView} from '../../util/scroll-view';
  * <ion-content>
  *   Add your content here!
  * </ion-content>
+ * ```
+ *
+ * To get a reference to the content component from a Page's logic,
+ * you can use Angular's `@ViewChild` annotation:
+ *
+ * ```ts
+ * import {ViewChild} from 'angular2/core';
+ * import {Content} from 'ionic-angular';
+ *
+ * @Page({...}
+ * export class MyPage{
+ *   @ViewChild(Content) content: Content;
+ *
+ *   scrollToTop() {
+ *     this.content.scrollToTop();
+ *   }
+ * }
  * ```
  *
  */
@@ -181,7 +198,7 @@ export class Content extends Ion {
       });
     }
 
-    setTimeout(next, 100);
+    nativeTimeout(next, 100);
   }
 
   /**
