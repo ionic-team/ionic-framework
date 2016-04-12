@@ -94,7 +94,7 @@ export interface PageMetadata {
  * you may see these tags if you inspect your markup, you don't need to include
  * them in your templates.
  *
- * For more information on how pages are created, see the [NavController API reference](../../components/nav/NavController/#creating_pages)
+ * For more information on how pages are created, see the [NavController API Docs](../../components/nav/NavController/#creating_pages)
  */
 export function Page(config: PageMetadata) {
   return function(cls) {

@@ -13,18 +13,18 @@ import {TabButton} from './tab-button';
 /**
  * @name Tab
  * @description
- * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
- * of the Component docs._
+ * The Tab component, written `<ion-tab>`, is styled based on the mode and should
+ * be used in conjunction with the [Tabs](../Tabs/) component.
  *
- * Tab components are basic navigation controllers used with Tabs.  Much like
- * Nav, they are a subclass of NavController and can be used to navigate
- * to pages in and manipulate the navigation stack of a particular tab.
+ * Each tab has a basic navigation controller. Similar to the [Nav](../../nav/Nav/)
+ * component, the tab navigation controller is a subclass of
+ * [NavController](../../nav/NavController). It can be used to navigate and manipulate
+ * pages in the navigation stack of the tab.
  *
  * For more information on using navigation controllers like Tab or [Nav](../../nav/Nav/),
- * take a look at the [NavController API reference](../NavController/).
+ * take a look at the [NavController API Docs](../../nav/NavController/).
  *
- * See the [Tabs API reference](../Tabs/) for more details on configuring Tabs
- * and the TabBar.
+ * See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
  *
  * @usage
  * For most cases, you can give tab a `[root]` property along with the component you want to load.
@@ -71,6 +71,10 @@ import {TabButton} from './tab-button';
  *
  *
  * @demo /docs/v2/demos/tabs/
+ * @see {@link /docs/v2/components#tabs Tabs Component Docs}
+ * @see {@link ../../tabs/Tabs Tabs API Docs}
+ * @see {@link ../../nav/Nav Nav API Docs}
+ * @see {@link ../../nav/NavController NavController API Docs}
  */
 @Component({
   selector: 'ion-tab',
