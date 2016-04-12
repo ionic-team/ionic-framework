@@ -334,6 +334,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         throw 'virtualItem required within virtualScroll';
       }
 
+      this._init = true;
+
       this.update(true);
 
       this._platform.onResize(() => {
@@ -398,9 +400,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     // ******** DOM READ ****************
     readDimensions(function() {
-      // we were able to read good DOM dimension data, let's do this!
-      self._init = true;
-
       processRecords(self._data.renderHeight,
                     self._records,
                     self._cells,
