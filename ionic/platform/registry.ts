@@ -9,7 +9,7 @@ const doc: any = document;
 Platform.register({
   name: 'core',
   settings: {
-    mode: 'ios',
+    mode: 'md',
     keyboardHeight: 290,
   }
 });
