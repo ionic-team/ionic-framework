@@ -21,7 +21,8 @@ export class InputBase {
   protected _keyboardHeight;
   protected _scrollMove: EventListener;
   protected _type: string = 'text';
-  protected _useAssist: boolean = true;
+  protected _useAssist: boolean;
+  protected _usePadding: boolean;
   protected _value = '';
   protected _isTouch: boolean;
   protected _autoFocusAssist: string;
@@ -47,8 +48,9 @@ export class InputBase {
     protected _nav: NavController,
     ngControl: NgControl
   ) {
-    this._useAssist = config.get('scrollAssist');
-    this._keyboardHeight = config.get('keyboardHeight');
+    this._useAssist = config.getBoolean('scrollAssist', false);
+    this._usePadding = config.getBoolean('scrollPadding', this._useAssist);
+    this._keyboardHeight = config.getNumber('keyboardHeight');
 
     this._autoFocusAssist = config.get('autoFocusAssist', 'delay');
     this._autoComplete = config.get('autocomplete', 'off');
@@ -359,8 +361,10 @@ export class InputBase {
         return;
       }
 
-      // add padding to the bottom of the scroll view (if needed)
-      scrollView.addScrollPadding(scrollData.scrollPadding);
+      if (this._usePadding) {
+        // add padding to the bottom of the scroll view (if needed)
+        scrollView.addScrollPadding(scrollData.scrollPadding);
+      }
 
       // manually scroll the text input to the top
       // do not allow any clicks while it's scrolling
@@ -385,6 +389,10 @@ export class InputBase {
         this._app.setEnabled(true);
         this._nav && this._nav.setTransitioning(false);
         this.regScrollMove();
+
+        if (this._usePadding) {
+          this._scrollView.clearScrollPaddingFocusOut();
+        }
       });
 
     } else {

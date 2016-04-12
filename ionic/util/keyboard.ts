@@ -70,7 +70,7 @@ export class Keyboard {
  * @param {function} callback method you want to call when the keyboard has been closed
  * @return {function} returns a callback that gets fired when the keyboard is closed
  */
-  onClose(callback, pollingInternval = KEYBOARD_CLOSE_POLLING) {
+  onClose(callback, pollingInternval = KEYBOARD_CLOSE_POLLING, pollingChecksMax = KEYBOARD_POLLING_CHECKS_MAX) {
     console.debug('keyboard onClose');
     const self = this;
     let checks = 0;
@@ -84,7 +84,7 @@ export class Keyboard {
 
     function checkKeyboard() {
       console.debug('keyboard isOpen', self.isOpen(), checks);
-      if (!self.isOpen() || checks > 100) {
+      if (!self.isOpen() || checks > pollingChecksMax) {
         rafFrames(30, () => {
           self._zone.run(() => {
             console.debug('keyboard closed');
@@ -183,3 +183,4 @@ export class Keyboard {
 }
 
 const KEYBOARD_CLOSE_POLLING = 150;
+const KEYBOARD_POLLING_CHECKS_MAX = 100;

@@ -3,6 +3,7 @@ import {Component, ElementRef, Optional, NgZone, ChangeDetectionStrategy, ViewEn
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
+import {Keyboard} from '../../util/keyboard';
 import {raf, transitionEnd, pointerCoord}  from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
@@ -38,6 +39,7 @@ import {ScrollView} from '../../util/scroll-view';
 })
 export class Content extends Ion {
   private _padding: number = 0;
+  private _inputPolling: boolean = false;
   private _scroll: ScrollView;
   private _scLsn: Function;
   private _scrollEle: HTMLElement;
@@ -46,6 +48,7 @@ export class Content extends Ion {
     private _elementRef: ElementRef,
     private _config: Config,
     private _app: IonicApp,
+    private _keyboard: Keyboard,
     private _zone: NgZone,
     @Optional() viewCtrl: ViewController
   ) {
@@ -356,12 +359,25 @@ export class Content extends Ion {
    * Adds padding to the bottom of the scroll element when the keyboard is open
    * so content below the keyboard can be scrolled into view.
    */
-  addScrollPadding(newPadding) {
+  addScrollPadding(newPadding: number) {
     if (newPadding > this._padding) {
       console.debug('content addScrollPadding', newPadding);
 
       this._padding = newPadding;
       this._scrollEle.style.paddingBottom = newPadding + 'px';
+    }
+  }
+
+  clearScrollPaddingFocusOut() {
+    if (!this._inputPolling) {
+      this._inputPolling = true;
+
+      this._keyboard.onClose(() => {
+        this._padding = 0;
+        this._scrollEle.style.paddingBottom = '';
+        this._inputPolling = false;
+        this.addScrollPadding(0);
+      }, 200, Infinity);
     }
   }
 
