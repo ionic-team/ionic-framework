@@ -303,7 +303,7 @@ Improve this doc
 
 <h2><a class="anchor" name="related" href="#related"></a>Related</h2>
 <@ for s in doc.see @>
-<$ s | safe $>
+<$ s | safe $> <@- if not loop.last @>,<@- endif -@>
 <@- endfor -@>
 
 <@- endif -@>
