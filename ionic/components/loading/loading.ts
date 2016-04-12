@@ -27,8 +27,8 @@ import {ViewController} from '../nav/view-controller';
  * the loading indicator will use the spinner specified by the mode. To
  * set the spinner name across the app, set the value of `loadingSpinner`
  * in your app's config. To hide the spinner, set `loadingSpinner: 'hide'`
- * in the apps' config or pass `spinner: 'hide'` in the loading
- * options. See the create method below for all available options.
+ * in the app's config or pass `spinner: 'hide'` in the loading
+ * options. See the [create](#create) method below for all available options.
  *
  * ### Dismissing
  * The loading indicator can be dismissed automatically after a specific
@@ -125,12 +125,12 @@ export class Loading extends ViewController {
     *
     * | Option                | Type       | Description                                                                                                      |
     * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
-    * | spinner               |`string`    | The name of the SVG spinner for the loading indicator.                                                                           |
+    * | spinner               |`string`    | The name of the SVG spinner for the loading indicator.                                                           |
     * | content               |`string`    | The html content for the loading indicator.                                                                      |
     * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
     * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
     * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
-    * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `hide()` is called.    |
+    * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `dismiss()` is called. |
     *
     *
     * @param {object} opts Loading options
