@@ -312,19 +312,19 @@ export class Content extends Ion {
 
   /**
    * Returns the content and scroll elements' dimensions.
-   * @returns {object} dimensions  The content and scroll elements' dimensions
-   * {number} dimensions.contentHeight  content offsetHeight
-   * {number} dimensions.contentTop  content offsetTop
-   * {number} dimensions.contentBottom  content offsetTop+offsetHeight
-   * {number} dimensions.contentWidth  content offsetWidth
-   * {number} dimensions.contentLeft  content offsetLeft
-   * {number} dimensions.contentRight  content offsetLeft + offsetWidth
-   * {number} dimensions.scrollHeight  scroll scrollHeight
-   * {number} dimensions.scrollTop  scroll scrollTop
-   * {number} dimensions.scrollBottom  scroll scrollTop + scrollHeight
-   * {number} dimensions.scrollWidth  scroll scrollWidth
-   * {number} dimensions.scrollLeft  scroll scrollLeft
-   * {number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
+   * @returns {object} dimensions  The content and scroll elements' dimensions <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.contentHeight  content offsetHeight <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.contentTop  content offsetTop <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.contentBottom  content offsetTop+offsetHeight <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.contentWidth  content offsetWidth <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.contentLeft  content offsetLeft <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.contentRight  content offsetLeft + offsetWidth <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.scrollHeight  scroll scrollHeight <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.scrollTop  scroll scrollTop <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.scrollBottom  scroll scrollTop + scrollHeight <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.scrollWidth  scroll scrollWidth <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.scrollLeft  scroll scrollLeft <br>
+   * &nbsp; &nbsp; &nbsp; <code>number</code> dimensions.scrollRight  scroll scrollLeft + scrollWidth <br>
    */
   getContentDimensions() {
     let _scrollEle = this._scrollEle;
