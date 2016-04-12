@@ -4,9 +4,8 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
-import {raf, transitionEnd, pointerCoord}  from '../../util/dom';
+import {raf, transitionEnd}  from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
-import {Animation} from '../../animations/animation';
 import {ScrollView} from '../../util/scroll-view';
 
 /**
@@ -208,6 +207,9 @@ export class Content extends Ion {
     setTimeout(next, 100);
   }
 
+  /**
+   * @private
+   */
   onScrollElementTransitionEnd(callback: Function) {
     transitionEnd(this._scrollEle, callback);
   }
@@ -216,31 +218,30 @@ export class Content extends Ion {
    * Scroll to the specified position.
    *
    * ```ts
+   * import {ViewChild} from 'angular2/core';
+   * import {Content} from 'ionic-angular';
+   *
    * @Page({
-   *   template: `<ion-content id="my-content">
-   *      <button (click)="scrollTo()"> Down 500px</button>
-   *   </ion-content>`
+   *   template: `<ion-content>
+   *                <button (click)="scrollTo()">Down 500px</button>
+   *              </ion-content>`
    * )}
    * export class MyPage{
-   *    constructor(app: IonicApp){
-   *        this.app = app;
-   *    }
-   *   // Need to wait until the component has been initialized
-   *   ngAfterViewInit() {
-   *     // Here 'my-content' is the ID of my ion-content
-   *     this.content = this.app.getComponent('my-content');
+   *   @ViewChild(Content) content: Content;
+   *
+   *   scrollTo() {
+   *     // set the scrollLeft to 0px, and scrollTop to 500px
+   *     // the scroll duration should take 200ms
+   *     this.content.scrollTo(0, 500, 200);
    *   }
-   *    scrollTo() {
-   *      this.content.scrollTo(0, 500, 200);
-   *    }
    * }
    * ```
    * @param {number} x  The x-value to scroll to.
    * @param {number} y  The y-value to scroll to.
-   * @param {number} duration  Duration of the scroll animation in ms.
-   * @returns {Promise} Returns a promise when done
+   * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
+   * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
-  scrollTo(x: number, y: number, duration: number): Promise<any> {
+  scrollTo(x: number, y: number, duration: number = 300): Promise<any> {
     return this._scroll.scrollTo(x, y, duration);
   }
 
@@ -248,29 +249,43 @@ export class Content extends Ion {
    * Scroll to the top of the content component.
    *
    * ```ts
+   * import {ViewChild} from 'angular2/core';
+   * import {Content} from 'ionic-angular';
+   *
    * @Page({
-   *   template: `<ion-content id="my-content">
-   *      <button (click)="scrollTop()"> Down 500px</button>
-   *   </ion-content>`
+   *   template: `<ion-content>
+   *                <button (click)="scrollToTop()">Scroll to top</button>
+   *              </ion-content>`
    * )}
    * export class MyPage{
-   *    constructor(app: IonicApp){
-   *        this.app = app;
-   *    }
-   *   // Need to wait until the component has been initialized
-   *   ngAfterViewInit() {
-   *     // Here 'my-content' is the ID of my ion-content
-   *     this.content = this.app.getComponent('my-content');
+   *   @ViewChild(Content) content: Content;
+   *
+   *   scrollToTop() {
+   *     this.content.scrollToTop();
    *   }
-   *    scrollTop() {
-   *      this.content.scrollToTop();
-   *    }
    * }
    * ```
-   * @returns {Promise} Returns a promise when done
+   * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
+   * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
   scrollToTop(duration: number = 300) {
     return this.scrollTo(0, 0, duration);
+  }
+
+  /**
+   * Get the `scrollTop` property of the content's scrollable element.
+   * @returns {number}
+   */
+  getScrollTop(): number {
+    return this._scroll.getTop();
+  }
+
+  /**
+   * Set the `scrollTop` property of the content's scrollable element.
+   * @param {number} top
+   */
+  setScrollTop(top: number) {
+    this._scroll.setTop(top);
   }
 
   /**
@@ -278,20 +293,6 @@ export class Content extends Ion {
    */
   jsScroll(onScrollCallback: Function): Function {
     return this._scroll.jsScroll(onScrollCallback);
-  }
-
-  /**
-   * @private
-   */
-  getScrollTop(): number {
-    return this._scroll.getTop();
-  }
-
-  /**
-   * @private
-   */
-  setScrollTop(top: number) {
-    this._scroll.setTop(top);
   }
 
   /**
@@ -368,6 +369,9 @@ export class Content extends Ion {
     }
   }
 
+  /**
+   * @private
+   */
   clearScrollPaddingFocusOut() {
     if (!this._inputPolling) {
       this._inputPolling = true;
