@@ -6,7 +6,7 @@ path: "<$ doc.path $>"
 category: api
 id: "<$ doc.name|lower|replace(' ','-') $>"
 title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$ doc.name $><@ endif @>"
-header_sub_title: "<$ doc.docType | capital $> in module <$ doc.module $>"
+header_sub_title: "Ionic API Documentation"
 doc: "<$ doc.name $>"
 docType: "<$ doc.docType $>"
 <@ if doc.demo @>show_preview_device: true
@@ -20,6 +20,14 @@ angular_controller: APIDemoCtrl <@ endif @>
     <@- for param in paramData -@>
       <span class="param"><$ param | escape $><@ if not loop.last @>, <@ endif @></span>
     <@- endfor @>)</span>
+  <@- endif @>
+<@- endmacro -@>
+
+<@ macro returnObject(params) -@>
+  <@- if params -@><br>
+    <@- for param in params -@>
+      <code><$ param.type $></code> <span class="fixed-width"><$ param.key $></span> <$ param.description $><br>
+    <@- endfor @>
   <@- endif @>
 <@- endmacro -@>
 
@@ -241,6 +249,9 @@ Improve this doc
 <div class="anchor" class="return-value">
 <i class="icon ion-arrow-return-left"></i>
 <b>Returns:</b> <$ typeInfo(method.returns) $>
+<@ if method.returnsObjectParams @>
+<$ returnObject(method.returnsObjectParams) $>
+<@ endif @>
 </div>
 <@ endif @>
 <@ endif @>
@@ -277,6 +288,9 @@ Improve this doc
 <div class="return-value">
 <i class="icon ion-arrow-return-left"></i>
 <b>Returns:</b> <$ typeInfo(method.returns) $>
+<@ if method.returnsObjectParams @>
+<$ returnObject(method.returnsObjectParams) $>
+<@ endif @>
 </div>
 <@ endif @>
 

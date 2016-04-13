@@ -11,9 +11,11 @@ var _ = require('lodash');
 var config = require('../config.json');
 
 // Define the dgeni package for generating the docs
-module.exports = function(currentVersion){
+module.exports = function(currentVersion) {
 
-  return new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, typescriptPackage, linksPackage, gitPackage])
+  return new Package('ionic-v2-docs',
+                     [jsdocPackage, nunjucksPackage, typescriptPackage,
+                      linksPackage, gitPackage])
 
 .processor(require('./processors/latest-version'))
 .processor(require('./processors/index-page'))
@@ -21,7 +23,7 @@ module.exports = function(currentVersion){
 .processor(require('./processors/remove-private-members'))
 .processor(require('./processors/hide-private-api'))
 .processor(require('./processors/collect-inputs-outputs'))
-
+.processor(require('./processors/parse-returns-object'))
 
 // for debugging docs
 // .processor(function test(){
