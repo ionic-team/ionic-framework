@@ -723,25 +723,10 @@ gulp.task('release', ['publish.npm', 'publish.github']);
  * Pulls latest, ensures there are no unstaged/uncommitted changes, updates
  * package.json minor version and generates CHANGELOG for release.
  */
-gulp.task('prepare', function(){
-  var execSync = require('child_process').execSync;
-  var spawnSync = require('child_process').spawnSync;
+gulp.task('prepare', ['git-pull-latest'], function(){
   var semver = require('semver');
   var fs = require('fs');
   var changelog = require('gulp-conventional-changelog');
-  var self = this;
-
-  //Check for uncommitted changes
-  var gitStatusResult = execSync('git status --porcelain');
-  if (gitStatusResult.toString().length > 0) {
-    return fail('You have uncommitted changes, please stash or commit them before running prepare');
-  }
-
-  //Pull latest
-  var gitPullResult = spawnSync('git', ['pull', 'origin', '2.0']);
-  if (gitPullResult.status !== 0) {
-    fail('There was an error running \'git pull\':\n' + gitPullResult.stderr.toString());
-  }
 
   //Update package.json version
   var packageJSON = require('./package.json');
@@ -754,15 +739,31 @@ gulp.task('prepare', function(){
       preset: 'angular'
     }))
     .pipe(gulp.dest('./'));
+});
 
 
-  function fail(msg) {
+gulp.task('git-pull-latest', function() {
+  var execSync = require('child_process').execSync;
+  var spawnSync = require('child_process').spawnSync;
+
+  function fail(context, msg) {
     // remove gulp's 'Finished 'task' after 10ms' message
-    self.removeAllListeners('task_stop');
+    context.removeAllListeners('task_stop');
     console.error('Prepare aborted.');
     console.error(msg);
   }
 
+  //Check for uncommitted changes
+  var gitStatusResult = execSync('git status --porcelain');
+  if (gitStatusResult.toString().length > 0) {
+    return fail(this, 'You have uncommitted changes, please stash or commit them before running prepare');
+  }
+
+  //Pull latest
+  var gitPullResult = spawnSync('git', ['pull', 'origin', '2.0']);
+  if (gitPullResult.status !== 0) {
+    fail('There was an error running \'git pull\':\n' + gitPullResult.stderr.toString());
+  }
 });
 
 /**
@@ -843,11 +844,14 @@ gulp.task('publish.npm', function(done) {
   });
 });
 
+gulp.task('publish.nightly', ['build.release'], function(done){
+  runSequence('git-pull-latest', 'nightly', done);
+});
 
 /**
  * Publishes a new tag to npm with a nightly tag.
  */
-gulp.task('publish.nightly', function(done) {
+gulp.task('nightly', ['package'], function(done) {
   var fs = require('fs');
   var spawn = require('child_process').spawn;
   var packageJSON = require('./package.json');
@@ -871,6 +875,8 @@ gulp.task('publish.nightly', function(done) {
     .slice(0, 2)
     .concat(createUniqueHash())
     .join('-');
+
+  fs.writeFileSync('./package.json', JSON.stringify(packageJSON, null, 2));
 
   var npmCmd = spawn('npm', ['publish', '--tag=nightly', './dist']);
 
