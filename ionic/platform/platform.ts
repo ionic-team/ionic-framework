@@ -190,7 +190,7 @@ export class Platform {
   triggerReady() {
     this._zone.run(() => {
       this._readyResolve();
-    })
+    });
   }
 
   /**
@@ -741,5 +741,5 @@ export interface PlatformVersion {
   str?: string;
   num?: number;
   major?: number;
-  minor?: number
+  minor?: number;
 }
