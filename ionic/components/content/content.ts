@@ -52,6 +52,9 @@ import {ScrollView} from '../../util/scroll-view';
     '<ng-content select="ion-refresher"></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  host: {
+    '[class.statusbar-padding]': '_sbPadding'
+  }
 })
 export class Content extends Ion {
   private _padding: number = 0;
@@ -59,6 +62,7 @@ export class Content extends Ion {
   private _scroll: ScrollView;
   private _scLsn: Function;
   private _scrollEle: HTMLElement;
+  private _sbPadding: boolean;
 
   constructor(
     private _elementRef: ElementRef,
@@ -69,6 +73,7 @@ export class Content extends Ion {
     @Optional() viewCtrl: ViewController
   ) {
     super(_elementRef);
+    this._sbPadding = _config.getBoolean('statusbarPadding', false);
 
     if (viewCtrl) {
       viewCtrl.setContent(this);
