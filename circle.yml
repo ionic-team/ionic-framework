@@ -2,6 +2,9 @@ general:
   branches:
     ignore:
       - ins_n_outs
+dependencies:
+  cache_directories:
+    - "~/ionic-site" # cache ionic-site
 machine:
   node:
     version: 4.1.0

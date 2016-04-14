@@ -24,10 +24,31 @@ angular_controller: APIDemoCtrl <@ endif @>
 <@- endmacro -@>
 
 <@ macro returnObject(params) -@>
-  <@- if params -@><br>
-    <@- for param in params -@>
-      <code><$ param.type $></code> <span class="fixed-width"><$ param.key $></span> <$ param.description $><br>
-    <@- endfor @>
+  <@- if params -@>
+    <table class="table returns-object-table param-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <@ for param in params @>
+        <tr>
+          <td class="fixed-width">
+            <$ param.key $>
+          </td>
+          <td>
+            <$ param.type | code $>
+          </td>
+          <td>
+            <$ param.description | marked $>
+          </td>
+        </tr>
+        <@ endfor @>
+      </tbody>
+    </table>
   <@- endif @>
 <@- endmacro -@>
 
