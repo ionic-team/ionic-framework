@@ -97,6 +97,7 @@ Platform.register({
     autoFocusAssist: 'delay',
     clickBlock: true,
     hoverCSS: false,
+    inputBlurring: isIOSDevice,
     inputCloning: isIOSDevice,
     keyboardHeight: 300,
     mode: 'ios',

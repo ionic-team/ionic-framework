@@ -14,6 +14,8 @@ import {CSS, hasFocus, raf}  from '../../util/dom';
 export class NativeInput {
   private _relocated: boolean;
   private _clone: boolean;
+  private _blurring: boolean;
+  private _unrefBlur: Function;
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
   @Output() valueChange: EventEmitter<string> = new EventEmitter();
@@ -25,6 +27,7 @@ export class NativeInput {
     public ngControl: NgControl
   ) {
     this._clone = config.getBoolean('inputCloning', false);
+    this._blurring = config.getBoolean('inputBlurring', false);
   }
 
   @HostListener('input', ['$event'])
@@ -34,13 +37,38 @@ export class NativeInput {
 
   @HostListener('focus')
   private _focus() {
-    this.focusChange.emit(true);
+    var self = this;
+
+    self.focusChange.emit(true);
+
+    if (self._blurring) {
+      // automatically blur input if:
+      // 1) this input has focus
+      // 2) the newly tapped document element is not an input
+      console.debug('input blurring enabled');
+      function docTouchEnd(ev) {
+        var tappedElement: any = ev.target;
+        if (tappedElement && self.element()) {
+          if (tappedElement.tagName !== 'INPUT' && tappedElement.tagName !== 'TEXTAREA') {
+            self.element().blur();
+          }
+        }
+      }
+      document.addEventListener('touchend', docTouchEnd, true);
+      self._unrefBlur = function() {
+        console.debug('input blurring disabled');
+        document.removeEventListener('touchend', docTouchEnd, true);
+      };
+    }
   }
 
   @HostListener('blur')
   private _blur() {
     this.focusChange.emit(false);
     this.hideFocus(false);
+
+    this._unrefBlur && this._unrefBlur();
+    this._unrefBlur = null;
   }
 
   labelledBy(val: string) {
@@ -136,6 +164,10 @@ export class NativeInput {
 
   element(): HTMLInputElement {
     return this._elementRef.nativeElement;
+  }
+
+  ngOnDestroy() {
+    this._unrefBlur && this._unrefBlur();
   }
 
 }
