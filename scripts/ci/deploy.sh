@@ -28,7 +28,7 @@ function run {
   fi
 
   # Install gulp globally for site deploy script.
-  npm install -g gulp
+  # npm install -g gulp
 
   if [[ "$IS_RELEASE" == "true" ]]; then
     echo "RELEASE DETECTED!"
