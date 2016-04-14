@@ -71,12 +71,13 @@ IonicModule
   '$timeout',
   '$ionicPlatform',
   '$ionicTemplateLoader',
+  '$q',
   '$$q',
   '$log',
   '$ionicClickBlock',
   '$window',
   'IONIC_BACK_PRIORITY',
-function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
+function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $q, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
 
   /**
    * @ngdoc controller
@@ -251,10 +252,20 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
     remove: function() {
-      var self = this;
+      var self = this,
+          deferred, promise;
       self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.removed', self);
 
-      return self.hide().then(function() {
+      // Only hide modal, when it is shown.
+      if (self._isShown) {
+        promise = self.hide();
+      } else {
+        deferred = $q.defer();
+        deferred.resolve();
+        promise = deferred.promise;
+      }
+
+      return promise.then(function() {
         self.scope.$destroy();
         self.$el.remove();
       });
