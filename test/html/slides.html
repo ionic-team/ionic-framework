@@ -20,6 +20,7 @@
         <ion-slide-page>
           <ion-content>
             <h2>Journey to HD 219134 b</h2>
+            <div>some property: {{viewModel.someProperty}}</div>
             <p>
               This app will prepare you for your journey through the galaxy
               to HD 219134 b, an exoplanet 21 lightyears away from our home on Earth.
@@ -37,6 +38,7 @@
         </ion-slide-page>
         <ion-slide-page>
           <h2>Before launch</h2>
+          <div>some property: {{viewModel.someProperty}}</div>
           <p>
             Before entering the space capsule, please prepare accordingly:
           </p>
@@ -48,6 +50,7 @@
         </ion-slide-page>
         <ion-slide-page>
           <h2>During launch</h2>
+          <div>some property: {{viewModel.someProperty}}</div>
           <p>
             Hang on and enjoy the ride. Your input is not needed (and, in fact, is heavily restricted) during the
             launch and minutes after reacing the proper altitude needed to utilize the ion propulsion engines
@@ -56,6 +59,7 @@
         </ion-slide-page>
         <ion-slide-page>
           <h2>After launch and years ahead</h2>
+          <div>some property: {{viewModel.someProperty}}</div>
           <p>
             Thus begins the long journey to HD 219134 b. To pass the time, we've supplied
             you with a variety of pharmaceuticals along with a pamphlet to understand the benefits and drawbacks of each.
@@ -71,6 +75,7 @@
         </ion-slide-page>
         <ion-slide-page>
           <h2>Approaching HD 219134 b</h2>
+          <div>some property: {{viewModel.someProperty}}</div>
           <p>
             If you are lucky enough to be able to see HD 219134 b with your own eyes, congratulations! No
             space pioneer has ever made it this far. Take a minute and celebrate this monumental achievement by
@@ -98,6 +103,7 @@
             we regret to inform you that the experiment is ended and we hope to one day retrieve your valuable data. From all of us
             at Ion Space Pursuits, we thank you for your participation in this important research study.
           </p>
+          <div>some property: {{viewModel.someProperty}}</div>
         </ion-slide-page>
       </ion-slides>
     </ion-content>
@@ -105,24 +111,24 @@
   <script>
     angular.module('slidesTest', ['ionic'])
     .controller('MyCtrl', ['$scope', '$interval', '$timeout', function($scope, $interval, $timeout) {
+
       $scope.options = {
         loop: true
       }
-
+      $scope.viewModel = {};
+      $scope.viewModel.someProperty = "Waiting...";
+      //$scope.someProperty = "Waiting...";
       $scope.data = {};
-
       $scope.$watch('data.slider', function(nv, ov) {
         $scope.slider = $scope.data.slider;
       })
-
-      $timeout(function() {
-        //$scope.slider.slideNext();
-      }, 1000)
-
+      $interval(function() {
+        //$scope.someProperty = Math.random();
+        $scope.viewModel.someProperty  = Math.random();
+      }, 200)
       $scope.doClick = function() {
         console.log('CLICK');
       }
-
       /*
       $scope.extraSlides = [];
       var i = 0;

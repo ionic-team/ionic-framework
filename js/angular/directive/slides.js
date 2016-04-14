@@ -61,6 +61,11 @@ function($animate, $timeout, $compile) {
       '</div>',
     controller: ['$scope', '$element', function($scope, $element) {
       var _this = this;
+      var _watchHandler = null;
+      var _enterHandler = null;
+      var _afterLeaveHandler = null;
+      var _modalRemovedHandler = null;
+      var _modalPresentedHandler = null;
 
       this.update = function() {
         $timeout(function() {
@@ -91,6 +96,52 @@ function($animate, $timeout, $compile) {
         _this.update();
       }, 50);
 
+      this.updateLoop = ionic.debounce(function(){
+        if ( _this._options.loop ){
+          _this.__slider.updateLoop();
+        }
+      }, 50);
+
+      this.watchForChanges = function(){
+        if ( ! _watchHandler ){
+          // if we're not already watching, start watching
+          _watchHandler = $scope.$watch(function(){
+            console.log("Watch triggered");
+            _this.updateLoop();
+          });
+        }
+      }
+
+      this.stopWatching = function(){
+        if ( _watchHandler ){
+          console.log("Stopping watching...");
+          _watchHandler();
+          _watchHandler = null;
+        }
+      }
+
+      this.cleanUpEventHandlers = function(){
+        if ( _enterHandler ){
+          _enterHandler();
+          _enterHandler = null;
+        }
+
+        if ( _afterLeaveHandler ){
+          _afterLeaveHandler();
+          _afterLeaveHandler = null;
+        }
+
+        if ( _modalRemovedHandler ){
+          _modalRemovedHandler();
+          _modalRemovedHandler = null;
+        }
+
+        if ( _modalPresentedHandler ){
+          _modalPresentedHandler();
+          _modalPresentedHandler = null;
+        }
+      }
+
       this.getSlider = function() {
         return _this.__slider;
       };
@@ -113,15 +164,41 @@ function($animate, $timeout, $compile) {
         $scope.slider = _this.__slider;
 
         $scope.$on('$destroy', function() {
+          alert("scope destroy event");
           slider.destroy();
           _this.__slider = null;
+          _this.stopWatching();
+          _this.cleanUpEventHandlers();
+
         });
+
+        _this.watchForChanges();
+
+        _enterHandler = $scope.$on("$ionicView.enter", function(){
+          console.log("enter");
+          _this.watchForChanges();
+        });
+
+        _afterLeaveHandler = $scope.$on("$ionicView.afterLeave", function(){
+          console.log("after leave");
+          _this.stopWatching();
+        });
+
+        _modalRemovedHandler = $scope.$on("$ionic.modalRemoved", function(){
+          console.log("Modal removed");
+          _this.stopWatching();
+        });
+
+        _modalPresentedHandler = $scope.$on("$ionic.modalPresented", function(){
+          console.log("Modal presented");
+          _this.watchForChanges();
+        });
+
       });
 
     }],
 
-
-    link: function($scope) {
+    link: function($scope, element, attrs) {
       $scope.showPager = true;
       // Disable ngAnimate for slidebox and its children
       //$animate.enabled(false, $element);
