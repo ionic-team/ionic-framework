@@ -75,7 +75,6 @@ Platform.register({
     hoverCSS: false,
     keyboardHeight: 300,
     mode: 'md',
-    scrollAssist: true,
   },
   isMatch(p: Platform): boolean {
     return p.isPlatformMatch('android', ['android', 'silk'], ['windows phone']);
@@ -98,6 +97,7 @@ Platform.register({
     autoFocusAssist: 'delay',
     clickBlock: true,
     hoverCSS: false,
+    inputCloning: isIOSDevice,
     keyboardHeight: 300,
     mode: 'ios',
     scrollAssist: isIOSDevice,

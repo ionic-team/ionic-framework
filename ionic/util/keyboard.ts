@@ -83,7 +83,7 @@ export class Keyboard {
     }
 
     function checkKeyboard() {
-      console.debug('keyboard isOpen', self.isOpen(), checks);
+      console.debug('keyboard isOpen', self.isOpen());
       if (!self.isOpen() || checks > pollingChecksMax) {
         rafFrames(30, () => {
           self._zone.run(() => {
