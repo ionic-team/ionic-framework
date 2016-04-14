@@ -1,4 +1,4 @@
-import {App, NavController, Page, IonicApp, Modal} from 'ionic-angular';
+import {App, NavController, Page, IonicApp, Modal, ViewController} from 'ionic-angular';
 
 
 @Page({
@@ -14,14 +14,20 @@ import {App, NavController, Page, IonicApp, Modal} from 'ionic-angular';
       </button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-content>
-    The modal should have status bar padding, too because it is a toolbar.
+  <ion-content padding>
+    <p>The modal toolbar should have status bar padding.</p>
+    <button block (click)="dismissModal()">Close modal</button>
   </ion-content>
-
   `
 })
 class MyModal {
+  constructor(private viewCtrl: ViewController) {
 
+  }
+
+  dismissModal() {
+    this.viewCtrl.dismiss();
+  }
 }
 
 
@@ -31,6 +37,12 @@ class MyModal {
 class Page1 {
   page2 = Page2;
   sort: string = 'all';
+
+  constructor(private nav: NavController) {}
+
+  goToTabs() {
+    this.nav.push(TabsPage);
+  }
 }
 
 
@@ -55,6 +67,23 @@ class Page2 {
   templateUrl: 'page3.html'
 })
 class Page3 {
+  constructor(private nav: NavController) {
+
+  }
+
+  goBack() {
+    this.nav.pop();
+  }
+}
+
+
+@Page({
+  templateUrl: 'tabs.html'
+})
+class TabsPage {
+  tab1Root = Page1;
+  tab2Root = Page2;
+  tab3Root = Page3;
 
   constructor(private nav: NavController) {
 
@@ -67,13 +96,9 @@ class Page3 {
 
 
 @App({
-  templateUrl: `./app.html`
+  templateUrl: `./app.html`,
+  config: { statusbarPadding: true }
 })
 class E2EApp {
   root = Page1;
 }
-
-// Add platform cordova and platform ios so the status bar
-// padding will get added for each mode
-document.body.classList.add('platform-cordova');
-document.body.classList.add('platform-ios');
