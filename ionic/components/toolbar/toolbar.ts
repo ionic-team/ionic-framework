@@ -1,9 +1,10 @@
 import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 
+import {Button} from '../button/button';
+import {Config} from '../../config/config';
 import {Ion} from '../ion';
 import {MenuToggle} from '../menu/menu-toggle';
 import {Navbar} from '../navbar/navbar';
-import {Button} from '../button/button';
 
 
 /**
@@ -108,14 +109,17 @@ export class ToolbarBase extends Ion {
       '<ng-content></ng-content>' +
     '</div>',
   host: {
-    'class': 'toolbar'
+    'class': 'toolbar',
+    '[class.statusbar-padding]': '_sbPadding'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toolbar extends ToolbarBase {
+  private _sbPadding: boolean;
 
-  constructor(elementRef: ElementRef) {
+  constructor(elementRef: ElementRef, config: Config) {
     super(elementRef);
+    this._sbPadding = config.getBoolean('statusbarPadding', false);
   }
 
 }

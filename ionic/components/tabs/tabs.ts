@@ -135,7 +135,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
 @Component({
   selector: 'ion-tabs',
   template:
-    '<ion-navbar-section>' +
+    '<ion-navbar-section [class.statusbar-padding]="_sbPadding">' +
       '<template navbar-anchor></template>' +
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
@@ -167,6 +167,7 @@ export class Tabs extends Ion {
   private _preloadTabs: boolean = null;
   private _tabs: Array<Tab> = [];
   private _onReady = null;
+  private _sbPadding: boolean;
   private _useHighlight: boolean;
 
   /**
@@ -238,6 +239,7 @@ export class Tabs extends Ion {
     this.id = ++tabIds;
     this.subPages = _config.getBoolean('tabSubPages');
     this._useHighlight = _config.getBoolean('tabbarHighlight');
+    this._sbPadding = _config.getBoolean('statusbarPadding', false);
 
     if (parent) {
       // this Tabs has a parent Nav
