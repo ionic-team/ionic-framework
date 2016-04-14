@@ -42,6 +42,14 @@ From your app directory:
 
 To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and then reinstall using `npm install ionic-angular`.
 
+### Publish a nightly release
+1. Run `gulp publish.nightly`
+  - Pulls latest
+  - builds npm package files into dist
+  - updates package.json to a nightly version for publish: 0.1.0-beta.0 results in 0.1.0-beta.0-r8e7684t
+  - publishes to NPM using the nightly tag
+2. `npm install ionic-angular@nightly` will now install the latest nightly release
+  
 
 ### Running Snapshot
 

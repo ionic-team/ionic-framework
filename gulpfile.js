@@ -864,11 +864,12 @@ gulp.task('publish.nightly', ['build.release'], function(done){
 
 /**
  * Publishes a new tag to npm with a nightly tag.
+ * This will only update the dist package.json file.
  */
 gulp.task('nightly', ['package'], function(done) {
   var fs = require('fs');
   var spawn = require('child_process').spawn;
-  var packageJSON = require('./package.json');
+  var packageJSON = require('./dist/package.json');
   var hashLength = 8;
 
   // Generate a unique hash based on current timestamp
@@ -890,10 +891,9 @@ gulp.task('nightly', ['package'], function(done) {
     .concat(createUniqueHash())
     .join('-');
 
-  fs.writeFileSync('./package.json', JSON.stringify(packageJSON, null, 2));
+  fs.writeFileSync('./dist/package.json', JSON.stringify(packageJSON, null, 2));
 
   var npmCmd = spawn('npm', ['publish', '--tag=nightly', './dist']);
-
   npmCmd.stdout.on('data', function (data) {
     console.log(data.toString());
   });
