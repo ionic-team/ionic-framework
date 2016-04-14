@@ -6,8 +6,8 @@
 
 $ionicons-font-path: $font-path !default;
 
-@import "ionicons-icons";
-@import "ionicons-variables";
+@import "~ionicons/dist/scss/ionicons-icons";
+@import "~ionicons/dist/scss/ionicons-variables";
 
 
 @font-face {
