@@ -320,14 +320,6 @@ export class NavController extends Ion {
   }
 
   /**
-   * @private
-   */
-  private setViews(components, opts?: NavOptions) {
-    console.warn('setViews() deprecated, use setPages() instead');
-    return this.setPages(components, opts);
-  }
-
-  /**
    * Push is how we can pass components and navigate to them. We push the component
    * we want to navigate to on to the navigation stack.
    *

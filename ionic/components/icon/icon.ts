@@ -35,7 +35,7 @@ import {Config} from '../../config/config';
  *
  */
 @Directive({
-  selector: 'ion-icon,icon',
+  selector: 'ion-icon',
   host: {
     'role': 'img'
   }
@@ -58,13 +58,6 @@ export class Icon {
     private _renderer: Renderer
   ) {
     this.mode = config.get('iconMode');
-
-    if (_elementRef.nativeElement.tagName === 'ICON') {
-      // deprecated warning
-      console.warn('<icon> has been renamed to <ion-icon>');
-      console.warn('<ion-icon> requires the "name" attribute w/ a value');
-      console.warn('<icon home></icon> should now be <ion-icon name="home"></ion-icon>');
-    }
   }
 
   /**
