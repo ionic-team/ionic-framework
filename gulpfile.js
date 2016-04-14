@@ -689,9 +689,16 @@ function buildDemoSass(isProductionMode) {
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
 // requires bundle.system to be run once
-gulp.task('karma', ['tests'], function() {
+gulp.task('karma', ['tests'], function(done) {
   var karma = require('karma').server;
-  return karma.start({ configFile: __dirname + '/scripts/karma/karma.conf.js' })
+  karma.start({
+    configFile: __dirname + '/scripts/karma/karma.conf.js'
+  }, function(result) {
+    if (result > 0) {
+      return done(new Error('Karma exited with an error'));
+    }
+    done();
+  });
 });
 
 gulp.task('karma-watch', ['watch.tests', 'bundle.system'], function() {
@@ -710,8 +717,15 @@ gulp.task('karma-watch', ['watch.tests', 'bundle.system'], function() {
   * some prerelease magic (see 'prepare') and copies npm package and tooling
   * files to dist.
   */
-gulp.task('prerelease', ['prepare', 'build.release'], function(done){
-  runSequence('package', done);
+gulp.task('prerelease', function(done){
+  runSequence(
+    'tslint',
+    'prepare',
+    'build.release',
+    'karma',
+    'package',
+    done
+  );
 });
 
 /**
@@ -931,11 +945,11 @@ gulp.task('tooling', function(){
 /**
  * TS LINT
  */
-gulp.task("tslint", function() {
-  var tslint = require("gulp-tslint");
-  gulp.src([
-    'ionic/**/*.ts',
-    '!ionic/**/test/**/*',
-  ]).pipe(tslint())
-    .pipe(tslint.report('verbose'));
+gulp.task('tslint', function(done) {
+  var tslint = require('gulp-tslint');
+  return gulp.src([
+      'ionic/**/*.ts',
+      '!ionic/**/test/**/*',
+    ]).pipe(tslint())
+      .pipe(tslint.report('verbose'));
 });
