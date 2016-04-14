@@ -105,6 +105,13 @@ export class TextInput extends InputBase {
   inputFocused(event) {
     this.focus.emit(event);
   }
+
+  /**
+   * @private
+   */
+  clearTextInput() {
+    this._value = '';
+  }
 }
 
 
