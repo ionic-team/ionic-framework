@@ -96,51 +96,51 @@ function($animate, $timeout, $compile) {
         _this.update();
       }, 50);
 
-      this.updateLoop = ionic.debounce(function(){
-        if ( _this._options.loop ){
+      this.updateLoop = ionic.debounce(function() {
+        if ( _this._options.loop ) {
           _this.__slider.updateLoop();
         }
       }, 50);
 
-      this.watchForChanges = function(){
-        if ( ! _watchHandler ){
+      this.watchForChanges = function() {
+        if ( !_watchHandler ) {
           // if we're not already watching, start watching
-          _watchHandler = $scope.$watch(function(){
+          _watchHandler = $scope.$watch(function() {
             console.log("Watch triggered");
             _this.updateLoop();
           });
         }
-      }
+      };
 
-      this.stopWatching = function(){
-        if ( _watchHandler ){
+      this.stopWatching = function() {
+        if ( _watchHandler ) {
           console.log("Stopping watching...");
           _watchHandler();
           _watchHandler = null;
         }
-      }
+      };
 
-      this.cleanUpEventHandlers = function(){
-        if ( _enterHandler ){
+      this.cleanUpEventHandlers = function() {
+        if ( _enterHandler ) {
           _enterHandler();
           _enterHandler = null;
         }
 
-        if ( _afterLeaveHandler ){
+        if ( _afterLeaveHandler ) {
           _afterLeaveHandler();
           _afterLeaveHandler = null;
         }
 
-        if ( _modalRemovedHandler ){
+        if ( _modalRemovedHandler ) {
           _modalRemovedHandler();
           _modalRemovedHandler = null;
         }
 
-        if ( _modalPresentedHandler ){
+        if ( _modalPresentedHandler ) {
           _modalPresentedHandler();
           _modalPresentedHandler = null;
         }
-      }
+      };
 
       this.getSlider = function() {
         return _this.__slider;
@@ -164,7 +164,6 @@ function($animate, $timeout, $compile) {
         $scope.slider = _this.__slider;
 
         $scope.$on('$destroy', function() {
-          alert("scope destroy event");
           slider.destroy();
           _this.__slider = null;
           _this.stopWatching();
@@ -174,23 +173,19 @@ function($animate, $timeout, $compile) {
 
         _this.watchForChanges();
 
-        _enterHandler = $scope.$on("$ionicView.enter", function(){
-          console.log("enter");
+        _enterHandler = $scope.$on("$ionicView.enter", function() {
           _this.watchForChanges();
         });
 
-        _afterLeaveHandler = $scope.$on("$ionicView.afterLeave", function(){
-          console.log("after leave");
+        _afterLeaveHandler = $scope.$on("$ionicView.afterLeave", function() {
           _this.stopWatching();
         });
 
-        _modalRemovedHandler = $scope.$on("$ionic.modalRemoved", function(){
-          console.log("Modal removed");
+        _modalRemovedHandler = $scope.$on("$ionic.modalRemoved", function() {
           _this.stopWatching();
         });
 
-        _modalPresentedHandler = $scope.$on("$ionic.modalPresented", function(){
-          console.log("Modal presented");
+        _modalPresentedHandler = $scope.$on("$ionic.modalPresented", function() {
           _this.watchForChanges();
         });
 
@@ -198,7 +193,7 @@ function($animate, $timeout, $compile) {
 
     }],
 
-    link: function($scope, element, attrs) {
+    link: function($scope) {
       $scope.showPager = true;
       // Disable ngAnimate for slidebox and its children
       //$animate.enabled(false, $element);
