@@ -47,7 +47,44 @@ import {isBlank, isTrueProperty} from '../../util/util';
  *
  * There are different ways you can select a specific tab from the tabs
  * component. You can use the `selectedIndex` property to set the index
- * on creation of the tabs:
+ * on the `<ion-tabs>` element, or you can call `select()` from the `Tabs`
+ * instance after creation. See usage below for more information.
+ *
+ * @usage
+ *
+ * You can add a basic tabs template to a `@Page` using the following
+ * template:
+ *
+ * ```html
+ * <ion-tabs>
+ *   <ion-tab [root]="tab1Root"></ion-tab>
+ *   <ion-tab [root]="tab2Root"></ion-tab>
+ *   <ion-tab [root]="tab3Root"></ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * Where `tab1Root`, `tab2Root`, and `tab3Root` are each a page:
+ *
+ *```ts
+ * @Page({
+ *   templateUrl: 'build/pages/tabs/tabs.html'
+ * })
+ * export class TabsPage {
+ *   // this tells the tabs component which Pages
+ *   // should be each tab's root Page
+ *   tab1Root = Page1;
+ *   tab2Root = Page2;
+ *   tab3Root = Page3;
+ *
+ *   constructor() {
+ *
+ *   }
+ * }
+ *```
+ *
+ * By default, the first tab will be selected upon navigation to the
+ * Tabs page. We can change the selected tab by using `selectedIndex`
+ * on the `<ion-tabs>` element:
  *
  * ```html
  * <ion-tabs selectedIndex="2">
@@ -58,9 +95,12 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * ```
  *
  * Since the index starts at `0`, this will select the 3rd tab which has
- * root set to `tab3Root`. You can also grab the `Tabs` instance and call
- * the `select()` method. This requires the `<ion-tabs>` element to have
- * an `id`. For example, set the value of `id` to `myTabs`:
+ * root set to `tab3Root`. If you wanted to change it dynamically from
+ * your class, you could use [property binding](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#property-binding).
+ *
+ * Alternatively, you can grab the `Tabs` instance and call the `select()`
+ * method. This requires the `<ion-tabs>` element to have an `id`. For
+ * example, set the value of `id` to `myTabs`:
  *
  * ```html
  * <ion-tabs id="myTabs">
@@ -70,11 +110,11 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * </ion-tabs>
  * ```
  *
- * Then in your JavaScript you can grab the `Tabs` instance and call `select()`,
+ * Then in your class you can grab the `Tabs` instance and call `select()`,
  * passing the index of the tab as the argument. In the following code `app` is
  * of type [`IonicApp`](../../app/IonicApp/):
  *
- *```js
+ *```ts
  * constructor(app: IonicApp) {
  *   this.app = app;
  * }
@@ -84,16 +124,6 @@ import {isBlank, isTrueProperty} from '../../util/util';
  *   tabs.select(2);
  * }
  *```
- *
- *
- * @usage
- * ```html
- * <ion-tabs [selectedIndex]="mySelectedIndex" tabbarLayout="icon-bottom" secondary>
- *   <ion-tab [root]="tab1Root"></ion-tab>
- *   <ion-tab [root]="tab2Root"></ion-tab>
- *   <ion-tab [root]="tab3Root"></ion-tab>
- * </ion-tabs>
- * ```
  *
  * @demo /docs/v2/demos/tabs/
  *
