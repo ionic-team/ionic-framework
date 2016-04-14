@@ -8,7 +8,7 @@
 // --------------------------------------------------
 
 [no-padding],
-[no-padding] > scroll-content {
+[no-padding] scroll-content {
   padding: 0;
 }
 
@@ -56,7 +56,7 @@
 // --------------------------------------------------
 
 [no-margin],
-[no-margin] > scroll-content {
+[no-margin] scroll-content {
   margin: 0;
 }
 
