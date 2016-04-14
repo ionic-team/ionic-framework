@@ -16,68 +16,10 @@ ion-content {
 // Material Design Content Padding
 // --------------------------------------------------
 
-[padding],
-[padding] > scroll-content {
-  padding: $content-md-padding;
-}
-
-[padding-top] {
-  padding-top: $content-md-padding;
-}
-
-[padding-left] {
-  padding-left: $content-md-padding;
-}
-
-[padding-right] {
-  padding-right: $content-md-padding;
-}
-
-[padding-bottom] {
-  padding-bottom: $content-md-padding;
-}
-
-[padding-vertical] {
-  padding-top: $content-md-padding;
-  padding-bottom: $content-md-padding;
-}
-
-[padding-horizontal] {
-  padding-right: $content-md-padding;
-  padding-left: $content-md-padding;
-}
+@include content-padding($content-md-padding);
 
 
 // Material Design Content Margin
 // --------------------------------------------------
 
-[margin],
-[margin] > scroll-content {
-  margin: $content-md-margin;
-}
-
-[margin-top] {
-  margin-top: $content-md-margin;
-}
-
-[margin-left] {
-  margin-left: $content-md-margin;
-}
-
-[margin-right] {
-  margin-right: $content-md-margin;
-}
-
-[margin-bottom] {
-  margin-bottom: $content-md-margin;
-}
-
-[margin-vertical] {
-  margin-top: $content-md-margin;
-  margin-bottom: $content-md-margin;
-}
-
-[margin-horizontal] {
-  margin-right: $content-md-margin;
-  margin-left: $content-md-margin;
-}
+@include content-margin($content-md-margin);
