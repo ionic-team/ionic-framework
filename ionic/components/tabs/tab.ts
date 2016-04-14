@@ -16,18 +16,16 @@ import {TabButton} from './tab-button';
  * The Tab component, written `<ion-tab>`, is styled based on the mode and should
  * be used in conjunction with the [Tabs](../Tabs/) component.
  *
- * Each tab has a basic navigation controller. Similar to the [Nav](../../nav/Nav/)
- * component, the tab navigation controller is a subclass of
- * [NavController](../../nav/NavController). It can be used to navigate and manipulate
- * pages in the navigation stack of the tab.
- *
- * For more information on using navigation controllers like Tab or [Nav](../../nav/Nav/),
- * take a look at the [NavController API Docs](../../nav/NavController/).
+ * Each tab has a separate navigation controller. For more information on using
+ * navigation controllers take a look at the [NavController API Docs](../../nav/NavController/).
  *
  * See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
  *
  * @usage
- * For most cases, you can give tab a `[root]` property along with the component you want to load.
+ *
+ * To add a basic tab, you can use the following markup where the `root` property
+ * is the page you want to load for that tab, `tabTitle` is the optional text to
+ * display on the tab, and `tabIcon` is the optional [icon](../../icon/Icon/).
  *
  * ```html
  * <ion-tabs>
@@ -35,20 +33,60 @@ import {TabButton} from './tab-button';
  * </ion-tabs>
  * ```
  *
+ * Then, in your class you can set `chatRoot` to an imported class:
+ *
  * ```ts
- * import {Chat} from '../chat/chat';
+ * import {ChatPage} from '../chat/chat';
+ *
  * export class Tabs {
- *    constructor(){
- *      // here we'll set the property of chatRoot to
- *      // the imported class of Chat
- *      this.chatRoot = Chat
- *    }
+ *   // here we'll set the property of chatRoot to
+ *   // the imported class of ChatPage
+ *   chatRoot = ChatPage;
+ *
+ *   constructor() {
+ *
+ *   }
  * }
  * ```
  *
- * In other cases, you may not want to navigate to a new component, but just
- * call a method. You can use the `(select)` event to call a method on your
- * class. Below is an example of presenting a modal from one of the tabs.
+ * You can also pass some parameters to the root page of the tab through
+ * `rootParams`. Below we pass `chatParams` to the Chat tab:
+ *
+ * ```html
+ * <ion-tabs>
+ *  <ion-tab [root]="chatRoot" [rootParams]="chatParams" tabTitle="Chat" tabIcon="chat"><ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * ```ts
+ * export class Tabs {
+ *   chatRoot = ChatPage;
+ *
+ *   // set some user information on chatParams
+ *   chatParams = {
+ *     user1: "admin",
+ *     user2: "ionic"
+ *   };
+ *
+ *   constructor() {
+ *
+ *   }
+ * }
+ * ```
+ *
+ * And in `ChatPage` you can get the data from `NavParams`:
+ *
+ * ```ts
+ * export class ChatPage {
+ *   constructor(navParams: NavParams) {
+ *     console.log("Passed params", navParams.data);
+ *   }
+ * }
+ *
+ * Sometimes you may want to call a method instead of navigating to a new
+ * page. You can use the `(select)` event to call a method on your class when
+ * the tab is selected. Below is an example of presenting a modal from one of
+ * the tabs.
  *
  * ```html
  * <ion-tabs preloadTabs="false">
@@ -58,16 +96,16 @@ import {TabButton} from './tab-button';
  *
  * ```ts
  * export class Tabs {
- *   constructor(nav: NavController){
+ *   constructor(nav: NavController) {
  *     this.nav = nav;
  *   }
+ *
  *   chat() {
  *     let modal = Modal.create(ChatPage);
  *     this.nav.present(modal);
  *   }
  * }
  * ```
- *
  *
  *
  * @demo /docs/v2/demos/tabs/

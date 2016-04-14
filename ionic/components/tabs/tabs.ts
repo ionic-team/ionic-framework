@@ -48,7 +48,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * There are different ways you can select a specific tab from the tabs
  * component. You can use the `selectedIndex` property to set the index
  * on the `<ion-tabs>` element, or you can call `select()` from the `Tabs`
- * instance after creation. See usage below for more information.
+ * instance after creation. See [usage](#usage) below for more information.
  *
  * @usage
  *
