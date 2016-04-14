@@ -55,8 +55,8 @@ import {Platform} from '../../platform/platform';
  *    <ion-input type="tel"></ion-input>
  *  </ion-item>
  *
- *  <ion-item clearInput>
- *    <ion-input placeholder="Username"></ion-input>
+ *  <ion-item>
+ *    <ion-input placeholder="Username" clearInput></ion-input>
  *  </ion-item>
  * ```
  *

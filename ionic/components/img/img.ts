@@ -84,7 +84,7 @@ export class Img {
   }
 
   private _loaded(isLoaded: boolean) {
-    this._elementRef.nativeElement.classList[isLoaded ? 'add': 'remove']('img-loaded');
+    this._elementRef.nativeElement.classList[isLoaded ? 'add' : 'remove']('img-loaded');
   }
 
   enable(shouldEnable: boolean) {
