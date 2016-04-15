@@ -130,9 +130,6 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         return $$q.when();
       }
 
-      // on iOS, clicks will sometimes bleed through/ghost click on underlying
-      // elements
-      $ionicClickBlock.show(600);
       stack.add(self);
 
       var modalEl = jqLite(self.modalEl);
@@ -213,9 +210,6 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       var self = this;
       var modalEl = jqLite(self.modalEl);
 
-      // on iOS, clicks will sometimes bleed through/ghost click on underlying
-      // elements
-      $ionicClickBlock.show(600);
       stack.remove(self);
 
       self.el.classList.remove('active');
