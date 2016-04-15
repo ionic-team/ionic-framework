@@ -3,6 +3,7 @@ import {EventEmitter, Input, Output} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
+import {isTrueProperty} from '../../util/util';
 import {Keyboard} from '../../util/keyboard';
 import {NavController, NavOptions} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
@@ -133,6 +134,8 @@ export class Tab extends NavController {
    */
   public isSelected: boolean;
   private _isInitial: boolean;
+  private _isEnabled: boolean = true;
+  private _isShown: boolean = true;
   private _panelId: string;
   private _btnId: string;
   private _loaded: boolean;
@@ -144,34 +147,60 @@ export class Tab extends NavController {
   btn: TabButton;
 
   /**
-   * @input {Page} Set the root page for this tab
+   * @input {Page} Set the root page for this tab.
    */
   @Input() root: Type;
 
   /**
-   * @input {object} Any nav-params you want to pass to the root page of the tab
+   * @input {object} Any nav-params to pass to the root page of this tab.
    */
   @Input() rootParams: any;
 
   /**
-   * @input {string} Set the title of this tab
+   * @input {string} The title of the tab button.
    */
   @Input() tabTitle: string;
 
   /**
-   * @input {string} Set the icon for this tab
+   * @input {string} The icon for the tab button.
    */
   @Input() tabIcon: string;
 
   /**
-   * @input {string} Set the badge for this tab
+   * @input {string} The badge for the tab button.
    */
   @Input() tabBadge: string;
 
   /**
-   * @input {string} Set the badge color for this tab
+   * @input {string} The badge color for the tab button.
    */
   @Input() tabBadgeStyle: string;
+
+  /**
+   * @input {boolean} If the tab is enabled or not. If the tab
+   * is not enabled then the tab button will still show, however,
+   * the button will appear grayed out and will not be clickable.
+   * Defaults to `true`.
+   */
+  @Input()
+  get enabled(): boolean {
+    return this._isEnabled;
+  }
+  set enabled(val: boolean) {
+    this._isEnabled = isTrueProperty(val);
+  }
+
+  /**
+   * @input {boolean} If the tab button is visible within the
+   * tabbar or not. Defaults to `true`.
+   */
+  @Input()
+  get show(): boolean {
+    return this._isShown;
+  }
+  set show(val: boolean) {
+    this._isShown = isTrueProperty(val);
+  }
 
   /**
    * @output {Tab} Method to call when the current tab is selected
