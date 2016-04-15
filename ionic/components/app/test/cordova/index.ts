@@ -78,10 +78,35 @@ class Page3 {
 
 
 @Page({
+  template: `
+  <ion-navbar *navbar>
+    <ion-title>This is a tab page</ion-title>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons end>
+      <button>
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-content padding>
+    <p>The toolbar should have status bar padding.</p>
+  </ion-content>
+  `
+})
+class TabPage1 {
+  constructor(private nav: NavController) {
+
+  }
+}
+
+
+@Page({
   templateUrl: 'tabs.html'
 })
 class TabsPage {
-  tab1Root = Page1;
+  tab1Root = TabPage1;
   tab2Root = Page2;
   tab3Root = Page3;
 
