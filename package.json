@@ -80,6 +80,7 @@
     "systemjs": "0.19.6",
     "through2": "^0.6.3",
     "tslint": "^3.7.1",
+    "tslint-eslint-rules": "^1.2.0",
     "typescript": "1.8.7",
     "vinyl": "^0.4.6",
     "webpack": "^1.12.2",

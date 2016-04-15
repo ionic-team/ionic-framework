@@ -1,4 +1,5 @@
 {
+    "rulesDirectory": "node_modules/tslint-eslint-rules/dist/rules",
     "rules": {
         "class-name": true,
         "comment-format": [
@@ -52,6 +53,10 @@
             "check-operator",
             "check-separator",
             "check-type"
+        ],
+        "no-inner-declarations": [
+            true,
+            "functions"
         ]
     }
 }
