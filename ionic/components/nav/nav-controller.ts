@@ -428,8 +428,8 @@ export class NavController extends Ion {
       opts = {};
     }
 
-    if (enteringView.usePortal && this._portal) {
-      return this._portal.present(enteringView, opts);
+    if (enteringView.usePortal && rootNav._portal) {
+      return rootNav._portal.present(enteringView, opts);
     }
 
     enteringView.setNav(rootNav);
