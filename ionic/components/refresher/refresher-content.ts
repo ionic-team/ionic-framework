@@ -1,4 +1,4 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 import {NgIf} from 'angular2/common';
 
 import {Config} from '../../config/config';
@@ -28,7 +28,9 @@ import {Spinner} from '../spinner/spinner';
   directives: [NgIf, Icon, Spinner],
   host: {
     '[attr.state]': 'r.state'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class RefresherContent {
 

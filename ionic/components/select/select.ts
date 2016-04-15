@@ -1,4 +1,4 @@
-import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forwardRef, EventEmitter, HostListener, ContentChildren, QueryList} from 'angular2/core';
+import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forwardRef, EventEmitter, HostListener, ContentChildren, QueryList, ViewEncapsulation} from 'angular2/core';
 import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Alert} from '../alert/alert';
@@ -115,7 +115,8 @@ const SELECT_VALUE_ACCESSOR = new Provider(
   host: {
     '[class.select-disabled]': '_disabled'
   },
-  providers: [SELECT_VALUE_ACCESSOR]
+  providers: [SELECT_VALUE_ACCESSOR],
+  encapsulation: ViewEncapsulation.None,
 })
 export class Select {
   private _disabled: any = false;

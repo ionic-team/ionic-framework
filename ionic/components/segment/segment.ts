@@ -1,4 +1,4 @@
-import {Directive, Component, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList} from 'angular2/core';
+import {Directive, Component, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList, ViewEncapsulation} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {isPresent} from '../../util/util';
@@ -52,7 +52,8 @@ import {isPresent} from '../../util/util';
     'tappable': '',
     'class': 'segment-button',
     'role': 'button'
-  }
+  },
+  encapsulation: ViewEncapsulation.None,
 })
 export class SegmentButton {
 

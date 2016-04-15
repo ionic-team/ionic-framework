@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, Input, Output, EventEmitter, Optional, Provider, forwardRef} from 'angular2/core';
+import {Component, ElementRef, Renderer, Input, Output, EventEmitter, Optional, Provider, forwardRef, ViewEncapsulation} from 'angular2/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Form} from '../../util/form';
@@ -57,6 +57,7 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
       '<div class="toggle-inner"></div>' +
     '</div>' +
     '<button role="checkbox" ' +
+            'type="button" ' +
             '[id]="id" ' +
             '[attr.aria-checked]="_checked" ' +
             '[attr.aria-labelledby]="_labelId" ' +
@@ -73,7 +74,8 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
   host: {
     '[class.toggle-disabled]': '_disabled'
   },
-  providers: [TOGGLE_VALUE_ACCESSOR]
+  providers: [TOGGLE_VALUE_ACCESSOR],
+  encapsulation: ViewEncapsulation.None,
 })
 export class Toggle implements ControlValueAccessor  {
   private _checked: boolean = false;

@@ -109,7 +109,8 @@ class ToolbarBackground {
     '</div>',
   host: {
     '[hidden]': '_hidden',
-    'class': 'toolbar'
+    'class': 'toolbar',
+    '[class.statusbar-padding]': '_sbPadding'
   },
   directives: [BackButton, BackButtonText, Icon, ToolbarBackground]
 })
@@ -121,6 +122,7 @@ export class Navbar extends ToolbarBase {
   private _bbRef: ElementRef;
   private _bbtRef: ElementRef;
   private _bgRef: ElementRef;
+  private _sbPadding: boolean;
 
   /**
    * @input {boolean} whether the back button should be shown or not
@@ -146,6 +148,7 @@ export class Navbar extends ToolbarBase {
 
     this._bbIcon = config.get('backButtonIcon');
     this._bbText = config.get('backButtonText');
+    this._sbPadding = config.getBoolean('statusbarPadding', false);
 
     let defaultAttributes = config.get('navbarAttributes');
     if (defaultAttributes && !elementRef.nativeElement.hasAttribute('ignore-default')) {

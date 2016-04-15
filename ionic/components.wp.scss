@@ -28,3 +28,14 @@
   "components/tabs/tabs.wp",
   "components/toggle/toggle.wp",
   "components/toolbar/toolbar.wp";
+
+
+// Windows w/ iOS Platform
+@import
+  "platform/cordova.wp";
+
+
+// Noto Sans Font
+@at-root {
+  @import "./fonts/noto-sans";
+}

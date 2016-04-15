@@ -101,13 +101,27 @@ $colors: (
 
 ###### Important
 
-If you are using the function `color` anywhere in your app to get a color from the map, it has changed to require the `$colors` map as the first argument. Therefore, this:
+In order to use the Ionic Sass functions in your app's theming files, you need to import `globals.core` at the beginning of your `app.variables.scss` file. It should look like this:
+
+```scss
+// http://ionicframework.com/docs/v2/theming/
+
+// Ionic Shared Functions
+// --------------------------------------------------
+// Makes Ionic Sass functions available to your App
+
+@import 'globals.core';
+```
+
+If you are using the `map-get` function in your app, you should replace it with the `color` function. The `color` function takes the `$colors` map as the first argument, and the color you want to get as the second. You can optionally pass `base` or `contrast` as the third argument. If there is no third argument it will return the `base` color.
+
+If you are already using the function `color` in your app, you need to update it so this:
 
 ```scss
 color: color(primary);
 ```
 
-has become this:
+becomes this:
 
 ```scss
 color: color($colors, primary);
@@ -118,6 +132,8 @@ If you'd like to grab the `contrast` color you can use:
 ```scss
 color: color($colors, primary, contrast);
 ```
+
+See the conference app's [theme directory](https://github.com/driftyco/ionic-conference-app/tree/master/app/theme) for example usage.
 
 ###### Note
 
@@ -345,9 +361,9 @@ Windows platform support has been added to Ionic! The Windows mode is abbreviate
 
 ### Refactor
 
-* **alert:** remove tabbarIcons and add tabbarLayout which accepts different values ([8cfebe1](https://github.com/driftyco/ionic/commit/8cfebe1)), closes [#5625](https://github.com/driftyco/ionic/issues/5625)
 * **menu:** improve menu get lookup ([004e635](https://github.com/driftyco/ionic/commit/004e635)), closes [#5535](https://github.com/driftyco/ionic/issues/5535)
 * **tabs:** remove duplicated styles from imports ([d5ebf3f](https://github.com/driftyco/ionic/commit/d5ebf3f)), closes [#5624](https://github.com/driftyco/ionic/issues/5624)
+* **tabs:** remove tabbarIcons and add tabbarLayout which accepts different values ([8cfebe1](https://github.com/driftyco/ionic/commit/8cfebe1)), closes [#5625](https://github.com/driftyco/ionic/issues/5625)
 * **searchbar:** add class to searchbar when hideCancel is passed ([a0f0004](https://github.com/driftyco/ionic/commit/a0f0004))
 
 ### Breaking Changes

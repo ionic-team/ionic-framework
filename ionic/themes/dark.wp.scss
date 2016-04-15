@@ -80,9 +80,3 @@ $input-wp-border-color:                 rgba(0, 0, 0, .5) !default;
   font-size: $font-size-wp-base;
   background-color: $background-wp-color;
 }
-
-
-// Noto Sans Font
-@at-root {
-  @import "../fonts/noto-sans";
-}

@@ -1,4 +1,5 @@
 import {Platform} from './platform';
+import {Config} from '../config/config';
 import {windowLoad} from '../util/dom';
 
 const win: any = window;
@@ -8,7 +9,7 @@ const doc: any = document;
 Platform.register({
   name: 'core',
   settings: {
-    mode: 'ios',
+    mode: 'md',
     keyboardHeight: 290,
   }
 });
@@ -74,7 +75,6 @@ Platform.register({
     hoverCSS: false,
     keyboardHeight: 300,
     mode: 'md',
-    scrollAssist: true,
   },
   isMatch(p: Platform): boolean {
     return p.isPlatformMatch('android', ['android', 'silk'], ['windows phone']);
@@ -97,17 +97,16 @@ Platform.register({
     autoFocusAssist: 'delay',
     clickBlock: true,
     hoverCSS: false,
+    inputBlurring: isIOSDevice,
+    inputCloning: isIOSDevice,
     keyboardHeight: 300,
     mode: 'ios',
     scrollAssist: isIOSDevice,
+    statusbarPadding: !!(win.cordova),
     swipeBackEnabled: isIOSDevice,
     swipeBackThreshold: 40,
     tapPolyfill: isIOSDevice,
-    virtualScrollEventAssist: function() {
-      // UIWebView needs help getting scroll events
-      // WKWebView does not (WKWebView supports indexDB)
-      return !(window.indexedDB);
-    }
+    virtualScrollEventAssist: !(window.indexedDB)
   },
   isMatch(p: Platform): boolean {
     return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
@@ -166,16 +165,38 @@ Platform.register({
 Platform.register({
   name: 'cordova',
   isEngine: true,
-  methods: {
-    ready: function(resolve) {
-      function isReady() {
-        doc.removeEventListener('deviceready', isReady);
-        resolve();
-      }
+  initialize: function(p: Platform, config: Config) {
+
+    // prepare a custom "ready" for cordova "deviceready"
+    p.prepareReady = function() {
+      // 1) ionic bootstrapped
       windowLoad(function() {
-        doc.addEventListener('deviceready', isReady);
+        // 2) window onload triggered or completed
+        doc.addEventListener('deviceready', () => {
+          // 3) cordova deviceready event triggered
+
+          // add cordova listeners to fire platform events
+          doc.addEventListener('backbutton', function() {
+            p.backButton.emit(null);
+          });
+          // doc.addEventListener('pause', function() {
+          //   p.pause.emit(null);
+          // });
+          // doc.addEventListener('resume', function() {
+          //   p.resume.emit(null);
+          // });
+
+          // cordova has fully loaded and we've added listeners
+          p.triggerReady();
+        });
       });
-    }
+    };
+
+    // cordova has its own exitApp method
+    p.exitApp = function() {
+      win.navigator.app.exitApp();
+    };
+
   },
   isMatch(): boolean {
     return !!(win.cordova || win.PhoneGap || win.phonegap);

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, Attribute, Optional, Input} from 'angular2/core';
+import {Component, ElementRef, Renderer, Attribute, Optional, Input, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 
 import {Config} from '../../config/config';
 import {Toolbar} from '../toolbar/toolbar';
@@ -27,7 +27,7 @@ import {isTrueProperty} from '../../util/util';
   * @property [fab-center] - Position a fab button towards the center.
   * @property [fab-top] - Position a fab button towards the top.
   * @property [fab-bottom] - Position a fab button towards the bottom.
-  * @property [color] - Dynamically set which color attribute this button should use.
+  * @property [color] - Dynamically set which predefined color this button should use (e.g. default, secondary, danger, etc).
   *
   * @demo /docs/v2/demos/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
@@ -38,7 +38,9 @@ import {isTrueProperty} from '../../util/util';
     '<span class="button-inner">' +
       '<ng-content></ng-content>' +
     '</span>' +
-    '<ion-button-effect></ion-button-effect>'
+    '<ion-button-effect></ion-button-effect>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class Button {
   private _role: string = 'button'; // bar-button/item-button
@@ -140,7 +142,7 @@ export class Button {
   }
 
   /**
-   * @input {string} Dynamically set which color attribute this button should use.
+   * @input {string} Dynamically set which predefined color this button should use (e.g. default, secondary, danger, etc).
    */
   @Input()
   set color(val: string) {

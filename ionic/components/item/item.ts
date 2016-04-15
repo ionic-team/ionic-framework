@@ -1,4 +1,4 @@
-import {Component, ContentChildren, forwardRef, ViewChild, ContentChild, Renderer, ElementRef} from 'angular2/core';
+import {Component, ContentChildren, forwardRef, ViewChild, ContentChild, Renderer, ElementRef, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 import {NgIf} from 'angular2/common';
 
 import {Button} from '../button/button';
@@ -57,7 +57,9 @@ import {Label} from '../label/label';
   host: {
     'class': 'item'
   },
-  directives: [NgIf, Label]
+  directives: [NgIf, Label],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class Item {
   private _ids: number = -1;

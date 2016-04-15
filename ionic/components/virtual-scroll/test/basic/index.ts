@@ -11,10 +11,9 @@ class E2EPage {
   @ViewChild('content') content: ElementRef;
 
   constructor() {
-    for (var i = 0; i < 14; i++) {
+    for (var i = 0; i < 200; i++) {
       this.items.push(i);
     }
-
   }
 
   headerFn(record: any, index: number, records: any[]) {

@@ -84,6 +84,20 @@ tabbar {
   cursor: pointer;
 }
 
+.tab-disabled {
+  pointer-events: none;
+
+  ion-badge,
+  ion-icon,
+  span {
+    opacity: 0.4;
+  }
+}
+
+.tab-hidden {
+  display: none;
+}
+
 .tab-button-text {
   margin-top: 3px;
   margin-bottom: 2px;

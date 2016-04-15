@@ -21,7 +21,8 @@ export class InputBase {
   protected _keyboardHeight;
   protected _scrollMove: EventListener;
   protected _type: string = 'text';
-  protected _useAssist: boolean = true;
+  protected _useAssist: boolean;
+  protected _usePadding: boolean;
   protected _value = '';
   protected _isTouch: boolean;
   protected _autoFocusAssist: string;
@@ -47,8 +48,9 @@ export class InputBase {
     protected _nav: NavController,
     ngControl: NgControl
   ) {
-    this._useAssist = config.get('scrollAssist');
-    this._keyboardHeight = config.get('keyboardHeight');
+    this._useAssist = config.getBoolean('scrollAssist', false);
+    this._usePadding = config.getBoolean('scrollPadding', this._useAssist);
+    this._keyboardHeight = config.getNumber('keyboardHeight');
 
     this._autoFocusAssist = config.get('autoFocusAssist', 'delay');
     this._autoComplete = config.get('autocomplete', 'off');
@@ -338,19 +340,17 @@ export class InputBase {
    */
   initFocus() {
     // begin the process of setting focus to the inner input element
-    let scrollView = this._scrollView;
+    var scrollView = this._scrollView;
 
     if (scrollView) {
       // this input is inside of a scroll view
-
       // find out if text input should be manually scrolled into view
-      let ele = this._elementRef.nativeElement;
-      let itemEle = closest(ele, 'ion-item');
-      if (itemEle) {
-        ele = itemEle;
-      }
 
-      let scrollData = InputBase.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this._keyboardHeight, this._platform.height());
+      // get container of this input, probably an ion-item a few nodes up
+      var ele = this._elementRef.nativeElement;
+      ele = closest(ele, 'ion-item,[ion-item]') || ele;
+
+      var scrollData = InputBase.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this._keyboardHeight, this._platform.height());
       if (scrollData.scrollAmount > -3 && scrollData.scrollAmount < 3) {
         // the text input is in a safe position that doesn't
         // require it to be scrolled into view, just set focus now
@@ -359,32 +359,39 @@ export class InputBase {
         return;
       }
 
-      // add padding to the bottom of the scroll view (if needed)
-      scrollView.addScrollPadding(scrollData.scrollPadding);
+      if (this._usePadding) {
+        // add padding to the bottom of the scroll view (if needed)
+        scrollView.addScrollPadding(scrollData.scrollPadding);
+      }
 
       // manually scroll the text input to the top
       // do not allow any clicks while it's scrolling
-      let scrollDuration = getScrollAssistDuration(scrollData.scrollAmount);
+      var scrollDuration = getScrollAssistDuration(scrollData.scrollAmount);
       this._app.setEnabled(false, scrollDuration);
       this._nav && this._nav.setTransitioning(true, scrollDuration);
 
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
       // at this point the native text input still does not have focus
-      this._native.relocate(true, scrollData.inputSafeY);
+      this._native.beginFocus(true, scrollData.inputSafeY);
 
       // scroll the input into place
       scrollView.scrollTo(0, scrollData.scrollTo, scrollDuration).then(() => {
         // the scroll view is in the correct position now
         // give the native text input focus
-        this._native.relocate(false, 0);
+        this._native.beginFocus(false, 0);
 
+        // ensure this is the focused input
         this.setFocus();
 
         // all good, allow clicks again
         this._app.setEnabled(true);
         this._nav && this._nav.setTransitioning(false);
         this.regScrollMove();
+
+        if (this._usePadding) {
+          this._scrollView.clearScrollPaddingFocusOut();
+        }
       });
 
     } else {
@@ -409,6 +416,7 @@ export class InputBase {
     this._form.setAsFocused(this);
 
     // set focus on the actual input element
+    console.debug(`input-base, setFocus ${this._native.element().value}`);
     this._native.setFocus();
 
     // ensure the body hasn't scrolled down

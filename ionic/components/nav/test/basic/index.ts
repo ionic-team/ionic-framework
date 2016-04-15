@@ -1,5 +1,5 @@
-import {Component, Type} from 'angular2/core';
-import {App, NavController, Alert} from 'ionic-angular';
+import {Component, Type, ViewChild} from 'angular2/core';
+import {App, NavController, Alert, Content} from 'ionic-angular';
 import {Page, Config, IonicApp} from 'ionic-angular';
 import {NavParams, ViewController, IONIC_DIRECTIVES} from 'ionic-angular';;
 
@@ -49,8 +49,8 @@ class MyCmpTest{}
         <button ion-item (click)="quickPush()">New push during transition</button>
         <button ion-item (click)="quickPop()">New pop during transition</button>
         <button ion-item (click)="reload()">Reload</button>
-
         <button *ngFor="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
+        <button ion-item (click)="content.scrollToTop()">Scroll to top</button>
       </ion-list>
       <my-cmp></my-cmp>
     </ion-content>`,
@@ -60,6 +60,7 @@ class FirstPage {
   pushPage;
   title = 'First Page';
   pages: Array<number> = [];
+  @ViewChild(Content) content: Content;
 
   constructor(
     private nav: NavController,
@@ -116,6 +117,10 @@ class FirstPage {
 
   reload() {
     window.location.reload();
+  }
+
+  scrollToTop() {
+    this.content.scrollToTop();
   }
 }
 

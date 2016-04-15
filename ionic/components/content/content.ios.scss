@@ -26,72 +26,10 @@ ion-tab.has-views {
 // iOS Content Padding
 // --------------------------------------------------
 
-[padding],
-[padding] > scroll-content {
-  padding: $content-ios-padding;
-}
-
-[padding-top] {
-  padding-top: $content-ios-padding;
-}
-
-[padding-left] {
-  padding-left: $content-ios-padding;
-}
-
-[padding-right] {
-  padding-right: $content-ios-padding;
-}
-
-[padding-bottom] {
-  padding-bottom: $content-ios-padding;
-}
-
-[padding-vertical] {
-  padding-top: $content-ios-padding;
-  padding-bottom: $content-ios-padding;
-}
-
-[padding-horizontal] {
-  padding-right: $content-ios-padding;
-  padding-left: $content-ios-padding;
-}
-
-[no-padding] {
-  padding: 0;
-}
+@include content-padding($content-ios-padding);
 
 
 // iOS Content Margin
 // --------------------------------------------------
 
-[margin],
-[margin] > scroll-content {
-  margin: $content-ios-margin;
-}
-
-[margin-top] {
-  margin-top: $content-ios-margin;
-}
-
-[margin-left] {
-  margin-left: $content-ios-margin;
-}
-
-[margin-right] {
-  margin-right: $content-ios-margin;
-}
-
-[margin-bottom] {
-  margin-bottom: $content-ios-margin;
-}
-
-[margin-vertical] {
-  margin-top: $content-ios-margin;
-  margin-bottom: $content-ios-margin;
-}
-
-[margin-horizontal] {
-  margin-right: $content-ios-margin;
-  margin-left: $content-ios-margin;
-}
+@include content-margin($content-ios-margin);

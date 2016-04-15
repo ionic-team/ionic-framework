@@ -7,7 +7,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('linux');
-    platform.load();
+    platform.load(null);
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('none');
@@ -18,7 +18,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('MacIntel');
-    platform.load();
+    platform.load(null);
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('ripple');
@@ -29,7 +29,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1650.59 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
-    platform.load();
+    platform.load(null);
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('none');
@@ -40,7 +40,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1650.59 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
-    platform.load();
+    platform.load(null);
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('ripple');
@@ -51,7 +51,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Android 5.0; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
-    platform.load();
+    platform.load(null);
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('ripple');
@@ -62,7 +62,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
-    platform.load();
+    platform.load(null);
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('none');
@@ -73,7 +73,7 @@ export function run() {
 
     let config = providers.find(provider => provider.useValue instanceof Config).useValue;
 
-    expect(config.get('mode')).toEqual('ios');
+    expect(config.get('mode')).toEqual('md');
   });
 
   it('should used passed in Config instance in ionicProviders', () => {
@@ -197,12 +197,12 @@ export function run() {
     expect(config.get('hoverCSS')).toEqual(true);
   });
 
-  it('should get ios mode for core platform', () => {
+  it('should get md mode for core platform', () => {
     let config = new Config();
     let platform = new Platform(['core']);
     config.setPlatform(platform);
 
-    expect(config.get('mode')).toEqual('ios');
+    expect(config.get('mode')).toEqual('md');
   });
 
   it('should get ios mode for ipad platform', () => {

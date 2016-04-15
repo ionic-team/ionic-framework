@@ -38,8 +38,14 @@ ion-searchbar {
 }
 
 .searchbar-clear-icon {
+  display: none;
+
   margin: 0;
   padding: 0;
 
   min-height: 0;
+}
+
+.searchbar-has-value.searchbar-focused .searchbar-clear-icon {
+  display: block;
 }

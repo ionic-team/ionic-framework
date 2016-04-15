@@ -1,4 +1,4 @@
-import {Component, Optional, Input, Output, EventEmitter, HostListener, Provider, forwardRef} from 'angular2/core';
+import {Component, Optional, Input, Output, EventEmitter, HostListener, Provider, forwardRef, ViewEncapsulation} from 'angular2/core';
 import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Form} from '../../util/form';
@@ -54,6 +54,7 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
       '<div class="checkbox-inner"></div>' +
     '</div>' +
     '<button role="checkbox" ' +
+            'type="button" ' +
             '[id]="id" ' +
             '[attr.aria-checked]="_checked" ' +
             '[attr.aria-labelledby]="_labelId" ' +
@@ -63,7 +64,8 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
   host: {
     '[class.checkbox-disabled]': '_disabled'
   },
-  providers: [CHECKBOX_VALUE_ACCESSOR]
+  providers: [CHECKBOX_VALUE_ACCESSOR],
+  encapsulation: ViewEncapsulation.None,
 })
 export class Checkbox {
   private _checked: boolean = false;

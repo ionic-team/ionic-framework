@@ -3,8 +3,7 @@ import {Title} from 'angular2/platform/browser';
 
 import {Config} from '../../config/config';
 import {ClickBlock} from '../../util/click-block';
-import {Nav} from '../nav/nav';
-import {Tabs} from '../tabs/tabs';
+import {Platform} from '../../platform/platform';
 
 
 /**
@@ -23,8 +22,20 @@ export class IonicApp {
 
   constructor(
     private _config: Config,
-    private _clickBlock: ClickBlock
-  ) {}
+    private _clickBlock: ClickBlock,
+    platform: Platform
+  ) {
+    platform.backButton.subscribe(() => {
+      let activeNav = this.getActiveNav();
+      if (activeNav) {
+        if (activeNav.length() === 1) {
+          platform.exitApp();
+        } else {
+          activeNav.pop();
+        }
+      }
+    });
+  }
 
   /**
    * Sets the document title.
@@ -102,7 +113,7 @@ export class IonicApp {
   /**
    * @private
    */
-  getActiveNav(): Nav | Tabs {
+  getActiveNav(): any {
     var nav = this._rootNav || null;
     var activeChildNav;
 

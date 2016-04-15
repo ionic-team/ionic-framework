@@ -1,8 +1,6 @@
 import {Component, ChangeDetectionStrategy, ViewEncapsulation, enableProdMode, Type} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
-import {IonicApp} from '../components/app/app';
-import {TapClick} from '../components/tap-click/tap-click';
-import {ionicProviders} from '../config/bootstrap';
+import {ionicProviders, postBootstrap} from '../config/bootstrap';
 import {IONIC_DIRECTIVES} from '../config/directives';
 
 const _reflect: any = Reflect;
@@ -41,7 +39,8 @@ export interface AppMetadata {
 * number of arguments that act as global config variables for the app.
 * `@App` is similar to Angular's `@Component` in which it can accept a `template`
 * property that has an inline template, or a `templateUrl` property that points
-* to an external html template.
+* to an external html template. The `@App` decorator runs the Angular bootstrapping
+* process automatically, however you can bootstrap your app separately if you prefer.
 *
 * @usage
 * ```ts
@@ -94,9 +93,7 @@ export function App(args: AppMetadata = {}) {
     }
 
     bootstrap(cls, providers).then(appRef => {
-      appRef.injector.get(TapClick);
-      let app: IonicApp = appRef.injector.get(IonicApp);
-      app.setProd(args.prodMode);
+      postBootstrap(appRef, args.prodMode);
     });
 
     return cls;

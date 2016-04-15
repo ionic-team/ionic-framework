@@ -1,8 +1,9 @@
-import {Component, Directive, Host, Inject, forwardRef, ElementRef, Compiler, AppViewManager, NgZone, Renderer, Type} from 'angular2/core';
+import {Component, Directive, Host, Inject, forwardRef, ElementRef, Compiler, AppViewManager, NgZone, Renderer, Type, ViewEncapsulation} from 'angular2/core';
 import {EventEmitter, Input, Output} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
+import {isTrueProperty} from '../../util/util';
 import {Keyboard} from '../../util/keyboard';
 import {NavController, NavOptions} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
@@ -13,21 +14,19 @@ import {TabButton} from './tab-button';
 /**
  * @name Tab
  * @description
- * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
- * of the Component docs._
+ * The Tab component, written `<ion-tab>`, is styled based on the mode and should
+ * be used in conjunction with the [Tabs](../Tabs/) component.
  *
- * Tab components are basic navigation controllers used with Tabs.  Much like
- * Nav, they are a subclass of NavController and can be used to navigate
- * to pages in and manipulate the navigation stack of a particular tab.
+ * Each tab has a separate navigation controller. For more information on using
+ * navigation controllers take a look at the [NavController API Docs](../../nav/NavController/).
  *
- * For more information on using navigation controllers like Tab or [Nav](../../nav/Nav/),
- * take a look at the [NavController API reference](../NavController/).
- *
- * See the [Tabs API reference](../Tabs/) for more details on configuring Tabs
- * and the TabBar.
+ * See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
  *
  * @usage
- * For most cases, you can give tab a `[root]` property along with the component you want to load.
+ *
+ * To add a basic tab, you can use the following markup where the `root` property
+ * is the page you want to load for that tab, `tabTitle` is the optional text to
+ * display on the tab, and `tabIcon` is the optional [icon](../../icon/Icon/).
  *
  * ```html
  * <ion-tabs>
@@ -35,20 +34,61 @@ import {TabButton} from './tab-button';
  * </ion-tabs>
  * ```
  *
+ * Then, in your class you can set `chatRoot` to an imported class:
+ *
  * ```ts
- * import {Chat} from '../chat/chat';
+ * import {ChatPage} from '../chat/chat';
+ *
  * export class Tabs {
- *    constructor(){
- *      // here we'll set the property of chatRoot to
- *      // the imported class of Chat
- *      this.chatRoot = Chat
- *    }
+ *   // here we'll set the property of chatRoot to
+ *   // the imported class of ChatPage
+ *   chatRoot = ChatPage;
+ *
+ *   constructor() {
+ *
+ *   }
  * }
  * ```
  *
- * In other cases, you may not want to navigate to a new component, but just
- * call a method. You can use the `(select)` event to call a method on your
- * class. Below is an example of presenting a modal from one of the tabs.
+ * You can also pass some parameters to the root page of the tab through
+ * `rootParams`. Below we pass `chatParams` to the Chat tab:
+ *
+ * ```html
+ * <ion-tabs>
+ *  <ion-tab [root]="chatRoot" [rootParams]="chatParams" tabTitle="Chat" tabIcon="chat"><ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * ```ts
+ * export class Tabs {
+ *   chatRoot = ChatPage;
+ *
+ *   // set some user information on chatParams
+ *   chatParams = {
+ *     user1: "admin",
+ *     user2: "ionic"
+ *   };
+ *
+ *   constructor() {
+ *
+ *   }
+ * }
+ * ```
+ *
+ * And in `ChatPage` you can get the data from `NavParams`:
+ *
+ * ```ts
+ * export class ChatPage {
+ *   constructor(navParams: NavParams) {
+ *     console.log("Passed params", navParams.data);
+ *   }
+ * }
+ * ```
+ *
+ * Sometimes you may want to call a method instead of navigating to a new
+ * page. You can use the `(select)` event to call a method on your class when
+ * the tab is selected. Below is an example of presenting a modal from one of
+ * the tabs.
  *
  * ```html
  * <ion-tabs preloadTabs="false">
@@ -58,9 +98,10 @@ import {TabButton} from './tab-button';
  *
  * ```ts
  * export class Tabs {
- *   constructor(nav: NavController){
+ *   constructor(nav: NavController) {
  *     this.nav = nav;
  *   }
+ *
  *   chat() {
  *     let modal = Modal.create(ChatPage);
  *     this.nav.present(modal);
@@ -69,8 +110,11 @@ import {TabButton} from './tab-button';
  * ```
  *
  *
- *
  * @demo /docs/v2/demos/tabs/
+ * @see {@link /docs/v2/components#tabs Tabs Component Docs}
+ * @see {@link ../../tabs/Tabs Tabs API Docs}
+ * @see {@link ../../nav/Nav Nav API Docs}
+ * @see {@link ../../nav/NavController NavController API Docs}
  */
 @Component({
   selector: 'ion-tab',
@@ -80,7 +124,8 @@ import {TabButton} from './tab-button';
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
-  template: '<div #contents></div>'
+  template: '<div #contents></div>',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Tab extends NavController {
 
@@ -89,6 +134,8 @@ export class Tab extends NavController {
    */
   public isSelected: boolean;
   private _isInitial: boolean;
+  private _isEnabled: boolean = true;
+  private _isShown: boolean = true;
   private _panelId: string;
   private _btnId: string;
   private _loaded: boolean;
@@ -100,34 +147,60 @@ export class Tab extends NavController {
   btn: TabButton;
 
   /**
-   * @input {Page} Set the root page for this tab
+   * @input {Page} Set the root page for this tab.
    */
   @Input() root: Type;
 
   /**
-   * @input {object} Any nav-params you want to pass to the root page of the tab
+   * @input {object} Any nav-params to pass to the root page of this tab.
    */
   @Input() rootParams: any;
 
   /**
-   * @input {string} Set the title of this tab
+   * @input {string} The title of the tab button.
    */
   @Input() tabTitle: string;
 
   /**
-   * @input {string} Set the icon for this tab
+   * @input {string} The icon for the tab button.
    */
   @Input() tabIcon: string;
 
   /**
-   * @input {string} Set the badge for this tab
+   * @input {string} The badge for the tab button.
    */
   @Input() tabBadge: string;
 
   /**
-   * @input {string} Set the badge color for this tab
+   * @input {string} The badge color for the tab button.
    */
   @Input() tabBadgeStyle: string;
+
+  /**
+   * @input {boolean} If the tab is enabled or not. If the tab
+   * is not enabled then the tab button will still show, however,
+   * the button will appear grayed out and will not be clickable.
+   * Defaults to `true`.
+   */
+  @Input()
+  get enabled(): boolean {
+    return this._isEnabled;
+  }
+  set enabled(val: boolean) {
+    this._isEnabled = isTrueProperty(val);
+  }
+
+  /**
+   * @input {boolean} If the tab button is visible within the
+   * tabbar or not. Defaults to `true`.
+   */
+  @Input()
+  get show(): boolean {
+    return this._isShown;
+  }
+  set show(val: boolean) {
+    this._isShown = isTrueProperty(val);
+  }
 
   /**
    * @output {Tab} Method to call when the current tab is selected

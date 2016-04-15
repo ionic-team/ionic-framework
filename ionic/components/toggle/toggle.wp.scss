@@ -26,6 +26,8 @@ $toggle-wp-handle-border-radius:         50% !default;
 $toggle-wp-media-margin:                 0 !default;
 $toggle-wp-media-padding:                12px ($item-wp-padding-right / 2) 12px $item-wp-padding-left !default;
 
+$toggle-wp-transition-duration:          300ms !default;
+
 $toggle-wp-disabled-opacity:             .3 !default;
 
 
@@ -68,6 +70,9 @@ ion-toggle {
 
   border-radius: $toggle-wp-handle-border-radius;
   background-color: $toggle-wp-handle-background-color-off;
+
+  transition-duration: $toggle-wp-transition-duration;
+  transition-property: transform, background-color;
 }
 
 
