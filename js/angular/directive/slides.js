@@ -149,7 +149,7 @@ function($animate, $timeout, $compile) {
       var options = $scope.options || {};
 
       var newOptions = angular.extend({
-        pagination: '.swiper-pagination',
+        pagination: $element.children().children()[1],
         paginationClickable: true,
         lazyLoading: true,
         preloadImages: false
