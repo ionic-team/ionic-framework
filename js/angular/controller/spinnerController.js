@@ -330,7 +330,8 @@
   var animations = {
 
     android: function(ele) {
-      var self = this;
+      // Note that this is called as a function, not a constructor.
+      var self = {};
 
       this.stop = false;
 
