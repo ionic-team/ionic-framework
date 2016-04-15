@@ -63,7 +63,9 @@ export function ionicProviders(args: any = {}) {
   ];
 }
 
-
+/**
+ * @private
+ */
 export function postBootstrap(appRef: ComponentRef, prodMode: boolean) {
   appRef.injector.get(TapClick);
   let app: IonicApp = appRef.injector.get(IonicApp);
