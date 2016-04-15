@@ -96,11 +96,9 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 ### Releasing Component Demos
 
-(Copied from [ionic-preview-app](https://github.com/driftyco/ionic-preview-app#updating-ionic-site), check there for updates)
+Ionic Component demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/driftyco/ionic-preview-app). No action is necessary.
 
-- Set [production mode](https://github.com/driftyco/ionic-preview-app/blob/master/app/app.ts#L11) to true
-- Rebuild app
-- Copy the contents of this entire repo to `ionic-site/dist/preview-app/` (`cp -R * ../path/to/ionic-site/dist/preview-app/`)
+If you'd like to manually update the demos, follow the steps on the preview app for [running locally on the site](https://github.com/driftyco/ionic-preview-app#running-locally-on-the-site).
 
 
 ### Releasing API Demos
