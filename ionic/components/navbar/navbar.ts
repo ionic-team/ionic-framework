@@ -63,7 +63,8 @@ class ToolbarBackground {
  * @name Navbar
  * @description
  * Navbar is a global level toolbar that gets updated every time a page gets
- * loaded. You can pass the navbar an `ion-title`, any number of buttons, a segment, or a searchbar.
+ * loaded. You can pass the navbar an `ion-title`, any number of buttons, a segment, or a searchbar.<br>
+ * Use `ignore-default` attribute to not set attributes from `navbarAttributes` config.
  *
  * @usage
  * ```html
@@ -148,6 +149,23 @@ export class Navbar extends ToolbarBase {
     this._bbIcon = config.get('backButtonIcon');
     this._bbText = config.get('backButtonText');
     this._sbPadding = config.getBoolean('statusbarPadding', false);
+
+    let defaultAttributes = config.get('navbarAttributes');
+    if (defaultAttributes && !elementRef.nativeElement.hasAttribute('ignore-default')) {
+
+      if (!Array.isArray(defaultAttributes)) {
+        defaultAttributes = [defaultAttributes];
+      }
+
+      defaultAttributes.forEach(attr => {
+
+        if (typeof attr == 'string') {
+          elementRef.nativeElement.setAttribute(attr, 1);
+        }
+
+      });
+
+    }
   }
 
   /**

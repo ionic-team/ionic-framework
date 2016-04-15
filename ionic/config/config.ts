@@ -26,6 +26,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  *     modalLeave: 'modal-slide-out',
  *     tabbarPlacement: 'bottom',
  *     pageTransition: 'ios',
+ *     navbarAttributes: "primary" //or ["primary"]
  *   }
  * })
  * ```
@@ -102,6 +103,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * | tabbarHighlight            |                        | top                       |
  * | tabbarLayout               |                        |                           |
  * | tabSubPages                |                        | true                      |
+ * | navbarAttributes           |                        |                           |
  *
 **/
 export class Config {
