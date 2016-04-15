@@ -1327,4 +1327,35 @@ describe('Ionic History', function() {
     expect($document[0].title).toEqual('New Title');
   }));
 
+  it('should remove the previous view completely', inject(function($state) {
+    $state.go('home');
+    rootScope.$apply();
+    var view1Scope = {};
+    var rsp = ionicHistory.register(view1Scope, false);
+
+    $state.go('about');
+    rootScope.$apply();
+    rsp = ionicHistory.register({}, false);
+
+    $state.go('contact');
+    rootScope.$apply();
+    rsp = ionicHistory.register({}, false);
+
+    var currentView = ionicHistory.currentView();
+    var backView = ionicHistory.backView();
+    expect(currentView.url).toEqual('/contact');
+    expect(backView.url).toEqual('/about');
+    expect(backView.viewId).toEqual(currentView.backViewId);
+
+    ionicHistory.removeBackView();
+
+    currentView = ionicHistory.currentView();
+    backView = ionicHistory.backView();
+    expect(backView.url).toEqual('/');
+    expect(backView.stateName).toEqual('home');
+    expect(currentView.url).toEqual('/contact');
+    expect(currentView.backViewId).toEqual(backView.viewId);
+
+  }));
+
 });

@@ -607,7 +607,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * @description Remove the previous view from the history completely, including the
      * cached element and scope (if they exist).
      */
-    removeBackView: function () {
+    removeBackView: function() {
       var self = this;
       var currentHistory = viewHistory.histories[this.currentHistoryId()];
       var currentCursor = currentHistory.cursor;
