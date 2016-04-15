@@ -6,12 +6,12 @@
 $cordova-ios-statusbar-padding:    20px   !default;
 
 
-ion-navbar-section {
+ion-navbar-section.statusbar-padding {
   height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
   min-height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
 }
 
-ion-navbar-section > .toolbar {
+ion-navbar-section.statusbar-padding > .toolbar {
   padding-top: $cordova-ios-statusbar-padding;
   height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
   min-height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
