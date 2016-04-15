@@ -14,7 +14,7 @@
       <pre>platform.is('android')</pre>
     </ion-col>
     <ion-col>
-      <pre>{{isAndroid}}</pre>
+      <pre [ngClass]="isAndroid ? 'platform-true' : 'platform-false'">{{isAndroid}}</pre>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -22,7 +22,15 @@
       <pre>platform.is('ios')</pre>
     </ion-col>
     <ion-col>
-      <pre>{{isIos}}</pre>
+      <pre [ngClass]="isIos ? 'platform-true' : 'platform-false'">{{isIos}}</pre>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <pre>platform.is('windows')</pre>
+    </ion-col>
+    <ion-col>
+      <pre [ngClass]="isWindows ? 'platform-true' : 'platform-false'">{{isWindows}}</pre>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -30,16 +38,21 @@
       <pre>platform.userAgent()</pre>
     </ion-col>
     <ion-col>
-      <pre>{{userAgent}}</pre>
+      <pre class="platform-normal">{{userAgent}}</pre>
     </ion-col>
   </ion-row>
 
 </ion-content>
 
 <style>
-  .platform-demo ion-col {
-    flex: 0 0 50%;
-    max-width: 50%;
+  .platform-demo ion-row ion-col:nth-child(odd) {
+    flex: 0 0 62%;
+    max-width: 62%;
+  }
+
+  .platform-demo ion-row ion-col:nth-child(even) {
+    flex: 0 0 38%;
+    max-width: 38%;
   }
 
   .platform-demo pre {
@@ -50,6 +63,22 @@
     margin-top: 0;
     border: 1px solid #ddd;
     border-radius: 2px;
+    white-space: pre-wrap;
+  }
+
+  .platform-demo .platform-true {
+    background: #dff2bf;
+    border-color: #4f8a10;
+  }
+
+  .platform-demo .platform-false {
+    background: #ffbaba;
+    border-color: #d8000c;
+  }
+
+  .platform-demo .platform-normal {
+    background: #bde5f8;
+    border-color: #00529b;
   }
 
   .platform-demo .note {
