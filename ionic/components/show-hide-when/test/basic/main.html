@@ -56,4 +56,14 @@
     hideWhen="android,ios"
   </p>
 
+  <p hideWhen="ios" [hidden]="toggle" style="background:magenta; color:white">
+    hideWhen="ios" [hidden]=toggle
+  </p>
+
+  <p showWhen="android" hideWhen="landscape" style="background:black; color:white">
+    showWhen="android" hideWhen="landscape"
+  </p>
+
+  <button (click)="toggle = !toggle">Toggle Hide When</button>
+
 </ion-content>

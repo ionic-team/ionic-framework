@@ -91,7 +91,7 @@ export class DisplayWhen {
 @Directive({
   selector: '[showWhen]',
   host: {
-    '[hidden]': 'hidden'
+    '[class.hidden-show-when]': '!isMatch'
   }
 })
 export class ShowWhen extends DisplayWhen {
@@ -102,13 +102,6 @@ export class ShowWhen extends DisplayWhen {
     ngZone: NgZone
   ) {
     super(showWhen, platform, ngZone);
-  }
-
-  /**
-   * @private
-   */
-  get hidden(): boolean {
-    return !this.isMatch;
   }
 
 }
@@ -148,7 +141,7 @@ export class ShowWhen extends DisplayWhen {
 @Directive({
   selector: '[hideWhen]',
   host: {
-    '[hidden]': 'hidden'
+    '[class.hidden-hide-when]': 'isMatch'
   }
 })
 export class HideWhen extends DisplayWhen {
@@ -159,13 +152,6 @@ export class HideWhen extends DisplayWhen {
     ngZone: NgZone
   ) {
     super(hideWhen, platform, ngZone);
-  }
-
-  /**
-   * @private
-   */
-  get hidden(): boolean {
-    return this.isMatch;
   }
 
 }
