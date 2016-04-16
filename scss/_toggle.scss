@@ -80,7 +80,7 @@
 }
 
 /* Fix to avoid background color bleeding */
-/* (occured on (at least) Android 4.2, Asus MeMO Pad HD7 ME173X) */
+/* (occurred on (at least) Android 4.2, Asus MeMO Pad HD7 ME173X) */
 .platform-android4_2 .toggle .track {
   -webkit-background-clip: padding-box;
 }
