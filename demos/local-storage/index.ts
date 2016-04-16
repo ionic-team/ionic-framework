@@ -1,9 +1,27 @@
 import {App, Page, IonicApp, Config, Platform} from 'ionic-angular';
 import {Storage, LocalStorage} from 'ionic-angular';
+import {Pipe, PipeTransform, Injectable} from 'angular2/core'
 
+
+@Pipe({name: 'cleanLocalData'})
+@Injectable()
+class CleanLocalDataPipe implements PipeTransform {
+  transform(obj:any) : any {
+    this.validKeys = ['username', 'name', 'email', 'address'];
+    this.output = {};
+    this.data = JSON.parse(obj);
+    for (var i = 0; i < Object.keys(this.data).length; i++) {
+      if (this.validKeys.indexOf( Object.keys(this.data)[i] ) > -1) {
+        this.output[Object.keys(this.data)[i]] = this.data[Object.keys(this.data)[i]];
+      }
+    }
+    return JSON.stringify(this.output, null, 2);
+  }
+}
 
 @App({
-  template: '<ion-nav [root]="root"></ion-nav>'
+  template: '<ion-nav [root]="root"></ion-nav>',
+  pipes: [CleanLocalDataPipe]
 })
 class ApiDemoApp {
   constructor() {
@@ -12,7 +30,8 @@ class ApiDemoApp {
 }
 
 @Page({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  pipes: [CleanLocalDataPipe]
 })
 class MainPage {
   constructor() {
