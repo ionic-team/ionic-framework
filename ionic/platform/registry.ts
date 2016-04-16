@@ -106,7 +106,7 @@ Platform.register({
     swipeBackEnabled: isIOSDevice,
     swipeBackThreshold: 40,
     tapPolyfill: isIOSDevice,
-    virtualScrollEventAssist: !(window.indexedDB)
+    virtualScrollEventAssist: !(win.indexedDB)
   },
   isMatch(p: Platform): boolean {
     return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
@@ -172,7 +172,7 @@ Platform.register({
       // 1) ionic bootstrapped
       windowLoad(function() {
         // 2) window onload triggered or completed
-        doc.addEventListener('deviceready', () => {
+        doc.addEventListener('deviceready', function() {
           // 3) cordova deviceready event triggered
 
           // add cordova listeners to fire platform events

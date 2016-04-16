@@ -69,9 +69,9 @@ export function ionicProviders(args: any = {}) {
 export function postBootstrap(appRef: ComponentRef, prodMode: boolean) {
   appRef.injector.get(TapClick);
   let app: IonicApp = appRef.injector.get(IonicApp);
-  let platform = appRef.injector.get(Platform);
-  let zone = appRef.injector.get(NgZone);
-  platform.prepareReady(zone);
+  let platform: Platform = appRef.injector.get(Platform);
+  platform.setZone(appRef.injector.get(NgZone));
+  platform.prepareReady();
   app.setProd(prodMode);
 }
 

@@ -48,6 +48,13 @@ export class Platform {
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }
 
+  /**
+   * @private
+   */
+  setZone(zone: NgZone) {
+    this._zone = zone;
+  }
+
 
   // Methods
   // **********************************************
@@ -207,11 +214,10 @@ export class Platform {
   /**
    * @private
    */
-  prepareReady(zone: NgZone) {
+  prepareReady() {
     // this is the default prepareReady if it's not replaced by the engine
     // if there was no custom ready method from the engine
     // then use the default DOM ready
-    this._zone = zone;
     ready(this.triggerReady.bind(this));
   }
 
