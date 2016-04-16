@@ -53,6 +53,7 @@ export class ScrollView {
 
     let xDistance = Math.abs(x - fromX);
     let yDistance = Math.abs(y - fromY);
+    let maxAttempts = (duration / 16) + 100;
 
     return new Promise(resolve => {
       let startTime: number;
@@ -62,7 +63,7 @@ export class ScrollView {
       function step() {
         attempts++;
 
-        if (!self._el || !self.isPlaying || attempts > 200) {
+        if (!self._el || !self.isPlaying || attempts > maxAttempts) {
           self.isPlaying = false;
           resolve();
           return;
