@@ -1,4 +1,4 @@
-import {Component, Directive, Host, Inject, forwardRef, ElementRef, Compiler, AppViewManager, NgZone, Renderer, Type, ViewEncapsulation} from 'angular2/core';
+import {Component, Directive, Host, Inject, forwardRef, ElementRef, Compiler, AppViewManager, NgZone, Renderer, Type, ViewEncapsulation, ChangeDetectorRef} from 'angular2/core';
 import {EventEmitter, Input, Output} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
@@ -216,7 +216,8 @@ export class Tab extends NavController {
     compiler: Compiler,
     viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer
+    renderer: Renderer,
+    private _cd: ChangeDetectorRef
   ) {
     // A Tab is a NavController for its child pages
     super(parentTabs, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer);
@@ -296,6 +297,16 @@ export class Tab extends NavController {
    */
   setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
+
+    if (isSelected) {
+      // this is the selected tab, detect changes
+      this._cd.reattach();
+
+    } else {
+      // this tab is not selected, do not detect changes
+      this._cd.detach();
+    }
+
     this.hideNavbars(!isSelected);
   }
 
