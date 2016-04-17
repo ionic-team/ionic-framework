@@ -182,11 +182,12 @@ export class TapClick {
 
 
 function getActivatableTarget(ele) {
-  let targetEle = ele;
-  for (let x = 0; x < 4; x++) {
-    if (!targetEle) break;
-    if (isActivatable(targetEle)) return targetEle;
-    targetEle = targetEle.parentElement;
+  if (isActivatable(ele)) {
+    return ele;
+  }
+  let parentEle = ele.parentElement;
+  if (parentEle) {
+    return getActivatableTarget(parentEle);
   }
   return null;
 }
