@@ -27,7 +27,7 @@ import {isTrueProperty} from '../../util/util';
   * @property [fab-center] - Position a fab button towards the center.
   * @property [fab-top] - Position a fab button towards the top.
   * @property [fab-bottom] - Position a fab button towards the bottom.
-  * @property [color] - Dynamically set which predefined color this button should use (e.g. default, secondary, danger, etc).
+  * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
   *
   * @demo /docs/v2/demos/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
@@ -135,20 +135,26 @@ export class Button {
     if (isTrueProperty(attrValue)) {
       this[type] = attrName;
       this._setClass(attrName, true);
-
     } else {
-      this[type] = null;
+      // Special handling for '_style' which defaults to 'default'.
+      this[type] = (type === '_style' ? 'default' : null);
+    }
+    if (type === '_style') {
+      this._setColor(attrName, isTrueProperty(attrValue));
     }
   }
 
   /**
-   * @input {string} Dynamically set which predefined color this button should use (e.g. default, secondary, danger, etc).
+   * @input {string} Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
    */
   @Input()
-  set color(val: string) {
-    this._assignCss(false);
-    this._colors = [val];
-    this._assignCss(true);
+  set color(val: string|string[]) {
+    // Clear the colors for all styles including the default one.
+    this._setColor(BUTTON_STYLE_ATTRS.concat(['default']), false);
+    // Support array input which is also supported via multiple attributes (e.g. primary, secondary, etc).
+    this._colors = (val instanceof Array ? val : [val]);
+    // Set the colors for the currently effective style.
+    this._setColor(this._style, true);
   }
 
   constructor(
@@ -289,11 +295,7 @@ export class Button {
       this._setClass(this._display, assignCssClass); // button-full
       this._setClass(this._size, assignCssClass); // button-small
       this._setClass(this._icon, assignCssClass); // button-icon-left
-
-      let colorStyle = (this._style !== 'default' ? this._style + '-' : '');
-      this._colors.forEach(colorName => {
-        this._setClass(colorStyle + colorName, assignCssClass); // button-secondary, button-clear-secondary
-      });
+      this._setColor(this._style, assignCssClass); // button-secondary, button-clear-secondary
     }
   }
 
@@ -303,6 +305,22 @@ export class Button {
   private _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
       this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type.toLowerCase(), assignCssClass);
+    }
+  }
+  
+  /**
+   * @private
+   */
+  private _setColor(type: string|string[], assignCssClass: boolean) {
+    if (type && this._init) {
+      // Support array to allow removal of many styles at once.
+      let styles = (type instanceof Array ? type : [type]);
+      styles.forEach(styleName => {
+        let colorStyle = (styleName !== null && styleName !== 'default' ? styleName.toLowerCase() + '-' : '');
+        this._colors.forEach(colorName => {
+          this._setClass(colorStyle + colorName, assignCssClass); // button-secondary, button-clear-secondary
+        });
+      });
     }
   }
 
