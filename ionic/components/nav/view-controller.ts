@@ -1,4 +1,4 @@
-import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, Renderer} from 'angular2/core';
+import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, Renderer, ChangeDetectorRef} from 'angular2/core';
 
 import {Navbar} from '../navbar/navbar';
 import {NavController, NavOptions} from './nav-controller';
@@ -33,6 +33,7 @@ export class ViewController {
   private _nbVwRef: ViewContainerRef;
   private _onDismiss: Function = null;
   private _pgRef: ElementRef;
+  private _cd: ChangeDetectorRef;
   protected _nav: NavController;
 
   /**
@@ -161,6 +162,13 @@ export class ViewController {
       return !!(previousItem);
     }
     return false;
+  }
+
+  /**
+   * @private
+   */
+  setChangeDetector(cd: ChangeDetectorRef) {
+    this._cd = cd;
   }
 
   /**
@@ -467,6 +475,14 @@ export class ViewController {
    * The view is about to enter and become the active view.
    */
   willEnter() {
+    if (this._cd) {
+      // ensure this has been re-attached to the change detector
+      this._cd.reattach();
+
+      // detect changes before we run any user code
+      this._cd.detectChanges();
+    }
+
     ctrlFn(this, 'onPageWillEnter');
   }
 
@@ -496,6 +512,10 @@ export class ViewController {
    */
   didLeave() {
     ctrlFn(this, 'onPageDidLeave');
+
+    // when this is not the active page
+    // we no longer need to detect changes
+    this._cd && this._cd.detach();
   }
 
   /**

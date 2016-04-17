@@ -1410,6 +1410,9 @@ export class NavController extends Ion {
       // set the ComponentRef's instance to this ViewController
       view.setInstance(component);
 
+      // remember the ChangeDetectorRef for this ViewController
+      view.setChangeDetector(hostViewRef.changeDetectorRef);
+
       // remember the ElementRef to the ion-page elementRef that was just created
       view.setPageRef(pageElementRef);
 
