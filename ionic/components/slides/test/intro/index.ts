@@ -20,9 +20,7 @@ class IntroPage {
   startingIndex: number = 1;
   mySlideOptions;
 
-  constructor(nav: NavController) {
-    this.nav = nav;
-
+  constructor(private nav: NavController) {
     this.mySlideOptions = {
       paginationClickable: true,
       lazyLoading: true,

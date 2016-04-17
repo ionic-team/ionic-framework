@@ -1,12 +1,16 @@
-import {App, IonicApp} from 'ionic-angular';
+import {ViewChild} from 'angular2/core';
+import {App, Slides} from 'ionic-angular';
 
 @App({
   templateUrl: 'main.html'
 })
 class MyApp {
-  constructor(app: IonicApp) {
-    this.app = app;
+  slides: any[];
+  @ViewChild('loopSlider') loopSlider: Slides;
+  startingIndex: number;
+  myTopSlideOptions: any;
 
+  constructor() {
     this.slides = [
       {
         name: "Slide 1",
@@ -22,23 +26,16 @@ class MyApp {
       }
     ];
 
-    this.startingIndex = 2;
-
     this.myTopSlideOptions = {
-      index: this.startingIndex,
+      initialSlide: 2,
       loop: true
     };
+
   }
 
-  onSlideChanged(slider) {
+  onSlideChanged(slider: Slides) {
     console.log('Slide changed', slider);
     console.log("active index", slider.activeIndex);
   }
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.slider = this.app.getComponent('loopSlider');
-      console.log('Got slider', this.slider);
-    });
-  }
 }
