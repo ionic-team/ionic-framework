@@ -16,6 +16,7 @@ class E2EPage {
   month: string;
   year: string;
   years: Array<number>;
+  notification: string;
 
   constructor() {
     this.gaming = '';
@@ -23,6 +24,7 @@ class E2EPage {
     this.music = null;
     this.month = '12';
     this.year = '1994';
+    this.notification = 'enable';
 
     this.years = [1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999];
 

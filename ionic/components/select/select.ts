@@ -2,6 +2,7 @@ import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forw
 import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Alert} from '../alert/alert';
+import {ActionSheet} from '../action-sheet/action-sheet';
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
 import {merge, isTrueProperty, isBlank, isCheckedProperty} from '../../util/util';
@@ -158,6 +159,11 @@ export class Select {
   @Input() checked: any = false;
 
   /**
+   * @private
+   */
+  @Input() interface: string = '';
+
+  /**
    * @output {any} Any expression you want to evaluate when the selection has changed
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
@@ -206,7 +212,10 @@ export class Select {
   }
 
   private _open() {
-    if (this._disabled) return;
+    if (this._disabled) {
+      return;
+    }
+
     console.debug('select, open alert');
 
     // the user may have assigned some options specifically for the alert
@@ -216,6 +225,7 @@ export class Select {
     // and we create a new array for the alert's two buttons
     alertOptions.buttons = [{
       text: this.cancelText,
+      role: 'cancel',
       handler: () => {
         this.cancel.emit(null);
       }
@@ -226,41 +236,72 @@ export class Select {
       alertOptions.title = this._item.getLabelText();
     }
 
-    // user cannot provide inputs from alertOptions
-    // alert inputs must be created by ionic from ion-options
-    alertOptions.inputs = this._options.toArray().map(input => {
-      return {
-        type: (this._multi ? 'checkbox' : 'radio'),
-        label: input.text,
-        value: input.value,
-        checked: input.checked
-      };
-    });
-
-    // create the alert instance from our built up alertOptions
-    let alert = Alert.create(alertOptions);
-
-    if (this._multi) {
-      // use checkboxes
-      alert.setCssClass('select-alert multiple-select-alert');
-
-    } else {
-      // use radio buttons
-      alert.setCssClass('select-alert single-select-alert');
+    let options = this._options.toArray();
+    if (this.interface === 'action-sheet' && options.length > 6) {
+      this.interface = null;
     }
 
-    alert.addButton({
-      text: this.okText,
-      handler: selectedValues => {
-        this.onChange(selectedValues);
-        this.change.emit(selectedValues);
+    let overlay;
+    if (this.interface === 'action-sheet') {
+      if (this._multi) {
+        throw new Error('action-sheet interface cannot use multivalue selector');
       }
-    });
 
-    this._nav.present(alert, alertOptions);
+      alertOptions.buttons = alertOptions.buttons.concat(options.map(input => {
+        return {
+          role: (input.checked ? 'selected' : ''),
+          text: input.text,
+          handler: () => {
+            this.onChange(input.value);
+            this.change.emit(input.value);
+          }
+        }
+      }));
+      alertOptions.cssClass = 'select-action-sheet';
+
+      overlay = ActionSheet.create(alertOptions);
+
+    } else {
+      // default to use the alert interface
+      this.interface = 'alert';
+
+      // user cannot provide inputs from alertOptions
+      // alert inputs must be created by ionic from ion-options
+      alertOptions.inputs = this._options.toArray().map(input => {
+        return {
+          type: (this._multi ? 'checkbox' : 'radio'),
+          label: input.text,
+          value: input.value,
+          checked: input.checked
+        }
+      });
+
+      // create the alert instance from our built up alertOptions
+      overlay = Alert.create(alertOptions);
+
+      if (this._multi) {
+        // use checkboxes
+        overlay.setCssClass('select-alert multiple-select-alert');
+
+      } else {
+        // use radio buttons
+        overlay.setCssClass('select-alert single-select-alert');
+      }
+
+      overlay.addButton({
+        text: this.okText,
+        handler: selectedValues => {
+          this.onChange(selectedValues);
+          this.change.emit(selectedValues);
+        }
+      });
+
+    }
+
+    this._nav.present(overlay, alertOptions);
 
     this._isOpen = true;
-    alert.onDismiss(() => {
+    overlay.onDismiss(() => {
       this._isOpen = false;
     });
   }
@@ -386,7 +427,7 @@ export class Select {
   /**
    * @private
    */
-  onTouched() {}
+  onTouched() { }
 
   /**
    * @private

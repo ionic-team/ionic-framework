@@ -75,6 +75,10 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
   }
 }
 
+.action-sheet-selected {
+  font-weight: bold;
+}
+
 .action-sheet-cancel {
   background: $action-sheet-wp-button-background;
 }
