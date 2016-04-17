@@ -40,11 +40,11 @@ export class NativeInput {
     var self = this;
 
     self.focusChange.emit(true);
-    
+
     function docTouchEnd(ev) {
-      var tappedElement: any = ev.target;
-      if (tappedElement && self.element()) {
-        if (tappedElement.tagName !== "INPUT" && tappedElement.tagName !== "TEXTAREA") {
+      var tapped: HTMLElement = ev.target;
+      if (tapped && self.element()) {
+        if (tapped.tagName !== "INPUT" && tapped.tagName !== "TEXTAREA" && !tapped.classList.contains('input-cover')) {
           self.element().blur();
         }
       }
@@ -55,7 +55,7 @@ export class NativeInput {
       // 1) this input has focus
       // 2) the newly tapped document element is not an input
       console.debug('input blurring enabled');
-      
+
       document.addEventListener('touchend', docTouchEnd, true);
       self._unrefBlur = function() {
         console.debug('input blurring disabled');
