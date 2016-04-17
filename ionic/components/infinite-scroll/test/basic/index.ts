@@ -6,10 +6,7 @@ import {App, Page, InfiniteScroll, NavController} from 'ionic-angular';
   templateUrl: 'main.html'
 })
 class E2EPage1 {
-  @ViewChild(InfiniteScroll) set _infiniteScroll(val) {
-    console.log('ViewChild')
-    this.infiniteScroll = val
-  }
+  @ViewChild(InfiniteScroll) infiniteScroll: InfiniteScroll;
   items = [];
   enabled: boolean = true;
 
