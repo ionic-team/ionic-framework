@@ -26,7 +26,7 @@
 
   <ion-item>
     <ion-label>Operating System</ion-label>
-    <ion-select [(ngModel)]="os" submitText="Okay" cancelText="Nah">
+    <ion-select [(ngModel)]="os" interface="alert" submitText="Okay" cancelText="Nah">
       <ion-option value="dos">DOS</ion-option>
       <ion-option value="lunix">Linux</ion-option>
       <ion-option value="mac7">Mac OS 7</ion-option>
@@ -34,6 +34,16 @@
       <ion-option value="win3.1">Windows 3.1</ion-option>
       <ion-option value="win95">Windows 95</ion-option>
       <ion-option value="win98">Windows 98</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Notifications</ion-label>
+    <ion-select [(ngModel)]="notification" interface="action-sheet" cancelText="Cancel!">
+      <ion-option value="enable">Enable</ion-option>
+      <ion-option value="mute">Mute</ion-option>
+      <ion-option value="mute_week">Mute for a week</ion-option>
+      <ion-option value="mute_year">Mute for a year</ion-option>
     </ion-select>
   </ion-item>
 
@@ -74,11 +84,16 @@
   <button (click)="resetGender()">Reset Gender</button>
 
   <p aria-hidden="true" padding>
-    <code>gender: {{gender}}</code><br>
-    <code>gaming: {{gaming}}</code><br>
-    <code>os: {{os}}</code><br>
-    <code>music: {{music}}</code><br>
-    <code>date: {{month}}/{{year}}</code><br>
+    <code>gender: {{gender}}</code>
+    <br>
+    <code>gaming: {{gaming}}</code>
+    <br>
+    <code>os: {{os}}</code>
+    <br>
+    <code>music: {{music}}</code>
+    <br>
+    <code>date: {{month}}/{{year}}</code>
+    <br>
   </p>
 
 </ion-content>
