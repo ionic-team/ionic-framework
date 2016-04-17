@@ -872,11 +872,15 @@ gulp.task('nightly', ['package'], function(done) {
   var packageJSON = require('./dist/package.json');
   var hashLength = 8;
 
-  // Generate a unique hash based on current timestamp
-  function createUniqueHash() {
-    var makeHash = require('crypto').createHash('sha1');
-    var timeString = (new Date).getTime().toString();
-    return makeHash.update(timeString).digest('hex').substring(0, hashLength);
+  // Generate a unique id formatted from current timestamp
+  function createTimestamp() {
+    // YYYYMMDDHHMM
+    var d = new Date();
+    return d.getUTCFullYear() + // YYYY
+           ('0' + (d.getUTCMonth() +　1)).slice(-2) + // MM
+           ('0' + (d.getUTCDate())).slice(-2) + // DD
+           ('0' + (d.getUTCHours())).slice(-2) + // HH
+           ('0' + (d.getUTCMinutes())).slice(-2); // MM
   }
 
   /**
@@ -888,7 +892,7 @@ gulp.task('nightly', ['package'], function(done) {
    */
   packageJSON.version = packageJSON.version.split('-')
     .slice(0, 2)
-    .concat(createUniqueHash())
+    .concat(createTimestamp())
     .join('-');
 
   fs.writeFileSync('./dist/package.json', JSON.stringify(packageJSON, null, 2));
