@@ -1,4 +1,4 @@
-  import {App, Page, NavController, Alert, Modal, ViewController} from 'ionic-angular';
+ import {App, Page, NavController, Alert, Modal, ViewController} from 'ionic-angular';
 
 //
 // Modal
@@ -38,11 +38,10 @@
   `
 })
 class MyModal {
-  constructor(viewCtrl: ViewController) {
-    this.viewCtrl = viewCtrl;
+  items: any[] = [];
 
-    this.items = [];
-    for(var i = 1; i <= 10; i++) {
+  constructor(private viewCtrl: ViewController) {
+    for (var i = 1; i <= 10; i++) {
       this.items.push(i);
     }
   }
@@ -72,12 +71,11 @@ class MyModal {
     </ion-content>
     `
 })
-class Tab1 {
-  constructor(nav: NavController) {
-    this.nav = nav;
+export class Tab1 {
+  items: any[] = [];
 
-    this.items = [];
-    for(var i = 1; i <= 250; i++) {
+  constructor() {
+    for (var i = 1; i <= 250; i++) {
       this.items.push(i);
     }
   }
@@ -107,10 +105,11 @@ class Tab1 {
     </ion-content>
   `
 })
-class Tab2 {
+export class Tab2 {
+  sessions: any[] = [];
+
   constructor() {
-    this.sessions = [];
-    for(var i = 1; i <= 250; i++) {
+    for (var i = 1; i <= 250; i++) {
       this.sessions.push({
         name: 'Name ' + i,
         location: 'Location: ' + i
@@ -139,10 +138,8 @@ class Tab2 {
     </ion-content>
     `
 })
-class Tab3 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+export class Tab3 {
+  constructor(private nav: NavController) {}
 
   presentAlert() {
     let alert = Alert.create({
@@ -182,18 +179,14 @@ class Tab3 {
   `
 })
 export class TabsPage {
-  constructor() {
-    this.root1 = Tab1;
-    this.root2 = Tab2;
-    this.root3 = Tab3;
-  }
+  root1 = Tab1;
+  root2 = Tab2;
+  root3 = Tab3;
 }
 
 @App({
-  template: `<ion-nav id="nav" [root]="root"></ion-nav>`
+  template: `<ion-nav [root]="root"></ion-nav>`
 })
 export class e2eApp {
-  constructor() {
-    this.root = TabsPage;
-  }
+  root = TabsPage;
 }
