@@ -3,6 +3,7 @@ import {AppViewManager, ElementRef, Directive, Renderer, Input} from 'angular2/c
 import {IonicApp} from './app';
 
 /**
+ * @private
  * @name Id
  * @description
  * The `id` attribute is an easy way to identify unique components in an app and access them
