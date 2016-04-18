@@ -234,10 +234,13 @@ describe('Ionic Modal', function() {
     expect(done).toBe(true);
   });
 
-  it('show should return a promise resolved on remove', function() {
+  it('hide should be called when removing a modal that is presently displayed', function() {
     var template = '<div class="modal"></div>';
     var instance = modal.fromTemplate(template, {});
+    instance._isShown = true;
     var done = false;
+
+    spyOn(instance, "hide").andCallThrough();
 
     instance.remove().then(function() {
       done = true;
@@ -246,6 +249,25 @@ describe('Ionic Modal', function() {
     timeout.flush();
     expect(instance.scope.$destroy).toHaveBeenCalled();
     expect(done).toBe(true);
+    expect(instance.hide).toHaveBeenCalled();
+  });
+
+  it('hide should not be called when removing a modal that is not displayed', function() {
+    var template = '<div class="modal"></div>';
+    var instance = modal.fromTemplate(template, {});
+    instance._isShown = false;
+    var done = false;
+
+    spyOn(instance, "hide").andCallThrough();
+
+    instance.remove().then(function() {
+      done = true;
+    });
+    spyOn(instance.scope, '$destroy');
+    timeout.flush();
+    expect(instance.scope.$destroy).toHaveBeenCalled();
+    expect(done).toBe(true);
+    expect(instance.hide).not.toHaveBeenCalled();
   });
 
 });
