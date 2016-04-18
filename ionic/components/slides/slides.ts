@@ -72,6 +72,9 @@ import {Scroll} from '../scroll/scroll';
       '<div [class.hide]="!showPager" class="swiper-pagination"></div>' +
     '</div>',
   directives: [NgClass],
+  host: {
+    '[id]': 'slideId'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -81,6 +84,16 @@ export class Slides extends Ion {
    * @private
    */
   public rapidUpdate: Function;
+
+  /**
+   * @private
+   */
+  private id: number;
+
+  /**
+   * @private
+   */
+  private slideId: string;
 
   /**
    * @private
@@ -204,6 +217,9 @@ export class Slides extends Ion {
     this.rapidUpdate = debounce(() => {
       this.update();
     }, 10);
+
+    this.id = ++slidesId;
+    this.slideId = 'slides-' + this.id;
   }
 
   /**
@@ -216,8 +232,10 @@ export class Slides extends Ion {
 
     this.showPager = isTrueProperty(this.pager);
 
+    let paginationId = '#' + this.slideId + ' .swiper-pagination';
+
     var options = defaults({
-      pagination: '.swiper-pagination',
+      pagination: paginationId,
     }, this.options);
 
     options.onTap = (swiper, e) => {
@@ -706,3 +724,5 @@ export class Slide {
   }
 })
 export class SlideLazy {}
+
+let slidesId = -1;
