@@ -1,13 +1,12 @@
 import {Component, Type, ViewChild} from 'angular2/core';
 import {App, NavController, Alert, Content} from 'ionic-angular';
 import {Page, Config, IonicApp} from 'ionic-angular';
-import {NavParams, ViewController, IONIC_DIRECTIVES} from 'ionic-angular';;
+import {NavParams, ViewController} from 'ionic-angular';;
 
 
 @Component({
   selector: 'my-cmp',
-  template: `<p>My Custom Component Test <ion-icon name="star"></ion-icon></p>`,
-  directives: [IONIC_DIRECTIVES]
+  template: `<p>My Custom Component Test <ion-icon name="star"></ion-icon></p>`
 })
 class MyCmpTest{}
 
