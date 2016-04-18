@@ -8,4 +8,5 @@ export declare class Swiper {
   update(): any;
   slideNext(): any;
   slidePrev(): any;
+  slideTo(slideIndex: number, speed: number, runCallbacks: boolean);
 }
