@@ -566,9 +566,10 @@
     _handleEndDrag: function(e) {
       var self = this;
 
-      if (self.scrollView) {
+      /*if (self.scrollView) {
         self.isScrollFreeze = self.scrollView.freeze(false);
       }
+      */
 
       self._didDragUpOrDown = false;
 
