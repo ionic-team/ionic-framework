@@ -128,11 +128,11 @@ angular_controller: APIDemoCtrl <@ endif @>
 
 <@- macro functionSyntax(fn) @>
   <@- set sep = joiner(',&nbsp;') -@>
-  <code><$ fn.name $>(<@- for param in fn.params @><$ sep() $>
+  <code><$ fn.name $><@- if not fn.isProperty @>(<@ endif -@><@- for param in fn.params @><$ sep() $>
   <@- if param.type.optional @>[<@ endif -@>
   <$ param.name $>
   <@- if param.type.optional @>]<@ endif -@>
-  <@ endfor @>)</code>
+  <@ endfor @><@- if not fn.isProperty @>)<@ endif -@></code>
   <@ if fn.alias @><small>(alias: <$ fn.alias $>)</small><@ endif @>
 <@ endmacro -@>
 
@@ -249,7 +249,7 @@ Improve this doc
 
 
 <@- if doc.statics.length -@>
-<h2><a class="anchor" name="static-methods" href="#static-methods"></a>Static Methods</h2>
+<h2><a class="anchor" name="static-members" href="#static-members"></a>Static Members</h2>
 <@- for method in doc.statics @><@ if not method.internal @>
 <div id="<$ method.name $>"></div>
 <h3><a class="anchor" name="<$ method.name $>" href="#<$ method.name $>"></a><$ functionSyntax(method) $></h3>
@@ -283,7 +283,7 @@ Improve this doc
 <!-- instance methods on the class -->
 <@- if doc.members and doc.members.length @>
 
-<h2><a class="anchor" name="instance-methods" href="#instance-methods"></a>Instance Methods</h2>
+<h2><a class="anchor" name="instance-members" href="#instance-members"></a>Instance Members</h2>
 <@- for method in doc.members @>
 
 <div id="<$ method.name $>"></div>
