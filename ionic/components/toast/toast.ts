@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer} from 'angular2/core';
+import {Component, ElementRef, Renderer, Output, EventEmitter} from 'angular2/core';
 import {NgClass, NgIf, NgFor} from 'angular2/common';
 
 import {Button} from '../button/button';
@@ -18,7 +18,6 @@ import {ViewController} from '../nav/view-controller';
  * @description
  * An Toast is a small message that appears in the lower part of the screen.
  * It's useful for displaying success messages, error messages, etc.
- * `title`, `subTitle` and `message`.
  *
  * @usage
  * ```ts
@@ -40,10 +39,9 @@ import {ViewController} from '../nav/view-controller';
 export class Toast extends ViewController {
 
   constructor(opts: ToastOptions = {}) {
-    console.log('Toast Constructor');
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
-
     super(ToastCmp, opts);
+
 
     this.viewType = 'toast';
     this.isOverlay = false;
@@ -53,6 +51,8 @@ export class Toast extends ViewController {
     // not fire its lifecycle events because it's not conceptually leaving
     this.fireOtherLifecycles = false;
   }
+
+
 
   /**
   * @private
@@ -75,14 +75,14 @@ export class Toast extends ViewController {
    *
    *  | Property              | Type      | Description                                                                   |
    *  |-----------------------|-----------|---------------------------------------------------------------------------    |
-   *  | message               | `string`  | The message for the toast                                                     |
-   *  | duration              | `number`  | The amount of time in milliseconds the toast should appear (optional)         |
-   *  | cssClass              | `string`  | Any additional class for the toast (optional)                                 |
-   *  | showCloseButton       | `boolean` | Whether or not to show an optional button to close the toast. (optional)      |
-   *  | closeButtonText       | `string`  | Text to display in the close button. (optional)                               |
-   *  | enableBackdropDismiss | `boolean` | Whether the the toast should be dismissed by tapping the backdrop (optional)  |
+   *  | message               | `string`  | The message for the toast. Long strings will wrap and the toast container will expand. **(required)**                                                     |
+   *  | duration              | `number`  | The amount of time in milliseconds the toast should appear *(optional)*         |
+   *  | cssClass              | `string`  | Any additional class for the toast *(optional)*                                 |
+   *  | showCloseButton       | `boolean` | Whether or not to show an optional button to close the toast. *(optional)*      |
+   *  | closeButtonText       | `string`  | Text to display in the close button. *(optional)*                               |
+   *  | enableBackdropDismiss | `boolean` | Whether the the toast should be dismissed by tapping the backdrop *(optional)*  |
    *
-   * @param {object} opts Toast. See the tabel above
+   * @param {object} ToastOptions Toast. See the above table for available options.
    */
   static create(opts: ToastOptions = {}) {
     return new Toast(opts);
@@ -119,7 +119,6 @@ class ToastCmp {
   private d: any;
   private descId: string;
   private hdrId: string;
-  private id: number;
   private created: number;
   private dismissTimeout: number = undefined;
 
@@ -139,16 +138,14 @@ class ToastCmp {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
     }
 
-    this.id = (++toastIds);
-
     if (this.d.message) {
       this.hdrId = 'acst-hdr-' + this.id;
     }
   }
 
   onPageDidEnter() {
-    let activeElement: any = document.activeElement;
-    if (document.activeElement) {
+    const { activeElement }: any = document;
+    if (activeElement) {
       activeElement.blur();
     }
 
@@ -267,11 +264,7 @@ class ToastWpPopIn extends Transition {
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
     backdrop.fromTo('opacity', 0, 0);
 
-    this
-      .easing('cubic-bezier(0,0 0.05,1)')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
+    this.easing('cubic-bezier(0,0 0.05,1)').duration(200).add(backdrop).add(wrapper);
   }
 }
 
@@ -286,11 +279,7 @@ class ToastWpPopOut extends Transition {
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');
     backdrop.fromTo('opacity', 0, 0);
 
-    this
-      .easing('ease-out')
-      .duration(150)
-      .add(backdrop)
-      .add(wrapper);
+    this.easing('ease-out').duration(150).add(backdrop).add(wrapper);
   }
 }
 
@@ -301,6 +290,3 @@ Transition.register('toast-md-slide-in', ToastMdSlideIn);
 Transition.register('toast-md-slide-out', ToastMdSlideOut);
 Transition.register('toast-wp-slide-out', ToastWpPopOut);
 Transition.register('toast-wp-slide-in', ToastWpPopIn);
-
-
-let toastIds = -1;
