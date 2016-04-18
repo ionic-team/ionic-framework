@@ -68,7 +68,7 @@ export class DisplayWhen {
  * to `true` or `showWhen` evaluates to `false`. If the `hidden` attribute is also added, the element
  * will not show if `hidden` evaluates to `true`.
  *
- * View the [Platform API docs](../../platform/Platform) for more information on the different
+ * View the [Platform API docs](../../../platform/Platform) for more information on the different
  * platforms you can use.
  *
  * @usage
@@ -95,7 +95,7 @@ export class DisplayWhen {
  * ```
  * @demo /docs/v2/demos/show-when/
  * @see {@link ../HideWhen HideWhen API Docs}
- * @see {@link ../../platform/Platform Platform API Docs}
+ * @see {@link ../../../platform/Platform Platform API Docs}
  */
 @Directive({
   selector: '[showWhen]',
@@ -126,7 +126,7 @@ export class ShowWhen extends DisplayWhen {
  * to `true` or `showWhen` evaluates to `false`. If the `hidden` attribute is also added, the element
  * will not show if `hidden` evaluates to `true`.
  *
- * View the [Platform API docs](../../platform/Platform) for more information on the different
+ * View the [Platform API docs](../../../platform/Platform) for more information on the different
  * platforms you can use.
  *
  * @usage
@@ -154,7 +154,7 @@ export class ShowWhen extends DisplayWhen {
  *
  * @demo /docs/v2/demos/hide-when/
  * @see {@link ../ShowWhen ShowWhen API Docs}
- * @see {@link ../../platform/Platform Platform API Docs}
+ * @see {@link ../../../platform/Platform Platform API Docs}
 */
 @Directive({
   selector: '[hideWhen]',
