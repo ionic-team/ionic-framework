@@ -37,7 +37,7 @@ import {ViewController} from './view-controller';
  * specific NavController, most times you will inject and use a reference to the
  * nearest NavController to manipulate the navigation stack.
  *
- * <h3 id="injecting_nav_controller">Injecting NavController</h3>
+ * ### Injecting NavController
  * Injecting NavController will always get you an instance of the nearest
  * NavController, regardless of whether it is a Tab or a Nav.
  *
@@ -57,8 +57,7 @@ import {ViewController} from './view-controller';
  *    }
  *  }
  * ```
- *
- * <h2 id="creating_pages">Page creation</h2>
+ * ## Page creation
  * _For more information on the `@Page` decorator see the [@Page API
  * reference](../../../decorators/Page/)._
  *
@@ -72,8 +71,7 @@ import {ViewController} from './view-controller';
  * example).  They are destroyed when removed from the navigation stack (on
  * [pop()](#pop) or [setRoot()](#setRoot)).
  *
- *
- * <h2 id="Lifecycle">Lifecycle events</h2>
+ * ## Lifecycle events
  * Lifecycle events are fired during various stages of navigation.  They can be
  * defined in any `@Page` decorated component class.
  *
