@@ -35,7 +35,10 @@ class MyApp {
 
   onSlideChanged(slider: Slides) {
     console.log('Slide changed', slider);
-    console.log("active index", slider.activeIndex);
+  }
+
+  ngAfterViewInit() {
+    console.log(this.loopSlider);
   }
 
 }
