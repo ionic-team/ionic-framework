@@ -158,7 +158,7 @@ import {ViewController} from '../nav/view-controller';
  *       let navTransition = alert.dismiss();
  *
  *       // start some async method
- *       someAsyncOperation(() => {
+ *       someAsyncOperation().then(() => {
  *         // once the async operation has completed
  *         // then run the next nav transition after the
  *         // first transition has finished animating out
