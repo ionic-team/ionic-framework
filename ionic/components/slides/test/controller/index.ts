@@ -1,34 +1,28 @@
 import {ViewChild} from 'angular2/core';
-import {App, Slides} from 'ionic-angular';
+import {App, Page, Slides} from 'ionic-angular';
 
 
 @App({
   templateUrl: 'main.html'
 })
-class MyApp {
-  mySlideOptions: any;
-  @ViewChild(Slides) slider: Slides;
-
-  constructor() {
-    console.log("here");
-    this.mySlideOptions = {
-      initialSlide: 1,
-      autoplay: 1000
-    };
-  }
+class MyPage {
+  @ViewChild('mySlider') slider: Slides;
+  mySlideOptions = {
+    initialSlide: 1,
+    loop: true
+  };
 
   ngAfterViewInit() {
 
   }
 
   onSlideChanged() {
-    console.log("Slide Changed");
-    let isEnd = this.slider.isEnd();
-    console.log("This is the last slide?", isEnd);
+    let currentIndex = this.slider.getActiveIndex();
+    console.log("Current index is", currentIndex);
   }
 
   goToPrevSlide() {
-    this.slider.slidePrev(5000, false);
+    this.slider.slidePrev();
   }
 
   goToNextSlide() {
@@ -36,7 +30,6 @@ class MyApp {
   }
 
   goToSlide(index) {
-    console.log(index);
     this.slider.slideTo(index, 500, false);
   }
 
@@ -49,4 +42,11 @@ class MyApp {
     let length = this.slider.length();
     console.log("Current Length is", length);
   }
+}
+
+@App({
+  template: `<ion-nav [root]="root"></ion-nav>`
+})
+class E2EApp {
+  root: Page = MyPage;
 }

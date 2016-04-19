@@ -1,16 +1,16 @@
-<ion-slides [options]="mySlideOptions" (didChange)="onSlideChanged()">
+<ion-slides #mySlider [options]="mySlideOptions" (didChange)="onSlideChanged()">
   <ion-slide padding>
-    <p>Slide 1</p>
-    <button block (click)="goToSlide(3)">Navigate to 3rd Slide</button>
+    <h1>Slide 1</h1>
+    <button block (click)="goToSlide(2)">Navigate to 3rd Slide</button>
     <button block (click)="getLength()">Get Slide Length</button>
   </ion-slide>
   <ion-slide padding>
-    <p>Slide 2</p>
+    <h1>Slide 2</h1>
     <button block (click)="goToPrevSlide()">Navigate Back</button>
     <button block (click)="goToNextSlide()">Navigate Forward</button>
   </ion-slide>
   <ion-slide padding>
-    <p>Slide 3</p>
+    <h1>Slide 3</h1>
     <button block (click)="getIndex()">Get Index</button>
   </ion-slide>
 </ion-slides>

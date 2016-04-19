@@ -53,7 +53,7 @@ import {Scroll} from '../scroll/scroll';
  * After creating and configuring the slides, you can navigate between them
  * by swiping or calling methods on the `Slides` instance. You can call `slideTo()` to
  * navigate to a specific slide, or `slideNext()` to change to the slide that follows
- * the active slide. All of the [methods](#instance-methods) provided by the `Slides`
+ * the active slide. All of the [methods](#instance-members) provided by the `Slides`
  * instance are listed below. See [Usage](#usage) below for more information on
  * navigating between slides.
  *
@@ -66,37 +66,107 @@ import {Scroll} from '../scroll/scroll';
  *
  *
  * @usage
+ *
+ * You can add slides to a `@Page` using the following template:
+ *
  * ```html
  * <ion-slides>
  *   <ion-slide>
- *     <p>Slide 1</p>
- *     <button (click)="goToSlide(3)">Navigate</button>
+ *     <h1>Slide 1</h1>
  *   </ion-slide>
  *   <ion-slide>
- *     <p>Slide 2</p>
+ *     <h1>Slide 2</h1>
  *   </ion-slide>
  *   <ion-slide>
- *     <p>Slide 3</p>
+ *     <h1>Slide 3</h1>
  *   </ion-slide>
  * </ion-slides>
  * ```
  *
+ * To add [options](#configuring), we will define them in `mySlideOptions` in our class `MyPage`:
+ *
+ * ```ts
+ * import {Page, Slides} from 'ionic-angular';
+ *
+ * @Page({
+ *   templateUrl: 'my-page.html'
+ * })
+ * class MyPage {
+ *   mySlideOptions = {
+ *     initialSlide: 1,
+ *     loop: true
+ *   };
+ * }
+ * ```
+ *
+ * This is setting the second slide as the initial slide on load, since
+ * the `initialSlide` begins at `0`. We are also setting `loop` to true which
+ * allows us to swipe from the last slide to the first continuously. Then,
+ * we will pass `mySlideOptions` in the `options` property of the `<ion-slides>`
+ * element. We are using [property binding](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#property-binding)
+ * on `options` because `mySlideOptions` is an expression:
+ *
+ * ```html
+ * <ion-slides [options]="mySlideOptions">
+ * ```
+ *
+ * To grab a reference to the Slides, we will add a [local template variable](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#local-vars)
+ * to `<ion-slides>` called `mySlider`:
+ *
+ * ```html
+ * <ion-slides #mySlider [options]="mySlideOptions">
+ * ```
+ *
+ * Next, we can use `ViewChild` to assign the Slides instance to `slider`:
+ *
  * ```ts
  * import {ViewChild} from 'angular2/core';
- * import {App, Slides} from 'ionic-angular';
  *
+ * class MyPage {
+ *   @ViewChild('mySlider') slider: Slides;
  *
- * @App({
- *   templateUrl: 'main.html'
- * })
- * class MyApp {
- *   @ViewChild(Slides) slider: Slides;
+ *   ...
+ * }
+ * ```
  *
- *   goToSlide(index) {
- *     this.slider.slideTo(index, 500);
+ * Now we can call any of the `Slider` [methods]((#instance-members)),
+ * for example we can use the Slider's `slideTo()` method in order to
+ * navigate to a specific slide on a button click. Below we call the
+ * `goToSlide()` method and it navigates to the 3rd slide:
+ *
+ * ```ts
+ * class MyPage {
+ *   ...
+ *
+ *   goToSlide() {
+ *     this.slider.slideTo(2, 500);
  *   }
  * }
  * ```
+ *
+ * We can also add events to listen to on the `<ion-slides>` element.
+ * Let's add the `didChange` event and call a method when the slide changes:
+ *
+ * ```html
+ * <ion-slides #mySlider (didChange)="onSlideChanged()" [options]="mySlideOptions">
+ * ```
+ *
+ * In our class, we add the `onSlideChanged()` method which gets the active
+ * index and prints it:
+ *
+ * ```ts
+ * class MyPage {
+ *   ...
+ *
+ *   onSlideChanged() {
+ *     let currentIndex = this.slider.getActiveIndex();
+ *     console.log("Current index is", currentIndex);
+ *   }
+ * }
+ * ```
+ *
+ * For all of the methods you can call on the `Slider` instance, see the
+ * [Instance Members](#instance-members).
  *
  * @demo /docs/v2/demos/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
