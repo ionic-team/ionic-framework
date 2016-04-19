@@ -57,6 +57,8 @@ import {ViewController} from './view-controller';
  *    }
  *  }
  * ```
+ *
+ *
  * ## Page creation
  * _For more information on the `@Page` decorator see the [@Page API
  * reference](../../../decorators/Page/)._
@@ -70,6 +72,7 @@ import {ViewController} from './view-controller';
  * from but still in the navigation stack (the exiting page on a `push()` for
  * example).  They are destroyed when removed from the navigation stack (on
  * [pop()](#pop) or [setRoot()](#setRoot)).
+ *
  *
  * ## Lifecycle events
  * Lifecycle events are fired during various stages of navigation.  They can be
@@ -100,8 +103,7 @@ import {ViewController} from './view-controller';
  *  | `onPageDidUnload`  | Runs after the page has been destroyed and its elements have been removed.
  *
  *
- *
- * ### Nav Transition Promises
+ * ## Nav Transition Promises
  *
  * Navigation transitions are asynchronous, meaning they take a few moments to finish, and
  * the duration of a transition could be any number. In most cases the async nature of a
@@ -114,23 +116,23 @@ import {ViewController} from './view-controller';
  * In cases where an app's navigation can be altered by other async tasks, which may or
  * may not take a long time, it's best to rely on each nav transition's returned
  * promise. So instead of firing and forgetting multiple `push` or `pop` nav transitions,
- * it's better to fire the next nav transition when the previous on has finished.
+ * it's better to fire the next nav transition when the previous one has finished.
  *
- * In the example below, after we receive some data asynchronously, we then want transition
- * to another page. Where the problem comes in, is that if we received the data 200ms after
- * the first transition started, then kicking off another transition halfway through
- * the first transition ends up with a janky transition. Instead, it's best to always
- * ensure the first transition has already finished before starting the next.
+ * In the example below, after the async operation has completed, we then want to transition
+ * to another page. Where the potential problem comes in, is that if the async operation
+ * completed 100ms after the first transition started, then kicking off another transition
+ * halfway through the first transition ends up with a janky animation. Instead, it's best
+ * to always ensure the first transition has already finished before starting the next.
  *
  * ```ts
  * // begin the first transition
  * let navTransition = this.nav.push(SomePage);
  *
  * // start an async call, we're not sure how long it'll take
- * getSomeAsyncData().then(() => {
- *   // incase we received the data faster than the time it
- *   // took to finish the first transition, this logic should
- *   // always wait that the previous transition has resolved
+ * someAsyncOperation().then(() => {
+ *   // incase the async operation completed faster than the time
+ *   // it took to finish the first transition, this logic should
+ *   // always ensure that the previous transition has resolved
  *   // first before kicking off the next transition
  *   navTransition.then(() => {
  *     this.nav.push(AnotherPage);
