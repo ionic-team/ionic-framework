@@ -6,7 +6,7 @@ export declare class Swiper {
   isEnd: boolean;
   isBeginning: boolean;
   update(): any;
-  slideNext(): any;
-  slidePrev(): any;
+  slideNext(runCallbacks: boolean, speed: number);
+  slidePrev(runCallbacks: boolean, speed: number);
   slideTo(slideIndex: number, speed: number, runCallbacks: boolean);
 }
