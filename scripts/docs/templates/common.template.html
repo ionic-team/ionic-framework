@@ -142,7 +142,7 @@ angular_controller: APIDemoCtrl <@ endif @>
 <@- endmacro -@>
 
 <@- macro typeInfo(fn) -@>
-  <$ typeList(fn.typeList) $> <$ fn.description $>
+  <$ typeList(fn.typeList) $> <$ fn.description | marked  $>
 <@- endmacro -@>
 
 <@ block body @>
