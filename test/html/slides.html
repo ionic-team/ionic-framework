@@ -141,6 +141,14 @@
         }
       }, 2000)
       */
+
+      $scope.$on("$ionicSlides.slideChangeEnd", function(event, data){
+        console.log("slideChangeEnd event: ", data);
+      });
+
+      $scope.$on("$ionicSlides.slideChangeStart", function(event, data){
+        console.log("slideChangeStart event: ", data);
+      });
     }]);
     </script>
   </body>

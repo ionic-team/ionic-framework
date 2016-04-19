@@ -1811,6 +1811,11 @@
                 s.emit('onTransitionStart', s);
                 if (s.activeIndex !== s.previousIndex) {
                     s.emit('onSlideChangeStart', s);
+                    _scope.$emit("$ionicSlides.slideChangeStart", {
+                      slider: s,
+                      activeIndex: s.getSlideDataIndex(s.activeIndex),
+                      previousIndex: s.getSlideDataIndex(s.previousIndex)
+                    });
                     if (s.activeIndex > s.previousIndex) {
                         s.emit('onSlideNextStart', s);
                     }
@@ -1830,6 +1835,11 @@
                 s.emit('onTransitionEnd', s);
                 if (s.activeIndex !== s.previousIndex) {
                     s.emit('onSlideChangeEnd', s);
+                    _scope.$emit("$ionicSlides.slideChangeEnd", {
+                      slider: s,
+                      activeIndex: s.getSlideDataIndex(s.activeIndex),
+                      previousIndex: s.getSlideDataIndex(s.previousIndex)
+                    });
                     if (s.activeIndex > s.previousIndex) {
                         s.emit('onSlideNextEnd', s);
                     }
@@ -2064,6 +2074,21 @@
             }
           }
         }
+
+        s.getSlideDataIndex = function(slideIndex){
+          // this is an Ionic custom function
+          // Swiper loops utilize duplicate DOM elements for slides when in a loop
+          // which means that we cannot rely on the actual slide index for our events
+          // because index 0 does not necessarily point to index 0
+          // and index n+1 does not necessarily point to the expected piece of data
+          // therefore, rather than using the actual slide index we should
+          // use the data index that swiper includes as an attribute on the dom elements
+          // because this is what will be meaningful to the consumer of our events
+          var slide = s.slides.eq(slideIndex);
+          var attributeIndex = angular.element(slide).attr("data-swiper-slide-index");
+          return parseInt(attributeIndex);
+        }
+
         /*=========================
           Loop
           ===========================*/

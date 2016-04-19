@@ -12,6 +12,7 @@
     "connect": "^2.13.0",
     "conventional-changelog": "~0.0.11",
     "cpr": "^0.2.0",
+    "cz-conventional-changelog": "^1.1.5",
     "dgeni": "^0.3.0",
     "dgeni-packages": "^0.9.3",
     "event-stream": "3.1.0",
@@ -68,5 +69,10 @@
     {
       "type": "MIT"
     }
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

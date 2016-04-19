@@ -15,30 +15,58 @@
  *
  * @usage
  * ```html
- * <ion-slides  options="options" slider="data.slider">
- *   <ion-slide-page>
- *     <div class="box blue"><h1>BLUE</h1></div>
- *   </ion-slide-page>
- *   <ion-slide-page>
- *     <div class="box yellow"><h1>YELLOW</h1></div>
- *   </ion-slide-page>
- *   <ion-slide-page>
- *     <div class="box pink"><h1>PINK</h1></div>
- *   </ion-slide-page>
- * </ion-slides>
+ * <ion-content scroll="false">
+ *   <ion-slides  options="options" slider="data.slider">
+ *     <ion-slide-page>
+ *       <div class="box blue"><h1>BLUE</h1></div>
+ *     </ion-slide-page>
+ *     <ion-slide-page>
+ *       <div class="box yellow"><h1>YELLOW</h1></div>
+ *     </ion-slide-page>
+ *     <ion-slide-page>
+ *       <div class="box pink"><h1>PINK</h1></div>
+ *     </ion-slide-page>
+ *   </ion-slides>
+ * </ion-content>
  * ```
  *
  * ```js
  * $scope.options = {
  *   loop: false,
- *   effect: fade,
+ *   effect: 'fade',
  *   speed: 500,
  * }
  * $scope.data = {};
  * $scope.$watch('data.slider', function(nv, ov) {
  *   $scope.slider = $scope.data.slider;
  * })
+ *
+ * $scope.$on("$ionicSlides.slideChangeStart", function(event, data){
+ *   console.log('Slide change is beginning');
+ * });
+ *
+ * $scope.$on("$ionicSlides.slideChangeEnd", function(event, data){
+ *   // note: the indexes are 0-based
+ *   $scope.activeIndex = data.activeIndex;
+ *   $scope.previousIndex = data.previousIndex;
+ * });
+ *
  * ```
+ *
+ * ## Slide Events
+ *
+ * The slides component dispatches events when the active slide changes
+ *
+ * <table class="table">
+ *   <tr>
+ *     <td><code>$ionicSlides.slideChangeStart</code></td>
+ *     <td>This event is dispatched when a slide change begins</td>
+ *   </tr>
+ *   <tr>
+ *     <td><code>$ionicSlides.slideChangeEnd</code></td>
+ *     <td>This event is dispatched when a slide change completes</td>
+ *   </tr>
+ * </table>
  *
  */
 IonicModule
