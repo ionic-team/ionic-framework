@@ -48,6 +48,7 @@ class MyCmpTest{}
         <button ion-item (click)="quickPush()">New push during transition</button>
         <button ion-item (click)="quickPop()">New pop during transition</button>
         <button ion-item (click)="reload()">Reload</button>
+        <button ion-item (click)="scrollToBottom()">Scroll to bottom</button>
         <button *ngFor="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
         <button ion-item (click)="content.scrollToTop()">Scroll to top</button>
       </ion-list>
@@ -120,6 +121,10 @@ class FirstPage {
 
   scrollToTop() {
     this.content.scrollToTop();
+  }
+
+  scrollToBottom() {
+    this.content.scrollToBottom(1000);
   }
 }
 

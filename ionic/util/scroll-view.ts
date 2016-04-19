@@ -104,6 +104,18 @@ export class ScrollView {
     });
   }
 
+  scrollToTop(duration: number): Promise<any> {
+    return this.scrollTo(0, 0, duration);
+  }
+
+  scrollToBottom(duration: number): Promise<any> {
+    let y = 0;
+    if (this._el) {
+      y = this._el.scrollHeight - this._el.clientHeight;
+    }
+    return this.scrollTo(0, y, duration);
+  }
+
   stop() {
     this.isPlaying = false;
   }
