@@ -1,4 +1,4 @@
-import { Alert, NavController, App, Page } from 'ionic-angular/index';
+import { Alert, Loading, NavController, App, Page } from 'ionic-angular/index';
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from 'angular2/common';
 
 
@@ -51,6 +51,9 @@ export class E2EPage {
       		</button>
     		</div>
 			</form>
+      <p>
+        <button block (click)="doFastPop()">Fast Loading Dismiss, Nav Pop</button>
+      </p>
     </ion-content>
   `
 })
@@ -103,6 +106,46 @@ class AnotherPage {
           }
         }
       ]
+    });
+    this.nav.present(alert);
+  }
+
+  doFastPop() {
+    let alert = Alert.create({
+      title: 'Async Nav Transition',
+      message: 'This is an example of dismissing an alert, then quickly starting another transition on the same nav controller.',
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+          // present a loading indicator
+          let loading = Loading.create({
+            content: 'Loading...'
+          });
+          this.nav.present(loading);
+
+          // start an async operation
+          setTimeout(() => {
+            // the async operation has completed
+            // dismiss the loading indicator
+            loading.dismiss();
+
+            // begin dismissing the alert
+            alert.dismiss().then(() => {
+              // after the alert has been dismissed
+              // then you can do another nav transition
+              this.nav.pop();
+            });
+          }, 100);
+
+          // return false so the alert doesn't automatically
+          // dismissed itself. Instead we're manually
+          // handling the dismiss logic above so that we
+          // can wait for the alert to finish it's dismiss
+          // transition before starting another nav transition
+          // on the same nav controller
+          return false;
+        }
+      }]
     });
     this.nav.present(alert);
   }
