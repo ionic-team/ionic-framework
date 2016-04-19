@@ -73,6 +73,7 @@ export function postBootstrap(appRef: ComponentRef, prodMode: boolean) {
   platform.setZone(appRef.injector.get(NgZone));
   platform.prepareReady();
   app.setProd(prodMode);
+  app.setAppInjector(appRef.injector);
 }
 
 
