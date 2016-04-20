@@ -371,17 +371,9 @@ export class Slides extends Ion {
       console.warn('The "zoom" attribute has been deprecated. Please pass it in options.');
     }
 
-    if (isPresent(this.change)) {
-      // beta.5 2016-04-18 deprecated warning
-      // change has been renamed to didChange
-      console.warn('The "change" event has been deprecated. Please use "didChange" instead.');
-    }
-
-    if (isPresent(this.slideChangeStart)) {
-      // beta.5 2016-04-18 deprecated warning
-      // slideChangeStart has been renamed to willChange
-      console.warn('The "slideChangeStart" event has been deprecated. Please use "willChange" instead.');
-    }
+    // Deprecated 04-18 beta.5
+    console.warn('The "slideChangeStart" event has been deprecated. Please use "willChange" instead. Ignore this if you aren\'t using it.');
+    console.warn('The "change" event has been deprecated. Please use "didChange" instead. Ignore this if you aren\'t using it.');
 
     if (isPresent(this.options.pager)) {
       this.showPager = isTrueProperty(this.options.pager);
