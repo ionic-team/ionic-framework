@@ -44,6 +44,7 @@ import {Scroll} from '../scroll/scroll';
  * | direction             | `string`  | 'horizontal'   | Swipe direction: 'horizontal' or 'vertical'.                                               |
  * | initialSlide          | `number`  | 0              | Index number of initial slide                                                              |
  * | loop                  | `boolean` | false          | Whether to continuously loop from the last slide to the first slide.                       |
+ * | pager                 | `boolean` | false          | Show the pagination bullets.                                                               |
  * | speed                 | `number`  | 300            | Duration of transition between slides (in ms).                                             |
  *
  * See [Usage](#usage) below for more information on configuring slides.
