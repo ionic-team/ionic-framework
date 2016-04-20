@@ -256,7 +256,7 @@ export class Select {
             this.onChange(input.value);
             this.change.emit(input.value);
           }
-        }
+        };
       }));
       alertOptions.cssClass = 'select-action-sheet';
 
@@ -274,7 +274,7 @@ export class Select {
           label: input.text,
           value: input.value,
           checked: input.checked
-        }
+        };
       });
 
       // create the alert instance from our built up alertOptions

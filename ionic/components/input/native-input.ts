@@ -44,7 +44,7 @@ export class NativeInput {
     function docTouchEnd(ev) {
       var tapped: HTMLElement = ev.target;
       if (tapped && self.element()) {
-        if (tapped.tagName !== "INPUT" && tapped.tagName !== "TEXTAREA" && !tapped.classList.contains('input-cover')) {
+        if (tapped.tagName !== 'INPUT' && tapped.tagName !== 'TEXTAREA' && !tapped.classList.contains('input-cover')) {
           self.element().blur();
         }
       }
