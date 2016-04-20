@@ -828,6 +828,15 @@ export class Slides extends Ion {
   }
 
   /**
+   * Get the index of the previous slide.
+   *
+   * @returns {number} The index number of the previous slide.
+   */
+  getPreviousIndex(): number {
+    return this.slider.previousIndex;
+  }
+
+  /**
    * Get the total number of slides.
    *
    * @returns {number} The total number of slides.
