@@ -354,8 +354,4 @@ ion-alert {
   &.activated {
     background: $alert-wp-button-background-activated;
   }
-
-  .button-inner {
-    justify-content: $alert-wp-button-group-justify-content;
-  }
 }
