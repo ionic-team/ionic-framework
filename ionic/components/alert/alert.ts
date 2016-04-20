@@ -353,7 +353,7 @@ export class Alert extends ViewController {
 
       '</div>' +
       '<div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">' +
-        '<button category="alert-button" *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass" class="alert-button">' +
+        '<button category="alert-button" *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
           '{{b.text}}' +
           '<ion-button-effect></ion-button-effect>' +
         '</button>' +
