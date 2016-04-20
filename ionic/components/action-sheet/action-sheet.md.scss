@@ -70,6 +70,10 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
   &:last-child .action-sheet-button {
     margin-bottom: $action-sheet-md-group-margin-bottom;
   }
+
+  .button-inner {
+    justify-content: flex-start;
+  }
 }
 
 .action-sheet-selected {

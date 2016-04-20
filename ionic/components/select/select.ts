@@ -109,6 +109,7 @@ const SELECT_VALUE_ACCESSOR = new Provider(
     '</div>' +
     '<button aria-haspopup="true" ' +
             '[id]="id" ' +
+            'category="item-cover" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
             'class="item-cover">' +
