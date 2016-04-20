@@ -69,13 +69,13 @@
 
   The following methods have been renamed:
 
-  `next()` has been renamed to `slideNext()`
-  `prev()` has been renamed to `slidePrev()`
-  `getIndex()` has been renamed to `getActiveIndex()`
-  `getNumSlides()` has been renamed to `length()`
-  `isAtEnd()` has been renamed to `isEnd()`
-  `isAtBeginning()` has been renamed to `isBeginning()`
-  `getSliderWidget()` has been renamed to `getSlider()`
+  - `next()` has been renamed to `slideNext()`
+  - `prev()` has been renamed to `slidePrev()`
+  - `getIndex()` has been renamed to `getActiveIndex()`
+  - `getNumSlides()` has been renamed to `length()`
+  - `isAtEnd()` has been renamed to `isEnd()`
+  - `isAtBeginning()` has been renamed to `isBeginning()`
+  - `getSliderWidget()` has been renamed to `getSlider()`
 
   All methods have been documented in the API docs:
   http://ionicframework.com/docs/v2/api/components/slides/Slides/
