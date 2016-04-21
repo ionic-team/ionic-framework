@@ -158,7 +158,9 @@ class ToastCmp {
     }
 
     // if there's a `duration` set, automatically dismiss.
-    this.dismissTimeout = setTimeout(() => this.dismiss('backdrop'), this.d.duration ? this.d.duration : 3000)
+    this.dismissTimeout = setTimeout(() =>
+      this.dismiss('backdrop'),
+    this.d.duration ? this.d.duration : 3000);
   }
 
   click(button, dismissDelay?) {
@@ -197,7 +199,7 @@ export interface ToastOptions {
   title?: string;
   cssClass?: string;
   buttons?: Array<any>;
-  duration?: number,
+  duration?: number;
   showCloseButton?: boolean;
   closeButtonText?: string;
   enableBackdropDismiss?: boolean;
@@ -237,7 +239,7 @@ class ToastMdSlideIn extends Transition {
 
     backdrop.fromTo('opacity', 0, 0);
     wrapper.fromTo('translateY', '100%', '0%');
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper)
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
   }
 }
 
