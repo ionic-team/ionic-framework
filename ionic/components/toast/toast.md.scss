@@ -1,41 +1,51 @@
 @import "../../globals.md";
+@import "./toast";
 
 // Material Design Toast
 // --------------------------------------------------
+
 $toast-md-text-align:                            left !default;
-$toast-md-background:                            #333333 !default;
+$toast-md-background:                            #333 !default;
 $toast-md-group-margin-bottom:                   8px !default;
 
 $toast-md-title-color:                           #fff !default;
 $toast-md-title-font-size:                       1.5rem !default;
 $toast-md-title-padding:                         19px 16px 17px !default;
 
+
 ion-toast {
-  display: block;
-  height: $toast-width;
-  left: 0;
   position: absolute;
   top: 0;
-  width: $toast-width;
+  left: 0;
   z-index: $z-index-overlay;
+  display: block;
+
+  width: $toast-width;
+  height: $toast-width;
 }
 
 .toast-wrapper {
-  background: $toast-md-background;
-  bottom: 0;
-  display: block;
-  left: 0;
-  margin: auto;
-  max-width: $toast-max-width;
   position: absolute;
   right: 0;
-  transform: translate3d(0, 100%, 0);
-  width: $toast-width;
+  bottom: 0;
+  left: 0;
   z-index: $z-index-overlay-wrapper;
+  display: block;
+
+  margin: auto;
+
+  width: $toast-width;
+  max-width: $toast-max-width;
+
+  background: $toast-md-background;
+
+  transform: translate3d(0, 100%, 0);
 }
 
 .toast-message {
-  color: $toast-md-title-color;
-  font-size: $toast-md-title-font-size;
   padding: $toast-md-title-padding;
+
+  font-size: $toast-md-title-font-size;
+
+  color: $toast-md-title-color;
 }

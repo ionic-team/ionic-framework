@@ -1,28 +1,34 @@
-@import "../../globals.ios";
+@import "../../globals.core";
 
-// Action Sheet
+
+// Toast
 // --------------------------------------------------
 
 $toast-width:                             100% !default;
 $toast-max-width:                         700px !default;
+
 
 ion-toast {
   position: absolute;
   top: 0;
   left: 0;
   z-index: $z-index-overlay;
+
   display: block;
+
   width: $toast-width;
   height: $toast-width;
 }
 
 .toast-container {
   display: flex;
+
   align-items: center;
 
   button {
-    font-size: 1.5rem;
     padding: 19px 16px 17px;
+
+    font-size: 1.5rem;
   }
 }
 
@@ -31,13 +37,16 @@ ion-toast {
 }
 
 .toast-wrapper {
-  bottom: 0;
-  display: block;
-  left: 0;
-  margin: auto;
-  max-width: $toast-max-width;
   position: absolute;
   right: 0;
-  transform: translate3d(0, 100%, 0);
+  bottom: 0;
+  left: 0;
   z-index: $z-index-overlay-wrapper;
+  display: block;
+
+  margin: auto;
+
+  max-width: $toast-max-width;
+
+  transform: translate3d(0, 100%, 0);
 }
