@@ -1,118 +1,75 @@
-### Creating an Issue
+# Contributing
 
-If you have a question on how something works, or its expected functionality, you might want to visit the [Ionic Forum](http://forum.ionicframework.com/) first.
-
-If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?state=open). You can search through existing issues to see if someone's reported one similar to yours.
-
-Next [create a new issue](https://github.com/driftyco/ionic/issues/new) that thoroughly explains the problem, how to reproduce the issue, and provide any additional information such as code examples and error logs.
-
-### Issue Etiquette Guidelines
-
-Poor  attitude, ranting, name-calling, bullying, being a jerk, complaining, or spamming are fruitless and unacceptable. Issues that violate the open source spirit of this community, or  any of the guidelines listed here, may result in your Issue being deleted or reposted to our Forum, a better place for debate and discussion. If you wish to contribute, either make your response respectful or do not bother to respond. You’ll find it’s pretty ineffective.
-
-Simply put: be respectful and act like an adult. Critiques are better made on the Forum. If you can’t do that, this isn’t a community for you.
-
-See our [Code of Conduct](./CODE_OF_CONDUCT.md) for more info.
+Thanks for your interest in contributing to the Ionic Framework! :tada:
 
 
-### Pull Request Guidelines
+## Contributing Etiquette
 
-Please use [Commitizen](https://github.com/commitizen/cz-cli#installing-the-command-line-tool) to commit to this repository. This ensures your commits will match our git conventions. It can be installed by running the following command (add sudo if on OSX/Linux):
-
-```
-npm install -g commitizen
-```
-
-Then, when you want to commit, instead of writing `git commit` you will write:
-
-```
-git cz
-```
-
-This will prompt you with some questions.
-
-When in doubt, keep your pull requests small. To give a PR the best chance of getting accepted, do not bundle more than one "feature" or bug fix per PR. Doing so makes it very hard to accept it if one of the fixes has issues.
-
-It's always best to create two smaller PRs than one big one.
-
-### Style
-
-Always use two spaces, no tabs. This goes for any HTML, CSS, or Javascript.
-
-#### Sass Guidelines
-
-##### Sass Linter
-
-Run [Sass Linter](https://github.com/brigade/scss-lint) to ensure the css/sass matches our conventions (requires Ruby)
-
-1. Install the linter: `gem install scss_lint`
-2. Make sure to run the linter at the root of the repository where the `.scss-lint.yml` file is located
-3. For all component Sass files: `scss-lint ionic/**/**/*.scss`
-4. For a specific Sass file: `scss-lint ionic/components/toolbar/toolbar.ios.scss`
+Please see our [Contributor Code of Conduct](./CODE_OF_CONDUCT.md) for information on our rules of conduct.
 
 
-##### Variable Naming Conventions
+## Creating an Issue
 
-The Sass variable should start with the component name:
+If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/) group.
 
-```
-$alert
-$action-sheet
-$badge
-$toolbar
-```
+If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
 
-Then it should use the mode abbreviation (ios, md, wp):
+Next, [create a new issue](https://github.com/driftyco/ionic/issues/new) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
 
-```
-$alert-md
-$action-sheet-ios
-$badge-md
-$toolbar-wp
-```
 
-Next should be the css property it is affecting, for example:
+## Creating a Pull Request
 
-```
-$alert-md-max-width
-$action-sheet-ios-background
-$badge-md-border-radius
-$toolbar-wp-padding
-```
+We appreciate you taking the time to contribute! Before submitting a pull request, we ask that you please [create an issue](#creating-an-issue) that explains the bug or feature request and let us know that you plan on creating a pull request for it. If an issue already exists, please comment on that issue letting us know you would like to submit a pull request for it. This helps us to keep track of the pull request and make sure there isn't duplicated effort.
 
-If it is affecting a component inside of the top level component, that should come next instead of the css property:
+Looking for an issue to fix? Make sure to look through our issues with the [help wanted](https://github.com/driftyco/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
 
-```
-$alert-md-title
-$alert-md-sub-title
-$alert-md-message
-$action-sheet-ios-title
-$action-sheet-ios-button
-```
+### Setup
 
-Followed by the css property of that component:
+1. Fork the repo.
+2. Clone your fork.
+3. Make a branch for your change.
+4. Run `npm install` (make sure you have [node](https://nodejs.org/en/) and [npm](http://blog.npmjs.org/post/85484771375/how-to-install-npm) installed first)
 
-```
-$alert-md-title-font-size
-$alert-md-sub-title-font-size
-$alert-md-message-padding
-$action-sheet-ios-title-color
-$action-sheet-ios-button-background
-```
 
-If the variable only applies to a specific state, that should come last (hover, focused, activated, etc):
+### Modifying Components
 
-```
-$action-sheet-ios-button-background-activated
-$alert-md-input-border-width-focused
-```
+1. Make any changes to the component.
+2. Modify the e2e test in the `test/` directory under the component directory, if possible. If the test does not exist and it is possible to show the change, please create a new test in a directory called `basic/`.
 
-**Should I use `background` or `bg`?**
-`background`
+#### TypeScript Changes
 
-**Should I use `background` or `background-color`?**
-`background` so users can override backgrounds in Sass variables using images and etc
+1. If there is a `*.spec.ts` file located in the `test/` folder, update it to include a karma test for your change, if needed. If this file doesn't exist, please notify us.
+2. Run `gulp karma` to make sure all tests are working, regardless if a test was added.
+3. Run `gulp tslint` and fix any linter errors.
 
-### License
+#### Sass Changes
+
+1. If the css property is something that the user may want to override and it won't break the component layout, it should be given a Sass variable. See our [doc on naming Sass variables](https://docs.google.com/document/d/1OyOyrRE5lpB_9mdkF0HWVQLV97fHma450N8XqE4mjZQ/edit?usp=sharing).
+2. After any changes to the Sass files run the [Sass Linter](https://github.com/brigade/scss-lint), and fix any linter errors:
+ - Requires [Ruby](https://www.ruby-lang.org/en/documentation/installation/). **Skip this step entirely if you are unable to install Ruby.**
+ - Install the linter: `gem install scss_lint`
+ - Make sure to run the linter at the root of the repository.
+ - To check all component Sass files: `scss-lint ionic/**/**/*.scss`
+ - To check a specific Sass file: `scss-lint ionic/components/toolbar/toolbar.ios.scss`
+
+
+#### Viewing Changes
+
+1. Run the gulp watch task for e2e tests: `gulp watch.e2e`
+2. Launch your browser and navigate to `http://localhost:8000/dist/e2e`
+3. From here, navigate to the component you are changing.
+4. Any changes to the e2e tests in the `test/` directory will show here.
+5. If your changes look good, you're ready to [commit](#committing)!
+
+
+### Committing
+
+1. Install [Commitizen](https://github.com/commitizen/cz-cli#installing-the-command-line-tool) (add sudo if on OSX/Linux): `npm install -g commitizen`
+2. Use commitizen to commit instead of `git commit`: `git cz`
+3. This will prompt you with questions and commit when you are finished.
+4. Submit the Pull Request!
+
+
+## License
 
 By contributing your code to the driftyco/ionic GitHub Repository, you agree to license your contribution under the MIT license.
