@@ -7,7 +7,7 @@ import {Gesture} from '../../gestures/gesture';
 import {DragGesture} from '../../gestures/drag-gesture';
 import {dom} from '../../util';
 import {CSS} from '../../util/dom';
-import {debounce, isTrueProperty, defaults} from '../../util/util';
+import {debounce, isTrueProperty, isPresent, defaults} from '../../util/util';
 
 import {Swiper} from './swiper-widget';
 import {Scroll} from '../scroll/scroll';
@@ -16,38 +16,159 @@ import {Scroll} from '../scroll/scroll';
 /**
  * @name Slides
  * @description
- * Slides is a slide box implementation based on Swiper.js
+ * The Slides component is a multi-section container. Each section can be swiped
+ * or dragged between. It contains any number of [Slide](../Slide) components.
+ *
+ *
+ * ### Creating
+ * You should use a template to create slides and listen to slide events. The template
+ * should contain the slide container, an `<ion-slides>` element, and any number of
+ * [Slide](../Slide) components, written as `<ion-slide>`. Any configuration of the
+ * slides should be passed in the `options` property of the `<ion-slides>` element.
+ * You can listen to events such as the slide changing by placing the event on the
+ * `<ion-slides>` element. See [Usage](#usage) below for more information on
+ * creating slides.
+ *
+ *
+ * ### Configuring
+ * There are several configuration options that can be passed to Slides. These should
+ * be passed in the `options` property of the `<ion-slides>` element upon creation.
+ * You can allow the slides to loop around from the last to the first, set autoplay
+ * on the slides so it will automatically switch between them, and more.
+ *
+ * Properties to pass in options:
+ *
+ * | Property              | Type      | Default        | Description                                                                                |
+ * |-----------------------|-----------|----------------|--------------------------------------------------------------------------------------------|
+ * | autoplay              | `number`  | -              | Delay between transitions (in ms). If this parameter is not passed, autoplay is disabled.  |
+ * | direction             | `string`  | 'horizontal'   | Swipe direction: 'horizontal' or 'vertical'.                                               |
+ * | initialSlide          | `number`  | 0              | Index number of initial slide                                                              |
+ * | loop                  | `boolean` | false          | Whether to continuously loop from the last slide to the first slide.                       |
+ * | pager                 | `boolean` | false          | Show the pagination bullets.                                                               |
+ * | speed                 | `number`  | 300            | Duration of transition between slides (in ms).                                             |
+ *
+ * See [Usage](#usage) below for more information on configuring slides.
+ *
+ *
+ * ### Navigating
+ * After creating and configuring the slides, you can navigate between them
+ * by swiping or calling methods on the `Slides` instance. You can call `slideTo()` to
+ * navigate to a specific slide, or `slideNext()` to change to the slide that follows
+ * the active slide. All of the [methods](#instance-members) provided by the `Slides`
+ * instance are listed below. See [Usage](#usage) below for more information on
+ * navigating between slides.
+ *
+ *
+ * ### Limitations
+ * The Slides component wraps the [Swiper](http://www.idangero.us/swiper/) component
+ * built by iDangero.us. This means that all of the Swiper API isn't exposed on the
+ * Slides component. See the [`getSlider()`](#getSlider) method for information on
+ * getting the `Swiper` instance and using its methods directly.
+ *
  *
  * @usage
- * ```ts
- * @Page({
- *  template: `
- *     <ion-slides pager (change)="onSlideChanged($event)" (move)="onSlideMove($event)">
- *      <ion-slide>
- *        <h3>Thank you for choosing the Awesome App!</h3>
- *        <p>
- *          The number one app for everything awesome.
- *        </p>
- *      </ion-slide>
- *      <ion-slide>
- *        <h3>Using Awesome</h3>
- *         <div id="list">
- *           <h5>Just three steps:</h5>
- *           <ol>
- *             <li>Be awesome</li>
- *             <li>Stay awesome</li>
- *             <li>There is no step 3</li>
- *           </ol>
- *         </div>
- *      </ion-slide>
- *      <ion-slide>
- *        <h3>Any questions?</h3>
- *      </ion-slide>
- *    </ion-slides>
- *    `
- *})
  *
- *```
+ * You can add slides to a `@Page` using the following template:
+ *
+ * ```html
+ * <ion-slides>
+ *   <ion-slide>
+ *     <h1>Slide 1</h1>
+ *   </ion-slide>
+ *   <ion-slide>
+ *     <h1>Slide 2</h1>
+ *   </ion-slide>
+ *   <ion-slide>
+ *     <h1>Slide 3</h1>
+ *   </ion-slide>
+ * </ion-slides>
+ * ```
+ *
+ * To add [options](#configuring), we will define them in `mySlideOptions` in our class `MyPage`:
+ *
+ * ```ts
+ * import {Page, Slides} from 'ionic-angular';
+ *
+ * @Page({
+ *   templateUrl: 'my-page.html'
+ * })
+ * class MyPage {
+ *   mySlideOptions = {
+ *     initialSlide: 1,
+ *     loop: true
+ *   };
+ * }
+ * ```
+ *
+ * This is setting the second slide as the initial slide on load, since
+ * the `initialSlide` begins at `0`. We are also setting `loop` to true which
+ * allows us to swipe from the last slide to the first continuously. Then,
+ * we will pass `mySlideOptions` in the `options` property of the `<ion-slides>`
+ * element. We are using [property binding](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#property-binding)
+ * on `options` because `mySlideOptions` is an expression:
+ *
+ * ```html
+ * <ion-slides [options]="mySlideOptions">
+ * ```
+ *
+ * To grab a reference to the Slides, we will add a [local template variable](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#local-vars)
+ * to `<ion-slides>` called `mySlider`:
+ *
+ * ```html
+ * <ion-slides #mySlider [options]="mySlideOptions">
+ * ```
+ *
+ * Next, we can use `ViewChild` to assign the Slides instance to `slider`:
+ *
+ * ```ts
+ * import {ViewChild} from 'angular2/core';
+ *
+ * class MyPage {
+ *   @ViewChild('mySlider') slider: Slides;
+ *
+ *   ...
+ * }
+ * ```
+ *
+ * Now we can call any of the `Slider` [methods]((#instance-members)),
+ * for example we can use the Slider's `slideTo()` method in order to
+ * navigate to a specific slide on a button click. Below we call the
+ * `goToSlide()` method and it navigates to the 3rd slide:
+ *
+ * ```ts
+ * class MyPage {
+ *   ...
+ *
+ *   goToSlide() {
+ *     this.slider.slideTo(2, 500);
+ *   }
+ * }
+ * ```
+ *
+ * We can also add events to listen to on the `<ion-slides>` element.
+ * Let's add the `didChange` event and call a method when the slide changes:
+ *
+ * ```html
+ * <ion-slides #mySlider (didChange)="onSlideChanged()" [options]="mySlideOptions">
+ * ```
+ *
+ * In our class, we add the `onSlideChanged()` method which gets the active
+ * index and prints it:
+ *
+ * ```ts
+ * class MyPage {
+ *   ...
+ *
+ *   onSlideChanged() {
+ *     let currentIndex = this.slider.getActiveIndex();
+ *     console.log("Current index is", currentIndex);
+ *   }
+ * }
+ * ```
+ *
+ * For all of the methods you can call on the `Slider` instance, see the
+ * [Instance Members](#instance-members).
+ *
  * @demo /docs/v2/demos/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
@@ -72,6 +193,9 @@ import {Scroll} from '../scroll/scroll';
       '<div [class.hide]="!showPager" class="swiper-pagination"></div>' +
     '</div>',
   directives: [NgClass],
+  host: {
+    '[class]': 'slideId'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -81,6 +205,16 @@ export class Slides extends Ion {
    * @private
    */
   public rapidUpdate: Function;
+
+  /**
+   * @private
+   */
+  private id: number;
+
+  /**
+   * @private
+   */
+  private slideId: string;
 
   /**
    * @private
@@ -156,54 +290,64 @@ export class Slides extends Ion {
   };
 
   /**
-   * @input {boolean} Whether the slide should show the pager or not
-   */
-  @Input() pager: any;
-
-  /**
-   * @input {any} Any slider options you want to configure, see swiper parameters: http://www.idangero.us/swiper/api/
+   * @input {Object} Any configuration for the slides
    */
   @Input() options: any;
 
   /**
-   * @input {number} Whether or not the slider can zoom in or out
+   * @private Deprecated
+   */
+  @Input() pager: any;
+
+  /**
+   * @private Deprecated
    */
   @Input() zoom: any;
 
   /**
-   * @input {number} how long it should take to zoom a slide
+   * @private Deprecated
    */
   @Input() zoomDuration: any;
 
   /**
-   * @input {number} the max scale an slide can be zoomed
+   * @private Deprecated
    */
   @Input() zoomMax: any;
 
   /**
-   * @output {any} expression to evaluate when a slide has been changed
-   */
-  @Output() change: EventEmitter<any> = new EventEmitter();
-
-  /**
-   * @output {any} expression to evaluate when a slide change starts
+   * @private Deprecated
    */
   @Output() slideChangeStart: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @output {any} expression to evaluate when a slide moves
+   * @private Deprecated
+   */
+  @Output() change: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @output {any} Expression to evaluate when a slide change starts.
+   */
+  @Output() willChange: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @output {any} Expression to evaluate when a slide change ends.
+   */
+  @Output() didChange: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @output {any} Expression to evaluate when a slide moves.
    */
   @Output() move: EventEmitter<any> = new EventEmitter();
 
-  /**
-   * @private
-   * @param {ElementRef} elementRef  TODO
-   */
+
   constructor(elementRef: ElementRef) {
     super(elementRef);
     this.rapidUpdate = debounce(() => {
       this.update();
     }, 10);
+
+    this.id = ++slidesId;
+    this.slideId = 'slides-' + this.id;
   }
 
   /**
@@ -214,10 +358,32 @@ export class Slides extends Ion {
       this.options = {};
     }
 
-    this.showPager = isTrueProperty(this.pager);
+    if (isPresent(this.pager)) {
+      // beta.5 2016-04-18 deprecated warning
+      // Pager should be passed as an option
+      console.warn('The "pager" attribute has been deprecated. Please pass it in options.');
+      // Remove this with the deprecation warning
+      this.showPager = isTrueProperty(this.pager);
+    }
+
+    if (isPresent(this.zoom)) {
+      // beta.5 2016-04-18 deprecated warning
+      // Zoom should be passed as an option
+      console.warn('The "zoom" attribute has been deprecated. Please pass it in options.');
+    }
+
+    // Deprecated 04-18 beta.5
+    console.warn('The "slideChangeStart" event has been deprecated. Please use "willChange" instead. Ignore this if you aren\'t using it.');
+    console.warn('The "change" event has been deprecated. Please use "didChange" instead. Ignore this if you aren\'t using it.');
+
+    if (isPresent(this.options.pager)) {
+      this.showPager = isTrueProperty(this.options.pager);
+    }
+
+    let paginationId = '.' + this.slideId + ' .swiper-pagination';
 
     var options = defaults({
-      pagination: '.swiper-pagination',
+      pagination: paginationId
     }, this.options);
 
     options.onTap = (swiper, e) => {
@@ -241,11 +407,17 @@ export class Slides extends Ion {
       return this.options.onTransitionEnd && this.options.onTransitionEnd(swiper, e);
     };
     options.onSlideChangeStart = (swiper) => {
+      // TODO deprecated 2016-04-18
       this.slideChangeStart.emit(swiper);
+
+      this.willChange.emit(swiper);
       return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
     };
     options.onSlideChangeEnd = (swiper) => {
+      // TODO deprecated 2016-04-18
       this.change.emit(swiper);
+
+      this.didChange.emit(swiper);
       return this.options.onSlideChangeEnd && this.options.onSlideChangeEnd(swiper);
     };
     options.onLazyImageLoad = (swiper, slide, img) => {
@@ -259,6 +431,7 @@ export class Slides extends Ion {
       return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
     };
 
+
     setTimeout(() => {
       var swiper = new Swiper(this.getNativeElement().children[0], options);
       this.slider = swiper;
@@ -266,7 +439,7 @@ export class Slides extends Ion {
 
     /*
     * TODO: Finish this
-    if (util.isTrueProperty(this.zoom)) {
+    if (isTrueProperty(this.zoom)) {
       this.enableZoom = true;
       setTimeout(() => {
         this.initZoom();
@@ -290,7 +463,6 @@ export class Slides extends Ion {
    * @private
    */
   onDoubleTap(swiper, e) {
-
     this.toggleZoom(swiper, e);
   }
   /**
@@ -602,58 +774,98 @@ export class Slides extends Ion {
       this.slider.update();
 
       // Don't allow pager to show with > 10 slides
-      if (this.slider.slides.length > 10) {
+      if (this.length() > 10) {
         this.showPager = false;
       }
     });
   }
 
   /**
-   * @private
+   * Transition to the specified slide.
+   *
+   * @param {number} index  The index number of the slide.
+   * @param {number} speed  Transition duration (in ms). Optional.
+   * @param {boolean} runCallbacks  Whether or not to emit the `willChange`/`didChange` events. Optional. Default true.
    */
-  next() {
-    this.slider.slideNext();
+  slideTo(index: number, speed: number, runCallbacks: boolean) {
+    this.slider.slideTo(index, speed, runCallbacks);
   }
 
   /**
-   * @private
+   * Transition to the next slide.
+   *
+   * @param {number} speed  Transition duration (in ms). Optional.
+   * @param {boolean} runCallbacks  Whether or not to emit the `willChange`/`didChange` events. Optional. Default true.
    */
-  prev() {
-    this.slider.slidePrev();
+  slideNext(speed: number, runCallbacks: boolean) {
+    this.slider.slideNext(runCallbacks, speed);
   }
 
   /**
-   * @private
+   * Transition to the previous slide.
+   *
+   * @param {number} speed  Transition duration (in ms). Optional.
+   * @param {boolean} runCallbacks  Whether or not to emit the `willChange`/`didChange` events. Optional. Default true.
    */
-  getIndex(): number {
+  slidePrev(speed: number, runCallbacks: boolean) {
+    this.slider.slidePrev(runCallbacks, speed);
+  }
+
+  /**
+   * Get the index of the active slide.
+   *
+   * @returns {number} The index number of the current slide.
+   */
+  getActiveIndex(): number {
     return this.slider.activeIndex;
   }
 
   /**
-   * @private
+   * Get the index of the previous slide.
+   *
+   * @returns {number} The index number of the previous slide.
    */
-  getNumSlides(): number {
+  getPreviousIndex(): number {
+    return this.slider.previousIndex;
+  }
+
+  /**
+   * Get the total number of slides.
+   *
+   * @returns {number} The total number of slides.
+   */
+  length(): number {
     return this.slider.slides.length;
   }
 
   /**
-   * @private
+   * Get whether or not the current slide is the last slide.
+   *
+   * @returns {boolean} If the slide is the last slide or not.
    */
-  isAtEnd(): boolean {
+  isEnd(): boolean {
     return this.slider.isEnd;
   }
 
   /**
-   * @private
+   * Get whether or not the current slide is the first slide.
+   *
+   * @returns {boolean} If the slide is the first slide or not.
    */
-  isAtBeginning(): boolean {
+  isBeginning(): boolean {
     return this.slider.isBeginning;
   }
 
   /**
-   * @private
+   * Get the `Swiper` instance.
+   *
+   * The Slides component wraps the `Swiper` component built by iDangero.us. See the
+   * [Swiper API Docs](http://idangero.us/swiper/api/) for information on using
+   * the `Swiper` instance directly.
+   *
+   * @returns {Swiper}
    */
-  getSliderWidget() {
+  getSlider() {
     return this.slider;
   }
 }
@@ -661,7 +873,11 @@ export class Slides extends Ion {
  /**
   * @name Slide
   * @description
-  * `ion-slide` is a child component of `ion-slides` and is where all your individule slide content will be rendered too.
+  * The Slide component is a child component of [Slides](../Slides). The template
+  * should be written as `ion-slide`. Any slide content should be written
+  * in this component and it should be used in conjunction with [Slides](../Slides).
+  *
+  * See the [Slides API Docs](../Slides) for more usage information.
   *
   * @demo /docs/v2/demos/slides/
   * @see {@link /docs/v2/api/components/slides/Slides/ Slides API Docs}
@@ -706,3 +922,5 @@ export class Slide {
   }
 })
 export class SlideLazy {}
+
+let slidesId = -1;

@@ -128,7 +128,7 @@ ion-toggle {
 // Windows Color Mixin
 // --------------------------------------------------
 
-@mixin toggle-theme-wp($color-name, $color-base) {
+@mixin toggle-theme-wp($color-name, $color-base, $color-contrast) {
 
   ion-toggle[#{$color-name}] {
 
@@ -151,6 +151,6 @@ ion-toggle {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  @include toggle-theme-wp($color-name, $color-base);
+  @include toggle-theme-wp($color-name, $color-base, $color-contrast);
 
 }

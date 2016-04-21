@@ -128,6 +128,62 @@ import {ViewController} from '../nav/view-controller';
  * }
  * ```
  *
+ *
+ * ### Dismissing And Async Navigation
+ *
+ * After an alert has been dismissed, the app may need to also transition
+ * to another page depending on the handler's logic. However, because multiple
+ * transitions were fired at roughly the same time, it's difficult for the
+ * nav controller to cleanly animate multiple transitions that may
+ * have been kicked off asynchronously. This is further described in the
+ * [`Nav Transition Promises`](../../nav/NavController) section. For alerts,
+ * this means it's best to wait for the alert to finish its transition
+ * out before starting a new transition on the same nav controller.
+ *
+ * In the example below, after the alert button has been clicked, its handler
+ * waits on async operation to complete, *then* it uses `pop` to navigate
+ * back a page in the same stack. The potential problem is that the async operation
+ * may have been completed before the alert has even finished its transition
+ * out. In this case, it's best to ensure the alert has finished its transition
+ * out first, *then* start the next transition.
+ *
+ * ```ts
+ * let alert = Alert.create({
+ *   title: 'Hello',
+ *   buttons: [{
+ *     text: 'Ok',
+ *     handler: () => {
+ *       // user has clicked the alert button
+ *       // begin the alert's dimiss transition
+ *       let navTransition = alert.dismiss();
+ *
+ *       // start some async method
+ *       someAsyncOperation().then(() => {
+ *         // once the async operation has completed
+ *         // then run the next nav transition after the
+ *         // first transition has finished animating out
+ *
+ *         navTransition.then(() => {
+ *           this.nav.pop();
+ *         });
+ *       });
+ *       return false;
+ *     }
+ *   }]
+ * });
+ *
+ * this.nav.present(alert);
+ * ```
+ *
+ * It's important to note that the handler returns `false`. A feature of
+ * button handlers is that they automatically dismiss the alert when their button
+ * was clicked, however, we'll need more control regarding the transition. Because
+ * the handler returns `false`, then the alert does not automatically dismiss
+ * itself. Instead, you now have complete control of when the alert has finished
+ * transitioning, and the ability to wait for the alert to finish transitioning
+ * out before starting a new transition.
+ *
+ *
  * @demo /docs/v2/demos/alert/
  */
 export class Alert extends ViewController {
@@ -242,7 +298,7 @@ export class Alert extends ViewController {
    *  | cssClass | `string` | An additional CSS class for the button                         |
    *  | role     | `string` | The buttons role, null or `cancel`                             |
    *
-   * @param {object} opts Alert. See the tabel above
+   * @param {object} opts Alert. See the table above
    */
   static create(opts: AlertOptions = {}) {
     return new Alert(opts);
@@ -267,7 +323,7 @@ export class Alert extends ViewController {
 
         '<template ngSwitchWhen="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
-            '<button *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
+            '<button category="alert-radio-button" *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
               '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
               '<div class="alert-radio-label">' +
                 '{{i.label}}' +
@@ -278,7 +334,7 @@ export class Alert extends ViewController {
 
         '<template ngSwitchWhen="checkbox">' +
           '<div class="alert-checkbox-group">' +
-            '<button *ngFor="#i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" class="alert-tappable alert-checkbox" role="checkbox">' +
+            '<button category="alert-checkbox-button" *ngFor="#i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" class="alert-tappable alert-checkbox" role="checkbox">' +
               '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
               '<div class="alert-checkbox-label">' +
                 '{{i.label}}' +
@@ -297,7 +353,7 @@ export class Alert extends ViewController {
 
       '</div>' +
       '<div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">' +
-        '<button *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass" class="alert-button">' +
+        '<button category="alert-button" *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
           '{{b.text}}' +
           '<ion-button-effect></ion-button-effect>' +
         '</button>' +

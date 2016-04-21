@@ -13,6 +13,10 @@ class E2EPage {
       duration: 1000
     });
 
+    loading.onDismiss(() => {
+     console.log('Dismissed loading');
+    });
+
     this.nav.present(loading);
   }
 

@@ -11,14 +11,6 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <pre>platform.is('android')</pre>
-    </ion-col>
-    <ion-col>
-      <pre [ngClass]="isAndroid ? 'platform-true' : 'platform-false'">{{isAndroid}}</pre>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
       <pre>platform.is('ios')</pre>
     </ion-col>
     <ion-col>
@@ -27,18 +19,18 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <pre>platform.is('windows')</pre>
+      <pre>platform.is('android')</pre>
     </ion-col>
     <ion-col>
-      <pre [ngClass]="isWindows ? 'platform-true' : 'platform-false'">{{isWindows}}</pre>
+      <pre [ngClass]="isAndroid ? 'platform-true' : 'platform-false'">{{isAndroid}}</pre>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <pre>platform.userAgent()</pre>
+      <pre>platform.is('windows')</pre>
     </ion-col>
     <ion-col>
-      <pre class="platform-normal">{{userAgent}}</pre>
+      <pre [ngClass]="isWindows ? 'platform-true' : 'platform-false'">{{isWindows}}</pre>
     </ion-col>
   </ion-row>
 

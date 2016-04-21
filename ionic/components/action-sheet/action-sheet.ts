@@ -75,6 +75,62 @@ import {ViewController} from '../nav/view-controller';
  * }
  * ```
  *
+ *
+ * ### Dismissing And Async Navigation
+ *
+ * After an action sheet has been dismissed, the app may need to also transition
+ * to another page depending on the handler's logic. However, because multiple
+ * transitions were fired at roughly the same time, it's difficult for the
+ * nav controller to cleanly animate multiple transitions that may
+ * have been kicked off asynchronously. This is further described in the
+ * [`Nav Transition Promises`](../../nav/NavController) section. For action sheets,
+ * this means it's best to wait for the action sheet to finish its transition
+ * out before starting a new transition on the same nav controller.
+ *
+ * In the example below, after the button has been clicked, its handler
+ * waits on async operation to complete, *then* it uses `pop` to navigate
+ * back a page in the same stack. The potential problem is that the async operation
+ * may have been completed before the action sheet has even finished its transition
+ * out. In this case, it's best to ensure the action sheet has finished its transition
+ * out first, *then* start the next transition.
+ *
+ * ```ts
+ * let actionSheet = ActionSheet.create({
+ *   title: 'Hello',
+ *   buttons: [{
+ *     text: 'Ok',
+ *     handler: () => {
+ *       // user has clicked the action sheet button
+ *       // begin the action sheet's dimiss transition
+ *       let navTransition = actionSheet.dismiss();
+ *
+ *       // start some async method
+ *       someAsyncOperation().then(() => {
+ *         // once the async operation has completed
+ *         // then run the next nav transition after the
+ *         // first transition has finished animating out
+ *
+ *         navTransition.then(() => {
+ *           this.nav.pop();
+ *         });
+ *       });
+ *       return false;
+ *     }
+ *   }]
+ * });
+ *
+ * this.nav.present(actionSheet);
+ * ```
+ *
+ * It's important to note that the handler returns `false`. A feature of
+ * button handlers is that they automatically dismiss the action sheet when their button
+ * was clicked, however, we'll need more control regarding the transition. Because
+ * the handler returns `false`, then the action sheet does not automatically dismiss
+ * itself. Instead, you now have complete control of when the action sheet has finished
+ * transitioning, and the ability to wait for the action sheet to finish transitioning
+ * out before starting a new transition.
+ *
+ *
  * @demo /docs/v2/demos/action-sheet/
  * @see {@link /docs/v2/components#action-sheets ActionSheet Component Docs}
  */
@@ -166,14 +222,14 @@ export class ActionSheet extends ViewController {
         '<div class="action-sheet-group">' +
           '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
           '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
-          '<button (click)="click(b)" *ngFor="#b of d.buttons" class="action-sheet-button disable-hover" [ngClass]="b.cssClass">' +
+          '<button category="action-sheet-button" (click)="click(b)" *ngFor="#b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{b.text}}' +
             '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
         '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
-          '<button (click)="click(d.cancelButton)" class="action-sheet-button action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
+          '<button category="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
             '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{d.cancelButton.text}}' +
             '<ion-button-effect></ion-button-effect>' +
@@ -234,7 +290,7 @@ class ActionSheetCmp {
 
       // deprecated warning
       if (button.style) {
-        console.warn('Alert "style" property has been renamed to "role"');
+        console.warn('Action sheet "style" property has been renamed to "role"');
         button.role = button.style;
       }
 

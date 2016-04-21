@@ -1,0 +1,44 @@
+@import "../../globals.wp";
+@import "./toast";
+
+// Windows Phone Toast
+// --------------------------------------------------
+
+$toast-wp-text-align:                            left !default;
+$toast-wp-background:                            rgba(0, 0, 0, 1) !default;
+$toast-wp-border-radius:                         0 !default;
+$toast-wp-button-color:                          #fff !default;
+
+$toast-wp-title-color:                           #fff !default;
+$toast-wp-title-font-size:                       1.4rem !default;
+$toast-wp-title-padding:                         1.5rem !default;
+
+
+.toast-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-overlay-wrapper;
+  display: block;
+
+  margin: auto;
+
+  max-width: $toast-max-width;
+
+  border-radius: $toast-wp-border-radius;
+  background: $toast-wp-background;
+
+  transform: translate3d(0, 100%, 0);
+}
+
+.toast-message {
+  padding: $toast-wp-title-padding;
+
+  font-size: $toast-wp-title-font-size;
+
+  color: $toast-wp-title-color;
+}
+
+.toast-button {
+  color: $toast-wp-button-color;
+}

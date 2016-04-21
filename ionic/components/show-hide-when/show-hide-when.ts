@@ -62,7 +62,15 @@ export class DisplayWhen {
  * @description
  * The `showWhen` attribute takes a string that represents a platform or screen orientation.
  * The element the attribute is added to will only be shown when that platform or screen orientation is active.
- * Complements the [hideWhen attribute](../HideWhen).
+ *
+ * Complements the [hideWhen attribute](../HideWhen). If the `showWhen` attribute is used on an
+ * element that also has the `hideWhen` attribute, the element will not show if `hideWhen` evaluates
+ * to `true` or `showWhen` evaluates to `false`. If the `hidden` attribute is also added, the element
+ * will not show if `hidden` evaluates to `true`.
+ *
+ * View the [Platform API docs](../../../platform/Platform) for more information on the different
+ * platforms you can use.
+ *
  * @usage
  * ```html
  * <div showWhen="android">
@@ -87,6 +95,7 @@ export class DisplayWhen {
  * ```
  * @demo /docs/v2/demos/show-when/
  * @see {@link ../HideWhen HideWhen API Docs}
+ * @see {@link ../../../platform/Platform Platform API Docs}
  */
 @Directive({
   selector: '[showWhen]',
@@ -111,7 +120,15 @@ export class ShowWhen extends DisplayWhen {
  * @description
  * The `hideWhen` attribute takes a string that represents a plaform or screen orientation.
  * The element the attribute is added to will only be hidden when that platform or screen orientation is active.
- * Complements the [showWhen attribute](../ShowWhen).
+ *
+ * Complements the [showWhen attribute](../ShowWhen). If the `hideWhen` attribute is used on an
+ * element that also has the `showWhen` attribute, the element will not show if `hideWhen` evaluates
+ * to `true` or `showWhen` evaluates to `false`. If the `hidden` attribute is also added, the element
+ * will not show if `hidden` evaluates to `true`.
+ *
+ * View the [Platform API docs](../../../platform/Platform) for more information on the different
+ * platforms you can use.
+ *
  * @usage
  * ```html
  * <div hideWhen="android">
@@ -137,7 +154,8 @@ export class ShowWhen extends DisplayWhen {
  *
  * @demo /docs/v2/demos/hide-when/
  * @see {@link ../ShowWhen ShowWhen API Docs}
- */
+ * @see {@link ../../../platform/Platform Platform API Docs}
+*/
 @Directive({
   selector: '[hideWhen]',
   host: {

@@ -65,7 +65,7 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  *     <ion-option>Pepperoni</ion-option>
  *     <ion-option>Sausage</ion-option>
  *   </ion-select>
- * <ion-item>
+ * </ion-item>
  * ```
  *
  * ### Alert Buttons
@@ -109,6 +109,7 @@ const SELECT_VALUE_ACCESSOR = new Provider(
     '</div>' +
     '<button aria-haspopup="true" ' +
             '[id]="id" ' +
+            'category="item-cover" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
             'class="item-cover">' +
@@ -255,7 +256,7 @@ export class Select {
             this.onChange(input.value);
             this.change.emit(input.value);
           }
-        }
+        };
       }));
       alertOptions.cssClass = 'select-action-sheet';
 
@@ -273,7 +274,7 @@ export class Select {
           label: input.text,
           value: input.value,
           checked: input.checked
-        }
+        };
       });
 
       // create the alert instance from our built up alertOptions

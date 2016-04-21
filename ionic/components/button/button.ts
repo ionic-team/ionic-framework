@@ -59,6 +59,11 @@ export class Button {
   isItem: boolean;
 
   /**
+   * @input {string} The category of the button.
+   */
+  @Input() category: string;
+
+  /**
    * @input {string} Large button.
    */
   @Input()
@@ -183,6 +188,16 @@ export class Button {
     }
 
     this._readAttrs(element);
+  }
+
+  /**
+   * @private
+   */
+  ngOnInit() {
+    // If the button has a role applied to it
+    if (this.category) {
+      this.setRole(this.category);
+    }
   }
 
   /**

@@ -151,6 +151,12 @@ textarea {
   touch-action: manipulation;
 }
 
+a ion-label,
+button ion-label,
+[tappable] ion-label {
+  pointer-events: none;
+}
+
 button {
   border: 0;
   font-family: inherit;

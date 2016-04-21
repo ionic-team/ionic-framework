@@ -1,13 +1,12 @@
 import {Component, Type, ViewChild} from 'angular2/core';
 import {App, NavController, Alert, Content} from 'ionic-angular';
 import {Page, Config, IonicApp} from 'ionic-angular';
-import {NavParams, ViewController, IONIC_DIRECTIVES} from 'ionic-angular';;
+import {NavParams, ViewController} from 'ionic-angular';;
 
 
 @Component({
   selector: 'my-cmp',
-  template: `<p>My Custom Component Test <ion-icon name="star"></ion-icon></p>`,
-  directives: [IONIC_DIRECTIVES]
+  template: `<p>My Custom Component Test <ion-icon name="star"></ion-icon></p>`
 })
 class MyCmpTest{}
 
@@ -49,6 +48,7 @@ class MyCmpTest{}
         <button ion-item (click)="quickPush()">New push during transition</button>
         <button ion-item (click)="quickPop()">New pop during transition</button>
         <button ion-item (click)="reload()">Reload</button>
+        <button ion-item (click)="scrollToBottom()">Scroll to bottom</button>
         <button *ngFor="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
         <button ion-item (click)="content.scrollToTop()">Scroll to top</button>
       </ion-list>
@@ -121,6 +121,10 @@ class FirstPage {
 
   scrollToTop() {
     this.content.scrollToTop();
+  }
+
+  scrollToBottom() {
+    this.content.scrollToBottom(1000);
   }
 }
 

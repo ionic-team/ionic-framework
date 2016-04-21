@@ -268,7 +268,7 @@ export class Content extends Ion {
    * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
   scrollToTop(duration: number = 300) {
-    return this.scrollTo(0, 0, duration);
+    return this._scroll.scrollToTop(duration);
   }
 
   /**
@@ -285,6 +285,15 @@ export class Content extends Ion {
    */
   setScrollTop(top: number) {
     this._scroll.setTop(top);
+  }
+
+  /**
+   * Scroll to the bottom of the content component.
+   * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
+   * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
+   */
+  scrollToBottom(duration: number = 300) {
+    return this._scroll.scrollToBottom(duration);
   }
 
   /**

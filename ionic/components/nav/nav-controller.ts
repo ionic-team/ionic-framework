@@ -37,7 +37,7 @@ import {ViewController} from './view-controller';
  * specific NavController, most times you will inject and use a reference to the
  * nearest NavController to manipulate the navigation stack.
  *
- * <h3 id="injecting_nav_controller">Injecting NavController</h3>
+ * ### Injecting NavController
  * Injecting NavController will always get you an instance of the nearest
  * NavController, regardless of whether it is a Tab or a Nav.
  *
@@ -58,7 +58,8 @@ import {ViewController} from './view-controller';
  *  }
  * ```
  *
- * <h2 id="creating_pages">Page creation</h2>
+ *
+ * ## Page creation
  * _For more information on the `@Page` decorator see the [@Page API
  * reference](../../../decorators/Page/)._
  *
@@ -73,7 +74,7 @@ import {ViewController} from './view-controller';
  * [pop()](#pop) or [setRoot()](#setRoot)).
  *
  *
- * <h2 id="Lifecycle">Lifecycle events</h2>
+ * ## Lifecycle events
  * Lifecycle events are fired during various stages of navigation.  They can be
  * defined in any `@Page` decorated component class.
  *
@@ -91,15 +92,53 @@ import {ViewController} from './view-controller';
  * }
  * ```
  *
+ *  | Page Event         | Description                                                                                                                                                                                                                                                                       |
+ *  |--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+ *  | `onPageLoaded`     | Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `onPageLoaded` event is good place to put your setup code for the page. |
+ *  | `onPageWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                  |
+ *  | `onPageDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                            |
+ *  | `onPageWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                            |
+ *  | `onPageDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                                         |
+ *  | `onPageWillUnload` | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                                        |
+ *  | `onPageDidUnload`  | Runs after the page has been destroyed and its elements have been removed.
  *
  *
- * - `onPageLoaded` - Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `onPageLoaded` event is good place to put your setup code for the page.
- * - `onPageWillEnter` - Runs when the page is about to enter and become the active page.
- * - `onPageDidEnter` - Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.
- * - `onPageWillLeave` - Runs when the page is about to leave and no longer be the active page.
- * - `onPageDidLeave` - Runs when the page has finished leaving and is no longer the active page.
- * - `onPageWillUnload` - Runs when the page is about to be destroyed and have its elements removed.
- * - `onPageDidUnload` - Runs after the page has been destroyed and its elements have been removed.
+ * ## Nav Transition Promises
+ *
+ * Navigation transitions are asynchronous, meaning they take a few moments to finish, and
+ * the duration of a transition could be any number. In most cases the async nature of a
+ * transition doesn't cause any problems and the nav controller is pretty good about handling
+ * which transition was the most recent when multiple transitions have been kicked off.
+ * However, when an app begins firing off many transitions, on the same stack at
+ * *roughly* the same time, the nav controller can start to get lost as to which transition
+ * should be finishing, and which transitions should not be animated.
+ *
+ * In cases where an app's navigation can be altered by other async tasks, which may or
+ * may not take a long time, it's best to rely on each nav transition's returned
+ * promise. So instead of firing and forgetting multiple `push` or `pop` nav transitions,
+ * it's better to fire the next nav transition when the previous one has finished.
+ *
+ * In the example below, after the async operation has completed, we then want to transition
+ * to another page. Where the potential problem comes in, is that if the async operation
+ * completed 100ms after the first transition started, then kicking off another transition
+ * halfway through the first transition ends up with a janky animation. Instead, it's best
+ * to always ensure the first transition has already finished before starting the next.
+ *
+ * ```ts
+ * // begin the first transition
+ * let navTransition = this.nav.push(SomePage);
+ *
+ * // start an async call, we're not sure how long it'll take
+ * someAsyncOperation().then(() => {
+ *   // incase the async operation completed faster than the time
+ *   // it took to finish the first transition, this logic should
+ *   // always ensure that the previous transition has resolved
+ *   // first before kicking off the next transition
+ *   navTransition.then(() => {
+ *     this.nav.push(AnotherPage);
+ *   });
+ * });
+ * ```
  *
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
@@ -178,6 +217,9 @@ export class NavController extends Ion {
     ]);
   }
 
+  /**
+   * @private
+   */
   setPortal(val: Portal) {
     this._portal = val;
   }
@@ -1357,7 +1399,7 @@ export class NavController extends Ion {
     }
     this._views.length = 0;
 
-    if (this.parent) {
+    if (this.parent && this.parent.unregisterChildNav) {
       this.parent.unregisterChildNav(this);
     }
   }
