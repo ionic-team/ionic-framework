@@ -29,7 +29,7 @@ insert any relevant code between the above and below backticks
 
 **For Ionic 1 issues** - http://plnkr.co/edit/jnOrQRtE8rN2WCXDQYQY?p=info
 
-**For Ionic 2 issues** - http://plnkr.co/edit/sSFR9jbfTsxgAmrm9hUR?p=info
+**For Ionic 2 issues** - http://plnkr.co/edit/FV8COT9PvzID6BOd8W5H?p=info
 
 
 **Run `ionic info` from terminal/cmd prompt:** (paste output below)
