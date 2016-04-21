@@ -62,6 +62,46 @@ Looking for an issue to fix? Make sure to look through our issues with the [help
 5. If your changes look good, you're ready to [commit](#committing)!
 
 
+#### Adding Documentation
+
+1. To add or modify API Documentation for a component, it should be added/changed in the component's TypeScript (`*.ts`) file, prior to the Class definition. For example, `Badge` looks similar to this:
+
+  ```
+  /**
+    * @name Badge
+    * @module ionic
+    * @description
+    * Badges are simple components in Ionic containing numbers or text.
+    *
+    * @see {@link /docs/v2/components/#badges Badges Component Docs}
+    * @demo /docs/v2/demos/badge/
+  **/
+  ```
+
+  where `@name` is the Class name, `@description` is the description displayed on the documentation page, `@see` links to any related pages, and `@demo` links to the API demo located in the `demos` folder.
+2. In order to run API documentation locally, you will need to clone the `ionic-site` repo as a sibling to the `ionic` repo and then run it: https://github.com/driftyco/ionic-site#local-build
+3. Then, run `gulp docs` in the `ionic` repo every time you make a change and the site will update.
+4. If the change affects the component documentation, create an issue on the `ionic-site` repo: https://github.com/driftyco/ionic-site/issues
+
+
+#### Adding Demos
+
+1. Create or modify the demo in the `demos/` folder.
+2. If it is new, link to the demo in the component's TypeScript (`*.ts`) file (under `ionic/components`) by adding a link to it in the documentation using `@demo`, for example:
+
+  ```
+  /**
+    * @name Badge
+    *
+    * ...
+    *
+    * @demo /docs/v2/demos/badge/
+  **/
+  ```
+3. Run `gulp watch.demos` to watch for changes to the demo
+4. Navigate to `http://localhost:8000/dist/demos/` and then to your component's demo to view it.
+5. If the change affects the component demos, create an issue on the `ionic-site` repo: https://github.com/driftyco/ionic-site/issues
+
 ### Committing
 
 1. Install [Commitizen](https://github.com/commitizen/cz-cli#installing-the-command-line-tool) (add sudo if on OSX/Linux): `npm install -g commitizen`
