@@ -220,9 +220,8 @@ class ToastCmp {
 }
 
 export interface ToastOptions {
-  title?: string;
+  message?: string;
   cssClass?: string;
-  buttons?: Array<any>;
   duration?: number;
   showCloseButton?: boolean;
   closeButtonText?: string;
