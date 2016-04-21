@@ -120,6 +120,7 @@ class ToastCmp {
   private descId: string;
   private hdrId: string;
   private created: number;
+  private id: number;
   private dismissTimeout: number = undefined;
 
   constructor(
@@ -138,8 +139,9 @@ class ToastCmp {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
     }
 
+    this.id = (++toastIds);
     if (this.d.message) {
-      this.hdrId = 'acst-hdr-' + this.id;
+      this.hdrId = 'toast-hdr-' + this.id;
     }
   }
 
@@ -290,3 +292,5 @@ Transition.register('toast-md-slide-in', ToastMdSlideIn);
 Transition.register('toast-md-slide-out', ToastMdSlideOut);
 Transition.register('toast-wp-slide-out', ToastWpPopOut);
 Transition.register('toast-wp-slide-in', ToastWpPopIn);
+
+let toastIds = -1;
