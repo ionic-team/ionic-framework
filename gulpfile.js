@@ -222,8 +222,14 @@ gulp.task('transpile', function(){
 
   var tscOpts = getTscOptions(TYPECHECK ? 'typecheck' : undefined);
   var tsResult = tsCompile(tscOpts, 'transpile')
+    .on('error', function(err) {
+      console.log(err.message);
+    });
 
   if (TYPECHECK) {
+    tsResult.on('error', function(err) {
+      process.exit(1);
+    });
     var merge = require('merge2');
     var js = tsResult.js;
     var dts = tsResult.dts;
@@ -249,10 +255,7 @@ function tsCompile(options, cacheName){
       '!ionic/**/*.spec.ts'
     ])
     .pipe(cache(cacheName, { optimizeMemory: true }))
-    .pipe(tsc(options, undefined, tscReporter))
-    .on('error', function(error) {
-      console.log(error.message);
-    });
+    .pipe(tsc(options, undefined, tscReporter));
 }
 
 /**
@@ -325,6 +328,21 @@ gulp.task('copy.scss', function() {
       '!ionic/util/test/*'
     ])
     .pipe(gulp.dest('dist'));
+});
+
+/**
+ * Lint the scss files using a ruby gem
+ */
+gulp.task('lint.scss', function() {
+  var scsslint = require('gulp-scss-lint');
+
+  return gulp.src([
+      'ionic/**/*.scss',
+      '!ionic/components/*/test/**/*',
+      '!ionic/util/test/*'
+    ])
+    .pipe(scsslint())
+    .pipe(scsslint.failReporter());
 });
 
 /**
@@ -719,10 +737,8 @@ gulp.task('karma-watch', ['watch.tests', 'bundle.system'], function() {
   */
 gulp.task('prerelease', function(done){
   runSequence(
-    'tslint',
+    'validate',
     'prepare',
-    'build.release',
-    'karma',
     'package',
     done
   );
@@ -858,8 +874,11 @@ gulp.task('publish.npm', function(done) {
   });
 });
 
-gulp.task('publish.nightly', ['build.release'], function(done){
-  runSequence('git-pull-latest', 'nightly', done);
+/**
+ * Execute this task to validate current code and then
+ */
+gulp.task('publish.nightly', function(done){
+  runSequence('git-pull-latest', 'validate', 'nightly', done);
 });
 
 /**
@@ -945,11 +964,25 @@ gulp.task('tooling', function(){
   })
 });
 
+/**
+ * Validate Task
+ * - This task
+ */
+gulp.task('validate', function(done) {
+  runSequence(
+    'lint.scss',
+    'tslint',
+    'build.release',
+    'karma',
+    done
+  );
+});
+
 
 /**
  * TS LINT
  */
-gulp.task('tslint', function(done) {
+gulp.task('tslint', function() {
   var tslint = require('gulp-tslint');
   return gulp.src([
       'ionic/**/*.ts',

@@ -49,6 +49,7 @@
     "gulp-remember": "^0.3.0",
     "gulp-rename": "~1.2.0",
     "gulp-sass": "^2.0.4",
+    "gulp-scss-lint": "^0.3.9",
     "gulp-shell": "^0.4.0",
     "gulp-strip-debug": "^1.1.0",
     "gulp-tslint": "^4.3.4",
