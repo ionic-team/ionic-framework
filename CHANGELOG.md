@@ -80,6 +80,8 @@
   All methods have been documented in the API docs:
   http://ionicframework.com/docs/v2/api/components/slides/Slides/
 
+* **platform:** `platform.versions()` no longer accepts an optional parameter for platform name
+and now returns only an object containing all of the platforms and their versions.
 
 <a name="2.0.0-beta.4"></a>
 # [2.0.0-beta.4](https://github.com/driftyco/ionic/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2016-04-07)
