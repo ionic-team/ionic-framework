@@ -1,6 +1,20 @@
 import {App, Page, Toast, NavController} from 'ionic-angular';
 
 @Page({
+  template: `
+    <ion-navbar *navbar>
+      <ion-title>Another Page</ion-title>
+    </ion-navbar>
+    <ion-content padding>
+      <p>This is another page to show that the toast stays.</p>
+    </ion-content>
+  `
+})
+class AnotherPage {
+
+}
+
+@Page({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -19,6 +33,10 @@ class E2EPage {
     });
 
     this.nav.present(toast);
+
+    setTimeout(() => {
+      this.nav.push(AnotherPage);
+    }, 1000);
   }
 
   showLongToast() {

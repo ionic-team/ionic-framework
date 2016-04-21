@@ -66,12 +66,12 @@ export class Toast extends ViewController {
 
   constructor(opts: ToastOptions = {}) {
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
-    console.log(opts.enableBackdropDismiss);
+    opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
+
     super(ToastCmp, opts);
-
-
     this.viewType = 'toast';
-    this.isOverlay = false;
+    this.isOverlay = true;
+    this.usePortal = true;
 
     // by default, toasts should not fire lifecycle events of other views
     // for example, when an toast enters, the current active view should
@@ -108,6 +108,7 @@ export class Toast extends ViewController {
    *  | showCloseButton       | `boolean` | false           | Whether or not to show a button to close the toast.                                                           |
    *  | closeButtonText       | `string`  | "Close"         | Text to display in the close button.                                                                          |
    *  | enableBackdropDismiss | `boolean` | true            | Whether the toast should be dismissed by tapping the backdrop.                                                |
+   *  | dismissOnPageChange   | `boolean` | false           | Whether to dismiss the toast when navigating to a new page.                                                   |
    *
    * @param {object} opts Toast options. See the above table for available options.
    */
@@ -226,6 +227,7 @@ export interface ToastOptions {
   showCloseButton?: boolean;
   closeButtonText?: string;
   enableBackdropDismiss?: boolean;
+  dismissOnPageChange?: boolean;
 }
 
 class ToastSlideIn extends Transition {
@@ -235,7 +237,7 @@ class ToastSlideIn extends Transition {
     let ele = enteringView.pageRef().nativeElement;
     let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
 
-    wrapper.fromTo('translateY', '100%', '0%');
+    wrapper.fromTo('translateY', '120%', '0%');
     this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(wrapper);
   }
 }
@@ -247,7 +249,7 @@ class ToastSlideOut extends Transition {
     let ele = leavingView.pageRef().nativeElement;
     let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
 
-    wrapper.fromTo('translateY', '0%', '100%');
+    wrapper.fromTo('translateY', '0%', '120%');
     this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add(wrapper);
   }
 }
@@ -261,7 +263,7 @@ class ToastMdSlideIn extends Transition {
     let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
 
     backdrop.fromTo('opacity', 0, 0);
-    wrapper.fromTo('translateY', '100%', '0%');
+    wrapper.fromTo('translateY', '120%', '0%');
     this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
   }
 }
@@ -274,7 +276,7 @@ class ToastMdSlideOut extends Transition {
     let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
     let backdrop = new Animation(ele.querySelector('.backdrop'));
 
-    wrapper.fromTo('translateY', '0%', '100%');
+    wrapper.fromTo('translateY', '0%', '120%');
     backdrop.fromTo('opacity', 0, 0);
     this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
   }
