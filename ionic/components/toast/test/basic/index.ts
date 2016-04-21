@@ -5,17 +5,19 @@ import {App, Page, Toast, NavController} from 'ionic-angular';
 })
 class E2EPage {
 
-  private dismissMessage: string;
-
-
   constructor(private nav: NavController) { }
 
   showToast() {
     const toast = Toast.create({
       message: 'User was created successfully',
+      showCloseButton: true,
+      enableBackdropDismiss: false
     });
 
-    toast.onDismiss(this.dismissHandler);
+    toast.onDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
     this.nav.present(toast);
   }
 
@@ -58,7 +60,7 @@ class E2EPage {
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
+  root = E2EPage;
   constructor() {
-    this.root = E2EPage;
   }
 }

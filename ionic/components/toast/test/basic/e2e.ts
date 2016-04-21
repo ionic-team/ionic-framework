@@ -1,6 +1,6 @@
 
-it('should open action sheet', function() {
-  element(by.css('.e2eOpenActionSheet')).click();
+it('should open toast', function() {
+  element(by.css('.e2eOpenToast')).click();
 });
 
 it('should close with backdrop click', function() {
