@@ -122,7 +122,7 @@ import {ViewController} from '../nav/view-controller';
  * this.nav.present(actionSheet);
  * ```
  *
- * It's important to note that the the handler returns `false`. A feature of
+ * It's important to note that the handler returns `false`. A feature of
  * button handlers is that they automatically dismiss the action sheet when their button
  * was clicked, however, we'll need more control regarding the transition. Because
  * the handler returns `false`, then the action sheet does not automatically dismiss

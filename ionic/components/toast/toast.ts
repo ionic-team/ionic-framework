@@ -80,7 +80,7 @@ export class Toast extends ViewController {
    *  | cssClass              | `string`  | Any additional class for the toast *(optional)*                                 |
    *  | showCloseButton       | `boolean` | Whether or not to show an optional button to close the toast. *(optional)*      |
    *  | closeButtonText       | `string`  | Text to display in the close button. *(optional)*                               |
-   *  | enableBackdropDismiss | `boolean` | Whether the the toast should be dismissed by tapping the backdrop *(optional)*  |
+   *  | enableBackdropDismiss | `boolean` | Whether the toast should be dismissed by tapping the backdrop *(optional)*      |
    *
    * @param {object} ToastOptions Toast. See the above table for available options.
    */

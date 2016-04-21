@@ -7,9 +7,9 @@ import {Directive, ElementRef, Renderer, Input, Optional, Attribute} from 'angul
  * Labels are placed inside of an `ion-item` element and can be used
  * to describe an `ion-input`, `ion-toggle`, `ion-checkbox`, and more.
  *
- * @property [fixed] - a persistant label that sits next the the input
- * @property [floating] - a label that will float about the input if the input is empty of looses focus
- * @property [stacked] - A stacked label will always appear on top of the input
+ * @property [fixed] - A persistant label that sits next the input.
+ * @property [floating] - A label that will float about the input if the input is empty of looses focus.
+ * @property [stacked] - A stacked label will always appear on top of the input.
 
  *
  * @usage
