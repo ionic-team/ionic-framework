@@ -36,7 +36,9 @@ import {ViewController} from '../nav/view-controller';
  * the `duration` of the loading options. By default the loading indicator
  * will show even during page changes, but this can be disabled by setting
  * `dismissOnPageChange` to `true`. To dismiss the loading indicator after
- * creation, call the `dismiss()` method on the Loading instance.
+ * creation, call the `dismiss()` method on the Loading instance. The
+ * `onDismiss` function can be called to perform an action after the loading
+ * indicator is dismissed.
  *
  * ### Limitations
  * The element is styled to appear on top of other content by setting its
@@ -69,6 +71,10 @@ import {ViewController} from '../nav/view-controller';
  *         <div class="custom-spinner-box"></div>
  *       </div>`,
  *     duration: 5000
+ *   });
+ *
+ *   loading.onDismiss(() => {
+ *     console.log('Dismissed loading');
  *   });
  *
  *   this.nav.present(loading);
