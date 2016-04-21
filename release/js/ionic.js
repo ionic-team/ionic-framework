@@ -2,7 +2,7 @@
  * Copyright 2015 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.2.4
+ * Ionic, v1.3.0
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -18,7 +18,7 @@
 // build processes may have already created an ionic obj
 window.ionic = window.ionic || {};
 window.ionic.views = {};
-window.ionic.version = '1.2.4';
+window.ionic.version = '1.3.0';
 
 (function (ionic) {
 
@@ -573,7 +573,7 @@ window.ionic.version = '1.2.4';
      *
      * `hold`, `tap`, `doubletap`, `drag`, `dragstart`, `dragend`, `dragup`, `dragdown`, <br/>
      * `dragleft`, `dragright`, `swipe`, `swipeup`, `swipedown`, `swipeleft`, `swiperight`, <br/>
-     * `transform`, `transformstart`, `transformend`, `rotate`, `pinch`, `pinchin`, `pinchout`, </br>
+     * `transform`, `transformstart`, `transformend`, `rotate`, `pinch`, `pinchin`, `pinchout`, <br/>
      * `touch`, `release`
      *
      * @param {string} eventType The gesture event to listen for.
@@ -2106,6 +2106,11 @@ window.ionic.version = '1.2.4';
      * @returns {string} What grade the current platform is.
      */
     grade: null,
+    /**
+     * @ngdoc property
+     * @name ionic.Platform#ua
+     * @returns {string} What User Agent is.
+     */
     ua: navigator.userAgent,
 
     /**
@@ -2184,7 +2189,7 @@ window.ionic.version = '1.2.4';
         self.platforms.push('webview');
         if (!(!window.cordova && !window.PhoneGap && !window.phonegap)) {
           self.platforms.push('cordova');
-        } else if (window.forge) {
+        } else if (typeof window.forge === 'object') {
           self.platforms.push('trigger');
         }
       } else {
@@ -2224,7 +2229,7 @@ window.ionic.version = '1.2.4';
      * @returns {boolean} Check if we are running within a WebView (such as Cordova).
      */
     isWebView: function() {
-      return !(!window.cordova && !window.PhoneGap && !window.phonegap && !window.forge);
+      return !(!window.cordova && !window.PhoneGap && !window.phonegap && window.forge !== 'object');
     },
     /**
      * @ngdoc method
@@ -3264,7 +3269,7 @@ ionic.DomUtil.ready(function() {
             eleToActivate = ele;
             break;
           }
-          if (ele.classList.contains('button')) {
+          if (ele.classList && ele.classList.contains('button')) {
             eleToActivate = ele;
             break;
           }
@@ -7493,11 +7498,18 @@ ionic.scroll = {
       };
 
       self.handleTouchMove = function(e) {
-        if(self.__frozenShut) {
+        if (self.__frozenShut) {
           e.preventDefault();
           e.stopPropagation();
           return false;
+
+        } else if ( self.__frozen ){
+          e.preventDefault();
+          // let it propagate so other events such as drag events can happen,
+          // but don't let it actually scroll
+          return false;
         }
+        return true;
       };
 
       container.addEventListener('scroll', self.onScroll);
@@ -10970,14 +10982,35 @@ ionic.views.Slider = ionic.views.View.inherit({
             }
             s.observers = [];
         };
+
+        s.updateLoop = function(){
+          // this is an Ionic custom function
+          var duplicates = s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass);
+          var slides = s.wrapper.children('.' + s.params.slideClass);
+          for ( var i = 0; i < duplicates.length; i++ ){
+            var duplicate = duplicates[i];
+            var swiperSlideIndex = angular.element(duplicate).attr("data-swiper-slide-index");
+            // loop through each slide
+            for ( var j = 0; i < slides.length; j++ ){
+              // if it's not a duplicate, and the data swiper slide index matches the duplicate value
+              var slide = slides[j]
+              if ( !angular.element(slide).hasClass(s.params.slideDuplicateClass) && angular.element(slide).attr("data-swiper-slide-index") === swiperSlideIndex ){
+                // sweet, it's a match
+                duplicate.innerHTML = slide.innerHTML;
+                break;
+              }
+            }
+          }
+        }
         /*=========================
           Loop
           ===========================*/
         // Create looped slides
         s.createLoop = function () {
-
-            var toRemove = s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass);
-            angular.element(toRemove).remove();
+          //console.log("Slider create loop method");
+            //var toRemove = s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass);
+            //angular.element(toRemove).remove();
+            s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass).remove();
 
             var slides = s.wrapper.children('.' + s.params.slideClass);
 
@@ -10997,24 +11030,26 @@ ionic.views.Slider = ionic.views.View.inherit({
                 slide.attr('data-swiper-slide-index', index);
             });
             for (i = 0; i < appendSlides.length; i++) {
-              newNode = angular.element(appendSlides[i]).clone().addClass(s.params.slideDuplicateClass);
+              /*newNode = angular.element(appendSlides[i]).clone().addClass(s.params.slideDuplicateClass);
               newNode.removeAttr('ng-transclude');
               newNode.removeAttr('ng-repeat');
               scope = angular.element(appendSlides[i]).scope();
               newNode = $compile(newNode)(scope);
               angular.element(s.wrapper).append(newNode);
-                //s.wrapper.append($(appendSlides[i].cloneNode(true)).addClass(s.params.slideDuplicateClass));
+                */
+                s.wrapper.append($(appendSlides[i].cloneNode(true)).addClass(s.params.slideDuplicateClass));
             }
             for (i = prependSlides.length - 1; i >= 0; i--) {
-                //s.wrapper.prepend($(prependSlides[i].cloneNode(true)).addClass(s.params.slideDuplicateClass));
+              s.wrapper.prepend($(prependSlides[i].cloneNode(true)).addClass(s.params.slideDuplicateClass));
 
-              newNode = angular.element(prependSlides[i]).clone().addClass(s.params.slideDuplicateClass);
+              /*newNode = angular.element(prependSlides[i]).clone().addClass(s.params.slideDuplicateClass);
               newNode.removeAttr('ng-transclude');
               newNode.removeAttr('ng-repeat');
 
               scope = angular.element(prependSlides[i]).scope();
               newNode = $compile(newNode)(scope);
               angular.element(s.wrapper).prepend(newNode);
+              */
             }
         };
         s.destroyLoop = function () {
