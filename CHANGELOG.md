@@ -1,3 +1,22 @@
+<a name="2.0.0-beta.6"></a>
+# [2.0.0-beta.6](https://github.com/driftyco/ionic/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2016-04-21)
+
+
+### Bug Fixes
+
+* **nav:** tabs should not dereg child navs ([f3ddb0b](https://github.com/driftyco/ionic/commit/f3ddb0b)), closes [#6267](https://github.com/driftyco/ionic/issues/6267)
+* **sass:** fix sass errors ([219059c](https://github.com/driftyco/ionic/commit/219059c))
+* **toast:** create unique toast id ([e07f0ae](https://github.com/driftyco/ionic/commit/e07f0ae))
+* **toast:** remove default duration, allow close button click when bd disabled ([d6589e1](https://github.com/driftyco/ionic/commit/d6589e1))
+* **toast:** remove unused options ([f9ea2d8](https://github.com/driftyco/ionic/commit/f9ea2d8))
+
+### Features
+
+* **toast:** add toast component ([3fb79cf](https://github.com/driftyco/ionic/commit/3fb79cf))
+* **toast:** display the toast even on page change unless `dismissOnPageChange` is passed ([0264532](https://github.com/driftyco/ionic/commit/0264532)), closes [#5582](https://github.com/driftyco/ionic/issues/5582)
+
+
+
 <a name="2.0.0-beta.5"></a>
 # [2.0.0-beta.5](https://github.com/driftyco/ionic/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2016-04-20)
 
