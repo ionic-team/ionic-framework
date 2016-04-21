@@ -189,7 +189,7 @@ class ToastCmp {
     if (this.d.duration) {
       this.dismissTimeout =
         setTimeout(() => {
-          this.dismiss('backdrop')
+          this.dismiss('backdrop');
         }, this.d.duration);
     }
   }
