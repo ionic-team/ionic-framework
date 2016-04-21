@@ -35,7 +35,7 @@ class ApiPage {
 
   showToastWithCloseButton() {
     const toast = Toast.create({
-      message: 'Your internet connection appears to be offline. Data integrity is not gauranteed.',
+      message: 'Your internet connection appears to be offline. Data integrity is not guaranteed.',
       showCloseButton: true,
       closeButtonText: 'Ok'
     });

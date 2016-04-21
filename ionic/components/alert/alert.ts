@@ -175,7 +175,7 @@ import {ViewController} from '../nav/view-controller';
  * this.nav.present(alert);
  * ```
  *
- * It's important to note that the the handler returns `false`. A feature of
+ * It's important to note that the handler returns `false`. A feature of
  * button handlers is that they automatically dismiss the alert when their button
  * was clicked, however, we'll need more control regarding the transition. Because
  * the handler returns `false`, then the alert does not automatically dismiss
