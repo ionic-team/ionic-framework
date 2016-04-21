@@ -152,9 +152,7 @@ export class Platform {
    * }
    * ```
    *
-   * @param {string} [platformName] optional platformName
-   * @returns {object} An object with various platform info
-   *
+   * @returns {object} An object containing all of the platforms and their versions.
    */
   versions(): {[name: string]: PlatformVersion} {
     // get all the platforms that have a valid parsed version
