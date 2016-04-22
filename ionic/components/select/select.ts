@@ -22,18 +22,25 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  * dialog will appear with all of the options in a large, easy to select list
  * for users.
  *
- * Under-the-hood the `ion-select` actually uses the
- * {@link ../../alert/Alert Alert API} to open up the overlay of options
- * which the user is presented with. Select can take numerous child
- * `ion-option` components. If `ion-option` is not given a `value` attribute
- * then it will use its text as the value.
+ * The select component takes child `ion-option` components. If `ion-option` is not
+ * given a `value` attribute then it will use its text as the value.
+ *
+ * ### Interfaces
+ *
+ * By default, the `ion-select` uses the {@link ../../alert/Alert Alert API} to
+ * open up the overlay of options in an alert. The interface can be changed to use the
+ * {@link ../../action-sheet/ActionSheet ActionSheet API} by passing `action-sheet` to
+ * the `interface` property. Read the other sections for the limitations of the
+ * action sheet interface.
  *
  * ### Single Value: Radio Buttons
  *
  * The standard `ion-select` component allows the user to select only one
- * option. When selecting only one option the alert overlay presents users with
- * a radio button styled list of options. The `ion-select` component's value
- * receives the value of the selected option's value.
+ * option. When selecting only one option the alert interface presents users with
+ * a radio button styled list of options. The action sheet interface can only be
+ * used with a single value select. If the number of options exceed 6, it will
+ * use the `alert` interface even if `action-sheet` is passed. The `ion-select`
+ * component's value receives the value of the selected option's value.
  *
  * ```html
  * <ion-item>
@@ -54,6 +61,8 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  * selected option values. In the example below, because each option is not given
  * a `value`, then it'll use its text as the value instead.
  *
+ * Note: the action sheet interface will not work with a multi-value select.
+ *
  * ```html
  * <ion-item>
  *   <ion-label>Toppings</ion-label>
@@ -68,8 +77,8 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  * </ion-item>
  * ```
  *
- * ### Alert Buttons
- * By default, the two buttons read `Cancel` and `OK`. The each button's text
+ * ### Select Buttons
+ * By default, the two buttons read `Cancel` and `OK`. Each button's text
  * can be customized using the `cancelText` and `okText` attributes:
  *
  * ```html
@@ -78,12 +87,16 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  * </ion-select>
  * ```
  *
+ * The action sheet interface does not have an `OK` button, clicking
+ * on any of the options will automatically close the overlay and select
+ * that value.
+ *
  * ### Alert Options
  *
- * Remember how `ion-select` is really just a wrapper to `Alert`? By using
- * the `alertOptions` property you can pass custom options to the alert
- * overlay. This would be useful if there is a custom alert title,
- * subtitle or message. {@link ../../alert/Alert Alert API}
+ * Since `ion-select` is a wrapper to `Alert`, by default, it can be
+ * passed options in the `alertOptions` property. This can be used to
+ * pass a custom alert title, subtitle or message. See the {@link ../../alert/Alert Alert API docs}
+ * for more properties.
  *
  * ```html
  * <ion-select [alertOptions]="alertOptions">
@@ -137,20 +150,18 @@ export class Select {
   id: string;
 
   /**
-   * @private
-   * @input {string}  The text of the cancel button. Defatuls to `Cancel`
+   * @input {string} The text to display on the cancel button. Default: `Cancel`.
    */
   @Input() cancelText: string = 'Cancel';
 
   /**
-   * @private
-   * @input {string} The text of the ok button. Defatuls to `OK`
+   * @input {string} The text to display on the ok button. Default: `OK`.
    */
   @Input() okText: string = 'OK';
 
   /**
-   * @private
-   * @input {any} Any addition options that an alert can take. Title, Subtitle, etc.
+   * @input {any} Any addition options that the alert interface can take.
+   * See the [Alert API docs](../../alert/Alert) for the create options.
    */
   @Input() alertOptions: any = {};
 
@@ -160,17 +171,17 @@ export class Select {
   @Input() checked: any = false;
 
   /**
-   * @private
+   * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
    */
   @Input() interface: string = '';
 
   /**
-   * @output {any} Any expression you want to evaluate when the selection has changed
+   * @output {any} Any expression you want to evaluate when the selection has changed.
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @output {any} Any expression you want to evaluate when the selection was cancelled
+   * @output {any} Any expression you want to evaluate when the selection was cancelled.
    */
   @Output() cancel: EventEmitter<any> = new EventEmitter();
 
@@ -239,14 +250,17 @@ export class Select {
 
     let options = this._options.toArray();
     if (this.interface === 'action-sheet' && options.length > 6) {
-      this.interface = null;
+      console.warn('Interface cannot be "action-sheet" with more than 6 options. Using the "alert" interface.');
+      this.interface = 'alert';
+    }
+
+    if (this.interface === 'action-sheet' && this._multi) {
+      console.warn('Interface cannot be "action-sheet" with a multi-value select. Using the "alert" interface.');
+      this.interface = 'alert';
     }
 
     let overlay;
     if (this.interface === 'action-sheet') {
-      if (this._multi) {
-        throw new Error('action-sheet interface cannot use multivalue selector');
-      }
 
       alertOptions.buttons = alertOptions.buttons.concat(options.map(input => {
         return {
@@ -309,7 +323,7 @@ export class Select {
 
 
   /**
-   * @input {boolean} Whether or not the select component can accept multipl selections
+   * @input {boolean} Whether or not the select component can accept multiple values. Default: `false`.
    */
   @Input()
   get multiple(): any {
@@ -367,7 +381,7 @@ export class Select {
   }
 
   /**
-   * @input {boolean} Whether or not the select component is disabled or not
+   * @input {boolean} Whether or not the select component is disabled. Default `false`.
    */
   @Input()
   get disabled() {
