@@ -179,12 +179,12 @@ Platform.register({
           doc.addEventListener('backbutton', function() {
             p.backButton.emit(null);
           });
-          // doc.addEventListener('pause', function() {
-          //   p.pause.emit(null);
-          // });
-          // doc.addEventListener('resume', function() {
-          //   p.resume.emit(null);
-          // });
+          doc.addEventListener('pause', function() {
+            p.pause.emit(null);
+          });
+          doc.addEventListener('resume', function() {
+            p.resume.emit(null);
+          });
 
           // cordova has fully loaded and we've added listeners
           p.triggerReady();
