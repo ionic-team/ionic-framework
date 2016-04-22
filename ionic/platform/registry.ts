@@ -192,7 +192,7 @@ Platform.register({
           };
 
           // cordova has fully loaded and we've added listeners
-          p.triggerReady();
+          p.triggerReady('cordova');
         });
       });
     };
