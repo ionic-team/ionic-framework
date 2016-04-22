@@ -1,0 +1,79 @@
+@import "../../globals.ios";
+@import "./picker";
+
+// iOS Picker
+// --------------------------------------------------
+
+$picker-ios-height:                            260px !default;
+$picker-ios-background-color:                  #cfd5da !default;
+
+$picker-ios-toolbar-height:                    44px !default;
+$picker-ios-toolbar-background-color:          #f7f7f8 !default;
+
+$picker-ios-button-height:                     $picker-ios-toolbar-height !default;
+$picker-ios-button-text-color:                 color($colors-ios, primary) !default;
+$picker-ios-button-background-color:           transparent !default;
+
+$picker-ios-option-offset-y:                   90px !default;
+$picker-ios-option-font-size:                  18px !default;
+$picker-ios-option-line-height:                24px !default;
+
+
+.picker-wrapper {
+  height: $picker-ios-height;
+
+  border-top: 1px solid #929499;
+
+  background: $picker-ios-background-color;
+}
+
+.hairlines .picker-wrapper {
+  border-width: $hairlines-width;
+}
+
+.picker-toolbar {
+  display: flex;
+
+  height: $picker-ios-toolbar-height;
+  background: $picker-ios-toolbar-background-color;
+}
+
+.picker-toolbar-button {
+  flex: 1;
+  text-align: right;
+}
+
+.picker-toolbar-cancel {
+  text-align: left;
+}
+
+.picker-button,
+.picker-button.activated {
+  margin: 0;
+
+  height: $picker-ios-button-height;
+
+  color: $picker-ios-button-text-color;
+  background: $picker-ios-button-background-color;
+}
+
+.picker-offset {
+  transform: translateY($picker-ios-option-offset-y);
+}
+
+.picker-column {
+  padding: 0 10px;
+}
+
+.picker-prefix,
+.picker-suffix,
+.picker-options {
+  padding: 0 8px;
+  font-size: $picker-ios-option-font-size;
+  line-height: $picker-ios-option-line-height;
+}
+
+.picker-prefix,
+.picker-suffix {
+  padding: 0
+}

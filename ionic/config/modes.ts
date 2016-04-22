@@ -28,6 +28,9 @@ Config.setModeConfig('ios', {
   pageTransition: 'ios-transition',
   pageTransitionDelay: 16,
 
+  pickerEnter: 'picker-slide-in',
+  pickerLeave: 'picker-slide-out',
+
   spinner: 'ios',
 
   tabbarPlacement: 'bottom',
@@ -59,6 +62,9 @@ Config.setModeConfig('md', {
 
   pageTransition: 'md-transition',
   pageTransitionDelay: 96,
+
+  pickerEnter: 'picker-slide-in',
+  pickerLeave: 'picker-slide-out',
 
   spinner: 'crescent',
 
@@ -94,6 +100,9 @@ Config.setModeConfig('wp', {
 
   pageTransition: 'wp-transition',
   pageTransitionDelay: 96,
+
+  pickerEnter: 'picker-slide-in',
+  pickerLeave: 'picker-slide-out',
 
   spinner: 'circles',
 

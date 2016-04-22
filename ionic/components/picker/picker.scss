@@ -1,0 +1,72 @@
+@import "../../globals.core";
+
+// Picker
+// --------------------------------------------------
+
+$picker-width:                             100% !default;
+$picker-max-width:                         500px !default;
+
+
+ion-picker-cmp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-overlay;
+  display: block;
+
+  width: $picker-width;
+  height: $picker-width;
+}
+
+.picker-toolbar {
+  z-index: 1;
+}
+
+.picker-wrapper {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-overlay-wrapper;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  margin: auto;
+
+  width: $picker-width;
+  max-width: $picker-max-width;
+
+  transform: translate3d(0, 100%, 0);
+}
+
+.picker-columns {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.picker-offset {
+  display: flex;
+}
+
+.picker-column {
+  flex: 1;
+}
+
+.picker-prefix {
+  flex: 1;
+  text-align: right;
+}
+
+.picker-suffix {
+  flex: 1;
+  text-align: left;
+}
+
+.picker-option {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
