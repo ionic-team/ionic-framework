@@ -29,8 +29,5 @@
   "components/virtual-scroll/virtual-scroll";
 
 
-// Ionicons (to be replaced with SVGs)
-$ionicons: true !default;
-@if ($ionicons) {
-  @import "fonts/ionicons";
-}
+// Ionicons
+@import "fonts/ionicons";

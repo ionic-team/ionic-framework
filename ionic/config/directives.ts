@@ -6,7 +6,6 @@ import {MenuToggle} from '../components/menu/menu-toggle';
 import {MenuClose} from '../components/menu/menu-close';
 import {Badge} from '../components/badge/badge';
 import {Button} from '../components/button/button';
-import {Blur} from '../components/blur/blur';
 import {Content} from '../components/content/content';
 import {Img} from '../components/img/img';
 import {Scroll} from '../components/scroll/scroll';
@@ -93,7 +92,6 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * - MenuClose
  * - Badge
  * - Button
- * - Blur
  * - Content
  * - Scroll
  * - InfiniteScroll
@@ -154,7 +152,6 @@ export const IONIC_DIRECTIVES = [
 
   Badge,
   Button,
-  Blur,
   Content,
   Scroll,
   InfiniteScroll,

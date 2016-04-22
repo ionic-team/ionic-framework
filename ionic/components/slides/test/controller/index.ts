@@ -9,7 +9,7 @@ class MyPage {
   @ViewChild('mySlider') slider: Slides;
   mySlideOptions = {
     initialSlide: 1,
-    loop: true
+    loop: false
   };
 
   ngAfterViewInit() {
@@ -17,8 +17,9 @@ class MyPage {
   }
 
   onSlideChanged() {
+    let previousIndex = this.slider.getPreviousIndex();
     let currentIndex = this.slider.getActiveIndex();
-    console.log("Current index is", currentIndex);
+    console.log("Previous index is", previousIndex, "Current index is", currentIndex);
   }
 
   goToPrevSlide() {
@@ -30,7 +31,7 @@ class MyPage {
   }
 
   goToSlide(index) {
-    this.slider.slideTo(index, 500, false);
+    this.slider.slideTo(index);
   }
 
   getIndex() {

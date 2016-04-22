@@ -1,8 +1,18 @@
 
-<ion-toolbar><ion-title>Show/Hide When</ion-title></ion-toolbar>
+<ion-toolbar>
+  <ion-title>Show/Hide When</ion-title>
+  <ion-buttons end>
+    <button showWhen="ios">iOS</button>
+    <button showWhen="windows">Windows</button>
+    <button showWhen="android">Android</button>
+  </ion-buttons>
+</ion-toolbar>
 
 
 <ion-content padding>
+  <button showWhen="ios">iOS</button>
+  <button showWhen="windows">Windows</button>
+  <button showWhen="android">Android</button>
 
   <p showWhen="ios" style="background:blue; color:white">
     showWhen="ios"

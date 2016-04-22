@@ -1,3 +1,107 @@
+<a name="2.0.0-beta.6"></a>
+# [2.0.0-beta.6](https://github.com/driftyco/ionic/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2016-04-21)
+
+
+### Bug Fixes
+
+* **nav:** tabs should not dereg child navs ([f3ddb0b](https://github.com/driftyco/ionic/commit/f3ddb0b)), closes [#6267](https://github.com/driftyco/ionic/issues/6267)
+* **sass:** fix sass errors ([219059c](https://github.com/driftyco/ionic/commit/219059c))
+* **toast:** create unique toast id ([e07f0ae](https://github.com/driftyco/ionic/commit/e07f0ae))
+* **toast:** remove default duration, allow close button click when bd disabled ([d6589e1](https://github.com/driftyco/ionic/commit/d6589e1))
+* **toast:** remove unused options ([f9ea2d8](https://github.com/driftyco/ionic/commit/f9ea2d8))
+
+### Features
+
+* **toast:** add toast component ([3fb79cf](https://github.com/driftyco/ionic/commit/3fb79cf))
+* **toast:** display the toast even on page change unless `dismissOnPageChange` is passed ([0264532](https://github.com/driftyco/ionic/commit/0264532)), closes [#5582](https://github.com/driftyco/ionic/issues/5582)
+
+
+
+<a name="2.0.0-beta.5"></a>
+# [2.0.0-beta.5](https://github.com/driftyco/ionic/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2016-04-20)
+
+
+### Bug Fixes
+
+* **alert:** remove justify content from buttons in an alert ([9412a7c](https://github.com/driftyco/ionic/commit/9412a7c))
+* **app:** add iOS status bar padding to each mode ([5a1c441](https://github.com/driftyco/ionic/commit/5a1c441)), closes [#5924](https://github.com/driftyco/ionic/issues/5924)
+* **button:** add a category to buttons so they won't get the button styles ([35dd0ed](https://github.com/driftyco/ionic/commit/35dd0ed)), closes [#6237](https://github.com/driftyco/ionic/issues/6237)
+* **button:** buttons don't get activated when ion-label contains exotic elements ([0521ce2](https://github.com/driftyco/ionic/commit/0521ce2))
+* **button:** remove classes from buttons with categories ([5f8edc2](https://github.com/driftyco/ionic/commit/5f8edc2))
+* **checkbox:** add `type="button"` to button tag ([7583ebf](https://github.com/driftyco/ionic/commit/7583ebf))
+* **content:** fix padding/margin attributes so all work on scroll-content ([9020d52](https://github.com/driftyco/ionic/commit/9020d52))
+* **cordova:** add status bar padding for content for all modes ([f45ddf9](https://github.com/driftyco/ionic/commit/f45ddf9)), closes [#5934](https://github.com/driftyco/ionic/issues/5934)
+* **cordova:** only target navbar section when it has the statusbar-padding ([422c983](https://github.com/driftyco/ionic/commit/422c983))
+* **focus:** improve input focus control ([e27452b](https://github.com/driftyco/ionic/commit/e27452b)), closes [#5536](https://github.com/driftyco/ionic/issues/5536)
+* **input:** add 'type="button"' to button tag ([f17f517](https://github.com/driftyco/ionic/commit/f17f517))
+* **input:** blur when tapping outside input on iOS ([f9b46c2](https://github.com/driftyco/ionic/commit/f9b46c2)), closes [#5020](https://github.com/driftyco/ionic/issues/5020)
+* **input:** move nested function outside of if statment so as to fix issue related to strict ([c8e58e5](https://github.com/driftyco/ionic/commit/c8e58e5))
+* **keyboard:** remove content padding after input blur ([e21c4d5](https://github.com/driftyco/ionic/commit/e21c4d5)), closes [#5800](https://github.com/driftyco/ionic/issues/5800)
+* **label:** remove flex-basis to fix floating/stacked labels on iOS/Safari ([cd62a4c](https://github.com/driftyco/ionic/commit/cd62a4c)), closes [#6109](https://github.com/driftyco/ionic/issues/6109)
+* **loading:** present loading from root nav controller ([f972908](https://github.com/driftyco/ionic/commit/f972908)), closes [#6121](https://github.com/driftyco/ionic/issues/6121)
+* **platform:** fire cordova platform.ready using zone ([ba5624b](https://github.com/driftyco/ionic/commit/ba5624b)), closes [#6186](https://github.com/driftyco/ionic/issues/6186)
+* **platform:** run zone after cordova deviceready ([e082bd1](https://github.com/driftyco/ionic/commit/e082bd1)), closes [#6087](https://github.com/driftyco/ionic/issues/6087)
+* **sass:** move the `@at-root` font import to the components file ([8f08de1](https://github.com/driftyco/ionic/commit/8f08de1)), closes [#5931](https://github.com/driftyco/ionic/issues/5931)
+* **searchbar:** only show clear icon when focused on the searchbar ([ecf9302](https://github.com/driftyco/ionic/commit/ecf9302)), closes [#5922](https://github.com/driftyco/ionic/issues/5922)
+* **showHideWhen:** remove hidden attribute on directives and use classes ([5692abe](https://github.com/driftyco/ionic/commit/5692abe)), closes [#5836](https://github.com/driftyco/ionic/issues/5836)
+* **slides:** add id to the slide component to grab the correct pagination ([7263728](https://github.com/driftyco/ionic/commit/7263728)), closes [#5745](https://github.com/driftyco/ionic/issues/5745) [#5508](https://github.com/driftyco/ionic/issues/5508)
+* **tabs:** do not init w/ tab that is hidden or disabled ([8d8cc4c](https://github.com/driftyco/ionic/commit/8d8cc4c)), closes [#6226](https://github.com/driftyco/ionic/issues/6226)
+* **tabs:** remove tabbarIcons and fix windows styling to use tabbarLayout ([81dd1cc](https://github.com/driftyco/ionic/commit/81dd1cc)), closes [#6126](https://github.com/driftyco/ionic/issues/6126)
+* **toolbar:** add border-top when toolbar is positioned to the bottom ([29e6242](https://github.com/driftyco/ionic/commit/29e6242)), closes [#5967](https://github.com/driftyco/ionic/issues/5967)
+* **virtualScroll:** load async data ([16a283e](https://github.com/driftyco/ionic/commit/16a283e)), closes [#6124](https://github.com/driftyco/ionic/issues/6124)
+
+### Features
+
+* **app:** getActiveNav() method ([7777237](https://github.com/driftyco/ionic/commit/7777237))
+* **backbutton:** add hardware back button ([68278b0](https://github.com/driftyco/ionic/commit/68278b0)), closes [#5071](https://github.com/driftyco/ionic/issues/5071)
+* **changeDetection:** detach Tabs when not active ([0c4171e](https://github.com/driftyco/ionic/commit/0c4171e))
+* **changeDetection:** detach ViewControllers when not active ([b282e90](https://github.com/driftyco/ionic/commit/b282e90))
+* **config:** create a method to access the global app injector which contains references the  ([17a9e6d](https://github.com/driftyco/ionic/commit/17a9e6d)), closes [#5973](https://github.com/driftyco/ionic/issues/5973)
+* **content:** add scrollToBottom ([bef4a67](https://github.com/driftyco/ionic/commit/bef4a67))
+* **directives:** auto provide IONIC_DIRECTIVES to all components ([0a83f2f](https://github.com/driftyco/ionic/commit/0a83f2f)), closes [#6092](https://github.com/driftyco/ionic/issues/6092)
+* **platform:** add backbutton event ([156fdc3](https://github.com/driftyco/ionic/commit/156fdc3))
+* **platform:** default desktop to use material design ([51032d2](https://github.com/driftyco/ionic/commit/51032d2)), closes [#6003](https://github.com/driftyco/ionic/issues/6003)
+* **select:** fallback to alert interface when more than 6 opts ([1c67b02](https://github.com/driftyco/ionic/commit/1c67b02))
+* **select:** using action-sheet as ion-select interface ([81096f1](https://github.com/driftyco/ionic/commit/81096f1))
+* **slides:** add ability to slide to specific index ([a6091bd](https://github.com/driftyco/ionic/commit/a6091bd))
+* **slides:** add method to get previous index ([a54361c](https://github.com/driftyco/ionic/commit/a54361c))
+* **statusbarPadding:** add statusbar-padding css to content ([98c2aab](https://github.com/driftyco/ionic/commit/98c2aab))
+* **statusbarPadding:** add statusbar-padding css to toolbars ([44403d1](https://github.com/driftyco/ionic/commit/44403d1))
+* **tabs:** enabled and show inputs ([1b085e3](https://github.com/driftyco/ionic/commit/1b085e3)), closes [#5768](https://github.com/driftyco/ionic/issues/5768)
+* **toggle:** add animation for windows mode toggle ([f841bef](https://github.com/driftyco/ionic/commit/f841bef)), closes [#5981](https://github.com/driftyco/ionic/issues/5981)
+
+### Performance Improvements
+
+* **img:** do not reuse img elements ([b744275](https://github.com/driftyco/ionic/commit/b744275)), closes [#6112](https://github.com/driftyco/ionic/issues/6112)
+
+
+### BREAKING CHANGES
+
+* **tabs:** `tabbarIcons` is officially removed, please use `tabbarLayout` instead. View the [Tabs API docs](http://ionicframework.com/docs/v2/api/components/tabs/Tabs/) for more information.
+* **slides:** The Slides component has been refactored. Many methods and events were
+    renamed.
+
+  The following events have been renamed:
+
+  - `slideChangeStart` has been renamed `willChange`
+  - `change` has been renamed `didChange`
+
+  The following methods have been renamed:
+
+  - `next()` has been renamed to `slideNext()`
+  - `prev()` has been renamed to `slidePrev()`
+  - `getIndex()` has been renamed to `getActiveIndex()`
+  - `getNumSlides()` has been renamed to `length()`
+  - `isAtEnd()` has been renamed to `isEnd()`
+  - `isAtBeginning()` has been renamed to `isBeginning()`
+  - `getSliderWidget()` has been renamed to `getSlider()`
+
+  All methods have been documented in the API docs:
+  http://ionicframework.com/docs/v2/api/components/slides/Slides/
+
+* **platform:** `platform.versions()` no longer accepts an optional parameter for platform name
+and now returns only an object containing all of the platforms and their versions.
+
 <a name="2.0.0-beta.4"></a>
 # [2.0.0-beta.4](https://github.com/driftyco/ionic/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2016-04-07)
 

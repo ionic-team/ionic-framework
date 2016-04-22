@@ -73,6 +73,10 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
   &:last-child .action-sheet-button {
     margin-bottom: $action-sheet-wp-group-margin-bottom;
   }
+
+  .button-inner {
+    justify-content: flex-start;
+  }
 }
 
 .action-sheet-selected {

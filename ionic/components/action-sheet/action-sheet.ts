@@ -122,7 +122,7 @@ import {ViewController} from '../nav/view-controller';
  * this.nav.present(actionSheet);
  * ```
  *
- * It's important to note that the the handler returns `false`. A feature of
+ * It's important to note that the handler returns `false`. A feature of
  * button handlers is that they automatically dismiss the action sheet when their button
  * was clicked, however, we'll need more control regarding the transition. Because
  * the handler returns `false`, then the action sheet does not automatically dismiss
@@ -222,14 +222,14 @@ export class ActionSheet extends ViewController {
         '<div class="action-sheet-group">' +
           '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
           '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
-          '<button (click)="click(b)" *ngFor="#b of d.buttons" class="action-sheet-button disable-hover" [ngClass]="b.cssClass">' +
+          '<button category="action-sheet-button" (click)="click(b)" *ngFor="#b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{b.text}}' +
             '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
         '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
-          '<button (click)="click(d.cancelButton)" class="action-sheet-button action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
+          '<button category="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
             '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{d.cancelButton.text}}' +
             '<ion-button-effect></ion-button-effect>' +

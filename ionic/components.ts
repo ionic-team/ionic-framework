@@ -3,7 +3,6 @@ export * from './components/app/id';
 export * from './components/action-sheet/action-sheet';
 export * from './components/alert/alert';
 export * from './components/badge/badge';
-export * from './components/blur/blur';
 export * from './components/button/button';
 export * from './components/checkbox/checkbox';
 export * from './components/content/content';

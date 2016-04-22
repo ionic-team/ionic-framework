@@ -89,9 +89,10 @@ describe('IonicApp', () => {
   var app: IonicApp;
   var config: Config;
   var platform: Platform;
+  var _cd: any;
 
   function mockNav(): Nav {
-    return new Nav(null,null,null,config,null,null,null,null,null,null);
+    return new Nav(null, null, null, config, null, null, null, null, null, null);
   }
 
   function mockTabs(): Tabs {
@@ -99,13 +100,17 @@ describe('IonicApp', () => {
   }
 
   function mockTab(parentTabs: Tabs): Tab {
-    return new Tab(parentTabs,null,config,null,null,null,null,null,null);
+    return new Tab(parentTabs, app, config, null, null, null, null, null, null, _cd);
   }
 
   beforeEach(() => {
     config = new Config();
     platform = new Platform();
     app = new IonicApp(config, null, platform);
+    _cd = {
+      reattach: function(){},
+      detach: function(){}
+    };
   });
 
 });

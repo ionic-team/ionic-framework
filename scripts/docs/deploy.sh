@@ -37,7 +37,9 @@ function run {
   ./node_modules/.bin/gulp demos --production=true
 
   # process new docs
-  rm -R $DOCS_DEST/api
+  if [ -d "$DOCS_DEST/api" ]; then
+    rm -R $DOCS_DEST/api
+  fi
   ./node_modules/.bin/gulp docs --doc-version="$VERSION_NAME"
 
   # compile sass vars json for ionic-site docs

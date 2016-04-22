@@ -175,7 +175,7 @@ import {ViewController} from '../nav/view-controller';
  * this.nav.present(alert);
  * ```
  *
- * It's important to note that the the handler returns `false`. A feature of
+ * It's important to note that the handler returns `false`. A feature of
  * button handlers is that they automatically dismiss the alert when their button
  * was clicked, however, we'll need more control regarding the transition. Because
  * the handler returns `false`, then the alert does not automatically dismiss
@@ -298,7 +298,7 @@ export class Alert extends ViewController {
    *  | cssClass | `string` | An additional CSS class for the button                         |
    *  | role     | `string` | The buttons role, null or `cancel`                             |
    *
-   * @param {object} opts Alert. See the tabel above
+   * @param {object} opts Alert. See the table above
    */
   static create(opts: AlertOptions = {}) {
     return new Alert(opts);
@@ -323,7 +323,7 @@ export class Alert extends ViewController {
 
         '<template ngSwitchWhen="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
-            '<button *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
+            '<button category="alert-radio-button" *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
               '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
               '<div class="alert-radio-label">' +
                 '{{i.label}}' +
@@ -334,7 +334,7 @@ export class Alert extends ViewController {
 
         '<template ngSwitchWhen="checkbox">' +
           '<div class="alert-checkbox-group">' +
-            '<button *ngFor="#i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" class="alert-tappable alert-checkbox" role="checkbox">' +
+            '<button category="alert-checkbox-button" *ngFor="#i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" class="alert-tappable alert-checkbox" role="checkbox">' +
               '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
               '<div class="alert-checkbox-label">' +
                 '{{i.label}}' +
@@ -353,7 +353,7 @@ export class Alert extends ViewController {
 
       '</div>' +
       '<div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">' +
-        '<button *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass" class="alert-button">' +
+        '<button category="alert-button" *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
           '{{b.text}}' +
           '<ion-button-effect></ion-button-effect>' +
         '</button>' +

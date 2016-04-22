@@ -92,7 +92,7 @@ export function App(args: AppMetadata = {}) {
     let directives = args.directives ? args.directives.concat(IONIC_DIRECTIVES) : IONIC_DIRECTIVES;
 
     // automatically provide all of Ionic's directives to every component
-    providers.push(provide(PLATFORM_DIRECTIVES, {useValue: [directives], multi:true}));
+    providers.push(provide(PLATFORM_DIRECTIVES, {useValue: [directives], multi: true}));
 
     if (args.prodMode) {
       enableProdMode();

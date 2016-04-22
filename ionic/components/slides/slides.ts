@@ -44,6 +44,7 @@ import {Scroll} from '../scroll/scroll';
  * | direction             | `string`  | 'horizontal'   | Swipe direction: 'horizontal' or 'vertical'.                                               |
  * | initialSlide          | `number`  | 0              | Index number of initial slide                                                              |
  * | loop                  | `boolean` | false          | Whether to continuously loop from the last slide to the first slide.                       |
+ * | pager                 | `boolean` | false          | Show the pagination bullets.                                                               |
  * | speed                 | `number`  | 300            | Duration of transition between slides (in ms).                                             |
  *
  * See [Usage](#usage) below for more information on configuring slides.
@@ -371,17 +372,9 @@ export class Slides extends Ion {
       console.warn('The "zoom" attribute has been deprecated. Please pass it in options.');
     }
 
-    if (isPresent(this.change)) {
-      // beta.5 2016-04-18 deprecated warning
-      // change has been renamed to didChange
-      console.warn('The "change" event has been deprecated. Please use "didChange" instead.');
-    }
-
-    if (isPresent(this.slideChangeStart)) {
-      // beta.5 2016-04-18 deprecated warning
-      // slideChangeStart has been renamed to willChange
-      console.warn('The "slideChangeStart" event has been deprecated. Please use "willChange" instead.');
-    }
+    // Deprecated 04-18 beta.5
+    console.warn('The "slideChangeStart" event has been deprecated. Please use "willChange" instead. Ignore this if you aren\'t using it.');
+    console.warn('The "change" event has been deprecated. Please use "didChange" instead. Ignore this if you aren\'t using it.');
 
     if (isPresent(this.options.pager)) {
       this.showPager = isTrueProperty(this.options.pager);
@@ -825,6 +818,15 @@ export class Slides extends Ion {
    */
   getActiveIndex(): number {
     return this.slider.activeIndex;
+  }
+
+  /**
+   * Get the index of the previous slide.
+   *
+   * @returns {number} The index number of the previous slide.
+   */
+  getPreviousIndex(): number {
+    return this.slider.previousIndex;
   }
 
   /**
