@@ -175,7 +175,7 @@ Platform.register({
         doc.addEventListener('deviceready', function() {
           // 3) cordova deviceready event triggered
 
-          // add cordova listeners to fire platform events
+          // add cordova listeners to emit platform events
           doc.addEventListener('backbutton', function() {
             p.backButton.emit(null);
           });
@@ -186,15 +186,15 @@ Platform.register({
             p.resume.emit(null);
           });
 
+          // cordova has its own exitApp method
+          p.exitApp = function() {
+            win.navigator.app.exitApp();
+          };
+
           // cordova has fully loaded and we've added listeners
           p.triggerReady();
         });
       });
-    };
-
-    // cordova has its own exitApp method
-    p.exitApp = function() {
-      win.navigator.app.exitApp();
     };
 
   },
