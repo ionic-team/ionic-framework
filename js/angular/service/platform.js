@@ -164,6 +164,11 @@ IonicModule
           var q = $q.defer();
 
           ionic.Platform.ready(function() {
+
+            window.addEventListener('statusTap', function() {
+              $ionicScrollDelegate.scrollTop(true);
+            });
+
             q.resolve();
             cb && cb();
           });
@@ -171,10 +176,6 @@ IonicModule
           return q.promise;
         }
       };
-
-      window.addEventListener('statusTap', function() {
-        $ionicScrollDelegate.scrollTop(true);
-      });
 
       return self;
     }]
