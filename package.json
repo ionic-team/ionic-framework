@@ -17,7 +17,7 @@
     "colors": "^1.1.2",
     "es6-shim": "^0.35.0",
     "inquirer": "0.11.0",
-    "ionicons": "3.0.0-alpha.3",
+    "ionicons": "3.0.0",
     "lodash": "3.10.1",
     "mkdirp-no-bin": "0.5.1",
     "q": "1.4.1",
