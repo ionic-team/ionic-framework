@@ -10,7 +10,6 @@ $tabbar-ios-item-font-size:           10px !default;
 $tabbar-ios-item-icon-size:           30px !default;
 $tabbar-ios-height:                   49px !default;
 
-$tab-button-ios-min-width:            80px !default;
 $tab-button-ios-max-width:            240px !default;
 $tab-button-ios-active-color:         $toolbar-ios-active-color !default;
 $tab-button-ios-inactive-color:       $toolbar-ios-inactive-color !default;
@@ -29,7 +28,6 @@ ion-tabs[tabbarPlacement=top] tabbar {
 .tab-button {
   padding: $tabbar-ios-item-padding;
 
-  min-width: $tab-button-ios-min-width;
   max-width: $tab-button-ios-max-width;
   min-height: $tabbar-ios-height;
 
