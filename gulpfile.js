@@ -29,6 +29,8 @@ var eslint = require('gulp-eslint');
 var jscs = require('gulp-jscs');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
+var rimraf = require("rimraf");
+var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
 var stripDebug = require('gulp-strip-debug');
 var template = require('gulp-template');
@@ -264,6 +266,64 @@ gulp.task('release-irc', function(done) {
   });
 });
 */
+
+gulp.task('clean', function(done){
+  rimraf('dist', {}, function(err){
+    done(err);
+  });
+});
+
+gulp.task('preparePackageJson', function(done){
+
+  function createTimestamp() {
+    // YYYYMMDDHHMM
+    var d = new Date();
+    return d.getUTCFullYear() + // YYYY
+           ('0' + (d.getUTCMonth() +　1)).slice(-2) + // MM
+           ('0' + (d.getUTCDate())).slice(-2) + // DD
+           ('0' + (d.getUTCHours())).slice(-2) + // HH
+           ('0' + (d.getUTCMinutes())).slice(-2); // MM
+  }
+
+  var existingPackage = require('./package.json');
+  existingPackage.name = "ionic-angular";
+  existingPackage.version = existingPackage.version + "-" + createTimestamp();
+  delete existingPackage.dependencies;
+  delete existingPackage.devDependencies;
+  delete existingPackage.config;
+  fs.writeFile("./dist/package.json", JSON.stringify(existingPackage, null, 2), function(err){
+    done(err);
+  });
+});
+
+gulp.task('copyReadme', function(done){
+    var data = fs.readFileSync('./README.md');
+    fs.writeFileSync('./dist/README.md', data);
+    done();
+});
+
+gulp.task('prepareForNpm', function(done){
+  runSequence('clean', 'bundle', 'sass', 'preparePackageJson', 'copyReadme', done);
+});
+
+gulp.task("publishToNpm", ['prepareForNpm'], function(done){
+  var tagName = argv.tagName && argv.tagName.length > 0 ? argv.tagName : "nightly";
+
+  var spawn = require('child_process').spawn;
+
+  var npmCmd = spawn('npm', ['publish', '--tag=' + tagName, './dist']);
+  npmCmd.stdout.on('data', function (data) {
+    console.log(data.toString());
+  });
+
+  npmCmd.stderr.on('data', function (data) {
+    console.log('npm err: ' + data.toString());
+  });
+
+  npmCmd.on('close', function() {
+    done();
+  });
+});
 
 gulp.task('release-github', function(done) {
   var github = new GithubApi({

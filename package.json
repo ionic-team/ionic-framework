@@ -60,6 +60,8 @@
     "protractor": "^0.23.1",
     "q": "^1.0.1",
     "request": "^2.36.0",
+    "rimraf": "^2.5.2",
+    "run-sequence": "^1.1.5",
     "sauce-connect-launcher": "^0.2.2",
     "semver": "^2.2.1",
     "through": "^2.3.4",
