@@ -254,4 +254,3 @@ describe('$ionicLoadingConfig', function() {
   }));
 
 });
-
