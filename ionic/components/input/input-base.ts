@@ -406,6 +406,7 @@ export class InputBase {
    */
   clearTextInput() {
     console.debug('Should clear input');
+    this._value = '';
   }
 
   /**
