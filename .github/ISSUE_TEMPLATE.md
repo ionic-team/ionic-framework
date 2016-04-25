@@ -27,7 +27,7 @@ insert any relevant code between the above and below backticks
 
 #### Plunker that shows an example of your issue
 
-**For Ionic 1 issues** - http://plnkr.co/edit/jnOrQRtE8rN2WCXDQYQY?p=info
+**For Ionic 1 issues** - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
 
 **For Ionic 2 issues** - http://plnkr.co/edit/L8JN6w5mqwbMY2E14dbk?p=preview
 
