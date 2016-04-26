@@ -23,6 +23,7 @@
   * tabs are now styled directly via dom manipulations ([fbae1aba](https://github.com/driftyco/ionic/commit/fbae1aba))
   * tabs-color-active works with tabs-striped ([237d79b7](https://github.com/driftyco/ionic/commit/237d79b7))
   * prevent flicker when changing tabs on android ([a7620d21](https://github.com/driftyco/ionic/commit/a7620d21))
+* **navigation:** remove ionicHistory infinite loop when linking to other tabs #3932 ([efb9bdf](https://github.com/driftyco/ionic/commit/efb9bdf))
 
 <a name"1.2.4"></a>
 ### 1.2.4 "Copenhagen" (2016-01-03)
