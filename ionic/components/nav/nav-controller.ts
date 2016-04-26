@@ -8,7 +8,6 @@ import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
 import {pascalCaseToDashCase, isBlank} from '../../util/util';
 import {Portal} from './nav-portal';
-import {raf} from '../../util/dom';
 import {SwipeBackGesture} from './swipe-back';
 import {Transition} from '../../transitions/transition';
 import {ViewController} from './view-controller';

@@ -1,6 +1,6 @@
 import {Component, Input, ElementRef, ChangeDetectionStrategy, ViewEncapsulation, NgZone} from 'angular2/core';
 
-import {raf} from '../../util/dom';
+import {nativeRaf} from '../../util/dom';
 import {isPresent} from '../../util/util';
 import {Platform} from '../../platform/platform';
 
@@ -62,7 +62,7 @@ export class Img {
           img.addEventListener('load', () => {
             if (img.src === this._normalizeSrc) {
               this._elementRef.nativeElement.appendChild(img);
-              raf(() => {
+              nativeRaf(() => {
                 this._update();
               });
             }

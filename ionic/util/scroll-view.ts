@@ -1,4 +1,4 @@
-import {CSS, pointerCoord, raf, cancelRaf} from '../util/dom';
+import {CSS, pointerCoord, nativeRaf, cancelRaf} from '../util/dom';
 
 
 export class ScrollView {
@@ -84,7 +84,7 @@ export class ScrollView {
         }
 
         if (easedT < 1) {
-          raf(step);
+          nativeRaf(step);
 
         } else {
           // done
@@ -96,9 +96,9 @@ export class ScrollView {
       self.isPlaying = true;
 
       // chill out for a frame first
-      raf(() => {
+      nativeRaf(() => {
         startTime = Date.now();
-        raf(step);
+        nativeRaf(step);
       });
 
     });
@@ -232,7 +232,7 @@ export class ScrollView {
         // ******** DOM READ ****************
         this._setMax();
 
-        this._rafId = raf(this._decelerate.bind(this));
+        this._rafId = nativeRaf(this._decelerate.bind(this));
       }
     }
 
@@ -260,7 +260,7 @@ export class ScrollView {
       self.setTop(self._top);
 
       if (self._top > 0 && self._top < self._max && Math.abs(self._velocity) > MIN_VELOCITY_CONTINUE_DECELERATION) {
-        self._rafId = raf(self._decelerate.bind(self));
+        self._rafId = nativeRaf(self._decelerate.bind(self));
       }
     }
   }

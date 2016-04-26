@@ -2,7 +2,7 @@ import {Directive, Attribute, ElementRef, Renderer, Input, Output, EventEmitter,
 import {NgControl} from 'angular2/common';
 
 import {Config} from '../../config/config';
-import {CSS, hasFocus, raf}  from '../../util/dom';
+import {CSS, hasFocus}  from '../../util/dom';
 
 
 /**

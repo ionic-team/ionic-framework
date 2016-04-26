@@ -1,4 +1,4 @@
-import {raf, rafFrames} from '../../util/dom';
+import {rafFrames} from '../../util/dom';
 
 
 export class Activator {

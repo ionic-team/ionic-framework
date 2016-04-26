@@ -25,7 +25,10 @@
 })();
 
 // use native raf rather than the zone wrapped one
-export const raf = (window[window['Zone']['__symbol__']('requestAnimationFrame')] || window[window['Zone']['__symbol__']('webkitRequestAnimationFrame')])['bind'](window);
+export const nativeRaf = (window[window['Zone']['__symbol__']('requestAnimationFrame')] || window[window['Zone']['__symbol__']('webkitRequestAnimationFrame')])['bind'](window);
+
+// zone wrapped raf
+export const raf = window.requestAnimationFrame.bind(window);
 export const cancelRaf = window.cancelAnimationFrame.bind(window);
 
 export const nativeTimeout = window[window['Zone']['__symbol__']('setTimeout')]['bind'](window);
@@ -35,11 +38,11 @@ export function rafFrames(framesToWait, callback) {
   framesToWait = Math.ceil(framesToWait);
 
   if (framesToWait < 2) {
-    raf(callback);
+    nativeRaf(callback);
 
   } else {
     nativeTimeout(() => {
-      raf(callback);
+      nativeRaf(callback);
     }, (framesToWait - 1) * 16.6667);
   }
 }

@@ -1,5 +1,5 @@
 import {Activator} from './activator';
-import {CSS, raf, rafFrames} from '../../util/dom';
+import {CSS, nativeRaf, rafFrames} from '../../util/dom';
 const win: any = window;
 
 
@@ -22,7 +22,7 @@ export class RippleActivator extends Activator {
     self._queue.push(activatableEle);
 
     this._zone.runOutsideAngular(function() {
-      raf(function() {
+      nativeRaf(function() {
         var i;
 
         for (i = 0; i < self._queue.length; i++) {

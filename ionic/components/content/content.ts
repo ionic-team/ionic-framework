@@ -4,7 +4,7 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
-import {raf, nativeTimeout, transitionEnd}  from '../../util/dom';
+import {nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
 import {ScrollView} from '../../util/scroll-view';
 
@@ -198,8 +198,8 @@ export class Content extends Ion {
 
       lastScrollTop = currentScrollTop;
 
-      raf(() => {
-        raf(next);
+      nativeRaf(() => {
+        nativeRaf(next);
       });
     }
 
