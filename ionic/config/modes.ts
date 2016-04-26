@@ -33,6 +33,7 @@ Config.setModeConfig('ios', {
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
+  pickerRotateFactor: -0.46,
 
   spinner: 'ios',
 

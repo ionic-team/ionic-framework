@@ -29,8 +29,10 @@ ion-picker-cmp {
   left: 0;
   z-index: $z-index-overlay-wrapper;
   display: flex;
-  flex-direction: column;
+
   overflow: hidden;
+
+  flex-direction: column;
 
   margin: auto;
 
@@ -41,32 +43,79 @@ ion-picker-cmp {
 }
 
 .picker-columns {
+  position: relative;
   display: flex;
-  flex: 1;
+
   overflow: hidden;
+
+  justify-content: center;
 }
 
-.picker-offset {
+.picker-col {
+  position: relative;
   display: flex;
+
+  max-height: 100%;
 }
 
-.picker-column {
-  flex: 1;
+.picker-opts {
+  position: relative;
+
+  width: 100%;
+  min-width: 50px;
+  max-width: 100%;
 }
 
 .picker-prefix {
+  position: relative;
+
   flex: 1;
+
+  min-width: 50px;
+  min-width: 45%;
+
   text-align: right;
+  white-space: nowrap;
 }
 
 .picker-suffix {
+  position: relative;
+
   flex: 1;
+
+  min-width: 50px;
+  min-width: 45%;
+
   text-align: left;
+  white-space: nowrap;
 }
 
-.picker-option {
-  flex: 1;
+.picker-opt {
+  position: absolute;
+  top: 0;
+  left: 0;
   overflow: hidden;
-  white-space: nowrap;
+
+  flex: 1;
+
+  width: 100%;
+
+  text-align: center;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-opts-left .button-inner {
+  justify-content: flex-start;
+}
+
+.picker-opts-right .button-inner {
+  justify-content: flex-end;
+}
+
+.picker-above-highlight,
+.picker-below-highlight {
+  display: none;
+
+  pointer-events: none;
 }

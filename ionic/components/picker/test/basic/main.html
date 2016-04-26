@@ -4,6 +4,30 @@
 
 <ion-content padding>
 
-  <button block class="e2ePresentPicker" (click)="presentPicker()">Picker</button>
+  <button block class="e2eTwoColumns" (click)="twoColumns()">
+    2 Columns
+  </button>
+
+  <button block class="e2ePrefixLabel" (click)="prefixLabel()">
+    Prefix Label
+  </button>
+
+  <button block class="e2eSuffixLabel" (click)="suffixLabel()">
+    Suffix Label
+  </button>
+
+  <button block class="e2eColumnSizesLabel" (click)="columnSizes()">
+    Columns with sizes
+  </button>
+
+
+  <p aria-hidden="true" padding>
+    <code>Smoothie: {{ smoothie }}</code><br>
+    <code>Timer: {{ timer }}</code><br>
+  </p>
 
 </ion-content>
+
+<style>
+
+</style>
