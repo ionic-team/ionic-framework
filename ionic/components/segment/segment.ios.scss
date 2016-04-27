@@ -8,11 +8,14 @@ $segment-button-ios-background-color:           transparent !default;
 $segment-button-ios-background-color-activated: $toolbar-ios-active-color !default;
 
 $segment-button-ios-text-color:                 color-contrast($colors-ios, $segment-button-ios-background-color-activated) !default;
-$segment-button-ios-activated-transition:       100ms all linear !default;
-$segment-button-ios-hover-transition:           100ms all linear !default;
-$segment-button-ios-active-transition:          100ms all linear !default;
-$segment-button-ios-hover-opacity:              .1 !default;
-$segment-button-ios-active-opacity:             .16 !default;
+$segment-button-ios-transition-activated:       100ms all linear !default;
+$segment-button-ios-transition-hover:           100ms all linear !default;
+$segment-button-ios-transition-active:          100ms all linear !default;
+
+$segment-button-ios-opacity-hover:              .1 !default;
+$segment-button-ios-opacity-active:             .16 !default;
+$segment-button-ios-opacity-activated:          1 !default;
+$segment-button-ios-opacity-disabled:           .3 !default;
 
 $segment-button-ios-border-width:               1px !default;
 $segment-button-ios-height:                     3.2rem !default;
@@ -55,18 +58,18 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   &.segment-activated {
     color: $segment-button-ios-text-color;
     background-color: $segment-button-ios-background-color-activated;
-    opacity: 1;
-    transition: $segment-button-ios-activated-transition;
+    opacity: $segment-button-ios-opacity-activated;
+    transition: $segment-button-ios-transition-activated;
   }
 
   &:hover:not(.segment-activated) {
-    background-color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-hover-opacity);
-    transition: $segment-button-ios-hover-transition;
+    background-color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-opacity-hover);
+    transition: $segment-button-ios-transition-hover;
   }
 
   &:active:not(.segment-activated) {
-    background-color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-active-opacity);
-    transition: $segment-button-ios-active-transition;
+    background-color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-opacity-active);
+    transition: $segment-button-ios-transition-active;
   }
 
   &:first-of-type {
@@ -85,6 +88,12 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
     border-left-width: 0;
     border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
   }
+}
+
+.segment-button-disabled {
+  color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-opacity-disabled);
+
+  pointer-events: none;
 }
 
 .toolbar {
@@ -117,22 +126,30 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
 @mixin ios-segment-button($color-name, $color-base, $color-contrast) {
 
-  ion-segment[#{$color-name}] .segment-button {
-    border-color: $color-base;
-    color: $color-base;
+  ion-segment[#{$color-name}] {
 
-    &:hover:not(.segment-activated) {
-      background-color: rgba($color-base, $segment-button-ios-hover-opacity);
+    .segment-button {
+      border-color: $color-base;
+      color: $color-base;
+
+      &:hover:not(.segment-activated) {
+        background-color: rgba($color-base, $segment-button-ios-opacity-hover);
+      }
+
+      &:active:not(.segment-activated) {
+        background-color: rgba($color-base, $segment-button-ios-opacity-active);
+      }
+
+      &.segment-activated {
+        color: $color-contrast;
+        background-color: $color-base;
+      }
     }
 
-    &:active:not(.segment-activated) {
-      background-color: rgba($color-base, $segment-button-ios-active-opacity);
+    .segment-button-disabled {
+      color: rgba($color-base, $segment-button-ios-opacity-disabled);
     }
 
-    &.segment-activated {
-      color: $color-contrast;
-      background-color: $color-base;
-    }
   }
 
 }

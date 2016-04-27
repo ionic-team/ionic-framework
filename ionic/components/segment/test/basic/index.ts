@@ -13,13 +13,18 @@ class MyApp {
   modelStyle: string = 'B';
   appType: string = 'free';
   icons: string = 'camera';
+  isDisabled: boolean = true;
 
   myForm;
 
   constructor(fb: FormBuilder) {
     this.myForm = fb.group({
-      mapStyle: ['hybrid', Validators.required]
+      mapStyle: ['active', Validators.required]
     });
+  }
+
+  toggleDisabled() {
+    this.isDisabled = !this.isDisabled;
   }
 
   onSegmentChanged(segmentButton) {

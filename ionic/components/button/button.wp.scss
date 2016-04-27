@@ -211,7 +211,7 @@ $button-wp-fab-border-radius:                         50% !default;
   .button-clear-#{$color-name} {
     $fg-color: $color-base;
     color: $fg-color;
-    background-color: transparent;    
+    background-color: transparent;
 
     &.activated {
       background-color: $button-wp-clear-background-color-activated;
