@@ -8,6 +8,7 @@ class E2EApp {
   isDestructive: boolean;
   isSecondary: boolean;
   isCustom: boolean;
+  isSolid: boolean;
   isOutline: boolean;
   isClear: boolean;
   isClicked: boolean;
@@ -23,6 +24,7 @@ class E2EApp {
 	  this.isDestructive = false;
 	  this.isSecondary = false;
 	  this.isCustom = false;
+	  this.isSolid = false;
 	  this.isOutline = false;
 	  this.isClear = false;
 	  this.isClicked = false;
@@ -35,6 +37,7 @@ class E2EApp {
 	  this.isDestructive = true;
 	  this.isSecondary = true;
 	  this.isCustom = true;
+	  this.isSolid = true;
 	  this.isOutline = true;
 	  this.isClear = true;
 	  this.isClicked = false;

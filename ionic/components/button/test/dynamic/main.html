@@ -1,11 +1,16 @@
 
 <ion-toolbar>
+  <ion-buttons start>
+    <button [color]="isDestructive ? 'danger' : 'primary'" [outline]="isOutline">Outline</button>
+  </ion-buttons>
   <ion-title>Default Buttons</ion-title>
+  <ion-buttons end>
+    <button [color]="isSecondary ? 'secondary' : 'primary'" [solid]="isSolid">Solid</button>
+  </ion-buttons>
 </ion-toolbar>
 
-<ion-content padding text-center>
-  <h1>Button Attributes Test</h1>
-  <button block>Primary</button>
+<ion-content padding>
+  <button block [solid]="isSolid">Solid</button>
   <button block [color]="isDestructive ? 'danger' : 'primary'" [outline]="isOutline">Danger (Outline)</button>
   <button block [color]="isSecondary ? 'secondary' : 'primary'"  [clear]="isClear">Secondary (Clear)</button>
   <button block [color]="myColor1" [round]="isCustom">Custom #1</button>

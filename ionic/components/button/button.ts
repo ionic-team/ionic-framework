@@ -331,7 +331,9 @@ export class Button {
       // Support array to allow removal of many styles at once.
       let styles = (type instanceof Array ? type : [type]);
       styles.forEach(styleName => {
-        let colorStyle = (styleName !== null && styleName !== 'default' && styleName !== 'solid' ? styleName.toLowerCase() + '-' : '');
+        // If the role is not a bar-button, don't apply the solid style
+        styleName = (this._role !== 'bar-button' && styleName === 'solid' ? 'default' : styleName);
+        let colorStyle = (styleName !== null && styleName !== 'default' ? styleName.toLowerCase() + '-' : '');
         this._colors.forEach(colorName => {
           this._setClass(colorStyle + colorName, assignCssClass); // button-secondary, button-clear-secondary
         });

@@ -64,6 +64,13 @@ export function run() {
       expect(hasClass(b, 'button-solid')).toEqual(true);
       expect(hasClass(b, 'button-primary')).toEqual(true);
       expect(hasClass(b, 'button-secondary')).toEqual(true);
+
+      b = mockButton(['solid', 'primary', 'secondary']);
+      b.setRole('bar-button');
+      b._assignCss(true);
+      expect(hasClass(b, 'bar-button-solid')).toEqual(true);
+      expect(hasClass(b, 'bar-button-solid-primary')).toEqual(true);
+      expect(hasClass(b, 'bar-button-solid-secondary')).toEqual(true);
     });
 
     it('should auto add the default style', () => {
@@ -99,12 +106,21 @@ export function run() {
       b._assignCss(true);
       expect(hasClass(b, 'button-outline')).toEqual(true);
 
+      b = mockButton(['solid']);
+      b._assignCss(true);
+      expect(hasClass(b, 'button-solid')).toEqual(true);      
+
       b = mockButton(['clear', 'outline', 'small', 'full']);
       b._assignCss(true);
       expect(hasClass(b, 'button-clear')).toEqual(false);
       expect(hasClass(b, 'button-outline')).toEqual(true);
       expect(hasClass(b, 'button-small')).toEqual(true);
       expect(hasClass(b, 'button-full')).toEqual(true);
+
+      b = mockButton(['outline']);
+      b.setRole('bar-button');
+      b._assignCss(true);
+      expect(hasClass(b, 'bar-button-outline')).toEqual(true);
     });
 
     it('should read button shape attributes', () => {
