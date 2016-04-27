@@ -12,7 +12,8 @@
   <button block [color]="myColor2" [outline]="isOutline" [round]="isCustom">Custom #2 (Outline)</button>
   <button block primary light [clear]="isClear" [round]="isCustom">Multicolor (Clear)</button>
   <button block danger dark [outline]="isOutline" [round]="isCustom">Multicolor (Outline)</button>
-  <button block [color]="multiColor" [solid]="!isClicked" [outline]="isClicked" [round]="isCustom" (click)="toggle()">Multicolor (Toggle)</button>
+  <button block [color]="multiColor" [outline]="isClicked" [round]="isCustom" (click)="toggle()">Multicolor Outline (Toggle)</button>
+  <button block [color]="multiColor" [clear]="isClicked" [round]="isCustom" (click)="toggle()">Multicolor Clear (Toggle)</button>
   <hr/>
   <button block outline danger (click)="unify()" class="e2eButtonDynamicUnify">Unify all buttons</button>
   <button block clear danger (click)="reset()">Reset all buttons</button>
