@@ -12,7 +12,6 @@ import {Platform} from '../../platform/platform';
  */
 @Injectable()
 export class IonicApp {
-  private _cmps: {[id: string]: any} = {};
   private _disTime: number = 0;
   private _scrollTime: number = 0;
   private _title: string = '';
@@ -145,59 +144,20 @@ export class IonicApp {
 
   /**
    * @private
-   * Register a known component with a key, for easy lookups later.
-   * @param {string} id  The id to use to register the component
-   * @param {object} component  The component to register
-   */
-  register(id: string, component: any) {
-    this._cmps[id] = component;
-  }
-
-  /**
-   * @private
-   * Unregister a known component with a key.
-   * @param {string} id  The id to use to unregister
-   */
-  unregister(id: string) {
-    delete this._cmps[id];
-  }
-
-  /**
-   * @private
-   * Get a registered component with the given type (returns the first)
-   * @param {object} cls the type to search for
-   * @return {object} the matching component, or undefined if none was found
    */
   getRegisteredComponent(cls: any): any {
-    for (let key in this._cmps) {
-      const component = this._cmps[key];
-      if (component instanceof cls) {
-        return component;
-      }
-    }
+    // deprecated warning: added 2016-04-28, beta7
+    console.warn('Using app.getRegisteredComponent() to query components has been deprecated. ' +
+                 'Please use Angular\'s ViewChild annotation instead:\n\nhttp://learnangular2.com/viewChild/');
   }
 
   /**
-   * Get the component for the given key.
+   * @private
    */
   getComponent(id: string): any {
-    // deprecated warning
-    if (/menu/i.test(id)) {
-      console.warn('Using app.getComponent(menuId) to control menus has been deprecated as of alpha55.\n' +
-                   'Instead inject MenuController, for example:\n\n' +
-                   'constructor(menu: MenuController) {\n' +
-                   '  this.menu = menu;\n' +
-                   '}\n' +
-                   'toggleMenu() {\n' +
-                   '  this.menu.toggle();\n' +
-                   '}\n' +
-                   'openRightMenu() {\n' +
-                   '  this.menu.open("right");\n' +
-                   '}'
-      );
-    }
-
-    return this._cmps[id];
+    // deprecated warning: added 2016-04-28, beta7
+    console.warn('Using app.getComponent() to query components has been deprecated. ' +
+                 'Please use Angular\'s ViewChild annotation instead:\n\nhttp://learnangular2.com/viewChild/');
   }
 
   /**

@@ -1,5 +1,4 @@
 export * from './components/app/app';
-export * from './components/app/id';
 export * from './components/action-sheet/action-sheet';
 export * from './components/alert/alert';
 export * from './components/badge/badge';
