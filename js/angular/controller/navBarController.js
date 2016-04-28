@@ -11,7 +11,6 @@ IonicModule
   '$ionicHistory',
 function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $ionicConfig, $ionicHistory) {
 
-  var CSS_HIDE = 'hide';
   var DATA_NAV_BAR_CTRL = '$ionNavBarController';
   var PRIMARY_BUTTONS = 'primaryButtons';
   var SECONDARY_BUTTONS = 'secondaryButtons';
@@ -99,15 +98,8 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
           // there's a custom nav bar item
           positionItem(navBarItemEle, itemType);
 
-          if (navEle[itemType]) {
-            // make sure the default on this itemType is hidden
-            navEle[itemType].addClass(CSS_HIDE);
-          }
           lastViewItemEle[itemType] = navBarItemEle;
 
-        } else if (navEle[itemType]) {
-          // there's a default button for this side and no view button
-          navEle[itemType].removeClass(CSS_HIDE);
         }
       },
       removeItem: function(itemType) {
@@ -357,11 +349,9 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
   self.visibleBar = function(shouldShow) {
     if (shouldShow && !isVisible) {
-      $element.removeClass(CSS_HIDE);
       self.align();
-    } else if (!shouldShow && isVisible) {
-      $element.addClass(CSS_HIDE);
     }
+
     isVisible = shouldShow;
   };
 
