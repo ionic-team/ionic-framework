@@ -24,6 +24,7 @@
   border-bottom: 1px solid $bar-default-border;
 
   background-color: $bar-default-bg;
+  color: $bar-default-text;
 
   /* border-width: 1px will actually create 2 device pixels on retina */
   /* this nifty trick sets an actual 1px border on hi-res displays */
@@ -147,6 +148,8 @@
     font-weight: $headings-font-weight;
 
     line-height: $bar-height;
+
+    color: $bar-default-text;
 
     &.title-left {
       text-align: left;
