@@ -11,6 +11,8 @@ import {Component} from 'angular2/core';
   templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html'
 })
 export class <%= jsClassName %> {
+  public text: string;
+  
   constructor() {
     this.text = 'Hello World';
   }
