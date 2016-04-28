@@ -83,25 +83,33 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * A config value can come from anywhere and be anything, but there are a default set of values.
  *
  *
- * | Config property            | Default iOS Value      | Default MD Value          |
- * |----------------------------|------------------------|---------------------------|
- * | activator                  | highlight              | ripple                    |
- * | actionSheetEnter           | action-sheet-slide-in  | action-sheet-md-slide-in  |
- * | actionSheetLeave           | action-sheet-slide-out | action-sheet-md-slide-out |
- * | alertEnter                 | alert-pop-in           | alert-md-pop-in           |
- * | alertLeave                 | alert-pop-out          | alert-md-pop-out          |
- * | backButtonText             | Back                   |                           |
- * | backButtonIcon             | ion-ios-arrow-back     | ion-md-arrow-back         |
- * | iconMode                   | ios                    | md                        |
- * | menuType                   | reveal                 | overlay                   |
- * | modalEnter                 | modal-slide-in         | modal-md-slide-in         |
- * | modalLeave                 | modal-slide-out        | modal-md-slide-out        |
- * | pageTransition             | ios-transition         | md-transition             |
- * | pageTransitionDelay        | 16                     | 120                       |
- * | tabbarPlacement            | bottom                 | top                       |
- * | tabbarHighlight            |                        | top                       |
- * | tabbarLayout               |                        |                           |
- * | tabSubPages                |                        | true                      |
+ * | Config property            | Default `ios` Value      | Default `md` Value          | Default `wp` Value          |
+ * |----------------------------|--------------------------|-----------------------------|-----------------------------|
+ * | activator                  | "highlight"              | "ripple"                    | "highlight"                 |
+ * | actionSheetEnter           | "action-sheet-slide-in"  | "action-sheet-md-slide-in"  | "action-sheet-wp-slide-in"  |
+ * | actionSheetLeave           | "action-sheet-slide-out" | "action-sheet-md-slide-out" | "action-sheet-wp-slide-out" |
+ * | alertEnter                 | "alert-pop-in"           | "alert-md-pop-in"           | "alert-wp-pop-in"           |
+ * | alertLeave                 | "alert-pop-out"          | "alert-md-pop-out"          | "alert-wp-pop-out"          |
+ * | backButtonText             | "Back"                   | ""                          | ""                          |
+ * | backButtonIcon             | "ios-arrow-back"         | "md-arrow-back"             | "ios-arrow-back"            |
+ * | iconMode                   | "ios"                    | "md"                        | "ios"                       |
+ * | loadingEnter               | "loading-pop-in"         | "loading-md-pop-in"         | "loading-wp-pop-in"         |
+ * | loadingLeave               | "loading-pop-out"        | "loading-md-pop-out"        | "loading-wp-pop-out"        |
+ * | menuType                   | "reveal"                 | "overlay"                   | "overlay"                   |
+ * | modalEnter                 | "modal-slide-in"         | "modal-md-slide-in"         | "modal-md-slide-in"         |
+ * | modalLeave                 | "modal-slide-out"        | "modal-md-slide-out"        | "modal-md-slide-out"        |
+ * | pageTransition             | "ios-transition"         | "md-transition"             | "wp-transition"             |
+ * | pageTransitionDelay        | 16                       | 96                          | 96                          |
+ * | pickerEnter                | "picker-slide-in"        | "picker-slide-in"           | "picker-slide-in"           |
+ * | pickerLeave                | "picker-slide-out"       | "picker-slide-out"          | "picker-slide-out"          |
+ * | pickerRotateFactor         | -0.46                    |                             |                             |
+ * | spinner                    | "ios"                    | "crescent"                  | "circles"                   |
+ * | tabbarHighlight            |                          | true                        |                             |
+ * | tabbarLayout               |                          |                             |                             |
+ * | tabbarPlacement            | "bottom"                 | "top"                       | "top"                       |
+ * | tabSubPages                |                          | true                        | true                        |
+ * | toastEnter                 | "toast-slide-in"         | "toast-md-slide-in"         | "toast-wp-slide-in"         |
+ * | toastLeave                 | "toast-slide-out"        | "toast-md-slide-out"        | "toast-wp-slide-out"        |
  *
 **/
 export class Config {

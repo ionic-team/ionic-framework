@@ -9,9 +9,6 @@ Config.setModeConfig('ios', {
   actionSheetEnter: 'action-sheet-slide-in',
   actionSheetLeave: 'action-sheet-slide-out',
 
-  toastEnter: 'toast-slide-in',
-  toastLeave: 'toast-slide-out',
-
   alertEnter: 'alert-pop-in',
   alertLeave: 'alert-pop-out',
 
@@ -38,6 +35,9 @@ Config.setModeConfig('ios', {
   spinner: 'ios',
 
   tabbarPlacement: 'bottom',
+
+  toastEnter: 'toast-slide-in',
+  toastLeave: 'toast-slide-out',
 });
 
 
@@ -47,9 +47,6 @@ Config.setModeConfig('md', {
 
   actionSheetEnter: 'action-sheet-md-slide-in',
   actionSheetLeave: 'action-sheet-md-slide-out',
-
-  toastEnter: 'toast-md-slide-in',
-  toastLeave: 'toast-md-slide-out',
 
   alertEnter: 'alert-md-pop-in',
   alertLeave: 'alert-md-pop-out',
@@ -79,6 +76,9 @@ Config.setModeConfig('md', {
   tabbarPlacement: 'top',
 
   tabSubPages: true,
+
+  toastEnter: 'toast-md-slide-in',
+  toastLeave: 'toast-md-slide-out',
 });
 
 
@@ -88,9 +88,6 @@ Config.setModeConfig('wp', {
 
   actionSheetEnter: 'action-sheet-wp-slide-in',
   actionSheetLeave: 'action-sheet-wp-slide-out',
-
-  toastEnter: 'toast-wp-slide-in',
-  toastLeave: 'toast-wp-slide-out',
 
   alertEnter: 'alert-wp-pop-in',
   alertLeave: 'alert-wp-pop-out',
@@ -119,4 +116,7 @@ Config.setModeConfig('wp', {
   tabbarPlacement: 'top',
 
   tabSubPages: true,
+
+  toastEnter: 'toast-wp-slide-in',
+  toastLeave: 'toast-wp-slide-out',
 });
