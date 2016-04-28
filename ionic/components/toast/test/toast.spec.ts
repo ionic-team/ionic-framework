@@ -12,9 +12,8 @@ describe('Toast', () => {
         showCloseButton: true
       });
 
-      expect(toast.message).toEqual('Please Wait...');
-      expect(toast.showCloseButton).toEqual(true);
-      expect(toast.closeButtonText).toEqual('Close');
+      expect(toast.data.message).toEqual('Please Wait...');
+      expect(toast.data.showCloseButton).toEqual(true);
     });
 
   });
