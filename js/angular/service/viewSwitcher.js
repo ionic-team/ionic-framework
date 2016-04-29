@@ -5,12 +5,12 @@
 
 IonicModule.factory('$ionicViewSwitcher', [
   '$timeout',
-  '$document',
   '$q',
   '$ionicClickBlock',
   '$ionicConfig',
   '$ionicNavBarDelegate',
-function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDelegate) {
+  '$ionicHistory',
+function($timeout, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDelegate, $ionicHistory) {
 
   var TRANSITIONEND_EVENT = 'webkitTransitionEnd transitionend';
   var DATA_NO_CACHE = '$noCache';
@@ -86,7 +86,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           if (!alreadyInDom) {
             // still no existing element to use
             // create it using existing template/scope/locals
-            enteringEle = registerData.ele || ionicViewSwitcher.createViewEle(viewLocals);
+            enteringEle = registerData.ele || $ionicHistory.createViewEle(viewLocals);
 
             // existing elements in the DOM are looked up by their state name and state id
             enteringEle.data(DATA_ELE_IDENTIFIER, enteringEleIdentifier);
@@ -130,6 +130,9 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
             // append the entering element to the DOM, create a new scope and run link
             var viewScope = navViewCtrl.appendViewElement(enteringEle, viewLocals);
+
+            // update back status after linking (in case of clearHistory)
+            enteringData.enableBack = $ionicHistory.enabledBack(enteringData.viewId);
 
             delete enteringData.direction;
             delete enteringData.transition;
@@ -399,19 +402,6 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         }
       }
       return ionic.transition.isActive;
-    },
-
-    createViewEle: function(viewLocals) {
-      var containerEle = $document[0].createElement('div');
-      if (viewLocals && viewLocals.$template) {
-        containerEle.innerHTML = viewLocals.$template;
-        if (containerEle.children.length === 1) {
-          containerEle.children[0].classList.add('pane');
-          return jqLite(containerEle.children[0]);
-        }
-      }
-      containerEle.className = "pane";
-      return jqLite(containerEle);
     },
 
     viewEleIsActive: function(viewEle, isActiveAttr) {

@@ -385,7 +385,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
       switcher.loadViewElements(registerData);
       switcher.render(registerData);
 
-      viewTransition = switcher.transition('back', $ionicHistory.enabledBack(backView), true);
+      viewTransition = switcher.transition('back', $ionicHistory.enabledBack(backView.viewId), true);
 
       associatedNavBarCtrl = getAssociatedNavBarCtrl();
 

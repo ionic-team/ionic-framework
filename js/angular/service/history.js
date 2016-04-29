@@ -23,9 +23,9 @@ IonicModule
   '$location',
   '$window',
   '$timeout',
-  '$ionicViewSwitcher',
   '$ionicNavViewDelegate',
-function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $ionicNavViewDelegate) {
+  '$document',
+function($rootScope, $state, $location, $window, $timeout, $ionicNavViewDelegate, $document) {
 
   // history actions while navigating views
   var ACTION_INITIAL_VIEW = 'initialView';
@@ -293,7 +293,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       } else {
 
         // create an element from the viewLocals template
-        ele = $ionicViewSwitcher.createViewEle(viewLocals);
+        ele = this.createViewEle(viewLocals);
         if (this.isAbstractEle(ele, viewLocals)) {
           console.log('VIEW', 'abstractView', DIRECTION_NONE, viewHistory.currentView);
           return {
@@ -426,7 +426,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
         action: action,
         direction: direction,
         historyId: historyId,
-        enableBack: this.enabledBack(viewHistory.currentView),
+        enableBack: this.enabledBack(viewId),
         isHistoryRoot: (viewHistory.currentView.index === 0),
         ele: ele
       };
@@ -643,7 +643,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       currentHistory.currentCursor += -1;
     },
 
-    enabledBack: function(view) {
+    enabledBack: function(viewId) {
+      var view = getViewById(viewId);
       var backView = getBackView(view);
       return !!(backView && backView.historyId === view.historyId);
     },
@@ -793,6 +794,19 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       }
 
       return currentHistoryId ? currentHistoryId == 'root' : true;
+    },
+
+    createViewEle: function(viewLocals) {
+      var containerEle = $document[0].createElement('div');
+      if (viewLocals && viewLocals.$template) {
+        containerEle.innerHTML = viewLocals.$template;
+        if (containerEle.children.length === 1) {
+          containerEle.children[0].classList.add('pane');
+          return jqLite(containerEle.children[0]);
+        }
+      }
+      containerEle.className = "pane";
+      return jqLite(containerEle);
     }
 
   };
