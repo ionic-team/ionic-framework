@@ -24,7 +24,7 @@ import {isPresent} from '../../util/util';
 export class ViewController {
   private _cntDir: any;
   private _cntRef: ElementRef;
-  private _destroys: Array<Function> = [];
+  private _destroys: Function[] = [];
   private _hdAttr: string = null;
   private _leavingOpts: NavOptions = null;
   private _loaded: boolean = false;
@@ -529,7 +529,7 @@ export class ViewController {
   /**
    * @private
    */
-  addDestroy(destroyFn: Function) {
+  onDestroy(destroyFn: Function) {
     this._destroys.push(destroyFn);
   }
 
@@ -542,7 +542,7 @@ export class ViewController {
     for (var i = 0; i < this._destroys.length; i++) {
       this._destroys[i]();
     }
-    this._destroys = [];
+    this._destroys.length = 0;
   }
 
 }

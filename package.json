@@ -13,7 +13,7 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.15",
+    "angular2": "2.0.0-beta.16",
     "colors": "^1.1.2",
     "es6-shim": "^0.35.0",
     "inquirer": "0.11.0",

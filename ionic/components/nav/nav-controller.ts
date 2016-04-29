@@ -1,4 +1,4 @@
-import {Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer, ResolvedProvider, Type, Input} from 'angular2/core';
+import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type} from 'angular2/core';
 import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/instrumentation';
 
 import {Config} from '../../config/config';
@@ -7,7 +7,7 @@ import {IonicApp} from '../app/app';
 import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
 import {pascalCaseToDashCase, isBlank} from '../../util/util';
-import {Portal} from './nav-portal';
+import {NavPortal} from './nav-portal';
 import {SwipeBackGesture} from './swipe-back';
 import {Transition} from '../../transitions/transition';
 import {ViewController} from './view-controller';
@@ -147,7 +147,8 @@ export class NavController extends Ion {
   private _trans: Transition;
   private _sbGesture: SwipeBackGesture;
   private _sbThreshold: number;
-  private _portal: Portal;
+  private _portal: NavPortal;
+  private _viewport: ViewContainerRef;
   private _children: any[] = [];
 
   protected _sbEnabled: boolean;
@@ -164,7 +165,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  providers: ResolvedProvider[];
+  providers: ResolvedReflectiveProvider[];
 
   /**
    * @private
@@ -192,11 +193,9 @@ export class NavController extends Ion {
     config: Config,
     protected _keyboard: Keyboard,
     elementRef: ElementRef,
-    protected _anchorName: string,
-    protected _compiler: Compiler,
-    protected _viewManager: AppViewManager,
     protected _zone: NgZone,
-    protected _renderer: Renderer
+    protected _renderer: Renderer,
+    protected _loader: DynamicComponentLoader
   ) {
     super(elementRef);
 
@@ -211,7 +210,7 @@ export class NavController extends Ion {
     this.id = (++ctrlIds).toString();
 
     // build a new injector for child ViewControllers to use
-    this.providers = Injector.resolve([
+    this.providers = ReflectiveInjector.resolve([
       provide(NavController, {useValue: this})
     ]);
   }
@@ -219,8 +218,15 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  setPortal(val: Portal) {
+  setPortal(val: NavPortal) {
     this._portal = val;
+  }
+
+  /**
+   * @private
+   */
+  setViewport(val: ViewContainerRef) {
+    this._viewport = val;
   }
 
   /**
@@ -988,6 +994,9 @@ export class NavController extends Ion {
     });
   }
 
+  /**
+   * @private
+   */
   private _setAnimate(opts: NavOptions) {
     if ((this._views.length === 1 && !this._init && !this.isPortal) || this.config.get('animate') === false) {
       opts.animate = false;
@@ -1285,7 +1294,9 @@ export class NavController extends Ion {
         // class to the nav when it's finished its first transition
         if (!this._init) {
           this._init = true;
-          this._renderer.setElementClass(this.elementRef.nativeElement, 'has-views', true);
+          if (!this.isPortal) {
+            this._renderer.setElementClass(this.getNativeElement(), 'has-views', true);
+          }
         }
 
       } else {
@@ -1406,75 +1417,71 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  loadPage(view: ViewController, navbarContainerRef, opts: NavOptions, done: Function) {
+  loadPage(view: ViewController, navbarContainerRef: ViewContainerRef, opts: NavOptions, done: Function) {
     let wtfTimeRangeScope = wtfStartTimeRange('NavController#loadPage', view.name);
 
-    // guts of DynamicComponentLoader#loadIntoLocation
-    this._compiler && this._compiler.compileInHost(view.componentType).then(hostProtoViewRef => {
+    if (!this._viewport || !view.componentType) {
+      return;
+    }
+
+    let providers = this.providers.concat(ReflectiveInjector.resolve([
+      provide(ViewController, {useValue: view}),
+      provide(NavParams, {useValue: view.getNavParams()})
+    ]));
+
+    // load the page component inside the nav
+    this._loader.loadNextToLocation(view.componentType, this._viewport, providers).then(component => {
       let wtfScope = wtfCreateScope('NavController#loadPage_After_Compile')();
 
-      let providers = this.providers.concat(Injector.resolve([
-        provide(ViewController, {useValue: view}),
-        provide(NavParams, {useValue: view.getNavParams()})
-      ]));
+      // the ElementRef of the actual ion-page created
+      let pageElementRef = component.location;
 
-      let location = this.elementRef;
-      if (this._anchorName) {
-        location = this._viewManager.getNamedElementInComponentView(location, this._anchorName);
-      }
+      // a new ComponentRef has been created
+      // set the ComponentRef's instance to its ViewController
+      view.setInstance(component.instance);
 
-      let viewContainer = this._viewManager.getViewContainer(location);
-      let hostViewRef: any =
-          viewContainer.createHostView(hostProtoViewRef, viewContainer.length, providers);
-      let pageElementRef = this._viewManager.getHostElement(hostViewRef);
-      let component = this._viewManager.getComponent(pageElementRef);
+      // remember the ChangeDetectorRef for this ViewController
+      view.setChangeDetector(component.changeDetectorRef);
+
+      // remember the ElementRef to the ion-page elementRef that was just created
+      view.setPageRef(pageElementRef);
 
       // auto-add page css className created from component JS class name
       let cssClassName = pascalCaseToDashCase(view.componentType['name']);
       this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
 
-      view.addDestroy(() => {
+      view.onDestroy(() => {
         // ensure the element is cleaned up for when the view pool reuses this element
         this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
         this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
-
-        // remove the page from its container
-        let index = viewContainer.indexOf(hostViewRef);
-        if (!hostViewRef.destroyed && index !== -1) {
-          viewContainer.remove(index);
-        }
-
-        view.setInstance(null);
+        component.destroy();
       });
 
-      // a new ComponentRef has been created
-      // set the ComponentRef's instance to this ViewController
-      view.setInstance(component);
-
-      // remember the ChangeDetectorRef for this ViewController
-      view.setChangeDetector(hostViewRef.changeDetectorRef);
-
-      // remember the ElementRef to the ion-page elementRef that was just created
-      view.setPageRef(pageElementRef);
-
       if (!navbarContainerRef) {
+        // there was not a navbar container ref already provided
+        // so use the location of the actual navbar template
         navbarContainerRef = view.getNavbarViewRef();
       }
 
+      // find a navbar template if one is in the page
       let navbarTemplateRef = view.getNavbarTemplateRef();
+
+      // check if we have both a navbar ViewContainerRef and a template
       if (navbarContainerRef && navbarTemplateRef) {
+        // let's now create the navbar view
         let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
 
-        view.addDestroy(() => {
-          let index = navbarContainerRef.indexOf(navbarViewRef);
-          if (!navbarViewRef.destroyed && index > -1) {
-            navbarContainerRef.remove(index);
-          }
+        view.onDestroy(() => {
+          // manually destroy the navbar when the page is destroyed
+          navbarViewRef.destroy();
         });
       }
 
+      // options may have had a postLoad method
+      // used mainly by tabs
       opts.postLoad && opts.postLoad(view);
 
+      // complete wtf loggers
       wtfEndTimeRange(wtfTimeRangeScope);
       wtfLeave(wtfScope);
 

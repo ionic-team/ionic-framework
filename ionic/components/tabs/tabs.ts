@@ -281,12 +281,7 @@ export class Tabs extends Ion {
         this.select(tab);
       });
     });
-  }
 
-  /**
-   * @private
-   */
-  ngAfterContentInit() {
     let preloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
 
     // get the selected index
@@ -306,6 +301,7 @@ export class Tabs extends Ion {
         selectedIndex = -1;
       }
     });
+
     if (selectedIndex < 0) {
       // the selected index wasn't safe to show
       // instead use an available index found to be safe to show

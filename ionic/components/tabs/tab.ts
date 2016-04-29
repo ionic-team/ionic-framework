@@ -1,5 +1,4 @@
-import {Component, Directive, Host, Inject, forwardRef, ElementRef, Compiler, AppViewManager, NgZone, Renderer, Type, ViewEncapsulation, ChangeDetectorRef} from 'angular2/core';
-import {EventEmitter, Input, Output} from 'angular2/core';
+import {Component, Inject, forwardRef, ElementRef, NgZone, Renderer, DynamicComponentLoader, ViewContainerRef, ViewChild, Type, ViewEncapsulation, ChangeDetectorRef, EventEmitter, Input, Output} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -124,15 +123,10 @@ import {TabButton} from './tab-button';
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
-  template: '<div #contents></div>',
+  template: '<div #viewport></div>',
   encapsulation: ViewEncapsulation.None,
 })
 export class Tab extends NavController {
-
-  /**
-   * @private
-   */
-  public isSelected: boolean;
   private _isInitial: boolean;
   private _isEnabled: boolean = true;
   private _isShown: boolean = true;
@@ -140,6 +134,11 @@ export class Tab extends NavController {
   private _btnId: string;
   private _loaded: boolean;
   private _loadTmr: any;
+
+  /**
+   * @private
+   */
+  isSelected: boolean;
 
   /**
    * @private
@@ -213,19 +212,26 @@ export class Tab extends NavController {
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,
-    compiler: Compiler,
-    viewManager: AppViewManager,
     zone: NgZone,
     renderer: Renderer,
+    loader: DynamicComponentLoader,
     private _cd: ChangeDetectorRef
   ) {
     // A Tab is a NavController for its child pages
-    super(parentTabs, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer);
+    super(parentTabs, app, config, keyboard, elementRef, zone, renderer, loader);
 
     parentTabs.add(this);
 
     this._panelId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
+  }
+
+  /**
+   * @private
+   */
+  @ViewChild('viewport', {read: ViewContainerRef})
+  set _vp(val: ViewContainerRef) {
+    this.setViewport(val);
   }
 
   /**

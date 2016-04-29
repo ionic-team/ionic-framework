@@ -1,10 +1,9 @@
-import {Directive, ElementRef, DynamicComponentLoader, Attribute} from 'angular2/core';
+import {Directive, ViewContainerRef, DynamicComponentLoader, Attribute} from 'angular2/core';
 import {
   RouterOutlet,
   Router,
   ComponentInstruction,
-  Instruction,
-  Location} from 'angular2/router';
+  Instruction} from 'angular2/router';
 
 import {Nav} from './nav';
 import {ViewController} from './view-controller';
@@ -21,7 +20,7 @@ export class NavRouter extends RouterOutlet {
   private _parent: Router;
 
   constructor(
-    elementRef: ElementRef,
+    viewContainerRef: ViewContainerRef,
     loader: DynamicComponentLoader,
     parentRouter: Router,
     @Attribute('name') nameAttr: string,
@@ -30,7 +29,7 @@ export class NavRouter extends RouterOutlet {
     if (nav.parent) {
       parentRouter = parentRouter.childRouter(nav);
     }
-    super(elementRef, loader, parentRouter, nameAttr);
+    super(viewContainerRef, loader, parentRouter, nameAttr);
 
     this._nav = nav;
     this._parent = parentRouter;
