@@ -6,10 +6,12 @@ import {MenuController} from './menu-controller';
 /**
  * @name MenuClose
  * @description
- * The `menuClose` directive can be placed on any button to
- * automatically close an open menu.
+ * The `menuClose` directive can be placed on any button to close an open menu.
  *
  * @usage
+ *
+ * A simple `menuClose` button can be added using the following markup:
+ *
  * ```html
  * <button menuClose>Close Menu</button>
  * ```

@@ -44,8 +44,8 @@ import {isTrueProperty} from '../../util/util';
  *
  * If a [MenuToggle](../MenuToggle) button is added to the [NavBar](../../nav/NavBar) of
  * a page, the button will only appear when the page it's in is currently a root page. The
- * root page is the initial page loaded in the app, or it can be set using the [setRoot](../../nav/NavController/#setRoot)
- * method on the [NavController](../../nav/NavController).
+ * root page is the initial page loaded in the app, or a page that has been set as the root
+ * using the [setRoot](../../nav/NavController/#setRoot) method on the [NavController](../../nav/NavController).
  *
  * For example, say the application has two pages, `Page1` and `Page2`, and both have a
  * `MenuToggle` button in their navigation bars. Assume the initial page loaded into the app
