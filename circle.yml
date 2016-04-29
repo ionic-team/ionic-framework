@@ -15,8 +15,8 @@ dependencies:
 test:
   override:
     - ./scripts/circle/test.sh --index=$CIRCLE_NODE_INDEX --total=$CIRCLE_NODE_TOTAL
-deployment:
-  tasks:
-    branch: master
-    commands:
-      #- ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM
+#deployment:
+#  tasks:
+#    branch: master
+#    commands:
+#      - ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM
