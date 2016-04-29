@@ -1,5 +1,6 @@
 import {ViewChild} from 'angular2/core';
-import {RouteConfig, Location} from 'angular2/router';
+import {RouteConfig} from 'angular2/router';
+import {Location} from 'angular2/platform/common';
 
 import {App, Page, NavController, NavParams, Modal, ViewController, Tabs} from 'ionic-angular';
 
@@ -64,14 +65,12 @@ class ChatPage {
   templateUrl: './tabs.html'
 })
 class TabsPage {
+  tab1Root = Tab1Page1;
+  tab2Root = Tab2Page1;
+  tab3Root = Tab3Page1;
   @ViewChild(Tabs) tabs: Tabs;
 
-  constructor(private nav: NavController, private params: NavParams) {
-    this.tab1Root = Tab1Page1;
-    this.tab1Params = params;
-    this.tab2Root = Tab2Page1;
-    this.tab3Root = Tab3Page1;
-  }
+  constructor(private nav: NavController, private params: NavParams) {}
 
   ngAfterViewInit() {
     this.tabs.change.subscribe(tab => {

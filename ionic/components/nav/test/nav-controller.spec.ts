@@ -1319,7 +1319,7 @@ export function run() {
     function mockNav() {
       let elementRef = getElementRef();
 
-      let nav = new NavController(null, null, config, null, elementRef, null, null, null, null, null);
+      let nav = new NavController(null, null, config, null, elementRef, null, null, null);
 
       nav._keyboard = {
         isOpen: function() {
@@ -1340,7 +1340,7 @@ export function run() {
         setElementStyle: function(){}
       };
 
-      nav._portal = new NavController(null, null, config, null, elementRef, null, null, null, null, null);
+      nav._portal = new NavController(null, null, config, null, elementRef, null, null, null);
 
       return nav;
     }
