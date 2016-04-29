@@ -19,4 +19,4 @@ deployment:
   tasks:
     branch: master
     commands:
-      - ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM
+      #- ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM
