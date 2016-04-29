@@ -10,7 +10,8 @@ class E2EPage {
   presentLoadingIos() {
     let loading = Loading.create({
       spinner: 'ios',
-      duration: 1000
+      duration: 1000,
+      cssClass: 'my-custom-loader'
     });
 
     loading.onDismiss(() => {
