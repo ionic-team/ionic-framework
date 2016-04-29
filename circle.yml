@@ -11,8 +11,8 @@ machine:
 test:
   override:
     - echo "Automatically marking tests as passing for now"
-deployment:
-  tasks:
-    branch: "2.0"
-    commands:
-      - ./scripts/ci/deploy.sh
+#deployment:
+#  tasks:
+#    branch: "2.0"
+#    commands:
+#      - ./scripts/ci/deploy.sh
