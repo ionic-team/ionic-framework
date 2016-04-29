@@ -115,7 +115,6 @@ ion-title {
 // --------------------------------------------------
 
 ion-buttons {
-  flex: 1;
   order: map-get($toolbar-order-ios, buttons-start);
 
   transform: translateZ(0);
