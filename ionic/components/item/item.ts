@@ -1,5 +1,4 @@
 import {Component, ContentChildren, forwardRef, ViewChild, ContentChild, Renderer, ElementRef, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
-import {NgIf} from 'angular2/common';
 
 import {Button} from '../button/button';
 import {Form} from '../../util/form';
@@ -57,7 +56,6 @@ import {Label} from '../label/label';
   host: {
     'class': 'item'
   },
-  directives: [NgIf, Label],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })

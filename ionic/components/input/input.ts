@@ -1,7 +1,6 @@
 import {Component, Optional, ElementRef, ViewChild, ViewEncapsulation} from 'angular2/core';
-import {NgIf, NgControl} from 'angular2/common';
+import {NgControl} from 'angular2/common';
 
-import {Button} from '../button/button';
 import {Config} from '../../config/config';
 import {Content} from '../content/content';
 import {Form} from '../../util/form';
@@ -70,10 +69,8 @@ import {Platform} from '../../platform/platform';
     '<button clear *ngIf="clearInput && value" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
   directives: [
-    NgIf,
     NextInput,
     NativeInput,
-    Button
   ],
   encapsulation: ViewEncapsulation.None,
 })
@@ -153,7 +150,6 @@ export class TextInput extends InputBase {
     '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
   directives: [
-    NgIf,
     NextInput,
     NativeInput
   ],

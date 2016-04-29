@@ -1,5 +1,5 @@
 import {ElementRef, Component, Directive, Host, HostBinding, HostListener, ViewChild, Input, Output, EventEmitter, Optional, ViewEncapsulation} from 'angular2/core';
-import {NgIf, NgClass, NgControl, FORM_DIRECTIVES} from 'angular2/common';
+import {NgControl} from 'angular2/common';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -64,7 +64,7 @@ export class SearchbarInput {
       '<button clear class="searchbar-clear-icon" (click)="clearInput()" (mousedown)="clearInput()"></button>' +
     '</div>' +
     '<button clear (click)="cancelSearchbar()" (mousedown)="cancelSearchbar()" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
-  directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, SearchbarInput],
+  directives: [SearchbarInput],
   encapsulation: ViewEncapsulation.None,
 })
 export class Searchbar extends Ion {

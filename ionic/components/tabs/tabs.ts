@@ -1,5 +1,4 @@
-import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, Type, ViewEncapsulation} from 'angular2/core';
-import {NgFor, NgIf} from 'angular2/common';
+import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, ViewEncapsulation} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -10,8 +9,6 @@ import {Ion} from '../ion';
 import {Platform} from '../../platform/platform';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {Icon} from '../icon/icon';
-import {rafFrames} from '../../util/dom';
 import {isBlank, isTrueProperty} from '../../util/util';
 
 
@@ -154,9 +151,6 @@ import {isBlank, isTrueProperty} from '../../util/util';
       '<ng-content></ng-content>' +
     '</ion-content-section>',
   directives: [
-    Icon,
-    NgFor,
-    NgIf,
     TabButton,
     TabHighlight,
     forwardRef(() => TabNavBarAnchor)

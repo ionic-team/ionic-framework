@@ -1,9 +1,7 @@
 import {Component, Input, ViewEncapsulation} from 'angular2/core';
-import {NgIf} from 'angular2/common';
 
 import {Config} from '../../config/config';
 import {InfiniteScroll} from './infinite-scroll';
-import {Spinner} from '../spinner/spinner';
 
 
 /**
@@ -18,7 +16,6 @@ import {Spinner} from '../spinner/spinner';
       '</div>' +
       '<div class="infinite-loading-text" [innerHTML]="loadingText" *ngIf="loadingText"></div>' +
     '</div>',
-  directives: [NgIf, Spinner],
   host: {
     '[attr.state]': 'inf.state'
   },
