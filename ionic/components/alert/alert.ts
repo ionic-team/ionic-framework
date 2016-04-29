@@ -1,5 +1,4 @@
-import {Component, ElementRef, Renderer, HostListener, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
-import {NgClass, NgSwitch, NgIf, NgFor} from 'angular2/common';
+import {Component, ElementRef, Renderer, HostListener, ViewEncapsulation} from 'angular2/core';
 
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
@@ -355,7 +354,6 @@ export class Alert extends ViewController {
       '<div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">' +
         '<button category="alert-button" *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
           '{{b.text}}' +
-          '<ion-button-effect></ion-button-effect>' +
         '</button>' +
       '</div>' +
     '</div>',
@@ -364,8 +362,6 @@ export class Alert extends ViewController {
     '[attr.aria-labelledby]': 'hdrId',
     '[attr.aria-describedby]': 'descId'
   },
-  directives: [NgClass, NgSwitch, NgIf, NgFor],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 class AlertCmp {

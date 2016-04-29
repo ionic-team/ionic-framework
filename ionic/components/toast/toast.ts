@@ -1,8 +1,5 @@
 import {Component, ElementRef, Renderer, Output, EventEmitter} from 'angular2/core';
-import {NgClass, NgIf, NgFor} from 'angular2/common';
 
-import {Button} from '../button/button';
-import {Icon} from '../icon/icon';
 import {ActionSheet, ActionSheetOptions} from '../action-sheet/action-sheet';
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
@@ -131,7 +128,6 @@ export class Toast extends ViewController {
         <div class="toast-message" id="{{hdrId}}" *ngIf="d.message">{{d.message}}</div>
         <button clear class="toast-button" *ngIf="d.showCloseButton" (click)="cbClick()">
           {{ d.closeButtonText || 'Close' }}
-          <ion-button-effect></ion-button-effect>
          </button>
       </div>
     </div>
@@ -139,9 +135,8 @@ export class Toast extends ViewController {
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
-    '[attr.aria-describedby]': 'descId'
+    '[attr.aria-describedby]': 'descId',
   },
-  directives: [NgIf, Icon, Button]
 })
 class ToastCmp {
   private d: any;

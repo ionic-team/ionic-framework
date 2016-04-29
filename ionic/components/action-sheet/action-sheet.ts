@@ -1,5 +1,4 @@
-import {Component, Renderer, ElementRef, HostListener, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
-import {NgFor, NgIf} from 'angular2/common';
+import {Component, Renderer, ElementRef, HostListener, ViewEncapsulation} from 'angular2/core';
 
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
@@ -225,14 +224,12 @@ export class ActionSheet extends ViewController {
           '<button category="action-sheet-button" (click)="click(b)" *ngFor="#b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{b.text}}' +
-            '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
         '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
           '<button category="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
             '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{d.cancelButton.text}}' +
-            '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
       '</div>' +
@@ -242,8 +239,6 @@ export class ActionSheet extends ViewController {
     '[attr.aria-labelledby]': 'hdrId',
     '[attr.aria-describedby]': 'descId'
   },
-  directives: [NgFor, NgIf, Icon],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 class ActionSheetCmp {

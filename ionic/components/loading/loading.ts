@@ -1,10 +1,8 @@
-import {Component, Renderer, ElementRef, HostListener, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
-import {NgFor, NgIf} from 'angular2/common';
+import {Component, Renderer, ElementRef, HostListener, ViewEncapsulation} from 'angular2/core';
 
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
-import {Spinner} from '../spinner/spinner';
 import {isPresent, isUndefined, isDefined} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
@@ -163,8 +161,6 @@ export class Loading extends ViewController {
   host: {
     'role': 'dialog'
   },
-  directives: [NgIf, Spinner],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 class LoadingCmp {
