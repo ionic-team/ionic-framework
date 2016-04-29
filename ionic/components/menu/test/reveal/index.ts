@@ -1,4 +1,4 @@
-import {App, IonicApp, Page} from 'ionic-angular';
+import {App, IonicApp, Page} from '../../../../../ionic';
 
 
 @Page({templateUrl: 'page1.html'})

@@ -1,5 +1,5 @@
 import {ViewChild} from 'angular2/core';
-import {App, Page, InfiniteScroll, NavController} from 'ionic-angular';
+import {App, Page, InfiniteScroll, NavController} from '../../../../../ionic';
 
 
 @Page({

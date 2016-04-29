@@ -1,4 +1,4 @@
-import {App} from 'ionic-angular';
+import {App} from '../../../../../ionic';
 import {FormBuilder, Validators} from 'angular2/common';
 
 

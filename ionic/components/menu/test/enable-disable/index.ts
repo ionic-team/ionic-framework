@@ -1,4 +1,4 @@
-import {App, Page, IonicApp, MenuController} from 'ionic-angular';
+import {App, Page, IonicApp, MenuController} from '../../../../../ionic';
 
 
 @Page({

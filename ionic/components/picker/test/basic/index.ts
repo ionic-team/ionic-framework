@@ -1,5 +1,5 @@
 import {ViewEncapsulation} from 'angular2/core';
-import {App, Page, Picker, NavController} from 'ionic-angular';
+import {App, Page, Picker, NavController} from '../../../../../ionic';
 
 
 @Page({

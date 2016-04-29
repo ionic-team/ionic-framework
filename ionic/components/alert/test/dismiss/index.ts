@@ -1,4 +1,4 @@
-import { Alert, Loading, NavController, App, Page } from 'ionic-angular/index';
+import { Alert, Loading, NavController, App, Page } from '../../../../../ionic/index';
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from 'angular2/common';
 
 

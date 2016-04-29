@@ -1,5 +1,5 @@
-import {App, Page, Config, Platform} from 'ionic-angular';
-import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from 'ionic-angular';;
+import {App, Page, Config, Platform} from '../../../../../ionic';
+import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../ionic';;
 
 
 @Page({

@@ -1,4 +1,4 @@
-import {App, InfiniteScroll} from 'ionic-angular';
+import {App, InfiniteScroll} from '../../../../../ionic';
 
 
 @App({
