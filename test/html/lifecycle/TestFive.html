@@ -1,0 +1,804 @@
+<!--
+  This test uses non-tabbed pages and tabbed-pages together in a unique fashion
+  to simulate a very complicated scenario of the user jumping around
+
+The navigation order is:
+
+Page 1
+Page 2
+Tab 1, Page 1
+Tab 1, Page 2
+Page 2
+Tab 2, Page 1
+Page 3
+Tab 1, Page 2
+Page 1
+Tab 1, Page 1
+Page 3
+Tab 2, Page 2
+Tab 3, Page 2
+Tab 1, Page 2
+Page 1
+Tab 2, Page 2
+Tab 2, Page 2
+Tab 3, Page 1
+Page 3
+Tab 3, Page 2
+Tab 3, Page 1
+Page 4 (results page)
+
+-->
+
+<html ng-app="ionicApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>Test Three</title>
+
+    <link href="../../../../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../../../../dist/js/ionic.bundle.js"></script>
+    <script src="http://chaijs.com/chai.js"></script>
+  </head>
+
+  <script id="page1.html" type="text/ng-template">
+    <ion-view view-title="Page One">
+      <h1>Page One</h1>
+    </ion-view>
+  </script>
+
+  <script id="page2.html" type="text/ng-template">
+    <ion-view view-title="Page Two">
+      <h1>Page Two</h1>
+    </ion-view>
+  </script>
+
+  <script id="page3.html" type="text/ng-template">
+    <ion-view view-title="Page Three">
+      <h1>Page Three</h1>
+    </ion-view>
+  </script>
+
+  <script id="tab1page1.html" type="text/ng-template">
+    <ion-view view-title="Tab One Page One">
+      <h1>Tab One Page One</h1>
+    </ion-view>
+  </script>
+
+  <script id="tab1page2.html" type="text/ng-template">
+    <ion-view view-title="Tab One Page Two">
+      <h1>Tab One Page Two</h1>
+    </ion-view>
+  </script>
+
+  <script id="tab2page1.html" type="text/ng-template">
+    <ion-view view-title="Tab Two Page One">
+      <h1>Tab Two Page One</h1>
+    </ion-view>
+  </script>
+
+  <script id="tab2page2.html" type="text/ng-template">
+    <ion-view view-title="Tab Two Page Two">
+      <h1>Tab Two Page Two</h1>
+    </ion-view>
+  </script>
+
+  <script id="tab3page1.html" type="text/ng-template">
+    <ion-view view-title="Tab Three Page One">
+      <h1>Tab Three Page One</h1>
+    </ion-view>
+  </script>
+
+  <script id="tab3page2.html" type="text/ng-template">
+    <ion-view view-title="Tab Three Page Two">
+      <h1>Tab Three Page Two</h1>
+    </ion-view>
+  </script>
+
+  <script id="page4.html" type="text/ng-template">
+    <ion-view view-title="Page Four">
+      <h1>Results: {{results}}</h1>
+    </ion-view>
+  </script>
+
+  <script id="tabs.html" type="text/ng-template">
+    <ion-tabs class="tabs-icon-top tabs-color-active-positive">
+      <ion-tab title="Tab 1" href="#/tab/tab1page1">
+        <ion-nav-view name="tab-one"></ion-nav-view>
+      </ion-tab>
+      <ion-tab title="Tab 2" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/tab2page1">
+        <ion-nav-view name="tab-two"></ion-nav-view>
+      </ion-tab>
+      <ion-tab title="Tab 3" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/tab3page1">
+        <ion-nav-view name="tab-three"></ion-nav-view>
+      </ion-tab>
+    </ion-tabs>
+  </script>
+
+  <body>
+
+    <ion-nav-view></ion-nav-view>
+
+  <script>
+
+  var expect = window.chai.expect;
+
+  angular.module('ionicApp', ['ionic'])
+
+.config(function($stateProvider, $urlRouterProvider) {
+
+  $stateProvider
+
+  .state('page1', {
+    url: '/page1',
+    templateUrl: 'page1.html',
+    controller: "PageOneController"
+  })
+  .state('page2', {
+    url: '/page2',
+    templateUrl: 'page2.html',
+    controller: "PageTwoController"
+  })
+  .state('page3', {
+    url: '/page3',
+    templateUrl: 'page3.html',
+    controller: "PageThreeController"
+  })
+  .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'tabs.html'
+  })
+  .state('tab.tab1page1', {
+    url: '/tab1page1',
+    views: {
+      'tab-one': {
+        templateUrl: 'tab1page1.html',
+        controller: 'TabOnePageOneController'
+      }
+    }
+  })
+  .state('tab.tab1page2', {
+    url: '/tab1page2',
+    views: {
+      'tab-one': {
+        templateUrl: 'tab1page2.html',
+        controller: 'TabOnePageTwoController'
+      }
+    }
+  })
+
+  .state('tab.tab2page1', {
+    url: '/tab2page1',
+    views: {
+      'tab-two': {
+        templateUrl: 'tab2page1.html',
+        controller: 'TabTwoPageOneController'
+      }
+    }
+  })
+  .state('tab.tab2page2', {
+    url: '/tab2page2',
+    views: {
+      'tab-two': {
+        templateUrl: 'tab2page2.html',
+        controller: 'TabTwoPageTwoController'
+      }
+    }
+  })
+  .state('tab.tab3page1', {
+    url: '/tab3page1',
+    views: {
+      'tab-three': {
+        templateUrl: 'tab3page1.html',
+        controller: 'TabThreePageOneController'
+      }
+    }
+  })
+  .state('tab.tab3page2', {
+    url: '/tab3page2',
+    views: {
+      'tab-three': {
+        templateUrl: 'tab3page2.html',
+        controller: 'TabThreePageTwoController'
+      }
+    }
+  })
+
+  .state('page4', {
+    url: "/page4",
+    templateUrl: "page4.html",
+    controller: "PageFourController"
+  });
+
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/page1');
+})
+
+.factory('dataAggregator', function() {
+
+  var dataStore = {};
+
+  return {
+    addEventForController: function(controllerName, eventName) {
+      var controllerData = dataStore[controllerName];
+      if ( !controllerData ){
+        controllerData = {};
+      }
+      var numCalls = controllerData[eventName] || 0;
+      controllerData[eventName] = ++numCalls;
+      dataStore[controllerName] = controllerData;
+    },
+
+    getEventCallCountForController: function(controllerName, eventName){
+      var controllerData = dataStore[controllerName];
+      if ( !controllerData ){
+        controllerData = {};
+      }
+      var numCalls = controllerData[eventName] || 0;
+      return numCalls;
+    }
+  };
+})
+
+.controller('PageOneController', function($scope, $state, $timeout, dataAggregator) {
+
+  var enterCount = 0;
+  $scope.$on("$ionicView.beforeEnter", function(){
+    console.log("PageOne: Before Enter");
+    dataAggregator.addEventForController("PageOneController", "$ionicView.beforeEnter");
+  });
+
+  $scope.$on("$ionicView.enter", function(){
+    console.log("PageOne: Enter");
+    dataAggregator.addEventForController("PageOneController", "$ionicView.enter");
+    if ( enterCount === 0 ){
+      $timeout(function(){
+        $state.go("page2");
+      }, 200);
+    }
+    else if ( enterCount === 1 ){
+      $timeout(function(){
+        $state.go("tab.tab1page1");
+      }, 200);
+    }
+    else if ( enterCount === 2 ){
+      $timeout(function(){
+        $state.go("tab.tab2page2");
+      }, 200);
+    }
+    enterCount++;
+  });
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    console.log("PageOne: After Enter");
+    dataAggregator.addEventForController("PageOneController", "$ionicView.afterEnter");
+  });
+
+  $scope.$on("$ionicView.beforeLeave", function(){
+    console.log("PageOne: Before Leave");
+    dataAggregator.addEventForController("PageOneController", "$ionicView.beforeLeave");
+  });
+
+  $scope.$on("$ionicView.leave", function(){
+    console.log("PageOne: Leave");
+    dataAggregator.addEventForController("PageOneController", "$ionicView.leave");
+  });
+
+  $scope.$on("$ionicView.afterLeave", function(){
+    console.log("PageOne: After Leave");
+    dataAggregator.addEventForController("PageOneController", "$ionicView.afterLeave");
+  });
+})
+
+.controller('PageTwoController', function($scope, $state, $timeout, dataAggregator) {
+
+  var enterCount = 0;
+  $scope.$on("$ionicView.beforeEnter", function(){
+    console.log("PageTwo: Before Enter");
+    dataAggregator.addEventForController("PageTwoController", "$ionicView.beforeEnter");
+  });
+
+  $scope.$on("$ionicView.enter", function(){
+    console.log("PageTwo: Enter");
+    dataAggregator.addEventForController("PageTwoController", "$ionicView.enter");
+    if ( enterCount === 0 ){
+      $timeout(function(){
+        $state.go("tab.tab1page1");
+      }, 200);
+    }
+    else if ( enterCount === 1 ){
+      $timeout(function(){
+        $state.go("tab.tab2page1");
+      }, 200);
+    }
+    enterCount++;
+  });
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    console.log("PageTwo: After Enter");
+    dataAggregator.addEventForController("PageTwoController", "$ionicView.afterEnter");
+  });
+
+  $scope.$on("$ionicView.beforeLeave", function(){
+    console.log("PageTwo: Before Leave");
+    dataAggregator.addEventForController("PageTwoController", "$ionicView.beforeLeave");
+  });
+
+  $scope.$on("$ionicView.leave", function(){
+    console.log("PageTwo: Leave");
+    dataAggregator.addEventForController("PageTwoController", "$ionicView.leave");
+  });
+
+  $scope.$on("$ionicView.afterLeave", function(){
+    console.log("PageTwo: After Leave");
+    dataAggregator.addEventForController("PageTwoController", "$ionicView.afterLeave");
+  });
+})
+
+.controller('PageThreeController', function($scope, $state, $timeout, dataAggregator) {
+
+  var enterCount = 0;
+  $scope.$on("$ionicView.beforeEnter", function(){
+    console.log("PageThree: Before Enter");
+    dataAggregator.addEventForController("PageThreeController", "$ionicView.beforeEnter");
+  });
+
+  $scope.$on("$ionicView.enter", function(){
+    console.log("PageThree: Enter");
+    dataAggregator.addEventForController("PageThreeController", "$ionicView.enter");
+    if ( enterCount === 0 ){
+      $timeout(function(){
+        $state.go("tab.tab1page2");
+      }, 200);
+    }
+    else if ( enterCount === 1 ){
+      $timeout(function(){
+        $state.go("tab.tab2page2");
+      }, 200);
+    }
+    else if ( enterCount === 2 ){
+      $timeout(function(){
+        $state.go("tab.tab3page2");
+      }, 200);
+    }
+    enterCount++;
+  });
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    console.log("PageThree: After Enter");
+    dataAggregator.addEventForController("PageThreeController", "$ionicView.afterEnter");
+  });
+
+  $scope.$on("$ionicView.beforeLeave", function(){
+    console.log("PageThree: Before Leave");
+    dataAggregator.addEventForController("PageThreeController", "$ionicView.beforeLeave");
+  });
+
+  $scope.$on("$ionicView.leave", function(){
+    console.log("PageThree: Leave");
+    dataAggregator.addEventForController("PageThreeController", "$ionicView.leave");
+  });
+
+  $scope.$on("$ionicView.afterLeave", function(){
+    console.log("PageThree: After Leave");
+    dataAggregator.addEventForController("PageThreeController", "$ionicView.afterLeave");
+  });
+})
+
+.controller('TabOnePageOneController', function($scope, $state, $timeout, dataAggregator) {
+
+  var enterCount = 0;
+  $scope.$on("$ionicView.beforeEnter", function(){
+    console.log("TabOnePageOne: Before Enter");
+    dataAggregator.addEventForController("TabOnePageOneController", "$ionicView.beforeEnter");
+  });
+
+  $scope.$on("$ionicView.enter", function(){
+    console.log("TabOnePageOne: Enter");
+    dataAggregator.addEventForController("TabOnePageOneController", "$ionicView.enter");
+    if ( enterCount === 0 ){
+      $timeout(function(){
+        $state.go("tab.tab1page2");
+      }, 200);
+    }
+    else if ( enterCount === 1 ){
+      $timeout(function(){
+        $state.go("page3");
+      }, 200);
+    }
+    enterCount++;
+  });
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    console.log("TabOnePageOne: After Enter");
+    dataAggregator.addEventForController("TabOnePageOneController", "$ionicView.afterEnter");
+  });
+
+  $scope.$on("$ionicView.beforeLeave", function(){
+    console.log("TabOnePageOne: Before Leave");
+    dataAggregator.addEventForController("TabOnePageOneController", "$ionicView.beforeLeave");
+  });
+
+  $scope.$on("$ionicView.leave", function(){
+    console.log("TabOnePageOne: Leave");
+    dataAggregator.addEventForController("TabOnePageOneController", "$ionicView.leave");
+  });
+
+  $scope.$on("$ionicView.afterLeave", function(){
+    console.log("TabOnePageOne: After Leave");
+    dataAggregator.addEventForController("TabOnePageOneController", "$ionicView.afterLeave");
+  });
+})
+
+.controller('TabOnePageTwoController', function($scope, $state, $timeout, dataAggregator) {
+
+  var enterCount = 0;
+  $scope.$on("$ionicView.beforeEnter", function(){
+    console.log("TabOnePageTwo: Before Enter");
+    dataAggregator.addEventForController("TabOnePageTwoController", "$ionicView.beforeEnter");
+  });
+
+  $scope.$on("$ionicView.enter", function(){
+    console.log("TabOnePageTwo: Enter");
+    dataAggregator.addEventForController("TabOnePageTwoController", "$ionicView.enter");
+    if ( enterCount === 0 ){
+      $timeout(function(){
+        $state.go("page2");
+      }, 200);
+    }
+    else if ( enterCount === 1 ){
+      $timeout(function(){
+        $state.go("page1");
+      }, 200);
+    }
+    else if ( enterCount === 2 ){
+      $timeout(function(){
+        $state.go("page1");
+      }, 200);
+    }
+    enterCount++;
+  });
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    console.log("TabOnePageTwo: After Enter");
+    dataAggregator.addEventForController("TabOnePageTwoController", "$ionicView.afterEnter");
+  });
+
+  $scope.$on("$ionicView.beforeLeave", function(){
+    console.log("TabOnePageTwo: Before Leave");
+    dataAggregator.addEventForController("TabOnePageTwoController", "$ionicView.beforeLeave");
+  });
+
+  $scope.$on("$ionicView.leave", function(){
+    console.log("TabOnePageTwo: Leave");
+    dataAggregator.addEventForController("TabOnePageTwoController", "$ionicView.leave");
+  });
+
+  $scope.$on("$ionicView.afterLeave", function(){
+    console.log("TabOnePageTwo: After Leave");
+    dataAggregator.addEventForController("TabOnePageTwoController", "$ionicView.afterLeave");
+  });
+})
+
+.controller('TabTwoPageOneController', function($scope, $state, $timeout, dataAggregator) {
+
+  var enterCount = 0;
+  $scope.$on("$ionicView.beforeEnter", function(){
+    console.log("TabTwoPageOne: Before Enter");
+    dataAggregator.addEventForController("TabTwoPageOneController", "$ionicView.beforeEnter");
+  });
+
+  $scope.$on("$ionicView.enter", function(){
+    console.log("TabTwoPageOne: Enter");
+    dataAggregator.addEventForController("TabTwoPageOneController", "$ionicView.enter");
+    if ( enterCount === 0 ){
+      $timeout(function(){
+        $state.go("page3");
+      }, 200);
+    }
+    else if ( enterCount === 1 ){
+      $timeout(function(){
+        $state.go("tab.tab3page1");
+      }, 200);
+    }
+    enterCount++;
+  });
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    console.log("TabTwoPageOne: After Enter");
+    dataAggregator.addEventForController("TabTwoPageOneController", "$ionicView.afterEnter");
+  });
+
+  $scope.$on("$ionicView.beforeLeave", function(){
+    console.log("TabTwoPageOne: Before Leave");
+    dataAggregator.addEventForController("TabTwoPageOneController", "$ionicView.beforeLeave");
+  });
+
+  $scope.$on("$ionicView.leave", function(){
+    console.log("TabTwoPageOne: Leave");
+    dataAggregator.addEventForController("TabTwoPageOneController", "$ionicView.leave");
+  });
+
+  $scope.$on("$ionicView.afterLeave", function(){
+    console.log("TabTwoPageOne: After Leave");
+    dataAggregator.addEventForController("TabTwoPageOneController", "$ionicView.afterLeave");
+  });
+})
+
+.controller('TabTwoPageTwoController', function($scope, $state, $timeout, dataAggregator) {
+
+  var enterCount = 0;
+  $scope.$on("$ionicView.beforeEnter", function(){
+    console.log("TabTwoPageTwo: Before Enter");
+    dataAggregator.addEventForController("TabTwoPageTwoController", "$ionicView.beforeEnter");
+  });
+
+  $scope.$on("$ionicView.enter", function(){
+    console.log("TabTwoPageTwo: Enter");
+    dataAggregator.addEventForController("TabTwoPageTwoController", "$ionicView.enter");
+    if ( enterCount === 0 ){
+      $timeout(function(){
+        $state.go("tab.tab3page2");
+      }, 200);
+    }
+    else if ( enterCount === 1 ){
+      $timeout(function(){
+        $state.go("tab.tab2page1");
+      }, 200);
+    }
+    enterCount++;
+  });
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    console.log("TabTwoPageTwo: After Enter");
+    dataAggregator.addEventForController("TabTwoPageTwoController", "$ionicView.afterEnter");
+  });
+
+  $scope.$on("$ionicView.beforeLeave", function(){
+    console.log("TabTwoPageTwo: Before Leave");
+    dataAggregator.addEventForController("TabTwoPageTwoController", "$ionicView.beforeLeave");
+  });
+
+  $scope.$on("$ionicView.leave", function(){
+    console.log("TabTwoPageTwo: Leave");
+    dataAggregator.addEventForController("TabTwoPageTwoController", "$ionicView.leave");
+  });
+
+  $scope.$on("$ionicView.afterLeave", function(){
+    console.log("TabTwoPageTwo: After Leave");
+    dataAggregator.addEventForController("TabTwoPageTwoController", "$ionicView.afterLeave");
+  });
+})
+
+.controller('TabThreePageOneController', function($scope, $state, $timeout, dataAggregator) {
+
+  var enterCount = 0;
+  $scope.$on("$ionicView.beforeEnter", function(){
+    console.log("TabThreePageOne: Before Enter");
+    dataAggregator.addEventForController("TabThreePageOneController", "$ionicView.beforeEnter");
+  });
+
+  $scope.$on("$ionicView.enter", function(){
+    console.log("TabThreePageOne: Enter");
+    dataAggregator.addEventForController("TabThreePageOneController", "$ionicView.enter");
+    if ( enterCount === 0 ){
+      $timeout(function(){
+        $state.go("page3");
+      }, 200);
+    }
+    else if ( enterCount === 1 ){
+      $timeout(function(){
+        $state.go("page4");
+      }, 200);
+    }
+    enterCount++;
+  });
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    console.log("TabThreePageOne: After Enter");
+    dataAggregator.addEventForController("TabThreePageOneController", "$ionicView.afterEnter");
+  });
+
+  $scope.$on("$ionicView.beforeLeave", function(){
+    console.log("TabThreePageOne: Before Leave");
+    dataAggregator.addEventForController("TabThreePageOneController", "$ionicView.beforeLeave");
+  });
+
+  $scope.$on("$ionicView.leave", function(){
+    console.log("TabThreePageOne: Leave");
+    dataAggregator.addEventForController("TabThreePageOneController", "$ionicView.leave");
+  });
+
+  $scope.$on("$ionicView.afterLeave", function(){
+    console.log("TabThreePageOne: After Leave");
+    dataAggregator.addEventForController("TabThreePageOneController", "$ionicView.afterLeave");
+  });
+})
+
+.controller('TabThreePageTwoController', function($scope, $state, $timeout, dataAggregator) {
+
+  var enterCount = 0;
+  $scope.$on("$ionicView.beforeEnter", function(){
+    console.log("TabThreePageTwo: Before Enter");
+    dataAggregator.addEventForController("TabThreePageTwoController", "$ionicView.beforeEnter");
+  });
+
+  $scope.$on("$ionicView.enter", function(){
+    console.log("TabThreePageTwo: Enter");
+    dataAggregator.addEventForController("TabThreePageTwoController", "$ionicView.enter");
+    if ( enterCount === 0 ){
+      $timeout(function(){
+        $state.go("tab.tab1page2");
+      }, 200);
+    }
+    else if ( enterCount === 1 ){
+      $timeout(function(){
+        $state.go("tab.tab3page1");
+      }, 200);
+    }
+    enterCount++;
+  });
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    console.log("TabThreePageTwo: After Enter");
+    dataAggregator.addEventForController("TabThreePageTwoController", "$ionicView.afterEnter");
+  });
+
+  $scope.$on("$ionicView.beforeLeave", function(){
+    console.log("TabThreePageTwo: Before Leave");
+    dataAggregator.addEventForController("TabThreePageTwoController", "$ionicView.beforeLeave");
+  });
+
+  $scope.$on("$ionicView.leave", function(){
+    console.log("TabThreePageTwo: Leave");
+    dataAggregator.addEventForController("TabThreePageTwoController", "$ionicView.leave");
+  });
+
+  $scope.$on("$ionicView.afterLeave", function(){
+    console.log("TabThreePageTwo: After Leave");
+    dataAggregator.addEventForController("TabThreePageTwoController", "$ionicView.afterLeave");
+  });
+})
+
+.controller('PageFourController', function($scope, $state, $timeout, dataAggregator) {
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    $timeout(function(){
+      doAssertions();
+    }, 250);
+  });
+
+  var doAssertions = function(){
+    // do various calculations and assertions
+    try{
+      $scope.results = "Calculating...";
+
+      var beforeEnterCount = dataAggregator.getEventCallCountForController("PageOneController", "$ionicView.beforeEnter");
+      expect(beforeEnterCount).to.equal(3);
+      var enterCount = dataAggregator.getEventCallCountForController("PageOneController", "$ionicView.enter");
+      expect(enterCount).to.equal(3);
+      var afterEnterCount = dataAggregator.getEventCallCountForController("PageOneController", "$ionicView.afterEnter");
+      expect(afterEnterCount).to.equal(3);
+      var beforeLeaveCount = dataAggregator.getEventCallCountForController("PageOneController", "$ionicView.beforeLeave");
+      expect(beforeLeaveCount).to.equal(3);
+      var leaveCount = dataAggregator.getEventCallCountForController("PageOneController", "$ionicView.leave");
+      expect(leaveCount).to.equal(3);
+      var afterLeaveCount = dataAggregator.getEventCallCountForController("PageOneController", "$ionicView.afterLeave");
+      expect(afterLeaveCount).to.equal(3);
+
+      var beforeEnterCount = dataAggregator.getEventCallCountForController("PageTwoController", "$ionicView.beforeEnter");
+      expect(beforeEnterCount).to.equal(2);
+      var enterCount = dataAggregator.getEventCallCountForController("PageTwoController", "$ionicView.enter");
+      expect(enterCount).to.equal(2);
+      var afterEnterCount = dataAggregator.getEventCallCountForController("PageTwoController", "$ionicView.afterEnter");
+      expect(afterEnterCount).to.equal(2);
+      var beforeLeaveCount = dataAggregator.getEventCallCountForController("PageTwoController", "$ionicView.beforeLeave");
+      expect(beforeLeaveCount).to.equal(2);
+      var leaveCount = dataAggregator.getEventCallCountForController("PageTwoController", "$ionicView.leave");
+      expect(leaveCount).to.equal(2);
+      var afterLeaveCount = dataAggregator.getEventCallCountForController("PageTwoController", "$ionicView.afterLeave");
+      expect(afterLeaveCount).to.equal(2);
+
+      var beforeEnterCount = dataAggregator.getEventCallCountForController("PageThreeController", "$ionicView.beforeEnter");
+      expect(beforeEnterCount).to.equal(3);
+      var enterCount = dataAggregator.getEventCallCountForController("PageThreeController", "$ionicView.enter");
+      expect(enterCount).to.equal(3);
+      var afterEnterCount = dataAggregator.getEventCallCountForController("PageThreeController", "$ionicView.afterEnter");
+      expect(afterEnterCount).to.equal(3);
+      var beforeLeaveCount = dataAggregator.getEventCallCountForController("PageThreeController", "$ionicView.beforeLeave");
+      expect(beforeLeaveCount).to.equal(3);
+      var leaveCount = dataAggregator.getEventCallCountForController("PageThreeController", "$ionicView.leave");
+      expect(leaveCount).to.equal(3);
+      var afterLeaveCount = dataAggregator.getEventCallCountForController("PageThreeController", "$ionicView.afterLeave");
+      expect(afterLeaveCount).to.equal(3);
+
+      var beforeEnterCount = dataAggregator.getEventCallCountForController("TabOnePageOneController", "$ionicView.beforeEnter");
+      expect(beforeEnterCount).to.equal(2);
+      var enterCount = dataAggregator.getEventCallCountForController("TabOnePageOneController", "$ionicView.enter");
+      expect(enterCount).to.equal(2);
+      var afterEnterCount = dataAggregator.getEventCallCountForController("TabOnePageOneController", "$ionicView.afterEnter");
+      expect(afterEnterCount).to.equal(2);
+      var beforeLeaveCount = dataAggregator.getEventCallCountForController("TabOnePageOneController", "$ionicView.beforeLeave");
+      expect(beforeLeaveCount).to.equal(2);
+      var leaveCount = dataAggregator.getEventCallCountForController("TabOnePageOneController", "$ionicView.leave");
+      expect(leaveCount).to.equal(2);
+      var afterLeaveCount = dataAggregator.getEventCallCountForController("TabOnePageOneController", "$ionicView.afterLeave");
+      expect(afterLeaveCount).to.equal(2);
+
+      var beforeEnterCount = dataAggregator.getEventCallCountForController("TabOnePageTwoController", "$ionicView.beforeEnter");
+      expect(beforeEnterCount).to.equal(3);
+      var enterCount = dataAggregator.getEventCallCountForController("TabOnePageTwoController", "$ionicView.enter");
+      expect(enterCount).to.equal(3);
+      var afterEnterCount = dataAggregator.getEventCallCountForController("TabOnePageTwoController", "$ionicView.afterEnter");
+      expect(afterEnterCount).to.equal(3);
+      var beforeLeaveCount = dataAggregator.getEventCallCountForController("TabOnePageTwoController", "$ionicView.beforeLeave");
+      expect(beforeLeaveCount).to.equal(3);
+      var leaveCount = dataAggregator.getEventCallCountForController("TabOnePageTwoController", "$ionicView.leave");
+      expect(leaveCount).to.equal(3);
+      var afterLeaveCount = dataAggregator.getEventCallCountForController("TabOnePageTwoController", "$ionicView.afterLeave");
+      expect(afterLeaveCount).to.equal(3);
+
+      var beforeEnterCount = dataAggregator.getEventCallCountForController("TabTwoPageOneController", "$ionicView.beforeEnter");
+      expect(beforeEnterCount).to.equal(2);
+      var enterCount = dataAggregator.getEventCallCountForController("TabTwoPageOneController", "$ionicView.enter");
+      expect(enterCount).to.equal(2);
+      var afterEnterCount = dataAggregator.getEventCallCountForController("TabTwoPageOneController", "$ionicView.afterEnter");
+      expect(afterEnterCount).to.equal(2);
+      var beforeLeaveCount = dataAggregator.getEventCallCountForController("TabTwoPageOneController", "$ionicView.beforeLeave");
+      expect(beforeLeaveCount).to.equal(2);
+      var leaveCount = dataAggregator.getEventCallCountForController("TabTwoPageOneController", "$ionicView.leave");
+      expect(leaveCount).to.equal(2);
+      var afterLeaveCount = dataAggregator.getEventCallCountForController("TabTwoPageOneController", "$ionicView.afterLeave");
+      expect(afterLeaveCount).to.equal(2);
+
+      var beforeEnterCount = dataAggregator.getEventCallCountForController("TabTwoPageTwoController", "$ionicView.beforeEnter");
+      expect(beforeEnterCount).to.equal(2);
+      var enterCount = dataAggregator.getEventCallCountForController("TabTwoPageTwoController", "$ionicView.enter");
+      expect(enterCount).to.equal(2);
+      var afterEnterCount = dataAggregator.getEventCallCountForController("TabTwoPageTwoController", "$ionicView.afterEnter");
+      expect(afterEnterCount).to.equal(2);
+      var beforeLeaveCount = dataAggregator.getEventCallCountForController("TabTwoPageTwoController", "$ionicView.beforeLeave");
+      expect(beforeLeaveCount).to.equal(2);
+      var leaveCount = dataAggregator.getEventCallCountForController("TabTwoPageTwoController", "$ionicView.leave");
+      expect(leaveCount).to.equal(2);
+      var afterLeaveCount = dataAggregator.getEventCallCountForController("TabTwoPageTwoController", "$ionicView.afterLeave");
+      expect(afterLeaveCount).to.equal(2);
+
+      var beforeEnterCount = dataAggregator.getEventCallCountForController("TabThreePageOneController", "$ionicView.beforeEnter");
+      expect(beforeEnterCount).to.equal(2);
+      var enterCount = dataAggregator.getEventCallCountForController("TabThreePageOneController", "$ionicView.enter");
+      expect(enterCount).to.equal(2);
+      var afterEnterCount = dataAggregator.getEventCallCountForController("TabThreePageOneController", "$ionicView.afterEnter");
+      expect(afterEnterCount).to.equal(2);
+      var beforeLeaveCount = dataAggregator.getEventCallCountForController("TabThreePageOneController", "$ionicView.beforeLeave");
+      expect(beforeLeaveCount).to.equal(2);
+      var leaveCount = dataAggregator.getEventCallCountForController("TabThreePageOneController", "$ionicView.leave");
+      expect(leaveCount).to.equal(2);
+      var afterLeaveCount = dataAggregator.getEventCallCountForController("TabThreePageOneController", "$ionicView.afterLeave");
+      expect(afterLeaveCount).to.equal(2);
+
+      var beforeEnterCount = dataAggregator.getEventCallCountForController("TabThreePageTwoController", "$ionicView.beforeEnter");
+      expect(beforeEnterCount).to.equal(2);
+      var enterCount = dataAggregator.getEventCallCountForController("TabThreePageTwoController", "$ionicView.enter");
+      expect(enterCount).to.equal(2);
+      var afterEnterCount = dataAggregator.getEventCallCountForController("TabThreePageTwoController", "$ionicView.afterEnter");
+      expect(afterEnterCount).to.equal(2);
+      var beforeLeaveCount = dataAggregator.getEventCallCountForController("TabThreePageTwoController", "$ionicView.beforeLeave");
+      expect(beforeLeaveCount).to.equal(2);
+      var leaveCount = dataAggregator.getEventCallCountForController("TabThreePageTwoController", "$ionicView.leave");
+      expect(leaveCount).to.equal(2);
+      var afterLeaveCount = dataAggregator.getEventCallCountForController("TabThreePageTwoController", "$ionicView.afterLeave");
+      expect(afterLeaveCount).to.equal(2);
+
+      $scope.results = "Test Passed";
+    }
+    catch(ex){
+      $scope.results = "Test Failed, see exceptions";
+      throw ex;
+    }
+  }
+})
+  </script>
+  <body>
+</html>
