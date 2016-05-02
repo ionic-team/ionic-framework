@@ -18,6 +18,7 @@ ion-navbar-section.statusbar-padding > .toolbar {
   min-height: calc(#{$toolbar-wp-height} + #{$cordova-ios-statusbar-padding});
 }
 
+.tab-subpage,
 ion-nav > ion-page,
 ion-menu {
   > .toolbar.statusbar-padding:first-child {

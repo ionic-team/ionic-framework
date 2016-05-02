@@ -50,6 +50,7 @@ class Page1 {
   templateUrl: 'page2.html'
 })
 class Page2 {
+  page1 = Page1;
   page3 = Page3;
 
   constructor(private nav: NavController) {
@@ -122,7 +123,9 @@ class TabsPage {
 
 @App({
   templateUrl: `./app.html`,
-  config: { statusbarPadding: true }
+  config: {
+    statusbarPadding: true
+  }
 })
 class E2EApp {
   root = Page1;
