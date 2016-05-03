@@ -37,6 +37,7 @@ export class LocalStorage extends StorageEngine {
   /**
    * Get the value of a key in LocalStorage
    * @param {string} key the key you want to lookup in LocalStorage
+   * @returns {Promise} Returns a promise which is resolved when the value has been retrieved
    */
   get(key: string): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -53,6 +54,7 @@ export class LocalStorage extends StorageEngine {
    * Set a key value pair and save it to LocalStorage
    * @param {string} key the key you want to save to LocalStorage
    * @param {string} value the value of the key you're saving
+   * @returns {Promise} Returns a promise which is resolved when the key value pair have been set
    */
   set(key: string, value: string): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -68,6 +70,7 @@ export class LocalStorage extends StorageEngine {
   /**
    * Remove a key from LocalStorage
    * @param {string} key the key you want to remove from LocalStorage
+   * @returns {Promise} Returns a promise which is resolved when the key has been removed
    */
   remove(key: string): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -80,6 +83,10 @@ export class LocalStorage extends StorageEngine {
     });
   }
 
+  /**
+   * Clear data stored in LocalStorage
+   * @returns {Promise} Returns a promise which is resolved when the data have been cleared
+   */
   clear(): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
