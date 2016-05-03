@@ -41,7 +41,7 @@ import {Label} from '../label/label';
 @Component({
   selector: 'ion-item,[ion-item]',
   template:
-    '<ng-content select="[item-left],ion-checkbox"></ng-content>' +
+    '<ng-content select="[item-left],ion-checkbox:not([item-right])"></ng-content>' +
     '<div class="item-inner">' +
       '<div class="input-wrapper">' +
         '<ng-content select="ion-label"></ng-content>' +

@@ -8,7 +8,6 @@ $checkbox-wp-border-bottom-style:        solid !default;
 $checkbox-wp-border-bottom-color:        $list-wp-border-color !default;
 $checkbox-wp-padding:                    $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0 !default;
 $checkbox-wp-margin:                     0 !default;
-$checkbox-wp-media-margin:               $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 4px !default;
 $checkbox-wp-disabled-opacity:           .3 !default;
 
 $checkbox-wp-icon-background-color-off:  $list-wp-background-color !default;
@@ -24,6 +23,9 @@ $checkbox-wp-icon-border-style:          solid !default;
 $checkbox-wp-icon-border-radius:         0 !default;
 $checkbox-wp-icon-border-color-off:      #333 !default;
 $checkbox-wp-icon-border-color-on:       color($colors-wp, primary) !default;
+
+$checkbox-wp-item-left-margin:           $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 4px !default;
+$checkbox-wp-item-right-margin:          11px 10px 10px 0 !default;
 
 
 ion-checkbox {
@@ -96,7 +98,11 @@ ion-checkbox {
   position: static;
   display: block;
 
-  margin: $checkbox-wp-media-margin;
+  margin: $checkbox-wp-item-left-margin;
+
+  &[item-right] {
+    margin: $checkbox-wp-item-right-margin;
+  }
 }
 
 ion-checkbox + .item-inner ion-label {
