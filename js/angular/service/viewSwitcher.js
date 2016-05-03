@@ -563,8 +563,8 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     }
     else {
       // it is an abstract element, so look for element with the "state" attributeValue
-      // set to the name of the leaving state
-      var elements = document.querySelectorAll("ion-view[state]");
+      // set to the name of the stateData state
+      var elements = aggregateNavViewChildren(element);
       for ( var i = 0; i < elements.length; i++ ) {
           var state = angular.element(elements[i]).attr("state");
           if ( state === stateData.stateName ) {
@@ -575,6 +575,20 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
       // we didn't find a match, so return null
       return null;
     }
+  }
+
+  function aggregateNavViewChildren(element) {
+    var aggregate = [];
+    var navViews = angular.element(element).find("ion-nav-view");
+    for ( var i = 0; i < navViews.length; i++ ) {
+      var children = angular.element(navViews[i]).children();
+      var childrenAggregated = [];
+      for ( var j = 0; j < children.length; j++ ) {
+        childrenAggregated = childrenAggregated.concat(children[j]);
+      }
+      aggregate = aggregate.concat(childrenAggregated);
+    }
+    return aggregate;
   }
 
 }]);
