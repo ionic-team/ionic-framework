@@ -24,11 +24,13 @@ $toggle-wp-handle-background-color-on:   color-contrast($colors-wp, $toggle-wp-a
 $toggle-wp-handle-border-radius:         50% !default;
 
 $toggle-wp-media-margin:                 0 !default;
-$toggle-wp-media-padding:                12px ($item-wp-padding-right / 2) 12px $item-wp-padding-left !default;
 
 $toggle-wp-transition-duration:          300ms !default;
 
 $toggle-wp-disabled-opacity:             .3 !default;
+
+$toggle-wp-item-left-padding:            12px 18px 12px 2px !default;
+$toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px $item-wp-padding-left !default;
 
 
 // Windows Toggle
@@ -115,9 +117,13 @@ ion-toggle {
 
 .item ion-toggle {
   margin: $toggle-wp-media-margin;
-  padding: $toggle-wp-media-padding;
+  padding: $toggle-wp-item-right-padding;
 
   cursor: pointer;
+
+  &[item-left] {
+    padding: $toggle-wp-item-left-padding;
+  }
 }
 
 .item-toggle ion-label {
