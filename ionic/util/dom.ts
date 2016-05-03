@@ -25,7 +25,9 @@
 })();
 
 // use native raf rather than the zone wrapped one
-export const nativeRaf = (window[window['Zone']['__symbol__']('requestAnimationFrame')] || window[window['Zone']['__symbol__']('webkitRequestAnimationFrame')])['bind'](window);
+let originalRaf = (window[window['Zone']['__symbol__']('requestAnimationFrame')] || window[window['Zone']['__symbol__']('webkitRequestAnimationFrame')]);
+// if the originalRaf from the Zone symbol is not available, we need to provide the polyfilled version
+export const nativeRaf = originalRaf !== undefined ? originalRaf['bind'](window) : window.requestAnimationFrame.bind(window);
 
 // zone wrapped raf
 export const raf = window.requestAnimationFrame.bind(window);
