@@ -17,6 +17,9 @@ $radio-wp-icon-border-radius:     50% !default;
 
 $radio-wp-disabled-opacity:       .3 !default;
 
+$radio-wp-item-left-margin:       9px 20px 9px 4px !default;
+$radio-wp-item-right-margin:      11px 10px 10px 0 !default;
+
 
 ion-radio {
   position: relative;
@@ -99,7 +102,12 @@ ion-radio {
 
   order: $radio-wp-order;
 
-  margin: $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 0;
+  margin: $radio-wp-item-left-margin;
+
+  &[item-right] {
+    order: 0;
+    margin: $radio-wp-item-right-margin;
+  }
 }
 
 .item-radio ion-label {
