@@ -49,5 +49,5 @@ class MyPage {
   template: `<ion-nav [root]="root"></ion-nav>`
 })
 class E2EApp {
-  root: Page = MyPage;
+  root: any = MyPage;
 }
