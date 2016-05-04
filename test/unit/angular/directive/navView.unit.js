@@ -9,6 +9,8 @@ describe('Ionic nav-view', function() {
   var lcStartingPage, lcPage1, lcPage2, lcPage3, lcPage4;
   var lcApp, lcApp2, lcAppPage2, lcAppPage3, lcApp2Page2, lcApp2Page3,lcAppTab1, lcAppTab2;
   var lcTabsPage, lcTabs2Page, lcTab1Page1, lcTab1Page2, lcTab2Page1, lcTab2Page2, lcTab3Page1, lcTab3Page2;
+  var lcApp2Tabs1Page, lcApp2Tabs1Tab1Page1, lcApp2Tabs1Tab1Page2, lcApp2Tabs1Tab2Page1, lcApp2Tabs1Tab2Page2, lcApp2Tabs1Tab3Page1, lcApp2Tabs1Tab3Page2;
+  var lcApp2Tabs2Page, lcApp2Tabs2Tab1Page1, lcApp2Tabs2Tab1Page2, lcApp2Tabs2Tab2Page1, lcApp2Tabs2Tab2Page2, lcApp2Tabs2Tab3Page1, lcApp2Tabs2Tab3Page2;
 
   var _stateProvider;
 
@@ -455,6 +457,140 @@ describe('Ionic nav-view', function() {
       }
     }
   };
+
+  lcApp2Tabs1Page = {
+    abstract: true,
+    views: {
+      "menuContent2": {
+        template: '<ion-tabs class="tabs-icon-top tabs-color-active-positive">' +
+          '<ion-tab title="Menu 2 Tabs 1 Tab 1">' +
+            '<ion-nav-view name="tab-one"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Menu 2 Tabs 1 Tab 2" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes">' +
+            '<ion-nav-view name="tab-two"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Menu 2 Tabs 1 Tab 3" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear">' +
+            '<ion-nav-view name="tab-three"></ion-nav-view>' +
+          '</ion-tab>' +
+        '</ion-tabs>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Page = {
+    abstract: true,
+    views: {
+      "menuContent2": {
+        template: '<ion-tabs class="tabs-icon-top tabs-color-active-positive">' +
+          '<ion-tab title="Menu 2 Tabs 2 Tab 1">' +
+            '<ion-nav-view name="tab-one"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Menu 2 Tabs 2 Tab 2" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes">' +
+            '<ion-nav-view name="tab-two"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Menu 2 Tabs 2 Tab 3" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear">' +
+            '<ion-nav-view name="tab-three"></ion-nav-view>' +
+          '</ion-tab>' +
+        '</ion-tabs>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab1Page1 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page One"><h1>Tab One Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab1Page2 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page Two"><h1>Tab One Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab2Page1 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page One"><h1>Tab Two Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab2Page2 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page Two"><h1>Tab Two Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab3Page1 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page One"><h1>Tab Three Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab3Page2 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page Two"><h1>Tab Three Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab1Page1 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page One"><h1>Tab One Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab1Page2 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page Two"><h1>Tab One Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab2Page1 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page One"><h1>Tab Two Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab2Page2 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page Two"><h1>Tab Two Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab3Page1 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page One"><h1>Tab Three Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab3Page2 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page Two"><h1>Tab Three Page Two</h1></ion-view>'
+      }
+    }
+  }
 
   beforeEach(module(function ($stateProvider) {
     _stateProvider = $stateProvider;
@@ -3019,32 +3155,809 @@ describe('Ionic nav-view', function() {
     expect(getEventCallCount("lcApp.tabs2.tab3Page2", "$ionicView.afterLeave")).toEqual(2);
   }));
 
+  it('should go to each state and receive correct life cycle events (test thirteen)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Menu 1 Page 2
+      Menu 1 Page 3
+      Page 3
+      Menu 2 Page 2
+      Menu 2 Page 3
+      Menu 1 Page 2
+      Menu 2 Page 3
+      Menu 1 Page 3
+      Page 1
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', lcPage1)
+    .state('lcApp', lcApp)
+    .state('lcApp2', lcApp2)
+    .state('lcApp.lcPage2', lcAppPage2)
+    .state('lcApp.lcPage3', lcAppPage3)
+    .state('lcApp2.lcPage2', lcApp2Page2)
+    .state('lcApp2.lcPage3', lcApp2Page3)
+    .state('lcPage3', lcPage3);
+
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcApp.lcPage2", "lcApp.lcPage3", "lcApp2.lcPage2", "lcApp2.lcPage3", "lcPage3",  "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+
+    // assert
+    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterLeave")).toEqual(1);
+
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(1);
+  }));
+
+  it('should go to each state and receive correct life cycle events (test fourteen)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Menu 1 Page 2
+      Menu 1 Tabs 1 Tab 1 Page 1
+      Menu 1 Tabs 1 Tab 1 Page 2
+      Menu 1 Page 3
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Page 4
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 2 Page 3
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 1 Tabs 1 Tab 1 Page 2
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 1 Page 2
+      Menu 1 Tabs 1 Tab 2 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 1
+      Menu 1 Page 2
+      Menu 2 Page 3
+      Menu 2 Page 2
+      Menu 1 Page 3
+      Page 1
+    */
+
+    /* visit counts
+
+    Page 1 - 2
+    Page 2 - 0
+    Page 4 - 1
+
+    Menu 1 Page 2 - 2
+    Menu 1 Page 3 - 3
+    Menu 1 Tabs 1 Tab 1 Page 1 - 1
+    Menu 1 Tabs 1 Tab 1 Page 2 - 2
+    Menu 1 Tabs 1 Tab 2 Page 1 - 1
+    Menu 1 Tabs 1 Tab 2 Page 2 - 1
+    Menu 1 Tabs 1 Tab 3 Page 1 - 0
+    Menu 1 Tabs 1 Tab 3 Page 2 - 0
+
+    Menu 2 Page 2 - 1
+    Menu 2 Page 3 - 2
+    Menu 2 Tabs 1 Tab 1 Page 1 - 1
+    Menu 2 Tabs 1 Tab 1 Page 2 - 1
+    Menu 2 Tabs 1 Tab 2 Page 1 - 1
+    Menu 2 Tabs 1 Tab 2 Page 2 - 2
+    Menu 2 Tabs 1 Tab 3 Page 1 - 0
+    Menu 2 Tabs 1 Tab 3 Page 2 - 0
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', {
+      template: '<ion-view><h1>Page One</h1></ion-view>'
+    })
+    .state('lcPage4', {
+      template: '<ion-view><h1>Page Four</h1></ion-view>'
+    })
+    .state('lcApp', lcApp)
+    .state('lcApp.lcPage2', lcAppPage2)
+    .state('lcApp.lcPage3', lcAppPage3)
+    .state('lcApp.tabs1', lcAppTab1)
+    .state('lcApp.tabs2', lcAppTab2)
+    .state('lcApp.tabs1.tab1Page1', lcTab1Page1)
+    .state('lcApp.tabs1.tab1Page2', lcTab1Page2)
+    .state('lcApp.tabs1.tab2Page1', lcTab2Page1)
+    .state('lcApp.tabs1.tab2Page2', lcTab2Page2)
+    .state('lcApp.tabs1.tab3Page1', lcTab3Page1)
+    .state('lcApp.tabs1.tab3Page2', lcTab3Page2)
+
+    .state('lcApp.tabs2.tab1Page1', lcTabs2Tab1Page1)
+    .state('lcApp.tabs2.tab1Page2', lcTabs2Tab1Page2)
+    .state('lcApp.tabs2.tab2Page1', lcTabs2Tab2Page1)
+    .state('lcApp.tabs2.tab2Page2', lcTabs2Tab2Page2)
+    .state('lcApp.tabs2.tab3Page1', lcTabs2Tab3Page1)
+    .state('lcApp.tabs2.tab3Page2', lcTabs2Tab3Page2)
+
+    .state('lcApp2', lcApp2)
+    .state('lcApp2.lcPage2', lcApp2Page2)
+    .state('lcApp2.lcPage3', lcApp2Page3)
+    .state('lcApp2.tabs1', lcApp2Tabs1Page)
+    .state('lcApp2.tabs2', lcApp2Tabs2Page)
+    .state('lcApp2.tabs1.tab1Page1', lcApp2Tabs1Tab1Page1)
+    .state('lcApp2.tabs1.tab1Page2', lcApp2Tabs1Tab1Page2)
+    .state('lcApp2.tabs1.tab2Page1', lcApp2Tabs1Tab2Page1)
+    .state('lcApp2.tabs1.tab2Page2', lcApp2Tabs1Tab2Page2)
+    .state('lcApp2.tabs1.tab3Page1', lcApp2Tabs1Tab3Page1)
+    .state('lcApp2.tabs1.tab3Page2', lcApp2Tabs1Tab3Page2)
+    .state('lcApp2.tabs2.tab1Page1', lcApp2Tabs2Tab1Page1)
+    .state('lcApp2.tabs2.tab1Page2', lcApp2Tabs2Tab1Page2)
+    .state('lcApp2.tabs2.tab2Page1', lcApp2Tabs2Tab2Page1)
+    .state('lcApp2.tabs2.tab2Page2', lcApp2Tabs2Tab2Page2)
+    .state('lcApp2.tabs2.tab3Page1', lcApp2Tabs2Tab3Page1)
+    .state('lcApp2.tabs2.tab3Page2', lcApp2Tabs2Tab3Page2)
+
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = [
+      "lcPage1", "lcPage4",
+      "lcApp.lcPage2", "lcApp.lcPage3",
+      "lcApp.tabs1.tab1Page1", "lcApp.tabs1.tab1Page2",
+      "lcApp.tabs1.tab2Page1", "lcApp.tabs1.tab2Page2",
+      "lcApp.tabs1.tab3Page1", "lcApp.tabs1.tab3Page2",
+      "lcApp.tabs2.tab1Page1", "lcApp.tabs2.tab1Page2",
+      "lcApp.tabs2.tab2Page1", "lcApp.tabs2.tab2Page2",
+      "lcApp.tabs2.tab3Page1", "lcApp.tabs2.tab3Page2",
+      "lcApp2.lcPage2", "lcApp2.lcPage3",
+      "lcApp2.tabs1.tab1Page1", "lcApp2.tabs1.tab1Page2",
+      "lcApp2.tabs1.tab2Page1", "lcApp2.tabs1.tab2Page2",
+      "lcApp2.tabs1.tab3Page1", "lcApp2.tabs1.tab3Page2",
+      "lcApp2.tabs2.tab1Page1", "lcApp2.tabs2.tab1Page2",
+      "lcApp2.tabs2.tab2Page1", "lcApp2.tabs2.tab2Page2",
+      "lcApp2.tabs2.tab3Page1", "lcApp2.tabs2.tab3Page2",
+      "lcStartingPage"];
+
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcPage4", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcPage4", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcPage4", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcPage4", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcPage4", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcPage4", "$ionicView.afterLeave")).toEqual(1);
+
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(1);
+
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(1);
+
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(1);
+
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterLeave")).toEqual(1);
+
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(1);
+
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(1);
+
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.enter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.leave")).toEqual(1);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(1);
+
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(2);
+
+  }));
+
+  it('should go to each state and receive correct life cycle events (test fifteen)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Menu 1 Page 2
+      Menu 1 Tabs 1 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 1
+      Menu 1 Tabs 1 Tab 1 Page 2
+      Menu 2 Tabs 2 Tab 2 Page 2
+      Menu 1 Tabs 2 Tab 1 Page 2
+      Menu 2 Tabs 2 Tab 1 Page 2
+      Menu 1 Page 2
+      Menu 2 Page 3
+      Menu 1 Page 3
+      Menu 1 Tabs 2 Tab 1 Page 2
+      Menu 2 Page 2
+      Menu 2 Tabs 2 Tab 1 Page 1
+      Page 4
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 1 Tabs 2 Tab 1 Page 1
+      Page 1
+      Menu 2 Tabs 2 Tab 1 Page 2
+      Menu 1 Tabs 2 Tab 2 Page 2
+      Menu 1 Tabs 2 Tab 2 Page 1
+      Menu 1 Tabs 2 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Menu 2 Page 3
+      Menu 1 Page 3
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 2 Page 3
+      Page 1
+      Menu 1 Tabs 1 Tab 2 Page 1
+      Menu 2 Page 2
+      Page 1
+      Menu 2 Tabs 2 Tab  Page 2
+      Page 4
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 2 Tabs 2 Tab 2 Page 1
+      Menu 1 Tabs 2 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 2 Page 3
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Menu 1 Tabs 1 Tab 2 Page 1
+      Menu 1 Page 2
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 1 Tabs 2 Tab 2 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 1
+      Menu 1 Tabs 1 Tab 1 Page 1
+      Menu 2 Page 3
+      Menu 1 Tabs 2 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 1 Tabs 2 Tab 1 Page 2
+      Menu 2 Tabs 2 Tab 2 Page 2
+      Menu 1 Tabs 2 Tab 2 Page 2
+      Page 4
+      Menu 1 Tabs 2 Tab 2 Page 1
+      Menu 1 Tabs 2 Tab 1 Page 2
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Menu 1 Tabs 1 Tab 1 Page 2
+      Menu 2 Tabs 2 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 1 Page 2
+      Page 1
+      Menu 2 Tabs 1 Tab 1 Page 2
+      Page 4
+      Menu 2 Page 2
+      Menu 1 Page 3
+      Menu 1 Tabs 2 Tab 2 Page 1
+      Page 1
+      Menu 2 Tabs 2 Tab 2 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 1
+      Menu 1 Page 2
+      Menu 2 Page 3
+      Menu 2 Page 2
+      Menu 1 Page 3
+      Page 1
+    */
+
+    /* visit counts
+
+    Page 1 - 7
+    Page 4 - 4
+
+    Menu 1 Page 2 - 4
+    Menu 1 Page 3 - 4
+
+    Menu 1 Tabs 1 Tab 1 Page 1 - 2
+    Menu 1 Tabs 1 Tab 1 Page 2 - 2
+    Menu 1 Tabs 1 Tab 2 Page 1 - 2
+    Menu 1 Tabs 1 Tab 2 Page 2 - 4
+
+    Menu 1 Tabs 2 Tab 1 Page 1 - 4
+    Menu 1 Tabs 2 Tab 1 Page 2 - 4
+    Menu 1 Tabs 2 Tab 2 Page 1 - 4
+    Menu 1 Tabs 2 Tab 2 Page 2 - 2
+
+    Menu 2 Page 2 - 4
+    Menu 2 Page 3 - 6
+
+    Menu 2 Tabs 1 Tab 1 Page 1 - 4
+    Menu 2 Tabs 1 Tab 1 Page 2 - 2
+    Menu 2 Tabs 1 Tab 2 Page 1 - 3
+    Menu 2 Tabs 1 Tab 2 Page 2 - 3
+
+    Menu 2 Tabs 2 Tab 1 Page 1 - 2
+    Menu 2 Tabs 2 Tab 1 Page 2 - 2
+    Menu 2 Tabs 2 Tab 2 Page 1 - 2
+    Menu 2 Tabs 2 Tab 2 Page 2 - 2
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', {
+      template: '<ion-view><h1>Page One</h1></ion-view>'
+    })
+    .state('lcPage4', {
+      template: '<ion-view><h1>Page Four</h1></ion-view>'
+    })
+    .state('lcApp', lcApp)
+    .state('lcApp.lcPage2', lcAppPage2)
+    .state('lcApp.lcPage3', lcAppPage3)
+    .state('lcApp.tabs1', lcAppTab1)
+    .state('lcApp.tabs2', lcAppTab2)
+    .state('lcApp.tabs1.tab1Page1', lcTab1Page1)
+    .state('lcApp.tabs1.tab1Page2', lcTab1Page2)
+    .state('lcApp.tabs1.tab2Page1', lcTab2Page1)
+    .state('lcApp.tabs1.tab2Page2', lcTab2Page2)
+    .state('lcApp.tabs1.tab3Page1', lcTab3Page1)
+    .state('lcApp.tabs1.tab3Page2', lcTab3Page2)
+
+    .state('lcApp.tabs2.tab1Page1', lcTabs2Tab1Page1)
+    .state('lcApp.tabs2.tab1Page2', lcTabs2Tab1Page2)
+    .state('lcApp.tabs2.tab2Page1', lcTabs2Tab2Page1)
+    .state('lcApp.tabs2.tab2Page2', lcTabs2Tab2Page2)
+    .state('lcApp.tabs2.tab3Page1', lcTabs2Tab3Page1)
+    .state('lcApp.tabs2.tab3Page2', lcTabs2Tab3Page2)
+
+    .state('lcApp2', lcApp2)
+    .state('lcApp2.lcPage2', lcApp2Page2)
+    .state('lcApp2.lcPage3', lcApp2Page3)
+    .state('lcApp2.tabs1', lcApp2Tabs1Page)
+    .state('lcApp2.tabs2', lcApp2Tabs2Page)
+    .state('lcApp2.tabs1.tab1Page1', lcApp2Tabs1Tab1Page1)
+    .state('lcApp2.tabs1.tab1Page2', lcApp2Tabs1Tab1Page2)
+    .state('lcApp2.tabs1.tab2Page1', lcApp2Tabs1Tab2Page1)
+    .state('lcApp2.tabs1.tab2Page2', lcApp2Tabs1Tab2Page2)
+    .state('lcApp2.tabs1.tab3Page1', lcApp2Tabs1Tab3Page1)
+    .state('lcApp2.tabs1.tab3Page2', lcApp2Tabs1Tab3Page2)
+    .state('lcApp2.tabs2.tab1Page1', lcApp2Tabs2Tab1Page1)
+    .state('lcApp2.tabs2.tab1Page2', lcApp2Tabs2Tab1Page2)
+    .state('lcApp2.tabs2.tab2Page1', lcApp2Tabs2Tab2Page1)
+    .state('lcApp2.tabs2.tab2Page2', lcApp2Tabs2Tab2Page2)
+    .state('lcApp2.tabs2.tab3Page1', lcApp2Tabs2Tab3Page1)
+    .state('lcApp2.tabs2.tab3Page2', lcApp2Tabs2Tab3Page2)
+
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = [
+      "lcPage1", "lcPage4",
+      "lcApp.lcPage2", "lcApp.lcPage3",
+      "lcApp.tabs1.tab1Page1", "lcApp.tabs1.tab1Page2",
+      "lcApp.tabs1.tab2Page1", "lcApp.tabs1.tab2Page2",
+      "lcApp.tabs1.tab3Page1", "lcApp.tabs1.tab3Page2",
+      "lcApp.tabs2.tab1Page1", "lcApp.tabs2.tab1Page2",
+      "lcApp.tabs2.tab2Page1", "lcApp.tabs2.tab2Page2",
+      "lcApp.tabs2.tab3Page1", "lcApp.tabs2.tab3Page2",
+      "lcApp2.lcPage2", "lcApp2.lcPage3",
+      "lcApp2.tabs1.tab1Page1", "lcApp2.tabs1.tab1Page2",
+      "lcApp2.tabs1.tab2Page1", "lcApp2.tabs1.tab2Page2",
+      "lcApp2.tabs1.tab3Page1", "lcApp2.tabs1.tab3Page2",
+      "lcApp2.tabs2.tab1Page1", "lcApp2.tabs2.tab1Page2",
+      "lcApp2.tabs2.tab2Page1", "lcApp2.tabs2.tab2Page2",
+      "lcApp2.tabs2.tab3Page1", "lcApp2.tabs2.tab3Page2",
+      "lcStartingPage"];
+
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(7);
+    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(7);
+    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(7);
+    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(7);
+    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(7);
+    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(7);
+
+    expect(getEventCallCount("lcPage4", "$ionicView.beforeEnter")).toEqual(4);
+    expect(getEventCallCount("lcPage4", "$ionicView.enter")).toEqual(4);
+    expect(getEventCallCount("lcPage4", "$ionicView.afterEnter")).toEqual(4);
+    expect(getEventCallCount("lcPage4", "$ionicView.beforeLeave")).toEqual(4);
+    expect(getEventCallCount("lcPage4", "$ionicView.leave")).toEqual(4);
+    expect(getEventCallCount("lcPage4", "$ionicView.afterLeave")).toEqual(4);
+
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.enter")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeLeave")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.leave")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterLeave")).toEqual(4);
+
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.enter")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeLeave")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.leave")).toEqual(4);
+    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterLeave")).toEqual(4);
+
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.enter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.leave")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(4);
+
+    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.beforeEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.enter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.afterEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.beforeLeave")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.leave")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.afterLeave")).toEqual(4);
+
+    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.beforeEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.enter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.afterEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.beforeLeave")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.leave")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.afterLeave")).toEqual(4);
+
+    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.beforeEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.enter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.afterEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.beforeLeave")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.leave")).toEqual(4);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.afterLeave")).toEqual(4);
+
+    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.enter")).toEqual(4);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeLeave")).toEqual(4);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.leave")).toEqual(4);
+    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterLeave")).toEqual(4);
+
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeEnter")).toEqual(6);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.enter")).toEqual(6);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterEnter")).toEqual(6);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeLeave")).toEqual(6);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.leave")).toEqual(6);
+    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterLeave")).toEqual(6);
+
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.enter")).toEqual(4);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(4);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(4);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.leave")).toEqual(4);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(4);
+
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.enter")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.leave")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(3);
+
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.enter")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.leave")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(3);
+
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.beforeEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.enter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.afterEnter")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.beforeLeave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.leave")).toEqual(2);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.afterLeave")).toEqual(2);
+
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.beforeEnter")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.enter")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.afterEnter")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.beforeLeave")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.leave")).toEqual(3);
+    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.afterLeave")).toEqual(3);
+
+  }));
 
 
 });
 
 function initializeHandlers(scope, viewName){
   scope.$on("$ionicView.beforeEnter", function(){
+    //console.debug("$ionicView.beforeEnter called for " + viewName);
     addEventForView(viewName, "$ionicView.beforeEnter");
   });
 
   scope.$on("$ionicView.enter", function(){
+    //console.debug("$ionicView.enter called for " + viewName);
     addEventForView(viewName, "$ionicView.enter");
   });
 
   scope.$on("$ionicView.afterEnter", function(){
+    //console.debug("$ionicView.afterEnter called for " + viewName);
     addEventForView(viewName, "$ionicView.afterEnter");
   });
 
   scope.$on("$ionicView.beforeLeave", function(){
+    //console.debug("$ionicView.beforeLeave called for " + viewName);
     addEventForView(viewName, "$ionicView.beforeLeave");
   });
 
   scope.$on("$ionicView.leave", function(){
+    //console.debug("$ionicView.leave called for " + viewName);
     addEventForView(viewName, "$ionicView.leave");
   });
 
   scope.$on("$ionicView.afterLeave", function(){
+    //console.debug("$ionicView.afterLeave called for " + viewName);
     addEventForView(viewName, "$ionicView.afterLeave");
   });
 }

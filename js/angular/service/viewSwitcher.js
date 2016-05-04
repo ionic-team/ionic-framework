@@ -325,7 +325,8 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
               if (leavingScope) {
                 leavingScope.$emit('$ionicView.leave', leavingData);
 
-              } else if (enteringScope && leavingData && leavingData.viewId) {
+              }
+              else if (enteringScope && leavingData && leavingData.viewId && enteringData.stateName !== leavingData.stateName) {
                 // we only want to dispatch this when we are doing a single-tier
                 // state change such as changing a tab, so compare the state
                 // for the same state-prefix but different suffix
@@ -343,7 +344,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             if (leavingScope) {
               leavingScope.$emit('$ionicView.' + step + 'Leave', leavingData);
 
-            } else if (enteringScope && leavingData && leavingData.viewId) {
+            } else if (enteringScope && leavingData && leavingData.viewId && enteringData.stateName !== leavingData.stateName) {
               // we only want to dispatch this when we are doing a single-tier
               // state change such as changing a tab, so compare the state
               // for the same state-prefix but different suffix
