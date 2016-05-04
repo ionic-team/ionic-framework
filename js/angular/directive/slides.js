@@ -52,7 +52,8 @@ function($animate, $timeout, $compile) {
     transclude: true,
     scope: {
       options: '=',
-      slider: '='
+      slider: '=',
+      showPager:'='
     },
     template: '<div class="swiper-container">' +
       '<div class="swiper-wrapper" ng-transclude>' +
@@ -194,7 +195,7 @@ function($animate, $timeout, $compile) {
     }],
 
     link: function($scope) {
-      $scope.showPager = true;
+      
       // Disable ngAnimate for slidebox and its children
       //$animate.enabled(false, $element);
     }
