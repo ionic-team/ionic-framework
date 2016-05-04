@@ -1794,33 +1794,17 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcPage2");
     goToState($state, $q, $timeout, "lcPage3");
     goToState($state, $q, $timeout, "lcPage4");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
+    doAssertionsForState("lcPage1", 1);
 
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage2", 1);
 
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage3", 1);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(1);
-
-    expect(getEventCallCount("lcPage4", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.afterEnter")).toEqual(1);
+    doAssertionsForState("lcPage4", 1);
 
   }));
 
@@ -1862,36 +1846,17 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcPage3");
     goToState($state, $q, $timeout, "lcPage2");
     goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
+    doAssertionsForState("lcPage1", 2);
 
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage2", 2);
 
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcPage3", 2);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(2);
-
-    expect(getEventCallCount("lcPage4", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage4", 1);
 
   }));
 
@@ -1931,29 +1896,15 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcPage3");
     goToState($state, $q, $timeout, "lcApp.lcPage2");
     goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
+    doAssertionsForState("lcPage1", 2);
 
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.lcPage2", 2);
 
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterLeave")).toEqual(2);
-
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage3", 1);
   }));
 
   it('should go to each state and receive correct life cycle events (test four)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
@@ -2012,48 +1963,17 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 3);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterLeave")).toEqual(2);
-
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 1);
   }));
 
   it('should go to each state and receive correct life cycle events (test five)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
@@ -2116,68 +2036,23 @@ describe('Ionic nav-view', function() {
 
     // assert
 
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcPage1", 2);
 
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcPage2", 2);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage3", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 0);
 
   }));
 
@@ -2259,68 +2134,23 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcPage1", 3);
 
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcPage2", 2);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcPage3", 3);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 3);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 2);
 
   }));
 
@@ -2370,68 +2200,23 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcPage1", 0);
 
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage2", 1);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage3", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 0);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 0);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 0);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 0);
 
   }));
 
@@ -2492,68 +2277,23 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage1", 1);
 
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcPage2", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcPage2", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcPage2", 0);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage3", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 0);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 2);
 
   }));
 
@@ -2599,33 +2339,13 @@ describe('Ionic nav-view', function() {
 
     // assert
 
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcPage1", 2);
 
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.lcPage2", 1);
 
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.lcPage3", 1);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage3", 1);
   }));
 
   it('should go to each state and receive correct life cycle events (test ten)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
@@ -2696,111 +2416,35 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage1", 1);
 
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage1", 1);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage3", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page1", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 0);
 
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab1Page2", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 0);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page1", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 0);
 
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab2Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 2);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 1);
 
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcTabsPage.lcTab3Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 2);
 
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page1", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page1", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page1", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page1", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page1", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page1", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabs2Page.lcTab1Page1", 0);
 
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab1Page2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabs2Page.lcTab1Page2", 1);
 
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabs2Page.lcTab2Page1", 1);
 
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page2", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page2", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page2", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page2", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page2", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab2Page2", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcTabs2Page.lcTab2Page2", 0);
 
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcTabs2Page.lcTab3Page1", 1);
 
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page2", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page2", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page2", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page2", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page2", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcTabs2Page.lcTab3Page2", "$ionicView.afterLeave")).toEqual(0);
-
+    doAssertionsForState("lcTabs2Page.lcTab3Page2", 0);
   }));
 
   it('should go to each state and receive correct life cycle events (test eleven)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
@@ -2893,69 +2537,23 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
+    doAssertionsForState("lcPage1", 3);
 
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcPage2", 2);
 
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcPage3", 3);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcApp.tabs1.tab1Page1", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab1Page2", 3);
 
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcApp.tabs1.tab2Page1", 1);
 
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.tabs1.tab2Page2", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab3Page1", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.afterLeave")).toEqual(2);
-
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab3Page2", 2);
   }));
 
   it('should go to each state and receive correct life cycle events (test twelve)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
@@ -3049,110 +2647,35 @@ describe('Ionic nav-view', function() {
 
     // assert
 
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcPage1", 3);
 
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcPage2", 2);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcPage3", 3);
 
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab1Page1", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab1Page2", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcApp.tabs1.tab2Page1", 0);
 
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab2Page2", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.tabs1.tab3Page1", 1);
 
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs1.tab3Page2", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcApp.tabs1.tab3Page2", 0);
 
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcApp.tabs2.tab1Page1", 0);
 
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.tabs2.tab1Page2", 1);
 
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.tabs2.tab2Page1", 1);
 
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.beforeEnter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.enter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.afterEnter")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.beforeLeave")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.leave")).toEqual(0);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.afterLeave")).toEqual(0);
+    doAssertionsForState("lcApp.tabs2.tab2Page2", 0);
 
-    expect(getEventCallCount("lcApp.tabs2.tab3Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.tabs2.tab3Page1", 1);
 
-    expect(getEventCallCount("lcApp.tabs2.tab3Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab3Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs2.tab3Page2", 2);
   }));
 
   it('should go to each state and receive correct life cycle events (test thirteen)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
@@ -3211,47 +2734,17 @@ describe('Ionic nav-view', function() {
 
 
     // assert
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcPage1", 2);
 
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.lcPage2", 2);
 
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.lcPage3", 2);
 
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp2.lcPage2", 1);
 
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp2.lcPage3", 2);
 
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage3", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage3", 1);
   }));
 
   it('should go to each state and receive correct life cycle events (test fourteen)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
@@ -3405,103 +2898,33 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcPage1", 2);
 
-    expect(getEventCallCount("lcPage4", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcPage4", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcPage4", 1);
 
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.lcPage2", 2);
 
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.lcPage3", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.tabs1.tab1Page1", 1);
 
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab1Page2", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.tabs1.tab2Page1", 1);
 
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp.tabs1.tab2Page2", 1);
 
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp2.lcPage2", 1);
 
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp2.lcPage3", 2);
 
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp2.tabs1.tab1Page1", 1);
 
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp2.tabs1.tab1Page2", 1);
 
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.enter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.leave")).toEqual(1);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(1);
+    doAssertionsForState("lcApp2.tabs1.tab2Page1", 1);
 
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp2.tabs1.tab2Page2", 2);
 
   }));
 
@@ -3771,194 +3194,121 @@ describe('Ionic nav-view', function() {
     goToState($state, $q, $timeout, "lcStartingPage");
 
     // assert
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeEnter")).toEqual(7);
-    expect(getEventCallCount("lcPage1", "$ionicView.enter")).toEqual(7);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterEnter")).toEqual(7);
-    expect(getEventCallCount("lcPage1", "$ionicView.beforeLeave")).toEqual(7);
-    expect(getEventCallCount("lcPage1", "$ionicView.leave")).toEqual(7);
-    expect(getEventCallCount("lcPage1", "$ionicView.afterLeave")).toEqual(7);
+    doAssertionsForState("lcPage1", 7);
 
-    expect(getEventCallCount("lcPage4", "$ionicView.beforeEnter")).toEqual(4);
-    expect(getEventCallCount("lcPage4", "$ionicView.enter")).toEqual(4);
-    expect(getEventCallCount("lcPage4", "$ionicView.afterEnter")).toEqual(4);
-    expect(getEventCallCount("lcPage4", "$ionicView.beforeLeave")).toEqual(4);
-    expect(getEventCallCount("lcPage4", "$ionicView.leave")).toEqual(4);
-    expect(getEventCallCount("lcPage4", "$ionicView.afterLeave")).toEqual(4);
+    doAssertionsForState("lcPage4", 4);
 
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.enter")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.beforeLeave")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.leave")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage2", "$ionicView.afterLeave")).toEqual(4);
+    doAssertionsForState("lcApp.lcPage2", 4);
 
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.enter")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.beforeLeave")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.leave")).toEqual(4);
-    expect(getEventCallCount("lcApp.lcPage3", "$ionicView.afterLeave")).toEqual(4);
+    doAssertionsForState("lcApp.lcPage3", 4);
 
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab1Page1", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab1Page2", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs1.tab2Page1", 2);
 
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.enter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.leave")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(4);
+    doAssertionsForState("lcApp.tabs1.tab2Page2", 4);
 
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.beforeEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.enter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.afterEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.beforeLeave")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.leave")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page1", "$ionicView.afterLeave")).toEqual(4);
+    doAssertionsForState("lcApp.tabs2.tab1Page1", 4);
 
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.beforeEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.enter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.afterEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.beforeLeave")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.leave")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab1Page2", "$ionicView.afterLeave")).toEqual(4);
+    doAssertionsForState("lcApp.tabs2.tab1Page2", 4);
 
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.beforeEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.enter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.afterEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.beforeLeave")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.leave")).toEqual(4);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page1", "$ionicView.afterLeave")).toEqual(4);
+    doAssertionsForState("lcApp.tabs2.tab2Page1", 4);
 
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp.tabs2.tab2Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp.tabs2.tab2Page2", 2);
 
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.enter")).toEqual(4);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.beforeLeave")).toEqual(4);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.leave")).toEqual(4);
-    expect(getEventCallCount("lcApp2.lcPage2", "$ionicView.afterLeave")).toEqual(4);
+    doAssertionsForState("lcApp2.lcPage2", 4);
 
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeEnter")).toEqual(6);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.enter")).toEqual(6);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterEnter")).toEqual(6);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.beforeLeave")).toEqual(6);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.leave")).toEqual(6);
-    expect(getEventCallCount("lcApp2.lcPage3", "$ionicView.afterLeave")).toEqual(6);
+    doAssertionsForState("lcApp2.lcPage3", 6);
 
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.beforeEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.enter")).toEqual(4);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.afterEnter")).toEqual(4);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.beforeLeave")).toEqual(4);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.leave")).toEqual(4);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page1", "$ionicView.afterLeave")).toEqual(4);
+    doAssertionsForState("lcApp2.tabs1.tab1Page1", 4);
 
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs1.tab1Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp2.tabs1.tab1Page2", 2);
 
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page1", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcApp2.tabs1.tab2Page1", 3);
 
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs1.tab2Page2", "$ionicView.afterLeave")).toEqual(3);
+    doAssertionsForState("lcApp2.tabs1.tab2Page2", 3);
 
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp2.tabs2.tab1Page1", 2);
 
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab1Page2", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp2.tabs2.tab1Page2", 2);
 
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.beforeEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.enter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.afterEnter")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.beforeLeave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.leave")).toEqual(2);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page1", "$ionicView.afterLeave")).toEqual(2);
+    doAssertionsForState("lcApp2.tabs2.tab2Page1", 2);
 
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.beforeEnter")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.enter")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.afterEnter")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.beforeLeave")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.leave")).toEqual(3);
-    expect(getEventCallCount("lcApp2.tabs2.tab2Page2", "$ionicView.afterLeave")).toEqual(3);
-
+    doAssertionsForState("lcApp2.tabs2.tab2Page2", 3);
   }));
-
-
 });
+
+function doAssertionsForState(stateName, callCount){
+  expect(getEventCallCount(stateName, "$ionicView.beforeEnter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.enter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.afterEnter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.beforeLeave")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.leave")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.afterLeave")).toEqual(callCount);
+
+  expect(getEventCallCount(stateName, "$ionicParentView.beforeEnter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.enter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.afterEnter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.beforeLeave")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.leave")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.afterLeave")).toEqual(callCount);
+}
 
 function initializeHandlers(scope, viewName){
   scope.$on("$ionicView.beforeEnter", function(){
-    //console.debug("$ionicView.beforeEnter called for " + viewName);
     addEventForView(viewName, "$ionicView.beforeEnter");
   });
 
   scope.$on("$ionicView.enter", function(){
-    //console.debug("$ionicView.enter called for " + viewName);
     addEventForView(viewName, "$ionicView.enter");
   });
 
   scope.$on("$ionicView.afterEnter", function(){
-    //console.debug("$ionicView.afterEnter called for " + viewName);
     addEventForView(viewName, "$ionicView.afterEnter");
   });
 
   scope.$on("$ionicView.beforeLeave", function(){
-    //console.debug("$ionicView.beforeLeave called for " + viewName);
     addEventForView(viewName, "$ionicView.beforeLeave");
   });
 
   scope.$on("$ionicView.leave", function(){
-    //console.debug("$ionicView.leave called for " + viewName);
     addEventForView(viewName, "$ionicView.leave");
   });
 
   scope.$on("$ionicView.afterLeave", function(){
-    //console.debug("$ionicView.afterLeave called for " + viewName);
     addEventForView(viewName, "$ionicView.afterLeave");
+  });
+
+  scope.$on("$ionicParentView.beforeEnter", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.beforeEnter");
+  });
+
+  scope.$on("$ionicParentView.enter", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.enter");
+  });
+
+  scope.$on("$ionicParentView.afterEnter", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.afterEnter");
+  });
+
+  scope.$on("$ionicParentView.beforeLeave", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.beforeLeave");
+  });
+
+  scope.$on("$ionicParentView.leave", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.leave");
+  });
+
+  scope.$on("$ionicParentView.afterLeave", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.afterLeave");
   });
 }
 

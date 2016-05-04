@@ -313,6 +313,9 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
               leavingScope.$emit('$ionicView.beforeLeave', leavingData);
               leavingScope.$emit('$ionicView.leave', leavingData);
               leavingScope.$emit('$ionicView.afterLeave', leavingData);
+              leavingScope.$broadcast('$ionicParentView.beforeLeave', leavingData);
+              leavingScope.$broadcast('$ionicParentView.leave', leavingData);
+              leavingScope.$broadcast('$ionicParentView.afterLeave', leavingData);
             }
           }
           else {
@@ -320,11 +323,12 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             if (step == 'after') {
               if (enteringScope) {
                 enteringScope.$emit('$ionicView.enter', enteringData);
+                enteringScope.$broadcast('$ionicParentView.enter', enteringData);
               }
 
               if (leavingScope) {
                 leavingScope.$emit('$ionicView.leave', leavingData);
-
+                leavingScope.$broadcast('$ionicParentView.leave', leavingData);
               }
               else if (enteringScope && leavingData && leavingData.viewId && enteringData.stateName !== leavingData.stateName) {
                 // we only want to dispatch this when we are doing a single-tier
@@ -339,10 +343,12 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
             if (enteringScope) {
               enteringScope.$emit('$ionicView.' + step + 'Enter', enteringData);
+              enteringScope.$broadcast('$ionicParentView.' + step + 'Enter', enteringData);
             }
 
             if (leavingScope) {
               leavingScope.$emit('$ionicView.' + step + 'Leave', leavingData);
+              leavingScope.$broadcast('$ionicParentView.' + step + 'Leave', leavingData);
 
             } else if (enteringScope && leavingData && leavingData.viewId && enteringData.stateName !== leavingData.stateName) {
               // we only want to dispatch this when we are doing a single-tier
