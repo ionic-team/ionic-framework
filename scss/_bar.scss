@@ -99,7 +99,7 @@
   &.bar-balanced {
     @include bar-style($bar-balanced-bg, $bar-balanced-border, $bar-balanced-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-balanced-border, $bar-positive-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, $bar-balanced-border, $bar-balanced-border 50%, transparent 50%);
     }
   }
   &.bar-energized {
