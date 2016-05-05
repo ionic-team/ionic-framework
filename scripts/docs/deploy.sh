@@ -13,20 +13,6 @@ function init {
   SITE_PATH=$(readJsonProp "config.json" "sitePath")
   SITE_DIR=$IONIC_DIR/$SITE_PATH
   DOCS_DEST=$(readJsonProp "config.json" "docsDest")
-
-  if [ ! -d "$SITE_DIR" ]; then
-    echo "checking out"
-    ./git/clone.sh --repository="driftyco/ionic-site" \
-      --directory="$SITE_DIR" \
-      --branch="master" \
-      --depth=1
-  else
-    echo "using existing"
-    cd $SITE_DIR
-    git reset --hard
-    git pull origin master
-    cd $IONIC_DIR/scripts
-  fi
 }
 
 function run {

@@ -3,7 +3,6 @@
 ARG_DEFS=(
   "--repository=(.*)"
   "--directory=(.*)"
-  "[--depth=(.*)]"
   "[--branch=(.*)]"
 )
 
@@ -13,13 +12,12 @@ function run {
 
   echo "-- Cloning $REPOSITORY#$BRANCH to $DIRECTORY..."
 
-  ARGS="--branch=${BRANCH:-master}"
-  if [[ "$DEPTH" != "" ]]; then
-    ARGS="$ARGS --depth=$DEPTH"
-  else
-    ARGS="$ARGS --depth=2"
-  fi
-  git clone https://driftyco:$GH_TOKEN@github.com/$REPOSITORY $DIRECTORY $ARGS
+  ARGS="--branch=${BRANCH:-master} --depth=2"
+
+  git config --global user.email "hi@ionicframework.com"
+  git config --global user.name "Ionitron"
+
+  git clone git@github.com:driftyco/$REPOSITORY.git $DIRECTORY $ARGS
   cd $DIRECTORY
   git fetch origin --tags
   cd ../
