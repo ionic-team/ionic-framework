@@ -1,4 +1,4 @@
-import {Directive, Component, ElementRef, Host, EventEmitter, Input, Output, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
+import {Directive, Component, ElementRef, Renderer, Host, EventEmitter, Input, Output, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
 import {NgClass} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -193,9 +193,6 @@ import {Scroll} from '../scroll/scroll';
       '<div [class.hide]="!showPager" class="swiper-pagination"></div>' +
     '</div>',
   directives: [NgClass],
-  host: {
-    '[class]': 'slideId'
-  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -340,7 +337,7 @@ export class Slides extends Ion {
   @Output() move: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(elementRef: ElementRef) {
+  constructor(elementRef: ElementRef, renderer: Renderer) {
     super(elementRef);
     this.rapidUpdate = debounce(() => {
       this.update();
@@ -348,6 +345,8 @@ export class Slides extends Ion {
 
     this.id = ++slidesId;
     this.slideId = 'slides-' + this.id;
+
+    renderer.setElementClass(elementRef.nativeElement, this.slideId, true);
   }
 
   /**
