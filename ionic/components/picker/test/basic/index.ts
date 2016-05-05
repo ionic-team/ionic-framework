@@ -1,4 +1,4 @@
-import {ViewEncapsulation} from 'angular2/core';
+import {ViewEncapsulation} from '@angular/core';
 import {App, Page, Picker, NavController} from '../../../../../ionic';
 
 

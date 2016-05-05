@@ -1,5 +1,5 @@
-import {RouteConfig,} from 'angular2/router';
-import {Location} from 'angular2/platform/common';
+import {Routes} from '@angular/router';
+import {Location} from '@angular/common';
 
 import {App, Page, NavParams, ViewController} from '../../../../../ionic';
 
@@ -55,10 +55,10 @@ class View3Cmp {
 
 
 @App()
-@RouteConfig([
-  { path: '/', component: View1Cmp, as: 'First' },
-  { path: '/2', component: View2Cmp, as: 'Second' },
-  { path: '/3/:id', component: View3Cmp, as: 'Third' }
+@Routes([
+  { path: '/', component: View1Cmp },
+  { path: '/2', component: View2Cmp },
+  { path: '/3/:id', component: View3Cmp }
 ])
 class InboxApp {
   constructor(private location: Location) {}

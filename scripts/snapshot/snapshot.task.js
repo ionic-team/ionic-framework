@@ -20,10 +20,10 @@ module.exports = function(gulp, argv, buildConfig) {
   });
 
   gulp.task('snapshot', ['e2e', 'protractor-server'], function(done) {
-    snapshot(done);
+    snapshot(done, false);
   });
 
-  gulp.task('snapshot-quick', ['e2e', 'protractor-server'], function(done) {
+  gulp.task('snapshot.quick', ['e2e', 'protractor-server'], function(done) {
     snapshot(done, true);
   });
 

@@ -1,5 +1,5 @@
-import {Directive, Component, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList, ViewEncapsulation} from 'angular2/core';
-import {NgControl} from 'angular2/common';
+import {Directive, Component, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList, ViewEncapsulation} from '@angular/core';
+import {NgControl} from '@angular/common';
 
 import {isTrueProperty, isPresent} from '../../util/util';
 

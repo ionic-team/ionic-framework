@@ -42,12 +42,43 @@
   <script>
     System.config({
       map: {
-        'angular2': '/angular2',
+        '@angular': '/node_modules/@angular',
         'ionic-angular': '/ionic'
       },
       packages: {
         'ionic-angular': {
           main: 'index'
+        },
+        '@angular/core': {
+          main: 'index.js',
+          defaultExtension: 'js'
+        },
+        '@angular/compiler': {
+          main: 'index.js',
+          defaultExtension: 'js'
+        },
+        '@angular/common': {
+          main: 'index.js',
+          defaultExtension: 'js'
+        },
+        '@angular/http': {
+          main: 'index.js',
+          defaultExtension: 'js'
+        },
+        '@angular/platform-browser': {
+          main: 'index.js',
+          defaultExtension: 'js'
+        },
+        '@angular/platform-browser-dynamic': {
+          main: 'index.js',
+          defaultExtension: 'js'
+        },
+        '@angular/router': {
+          main: 'index.js',
+          defaultExtension: 'js'
+        },
+        'rxjs': {
+          defaultExtension: 'js'
         }
       }
     });

@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from 'angular2/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 
 import {Config} from '../../config/config';
 import {InfiniteScroll} from './infinite-scroll';

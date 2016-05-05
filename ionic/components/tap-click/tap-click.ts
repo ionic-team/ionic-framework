@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from 'angular2/core';
+import {Injectable, NgZone} from '@angular/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';

@@ -1,4 +1,4 @@
-import {Component, ElementRef, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
+import {Component, ElementRef, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 
 import {Ion} from '../ion';
 import {Gesture} from '../../gestures/gesture';

@@ -1,4 +1,4 @@
-import {Directive, Input, Output, EventEmitter, Host, NgZone, ElementRef} from 'angular2/core';
+import {Directive, Input, Output, EventEmitter, Host, NgZone, ElementRef} from '@angular/core';
 
 import {Content} from '../content/content';
 
@@ -19,7 +19,7 @@ import {Content} from '../content/content';
  * <ion-content>
  *
  *  <ion-list>
- *    <ion-item *ngFor="#i of items">{{i}}</ion-item>
+ *    <ion-item *ngFor="let i of items">{{i}}</ion-item>
  *  </ion-list>
  *
  *  <ion-infinite-scroll (infinite)="doInfinite($event)">

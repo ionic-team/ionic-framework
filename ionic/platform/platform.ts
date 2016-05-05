@@ -1,4 +1,4 @@
-import {EventEmitter, NgZone} from 'angular2/core';
+import {EventEmitter, NgZone} from '@angular/core';
 
 import {Config} from '../config/config';
 import {getQuerystring} from '../util/util';

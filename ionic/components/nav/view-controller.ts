@@ -1,4 +1,4 @@
-import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, Renderer, ChangeDetectorRef} from 'angular2/core';
+import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, Renderer, ChangeDetectorRef} from '@angular/core';
 
 import {Navbar} from '../navbar/navbar';
 import {NavController, NavOptions} from './nav-controller';
@@ -29,7 +29,7 @@ export class ViewController {
   private _leavingOpts: NavOptions = null;
   private _loaded: boolean = false;
   private _nbDir: Navbar;
-  private _nbTmpRef: TemplateRef;
+  private _nbTmpRef: TemplateRef<Object>;
   private _nbVwRef: ViewContainerRef;
   private _onDismiss: Function = null;
   private _pgRef: ElementRef;
@@ -263,14 +263,14 @@ export class ViewController {
   /**
    * @private
    */
-  setNavbarTemplateRef(templateRef: TemplateRef) {
+  setNavbarTemplateRef(templateRef: TemplateRef<Object>) {
     this._nbTmpRef = templateRef;
   }
 
   /**
    * @private
    */
-  getNavbarTemplateRef(): TemplateRef {
+  getNavbarTemplateRef(): TemplateRef<Object> {
     return this._nbTmpRef;
   }
 

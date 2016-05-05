@@ -1,5 +1,5 @@
-import {Directive, Component, ElementRef, Host, EventEmitter, Input, Output, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
-import {NgClass} from 'angular2/common';
+import {Directive, Component, ElementRef, Host, EventEmitter, Input, Output, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import {NgClass} from '@angular/common';
 
 import {Ion} from '../ion';
 import {Animation} from '../../animations/animation';
@@ -121,7 +121,7 @@ import {Scroll} from '../scroll/scroll';
  * Next, we can use `ViewChild` to assign the Slides instance to `slider`:
  *
  * ```ts
- * import {ViewChild} from 'angular2/core';
+ * import {ViewChild} from '@angular/core';
  *
  * class MyPage {
  *   @ViewChild('mySlider') slider: Slides;

@@ -8,13 +8,13 @@
 <ion-content class="outer-content">
 
   <ion-list>
-    <ion-item-group *ngFor="#timeSlot of data">
+    <ion-item-group *ngFor="let timeSlot of data">
 
       <ion-item-divider sticky>
         {{timeSlot.time}}
       </ion-item-divider>
 
-      <ion-item-sliding *ngFor="#session of timeSlot.talks" [attr.category]="session.category" #slidingItem>
+      <ion-item-sliding *ngFor="let session of timeSlot.talks" [attr.category]="session.category" #slidingItem>
         <button ion-item (click)="openSession(session)">
           <h3>{{session.name}}</h3>
           <p>

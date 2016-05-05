@@ -1,4 +1,4 @@
-import {Component, ContentChildren, forwardRef, ViewChild, ContentChild, Renderer, ElementRef, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
+import {Component, ContentChildren, forwardRef, ViewChild, ContentChild, Renderer, ElementRef, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 
 import {Button} from '../button/button';
 import {Form} from '../../util/form';

@@ -1,4 +1,4 @@
-import {Directive, Input, ViewContainerRef, TemplateRef, EmbeddedViewRef} from 'angular2/core';
+import {Directive, Input, ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
 
 import {CSS} from '../../util/dom';
 
@@ -129,7 +129,7 @@ function addCell(previousCell: VirtualCell, recordIndex: number, tmpl: number, t
  */
 export function populateNodeData(startCellIndex: number, endCellIndex: number, viewportWidth: number, scrollingDown: boolean,
                                  cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
-                                 itmTmp: TemplateRef, hdrTmp: TemplateRef, ftrTmp: TemplateRef,
+                                 itmTmp: TemplateRef<Object>, hdrTmp: TemplateRef<Object>, ftrTmp: TemplateRef<Object>,
                                  initialLoad: boolean): boolean {
   let madeChanges = false;
   let node: VirtualNode;
@@ -218,10 +218,11 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
 
       availableNode = {
         tmpl: cell.tmpl,
-        view: viewContainer.createEmbeddedView(
+        view: <EmbeddedViewRef<VirtualContext>>viewContainer.createEmbeddedView(
           cell.tmpl === TEMPLATE_HEADER ? hdrTmp :
           cell.tmpl === TEMPLATE_FOOTER ? ftrTmp :
           itmTmp,
+          new VirtualContext(null, null, null),
           viewInsertIndex
         )
       };
@@ -236,10 +237,10 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
     availableNode.cell = cellIndex;
 
     // apply the cell's data to this node
-    availableNode.view.setLocal('\$implicit', cell.data || records[cell.record]);
-    availableNode.view.setLocal('index', cellIndex);
-    availableNode.view.setLocal('even', (cellIndex % 2 === 0));
-    availableNode.view.setLocal('odd', (cellIndex % 2 === 1));
+    availableNode.view.context.$implicit = cell.data || records[cell.record];
+    availableNode.view.context.index = cellIndex;
+    availableNode.view.context.even = (cellIndex % 2 === 0);
+    availableNode.view.context.odd = (cellIndex % 2 === 1);
     availableNode.hasChanges = true;
     availableNode.lastTransform = null;
     madeChanges = true;
@@ -257,15 +258,15 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
 
 
 function addLastNodes(nodes: VirtualNode[], viewContainer: ViewContainerRef,
-                      templateType: number, templateRef: TemplateRef) {
+                      templateType: number, templateRef: TemplateRef<Object>) {
   if (templateRef) {
     let node: VirtualNode = {
       tmpl: templateType,
-      view: viewContainer.createEmbeddedView(templateRef),
+      view: <EmbeddedViewRef<VirtualContext>>viewContainer.createEmbeddedView(templateRef),
       isLastRecord: true,
       hidden: true,
     };
-    node.view.setLocal('\$implicit', {});
+    node.view.context.$implicit = {};
     nodes.push(node);
   }
 }
@@ -632,11 +633,23 @@ export interface VirtualCell {
 export interface VirtualNode {
   cell?: number;
   tmpl: number;
-  view: EmbeddedViewRef;
+  view: EmbeddedViewRef<VirtualContext>;
   isLastRecord?: boolean;
   hidden?: boolean;
   hasChanges?: boolean;
   lastTransform?: string;
+}
+
+export class VirtualContext {
+  constructor(public $implicit: any, public index: number, public count: number) {}
+
+  get first(): boolean { return this.index === 0; }
+
+  get last(): boolean { return this.index === this.count - 1; }
+
+  get even(): boolean { return this.index % 2 === 0; }
+
+  get odd(): boolean { return !this.even; }
 }
 
 

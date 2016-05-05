@@ -23,7 +23,7 @@
     <ion-list>
       <ion-list-header>Tracks</ion-list-header>
 
-      <ion-item *ngFor="#i of items">
+      <ion-item *ngFor="let i of items">
         <ion-label>Toggle {{i}}</ion-label>
         <ion-toggle secondary></ion-toggle>
       </ion-item>
@@ -66,7 +66,7 @@ class MyModal {
         <ion-list-header>
           Tab 1
         </ion-list-header>
-        <ion-item *ngFor="#i of items">Item {{i}} {{i}} {{i}} {{i}}</ion-item>
+        <ion-item *ngFor="let i of items">Item {{i}} {{i}} {{i}} {{i}}</ion-item>
       </ion-list>
     </ion-content>
     `
@@ -91,7 +91,7 @@ export class Tab1 {
     </ion-navbar>
     <ion-content>
       <ion-list>
-        <ion-item-sliding *ngFor="#session of sessions" #slidingItem>
+        <ion-item-sliding *ngFor="let session of sessions" #slidingItem>
           <ion-item>
             <h3>{{session.name}} {{session.name}} {{session.name}}</h3>
             <p>{{session.location}} {{session.location}} {{session.location}}</p>

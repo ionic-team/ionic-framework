@@ -1,4 +1,4 @@
-import {Component, Optional, Input, Output, HostListener, EventEmitter, ViewEncapsulation} from 'angular2/core';
+import {Component, Optional, Input, Output, HostListener, EventEmitter, ViewEncapsulation} from '@angular/core';
 
 import {Form} from '../../util/form';
 import {isTrueProperty, isPresent, isBlank, isCheckedProperty} from '../../util/util';

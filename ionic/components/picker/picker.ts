@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild, Renderer, HostListener, ViewEncapsulation} from 'angular2/core';
+import {Component, ElementRef, Input, ViewChild, Renderer, HostListener, ViewEncapsulation} from '@angular/core';
 
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
@@ -76,7 +76,7 @@ export class Picker extends ViewController {
   template:
     '<div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>' +
     '<div class="picker-opts" #colEle [style.width]="col.optionsWidth">' +
-      '<button *ngFor="#o of col.options; #i=index" (click)="optClick($event, i)" type="button" category="picker-opt">' +
+      '<button *ngFor="let o of col.options; #i=index" (click)="optClick($event, i)" type="button" category="picker-opt">' +
         '{{o.text}}' +
       '</button>' +
     '</div>' +
@@ -382,7 +382,7 @@ class PickerColumnCmp {
     '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
     '<div class="picker-wrapper">' +
       '<div class="picker-toolbar">' +
-        '<div *ngFor="#b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">' +
+        '<div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">' +
           '<button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>' +
             '{{b.text}}' +
           '</button>' +
@@ -390,7 +390,7 @@ class PickerColumnCmp {
       '</div>' +
       '<div class="picker-columns">' +
         '<div class="picker-above-highlight"></div>' +
-        '<div *ngFor="#c of d.columns" [col]="c" class="picker-col"></div>' +
+        '<div *ngFor="let c of d.columns" [col]="c" class="picker-col"></div>' +
         '<div class="picker-below-highlight"></div>' +
       '</div>' +
     '</div>',

@@ -1,5 +1,5 @@
-import {Directive, Input, Output, EventEmitter, HostListener, ViewChild, ElementRef} from 'angular2/core';
-import {NgControl} from 'angular2/common';
+import {Directive, Input, Output, EventEmitter, HostListener, ViewChild, ElementRef} from '@angular/core';
+import {NgControl} from '@angular/common';
 
 import {Config} from '../../config/config';
 import {Content} from '../content/content';

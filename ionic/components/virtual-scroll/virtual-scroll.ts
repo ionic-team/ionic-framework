@@ -1,4 +1,4 @@
-import {Directive, ContentChild, ContentChildren, QueryList, IterableDiffers, IterableDiffer, TrackByFn, Input, Optional, Renderer, ElementRef, ChangeDetectorRef, NgZone, TemplateRef, ViewContainerRef, DoCheck, AfterContentInit, OnDestroy} from 'angular2/core';
+import {Directive, ContentChild, ContentChildren, QueryList, IterableDiffers, IterableDiffer, TrackByFn, Input, Optional, Renderer, ElementRef, ChangeDetectorRef, NgZone, TemplateRef, ViewContainerRef, DoCheck, AfterContentInit, OnDestroy} from '@angular/core';
 
 import {Config} from '../../config/config';
 import {Content} from '../content/content';

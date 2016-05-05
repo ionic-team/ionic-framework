@@ -1,4 +1,4 @@
-import {Component, ElementRef, Optional, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
+import {Component, ElementRef, Optional, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 
 import {List} from '../list/list';
 
@@ -12,7 +12,7 @@ import {List} from '../list/list';
  * @usage
  * ```html
  * <ion-list>
- *   <ion-item-sliding *ngFor="#item of items">
+ *   <ion-item-sliding *ngFor="let item of items">
  *     <button ion-item (click)="itemTapped(item)">
  *       {{item.title}}
  *     </button>

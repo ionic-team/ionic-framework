@@ -35,7 +35,7 @@
   <ion-item>
     <ion-label>Pets</ion-label>
     <ion-select [(ngModel)]="pets" multiple>
-      <ion-option *ngFor="#o of petOptions" [value]="o.value">{{o.text}}</ion-option>
+      <ion-option *ngFor="let o of petOptions" [value]="o.value">{{o.text}}</ion-option>
     </ion-select>
   </ion-item>
 

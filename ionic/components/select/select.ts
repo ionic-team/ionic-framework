@@ -1,5 +1,5 @@
-import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forwardRef, EventEmitter, HostListener, ContentChildren, QueryList, ViewEncapsulation} from 'angular2/core';
-import {NG_VALUE_ACCESSOR} from 'angular2/common';
+import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forwardRef, EventEmitter, HostListener, ContentChildren, QueryList, ViewEncapsulation} from '@angular/core';
+import {NG_VALUE_ACCESSOR} from '@angular/common';
 
 import {Alert} from '../alert/alert';
 import {ActionSheet} from '../action-sheet/action-sheet';

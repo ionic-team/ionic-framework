@@ -1,5 +1,5 @@
-import {Directive, ElementRef, Renderer, Optional, Input, Output, Provider, forwardRef, HostListener, ContentChild, EventEmitter} from 'angular2/core';
-import {NG_VALUE_ACCESSOR} from 'angular2/common';
+import {Directive, ElementRef, Renderer, Optional, Input, Output, Provider, forwardRef, HostListener, ContentChild, EventEmitter} from '@angular/core';
+import {NG_VALUE_ACCESSOR} from '@angular/common';
 
 import {RadioButton} from './radio-button';
 import {ListHeader} from '../list/list';

@@ -1,5 +1,5 @@
 <ion-slides [options]="mySlideOptions" id="slider" style="background-color: black">
-  <ion-slide *ngFor="#image of images">
+  <ion-slide *ngFor="let image of images">
     <img data-src="{{getImageUrl(image)}}" slide-lazy>
   </ion-slide>
 </ion-slides>

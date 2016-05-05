@@ -11,7 +11,7 @@
     <ion-item>
       <ion-label>Key</ion-label>
       <ion-select [(ngModel)]="myItem.key">
-        <ion-option *ngFor="#key of keys" [value]="key">
+        <ion-option *ngFor="let key of keys" [value]="key">
           {{ key }}
         </ion-option>
       </ion-select>
@@ -20,7 +20,7 @@
     <ion-item>
       <ion-label>Value</ion-label>
       <ion-select [(ngModel)]="myItem.value">
-        <ion-option *ngFor="#value of values" [value]="value">
+        <ion-option *ngFor="let value of values" [value]="value">
           {{ value }}
         </ion-option>
       </ion-select>
@@ -42,7 +42,7 @@
       <ion-label>Key</ion-label>
       <ion-select [(ngModel)]="delKey">
         <ion-option checked>Select a Key</ion-option>
-        <ion-option *ngFor="#key of addedKeys" [value]="key">
+        <ion-option *ngFor="let key of addedKeys" [value]="key">
           {{ key }}
         </ion-option>
       </ion-select>

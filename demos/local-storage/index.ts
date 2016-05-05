@@ -1,6 +1,6 @@
 import {App, Page, IonicApp, Config, Platform} from 'ionic-angular';
 import {Storage, LocalStorage} from 'ionic-angular';
-import {Pipe, PipeTransform, Injectable} from 'angular2/core'
+import {Pipe, PipeTransform, Injectable} from '@angular/core'
 
 
 @Pipe({name: 'cleanLocalData'})

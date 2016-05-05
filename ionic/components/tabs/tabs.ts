@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, ViewEncapsulation} from 'angular2/core';
+import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, ViewEncapsulation} from '@angular/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -138,7 +138,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
       '<tabbar role="tablist">' +
-        '<a *ngFor="#t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab">' +
+        '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab">' +
           '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
           '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
           '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +

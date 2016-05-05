@@ -20,7 +20,7 @@
 <ion-content padding>
 
   <ion-slides (change)="onSlideChanged($event)" id="loopSlider">
-    <ion-slide *ngFor="#slide of slides">
+    <ion-slide *ngFor="let slide of slides">
       <h1>{{ slide.title }}</h1>
     </ion-slide>
   </ion-slides>
