@@ -21,7 +21,6 @@ function run {
     ./git/clone.sh --repository="ionic-site" \
       --directory="$SITE_DIR" \
       --branch="master"
-    ls -al $SITE_DIR
   else
     echo "using existing"
     cd $SITE_DIR
