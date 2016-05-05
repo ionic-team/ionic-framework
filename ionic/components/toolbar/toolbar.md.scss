@@ -19,11 +19,14 @@ $toolbar-order-md: (
 $toolbar-md-padding:                     4px !default;
 $toolbar-md-height:                      5.6rem !default;
 $toolbar-md-title-font-size:             2rem !default;
-$toolbar-md-button-font-size:            1.4rem !default;
-$navbar-md-height:                       $toolbar-md-height !default;
+$toolbar-md-title-text-color:            color-contrast($colors-md, $toolbar-md-background, true) !default;
 
-$bar-button-md-color:                    $toolbar-md-button-color !default;
-$bar-button-md-border-radius:            2px !default;
+$toolbar-md-button-font-size:            1.4rem !default;
+
+$toolbar-md-button-color:                $toolbar-md-title-text-color !default;
+$toolbar-md-button-border-radius:        2px !default;
+
+$navbar-md-height:                       $toolbar-md-height !default;
 
 
 .toolbar {
@@ -62,7 +65,7 @@ ion-navbar-section {
 
   font-size: $toolbar-md-title-font-size;
   font-weight: 500;
-  color: $toolbar-md-text-color;
+  color: $toolbar-md-title-text-color;
 }
 
 @mixin md-toolbar-theme($color-name, $color-base, $color-contrast) {
@@ -142,7 +145,7 @@ ion-buttons[right] {
   height: 32px;
 
   border: 0;
-  border-radius: $bar-button-md-border-radius;
+  border-radius: $toolbar-md-button-border-radius;
   font-size: $toolbar-md-button-font-size;
   font-weight: 500;
   text-transform: uppercase;
@@ -174,8 +177,8 @@ ion-buttons[right] {
 .bar-button-outline {
   border-width: 1px;
   border-style: solid;
-  border-color: $bar-button-md-color;
-  color: $bar-button-md-color;
+  border-color: $toolbar-md-button-color;
+  color: $toolbar-md-button-color;
   background-color: transparent;
 
   &:hover:not(.disable-hover) {
@@ -183,8 +186,8 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: color-contrast($colors-md, $bar-button-md-color);
-    background-color: $bar-button-md-color;
+    color: color-contrast($colors-md, $toolbar-md-button-color, true);
+    background-color: $toolbar-md-button-color;
   }
 }
 
@@ -209,16 +212,16 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: color-contrast($colors-md, $bar-button-md-color);
-  background-color: $bar-button-md-color;
+  color: color-contrast($colors-md, $toolbar-md-button-color, true);
+  background-color: $toolbar-md-button-color;
 
   &:hover:not(.disable-hover) {
-    color: color-contrast($colors-md, $bar-button-md-color);
+    color: color-contrast($colors-md, $toolbar-md-button-color, true);
   }
 
   &.activated {
-    color: color-contrast($colors-md, $bar-button-md-color);
-    background-color: color-shade($bar-button-md-color);
+    color: color-contrast($colors-md, $toolbar-md-button-color, true);
+    background-color: color-shade($toolbar-md-button-color);
   }
 }
 
@@ -326,7 +329,7 @@ ion-buttons[right] {
 // Material Design Toolbar Color Generation
 // --------------------------------------------------
 
-@include md-bar-button-default(default, $bar-button-md-color, color-contrast($colors-md, $bar-button-md-color));
+@include md-bar-button-default(default, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, true));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
   @include md-toolbar-theme($color-name, $color-base, $color-contrast);
