@@ -186,7 +186,10 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: color-contrast($colors-md, $toolbar-md-button-color, true);
+    background-color: transparent;
+  }
+
+  ion-button-effect {
     background-color: $toolbar-md-button-color;
   }
 }
@@ -200,7 +203,10 @@ ion-buttons[right] {
     background-color: transparent;
 
     &.activated {
-      color: $color-contrast;
+      background-color: transparent;
+    }
+
+    ion-button-effect {
       background-color: $fg-color;
     }
   }
