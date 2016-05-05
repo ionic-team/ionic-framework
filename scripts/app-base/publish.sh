@@ -11,7 +11,7 @@ function init {
   APPBASE_DIR=$HOME/ionic-app-base
   APPBASE_LIB_DIR=$APPBASE_DIR/www/lib/ionic
 
-  ../clone/clone.sh --repository="driftyco/ionic-app-base" \
+  ../clone/clone.sh --repository="ionic-app-base" \
     --depth="1" \
     --directory="$APPBASE_DIR" \
     --branch="master"

@@ -10,7 +10,7 @@ echo "#####"
 function init {
   SITE_DIR=$HOME/ionic-site
 
-  ../clone/clone.sh --repository="driftyco/ionic-site" \
+  ../clone/clone.sh --repository="ionic-site" \
     --directory="$SITE_DIR" \
     --branch="master"
 }

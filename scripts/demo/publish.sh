@@ -11,7 +11,7 @@ echo "#####"
 function init {
   DEMO_DIR=$HOME/ionic-demo
 
-  ../clone/clone.sh --repository="driftyco/ionic-demo" \
+  ../clone/clone.sh --repository="ionic-demo" \
     --depth="1" \
     --directory="$DEMO_DIR" \
     --branch="gh-pages"
