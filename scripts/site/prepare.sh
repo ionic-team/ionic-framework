@@ -7,7 +7,7 @@ echo "#####"
 
 function init {
   cd ..
-  SITE_PATH=$(readJsonProp "config.json" "sitePath")
+  SITE_PATH=ionic-site
   cd ..
   export IONIC_DIR=$PWD
   SITE_DIR=$IONIC_DIR/$SITE_PATH
