@@ -42,11 +42,17 @@
           <p>
             Before entering the space capsule, please prepare accordingly:
           </p>
+          <p>
+            <img src="exoplanet.jpg" style="max-width: 100%" />
+          </p>
           <ul>
             <li>Say "good bye" to your loved ones. You will not see them again.</li>
             <li>Turn off any gas sources and lights in your home.</li>
             <li>Pets cannot make the journey to distant planets. Please arrange for their safe keeping.</li>
           </ul>
+          <div>
+            <button class="button button-assertive" ng-click="doClick()">Tap</button>
+          </div>
         </ion-slide-page>
         <ion-slide-page>
           <h2>During launch</h2>
@@ -55,6 +61,9 @@
             Hang on and enjoy the ride. Your input is not needed (and, in fact, is heavily restricted) during the
             launch and minutes after reacing the proper altitude needed to utilize the ion propulsion engines
             that will carry you to HD 219134 b.
+          </p>
+          <p>
+            <img src="exoplanet.jpg" style="max-width: 100%" />
           </p>
         </ion-slide-page>
         <ion-slide-page>
@@ -65,6 +74,9 @@
             you with a variety of pharmaceuticals along with a pamphlet to understand the benefits and drawbacks of each.
           </p>
           <p>
+            <img src="exoplanet.jpg" style="max-width: 100%" />
+          </p>
+          <p>
             Whether you choose to utilize your full Vitality Buffer of four earth-years by experiencing the mystery and excitement
              of traveling through the vast universe, you must transition to the Cryo Pad for preservation for the rest of the voyage.
           </p>
@@ -72,10 +84,16 @@
             During your long nap, the experimental Worm Slip engines will fire to reduce the journey by several hundreds of thousands of earth-years.
             The status of the experiment will not be known until your planned Cryo Wake in 4000 earth-years.
           </p>
+          <div>
+            <button class="button button-assertive" ng-click="doClick()">Tap</button>
+          </div>
         </ion-slide-page>
         <ion-slide-page>
           <h2>Approaching HD 219134 b</h2>
           <div>some property: {{viewModel.someProperty}}</div>
+          <p>
+            <img src="exoplanet.jpg" style="max-width: 100%" />
+          </p>
           <p>
             If you are lucky enough to be able to see HD 219134 b with your own eyes, congratulations! No
             space pioneer has ever made it this far. Take a minute and celebrate this monumental achievement by
@@ -89,9 +107,15 @@
             If the Worm Slip experiment failed and you have only partially progressed on your journey to HD 219134 b, please review the
             Contingency Plan for ideas on how to make the most of the rest of your life in space.
           </p>
+          <div>
+            <button class="button button-assertive" ng-click="doClick()">Tap</button>
+          </div>
         </ion-slide-page>
         <ion-slide-page>
           <h2>Life on HD 219134 b</h2>
+          <p>
+            <img src="exoplanet.jpg" style="max-width: 100%" />
+          </p>
           <p>
             Scientists aren't quite sure what life on HD 219134 b will be like!
             In order to help you adapt to a set of predicted atmospheric, pressure, and temperature environments,
@@ -104,6 +128,9 @@
             at Ion Space Pursuits, we thank you for your participation in this important research study.
           </p>
           <div>some property: {{viewModel.someProperty}}</div>
+          <div>
+            <button class="button button-assertive" ng-click="doClick()">Tap</button>
+          </div>
         </ion-slide-page>
       </ion-slides>
     </ion-content>
@@ -117,30 +144,31 @@
       }
       $scope.viewModel = {};
       $scope.viewModel.someProperty = "Waiting...";
-      //$scope.someProperty = "Waiting...";
-      $scope.data = {};
-      $scope.$watch('data.slider', function(nv, ov) {
-        $scope.slider = $scope.data.slider;
-      })
+
+      $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+        console.log("Slider initialized: ", data);
+        $scope.slider = data.slider;
+      });
+
       $interval(function() {
         //$scope.someProperty = Math.random();
         $scope.viewModel.someProperty  = Math.random();
-      }, 200)
-      $scope.doClick = function() {
-        console.log('CLICK');
-      }
-      /*
-      $scope.extraSlides = [];
-      var i = 0;
-      var c = $interval(function() {
-        $scope.extraSlides.push({
-          id: ++i
-        })
-        if(i > 2) {
-          $interval.cancel(c);
+        if ( $scope.slider ){
+          $scope.slider.updateLoop();
         }
-      }, 2000)
-      */
+      }, 1000);
+
+      $scope.$on("$ionicSlides.slideChangeEnd", function(event, data){
+        console.log("slideChangeEnd event: ", data);
+      });
+
+      $scope.$on("$ionicSlides.slideChangeStart", function(event, data){
+        console.log("slideChangeStart event: ", data);
+      });
+
+      $scope.doClick = function(){
+        alert("clicked!");
+      }
     }]);
     </script>
   </body>
