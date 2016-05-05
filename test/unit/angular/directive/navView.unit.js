@@ -1,7 +1,23 @@
 
+var lifeCycleDataStore;
+var _rootScope;
+
 describe('Ionic nav-view', function() {
+
+
+
+  var lcStartingPage, lcPage1, lcPage2, lcPage3, lcPage4;
+  var lcApp, lcApp2, lcAppPage2, lcAppPage3, lcApp2Page2, lcApp2Page3,lcAppTab1, lcAppTab2;
+  var lcTabsPage, lcTabs2Page, lcTab1Page1, lcTab1Page2, lcTab2Page1, lcTab2Page2, lcTab3Page1, lcTab3Page2;
+  var lcApp2Tabs1Page, lcApp2Tabs1Tab1Page1, lcApp2Tabs1Tab1Page2, lcApp2Tabs1Tab2Page1, lcApp2Tabs1Tab2Page2, lcApp2Tabs1Tab3Page1, lcApp2Tabs1Tab3Page2;
+  var lcApp2Tabs2Page, lcApp2Tabs2Tab1Page1, lcApp2Tabs2Tab1Page2, lcApp2Tabs2Tab2Page1, lcApp2Tabs2Tab2Page2, lcApp2Tabs2Tab3Page1, lcApp2Tabs2Tab3Page2;
+
+  var _stateProvider;
+
+
   beforeEach(module('ionic'));
 
+  lifeCycleDataStore = {};
   var compile, $rootScope, elem;
 
   var aState = {
@@ -75,20 +91,21 @@ describe('Ionic nav-view', function() {
   jState = {
     template: 'jState'
   },
+
   page1State = {
-    template: 'page1'
+    template: '<ion-view state="page1State">page1</ion-view>'
   },
   page2State = {
-    template: 'page2'
+    template: '<ion-view state="page2State">page2</ion-view>'
   },
   page3State = {
-    template: 'page3'
+    template: '<ion-view state="page3State">page3</ion-view>'
   },
   page4State = {
-    template: 'page4'
+    template: '<ion-view state="page4State">page4</ion-view>'
   },
   page5State = {
-    template: 'page5'
+    template: '<ion-view state="page5State">page5</ion-view>'
   },
   ionView1State = {
     template: '<ion-view>ionView1</ion-view>'
@@ -141,28 +158,28 @@ describe('Ionic nav-view', function() {
   tab1page1State = {
     views: {
       'tab1': {
-        template: 'tab1page1'
+        template: '<ion-view>tab1page1</ion-view>'
       }
     }
   },
   tab1page2State = {
     views: {
       'tab1': {
-        template: 'tab1page2'
+        template: '<ion-view>tab1page2</ion-view>'
       }
     }
   },
   tab2page1State = {
     views: {
       'tab2': {
-        template: 'tab2page1'
+        template: '<ion-view>tab2page1</ion-view>'
       }
     }
   },
   tab3page1State = {
     views: {
       'tab3': {
-        template: 'tab3page1'
+        template: '<ion-view>tab3page1</ion-view>'
       }
     }
   },
@@ -170,11 +187,414 @@ describe('Ionic nav-view', function() {
     cache: false,
     views: {
       'tab3': {
-        template: 'tab3page2NoCache'
+        template: '<ion-view>tab3page2NoCache</ion-view>'
+      }
+    }
+  };
+
+  lcStartingPage = {
+    template: '<ion-view><h1>Starting Page</h1></ion-view>'
+  };
+
+  lcPage1 = {
+    template: '<ion-view><h1>Page One</h1></ion-view>'
+  };
+
+  lcPage2 = {
+    template: '<ion-view><h1>Page Two</h1></ion-view>'
+  };
+
+  lcPage3 = {
+    template: '<ion-view><h1>Page Three</h1></ion-view>'
+  };
+
+  lcPage4 = {
+    template: '<ion-view><h1>Page Four</h1></ion-view>'
+  };
+
+  lcApp = {
+    abstract: true,
+    template: '<ion-side-menus>' +
+      '<ion-side-menu-content>' +
+        '<ion-nav-bar class="bar-energized">' +
+          '<ion-nav-buttons side="left">' +
+           '<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>' +
+        '</ion-nav-bar>' +
+        '<ion-nav-view name="menuContent" animation="slide-in-left"></ion-nav-view>' +
+      '</ion-side-menu-content>' +
+      '<ion-side-menu side="left">' +
+        '<ion-header-bar class="bar-positive" align-title="left">' +
+          '<h1 class="title">Menu</h1>' +
+        '</ion-header-bar>' +
+        '<ion-content>' +
+          '<ul class="list list-dark">' +
+              '<li>' +
+
+              '</li>' +
+            '</ul>' +
+        '</ion-content>' +
+      '</ion-side-menu>' +
+    '</ion-side-menus>'
+  };
+
+  lcApp2 = {
+    abstract: true,
+    template: '<ion-side-menus>' +
+      '<ion-side-menu-content>' +
+        '<ion-nav-bar class="bar-energized">' +
+          '<ion-nav-buttons side="left">' +
+           '<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>' +
+        '</ion-nav-bar>' +
+        '<ion-nav-view name="menuContent2" animation="slide-in-left"></ion-nav-view>' +
+      '</ion-side-menu-content>' +
+      '<ion-side-menu side="left">' +
+        '<ion-header-bar class="bar-positive" align-title="left">' +
+          '<h1 class="title">Menu</h1>' +
+        '</ion-header-bar>' +
+        '<ion-content>' +
+          '<ul class="list list-dark">' +
+              '<li>' +
+
+              '</li>' +
+            '</ul>' +
+        '</ion-content>' +
+      '</ion-side-menu>' +
+    '</ion-side-menus>'
+  };
+
+  lcAppPage2 = {
+    views: {
+      "menuContent": {
+        template: "<ion-view><h1>Menu Page Two</h1></ion-view>"
       }
     }
   }
+
+  lcApp2Page2 = {
+    views: {
+      "menuContent2": {
+        template: "<ion-view><h1>Menu 2 Page Two</h1></ion-view>"
+      }
+    }
+  }
+
+  lcAppPage3 = {
+    views: {
+      "menuContent": {
+        template: "<ion-view><h1>Menu Page Three</h1></ion-view>"
+      }
+    }
+  }
+
+  lcApp2Page3 = {
+    views: {
+      "menuContent2": {
+        template: "<ion-view><h1>Menu 2 Page Three</h1></ion-view>"
+      }
+    }
+  }
+
+  lcAppTab1 = {
+    abstract: true,
+    views: {
+      "menuContent": {
+        template: '<ion-tabs class="tabs-icon-top tabs-color-active-positive">' +
+          '<ion-tab title="Tabs 1 Tab 1">' +
+            '<ion-nav-view name="tab-one"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Tabs 1 Tab 2" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes">' +
+            '<ion-nav-view name="tab-two"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Tabs 1 Tab 3" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear">' +
+            '<ion-nav-view name="tab-three"></ion-nav-view>' +
+          '</ion-tab>' +
+        '</ion-tabs>'
+      }
+    }
+  };
+
+  lcAppTab2 = {
+    abstract: true,
+    views: {
+      "menuContent": {
+        template: '<ion-tabs class="tabs-icon-top tabs-color-active-positive">' +
+          '<ion-tab title="Tabs 2 Tab 1">' +
+            '<ion-nav-view name="tab-one"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Tabs 2 Tab 2" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes">' +
+            '<ion-nav-view name="tab-two"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Tabs 2 Tab 3" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear">' +
+            '<ion-nav-view name="tab-three"></ion-nav-view>' +
+          '</ion-tab>' +
+        '</ion-tabs>'
+      }
+    }
+  };
+
+  lcTabsPage = {
+    abstract: true,
+    template: '<ion-tabs class="tabs-icon-top tabs-color-active-positive">' +
+      '<ion-tab title="Tab 1" href="#/tab/tab1page1">' +
+        '<ion-nav-view name="tab-one"></ion-nav-view>' +
+      '</ion-tab>' +
+      '<ion-tab title="Tab 2" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/tab2page1">' +
+        '<ion-nav-view name="tab-two"></ion-nav-view>' +
+      '</ion-tab>' +
+      '<ion-tab title="Tab 3" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/tab3page1">' +
+        '<ion-nav-view name="tab-three"></ion-nav-view>' +
+      '</ion-tab>' +
+    '</ion-tabs>'
+  };
+
+  lcTab1Page1 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page One"><h1>Tab One Page One</h1></ion-view>'
+      }
+    }
+  };
+
+  lcTab1Page2 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page Two"><h1>Tab One Page Two</h1></ion-view>'
+      }
+    }
+  };
+
+  lcTab2Page1 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page One"><h1>Tab Two Page One</h1></ion-view>'
+      }
+    }
+  };
+
+  lcTab2Page2 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page Two"><h1>Tab Two Page Two</h1></ion-view>'
+      }
+    }
+  };
+
+  lcTab3Page1 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page One"><h1>Tab Three Page One</h1></ion-view>'
+      }
+    }
+  };
+
+  lcTab3Page2 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page Two"><h1>Tab Three Page Two</h1></ion-view>'
+      }
+    }
+  };
+
+  lcTabs2Page = {
+    abstract: true,
+    template: '<ion-tabs class="tabs-icon-top tabs-color-active-positive">' +
+      '<ion-tab title="Tab 1" href="#/tab2/tab1page1">' +
+        '<ion-nav-view name="tab-one"></ion-nav-view>' +
+      '</ion-tab>' +
+      '<ion-tab title="Tab 2" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab2/tab2page1">' +
+        '<ion-nav-view name="tab-two"></ion-nav-view>' +
+      '</ion-tab>' +
+      '<ion-tab title="Tab 3" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab2/tab3page1">' +
+        '<ion-nav-view name="tab-three"></ion-nav-view>' +
+      '</ion-tab>' +
+    '</ion-tabs>'
+  };
+
+  var lcTabs2Tab1Page1 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page One"><h1>Tab One Page One</h1></ion-view>'
+      }
+    }
+  };
+
+  var lcTabs2Tab1Page2 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page Two"><h1>Tab One Page Two</h1></ion-view>'
+      }
+    }
+  };
+
+  var lcTabs2Tab2Page1 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page One"><h1>Tab Two Page One</h1></ion-view>'
+      }
+    }
+  };
+
+  var lcTabs2Tab2Page2 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page Two"><h1>Tab Two Page Two</h1></ion-view>'
+      }
+    }
+  };
+
+  var lcTabs2Tab3Page1 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page One"><h1>Tab Three Page One</h1></ion-view>'
+      }
+    }
+  };
+
+  var lcTabs2Tab3Page2 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page Two"><h1>Tab Three Page Two</h1></ion-view>'
+      }
+    }
+  };
+
+  lcApp2Tabs1Page = {
+    abstract: true,
+    views: {
+      "menuContent2": {
+        template: '<ion-tabs class="tabs-icon-top tabs-color-active-positive">' +
+          '<ion-tab title="Menu 2 Tabs 1 Tab 1">' +
+            '<ion-nav-view name="tab-one"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Menu 2 Tabs 1 Tab 2" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes">' +
+            '<ion-nav-view name="tab-two"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Menu 2 Tabs 1 Tab 3" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear">' +
+            '<ion-nav-view name="tab-three"></ion-nav-view>' +
+          '</ion-tab>' +
+        '</ion-tabs>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Page = {
+    abstract: true,
+    views: {
+      "menuContent2": {
+        template: '<ion-tabs class="tabs-icon-top tabs-color-active-positive">' +
+          '<ion-tab title="Menu 2 Tabs 2 Tab 1">' +
+            '<ion-nav-view name="tab-one"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Menu 2 Tabs 2 Tab 2" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes">' +
+            '<ion-nav-view name="tab-two"></ion-nav-view>' +
+          '</ion-tab>' +
+          '<ion-tab title="Menu 2 Tabs 2 Tab 3" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear">' +
+            '<ion-nav-view name="tab-three"></ion-nav-view>' +
+          '</ion-tab>' +
+        '</ion-tabs>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab1Page1 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page One"><h1>Tab One Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab1Page2 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page Two"><h1>Tab One Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab2Page1 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page One"><h1>Tab Two Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab2Page2 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page Two"><h1>Tab Two Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab3Page1 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page One"><h1>Tab Three Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs1Tab3Page2 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page Two"><h1>Tab Three Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab1Page1 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page One"><h1>Tab One Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab1Page2 = {
+    views: {
+      'tab-one' : {
+        template: '<ion-view view-title="Tab One Page Two"><h1>Tab One Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab2Page1 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page One"><h1>Tab Two Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab2Page2 = {
+    views: {
+      'tab-two' : {
+        template: '<ion-view view-title="Tab Two Page Two"><h1>Tab Two Page Two</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab3Page1 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page One"><h1>Tab Three Page One</h1></ion-view>'
+      }
+    }
+  }
+
+  lcApp2Tabs2Tab3Page2 = {
+    views: {
+      'tab-three' : {
+        template: '<ion-view view-title="Tab Three Page Two"><h1>Tab Three Page Two</h1></ion-view>'
+      }
+    }
+  }
+
   beforeEach(module(function ($stateProvider) {
+    _stateProvider = $stateProvider;
+    lifeCycleDataStore = {};
     $stateProvider
       .state('a', aState)
       .state('b', bState)
@@ -212,6 +632,7 @@ describe('Ionic nav-view', function() {
 
   beforeEach(inject(function(_$compile_, $ionicConfig, $rootScope) {
     $compile = _$compile_;
+    _rootScope = $rootScope;
     scope = $rootScope.$new();
     elem = angular.element('<div>');
 
@@ -436,6 +857,7 @@ describe('Ionic nav-view', function() {
   }));
 
   it('should add multiple ion-nav-view', inject(function ($state, $q, $timeout, $compile) {
+
     elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
 
     expect(elem.find('ion-nav-view').find('div').length).toBe(0);
@@ -443,55 +865,58 @@ describe('Ionic nav-view', function() {
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
-    var divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(1);
-    expect(divs.eq(0).attr('nav-view')).toBe('active');
-    expect(divs.eq(0).text()).toBe('page1');
+    var navViews = elem.find('ion-nav-view');
+    var ionViews = navViews.find('ion-view');
+    expect(ionViews.length).toBe(1);
+    var navViewAttribute = ionViews.eq(0).attr('nav-view');
+    expect(navViewAttribute).toBe('active');
+    var textAttribute = ionViews.eq(0).text();
+    expect(textAttribute).toBe('page1');
 
     $state.go(page2State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(2);
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(2);
 
-    expect(divs.eq(0).attr('nav-view')).toBe('cached');
-    expect(divs.eq(0).text()).toBe('page1');
+    expect(ionViews.eq(0).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(0).text()).toBe('page1');
 
-    expect(divs.eq(1).attr('nav-view')).toBe('active');
-    expect(divs.eq(1).text()).toBe('page2');
+    expect(ionViews.eq(1).attr('nav-view')).toBe('active');
+    expect(ionViews.eq(1).text()).toBe('page2');
 
     $state.go(page3State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(3);
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(3);
 
-    expect(divs.eq(0).attr('nav-view')).toBe('cached');
-    expect(divs.eq(0).text()).toBe('page1');
+    expect(ionViews.eq(0).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(0).text()).toBe('page1');
 
-    expect(divs.eq(1).attr('nav-view')).toBe('cached');
-    expect(divs.eq(1).text()).toBe('page2');
+    expect(ionViews.eq(1).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(1).text()).toBe('page2');
 
-    expect(divs.eq(2).attr('nav-view')).toBe('active');
-    expect(divs.eq(2).text()).toBe('page3');
+    expect(ionViews.eq(2).attr('nav-view')).toBe('active');
+    expect(ionViews.eq(2).text()).toBe('page3');
 
     $state.go(page4State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(4);
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(4);
 
-    expect(divs.eq(0).attr('nav-view')).toBe('cached');
-    expect(divs.eq(0).text()).toBe('page1');
+    expect(ionViews.eq(0).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(0).text()).toBe('page1');
 
-    expect(divs.eq(1).attr('nav-view')).toBe('cached');
-    expect(divs.eq(1).text()).toBe('page2');
+    expect(ionViews.eq(1).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(1).text()).toBe('page2');
 
-    expect(divs.eq(2).attr('nav-view')).toBe('cached');
-    expect(divs.eq(2).text()).toBe('page3');
+    expect(ionViews.eq(2).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(2).text()).toBe('page3');
 
-    expect(divs.eq(3).attr('nav-view')).toBe('active');
-    expect(divs.eq(3).text()).toBe('page4');
+    expect(ionViews.eq(3).attr('nav-view')).toBe('active');
+    expect(ionViews.eq(3).text()).toBe('page4');
   }));
 
   it('should remove ion-nav-views when going back', inject(function ($state, $q, $timeout, $compile) {
@@ -513,36 +938,36 @@ describe('Ionic nav-view', function() {
     $q.flush();
     $timeout.flush();
 
-    var divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(4);
-    expect(divs.eq(0).attr('nav-view')).toBe('cached');
-    expect(divs.eq(1).attr('nav-view')).toBe('cached');
-    expect(divs.eq(2).attr('nav-view')).toBe('cached');
-    expect(divs.eq(3).attr('nav-view')).toBe('active');
+    var ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(4);
+    expect(ionViews.eq(0).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(1).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(2).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(3).attr('nav-view')).toBe('active');
 
     $state.go(page3State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(3);
-    expect(divs.eq(0).attr('nav-view')).toBe('cached');
-    expect(divs.eq(1).attr('nav-view')).toBe('cached');
-    expect(divs.eq(2).attr('nav-view')).toBe('active');
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(3);
+    expect(ionViews.eq(0).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(1).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(2).attr('nav-view')).toBe('active');
 
     $state.go(page2State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(2);
-    expect(divs.eq(0).attr('nav-view')).toBe('cached');
-    expect(divs.eq(1).attr('nav-view')).toBe('active');
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(2);
+    expect(ionViews.eq(0).attr('nav-view')).toBe('cached');
+    expect(ionViews.eq(1).attr('nav-view')).toBe('active');
 
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(1);
-    expect(divs.eq(0).attr('nav-view')).toBe('active');
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(1);
+    expect(ionViews.eq(0).attr('nav-view')).toBe('active');
   }));
 
   it('should disconnect and reconnect view scopes', inject(function ($state, $q, $timeout, $compile) {
@@ -552,22 +977,22 @@ describe('Ionic nav-view', function() {
     $q.flush();
     $timeout.flush();
 
-    var divs = elem.find('ion-nav-view').find('div');
-    expect(divs.eq(0).scope().$$disconnected).toBeUndefined();
+    var ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.eq(0).scope().$$disconnected).toBeUndefined();
 
     $state.go(page2State);
     $q.flush();
     $timeout.flush();
 
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.eq(0).scope().$$disconnected).toBe(true);
-    expect(divs.eq(1).scope().$$disconnected).toBeUndefined();
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.eq(0).scope().$$disconnected).toBe(true);
+    expect(ionViews.eq(1).scope().$$disconnected).toBeUndefined();
 
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.eq(0).scope().$$disconnected).toBe(false);
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.eq(0).scope().$$disconnected).toBe(false);
   }));
 
   it('should have connected scopes at the time of lifecycle events', inject(function ($state, $q, $timeout, $compile) {
@@ -579,16 +1004,16 @@ describe('Ionic nav-view', function() {
 
     var beforeEnterDisconnected, afterEnterDisconnected, beforeLeaveDisconnected, afterLeaveDisconnected;
     scope.$on('$ionicView.beforeEnter', function(ev, d){
-      beforeEnterDisconnected = elem.find('ion-nav-view').find('div').eq(1).scope().$$disconnected;
+      beforeEnterDisconnected = elem.find('ion-nav-view').find('ion-view').eq(1).scope().$$disconnected;
     });
     scope.$on('$ionicView.afterEnter', function(ev, d){
-      afterEnterDisconnected = elem.find('ion-nav-view').find('div').eq(1).scope().$$disconnected;
+      afterEnterDisconnected = elem.find('ion-nav-view').find('ion-view').eq(1).scope().$$disconnected;
     });
     scope.$on('$ionicView.beforeLeave', function(ev, d){
-      beforeLeaveDisconnected = elem.find('ion-nav-view').find('div').eq(0).scope().$$disconnected;
+      beforeLeaveDisconnected = elem.find('ion-nav-view').find('ion-view').eq(0).scope().$$disconnected;
     });
     scope.$on('$ionicView.afterLeave', function(ev, d){
-      afterLeaveDisconnected = elem.find('ion-nav-view').find('div').eq(0).scope().$$disconnected;
+      afterLeaveDisconnected = elem.find('ion-nav-view').find('ion-view').eq(0).scope().$$disconnected;
     });
 
     $state.go(page2State);
@@ -600,8 +1025,8 @@ describe('Ionic nav-view', function() {
     expect(beforeLeaveDisconnected).toBeUndefined();
     expect(afterLeaveDisconnected).toBeUndefined();
 
-    expect(elem.find('ion-nav-view').find('div').eq(0).scope().$$disconnected).toBe(true);
-    expect(elem.find('ion-nav-view').find('div').eq(1).scope().$$disconnected).toBeUndefined();
+    expect(elem.find('ion-nav-view').find('ion-view').eq(0).scope().$$disconnected).toBe(true);
+    expect(elem.find('ion-nav-view').find('ion-view').eq(1).scope().$$disconnected).toBeUndefined();
   }));
 
   it('should not cache ion-nav-views that were forward when moving back', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
@@ -617,42 +1042,42 @@ describe('Ionic nav-view', function() {
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(1);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(1);
 
     $state.go(page2State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(2);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(2);
 
     $state.go(page3State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(3);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(3);
     expect(unloaded).toBeUndefined();
 
     $state.go(page4State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(3);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(3);
     expect(unloaded.historyId).toBe('root');
     expect(unloaded.stateName).toBe('page1');
 
     $state.go(page3State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(2);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(2);
     expect(unloaded.stateName).toBe('page4');
 
     $state.go(page2State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(1);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(1);
     expect(unloaded.stateName).toBe('page3');
 
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(1);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(1);
     expect(unloaded.stateName).toBe('page2');
   }));
 
@@ -664,37 +1089,37 @@ describe('Ionic nav-view', function() {
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(1);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(1);
 
     $state.go(page2State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(2);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(2);
 
     $state.go(page3State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(3);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(3);
 
     $state.go(page4State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(4);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(4);
 
     $state.go(page3State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(4);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(4);
 
     $state.go(page2State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(4);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(4);
 
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
-    expect(elem.find('ion-nav-view').find('div').length).toBe(4);
+    expect(elem.find('ion-nav-view').find('ion-view').length).toBe(4);
   }));
 
   it('should not cache ion-views with the cache-view="true" attribute', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
@@ -753,45 +1178,45 @@ describe('Ionic nav-view', function() {
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
-    var divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(1);
-    expect(divs.eq(0).text()).toBe('page1');
+    var ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(1);
+    expect(ionViews.eq(0).text()).toBe('page1');
 
     $state.go(page2State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(2);
-    expect(divs.eq(1).text()).toBe('page2');
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(2);
+    expect(ionViews.eq(1).text()).toBe('page2');
 
     $state.go(page3State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(3);
-    expect(divs.eq(2).text()).toBe('page3');
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(3);
+    expect(ionViews.eq(2).text()).toBe('page3');
 
     $state.go(page4State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(4);
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(4);
 
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(4);
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(4);
 
     $state.go(page5State);
     $q.flush();
     $timeout.flush();
-    divs = elem.find('ion-nav-view').find('div');
-    expect(divs.length).toBe(4);
-    expect(divs.eq(0).text()).toBe('page1');
-    expect(divs.eq(1).text()).toBe('page3');
-    expect(divs.eq(2).text()).toBe('page4');
-    expect(divs.eq(3).text()).toBe('page5');
+    ionViews = elem.find('ion-nav-view').find('ion-view');
+    expect(ionViews.length).toBe(4);
+    expect(ionViews.eq(0).text()).toBe('page1');
+    expect(ionViews.eq(1).text()).toBe('page3');
+    expect(ionViews.eq(2).text()).toBe('page4');
+    expect(ionViews.eq(3).text()).toBe('page5');
   }));
 
   it('should emit $ionicView loaded event only once if cached', inject(function ($state, $q, $timeout, $compile) {
@@ -900,7 +1325,7 @@ describe('Ionic nav-view', function() {
     expect(afterLeave.stateName).toEqual('page1');
     expect(leave.stateName).toEqual('page1');
     expect(leave.transitionId).toEqual(2);
-    
+
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
@@ -1009,10 +1434,10 @@ describe('Ionic nav-view', function() {
 
     expect(unloadedEvent.stateName).toEqual('tabAbstract.tab3page1');
   }));
-  
+
   it('should emit $ionicView events in correct order', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
     $ionicConfig.views.maxCache(0);
-  
+
     var order = [];
     scope.$on('$ionicView.loaded', function(ev, d){
       order.push('$ionicView.loaded');
@@ -1083,7 +1508,7 @@ describe('Ionic nav-view', function() {
     $q.flush();
     $timeout.flush();
 
-    var divs = elem.find('ion-nav-view').find('div');
+    var divs = elem.find('ion-nav-view').find('ion-view');
     expect(divs.length).toBe(3);
 
     expect(divs.eq(0).attr('nav-view')).toBe('cached');
@@ -1104,7 +1529,7 @@ describe('Ionic nav-view', function() {
     expect(clearCacheCollection[1].stateName).toBe('page2');
     clearCacheCollection = [];
 
-    var divs = elem.find('ion-nav-view').find('div');
+    var divs = elem.find('ion-nav-view').find('ion-view');
     expect(divs.length).toBe(1);
 
     expect(divs.eq(0).attr('nav-view')).toBe('active');
@@ -1114,7 +1539,7 @@ describe('Ionic nav-view', function() {
     $timeout.flush();
     expect(clearCacheCollection.length).toBe(0);
 
-    var divs = elem.find('ion-nav-view').find('div');
+    var divs = elem.find('ion-nav-view').find('ion-view');
     expect(divs.length).toBe(1);
 
     expect(divs.eq(0).attr('nav-view')).toBe('active');
@@ -1124,7 +1549,7 @@ describe('Ionic nav-view', function() {
     $q.flush();
     $timeout.flush();
 
-    var divs = elem.find('ion-nav-view').find('div');
+    var divs = elem.find('ion-nav-view').find('ion-view');
     expect(divs.length).toBe(1);
 
     expect(divs.eq(0).attr('nav-view')).toBe('active');
@@ -1337,7 +1762,1592 @@ describe('Ionic nav-view', function() {
     expect(tab3InnerEle).toBe(null);
   }));
 
+  it('should go to each state and receive correct life cycle events (test one)', inject(function ($state, $q, $timeout, $compile) {
+
+    /*
+      Order:
+      Page 1
+      Page 2
+      Page 3
+      Page 4
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', lcPage1)
+    .state('lcPage2', lcPage2)
+    .state('lcPage3', lcPage3)
+    .state('lcPage4', lcPage4);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcPage2", "lcPage3", "lcPage4", "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcPage4");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 1);
+
+    doAssertionsForState("lcPage2", 1);
+
+    doAssertionsForState("lcPage3", 1);
+
+    doAssertionsForState("lcPage4", 1);
+
+  }));
+
+  it('should go to each state and receive correct life cycle events (test two)', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
+
+    /*
+      Order:
+      Page 1
+      Page 2
+      Page 3
+      Page 4
+      Page 3
+      Page 2
+      Page 1
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', lcPage1)
+    .state('lcPage2', lcPage2)
+    .state('lcPage3', lcPage3)
+    .state('lcPage4', lcPage4);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcPage2", "lcPage3", "lcPage4", "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 2);
+
+    doAssertionsForState("lcPage2", 2);
+
+    doAssertionsForState("lcPage3", 2);
+
+    doAssertionsForState("lcPage4", 1);
+
+  }));
+
+  it('should go to each state and receive correct life cycle events (test three)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      (Menu) Page 2
+      Page 3
+      (Menu) Page 2
+      Page 1
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', lcPage1)
+    .state('lcApp', lcApp)
+    .state('lcApp.lcPage2', lcAppPage2)
+    .state('lcPage3', lcPage3);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcApp.lcPage2", "lcPage3",  "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 2);
+
+    doAssertionsForState("lcApp.lcPage2", 2);
+
+    doAssertionsForState("lcPage3", 1);
+  }));
+
+  it('should go to each state and receive correct life cycle events (test four)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Tab 1, Page 1
+      Tab 1, Page 2
+      Tab 2, Page 1
+      Tab 1, Page 2
+      Tab 1, Page 1
+      Tab 2, Page 1
+      Tab 2, Page 2
+      Tab 2, Page 1
+      Tab 3, Page 1
+      Tab 3, Page 2
+      Tab 3, Page 1
+    */
+
+    _stateProvider
+    .state('lcTabsPage', lcTabsPage)
+    .state('lcTabsPage.lcTab1Page1', lcTab1Page1)
+    .state('lcTabsPage.lcTab1Page2', lcTab1Page2)
+    .state('lcTabsPage.lcTab2Page1', lcTab2Page1)
+    .state('lcTabsPage.lcTab2Page2', lcTab2Page2)
+    .state('lcTabsPage.lcTab3Page1', lcTab3Page1)
+    .state('lcTabsPage.lcTab3Page2', lcTab3Page2)
+    .state('lcStartingPage', lcStartingPage);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcTabsPage.lcTab1Page1", "lcTabsPage.lcTab1Page2", "lcTabsPage.lcTab2Page1", "lcTabsPage.lcTab2Page2",
+      "lcTabsPage.lcTab3Page1", "lcTabsPage.lcTab3Page2", "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 3);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 1);
+  }));
+
+  it('should go to each state and receive correct life cycle events (test five)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Page 2
+      Tab 1, Page 1
+      Tab 1, Page 2
+      Page 2
+      Tab 2, Page 1,
+      Tab 2, Page 2,
+      Page 3
+      Tab 1, Page 2
+      Page 1
+      Tab 3, Page 1
+    */
+
+    _stateProvider
+    .state('lcPage1', lcPage1)
+    .state('lcPage2', lcPage2)
+    .state('lcPage3', lcPage3)
+    .state('lcTabsPage', lcTabsPage)
+    .state('lcTabsPage.lcTab1Page1', lcTab1Page1)
+    .state('lcTabsPage.lcTab1Page2', lcTab1Page2)
+    .state('lcTabsPage.lcTab2Page1', lcTab2Page1)
+    .state('lcTabsPage.lcTab2Page2', lcTab2Page2)
+    .state('lcTabsPage.lcTab3Page1', lcTab3Page1)
+    .state('lcTabsPage.lcTab3Page2', lcTab3Page2)
+    .state('lcStartingPage', lcStartingPage);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcPage2", "lcPage3", "lcTabsPage.lcTab1Page1", "lcTabsPage.lcTab1Page2", "lcTabsPage.lcTab2Page1", "lcTabsPage.lcTab2Page2",
+      "lcTabsPage.lcTab3Page1", "lcTabsPage.lcTab3Page2", "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page2");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+
+    doAssertionsForState("lcPage1", 2);
+
+    doAssertionsForState("lcPage2", 2);
+
+    doAssertionsForState("lcPage3", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 0);
+
+  }));
+
+  it('should go to each state and receive correct life cycle events (test six)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Page 2
+      Tab 1, Page 1
+      Tab 1, Page 2
+      Page 2
+      Tab 2, Page 1
+      Page 3
+      Tab 1, Page 2
+      Page 1
+      Tab 1, Page 1
+      Page 3
+      Tab 2, Page 2
+      Tab 3, Page 2
+      Tab 1, Page 2
+      Page 1
+      Tab 2, Page 2
+      Tab 3, Page 1
+      Page 3
+      Tab 3, Page 2
+      Tab 3, Page 1
+    */
+
+    _stateProvider
+    .state('lcPage1', lcPage1)
+    .state('lcPage2', lcPage2)
+    .state('lcPage3', lcPage3)
+    .state('lcTabsPage', lcTabsPage)
+    .state('lcTabsPage.lcTab1Page1', lcTab1Page1)
+    .state('lcTabsPage.lcTab1Page2', lcTab1Page2)
+    .state('lcTabsPage.lcTab2Page1', lcTab2Page1)
+    .state('lcTabsPage.lcTab2Page2', lcTab2Page2)
+    .state('lcTabsPage.lcTab3Page1', lcTab3Page1)
+    .state('lcTabsPage.lcTab3Page2', lcTab3Page2)
+    .state('lcStartingPage', lcStartingPage);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcPage2", "lcPage3", "lcTabsPage.lcTab1Page1", "lcTabsPage.lcTab1Page2", "lcTabsPage.lcTab2Page1", "lcTabsPage.lcTab2Page2",
+      "lcTabsPage.lcTab3Page1", "lcTabsPage.lcTab3Page2", "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page1");
+
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 3);
+
+    doAssertionsForState("lcPage2", 2);
+
+    doAssertionsForState("lcPage3", 3);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 3);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 2);
+
+  }));
+
+  it('should go to each state and receive correct life cycle events (test seven)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Tab 1, Page 2
+      Page 2
+      Tab 2, Page 1
+      Page 3
+    */
+
+    _stateProvider
+    .state('lcPage1', lcPage1)
+    .state('lcPage2', lcPage2)
+    .state('lcPage3', lcPage3)
+    .state('lcTabsPage', lcTabsPage)
+    .state('lcTabsPage.lcTab1Page1', lcTab1Page1)
+    .state('lcTabsPage.lcTab1Page2', lcTab1Page2)
+    .state('lcTabsPage.lcTab2Page1', lcTab2Page1)
+    .state('lcTabsPage.lcTab2Page2', lcTab2Page2)
+    .state('lcTabsPage.lcTab3Page1', lcTab3Page1)
+    .state('lcTabsPage.lcTab3Page2', lcTab3Page2)
+    .state('lcStartingPage', lcStartingPage);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcPage2", "lcPage3", "lcTabsPage.lcTab1Page1", "lcTabsPage.lcTab1Page2", "lcTabsPage.lcTab2Page1", "lcTabsPage.lcTab2Page2",
+      "lcTabsPage.lcTab3Page1", "lcTabsPage.lcTab3Page2", "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 0);
+
+    doAssertionsForState("lcPage2", 1);
+
+    doAssertionsForState("lcPage3", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 0);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 0);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 0);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 0);
+
+  }));
+
+  it('should go to each state and receive correct life cycle events (test eight)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Tab 2, Page 2
+      Tab 3, Page 2
+      Tab 1, Page 2
+      Page 1
+      Tab 2, Page 2
+      Tab 2, Page 1
+      Tab 3, Page 1
+      Page 3
+      Tab 3, Page 2
+      Tab 3, Page 1
+    */
+
+    _stateProvider
+    .state('lcPage1', lcPage1)
+    .state('lcPage2', lcPage2)
+    .state('lcPage3', lcPage3)
+    .state('lcTabsPage', lcTabsPage)
+    .state('lcTabsPage.lcTab1Page1', lcTab1Page1)
+    .state('lcTabsPage.lcTab1Page2', lcTab1Page2)
+    .state('lcTabsPage.lcTab2Page1', lcTab2Page1)
+    .state('lcTabsPage.lcTab2Page2', lcTab2Page2)
+    .state('lcTabsPage.lcTab3Page1', lcTab3Page1)
+    .state('lcTabsPage.lcTab3Page2', lcTab3Page2)
+    .state('lcStartingPage', lcStartingPage);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcPage2", "lcPage3", "lcTabsPage.lcTab1Page1", "lcTabsPage.lcTab1Page2", "lcTabsPage.lcTab2Page1", "lcTabsPage.lcTab2Page2",
+      "lcTabsPage.lcTab3Page1", "lcTabsPage.lcTab3Page2", "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 1);
+
+    doAssertionsForState("lcPage2", 0);
+
+    doAssertionsForState("lcPage3", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 0);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 2);
+
+  }));
+
+  it('should go to each state and receive correct life cycle events (test nine)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      (Menu) Page 2
+      (Menu) Page 3
+      Page 3
+      Page 1
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', lcPage1)
+    .state('lcApp', lcApp)
+    .state('lcApp.lcPage2', lcAppPage2)
+    .state('lcApp.lcPage3', lcAppPage3)
+    .state('lcPage3', lcPage3);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcApp.lcPage2", "lcApp.lcPage3", "lcPage3",  "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+
+    doAssertionsForState("lcPage1", 2);
+
+    doAssertionsForState("lcApp.lcPage2", 1);
+
+    doAssertionsForState("lcApp.lcPage3", 1);
+
+    doAssertionsForState("lcPage3", 1);
+  }));
+
+  it('should go to each state and receive correct life cycle events (test ten)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Tabs 1 Tab 2, Page 2
+      Tabs 1 Tab 3, Page 2
+      Tabs 2 Tab 1, Page 2
+      Page 3
+      Tabs 1 Tab 2, Page 2
+      Tabs 2 Tab 2, Page 1
+      Tabs 1 Tab 3, Page 1
+      Page 2
+      Tabs 1 Tab 3, Page 2
+      Tabs 2 Tab 3, Page 1
+    */
+
+    _stateProvider
+    .state('lcPage1', lcPage1)
+    .state('lcPage2', lcPage2)
+    .state('lcPage3', lcPage3)
+    .state('lcTabsPage', lcTabsPage)
+    .state('lcTabsPage.lcTab1Page1', lcTab1Page1)
+    .state('lcTabsPage.lcTab1Page2', lcTab1Page2)
+    .state('lcTabsPage.lcTab2Page1', lcTab2Page1)
+    .state('lcTabsPage.lcTab2Page2', lcTab2Page2)
+    .state('lcTabsPage.lcTab3Page1', lcTab3Page1)
+    .state('lcTabsPage.lcTab3Page2', lcTab3Page2)
+    .state('lcTabs2Page', lcTabs2Page)
+    .state('lcTabs2Page.lcTab1Page1', lcTabs2Tab1Page1)
+    .state('lcTabs2Page.lcTab1Page2', lcTabs2Tab1Page2)
+    .state('lcTabs2Page.lcTab2Page1', lcTabs2Tab2Page1)
+    .state('lcTabs2Page.lcTab2Page2', lcTabs2Tab2Page2)
+    .state('lcTabs2Page.lcTab3Page1', lcTabs2Tab3Page1)
+    .state('lcTabs2Page.lcTab3Page2', lcTabs2Tab3Page2)
+    .state('lcStartingPage', lcStartingPage);
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcPage2", "lcPage3", "lcTabsPage.lcTab1Page1", "lcTabsPage.lcTab1Page2", "lcTabsPage.lcTab2Page1", "lcTabsPage.lcTab2Page2",
+      "lcTabsPage.lcTab3Page1", "lcTabsPage.lcTab3Page2",
+    "lcTabs2Page.lcTab1Page1", "lcTabs2Page.lcTab1Page2", "lcTabs2Page.lcTab2Page1", "lcTabs2Page.lcTab2Page2",
+    "lcTabs2Page.lcTab3Page1", "lcTabs2Page.lcTab3Page2", "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page2");
+    goToState($state, $q, $timeout, "lcTabs2Page.lcTab1Page2");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab2Page2");
+    goToState($state, $q, $timeout, "lcTabs2Page.lcTab2Page1");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page1");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcTabsPage.lcTab3Page2");
+    goToState($state, $q, $timeout, "lcTabs2Page.lcTab3Page1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 1);
+
+    doAssertionsForState("lcPage1", 1);
+
+    doAssertionsForState("lcPage3", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page1", 0);
+
+    doAssertionsForState("lcTabsPage.lcTab1Page2", 0);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page1", 0);
+
+    doAssertionsForState("lcTabsPage.lcTab2Page2", 2);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page1", 1);
+
+    doAssertionsForState("lcTabsPage.lcTab3Page2", 2);
+
+    doAssertionsForState("lcTabs2Page.lcTab1Page1", 0);
+
+    doAssertionsForState("lcTabs2Page.lcTab1Page2", 1);
+
+    doAssertionsForState("lcTabs2Page.lcTab2Page1", 1);
+
+    doAssertionsForState("lcTabs2Page.lcTab2Page2", 0);
+
+    doAssertionsForState("lcTabs2Page.lcTab3Page1", 1);
+
+    doAssertionsForState("lcTabs2Page.lcTab3Page2", 0);
+  }));
+
+  it('should go to each state and receive correct life cycle events (test eleven)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Page 2
+      (Menu) Tab 1, Page 1
+      (Menu) Tab 1, Page 2
+      Page 2
+      (Menu) Tab 2, Page 1
+      Page 3
+      (Menu) Tab 1, Page 2
+      Page 1
+      (Menu) Tab 1, Page 1
+      Page 3
+      (Menu) Tab 2, Page 2
+      (Menu) Tab 3, Page 2
+      (Menu) Tab 1, Page 2
+      Page 1
+      (Menu) Tab 2, Page 2
+      (Menu) Tab 3, Page 1
+      Page 3
+      (Menu) Tab 3, Page 2
+      (Menu) Tab 3, Page 1
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', lcPage1)
+    .state('lcPage2', lcPage2)
+    .state('lcPage3', lcPage3)
+    .state('lcApp', lcApp)
+    .state('lcApp.tabs1', lcAppTab1)
+    .state('lcApp.tabs2', lcAppTab2)
+    .state('lcApp.tabs1.tab1Page1', lcTab1Page1)
+    .state('lcApp.tabs1.tab1Page2', lcTab1Page2)
+    .state('lcApp.tabs1.tab2Page1', lcTab2Page1)
+    .state('lcApp.tabs1.tab2Page2', lcTab2Page2)
+    .state('lcApp.tabs1.tab3Page1', lcTab3Page1)
+    .state('lcApp.tabs1.tab3Page2', lcTab3Page2)
+
+    .state('lcApp.tabs2.tab1Page1', lcTabs2Tab1Page1)
+    .state('lcApp.tabs2.tab1Page2', lcTabs2Tab1Page2)
+    .state('lcApp.tabs2.tab2Page1', lcTabs2Tab2Page1)
+    .state('lcApp.tabs2.tab2Page2', lcTabs2Tab2Page2)
+    .state('lcApp.tabs2.tab3Page1', lcTabs2Tab3Page1)
+    .state('lcApp.tabs2.tab3Page2', lcTabs2Tab3Page2)
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcPage2", "lcPage3",
+    "lcApp.tabs1.tab1Page1", "lcApp.tabs1.tab1Page2", "lcApp.tabs1.tab2Page1",
+    "lcApp.tabs1.tab2Page2", "lcApp.tabs1.tab3Page1", "lcApp.tabs1.tab3Page2",
+    "lcApp.tabs2.tab1Page1", "lcApp.tabs2.tab1Page2", "lcApp.tabs2.tab2Page1",
+    "lcApp.tabs2.tab2Page2", "lcApp.tabs2.tab3Page1", "lcApp.tabs2.tab3Page2",
+    "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab3Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab3Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab3Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab3Page1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 3);
+
+    doAssertionsForState("lcPage2", 2);
+
+    doAssertionsForState("lcPage3", 3);
+
+    doAssertionsForState("lcApp.tabs1.tab1Page1", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab1Page2", 3);
+
+    doAssertionsForState("lcApp.tabs1.tab2Page1", 1);
+
+    doAssertionsForState("lcApp.tabs1.tab2Page2", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab3Page1", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab3Page2", 2);
+  }));
+
+  it('should go to each state and receive correct life cycle events (test twelve)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Page 2
+      (Menu) Tabs 1, Tab 1, Page 1
+      (Menu) Tabs 2, Tab 1, Page 2
+      Page 2
+      (Menu) Tabs 2, Tab 2, Page 1
+      Page 3
+      (Menu) Tabs1, Tab 1, Page 2
+      Page 1
+      (Menu) Tabs 1, Tab 1, Page 1
+      Page 3
+      (Menu) Tabs 1, Tab 2, Page 2
+      (Menu) Tabs 2, Tab 3, Page 2
+      (Menu) Tabs 1, Tab 1, Page 2
+      Page 1
+      (Menu) Tabs 1, Tab 2, Page 2
+      (Menu) Tabs 2, Tab 3, Page 1
+      Page 3
+      (Menu) Tabs 2, Tab 3, Page 2
+      (Menu) Tabs 1, Tab 3, Page 1
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', lcPage1)
+    .state('lcPage2', lcPage2)
+    .state('lcPage3', lcPage3)
+    .state('lcApp', lcApp)
+    .state('lcApp.tabs1', lcAppTab1)
+    .state('lcApp.tabs2', lcAppTab2)
+    .state('lcApp.tabs1.tab1Page1', lcTab1Page1)
+    .state('lcApp.tabs1.tab1Page2', lcTab1Page2)
+    .state('lcApp.tabs1.tab2Page1', lcTab2Page1)
+    .state('lcApp.tabs1.tab2Page2', lcTab2Page2)
+    .state('lcApp.tabs1.tab3Page1', lcTab3Page1)
+    .state('lcApp.tabs1.tab3Page2', lcTab3Page2)
+
+    .state('lcApp.tabs2.tab1Page1', lcTabs2Tab1Page1)
+    .state('lcApp.tabs2.tab1Page2', lcTabs2Tab1Page2)
+    .state('lcApp.tabs2.tab2Page1', lcTabs2Tab2Page1)
+    .state('lcApp.tabs2.tab2Page2', lcTabs2Tab2Page2)
+    .state('lcApp.tabs2.tab3Page1', lcTabs2Tab3Page1)
+    .state('lcApp.tabs2.tab3Page2', lcTabs2Tab3Page2)
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcPage2", "lcPage3",
+    "lcApp.tabs1.tab1Page1", "lcApp.tabs1.tab1Page2", "lcApp.tabs1.tab2Page1",
+    "lcApp.tabs1.tab2Page2", "lcApp.tabs1.tab3Page1", "lcApp.tabs1.tab3Page2",
+    "lcApp.tabs2.tab1Page1", "lcApp.tabs2.tab1Page2", "lcApp.tabs2.tab2Page1",
+    "lcApp.tabs2.tab2Page2", "lcApp.tabs2.tab3Page1", "lcApp.tabs2.tab3Page2",
+    "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab3Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab3Page1");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab3Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab3Page1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+
+    doAssertionsForState("lcPage1", 3);
+
+    doAssertionsForState("lcPage2", 2);
+
+    doAssertionsForState("lcPage3", 3);
+
+    doAssertionsForState("lcApp.tabs1.tab1Page1", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab1Page2", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab2Page1", 0);
+
+    doAssertionsForState("lcApp.tabs1.tab2Page2", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab3Page1", 1);
+
+    doAssertionsForState("lcApp.tabs1.tab3Page2", 0);
+
+    doAssertionsForState("lcApp.tabs2.tab1Page1", 0);
+
+    doAssertionsForState("lcApp.tabs2.tab1Page2", 1);
+
+    doAssertionsForState("lcApp.tabs2.tab2Page1", 1);
+
+    doAssertionsForState("lcApp.tabs2.tab2Page2", 0);
+
+    doAssertionsForState("lcApp.tabs2.tab3Page1", 1);
+
+    doAssertionsForState("lcApp.tabs2.tab3Page2", 2);
+  }));
+
+  it('should go to each state and receive correct life cycle events (test thirteen)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Menu 1 Page 2
+      Menu 1 Page 3
+      Page 3
+      Menu 2 Page 2
+      Menu 2 Page 3
+      Menu 1 Page 2
+      Menu 2 Page 3
+      Menu 1 Page 3
+      Page 1
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', lcPage1)
+    .state('lcApp', lcApp)
+    .state('lcApp2', lcApp2)
+    .state('lcApp.lcPage2', lcAppPage2)
+    .state('lcApp.lcPage3', lcAppPage3)
+    .state('lcApp2.lcPage2', lcApp2Page2)
+    .state('lcApp2.lcPage3', lcApp2Page3)
+    .state('lcPage3', lcPage3);
+
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = ["lcPage1", "lcApp.lcPage2", "lcApp.lcPage3", "lcApp2.lcPage2", "lcApp2.lcPage3", "lcPage3",  "lcStartingPage"];
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcPage3");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+
+    // assert
+    doAssertionsForState("lcPage1", 2);
+
+    doAssertionsForState("lcApp.lcPage2", 2);
+
+    doAssertionsForState("lcApp.lcPage3", 2);
+
+    doAssertionsForState("lcApp2.lcPage2", 1);
+
+    doAssertionsForState("lcApp2.lcPage3", 2);
+
+    doAssertionsForState("lcPage3", 1);
+  }));
+
+  it('should go to each state and receive correct life cycle events (test fourteen)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Menu 1 Page 2
+      Menu 1 Tabs 1 Tab 1 Page 1
+      Menu 1 Tabs 1 Tab 1 Page 2
+      Menu 1 Page 3
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Page 4
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 2 Page 3
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 1 Tabs 1 Tab 1 Page 2
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 1 Page 2
+      Menu 1 Tabs 1 Tab 2 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 1
+      Menu 1 Page 2
+      Menu 2 Page 3
+      Menu 2 Page 2
+      Menu 1 Page 3
+      Page 1
+    */
+
+    /* visit counts
+
+    Page 1 - 2
+    Page 2 - 0
+    Page 4 - 1
+
+    Menu 1 Page 2 - 2
+    Menu 1 Page 3 - 3
+    Menu 1 Tabs 1 Tab 1 Page 1 - 1
+    Menu 1 Tabs 1 Tab 1 Page 2 - 2
+    Menu 1 Tabs 1 Tab 2 Page 1 - 1
+    Menu 1 Tabs 1 Tab 2 Page 2 - 1
+    Menu 1 Tabs 1 Tab 3 Page 1 - 0
+    Menu 1 Tabs 1 Tab 3 Page 2 - 0
+
+    Menu 2 Page 2 - 1
+    Menu 2 Page 3 - 2
+    Menu 2 Tabs 1 Tab 1 Page 1 - 1
+    Menu 2 Tabs 1 Tab 1 Page 2 - 1
+    Menu 2 Tabs 1 Tab 2 Page 1 - 1
+    Menu 2 Tabs 1 Tab 2 Page 2 - 2
+    Menu 2 Tabs 1 Tab 3 Page 1 - 0
+    Menu 2 Tabs 1 Tab 3 Page 2 - 0
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', {
+      template: '<ion-view><h1>Page One</h1></ion-view>'
+    })
+    .state('lcPage4', {
+      template: '<ion-view><h1>Page Four</h1></ion-view>'
+    })
+    .state('lcApp', lcApp)
+    .state('lcApp.lcPage2', lcAppPage2)
+    .state('lcApp.lcPage3', lcAppPage3)
+    .state('lcApp.tabs1', lcAppTab1)
+    .state('lcApp.tabs2', lcAppTab2)
+    .state('lcApp.tabs1.tab1Page1', lcTab1Page1)
+    .state('lcApp.tabs1.tab1Page2', lcTab1Page2)
+    .state('lcApp.tabs1.tab2Page1', lcTab2Page1)
+    .state('lcApp.tabs1.tab2Page2', lcTab2Page2)
+    .state('lcApp.tabs1.tab3Page1', lcTab3Page1)
+    .state('lcApp.tabs1.tab3Page2', lcTab3Page2)
+
+    .state('lcApp.tabs2.tab1Page1', lcTabs2Tab1Page1)
+    .state('lcApp.tabs2.tab1Page2', lcTabs2Tab1Page2)
+    .state('lcApp.tabs2.tab2Page1', lcTabs2Tab2Page1)
+    .state('lcApp.tabs2.tab2Page2', lcTabs2Tab2Page2)
+    .state('lcApp.tabs2.tab3Page1', lcTabs2Tab3Page1)
+    .state('lcApp.tabs2.tab3Page2', lcTabs2Tab3Page2)
+
+    .state('lcApp2', lcApp2)
+    .state('lcApp2.lcPage2', lcApp2Page2)
+    .state('lcApp2.lcPage3', lcApp2Page3)
+    .state('lcApp2.tabs1', lcApp2Tabs1Page)
+    .state('lcApp2.tabs2', lcApp2Tabs2Page)
+    .state('lcApp2.tabs1.tab1Page1', lcApp2Tabs1Tab1Page1)
+    .state('lcApp2.tabs1.tab1Page2', lcApp2Tabs1Tab1Page2)
+    .state('lcApp2.tabs1.tab2Page1', lcApp2Tabs1Tab2Page1)
+    .state('lcApp2.tabs1.tab2Page2', lcApp2Tabs1Tab2Page2)
+    .state('lcApp2.tabs1.tab3Page1', lcApp2Tabs1Tab3Page1)
+    .state('lcApp2.tabs1.tab3Page2', lcApp2Tabs1Tab3Page2)
+    .state('lcApp2.tabs2.tab1Page1', lcApp2Tabs2Tab1Page1)
+    .state('lcApp2.tabs2.tab1Page2', lcApp2Tabs2Tab1Page2)
+    .state('lcApp2.tabs2.tab2Page1', lcApp2Tabs2Tab2Page1)
+    .state('lcApp2.tabs2.tab2Page2', lcApp2Tabs2Tab2Page2)
+    .state('lcApp2.tabs2.tab3Page1', lcApp2Tabs2Tab3Page1)
+    .state('lcApp2.tabs2.tab3Page2', lcApp2Tabs2Tab3Page2)
+
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = [
+      "lcPage1", "lcPage4",
+      "lcApp.lcPage2", "lcApp.lcPage3",
+      "lcApp.tabs1.tab1Page1", "lcApp.tabs1.tab1Page2",
+      "lcApp.tabs1.tab2Page1", "lcApp.tabs1.tab2Page2",
+      "lcApp.tabs1.tab3Page1", "lcApp.tabs1.tab3Page2",
+      "lcApp.tabs2.tab1Page1", "lcApp.tabs2.tab1Page2",
+      "lcApp.tabs2.tab2Page1", "lcApp.tabs2.tab2Page2",
+      "lcApp.tabs2.tab3Page1", "lcApp.tabs2.tab3Page2",
+      "lcApp2.lcPage2", "lcApp2.lcPage3",
+      "lcApp2.tabs1.tab1Page1", "lcApp2.tabs1.tab1Page2",
+      "lcApp2.tabs1.tab2Page1", "lcApp2.tabs1.tab2Page2",
+      "lcApp2.tabs1.tab3Page1", "lcApp2.tabs1.tab3Page2",
+      "lcApp2.tabs2.tab1Page1", "lcApp2.tabs2.tab1Page2",
+      "lcApp2.tabs2.tab2Page1", "lcApp2.tabs2.tab2Page2",
+      "lcApp2.tabs2.tab3Page1", "lcApp2.tabs2.tab3Page2",
+      "lcStartingPage"];
+
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 2);
+
+    doAssertionsForState("lcPage4", 1);
+
+    doAssertionsForState("lcApp.lcPage2", 2);
+
+    doAssertionsForState("lcApp.lcPage3", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab1Page1", 1);
+
+    doAssertionsForState("lcApp.tabs1.tab1Page2", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab2Page1", 1);
+
+    doAssertionsForState("lcApp.tabs1.tab2Page2", 1);
+
+    doAssertionsForState("lcApp2.lcPage2", 1);
+
+    doAssertionsForState("lcApp2.lcPage3", 2);
+
+    doAssertionsForState("lcApp2.tabs1.tab1Page1", 1);
+
+    doAssertionsForState("lcApp2.tabs1.tab1Page2", 1);
+
+    doAssertionsForState("lcApp2.tabs1.tab2Page1", 1);
+
+    doAssertionsForState("lcApp2.tabs1.tab2Page2", 2);
+
+  }));
+
+  it('should go to each state and receive correct life cycle events (test fifteen)', inject(function ($state, $q, $timeout, $compile, $ionicConfig, $ionicHistory) {
+
+    /*
+      Order:
+      Page 1
+      Menu 1 Page 2
+      Menu 1 Tabs 1 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 1
+      Menu 1 Tabs 1 Tab 1 Page 2
+      Menu 2 Tabs 2 Tab 2 Page 2
+      Menu 1 Tabs 2 Tab 1 Page 2
+      Menu 2 Tabs 2 Tab 1 Page 2
+      Menu 1 Page 2
+      Menu 2 Page 3
+      Menu 1 Page 3
+      Menu 1 Tabs 2 Tab 1 Page 2
+      Menu 2 Page 2
+      Menu 2 Tabs 2 Tab 1 Page 1
+      Page 4
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 1 Tabs 2 Tab 1 Page 1
+      Page 1
+      Menu 2 Tabs 2 Tab 1 Page 2
+      Menu 1 Tabs 2 Tab 2 Page 2
+      Menu 1 Tabs 2 Tab 2 Page 1
+      Menu 1 Tabs 2 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Menu 2 Page 3
+      Menu 1 Page 3
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 2 Page 3
+      Page 1
+      Menu 1 Tabs 1 Tab 2 Page 1
+      Menu 2 Page 2
+      Page 1
+      Menu 2 Tabs 2 Tab  Page 2
+      Page 4
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 2 Tabs 2 Tab 2 Page 1
+      Menu 1 Tabs 2 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 2 Page 3
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Menu 1 Tabs 1 Tab 2 Page 1
+      Menu 1 Page 2
+      Menu 2 Tabs 1 Tab 1 Page 1
+      Menu 1 Tabs 2 Tab 2 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 1
+      Menu 1 Tabs 1 Tab 1 Page 1
+      Menu 2 Page 3
+      Menu 1 Tabs 2 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 2
+      Menu 1 Tabs 2 Tab 1 Page 2
+      Menu 2 Tabs 2 Tab 2 Page 2
+      Menu 1 Tabs 2 Tab 2 Page 2
+      Page 4
+      Menu 1 Tabs 2 Tab 2 Page 1
+      Menu 1 Tabs 2 Tab 1 Page 2
+      Menu 1 Tabs 1 Tab 2 Page 2
+      Menu 1 Tabs 1 Tab 1 Page 2
+      Menu 2 Tabs 2 Tab 1 Page 1
+      Menu 2 Tabs 1 Tab 1 Page 2
+      Page 1
+      Menu 2 Tabs 1 Tab 1 Page 2
+      Page 4
+      Menu 2 Page 2
+      Menu 1 Page 3
+      Menu 1 Tabs 2 Tab 2 Page 1
+      Page 1
+      Menu 2 Tabs 2 Tab 2 Page 1
+      Menu 2 Tabs 1 Tab 2 Page 1
+      Menu 1 Page 2
+      Menu 2 Page 3
+      Menu 2 Page 2
+      Menu 1 Page 3
+      Page 1
+    */
+
+    /* visit counts
+
+    Page 1 - 7
+    Page 4 - 4
+
+    Menu 1 Page 2 - 4
+    Menu 1 Page 3 - 4
+
+    Menu 1 Tabs 1 Tab 1 Page 1 - 2
+    Menu 1 Tabs 1 Tab 1 Page 2 - 2
+    Menu 1 Tabs 1 Tab 2 Page 1 - 2
+    Menu 1 Tabs 1 Tab 2 Page 2 - 4
+
+    Menu 1 Tabs 2 Tab 1 Page 1 - 4
+    Menu 1 Tabs 2 Tab 1 Page 2 - 4
+    Menu 1 Tabs 2 Tab 2 Page 1 - 4
+    Menu 1 Tabs 2 Tab 2 Page 2 - 2
+
+    Menu 2 Page 2 - 4
+    Menu 2 Page 3 - 6
+
+    Menu 2 Tabs 1 Tab 1 Page 1 - 4
+    Menu 2 Tabs 1 Tab 1 Page 2 - 2
+    Menu 2 Tabs 1 Tab 2 Page 1 - 3
+    Menu 2 Tabs 1 Tab 2 Page 2 - 3
+
+    Menu 2 Tabs 2 Tab 1 Page 1 - 2
+    Menu 2 Tabs 2 Tab 1 Page 2 - 2
+    Menu 2 Tabs 2 Tab 2 Page 1 - 2
+    Menu 2 Tabs 2 Tab 2 Page 2 - 2
+    */
+
+    _stateProvider
+    .state('lcStartingPage', lcStartingPage)
+    .state('lcPage1', {
+      template: '<ion-view><h1>Page One</h1></ion-view>'
+    })
+    .state('lcPage4', {
+      template: '<ion-view><h1>Page Four</h1></ion-view>'
+    })
+    .state('lcApp', lcApp)
+    .state('lcApp.lcPage2', lcAppPage2)
+    .state('lcApp.lcPage3', lcAppPage3)
+    .state('lcApp.tabs1', lcAppTab1)
+    .state('lcApp.tabs2', lcAppTab2)
+    .state('lcApp.tabs1.tab1Page1', lcTab1Page1)
+    .state('lcApp.tabs1.tab1Page2', lcTab1Page2)
+    .state('lcApp.tabs1.tab2Page1', lcTab2Page1)
+    .state('lcApp.tabs1.tab2Page2', lcTab2Page2)
+    .state('lcApp.tabs1.tab3Page1', lcTab3Page1)
+    .state('lcApp.tabs1.tab3Page2', lcTab3Page2)
+
+    .state('lcApp.tabs2.tab1Page1', lcTabs2Tab1Page1)
+    .state('lcApp.tabs2.tab1Page2', lcTabs2Tab1Page2)
+    .state('lcApp.tabs2.tab2Page1', lcTabs2Tab2Page1)
+    .state('lcApp.tabs2.tab2Page2', lcTabs2Tab2Page2)
+    .state('lcApp.tabs2.tab3Page1', lcTabs2Tab3Page1)
+    .state('lcApp.tabs2.tab3Page2', lcTabs2Tab3Page2)
+
+    .state('lcApp2', lcApp2)
+    .state('lcApp2.lcPage2', lcApp2Page2)
+    .state('lcApp2.lcPage3', lcApp2Page3)
+    .state('lcApp2.tabs1', lcApp2Tabs1Page)
+    .state('lcApp2.tabs2', lcApp2Tabs2Page)
+    .state('lcApp2.tabs1.tab1Page1', lcApp2Tabs1Tab1Page1)
+    .state('lcApp2.tabs1.tab1Page2', lcApp2Tabs1Tab1Page2)
+    .state('lcApp2.tabs1.tab2Page1', lcApp2Tabs1Tab2Page1)
+    .state('lcApp2.tabs1.tab2Page2', lcApp2Tabs1Tab2Page2)
+    .state('lcApp2.tabs1.tab3Page1', lcApp2Tabs1Tab3Page1)
+    .state('lcApp2.tabs1.tab3Page2', lcApp2Tabs1Tab3Page2)
+    .state('lcApp2.tabs2.tab1Page1', lcApp2Tabs2Tab1Page1)
+    .state('lcApp2.tabs2.tab1Page2', lcApp2Tabs2Tab1Page2)
+    .state('lcApp2.tabs2.tab2Page1', lcApp2Tabs2Tab2Page1)
+    .state('lcApp2.tabs2.tab2Page2', lcApp2Tabs2Tab2Page2)
+    .state('lcApp2.tabs2.tab3Page1', lcApp2Tabs2Tab3Page1)
+    .state('lcApp2.tabs2.tab3Page2', lcApp2Tabs2Tab3Page2)
+
+
+    // arrange
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    var states = [
+      "lcPage1", "lcPage4",
+      "lcApp.lcPage2", "lcApp.lcPage3",
+      "lcApp.tabs1.tab1Page1", "lcApp.tabs1.tab1Page2",
+      "lcApp.tabs1.tab2Page1", "lcApp.tabs1.tab2Page2",
+      "lcApp.tabs1.tab3Page1", "lcApp.tabs1.tab3Page2",
+      "lcApp.tabs2.tab1Page1", "lcApp.tabs2.tab1Page2",
+      "lcApp.tabs2.tab2Page1", "lcApp.tabs2.tab2Page2",
+      "lcApp.tabs2.tab3Page1", "lcApp.tabs2.tab3Page2",
+      "lcApp2.lcPage2", "lcApp2.lcPage3",
+      "lcApp2.tabs1.tab1Page1", "lcApp2.tabs1.tab1Page2",
+      "lcApp2.tabs1.tab2Page1", "lcApp2.tabs1.tab2Page2",
+      "lcApp2.tabs1.tab3Page1", "lcApp2.tabs1.tab3Page2",
+      "lcApp2.tabs2.tab1Page1", "lcApp2.tabs2.tab1Page2",
+      "lcApp2.tabs2.tab2Page1", "lcApp2.tabs2.tab2Page2",
+      "lcApp2.tabs2.tab3Page1", "lcApp2.tabs2.tab3Page2",
+      "lcStartingPage"];
+
+    var scopes = setUpStatesAndStoreScope($state, $q, $timeout, elem[0], states);
+
+    for ( var i = 0; i < states.length; i++ ){
+      initializeHandlers(scopes[states[i]], states[i]);
+    }
+
+    $ionicHistory.clearHistory();
+
+    // act
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page2");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab2Page2");
+    goToState($state, $q, $timeout, "lcApp.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab1Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab1Page2");
+    goToState($state, $q, $timeout, "lcPage4");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcApp.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcPage1");
+    goToState($state, $q, $timeout, "lcApp2.tabs2.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp2.tabs1.tab2Page1");
+    goToState($state, $q, $timeout, "lcApp.lcPage2");
+    goToState($state, $q, $timeout, "lcApp2.lcPage3");
+    goToState($state, $q, $timeout, "lcApp2.lcPage2");
+    goToState($state, $q, $timeout, "lcApp.lcPage3");
+    goToState($state, $q, $timeout, "lcPage1");
+    // go to done page
+    goToState($state, $q, $timeout, "lcStartingPage");
+
+    // assert
+    doAssertionsForState("lcPage1", 7);
+
+    doAssertionsForState("lcPage4", 4);
+
+    doAssertionsForState("lcApp.lcPage2", 4);
+
+    doAssertionsForState("lcApp.lcPage3", 4);
+
+    doAssertionsForState("lcApp.tabs1.tab1Page1", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab1Page2", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab2Page1", 2);
+
+    doAssertionsForState("lcApp.tabs1.tab2Page2", 4);
+
+    doAssertionsForState("lcApp.tabs2.tab1Page1", 4);
+
+    doAssertionsForState("lcApp.tabs2.tab1Page2", 4);
+
+    doAssertionsForState("lcApp.tabs2.tab2Page1", 4);
+
+    doAssertionsForState("lcApp.tabs2.tab2Page2", 2);
+
+    doAssertionsForState("lcApp2.lcPage2", 4);
+
+    doAssertionsForState("lcApp2.lcPage3", 6);
+
+    doAssertionsForState("lcApp2.tabs1.tab1Page1", 4);
+
+    doAssertionsForState("lcApp2.tabs1.tab1Page2", 2);
+
+    doAssertionsForState("lcApp2.tabs1.tab2Page1", 3);
+
+    doAssertionsForState("lcApp2.tabs1.tab2Page2", 3);
+
+    doAssertionsForState("lcApp2.tabs2.tab1Page1", 2);
+
+    doAssertionsForState("lcApp2.tabs2.tab1Page2", 2);
+
+    doAssertionsForState("lcApp2.tabs2.tab2Page1", 2);
+
+    doAssertionsForState("lcApp2.tabs2.tab2Page2", 3);
+  }));
 });
+
+function doAssertionsForState(stateName, callCount){
+  expect(getEventCallCount(stateName, "$ionicView.beforeEnter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.enter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.afterEnter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.beforeLeave")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.leave")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicView.afterLeave")).toEqual(callCount);
+
+  expect(getEventCallCount(stateName, "$ionicParentView.beforeEnter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.enter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.afterEnter")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.beforeLeave")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.leave")).toEqual(callCount);
+  expect(getEventCallCount(stateName, "$ionicParentView.afterLeave")).toEqual(callCount);
+}
+
+function initializeHandlers(scope, viewName){
+  scope.$on("$ionicView.beforeEnter", function(){
+    addEventForView(viewName, "$ionicView.beforeEnter");
+  });
+
+  scope.$on("$ionicView.enter", function(){
+    addEventForView(viewName, "$ionicView.enter");
+  });
+
+  scope.$on("$ionicView.afterEnter", function(){
+    addEventForView(viewName, "$ionicView.afterEnter");
+  });
+
+  scope.$on("$ionicView.beforeLeave", function(){
+    addEventForView(viewName, "$ionicView.beforeLeave");
+  });
+
+  scope.$on("$ionicView.leave", function(){
+    addEventForView(viewName, "$ionicView.leave");
+  });
+
+  scope.$on("$ionicView.afterLeave", function(){
+    addEventForView(viewName, "$ionicView.afterLeave");
+  });
+
+  scope.$on("$ionicParentView.beforeEnter", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.beforeEnter");
+  });
+
+  scope.$on("$ionicParentView.enter", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.enter");
+  });
+
+  scope.$on("$ionicParentView.afterEnter", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.afterEnter");
+  });
+
+  scope.$on("$ionicParentView.beforeLeave", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.beforeLeave");
+  });
+
+  scope.$on("$ionicParentView.leave", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.leave");
+  });
+
+  scope.$on("$ionicParentView.afterLeave", function(event){
+    event.preventDefault();
+    addEventForView(viewName, "$ionicParentView.afterLeave");
+  });
+}
+
+function goToState($state, $q, $timeout, state){
+  $state.go(state);
+  $q.flush();
+  $timeout.flush();
+  _rootScope.$apply();
+}
+
+function setUpStatesAndStoreScope($state, $q, $timeout, element, statesToInitialize){
+  var scopes = {};
+  for ( var i = 0; i < statesToInitialize.length; i++ ){
+    var state = statesToInitialize[i];
+    goToState($state, $q, $timeout, state);
+    //console.debug(element.innerHTML);
+    var ionViews = angular.element(element).find("ion-view");
+    for ( var j = 0; j < ionViews.length; j++){
+      if ( angular.element(ionViews[j]).attr("state") === state ){
+        scopes[state] = angular.element(ionViews[j]).scope();
+        break;
+      }
+    }
+  }
+  return scopes;
+}
+
+function addEventForView(viewName, eventName){
+  var viewData = lifeCycleDataStore[viewName] || {};
+  var numCalls = viewData[eventName] || 0;
+  viewData[eventName] = ++numCalls;
+  lifeCycleDataStore[viewName] = viewData;
+}
+
+function getEventCallCount(viewName, eventName){
+  var viewData = lifeCycleDataStore[viewName] || {};
+  var numCalls = viewData[eventName] || 0;
+  return numCalls;
+}
 
 angular.module('ngMock').config(function ($provide) {
   $provide.decorator('$q', function ($delegate, $rootScope) {
@@ -1383,4 +3393,5 @@ angular.module('ngMock').config(function ($provide) {
 
     return $delegate;
   });
+
 });

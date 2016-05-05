@@ -298,32 +298,67 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
         },
 
-        emit: function(step, enteringData, leavingData) {
-          var enteringScope = enteringEle.scope(),
-            leavingScope = leavingEle && leavingEle.scope();
+      emit: function(step, enteringData, leavingData) {
+          var enteringScope = getScopeForElement(enteringEle, enteringData);
+          var leavingScope = getScopeForElement(leavingEle, leavingData);
 
-          if (step == 'after') {
+          var prefixesAreEqual;
+
+          if ( !enteringData.viewId || enteringData.abstractView ) {
+            // it's an abstract view, so treat it accordingly
+
+            // we only get access to the leaving scope once in the transition,
+            // so dispatch all events right away if it exists
+            if ( leavingScope ) {
+              leavingScope.$emit('$ionicView.beforeLeave', leavingData);
+              leavingScope.$emit('$ionicView.leave', leavingData);
+              leavingScope.$emit('$ionicView.afterLeave', leavingData);
+              leavingScope.$broadcast('$ionicParentView.beforeLeave', leavingData);
+              leavingScope.$broadcast('$ionicParentView.leave', leavingData);
+              leavingScope.$broadcast('$ionicParentView.afterLeave', leavingData);
+            }
+          }
+          else {
+            // it's a regular view, so do the normal process
+            if (step == 'after') {
+              if (enteringScope) {
+                enteringScope.$emit('$ionicView.enter', enteringData);
+                enteringScope.$broadcast('$ionicParentView.enter', enteringData);
+              }
+
+              if (leavingScope) {
+                leavingScope.$emit('$ionicView.leave', leavingData);
+                leavingScope.$broadcast('$ionicParentView.leave', leavingData);
+              }
+              else if (enteringScope && leavingData && leavingData.viewId && enteringData.stateName !== leavingData.stateName) {
+                // we only want to dispatch this when we are doing a single-tier
+                // state change such as changing a tab, so compare the state
+                // for the same state-prefix but different suffix
+                prefixesAreEqual = compareStatePrefixes(enteringData.stateName, leavingData.stateName);
+                if ( prefixesAreEqual ) {
+                  enteringScope.$emit('$ionicNavView.leave', leavingData);
+                }
+              }
+            }
+
             if (enteringScope) {
-              enteringScope.$emit('$ionicView.enter', enteringData);
+              enteringScope.$emit('$ionicView.' + step + 'Enter', enteringData);
+              enteringScope.$broadcast('$ionicParentView.' + step + 'Enter', enteringData);
             }
 
             if (leavingScope) {
-              leavingScope.$emit('$ionicView.leave', leavingData);
+              leavingScope.$emit('$ionicView.' + step + 'Leave', leavingData);
+              leavingScope.$broadcast('$ionicParentView.' + step + 'Leave', leavingData);
 
-            } else if (enteringScope && leavingData && leavingData.viewId) {
-              enteringScope.$emit('$ionicNavView.leave', leavingData);
+            } else if (enteringScope && leavingData && leavingData.viewId && enteringData.stateName !== leavingData.stateName) {
+              // we only want to dispatch this when we are doing a single-tier
+              // state change such as changing a tab, so compare the state
+              // for the same state-prefix but different suffix
+              prefixesAreEqual = compareStatePrefixes(enteringData.stateName, leavingData.stateName);
+              if ( prefixesAreEqual ) {
+                enteringScope.$emit('$ionicNavView.' + step + 'Leave', leavingData);
+              }
             }
-          }
-
-          if (enteringScope) {
-            enteringScope.$emit('$ionicView.' + step + 'Enter', enteringData);
-          }
-
-          if (leavingScope) {
-            leavingScope.$emit('$ionicView.' + step + 'Leave', leavingData);
-
-          } else if (enteringScope && leavingData && leavingData.viewId) {
-            enteringScope.$emit('$ionicNavView.' + step + 'Leave', leavingData);
           }
         },
 
@@ -407,6 +442,15 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         containerEle.innerHTML = viewLocals.$template;
         if (containerEle.children.length === 1) {
           containerEle.children[0].classList.add('pane');
+          if ( viewLocals.$$state && viewLocals.$$state.self && viewLocals.$$state.self['abstract'] ) {
+            angular.element(containerEle.children[0]).attr("abstract", "true");
+          }
+          else {
+            if ( viewLocals.$$state && viewLocals.$$state.self ) {
+              angular.element(containerEle.children[0]).attr("state", viewLocals.$$state.self.name);
+            }
+
+          }
           return jqLite(containerEle.children[0]);
         }
       }
@@ -489,6 +533,69 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
       }
       ele.remove();
     }
+  }
+
+  function compareStatePrefixes(enteringStateName, exitingStateName) {
+    var enteringStateSuffixIndex = enteringStateName.lastIndexOf('.');
+    var exitingStateSuffixIndex = exitingStateName.lastIndexOf('.');
+
+    // if either of the prefixes are empty, just return false
+    if ( enteringStateSuffixIndex < 0 || exitingStateSuffixIndex < 0 ) {
+      return false;
+    }
+
+    var enteringPrefix = enteringStateName.substring(0, enteringStateSuffixIndex);
+    var exitingPrefix = exitingStateName.substring(0, exitingStateSuffixIndex);
+
+    return enteringPrefix === exitingPrefix;
+  }
+
+  function getScopeForElement(element, stateData) {
+    if ( !element ) {
+      return null;
+    }
+    // check if it's abstract
+    var attributeValue = angular.element(element).attr("abstract");
+    var stateValue = angular.element(element).attr("state");
+
+    if ( attributeValue !== "true" ) {
+      // it's not an abstract view, so make sure the element
+      // matches the state.  Due to abstract view weirdness,
+      // sometimes it doesn't. If it doesn't, don't dispatch events
+      // so leave the scope undefined
+      if ( stateValue === stateData.stateName ) {
+        return angular.element(element).scope();
+      }
+      return null;
+    }
+    else {
+      // it is an abstract element, so look for element with the "state" attributeValue
+      // set to the name of the stateData state
+      var elements = aggregateNavViewChildren(element);
+      for ( var i = 0; i < elements.length; i++ ) {
+          var state = angular.element(elements[i]).attr("state");
+          if ( state === stateData.stateName ) {
+            stateData.abstractView = true;
+            return angular.element(elements[i]).scope();
+          }
+      }
+      // we didn't find a match, so return null
+      return null;
+    }
+  }
+
+  function aggregateNavViewChildren(element) {
+    var aggregate = [];
+    var navViews = angular.element(element).find("ion-nav-view");
+    for ( var i = 0; i < navViews.length; i++ ) {
+      var children = angular.element(navViews[i]).children();
+      var childrenAggregated = [];
+      for ( var j = 0; j < children.length; j++ ) {
+        childrenAggregated = childrenAggregated.concat(children[j]);
+      }
+      aggregate = aggregate.concat(childrenAggregated);
+    }
+    return aggregate;
   }
 
 }]);
