@@ -10,13 +10,17 @@ checkout:
     # copy/pasted from circleCI support)
     - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
 dependencies:
+  pre:
+    - ./scripts/site/prepare.sh
+  cache_directories:
+    - "~/ionic-site" # cache ionic-site
   post:
     - bower install
 test:
   override:
     - ./scripts/circle/test.sh --index=$CIRCLE_NODE_INDEX --total=$CIRCLE_NODE_TOTAL
-#deployment:
-#  tasks:
-#    branch: master
-#    commands:
-#      - ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM
+deployment:
+ tasks:
+   branch: master
+   commands:
+     - ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM
