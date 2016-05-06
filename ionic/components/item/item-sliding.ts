@@ -23,6 +23,28 @@ import {List} from '../list/list';
  *   </ion-item-sliding>
  * </ion-list>
  * ```
+ * ItemSliding can be closed by API by adding #slidingItem in ion-item-sliding.
+ * We grab a reference to the item reference by pass the `#slidingItem` to the share method.
+ *
+ * ```html
+ * <ion-list>
+ *   <ion-item-sliding *ngFor="#item of items" #slidingItem>
+ *     <button ion-item (click)="itemTapped(item)">
+ *       {{item}}
+ *   </button>
+ *     <ion-item-options>
+ *       <button (click)="share(item, slidingItem)">Share</button>
+ *     </ion-item-options>
+ *   </ion-item-sliding>
+ * </ion-list>
+ * ```
+ *
+ * ```typescript
+ * share(item, slidingItem) {
+ *    slidingItem.close();
+ * }
+ * ```
+ *
  * @demo /docs/v2/demos/item-sliding/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
