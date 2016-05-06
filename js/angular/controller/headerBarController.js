@@ -104,10 +104,20 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 
   self.titleTextWidth = function() {
-    if (!titleTextWidth) {
-      var bounds = ionic.DomUtil.getTextBounds(getEle(TITLE));
-      titleTextWidth = Math.min(bounds && bounds.width || 30);
+    var element = getEle(TITLE);
+    if ( element ) {
+      // If the element has a nav-bar-title, use that instead
+      // to calculate the width of the title
+      var children = angular.element(element).children();
+      for ( var i = 0; i < children.length; i++ ) {
+        if ( angular.element(children[i]).hasClass('nav-bar-title') ) {
+          element = children[i];
+          break;
+        }
+      }
     }
+    var bounds = ionic.DomUtil.getTextBounds(element);
+    titleTextWidth = Math.min(bounds && bounds.width || 30);
     return titleTextWidth;
   };
 
