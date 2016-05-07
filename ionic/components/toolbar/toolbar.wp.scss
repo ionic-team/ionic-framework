@@ -22,11 +22,13 @@ $toolbar-wp-title-padding:               0 6px !default;
 $toolbar-wp-title-font-size:             1.5rem !default;
 $toolbar-wp-title-font-weight:           bold !default;
 $toolbar-wp-title-text-transform:        uppercase !default;
-$toolbar-wp-button-font-size:            1.4rem !default;
-$navbar-wp-height:                       $toolbar-wp-height !default;
+$toolbar-wp-title-text-color:            color-contrast($colors-wp, $toolbar-wp-background) !default;
 
-$bar-button-wp-color:                    $toolbar-wp-button-color !default;
-$bar-button-wp-border-radius:            2px !default;
+$toolbar-wp-button-font-size:            1.4rem !default;
+$toolbar-wp-button-color:                color-contrast($colors-wp, $toolbar-wp-background) !default;
+$toolbar-wp-button-border-radius:        2px !default;
+
+$navbar-wp-height:                       $toolbar-wp-height !default;
 
 
 .toolbar {
@@ -66,7 +68,7 @@ ion-navbar-section {
   font-size: $toolbar-wp-title-font-size;
   font-weight: $toolbar-wp-title-font-weight;
   text-transform: $toolbar-wp-title-text-transform;
-  color: $toolbar-wp-text-color;
+  color: $toolbar-wp-title-text-color;
 }
 
 @mixin wp-toolbar-theme($color-name, $color-base, $color-contrast) {
@@ -146,7 +148,7 @@ ion-buttons[right] {
   height: 32px;
 
   border: 0;
-  border-radius: $bar-button-wp-border-radius;
+  border-radius: $toolbar-wp-button-border-radius;
   font-size: $toolbar-wp-button-font-size;
   font-weight: 500;
   text-transform: uppercase;
@@ -178,8 +180,8 @@ ion-buttons[right] {
 .bar-button-outline {
   border-width: 1px;
   border-style: solid;
-  border-color: $bar-button-wp-color;
-  color: $bar-button-wp-color;
+  border-color: $toolbar-wp-button-color;
+  color: $toolbar-wp-button-color;
   background-color: transparent;
 
   &:hover:not(.disable-hover) {
@@ -187,8 +189,8 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: color-contrast($colors-wp, $bar-button-wp-color);
-    background-color: $bar-button-wp-color;
+    color: color-contrast($colors-wp, $toolbar-wp-button-color);
+    background-color: $toolbar-wp-button-color;
   }
 }
 
@@ -213,16 +215,16 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: color-contrast($colors-wp, $bar-button-wp-color);
-  background-color: $bar-button-wp-color;
+  color: color-contrast($colors-wp, $toolbar-wp-button-color);
+  background-color: $toolbar-wp-button-color;
 
   &:hover:not(.disable-hover) {
-    color: color-contrast($colors-wp, $bar-button-wp-color);
+    color: color-contrast($colors-wp, $toolbar-wp-button-color);
   }
 
   &.activated {
-    color: color-contrast($colors-wp, $bar-button-wp-color);
-    background-color: color-shade($bar-button-wp-color);
+    color: color-contrast($colors-wp, $toolbar-wp-button-color);
+    background-color: color-shade($toolbar-wp-button-color);
   }
 }
 
@@ -330,7 +332,7 @@ ion-buttons[right] {
 // Windows Toolbar Color Generation
 // --------------------------------------------------
 
-@include wp-bar-button-default(default, $bar-button-wp-color, color-contrast($colors-wp, $bar-button-wp-color));
+@include wp-bar-button-default(default, $toolbar-wp-button-color, color-contrast($colors-wp, $toolbar-wp-button-color));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
   @include wp-toolbar-theme($color-name, $color-base, $color-contrast);
