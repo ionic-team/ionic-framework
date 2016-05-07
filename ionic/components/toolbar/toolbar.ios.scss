@@ -19,12 +19,16 @@ $toolbar-order-ios: (
 $toolbar-ios-padding:                       4px !default;
 $toolbar-ios-height:                        44px !default;
 $toolbar-ios-button-font-size:              1.7rem !default;
+
 $toolbar-ios-title-font-size:               1.7rem !default;
+$toolbar-ios-title-font-weight:             600 !default;
+$toolbar-ios-title-text-align:              center !default;
+$toolbar-ios-title-text-color:              color-contrast($colors-ios, $toolbar-ios-background) !default;
+
+$toolbar-ios-button-color:                  $toolbar-ios-active-color !default;
+$toolbar-ios-button-border-radius:          4px !default;
+
 $navbar-ios-height:                         $toolbar-ios-height !default;
-
-$bar-button-ios-color:                      $toolbar-ios-active-color !default;
-$bar-button-ios-border-radius:              4px !default;
-
 
 .toolbar {
   padding: $toolbar-ios-padding;
@@ -73,9 +77,9 @@ ion-navbar-section {
 
 .toolbar-title {
   font-size: $toolbar-ios-title-font-size;
-  font-weight: 600;
-  text-align: center;
-  color: $toolbar-ios-text-color;
+  font-weight: $toolbar-ios-title-font-weight;
+  text-align: $toolbar-ios-title-text-align;
+  color: $toolbar-ios-title-text-color;
 
   pointer-events: auto;
 }
@@ -147,7 +151,7 @@ ion-buttons[right] {
   height: 32px;
 
   border: 0;
-  border-radius: $bar-button-ios-border-radius;
+  border-radius: $toolbar-ios-button-border-radius;
   font-size: $toolbar-ios-button-font-size;
 }
 
@@ -175,8 +179,8 @@ ion-buttons[right] {
 .bar-button-outline {
   border-width: 1px;
   border-style: solid;
-  border-color: $bar-button-ios-color;
-  color: $bar-button-ios-color;
+  border-color: $toolbar-ios-button-color;
+  color: $toolbar-ios-button-color;
   background-color: transparent;
 
   &:hover:not(.disable-hover) {
@@ -184,8 +188,8 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: color-contrast($colors-ios, $bar-button-ios-color);
-    background-color: $bar-button-ios-color;
+    color: color-contrast($colors-ios, $toolbar-ios-button-color);
+    background-color: $toolbar-ios-button-color;
   }
 }
 
@@ -210,17 +214,17 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: color-contrast($colors-ios, $bar-button-ios-color);
-  background-color: $bar-button-ios-color;
+  color: color-contrast($colors-ios, $toolbar-ios-button-color);
+  background-color: $toolbar-ios-button-color;
 
   &:hover:not(.disable-hover) {
-    color: color-contrast($colors-ios, $bar-button-ios-color);
+    color: color-contrast($colors-ios, $toolbar-ios-button-color);
     opacity: .4;
   }
 
   &.activated {
-    color: color-contrast($colors-ios, $bar-button-ios-color);
-    background-color: color-shade($bar-button-ios-color);
+    color: color-contrast($colors-ios, $toolbar-ios-button-color);
+    background-color: color-shade($toolbar-ios-button-color);
     opacity: .4;
   }
 }
@@ -336,7 +340,7 @@ ion-buttons[right] {
 // iOS Toolbar Color Generation
 // --------------------------------------------------
 
-@include ios-bar-button-default(default, $bar-button-ios-color, color-contrast($colors-ios, $bar-button-ios-color));
+@include ios-bar-button-default(default, $toolbar-ios-button-color, color-contrast($colors-ios, $toolbar-ios-button-color));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   @include ios-toolbar-theme($color-name, $color-base, $color-contrast);
