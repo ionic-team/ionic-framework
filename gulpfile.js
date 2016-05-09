@@ -222,8 +222,14 @@ gulp.task('transpile', function(){
 
   var tscOpts = getTscOptions(TYPECHECK ? 'typecheck' : undefined);
   var tsResult = tsCompile(tscOpts, 'transpile')
+    .on('error', function(err) {
+      console.log(err.message);
+    });
 
   if (TYPECHECK) {
+    tsResult.on('error', function(err) {
+      process.exit(1);
+    });
     var merge = require('merge2');
     var js = tsResult.js;
     var dts = tsResult.dts;
@@ -249,10 +255,7 @@ function tsCompile(options, cacheName){
       '!ionic/**/*.spec.ts'
     ])
     .pipe(cache(cacheName, { optimizeMemory: true }))
-    .pipe(tsc(options, undefined, tscReporter))
-    .on('error', function(error) {
-      console.log(error.message);
-    });
+    .pipe(tsc(options, undefined, tscReporter));
 }
 
 /**
@@ -325,6 +328,21 @@ gulp.task('copy.scss', function() {
       '!ionic/util/test/*'
     ])
     .pipe(gulp.dest('dist'));
+});
+
+/**
+ * Lint the scss files using a ruby gem
+ */
+gulp.task('lint.scss', function() {
+  var scsslint = require('gulp-scss-lint');
+
+  return gulp.src([
+      'ionic/**/*.scss',
+      '!ionic/components/*/test/**/*',
+      '!ionic/util/test/*'
+    ])
+    .pipe(scsslint())
+    .pipe(scsslint.failReporter());
 });
 
 /**
@@ -719,10 +737,8 @@ gulp.task('karma-watch', ['watch.tests', 'bundle.system'], function() {
   */
 gulp.task('prerelease', function(done){
   runSequence(
-    'tslint',
+    'validate',
     'prepare',
-    'build.release',
-    'karma',
     'package',
     done
   );
@@ -858,8 +874,11 @@ gulp.task('publish.npm', function(done) {
   });
 });
 
-gulp.task('publish.nightly', ['build.release'], function(done){
-  runSequence('git-pull-latest', 'nightly', done);
+/**
+ * Execute this task to validate current code and then
+ */
+gulp.task('publish.nightly', function(done){
+  runSequence('git-pull-latest', 'validate', 'nightly', done);
 });
 
 /**
@@ -872,11 +891,15 @@ gulp.task('nightly', ['package'], function(done) {
   var packageJSON = require('./dist/package.json');
   var hashLength = 8;
 
-  // Generate a unique hash based on current timestamp
-  function createUniqueHash() {
-    var makeHash = require('crypto').createHash('sha1');
-    var timeString = (new Date).getTime().toString();
-    return makeHash.update(timeString).digest('hex').substring(0, hashLength);
+  // Generate a unique id formatted from current timestamp
+  function createTimestamp() {
+    // YYYYMMDDHHMM
+    var d = new Date();
+    return d.getUTCFullYear() + // YYYY
+           ('0' + (d.getUTCMonth() +　1)).slice(-2) + // MM
+           ('0' + (d.getUTCDate())).slice(-2) + // DD
+           ('0' + (d.getUTCHours())).slice(-2) + // HH
+           ('0' + (d.getUTCMinutes())).slice(-2); // MM
   }
 
   /**
@@ -888,7 +911,7 @@ gulp.task('nightly', ['package'], function(done) {
    */
   packageJSON.version = packageJSON.version.split('-')
     .slice(0, 2)
-    .concat(createUniqueHash())
+    .concat(createTimestamp())
     .join('-');
 
   fs.writeFileSync('./dist/package.json', JSON.stringify(packageJSON, null, 2));
@@ -941,11 +964,25 @@ gulp.task('tooling', function(){
   })
 });
 
+/**
+ * Validate Task
+ * - This task
+ */
+gulp.task('validate', function(done) {
+  runSequence(
+    'lint.scss',
+    'tslint',
+    'build.release',
+    'karma',
+    done
+  );
+});
+
 
 /**
  * TS LINT
  */
-gulp.task('tslint', function(done) {
+gulp.task('tslint', function() {
   var tslint = require('gulp-tslint');
   return gulp.src([
       'ionic/**/*.ts',

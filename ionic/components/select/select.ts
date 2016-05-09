@@ -2,6 +2,7 @@ import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forw
 import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Alert} from '../alert/alert';
+import {ActionSheet} from '../action-sheet/action-sheet';
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
 import {merge, isTrueProperty, isBlank, isCheckedProperty} from '../../util/util';
@@ -21,18 +22,25 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  * dialog will appear with all of the options in a large, easy to select list
  * for users.
  *
- * Under-the-hood the `ion-select` actually uses the
- * {@link ../../alert/Alert Alert API} to open up the overlay of options
- * which the user is presented with. Select can take numerous child
- * `ion-option` components. If `ion-option` is not given a `value` attribute
- * then it will use its text as the value.
+ * The select component takes child `ion-option` components. If `ion-option` is not
+ * given a `value` attribute then it will use its text as the value.
+ *
+ * ### Interfaces
+ *
+ * By default, the `ion-select` uses the {@link ../../alert/Alert Alert API} to
+ * open up the overlay of options in an alert. The interface can be changed to use the
+ * {@link ../../action-sheet/ActionSheet ActionSheet API} by passing `action-sheet` to
+ * the `interface` property. Read the other sections for the limitations of the
+ * action sheet interface.
  *
  * ### Single Value: Radio Buttons
  *
  * The standard `ion-select` component allows the user to select only one
- * option. When selecting only one option the alert overlay presents users with
- * a radio button styled list of options. The `ion-select` component's value
- * receives the value of the selected option's value.
+ * option. When selecting only one option the alert interface presents users with
+ * a radio button styled list of options. The action sheet interface can only be
+ * used with a single value select. If the number of options exceed 6, it will
+ * use the `alert` interface even if `action-sheet` is passed. The `ion-select`
+ * component's value receives the value of the selected option's value.
  *
  * ```html
  * <ion-item>
@@ -53,6 +61,8 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  * selected option values. In the example below, because each option is not given
  * a `value`, then it'll use its text as the value instead.
  *
+ * Note: the action sheet interface will not work with a multi-value select.
+ *
  * ```html
  * <ion-item>
  *   <ion-label>Toppings</ion-label>
@@ -64,11 +74,11 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  *     <ion-option>Pepperoni</ion-option>
  *     <ion-option>Sausage</ion-option>
  *   </ion-select>
- * <ion-item>
+ * </ion-item>
  * ```
  *
- * ### Alert Buttons
- * By default, the two buttons read `Cancel` and `OK`. The each button's text
+ * ### Select Buttons
+ * By default, the two buttons read `Cancel` and `OK`. Each button's text
  * can be customized using the `cancelText` and `okText` attributes:
  *
  * ```html
@@ -77,12 +87,16 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  * </ion-select>
  * ```
  *
+ * The action sheet interface does not have an `OK` button, clicking
+ * on any of the options will automatically close the overlay and select
+ * that value.
+ *
  * ### Alert Options
  *
- * Remember how `ion-select` is really just a wrapper to `Alert`? By using
- * the `alertOptions` property you can pass custom options to the alert
- * overlay. This would be useful if there is a custom alert title,
- * subtitle or message. {@link ../../alert/Alert Alert API}
+ * Since `ion-select` is a wrapper to `Alert`, by default, it can be
+ * passed options in the `alertOptions` property. This can be used to
+ * pass a custom alert title, subtitle or message. See the {@link ../../alert/Alert Alert API docs}
+ * for more properties.
  *
  * ```html
  * <ion-select [alertOptions]="alertOptions">
@@ -108,6 +122,7 @@ const SELECT_VALUE_ACCESSOR = new Provider(
     '</div>' +
     '<button aria-haspopup="true" ' +
             '[id]="id" ' +
+            'category="item-cover" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
             'class="item-cover">' +
@@ -135,20 +150,18 @@ export class Select {
   id: string;
 
   /**
-   * @private
-   * @input {string}  The text of the cancel button. Defatuls to `Cancel`
+   * @input {string} The text to display on the cancel button. Default: `Cancel`.
    */
   @Input() cancelText: string = 'Cancel';
 
   /**
-   * @private
-   * @input {string} The text of the ok button. Defatuls to `OK`
+   * @input {string} The text to display on the ok button. Default: `OK`.
    */
   @Input() okText: string = 'OK';
 
   /**
-   * @private
-   * @input {any} Any addition options that an alert can take. Title, Subtitle, etc.
+   * @input {any} Any addition options that the alert interface can take.
+   * See the [Alert API docs](../../alert/Alert) for the create options.
    */
   @Input() alertOptions: any = {};
 
@@ -158,12 +171,17 @@ export class Select {
   @Input() checked: any = false;
 
   /**
-   * @output {any} Any expression you want to evaluate when the selection has changed
+   * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
+   */
+  @Input() interface: string = '';
+
+  /**
+   * @output {any} Any expression you want to evaluate when the selection has changed.
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @output {any} Any expression you want to evaluate when the selection was cancelled
+   * @output {any} Any expression you want to evaluate when the selection was cancelled.
    */
   @Output() cancel: EventEmitter<any> = new EventEmitter();
 
@@ -206,7 +224,10 @@ export class Select {
   }
 
   private _open() {
-    if (this._disabled) return;
+    if (this._disabled) {
+      return;
+    }
+
     console.debug('select, open alert');
 
     // the user may have assigned some options specifically for the alert
@@ -216,6 +237,7 @@ export class Select {
     // and we create a new array for the alert's two buttons
     alertOptions.buttons = [{
       text: this.cancelText,
+      role: 'cancel',
       handler: () => {
         this.cancel.emit(null);
       }
@@ -226,48 +248,82 @@ export class Select {
       alertOptions.title = this._item.getLabelText();
     }
 
-    // user cannot provide inputs from alertOptions
-    // alert inputs must be created by ionic from ion-options
-    alertOptions.inputs = this._options.toArray().map(input => {
-      return {
-        type: (this._multi ? 'checkbox' : 'radio'),
-        label: input.text,
-        value: input.value,
-        checked: input.checked
-      };
-    });
-
-    // create the alert instance from our built up alertOptions
-    let alert = Alert.create(alertOptions);
-
-    if (this._multi) {
-      // use checkboxes
-      alert.setCssClass('select-alert multiple-select-alert');
-
-    } else {
-      // use radio buttons
-      alert.setCssClass('select-alert single-select-alert');
+    let options = this._options.toArray();
+    if (this.interface === 'action-sheet' && options.length > 6) {
+      console.warn('Interface cannot be "action-sheet" with more than 6 options. Using the "alert" interface.');
+      this.interface = 'alert';
     }
 
-    alert.addButton({
-      text: this.okText,
-      handler: selectedValues => {
-        this.onChange(selectedValues);
-        this.change.emit(selectedValues);
-      }
-    });
+    if (this.interface === 'action-sheet' && this._multi) {
+      console.warn('Interface cannot be "action-sheet" with a multi-value select. Using the "alert" interface.');
+      this.interface = 'alert';
+    }
 
-    this._nav.present(alert, alertOptions);
+    let overlay;
+    if (this.interface === 'action-sheet') {
+
+      alertOptions.buttons = alertOptions.buttons.concat(options.map(input => {
+        return {
+          role: (input.checked ? 'selected' : ''),
+          text: input.text,
+          handler: () => {
+            this.onChange(input.value);
+            this.change.emit(input.value);
+          }
+        };
+      }));
+      alertOptions.cssClass = 'select-action-sheet';
+
+      overlay = ActionSheet.create(alertOptions);
+
+    } else {
+      // default to use the alert interface
+      this.interface = 'alert';
+
+      // user cannot provide inputs from alertOptions
+      // alert inputs must be created by ionic from ion-options
+      alertOptions.inputs = this._options.toArray().map(input => {
+        return {
+          type: (this._multi ? 'checkbox' : 'radio'),
+          label: input.text,
+          value: input.value,
+          checked: input.checked
+        };
+      });
+
+      // create the alert instance from our built up alertOptions
+      overlay = Alert.create(alertOptions);
+
+      if (this._multi) {
+        // use checkboxes
+        overlay.setCssClass('select-alert multiple-select-alert');
+
+      } else {
+        // use radio buttons
+        overlay.setCssClass('select-alert single-select-alert');
+      }
+
+      overlay.addButton({
+        text: this.okText,
+        handler: selectedValues => {
+          this.onChange(selectedValues);
+          this.change.emit(selectedValues);
+        }
+      });
+
+    }
+
+    this._nav.present(overlay, alertOptions);
 
     this._isOpen = true;
-    alert.onDismiss(() => {
+    overlay.onDismiss(() => {
       this._isOpen = false;
     });
   }
 
 
   /**
-   * @input {boolean} Whether or not the select component can accept multipl selections
+   * @input {boolean} Whether or not the select component can accept multiple values. Default: `false`.
    */
   @Input()
   get multiple(): any {
@@ -325,7 +381,7 @@ export class Select {
   }
 
   /**
-   * @input {boolean} Whether or not the select component is disabled or not
+   * @input {boolean} Whether or not the select component is disabled. Default `false`.
    */
   @Input()
   get disabled() {
@@ -386,7 +442,7 @@ export class Select {
   /**
    * @private
    */
-  onTouched() {}
+  onTouched() { }
 
   /**
    * @private

@@ -1,5 +1,4 @@
 import {Component} from 'angular2/core';
-import {IONIC_DIRECTIVES} from 'ionic-angular';
 
 /*
   Generated class for the <%= jsClassName %> component.
@@ -9,8 +8,7 @@ import {IONIC_DIRECTIVES} from 'ionic-angular';
 */
 @Component({
   selector: '<%= fileName %>',
-  templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html',
-  directives: [IONIC_DIRECTIVES] // makes all Ionic directives available to your component
+  templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html'
 })
 export class <%= jsClassName %> {
   constructor() {

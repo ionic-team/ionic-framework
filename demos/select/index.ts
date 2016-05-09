@@ -10,6 +10,8 @@ class MainPage {
   petAlertOpts;
   petData;
   pets: Array<string>;
+  notifications: string = 'mute_1';
+  rating: number = 2;
 
   constructor() {
     this.gender = 'f';

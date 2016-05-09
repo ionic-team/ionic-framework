@@ -8,7 +8,7 @@ import {VirtualItem, VirtualHeader, VirtualFooter} from './virtual-item';
 import {VirtualCell, VirtualNode, VirtualData} from './virtual-util';
 import {processRecords, populateNodeData, initReadNodes, writeToNodes, updateDimensions, adjustRendered, calcDimensions, estimateHeight} from './virtual-util';
 import {isBlank, isPresent, isFunction} from '../../util/util';
-import {rafFrames, raf, cancelRaf, pointerCoord, nativeTimeout, clearNativeTimeout} from '../../util/dom';
+import {rafFrames, nativeRaf, cancelRaf, pointerCoord, nativeTimeout, clearNativeTimeout} from '../../util/dom';
 import {Img} from '../img/img';
 
 
@@ -391,7 +391,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
           // oh no! the DOM doesn't have good data yet!
           // let's try again in XXms, and give up eventually if we never get data
           attempts++;
-          raf(function() {
+          nativeRaf(function() {
             readDimensions(done);
           });
         }
@@ -439,7 +439,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     this._cd.detectChanges();
 
     // wait a frame before trying to read and calculate the dimensions
-    raf(this.postRenderVirtual.bind(this));
+    nativeRaf(this.postRenderVirtual.bind(this));
   }
 
   /**

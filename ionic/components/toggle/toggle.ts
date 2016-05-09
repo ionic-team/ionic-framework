@@ -58,6 +58,7 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
     '</div>' +
     '<button role="checkbox" ' +
             'type="button" ' +
+            'category="item-cover" ' +
             '[id]="id" ' +
             '[attr.aria-checked]="_checked" ' +
             '[attr.aria-labelledby]="_labelId" ' +

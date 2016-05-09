@@ -2,7 +2,7 @@ import {DIRECTION_RIGHT} from '../../gestures/hammer';
 import {DragGesture} from '../../gestures/drag-gesture';
 import {List} from '../list/list';
 
-import {CSS, raf, closest} from '../../util/dom';
+import {CSS, nativeRaf, closest} from '../../util/dom';
 
 
 export class ItemSlidingGesture extends DragGesture {
@@ -108,7 +108,7 @@ export class ItemSlidingGesture extends DragGesture {
       itemData.hasMouseOut = true;
     }
 
-    raf(() => {
+    nativeRaf(() => {
       if (!this.dragEnded && !this.preventDrag) {
         isItemActive(itemContainerEle, true);
         this.open(itemContainerEle, newX, false);
@@ -146,7 +146,7 @@ export class ItemSlidingGesture extends DragGesture {
     itemContainerEle.removeEventListener('mouseout', this.onMouseOut);
     itemData.hasMouseOut = false;
 
-    raf(() => {
+    nativeRaf(() => {
       this.open(itemContainerEle, restingPoint, true);
     });
   }

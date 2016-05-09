@@ -38,6 +38,21 @@
         <ion-checkbox light (change)="strawberryChange($event)" [checked]="true"></ion-checkbox>
       </ion-item>
 
+      <ion-item>
+        <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
+        <ion-checkbox item-right danger checked></ion-checkbox>
+      </ion-item>
+
+      <button ion-item detail-none>
+        <ion-label>Checkbox right side</ion-label>
+        <ion-checkbox item-right checked></ion-checkbox>
+      </button>
+
+      <button ion-item detail-none>
+        Button w/ right side default icon, really long text that should ellipsis
+        <ion-icon name="information-circle" item-right></ion-icon>
+      </button>
+
     </ion-list>
 
   </form>

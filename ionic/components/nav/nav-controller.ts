@@ -1,4 +1,4 @@
-import {Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer, ResolvedProvider, Type, Input} from 'angular2/core';
+import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type} from 'angular2/core';
 import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/instrumentation';
 
 import {Config} from '../../config/config';
@@ -7,8 +7,7 @@ import {IonicApp} from '../app/app';
 import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
 import {pascalCaseToDashCase, isBlank} from '../../util/util';
-import {Portal} from './nav-portal';
-import {raf} from '../../util/dom';
+import {NavPortal} from './nav-portal';
 import {SwipeBackGesture} from './swipe-back';
 import {Transition} from '../../transitions/transition';
 import {ViewController} from './view-controller';
@@ -37,7 +36,7 @@ import {ViewController} from './view-controller';
  * specific NavController, most times you will inject and use a reference to the
  * nearest NavController to manipulate the navigation stack.
  *
- * <h3 id="injecting_nav_controller">Injecting NavController</h3>
+ * ### Injecting NavController
  * Injecting NavController will always get you an instance of the nearest
  * NavController, regardless of whether it is a Tab or a Nav.
  *
@@ -58,7 +57,8 @@ import {ViewController} from './view-controller';
  *  }
  * ```
  *
- * <h2 id="creating_pages">Page creation</h2>
+ *
+ * ## Page creation
  * _For more information on the `@Page` decorator see the [@Page API
  * reference](../../../decorators/Page/)._
  *
@@ -73,7 +73,7 @@ import {ViewController} from './view-controller';
  * [pop()](#pop) or [setRoot()](#setRoot)).
  *
  *
- * <h2 id="Lifecycle">Lifecycle events</h2>
+ * ## Lifecycle events
  * Lifecycle events are fired during various stages of navigation.  They can be
  * defined in any `@Page` decorated component class.
  *
@@ -91,15 +91,67 @@ import {ViewController} from './view-controller';
  * }
  * ```
  *
+ *  | Page Event         | Description                                                                                                                                                                                                                                                                       |
+ *  |--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+ *  | `onPageLoaded`     | Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `onPageLoaded` event is good place to put your setup code for the page. |
+ *  | `onPageWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                  |
+ *  | `onPageDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                            |
+ *  | `onPageWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                            |
+ *  | `onPageDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                                         |
+ *  | `onPageWillUnload` | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                                        |
+ *  | `onPageDidUnload`  | Runs after the page has been destroyed and its elements have been removed.
  *
  *
- * - `onPageLoaded` - Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `onPageLoaded` event is good place to put your setup code for the page.
- * - `onPageWillEnter` - Runs when the page is about to enter and become the active page.
- * - `onPageDidEnter` - Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.
- * - `onPageWillLeave` - Runs when the page is about to leave and no longer be the active page.
- * - `onPageDidLeave` - Runs when the page has finished leaving and is no longer the active page.
- * - `onPageWillUnload` - Runs when the page is about to be destroyed and have its elements removed.
- * - `onPageDidUnload` - Runs after the page has been destroyed and its elements have been removed.
+ * ## Nav Transition Promises
+ *
+ * Navigation transitions are asynchronous, meaning they take a few moments to finish, and
+ * the duration of a transition could be any number. In most cases the async nature of a
+ * transition doesn't cause any problems and the nav controller is pretty good about handling
+ * which transition was the most recent when multiple transitions have been kicked off.
+ * However, when an app begins firing off many transitions, on the same stack at
+ * *roughly* the same time, the nav controller can start to get lost as to which transition
+ * should be finishing, and which transitions should not be animated.
+ *
+ * In cases where an app's navigation can be altered by other async tasks, which may or
+ * may not take a long time, it's best to rely on each nav transition's returned
+ * promise. So instead of firing and forgetting multiple `push` or `pop` nav transitions,
+ * it's better to fire the next nav transition when the previous one has finished.
+ *
+ * In the example below, after the async operation has completed, we then want to transition
+ * to another page. Where the potential problem comes in, is that if the async operation
+ * completed 100ms after the first transition started, then kicking off another transition
+ * halfway through the first transition ends up with a janky animation. Instead, it's best
+ * to always ensure the first transition has already finished before starting the next.
+ *
+ * ```ts
+ * // begin the first transition
+ * let navTransition = this.nav.push(SomePage);
+ *
+ * // start an async call, we're not sure how long it'll take
+ * someAsyncOperation().then(() => {
+ *   // incase the async operation completed faster than the time
+ *   // it took to finish the first transition, this logic should
+ *   // always ensure that the previous transition has resolved
+ *   // first before kicking off the next transition
+ *   navTransition.then(() => {
+ *     this.nav.push(AnotherPage);
+ *   });
+ * });
+ * ```
+ *
+ * ## NavOptions
+ *
+ * Some methods on `NavController` allow for customizing the current transition.
+ * To do this, we can pass an object with the modified properites.
+ *
+ * | Property  | Value     | Description                                          |
+ * |-----------|-----------|------------------------------------------------------|
+ * | animate   | `boolean` | Whether or not the transition should animate         |
+ * | animation | `string`  | What kind of animation should be used                |
+ * | direction | `string`  | The direction the page should animate                |
+ * | duration  | `number`  | The length in milliseconds the animation should take |
+ * | easing    | `string`  | The easing for the animation                         |
+ *
  *
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
@@ -109,7 +161,8 @@ export class NavController extends Ion {
   private _trans: Transition;
   private _sbGesture: SwipeBackGesture;
   private _sbThreshold: number;
-  private _portal: Portal;
+  private _portal: NavPortal;
+  private _viewport: ViewContainerRef;
   private _children: any[] = [];
 
   protected _sbEnabled: boolean;
@@ -126,7 +179,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  providers: ResolvedProvider[];
+  providers: ResolvedReflectiveProvider[];
 
   /**
    * @private
@@ -154,11 +207,9 @@ export class NavController extends Ion {
     config: Config,
     protected _keyboard: Keyboard,
     elementRef: ElementRef,
-    protected _anchorName: string,
-    protected _compiler: Compiler,
-    protected _viewManager: AppViewManager,
     protected _zone: NgZone,
-    protected _renderer: Renderer
+    protected _renderer: Renderer,
+    protected _loader: DynamicComponentLoader
   ) {
     super(elementRef);
 
@@ -173,13 +224,23 @@ export class NavController extends Ion {
     this.id = (++ctrlIds).toString();
 
     // build a new injector for child ViewControllers to use
-    this.providers = Injector.resolve([
+    this.providers = ReflectiveInjector.resolve([
       provide(NavController, {useValue: this})
     ]);
   }
 
-  setPortal(val: Portal) {
+  /**
+   * @private
+   */
+  setPortal(val: NavPortal) {
     this._portal = val;
+  }
+
+  /**
+   * @private
+   */
+  setViewport(val: ViewContainerRef) {
+    this._viewport = val;
   }
 
   /**
@@ -947,6 +1008,9 @@ export class NavController extends Ion {
     });
   }
 
+  /**
+   * @private
+   */
   private _setAnimate(opts: NavOptions) {
     if ((this._views.length === 1 && !this._init && !this.isPortal) || this.config.get('animate') === false) {
       opts.animate = false;
@@ -1244,7 +1308,9 @@ export class NavController extends Ion {
         // class to the nav when it's finished its first transition
         if (!this._init) {
           this._init = true;
-          this._renderer.setElementClass(this.elementRef.nativeElement, 'has-views', true);
+          if (!this.isPortal) {
+            this._renderer.setElementClass(this.getNativeElement(), 'has-views', true);
+          }
         }
 
       } else {
@@ -1357,7 +1423,7 @@ export class NavController extends Ion {
     }
     this._views.length = 0;
 
-    if (this.parent) {
+    if (this.parent && this.parent.unregisterChildNav) {
       this.parent.unregisterChildNav(this);
     }
   }
@@ -1365,72 +1431,71 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  loadPage(view: ViewController, navbarContainerRef, opts: NavOptions, done: Function) {
+  loadPage(view: ViewController, navbarContainerRef: ViewContainerRef, opts: NavOptions, done: Function) {
     let wtfTimeRangeScope = wtfStartTimeRange('NavController#loadPage', view.name);
 
-    // guts of DynamicComponentLoader#loadIntoLocation
-    this._compiler && this._compiler.compileInHost(view.componentType).then(hostProtoViewRef => {
+    if (!this._viewport || !view.componentType) {
+      return;
+    }
+
+    let providers = this.providers.concat(ReflectiveInjector.resolve([
+      provide(ViewController, {useValue: view}),
+      provide(NavParams, {useValue: view.getNavParams()})
+    ]));
+
+    // load the page component inside the nav
+    this._loader.loadNextToLocation(view.componentType, this._viewport, providers).then(component => {
       let wtfScope = wtfCreateScope('NavController#loadPage_After_Compile')();
 
-      let providers = this.providers.concat(Injector.resolve([
-        provide(ViewController, {useValue: view}),
-        provide(NavParams, {useValue: view.getNavParams()})
-      ]));
+      // the ElementRef of the actual ion-page created
+      let pageElementRef = component.location;
 
-      let location = this.elementRef;
-      if (this._anchorName) {
-        location = this._viewManager.getNamedElementInComponentView(location, this._anchorName);
-      }
+      // a new ComponentRef has been created
+      // set the ComponentRef's instance to its ViewController
+      view.setInstance(component.instance);
 
-      let viewContainer = this._viewManager.getViewContainer(location);
-      let hostViewRef: any =
-          viewContainer.createHostView(hostProtoViewRef, viewContainer.length, providers);
-      let pageElementRef = this._viewManager.getHostElement(hostViewRef);
-      let component = this._viewManager.getComponent(pageElementRef);
+      // remember the ChangeDetectorRef for this ViewController
+      view.setChangeDetector(component.changeDetectorRef);
+
+      // remember the ElementRef to the ion-page elementRef that was just created
+      view.setPageRef(pageElementRef);
 
       // auto-add page css className created from component JS class name
       let cssClassName = pascalCaseToDashCase(view.componentType['name']);
       this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
 
-      view.addDestroy(() => {
+      view.onDestroy(() => {
         // ensure the element is cleaned up for when the view pool reuses this element
         this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
         this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
-
-        // remove the page from its container
-        let index = viewContainer.indexOf(hostViewRef);
-        if (!hostViewRef.destroyed && index !== -1) {
-          viewContainer.remove(index);
-        }
-
-        view.setInstance(null);
+        component.destroy();
       });
 
-      // a new ComponentRef has been created
-      // set the ComponentRef's instance to this ViewController
-      view.setInstance(component);
-
-      // remember the ElementRef to the ion-page elementRef that was just created
-      view.setPageRef(pageElementRef);
-
       if (!navbarContainerRef) {
+        // there was not a navbar container ref already provided
+        // so use the location of the actual navbar template
         navbarContainerRef = view.getNavbarViewRef();
       }
 
+      // find a navbar template if one is in the page
       let navbarTemplateRef = view.getNavbarTemplateRef();
+
+      // check if we have both a navbar ViewContainerRef and a template
       if (navbarContainerRef && navbarTemplateRef) {
+        // let's now create the navbar view
         let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
 
-        view.addDestroy(() => {
-          let index = navbarContainerRef.indexOf(navbarViewRef);
-          if (!navbarViewRef.destroyed && index > -1) {
-            navbarContainerRef.remove(index);
-          }
+        view.onDestroy(() => {
+          // manually destroy the navbar when the page is destroyed
+          navbarViewRef.destroy();
         });
       }
 
+      // options may have had a postLoad method
+      // used mainly by tabs
       opts.postLoad && opts.postLoad(view);
 
+      // complete wtf loggers
       wtfEndTimeRange(wtfTimeRangeScope);
       wtfLeave(wtfScope);
 

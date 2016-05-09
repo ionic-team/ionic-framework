@@ -4,7 +4,10 @@
 
 exclude:
   - 'ionic/components/slides/**'
+  - 'ionic/components/show-hide-when/**'
   - 'ionic/components.*.scss'
+  - 'ionic/util/*.scss'
+  - 'ionic/platform/cordova.*.scss'
 
 
 linters:

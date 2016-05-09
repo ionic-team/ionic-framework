@@ -1,5 +1,4 @@
-import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, Type, ViewEncapsulation} from 'angular2/core';
-import {NgFor, NgIf} from 'angular2/common';
+import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, ViewEncapsulation} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -10,8 +9,6 @@ import {Ion} from '../ion';
 import {Platform} from '../../platform/platform';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {Icon} from '../icon/icon';
-import {rafFrames} from '../../util/dom';
 import {isBlank, isTrueProperty} from '../../util/util';
 
 
@@ -103,7 +100,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * example, set the value of `id` to `myTabs`:
  *
  * ```html
- * <ion-tabs id="myTabs">
+ * <ion-tabs #myTabs>
  *   <ion-tab [root]="tab1Root"></ion-tab>
  *   <ion-tab [root]="tab2Root"></ion-tab>
  *   <ion-tab [root]="tab3Root"></ion-tab>
@@ -111,17 +108,18 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * ```
  *
  * Then in your class you can grab the `Tabs` instance and call `select()`,
- * passing the index of the tab as the argument. In the following code `app` is
- * of type [`IonicApp`](../../app/IonicApp/):
+ * passing the index of the tab as the argument. Here we're grabbing the tabs
+ * by using ViewChild.
  *
  *```ts
- * constructor(app: IonicApp) {
- *   this.app = app;
- * }
+ * export class TabsPage {
+ *
+ * @ViewChild('myTabs) tabRef: Tabs
  *
  * onPageDidEnter() {
- *   let tabs = this.app.getComponent('myTabs');
- *   tabs.select(2);
+ *   this.tabRef.select(2);
+ *  }
+ *
  * }
  *```
  *
@@ -153,9 +151,6 @@ import {isBlank, isTrueProperty} from '../../util/util';
       '<ng-content></ng-content>' +
     '</ion-content-section>',
   directives: [
-    Icon,
-    NgFor,
-    NgIf,
     TabButton,
     TabHighlight,
     forwardRef(() => TabNavBarAnchor)
@@ -281,15 +276,32 @@ export class Tabs extends Ion {
         this.select(tab);
       });
     });
-  }
-
-  /**
-   * @private
-   */
-  ngAfterContentInit() {
-    let selectedIndex = this.selectedIndex ? parseInt(this.selectedIndex, 10) : 0;
 
     let preloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
+
+    // get the selected index
+    let selectedIndex = this.selectedIndex ? parseInt(this.selectedIndex, 10) : 0;
+
+    // ensure the selectedIndex isn't a hidden or disabled tab
+    // also find the first available index incase we need it later
+    let availableIndex = -1;
+    this._tabs.forEach((tab, index) => {
+      if (tab.enabled && tab.show && availableIndex < 0) {
+        // we know this tab index is safe to show
+        availableIndex = index;
+      }
+
+      if (index === selectedIndex && (!tab.enabled || !tab.show)) {
+        // the selectedIndex is not safe to show
+        selectedIndex = -1;
+      }
+    });
+
+    if (selectedIndex < 0) {
+      // the selected index wasn't safe to show
+      // instead use an available index found to be safe to show
+      selectedIndex = availableIndex;
+    }
 
     this._tabs.forEach((tab, index) => {
       if (index === selectedIndex) {

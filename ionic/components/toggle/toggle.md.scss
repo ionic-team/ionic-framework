@@ -18,11 +18,13 @@ $toggle-md-handle-box-shadow:            0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1
 $toggle-md-handle-border-radius:         50% !default;
 
 $toggle-md-media-margin:                 0 !default;
-$toggle-md-media-padding:                12px ($item-md-padding-right / 2) 12px $item-md-padding-left !default;
 
 $toggle-md-transition-duration:          300ms !default;
 
 $toggle-md-disabled-opacity:             .3 !default;
+
+$toggle-md-item-left-padding:            12px 18px 12px 2px !default;
+$toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px $item-md-padding-left !default;
 
 
 // Material Design Toggle
@@ -110,9 +112,13 @@ ion-toggle {
 
 .item ion-toggle {
   margin: $toggle-md-media-margin;
-  padding: $toggle-md-media-padding;
+  padding: $toggle-md-item-right-padding;
 
   cursor: pointer;
+
+  &[item-left] {
+    padding: $toggle-md-item-left-padding;
+  }
 }
 
 .item-toggle ion-label {

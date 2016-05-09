@@ -21,11 +21,13 @@ $toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, .16), 0 3px 1px 
 $toggle-ios-handle-background-color:   $toggle-ios-background-color-off !default;
 
 $toggle-ios-media-margin:              0 !default;
-$toggle-ios-media-padding:             6px ($item-ios-padding-right / 2) 5px ($item-ios-padding-left) !default;
 
 $toggle-ios-transition-duration:       300ms !default;
 
 $toggle-ios-disabled-opacity:          .3 !default;
+
+$toggle-ios-item-left-padding:         6px 16px 5px 0 !default;
+$toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($item-ios-padding-left) !default;
 
 
 // iOS Toggle
@@ -164,7 +166,11 @@ ion-toggle {
 
 .item ion-toggle {
   margin: $toggle-ios-media-margin;
-  padding: $toggle-ios-media-padding;
+  padding: $toggle-ios-item-right-padding;
+
+  &[item-left] {
+    padding: $toggle-ios-item-left-padding;
+  }
 }
 
 

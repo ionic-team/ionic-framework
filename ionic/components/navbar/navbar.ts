@@ -92,14 +92,13 @@ class ToolbarBackground {
   selector: 'ion-navbar',
   template:
     '<div class="toolbar-background"></div>' +
-    '<button class="back-button bar-button bar-button-default" [hidden]="_hideBb">' +
+    '<button category="bar-button" class="back-button" [hidden]="_hideBb">' +
       '<span class="button-inner">' +
         '<ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>' +
         '<span class="back-button-text">' +
           '<span class="back-default">{{_bbText}}</span>' +
         '</span>' +
       '</span>' +
-      '<ion-button-effect></ion-button-effect>' +
     '</button>' +
     '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
     '<ng-content select="ion-buttons[start]"></ng-content>' +
@@ -112,7 +111,7 @@ class ToolbarBackground {
     'class': 'toolbar',
     '[class.statusbar-padding]': '_sbPadding'
   },
-  directives: [BackButton, BackButtonText, Icon, ToolbarBackground]
+  directives: [BackButton, BackButtonText, ToolbarBackground]
 })
 export class Navbar extends ToolbarBase {
   private _bbIcon: string;

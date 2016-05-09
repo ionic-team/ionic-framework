@@ -3,6 +3,8 @@ general:
     ignore:
       - ins_n_outs
 dependencies:
+  pre:
+   - ./scripts/docs/prepare.sh
   cache_directories:
     - "~/ionic-site" # cache ionic-site
 machine:
@@ -12,7 +14,7 @@ test:
   override:
     - echo "Automatically marking tests as passing for now"
 deployment:
-  tasks:
-    branch: "2.0"
-    commands:
-      - ./scripts/ci/deploy.sh
+ tasks:
+   branch: "2.0"
+   commands:
+     - ./scripts/ci/deploy.sh

@@ -1,4 +1,4 @@
-import {App} from 'ionic-angular';
+import {App} from '../../../../../ionic';
 import {
   Control,
   ControlGroup,

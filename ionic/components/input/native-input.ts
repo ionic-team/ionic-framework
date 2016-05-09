@@ -2,7 +2,7 @@ import {Directive, Attribute, ElementRef, Renderer, Input, Output, EventEmitter,
 import {NgControl} from 'angular2/common';
 
 import {Config} from '../../config/config';
-import {CSS, hasFocus, raf}  from '../../util/dom';
+import {CSS, hasFocus}  from '../../util/dom';
 
 
 /**
@@ -41,19 +41,21 @@ export class NativeInput {
 
     self.focusChange.emit(true);
 
+    function docTouchEnd(ev) {
+      var tapped: HTMLElement = ev.target;
+      if (tapped && self.element()) {
+        if (tapped.tagName !== 'INPUT' && tapped.tagName !== 'TEXTAREA' && !tapped.classList.contains('input-cover')) {
+          self.element().blur();
+        }
+      }
+    }
+
     if (self._blurring) {
       // automatically blur input if:
       // 1) this input has focus
       // 2) the newly tapped document element is not an input
       console.debug('input blurring enabled');
-      function docTouchEnd(ev) {
-        var tappedElement: any = ev.target;
-        if (tappedElement && self.element()) {
-          if (tappedElement.tagName !== 'INPUT' && tappedElement.tagName !== 'TEXTAREA') {
-            self.element().blur();
-          }
-        }
-      }
+
       document.addEventListener('touchend', docTouchEnd, true);
       self._unrefBlur = function() {
         console.debug('input blurring disabled');

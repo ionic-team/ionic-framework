@@ -1,5 +1,5 @@
 import {ViewChild, ElementRef} from 'angular2/core';
-import {App, Page} from 'ionic-angular';
+import {App, Page} from '../../../../../ionic';
 
 
 @Page({

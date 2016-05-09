@@ -1,7 +1,7 @@
 {
   "private": "true",
   "name": "ionic2",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0-beta.6",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -13,17 +13,17 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.15",
+    "angular2": "2.0.0-beta.16",
     "colors": "^1.1.2",
     "es6-shim": "^0.35.0",
     "inquirer": "0.11.0",
-    "ionicons": "3.0.0-alpha.3",
+    "ionicons": "3.0.0",
     "lodash": "3.10.1",
     "mkdirp-no-bin": "0.5.1",
     "q": "1.4.1",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
-    "zone.js": "^0.6.10"
+    "zone.js": "^0.6.12"
   },
   "devDependencies": {
     "canonical-path": "0.0.2",
@@ -49,6 +49,7 @@
     "gulp-remember": "^0.3.0",
     "gulp-rename": "~1.2.0",
     "gulp-sass": "^2.0.4",
+    "gulp-scss-lint": "^0.3.9",
     "gulp-shell": "^0.4.0",
     "gulp-strip-debug": "^1.1.0",
     "gulp-tslint": "^4.3.4",
@@ -80,6 +81,7 @@
     "systemjs": "0.19.6",
     "through2": "^0.6.3",
     "tslint": "^3.7.1",
+    "tslint-eslint-rules": "^1.2.0",
     "typescript": "1.8.7",
     "vinyl": "^0.4.6",
     "webpack": "^1.12.2",

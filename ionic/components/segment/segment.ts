@@ -1,7 +1,7 @@
 import {Directive, Component, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList, ViewEncapsulation} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
-import {isPresent} from '../../util/util';
+import {isTrueProperty, isPresent} from '../../util/util';
 
 
 /**
@@ -56,6 +56,7 @@ import {isPresent} from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class SegmentButton {
+  private _disabled: boolean = false;
 
   /**
    * @input {string} the value of the segment button. Required.
@@ -68,6 +69,26 @@ export class SegmentButton {
   @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
+
+  /**
+   * @private
+   */
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  set disabled(val: boolean) {
+    this._disabled = isTrueProperty(val);
+    this.setCssClass('segment-button-disabled', this._disabled);
+  }
+
+  /**
+   * @private
+   */
+  setCssClass(cssClass: string, shouldAdd: boolean) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
+  }
 
   /**
    * @private
@@ -146,6 +167,7 @@ export class SegmentButton {
   selector: 'ion-segment'
 })
 export class Segment {
+  private _disabled: boolean = false;
 
   /**
    * @private
@@ -167,6 +189,25 @@ export class Segment {
   constructor(@Optional() ngControl: NgControl) {
     if (ngControl) {
       ngControl.valueAccessor = this;
+    }
+  }
+
+  /**
+   * @private
+   */
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  set disabled(val: boolean) {
+    this._disabled = isTrueProperty(val);
+
+    if (this._buttons) {
+      let buttons = this._buttons.toArray();
+      for (let button of buttons) {
+        button.setCssClass('segment-button-disabled', this._disabled);
+      }
     }
   }
 
@@ -199,6 +240,11 @@ export class Segment {
      if (isPresent(this.value)) {
        button.isActive = (button.value === this.value);
      }
+
+     if (isTrueProperty(this._disabled)) {
+       button.setCssClass('segment-button-disabled', this._disabled);
+     }
+
    }
   }
 

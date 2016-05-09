@@ -4,9 +4,13 @@ import {App, Platform} from 'ionic-angular';
   templateUrl: 'main.html'
 })
 class ApiDemoApp {
+  isIos: boolean;
+  isAndroid: boolean;
+  isWindows: boolean;
+
   constructor(platform: Platform) {
     this.isIos = platform.is('ios');
     this.isAndroid = platform.is('android');
-    this.userAgent = platform.userAgent();
+    this.isWindows = platform.is('windows');
   }
 }

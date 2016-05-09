@@ -32,14 +32,14 @@
 
   <form (submit)="doSubmit($event)" [ngFormModel]="myForm">
     <ion-segment ngControl="mapStyle" danger>
-      <ion-segment-button value="standard" class="e2eSegmentStandard">
-        Standard
+      <ion-segment-button value="active" class="e2eSegmentStandard">
+        Active
       </ion-segment-button>
-      <ion-segment-button value="hybrid">
-        Hybrid
+      <ion-segment-button value="disabled" [disabled]="isDisabled">
+        Disabled
       </ion-segment-button>
-      <ion-segment-button value="sat">
-        Satellite
+      <ion-segment-button value="inactive" disabled="false">
+        Inactive
       </ion-segment-button>
     </ion-segment>
   </form>
@@ -74,7 +74,7 @@
     <ion-segment-button value="C" class="e2eSegmentModelC">
       Model C
     </ion-segment-button>
-    <ion-segment-button value="D">
+    <ion-segment-button value="D" [disabled]="isDisabled">
       Model D
     </ion-segment-button>
   </ion-segment>
@@ -89,6 +89,8 @@
       <ion-icon name="bookmark"></ion-icon>
     </ion-segment-button>
   </ion-segment>
+
+  <button block dark (click)="toggleDisabled()">Toggle Disabled</button>
 </ion-content>
 
 <ion-toolbar position="bottom" primary>
@@ -100,7 +102,7 @@
       Toolbar
     </ion-segment-button>
     <ion-segment-button value="top" class="e2eSegmentTopGrossing">
-      Default Segment
+      Light Segment
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
@@ -108,7 +110,7 @@
 <ion-toolbar position="bottom">
   <ion-segment [(ngModel)]="appType" danger>
     <ion-segment-button value="paid">
-      Light
+      Default
     </ion-segment-button>
     <ion-segment-button value="free">
       Toolbar
@@ -120,15 +122,15 @@
 </ion-toolbar>
 
 <ion-toolbar position="bottom">
-  <ion-segment [(ngModel)]="appType" dark>
+  <ion-segment [(ngModel)]="appType" dark [disabled]="isDisabled">
     <ion-segment-button value="paid">
-      Light
+      Default
     </ion-segment-button>
     <ion-segment-button value="free">
       Toolbar
     </ion-segment-button>
     <ion-segment-button value="top">
-      Default Segment
+      Dark Segment
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>

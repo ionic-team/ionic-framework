@@ -7,10 +7,16 @@ import {MenuController} from './menu-controller';
 /**
  * @name MenuToggle
  * @description
- * The `menuToggle` directive can be placed on any button to
- * automatically close an open menu.
+ * The `menuToggle` directive can be placed on any button to toggle a menu open or closed.
+ * If it is added to the [NavBar](../../nav/NavBar) of a page, the button will only appear
+ * when the page it's in is currently a root page. See the [Menu Navigation Bar Behavior](../Menu#navigation-bar-behavior)
+ * docs for more information.
+ *
  *
  * @usage
+ *
+ * A simple `menuToggle` button can be added using the following markup:
+ *
  * ```html
  * <button menuToggle>Toggle Menu</button>
  * ```

@@ -406,6 +406,7 @@ export class InputBase {
    */
   clearTextInput() {
     console.debug('Should clear input');
+    this._value = '';
   }
 
   /**
@@ -434,7 +435,7 @@ export class InputBase {
 
   /**
    * @private
-   * Angular2 Forms API method called by the the view (NgControl) to register
+   * Angular2 Forms API method called by the view (NgControl) to register
    * the onTouched event handler that marks model (Control) as touched.
    * @param {Function} fn  onTouched event handler.
    */

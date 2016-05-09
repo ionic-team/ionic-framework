@@ -155,11 +155,17 @@ export class Spinner {
 
   constructor(private _config: Config) {}
 
+  /**
+   * @private
+   */
   ngOnInit() {
     this._init = true;
     this.load();
   }
 
+  /**
+   * @private
+   */
   load() {
     if (this._init) {
       this._l = [];

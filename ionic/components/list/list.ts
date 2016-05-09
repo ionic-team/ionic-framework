@@ -52,11 +52,12 @@ export class List extends Ion {
    * Enable sliding items if your page has them
    *
    * ```ts
+   * import {Page, List} from 'ionic-angular';
+   * import {ViewChild} from 'angular2/core';
+   * @Page...
    * export class MyClass {
-   *    constructor(app: IonicApp){
-   *      this.app = app;
-   *      this.list = this.app.getComponent('my-list');
-   *    }
+   *    @ViewChild(List) list: List;
+   *    constructor(){}
    *    stopSliding(){
    *      this.list.enableSlidingItems(false);
    *    }
@@ -86,13 +87,12 @@ export class List extends Ion {
    * Enable sliding items if your page has
    *
    * ```ts
+   * import {Page, List} from 'ionic-angular';
+   * import {ViewChild} from 'angular2/core';
+   * @Page...
    * export class MyClass {
-   *    constructor(app: IonicApp){
-   *      this.app = app;
-   *      this.list = this.app.getComponent('my-list');
-   *    }
-   *    // Here we have some method that will close the items
-   *    // when called
+   *    @ViewChild(List) list: List;
+   *    constructor(){}
    *    closeItmes(){
    *      this.list.closeSlidingItems();
    *    }

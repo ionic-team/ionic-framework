@@ -57,7 +57,7 @@ $alert-md-list-border-bottom:                 $alert-md-list-border-top !default
 
 $alert-md-radio-label-padding:                13px 26px !default;
 
-$alert-md-radio-top:                          13px !default;
+$alert-md-radio-top:                          0 !default;
 $alert-md-radio-left:                         13px !default;
 $alert-md-radio-width:                        16px !default;
 $alert-md-radio-height:                       16px !default;
@@ -78,7 +78,7 @@ $alert-md-radio-icon-transition:              transform 280ms cubic-bezier(.4, 0
 
 $alert-md-checkbox-label-padding:             13px 26px !default;
 
-$alert-md-checkbox-top:                       13px !default;
+$alert-md-checkbox-top:                       0 !default;
 $alert-md-checkbox-left:                      13px !default;
 $alert-md-checkbox-width:                     16px !default;
 $alert-md-checkbox-height:                    16px !default;
@@ -336,5 +336,9 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   &.activated {
     background-color: $alert-md-button-background-color-activated;
+  }
+
+  .button-inner {
+    justify-content: $alert-md-button-group-justify-content;
   }
 }

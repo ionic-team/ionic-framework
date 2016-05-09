@@ -2,7 +2,7 @@ import {Injectable, NgZone} from 'angular2/core';
 
 import {Config} from '../config/config';
 import {Form} from './form';
-import {hasFocusedTextInput, raf, rafFrames, nativeTimeout} from './dom';
+import {hasFocusedTextInput, nativeRaf, rafFrames, nativeTimeout} from './dom';
 
 /**
  * @name Keyboard
@@ -109,7 +109,7 @@ export class Keyboard {
  */
   close() {
     console.debug('keyboard close()');
-    raf(() => {
+    nativeRaf(() => {
       if (hasFocusedTextInput()) {
         // only focus out when a text input has focus
         this._form.focusOut();
@@ -137,7 +137,7 @@ export class Keyboard {
     let isKeyInputEnabled = false;
 
     function cssClass() {
-      raf(() => {
+      nativeRaf(() => {
         document.body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
       });
     }

@@ -2,6 +2,14 @@
 
 <ion-content>
 
+  <p>
+    InfiniteScroll is enabled: {{enabled}}
+  </p>
+
+  <button (click)="toggleInfiniteScroll()" block>
+    Toggle InfiniteScroll Enabled
+  </button>
+
   <ion-list>
     <button ion-item (click)="goToPage2()" *ngFor="#item of items">
       {{ item }}

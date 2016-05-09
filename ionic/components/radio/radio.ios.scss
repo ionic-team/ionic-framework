@@ -12,6 +12,9 @@ $radio-ios-icon-border-style:      solid !default;
 
 $radio-ios-disabled-opacity:       .3 !default;
 
+$radio-ios-item-left-margin:       8px 21px 8px 3px !default;
+$radio-ios-item-right-margin:      $item-ios-padding-media-top 11px $item-ios-padding-media-bottom ($item-ios-padding-left / 2) !default;
+
 
 ion-radio {
   position: relative;
@@ -69,7 +72,11 @@ ion-radio {
   position: static;
   display: block;
 
-  margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
+  margin: $radio-ios-item-right-margin;
+
+  &[item-left] {
+    margin: $radio-ios-item-left-margin;
+  }
 }
 
 .item-radio ion-label {

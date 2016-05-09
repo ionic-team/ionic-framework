@@ -29,7 +29,7 @@
 
 
 @function toolbar-button-inverse($color-value) {
-  @return color-inverse($color-value, $dark: $toolbar-md-button-color, $light: #fff);
+  @return color-inverse($color-value, $dark: #424242, $light: #fff);
 }
 
 

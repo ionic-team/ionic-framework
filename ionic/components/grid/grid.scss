@@ -45,20 +45,23 @@ $grid-responsive-lg-break:        1023px !default; // smaller than landscape tab
   }
 }
 
+ion-grid {
+  display: flex;
+
+  flex-direction: column;
+
+  padding: ($grid-padding-width / 2);
+
+  width: 100%;
+}
 
 ion-row {
   display: flex;
-
-  padding: ($grid-padding-width / 2);
 
   width: 100%;
 
   &[wrap] {
     flex-wrap: wrap;
-  }
-
-  &[flush] {
-    padding: 0;
   }
 
   &[top] {
@@ -80,11 +83,6 @@ ion-row {
   &[baseline] {
     align-items: baseline;
   }
-}
-
-ion-row + ion-row {
-  margin-top: ($grid-padding-width / 2) * -1;
-  padding-top: 0;
 }
 
 ion-col {

@@ -1,4 +1,4 @@
-import {App, Page, ActionSheet, Loading, NavController, ViewController, Platform} from 'ionic-angular';
+import {App, Page, ActionSheet, Loading, NavController, ViewController, Platform} from '../../../../../ionic';
 
 
 @Page({
@@ -10,7 +10,12 @@ class E2EPage {
   presentLoadingIos() {
     let loading = Loading.create({
       spinner: 'ios',
-      duration: 1000
+      duration: 1000,
+      cssClass: 'my-custom-loader'
+    });
+
+    loading.onDismiss(() => {
+     console.log('Dismissed loading');
     });
 
     this.nav.present(loading);

@@ -1,10 +1,8 @@
-import {Component, Renderer, ElementRef, HostListener, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
-import {NgFor, NgIf} from 'angular2/common';
+import {Component, Renderer, ElementRef, HostListener, ViewEncapsulation} from 'angular2/core';
 
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
-import {Spinner} from '../spinner/spinner';
 import {isPresent, isUndefined, isDefined} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
@@ -36,7 +34,9 @@ import {ViewController} from '../nav/view-controller';
  * the `duration` of the loading options. By default the loading indicator
  * will show even during page changes, but this can be disabled by setting
  * `dismissOnPageChange` to `true`. To dismiss the loading indicator after
- * creation, call the `dismiss()` method on the Loading instance.
+ * creation, call the `dismiss()` method on the Loading instance. The
+ * `onDismiss` function can be called to perform an action after the loading
+ * indicator is dismissed.
  *
  * ### Limitations
  * The element is styled to appear on top of other content by setting its
@@ -69,6 +69,10 @@ import {ViewController} from '../nav/view-controller';
  *         <div class="custom-spinner-box"></div>
  *       </div>`,
  *     duration: 5000
+ *   });
+ *
+ *   loading.onDismiss(() => {
+ *     console.log('Dismissed loading');
  *   });
  *
  *   this.nav.present(loading);
@@ -157,8 +161,6 @@ export class Loading extends ViewController {
   host: {
     'role': 'dialog'
   },
-  directives: [NgIf, Spinner],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 class LoadingCmp {
@@ -218,6 +220,7 @@ class LoadingCmp {
 export interface LoadingOptions {
   spinner?: string;
   content?: string;
+  cssClass?: string;
   showBackdrop?: boolean;
   dismissOnPageChange?: boolean;
   delay?: number;

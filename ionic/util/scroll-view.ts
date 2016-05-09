@@ -1,4 +1,4 @@
-import {CSS, pointerCoord, raf, cancelRaf} from '../util/dom';
+import {CSS, pointerCoord, nativeRaf, cancelRaf} from '../util/dom';
 
 
 export class ScrollView {
@@ -53,6 +53,7 @@ export class ScrollView {
 
     let xDistance = Math.abs(x - fromX);
     let yDistance = Math.abs(y - fromY);
+    let maxAttempts = (duration / 16) + 100;
 
     return new Promise(resolve => {
       let startTime: number;
@@ -62,7 +63,7 @@ export class ScrollView {
       function step() {
         attempts++;
 
-        if (!self._el || !self.isPlaying || attempts > 200) {
+        if (!self._el || !self.isPlaying || attempts > maxAttempts) {
           self.isPlaying = false;
           resolve();
           return;
@@ -83,7 +84,7 @@ export class ScrollView {
         }
 
         if (easedT < 1) {
-          raf(step);
+          nativeRaf(step);
 
         } else {
           // done
@@ -95,12 +96,24 @@ export class ScrollView {
       self.isPlaying = true;
 
       // chill out for a frame first
-      raf(() => {
+      nativeRaf(() => {
         startTime = Date.now();
-        raf(step);
+        nativeRaf(step);
       });
 
     });
+  }
+
+  scrollToTop(duration: number): Promise<any> {
+    return this.scrollTo(0, 0, duration);
+  }
+
+  scrollToBottom(duration: number): Promise<any> {
+    let y = 0;
+    if (this._el) {
+      y = this._el.scrollHeight - this._el.clientHeight;
+    }
+    return this.scrollTo(0, y, duration);
   }
 
   stop() {
@@ -219,7 +232,7 @@ export class ScrollView {
         // ******** DOM READ ****************
         this._setMax();
 
-        this._rafId = raf(this._decelerate.bind(this));
+        this._rafId = nativeRaf(this._decelerate.bind(this));
       }
     }
 
@@ -247,7 +260,7 @@ export class ScrollView {
       self.setTop(self._top);
 
       if (self._top > 0 && self._top < self._max && Math.abs(self._velocity) > MIN_VELOCITY_CONTINUE_DECELERATION) {
-        self._rafId = raf(self._decelerate.bind(self));
+        self._rafId = nativeRaf(self._decelerate.bind(self));
       }
     }
   }

@@ -8,7 +8,7 @@
 </ion-navbar>
 
 <ion-content>
-  <ion-slides pager [options]="mySlideOptions" (change)="onSlideChanged($event)" (slideChangeStart)="onSlideChangeStart($event)" (move)="onSlideMove($event)">
+  <ion-slides pager [options]="mySlideOptions" (didChange)="onSlideChanged($event)" (willChange)="onSlideChangeStart($event)" (move)="onSlideMove($event)">
     <ion-slide>
       <h3>Thank you for choosing the Awesome App!</h3>
       <div id="logo">

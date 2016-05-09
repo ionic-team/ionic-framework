@@ -1,5 +1,5 @@
-import {App, Page, Config, Platform} from 'ionic-angular';
-import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from 'ionic-angular';;
+import {App, Page, Config, Platform} from '../../../../../ionic';
+import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../ionic';;
 
 
 @Page({
@@ -25,8 +25,8 @@ class E2EPage {
     console.log('android', platform.is('android'));
     console.log('windows phone', platform.is('windows'));
 
-    platform.ready().then(() => {
-      console.log('platform.ready');
+    platform.ready().then((readySource) => {
+      console.log('platform.ready, readySource:', readySource);
     });
 
     this.platforms = platform.platforms();

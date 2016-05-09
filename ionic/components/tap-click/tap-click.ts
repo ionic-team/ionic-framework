@@ -137,7 +137,7 @@ export class TapClick {
 
   pointerEnd(ev) {
     let activatableEle = getActivatableTarget(ev.target);
-    if (activatableEle) {
+    if (activatableEle && this.startCoord) {
       this.activator && this.activator.upAction(ev, activatableEle, this.startCoord.x, this.startCoord.y);
     }
     this.moveListeners(false);
