@@ -1,5 +1,4 @@
 import {Component, ContentChildren, forwardRef, ViewChild, ContentChild, Renderer, ElementRef, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
-import {NgIf} from 'angular2/common';
 
 import {Button} from '../button/button';
 import {Form} from '../../util/form';
@@ -42,7 +41,7 @@ import {Label} from '../label/label';
 @Component({
   selector: 'ion-item,[ion-item]',
   template:
-    '<ng-content select="[item-left],ion-checkbox"></ng-content>' +
+    '<ng-content select="[item-left],ion-checkbox:not([item-right])"></ng-content>' +
     '<div class="item-inner">' +
       '<div class="input-wrapper">' +
         '<ng-content select="ion-label"></ng-content>' +
@@ -57,7 +56,6 @@ import {Label} from '../label/label';
   host: {
     'class': 'item'
   },
-  directives: [NgIf, Label],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })

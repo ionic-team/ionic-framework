@@ -1,6 +1,6 @@
 import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/common';
 
-import {App} from 'ionic-angular';
+import {App} from '../../../../../ionic';
 
 @App({
   templateUrl: 'main.html',

@@ -1,8 +1,18 @@
 
-<ion-toolbar><ion-title>Show/Hide When</ion-title></ion-toolbar>
+<ion-toolbar>
+  <ion-title>Show/Hide When</ion-title>
+  <ion-buttons end>
+    <button showWhen="ios">iOS</button>
+    <button showWhen="windows">Windows</button>
+    <button showWhen="android">Android</button>
+  </ion-buttons>
+</ion-toolbar>
 
 
 <ion-content padding>
+  <button showWhen="ios">iOS</button>
+  <button showWhen="windows">Windows</button>
+  <button showWhen="android">Android</button>
 
   <p showWhen="ios" style="background:blue; color:white">
     showWhen="ios"
@@ -55,5 +65,15 @@
   <p hideWhen="android,ios" style="background:yellow;">
     hideWhen="android,ios"
   </p>
+
+  <p hideWhen="ios" [hidden]="toggle" style="background:magenta; color:white">
+    hideWhen="ios" [hidden]=toggle
+  </p>
+
+  <p showWhen="android" hideWhen="landscape" style="background:black; color:white">
+    showWhen="android" hideWhen="landscape"
+  </p>
+
+  <button (click)="toggle = !toggle">Toggle Hide When</button>
 
 </ion-content>

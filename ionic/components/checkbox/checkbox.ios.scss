@@ -17,10 +17,10 @@ $checkbox-ios-icon-checkmark-width:       1px !default;
 $checkbox-ios-icon-checkmark-style:       solid !default;
 $checkbox-ios-icon-checkmark-color:       color-contrast($colors-ios, $checkbox-ios-background-color-on) !default;
 
-$checkbox-ios-media-margin:               $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom 2px !default;
-
 $checkbox-ios-disabled-opacity:           .3 !default;
 
+$checkbox-ios-item-left-margin:           $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom 2px !default;
+$checkbox-ios-item-right-margin:          10px 8px 9px 0 !default;
 
 ion-checkbox {
   position: relative;
@@ -92,7 +92,11 @@ ion-checkbox {
   position: static;
   display: block;
 
-  margin: $checkbox-ios-media-margin;
+  margin: $checkbox-ios-item-left-margin;
+
+  &[item-right] {
+    margin: $checkbox-ios-item-right-margin;
+  }
 }
 
 

@@ -37,6 +37,7 @@ import {RadioGroup} from './radio-group';
     '</div>' +
     '<button role="radio" ' +
             'type="button" ' +
+            'category="item-cover" ' +
             '[id]="id" ' +
             '[attr.aria-checked]="_checked" ' +
             '[attr.aria-labelledby]="_labelId" ' +

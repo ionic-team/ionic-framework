@@ -64,6 +64,9 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 1. `gulp karma`
 
+### Running Sass Linter
+
+1. See the [Sass Guidelines](https://github.com/driftyco/ionic/blob/2.0/CONTRIBUTING.md#sass-guidelines) for editing Sass and running the linter.
 
 # Releasing
 
@@ -96,15 +99,13 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 ### Releasing Component Demos
 
-(Copied from [ionic-preview-app](https://github.com/driftyco/ionic-preview-app#updating-ionic-site), check there for updates)
+Ionic Component demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/driftyco/ionic-preview-app). No action is necessary.
 
-- Set [production mode](https://github.com/driftyco/ionic-preview-app/blob/master/app/app.ts#L11) to true
-- Rebuild app
-- Copy the contents of this entire repo to `ionic-site/dist/preview-app/` (`cp -R * ../path/to/ionic-site/dist/preview-app/`)
+If you'd like to manually update the demos, follow the steps on the preview app for [running locally on the site](https://github.com/driftyco/ionic-preview-app#running-locally-on-the-site).
 
 
 ### Releasing API Demos
 
 Ionic API demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary.
 
-If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/driftyco/ionic-site) repo as a sibling of `ionic`. From `ionic` run gulp docs, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing or committing.
+If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/driftyco/ionic-site) repo as a sibling of `ionic`. From `ionic` run gulp docs, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing.

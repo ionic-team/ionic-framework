@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager, Renderer, Type, ContentChild} from 'angular2/core';
+import {Directive, ElementRef, Optional, NgZone, Renderer, DynamicComponentLoader, ViewContainerRef} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -10,22 +10,23 @@ import {ViewController} from './view-controller';
  * @private
  */
 @Directive({
-  selector: '[portal]'
+  selector: '[nav-portal]'
 })
-export class Portal extends NavController {
+export class NavPortal extends NavController {
   constructor(
-    @Optional() hostNavCtrl: NavController,
     @Optional() viewCtrl: ViewController,
+    @Optional() parent: NavController,
     app: IonicApp,
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,
-    compiler: Compiler,
-    viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer
+    renderer: Renderer,
+    loader: DynamicComponentLoader,
+    viewPort: ViewContainerRef
   ) {
-    super(hostNavCtrl, app, config, keyboard, elementRef, null, compiler, viewManager, zone, renderer);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, loader);
     this.isPortal = true;
+    this.setViewport(viewPort);
   }
 }

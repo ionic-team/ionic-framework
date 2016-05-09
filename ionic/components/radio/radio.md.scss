@@ -17,6 +17,8 @@ $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 
 $radio-md-disabled-opacity:       .3 !default;
 
+$radio-md-item-left-margin:       11px 36px 10px 4px !default;
+$radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-padding-media-bottom 0 !default;
 
 ion-radio {
   position: relative;
@@ -97,7 +99,11 @@ ion-radio {
   position: static;
   display: block;
 
-  margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom 0;
+  margin: $radio-md-item-right-margin;
+
+  &[item-left] {
+    margin: $radio-md-item-left-margin;
+  }
 }
 
 .item-radio ion-label {

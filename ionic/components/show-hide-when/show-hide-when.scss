@@ -1,0 +1,14 @@
+@import "../../globals.core";
+
+// Show / Hide When
+// --------------------------------------------------
+
+// Applied by the showWhen directive
+.hidden-show-when {
+  display: none !important;
+}
+
+// Applied by the hideWhen directive
+.hidden-hide-when {
+  display: none !important;
+}

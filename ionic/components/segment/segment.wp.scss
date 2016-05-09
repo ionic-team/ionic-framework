@@ -18,6 +18,7 @@ $segment-button-wp-background-color:           transparent !default;
 
 $segment-button-wp-opacity:                    .5 !default;
 $segment-button-wp-opacity-activated:          1 !default;
+$segment-button-wp-opacity-disabled:           .3 !default;
 
 $segment-button-wp-buttons-justify-content:    flex-start !default;
 
@@ -48,6 +49,12 @@ ion-segment {
     font-size: $segment-button-wp-icon-size;
     line-height: $segment-button-wp-icon-line-height;
   }
+}
+
+.segment-button-disabled {
+  opacity: $segment-button-wp-opacity-disabled;
+
+  pointer-events: none;
 }
 
 .toolbar {

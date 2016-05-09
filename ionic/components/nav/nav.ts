@@ -1,11 +1,11 @@
-import {Component, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager, Renderer, Type, ViewChild, ViewEncapsulation} from 'angular2/core';
+import {Component, ElementRef, ViewContainerRef, DynamicComponentLoader, Input, Optional, NgZone, Renderer, Type, ViewChild, ViewEncapsulation, AfterViewInit} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
 import {isTrueProperty} from '../../util/util';
 import {NavController} from './nav-controller';
-import {Portal} from './nav-portal';
+import {NavPortal} from './nav-portal';
 import {ViewController} from './view-controller';
 
 /**
@@ -39,7 +39,8 @@ import {ViewController} from './view-controller';
  * }
  * ```
  *
- * <h2 id="back_navigation">Back navigation</h2>
+ * ### Back Navigation
+ *
  * If a [page](../NavController/#creating_pages) you navigate to has a [NavBar](../NavBar/),
  * Nav will automatically add a back button to it if there is a page
  * before the one you are navigating to in the navigation stack.
@@ -105,27 +106,26 @@ import {ViewController} from './view-controller';
  */
 @Component({
   selector: 'ion-nav',
-  template: '<div #contents></div><div portal></div>',
-  directives: [Portal],
+  template: '<div #viewport></div><div nav-portal></div>',
+  directives: [NavPortal],
   encapsulation: ViewEncapsulation.None,
 })
-export class Nav extends NavController {
+export class Nav extends NavController implements AfterViewInit {
   private _root: Type;
   private _hasInit: boolean = false;
 
   constructor(
-    @Optional() parent: NavController,
     @Optional() viewCtrl: ViewController,
+    @Optional() parent: NavController,
     app: IonicApp,
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,
-    compiler: Compiler,
-    viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer
+    renderer: Renderer,
+    loader: DynamicComponentLoader
   ) {
-    super(parent, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, loader);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
@@ -141,6 +141,28 @@ export class Nav extends NavController {
     } else if (app) {
       // this is the root navcontroller for the entire app
       this._app.setRootNav(this);
+    }
+  }
+
+  /**
+   * @private
+   */
+  @ViewChild('viewport', {read: ViewContainerRef})
+  set _vp(val: ViewContainerRef) {
+    this.setViewport(val);
+  }
+
+  /**
+   * @private
+   */
+  ngAfterViewInit() {
+    this._hasInit = true;
+
+    if (this._root) {
+      if (typeof this._root !== 'function') {
+        throw 'The [root] property in <ion-nav> must be given a reference to a component class from within the constructor.';
+      }
+      this.push(this._root);
     }
   }
 
@@ -171,22 +193,8 @@ export class Nav extends NavController {
     this._sbEnabled = isTrueProperty(val);
   }
 
-  /**
-   * @private
-   */
-  ngOnInit() {
-    this._hasInit = true;
-
-    if (this._root) {
-      if (typeof this._root !== 'function') {
-        throw 'The [root] property in <ion-nav> must be given a reference to a component class from within the constructor.';
-      }
-      this.push(this._root);
-    }
-  }
-
-  @ViewChild(Portal)
-  private set _navPortal(val: Portal) {
+  @ViewChild(NavPortal)
+  private set _np(val: NavPortal) {
     this.setPortal(val);
   }
 }

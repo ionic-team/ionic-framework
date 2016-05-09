@@ -106,7 +106,7 @@ Platform.register({
     swipeBackEnabled: isIOSDevice,
     swipeBackThreshold: 40,
     tapPolyfill: isIOSDevice,
-    virtualScrollEventAssist: !(window.indexedDB)
+    virtualScrollEventAssist: !(win.indexedDB)
   },
   isMatch(p: Platform): boolean {
     return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
@@ -172,29 +172,29 @@ Platform.register({
       // 1) ionic bootstrapped
       windowLoad(function() {
         // 2) window onload triggered or completed
-        doc.addEventListener('deviceready', () => {
+        doc.addEventListener('deviceready', function() {
           // 3) cordova deviceready event triggered
 
-          // add cordova listeners to fire platform events
+          // add cordova listeners to emit platform events
           doc.addEventListener('backbutton', function() {
             p.backButton.emit(null);
           });
-          // doc.addEventListener('pause', function() {
-          //   p.pause.emit(null);
-          // });
-          // doc.addEventListener('resume', function() {
-          //   p.resume.emit(null);
-          // });
+          doc.addEventListener('pause', function() {
+            p.pause.emit(null);
+          });
+          doc.addEventListener('resume', function() {
+            p.resume.emit(null);
+          });
+
+          // cordova has its own exitApp method
+          p.exitApp = function() {
+            win.navigator.app.exitApp();
+          };
 
           // cordova has fully loaded and we've added listeners
-          p.triggerReady();
+          p.triggerReady('cordova');
         });
       });
-    };
-
-    // cordova has its own exitApp method
-    p.exitApp = function() {
-      win.navigator.app.exitApp();
     };
 
   },

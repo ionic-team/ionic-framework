@@ -12,6 +12,12 @@ module.exports = function collectInputsOutputs() {
 
           memberLoop:
           for (var i in doc.members) {
+
+            // identify properties to differentiate from methods
+            if (typeof doc.members[i].parameters == 'undefined') {
+              doc.members[i].isProperty = true;
+            }
+
             if (doc.members[i].decorators && doc.members[i].decorators.length) {
 
               decoratorLoop:

@@ -81,7 +81,7 @@ tabbar {
 // Windows Tabbar Color Mixin
 // --------------------------------------------------
 
-@mixin tabbar-wp($color-name, $color-base) {
+@mixin tabbar-wp($color-name, $color-base, $color-contrast) {
 
   ion-tabs[#{$color-name}] tabbar {
     background-color: $color-base;
@@ -104,5 +104,5 @@ tabbar {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
-  @include tabbar-wp($color-name, $color-base);
+  @include tabbar-wp($color-name, $color-base, $color-contrast);
 }

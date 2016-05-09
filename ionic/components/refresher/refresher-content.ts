@@ -1,10 +1,7 @@
 import {Component, Input, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
-import {NgIf} from 'angular2/common';
 
 import {Config} from '../../config/config';
-import {Icon} from '../icon/icon';
 import {Refresher} from './refresher';
-import {Spinner} from '../spinner/spinner';
 
 
 /**
@@ -25,11 +22,9 @@ import {Spinner} from '../spinner/spinner';
       '</div>' +
       '<div class="refresher-refreshing-text" [innerHTML]="refreshingText" *ngIf="refreshingText"></div>' +
     '</div>',
-  directives: [NgIf, Icon, Spinner],
   host: {
     '[attr.state]': 'r.state'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class RefresherContent {

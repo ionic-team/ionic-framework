@@ -95,4 +95,30 @@
 
   </ion-list>
 
+  <ion-list>
+    <ion-list-header>Action Sheet Interface Select</ion-list-header>
+
+    <ion-item>
+      <ion-label>Mute Notifications</ion-label>
+      <ion-select [(ngModel)]="notifications" interface="action-sheet">
+        <ion-option value="mute_15">For 15 Minutes</ion-option>
+        <ion-option value="mute_1">For 1 Hour</ion-option>
+        <ion-option value="mute_23">For 24 Hours</ion-option>
+        <ion-option value="mute_inf">Until I turn it back on</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Rating</ion-label>
+      <ion-select [(ngModel)]="rating" interface="action-sheet">
+        <ion-option value="1">1 Star</ion-option>
+        <ion-option value="2">2 Stars</ion-option>
+        <ion-option value="3">3 Stars</ion-option>
+        <ion-option value="4">4 Stars</ion-option>
+        <ion-option value="5">5 Stars</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
 </ion-content>

@@ -3,17 +3,18 @@ import {MenuType} from './menu-types';
 
 
 /**
- * @name Menu
+ * @name MenuController
  * @description
- * Menu is a side-menu interface that can be dragged and toggled to open or close.
- * An Ionic app can have numerous menus, all of which can be controlled within
- * template HTML, or programmatically.
+ * The MenuController is a provider which makes it easy to control a [Menu](../Menu).
+ * Its methods can be used to display the menu, enable the menu, toggle the menu, and more.
+ * The controller will grab a reference to the menu by the `side`, `id`, or, if neither
+ * of these are passed to it, it will grab the first menu it finds.
+ *
  *
  * @usage
- * In order to use Menu, you must specify a [reference](https://angular.io/docs/ts/latest/guide/user-input.html#local-variables)
- * to the content element that Menu should listen on for drag events, using the `content` property.
- * This is telling the menu which content the menu is attached to, so it knows which element to
- * move over, and to respond to drag events. Note that a **menu is a sibling to its content**.
+ *
+ * Add a basic menu component to start with. See the [Menu](../Menu) API docs
+ * for more information on adding menu components.
  *
  * ```html
  * <ion-menu [content]="mycontent">
@@ -27,45 +28,44 @@ import {MenuType} from './menu-types';
  * <ion-nav #mycontent [root]="rootPage"></ion-nav>
  * ```
  *
- * By default, Menus are on the left, but this can be overridden with the `side`
- * property:
- *
- * ```html
- * <ion-menu side="right" [content]="mycontent">...</ion-menu>
- * ```
- *
- *
- * ### Programmatic Interaction
- *
- * To programmatically interact with any menu, you can inject the `MenuController`
- * provider into any component or directive. This makes it easy get ahold of and
- * control the correct menu instance. By default Ionic will find the app's menu
- * without requiring a menu ID.
+ * To call the controller methods, inject the `MenuController` provider
+ * into the page. Then, create some methods for opening, closing, and
+ * toggling the menu.
  *
  * ```ts
  * import{Page, MenuController} from 'ionic-angular';
+ *
  * @Page({...})
  * export class MyPage {
- *  constructor(menu: MenuController) {
- *    this.menu = menu;
+ *
+ *  constructor(private menu: MenuController) {
+ *
  *  }
  *
  *  openMenu() {
  *    this.menu.open();
  *  }
  *
+ *  closeMenu() {
+ *    this.menu.close();
+ *  }
+ *
+ *  toggleMenu() {
+ *    this.menu.toggle();
+ *  }
+ *
  * }
  * ```
  *
- * Note that if you want to easily toggle or close a menu just from a page's
- * template, you can use `menuToggle` and/or `menuClose` to accomplish the same
- * tasks as above.
+ * Since only one menu exists, the `MenuController` will grab the
+ * correct menu and call the correct method for each.
  *
  *
- * ### Apps With Left And Right Menus
+ * ### Multiple Menus on Different Sides
  *
- * For apps with a left and right menu, you can control the desired
- * menu by passing in the side of the menu.
+ * For applications with both a left and right menu, the desired menu can be
+ * grabbed by passing the `side` of the menu. If nothing is passed, it will
+ * default to the `"left"` menu.
  *
  * ```html
  * <ion-menu side="left" [content]="mycontent">...</ion-menu>
@@ -74,24 +74,22 @@ import {MenuType} from './menu-types';
  * ```
  *
  * ```ts
- *  openLeftMenu() {
- *    this.menu.open('left');
+ *  toggleLeftMenu() {
+ *    this.menu.toggle();
  *  }
  *
- *  closeRightMenu() {
- *    this.menu.close('right');
+ *  toggleRightMenu() {
+ *    this.menu.toggle('right');
  *  }
  * ```
  *
  *
- * ### Apps With Multiple, Same Side Menus
+ * ### Multiple Menus on the Same Side
  *
- * Since more than one menu on a the same side is possible, and you wouldn't want
- * both to be open at the same time, an app can decide which menu should be enabled.
- * For apps with multiple menus on the same side, it's required to give each menu a
- * unique ID. In the example below, we're saying that the left menu with the
- * `authenticated` id should be enabled, and the left menu with the `unauthenticated`
- * id be disabled.
+ * An application can have multiple menus on the same side. In order to determine
+ * the menu to control, an `id` should be passed. In the example below, the menu
+ * with the `authenticated` id will be enabled, and the menu with the `unauthenticated`
+ * id will be disabled.
  *
  * ```html
  * <ion-menu id="authenticated" side="left" [content]="mycontent">...</ion-menu>
@@ -106,43 +104,13 @@ import {MenuType} from './menu-types';
  *  }
  * ```
  *
- * Note that if an app only had one menu, there is no reason to pass a menu id.
+ * Note: if an app only has one menu, there is no reason to pass an `id`.
  *
- *
- * ### Menu Types
- *
- * Menu supports two display types: `overlay`, `reveal` and `push`. Overlay
- * is the traditional Material Design drawer type, and Reveal is the traditional
- * iOS type. By default, menus will use to the correct type for the platform,
- * but this can be overriden using the `type` property:
- *
- * ```html
- * <ion-menu type="overlay" [content]="mycontent">...</ion-menu>
- * ```
- *
- *
- * ### Persistent Menus
- *
- * By default, menus, and specifically their menu toggle buttons in the navbar,
- * only show on the root page within its `NavController`. For example, on Page 1
- * the menu toggle will show in the navbar. However, when navigating to Page 2,
- * because it is not the root Page for that `NavController`, the menu toggle
- * will not show in the navbar.
- *
- * Not showing the menu toggle button in the navbar is commonly seen within
- * native apps after navigating past the root Page. However, it is still possible
- * to always show the menu toggle button in the navbar by setting
- * `persistent="true"` on the `ion-menu` component.
- *
- * ```html
- * <ion-menu persistent="true" [content]="content">...</ion-menu>
- * ```
  *
  * @demo /docs/v2/demos/menu/
  *
  * @see {@link /docs/v2/components#menus Menu Component Docs}
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
- * @see {@link ../../nav/Nav Nav API Docs}
+ * @see {@link ../Menu Menu API Docs}
  *
  */
 export class MenuController {

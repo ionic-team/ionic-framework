@@ -1,5 +1,6 @@
 import {provide, Provider, ComponentRef, NgZone} from 'angular2/core';
-import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
+import {ROUTER_PROVIDERS} from 'angular2/router';
+import {LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {ClickBlock} from '../util/click-block';
@@ -63,14 +64,17 @@ export function ionicProviders(args: any = {}) {
   ];
 }
 
-
+/**
+ * @private
+ */
 export function postBootstrap(appRef: ComponentRef, prodMode: boolean) {
   appRef.injector.get(TapClick);
   let app: IonicApp = appRef.injector.get(IonicApp);
-  let platform = appRef.injector.get(Platform);
-  let zone = appRef.injector.get(NgZone);
-  platform.prepareReady(zone);
+  let platform: Platform = appRef.injector.get(Platform);
+  platform.setZone(appRef.injector.get(NgZone));
+  platform.prepareReady();
   app.setProd(prodMode);
+  app.setAppInjector(appRef.injector);
 }
 
 

@@ -28,9 +28,16 @@ Config.setModeConfig('ios', {
   pageTransition: 'ios-transition',
   pageTransitionDelay: 16,
 
+  pickerEnter: 'picker-slide-in',
+  pickerLeave: 'picker-slide-out',
+  pickerRotateFactor: -0.46,
+
   spinner: 'ios',
 
   tabbarPlacement: 'bottom',
+
+  toastEnter: 'toast-slide-in',
+  toastLeave: 'toast-slide-out',
 });
 
 
@@ -60,12 +67,18 @@ Config.setModeConfig('md', {
   pageTransition: 'md-transition',
   pageTransitionDelay: 96,
 
+  pickerEnter: 'picker-slide-in',
+  pickerLeave: 'picker-slide-out',
+
   spinner: 'crescent',
 
   tabbarHighlight: true,
   tabbarPlacement: 'top',
 
   tabSubPages: true,
+
+  toastEnter: 'toast-md-slide-in',
+  toastLeave: 'toast-md-slide-out',
 });
 
 
@@ -95,9 +108,15 @@ Config.setModeConfig('wp', {
   pageTransition: 'wp-transition',
   pageTransitionDelay: 96,
 
+  pickerEnter: 'picker-slide-in',
+  pickerLeave: 'picker-slide-out',
+
   spinner: 'circles',
 
   tabbarPlacement: 'top',
 
   tabSubPages: true,
+
+  toastEnter: 'toast-wp-slide-in',
+  toastLeave: 'toast-wp-slide-out',
 });
