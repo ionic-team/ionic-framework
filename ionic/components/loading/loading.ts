@@ -38,6 +38,11 @@ import {ViewController} from '../nav/view-controller';
  * `onDismiss` function can be called to perform an action after the loading
  * indicator is dismissed.
  *
+ * >Note that after the component is dissmised, it will not be usable anymore
+ * and another one must be created. This can be avoided by wrapping the
+ * creation and presentation of the component in a reusable function as show
+ * on the `usage` section below.
+ *
  * ### Limitations
  * The element is styled to appear on top of other content by setting its
  * `z-index` property. You must ensure no element has a stacking context with
