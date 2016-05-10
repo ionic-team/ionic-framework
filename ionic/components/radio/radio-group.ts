@@ -11,12 +11,13 @@ const RADIO_VALUE_ACCESSOR = new Provider(
 /**
  * @name RadioGroup
  * @description
- * A radio group is a group of radio button components, and its value
- * comes from the checked radio button's value. Selecting a radio
- * button in the group unchecks all others in the group.
+ * A radio group is a group of [radio buttons](../RadioButton). It allows
+ * a user to select at most one radio button from a set. Checking one radio
+ * button that belongs to a radio group unchecks any previous checked
+ * radio button within the same group.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
- * for more info on forms and inputs.
+ * See the [Angular Forms Docs](https://angular.io/docs/ts/latest/guide/forms.html)
+ * for more information on forms and inputs.
  *
  * @usage
  * ```html
@@ -56,6 +57,7 @@ const RADIO_VALUE_ACCESSOR = new Provider(
  *
  * @demo /docs/v2/demos/radio/
  * @see {@link /docs/v2/components#radio Radio Component Docs}
+ * @see {@link ../RadioButton RadioButton API Docs}
 */
 @Directive({
   selector: '[radio-group]',

@@ -9,25 +9,38 @@ import {RadioGroup} from './radio-group';
 
 /**
  * @description
- * A radio button with a unique value. Note that all `<ion-radio>`
- * components must be wrapped within a `<ion-list radio-group>`,
- * and there must be at least two `<ion-radio>` components within
- * the radio group.
+ * A radio button is a button that can be either checked or unchecked. A user can tap
+ * the button to check or uncheck it. It can also be checked from the template using
+ * the `checked` property.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html) for
- * more info on forms and input.
+ * Use an element with a `radio-group` attribute to group a set of radio buttons. When
+ * radio buttons are inside a [radio group](../RadioGroup), exactly one radio button
+ * in the group can be checked at any time. If a radio button is not placed in a group,
+ * they will all have the ability to be checked at the same time.
+ *
+ * See the [Angular Forms Docs](https://angular.io/docs/ts/latest/guide/forms.html) for
+ * more information on forms and input.
  *
  * @usage
  * ```html
- *
- * <ion-item>
- *   <ion-label>Radio Label</ion-label>
- *   <ion-radio value="radio-value"></ion-radio>
- * </ion-item>
- *
+ * <ion-list radio-group [(ngModel)]="relationship">
+ *   <ion-item>
+ *     <ion-label>Friends</ion-label>
+ *     <ion-radio value="friends" checked></ion-radio>
+ *   </ion-item>
+ *   <ion-item>
+ *     <ion-label>Family</ion-label>
+ *     <ion-radio value="family"></ion-radio>
+ *   </ion-item>
+ *   <ion-item>
+ *     <ion-label>Enemies</ion-label>
+ *     <ion-radio value="enemies" [disabled]="isDisabled"></ion-radio>
+ *   </ion-item>
+ * </ion-list>
  * ```
  * @demo /docs/v2/demos/radio/
  * @see {@link /docs/v2/components#radio Radio Component Docs}
+ * @see {@link ../RadioGroup RadioGroup API Docs}
  */
 @Component({
   selector: 'ion-radio',
@@ -87,7 +100,7 @@ export class RadioButton {
   }
 
   /**
-   * @private
+   * @input {any} The value of the radio button. Defaults to the generated id.
    */
   @Input()
   get value(): any {
@@ -100,7 +113,7 @@ export class RadioButton {
   }
 
   /**
-   * @private
+   * @input {boolean} Whether the radio button should be checked or not. Default false.
    */
   @Input()
   get checked(): boolean {
@@ -116,7 +129,7 @@ export class RadioButton {
   }
 
   /**
-   * @private
+   * @input {boolean} Whether the radio button should be disabled or not. Default false.
    */
   @Input()
   get disabled(): boolean {
@@ -155,8 +168,6 @@ export class RadioButton {
    */
   ngOnDestroy() {
     this._form.deregister(this);
-    if (this._group) {
-      this._group.remove(this);
-    }
+    this._group && this._group.remove(this);
   }
 }
