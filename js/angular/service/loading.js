@@ -5,10 +5,6 @@ var LOADING_TPL =
     '</div>' +
   '</div>';
 
-var LOADING_HIDE_DEPRECATED = '$ionicLoading instance.hide() has been deprecated. Use $ionicLoading.hide().';
-var LOADING_SHOW_DEPRECATED = '$ionicLoading instance.show() has been deprecated. Use $ionicLoading.show().';
-var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been deprecated. Use $ionicLoading.show({ template: \'my content\' }).';
-
 /**
  * @ngdoc service
  * @name $ionicLoading
@@ -24,10 +20,14 @@ var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been depre
  *   $scope.show = function() {
  *     $ionicLoading.show({
  *       template: 'Loading...'
+ *     }).then(function(){
+ *        console.log("The loading indicator is now displayed");
  *     });
  *   };
  *   $scope.hide = function(){
- *     $ionicLoading.hide();
+ *     $ionicLoading.hide().then(function(){
+ *        console.log("The loading indicator is now hidden");
+ *     });
  *   };
  * });
  * ```
@@ -47,7 +47,10 @@ var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been depre
  * });
  * app.controller('AppCtrl', function($scope, $ionicLoading) {
  *   $scope.showLoading = function() {
- *     $ionicLoading.show(); //options default to values in $ionicLoadingConfig
+ *     //options default to values in $ionicLoadingConfig
+ *     $ionicLoading.show().then(function(){
+ *        console.log("The loading indicator is now displayed");
+ *     });
  *   };
  * });
  * ```
@@ -82,9 +85,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
      * @ngdoc method
      * @name $ionicLoading#show
      * @description Shows a loading indicator. If the indicator is already shown,
-     * it will set the options given and keep the indicator shown. Note: While this
-     * function still returns an $ionicLoading instance for backwards compatiblity,
-     * its use has been deprecated.
+     * it will set the options given and keep the indicator shown.
+     * @returns {promise} A promise which is resolved when the loading indicator is presented.
      * @param {object} opts The options for the loading indicator. Available properties:
      *  - `{string=}` `template` The html content of the indicator.
      *  - `{string=}` `templateUrl` The url of an html template to load as the content of the indicator.
@@ -101,6 +103,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
      * @ngdoc method
      * @name $ionicLoading#hide
      * @description Hides the loading indicator, if shown.
+     * @returns {promise} A promise which is resolved when the loading indicator is hidden.
      */
     hide: hideLoader,
     /**
@@ -198,6 +201,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
 
   function showLoader(options) {
     options = extend({}, $ionicLoadingConfig || {}, options || {});
+    // use a default delay of 100 to avoid some issues reported on github
+    // https://github.com/driftyco/ionic/issues/3717
     var delay = options.delay || options.showDelay || 0;
 
     deregisterStateListener1();
@@ -210,34 +215,17 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     //If loading.show() was called previously, cancel it and show with our new options
     $timeout.cancel(loadingShowDelay);
     loadingShowDelay = $timeout(noop, delay);
-    loadingShowDelay.then(getLoader).then(function(loader) {
+    return loadingShowDelay.then(getLoader).then(function(loader) {
       return loader.show(options);
     });
-
-    return {
-      hide: function deprecatedHide() {
-        $log.error(LOADING_HIDE_DEPRECATED);
-        return hideLoader.apply(this, arguments);
-      },
-      show: function deprecatedShow() {
-        $log.error(LOADING_SHOW_DEPRECATED);
-        return showLoader.apply(this, arguments);
-      },
-      setContent: function deprecatedSetContent(content) {
-        $log.error(LOADING_SET_DEPRECATED);
-        return getLoader().then(function(loader) {
-          loader.show({ template: content });
-        });
-      }
-    };
   }
 
   function hideLoader() {
     deregisterStateListener1();
     deregisterStateListener2();
     $timeout.cancel(loadingShowDelay);
-    getLoader().then(function(loader) {
-      loader.hide();
+    return getLoader().then(function(loader) {
+      return loader.hide();
     });
   }
 }]);
