@@ -86,30 +86,48 @@ export function run() {
       });
 
     });
+  });
 
-    let rg: RadioGroup;
-    let form: Form;
+  describe('RadioButton', () => {
 
-    function createRadioButton() {
-      return new RadioButton(form, null, rg);
-    }
+    describe('ngOnDestroy', () => {
+      it('should work without a group', () => {
+        let rb1 = createRadioButton(false);
+        expect(() => rb1.ngOnDestroy()).not.toThrowError();
+      });
 
-    function mockRenderer(): any {
-      return {
-        setElementAttribute: function(){}
-      }
-    }
+      it('should remove button from group if part of a radio group', () => {
+        let rb1 = createRadioButton();
+        spyOn(rg, 'remove');
+        rb1.ngOnDestroy();
+        expect(rg.remove).toHaveBeenCalledWith(rb1);
+      });
 
-    function mockElementRef(): any {
-      return {
-        nativeElement: document.createElement('div')
-      }
-    }
-
-    beforeEach(() => {
-      rg = new RadioGroup(mockRenderer(), mockElementRef());
-      form = new Form();
     });
 
+  });
+
+  let rg: RadioGroup;
+  let form: Form;
+
+  function createRadioButton(shouldIncludeGroup = true) {
+    return new RadioButton(form, null, shouldIncludeGroup? rg : null);
+  }
+
+  function mockRenderer(): any {
+    return {
+      setElementAttribute: function(){}
+    }
+  }
+
+  function mockElementRef(): any {
+    return {
+      nativeElement: document.createElement('div')
+    }
+  }
+
+  beforeEach(() => {
+    rg = new RadioGroup(mockRenderer(), mockElementRef());
+    form = new Form();
   });
 }

@@ -155,6 +155,8 @@ export class RadioButton {
    */
   ngOnDestroy() {
     this._form.deregister(this);
-    this._group.remove(this);
+    if (this._group) {
+      this._group.remove(this);
+    }
   }
 }
