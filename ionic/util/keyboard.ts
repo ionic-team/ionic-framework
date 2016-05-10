@@ -104,7 +104,7 @@ export class Keyboard {
   }
 
 /**
- * Progamatically close they keyboard
+ * Programmatically close the keyboard
  *
  */
   close() {

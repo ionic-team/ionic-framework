@@ -9,7 +9,7 @@ import {isPresent} from '../../util/util';
 /**
  * @name ViewController
  * @description
- * Access various features and information about the current view
+ * Access various features and information about the current view.
  * @usage
  *  ```ts
  *  import {Page, ViewController} from 'ionic-angular';
@@ -149,7 +149,7 @@ export class ViewController {
   }
 
   /**
-   * Check to see if you can go back in the navigation stack
+   * Check to see if you can go back in the navigation stack.
    * @param {boolean} Check whether or not you can go back from this page
    * @returns {boolean} Returns if it's possible to go back from this Page.
    */
@@ -186,7 +186,7 @@ export class ViewController {
   }
 
   /**
-   * You can find out the index of the current view is in the current navigation stack
+   * You can find out the index of the current view is in the current navigation stack.
    *
    * ```typescript
    *  export class Page1 {

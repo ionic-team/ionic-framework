@@ -111,17 +111,17 @@ export class TextInput extends InputBase {
  * @description
  *
  * `ion-textarea` is is used for multi-line text inputs. Ionic still
- * uses an actual `<textarea>` HTML element within the component,
- * however, with Ionic wrapping the native HTML textarea element then
- * Ionic is able to better handle the user experience and interactivity.
+ * uses an actual `<textarea>` HTML element within the component;
+ * however, with Ionic wrapping the native HTML text area element, Ionic
+ * is able to better handle the user experience and interactivity.
  *
  * Not that `<ion-textarea>` must load its value from the `value` or
  * `[(ngModel)]` attribute. Unlike the native `<textarea>` element,
  * `<ion-textarea>` does not support loading its value from the
  * textarea's inner content.
  *
- * When requiring only a single-line text input it's recommended
- * to use `<ion-input>` instead.
+ * When requiring only a single-line text input, we recommend using
+ * `<ion-input>` instead.
  *
  * @usage
  * ```html
