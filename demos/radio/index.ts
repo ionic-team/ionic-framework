@@ -3,4 +3,7 @@ import {App} from 'ionic-angular';
 @App({
   templateUrl: 'main.html'
 })
-class ApiDemoApp {}
+class ApiDemoApp {
+  isDisabled = true;
+
+}
