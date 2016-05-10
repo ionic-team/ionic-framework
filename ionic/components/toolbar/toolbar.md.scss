@@ -19,7 +19,7 @@ $toolbar-order-md: (
 $toolbar-md-padding:                     4px !default;
 $toolbar-md-height:                      5.6rem !default;
 $toolbar-md-title-font-size:             2rem !default;
-$toolbar-md-title-text-color:            color-contrast($colors-md, $toolbar-md-background, true) !default;
+$toolbar-md-title-text-color:            color-contrast($colors-md, $toolbar-md-background, md) !default;
 
 $toolbar-md-button-font-size:            1.4rem !default;
 
@@ -70,7 +70,7 @@ ion-navbar-section {
 
 @mixin md-toolbar-theme($color-name, $color-base, $color-contrast) {
   .toolbar[#{$color-name}] {
-    $fg-color: color-contrast($colors-md, $color-base, true);
+    $fg-color: color-contrast($colors-md, $color-base, md);
 
     .toolbar-background {
       background: $color-base;
@@ -218,15 +218,15 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: color-contrast($colors-md, $toolbar-md-button-color, true);
+  color: color-contrast($colors-md, $toolbar-md-button-color, md);
   background-color: $toolbar-md-button-color;
 
   &:hover:not(.disable-hover) {
-    color: color-contrast($colors-md, $toolbar-md-button-color, true);
+    color: color-contrast($colors-md, $toolbar-md-button-color, md);
   }
 
   &.activated {
-    color: color-contrast($colors-md, $toolbar-md-button-color, true);
+    color: color-contrast($colors-md, $toolbar-md-button-color, md);
     background-color: color-shade($toolbar-md-button-color);
   }
 }
@@ -335,7 +335,7 @@ ion-buttons[right] {
 // Material Design Toolbar Color Generation
 // --------------------------------------------------
 
-@include md-bar-button-default(default, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, true));
+@include md-bar-button-default(default, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
   @include md-toolbar-theme($color-name, $color-base, $color-contrast);

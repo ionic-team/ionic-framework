@@ -22,10 +22,10 @@ $toolbar-wp-title-padding:               0 6px !default;
 $toolbar-wp-title-font-size:             1.5rem !default;
 $toolbar-wp-title-font-weight:           bold !default;
 $toolbar-wp-title-text-transform:        uppercase !default;
-$toolbar-wp-title-text-color:            color-contrast($colors-wp, $toolbar-wp-background) !default;
+$toolbar-wp-title-text-color:            color-contrast($colors-wp, $toolbar-wp-background, wp) !default;
 
 $toolbar-wp-button-font-size:            1.4rem !default;
-$toolbar-wp-button-color:                color-contrast($colors-wp, $toolbar-wp-background) !default;
+$toolbar-wp-button-color:                color-contrast($colors-wp, $toolbar-wp-background, wp) !default;
 $toolbar-wp-button-border-radius:        2px !default;
 
 $navbar-wp-height:                       $toolbar-wp-height !default;
@@ -189,7 +189,7 @@ ion-buttons[right] {
   }
 
   &.activated {
-    color: color-contrast($colors-wp, $toolbar-wp-button-color);
+    color: color-contrast($colors-wp, $toolbar-wp-button-color, wp);
     background-color: $toolbar-wp-button-color;
   }
 }
@@ -215,15 +215,15 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-solid {
-  color: color-contrast($colors-wp, $toolbar-wp-button-color);
+  color: color-contrast($colors-wp, $toolbar-wp-button-color, wp);
   background-color: $toolbar-wp-button-color;
 
   &:hover:not(.disable-hover) {
-    color: color-contrast($colors-wp, $toolbar-wp-button-color);
+    color: color-contrast($colors-wp, $toolbar-wp-button-color, wp);
   }
 
   &.activated {
-    color: color-contrast($colors-wp, $toolbar-wp-button-color);
+    color: color-contrast($colors-wp, $toolbar-wp-button-color, wp);
     background-color: color-shade($toolbar-wp-button-color);
   }
 }
@@ -332,7 +332,7 @@ ion-buttons[right] {
 // Windows Toolbar Color Generation
 // --------------------------------------------------
 
-@include wp-bar-button-default(default, $toolbar-wp-button-color, color-contrast($colors-wp, $toolbar-wp-button-color));
+@include wp-bar-button-default(default, $toolbar-wp-button-color, color-contrast($colors-wp, $toolbar-wp-button-color, wp));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
   @include wp-toolbar-theme($color-name, $color-base, $color-contrast);

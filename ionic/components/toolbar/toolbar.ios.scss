@@ -25,7 +25,7 @@ $toolbar-ios-title-font-weight:             600 !default;
 $toolbar-ios-title-text-align:              center !default;
 $toolbar-ios-title-text-color:              color-contrast($colors-ios, $toolbar-ios-background) !default;
 
-$toolbar-ios-button-color:                  $toolbar-ios-active-color !default;
+$toolbar-ios-button-color:                  color-contrast($colors-ios, $toolbar-ios-background, ios) !default;
 $toolbar-ios-button-border-radius:          4px !default;
 
 $navbar-ios-height:                         $toolbar-ios-height !default;
@@ -340,7 +340,7 @@ ion-buttons[right] {
 // iOS Toolbar Color Generation
 // --------------------------------------------------
 
-@include ios-bar-button-default(default, $toolbar-ios-button-color, color-contrast($colors-ios, $toolbar-ios-button-color));
+@include ios-bar-button-default(default, $toolbar-ios-button-color, color-contrast($colors-ios, $toolbar-ios-button-color, ios));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   @include ios-toolbar-theme($color-name, $color-base, $color-contrast);
