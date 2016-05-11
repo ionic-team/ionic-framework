@@ -80,36 +80,38 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * ```
  *
  *
- * A config value can come from anywhere and be anything, but there are a default set of values.
+ * A config value can come from anywhere and be anything, but there are default
+ * values for each mode. The [theming](../../../theming/platform-specific-styles/)
+ * documentation has a chart of the default mode configuration. The following
+ * chart displays each property with a description of what it controls.
  *
  *
- * | Config property            | Default `ios` Value      | Default `md` Value          | Default `wp` Value          |
- * |----------------------------|--------------------------|-----------------------------|-----------------------------|
- * | activator                  | "highlight"              | "ripple"                    | "highlight"                 |
- * | actionSheetEnter           | "action-sheet-slide-in"  | "action-sheet-md-slide-in"  | "action-sheet-wp-slide-in"  |
- * | actionSheetLeave           | "action-sheet-slide-out" | "action-sheet-md-slide-out" | "action-sheet-wp-slide-out" |
- * | alertEnter                 | "alert-pop-in"           | "alert-md-pop-in"           | "alert-wp-pop-in"           |
- * | alertLeave                 | "alert-pop-out"          | "alert-md-pop-out"          | "alert-wp-pop-out"          |
- * | backButtonText             | "Back"                   | ""                          | ""                          |
- * | backButtonIcon             | "ios-arrow-back"         | "md-arrow-back"             | "ios-arrow-back"            |
- * | iconMode                   | "ios"                    | "md"                        | "ios"                       |
- * | loadingEnter               | "loading-pop-in"         | "loading-md-pop-in"         | "loading-wp-pop-in"         |
- * | loadingLeave               | "loading-pop-out"        | "loading-md-pop-out"        | "loading-wp-pop-out"        |
- * | menuType                   | "reveal"                 | "overlay"                   | "overlay"                   |
- * | modalEnter                 | "modal-slide-in"         | "modal-md-slide-in"         | "modal-md-slide-in"         |
- * | modalLeave                 | "modal-slide-out"        | "modal-md-slide-out"        | "modal-md-slide-out"        |
- * | pageTransition             | "ios-transition"         | "md-transition"             | "wp-transition"             |
- * | pageTransitionDelay        | 16                       | 96                          | 96                          |
- * | pickerEnter                | "picker-slide-in"        | "picker-slide-in"           | "picker-slide-in"           |
- * | pickerLeave                | "picker-slide-out"       | "picker-slide-out"          | "picker-slide-out"          |
- * | pickerRotateFactor         | -0.46                    |                             |                             |
- * | spinner                    | "ios"                    | "crescent"                  | "circles"                   |
- * | tabbarHighlight            |                          | true                        |                             |
- * | tabbarLayout               |                          |                             |                             |
- * | tabbarPlacement            | "bottom"                 | "top"                       | "top"                       |
- * | tabSubPages                |                          | true                        | true                        |
- * | toastEnter                 | "toast-slide-in"         | "toast-md-slide-in"         | "toast-wp-slide-in"         |
- * | toastLeave                 | "toast-slide-out"        | "toast-md-slide-out"        | "toast-wp-slide-out"        |
+ * | Config Property          | Type                | Details                                                                                                                                          |
+ * |--------------------------|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+ * | `activator`              | `string`            | Used for buttons, changes the effect of pressing on a button. Available options: `"ripple"`, `"highlight"`.                                      |
+ * | `actionSheetEnter`       | `string`            | The name of the transition to use while an action sheet is presented.                                                                            |
+ * | `actionSheetLeave`       | `string`            | The name of the transition to use while an action sheet is dismissed.                                                                            |
+ * | `alertEnter`             | `string`            | The name of the transition to use while an alert is presented.                                                                                   |
+ * | `alertLeave`             | `string`            | The name of the transition to use while an alert is dismissed.                                                                                   |
+ * | `backButtonText`         | `string`            | The text to display by the back button icon in the navbar.                                                                                       |
+ * | `backButtonIcon`         | `string`            | The icon to use as the back button icon.                                                                                                         |
+ * | `iconMode`               | `string`            | The mode to use for all icons throughout the application. Available options: `"ios"`, `"md"`                                                     |
+ * | `loadingEnter`           | `string`            | The name of the transition to use while a loading indicator is presented.                                                                        |
+ * | `loadingLeave`           | `string`            | The name of the transition to use while a loading indicator is dismissed.                                                                        |
+ * | `menuType`               | `string`            | Type of menu to display. Available options: `"overlay"`, `"reveal"`, `"push"`.                                                                   |
+ * | `modalEnter`             | `string`            | The name of the transition to use while a modal is presented.                                                                                    |
+ * | `modalLeave`             | `string`            | The name of the transition to use while a modal is dismiss.                                                                                      |
+ * | `pageTransition`         | `string`            | The name of the transition to use while changing pages.                                                                                          |
+ * | `pageTransitionDelay`    | `number`            | The delay in milliseconds before the transition starts while changing pages.                                                                     |
+ * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
+ * | `pickerLeave`            | `string`            | The name of the transition to use while a picker is dismissed.                                                                                   |
+ * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
+ * | `tabbarHighlight`        | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
+ * | `tabbarLayout`           | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-left"`, `"icon-right"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.  |
+ * | `tabbarPlacement`        | `string`            | The position of the tabs. Available options: `"top"`, `"bottom"`                                                                                 |
+ * | `tabSubPages`            | `boolean`           | Whether to hide the tabs on child pages or not. If `true` it will not show the tabs on child pages.                                              |
+ * | `toastEnter`             | `string`            | The name of the transition to use while a toast is presented.                                                                                    |
+ * | `toastLeave`             | `string`            | The name of the transition to use while a toast is dismissed.                                                                                    |
  *
 **/
 export class Config {
