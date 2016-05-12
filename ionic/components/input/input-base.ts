@@ -402,14 +402,6 @@ export class InputBase {
   }
 
   /**
-    * @private
-   */
-  clearTextInput() {
-    console.debug('Should clear input');
-    this._value = '';
-  }
-
-  /**
    * @private
    */
   private setFocus() {

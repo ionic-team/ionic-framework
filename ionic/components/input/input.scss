@@ -127,12 +127,17 @@ input.text-input:-webkit-autofill {
 
 .text-input-clear-icon {
   position: absolute;
+  display: none;
 
   margin: 0;
   padding: 0;
 
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.input-has-value .text-input-clear-icon {
+  display: block;
 }
 
 

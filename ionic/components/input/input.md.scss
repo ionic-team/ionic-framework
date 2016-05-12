@@ -112,7 +112,7 @@ ion-input[clearInput] {
   @include svg-background-image($text-input-md-input-clear-icon-svg);
 
   right: ($item-md-padding-right / 2);
-  bottom: 2px;
+  bottom: 4px;
 
   width: $text-input-md-input-clear-icon-width;
 
