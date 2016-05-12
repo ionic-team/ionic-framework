@@ -1,3 +1,37 @@
+<a name"1.3.1"></a>
+## 1.3.1 "el salvador" (2016-05-12)
+
+#### Bug Fixes
+
+* **Status Bar:**  Moved status tap handler to after platform ready fires. ([947d9296](https://github.com/driftyco/ionic/commit/947d9296))
+
+* **Loader:** make the loader service return a promise instead of the deprecated object, updated docs ([0e94f914](https://github.com/driftyco/ionic/commit/0e94f914), closes [#3717](https://github.com/driftyco/ionic/issues/3717))
+
+* **Tabs:** fixs as issue with tabs without icons ([28e99594](https://github.com/driftyco/ionic/commit/28e99594), closes [#6292](https://github.com/driftyco/ionic/issues/6292))
+
+* **Navigation:** revert previous navigation fix (efb9bd) and added a different fix for the infinite loop issue.  Wrote additional tests to verify the test. ([e31498c4](https://github.com/driftyco/ionic/commit/e31498c4))
+
+* **Life Cycle:** Life cycle events fire reliably on correct scope, closed many issues ([d6373335](https://github.com/driftyco/ionic/commit/d6373335))
+
+* **Slides:** changed the way looped/duplicates slides work, added documentation ([44d5a0f8](https://github.com/driftyco/ionic/commit/44d5a0f8), closes [#6305](https://github.com/driftyco/ionic/issues/6305))
+
+* **Header:** 
+  * ion-nav-title will fill up available space ([677d2d4c](https://github.com/driftyco/ionic/commit/677d2d4c), closes [#4661](https://github.com/driftyco/ionic/issues/4661))
+  * subheader visiblity fix, remove display as block ([01ab8b03](https://github.com/driftyco/ionic/commit/01ab8b03), closes [#3055](https://github.com/driftyco/ionic/pull/3055))
+  * set correct title bar height ([6a5e6bc4](https://github.com/driftyco/ionic/commit/6a5e6bc4), closes [#4965](https://github.com/driftyco/ionic/pull/4965))
+
+* **Footer:** fix a typo in footer bar styles using balanced class ([99f987fc](https://github.com/driftyco/ionic/pull/6426/commits/99f987fc), closes [#6426](https://github.com/driftyco/ionic/issues/6426))
+
+* **Pull-to-refresh:** Better performance via changing translateY to 3d ([c7e61e4d](https://github.com/driftyco/ionic/commit/c7e61e4d), closes [#6360](https://github.com/driftyco/ionic/pull/6360))
+
+* **Scss:** made variables for button-default-border and button-default-active-bordermade variables ([7da8739f](https://github.com/driftyco/ionic/commit/7da8739f), closes [#5576](https://github.com/driftyco/ionic/issues/5576))
+
+* **Content:** documentation update ([#62fdd636](https://github.com/driftyco/ionic/commit/62fdd636), closes [#5813](https://github.com/driftyco/ionic/pull/5813))
+
+#### Breaking Changes
+
+* **Scss:** changed variable being passed to buttons for styling borders.  By default, the variable passed is `$button-default-border` instead of `$button-primary-border` (for example).  The border property was previously ignoring the parameter and was hard-coded to transparent ([7da8739f](https://github.com/driftyco/ionic/commit/7da8739f)
+
 <a name"1.3.0"></a>
 ## 1.3.0 "delhi" (2016-04-21)
 
