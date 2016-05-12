@@ -38,44 +38,24 @@
 
   <script src="../../../js/es6-shim.min.js"></script>
   <script src="../../../js/es6-module-loader.src.js"></script>
+  <script src="../../../js/Reflect.js"></script>
+  <script src="../../../js/zone.js"></script>
   <script src="../../../js/system.src.js"></script>
   <script>
     System.config({
       map: {
-        '@angular': '/node_modules/@angular',
+        '@angular/core': '/node_modules/@angular/core/core.umd.js',
+        '@angular/compiler': '/node_modules/@angular/compiler/compiler.umd.js',
+        '@angular/common': '/node_modules/@angular/common/common.umd.js',
+        '@angular/http': '/node_modules/@angular/http/http.umd.js',
+        '@angular/platform-browser': '/node_modules/@angular/platform-browser/platform-browser.umd.js',
+        '@angular/platform-browser-dynamic': '/node_modules/@angular/platform-browser-dynamic/platform-browser-dynamic.umd.js',
+        '@angular/router': '/node_modules/@angular/router/router.umd.js',
         'ionic-angular': '/ionic'
       },
       packages: {
         'ionic-angular': {
           main: 'index'
-        },
-        '@angular/core': {
-          main: 'index.js',
-          defaultExtension: 'js'
-        },
-        '@angular/compiler': {
-          main: 'index.js',
-          defaultExtension: 'js'
-        },
-        '@angular/common': {
-          main: 'index.js',
-          defaultExtension: 'js'
-        },
-        '@angular/http': {
-          main: 'index.js',
-          defaultExtension: 'js'
-        },
-        '@angular/platform-browser': {
-          main: 'index.js',
-          defaultExtension: 'js'
-        },
-        '@angular/platform-browser-dynamic': {
-          main: 'index.js',
-          defaultExtension: 'js'
-        },
-        '@angular/router': {
-          main: 'index.js',
-          defaultExtension: 'js'
         },
         'rxjs': {
           defaultExtension: 'js'
@@ -83,10 +63,6 @@
       }
     });
   </script>
-  <script src="../../../js/angular2-polyfills.js"></script>
-  <script src="../../../js/angular2.dev.js"></script>
-  <script src="../../../js/router.dev.js"></script>
-  <script src="../../../js/http.dev.js"></script>
   <script src="../../../bundles/ionic.system.js"></script>
   <script src="../../../js/Rx.js"></script>
 

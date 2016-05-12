@@ -355,11 +355,9 @@ gulp.task('copy.libs', function() {
       'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js', //npm2
       'node_modules/es6-module-loader/dist/es6-module-loader.src.js', //npm3
       'node_modules/systemjs/dist/system.src.js',
-      'node_modules/angular2/bundles/angular2-polyfills.js',
-      'node_modules/angular2/bundles/angular2.dev.js',
-      'node_modules/angular2/bundles/router.dev.js',
-      'node_modules/angular2/bundles/http.dev.js',
-      'node_modules/rxjs/bundles/Rx.js'
+      'node_modules/rxjs/bundles/Rx.js',
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/reflect-metadata/Reflect.js'
     ])
     .pipe(gulp.dest('dist/js'));
 
