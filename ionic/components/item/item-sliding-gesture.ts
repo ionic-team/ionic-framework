@@ -234,7 +234,7 @@ function preventDefault(ev) {
   ev.preventDefault();
 }
 
-function getItemConatiner(ele) {
+function getItemContainer(ele) {
   return closest(ele, 'ion-item-sliding', true);
 }
 
