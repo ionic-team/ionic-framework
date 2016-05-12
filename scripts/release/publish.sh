@@ -15,7 +15,7 @@ function run {
   cd ../..
 
   node_modules/.bin/gulp build --release --dist="$RELEASE_DIR/release"
-  node_modules/.bin/gulp changelog --dest="$RELEASE_DIR/CHANGELOG.md"
+  #node_modules/.bin/gulp changelog --dest="$RELEASE_DIR/CHANGELOG.md"
 
   # Move modified files into the repo copy we're going to push
   cp package.json $RELEASE_DIR
