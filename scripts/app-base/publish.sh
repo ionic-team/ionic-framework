@@ -35,6 +35,9 @@ function run {
 
   cd $APPBASE_DIR
 
+  git config --global user.email "hi@ionicframework.com"
+  git config --global user.name "Ionitron"
+
   git add -A
   git commit -am "release: update ionic to v$VERSION"
   git push -q origin master
