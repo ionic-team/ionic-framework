@@ -41,7 +41,7 @@ export class ItemSlidingGesture extends DragGesture {
   }
 
   onDragStart(ev): boolean {
-    let itemContainerEle = getItemConatiner(ev.target);
+    let itemContainerEle = getItemContainer(ev.target);
     if (!itemContainerEle) {
       console.debug('onDragStart, no itemContainerEle');
       return false;
@@ -77,7 +77,7 @@ export class ItemSlidingGesture extends DragGesture {
       return;
     }
 
-    let itemContainerEle = getItemConatiner(ev.target);
+    let itemContainerEle = getItemContainer(ev.target);
     if (!itemContainerEle || !isActive(itemContainerEle)) {
       console.debug('onDrag, no itemContainerEle');
       return;
@@ -120,7 +120,7 @@ export class ItemSlidingGesture extends DragGesture {
     this.preventDrag = false;
     this.dragEnded = true;
 
-    let itemContainerEle = getItemConatiner(ev.target);
+    let itemContainerEle = getItemContainer(ev.target);
     if (!itemContainerEle || !isActive(itemContainerEle)) {
       console.debug('onDragEnd, no itemContainerEle');
       return;

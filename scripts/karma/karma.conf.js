@@ -20,7 +20,7 @@ module.exports = function(config) {
       'node_modules/angular2/bundles/http.min.js',
       'node_modules/rxjs/bundles/Rx.min.js',
       'dist/bundles/ionic.system.js',
-      //'node_modules/angular2/bundles/test_lib.js',
+      'node_modules/angular2/bundles/test_lib.js',
       { pattern: 'dist/tests/**/*.spec.js', included: false },
       'scripts/karma/test-main.js'
     ],
