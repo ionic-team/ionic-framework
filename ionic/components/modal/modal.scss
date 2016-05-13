@@ -8,4 +8,22 @@ ion-page.modal {
 
   // hidden by default to prevent flickers, the animation will show it
   transform: translate3d(0, 100%, 0);
+
+  @media only screen and (min-width: 768px) and (min-height: 600px){
+    position: absolute;
+    top: calc(50% - 250px);
+    left: calc(50% - 300px);
+
+    width: 600px;
+    height: 500px;
+  }
+
+  @media only screen and (min-width: 768px) and (min-height: 768px){
+    position: absolute;
+    top: calc(50% - 300px);
+    left: calc(50% - 300px);
+
+    width: 600px;
+    height: 600px;
+  }
 }
