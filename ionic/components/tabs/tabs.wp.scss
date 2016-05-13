@@ -35,7 +35,7 @@ tabbar {
   opacity: .7;
 
   &[aria-selected=true] {
-    border-bottom: 2px solid $tab-button-wp-active-color;
+    border-bottom-color: $tab-button-wp-active-color;
     color: $tab-button-wp-active-color;
     opacity: 1;
   }
@@ -76,6 +76,17 @@ tabbar {
 .tab-button.has-title-only {
   padding: 6px 10px;
 }
+
+[tabbarPlacement=bottom] .tab-button {
+  border-top: 2px solid transparent;
+  border-bottom-width: 0;
+
+  &[aria-selected=true] {
+    border-top-color: $tab-button-wp-active-color;
+  }
+}
+
+
 
 
 // Windows Tabbar Color Mixin
