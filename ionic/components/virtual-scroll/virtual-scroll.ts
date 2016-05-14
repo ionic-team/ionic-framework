@@ -485,7 +485,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       for (var i = 0; i < this._nodes.length; i++) {
         node = this._nodes[i];
         if (node.hasChanges) {
-          node.view['changeDetectorRef'].detectChanges();
+          node.view['detectChanges']();
           node.hasChanges = false;
         }
       }

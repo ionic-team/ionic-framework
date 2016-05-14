@@ -4,7 +4,7 @@
 
   <div [virtualScroll]="items" approxItemHeight="320px">
 
-    <ion-card *virtualItem="#item">
+    <ion-card *virtualItem="let item">
 
       <div>
         <ion-img [src]="item.imgSrc" [height]="item.imgHeight"></ion-img>

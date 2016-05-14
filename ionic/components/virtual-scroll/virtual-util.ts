@@ -239,8 +239,6 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
     // apply the cell's data to this node
     availableNode.view.context.$implicit = cell.data || records[cell.record];
     availableNode.view.context.index = cellIndex;
-    availableNode.view.context.even = (cellIndex % 2 === 0);
-    availableNode.view.context.odd = (cellIndex % 2 === 1);
     availableNode.hasChanges = true;
     availableNode.lastTransform = null;
     madeChanges = true;
