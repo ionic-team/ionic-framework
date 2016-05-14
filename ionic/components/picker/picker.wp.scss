@@ -15,15 +15,15 @@ $picker-wp-button-height:                     $picker-wp-toolbar-height !default
 $picker-wp-button-text-color:                 $link-wp-color !default;
 $picker-wp-button-background-color:           transparent !default;
 
-$picker-wp-column-padding:                    0 12px !default;
+$picker-wp-column-padding:                    0 4px !default;
 
-$picker-wp-option-padding:                    0 10px !default;
+$picker-wp-option-padding:                    0 !default;
 $picker-wp-option-text-color:                 $list-wp-text-color !default;
 $picker-wp-option-font-size:                  18px !default;
 $picker-wp-option-height:                     42px !default;
 $picker-wp-option-offset-y:                   (($picker-wp-height - $picker-wp-toolbar-height) / 2) - ($picker-wp-option-height / 2) - 10 !default;
 
-$picker-wp-option-selected-font-size:         24px !default;
+$picker-wp-option-selected-font-size:         22px !default;
 $picker-wp-option-selected-color:             $link-wp-color !default;
 
 $picker-highlight-opacity:                     .8 !default;
@@ -109,8 +109,6 @@ $picker-highlight-opacity:                     .8 !default;
 .picker-opt {
   margin: 0;
   padding: $picker-wp-option-padding;
-
-  width: calc(100% - 24px);
 
   font-size: $picker-wp-option-font-size;
   line-height: $picker-wp-option-height;

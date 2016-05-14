@@ -27,6 +27,7 @@ import {Spinner} from '../components/spinner/spinner';
 import {Checkbox} from '../components/checkbox/checkbox';
 import {Select} from '../components/select/select';
 import {Option} from '../components/option/option';
+import {DateTime} from '../components/datetime/datetime';
 import {Toggle} from '../components/toggle/toggle';
 import {TextInput, TextArea} from '../components/input/input';
 import {Label} from '../components/label/label';
@@ -44,7 +45,7 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * @name IONIC_DIRECTIVES
  * @description
  * The core Ionic directives as well as Angular's `CORE_DIRECTIVES` and `FORM_DIRECTIVES` are
- * avaialbe automatically when you bootstrap your app with the `@App` decorator. This means
+ * available automatically when you bootstrap your app with the `@App` decorator. This means
  * if you are using custom components you no longer need to import `IONIC_DIRECTIVES` as they
  * are part of the `@App`s default directives.
  *
@@ -125,6 +126,7 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * - RadioButton
  * - Select
  * - Option
+ * - DateTime
  * - Toggle
  * - TextArea
  * - TextInput
@@ -197,6 +199,7 @@ export const IONIC_DIRECTIVES = [
   RadioButton,
   Select,
   Option,
+  DateTime,
   Toggle,
   TextArea,
   TextInput,

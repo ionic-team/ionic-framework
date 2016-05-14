@@ -15,11 +15,12 @@ $picker-ios-button-height:                     $picker-ios-toolbar-height !defau
 $picker-ios-button-text-color:                 $link-ios-color !default;
 $picker-ios-button-background-color:           transparent !default;
 
-$picker-ios-column-padding:                    0 12px !default;
+$picker-ios-column-padding:                    0 4px !default;
+$picker-ios-column-perspective:                1000px !default;
 
-$picker-ios-option-padding:                    0 10px !default;
+$picker-ios-option-padding:                    0 !default;
 $picker-ios-option-text-color:                 $list-ios-text-color !default;
-$picker-ios-option-font-size:                  22px !default;
+$picker-ios-option-font-size:                  20px !default;
 $picker-ios-option-height:                     42px !default;
 $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-ios-toolbar-height) / 2) - ($picker-ios-option-height / 2) - 10 !default;
 
@@ -74,7 +75,7 @@ $picker-highlight-opacity:                     .8 !default;
 .picker-columns {
   height: $picker-ios-height - $picker-ios-toolbar-height;
 
-  perspective: 1800px;
+  perspective: $picker-ios-column-perspective;
 }
 
 .picker-col {
@@ -100,8 +101,6 @@ $picker-highlight-opacity:                     .8 !default;
 .picker-opt {
   margin: 0;
   padding: $picker-ios-option-padding;
-
-  width: calc(100% - 24px);
 
   font-size: $picker-ios-option-font-size;
   line-height: $picker-ios-option-height;

@@ -138,8 +138,8 @@ export class Select {
   private _labelId: string;
   private _multi: boolean = false;
   private _options: QueryList<Option>;
-  private _values: Array<string> = [];
-  private _texts: Array<string> = [];
+  private _values: string[] = [];
+  private _texts: string[] = [];
   private _text: string = '';
   private _fn: Function;
   private _isOpen: boolean = false;
@@ -282,7 +282,7 @@ export class Select {
 
       // user cannot provide inputs from alertOptions
       // alert inputs must be created by ionic from ion-options
-      alertOptions.inputs = this._options.toArray().map(input => {
+      alertOptions.inputs = this._options.map(input => {
         return {
           type: (this._multi ? 'checkbox' : 'radio'),
           label: input.text,
@@ -352,7 +352,7 @@ export class Select {
     if (!this._values.length) {
       // there are no values set at this point
       // so check to see who should be checked
-      this._values = val.toArray().filter(o => o.checked).map(o => o.value);
+      this._values = val.filter(o => o.checked).map(o => o.value);
     }
 
     this._updOpts();
@@ -365,7 +365,7 @@ export class Select {
     this._texts = [];
 
     if (this._options) {
-      this._options.toArray().forEach(option => {
+      this._options.forEach(option => {
         // check this option if the option's value is in the values array
         option.checked = this._values.some(selectValue => {
           return isCheckedProperty(selectValue, option.value);

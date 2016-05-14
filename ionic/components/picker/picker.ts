@@ -1,12 +1,12 @@
-import {Component, ElementRef, Input, ViewChild, Renderer, HostListener, ViewEncapsulation} from 'angular2/core';
+import {Component, ElementRef, Input, Output, EventEmitter, ViewChildren, QueryList, ViewChild, Renderer, HostListener, ViewEncapsulation} from 'angular2/core';
 
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
-import {isPresent, isString, isNumber} from '../../util/util';
+import {isPresent, isString, isNumber, clamp} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
-import {nativeRaf, cancelRaf, CSS, pointerCoord} from '../../util/dom';
+import {raf, cancelRaf, CSS, pointerCoord} from '../../util/dom';
 
 
 /**
@@ -16,6 +16,8 @@ import {nativeRaf, cancelRaf, CSS, pointerCoord} from '../../util/dom';
  */
 export class Picker extends ViewController {
 
+  @Output() change: EventEmitter<any>;
+
   constructor(opts: PickerOptions = {}) {
     opts.columns = opts.columns || [];
     opts.buttons = opts.buttons || [];
@@ -24,6 +26,8 @@ export class Picker extends ViewController {
     super(PickerDisplayCmp, opts);
     this.viewType = 'picker';
     this.isOverlay = true;
+
+    this.change = new EventEmitter();
 
     // by default, pickers should not fire lifecycle events of other views
     // for example, when an picker enters, the current active view should
@@ -54,6 +58,14 @@ export class Picker extends ViewController {
     this.data.columns.push(column);
   }
 
+  getColumns(): PickerColumn[] {
+    return this.data.columns;
+  }
+
+  refresh() {
+    this.instance.refresh && this.instance.refresh();
+  }
+
   /**
    * @param {string} cssClass CSS class name to add to the picker's outer wrapper.
    */
@@ -76,7 +88,7 @@ export class Picker extends ViewController {
   template:
     '<div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>' +
     '<div class="picker-opts" #colEle [style.width]="col.optionsWidth">' +
-      '<button *ngFor="#o of col.options; #i=index" (click)="optClick($event, i)" type="button" category="picker-opt">' +
+      '<button *ngFor="#o of col.options; #i=index" [style.transform]="o._trans" [style.transitionDuration]="o._dur" [class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" (click)="optClick($event, i)" type="button" category="picker-opt">' +
         '{{o.text}}' +
       '</button>' +
     '</div>' +
@@ -91,7 +103,6 @@ export class Picker extends ViewController {
     '(mousedown)': 'pointerStart($event)',
     '(mousemove)': 'pointerMove($event)',
     '(body:mouseup)': 'pointerEnd($event)',
-    '(body:mouseout)': 'mouseOut($event)',
   }
 })
 class PickerColumnCmp {
@@ -106,8 +117,11 @@ class PickerColumnCmp {
   startY: number = null;
   rafId: number;
   bounceFrom: number;
+  minY: number;
   maxY: number;
   rotateFactor: number;
+  lastIndex: number;
+  @Output() change: EventEmitter<any> = new EventEmitter();
 
   constructor(config: Config) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
@@ -123,8 +137,7 @@ class PickerColumnCmp {
     this.optHeight = (colEle.firstElementChild ? colEle.firstElementChild.clientHeight : 0);
 
     // set the scroll position for the selected option
-    let selectedIndex = this.col.options.indexOf(this.col.selected);
-    this.setSelected(selectedIndex, 0);
+    this.setSelected(this.col.selectedIndex, 0);
   }
 
   pointerStart(ev) {
@@ -145,7 +158,24 @@ class PickerColumnCmp {
     this.velocity = 0;
     this.pos.length = 0;
     this.pos.push(this.startY, Date.now());
-    this.maxY = (this.optHeight * (this.col.options.length - 1)) * -1;
+
+    let minY = this.col.options.length - 1;
+    let maxY = 0;
+
+    for (var i = 0; i < this.col.options.length; i++) {
+      if (this.col.options[i].disabled) {
+        continue;
+      }
+      if (i < minY) {
+        minY = i;
+      }
+      if (i > maxY) {
+        maxY = i;
+      }
+    }
+
+    this.minY = (minY * this.optHeight * -1);
+    this.maxY = (maxY * this.optHeight * -1);
   }
 
   pointerMove(ev) {
@@ -163,21 +193,21 @@ class PickerColumnCmp {
       // update the scroll position relative to pointer start position
       var y = this.y + (currentY - this.startY);
 
-      if (y > 0) {
+      if (y > this.minY) {
         // scrolling up higher than scroll area
         y = Math.pow(y, 0.8);
         this.bounceFrom = y;
 
       } else if (y < this.maxY) {
         // scrolling down below scroll area
-        y = y + Math.pow(this.maxY - y, 0.9);
+        y += Math.pow(this.maxY - y, 0.9);
         this.bounceFrom = y;
 
       } else {
         this.bounceFrom = 0;
       }
 
-      this.update(y, 0, false);
+      this.update(y, 0, false, false);
     }
   }
 
@@ -190,11 +220,11 @@ class PickerColumnCmp {
 
     if (this.bounceFrom > 0) {
       // bounce back up
-      this.update(0, 100, true);
+      this.update(this.minY, 100, true, true);
 
     } else if (this.bounceFrom < 0) {
       // bounce back down
-      this.update(this.maxY, 100, true);
+      this.update(this.maxY, 100, true, true);
 
     } else if (this.startY !== null) {
       var endY = pointerCoord(ev).y;
@@ -226,7 +256,7 @@ class PickerColumnCmp {
         ev.stopPropagation();
 
         var y = this.y + (endY - this.startY);
-        this.update(y, 0, true);
+        this.update(y, 0, true, true);
       }
 
     }
@@ -235,19 +265,13 @@ class PickerColumnCmp {
     this.decelerate();
   }
 
-  mouseOut(ev) {
-    if (ev.target.classList.contains('picker-col')) {
-      this.pointerEnd(ev);
-    }
-  }
-
   decelerate() {
-    var y = 0;
+    let y = 0;
     cancelRaf(this.rafId);
 
     if (isNaN(this.y) || !this.optHeight) {
       // fallback in case numbers get outta wack
-      this.update(y, 0, true);
+      this.update(y, 0, true, true);
 
     } else if (Math.abs(this.velocity) > 0) {
       // still decelerating
@@ -258,9 +282,9 @@ class PickerColumnCmp {
 
       y = Math.round(this.y - this.velocity);
 
-      if (y > 0) {
+      if (y > this.minY) {
         // whoops, it's trying to scroll up farther than the options we have!
-        y = 0;
+        y = this.minY;
         this.velocity = 0;
 
       } else if (y < this.maxY) {
@@ -271,11 +295,13 @@ class PickerColumnCmp {
 
       console.log(`decelerate y: ${y}, velocity: ${this.velocity}, optHeight: ${this.optHeight}`);
 
-      this.update(y, 0, true);
+      var notLockedIn = (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1);
 
-      if (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1) {
+      this.update(y, 0, true, !notLockedIn);
+
+      if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
-        this.rafId = nativeRaf(this.decelerate.bind(this));
+        this.rafId = raf(this.decelerate.bind(this));
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -307,22 +333,17 @@ class PickerColumnCmp {
     this.velocity = 0;
 
     // so what y position we're at
-    this.update(y, duration, true);
+    this.update(y, duration, true, true);
   }
 
-  update(y: number, duration: number, saveY: boolean) {
+  update(y: number, duration: number, saveY: boolean, emitChange: boolean) {
     // ensure we've got a good round number :)
     y = Math.round(y);
 
-    let selectedIndex = Math.abs(Math.round(y / this.optHeight));
+    this.col.selectedIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
 
-    this.col.selected = this.col.options[selectedIndex];
-
-    let colEle: HTMLElement = this.colEle.nativeElement;
-    let optElements: any = colEle.querySelectorAll('.picker-opt');
-
-    for (var i = 0; i < optElements.length; i++) {
-      var optEle: HTMLElement = optElements[i];
+    for (var i = 0; i < this.col.options.length; i++) {
+      var opt = <any>this.col.options[i];
       var optTop = (i * this.optHeight);
       var optOffset = (optTop + y);
 
@@ -332,7 +353,7 @@ class PickerColumnCmp {
       var translateZ = 0;
 
       if (this.rotateFactor !== 0) {
-        translateX = 10;
+        translateX = 0;
         translateZ = 90;
         if (rotateX > 90 || rotateX < -90) {
           translateX = -9999;
@@ -343,16 +364,49 @@ class PickerColumnCmp {
         translateY = optOffset;
       }
 
-      optEle.style[CSS.transform] = `rotateX(${rotateX}deg) translate3d(${translateX}px,${translateY}px,${translateZ}px)`;
-
-      optEle.style[CSS.transitionDuration] = (duration > 0 ? duration + 'ms' : '');
-
-      optEle.classList[i === selectedIndex ? 'add' : 'remove']('picker-opt-selected');
-
+      opt._trans = `rotateX(${rotateX}deg) translate3d(${translateX}px,${translateY}px,${translateZ}px)`;
+      opt._dur = (duration > 0 ? duration + 'ms' : '');
     }
 
     if (saveY) {
       this.y = y;
+    }
+
+    if (emitChange) {
+      if (this.lastIndex === undefined) {
+        // have not set a last index yet
+        this.lastIndex = this.col.selectedIndex;
+
+      } else if (this.lastIndex !== this.col.selectedIndex) {
+        // new selected index has changed from the last index
+        // update the lastIndex and emit that it has changed
+        this.lastIndex = this.col.selectedIndex;
+        this.change.emit(this.col.options[this.col.selectedIndex]);
+      }
+    }
+  }
+
+  refresh() {
+    let min = this.col.options.length - 1;
+    let max = 0;
+
+    for (var i = 0; i < this.col.options.length; i++) {
+      var opt = this.col.options[i];
+      if (!opt.disabled) {
+        if (i < min) {
+          min = i;
+        }
+        if (i > max) {
+          max = i;
+        }
+      }
+    }
+
+    var selectedIndex = clamp(min, this.col.selectedIndex, max);
+
+    if (selectedIndex !== this.col.selectedIndex) {
+      var y = (selectedIndex * this.optHeight) * -1;
+      this.update(y, 150, true, true);
     }
   }
 
@@ -390,7 +444,7 @@ class PickerColumnCmp {
       '</div>' +
       '<div class="picker-columns">' +
         '<div class="picker-above-highlight"></div>' +
-        '<div *ngFor="#c of d.columns" [col]="c" class="picker-col"></div>' +
+        '<div *ngFor="#c of d.columns" [col]="c" class="picker-col" (change)="_colChange($event)"></div>' +
         '<div class="picker-below-highlight"></div>' +
       '</div>' +
     '</div>',
@@ -401,6 +455,7 @@ class PickerColumnCmp {
   encapsulation: ViewEncapsulation.None,
 })
 class PickerDisplayCmp {
+  @ViewChildren(PickerColumnCmp) private _cols: QueryList<PickerColumnCmp>;
   private d: PickerOptions;
   private created: number;
   private lastClick: number;
@@ -452,12 +507,13 @@ class PickerDisplayCmp {
       column.options = column.options.map(inputOpt => {
         let opt: PickerColumnOption = {
           text: '',
-          value: ''
+          value: '',
+          disabled: inputOpt.disabled,
         };
 
         if (isPresent(inputOpt)) {
           if (isString(inputOpt) || isNumber(inputOpt)) {
-            opt.text = inputOpt;
+            opt.text = inputOpt.toString();
             opt.value = inputOpt;
 
           } else {
@@ -470,6 +526,18 @@ class PickerDisplayCmp {
       });
       return column;
     });
+  }
+
+  refresh() {
+    this._cols.forEach(column => {
+      column.refresh();
+    });
+  }
+
+  private _colChange(selectedOption: PickerColumnOption) {
+    // one of the columns has changed its selected index
+    var picker = <Picker>this._viewCtrl;
+    picker.change.emit(this.getSelected());
   }
 
   @HostListener('body:keyup', ['$event'])
@@ -518,7 +586,7 @@ class PickerDisplayCmp {
     if (button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      if (button.handler(this.getValues()) === false) {
+      if (button.handler(this.getSelected()) === false) {
         // if the return value of the handler is false then do not dismiss
         shouldDismiss = false;
       }
@@ -538,17 +606,20 @@ class PickerDisplayCmp {
   }
 
   dismiss(role): Promise<any> {
-    return this._viewCtrl.dismiss(this.getValues(), role);
+    return this._viewCtrl.dismiss(this.getSelected(), role);
   }
 
-  getValues() {
-    // this is an alert with text inputs
-    // return an object of all the values with the input name as the key
-    let values = {};
-    this.d.columns.forEach(col => {
-      values[col.name] = col.selected ? col.selected.value : null;
+  getSelected(): any {
+    let selected = {};
+    this.d.columns.forEach((col, index) => {
+      let selectedColumn = col.options[col.selectedIndex];
+      selected[col.name] = {
+        text: selectedColumn ? selectedColumn.text : null,
+        value: selectedColumn ? selectedColumn.value : null,
+        columnIndex: index,
+      };
     });
-    return values;
+    return selected;
   }
 
   isEnabled() {
@@ -566,10 +637,10 @@ export interface PickerOptions {
 
 export interface PickerColumn {
   name?: string;
-  selected?: PickerColumnOption;
+  selectedIndex?: number;
   prefix?: string;
   suffix?: string;
-  options: PickerColumnOption[];
+  options?: PickerColumnOption[];
   cssClass?: string;
   columnWidth?: string;
   prefixWidth?: string;
@@ -578,8 +649,9 @@ export interface PickerColumn {
 }
 
 export interface PickerColumnOption {
+  text?: string;
   value?: any;
-  text?: any;
+  disabled?: boolean;
 }
 
 

@@ -5,6 +5,7 @@ export * from './components/badge/badge';
 export * from './components/button/button';
 export * from './components/checkbox/checkbox';
 export * from './components/content/content';
+export * from './components/datetime/datetime';
 export * from './components/icon/icon';
 export * from './components/img/img';
 export * from './components/infinite-scroll/infinite-scroll';
