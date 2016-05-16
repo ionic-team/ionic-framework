@@ -16,29 +16,22 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
 /**
  * @name DateTime
  * @description
- * The Date/Time Picker displays a dialog from the bottom of a page.
+ * The DateTime component can be added to a template using the `<ion-datetime>` element.
+ * Tapping on the `<ion-datetime>` element will display a dialog that slides up from the
+ * bottom of the page. The dialog displays scrollable columns that can be used to select
+ * date and time values.
+ *
+ * It is similar to the native `<input type="datetime-local">` element, however, Ionic's
+ * DateTime component makes it easy for developers to display the date in their preferred
+ * format and manage the date from their JavaScript.
  *
  *
- * It is similar to the native `<input type="datetime-local">` element.
- * However, Ionic's Date/Time component makes it easy for developers to display
- * the date in their preferred format and manage the date from their JavaScript.
- * Additionally, the Date/Time component makes it easier for users to scroll through
- * and individually select parts of date and time values from an easy to user interface.
+ * ## Display and Picker Formats
  *
- * ```html
- * <ion-item>
- *   <ion-label>Date</ion-label>
- *   <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate">
- *   </ion-datetime>
- * </ion-item>
- * ```
- *
- *
- * ### Display and Picker Formats
- *
- * Datetime values can be displayed in many different formats, so it is best to
- * let the app decide exactly how to display it. To do so, `ion-datetime` uses
- * a common format seen in many other libraries and programming languages:
+ * The DateTime component displays the date/time in two places: in the `<ion-datetime>`
+ * element, and in the dialog that presents from the bottom of the screen. These both
+ * can be customized to display in many different formats. The following chart lists
+ * all of the formats that can be passed to the different inputs.
  *
  * | Format  | Description                    | Example                 |
  * |---------|--------------------------------|-------------------------|
@@ -67,37 +60,43 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * **Important**: See the [Month Names and Day of the Week Names](#month-names-and-day-of-the-week-names)
  * section below on how to use different names for the month and day.
  *
- * The `displayFormat` input allows developers to specify how a date's value
- * should be displayed within the `ion-datetime`. The `pickerFormat` decides
- * which datetime picker columns should be shown, the order of the columns, and
- * which format to display the value in. If a `pickerFormat` is not provided
- * then it'll use the `displayFormat` instead. In most cases only providing the
- * `displayFormat` is needed.
+ * ### Display Format
  *
- * In the example below, the datetime's display would use the month's short
- * name, the 1 digit day in the month, and a 4 digit year.
+ * The `displayFormat` input specifies how a date's value should be displayed
+ * within the `ion-datetime` element.
  *
- * ```html
- * <ion-item>
- *   <ion-label>Date</ion-label>
- *   <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="myDate">
- *   </ion-datetime>
- * </ion-item>
- * ```
- *
- * In this example, the datetime's display would only show hours and minutes,
- * and the hours would be in the 24-hour format. Note that the divider between
- * the hours and minutes, in this case the `:` character, can be have any
- * character which the app chooses to use as the divider.
+ * In the following example, the display in the `<ion-datetime>` will use the
+ * month's short name, the numerical day with a leading zero, a comma and the
+ * 4 digit year. In addition to the date, it will display the time with the hours
+ * in the 24-hour format and the minutes. Both the hour and minutes will be displayed
+ * with a leading zero, and they are separated by a `:` character. Any character
+ * can be used as a separator. An example display using this format is: `Jun 17, 2005 11:06`.
  *
  * ```html
  * <ion-item>
  *   <ion-label>Date</ion-label>
- *   <ion-datetime displayFormat="HH:mm" [(ngModel)]="myDate">
+ *   <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate">
  *   </ion-datetime>
  * </ion-item>
  * ```
  *
+ * ### Picker Format
+ *
+ * The `pickerFormat` input determines which columns should be shown in the dialog,
+ * the order of the columns, and which format to use to display the value. If the
+ *`pickerFormat` input is not provided then it will use the `displayFormat`.
+ *
+ * In the following example, the display in the `<ion-datetime>` will use the
+ * numerical month with a leading zero, followed by a forward slash `/` and the
+ * 4 digit year. An example display using this format is: `06/2020`. The dialog
+ * will display two columns: the month's long name, and the 4 digit year.
+ *
+ * ```html
+ * <ion-item>
+ *   <ion-label>Date</ion-label>
+ *   <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="myDate"></ion-datetime>
+ * </ion-item>
+ * ```
  *
  * ### Datetime Data
  *
@@ -157,7 +156,7 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * string.
  *
  *
- * ### Min and Max Datetimes
+ * ## Min and Max Datetimes
  *
  * Dates are infinite in either direction, so for a user selection there should be at
  * least some form of restricting the dates can be selected. Be default, the maximum
@@ -180,7 +179,7 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * ```
  *
  *
- * ### Month Names and Day of the Week Names
+ * ## Month Names and Day of the Week Names
  *
  * At this time, there is no one-size-fits-all standard to automatically choose the correct
  * language/spelling for a month name, or day of the week name, depending on the language
@@ -193,10 +192,10 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  *
  * All things considered, the by far easiest solution is to just provide an array of names
  * if the app needs to use names other than the default English version of month and day
- * names. The month names and day names can be either configurated at the app level, or
+ * names. The month names and day names can be either configured at the app level, or
  * individual `ion-datetime` level.
  *
- * ##### App Config Level
+ * ### App Config Level
  *
  * ```ts
  * @App({
@@ -209,16 +208,17 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * })
  * ```
  *
- * ##### Component Input Level
+ * ### Component Input Level
  *
  * ```html
  * <ion-item>
  *   <ion-label>Período</ion-label>
- *   <ion-datetime displayFormat="DDDD MMM D, YYYY" [(ngModel)]="myDate"
- *     [monthNames]="['janeiro, 'fevereiro', 'mar\u00e7o', ... ]"
- *     [monthShortNames]="['jan', 'fev', 'mar', ... ]"
- *     [dayNames]="['domingo', 'segunda-feira', 'ter\u00e7a-feira', ... ]"
- *     [dayShortNames]="['dom', 'seg', 'ter', ... ]"
+ *   <ion-datetime displayFormat="DDDD MMM D, YYYY"
+ *     [(ngModel)]="myDate"
+ *     monthNames="['janeiro, 'fevereiro', 'mar\u00e7o', ... ]"
+ *     monthShortNames="['jan', 'fev', 'mar', ... ]"
+ *     dayNames="['domingo', 'segunda-feira', 'ter\u00e7a-feira', ... ]"
+ *     dayShortNames="['dom', 'seg', 'ter', ... ]"
  *     ></ion-datetime>
  * </ion-item>
  * ```
@@ -238,6 +238,17 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * our goto standard when dealing with datetimes within JavaScript, but Ionic does not
  * prepackage this dependency since most apps will not require it, and its locale
  * configuration should be decided by the end-developer.
+ *
+ *
+ * @usage
+ * ```html
+ * <ion-item>
+ *   <ion-label>Date</ion-label>
+ *   <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate">
+ *   </ion-datetime>
+ * </ion-item>
+ * ```
+ *
  *
  * @demo /docs/v2/demos/datetime/
  */
