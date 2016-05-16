@@ -16,10 +16,13 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
 /**
  * @name DateTime
  * @description
- * The `ion-datetime` component is similar to an HTML `<input type="datetime-local">`
- * input, however, Ionic's datetime component makes it easier for developers to
- * display an exact datetime input format and manage values within JavaScript.
- * Additionally, the datetime component makes it easier for users to scroll through
+ * The Date/Time Picker displays a dialog from the bottom of a page.
+ *
+ *
+ * It is similar to the native `<input type="datetime-local">` element.
+ * However, Ionic's Date/Time component makes it easy for developers to display
+ * the date in their preferred format and manage the date from their JavaScript.
+ * Additionally, the Date/Time component makes it easier for users to scroll through
  * and individually select parts of date and time values from an easy to user interface.
  *
  * ```html
@@ -33,37 +36,36 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  *
  * ### Display and Picker Formats
  *
- * How datetime values can be displayed can come in many variations formats,
- * therefore it is best to let the app decide exactly how to display it. To do
- * so, `ion-datetime` uses a common format seen in many other libraries and
- * programming languages:
+ * Datetime values can be displayed in many different formats, so it is best to
+ * let the app decide exactly how to display it. To do so, `ion-datetime` uses
+ * a common format seen in many other libraries and programming languages:
  *
- * | Format   | Description         | Examples       |
- * |----------|---------------------|----------------|
- * | `YYYY`   | Year, 4 digits      | `2018`         |
- * | `YY`     | Year, 2 digits      | `18`           |
- * | `M`      | Month, 1 digit      | `1` .. `12`    |
- * | `MM`     | Month, 2 digit      | `01` .. `12`   |
- * | `MMM`    | Month, short name   | `Jan` *        |
- * | `MMMM`   | Month, full name    | `January` *    |
- * | `D`      | Day, 1 digit        | `1` .. `31`    |
- * | `DD`     | Day, 2 digit        | `01` .. `31`   |
- * | `DDD`    | Day, short name     | `Fri` *        |
- * | `DDDD`   | Day, full name      | `Friday` *     |
- * | `H`      | 24-hour, 1 digit    | `0` .. `23`    |
- * | `HH`     | 24-hour, 2 digit    | `00` .. `23`   |
- * | `h`      | 12-hour, 1 digit    | `1` .. `12`    |
- * | `hh`     | 12-hour, 2 digit    | `01` .. `12`   |
- * | `a`      | am/pm, lower case   | `am` `pm`      |
- * | `A`      | AM/PM, upper case   | `AM` `PM`      |
- * | `m`      | minute, 1 digit     | `1` .. `59`    |
- * | `mm`     | minute, 2 digit     | `01` .. `59`   |
- * | `s`      | seconds, 1 digit    | `1` .. `59`    |
- * | `ss`     | seconds, 2 digit    | `01` .. `59`   |
- * | `Z`      | UTC Timezone Offset |                |
+ * | Format  | Description                    | Example                 |
+ * |---------|--------------------------------|-------------------------|
+ * | `YYYY`  | Year, 4 digits                 | `2018`                  |
+ * | `YY`    | Year, 2 digits                 | `18`                    |
+ * | `M`     | Month                          | `1` ... `12`            |
+ * | `MM`    | Month, leading zero            | `01` ... `12`           |
+ * | `MMM`   | Month, short name              | `Jan`                   |
+ * | `MMMM`  | Month, full name               | `January`               |
+ * | `D`     | Day                            | `1` ... `31`            |
+ * | `DD`    | Day, leading zero              | `01` ... `31`           |
+ * | `DDD`   | Day, short name                | `Fri`                   |
+ * | `DDDD`  | Day, full name                 | `Friday`                |
+ * | `H`     | Hour, 24-hour                  | `0` ... `23`            |
+ * | `HH`    | Hour, 24-hour, leading zero    | `00` ... `23`           |
+ * | `h`     | Hour, 12-hour                  | `1` ... `12`            |
+ * | `hh`    | Hour, 12-hour, leading zero    | `01` ... `12`           |
+ * | `a`     | 12-hour time period, lowercase | `am` `pm`               |
+ * | `A`     | 12-hour time period, uppercase | `AM` `PM`               |
+ * | `m`     | Minute                         | `1` ... `59`            |
+ * | `mm`    | Minute, leading zero           | `01` ... `59`           |
+ * | `s`     | Second                         | `1` ... `59`            |
+ * | `ss`    | Second, leading zero           | `01` ... `59`           |
+ * | `Z`     | UTC Timezone Offset            | `Z or +HH:mm or -HH:mm` |
  *
- * * See the "Month Names and Day of the Week Names" section below on how to
- * use names other than the default English month and day names.
+ * **Important**: See the [Month Names and Day of the Week Names](#month-names-and-day-of-the-week-names)
+ * section below on how to use different names for the month and day.
  *
  * The `displayFormat` input allows developers to specify how a date's value
  * should be displayed within the `ion-datetime`. The `pickerFormat` decides
@@ -237,7 +239,7 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * prepackage this dependency since most apps will not require it, and its locale
  * configuration should be decided by the end-developer.
  *
- *
+ * @demo /docs/v2/demos/datetime/
  */
 @Component({
   selector: 'ion-datetime',
