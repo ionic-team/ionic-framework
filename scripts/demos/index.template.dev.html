@@ -14,16 +14,26 @@
   <script src="../../js/es6-module-loader.src.js"></script>
   <script src="../../js/system.src.js"></script>
   <script>
-    System.config({
-      map: {
-        'angular2': '/angular2'
+  System.config({
+    map: {
+      '@angular/core': '/node_modules/@angular/core/core.umd.js',
+      '@angular/compiler': '/node_modules/@angular/compiler/compiler.umd.js',
+      '@angular/common': '/node_modules/@angular/common/common.umd.js',
+      '@angular/http': '/node_modules/@angular/http/http.umd.js',
+      '@angular/platform-browser': '/node_modules/@angular/platform-browser/platform-browser.umd.js',
+      '@angular/platform-browser-dynamic': '/node_modules/@angular/platform-browser-dynamic/platform-browser-dynamic.umd.js',
+      '@angular/router': '/node_modules/@angular/router/router.umd.js',
+      'ionic-angular': '/ionic'
+    },
+    packages: {
+      'ionic-angular': {
+        main: 'index'
       },
-      packages: {
-        'ionic-angular': {
-          main: 'index'
-        }
+      'rxjs': {
+        defaultExtension: 'js'
       }
-    });
+    }
+  });
   </script>
   <script src="../../js/angular2-polyfills.js"></script>
   <script src="../../js/angular2.dev.js"></script>
