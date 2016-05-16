@@ -42,7 +42,7 @@ export function renderTextFormat(format: string, value: any, date: DateTimeData,
       value = (new Date(date.year, date.month - 1, date.day)).getDay();
 
       if (format === FORMAT_DDDD) {
-        return (isPresent(locale.dayShort) ? locale.dayShort : DAY_NAMES)[value];
+        return (isPresent(locale.dayNames) ? locale.dayNames : DAY_NAMES)[value];
       }
 
       return (isPresent(locale.dayShortNames) ? locale.dayShortNames : DAY_SHORT_NAMES)[value];
@@ -402,7 +402,7 @@ export interface DateTimeData {
 export interface LocaleData {
   monthNames?: string[];
   monthShortNames?: string[];
-  dayShort?: string[];
+  dayNames?: string[];
   dayShortNames?: string[];
 }
 

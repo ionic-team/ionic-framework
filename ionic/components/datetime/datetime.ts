@@ -200,7 +200,7 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * ```ts
  * @App({
  *   config: {
- *     monthNames: ['janeiro, 'fevereiro', 'mar\u00e7o', ... ],
+ *     monthNames: ['janeiro', 'fevereiro', 'mar\u00e7o', ... ],
  *     monthShortNames: ['jan', 'fev', 'mar', ... ],
  *     dayNames: ['domingo', 'segunda-feira', 'ter\u00e7a-feira', ... ],
  *     dayShortNames: ['dom', 'seg', 'ter', ... ],
@@ -215,10 +215,10 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  *   <ion-label>Período</ion-label>
  *   <ion-datetime displayFormat="DDDD MMM D, YYYY"
  *     [(ngModel)]="myDate"
- *     monthNames="['janeiro, 'fevereiro', 'mar\u00e7o', ... ]"
- *     monthShortNames="['jan', 'fev', 'mar', ... ]"
- *     dayNames="['domingo', 'segunda-feira', 'ter\u00e7a-feira', ... ]"
- *     dayShortNames="['dom', 'seg', 'ter', ... ]"
+ *     monthNames="[janeiro, fevereiro, mar\u00e7o, ... ]"
+ *     monthShortNames="[jan, fev, mar, ... ]"
+ *     dayNames="[domingo, segunda-feira, ter\u00e7a-feira, ... ]"
+ *     dayShortNames="[dom, seg, ter, ... ]"
  *     ></ion-datetime>
  * </ion-item>
  * ```
@@ -406,7 +406,7 @@ export class DateTime {
   @Input() dayShortNames: any;
 
   /**
-   * @input {any} Any addition options that the picker interface can accept.
+   * @input {any} Any additional options that the picker interface can accept.
    * See the [Picker API docs](../../picker/Picker) for the picker options.
    */
   @Input() pickerOptions: any = {};
