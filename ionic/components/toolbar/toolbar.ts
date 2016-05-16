@@ -1,4 +1,4 @@
-import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
+import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 
 import {Button} from '../button/button';
 import {Config} from '../../config/config';

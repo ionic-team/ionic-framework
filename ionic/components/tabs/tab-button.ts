@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, HostListener, EventEmitter, Output, Input, Renderer} from 'angular2/core';
+import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, HostListener, EventEmitter, Output, Input, Renderer} from '@angular/core';
 
 import {Tab} from './tab';
 import {Ion} from '../ion';

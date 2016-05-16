@@ -1,5 +1,5 @@
-import {Validators, Control, ControlGroup} from 'angular2/common';
-import {Http} from 'angular2/http';
+import {Validators, Control, ControlGroup} from '@angular/common';
+import {Http} from '@angular/http';
 import {App, Page, IonicApp, NavController} from '../../../../../ionic';
 
 

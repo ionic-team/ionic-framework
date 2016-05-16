@@ -1,4 +1,4 @@
-import {Component, Type, ViewChild} from 'angular2/core';
+import {Component, Type, ViewChild} from '@angular/core';
 import {App, NavController, Alert, Content} from '../../../../../ionic';
 import {Page, Config, IonicApp} from '../../../../../ionic';
 import {NavParams, ViewController} from '../../../../../ionic';;
@@ -49,7 +49,7 @@ class MyCmpTest{}
         <button ion-item (click)="quickPop()">New pop during transition</button>
         <button ion-item (click)="reload()">Reload</button>
         <button ion-item (click)="scrollToBottom()">Scroll to bottom</button>
-        <button *ngFor="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
+        <button *ngFor="let i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
         <button ion-item (click)="content.scrollToTop()">Scroll to top</button>
       </ion-list>
       <my-cmp></my-cmp>

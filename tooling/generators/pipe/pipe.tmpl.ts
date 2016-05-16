@@ -1,4 +1,4 @@
-import {Injectable, Pipe} from 'angular2/core';
+import {Injectable, Pipe} from '@angular/core';
 
 /*
   Generated class for the <%= jsClassName %> pipe.

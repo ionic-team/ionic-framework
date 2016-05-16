@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, ChangeDetectionStrategy, ViewEncapsulation, NgZone} from 'angular2/core';
+import {Component, Input, ElementRef, ChangeDetectionStrategy, ViewEncapsulation, NgZone} from '@angular/core';
 
 import {nativeRaf} from '../../util/dom';
 import {isPresent} from '../../util/util';

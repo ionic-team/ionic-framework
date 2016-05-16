@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, Output, EventEmitter} from 'angular2/core';
+import {Component, ElementRef, Renderer, Output, EventEmitter} from '@angular/core';
 
 import {ActionSheet, ActionSheetOptions} from '../action-sheet/action-sheet';
 import {Animation} from '../../animations/animation';

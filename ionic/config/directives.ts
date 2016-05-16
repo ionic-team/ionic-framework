@@ -1,5 +1,5 @@
-import {forwardRef, Type} from 'angular2/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
+import {forwardRef, Type} from '@angular/core';
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
 
 import {Menu} from '../components/menu/menu';
 import {MenuToggle} from '../components/menu/menu-toggle';
@@ -69,7 +69,7 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  *
  * ```typescript
  *  import {IONIC_DIRECTIVES, ionicProviders} from 'ionic-angular';
- *  import {bootstrap} from 'angular2/platform/browser';
+ *  import {bootstrap} from '@angular/platform/browser';
  *
  *  @Component({
  *      //default selector, and theme.
@@ -141,7 +141,7 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * - ShowWhen
  * - HideWhen
  */
-export const IONIC_DIRECTIVES = [
+export const IONIC_DIRECTIVES: any[] = [
   // Angular
   CORE_DIRECTIVES,
   FORM_DIRECTIVES,

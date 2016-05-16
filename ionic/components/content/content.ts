@@ -1,4 +1,4 @@
-import {Component, ElementRef, Optional, NgZone, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
+import {Component, ElementRef, Optional, NgZone, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -28,7 +28,7 @@ import {ScrollView} from '../../util/scroll-view';
  * you can use Angular's `@ViewChild` annotation:
  *
  * ```ts
- * import {ViewChild} from 'angular2/core';
+ * import {ViewChild} from '@angular/core';
  * import {Content} from 'ionic-angular';
  *
  * @Page({...}
@@ -217,7 +217,7 @@ export class Content extends Ion {
    * Scroll to the specified position.
    *
    * ```ts
-   * import {ViewChild} from 'angular2/core';
+   * import {ViewChild} from '@angular/core';
    * import {Content} from 'ionic-angular';
    *
    * @Page({
@@ -248,7 +248,7 @@ export class Content extends Ion {
    * Scroll to the top of the content component.
    *
    * ```ts
-   * import {ViewChild} from 'angular2/core';
+   * import {ViewChild} from '@angular/core';
    * import {Content} from 'ionic-angular';
    *
    * @Page({

@@ -69,7 +69,7 @@
       <ion-list-header id="currencies">
         Currencies
       </ion-list-header>
-      <ion-item *ngFor="#currency of currencies">
+      <ion-item *ngFor="let currency of currencies">
         <ion-label>{{currency}}</ion-label>
         <ion-radio [value]="currency"></ion-radio>
       </ion-item>
@@ -111,7 +111,7 @@
   </div>
 
   <ion-list radio-group [(ngModel)]="someValue">
-    <ion-item *ngFor="#item of items">
+    <ion-item *ngFor="let item of items">
       <ion-label>
         {{ item.description }}
       </ion-label>

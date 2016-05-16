@@ -11,7 +11,7 @@
   </button>
 
   <ion-list>
-    <button ion-item (click)="goToPage2()" *ngFor="#item of items">
+    <button ion-item (click)="goToPage2()" *ngFor="let item of items">
       {{ item }}
     </button>
   </ion-list>

@@ -1,4 +1,4 @@
-import {ElementRef} from 'angular2/core';
+import {ElementRef} from '@angular/core';
 import * as dom from '../util/dom';
 
 let ids: number = 0;

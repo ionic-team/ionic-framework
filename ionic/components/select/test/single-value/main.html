@@ -77,7 +77,7 @@
       <ion-option value="12">December</ion-option>
     </ion-select>
     <ion-select [(ngModel)]="year">
-      <ion-option *ngFor="#yr of years">{{yr}}</ion-option>
+      <ion-option *ngFor="let yr of years">{{yr}}</ion-option>
     </ion-select>
   </ion-item>
 

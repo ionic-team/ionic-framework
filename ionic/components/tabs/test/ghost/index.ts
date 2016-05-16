@@ -1,6 +1,6 @@
   import {App, Page, NavController, Tab} from '../../../../../ionic';
 
-import {ContentChild, QueryList, ViewChildren} from 'angular2/core';
+import {ContentChild, QueryList, ViewChildren} from '@angular/core';
 
 //
 // Tab 1

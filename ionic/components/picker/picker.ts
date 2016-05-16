@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, Output, EventEmitter, ViewChildren, QueryList, ViewChild, Renderer, HostListener, ViewEncapsulation} from 'angular2/core';
+import {Component, ElementRef, Input, Output, EventEmitter, ViewChildren, QueryList, ViewChild, Renderer, HostListener, ViewEncapsulation} from '@angular/core';
 
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
@@ -88,7 +88,7 @@ export class Picker extends ViewController {
   template:
     '<div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>' +
     '<div class="picker-opts" #colEle [style.width]="col.optionsWidth">' +
-      '<button *ngFor="#o of col.options; #i=index" [style.transform]="o._trans" [style.transitionDuration]="o._dur" [class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" (click)="optClick($event, i)" type="button" category="picker-opt">' +
+      '<button *ngFor="let o of col.options; let i=index;" (click)="optClick($event, i)" type="button" category="picker-opt">' +
         '{{o.text}}' +
       '</button>' +
     '</div>' +
@@ -342,7 +342,10 @@ class PickerColumnCmp {
 
     this.col.selectedIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
 
+    let colElements = this.colEle.nativeElement.querySelectorAll('.picker-opt');
+
     for (var i = 0; i < this.col.options.length; i++) {
+      var ele: HTMLElement = colElements[i];
       var opt = <any>this.col.options[i];
       var optTop = (i * this.optHeight);
       var optOffset = (optTop + y);
@@ -364,8 +367,11 @@ class PickerColumnCmp {
         translateY = optOffset;
       }
 
-      opt._trans = `rotateX(${rotateX}deg) translate3d(${translateX}px,${translateY}px,${translateZ}px)`;
-      opt._dur = (duration > 0 ? duration + 'ms' : '');
+      // TODO: setting by [style.transform]="o.transform" within the template is currently broke
+      ele.style[CSS.transform] = `rotateX(${rotateX}deg) translate3d(${translateX}px,${translateY}px,${translateZ}px)`;
+      ele.style[CSS.transitionDuration] = (duration > 0 ? duration + 'ms' : '');
+      ele.classList[this.col.selectedIndex===i ? 'add' : 'remove']('picker-opt-selected');
+      ele.classList[opt.disabled ? 'add' : 'remove']('picker-opt-disabled');
     }
 
     if (saveY) {
@@ -436,7 +442,7 @@ class PickerColumnCmp {
     '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
     '<div class="picker-wrapper">' +
       '<div class="picker-toolbar">' +
-        '<div *ngFor="#b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">' +
+        '<div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">' +
           '<button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>' +
             '{{b.text}}' +
           '</button>' +
@@ -444,7 +450,7 @@ class PickerColumnCmp {
       '</div>' +
       '<div class="picker-columns">' +
         '<div class="picker-above-highlight"></div>' +
-        '<div *ngFor="#c of d.columns" [col]="c" class="picker-col" (change)="_colChange($event)"></div>' +
+        '<div *ngFor="let c of d.columns" [col]="c" class="picker-col"> (change)="_colChange($event)"</div>' +
         '<div class="picker-below-highlight"></div>' +
       '</div>' +
     '</div>',

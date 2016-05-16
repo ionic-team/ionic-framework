@@ -1,4 +1,4 @@
-import {Directive, Optional, Input} from 'angular2/core';
+import {Directive, Optional, Input} from '@angular/core';
 import {NavController} from './nav-controller';
 import {NavRegistry} from './nav-registry';
 

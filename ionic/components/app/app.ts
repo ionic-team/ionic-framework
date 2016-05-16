@@ -1,5 +1,5 @@
-import {Injectable, Injector} from 'angular2/core';
-import {Title} from 'angular2/platform/browser';
+import {Injectable, Injector} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 
 import {Config} from '../../config/config';
 import {ClickBlock} from '../../util/click-block';

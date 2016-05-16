@@ -13,11 +13,11 @@
   <ion-list [virtualScroll]="items"
             [headerFn]="headerFn">
 
-    <ion-item-divider *virtualHeader="#header">
+    <ion-item-divider *virtualHeader="let header">
       Header: {{header}}
     </ion-item-divider>
 
-    <ion-item *virtualItem="#item">
+    <ion-item *virtualItem="let item">
       Item: {{item}}
     </ion-item>
 

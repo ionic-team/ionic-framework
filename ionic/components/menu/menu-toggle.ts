@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Optional, Input, HostListener} from 'angular2/core';
+import {Directive, ElementRef, Optional, Input, HostListener} from '@angular/core';
 
 import {ViewController} from '../nav/view-controller';
 import {Navbar} from '../navbar/navbar';

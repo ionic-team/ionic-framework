@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Attribute, NgZone} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Attribute, NgZone} from '@angular/core';
 
 import {Ion} from '../ion';
 import {ItemSlidingGesture} from '../item/item-sliding-gesture';
@@ -53,7 +53,7 @@ export class List extends Ion {
    *
    * ```ts
    * import {Page, List} from 'ionic-angular';
-   * import {ViewChild} from 'angular2/core';
+   * import {ViewChild} from '@angular/core';
    * @Page...
    * export class MyClass {
    *    @ViewChild(List) list: List;
@@ -88,7 +88,7 @@ export class List extends Ion {
    *
    * ```ts
    * import {Page, List} from 'ionic-angular';
-   * import {ViewChild} from 'angular2/core';
+   * import {ViewChild} from '@angular/core';
    * @Page...
    * export class MyClass {
    *    @ViewChild(List) list: List;

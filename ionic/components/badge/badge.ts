@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Attribute} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Attribute} from '@angular/core';
 
 import {Config} from '../../config/config';
 

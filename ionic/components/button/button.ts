@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, Attribute, Optional, Input, ChangeDetectionStrategy, ViewEncapsulation} from 'angular2/core';
+import {Component, ElementRef, Renderer, Attribute, Optional, Input, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 
 import {Config} from '../../config/config';
 import {Toolbar} from '../toolbar/toolbar';

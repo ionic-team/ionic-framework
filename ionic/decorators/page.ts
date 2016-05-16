@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, ViewEncapsulation, Type} from 'angular2/core';
+import {Component, ChangeDetectionStrategy, ViewEncapsulation, Type} from '@angular/core';
 
 const _reflect: any = Reflect;
 

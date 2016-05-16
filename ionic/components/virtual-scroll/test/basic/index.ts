@@ -1,4 +1,4 @@
-import {ViewChild, ElementRef} from 'angular2/core';
+import {ViewChild, ElementRef} from '@angular/core';
 import {App, Page} from '../../../../../ionic';
 
 

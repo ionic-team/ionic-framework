@@ -1,4 +1,4 @@
-import {Component, Inject, forwardRef, ElementRef, NgZone, Renderer, DynamicComponentLoader, ViewContainerRef, ViewChild, Type, ViewEncapsulation, ChangeDetectorRef, EventEmitter, Input, Output} from 'angular2/core';
+import {Component, Inject, forwardRef, ElementRef, NgZone, Renderer, DynamicComponentLoader, ViewContainerRef, ViewChild, Type, ViewEncapsulation, ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';

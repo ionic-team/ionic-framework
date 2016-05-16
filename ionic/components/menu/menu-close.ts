@@ -1,4 +1,4 @@
-import {Directive, Input, HostListener} from 'angular2/core';
+import {Directive, Input, HostListener} from '@angular/core';
 
 import {MenuController} from './menu-controller';
 

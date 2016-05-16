@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewContainerRef, DynamicComponentLoader, Input, Optional, NgZone, Renderer, Type, ViewChild, ViewEncapsulation, AfterViewInit} from 'angular2/core';
+import {Component, ElementRef, ViewContainerRef, DynamicComponentLoader, Input, Optional, NgZone, Renderer, Type, ViewChild, ViewEncapsulation, AfterViewInit} from '@angular/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';

@@ -1,5 +1,4 @@
-import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type} from 'angular2/core';
-import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/instrumentation';
+import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type} from '@angular/core';
 
 import {Config} from '../../config/config';
 import {Ion} from '../ion';
@@ -972,9 +971,6 @@ export class NavController extends Ion {
       return done(false);
     }
 
-    // lets time this sucker, ready go
-    let wtfScope = wtfStartTimeRange('NavController#_transition', (enteringView && enteringView.name));
-
     if (isBlank(opts)) {
       opts = {};
     }
@@ -1003,7 +999,6 @@ export class NavController extends Ion {
     // begin the multiple async process of transitioning to the entering view
     this._render(transId, enteringView, leavingView, opts, (hasCompleted: boolean) => {
       this._transFinish(transId, enteringView, leavingView, opts.direction, hasCompleted);
-      wtfEndTimeRange(wtfScope);
       done(hasCompleted);
     });
   }
@@ -1432,8 +1427,6 @@ export class NavController extends Ion {
    * @private
    */
   loadPage(view: ViewController, navbarContainerRef: ViewContainerRef, opts: NavOptions, done: Function) {
-    let wtfTimeRangeScope = wtfStartTimeRange('NavController#loadPage', view.name);
-
     if (!this._viewport || !view.componentType) {
       return;
     }
@@ -1445,8 +1438,6 @@ export class NavController extends Ion {
 
     // load the page component inside the nav
     this._loader.loadNextToLocation(view.componentType, this._viewport, providers).then(component => {
-      let wtfScope = wtfCreateScope('NavController#loadPage_After_Compile')();
-
       // the ElementRef of the actual ion-page created
       let pageElementRef = component.location;
 
@@ -1495,10 +1486,7 @@ export class NavController extends Ion {
       // used mainly by tabs
       opts.postLoad && opts.postLoad(view);
 
-      // complete wtf loggers
-      wtfEndTimeRange(wtfTimeRangeScope);
-      wtfLeave(wtfScope);
-
+      // our job is done here
       done(view);
     });
   }

@@ -1,4 +1,4 @@
-import {ViewChild} from 'angular2/core';
+import {ViewChild} from '@angular/core';
 import {App, Page, InfiniteScroll, NavController} from '../../../../../ionic';
 
 

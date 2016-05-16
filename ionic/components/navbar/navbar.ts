@@ -1,4 +1,4 @@
-import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject, ViewContainerRef, Input} from 'angular2/core';
+import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject, ViewContainerRef, Input} from '@angular/core';
 
 import {Ion} from '../ion';
 import {Icon} from '../icon/icon';
@@ -232,7 +232,7 @@ export class Navbar extends ToolbarBase {
 export class NavbarTemplate {
   constructor(
     viewContainerRef: ViewContainerRef,
-    templateRef: TemplateRef,
+    templateRef: TemplateRef<Object>,
     @Optional() viewCtrl: ViewController
   ) {
     if (viewCtrl) {

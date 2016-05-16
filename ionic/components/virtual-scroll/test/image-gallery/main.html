@@ -52,16 +52,16 @@
             approxHeaderWidth="100%"
             approxHeaderHeight="36px">
 
-    <div *virtualHeader="#header" class="virtual-header">
+    <div *virtualHeader="let header" class="virtual-header">
       Header: {{header.date}}
     </div>
 
-    <div *virtualItem="#item" class="virtual-item">
+    <div *virtualItem="let item" class="virtual-item">
       <ion-img [src]="item.imgSrc"></ion-img>
       <!--{{ item.index }}-->
     </div>
 
-    <div *virtualFooter="#footer" class="virtual-footer">
+    <div *virtualFooter="let footer" class="virtual-footer">
       footer
     </div>
 

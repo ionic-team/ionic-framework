@@ -1,5 +1,5 @@
-import {Component, ChangeDetectionStrategy, ViewEncapsulation, enableProdMode, Type, provide, PLATFORM_DIRECTIVES} from 'angular2/core';
-import {bootstrap} from 'angular2/platform/browser';
+import {Component, ChangeDetectionStrategy, ViewEncapsulation, enableProdMode, Type, provide, PLATFORM_DIRECTIVES} from '@angular/core';
+import {bootstrap} from '@angular/platform-browser-dynamic';
 import {ionicProviders, postBootstrap} from '../config/bootstrap';
 import {IONIC_DIRECTIVES} from '../config/directives';
 

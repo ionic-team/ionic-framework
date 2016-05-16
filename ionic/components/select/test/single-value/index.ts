@@ -1,4 +1,4 @@
-import {NgFor} from 'angular2/common';
+import {NgFor} from '@angular/common';
 
 import {App, Page} from '../../../../../ionic';
 

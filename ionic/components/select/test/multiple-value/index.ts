@@ -1,5 +1,5 @@
 import {App, Page} from '../../../../../ionic';
-import {Control, ControlGroup} from 'angular2/common';
+import {Control, ControlGroup} from '@angular/common';
 
 
 @Page({

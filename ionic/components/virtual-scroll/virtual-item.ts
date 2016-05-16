@@ -1,4 +1,4 @@
-import {Directive, TemplateRef, ViewContainerRef} from 'angular2/core';
+import {Directive, TemplateRef, ViewContainerRef} from '@angular/core';
 
 
 /**
@@ -6,7 +6,7 @@ import {Directive, TemplateRef, ViewContainerRef} from 'angular2/core';
  */
 @Directive({selector: '[virtualHeader]'})
 export class VirtualHeader {
-  constructor(public templateRef: TemplateRef) {}
+  constructor(public templateRef: TemplateRef<Object>) {}
 }
 
 
@@ -15,7 +15,7 @@ export class VirtualHeader {
  */
 @Directive({selector: '[virtualFooter]'})
 export class VirtualFooter {
-  constructor(public templateRef: TemplateRef) {}
+  constructor(public templateRef: TemplateRef<Object>) {}
 }
 
 
@@ -24,5 +24,5 @@ export class VirtualFooter {
  */
 @Directive({selector: '[virtualItem]'})
 export class VirtualItem {
-  constructor(public templateRef: TemplateRef, public viewContainer: ViewContainerRef) {}
+  constructor(public templateRef: TemplateRef<Object>, public viewContainer: ViewContainerRef) {}
 }

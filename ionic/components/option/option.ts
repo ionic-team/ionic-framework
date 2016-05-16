@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, Output, EventEmitter} from 'angular2/core';
+import {Directive, ElementRef, Input, Output, EventEmitter} from '@angular/core';
 
 import {isPresent, isTrueProperty} from '../../util/util';
 
