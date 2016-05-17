@@ -535,7 +535,7 @@ describe('VirtualScroll', () => {
 
   function getView(width?:number, height?: number, top?: number, left?: number): any {
     return {
-      setLocal: function(){},
+      context: {},
       rootNodes: [{
         nodeType: 1,
         offsetWidth: width,
