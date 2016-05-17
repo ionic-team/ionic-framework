@@ -7,14 +7,14 @@ import {App, Page} from 'ionic-angular';
 class MainPage {
   wwwReleased = '1991';
   netscapeReleased = '1994-12-15T13:47:20.789';
-  firefoxReleased = '2002-09-23T15:03:46.789';
   operaReleased = '1995-04-15';
   webkitReleased = '1998-11-04T11:06Z';
+  firefoxReleased = '2002-09-23T15:03:46.789';
   chromeReleased = '2008-09-02';
 
   tokyoTime: string;
   parisTime: string;
-  dallasTime: string;
+  madisonTime: string;
   alertTime = '10:15';
 
   operaShortDay = [
@@ -28,16 +28,14 @@ class MainPage {
   ];
 
   constructor() {
-    this.tokyoTime = this.calculateTime("+9");
-    this.parisTime = this.calculateTime("+1");
-    this.dallasTime = this.calculateTime("-6");
-
-    let today = new Date();
+    this.tokyoTime = this.calculateTime('+9');
+    this.parisTime = this.calculateTime('+1');
+    this.madisonTime = this.calculateTime('-6');
 
     // If it is Daylight Savings Time
-    if (this.dst(today)) {
-      this.parisTime = this.calculateTime("+2");
-      this.dallasTime = this.calculateTime("-5");
+    if (this.dst(new Date())) {
+      this.parisTime = this.calculateTime('+2');
+      this.madisonTime = this.calculateTime('-5');
     }
   }
 
@@ -47,7 +45,7 @@ class MainPage {
 
     // create new Date object for different city
     // using supplied offset
-    let nd = new Date(d.getTime() + (3600000*offset));
+    let nd = new Date(d.getTime() + (3600000 * offset));
 
     return nd.toISOString();
   }
@@ -70,8 +68,4 @@ class MainPage {
 })
 class ApiDemoApp {
   root = MainPage;
-
-  constructor() {
-
-  }
 }
