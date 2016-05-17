@@ -15,13 +15,16 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>MMM DD, YYYY</ion-label>
-    <ion-datetime displayFormat="MMM DD, YYYY" min="1994-03-14" max="2012-12-09" [(ngModel)]="firefoxReleased" class="e2eOpenMMDDYYYY"></ion-datetime>
+    <ion-label>MM/DD/YYYY</ion-label>
+    <ion-datetime displayFormat="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" [(ngModel)]="firefoxReleased" class="e2eOpenMMDDYYYY"></ion-datetime>
   </ion-item>
 
   <ion-item>
-    <ion-label>DDD. MM/DD/YY (locale day)</ion-label>
-    <ion-datetime displayFormat="DDD. MM/DD/YY" min="1990-02" max="2000" [dayShortNames]="customShortDay" [(ngModel)]="operaReleased"></ion-datetime>
+    <ion-label>DDD. MMM DD, YY (custom locale)</ion-label>
+    <ion-datetime [(ngModel)]="operaReleased" min="1990-02" max="2000"
+      displayFormat="DDD. MMM DD, YY"
+      monthShortNames="jan, feb, mar, apr, mai, jun, jul, aug, sep, okt, nov, des"
+      [dayShortNames]="customShortDay"></ion-datetime>
   </ion-item>
 
   <ion-item>

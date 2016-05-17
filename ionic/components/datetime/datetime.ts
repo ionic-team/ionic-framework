@@ -213,13 +213,11 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * ```html
  * <ion-item>
  *   <ion-label>Período</ion-label>
- *   <ion-datetime displayFormat="DDDD MMM D, YYYY"
- *     [(ngModel)]="myDate"
- *     monthNames="[janeiro, fevereiro, mar\u00e7o, ... ]"
- *     monthShortNames="[jan, fev, mar, ... ]"
- *     dayNames="[domingo, segunda-feira, ter\u00e7a-feira, ... ]"
- *     dayShortNames="[dom, seg, ter, ... ]"
- *     ></ion-datetime>
+ *   <ion-datetime displayFormat="DDDD MMM D, YYYY" [(ngModel)]="myDate"
+ *     monthNames="janeiro, fevereiro, mar\u00e7o, ..."
+ *     monthShortNames="jan, fev, mar, ..."
+ *     dayNames="domingo, segunda-feira, ter\u00e7a-feira, ..."
+ *     dayShortNames="dom, seg, ter, ..."></ion-datetime>
  * </ion-item>
  * ```
  *
