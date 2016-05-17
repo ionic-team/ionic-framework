@@ -266,33 +266,38 @@ export function updateDate(existingData: DateTimeData, newData: any) {
 
 
 export function parseTemplate(template: string): string[] {
-  var formats: string[] = [];
+  let formats: string[] = [];
 
-  var foundFormats: {index: number; format: string}[] = [];
+  template = template.replace(/[^\w\s]/gi, ' ');
+
   FORMAT_KEYS.forEach(format => {
-    var index = template.indexOf(format.f);
-    if (index > -1) {
-      template = template.replace(format.f, replacer(format.f));
-      foundFormats.push({
-        index: index,
-        format: format.f,
+    if (format.f.length > 1 && template.indexOf(format.f) > -1 && template.indexOf(format.f + format.f.charAt(0)) < 0) {
+      template = template.replace(format.f, ' ' + format.f + ' ');
+    }
+  });
+
+  let words = template.split(' ').filter(w => w.length > 0);
+  words.forEach((word, i) => {
+    if (word.length) {
+      FORMAT_KEYS.forEach(format => {
+        if (word === format.f) {
+          if (word === FORMAT_A || word === FORMAT_a) {
+            // this format is an am/pm format, so it's an "a" or "A"
+            if ((formats.indexOf(FORMAT_h) < 0 && formats.indexOf(FORMAT_hh) < 0) ||
+                (words[i - 1] !== FORMAT_m && words[i - 1] !== FORMAT_mm)) {
+              // template does not already have a 12-hour format
+              // or this am/pm format doesn't have a minute format immediately before it
+              // so do not treat this word "a" or "A" as an am/pm format
+              return;
+            }
+          }
+          formats.push(word);
+        }
       });
     }
   });
 
-  // sort the found formats back to their original order
-  foundFormats.sort((a, b) => (a.index > b.index) ? 1 : (a.index < b.index) ? -1 : 0);
-
-  return foundFormats.map(val => val.format);
-}
-
-
-function replacer(originalStr: string): string {
-  let r = '';
-  for (var i = 0; i < originalStr.length; i++) {
-    r += '^';
-  }
-  return r;
+  return formats;
 }
 
 

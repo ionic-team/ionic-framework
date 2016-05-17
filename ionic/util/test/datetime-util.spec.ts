@@ -249,36 +249,87 @@ describe('getValueFromFormat', () => {
 
 describe('parseTemplate', () => {
 
-  it('should get formats from template "a A m mm h hh H HH D DD DDD DDDD M MM MMM MMMM YY YYYY"', () => {
-    var formats = datetime.parseTemplate('a A m mm h hh H HH D DD DDD DDDD M MM MMM MMMM YY YYYY');
-    expect(formats[0]).toEqual('a');
-    expect(formats[1]).toEqual('A');
-    expect(formats[2]).toEqual('m');
-    expect(formats[3]).toEqual('mm');
-    expect(formats[4]).toEqual('h');
-    expect(formats[5]).toEqual('hh');
-    expect(formats[6]).toEqual('H');
-    expect(formats[7]).toEqual('HH');
-    expect(formats[8]).toEqual('D');
-    expect(formats[9]).toEqual('DD');
-    expect(formats[10]).toEqual('DDD');
-    expect(formats[11]).toEqual('DDDD');
-    expect(formats[12]).toEqual('M');
-    expect(formats[13]).toEqual('MM');
-    expect(formats[14]).toEqual('MMM');
-    expect(formats[15]).toEqual('MMMM');
-    expect(formats[16]).toEqual('YY');
-    expect(formats[17]).toEqual('YYYY');
+  it('should not parse D thats apart of a word', () => {
+    var formats = datetime.parseTemplate('D Days');
+    expect(formats.length).toEqual(1);
+    expect(formats[0]).toEqual('D');
   });
 
-  it('should get formats from template YYMMMMDDHma', () => {
-    var formats = datetime.parseTemplate('YYMMMMDDHma');
+  it('should not parse D thats apart of a word', () => {
+    var formats = datetime.parseTemplate('DD Days');
+    expect(formats.length).toEqual(1);
+    expect(formats[0]).toEqual('DD');
+  });
+
+  it('should not parse m thats apart of a word', () => {
+    var formats = datetime.parseTemplate('m mins');
+    expect(formats.length).toEqual(1);
+    expect(formats[0]).toEqual('m');
+  });
+
+  it('should not parse M thats apart of a word', () => {
+    var formats = datetime.parseTemplate('mm Minutes');
+    expect(formats.length).toEqual(1);
+    expect(formats[0]).toEqual('mm');
+  });
+
+  it('should not pickup "a" within 12-hour, but its not the am/pm', () => {
+    var formats = datetime.parseTemplate('hh:mm is a time');
+    expect(formats.length).toEqual(2);
+    expect(formats[0]).toEqual('hh');
+    expect(formats[1]).toEqual('mm');
+  });
+
+  it('should allow am/pm when using 12-hour and no spaces', () => {
+    var formats = datetime.parseTemplate('hh:mma');
+    expect(formats.length).toEqual(3);
+    expect(formats[0]).toEqual('hh');
+    expect(formats[1]).toEqual('mm');
+    expect(formats[2]).toEqual('a');
+  });
+
+  it('should allow am/pm when using 12-hour', () => {
+    var formats = datetime.parseTemplate('hh:mm a');
+    expect(formats.length).toEqual(3);
+    expect(formats[0]).toEqual('hh');
+    expect(formats[1]).toEqual('mm');
+    expect(formats[2]).toEqual('a');
+  });
+
+  it('should not add am/pm when not using 24-hour', () => {
+    var formats = datetime.parseTemplate('HH:mm a');
+    expect(formats.length).toEqual(2);
+    expect(formats[0]).toEqual('HH');
+    expect(formats[1]).toEqual('mm');
+  });
+
+  it('should get formats from template "m mm h hh H HH D DD DDD DDDD M MM MMM MMMM YY YYYY"', () => {
+    var formats = datetime.parseTemplate('m mm h hh H HH D DD DDD DDDD M MM MMM MMMM YY YYYY');
+    expect(formats[0]).toEqual('m');
+    expect(formats[1]).toEqual('mm');
+    expect(formats[2]).toEqual('h');
+    expect(formats[3]).toEqual('hh');
+    expect(formats[4]).toEqual('H');
+    expect(formats[5]).toEqual('HH');
+    expect(formats[6]).toEqual('D');
+    expect(formats[7]).toEqual('DD');
+    expect(formats[8]).toEqual('DDD');
+    expect(formats[9]).toEqual('DDDD');
+    expect(formats[10]).toEqual('M');
+    expect(formats[11]).toEqual('MM');
+    expect(formats[12]).toEqual('MMM');
+    expect(formats[13]).toEqual('MMMM');
+    expect(formats[14]).toEqual('YY');
+    expect(formats[15]).toEqual('YYYY');
+  });
+
+  it('should get formats from template YYMMMMDDHHmm', () => {
+    var formats = datetime.parseTemplate('YYMMMMDDHHmm');
     expect(formats[0]).toEqual('YY');
     expect(formats[1]).toEqual('MMMM');
     expect(formats[2]).toEqual('DD');
-    expect(formats[3]).toEqual('H');
-    expect(formats[4]).toEqual('m');
-    expect(formats[5]).toEqual('a');
+    expect(formats[3]).toEqual('HH');
+    expect(formats[4]).toEqual('mm');
   });
 
   it('should get formats from template MM/DD/YYYY', () => {
@@ -741,7 +792,7 @@ describe('parseISODate', () => {
 
 // pt-br
 var customLocale: datetime.LocaleData = {
-  dayShort: [
+  dayNames: [
     'domingo',
     'segunda-feira',
     'ter\u00e7a-feira',

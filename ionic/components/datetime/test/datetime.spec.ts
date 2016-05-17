@@ -465,7 +465,7 @@ describe('DateTime', () => {
 
   // pt-br
   var customLocale: datetime.LocaleData = {
-    dayShort: [
+    dayNames: [
       'domingo',
       'segunda-feira',
       'ter\u00e7a-feira',
