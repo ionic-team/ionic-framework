@@ -306,7 +306,7 @@ class PickerColumnCmp {
 
     } else if (this.y % this.optHeight !== 0) {
       // needs to still get locked into a position so options line up
-      var currentPos = Math.abs(this.y  % this.optHeight);
+      var currentPos = Math.abs(this.y % this.optHeight);
 
       // create a velocity in the direction it needs to scroll
       this.velocity = (currentPos > (this.optHeight / 2) ? 1 : -1);
@@ -343,8 +343,12 @@ class PickerColumnCmp {
     this.col.selectedIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
 
     let colElements = this.colEle.nativeElement.querySelectorAll('.picker-opt');
-
-    for (var i = 0; i < this.col.options.length; i++) {
+    if (colElements.length != this.col.options.length) {
+      // TODO: it would be great to find the root of the problem
+      // and implement a good fix, but at least, this prevents an expection
+      console.error("colElements.length!=this.col.options.length");
+    }
+    for (var i = 0; i < colElements.length; i++) {
       var ele: HTMLElement = colElements[i];
       var opt = <any>this.col.options[i];
       var optTop = (i * this.optHeight);
@@ -370,7 +374,7 @@ class PickerColumnCmp {
       // TODO: setting by [style.transform]="o.transform" within the template is currently broke
       ele.style[CSS.transform] = `rotateX(${rotateX}deg) translate3d(${translateX}px,${translateY}px,${translateZ}px)`;
       ele.style[CSS.transitionDuration] = (duration > 0 ? duration + 'ms' : '');
-      ele.classList[this.col.selectedIndex===i ? 'add' : 'remove']('picker-opt-selected');
+      ele.classList[this.col.selectedIndex === i ? 'add' : 'remove']('picker-opt-selected');
       ele.classList[opt.disabled ? 'add' : 'remove']('picker-opt-disabled');
     }
 
