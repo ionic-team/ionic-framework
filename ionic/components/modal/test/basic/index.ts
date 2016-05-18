@@ -1,11 +1,8 @@
 import {App, Page, Config, Platform} from '../../../../../ionic';
 import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../ionic';
 
-import {Http} from 'angular2/http';
-
 @Page({
-  templateUrl: 'main.html',
-  providers : [Http]
+  templateUrl: 'main.html'
 })
 class E2EPage {
   platforms;
@@ -97,7 +94,7 @@ class E2EPage {
 class ModalPassData {
   data;
 
-  constructor(private http:Http, params: NavParams, private viewCtrl: ViewController) {
+  constructor(params: NavParams, private viewCtrl: ViewController) {
     this.data = {
       userId: params.get('userId'),
       name: 'Jenny'
@@ -114,7 +111,6 @@ class ModalPassData {
 
   onPageDidEnter(){
     console.log("ModalPassData onPageDidEnter fired");
-    console.log("ModalPassData http: ", this.http);
   }
 
   onPageWillLeave(){

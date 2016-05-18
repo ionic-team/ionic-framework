@@ -144,13 +144,13 @@ class ModalComponent {
 
   @ViewChild('wrapper', {read: ViewContainerRef}) wrapper: ViewContainerRef;
 
-  constructor(protected dynamicComponentLoader: DynamicComponentLoader, protected navParams: NavParams, protected viewController: ViewController) {
+  constructor(private _loader: DynamicComponentLoader, private _navParams: NavParams, private _viewCtrl: ViewController) {
   }
 
   ngAfterViewInit() {
-    var component = this.navParams.data.componentToPresent;
-    this.dynamicComponentLoader.loadNextToLocation(component, this.wrapper).then(componentInstance => {
-      this.viewController.setInstance(componentInstance.instance);
+    let component = this._navParams.data.componentToPresent;
+    this._loader.loadNextToLocation(component, this.wrapper).then(componentInstance => {
+      this._viewCtrl.setInstance(componentInstance.instance);
       // TODO - validate what life cycle events aren't call and possibly call them here if needed
     });
   }
