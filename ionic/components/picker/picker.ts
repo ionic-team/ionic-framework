@@ -343,11 +343,12 @@ class PickerColumnCmp {
     this.col.selectedIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
 
     let colElements = this.colEle.nativeElement.querySelectorAll('.picker-opt');
-    if (colElements.length != this.col.options.length) {
-      // TODO: it would be great to find the root of the problem
-      // and implement a good fix, but at least, this prevents an expection
-      console.error("colElements.length!=this.col.options.length");
+    if (colElements.length !== this.col.options.length) {
+      // TODO: temporary until [style.transform] is fixed within ng2
+      console.warn('colElements.length!=this.col.options.length');
+      return;
     }
+
     for (var i = 0; i < colElements.length; i++) {
       var ele: HTMLElement = colElements[i];
       var opt = <any>this.col.options[i];
