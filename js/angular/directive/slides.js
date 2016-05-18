@@ -48,8 +48,8 @@
  *
  * $scope.$on("$ionicSlides.slideChangeEnd", function(event, data){
  *   // note: the indexes are 0-based
- *   $scope.activeIndex = data.activeIndex;
- *   $scope.previousIndex = data.previousIndex;
+ *   $scope.activeIndex = data.slider.activeIndex;
+ *   $scope.previousIndex = data.slider.previousIndex;
  * });
  *
  * ```
