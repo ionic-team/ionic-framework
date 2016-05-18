@@ -3,13 +3,27 @@
 // Modals
 // --------------------------------------------------
 
-ion-page.modal {
-  z-index: $z-index-overlay;
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
 
-  // hidden by default to prevent flickers, the animation will show it
-  transform: translate3d(0, 100%, 0);
+  width: 100%;
+  height: 100%;
 
-  @media only screen and (min-width: 768px) and (min-height: 600px){
+  .backdrop {
+    @media not all and (min-width: 768px) and (min-height: 600px) {
+      display: none;
+    }
+  }
+}
+
+.modal-wrapper {
+  z-index: 10;
+
+  height: 100%;
+
+  @media only screen and (min-width: 768px) and (min-height: 600px) {
     position: absolute;
     top: calc(50% - 250px);
     left: calc(50% - 300px);
@@ -18,7 +32,7 @@ ion-page.modal {
     height: 500px;
   }
 
-  @media only screen and (min-width: 768px) and (min-height: 768px){
+  @media only screen and (min-width: 768px) and (min-height: 768px) {
     position: absolute;
     top: calc(50% - 300px);
     left: calc(50% - 300px);
@@ -26,4 +40,8 @@ ion-page.modal {
     width: 600px;
     height: 600px;
   }
+}
+
+.show-page ion-page {
+  display: flex;
 }

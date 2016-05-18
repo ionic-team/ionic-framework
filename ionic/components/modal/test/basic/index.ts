@@ -1,9 +1,11 @@
 import {App, Page, Config, Platform} from '../../../../../ionic';
-import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../ionic';;
+import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../ionic';
 
+import {Http} from 'angular2/http';
 
 @Page({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  providers : [Http]
 })
 class E2EPage {
   platforms;
@@ -95,7 +97,7 @@ class E2EPage {
 class ModalPassData {
   data;
 
-  constructor(params: NavParams, private viewCtrl: ViewController) {
+  constructor(private http:Http, params: NavParams, private viewCtrl: ViewController) {
     this.data = {
       userId: params.get('userId'),
       name: 'Jenny'
@@ -104,6 +106,22 @@ class ModalPassData {
 
   submit() {
     this.viewCtrl.dismiss(this.data);
+  }
+
+  onPageWillEnter(){
+    console.log("ModalPassData onPagewillEnter fired");
+  }
+
+  onPageDidEnter(){
+    console.log("ModalPassData onPageDidEnter fired");
+  }
+
+  onPageWillLeave(){
+    console.log("ModalPassData onPageWillLeave fired");
+  }
+
+  onPageDidLeave(){
+    console.log("ModalPassData onPageDidLeave fired");
   }
 }
 

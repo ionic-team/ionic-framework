@@ -6,6 +6,14 @@
 $modal-ios-background-color:          $background-ios-color !default;
 
 
-ion-page.modal {
+.modal ion-page {
   background-color: $modal-ios-background-color;
+}
+
+.modal-wrapper {
+  @media only screen and (min-width: 768px) and (min-height: 600px) {
+    overflow: hidden;
+
+    border-radius: 5px;
+  }
 }
