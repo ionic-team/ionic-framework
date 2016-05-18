@@ -3,27 +3,54 @@
 // Modals
 // --------------------------------------------------
 
-ion-page.modal {
-  z-index: $z-index-overlay;
+$modal-inset-min-width:                      768px !default;
+$modal-inset-min-height-small:               600px !default;
+$modal-inset-min-height-large:               768px !default;
+$modal-inset-width:                          600px !default;
+$modal-inset-height-small:                   500px !default;
+$modal-inset-height-large:                   600px !default;
 
-  // hidden by default to prevent flickers, the animation will show it
-  transform: translate3d(0, 100%, 0);
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
 
-  @media only screen and (min-width: 768px) and (min-height: 600px){
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  .backdrop {
+    @media not all and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+      display: none;
+    }
+  }
+}
+
+.modal-wrapper {
+  z-index: 10;
+
+  height: 100%;
+
+  @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
     position: absolute;
-    top: calc(50% - 250px);
-    left: calc(50% - 300px);
+    top: calc(50% - (#{$modal-inset-height-small}/2));
+    left: calc(50% - (#{$modal-inset-width}/2));
 
-    width: 600px;
-    height: 500px;
+    width: $modal-inset-width;
+    height: $modal-inset-height-small;
   }
 
-  @media only screen and (min-width: 768px) and (min-height: 768px){
+  @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-large) {
     position: absolute;
-    top: calc(50% - 300px);
-    left: calc(50% - 300px);
+    top: calc(50% - (#{$modal-inset-height-large}/2));
+    left: calc(50% - (#{$modal-inset-width}/2));
 
-    width: 600px;
-    height: 600px;
+    width: $modal-inset-width;
+    height: $modal-inset-height-large;
   }
+}
+
+.show-page ion-page {
+  display: flex;
 }

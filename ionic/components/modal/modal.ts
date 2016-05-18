@@ -1,3 +1,6 @@
+import {Component, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
+
+import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
@@ -103,8 +106,9 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  */
 export class Modal extends ViewController {
 
-  constructor(componentType, data = {}) {
-    super(componentType, data);
+  constructor(componentType, data: any = {}) {
+    data.componentToPresent = componentType;
+    super(ModalComponent, data);
     this.viewType = 'modal';
     this.isOverlay = true;
   }
@@ -127,6 +131,30 @@ export class Modal extends ViewController {
 
 }
 
+@Component({
+  selector: 'ion-modal',
+  template: `
+    <div class="backdrop"></div>
+    <div class="modal-wrapper">
+      <div #wrapper></div>
+    </div>
+  `
+})
+class ModalComponent {
+
+  @ViewChild('wrapper', {read: ViewContainerRef}) wrapper: ViewContainerRef;
+
+  constructor(private _loader: DynamicComponentLoader, private _navParams: NavParams, private _viewCtrl: ViewController) {
+  }
+
+  ngAfterViewInit() {
+    let component = this._navParams.data.componentToPresent;
+    this._loader.loadNextToLocation(component, this.wrapper).then(componentInstance => {
+      this._viewCtrl.setInstance(componentInstance.instance);
+      // TODO - validate what life cycle events aren't call and possibly call them here if needed
+    });
+  }
+}
 
 /**
  * Animations for modals
@@ -134,12 +162,19 @@ export class Modal extends ViewController {
 class ModalSlideIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(opts);
+
+    let ele = enteringView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    backdrop.fromTo('opacity', 0.01, 0.4);
+    let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    wrapper.fromTo('translateY', '100%', '0%');
     this
       .element(enteringView.pageRef())
       .easing('cubic-bezier(0.36,0.66,0.04,1)')
       .duration(400)
-      .fromTo('translateY', '100%', '0%')
-      .before.addClass('show-page');
+      .before.addClass('show-page')
+      .add(backdrop)
+      .add(wrapper);
 
     if (enteringView.hasNavbar()) {
       // entering page has a navbar
@@ -155,11 +190,19 @@ Transition.register('modal-slide-in', ModalSlideIn);
 class ModalSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(opts);
+
+    let ele = leavingView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    backdrop.fromTo('opacity', 0.4, 0.0);
+    let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    wrapper.fromTo('translateY', '0%', '100%');
+
     this
       .element(leavingView.pageRef())
       .easing('ease-out')
       .duration(250)
-      .fromTo('translateY', '0%', '100%');
+      .add(backdrop)
+      .add(wrapper);
   }
 }
 Transition.register('modal-slide-out', ModalSlideOut);
@@ -168,13 +211,21 @@ Transition.register('modal-slide-out', ModalSlideOut);
 class ModalMDSlideIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(opts);
+
+    let ele = enteringView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    backdrop.fromTo('opacity', 0.01, 0.4);
+    let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    wrapper.fromTo('translateY', '40px', '0px');
+
     this
       .element(enteringView.pageRef())
       .easing('cubic-bezier(0.36,0.66,0.04,1)')
       .duration(280)
-      .fromTo('translateY', '40px', '0px')
       .fadeIn()
-      .before.addClass('show-page');
+      .before.addClass('show-page')
+      .add(backdrop)
+      .add(wrapper);
 
     if (enteringView.hasNavbar()) {
       // entering page has a navbar
@@ -190,12 +241,20 @@ Transition.register('modal-md-slide-in', ModalMDSlideIn);
 class ModalMDSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(opts);
+
+    let ele = leavingView.pageRef().nativeElement;
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    backdrop.fromTo('opacity', 0.4, 0.0);
+    let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    wrapper.fromTo('translateY', '0px', '40px');
+
     this
       .element(leavingView.pageRef())
       .duration(200)
       .easing('cubic-bezier(0.47,0,0.745,0.715)')
-      .fromTo('translateY', '0px', '40px')
-      .fadeOut();
+      .fadeOut()
+      .add(wrapper)
+      .add(backdrop);
   }
 }
 Transition.register('modal-md-slide-out', ModalMDSlideOut);

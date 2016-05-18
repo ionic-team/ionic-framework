@@ -1,6 +1,5 @@
 import {App, Page, Config, Platform} from '../../../../../ionic';
-import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../ionic';;
-
+import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../ionic';
 
 @Page({
   templateUrl: 'main.html'
@@ -104,6 +103,22 @@ class ModalPassData {
 
   submit() {
     this.viewCtrl.dismiss(this.data);
+  }
+
+  onPageWillEnter(){
+    console.log("ModalPassData onPagewillEnter fired");
+  }
+
+  onPageDidEnter(){
+    console.log("ModalPassData onPageDidEnter fired");
+  }
+
+  onPageWillLeave(){
+    console.log("ModalPassData onPageWillLeave fired");
+  }
+
+  onPageDidLeave(){
+    console.log("ModalPassData onPageDidLeave fired");
   }
 }
 
@@ -242,11 +257,25 @@ class ContactUs {
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      <ion-list>
+        <ion-item *ngFor="#item of items">
+          Item Number: {{item.value}}
+        </ion-item>
+      </ion-list>
     </ion-content>
   `
 })
 class ModalFirstPage {
-  constructor(private nav: NavController) {}
+
+  private items:any[];
+  constructor(private nav: NavController) {
+    this.items = [];
+    for ( let i = 0; i < 50; i++ ){
+      this.items.push({
+        value: (i + 1)
+      });
+    }
+  }
 
   push() {
     let page = ModalSecondPage;
