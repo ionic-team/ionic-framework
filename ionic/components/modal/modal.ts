@@ -1,4 +1,4 @@
-import {Component, DynamicComponentLoader, ViewChild, ViewContainerRef} from 'angular2/core';
+import {Component, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
 
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
