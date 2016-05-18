@@ -151,6 +151,7 @@ class ModalComponent {
     var component = this.navParams.data.componentToPresent;
     this.dynamicComponentLoader.loadNextToLocation(component, this.wrapper).then(componentInstance => {
       this.viewController.setInstance(componentInstance.instance);
+      // TODO - validate what life cycle events aren't call and possibly call them here if needed
     });
   }
 }

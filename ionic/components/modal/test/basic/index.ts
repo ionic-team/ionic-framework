@@ -114,6 +114,7 @@ class ModalPassData {
 
   onPageDidEnter(){
     console.log("ModalPassData onPageDidEnter fired");
+    console.log("ModalPassData http: ", this.http);
   }
 
   onPageWillLeave(){
@@ -260,11 +261,25 @@ class ContactUs {
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      <ion-list>
+        <ion-item *ngFor="#item of items">
+          Item Number: {{item.value}}
+        </ion-item>
+      </ion-list>
     </ion-content>
   `
 })
 class ModalFirstPage {
-  constructor(private nav: NavController) {}
+
+  private items:any[];
+  constructor(private nav: NavController) {
+    this.items = [];
+    for ( let i = 0; i < 50; i++ ){
+      this.items.push({
+        value: (i + 1)
+      });
+    }
+  }
 
   push() {
     let page = ModalSecondPage;
