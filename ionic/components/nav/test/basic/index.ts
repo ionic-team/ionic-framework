@@ -221,6 +221,9 @@ class FullPage {
       </ion-fixed>
       <ion-fixed style="pointer-events: none; top:0; bottom:0; right:0; width:50%; background: rgba(0,0,0,0.5);"></ion-fixed>
     </ion-content>
+    <ion-toolbar position="bottom">
+      Footer
+    </ion-toolbar>
   `
 })
 class PrimaryHeaderPage {
@@ -285,6 +288,10 @@ class PrimaryHeaderPage {
         <button ion-item (click)="setBackButtonText()">Set Back Button Text</button>
       </ion-list>
     </ion-content>
+
+    <ion-toolbar position="bottom">
+      Another Page Footer
+    </ion-toolbar>
   `
 })
 class AnotherPage {

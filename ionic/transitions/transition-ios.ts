@@ -34,6 +34,7 @@ class IOSTransition extends Transition {
 
     // entering content
     let enteringContent = new Animation(enteringView.contentRef());
+    enteringContent.element(enteringView.toolbarRefs());
     this.add(enteringContent);
 
     if (backDirection) {
@@ -120,6 +121,7 @@ class IOSTransition extends Transition {
     if (leavingView) {
       // leaving content
       let leavingContent = new Animation(leavingView.contentRef());
+      leavingContent.element(leavingView.toolbarRefs());
       this.add(leavingContent);
 
       if (backDirection) {

@@ -5,6 +5,7 @@ import {Config} from '../../config/config';
 import {Ion} from '../ion';
 import {MenuToggle} from '../menu/menu-toggle';
 import {Navbar} from '../navbar/navbar';
+import {ViewController} from '../nav/view-controller';
 
 
 /**
@@ -117,9 +118,14 @@ export class ToolbarBase extends Ion {
 export class Toolbar extends ToolbarBase {
   private _sbPadding: boolean;
 
-  constructor(elementRef: ElementRef, config: Config) {
+  constructor(
+    @Optional() viewCtrl: ViewController,
+    elementRef: ElementRef,
+    config: Config
+  ) {
     super(elementRef);
     this._sbPadding = config.getBoolean('statusbarPadding', false);
+    viewCtrl && viewCtrl.setToolbarRef(elementRef);
   }
 
 }

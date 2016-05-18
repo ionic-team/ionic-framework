@@ -24,6 +24,7 @@ import {isPresent} from '../../util/util';
 export class ViewController {
   private _cntDir: any;
   private _cntRef: ElementRef;
+  private _tbRefs: ElementRef[] = [];
   private _destroys: Function[] = [];
   private _hdAttr: string = null;
   private _leavingOpts: NavOptions = null;
@@ -321,6 +322,21 @@ export class ViewController {
   /**
    * @private
    */
+  setToolbarRef(elementRef: ElementRef) {
+    this._tbRefs.push(elementRef);
+  }
+
+  /**
+   * @private
+   * @returns {elementRef} Returns the Page's Content ElementRef
+   */
+  toolbarRefs(): ElementRef[] {
+    return this._tbRefs;
+  }
+
+  /**
+   * @private
+   */
   setContent(directive) {
     this._cntDir = directive;
   }
@@ -543,6 +559,7 @@ export class ViewController {
       this._destroys[i]();
     }
     this._destroys.length = 0;
+    this._tbRefs.length = 0;
   }
 
 }
