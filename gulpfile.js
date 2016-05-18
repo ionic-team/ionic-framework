@@ -812,7 +812,7 @@ gulp.task('package', function(done){
   var templateVars = {};
   var packageJSON = require('./package.json');
   templateVars.ionicVersion = packageJSON.version;
-  templateVars.angularVersion = packageJSON.dependencies.angular2;
+  templateVars.angularVersion = packageJSON.dependencies['@angular/core'];
   var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
   fs.writeFileSync(distDir + '/package.json', packageTemplate(templateVars));
   done();
