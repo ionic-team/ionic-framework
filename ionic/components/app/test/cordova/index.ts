@@ -5,7 +5,7 @@ import {App, NavController, Page, IonicApp, Modal, ViewController} from '../../.
   template: `
   <ion-toolbar>
     <ion-title>This is a modal</ion-title>
-    <button menuToggle>
+    <button menuToggle class="e2eCordovaOpenLeftMenu">
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-buttons end>
