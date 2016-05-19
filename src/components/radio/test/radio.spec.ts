@@ -1,4 +1,4 @@
-import {RadioGroup, RadioButton, Form} from '../../../../ionic';
+import {RadioGroup, RadioButton, Form} from '../../../../src';
 
 export function run() {
   describe('RadioGroup', () => {

@@ -1,4 +1,4 @@
-import {App, Page, ActionSheet, Loading, NavController, ViewController, Platform} from '../../../../../ionic';
+import {App, Page, ActionSheet, Loading, NavController, ViewController, Platform} from '../../../../../src';
 
 
 @Page({

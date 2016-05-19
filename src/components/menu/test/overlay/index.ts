@@ -1,4 +1,4 @@
-import {App, IonicApp, Page} from '../../../../../ionic';
+import {App, IonicApp, Page} from '../../../../../src';
 
 
 @Page({templateUrl: 'page1.html'})

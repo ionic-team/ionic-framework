@@ -1,4 +1,4 @@
-import {App, Page, Alert, Modal, NavController, ViewController} from '../../../../../ionic';
+import {App, Page, Alert, Modal, NavController, ViewController} from '../../../../../src';
 
 
 @Page({

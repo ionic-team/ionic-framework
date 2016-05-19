@@ -1,7 +1,7 @@
 import {Component, Type, ViewChild} from '@angular/core';
-import {App, NavController, Alert, Content} from '../../../../../ionic';
-import {Page, Config, IonicApp} from '../../../../../ionic';
-import {NavParams, ViewController} from '../../../../../ionic';;
+import {App, NavController, Alert, Content} from '../../../../../src';
+import {Page, Config, IonicApp} from '../../../../../src';
+import {NavParams, ViewController} from '../../../../../src';;
 
 
 @Component({

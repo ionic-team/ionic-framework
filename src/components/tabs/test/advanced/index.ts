@@ -2,7 +2,7 @@ import {ViewChild} from '@angular/core';
 import {RouteConfig} from '@angular/router';
 import {Location} from '@angular/common';
 
-import {App, Page, NavController, NavParams, Modal, ViewController, Tabs} from '../../../../../ionic';
+import {App, Page, NavController, NavParams, Modal, ViewController, Tabs} from '../../../../../src';
 
 
 @Page({

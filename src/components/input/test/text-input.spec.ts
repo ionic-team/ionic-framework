@@ -1,4 +1,4 @@
-import {TextInput} from '../../../../ionic';
+import {TextInput} from '../../../../src';
 
 export function run() {
 

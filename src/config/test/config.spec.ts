@@ -1,4 +1,4 @@
-import {Config, Platform, ionicProviders} from '../../../ionic';
+import {Config, Platform, ionicProviders} from '../../../src';
 
 export function run() {
 

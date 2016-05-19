@@ -1,4 +1,4 @@
-import {Button, Config} from '../../../../ionic';
+import {Button, Config} from '../../../../src';
 
 export function run() {
 

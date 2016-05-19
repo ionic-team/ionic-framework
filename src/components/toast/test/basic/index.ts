@@ -1,4 +1,4 @@
-import {App, Page, Toast, NavController} from '../../../../../ionic';
+import {App, Page, Toast, NavController} from '../../../../../src';
 
 @Page({
   template: `

@@ -1,4 +1,4 @@
-import {App, Page, NavController, NavParams} from '../../../../../ionic';
+import {App, Page, NavController, NavParams} from '../../../../../src';
 
 
 @Page({

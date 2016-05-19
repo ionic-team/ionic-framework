@@ -1,4 +1,4 @@
-import {Toast} from '../../../../ionic';
+import {Toast} from '../../../../src';
 
 export function run() {
 

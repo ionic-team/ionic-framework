@@ -1,4 +1,4 @@
-import {App, Page, Animation, IonicApp} from '../../../../../ionic';
+import {App, Page, Animation, IonicApp} from '../../../../../src';
 
 
 @Page({

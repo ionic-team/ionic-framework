@@ -1,5 +1,5 @@
 import {ViewChild} from '@angular/core';
-import {App, Page, InfiniteScroll, NavController} from '../../../../../ionic';
+import {App, Page, InfiniteScroll, NavController} from '../../../../../src';
 
 
 @Page({

@@ -1,4 +1,4 @@
-import {IonicApp, Nav, Tabs, Tab, NavOptions, Config, ViewController, Platform} from '../../../../ionic';
+import {IonicApp, Nav, Tabs, Tab, NavOptions, Config, ViewController, Platform} from '../../../../src';
 
 export function run() {
 

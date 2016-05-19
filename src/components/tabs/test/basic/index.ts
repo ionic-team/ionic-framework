@@ -1,4 +1,4 @@
- import {App, Page, NavController, Alert, Modal, ViewController} from '../../../../../ionic';
+ import {App, Page, NavController, Alert, Modal, ViewController} from '../../../../../src';
 
 //
 // Modal

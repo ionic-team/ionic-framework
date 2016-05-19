@@ -1,5 +1,5 @@
 import {Validators, Control, ControlGroup} from '@angular/common';
-import {App, Page, NavController} from '../../../../../ionic';
+import {App, Page, NavController} from '../../../../../src';
 
 
 @Page({

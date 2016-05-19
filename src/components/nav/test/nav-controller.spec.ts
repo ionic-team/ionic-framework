@@ -1,4 +1,4 @@
-import {NavController, Tabs, NavOptions, Config, ViewController} from '../../../../ionic';
+import {NavController, Tabs, NavOptions, Config, ViewController} from '../../../../src';
 
 export function run() {
   describe('NavController', () => {

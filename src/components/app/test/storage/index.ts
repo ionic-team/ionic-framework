@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Control, ControlGroup} from '@angular/common';
 
-import {App, Storage, LocalStorage, SqlStorage} from '../../../../../ionic';
+import {App, Storage, LocalStorage, SqlStorage} from '../../../../../src';
 
 @App({
   templateUrl: 'main.html'

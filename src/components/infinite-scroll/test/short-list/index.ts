@@ -1,4 +1,4 @@
-import {App, InfiniteScroll} from '../../../../../ionic';
+import {App, InfiniteScroll} from '../../../../../src';
 
 
 @App({

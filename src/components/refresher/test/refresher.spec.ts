@@ -1,4 +1,4 @@
-import {Refresher, Content, Config, Ion} from '../../../../ionic';
+import {Refresher, Content, Config, Ion} from '../../../../src';
 
 export function run() {
 

@@ -1,4 +1,4 @@
-import {App, Page} from '../../../../../ionic';
+import {App, Page} from '../../../../../src';
 import {Control, ControlGroup} from '@angular/common';
 
 

@@ -1,5 +1,5 @@
 import {ViewChild} from '@angular/core';
-import {App, Page, Slides} from '../../../../../ionic';
+import {App, Page, Slides} from '../../../../../src';
 
 
 @App({

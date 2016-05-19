@@ -1,4 +1,4 @@
-import * as tapClick from '../../../../ionic';
+import * as tapClick from '../../../../src';
 
 export function run() {
 

@@ -1,4 +1,4 @@
-import {App} from '../../../../../ionic';
+import {App} from '../../../../../src';
 
 @App({
   templateUrl: 'main.html',
