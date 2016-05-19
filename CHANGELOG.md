@@ -113,8 +113,20 @@ Angular has been updated to 2.0.0-rc.1, follow these steps to update Angular.
   ```
   *ngFor="let session of group.sessions"
   ```
+  
+7. Replace all template variables in `virtualScroll`. For example:
 
-7. View the [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md) for more in depth changes.
+  ```
+  *virtualItem="#item"
+  ```
+  
+  becomes
+  
+  ```
+  *virtualItem="let item"
+  ```
+
+8. View the [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md) for more in depth changes.
 
 
 #### IonicApp ([df32836](https://github.com/driftyco/ionic/commit/df32836)) references [#6199](https://github.com/driftyco/ionic/issues/6199)
