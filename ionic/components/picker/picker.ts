@@ -1,4 +1,5 @@
 import {Component, ElementRef, Input, Output, EventEmitter, ViewChildren, QueryList, ViewChild, Renderer, HostListener, ViewEncapsulation} from '@angular/core';
+import {DomSanitizationService} from '@angular/platform-browser';
 
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
@@ -88,7 +89,7 @@ export class Picker extends ViewController {
   template:
     '<div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>' +
     '<div class="picker-opts" #colEle [style.width]="col.optionsWidth">' +
-      '<button *ngFor="let o of col.options; let i=index;" (click)="optClick($event, i)" type="button" category="picker-opt">' +
+      '<button *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" [style.transitionDuration]="o._dur" [class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" (click)="optClick($event, i)" type="button" category="picker-opt">' +
         '{{o.text}}' +
       '</button>' +
     '</div>' +
@@ -123,7 +124,7 @@ class PickerColumnCmp {
   lastIndex: number;
   @Output() change: EventEmitter<any> = new EventEmitter();
 
-  constructor(config: Config) {
+  constructor(config: Config, private _sanitizer: DomSanitizationService) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
   }
 
@@ -342,15 +343,7 @@ class PickerColumnCmp {
 
     this.col.selectedIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
 
-    let colElements = this.colEle.nativeElement.querySelectorAll('.picker-opt');
-    if (colElements.length !== this.col.options.length) {
-      // TODO: temporary until [style.transform] is fixed within ng2
-      console.warn('colElements.length!=this.col.options.length');
-      return;
-    }
-
-    for (var i = 0; i < colElements.length; i++) {
-      var ele: HTMLElement = colElements[i];
+    for (var i = 0; i < this.col.options.length; i++) {
       var opt = <any>this.col.options[i];
       var optTop = (i * this.optHeight);
       var optOffset = (optTop + y);
@@ -372,11 +365,8 @@ class PickerColumnCmp {
         translateY = optOffset;
       }
 
-      // TODO: setting by [style.transform]="o.transform" within the template is currently broke
-      ele.style[CSS.transform] = `rotateX(${rotateX}deg) translate3d(${translateX}px,${translateY}px,${translateZ}px)`;
-      ele.style[CSS.transitionDuration] = (duration > 0 ? duration + 'ms' : '');
-      ele.classList[this.col.selectedIndex === i ? 'add' : 'remove']('picker-opt-selected');
-      ele.classList[opt.disabled ? 'add' : 'remove']('picker-opt-disabled');
+      opt._trans = this._sanitizer.bypassSecurityTrustStyle(`rotateX(${rotateX}deg) translate3d(${translateX}px,${translateY}px,${translateZ}px)`);
+      opt._dur = (duration > 0 ? duration + 'ms' : '');
     }
 
     if (saveY) {
