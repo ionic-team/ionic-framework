@@ -153,8 +153,8 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  *
  * ## Min and Max Datetimes
  *
- * Dates are infinite in either direction, so for a user selection there should be at
- * least some form of restricting the dates can be selected. Be default, the maximum
+ * Dates are infinite in either direction, so for a user's selection there should be at
+ * least some form of restricting the dates that can be selected. Be default, the maximum
  * date is to the end of the current year, and the minimum date is from the beginning
  * of the year that was 100 years ago.
  *
@@ -225,7 +225,7 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * However, it's important to note that `ion-datetime` does not attempt to solve all
  * situtations when validating and manipulating datetime values. If datetime values need
  * to be parsed from a certain format, or manipulated (such as adding 5 days to a date,
- * subtracting 30 minutes), or even formatting data to a specific locale, then we highly
+ * subtracting 30 minutes, etc.), or even formatting data to a specific locale, then we highly
  * recommend using [moment.js](http://momentjs.com/) to "Parse, validate, manipulate, and
  * display dates in JavaScript". [Moment.js](http://momentjs.com/) has quickly become
  * our goto standard when dealing with datetimes within JavaScript, but Ionic does not
@@ -367,7 +367,7 @@ export class DateTime {
 
   /**
    * @input {array | string} Values used to create the list of selectable minutes. By default
-   * the mintues range from `1` to `59`. However, to control exactly which minutes to display,
+   * the mintues range from `0` to `59`. However, to control exactly which minutes to display,
    * the `minuteValues` input can take either an array of numbers, or string of comma separated
    * numbers. For example, if the minute selections should only be every 15 minutes, then
    * this input value would be `minuteValues="0,15,30,45"`.
