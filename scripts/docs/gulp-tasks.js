@@ -86,7 +86,7 @@ module.exports = function(gulp, flags) {
           }));
         callback();
       }).on('end', function() {
-        gutil.log("Writing to file at", gutil.colors.cyan("/driftyco/ionic2/" + outputFile));
+        gutil.log("Writing to file at", gutil.colors.cyan("/driftyco/ionic/" + outputFile));
         gutil.log("Place this file in", gutil.colors.cyan("/driftyco/ionic-site/" + config.v2DocsDir + "/theming/overriding-ionic-variables/"), "in order to update the docs");
         mkdirp.sync('tmp');
         fs.writeFileSync(outputFile, JSON.stringify(variables));
