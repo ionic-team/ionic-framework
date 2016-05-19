@@ -69,10 +69,7 @@ Ionic currently supports Android 4.1 and above, iOS 8 and above, and Windows 10.
 * Read our [Blog](http://blog.ionic.io/)
 * Have a feature request or find a bug? [Submit an issue](http://ionicframework.com/submit-issue/)
 * Join our Community Slack Group! [Ionic Worldwide](http://ionicworldwide.herokuapp.com/)
-
-## Authors
-
-Originally created by [Adam Bradley](https://twitter.com/adamdbradley), [Ben Sperry](https://twitter.com/benjsperry), and [Max Lynch](https://twitter.com/maxlynch), Ionic has seen hundreds of great [contributors](https://github.com/driftyco/ionic/graphs/contributors) from around the world, including Ionic Team Members [Perry Govier](https://twitter.com/perrygovier), [Mike Hartington](https://twitter.com/mhartington), and [Tim Lancina](https://twitter.com/dopernicus).
+* [Ionic Team](http://ionic.io/team)
 
 ## Development
 
