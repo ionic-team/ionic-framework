@@ -6,7 +6,7 @@ Ionic 2 is the next generation of [Ionic](http://ionicframework.com/), the open-
 
 Ionic 2 is based on the new [2.x version of AngularJS](https://angular.io/), and comes with many significant performance, usability, and feature improvements.
 
-See [Adam Bradley](http://twitter.com/adamdbradley)'s [Building apps with Ionic 2](http://adamdbradley.github.io/building-with-ionic2) slides for a quick overview of Ionic 2.
+See the [Building apps with Ionic 2](http://adamdbradley.github.io/building-with-ionic2) slides for a quick overview of Ionic 2.
 
 ### Try Ionic 2
 
