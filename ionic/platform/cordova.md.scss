@@ -1,38 +1,22 @@
 @import "../globals.md";
+@import "./cordova";
 
-// iOS Cordova
+// Material Design on iOS with Cordova
 // --------------------------------------------------
 
-$cordova-ios-statusbar-padding:    20px   !default;
+$cordova-md-statusbar-padding-modal-max-width:         $cordova-statusbar-padding-modal-max-width !default;
 
 
-ion-navbar-section.statusbar-padding {
-  height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
-  min-height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
-}
-
-ion-navbar-section.statusbar-padding > .toolbar {
-  padding-top: $cordova-ios-statusbar-padding;
-
-  height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
-  min-height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
-}
+@include navbar-section-statusbar-padding($toolbar-md-height);
 
 .tab-subpage,
 ion-nav > ion-page,
 ion-menu {
-  > .toolbar.statusbar-padding:first-child {
-    padding-top: $cordova-ios-statusbar-padding;
-    height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
-    min-height: calc(#{$toolbar-md-height} + #{$cordova-ios-statusbar-padding});
-  }
+  @include toolbar-statusbar-padding($toolbar-md-height, $content-md-padding);
+}
 
-  > ion-content.statusbar-padding:first-child scroll-content {
-    padding-top: $cordova-ios-statusbar-padding;
-  }
-
-  > ion-content.statusbar-padding:first-child[padding] scroll-content,
-  > ion-content.statusbar-padding:first-child[padding-top] scroll-content {
-    padding-top: calc(#{$content-md-padding} + #{$cordova-ios-statusbar-padding});
+@media only screen and (max-width: $cordova-md-statusbar-padding-modal-max-width) {
+  .modal-wrapper > ion-page {
+    @include toolbar-statusbar-padding($toolbar-md-height, $content-md-padding);
   }
 }
