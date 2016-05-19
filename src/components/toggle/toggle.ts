@@ -192,7 +192,6 @@ export class Toggle implements ControlValueAccessor  {
    * @private
    */
   private _setChecked(isChecked: boolean) {
-    console.debug('_setChecked')
     if (isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {

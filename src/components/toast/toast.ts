@@ -122,7 +122,6 @@ export class Toast extends ViewController {
 @Component({
   selector: 'ion-toast',
   template: `
-    <div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>
     <div class="toast-wrapper">
       <div class="toast-container">
         <div class="toast-message" id="{{hdrId}}" *ngIf="d.message">{{d.message}}</div>
@@ -186,12 +185,6 @@ class ToastCmp {
         setTimeout(() => {
           this.dismiss('backdrop');
         }, this.d.duration);
-    }
-  }
-
-  bdClick() {
-    if (this.isEnabled() && this.d.enableBackdropDismiss) {
-      this.dismiss('backdrop');
     }
   }
 

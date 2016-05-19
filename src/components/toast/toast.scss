@@ -18,6 +18,8 @@ ion-toast {
 
   width: $toast-width;
   height: $toast-width;
+
+  pointer-events: none;
 }
 
 .toast-container {
@@ -25,11 +27,13 @@ ion-toast {
 
   align-items: center;
 
-  button {
-    padding: 19px 16px 17px;
+  pointer-events: auto;
+}
 
-    font-size: 1.5rem;
-  }
+.toast-button {
+  padding: 19px 16px 17px;
+
+  font-size: 1.5rem;
 }
 
 .toast-message {
