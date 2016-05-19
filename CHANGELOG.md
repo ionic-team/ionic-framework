@@ -144,7 +144,7 @@ class myApp {
 and the same example (in JavaScript):
 
 ```javascript
-import {ViewChild} from 'angular2/core';
+import {ViewChild} from '@angular/core';
 
 @App({
   templateUrl: 'build/app.html',
