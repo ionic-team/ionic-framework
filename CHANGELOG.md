@@ -1,3 +1,217 @@
+<a name="2.0.0-beta.7"></a>
+# [2.0.0-beta.7](https://github.com/driftyco/ionic/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2016-05-19)
+
+
+### Features
+
+* **datetime:** add ion-datetime ([1e331c9](https://github.com/driftyco/ionic/commit/1e331c9))
+* **input:** added functionality for clear input option on ion-input ([d8e2849](https://github.com/driftyco/ionic/commit/d8e2849))
+* **modal:** add inset modal feature ([a658524](https://github.com/driftyco/ionic/commit/a658524)), closes [#5423](https://github.com/driftyco/ionic/issues/5423)
+* **modal:** start of inset modals ([a1a594d](https://github.com/driftyco/ionic/commit/a1a594d))
+* **picker:** add ios/md/wp picker styles ([aa9a667](https://github.com/driftyco/ionic/commit/aa9a667))
+* **picker:** init picker ([d5068f8](https://github.com/driftyco/ionic/commit/d5068f8))
+* **platform:** add a readySource as ready resolved value ([f68ac8a](https://github.com/driftyco/ionic/commit/f68ac8a))
+* **platform:** cordova pause/resume events ([532096b](https://github.com/driftyco/ionic/commit/532096b))
+
+
+### Bug Fixes
+
+* **app:** add status bar padding to navbar when a tab subpage ([62b97ce](https://github.com/driftyco/ionic/commit/62b97ce)), closes [#6368](https://github.com/driftyco/ionic/issues/6368)
+* **app:** fix status bar padding for inset modals ([4d27680](https://github.com/driftyco/ionic/commit/4d27680))
+* **build:** fix e2e, demos, and karma tests to use new angular module setup. ([4c19d15](https://github.com/driftyco/ionic/commit/4c19d15))
+* **button:** add the solid class to bar buttons ([658b29b](https://github.com/driftyco/ionic/commit/658b29b))
+* **button:** add transparent background for clear/outline windows buttons ([da5c065](https://github.com/driftyco/ionic/commit/da5c065))
+* **button:** exclude solid from getting added to the button in the class ([4252448](https://github.com/driftyco/ionic/commit/4252448))
+* **button:** remove unnecessary ion-button-effect elements ([369d78b](https://github.com/driftyco/ionic/commit/369d78b))
+* **checkbox:** add ability to align checkboxes to the right ([e075ccd](https://github.com/driftyco/ionic/commit/e075ccd)), closes [#5925](https://github.com/driftyco/ionic/issues/5925)
+* **datetime:** fix property dayNames (it was using dayShort) ([0bd736d](https://github.com/driftyco/ionic/commit/0bd736d))
+* **datetime:** improve parseTemplate ([55ec80a](https://github.com/driftyco/ionic/commit/55ec80a))
+* **grid:** add ion-grid element which wraps the rows/cols and adds padding ([a0c0228](https://github.com/driftyco/ionic/commit/a0c0228))
+* **input:** clear text input ([bde103d](https://github.com/driftyco/ionic/commit/bde103d))
+* **input:** remove old clearInput code and clean up UI, added onChange calls ([71cd297](https://github.com/driftyco/ionic/commit/71cd297))
+* **loading:** include cssClass in the Loading options ([4c8ee95](https://github.com/driftyco/ionic/commit/4c8ee95)), closes [#6365](https://github.com/driftyco/ionic/issues/6365)
+* **nav:** transition toolbars on iOS ([daa4ccc](https://github.com/driftyco/ionic/commit/daa4ccc)), closes [#5692](https://github.com/driftyco/ionic/issues/5692)
+* **picker:** number of dom children != number of options (#6551) ([28cf16a](https://github.com/driftyco/ionic/commit/28cf16a))
+* **radio:** add styling for radio when item-left/item-right is added ([4c5dd0b](https://github.com/driftyco/ionic/commit/4c5dd0b))
+* **raf:** test for undefined raf ([1c16008](https://github.com/driftyco/ionic/commit/1c16008))
+* **segment:** add disabled property to segment and segment button ([4fca31e](https://github.com/driftyco/ionic/commit/4fca31e))
+* **select:** add min height to select text for windows since it shows border ([e9c1442](https://github.com/driftyco/ionic/commit/e9c1442))
+* **show-hide-when:** add !important to display as this should always take precedence ([617b7ac](https://github.com/driftyco/ionic/commit/617b7ac)), closes [#6270](https://github.com/driftyco/ionic/issues/6270)
+* **slides:** make slide method parameters optional ([f355087](https://github.com/driftyco/ionic/commit/f355087))
+* **slides:** set class using renderer instead of host ([132d8e9](https://github.com/driftyco/ionic/commit/132d8e9)), closes [#6275](https://github.com/driftyco/ionic/issues/6275)
+* **tabs:** move border to top for windows positioned bottom tabs ([af2085e](https://github.com/driftyco/ionic/commit/af2085e)), closes [#6526](https://github.com/driftyco/ionic/issues/6526)
+* **tabs:** remove min-width from tab so 5 tabs will fit ([b4647cd](https://github.com/driftyco/ionic/commit/b4647cd)), closes [#6056](https://github.com/driftyco/ionic/issues/6056)
+* **toast:** add toast back to the components export ([d7d4742](https://github.com/driftyco/ionic/commit/d7d4742))
+* **toggle:** add styling for toggle when placed left ([ab82d53](https://github.com/driftyco/ionic/commit/ab82d53))
+* **toolbar:** add the mode to the inverse function for a toolbar ([3ca3027](https://github.com/driftyco/ionic/commit/3ca3027)), closes [#6364](https://github.com/driftyco/ionic/issues/6364)
+* **toolbar:** md mode use the color contrast for toolbar button/title ([9f54f16](https://github.com/driftyco/ionic/commit/9f54f16))
+* **toolbar:** remove color change from outline buttons in toolbar ([6759074](https://github.com/driftyco/ionic/commit/6759074))
+* **toolbar:** set the text color of the toolbar based on the contrast of the background ([74afc18](https://github.com/driftyco/ionic/commit/74afc18))
+* **toolbar:** wp get title/button color from the contrast of toolbar background ([62bd13b](https://github.com/driftyco/ionic/commit/62bd13b))
+* **virtual-scroll:** fixes from rc1 breaking changes ([158f717](https://github.com/driftyco/ionic/commit/158f717))
+
+
+### BREAKING CHANGES
+
+#### Angular Update to 2.0.0-rc.1
+
+Angular has been updated to 2.0.0-rc.1, follow these steps to update Angular.
+
+1. Edit your `package.json` and **remove** the `angular2` entry:
+
+  ```
+  "angular2": "2.0.0-beta.15"
+  ```
+
+2. Then, run the following command from a terminal:
+
+  ```
+  npm install --save @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic @angular/router @angular/http rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata
+  ```
+
+3. Run the following command from a terminal to update the gulp task for `ionic-gulp-scripts-copy`:
+
+  ```
+  npm install --save-dev ionic-gulp-scripts-copy
+  ```
+
+4. Then, change any imports in your application from `angular2` to `@angular`. For example, the following:
+
+  ```javascript
+  import {ViewChild} from 'angular2/core';
+  import {Http} from 'angular2/http';
+  ```
+
+  becomes
+
+  ```javascript
+  import {ViewChild} from '@angular/core';
+  import {Http} from '@angular/http';
+  ```
+
+5. Remove the import for `angular2-polyfills` in `index.html`:
+
+  ```html
+   <script src="build/js/angular2-polyfills.js"></script>
+  ```
+
+  and replace it with the following scripts:
+
+  ```html
+  <script src="build/js/zone.js"></script>
+  <script src="build/js/Reflect.js"></script>
+  ```
+
+6. Replace all template variables in `ngFor` with `let`. For example:
+
+  ```
+  *ngFor="#session of group.sessions"
+  ```
+
+  becomes
+
+  ```
+  *ngFor="let session of group.sessions"
+  ```
+
+7. View the [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md) for more in depth changes.
+
+
+#### IonicApp ([df32836](https://github.com/driftyco/ionic/commit/df32836)) references [#6199](https://github.com/driftyco/ionic/issues/6199)
+
+The `getComponent` method of `IonicApp` has been removed. Please use Angular's [ViewChild](https://angular.io/docs/ts/latest/api/core/ViewChild-var.html) instead.
+
+An example (in TypeScript) of getting the `Nav` ViewChild:
+
+```html
+<ion-nav [root]="rootPage" #content></ion-nav>
+```
+
+```javascript
+import {ViewChild} from '@angular/core';
+import {Nav} from 'ionic-angular';
+
+@App({
+  templateUrl: 'build/app.html'
+})
+class myApp {
+  @ViewChild(Nav) nav: Nav;
+
+  ...
+}
+```
+
+and the same example (in JavaScript):
+
+```javascript
+import {ViewChild} from 'angular2/core';
+
+@App({
+  templateUrl: 'build/app.html',
+  queries: {
+    nav: new ViewChild('content')
+  }
+})
+class myApp {
+
+}
+```
+
+Please see the [Ionic Conference App](https://github.com/driftyco/ionic-conference-app) for more usage examples.
+
+
+#### Router
+
+The Angular router is currently under heavy development and refactoring. As a result of this, Angular’s router is currently disabled within Ionic. If your app requires use of the router we recommend waiting until a future release of Ionic when Angular has completed work on the new router. However, this does not affect Ionic’s navigation system and it continues to work with the same API from previous versions.
+
+
+#### Sass Changes
+
+##### Toolbar [#6364](https://github.com/driftyco/ionic/issues/6364)
+
+**iOS Mode**
+
+- `$toolbar-ios-button-color` now has a
+default value of `color-contrast($colors-ios, $toolbar-ios-background,
+ios)` which will evaluate to the primary color for light background
+toolbars and white for dark background toolbars.
+- `$bar-button-ios-color` has been renamed to `$toolbar-ios-button-color`
+- `$bar-button-ios-border-radius` has been renamed to
+`$toolbar-ios-button-border-radius`
+
+- added variables for the toolbar ios title for easier styling:
+
+  ```
+  $toolbar-ios-title-font-weight
+  $toolbar-ios-title-text-align
+  $toolbar-ios-title-text-color
+  ```
+
+**Windows Mode**
+
+- `$bar-button-wp-color` was renamed to `$toolbar-wp-button-color`
+- `$bar-button-wp-border-radius` was renamed to
+`$toolbar-wp-button-border-radius`
+- Added `$toolbar-wp-title-text-color` for better control of the title
+color
+- Removed `$toolbar-wp-button-color` from the default themes
+
+**Material Design Mode**
+
+- `$toolbar-md-button-color` no longer gets passed to the function that
+sets the contrast color for toolbar buttons, but it can still be used
+to set the default button color.
+- `$bar-button-md-color` was renamed to `$toolbar-md-button-color`
+- `$bar-button-md-border-radius` was renamed to
+`$toolbar-md-button-border-radius`
+
+##### Toggle, Checkbox, Radio ([4c5dd0b](https://github.com/driftyco/ionic/commit/4c5dd0b)), ([e075ccd](https://github.com/driftyco/ionic/commit/e075ccd)), ([ab82d53](https://github.com/driftyco/ionic/commit/ab82d53)) references [#5925](https://github.com/driftyco/ionic/issues/5925)
+
+Renamed Sass variables in toggle, checkbox, and
+radio. Changed the word `media` in `component-mode-media-padding` (for example)
+to `item-left`.
+
+
 <a name="2.0.0-beta.6"></a>
 # [2.0.0-beta.6](https://github.com/driftyco/ionic/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2016-04-21)
 
