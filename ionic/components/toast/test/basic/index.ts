@@ -48,6 +48,16 @@ class E2EPage {
     this.nav.present(toast);
   }
 
+  showDisabledBackdropToast() {
+    const toast = Toast.create({
+      message: 'User can interact with content even when the toast is diplayed',
+      disableBackdrop: true,
+    });
+
+    toast.onDismiss(this.dismissHandler);
+    this.nav.present(toast);
+  }
+
   showDismissDurationToast() {
     const toast = Toast.create({
       message: 'I am dismissed after 1.5 seconds',
