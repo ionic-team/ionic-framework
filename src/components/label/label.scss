@@ -40,14 +40,17 @@ ion-label[fixed] {
   max-width: 200px;
 }
 
-ion-label[stacked],
-ion-label[floating] {
+.item-label-stacked ion-label,
+.item-label-floating ion-label {
   align-self: stretch;
-
-  margin-bottom: 0;
 
   width: auto;
   max-width: 100%;
+}
+
+ion-label[stacked],
+ion-label[floating] {
+  margin-bottom: 0;
 }
 
 .item-label-stacked .input-wrapper,
