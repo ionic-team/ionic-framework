@@ -63,7 +63,7 @@ Angular has been updated to 2.0.0-rc.1, follow these steps to update Angular.
   "angular2": "2.0.0-beta.15"
   ```
 
-2. Then, run the following command from a terminal to update Ionic and Angular:
+2. Then, run the following command from a terminal to update Ionic and Angular, or take a look at the starter's [package.json](https://github.com/driftyco/ionic2-app-base/commit/4861c099e2cc509eeb0eff4548554b34116c22a5) changes and update each version:
 
   ```
   npm install --save ionic-angular@2.0.0-beta.7 @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic @angular/router @angular/http rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata
