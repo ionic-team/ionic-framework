@@ -72,7 +72,7 @@ Angular has been updated to 2.0.0-rc.1, follow these steps to update Angular.
 3. Run the following command from a terminal to update the gulp task for `ionic-gulp-scripts-copy`:
 
   ```
-  npm install --save-dev ionic-gulp-scripts-copy
+  npm install --save-dev ionic-gulp-scripts-copy@2.0.0
   ```
 
 4. Then, change any imports in your application from `angular2` to `@angular`. For example, the following:
