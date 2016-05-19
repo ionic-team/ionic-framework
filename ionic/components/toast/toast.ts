@@ -64,6 +64,7 @@ export class Toast extends ViewController {
   constructor(opts: ToastOptions = {}) {
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
+    opts.disableBackdrop = isPresent(opts.disableBackdrop) ? !!opts.disableBackdrop : false;
 
     super(ToastCmp, opts);
     this.viewType = 'toast';
@@ -106,6 +107,7 @@ export class Toast extends ViewController {
    *  | closeButtonText       | `string`  | "Close"         | Text to display in the close button.                                                                          |
    *  | enableBackdropDismiss | `boolean` | true            | Whether the toast should be dismissed by tapping the backdrop.                                                |
    *  | dismissOnPageChange   | `boolean` | false           | Whether to dismiss the toast when navigating to a new page.                                                   |
+   *  | disableBackdrop       | `boolean` | false           | Whether to disable the backdrop to allow user interaction while toast is being displayed.                        |
    *
    * @param {object} opts Toast options. See the above table for available options.
    */
@@ -136,6 +138,7 @@ export class Toast extends ViewController {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
     '[attr.aria-describedby]': 'descId',
+    '[class.disable-backdrop]':'disableBackdrop',
   },
 })
 class ToastCmp {
@@ -145,6 +148,7 @@ class ToastCmp {
   private created: number;
   private id: number;
   private dismissTimeout: number = undefined;
+  private disableBackdrop: boolean = false;
 
   constructor(
     private _nav: NavController,
@@ -165,6 +169,10 @@ class ToastCmp {
     this.id = (++toastIds);
     if (this.d.message) {
       this.hdrId = 'toast-hdr-' + this.id;
+    }
+
+    if (this.d.disableBackdrop) {
+      this.disableBackdrop = this.d.disableBackdrop
     }
   }
 
@@ -222,6 +230,7 @@ export interface ToastOptions {
   closeButtonText?: string;
   enableBackdropDismiss?: boolean;
   dismissOnPageChange?: boolean;
+  disableBackdrop?: boolean;
 }
 
 class ToastSlideIn extends Transition {

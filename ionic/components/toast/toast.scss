@@ -20,6 +20,10 @@ ion-toast {
   height: $toast-width;
 }
 
+.disable-backdrop {
+  pointer-events: none;
+}
+
 .toast-container {
   display: flex;
 
