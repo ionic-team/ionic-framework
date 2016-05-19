@@ -19,12 +19,12 @@
 
       <ion-item>
         <ion-label>Apple, ngControl</ion-label>
-        <ion-toggle ngControl="appleCtrl"></ion-toggle>
+        <ion-toggle ngControl="appleCtrl" (change)="appleChange($event)"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>Banana, ngControl</ion-label>
-        <ion-toggle ngControl="bananaCtrl"></ion-toggle>
+        <ion-toggle ngControl="bananaCtrl" (change)="bananaChange($event)"></ion-toggle>
       </ion-item>
 
       <ion-item>

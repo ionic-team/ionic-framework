@@ -70,6 +70,7 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
 })
 export class Checkbox {
   private _checked: boolean = false;
+  private _init: boolean;
   private _disabled: boolean = false;
   private _labelId: string;
   private _fn: Function;
@@ -127,7 +128,9 @@ export class Checkbox {
   private _setChecked(isChecked: boolean) {
     if (isChecked !== this._checked) {
       this._checked = isChecked;
-      this.change.emit(this);
+      if (this._init) {
+        this.change.emit(this);
+      }
       this._item && this._item.setCssClass('item-checkbox-checked', isChecked);
     }
   }
@@ -184,6 +187,13 @@ export class Checkbox {
    * @private
    */
   onTouched() {}
+
+  /**
+   * @private
+   */
+  ngAfterContentInit() {
+    this._init = true;
+  }
 
   /**
    * @private

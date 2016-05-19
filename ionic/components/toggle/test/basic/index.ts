@@ -42,6 +42,14 @@ class E2EApp {
     this.grapeDisabled = !this.grapeDisabled;
   }
 
+  appleChange(ev) {
+    console.log('appleChange', ev);
+  }
+
+  bananaChange(ev) {
+    console.log('bananaChange', ev);
+  }
+
   kiwiChange(ev) {
     console.log('kiwiChange', ev);
     this.kiwiValue = ev.checked;
