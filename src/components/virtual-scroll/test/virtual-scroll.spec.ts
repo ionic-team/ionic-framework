@@ -1,6 +1,6 @@
-import {VirtualScroll} from '../../../../ionic/components/virtual-scroll/virtual-scroll';
-import {VirtualCell, VirtualData, VirtualNode} from '../../../../ionic/components/virtual-scroll/virtual-util';
-import {processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered} from '../../../../ionic/components/virtual-scroll/virtual-util';
+import {VirtualScroll} from '../virtual-scroll';
+import {VirtualCell, VirtualData, VirtualNode} from '../virtual-util';
+import {processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered} from '../virtual-util';
 
 
 export function run() {

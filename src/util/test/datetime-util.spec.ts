@@ -1,4 +1,4 @@
-import * as datetime from '../../../ionic/util/datetime-util';
+import * as datetime from '../../../src/util/datetime-util';
 
 export function run() {
 

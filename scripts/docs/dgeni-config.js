@@ -94,13 +94,13 @@ module.exports = function(currentVersion) {
     docTypes: ['class', 'var', 'function', 'let'],
     getOutputPath: function(doc) {
       // strip ionic from path root
-      var docPath = doc.fileInfo.relativePath.replace(/^ionic\//, '');
+      var docPath = doc.fileInfo.relativePath.replace(/^src\//, '');
       // remove filename since we have multiple docTypes per file
       docPath = docPath.substring(0, docPath.lastIndexOf('/') + 1);
       docPath += doc.name + '/index.md';
       var path = config.v2DocsDir + '/' + (versionData.current.folder || '') +
                      '/api/' +  docPath;
-      path = path.replace('/home/ubuntu/ionic/ionic', '')
+                     path = path.replace('/home/ubuntu/ionic/src', '')
                     return path;
     }
   }];
@@ -115,7 +115,7 @@ module.exports = function(currentVersion) {
 
   readTypeScriptModules.basePath = path.resolve(path.resolve(__dirname, '../..'));
   readTypeScriptModules.sourceFiles = [
-    'ionic/index.ts'
+    'src/index.ts'
   ];
 })
 

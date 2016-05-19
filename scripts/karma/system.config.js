@@ -1,7 +1,7 @@
 System.config({
   baseURL: '/base',
   map: {
-    'ionic-angular': 'ionic',
+    'ionic-angular': 'src',
     '@angular': 'node_modules/@angular',
   },
   packages: {

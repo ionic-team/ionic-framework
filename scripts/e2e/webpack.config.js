@@ -1,8 +1,8 @@
 module.exports = {
   externals: [
     {
-      'ionic/ionic': {
-        commonjs2: 'ionic/ionic'
+      'src/ionic': {
+        commonjs2: 'src/ionic'
       },
       '@angular/core': {
         commonjs2: ['angular2', 'core']

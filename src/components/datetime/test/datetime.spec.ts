@@ -1,5 +1,5 @@
-import {DateTime, Form, Picker, Config, NavController} from '../../../../ionic';
-import * as datetime from '../../../../ionic/util/datetime-util';
+import {DateTime, Form, Picker, Config, NavController} from '../../../../src';
+import * as datetime from '../../../../src/util/datetime-util';
 
 export function run() {
 

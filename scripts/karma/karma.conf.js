@@ -25,7 +25,7 @@ module.exports = function(config) {
       'scripts/karma/test-main.js'
     ],
 
-    exclude: ['ionic/components/*/test/*/**/*'],
+    exclude: ['src/components/*/test/*/**/*'],
 
     logLevel: 'warn',
 

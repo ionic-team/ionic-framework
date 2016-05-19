@@ -1,4 +1,4 @@
-import * as util from '../../../ionic/util';
+import * as util from '../../../src/util';
 
 export function run() {
 

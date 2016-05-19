@@ -2,13 +2,13 @@
 module.exports = {
   dist: 'dist',
   src: {
-    spec: ['ionic/**/test/*.spec.js'],
-    js: ['ionic/**/*.js'],
+    spec: ['src/**/test/*.spec.js'],
+    js: ['src/**/*.js'],
 
     // Get all the non-js files and main.js
-    e2e: ['ionic/components/*/test/*/**/*'],
-    html: 'ionic/**/*.html',
-    scss: 'ionic/**/*.scss',
+    e2e: ['src/components/*/test/*/**/*'],
+    html: 'src/**/*.html',
+    scss: 'src/**/*.scss',
   },
 
   scripts: [

@@ -55,7 +55,7 @@ module.exports = function(gulp, flags) {
       });
     }
 
-    return gulp.src('ionic/**/*.scss')
+    return gulp.src('src/**/*.scss')
       .pipe(es.map(function(file, callback) {
         var contents = file.contents.toString();
         var variableLine, variableName, defaultValue, multiline;
