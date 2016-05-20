@@ -24,17 +24,17 @@
     <button outline item-right (click)="testClick($event)">Outline</button>
   </ion-item>
 
-  <ion-item>
+  <button ion-item disabled>
     <button item-left (click)="testClick($event)">
       <ion-icon name="home"></ion-icon>
       Left Icon
     </button>
-    left icon buttons
+    disabled left icon buttons
     <button outline item-right (click)="testClick($event)">
       <ion-icon name="star"></ion-icon>
       Left Icon
     </button>
-  </ion-item>
+  </button>
 
   <ion-item>
     <button item-left (click)="testClick($event)">
@@ -58,13 +58,13 @@
     </button>
   </ion-item>
 
-  <ion-item>
-    ion-item right icon/text button large
+  <a ion-item disabled>
+    a ion-item disabled right icon/text button large
     <button item-right large (click)="testClick($event)">
       <ion-icon name="refresh"></ion-icon>
       Refresh
     </button>
-  </ion-item>
+  </a>
 
   <ion-item>
     <button clear item-left small (click)="testClick($event)">
