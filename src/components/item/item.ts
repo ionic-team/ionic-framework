@@ -28,7 +28,7 @@ import {Label} from '../label/label';
  *
  *   // default item
  *   <ion-item>
- *     {{item.title}}
+ *     {% raw %}{{item.title}}{% endraw %}
  *   </ion-item>
  *
  * </ion-list>

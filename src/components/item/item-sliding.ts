@@ -14,7 +14,7 @@ import {List} from '../list/list';
  * <ion-list>
  *   <ion-item-sliding *ngFor="let item of items">
  *     <button ion-item (click)="itemTapped(item)">
- *       {{item.title}}
+ *       {% raw %}{{item.title}}{% endraw %}
  *     </button>
  *     <ion-item-options>
  *       <button (click)="favorite(item)">Favorite</button>
@@ -30,7 +30,7 @@ import {List} from '../list/list';
  * <ion-list>
  *   <ion-item-sliding *ngFor="#item of items" #slidingItem>
  *     <button ion-item (click)="itemTapped(item)">
- *       {{item}}
+ *       {% raw %}{{item}}{% endraw %}
  *   </button>
  *     <ion-item-options>
  *       <button (click)="share(item, slidingItem)">Share</button>
