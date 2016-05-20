@@ -154,6 +154,23 @@ ion-note {
 }
 
 
+// Material Design Item Group
+// --------------------------------------------------
+
+ion-item-group {
+  .item:first-child {
+    .item-inner {
+      border-top-width: 0;
+    }
+  }
+
+  .item:last-child .item-inner,
+  ion-item-sliding:last-child .item-inner {
+    border: 0;
+  }
+}
+
+
 // Material Design Item Divider
 // --------------------------------------------------
 
