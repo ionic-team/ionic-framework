@@ -56,6 +56,7 @@ $alert-md-list-border-top:                    1px solid $alert-md-input-border-c
 $alert-md-list-border-bottom:                 $alert-md-list-border-top !default;
 
 $alert-md-radio-label-padding:                13px 26px !default;
+$alert-md-radio-label-text-color-checked:     $alert-md-button-text-color !default;
 
 $alert-md-radio-top:                          0 !default;
 $alert-md-radio-left:                         13px !default;
@@ -77,6 +78,7 @@ $alert-md-radio-icon-transform-on:            scale3d(1, 1, 1) !default;
 $alert-md-radio-icon-transition:              transform 280ms cubic-bezier(.4, 0, .2, 1) !default;
 
 $alert-md-checkbox-label-padding:             13px 26px !default;
+$alert-md-checkbox-label-text-color-checked:  initial !default;
 
 $alert-md-checkbox-top:                       0 !default;
 $alert-md-checkbox-left:                      13px !default;
@@ -241,15 +243,19 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // ---------------------------------------------------
 
 .alert-radio[aria-checked=true] {
-  color: $alert-md-radio-border-color-on;
+
+  .alert-radio-label {
+    color: $alert-md-radio-label-text-color-checked;
+  }
 
   .alert-radio-icon {
     border-color: $alert-md-radio-border-color-on;
   }
-}
 
-.alert-radio[aria-checked=true] .alert-radio-inner {
-  transform: $alert-md-radio-icon-transform-on;
+  .alert-radio-inner {
+    transform: $alert-md-radio-icon-transform-on;
+  }
+
 }
 
 
@@ -265,6 +271,10 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.alert-checkbox[aria-checked=true] .alert-checkbox-label {
+  color: $alert-md-checkbox-label-text-color-checked;
 }
 
 // Material Design Alert Checkbox Outline: Unchecked

@@ -55,6 +55,7 @@ $alert-ios-button-main-font-weight:             bold !default;
 $alert-ios-list-border-top:                     $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color !default;
 
 $alert-ios-radio-label-padding:                 13px !default;
+$alert-ios-radio-label-text-color-checked:      $alert-ios-button-text-color !default;
 
 $alert-ios-radio-min-width:                     30px !default;
 
@@ -68,6 +69,7 @@ $alert-ios-radio-icon-border-color:             $alert-ios-button-text-color !de
 $alert-ios-radio-icon-transform:                rotate(45deg) !default;
 
 $alert-ios-checkbox-label-padding:              13px !default;
+$alert-ios-checkbox-label-text-color-checked:   initial !default;
 
 $alert-ios-checkbox-margin:                     10px 6px 10px 16px !default;
 $alert-ios-checkbox-size:                       21px !default;
@@ -178,7 +180,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 
-// iOS Alert Radio
+// iOS Alert Radio Label
 // --------------------------------------------------
 
 .alert-radio-label {
@@ -194,6 +196,15 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   white-space: nowrap;
 }
 
+
+// iOS Alert Radio Label: Checked
+// --------------------------------------------------
+
+.alert-radio[aria-checked=true] .alert-radio-label {
+  color: $alert-ios-radio-label-text-color-checked;
+}
+
+
 // iOS Alert Radio Checkmark: Unchecked
 // -----------------------------------------
 
@@ -205,12 +216,8 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   min-width: $alert-ios-radio-min-width;
 }
 
-.alert-radio[aria-checked=true] {
-  color: $alert-ios-button-text-color;
-}
 
-
-// iOS Alert Radio Checkmark: Checked
+// iOS Alert Radio Checked
 // -----------------------------------------
 
 .alert-radio[aria-checked=true] .alert-radio-inner {
@@ -244,6 +251,9 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   white-space: nowrap;
 }
 
+.alert-checkbox[aria-checked=true] .alert-checkbox-label {
+  color: $alert-ios-checkbox-label-text-color-checked;
+}
 
 // iOS Alert Checkbox Outer Circle: Unchecked
 // -----------------------------------------
