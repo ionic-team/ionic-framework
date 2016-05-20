@@ -1,4 +1,5 @@
-import {App, IonicApp, MenuController, Page, NavController, Alert} from '../../../../../src';
+import {ViewChild} from '@angular/core';
+import {App, IonicApp, MenuController, Page, NavController, Alert, Nav} from '../../../../../src';
 
 
 @Page({
@@ -15,6 +16,10 @@ class Page1 {
       buttons: ['Ok']
     });
     this.nav.present(alert);
+  }
+
+  goToPage2() {
+    this.nav.push(Page2);
   }
 }
 
@@ -40,6 +45,7 @@ class E2EApp {
   rootPage;
   changeDetectionCount: number = 0;
   pages: Array<{title: string, component: any}>;
+  @ViewChild(Nav) nav: Nav;
 
   constructor(private app: IonicApp, private menu: MenuController) {
     this.rootPage = Page1;
@@ -54,8 +60,7 @@ class E2EApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    let nav = this.app.getComponent('nav');
-    nav.setRoot(page.component).then(() => {
+    this.nav.setRoot(page.component).then(() => {
       // wait for the root page to be completely loaded
       // then close the menu
       this.menu.close();

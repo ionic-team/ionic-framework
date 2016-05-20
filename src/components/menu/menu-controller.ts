@@ -156,6 +156,12 @@ export class MenuController {
     return Promise.resolve(false);
   }
 
+  tempDisable(temporarilyDisable: boolean) {
+    this._menus.forEach(menu => {
+      menu.tempDisable(temporarilyDisable);
+    });
+  }
+
   /**
    * Toggle the menu. If it's closed, it will open, and if opened, it
    * will close.

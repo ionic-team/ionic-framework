@@ -6,6 +6,7 @@ import {IonicApp} from '../app/app';
 import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
 import {pascalCaseToDashCase, isBlank} from '../../util/util';
+import {MenuController} from '../menu/menu-controller';
 import {NavPortal} from './nav-portal';
 import {SwipeBackGesture} from './swipe-back';
 import {Transition} from '../../transitions/transition';
@@ -1555,7 +1556,8 @@ export class NavController extends Ion {
           edge: 'left',
           threshold: this._sbThreshold
         };
-        this._sbGesture = new SwipeBackGesture(this.getNativeElement(), opts, this);
+        let menuCtrl = this._app.getAppInjector().get(MenuController);
+        this._sbGesture = new SwipeBackGesture(this.getNativeElement(), opts, this, menuCtrl);
       }
 
       if (this.canSwipeBack()) {

@@ -1,3 +1,4 @@
+import {MenuController} from '../menu/menu-controller';
 import {NavController} from './nav-controller';
 import {SlideEdgeGesture} from '../../gestures/slide-edge-gesture';
 import {SlideData} from '../../gestures/slide-gesture';
@@ -9,7 +10,8 @@ export class SwipeBackGesture extends SlideEdgeGesture {
   constructor(
     element: HTMLElement,
     options: any,
-    private _nav: NavController
+    private _nav: NavController,
+    private _menuCtrl: MenuController
   ) {
     super(element, assign({
       direction: 'x',
@@ -33,9 +35,11 @@ export class SwipeBackGesture extends SlideEdgeGesture {
     return false;
   }
 
-  onSlideBeforeStart() {
-    console.debug('swipeBack, onSlideBeforeStart');
+  onSlideBeforeStart(slideData: SlideData, ev: any) {
+    console.debug('swipeBack, onSlideBeforeStart', ev.srcEvent.type);
     this._nav.swipeBackStart();
+
+    this._menuCtrl.tempDisable(true);
   }
 
   onSlide(slide: SlideData) {
@@ -52,6 +56,8 @@ export class SwipeBackGesture extends SlideEdgeGesture {
     console.debug('swipeBack, onSlideEnd, shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
     this._nav.swipeBackEnd(shouldComplete, currentStepValue);
+
+    this._menuCtrl.tempDisable(false);
   }
 
 }

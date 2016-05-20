@@ -198,6 +198,7 @@ export class Menu extends Ion {
   private _isSwipeEnabled: boolean = true;
   private _isPers: boolean = false;
   private _init: boolean = false;
+  private _prevEnabled: boolean;
 
   /**
    * @private
@@ -419,10 +420,10 @@ export class Menu extends Ion {
    */
   swipeStart() {
     // user started swiping the menu open/close
-    if (this._isPrevented() || !this._isEnabled || !this._isSwipeEnabled) return;
-
-    this._before();
-    this._getType().setProgressStart(this.isOpen);
+    if (this._isEnabled && this._isSwipeEnabled && !this._isPrevented()) {
+      this._before();
+      this._getType().setProgressStart(this.isOpen);
+    }
   }
 
   /**
@@ -451,9 +452,6 @@ export class Menu extends Ion {
     }
   }
 
-  /**
-   * @private
-   */
   private _before() {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
@@ -466,9 +464,6 @@ export class Menu extends Ion {
     }
   }
 
-  /**
-   * @private
-   */
   private _after(isOpen: boolean) {
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
@@ -495,15 +490,24 @@ export class Menu extends Ion {
   /**
    * @private
    */
+  tempDisable(temporarilyDisable: boolean) {
+    if (temporarilyDisable) {
+      this._prevEnabled = this._isEnabled;
+      this._getType().setProgessStep(0);
+      this.enable(false);
+
+    } else {
+      this.enable(this._prevEnabled);
+      this._after(false);
+    }
+  }
+
   private _prevent() {
     // used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the MenuToggle
     this._preventTime = Date.now() + 20;
   }
 
-  /**
-   * @private
-   */
   private _isPrevented() {
     return this._preventTime > Date.now();
   }
