@@ -285,6 +285,16 @@ export class Menu extends Ion {
    */
   @Output() opening: EventEmitter<number> = new EventEmitter();
 
+  /**
+   * @output {event} When the menu has been opened.
+   */
+  @Output() opened: EventEmitter<boolean> = new EventEmitter();
+
+  /**
+   * @output {event} When the menu has been closed.
+   */
+  @Output() closed: EventEmitter<boolean> = new EventEmitter();
+
   constructor(
     private _menuCtrl: MenuController,
     private _elementRef: ElementRef,
@@ -468,6 +478,7 @@ export class Menu extends Ion {
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
+    // emit opened/closed events
     if ((this._isEnabled && isOpen) || !isOpen) {
       this._prevent();
 
@@ -479,10 +490,12 @@ export class Menu extends Ion {
 
       if (isOpen) {
         this._cntEle.addEventListener('click', this.onContentClick);
+        this.opened.emit(true);
 
       } else {
         this.getNativeElement().classList.remove('show-menu');
         this.getBackdropElement().classList.remove('show-backdrop');
+        this.closed.emit(true);
       }
     }
   }
