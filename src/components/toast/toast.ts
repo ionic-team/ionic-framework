@@ -62,7 +62,6 @@ import {ViewController} from '../nav/view-controller';
 export class Toast extends ViewController {
 
   constructor(opts: ToastOptions = {}) {
-    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
 
     super(ToastCmp, opts);
@@ -104,7 +103,6 @@ export class Toast extends ViewController {
    *  | cssClass              | `string`  | -               | Any additional class for custom styles.                                                                       |
    *  | showCloseButton       | `boolean` | false           | Whether or not to show a button to close the toast.                                                           |
    *  | closeButtonText       | `string`  | "Close"         | Text to display in the close button.                                                                          |
-   *  | enableBackdropDismiss | `boolean` | true            | Whether the toast should be dismissed by tapping the backdrop.                                                |
    *  | dismissOnPageChange   | `boolean` | false           | Whether to dismiss the toast when navigating to a new page.                                                   |
    *
    * @param {object} opts Toast options. See the above table for available options.
@@ -213,7 +211,6 @@ export interface ToastOptions {
   duration?: number;
   showCloseButton?: boolean;
   closeButtonText?: string;
-  enableBackdropDismiss?: boolean;
   dismissOnPageChange?: boolean;
 }
 

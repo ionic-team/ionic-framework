@@ -23,9 +23,7 @@ class E2EPage {
 
   showToast() {
     const toast = Toast.create({
-      message: 'User was created successfully',
-      showCloseButton: true,
-      enableBackdropDismiss: false
+      message: 'User was created successfully'
     });
 
     toast.onDismiss(() => {
@@ -37,11 +35,16 @@ class E2EPage {
     setTimeout(() => {
       this.nav.push(AnotherPage);
     }, 1000);
+
+    setTimeout(() => {
+      toast.dismiss();
+    }, 2000);
   }
 
   showLongToast() {
     const toast = Toast.create({
       message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.',
+      duration: 5000
     });
 
     toast.onDismiss(this.dismissHandler);
