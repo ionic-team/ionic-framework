@@ -19,7 +19,7 @@ import {Content} from '../content/content';
  * <ion-content>
  *
  *  <ion-list>
- *    <ion-item *ngFor="let i of items">{{i}}</ion-item>
+ *    {% raw %}<ion-item *ngFor="let i of items">{{i}}</ion-item>{% endraw %}
  *  </ion-list>
  *
  *  <ion-infinite-scroll (infinite)="doInfinite($event)">

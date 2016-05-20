@@ -35,7 +35,7 @@ import {Img} from '../img/img';
  * <ion-list [virtualScroll]="items">
  *
  *   <ion-item *virtualItem="#item">
- *     {{ item }}
+ *     {% raw %}{{ item }}{% endraw %}
  *   </ion-item>
  *
  * </ion-list>
@@ -56,11 +56,11 @@ import {Img} from '../img/img';
  * <ion-list [virtualScroll]="items" [headerFn]="myHeaderFn">
  *
  *   <ion-item-divider *virtualHeader="#header">
- *     Header: {{ header }}
+ *     Header: {% raw %}{{ header }}{% endraw %}
  *   </ion-item-divider>
  *
  *   <ion-item *virtualItem="#item">
- *     Item: {{ item }}
+ *     Item: {% raw %}{{ item }}{% endraw %}
  *   </ion-item>
  *
  * </ion-list>
@@ -123,7 +123,7 @@ import {Img} from '../img/img';
  *     <ion-avatar item-left>
  *       <ion-img [src]="item.avatarUrl"></ion-img>
  *     </ion-avatar>
- *     {{ item.firstName }} {{ item.lastName }}
+ *    {% raw %} {{ item.firstName }} {{ item.lastName }}{% endraw %}
  *   </ion-item>
  *
  * </ion-list>
