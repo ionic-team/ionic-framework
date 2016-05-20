@@ -1,0 +1,142 @@
+@import "../../globals.wp";
+
+// Windows Radio
+// --------------------------------------------------
+
+$radio-wp-color-on:               color($colors-wp, primary) !default;
+$radio-wp-color-off:              #333 !default;
+
+// Places radio icon on the left of the item
+$radio-wp-order:                  -1 !default;
+
+$radio-wp-icon-width:             16px !default;
+$radio-wp-icon-height:            16px !default;
+$radio-wp-icon-border-width:      2px !default;
+$radio-wp-icon-border-style:      solid !default;
+$radio-wp-icon-border-radius:     50% !default;
+
+$radio-wp-disabled-opacity:       .3 !default;
+
+$radio-wp-item-left-margin:       9px 20px 9px 4px !default;
+$radio-wp-item-right-margin:      11px 10px 10px 0 !default;
+
+
+ion-radio {
+  position: relative;
+  display: inline-block;
+}
+
+
+// Windows Radio Outer Circle: Unchecked
+// -----------------------------------------
+
+.radio-icon {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+
+  margin: 0;
+
+  width: $radio-wp-icon-width;
+  height: $radio-wp-icon-height;
+
+  border-width: $radio-wp-icon-border-width;
+  border-style: $radio-wp-icon-border-style;
+  border-radius: $radio-wp-icon-border-radius;
+  border-color: $radio-wp-color-off;
+}
+
+
+// Windows Radio Inner Circle: Unchecked
+// -----------------------------------------
+
+.radio-inner {
+  position: absolute;
+  top: $radio-wp-icon-border-width;
+  left: $radio-wp-icon-border-width;
+  display: none;
+
+  width: $radio-wp-icon-width / 2;
+  height: $radio-wp-icon-height / 2;
+
+  border-radius: 50%;
+  background-color: $radio-wp-color-off;
+}
+
+
+// Windows Radio Outer Circle: Checked
+// -----------------------------------------
+
+.radio-checked {
+  border-color: $radio-wp-color-on;
+}
+
+
+// Windows Radio Inner Circle: Checked
+// -----------------------------------------
+
+.radio-checked .radio-inner {
+  // transform: scale3d(1, 1, 1);
+  display: block;
+}
+
+
+// Windows Radio: Disabled
+// -----------------------------------------
+
+.radio-disabled,
+.item-radio-disabled ion-label {
+  opacity: $radio-wp-disabled-opacity;
+
+  pointer-events: none;
+}
+
+
+// Windows Radio Within An Item
+// -----------------------------------------
+
+.item ion-radio {
+  position: static;
+  display: block;
+
+  order: $radio-wp-order;
+
+  margin: $radio-wp-item-left-margin;
+
+  &[item-right] {
+    order: 0;
+
+    margin: $radio-wp-item-right-margin;
+  }
+}
+
+.item-radio ion-label {
+  margin-left: 0;
+}
+
+
+// Windows Radio Color Mixin
+// --------------------------------------------------
+
+@mixin radio-theme-wp($color-name, $color-base) {
+
+  ion-radio[#{$color-name}] {
+
+    .radio-checked {
+      border-color: $color-base;
+    }
+
+  }
+
+}
+
+
+// Generate Windows Radio Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  @include radio-theme-wp($color-name, $color-base);
+
+}

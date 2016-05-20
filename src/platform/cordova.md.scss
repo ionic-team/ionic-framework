@@ -1,0 +1,22 @@
+@import "../globals.md";
+@import "./cordova";
+
+// Material Design on iOS with Cordova
+// --------------------------------------------------
+
+$cordova-md-statusbar-padding-modal-max-width:         $cordova-statusbar-padding-modal-max-width !default;
+
+
+@include navbar-section-statusbar-padding($toolbar-md-height);
+
+.tab-subpage,
+ion-nav > ion-page,
+ion-menu {
+  @include toolbar-statusbar-padding($toolbar-md-height, $content-md-padding);
+}
+
+@media only screen and (max-width: $cordova-md-statusbar-padding-modal-max-width) {
+  .modal-wrapper > ion-page {
+    @include toolbar-statusbar-padding($toolbar-md-height, $content-md-padding);
+  }
+}

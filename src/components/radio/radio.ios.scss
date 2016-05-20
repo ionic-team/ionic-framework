@@ -1,0 +1,119 @@
+@import "../../globals.ios";
+
+// iOS Radio
+// --------------------------------------------------
+
+$radio-ios-color-on:               color($colors-ios, primary) !default;
+
+$radio-ios-icon-width:             16px !default;
+$radio-ios-icon-height:            21px !default;
+$radio-ios-icon-border-width:      2px !default;
+$radio-ios-icon-border-style:      solid !default;
+
+$radio-ios-disabled-opacity:       .3 !default;
+
+$radio-ios-item-left-margin:       8px 21px 8px 3px !default;
+$radio-ios-item-right-margin:      $item-ios-padding-media-top 11px $item-ios-padding-media-bottom ($item-ios-padding-left / 2) !default;
+
+
+ion-radio {
+  position: relative;
+  display: inline-block;
+}
+
+
+// iOS Radio Circle: Unchecked
+// -----------------------------------------
+
+.radio-icon {
+  position: relative;
+  display: block;
+
+  width: $radio-ios-icon-width;
+  height: $radio-ios-icon-height;
+}
+
+
+// iOS Radio Checkmark: Checked
+// -----------------------------------------
+
+.radio-checked .radio-inner {
+  position: absolute;
+  top: 4px;
+  left: 7px;
+
+  width: 5px;
+  height: 12px;
+
+  border-width: $radio-ios-icon-border-width;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-style: $radio-ios-icon-border-style;
+  border-color: $radio-ios-color-on;
+  transform: rotate(45deg);
+}
+
+
+// iOS Radio: Disabled
+// -----------------------------------------
+
+.radio-disabled,
+.item-radio-disabled ion-label {
+  opacity: $radio-ios-disabled-opacity;
+
+  pointer-events: none;
+}
+
+
+// iOS Radio Within An Item
+// -----------------------------------------
+
+.item ion-radio {
+  position: static;
+  display: block;
+
+  margin: $radio-ios-item-right-margin;
+
+  &[item-left] {
+    margin: $radio-ios-item-left-margin;
+  }
+}
+
+.item-radio ion-label {
+  margin-left: 0;
+}
+
+
+// iOS Radio Item Label: Checked
+// -----------------------------------------
+
+.item-radio-checked ion-label {
+  color: $radio-ios-color-on;
+}
+
+
+// iOS Radio Color Mixin
+// --------------------------------------------------
+
+@mixin radio-theme-ios($color-name, $color-base) {
+
+  ion-radio[#{$color-name}] .radio-checked {
+    color: $color-base;
+
+    .radio-inner {
+      border-color: $color-base;
+    }
+
+  }
+
+}
+
+
+// Generate iOS Radio Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  @include radio-theme-ios($color-name, $color-base);
+
+}

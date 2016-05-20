@@ -1,0 +1,25 @@
+@import "../globals.ios";
+@import "./cordova";
+
+// iOS Cordova
+// --------------------------------------------------
+
+$cordova-ios-statusbar-padding-modal-max-width:         $cordova-statusbar-padding-modal-max-width !default;
+
+
+@include navbar-section-statusbar-padding($toolbar-ios-height);
+@include navbar-section-title-statusbar-padding($toolbar-ios-height);
+
+.tab-subpage,
+ion-nav > ion-page,
+ion-menu {
+  @include toolbar-statusbar-padding($toolbar-ios-height, $content-ios-padding);
+  @include toolbar-title-statusbar-padding($toolbar-ios-height, $content-ios-padding);
+}
+
+@media only screen and (max-width: $cordova-ios-statusbar-padding-modal-max-width) {
+  .modal-wrapper > ion-page {
+    @include toolbar-statusbar-padding($toolbar-ios-height, $content-ios-padding);
+    @include toolbar-title-statusbar-padding($toolbar-ios-height, $content-ios-padding);
+  }
+}

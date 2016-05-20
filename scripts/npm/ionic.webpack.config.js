@@ -9,23 +9,20 @@ module.exports = {
   },
   externals: [
     {
-      'angular2/core': {
+      '@angular/core': {
         commonjs2: ['angular2', 'core']
       },
-      'angular2/common': {
+      '@angular/common': {
         commonjs2: ['angular2', 'common']
       },
-      'angular2/router' : {
+      '@angular/router' : {
         commonjs2: ['angular2', 'router']
       },
-      'angular2/http': {
+      '@angular/http': {
         commonjs2: ['angular2', 'http']
       },
-      'angular2/platform/browser': {
+      '@angular/platform-browser': {
         commonjs2: ['angular2', 'platform', 'browser']
-      },
-      'angular2/instrumentation': {
-        commonjs2: ['angular2', 'instrumentation']
       },
     }
   ]

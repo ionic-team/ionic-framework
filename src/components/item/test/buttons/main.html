@@ -1,0 +1,105 @@
+<ion-toolbar><ion-title>Items as Links/Buttons</ion-title></ion-toolbar>
+
+<ion-content>
+
+  <a ion-item href="#" (click)="testClick($event)">
+    a[ion-item]
+  </a>
+
+  <a ion-item class="activated" href="#" (click)="testClick($event)">
+    a[ion-item].activated
+  </a>
+
+  <button ion-item (click)="testClick($event)">
+    button[ion-item]
+  </button>
+
+  <button ion-item class="activated" (click)="testClick($event)">
+    button[ion-item].activated
+  </button>
+
+  <ion-item>
+    <button item-left (click)="testClick($event)">Default</button>
+    Inner Buttons
+    <button outline item-right (click)="testClick($event)">Outline</button>
+  </ion-item>
+
+  <button ion-item disabled>
+    <button item-left (click)="testClick($event)">
+      <ion-icon name="home"></ion-icon>
+      Left Icon
+    </button>
+    disabled left icon buttons
+    <button outline item-right (click)="testClick($event)">
+      <ion-icon name="star"></ion-icon>
+      Left Icon
+    </button>
+  </button>
+
+  <ion-item>
+    <button item-left (click)="testClick($event)">
+      Right Icon
+      <ion-icon name="home"></ion-icon>
+    </button>
+    right icon buttons
+    <button outline item-right (click)="testClick($event)">
+      Right Icon
+      <ion-icon name="star"></ion-icon>
+    </button>
+  </ion-item>
+
+  <ion-item>
+    <button clear item-left default (click)="testClick($event)">
+      <ion-icon name="navigate"></ion-icon>
+    </button>
+    icon only buttons default
+    <button clear item-right default (click)="testClick($event)">
+      <ion-icon name="navigate"></ion-icon>
+    </button>
+  </ion-item>
+
+  <a ion-item disabled>
+    a ion-item disabled right icon/text button large
+    <button item-right large (click)="testClick($event)">
+      <ion-icon name="refresh"></ion-icon>
+      Refresh
+    </button>
+  </a>
+
+  <ion-item>
+    <button clear item-left small (click)="testClick($event)">
+      <ion-icon name="settings"></ion-icon>
+      Settings
+    </button>
+    ion-item left clear button small
+  </ion-item>
+
+  <ion-item>
+    ion-item right clear button
+    <button secondary clear item-right (click)="testClick($event)">
+      Edit
+    </button>
+  </ion-item>
+
+  <ion-item text-wrap>
+    This is multiline text that has a
+    long description of about how the text is really long
+    and a <a href="#" (click)="testClick($event)">link</a>.
+    <button outline item-right (click)="testClick($event)">View</button>
+  </ion-item>
+
+  <button ion-item *ngFor="let data of [0,1,2,3,4]; #i = index" [class.activated]="i == 1" (click)="testClick($event)">
+    <ion-avatar item-left>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </ion-avatar>
+    <h3>ng-for {{i}}</h3>
+    <ion-badge item-right>260k</ion-badge>
+  </button>
+
+</ion-content>
+
+<style>
+  img {
+    height: 100px;
+  }
+</style>

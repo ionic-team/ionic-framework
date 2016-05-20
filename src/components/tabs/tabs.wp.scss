@@ -1,0 +1,119 @@
+@import "../../globals.wp";
+@import "./tabs";
+
+// Windows Tabs
+// --------------------------------------------------
+
+$tabbar-wp-background:               $toolbar-wp-background !default;
+$tabbar-wp-item-padding:             12px 10px 5px 10px !default;
+$tabbar-wp-item-font-size:           1.2rem !default;
+$tabbar-wp-item-font-weight:         normal !default;
+$tabbar-wp-item-icon-size:           2.4rem !default;
+$tabbar-wp-item-height:              4.8rem !default;
+
+$tab-button-wp-active-color:         $toolbar-wp-active-color !default;
+$tab-button-wp-inactive-color:       $toolbar-wp-inactive-color !default;
+
+$tab-button-wp-background-activated: rgba(0, 0, 0, .1) !default;
+
+tabbar {
+  background: $tabbar-wp-background;
+}
+
+
+.tab-button {
+  padding: $tabbar-wp-item-padding;
+
+  min-height: $tabbar-wp-item-height;
+
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  font-size: $tabbar-wp-item-font-size;
+  font-weight: $tabbar-wp-item-font-weight;
+  color: $tab-button-wp-inactive-color;
+  box-shadow: none;
+  opacity: .7;
+
+  &[aria-selected=true] {
+    border-bottom-color: $tab-button-wp-active-color;
+    color: $tab-button-wp-active-color;
+    opacity: 1;
+  }
+
+  &.activated {
+    background: $tab-button-wp-background-activated;
+  }
+}
+
+.tab-button-text {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.tab-button-icon {
+  min-width: $tabbar-wp-item-icon-size;
+
+  font-size: $tabbar-wp-item-icon-size;
+}
+
+[tabbarLayout=icon-bottom] .tab-button {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+[tabbarLayout=icon-right] .tab-button,
+[tabbarLayout=icon-left] .tab-button {
+  padding-bottom: 10px;
+
+  ion-icon {
+    min-width: 24px;
+  }
+}
+
+[tabbarLayout=icon-hide] .tab-button,
+[tabbarLayout=title-hide] .tab-button,
+.tab-button.icon-only,
+.tab-button.has-title-only {
+  padding: 6px 10px;
+}
+
+[tabbarPlacement=bottom] .tab-button {
+  border-top: 2px solid transparent;
+  border-bottom-width: 0;
+
+  &[aria-selected=true] {
+    border-top-color: $tab-button-wp-active-color;
+  }
+}
+
+
+
+
+// Windows Tabbar Color Mixin
+// --------------------------------------------------
+
+@mixin tabbar-wp($color-name, $color-base, $color-contrast) {
+
+  ion-tabs[#{$color-name}] tabbar {
+    background-color: $color-base;
+
+    .tab-button {
+      color: $color-contrast;
+    }
+
+    .tab-button:hover:not(.disable-hover),
+    .tab-button[aria-selected=true] {
+      border-color: $color-contrast;
+      color: $color-contrast;
+    }
+  }
+
+}
+
+
+// Windows Tabbar Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  @include tabbar-wp($color-name, $color-base, $color-contrast);
+}

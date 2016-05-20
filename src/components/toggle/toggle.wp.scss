@@ -1,0 +1,162 @@
+@import "../../globals.wp";
+
+// Windows Toggle
+// --------------------------------------------------
+
+$toggle-wp-inactive-color:               #323232 !default;
+$toggle-wp-active-color:                 color($colors-wp, primary) !default;
+
+$toggle-wp-track-width:                  40px !default;
+$toggle-wp-track-height:                 18px !default;
+$toggle-wp-track-background-color-off:   transparent !default;
+$toggle-wp-track-background-color-on:    $toggle-wp-active-color !default;
+
+$toggle-wp-track-border-width:           2px !default;
+$toggle-wp-track-border-color-off:       $toggle-wp-inactive-color !default;
+$toggle-wp-track-border-color-on:        $toggle-wp-active-color !default;
+
+$toggle-wp-handle-width:                 10px !default;
+$toggle-wp-handle-height:                10px !default;
+$toggle-wp-handle-top:                   2px !default;
+$toggle-wp-handle-left:                  2px !default;
+$toggle-wp-handle-background-color-off:  $toggle-wp-inactive-color !default;
+$toggle-wp-handle-background-color-on:   color-contrast($colors-wp, $toggle-wp-active-color) !default;
+$toggle-wp-handle-border-radius:         50% !default;
+
+$toggle-wp-media-margin:                 0 !default;
+
+$toggle-wp-transition-duration:          300ms !default;
+
+$toggle-wp-disabled-opacity:             .3 !default;
+
+$toggle-wp-item-left-padding:            12px 18px 12px 2px !default;
+$toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px $item-wp-padding-left !default;
+
+
+// Windows Toggle
+// -----------------------------------------
+
+ion-toggle {
+  position: relative;
+}
+
+
+// Windows Toggle Background Track: Unchecked
+// -----------------------------------------
+
+.toggle-icon {
+  position: relative;
+  display: block;
+
+  width: $toggle-wp-track-width;
+  height: $toggle-wp-track-height;
+
+  border: $toggle-wp-track-border-width solid $toggle-wp-track-border-color-off;
+  border-radius: $toggle-wp-track-height;
+  background-color: $toggle-wp-track-background-color-off;
+
+  pointer-events: none;
+}
+
+
+// Windows Toggle Inner Knob: Unchecked
+// -----------------------------------------
+
+.toggle-inner {
+  position: absolute;
+  top: $toggle-wp-handle-top;
+  left: $toggle-wp-handle-left;
+
+  width: $toggle-wp-handle-width;
+  height: $toggle-wp-handle-height;
+
+  border-radius: $toggle-wp-handle-border-radius;
+  background-color: $toggle-wp-handle-background-color-off;
+
+  transition-duration: $toggle-wp-transition-duration;
+  transition-property: transform, background-color;
+}
+
+
+// Windows Toggle Background Track: Checked
+// -----------------------------------------
+
+.toggle-checked {
+  border-color: $toggle-wp-track-background-color-on;
+  background-color: $toggle-wp-track-background-color-on;
+}
+
+
+// Windows Toggle Inner Knob: Checked
+// -----------------------------------------
+
+.toggle-checked .toggle-inner {
+  background-color: $toggle-wp-handle-background-color-on;
+  // transform: translate3d(23px, 0, 0);
+  transform: translate3d($toggle-wp-track-width - $toggle-wp-handle-width - ($toggle-wp-track-border-width * 2) - ($toggle-wp-handle-left * 2), 0, 0);
+}
+
+
+// Windows Toggle: Disabled
+// -----------------------------------------
+
+.toggle-disabled,
+.item-toggle-disabled ion-label {
+  opacity: $toggle-wp-disabled-opacity;
+
+  pointer-events: none;
+}
+
+.toggle-disabled ion-radio {
+  opacity: $toggle-wp-disabled-opacity;
+}
+
+
+// Windows Toggle Within An Item
+// -----------------------------------------
+
+.item ion-toggle {
+  margin: $toggle-wp-media-margin;
+  padding: $toggle-wp-item-right-padding;
+
+  cursor: pointer;
+
+  &[item-left] {
+    padding: $toggle-wp-item-left-padding;
+  }
+}
+
+.item-toggle ion-label {
+  margin-left: 0;
+}
+
+
+// Windows Color Mixin
+// --------------------------------------------------
+
+@mixin toggle-theme-wp($color-name, $color-base, $color-contrast) {
+
+  ion-toggle[#{$color-name}] {
+
+    .toggle-checked {
+      border-color: $color-base;
+      background-color: $color-base;
+    }
+
+    .toggle-checked .toggle-inner {
+      background-color: $color-contrast;
+    }
+
+  }
+
+}
+
+
+// Generate Windows Toggle Auxiliary Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  @include toggle-theme-wp($color-name, $color-base, $color-contrast);
+
+}

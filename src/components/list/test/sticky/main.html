@@ -1,0 +1,10 @@
+<ion-content>
+  <ion-list>
+    <ion-item-group *ngFor="let group of groups">
+      <ion-item-divider sticky>{{group.title}}</ion-item-divider>
+      <ion-item *ngFor="let item of group.items">
+        {{item.title}}
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

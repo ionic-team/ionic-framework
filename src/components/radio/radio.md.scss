@@ -1,0 +1,149 @@
+@import "../../globals.md";
+
+// Material Design Radio
+// --------------------------------------------------
+
+$radio-md-color-on:               color($colors-md, primary) !default;
+$radio-md-color-off:              darken($list-md-border-color, 40%) !default;
+
+$radio-md-icon-width:             16px !default;
+$radio-md-icon-height:            16px !default;
+$radio-md-icon-border-width:      2px !default;
+$radio-md-icon-border-style:      solid !default;
+$radio-md-icon-border-radius:     50% !default;
+
+$radio-md-transition-duration:    280ms !default;
+$radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
+
+$radio-md-disabled-opacity:       .3 !default;
+
+$radio-md-item-left-margin:       11px 36px 10px 4px !default;
+$radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-padding-media-bottom 0 !default;
+
+ion-radio {
+  position: relative;
+  display: inline-block;
+}
+
+
+// Material Design Radio Outer Circle: Unchecked
+// -----------------------------------------
+
+.radio-icon {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+
+  margin: 0;
+
+  width: $radio-md-icon-width;
+  height: $radio-md-icon-height;
+
+  border-width: $radio-md-icon-border-width;
+  border-style: $radio-md-icon-border-style;
+  border-radius: $radio-md-icon-border-radius;
+  border-color: $radio-md-color-off;
+}
+
+
+// Material Design Radio Inner Circle: Unchecked
+// -----------------------------------------
+
+.radio-inner {
+  position: absolute;
+  top: $radio-md-icon-border-width;
+  left: $radio-md-icon-border-width;
+
+  width: $radio-md-icon-width / 2;
+  height: $radio-md-icon-height / 2;
+
+  border-radius: 50%;
+  background-color: $radio-md-color-on;
+  transform: scale3d(0, 0, 0);
+  transition: transform $radio-md-transition-duration $radio-md-transition-easing;
+}
+
+
+// Material Design Radio Outer Circle: Checked
+// -----------------------------------------
+
+.radio-checked {
+  border-color: $radio-md-color-on;
+}
+
+
+// Material Design Radio Inner Circle: Checked
+// -----------------------------------------
+
+.radio-checked .radio-inner {
+  transform: scale3d(1, 1, 1);
+}
+
+
+// Material Design Radio: Disabled
+// -----------------------------------------
+
+.radio-disabled,
+.item-radio-disabled ion-label {
+  opacity: $radio-md-disabled-opacity;
+
+  pointer-events: none;
+}
+
+
+// Material Design Radio Within An Item
+// -----------------------------------------
+
+.item ion-radio {
+  position: static;
+  display: block;
+
+  margin: $radio-md-item-right-margin;
+
+  &[item-left] {
+    margin: $radio-md-item-left-margin;
+  }
+}
+
+.item-radio ion-label {
+  margin-left: 0;
+}
+
+
+// Material Design Radio Item Label: Checked
+// -----------------------------------------
+
+.item-radio-checked ion-label {
+  color: $radio-md-color-on;
+}
+
+
+// Material Design Radio Color Mixin
+// --------------------------------------------------
+
+@mixin radio-theme-md($color-name, $color-base, $color-contrast) {
+
+  ion-radio[#{$color-name}] {
+
+    .radio-checked {
+      border-color: $color-base;
+    }
+
+    .radio-inner {
+      background-color: $color-base;
+    }
+
+  }
+
+}
+
+
+// Generate Material Design Radio Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  @include radio-theme-md($color-name, $color-base, $color-contrast);
+
+}

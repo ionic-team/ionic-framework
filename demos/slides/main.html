@@ -1,5 +1,5 @@
 <ion-slides loop="true" style="background-color: black">
-  <ion-slide *ngFor="#image of [1,2,3,4,5]">
+  <ion-slide *ngFor="let image of [1,2,3,4,5]">
     <img data-src="./slide{{image}}.jpeg">
   </ion-slide>
 </ion-slides>

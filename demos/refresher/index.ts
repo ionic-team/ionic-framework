@@ -1,5 +1,5 @@
 import {App, Page, Refresher} from 'ionic-angular';
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 
 /**
  * Mock Data Access Object

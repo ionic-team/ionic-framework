@@ -1,0 +1,100 @@
+@import "../../globals.core";
+
+// Buttons
+// --------------------------------------------------
+
+$button-round-padding:            0 2.6rem !default;
+$button-round-border-radius:      64px !default;
+
+
+.button {
+  @include user-select-none();
+  @include appearance(none);
+
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  overflow: hidden;
+
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+  white-space: nowrap;
+  cursor: pointer;
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
+
+  transition: background-color, opacity 100ms linear;
+
+  font-kerning: none;
+}
+
+.button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+a.button,
+a[button] {
+  text-decoration: none;
+}
+
+a[disabled],
+button[disabled],
+.button[disabled] {
+  cursor: default;
+  opacity: .4;
+
+  pointer-events: none;
+}
+
+
+// Block Button
+// --------------------------------------------------
+
+.button-block {
+  display: block;
+  clear: both;
+
+  width: 100%;
+
+  &::after {
+    clear: both;
+  }
+}
+
+
+// Full Button
+// --------------------------------------------------
+
+.button-full {
+  display: block;
+
+  width: 100%;
+
+  // Full Outline Button
+  // --------------------------------------------------
+  &.button-outline {
+    border-right-width: 0;
+    border-left-width: 0;
+    border-radius: 0;
+  }
+}
+
+
+// Round Button
+// --------------------------------------------------
+
+.button-round {
+  padding: $button-round-padding;
+
+  border-radius: $button-round-border-radius;
+}

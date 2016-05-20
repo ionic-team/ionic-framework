@@ -35,13 +35,18 @@
     </ion-list-header>
 
     <ion-item>
+      <ion-label>Enable "Never"</ion-label>
+      <ion-toggle (change)="isDisabled = !isDisabled"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
       <ion-label>1 Minute</ion-label>
       <ion-radio></ion-radio>
     </ion-item>
 
     <ion-item>
       <ion-label>2 Minutes</ion-label>
-      <ion-radio checked="true"></ion-radio>
+      <ion-radio checked></ion-radio>
     </ion-item>
 
     <ion-item>
@@ -51,7 +56,7 @@
 
     <ion-item>
       <ion-label>Never</ion-label>
-      <ion-radio></ion-radio>
+      <ion-radio [disabled]="isDisabled"></ion-radio>
     </ion-item>
   </ion-list>
 

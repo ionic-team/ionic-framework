@@ -86,9 +86,9 @@ gulp.task('watch', ['build'], function() {
 
 function watchTask(task){
   watch([
-      'ionic/**/*.ts',
-      '!ionic/components/*/test/**/*',
-      '!ionic/util/test/*'
+      'src/**/*.ts',
+      '!src/components/*/test/**/*',
+      '!src/util/test/*'
     ],
     function(file) {
       if (file.event === "unlink") {
@@ -99,7 +99,7 @@ function watchTask(task){
     }
   );
 
-  watch('ionic/**/*.scss', function() {
+  watch('src/**/*.scss', function() {
     gulp.start('sass');
   });
 
@@ -201,7 +201,7 @@ gulp.task('bundle.system', function(){
   var tsResult = tsCompile(getTscOptions('es6'), 'system')
     .pipe(babel(babelOptions));
 
-  var swiper = gulp.src('ionic/components/slides/swiper-widget.system.js');
+  var swiper = gulp.src('src/components/slides/swiper-widget.system.js');
 
   return merge([tsResult, swiper])
     .pipe(remember('system'))
@@ -246,13 +246,13 @@ gulp.task('transpile', function(){
 function tsCompile(options, cacheName){
   return gulp.src([
       'typings/main.d.ts',
-      'ionic/**/*.ts',
-      '!ionic/**/*.d.ts',
-      '!ionic/components/*/test/**/*',
-      '!ionic/util/test/*',
-      '!ionic/config/test/*',
-      '!ionic/platform/test/*',
-      '!ionic/**/*.spec.ts'
+      'src/**/*.ts',
+      '!src/**/*.d.ts',
+      '!src/components/*/test/**/*',
+      '!src/util/test/*',
+      '!src/config/test/*',
+      '!src/platform/test/*',
+      '!src/**/*.spec.ts'
     ])
     .pipe(cache(cacheName, { optimizeMemory: true }))
     .pipe(tsc(options, undefined, tscReporter));
@@ -267,10 +267,10 @@ gulp.task('sass', function() {
   var minifyCss = require('gulp-minify-css');
 
   gulp.src([
-    'ionic/ionic.ios.scss',
-    'ionic/ionic.md.scss',
-    'ionic/ionic.wp.scss',
-    'ionic/ionic.scss'
+    'src/ionic.ios.scss',
+    'src/ionic.md.scss',
+    'src/ionic.wp.scss',
+    'src/ionic.scss'
   ])
   .pipe(sass({
       includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
@@ -312,7 +312,7 @@ gulp.task('sass.themes', function() {
  */
 gulp.task('fonts', function() {
   gulp.src([
-    'ionic/fonts/*.+(ttf|woff|woff2)',
+    'src/fonts/*.+(ttf|woff|woff2)',
     'node_modules/ionicons/dist/fonts/*.+(ttf|woff|woff2)'
    ])
     .pipe(gulp.dest('dist/fonts'));
@@ -323,9 +323,9 @@ gulp.task('fonts', function() {
  */
 gulp.task('copy.scss', function() {
   return gulp.src([
-      'ionic/**/*.scss',
-      '!ionic/components/*/test/**/*',
-      '!ionic/util/test/*'
+      'src/**/*.scss',
+      '!src/components/*/test/**/*',
+      '!src/util/test/*'
     ])
     .pipe(gulp.dest('dist'));
 });
@@ -337,9 +337,9 @@ gulp.task('lint.scss', function() {
   var scsslint = require('gulp-scss-lint');
 
   return gulp.src([
-      'ionic/**/*.scss',
-      '!ionic/components/*/test/**/*',
-      '!ionic/util/test/*'
+      'src/**/*.scss',
+      '!src/components/*/test/**/*',
+      '!src/util/test/*'
     ])
     .pipe(scsslint())
     .pipe(scsslint.failReporter());
@@ -355,18 +355,16 @@ gulp.task('copy.libs', function() {
       'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js', //npm2
       'node_modules/es6-module-loader/dist/es6-module-loader.src.js', //npm3
       'node_modules/systemjs/dist/system.src.js',
-      'node_modules/angular2/bundles/angular2-polyfills.js',
-      'node_modules/angular2/bundles/angular2.dev.js',
-      'node_modules/angular2/bundles/router.dev.js',
-      'node_modules/angular2/bundles/http.dev.js',
-      'node_modules/rxjs/bundles/Rx.js'
+      'node_modules/rxjs/bundles/Rx.js',
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/reflect-metadata/Reflect.js'
     ])
     .pipe(gulp.dest('dist/js'));
 
   // for swiper-widget
   var libs = gulp.src([
-      'ionic/**/*.js',
-      'ionic/**/*.d.ts'
+      'src/**/*.js',
+      'src/**/*.d.ts'
     ])
     .pipe(gulp.dest('dist'));
 
@@ -385,7 +383,7 @@ gulp.task('copy.libs', function() {
 gulp.task('watch.e2e', ['e2e'], function() {
   watchTask('bundle.system');
 
-  watch('ionic/components/*/test/**/*', function(file) {
+  watch('src/components/*/test/**/*', function(file) {
     gulp.start('e2e.build');
   });
 });
@@ -421,8 +419,8 @@ gulp.task('e2e.build', function() {
 
   // Get each test folder with gulp.src
   var tsResult = gulp.src([
-      'ionic/components/*/test/*/**/*.ts',
-      '!ionic/components/*/test/*/**/*.spec.ts'
+      'src/components/*/test/*/**/*.ts',
+      '!src/components/*/test/*/**/*.spec.ts'
     ])
     .pipe(cache('e2e.ts'))
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
@@ -433,8 +431,8 @@ gulp.task('e2e.build', function() {
     .pipe(gulpif(/e2e.js$/, createPlatformTests()))
 
   var testFiles = gulp.src([
-      'ionic/components/*/test/*/**/*',
-      '!ionic/components/*/test/*/**/*.ts'
+      'src/components/*/test/*/**/*',
+      '!src/components/*/test/*/**/*.ts'
     ])
     .pipe(cache('e2e.files'))
 
@@ -463,7 +461,7 @@ gulp.task('e2e.build', function() {
   function createPlatformTests(file) {
     return through2.obj(function(file, enc, next) {
       var self = this;
-      var relativePath = path.dirname(file.path.replace(/^.*?ionic(\/|\\)components(\/|\\)/, ''));
+      var relativePath = path.dirname(file.path.replace(/^.*?src(\/|\\)components(\/|\\)/, ''));
       relativePath = relativePath.replace('/test/', '/');
       var contents = file.contents.toString();
       platforms.forEach(function(platform) {
@@ -488,7 +486,7 @@ gulp.task('e2e.build', function() {
  * Builds Ionic unit tests to dist/tests.
  */
 gulp.task('tests', function() {
-  return gulp.src('ionic/**/test/**/*.spec.ts')
+  return gulp.src('src/**/test/**/*.spec.ts')
     .pipe(cache('tests'))
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .pipe(rename(function(file) {
@@ -499,7 +497,7 @@ gulp.task('tests', function() {
 });
 
 gulp.task('watch.tests', ['tests'], function(){
-  watch('ionic/**/test/**/*.spec.ts', function(){
+  watch('src/**/test/**/*.spec.ts', function(){
     gulp.start('tests');
   });
 });
@@ -814,7 +812,7 @@ gulp.task('package', function(done){
   var templateVars = {};
   var packageJSON = require('./package.json');
   templateVars.ionicVersion = packageJSON.version;
-  templateVars.angularVersion = packageJSON.dependencies.angular2;
+  templateVars.angularVersion = packageJSON.dependencies['@angular/core'];
   var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
   fs.writeFileSync(distDir + '/package.json', packageTemplate(templateVars));
   done();
@@ -985,8 +983,8 @@ gulp.task('validate', function(done) {
 gulp.task('tslint', function() {
   var tslint = require('gulp-tslint');
   return gulp.src([
-      'ionic/**/*.ts',
-      '!ionic/**/test/**/*',
+      'src/**/*.ts',
+      '!src/**/test/**/*',
     ]).pipe(tslint())
       .pipe(tslint.report('verbose'));
 });

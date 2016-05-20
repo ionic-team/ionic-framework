@@ -1,0 +1,30 @@
+@import "../../globals.core";
+
+// DateTime
+// --------------------------------------------------
+
+ion-datetime {
+  display: flex;
+  overflow: hidden;
+
+  max-width: 45%;
+}
+
+.datetime-text {
+  overflow: hidden;
+
+  flex: 1;
+
+  min-width: 16px;
+
+  font-size: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.datetime-disabled,
+.item-datetime-disabled ion-label {
+  opacity: .4;
+
+  pointer-events: none;
+}

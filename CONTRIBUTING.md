@@ -50,7 +50,7 @@ Looking for an issue to fix? Make sure to look through our issues with the [help
  - Install the linter: `gem install scss_lint`
  - Make sure to run the linter at the root of the repository.
  - To check all component Sass files: `scss-lint ionic/**/**/*.scss`
- - To check a specific Sass file: `scss-lint ionic/components/toolbar/toolbar.ios.scss`
+ - To check a specific Sass file: `scss-lint src/components/toolbar/toolbar.ios.scss`
 
 
 #### Viewing Changes
@@ -87,7 +87,7 @@ Looking for an issue to fix? Make sure to look through our issues with the [help
 #### Adding Demos
 
 1. Create or modify the demo in the `demos/` folder.
-2. If it is new, link to the demo in the component's TypeScript (`*.ts`) file (under `ionic/components`) by adding a link to it in the documentation using `@demo`, for example:
+2. If it is new, link to the demo in the component's TypeScript (`*.ts`) file (under `src/components`) by adding a link to it in the documentation using `@demo`, for example:
 
   ```
   /**

@@ -16,6 +16,12 @@
     "q": "1.4.1"
   },
   "peerDependencies": {
-    "angular2": "^<%= angularVersion %>"
+    "@angular/common": "^<%= angularVersion %>",
+    "@angular/compiler": "^<%= angularVersion %>",
+    "@angular/core": "^<%= angularVersion %>",
+    "@angular/platform-browser": "^<%= angularVersion %>",
+    "@angular/platform-browser-dynamic": "^<%= angularVersion %>",
+    "@angular/http": "^<%= angularVersion %>",
+    "@angular/router": "^<%= angularVersion %>"
   }
 }

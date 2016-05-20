@@ -1,0 +1,135 @@
+@import "../../globals.wp";
+
+// Windows Checkbox
+// --------------------------------------------------
+
+$checkbox-wp-border-bottom-width:        1px !default;
+$checkbox-wp-border-bottom-style:        solid !default;
+$checkbox-wp-border-bottom-color:        $list-wp-border-color !default;
+$checkbox-wp-padding:                    $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0 !default;
+$checkbox-wp-margin:                     0 !default;
+$checkbox-wp-disabled-opacity:           .3 !default;
+
+$checkbox-wp-icon-background-color-off:  $list-wp-background-color !default;
+$checkbox-wp-icon-background-color-on:   color($colors-wp, primary) !default;
+$checkbox-wp-icon-size:                  16px !default;
+
+$checkbox-wp-icon-checkmark-width:       1px !default;
+$checkbox-wp-icon-checkmark-style:       solid !default;
+$checkbox-wp-icon-checkmark-color:       color-contrast($colors-wp, $checkbox-wp-icon-background-color-on) !default;
+
+$checkbox-wp-icon-border-width:          2px !default;
+$checkbox-wp-icon-border-style:          solid !default;
+$checkbox-wp-icon-border-radius:         0 !default;
+$checkbox-wp-icon-border-color-off:      #333 !default;
+$checkbox-wp-icon-border-color-on:       color($colors-wp, primary) !default;
+
+$checkbox-wp-item-left-margin:           $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 4px !default;
+$checkbox-wp-item-right-margin:          11px 10px 10px 0 !default;
+
+
+ion-checkbox {
+  position: relative;
+  display: inline-block;
+}
+
+
+// Windows Checkbox Outer Square: Unchecked
+// -----------------------------------------
+
+.checkbox-icon {
+  position: relative;
+
+  width: $checkbox-wp-icon-size;
+  height: $checkbox-wp-icon-size;
+
+  border-width: $checkbox-wp-icon-border-width;
+  border-style: $checkbox-wp-icon-border-style;
+  border-radius: $checkbox-wp-icon-border-radius;
+  border-color: $checkbox-wp-icon-border-color-off;
+  background-color: $checkbox-wp-icon-background-color-off;
+}
+
+
+// Windows Checkbox Outer Square: Checked
+// -----------------------------------------
+
+.checkbox-checked {
+  border-color: $checkbox-wp-icon-border-color-on;
+  background-color: $checkbox-wp-icon-background-color-on;
+}
+
+
+// Windows Checkbox Inner Checkmark: Checked
+// -----------------------------------------
+
+.checkbox-checked .checkbox-inner {
+  position: absolute;
+  top: -2px;
+  left: 3px;
+
+  width: 6px;
+  height: 12px;
+
+  border-width: $checkbox-wp-icon-checkmark-width;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-style: $checkbox-wp-icon-checkmark-style;
+  border-color: $checkbox-wp-icon-checkmark-color;
+  transform: rotate(45deg);
+}
+
+
+// Windows Checkbox: Disabled
+// -----------------------------------------
+
+.checkbox-disabled,
+.item-checkbox-disabled ion-label {
+  opacity: $checkbox-wp-disabled-opacity;
+
+  pointer-events: none;
+}
+
+
+// Windows Checkbox Within An Item
+// -----------------------------------------
+
+.item ion-checkbox {
+  position: static;
+  display: block;
+
+  margin: $checkbox-wp-item-left-margin;
+
+  &[item-right] {
+    margin: $checkbox-wp-item-right-margin;
+  }
+}
+
+ion-checkbox + .item-inner ion-label {
+  margin-left: 0;
+}
+
+
+// Windows Checkbox Color Mixin
+// --------------------------------------------------
+
+@mixin checkbox-theme-wp($color-name, $color-base, $color-contrast) {
+
+  ion-checkbox[#{$color-name}] .checkbox-checked {
+    border-color: $color-base;
+    background-color: $color-base;
+
+    .checkbox-inner {
+      border-color: $color-contrast;
+    }
+  }
+
+}
+
+
+// Generate Windows Checkbox Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  @include checkbox-theme-wp($color-name, $color-base, $color-contrast);
+}

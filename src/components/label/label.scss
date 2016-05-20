@@ -1,0 +1,71 @@
+@import "../../globals.core";
+
+// Label
+// --------------------------------------------------
+
+ion-label {
+  display: block;
+  overflow: hidden;
+
+  flex: 1;
+
+  margin: 0;
+
+  font-size: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-input ion-label {
+  flex: initial;
+
+  max-width: 200px;
+
+  pointer-events: none;
+}
+
+[text-wrap] ion-label {
+  white-space: normal;
+}
+
+
+// Stacked & Floating Inputs
+// --------------------------------------------------
+
+ion-label[fixed] {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+.item-label-stacked ion-label,
+.item-label-floating ion-label {
+  align-self: stretch;
+
+  width: auto;
+  max-width: 100%;
+}
+
+ion-label[stacked],
+ion-label[floating] {
+  margin-bottom: 0;
+}
+
+.item-label-stacked .input-wrapper,
+.item-label-floating .input-wrapper {
+  flex: 1;
+  flex-direction: column;
+}
+
+.item-label-stacked ion-select,
+.item-label-floating ion-select {
+  align-self: stretch;
+
+  max-width: 100%;
+}
+
+.item-select ion-label[floating] {
+  transform: translate3d(0, 0, 0) scale(.8);
+}

@@ -13,20 +13,6 @@ function init {
   SITE_PATH=$(readJsonProp "config.json" "sitePath")
   SITE_DIR=$IONIC_DIR/$SITE_PATH
   DOCS_DEST=$(readJsonProp "config.json" "docsDest")
-
-  if [ ! -d "$SITE_DIR" ]; then
-    echo "checking out"
-    ./git/clone.sh --repository="driftyco/ionic-site" \
-      --directory="$SITE_DIR" \
-      --branch="master" \
-      --depth=1
-  else
-    echo "using existing"
-    cd $SITE_DIR
-    git reset --hard
-    git pull origin master
-    cd $IONIC_DIR/scripts
-  fi
 }
 
 function run {
@@ -58,6 +44,11 @@ function run {
   else
     git add -A
     git commit -am "Automated build of ionic  v$VERSION driftyco/$CIRCLE_PROJECT_REPONAME@$CIRCLE_SHA1"
+    # in case a different commit was pushed to ionic-site during doc/demo gen,
+    # try to rebase around it before pushing
+    git fetch
+    git rebase
+
     git push origin master
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"

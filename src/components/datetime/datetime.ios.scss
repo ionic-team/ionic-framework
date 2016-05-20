@@ -1,0 +1,15 @@
+@import "../../globals.ios";
+@import "./datetime";
+
+// iOS DateTime
+// --------------------------------------------------
+
+$datetime-ios-padding-top:         $item-ios-padding-top !default;
+$datetime-ios-padding-right:       ($item-ios-padding-right / 2) !default;
+$datetime-ios-padding-bottom:      $item-ios-padding-bottom !default;
+$datetime-ios-padding-left:        $item-ios-padding-left !default;
+
+
+ion-datetime {
+  padding: $datetime-ios-padding-top $datetime-ios-padding-right $datetime-ios-padding-bottom $datetime-ios-padding-left;
+}

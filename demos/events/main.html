@@ -10,7 +10,7 @@
       <ion-item *ngIf="loggedIn">
         Welcome, Administrator!
       </ion-item>
-      <button ion-item menuClose *ngFor="#p of pages" (click)="openPage(menu, p)" [hidden]="(loggedIn == true && p.showLoggedIn == false) || (loggedIn == false && p.showLoggedIn == true)">
+      <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(menu, p)" [hidden]="(loggedIn == true && p.showLoggedIn == false) || (loggedIn == false && p.showLoggedIn == true)">
         <ion-label primary>{{p.title}}</ion-label>
       </button>
 
