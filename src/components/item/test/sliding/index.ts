@@ -1,21 +1,24 @@
-import {App, Page, IonicApp, Alert, NavController} from '../../../../../src';
+import {ViewChild} from '@angular/core';
+import {App, Page, IonicApp, Alert, NavController, List, ItemSliding} from '../../../../../src';
 
 
 @Page({
   templateUrl: 'main.html'
 })
 class E2EPage {
+  @ViewChild('myList', {read: List}) list: List;
+
+  items = [];
+  shouldShow: boolean = true;
+
   constructor(private app: IonicApp, private nav: NavController) {
-    this.items = [];
     for (let x = 0; x < 20; x++) {
       this.items.push(x);
     }
-
-    this.shouldShow = true;
   }
 
   closeOpened() {
-    this.app.getComponent('myList').closeSlidingItems();
+    this.list.closeSlidingItems();
   }
 
   didClick(item) {
@@ -68,7 +71,9 @@ class E2EPage {
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
+  root = E2EPage;
+
   constructor() {
-    this.root = E2EPage;
+
   }
 }
