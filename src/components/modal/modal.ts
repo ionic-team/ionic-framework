@@ -107,8 +107,8 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
 export class Modal extends ViewController {
 
   constructor(componentType, data: any = {}) {
-    data.componentToPresent = componentType;
-    super(ModalComponent, data);
+    data.componentType = componentType;
+    super(ModalCmp, data);
     this.viewType = 'modal';
     this.isOverlay = true;
   }
@@ -133,25 +133,24 @@ export class Modal extends ViewController {
 
 @Component({
   selector: 'ion-modal',
-  template: `
-    <div class="backdrop"></div>
-    <div class="modal-wrapper">
-      <div #wrapper></div>
-    </div>
-  `
+  template:
+    '<div class="backdrop"></div>' +
+    '<div class="modal-wrapper">' +
+      '<div #viewport></div>' +
+    '</div>'
 })
-class ModalComponent {
+class ModalCmp {
 
-  @ViewChild('wrapper', {read: ViewContainerRef}) wrapper: ViewContainerRef;
+  @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
-  constructor(private _loader: DynamicComponentLoader, private _navParams: NavParams, private _viewCtrl: ViewController) {
-  }
+  constructor(private _loader: DynamicComponentLoader, private _navParams: NavParams, private _viewCtrl: ViewController) {}
 
-  ngAfterViewInit() {
-    let component = this._navParams.data.componentToPresent;
-    this._loader.loadNextToLocation(component, this.wrapper).then(componentInstance => {
-      this._viewCtrl.setInstance(componentInstance.instance);
-      // TODO - validate what life cycle events aren't call and possibly call them here if needed
+  onPageWillEnter() {
+    this._loader.loadNextToLocation(this._navParams.data.componentType, this.viewport).then(componentRef => {
+      this._viewCtrl.setInstance(componentRef.instance);
+
+      // manually fire onPageWillEnter() since ModalCmp's  onPageWillEnter already happened
+      this._viewCtrl.willEnter();
     });
   }
 }
