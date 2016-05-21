@@ -49,18 +49,21 @@ export class List extends Ion {
   }
 
   /**
-   * Enable sliding items if your page has them
+   * Enable the sliding items.
    *
    * ```ts
    * import {Page, List} from 'ionic-angular';
    * import {ViewChild} from '@angular/core';
-   * @Page...
+   *
+   * @Page({})
    * export class MyClass {
-   *    @ViewChild(List) list: List;
-   *    constructor(){}
-   *    stopSliding(){
-   *      this.list.enableSlidingItems(false);
-   *    }
+   *   @ViewChild(List) list: List;
+   *
+   *   constructor() { }
+   *
+   *   stopSliding() {
+   *     this.list.enableSlidingItems(false);
+   *   }
    * }
    * ```
    * @param {boolean} shouldEnable whether the item-sliding should be enabled or not
@@ -84,18 +87,21 @@ export class List extends Ion {
   }
 
   /**
-   * Enable sliding items if your page has
+   * Close the open sliding item.
    *
    * ```ts
    * import {Page, List} from 'ionic-angular';
    * import {ViewChild} from '@angular/core';
-   * @Page...
+   *
+   * @Page({})
    * export class MyClass {
-   *    @ViewChild(List) list: List;
-   *    constructor(){}
-   *    closeItems(){
-   *      this.list.closeSlidingItems();
-   *    }
+   *   @ViewChild(List) list: List;
+   *
+   *   constructor() { }
+   *
+   *   closeItems() {
+   *     this.list.closeSlidingItems();
+   *   }
    * }
    * ```
    */

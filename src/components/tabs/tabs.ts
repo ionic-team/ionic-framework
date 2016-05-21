@@ -114,7 +114,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  *```ts
  * export class TabsPage {
  *
- * @ViewChild('myTabs) tabRef: Tabs
+ * @ViewChild('myTabs') tabRef: Tabs;
  *
  * onPageDidEnter() {
  *   this.tabRef.select(2);
