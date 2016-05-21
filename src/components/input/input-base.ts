@@ -58,6 +58,7 @@ export class InputBase {
 
     if (ngControl) {
       ngControl.valueAccessor = this;
+      this.inputControl = ngControl;
     }
 
     _form.register(this);
@@ -107,15 +108,15 @@ export class InputBase {
 
   private setItemControlCss() {
     let item = this._item;
-    let nativeControl = this._native && this._native.ngControl;
+    let inputControl = this.inputControl;
 
-    if (item && nativeControl) {
-      item.setCssClass('ng-untouched', nativeControl.untouched);
-      item.setCssClass('ng-touched', nativeControl.touched);
-      item.setCssClass('ng-pristine', nativeControl.pristine);
-      item.setCssClass('ng-dirty', nativeControl.dirty);
-      item.setCssClass('ng-valid', nativeControl.valid);
-      item.setCssClass('ng-invalid', !nativeControl.valid);
+    if (item && inputControl) {
+      item.setCssClass('ng-untouched', inputControl.untouched);
+      item.setCssClass('ng-touched', inputControl.touched);
+      item.setCssClass('ng-pristine', inputControl.pristine);
+      item.setCssClass('ng-dirty', inputControl.dirty);
+      item.setCssClass('ng-valid', inputControl.valid);
+      item.setCssClass('ng-invalid', !inputControl.valid);
     }
   }
 
@@ -220,7 +221,7 @@ export class InputBase {
     }
     nativeInputEle.setAttribute('autocomplete', this._autoComplete);
 
-    // by default set autocomplete="off" unless specified by the input
+    // by default set autocorrect="off" unless specified by the input
     if (ionInputEle.hasAttribute('autocorrect')) {
       this._autoCorrect = ionInputEle.getAttribute('autocorrect');
     }
