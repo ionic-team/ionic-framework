@@ -99,25 +99,36 @@ export class InputBase {
       }
     };
 
-    this.setItemControlCss();
+    this.setItemInputControlCss();
   }
 
   ngAfterContentChecked() {
-    this.setItemControlCss();
+    this.setItemInputControlCss();
   }
 
-  private setItemControlCss() {
+  private setItemInputControlCss() {
     let item = this._item;
+    let nativeInput = this._native;
     let inputControl = this.inputControl;
 
+    // Set the control classes on the item
     if (item && inputControl) {
-      item.setCssClass('ng-untouched', inputControl.untouched);
-      item.setCssClass('ng-touched', inputControl.touched);
-      item.setCssClass('ng-pristine', inputControl.pristine);
-      item.setCssClass('ng-dirty', inputControl.dirty);
-      item.setCssClass('ng-valid', inputControl.valid);
-      item.setCssClass('ng-invalid', !inputControl.valid);
+      this.setControlCss(item, inputControl);
     }
+
+    // Set the control classes on the native input
+    if (nativeInput && inputControl) {
+      this.setControlCss(nativeInput, inputControl);
+    }
+  }
+
+  private setControlCss(element, control) {
+    element.setCssClass('ng-untouched', control.untouched);
+    element.setCssClass('ng-touched', control.touched);
+    element.setCssClass('ng-pristine', control.pristine);
+    element.setCssClass('ng-dirty', control.dirty);
+    element.setCssClass('ng-valid', control.valid);
+    element.setCssClass('ng-invalid', !control.valid);
   }
 
   ngOnDestroy() {
