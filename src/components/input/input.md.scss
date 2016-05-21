@@ -19,6 +19,8 @@ $text-input-md-input-clear-icon-color:      #5b5b5b !default;
 $text-input-md-input-clear-icon-svg:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $text-input-md-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
 $text-input-md-input-clear-icon-size:       22px !default;
 
+$text-input-md-show-success-highlight:      true !default;
+$text-input-md-show-error-highlight:        true !default;
 
 
 // Material Design Default Input
@@ -44,7 +46,7 @@ $text-input-md-input-clear-icon-size:       22px !default;
 // Material Design Highlighted Input
 // --------------------------------------------------
 
-ion-input::after {
+.item-input::after {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -56,16 +58,32 @@ ion-input::after {
   content: "";
 }
 
-.input-has-focus::after {
+.item-input.input-has-focus::after {
   border-bottom-color: $text-input-md-highlight-color;
 }
 
-ion-input.ng-valid.input-has-value::after {
-  border-bottom-color: $text-input-md-hightlight-color-valid;
+@if($text-input-md-show-success-highlight) {
+  .item-input.ng-valid.input-has-value {
+    &::after {
+      border-bottom-color: $text-input-md-hightlight-color-valid;
+    }
+
+    &.input-has-focus::after {
+      border-bottom-color: $text-input-md-highlight-color;
+    }
+  }
 }
 
-ion-input.ng-invalid.ng-touched::after {
-  border-bottom-color: $text-input-md-hightlight-color-invalid;
+@if($text-input-md-show-error-highlight) {
+  .item-input.ng-invalid.ng-touched {
+    &::after {
+      border-bottom-color: $text-input-md-hightlight-color-invalid;
+    }
+
+    &.input-has-focus::after {
+      border-bottom-color: $text-input-md-highlight-color;
+    }
+  }
 }
 
 
