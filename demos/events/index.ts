@@ -1,14 +1,15 @@
-import {App, IonicApp, Page, Events} from 'ionic-angular';
+import {ViewChild} from '@angular/core';
+import {App, Page, Events, Nav} from 'ionic-angular';
 
 @Page({templateUrl: 'login.html'})
 class Login {
-  constructor(events: Events) {
-    this.events = events;
+  user = {
+    name: "Administrator",
+    username: "admin"
+  };
 
-    this.user = {
-      name: "Administrator",
-      username: "admin"
-    };
+  constructor(private events: Events) {
+
   }
 
   login() {
@@ -20,8 +21,8 @@ class Login {
 
 @Page({templateUrl: 'logout.html'})
 class Logout {
-  constructor(events: Events) {
-    this.events = events;
+  constructor(private events: Events) {
+
   }
 
   logout() {
@@ -33,18 +34,17 @@ class Logout {
   templateUrl: 'main.html'
 })
 class ApiDemoApp {
-  constructor(app: IonicApp, events: Events) {
-    this.app = app;
-    this.events = events;
+  @ViewChild(Nav) nav: Nav;
 
-    this.rootView = Login;
-    this.loggedIn = false;
+  rootView = Login;
+  loggedIn = false;
 
-    this.pages = [
-      { title: 'Logout', component: Logout, showLoggedIn: true },
-      { title: 'Login', component: Login, showLoggedIn: false },
-    ];
+  pages = [
+    { title: 'Logout', component: Logout, showLoggedIn: true },
+    { title: 'Login', component: Login, showLoggedIn: false },
+  ];
 
+  constructor(private events: Events) {
     this.listenToLoginEvents();
   }
 
@@ -52,8 +52,7 @@ class ApiDemoApp {
     // find the nav component and set what the root page should be
     // reset the nav to remove previous pages and only have this page
     // we wouldn't want the back button to show in this scenario
-    let nav = this.app.getComponent('nav');
-    nav.setRoot(page.component);
+    this.nav.setRoot(page.component);
   }
 
   listenToLoginEvents() {

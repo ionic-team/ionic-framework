@@ -1,40 +1,42 @@
 import {Validators, Control, ControlGroup} from '@angular/common';
 import {Http} from '@angular/http';
-import {App, Page, IonicApp, NavController} from '../../../../../src';
+import {ViewChild} from '@angular/core';
+import {App, Page, NavController, Slides} from '../../../../../src';
 
 
 @Page({
   templateUrl: 'main.html',
 })
 class SegmentPage {
-  constructor(app: IonicApp) {
-    this.app = app;
+  @ViewChild('loopSlider') sliderComponent: Slides;
 
-    this.selectedSegment = "first";
-    this.slides = [
-      {
-        id: "first",
-        title: "First Slide"
-      },
-      {
-        id: "second",
-        title: "Second Slide"
-      },
-      {
-        id: "third",
-        title: "Third Slide"
-      }
-    ];
+  selectedSegment = "first";
+  slides = [
+    {
+      id: "first",
+      title: "First Slide"
+    },
+    {
+      id: "second",
+      title: "Second Slide"
+    },
+    {
+      id: "third",
+      title: "Third Slide"
+    }
+  ];
+
+  constructor() {
+
   }
 
   onSegmentChanged(segmentButton) {
     console.log("Segment changed to", segmentButton.value);
 
-    this.sliderComponent = this.app.getComponent('loopSlider');
     const selectedIndex = this.slides.findIndex((slide) => {
       return slide.id === segmentButton.value;
     });
-    this.sliderComponent.slider.slideTo(selectedIndex);
+    this.sliderComponent.slideTo(selectedIndex);
   }
 
   onSlideChanged(slider) {
@@ -47,11 +49,12 @@ class SegmentPage {
 
 
 @App({
-  pages: [SegmentPage],
   template: `<ion-nav [root]="root"></ion-nav>`
 })
 class MyApp {
+  root = SegmentPage;
+
   constructor() {
-    this.root = SegmentPage;
+
   }
 }

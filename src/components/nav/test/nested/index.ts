@@ -1,5 +1,6 @@
+import {ViewChild} from '@angular/core';
 import {App, NavParams, NavController, ViewController, MenuController} from '../../../../../src';
-import {Page, Config, IonicApp} from '../../../../../src';
+import {Page, Config, Nav} from '../../../../../src';
 
 
 @Page({
@@ -46,26 +47,28 @@ export class Login {
   `
 })
 export class Account {
-  rootPage;
+  @ViewChild('account-nav') accountNav: Nav;
 
-  constructor(private app: IonicApp, private menu: MenuController) {
-    this.rootPage = Dashboard;
+  rootPage = Dashboard;
+
+  constructor(private menu: MenuController, private nav: NavController) {
+
   }
 
   goToProfile() {
-    this.app.getComponent('account-nav').setRoot(Profile).then(() => {
+    this.accountNav.setRoot(Profile).then(() => {
       this.menu.close();
     });
   }
 
   goToDashboard() {
-    this.app.getComponent('account-nav').setRoot(Dashboard).then(() => {
+    this.accountNav.setRoot(Dashboard).then(() => {
       this.menu.close();
     });
   }
 
   logOut() {
-    this.app.getComponent('root-nav').setRoot(Login, null, { animate: true });
+    this.nav.parent.setRoot(Login, null, { animate: true });
   }
 }
 
@@ -85,13 +88,13 @@ export class Account {
   `
 })
 export class Dashboard {
-  constructor(private app: IonicApp, private nav: NavController) {}
+  constructor(private nav: NavController) {}
 
   goToProfile() {
     this.nav.push(Profile);
   }
   logOut() {
-    this.app.getComponent('root-nav').setRoot(Login, null, {
+    this.nav.parent.setRoot(Login, null, {
       animate: true,
       direction: 'back'
     });
@@ -114,13 +117,14 @@ export class Dashboard {
   `
 })
 export class Profile {
-  constructor(private app: IonicApp, private nav: NavController) {}
+  constructor(private nav: NavController) {}
 
   goToDashboard() {
     this.nav.push(Dashboard);
   }
+
   logOut() {
-    this.app.getComponent('root-nav').setRoot(Login, null, {
+    this.nav.parent.setRoot(Login, null, {
       animate: true,
       direction: 'back'
     });
@@ -132,9 +136,9 @@ export class Profile {
   template: `<ion-nav id="root-nav" [root]="rootPage" swipeBackEnabled="false"></ion-nav>`
 })
 class E2EApp {
-  rootPage;
+  rootPage = Login;
 
   constructor() {
-    this.rootPage = Login;
+
   }
 }

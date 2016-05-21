@@ -1,4 +1,5 @@
-import {App, Page, IonicApp, MenuController} from '../../../../../src';
+import {ViewChild} from '@angular/core';
+import {App, Page, IonicApp, MenuController, Nav} from '../../../../../src';
 
 
 @Page({
@@ -18,24 +19,20 @@ class Page2 {
   templateUrl: 'main.html'
 })
 class E2EApp {
-  rootPage;
+  @ViewChild(Nav) nav: Nav;
+
   activeMenu: string;
+  page1 = Page1;
+  page2 = Page2;
+  rootPage = Page1;
 
-  constructor(app: IonicApp, menu: MenuController) {
-    this.app = app;
-    this.menu = menu;
-
-    this.page1 = Page1;
-    this.page2 = Page2;
-
-    this.rootPage = Page1;
+  constructor(private app: IonicApp, private menu: MenuController) {
     this.menu1Active();
   }
 
   openPage(p) {
     // Get the <ion-nav> by id
-    let nav = this.app.getComponent('nav');
-    nav.setRoot(p);
+    this.nav.setRoot(p);
   }
 
   menu1Active() {
