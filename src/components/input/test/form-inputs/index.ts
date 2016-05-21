@@ -1,11 +1,11 @@
-import {App} from '../../../../../src';
+import {App, Page} from '../../../../../src';
 import {FormBuilder, Validators, Control} from '@angular/common';
 
 
-@App({
+@Page({
   templateUrl: 'main.html'
 })
-class E2EApp {
+class E2EPage {
   loginForm: any;
 
   login = {
@@ -29,7 +29,8 @@ class E2EApp {
       ])],
       username: [""],
       password: ["", Validators.required],
-      comments: ["", Validators.required]
+      comments: ["", Validators.required],
+      gender: ["", Validators.required]
     });
   }
 
@@ -50,4 +51,11 @@ class E2EApp {
     this.isTextAreaDisabled = !this.isTextAreaDisabled;
   }
 
+}
+
+@App({
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
+})
+class E2EApp {
+  rootPage = E2EPage;
 }

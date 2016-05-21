@@ -27,6 +27,14 @@
         <ion-textarea clearInput [(ngModel)]="login.comments" ngControl="comments" required>Comment value</ion-textarea>
       </ion-item>
 
+      <ion-item>
+        <ion-label>Gender</ion-label>
+        <ion-select [(ngModel)]="login.gender" ngControl="gender">
+          <ion-option value="f">Female</ion-option>
+          <ion-option value="m">Male</ion-option>
+        </ion-select>
+      </ion-item>
+
       <div padding-left padding-right>
         <button block (click)="submit($event, login)">Login</button>
       </div>
