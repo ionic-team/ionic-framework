@@ -1,0 +1,63 @@
+@import "../../globals.core";
+@import "./popover";
+
+// iOS Popover
+// --------------------------------------------------
+
+$popover-ios-padding:                   24px 34px !default;
+$popover-ios-min-width:                 150px !default;
+$popover-ios-max-width:                 270px !default;
+$popover-ios-max-height:                90% !default;
+$popover-ios-border-radius:             10px !default;
+$popover-ios-text-color:                #000 !default;
+$popover-ios-background:                #f3f3f3 !default;
+
+
+.popover-wrapper {
+  padding: $popover-ios-padding;
+
+  min-width: $popover-ios-min-width;
+  max-width: $popover-ios-max-width;
+
+  max-height: $popover-ios-max-height;
+
+  border-radius: $popover-ios-border-radius;
+  color: $popover-ios-text-color;
+  background: $popover-ios-background;
+}
+
+
+// Popover Arrow
+// -----------------------------------------
+
+.popover-arrow {
+  position: absolute;
+  display: block;
+  top: -20px;
+  width: 30px;
+  height: 19px;
+  overflow: hidden;
+
+  &:after {
+    position: absolute;
+
+    z-index: $z-index-overlay-wrapper;
+
+    top: 12px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: $popover-ios-background;
+    border-radius: 3px;
+    content: '';
+    transform: rotate(-45deg);
+  }
+}
+
+.popover-bottom .popover-arrow {
+  top: auto;
+  bottom: -10px;
+  &:after {
+    top: -6px;
+  }
+}

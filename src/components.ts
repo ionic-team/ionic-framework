@@ -31,6 +31,7 @@ export * from './components/nav/nav-router';
 export * from './components/navbar/navbar';
 export * from './components/option/option';
 export * from './components/picker/picker';
+export * from './components/popover/popover';
 export * from './components/radio/radio-button';
 export * from './components/radio/radio-group';
 export * from './components/refresher/refresher';

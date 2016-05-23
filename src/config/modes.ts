@@ -32,6 +32,9 @@ Config.setModeConfig('ios', {
   pickerLeave: 'picker-slide-out',
   pickerRotateFactor: -0.46,
 
+  popoverEnter: 'popover-pop-in',
+  popoverLeave: 'popover-pop-out',
+
   spinner: 'ios',
 
   tabbarPlacement: 'bottom',
@@ -69,6 +72,9 @@ Config.setModeConfig('md', {
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
+
+  popoverEnter: 'popover-md-pop-in',
+  popoverLeave: 'popover-md-pop-out',
 
   spinner: 'crescent',
 
@@ -110,6 +116,9 @@ Config.setModeConfig('wp', {
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
+
+  popoverEnter: 'popover-wp-pop-in',
+  popoverLeave: 'popover-wp-pop-out',    
 
   spinner: 'circles',
 

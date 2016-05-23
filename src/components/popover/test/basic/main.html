@@ -1,0 +1,25 @@
+<ion-navbar *navbar>
+  <ion-title>Popover</ion-title>
+  <ion-buttons end>
+    <button #popover (click)="presentPopover(popover, $event)">
+      <ion-icon name="more"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content padding>
+
+  <button #element block (click)="presentPopover(element, $event)">
+    Present Popover
+  </button>
+
+</ion-content>
+
+<ion-toolbar position="bottom">
+  <ion-title>Popover</ion-title>
+  <ion-buttons start>
+    <button #bottomPopover (click)="presentPopover(bottomPopover, $event)">
+      <ion-icon name="more"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>

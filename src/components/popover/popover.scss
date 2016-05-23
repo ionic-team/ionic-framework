@@ -1,0 +1,44 @@
+@import "../../globals.core";
+
+// Popover
+// --------------------------------------------------
+
+$popover-min-width:                 150px !default;
+$popover-max-height:                90% !default;
+
+
+ion-popover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-overlay;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.popover-wrapper {
+  position: absolute;
+
+  z-index: $z-index-overlay-wrapper;
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: $popover-min-width;
+  max-height: $popover-max-height;
+
+  opacity: 0;
+}
+
+
+// Popover Backdrop
+// -----------------------------------------
+
+.hide-backdrop {
+  display: none;
+}
