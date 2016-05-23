@@ -4,7 +4,6 @@
 // iOS Popover
 // --------------------------------------------------
 
-$popover-ios-padding:                   24px 34px !default;
 $popover-ios-min-width:                 150px !default;
 $popover-ios-max-width:                 270px !default;
 $popover-ios-max-height:                90% !default;
@@ -14,8 +13,6 @@ $popover-ios-background:                #f3f3f3 !default;
 
 
 .popover-wrapper {
-  padding: $popover-ios-padding;
-
   min-width: $popover-ios-min-width;
   max-width: $popover-ios-max-width;
 
@@ -34,8 +31,8 @@ $popover-ios-background:                #f3f3f3 !default;
   position: absolute;
   display: block;
   top: -20px;
-  width: 30px;
-  height: 19px;
+  width: 20px;
+  height: 10px;
   overflow: hidden;
 
   &:after {
@@ -43,14 +40,15 @@ $popover-ios-background:                #f3f3f3 !default;
 
     z-index: $z-index-overlay-wrapper;
 
-    top: 12px;
-    left: 5px;
-    width: 20px;
-    height: 20px;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+
     background-color: $popover-ios-background;
     border-radius: 3px;
     content: '';
-    transform: rotate(-45deg);
+    transform: rotate(45deg);
   }
 }
 

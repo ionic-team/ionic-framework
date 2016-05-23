@@ -1,7 +1,18 @@
-<ion-navbar *navbar>
+<ion-navbar *navbar primary>
+  <ion-buttons start>
+    <button (click)="presentPopover($event)">
+      <ion-icon name="options"></ion-icon>
+    </button>
+    <button (click)="presentPopover($event)">
+      <ion-icon name="more"></ion-icon>
+    </button>
+  </ion-buttons>
   <ion-title>Popover</ion-title>
   <ion-buttons end>
-    <button #popover (click)="presentPopover(popover, $event)">
+    <button (click)="presentPopover($event)">
+      <ion-icon name="options"></ion-icon>
+    </button>
+    <button (click)="presentPopover($event)">
       <ion-icon name="more"></ion-icon>
     </button>
   </ion-buttons>
@@ -9,7 +20,7 @@
 
 <ion-content padding>
 
-  <button #element block (click)="presentPopover(element, $event)">
+  <button block (click)="presentPopover($event)">
     Present Popover
   </button>
 
@@ -18,7 +29,7 @@
 <ion-toolbar position="bottom">
   <ion-title>Popover</ion-title>
   <ion-buttons start>
-    <button #bottomPopover (click)="presentPopover(bottomPopover, $event)">
+    <button (click)="presentPopover($event)">
       <ion-icon name="more"></ion-icon>
     </button>
   </ion-buttons>

@@ -4,7 +4,6 @@
 // Material Design Popover
 // --------------------------------------------------
 
-$popover-md-padding:                   24px 34px !default;
 $popover-md-min-width:                 150px !default;
 $popover-md-max-width:                 270px !default;
 $popover-md-max-height:                90% !default;
@@ -14,8 +13,6 @@ $popover-md-background:                #fafafa !default;
 
 
 .popover-wrapper {
-  padding: $popover-md-padding;
-
   min-width: $popover-md-min-width;
   max-width: $popover-md-max-width;
 
@@ -24,12 +21,4 @@ $popover-md-background:                #fafafa !default;
   border-radius: $popover-md-border-radius;
   color: $popover-md-text-color;
   background: $popover-md-background;
-}
-
-
-// Material Design Popover Template
-// -----------------------------------------
-
-.popover-template {
-
 }

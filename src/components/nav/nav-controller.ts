@@ -1157,7 +1157,8 @@ export class NavController extends Ion {
         duration: opts.duration,
         easing: opts.easing,
         renderDelay: opts.transitionDelay || this._trnsDelay,
-        isRTL: this.config.platform.isRTL()
+        isRTL: this.config.platform.isRTL(),
+        ev: opts.ev,
       };
 
       let transAnimation = Transition.createTransition(enteringView,
@@ -1779,6 +1780,7 @@ export interface NavOptions {
   postLoad?: Function;
   progressAnimation?: boolean;
   climbNav?: boolean;
+  ev?: any;
 }
 
 const STATE_ACTIVE = 'active';

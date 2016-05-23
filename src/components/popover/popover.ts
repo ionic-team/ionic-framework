@@ -1,13 +1,15 @@
-import {Component, Renderer, ElementRef, HostListener, ViewEncapsulation} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, DynamicComponentLoader} from '@angular/core';
+import {Renderer, ElementRef} from '@angular/core';
 
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {NavParams} from '../nav/nav-params';
+import {Platform} from '../../platform/platform'
 import {isPresent, isUndefined, isDefined} from '../../util/util';
 import {ViewController} from '../nav/view-controller';
 
-const POPOVER_BODY_PADDING = 6;
+const POPOVER_BODY_PADDING = 2;
 
 /**
  * @name Popover
@@ -16,14 +18,15 @@ const POPOVER_BODY_PADDING = 6;
  */
 export class Popover extends ViewController {
 
-  constructor(opts: PopoverOptions = {}) {
+  constructor(componentType, data: any = {}, opts: PopoverOptions = {}) {
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(PopoverCmp, opts);
+    data.componentType = componentType;
+    data.opts = opts;
+    super(PopoverCmp, data);
     this.viewType = 'popover';
     this.isOverlay = true;
-    this.usePortal = false;
 
     // by default, popovers should not fire lifecycle events of other views
     // for example, when a popover enters, the current active view should
@@ -44,16 +47,16 @@ export class Popover extends ViewController {
     *
     * | Option                | Type       | Description                                                                                                      |
     * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
-    * | template              |`string`    | The html content for the popover.                                                                                |
     * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
     * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
     * | enableBackdropDismiss |`boolean`   | Wheather the popover should be dismissed by tapping the backdrop. Default true.                                  |
     *
     *
+    * @param {object} data Any data to pass to the popover view
     * @param {object} opts Popover options
     */
-   static create(opts: PopoverOptions = {}) {
-     return new Popover(opts);
+   static create(componentType, data = {}, opts: PopoverOptions = {}) {
+     return new Popover(componentType, data, opts);
    }
 
  }
@@ -64,30 +67,29 @@ export class Popover extends ViewController {
 @Component({
   selector: 'ion-popover',
   template:
-    '<div disable-activated class="backdrop" (click)="bdClick()" [class.hide-backdrop]="!d.showBackdrop" role="presentation"></div>' +
+    '<div disable-activated class="backdrop" (click)="bdClick()" [class.hide-backdrop]="!d.showBackdrop"></div>' +
     '<div class="popover-arrow"></div>' +
     '<div class="popover-wrapper">' +
-      '<div *ngIf="d.template" [innerHTML]="d.template" class="popover-template"></div>' +
-    '</div>',
-  host: {
-    'role': 'dialog'
-  },
-  encapsulation: ViewEncapsulation.None,
+      '<div #viewport></div>' +
+    '</div>'
 })
 class PopoverCmp {
+  @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
+
   private d: any;
   private id: number;
   private created: number;
   private showSpinner: boolean;
 
-  constructor(
-    private _viewCtrl: ViewController,
-    private _config: Config,
+  constructor(private _loader: DynamicComponentLoader,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
-    params: NavParams
+    private _config: Config,
+    private _navParams: NavParams,
+    private _viewCtrl: ViewController,
+    private _platform: Platform
   ) {
-    this.d = params.data;
+    this.d = _navParams.data.opts;
     this.created = Date.now();
 
     if (this.d.cssClass) {
@@ -97,9 +99,18 @@ class PopoverCmp {
     this.id = (++popoverIds);
   }
 
+  onPageWillEnter() {
+    this._loader.loadNextToLocation(this._navParams.data.componentType, this.viewport).then(componentRef => {
+      this._viewCtrl.setInstance(componentRef.instance);
+
+      // manually fire onPageWillEnter() since ModalCmp's  onPageWillEnter already happened
+      this._viewCtrl.willEnter();
+    });
+  }
+
   ngOnInit() {
-    if (this.d.element && this.d.event) {
-      this.positionView(this.d.element, this.d.event);
+    if (this.d.event) {
+      this.positionView(this.d.event);
     }
   }
 
@@ -110,71 +121,64 @@ class PopoverCmp {
     }
   }
 
-  positionView(targetEle, ev) {
-    let popoverEle = this._elementRef.nativeElement;
-    let popoverWrapperEle = popoverEle.querySelector('.popover-wrapper');
+  positionView(ev) {
+    let nativeEle = this._elementRef.nativeElement;
 
-    // Popover width and height
-    let popoverWidth = popoverWrapperEle.offsetWidth;
-    let popoverHeight = popoverWrapperEle.offsetHeight;
+    // Popover wrapper width and height
+    let popoverEle = nativeEle.querySelector('.popover-wrapper');
+    let popoverDim = popoverEle.getBoundingClientRect();
+    let popoverWidth = popoverDim.width;
+    let popoverHeight = popoverDim.height;
 
     // Window body width and height
-    let bodyWidth = window.innerWidth;
-    let bodyHeight = window.innerHeight;
+    let bodyWidth = this._platform.width();
+    let bodyHeight = this._platform.height();
 
-    // Clicked element width and height
-    targetEle = targetEle._elementRef.nativeElement;
-    let targetWidth = targetEle.offsetWidth;
-    let targetHeight = targetEle.offsetHeight;
-
-    // console.log("Popover Wrapper Element", popoverWrapperEle);
-    // console.log("Popover Wrapper Width & Height", popoverWidth, popoverHeight);
-    // console.log("Body Width & Height", bodyWidth, bodyHeight);
-    // console.log("Target", targetEle);
-    // console.log("Target Width & Height", targetWidth, targetHeight);
-
-    let popoverCSS = {
-      top: ev.clientY + targetHeight - (popoverHeight / 2),
-      left: ev.clientX - popoverWidth / 2
-    };
+    // Target element width and height
+    let targetDim = ev.target.getBoundingClientRect();
+    let targetTop = targetDim.top;
+    let targetLeft = targetDim.left;
+    let targetWidth = targetDim.width;
+    let targetHeight = targetDim.height;
 
     // The arrow that shows above the popover on iOS
-    var arrowEle = popoverEle.querySelector('.popover-arrow');
-    var arrowWidth = arrowEle.offsetWidth;
-    var arrowHeight = arrowEle.offsetHeight;
-
-    let arrowLeft = targetWidth + targetWidth / 2 -
-      arrowEle.offsetWidth / 2 - popoverCSS.left;
+    var arrowEle = nativeEle.querySelector('.popover-arrow');
+    let arrowDim = arrowEle.getBoundingClientRect();
+    var arrowWidth = arrowDim.width;
+    var arrowHeight = arrowDim.height;
 
     let arrowCSS = {
-      top: ev.clientY + targetHeight - (popoverHeight / 2) - arrowHeight,
-      left: ev.clientX - (arrowWidth / 2)
+      top: targetTop + targetHeight,
+      left: targetLeft + (targetWidth / 2) - (arrowWidth / 2)
     }
+
+    let popoverCSS = {
+      top: targetTop + targetHeight + (arrowHeight - 1),
+      left: targetLeft + (targetWidth / 2) - (popoverWidth / 2)
+    };
 
     // If the popover left is less than the padding it is off screen
     // to the left so adjust it, else if the width of the popover
     // exceeds the body width it is off screen to the right so adjust
     if (popoverCSS.left < POPOVER_BODY_PADDING) {
       popoverCSS.left = POPOVER_BODY_PADDING;
-      arrowCSS.left = (POPOVER_BODY_PADDING * 2);
     } else if (popoverWidth + POPOVER_BODY_PADDING + popoverCSS.left > bodyWidth) {
       popoverCSS.left = bodyWidth - popoverWidth - POPOVER_BODY_PADDING;
-      arrowCSS.left = bodyWidth - (POPOVER_BODY_PADDING * 2) - arrowWidth;
     }
 
     // If the popover when popped down stretches past bottom of screen,
     // make it pop up if there's room above
-    if (popoverCSS.top + POPOVER_BODY_PADDING + popoverHeight > bodyHeight &&
-        popoverCSS.top - popoverHeight > 0) {
-        popoverCSS.top = popoverCSS.top - targetHeight - popoverHeight;
-        this._renderer.setElementClass(this._elementRef.nativeElement, 'popover-bottom', true);
+    if (popoverCSS.top + POPOVER_BODY_PADDING + popoverHeight > bodyHeight && popoverCSS.top - popoverHeight > 0) {
+      arrowCSS.top = targetTop - (arrowHeight + 1);
+      popoverCSS.top = targetTop - popoverHeight - (arrowHeight - 1);
+      this._renderer.setElementClass(this._elementRef.nativeElement, 'popover-bottom', true);
     }
 
     this._renderer.setElementStyle(arrowEle, 'top', arrowCSS.top + 'px');
     this._renderer.setElementStyle(arrowEle, 'left', arrowCSS.left + 'px');
 
-    this._renderer.setElementStyle(popoverWrapperEle, 'top', popoverCSS.top + 'px');
-    this._renderer.setElementStyle(popoverWrapperEle, 'left', popoverCSS.left + 'px');
+    this._renderer.setElementStyle(popoverEle, 'top', popoverCSS.top + 'px');
+    this._renderer.setElementStyle(popoverEle, 'left', popoverCSS.left + 'px');
   }
 
   dismiss(role): Promise<any> {
@@ -194,8 +198,6 @@ class PopoverCmp {
 }
 
 export interface PopoverOptions {
-  template?: string;
-  element?: any;
   event?: any;
   cssClass?: string;
   showBackdrop?: boolean;
@@ -208,6 +210,8 @@ export interface PopoverOptions {
 class PopoverPopIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(opts);
+
+    console.log(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));

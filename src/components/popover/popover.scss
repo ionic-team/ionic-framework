@@ -3,8 +3,8 @@
 // Popover
 // --------------------------------------------------
 
-$popover-min-width:                 150px !default;
-$popover-max-height:                90% !default;
+$popover-width:                 200px !default;
+$popover-height:                250px !default;
 
 
 ion-popover {
@@ -29,10 +29,20 @@ ion-popover {
 
   flex-direction: column;
 
-  min-width: $popover-min-width;
-  max-height: $popover-max-height;
+  width: $popover-width;
+  height: $popover-height;
+
+  min-width: $popover-width;
+  max-height: $popover-height;
+
+  overflow: hidden;
 
   opacity: 0;
+
+  ion-page {
+    display: flex;
+    overflow: auto;
+  }
 }
 
 
