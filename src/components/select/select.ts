@@ -176,6 +176,12 @@ export class Select {
   @Input() interface: string = '';
 
   /**
+   * @input {string} The name of the object property that should be used to determine which option is selected
+   * This is only used when the options are objects
+   */
+  @Input() trackBy: string = '';
+
+  /**
    * @output {any} Any expression you want to evaluate when the selection has changed.
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
@@ -366,10 +372,19 @@ export class Select {
 
     if (this._options) {
       this._options.forEach(option => {
-        // check this option if the option's value is in the values array
-        option.checked = this._values.some(selectValue => {
-          return isCheckedProperty(selectValue, option.value);
-        });
+        if (this.trackBy) {
+          // If a trackBy property was provided, then assume the values are objects.
+          // check this option if the trackBy property of the option is the same as model
+          option.checked = this._values.some(selectValue => {
+            return isCheckedProperty(selectValue[this.trackBy], option.value[this.trackBy]);
+          });
+        }
+        else {
+          // check this option if the option's value is in the values array
+          option.checked = this._values.some(selectValue => {
+            return isCheckedProperty(selectValue, option.value);
+          });
+        }
 
         if (option.checked) {
           this._texts.push(option.text);
