@@ -22,16 +22,17 @@ class PopoverPage {
   templateUrl: 'main.html'
 })
 class E2EPage {
+  popover: any;
+
   constructor(private nav: NavController) {}
 
+  createPopover() {
+    this.popover = Popover.create(PopoverPage);
+  }
+
   presentPopover(ev) {
-    let popover = Popover.create(PopoverPage, {}, {
-      event: ev
-    });
-
-    this.nav.present(popover);
-
-    this.nav.present(popover, {
+    this.createPopover();
+    this.nav.present(this.popover, {
       ev: ev
     });
   }
