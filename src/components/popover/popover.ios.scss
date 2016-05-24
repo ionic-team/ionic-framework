@@ -11,6 +11,7 @@ $popover-ios-border-radius:             10px !default;
 $popover-ios-text-color:                #000 !default;
 
 $popover-ios-background:                #f3f3f3 !default;
+$popover-ios-item-background:           $popover-ios-background !default;
 $popover-ios-arrow-background:          $popover-ios-background !default;
 
 
@@ -23,6 +24,10 @@ $popover-ios-arrow-background:          $popover-ios-background !default;
   border-radius: $popover-ios-border-radius;
   color: $popover-ios-text-color;
   background: $popover-ios-background;
+}
+
+.popover-wrapper .item {
+  background-color: $popover-ios-item-background;
 }
 
 

@@ -4,12 +4,14 @@
 // Windows Popover
 // --------------------------------------------------
 
-$popover-wp-min-width:                 150px !default;
+$popover-wp-min-width:                 200px !default;
 $popover-wp-max-width:                 270px !default;
 $popover-wp-max-height:                90% !default;
 $popover-wp-border-radius:             2px !default;
 $popover-wp-text-color:                #000 !default;
-$popover-wp-background:                #fff !default;
+
+$popover-wp-background:                #e6e6e6 !default;
+$popover-wp-item-background:           $popover-wp-background !default;
 
 
 .popover-wrapper {
@@ -21,4 +23,8 @@ $popover-wp-background:                #fff !default;
   border-radius: $popover-wp-border-radius;
   color: $popover-wp-text-color;
   background: $popover-wp-background;
+}
+
+.popover-wrapper .item {
+  background-color: $popover-wp-item-background;
 }
