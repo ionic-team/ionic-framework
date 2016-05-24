@@ -1,5 +1,5 @@
 import {ViewChild, ElementRef} from '@angular/core';
-import {App, Page, Popover, NavController, Content, NavParams} from '../../../../../src';
+import {App, Page, Popover, NavController, Content, NavParams} from 'ionic-angular';
 
 
 @Page({
@@ -134,37 +134,14 @@ class PopoverRadioPage {
 
 
 @Page({
-  template: `
-    <ion-list>
-      <ion-list-header>Ionic</ion-list-header>
-      <button ion-item>Learn Ionic</button>
-      <button ion-item>Documentation</button>
-      <button ion-item>Showcase</button>
-      <button ion-item>GitHub Repo</button>
-    </ion-list>
-  `
-})
-class PopoverListPage {
-
-}
-
-
-@Page({
   templateUrl: 'main.html'
 })
-class E2EPage {
+class PopoverPage {
   @ViewChild('popoverContent', {read: ElementRef}) content: ElementRef;
   @ViewChild('popoverText', {read: ElementRef}) text: ElementRef;
 
   constructor(private nav: NavController) {
 
-  }
-
-  presentListPopover(ev) {
-    let popover = Popover.create(PopoverListPage);
-    this.nav.present(popover, {
-      ev: ev
-    });
   }
 
   presentRadioPopover(ev) {
@@ -184,8 +161,8 @@ class E2EPage {
 @App({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-class E2EApp {
-  root = E2EPage;
+class ApiDemoApp {
+  root = PopoverPage;
 }
 
 document.body.innerHTML += '<link href="style.css" rel="stylesheet">'

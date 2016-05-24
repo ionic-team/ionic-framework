@@ -15,6 +15,9 @@ const POPOVER_BODY_PADDING = 2;
  * @name Popover
  * @description
  *
+ *
+ *
+ * @demo /docs/v2/demos/popover/
  */
 export class Popover extends ViewController {
 

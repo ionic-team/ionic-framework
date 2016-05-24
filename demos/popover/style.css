@@ -68,19 +68,19 @@ ion-col {
 }
 
 .dot-white {
-  background-color: rgb(255,255,255);
+  background-color: #fff;
 }
 
 .dot-tan {
-  background-color: rgb(249,241,228);
+  background-color: #f9f1e4;
 }
 
 .dot-grey {
-  background-color: rgb(76,75,80);
+  background-color: #4c4b50;
 }
 
 .dot-black {
-  background-color: rgb(0,0,0);
+  background-color: #000;
 }
 
 .dot.selected {
