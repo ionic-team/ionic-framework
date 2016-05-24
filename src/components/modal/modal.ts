@@ -213,12 +213,12 @@ class ModalSlideOut extends Transition {
     let backdrop = new Animation(ele.querySelector('.backdrop'));
     backdrop.fromTo('opacity', 0.4, 0.0);
     let wrapperEle = <HTMLElement> ele.querySelector('.modal-wrapper');
-    var wrapperEleRect = wrapperEle.getBoundingClientRect();
+    let wrapperEleRect = wrapperEle.getBoundingClientRect();
     let wrapper = new Animation(wrapperEle);
 
     // height of the screen - top of the container tells us how much to scoot it down
     // so it's off-screen
-    var screenDimensions = windowDimensions();
+    let screenDimensions = windowDimensions();
     wrapper.fromTo('translateY', '0px', `${screenDimensions.height - wrapperEleRect.top}px`);
 
     this
