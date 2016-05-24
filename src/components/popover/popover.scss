@@ -27,15 +27,15 @@ ion-popover {
   z-index: $z-index-overlay-wrapper;
   display: flex;
 
+  overflow: hidden;
+
   flex-direction: column;
 
   width: $popover-width;
-  height: $popover-height;
-
   min-width: $popover-width;
-  max-height: $popover-height;
 
-  overflow: hidden;
+  height: $popover-height;
+  max-height: $popover-height;
 
   opacity: 0;
 

@@ -5,7 +5,7 @@ import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {NavParams} from '../nav/nav-params';
-import {Platform} from '../../platform/platform'
+import {Platform} from '../../platform/platform';
 import {isPresent, isUndefined, isDefined} from '../../util/util';
 import {ViewController} from '../nav/view-controller';
 
@@ -173,7 +173,7 @@ class PopoverTransition extends Transition {
     let arrowCSS = {
       top: targetTop + targetHeight,
       left: targetLeft + (targetWidth / 2) - (arrowWidth / 2)
-    }
+    };
 
     let popoverCSS = {
       top: targetTop + targetHeight + (arrowHeight - 1),
