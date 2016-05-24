@@ -65,22 +65,23 @@ ion-col {
   width: 30px;
   border-radius: 50%;
   margin: 10px auto;
+  position: relative;
 }
 
 .dot-white {
-  background-color: #fff;
+  background-color: rgb(255,255,255);
 }
 
 .dot-tan {
-  background-color: #f9f1e4;
+  background-color: rgb(249,241,228);
 }
 
 .dot-grey {
-  background-color: #4c4b50;
+  background-color: rgb(76,75,80);
 }
 
 .dot-black {
-  background-color: #000;
+  background-color: rgb(0,0,0);
 }
 
 .dot.selected {

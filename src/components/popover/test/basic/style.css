@@ -65,6 +65,7 @@ ion-col {
   width: 30px;
   border-radius: 50%;
   margin: 10px auto;
+  position: relative;
 }
 
 .dot-white {
