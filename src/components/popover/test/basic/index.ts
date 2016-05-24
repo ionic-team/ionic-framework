@@ -1,5 +1,5 @@
 import {ViewChild, ElementRef} from '@angular/core';
-import {App, Page, Popover, NavController, Content, NavParams} from '../../../../../src';
+import {App, Page, Popover, NavController, Content, NavParams, ViewController} from '../../../../../src';
 
 
 @Page({
@@ -137,15 +137,19 @@ class PopoverRadioPage {
   template: `
     <ion-list>
       <ion-list-header>Ionic</ion-list-header>
-      <button ion-item>Learn Ionic</button>
-      <button ion-item>Documentation</button>
-      <button ion-item>Showcase</button>
-      <button ion-item>GitHub Repo</button>
+      <button ion-item (click)="close()">Learn Ionic</button>
+      <button ion-item (click)="close()">Documentation</button>
+      <button ion-item (click)="close()">Showcase</button>
+      <button ion-item (click)="close()">GitHub Repo</button>
     </ion-list>
   `
 })
 class PopoverListPage {
+  constructor(private viewCtrl: ViewController) {}
 
+  close() {
+    this.viewCtrl.dismiss();
+  }
 }
 
 

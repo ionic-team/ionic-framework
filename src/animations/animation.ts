@@ -156,7 +156,7 @@ export class Animation {
         wc: ''
       };
 
-      // add the will-change property fo transforms or opacity
+      // add the will-change property for transforms or opacity
       if (fxProp.trans) {
         fxProp.wc = CSS.transform;
 

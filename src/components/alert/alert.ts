@@ -273,7 +273,7 @@ export class Alert extends ViewController {
    *  | cssClass              | `string`  | Any additional class for the alert (optional)                             |
    *  | inputs                | `array`   | An array of inputs for the alert. See input options. (optional)           |
    *  | buttons               | `array`   | An array of buttons for the alert. See buttons options. (optional)        |
-   *  | enableBackdropDismiss | `boolean` | Wheather the alert should be dismissed by tapping the backdrop (optional) |
+   *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop (optional)  |
    *
    *
    *  Input options

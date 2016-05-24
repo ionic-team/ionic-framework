@@ -52,10 +52,11 @@ export class Popover extends ViewController {
     * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
     * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
     * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
-    * | enableBackdropDismiss |`boolean`   | Wheather the popover should be dismissed by tapping the backdrop. Default true.                                  |
+    * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
     *
     *
-    * @param {object} data Any data to pass to the popover view
+    * @param {object} componentType The Popover
+    * @param {object} data Any data to pass to the Popover view
     * @param {object} opts Popover options
     */
    static create(componentType, data = {}, opts: PopoverOptions = {}) {
@@ -71,9 +72,11 @@ export class Popover extends ViewController {
   selector: 'ion-popover',
   template:
     '<div disable-activated class="backdrop" (click)="bdClick()" [class.hide-backdrop]="!d.showBackdrop"></div>' +
-    '<div class="popover-arrow"></div>' +
     '<div class="popover-wrapper">' +
-      '<div #viewport></div>' +
+      '<div class="popover-arrow"></div>' +
+      '<div class="popover-content">' +
+        '<div #viewport></div>' +
+      '</div>' +
     '</div>'
 })
 class PopoverCmp {
@@ -148,8 +151,8 @@ class PopoverTransition extends Transition {
   }
 
   positionView(nativeEle: HTMLElement, ev) {
-    // Popover wrapper width and height
-    let popoverEle = <HTMLElement>nativeEle.querySelector('.popover-wrapper');
+    // Popover content width and height
+    let popoverEle = <HTMLElement>nativeEle.querySelector('.popover-content');
     let popoverDim = popoverEle.getBoundingClientRect();
     let popoverWidth = popoverDim.width;
     let popoverHeight = popoverDim.height;
@@ -216,18 +219,16 @@ class PopoverPopIn extends PopoverTransition {
     this.positionView(ele, opts.ev);
 
     let backdrop = new Animation(ele.querySelector('.backdrop'));
-    let arrow = new Animation(ele.querySelector('.popover-arrow'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
-    arrow.fromTo('opacity', '0.01', '1');
-    wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
-    backdrop.fromTo('opacity', '0.01', '0.3');
+    wrapper.fromTo('opacity', '0.01', '1');
+    backdrop.fromTo('opacity', '0.01', '0.1');
 
     this
-      .easing('ease-in-out')
-      .duration(200)
+      .easing('ease')
+      .duration(100)
+      .before.addClass('show-page')
       .add(backdrop)
-      .add(arrow)
       .add(wrapper);
   }
 }
@@ -240,18 +241,15 @@ class PopoverPopOut extends PopoverTransition {
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
-    let arrow = new Animation(ele.querySelector('.popover-arrow'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
-    arrow.fromTo('opacity', '1', '0');
-    wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
-    backdrop.fromTo('opacity', '0.3', '0');
+    wrapper.fromTo('opacity', '1', '0');
+    backdrop.fromTo('opacity', '0.1', '0');
 
     this
-      .easing('ease-in-out')
-      .duration(200)
+      .easing('ease')
+      .duration(500)
       .add(backdrop)
-      .add(arrow)
       .add(wrapper);
   }
 }
@@ -266,19 +264,17 @@ class PopoverMdPopIn extends PopoverTransition {
     this.positionView(ele, opts.ev);
 
     let backdrop = new Animation(ele.querySelector('.backdrop'));
-    let arrow = new Animation(ele.querySelector('.popover-arrow'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
-    arrow.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
-    wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
-    backdrop.fromTo('opacity', '0.01', '0.5');
+    wrapper.fromTo('opacity', '0.01', '1');
+    backdrop.fromTo('opacity', '0', '0');
 
     this
-      .easing('ease-in-out')
-      .duration(200)
+      .easing('ease')
+      .duration(100)
+      .fadeIn()
       .add(backdrop)
-      .add(wrapper)
-      .add(arrow);
+      .add(wrapper);
   }
 }
 Transition.register('popover-md-pop-in', PopoverMdPopIn);
@@ -290,19 +286,17 @@ class PopoverMdPopOut extends PopoverTransition {
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
-    let arrow = new Animation(ele.querySelector('.popover-arrow'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
-    arrow.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
-    wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
-    backdrop.fromTo('opacity', '0.5', '0');
+    wrapper.fromTo('opacity', '1', '0');
+    backdrop.fromTo('opacity', '0', '0');
 
     this
-      .easing('ease-in-out')
-      .duration(200)
+      .easing('ease')
+      .duration(500)
+      .fadeIn()
       .add(backdrop)
-      .add(wrapper)
-      .add(arrow);
+      .add(wrapper);
   }
 }
 Transition.register('popover-md-pop-out', PopoverMdPopOut);
@@ -317,19 +311,17 @@ class PopoverWpPopIn extends PopoverTransition {
     this.positionView(ele, opts.ev);
 
     let backdrop = new Animation(ele.querySelector('.backdrop'));
-    let arrow = new Animation(ele.querySelector('.popover-arrow'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
-    arrow.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
-    wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
+    wrapper.fromTo('opacity', '0.01', '1');
     backdrop.fromTo('opacity', '0.01', '0.5');
 
     this
-      .easing('cubic-bezier(0,0 0.05,1)')
-      .duration(200)
+      .easing('ease')
+      .duration(100)
+      .fadeIn()
       .add(backdrop)
-      .add(wrapper)
-      .add(arrow);
+      .add(wrapper);
   }
 }
 Transition.register('popover-wp-pop-in', PopoverWpPopIn);
@@ -341,19 +333,17 @@ class PopoverWpPopOut extends PopoverTransition {
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
-    let arrow = new Animation(ele.querySelector('.popover-arrow'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
-    arrow.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');
-    wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');
+    wrapper.fromTo('opacity', '1', '0');
     backdrop.fromTo('opacity', '0.5', '0');
 
     this
-      .easing('ease-out')
-      .duration(150)
+      .easing('ease')
+      .duration(500)
+      .fadeIn()
       .add(backdrop)
-      .add(wrapper)
-      .add(arrow);
+      .add(wrapper);
   }
 }
 Transition.register('popover-wp-pop-out', PopoverWpPopOut);

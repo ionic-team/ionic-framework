@@ -10,11 +10,11 @@ $popover-wp-max-height:                90% !default;
 $popover-wp-border-radius:             2px !default;
 $popover-wp-text-color:                #000 !default;
 
-$popover-wp-background:                #e6e6e6 !default;
+$popover-wp-background:                #f2f2f2 !default;
 $popover-wp-item-background:           $popover-wp-background !default;
 
 
-.popover-wrapper {
+.popover-content {
   min-width: $popover-wp-min-width;
   max-width: $popover-wp-max-width;
 
@@ -25,6 +25,6 @@ $popover-wp-item-background:           $popover-wp-background !default;
   background: $popover-wp-background;
 }
 
-.popover-wrapper .item {
+.popover-content .item {
   background-color: $popover-wp-item-background;
 }

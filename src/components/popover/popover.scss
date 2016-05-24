@@ -22,9 +22,14 @@ ion-popover {
 }
 
 .popover-wrapper {
-  position: absolute;
-
+  opacity: 0;
   z-index: $z-index-overlay-wrapper;
+}
+
+.popover-content {
+  position: absolute;
+  z-index: $z-index-overlay-wrapper;
+
   display: flex;
 
   overflow: hidden;
@@ -36,8 +41,6 @@ ion-popover {
 
   height: $popover-height;
   max-height: $popover-height;
-
-  opacity: 0;
 
   ion-page {
     display: flex;
