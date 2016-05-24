@@ -359,7 +359,7 @@ export class DateTime {
 
   /**
    * @input {array | string} Values used to create the list of selectable hours. By default
-   * the hour values range from `1` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
+   * the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
    * to control exactly which hours to display, the `hourValues` input can take either an
    * array of numbers, or string of comma separated numbers.
    */
