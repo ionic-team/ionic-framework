@@ -1,4 +1,4 @@
-import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type} from '@angular/core';
+import {ComponentRef, ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type} from '@angular/core';
 
 import {Config} from '../../config/config';
 import {Ion} from '../ion';
@@ -1442,54 +1442,69 @@ export class NavController extends Ion {
       // the ElementRef of the actual ion-page created
       let pageElementRef = component.location;
 
-      // a new ComponentRef has been created
-      // set the ComponentRef's instance to its ViewController
-      view.setInstance(component.instance);
-
-      // remember the ChangeDetectorRef for this ViewController
-      view.setChangeDetector(component.changeDetectorRef);
-
-      // remember the ElementRef to the ion-page elementRef that was just created
-      view.setPageRef(pageElementRef);
-
-      // auto-add page css className created from component JS class name
-      let cssClassName = pascalCaseToDashCase(view.componentType['name']);
-      this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
-
-      view.onDestroy(() => {
-        // ensure the element is cleaned up for when the view pool reuses this element
-        this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
-        this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
-        component.destroy();
-      });
-
-      if (!navbarContainerRef) {
-        // there was not a navbar container ref already provided
-        // so use the location of the actual navbar template
-        navbarContainerRef = view.getNavbarViewRef();
-      }
-
-      // find a navbar template if one is in the page
-      let navbarTemplateRef = view.getNavbarTemplateRef();
-
-      // check if we have both a navbar ViewContainerRef and a template
-      if (navbarContainerRef && navbarTemplateRef) {
-        // let's now create the navbar view
-        let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
-
-        view.onDestroy(() => {
-          // manually destroy the navbar when the page is destroyed
-          navbarViewRef.destroy();
+      let promise = null;
+      if ( component.instance['_ionicProjectContent'] ) {
+        component.instance['_ionicProjectContent']().then( () => {
+          this._loadPageCont(view, navbarContainerRef, opts, component, pageElementRef, done);
         });
       }
-
-      // options may have had a postLoad method
-      // used mainly by tabs
-      opts.postLoad && opts.postLoad(view);
-
-      // our job is done here
-      done(view);
+      else {
+        this._loadPageCont(view, navbarContainerRef, opts, component, pageElementRef, done);
+      }
     });
+  }
+
+  /**
+   * @private
+   */
+  private _loadPageCont(view: ViewController, navbarContainerRef: ViewContainerRef, opts: NavOptions, component: any, pageElementRef: ElementRef, done: Function) {
+    // a new ComponentRef has been created
+    // set the ComponentRef's instance to its ViewController
+    view.setInstance(component.instance);
+
+    // remember the ChangeDetectorRef for this ViewController
+    view.setChangeDetector(component.changeDetectorRef);
+
+    // remember the ElementRef to the ion-page elementRef that was just created
+    view.setPageRef(pageElementRef);
+
+    // auto-add page css className created from component JS class name
+    let cssClassName = pascalCaseToDashCase(view.componentType['name']);
+    this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
+
+    view.onDestroy(() => {
+      // ensure the element is cleaned up for when the view pool reuses this element
+      this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
+      this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
+      component.destroy();
+    });
+
+    if (!navbarContainerRef) {
+      // there was not a navbar container ref already provided
+      // so use the location of the actual navbar template
+      navbarContainerRef = view.getNavbarViewRef();
+    }
+
+    // find a navbar template if one is in the page
+    let navbarTemplateRef = view.getNavbarTemplateRef();
+
+    // check if we have both a navbar ViewContainerRef and a template
+    if (navbarContainerRef && navbarTemplateRef) {
+      // let's now create the navbar view
+      let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
+
+      view.onDestroy(() => {
+        // manually destroy the navbar when the page is destroyed
+        navbarViewRef.destroy();
+      });
+    }
+
+    // options may have had a postLoad method
+    // used mainly by tabs
+    opts.postLoad && opts.postLoad(view);
+
+    // our job is done here
+    done(view);
   }
 
   /**

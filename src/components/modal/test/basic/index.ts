@@ -8,7 +8,7 @@ class E2EPage {
   platforms;
 
   constructor(private nav: NavController, config: Config, platform: Platform) {
-    console.log('platforms', platform.platforms());
+    /*console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
     console.log('isRTL', platform.isRTL());
@@ -23,6 +23,7 @@ class E2EPage {
     console.log('ios', platform.is('ios'));
     console.log('android', platform.is('android'));
     console.log('windows phone', platform.is('windows'));
+    */
 
     platform.ready().then((readySource) => {
       console.log('platform.ready, readySource:', readySource);
@@ -43,6 +44,7 @@ class E2EPage {
   presentModalChildNav() {
     let modal = Modal.create(ContactUs);
     this.nav.present(modal);
+    //this.nav.push(ContactUs);
   }
 
   presentToolbarModal() {
@@ -68,7 +70,52 @@ class E2EPage {
       animation: 'my-fade-in'
     });
   }
+
+  presentNavigableModal(){
+    let modal = Modal.create(NavigableModal);
+    this.nav.present(modal);
+    //this.nav.push(NavigableModal);
+  }
 }
+
+@Page({
+  template: `
+  <ion-navbar *navbar>
+    <ion-title>Page One</ion-title>
+  </ion-navbar>
+  <ion-content>
+    <button full (click)="submit()">Submit</button>
+  </ion-content>
+  `
+})
+class NavigableModal{
+  constructor(private navController:NavController){
+  }
+
+  submit(){
+    this.navController.push(NavigableModal2);
+  }
+}
+
+@Page({
+  template: `
+  <ion-navbar *navbar>
+    <ion-title>Page Two</ion-title>
+  </ion-navbar>
+  <ion-content>
+    <button full (click)="submit()">Submit</button>
+  </ion-content>
+  `
+})
+class NavigableModal2{
+  constructor(private navController:NavController){
+  }
+
+  submit(){
+    this.navController.pop();
+  }
+}
+
 
 
 @Page({
@@ -280,9 +327,9 @@ class ModalFirstPage {
   push() {
     let page = ModalSecondPage;
     let params = { id: 8675309, myData: [1,2,3,4] };
-    let opts = { animation: 'ios-transition' };
+    //let opts = { animation: 'ios-transition' };
 
-    this.nav.push(page, params, opts);
+    this.nav.push(page, params);
   }
 
   dismiss() {
@@ -352,11 +399,20 @@ class ModalFirstPage {
   `
 })
 class ModalSecondPage {
-  constructor(
-    private nav: NavController,
-    params: NavParams
-  ) {
+  constructor(private nav: NavController, params: NavParams) {
     console.log('Second page params:', params);
+  }
+
+  onPageLoaded(){
+    console.log("ModalSecondPage onPageLoaded");
+  }
+
+  onPageWillEnter(){
+    console.log("ModalSecondPage onPageWillEnter");
+  }
+
+  onPageDidEnter(){
+    console.log("ModalSecondPage onPageDidEnter");
   }
 }
 

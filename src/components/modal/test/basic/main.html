@@ -3,9 +3,12 @@
   <ion-title>Modals</ion-title>
 </ion-navbar>
 
-<ion-content padding>
+<ion-content padding style="background-color: green;">
   <p>
     <button (click)="presentModal()">Present modal, pass params</button>
+  </p>
+  <p>
+    <button class="e2eOpenModal" (click)="presentNavigableModal()">Present modal, push page</button>
   </p>
   <p>
     <button class="e2eOpenModal" (click)="presentModalChildNav()">Present modal w/ child ion-nav</button>
