@@ -902,12 +902,16 @@ export class Slide {
 
   constructor(
     elementRef: ElementRef,
-    @Host() slides: Slides
+    @Host() private slides: Slides
   ) {
     this.ele = elementRef.nativeElement;
     this.ele.classList.add('swiper-slide');
 
     slides.rapidUpdate();
+  }
+
+  ngOnDestroy() {
+    this.slides.rapidUpdate();
   }
 }
 
