@@ -29,7 +29,7 @@
    -iOS 6.1 Cordova no viewport height, keyboard is over webview
    -iOS 6.1 Safari no viewport height, keyboard is over webview
 
-  http://cordova.apache.org/docs/en/3.3.0/guide_platforms_ios_upgrading.md.html#Upgrading%20iOS
+  http://cordova.apache.org/docs/en/latest/guide/platforms/ios/upgrade.html
   https://issues.apache.org/jira/browse/CB-4323
 
 */
