@@ -32,7 +32,7 @@ const POPOVER_BODY_PADDING = 2;
  * The first argument passed to the `present` should be the popover. In order
  * to position the popover relative to the element clicked, the event needs to be
  * passed as the second argument. If the event is not passed, the popover will be
- * positioned at the top of the current view. See the [usage](#usage) section for
+ * positioned in the center of the current view. See the [usage](#usage) section for
  * an example of passing this event.
  *
  * ### Dismissing
@@ -250,7 +250,7 @@ class PopoverTransition extends Transition {
     let bodyWidth = window.innerWidth;
     let bodyHeight = window.innerHeight;
 
-    let targetTop = POPOVER_BODY_PADDING;
+    let targetTop = (bodyHeight / 2) - (popoverHeight / 2);
     let targetLeft = bodyWidth / 2;
     let targetWidth = 0;
     let targetHeight = 0;
