@@ -72,7 +72,7 @@ export class Popover extends ViewController {
 @Component({
   selector: 'ion-popover',
   template:
-    '<div disable-activated class="backdrop" (click)="bdClick()" [class.hide-backdrop]="!d.showBackdrop"></div>' +
+    '<div class="backdrop" (touchmove)="bdTouch($event)" (click)="bdClick($event)" [class.hide-backdrop]="!d.showBackdrop" disable-activated tappable role="presentation"></div>' +
     '<div class="popover-wrapper">' +
       '<div class="popover-arrow"></div>' +
       '<div class="popover-content">' +
@@ -123,6 +123,11 @@ class PopoverCmp {
 
   dismiss(role): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
+  }
+
+  bdTouch(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
   }
 
   bdClick() {
@@ -269,7 +274,6 @@ class PopoverMdPopIn extends PopoverTransition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    this.positionView(ele, opts.ev);
 
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
@@ -317,7 +321,6 @@ class PopoverWpPopIn extends PopoverTransition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    this.positionView(ele, opts.ev);
 
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
