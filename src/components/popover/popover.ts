@@ -15,7 +15,89 @@ const POPOVER_BODY_PADDING = 2;
 /**
  * @name Popover
  * @description
+ * A Popover is a dialog that appears on top of the current page.
+ * It can be used for anything, but generally it is used for overflow
+ * actions that don't fit in the navigation bar.
  *
+ * ### Creating
+ * A popover can be created by calling the `create` method. The view
+ * to display in the popover should be passed as the first argument.
+ * Any data to pass to the popover view can optionally be passed in
+ * the second argument. Options for the popover can optionally be
+ * passed in the third argument. See the [create](#create) method
+ * below for all available options.
+ *
+ * ### Presenting
+ * To present a popover, call the `present` method on the [NavController](../../nav/NavController).
+ * The first argument passed to the `present` should be the popover. In order
+ * to position the popover relative to the element clicked, the event needs to be
+ * passed as the second argument. If the event is not passed, the popover will be
+ * positioned at the top of the current view. See the [usage](#usage) section for
+ * an example of passing this event.
+ *
+ * ### Dismissing
+ * To dismiss the popover after creation, call the `dismiss()` method on the
+ * `Popover` instance. The popover can also be dismissed from within the popover's
+ * view by calling the `dismiss()` method on the [ViewController](../../nav/ViewController).
+ * The `onDismiss` function can be called to perform an action after the popover
+ * is dismissed. The popover will dismiss when the backdrop is clicked, but this
+ * can be disabled by setting `enableBackdropDismiss` to `false` in the popover
+ * options.
+ *
+ * > Note that after the component is dismissed, it will not be usable anymore and
+ * another one must be created. This can be avoided by wrapping the creation and
+ * presentation of the component in a reusable function as shown in the [usage](#usage)
+ * section below.
+ *
+ * @usage
+ *
+ * To open a popover on the click of a button, pass `$event` to the method
+ * which creates and presents the popover:
+ *
+ * ```html
+ * <button (click)="presentPopover($event)">
+ *   <ion-icon name="more"></ion-icon>
+ * </button>
+ * ```
+ *
+ * ```js
+ * @Page({})
+ * class MyPage {
+ *   constructor(private nav: NavController) {}
+ *
+ *   presentPopover(myEvent) {
+ *     let popover = Popover.create(PopoverPage);
+ *     this.nav.present(popover, {
+ *       ev: myEvent
+ *     });
+ *   }
+ * }
+ * ```
+ *
+ * The `PopoverPage` will display inside of the popover, and
+ * can be anything. Below is an example of a page with items
+ * that close the popover on click.
+ *
+ * ```js
+ * @Page({
+ *   template: `
+ *     <ion-list>
+ *       <ion-list-header>Ionic</ion-list-header>
+ *       <button ion-item (click)="close()">Learn Ionic</button>
+ *       <button ion-item (click)="close()">Documentation</button>
+ *       <button ion-item (click)="close()">Showcase</button>
+ *       <button ion-item (click)="close()">GitHub Repo</button>
+ *     </ion-list>
+ *   `
+ * })
+ * class PopoverPage {
+ *   constructor(private viewCtrl: ViewController) {}
+ *
+ *   close() {
+ *     this.viewCtrl.dismiss();
+ *   }
+ * }
+ * ```
  *
  *
  * @demo /docs/v2/demos/popover/
@@ -168,12 +250,19 @@ class PopoverTransition extends Transition {
     let bodyWidth = window.innerWidth;
     let bodyHeight = window.innerHeight;
 
-    // Target element width and height
-    let targetDim = ev.target.getBoundingClientRect();
-    let targetTop = targetDim.top;
-    let targetLeft = targetDim.left;
-    let targetWidth = targetDim.width;
-    let targetHeight = targetDim.height;
+    let targetTop = POPOVER_BODY_PADDING;
+    let targetLeft = bodyWidth / 2;
+    let targetWidth = 0;
+    let targetHeight = 0;
+
+    // If ev was passed, use that for target element
+    if (ev && ev.target) {
+      let targetDim = ev.target.getBoundingClientRect();
+      targetTop = targetDim.top;
+      targetLeft = targetDim.left;
+      targetWidth = targetDim.width;
+      targetHeight = targetDim.height;
+    }
 
     // The arrow that shows above the popover on iOS
     var arrowEle = <HTMLElement>nativeEle.querySelector('.popover-arrow');

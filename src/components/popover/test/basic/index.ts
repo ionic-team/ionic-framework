@@ -210,6 +210,11 @@ class E2EPage {
     });
   }
 
+  presentNoEventPopover() {
+    let popover = Popover.create(PopoverListPage);
+    this.nav.present(popover);
+  }
+
 }
 
 
