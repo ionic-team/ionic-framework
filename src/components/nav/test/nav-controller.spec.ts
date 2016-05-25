@@ -1234,10 +1234,8 @@ export function run() {
         nav.present(enteringView).then( () => {
           // assert
           expect(componentToPresentSpy._ionicProjectContent).toHaveBeenCalled();
-          console.log("W0000000000000000t");
           done();
         }).catch(function(err){
-          console.log("ERROR ERROR ERROR: ", err.message);
           done(err);
         });
       }, 10000);

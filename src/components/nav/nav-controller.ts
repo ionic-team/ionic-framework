@@ -1445,10 +1445,15 @@ export class NavController extends Ion {
       let promise = null;
       if ( component.instance['_ionicProjectContent'] ) {
         component.instance['_ionicProjectContent']().then( () => {
+          // don't bother setting the view controllers component - the content projection
+          // step will take care of that
           this._loadPageCont(view, navbarContainerRef, opts, component, pageElementRef, done);
         });
       }
       else {
+        // a new ComponentRef has been created
+        // set the ComponentRef's instance to its ViewController
+        view.setInstance(component.instance);
         this._loadPageCont(view, navbarContainerRef, opts, component, pageElementRef, done);
       }
     });
@@ -1458,10 +1463,6 @@ export class NavController extends Ion {
    * @private
    */
   private _loadPageCont(view: ViewController, navbarContainerRef: ViewContainerRef, opts: NavOptions, component: any, pageElementRef: ElementRef, done: Function) {
-    // a new ComponentRef has been created
-    // set the ComponentRef's instance to its ViewController
-    view.setInstance(component.instance);
-
     // remember the ChangeDetectorRef for this ViewController
     view.setChangeDetector(component.changeDetectorRef);
 

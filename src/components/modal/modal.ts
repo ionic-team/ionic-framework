@@ -144,7 +144,7 @@ export class Modal extends ViewController {
       '<div #viewport></div>' +
     '</div>'
 })
-class ModalCmp {
+export class ModalCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 

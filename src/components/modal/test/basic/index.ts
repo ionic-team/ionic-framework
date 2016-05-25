@@ -152,6 +152,10 @@ class ModalPassData {
     this.viewCtrl.dismiss(this.data);
   }
 
+  onPageLoaded(){
+    console.log("ModalPassData onPageLoaded fired");
+  }
+
   onPageWillEnter(){
     console.log("ModalPassData onPagewillEnter fired");
   }
@@ -334,6 +338,18 @@ class ModalFirstPage {
 
   dismiss() {
     this.nav.rootNav.pop();
+  }
+
+  onPageLoaded(){
+    console.log("ModalFirstPage OnPageLoaded fired");
+  }
+
+  onPageWillEnter(){
+    console.log("ModalFirstPage onPageWillEnter fired");
+  }
+
+  onPageDidEnter(){
+    console.log("ModalFirstPage onPageDidEnter fired");
   }
 
   openActionSheet() {
