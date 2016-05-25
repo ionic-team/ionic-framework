@@ -54,6 +54,10 @@ ion-col {
   border: 1px solid #dedede;
 }
 
+.wp .dot {
+  border: 2px solid #ccc;
+}
+
 .hairlines .text-smaller,
 .hairlines .row-dots,
 .hairlines .dot {

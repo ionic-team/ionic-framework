@@ -7,6 +7,7 @@ import {Config} from '../../config/config';
 import {NavParams} from '../nav/nav-params';
 import {Platform} from '../../platform/platform';
 import {isPresent, isUndefined, isDefined} from '../../util/util';
+import {nativeRaf} from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
 
 const POPOVER_BODY_PADDING = 2;
@@ -108,7 +109,7 @@ class PopoverCmp {
     this._loader.loadNextToLocation(this._navParams.data.componentType, this.viewport).then(componentRef => {
       this._viewCtrl.setInstance(componentRef.instance);
 
-      // manually fire onPageWillEnter() since ModalCmp's  onPageWillEnter already happened
+      // manually fire onPageWillEnter() since PopoverCmp's onPageWillEnter already happened
       this._viewCtrl.willEnter();
     });
   }
@@ -150,6 +151,7 @@ class PopoverTransition extends Transition {
     super(opts);
   }
 
+
   positionView(nativeEle: HTMLElement, ev) {
     // Popover content width and height
     let popoverEle = <HTMLElement>nativeEle.querySelector('.popover-content');
@@ -158,8 +160,6 @@ class PopoverTransition extends Transition {
     let popoverHeight = popoverDim.height;
 
     // Window body width and height
-    // let bodyWidth = this._platform.width();
-    // let bodyHeight = this._platform.height();
     let bodyWidth = window.innerWidth;
     let bodyHeight = window.innerHeight;
 
@@ -197,10 +197,13 @@ class PopoverTransition extends Transition {
 
     // If the popover when popped down stretches past bottom of screen,
     // make it pop up if there's room above
-    if (popoverCSS.top + POPOVER_BODY_PADDING + popoverHeight > bodyHeight && popoverCSS.top - popoverHeight > 0) {
+    if (targetTop + targetHeight + popoverHeight > bodyHeight && targetTop - popoverHeight > 0) {
       arrowCSS.top = targetTop - (arrowHeight + 1);
       popoverCSS.top = targetTop - popoverHeight - (arrowHeight - 1);
       nativeEle.className = nativeEle.className + ' popover-bottom';
+    // If there isn't room for it to pop up above the target cut it off
+    } else if (targetTop + targetHeight + popoverHeight > bodyHeight) {
+      popoverEle.style.bottom = POPOVER_BODY_PADDING + '%';
     }
 
     arrowEle.style.top = arrowCSS.top + 'px';
@@ -212,31 +215,36 @@ class PopoverTransition extends Transition {
 }
 
 class PopoverPopIn extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+  constructor(private enteringView: ViewController, private leavingView: ViewController, private opts: TransitionOptions) {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    this.positionView(ele, opts.ev);
 
     let backdrop = new Animation(ele.querySelector('.backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1');
-    backdrop.fromTo('opacity', '0.01', '0.1');
+    backdrop.fromTo('opacity', '0.01', '0.08');
 
     this
       .easing('ease')
       .duration(100)
-      .before.addClass('show-page')
       .add(backdrop)
       .add(wrapper);
+  }
+
+  play() {
+    nativeRaf(() => {
+      this.positionView(this.enteringView.pageRef().nativeElement, this.opts.ev);
+      super.play();
+    });
   }
 }
 Transition.register('popover-pop-in', PopoverPopIn);
 
 
 class PopoverPopOut extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+  constructor(private enteringView: ViewController, private leavingView: ViewController, private opts: TransitionOptions) {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
@@ -244,7 +252,7 @@ class PopoverPopOut extends PopoverTransition {
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0');
-    backdrop.fromTo('opacity', '0.1', '0');
+    backdrop.fromTo('opacity', '0.08', '0');
 
     this
       .easing('ease')
@@ -257,45 +265,46 @@ Transition.register('popover-pop-out', PopoverPopOut);
 
 
 class PopoverMdPopIn extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+  constructor(private enteringView: ViewController, private leavingView: ViewController, private opts: TransitionOptions) {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     this.positionView(ele, opts.ev);
 
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1');
-    backdrop.fromTo('opacity', '0', '0');
 
     this
       .easing('ease')
       .duration(100)
       .fadeIn()
-      .add(backdrop)
       .add(wrapper);
+  }
+
+  play() {
+    nativeRaf(() => {
+      this.positionView(this.enteringView.pageRef().nativeElement, this.opts.ev);
+      super.play();
+    });
   }
 }
 Transition.register('popover-md-pop-in', PopoverMdPopIn);
 
 
 class PopoverMdPopOut extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+  constructor(private enteringView: ViewController, private leavingView: ViewController, private opts: TransitionOptions) {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0');
-    backdrop.fromTo('opacity', '0', '0');
 
     this
       .easing('ease')
       .duration(500)
       .fadeIn()
-      .add(backdrop)
       .add(wrapper);
   }
 }
@@ -304,45 +313,46 @@ Transition.register('popover-md-pop-out', PopoverMdPopOut);
 
 
 class PopoverWpPopIn extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+  constructor(private enteringView: ViewController, private leavingView: ViewController, private opts: TransitionOptions) {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     this.positionView(ele, opts.ev);
 
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1');
-    backdrop.fromTo('opacity', '0.01', '0.5');
 
     this
       .easing('ease')
       .duration(100)
       .fadeIn()
-      .add(backdrop)
       .add(wrapper);
+  }
+
+  play() {
+    nativeRaf(() => {
+      this.positionView(this.enteringView.pageRef().nativeElement, this.opts.ev);
+      super.play();
+    });
   }
 }
 Transition.register('popover-wp-pop-in', PopoverWpPopIn);
 
 
 class PopoverWpPopOut extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+  constructor(private enteringView: ViewController, private leavingView: ViewController, private opts: TransitionOptions) {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0');
-    backdrop.fromTo('opacity', '0.5', '0');
 
     this
       .easing('ease')
       .duration(500)
       .fadeIn()
-      .add(backdrop)
       .add(wrapper);
   }
 }

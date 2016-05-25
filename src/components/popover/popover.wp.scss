@@ -1,25 +1,25 @@
 @import "../../globals.core";
-@import "./popover";
 
 // Windows Popover
 // --------------------------------------------------
 
-$popover-wp-min-width:                 200px !default;
-$popover-wp-max-width:                 270px !default;
+$popover-wp-width:                     200px !default;
 $popover-wp-max-height:                90% !default;
-$popover-wp-border-radius:             2px !default;
-$popover-wp-text-color:                #000 !default;
 
+$popover-wp-border:                    2px solid #ccc !default;
+$popover-wp-border-radius:             0 !default;
+
+$popover-wp-text-color:                #000 !default;
 $popover-wp-background:                #f2f2f2 !default;
 $popover-wp-item-background:           $popover-wp-background !default;
 
 
 .popover-content {
-  min-width: $popover-wp-min-width;
-  max-width: $popover-wp-max-width;
+  width: $popover-wp-width;
 
   max-height: $popover-wp-max-height;
 
+  border: $popover-wp-border;
   border-radius: $popover-wp-border-radius;
   color: $popover-wp-text-color;
   background: $popover-wp-background;

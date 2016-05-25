@@ -154,6 +154,27 @@ class PopoverListPage {
 
 
 @Page({
+  template: `
+    <ion-list>
+      <ion-list-header>Ionic</ion-list-header>
+      <button ion-item *ngFor="let item of items">Item {{item}}</button>
+    </ion-list>
+  `
+})
+class PopoverLongListPage {
+  items = [];
+
+  constructor(private viewCtrl: ViewController) {}
+
+  ngOnInit() {
+    for(let i = 1; i < 21; i++) {
+      this.items.push(i);
+    }
+  }
+}
+
+
+@Page({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -166,6 +187,13 @@ class E2EPage {
 
   presentListPopover(ev) {
     let popover = Popover.create(PopoverListPage);
+    this.nav.present(popover, {
+      ev: ev
+    });
+  }
+
+  presentLongListPopover(ev) {
+    let popover = Popover.create(PopoverLongListPage);
     this.nav.present(popover, {
       ev: ev
     });

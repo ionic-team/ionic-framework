@@ -3,9 +3,6 @@
 // Popover
 // --------------------------------------------------
 
-$popover-width:                 200px !default;
-$popover-height:                250px !default;
-
 
 ion-popover {
   position: absolute;
@@ -22,8 +19,9 @@ ion-popover {
 }
 
 .popover-wrapper {
-  opacity: 0;
   z-index: $z-index-overlay-wrapper;
+
+  opacity: 0;
 }
 
 .popover-content {
@@ -32,19 +30,15 @@ ion-popover {
 
   display: flex;
 
-  overflow: hidden;
+  overflow: auto;
 
   flex-direction: column;
 
-  width: $popover-width;
-  min-width: $popover-width;
-
-  height: $popover-height;
-  max-height: $popover-height;
+  min-height: 200px;
 
   ion-page {
+    position: relative;
     display: flex;
-    overflow: auto;
   }
 }
 

@@ -1,12 +1,11 @@
 @import "../../globals.core";
-@import "./popover";
 
 // iOS Popover
 // --------------------------------------------------
 
-$popover-ios-min-width:                 150px !default;
-$popover-ios-max-width:                 270px !default;
+$popover-ios-width:                     200px !default;
 $popover-ios-max-height:                90% !default;
+
 $popover-ios-border-radius:             10px !default;
 $popover-ios-text-color:                #000 !default;
 
@@ -16,8 +15,7 @@ $popover-ios-arrow-background:          $popover-ios-background !default;
 
 
 .popover-content {
-  min-width: $popover-ios-min-width;
-  max-width: $popover-ios-max-width;
+  width: $popover-ios-width;
 
   max-height: $popover-ios-max-height;
 
