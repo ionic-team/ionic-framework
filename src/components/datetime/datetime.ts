@@ -145,7 +145,7 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * and `23` means `11pm`.
  *
  * It's also important to note that neither the `displayFormat` or `pickerFormat` can
- * set the datetime value's output, which is the value that sent the the component's
+ * set the datetime value's output, which is the value that is set by the component's
  * `ngModel`. The format's are merely for displaying the value as text and the picker's
  * interface, but the datetime's value is always persisted as a valid ISO 8601 datetime
  * string.
