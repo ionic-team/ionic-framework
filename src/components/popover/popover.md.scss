@@ -19,11 +19,9 @@ $popover-md-item-background:           $popover-md-background !default;
 }
 
 .popover-content {
+  width: $popover-md-width;
   min-width: 0;
   min-height: 0;
-
-  width: $popover-md-width;
-
   max-height: $popover-md-max-height;
 
   border-radius: $popover-md-border-radius;
