@@ -22,7 +22,7 @@ import {ViewController} from '../nav/view-controller';
  * An action sheet is created from an array of `buttons`, with each button
  * including properties for its `text`, and optionally a `handler` and `role`.
  * If a handler returns `false` then the action sheet will not be dismissed. An
- * action sheet can also optionally have a `title` and a `subTitle`.
+ * action sheet can also optionally have a `title`, `subTitle` and an `icon`.
  *
  * A button's `role` property can either be `destructive` or `cancel`. Buttons
  * without a role property will have the default look for the platform. Buttons
