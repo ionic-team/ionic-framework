@@ -37,6 +37,14 @@ export class ViewController {
   private _cd: ChangeDetectorRef;
   protected _nav: NavController;
 
+  protected _didLoad$: EventEmitter<LifeCycleEvent>;
+  protected _willEnter$: EventEmitter<LifeCycleEvent>;
+  protected _didEnter$: EventEmitter<LifeCycleEvent>;
+  protected _willLeave$: EventEmitter<LifeCycleEvent>;
+  protected _didLeave$: EventEmitter<LifeCycleEvent>;
+  protected _willUnload$: EventEmitter<LifeCycleEvent>;
+  protected _didUnload$: EventEmitter<LifeCycleEvent>;
+
   /**
    * @private
    */
@@ -97,6 +105,18 @@ export class ViewController {
   constructor(public componentType?: Type, data?: any) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
+
+    this.initializeObservables();
+  }
+
+  initializeObservables() {
+    this._didLoad$ = new EventEmitter();
+    this._willEnter$ = new EventEmitter();
+    this._didEnter$ = new EventEmitter();
+    this._willLeave$ = new EventEmitter();
+    this._didLeave$ = new EventEmitter();
+    this._willUnload$ = new EventEmitter();
+    this._didUnload$ = new EventEmitter();
   }
 
   subscribe(generatorOrNext?: any): any {
@@ -119,6 +139,34 @@ export class ViewController {
       this._onDismiss && this._onDismiss(data, role);
       return data;
     });
+  }
+
+  getPageDidLoadObservable(): EventEmitter<LifeCycleEvent> {
+    return this._didLoad$;
+  }
+
+  getPageWillEnterObservable(): EventEmitter<LifeCycleEvent> {
+    return this._willEnter$;
+  }
+
+  getPageDidEnterObservable(): EventEmitter<LifeCycleEvent> {
+    return this._didEnter$;
+  }
+
+  getPageWillLeaveObservable(): EventEmitter<LifeCycleEvent> {
+    return this._willLeave$;
+  }
+
+  getPageDidLeaveObservable(): EventEmitter<LifeCycleEvent> {
+    return this._didLeave$;
+  }
+
+  getPageWillUnloadObservable(): EventEmitter<LifeCycleEvent> {
+    return this._willUnload$;
+  }
+
+  getPageDidUnloadObservable(): EventEmitter<LifeCycleEvent> {
+    return this._didUnload$;
   }
 
   /**
@@ -483,6 +531,7 @@ export class ViewController {
    */
   loaded() {
     this._loaded = true;
+    this.dispathLifeCycleEvent(this._didLoad$, this.componentType);
     ctrlFn(this, 'onPageLoaded');
   }
 
@@ -498,7 +547,7 @@ export class ViewController {
       // detect changes before we run any user code
       this._cd.detectChanges();
     }
-
+    this.dispathLifeCycleEvent(this._willEnter$, this.componentType);
     ctrlFn(this, 'onPageWillEnter');
   }
 
@@ -510,6 +559,7 @@ export class ViewController {
   didEnter() {
     let navbar = this.getNavbar();
     navbar && navbar.didEnter();
+    this.dispathLifeCycleEvent(this._didEnter$, this.componentType);
     ctrlFn(this, 'onPageDidEnter');
   }
 
@@ -518,6 +568,7 @@ export class ViewController {
    * The view has is about to leave and no longer be the active view.
    */
   willLeave() {
+    this.dispathLifeCycleEvent(this._willLeave$, this.componentType);
     ctrlFn(this, 'onPageWillLeave');
   }
 
@@ -527,6 +578,7 @@ export class ViewController {
    * will fire, whether it is cached or unloaded.
    */
   didLeave() {
+    this.dispathLifeCycleEvent(this._didLeave$, this.componentType);
     ctrlFn(this, 'onPageDidLeave');
 
     // when this is not the active page
@@ -539,6 +591,7 @@ export class ViewController {
    * The view is about to be destroyed and have its elements removed.
    */
   willUnload() {
+    this.dispathLifeCycleEvent(this._willUnload$, this.componentType);
     ctrlFn(this, 'onPageWillUnload');
   }
 
@@ -552,7 +605,17 @@ export class ViewController {
   /**
    * @private
    */
+   dispathLifeCycleEvent(eventEmitter: EventEmitter<LifeCycleEvent>, componentType) {
+     eventEmitter.emit({
+       componentType: componentType
+     });
+   }
+
+  /**
+   * @private
+   */
   destroy() {
+    this.dispathLifeCycleEvent(this._didUnload$, this.componentType);
     ctrlFn(this, 'onPageDidUnload');
 
     for (var i = 0; i < this._destroys.length; i++) {
@@ -562,6 +625,10 @@ export class ViewController {
     this._tbRefs.length = 0;
   }
 
+}
+
+export interface LifeCycleEvent {
+  componentType?: any;
 }
 
 function ctrlFn(viewCtrl: ViewController, fnName: string) {
