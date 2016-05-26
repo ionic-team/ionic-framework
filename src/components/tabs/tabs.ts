@@ -252,7 +252,7 @@ export class Tabs extends Ion {
       viewCtrl.setContent(this);
       viewCtrl.setContentRef(_elementRef);
 
-      viewCtrl.onReady = (done) => {
+      viewCtrl.loaded = (done) => {
         this._onReady = done;
       };
     }
@@ -357,11 +357,11 @@ export class Tabs extends Ion {
     let deselectedPage;
     if (deselectedTab) {
       deselectedPage = deselectedTab.getActive();
-      deselectedPage && deselectedPage.willLeave();
+      deselectedPage && deselectedPage.fireWillLeave();
     }
 
     let selectedPage = selectedTab.getActive();
-    selectedPage && selectedPage.willEnter();
+    selectedPage && selectedPage.fireWillEnter();
 
     selectedTab.load(opts, () => {
 
@@ -382,8 +382,8 @@ export class Tabs extends Ion {
         }
       }
 
-      selectedPage && selectedPage.didEnter();
-      deselectedPage && deselectedPage.didLeave();
+      selectedPage && selectedPage.fireDidEnter();
+      deselectedPage && deselectedPage.fireDidLeave();
 
       if (this._onReady) {
         this._onReady();

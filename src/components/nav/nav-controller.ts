@@ -1042,19 +1042,8 @@ export class NavController extends Ion {
       this.setTransitioning(true, 500);
 
       this.loadPage(enteringView, null, opts, () => {
-        if (enteringView.onReady) {
-          // this entering view needs to wait for it to be ready
-          // this is used by Tabs to wait for the first page of
-          // the first selected tab to be loaded
-          enteringView.onReady(() => {
-            enteringView.fireLoaded();
-            this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
-          });
-
-        } else {
-          enteringView.fireLoaded();
-          this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
-        }
+        enteringView.fireLoaded();
+        this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
       });
     }
   }
@@ -1439,56 +1428,61 @@ export class NavController extends Ion {
 
     // load the page component inside the nav
     this._loader.loadNextToLocation(view.componentType, this._viewport, providers).then(component => {
-      // the ElementRef of the actual ion-page created
-      let pageElementRef = component.location;
-
+      
       // a new ComponentRef has been created
       // set the ComponentRef's instance to its ViewController
       view.setInstance(component.instance);
+      
+      // the component has been loaded, so call the view controller's loaded method to load any dependencies into the dom
+      view.loaded( () => {
+        
+        // the ElementRef of the actual ion-page created
+        let pageElementRef = component.location;
 
-      // remember the ChangeDetectorRef for this ViewController
-      view.setChangeDetector(component.changeDetectorRef);
+        // remember the ChangeDetectorRef for this ViewController
+        view.setChangeDetector(component.changeDetectorRef);
 
-      // remember the ElementRef to the ion-page elementRef that was just created
-      view.setPageRef(pageElementRef);
+        // remember the ElementRef to the ion-page elementRef that was just created
+        view.setPageRef(pageElementRef);
 
-      // auto-add page css className created from component JS class name
-      let cssClassName = pascalCaseToDashCase(view.componentType['name']);
-      this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
-
-      view.onDestroy(() => {
-        // ensure the element is cleaned up for when the view pool reuses this element
-        this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
-        this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
-        component.destroy();
-      });
-
-      if (!navbarContainerRef) {
-        // there was not a navbar container ref already provided
-        // so use the location of the actual navbar template
-        navbarContainerRef = view.getNavbarViewRef();
-      }
-
-      // find a navbar template if one is in the page
-      let navbarTemplateRef = view.getNavbarTemplateRef();
-
-      // check if we have both a navbar ViewContainerRef and a template
-      if (navbarContainerRef && navbarTemplateRef) {
-        // let's now create the navbar view
-        let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
+        // auto-add page css className created from component JS class name
+        let cssClassName = pascalCaseToDashCase(view.componentType['name']);
+        this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
 
         view.onDestroy(() => {
-          // manually destroy the navbar when the page is destroyed
-          navbarViewRef.destroy();
+          // ensure the element is cleaned up for when the view pool reuses this element
+          this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
+          this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
+          component.destroy();
         });
-      }
 
-      // options may have had a postLoad method
-      // used mainly by tabs
-      opts.postLoad && opts.postLoad(view);
+        if (!navbarContainerRef) {
+          // there was not a navbar container ref already provided
+          // so use the location of the actual navbar template
+          navbarContainerRef = view.getNavbarViewRef();
+        }
 
-      // our job is done here
-      done(view);
+        // find a navbar template if one is in the page
+        let navbarTemplateRef = view.getNavbarTemplateRef();
+
+        // check if we have both a navbar ViewContainerRef and a template
+        if (navbarContainerRef && navbarTemplateRef) {
+          // let's now create the navbar view
+          let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
+
+          view.onDestroy(() => {
+            // manually destroy the navbar when the page is destroyed
+            navbarViewRef.destroy();
+          });
+        }
+
+        // options may have had a postLoad method
+        // used mainly by tabs
+        opts.postLoad && opts.postLoad(view);
+
+        // our job is done here
+        done(view);
+      });
     });
   }
 

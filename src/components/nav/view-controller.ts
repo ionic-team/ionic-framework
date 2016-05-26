@@ -72,11 +72,6 @@ export class ViewController {
 
   /**
    * @private
-   */
-  onReady: Function;
-
-  /**
-   * @private
    * If this is currently the active view, then set to false
    * if it does not want the other views to fire their own lifecycles.
    */
@@ -487,6 +482,17 @@ export class ViewController {
    */
   isLoaded(): boolean {
     return this._loaded;
+  }
+  
+  /**
+   * The loaded method is used to load any dynamic content/components
+   * into the dom before proceeding with the transition.  If a component needs
+   * dynamic component loading, extending ViewController and overriding
+   * this method is a good option
+   * @param {function} done is a callback that must be called when async loading/actions are completed 
+   */
+  loaded(done: (() => any)) {
+    done();
   }
 
   /**
