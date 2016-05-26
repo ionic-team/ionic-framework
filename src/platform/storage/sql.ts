@@ -144,6 +144,10 @@ export class SqlStorage extends StorageEngine {
     return this.query('delete from kv where key = ?', [key]);
   }
 
+  /**
+  * Clear all keys/values of your database.
+  * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
+  */
   clear(): Promise<any> {
     return this.query('delete from kv');
   }

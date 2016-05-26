@@ -22,7 +22,7 @@ import {ViewController} from '../nav/view-controller';
  * An action sheet is created from an array of `buttons`, with each button
  * including properties for its `text`, and optionally a `handler` and `role`.
  * If a handler returns `false` then the action sheet will not be dismissed. An
- * action sheet can also optionally have a `title` and a `subTitle`.
+ * action sheet can also optionally have a `title`, `subTitle` and an `icon`.
  *
  * A button's `role` property can either be `destructive` or `cancel`. Buttons
  * without a role property will have the default look for the platform. Buttons
@@ -82,7 +82,7 @@ import {ViewController} from '../nav/view-controller';
  * transitions were fired at roughly the same time, it's difficult for the
  * nav controller to cleanly animate multiple transitions that may
  * have been kicked off asynchronously. This is further described in the
- * [`Nav Transition Promises`](../../nav/NavController) section. For action sheets,
+ * [`Nav Transition Promises`](../../nav/NavController/#nav-transition-promises) section. For action sheets,
  * this means it's best to wait for the action sheet to finish its transition
  * out before starting a new transition on the same nav controller.
  *
