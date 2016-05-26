@@ -13,8 +13,8 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        var observable = viewController.getPageDidLoadObservable();
-        subscription = observable.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.didLoad.subscribe((event:LifeCycleEvent) => {
+          // assert
           expect(event.componentType['name']).toEqual('FakePage');
           done();
         }, err => {
@@ -22,7 +22,7 @@ export function run() {
         });
 
         // act
-        viewController.loaded();
+        viewController.fireLoaded();
       }, 10000);
     });
 
@@ -30,8 +30,8 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        var observable = viewController.getPageWillEnterObservable();
-        subscription = observable.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.willEnter.subscribe((event:LifeCycleEvent) => {
+          // assert
           expect(event.componentType['name']).toEqual('FakePage');
           done();
         }, err => {
@@ -39,7 +39,7 @@ export function run() {
         });
 
         // act
-        viewController.willEnter();
+        viewController.fireWillEnter();
       }, 10000);
     });
 
@@ -47,8 +47,8 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        var observable = viewController.getPageDidEnterObservable();
-        subscription = observable.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.didEnter.subscribe((event:LifeCycleEvent) => {
+          // assert
           expect(event.componentType['name']).toEqual('FakePage');
           done();
         }, err => {
@@ -56,7 +56,7 @@ export function run() {
         });
 
         // act
-        viewController.didEnter();
+        viewController.fireDidEnter();
       }, 10000);
     });
 
@@ -64,8 +64,8 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        var observable = viewController.getPageWillLeaveObservable();
-        subscription = observable.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.willLeave.subscribe((event:LifeCycleEvent) => {
+          // assert
           expect(event.componentType['name']).toEqual('FakePage');
           done();
         }, err => {
@@ -73,7 +73,7 @@ export function run() {
         });
 
         // act
-        viewController.willLeave();
+        viewController.fireWillLeave();
       }, 10000);
     });
 
@@ -81,8 +81,8 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        var observable = viewController.getPageDidLeaveObservable();
-        subscription = observable.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.didLeave.subscribe((event:LifeCycleEvent) => {
+          // assert
           expect(event.componentType['name']).toEqual('FakePage');
           done();
         }, err => {
@@ -90,7 +90,7 @@ export function run() {
         });
 
         // act
-        viewController.didLeave();
+        viewController.fireDidLeave();
       }, 10000);
     });
 
@@ -98,8 +98,7 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        var observable = viewController.getPageWillUnloadObservable();
-        subscription = observable.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.willUnload.subscribe((event:LifeCycleEvent) => {
           expect(event.componentType['name']).toEqual('FakePage');
           done();
         }, err => {
@@ -107,7 +106,7 @@ export function run() {
         });
 
         // act
-        viewController.willUnload();
+        viewController.fireWillUnload();
       }, 10000);
     });
 
@@ -115,8 +114,8 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        var observable = viewController.getPageDidUnloadObservable();
-        subscription = observable.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.didUnload.subscribe((event:LifeCycleEvent) => {
+          // assert
           expect(event.componentType['name']).toEqual('FakePage');
           done();
         }, err => {
