@@ -158,7 +158,9 @@ export class Popover extends ViewController {
     '<div class="popover-wrapper">' +
       '<div class="popover-arrow"></div>' +
       '<div class="popover-content">' +
-        '<div #viewport></div>' +
+        '<div class="popover-viewport">' +
+          '<div #viewport></div>' +
+        '</div>' +
       '</div>' +
     '</div>'
 })
@@ -365,14 +367,18 @@ class PopoverMdPopIn extends PopoverTransition {
     let ele = enteringView.pageRef().nativeElement;
 
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
+    let content = new Animation(ele.querySelector('.popover-content'));
+    let viewport = new Animation(ele.querySelector('.popover-viewport'));
 
-    wrapper.fromTo('opacity', '0.01', '1');
+    content.fromTo('maxWidth', '0%', '90%');
+    content.fromTo('maxHeight', '0%', '90%');
+    viewport.fromTo('opacity', '0', '1');
 
     this
       .easing('ease')
-      .duration(100)
-      .fadeIn()
-      .add(wrapper);
+      .duration(500)
+      .add(content)
+      .add(viewport);
   }
 
   play() {

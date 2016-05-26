@@ -14,8 +14,14 @@ $popover-md-box-shadow:                0 3px 12px 2px $alert-md-box-shadow-color
 
 $popover-md-item-background:           $popover-md-background !default;
 
+.popover-wrapper {
+  opacity: 1;
+}
 
 .popover-content {
+  min-width: 0;
+  min-height: 0;
+
   width: $popover-md-width;
 
   max-height: $popover-md-max-height;
@@ -28,4 +34,8 @@ $popover-md-item-background:           $popover-md-background !default;
 
 .popover-content .item {
   background-color: $popover-md-item-background;
+}
+
+.popover-viewport {
+  opacity: 0;
 }
