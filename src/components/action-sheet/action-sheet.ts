@@ -82,7 +82,7 @@ import {ViewController} from '../nav/view-controller';
  * transitions were fired at roughly the same time, it's difficult for the
  * nav controller to cleanly animate multiple transitions that may
  * have been kicked off asynchronously. This is further described in the
- * [`Nav Transition Promises`](../../nav/NavController) section. For action sheets,
+ * [`Nav Transition Promises`](../../nav/NavController/#nav-transition-promises) section. For action sheets,
  * this means it's best to wait for the action sheet to finish its transition
  * out before starting a new transition on the same nav controller.
  *
