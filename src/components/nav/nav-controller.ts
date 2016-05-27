@@ -818,10 +818,10 @@ export class NavController extends Ion {
             if (!parentNav['_tabs']) {
               // Tabs can be a parent, but it is not a collection of views
               // only we're looking for an actual NavController w/ stack of views
-              leavingView.willLeave();
+              leavingView.fireWillLeave();
 
               return parentNav.pop(opts).then((rtnVal: boolean) => {
-                leavingView.didLeave();
+                leavingView.fireDidLeave();
                 return rtnVal;
               });
             }
@@ -918,7 +918,7 @@ export class NavController extends Ion {
       // set that it is the init leaving view
       // the first view to be removed, it should init leave
       view.state = STATE_INIT_LEAVE;
-      view.willUnload();
+      view.fireWillUnload();
 
       // from the index of the leaving view, go backwards and
       // find the first view that is inactive so it can be the entering
@@ -951,8 +951,8 @@ export class NavController extends Ion {
     // remove views that have been set to be removed, but not
     // apart of any transitions that will eventually happen
     this._views.filter(v => v.state === STATE_REMOVE).forEach(view => {
-      view.willLeave();
-      view.didLeave();
+      view.fireWillLeave();
+      view.fireDidLeave();
       this._views.splice(this.indexOf(view), 1);
       view.destroy();
     });
@@ -986,7 +986,7 @@ export class NavController extends Ion {
     if (!enteringView) {
       // if no entering view then create a bogus one
       enteringView = new ViewController();
-      enteringView.loaded();
+      enteringView.fireLoaded();
     }
 
     /* Async steps to complete a transition
@@ -1047,12 +1047,12 @@ export class NavController extends Ion {
           // this is used by Tabs to wait for the first page of
           // the first selected tab to be loaded
           enteringView.onReady(() => {
-            enteringView.loaded();
+            enteringView.fireLoaded();
             this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
           });
 
         } else {
-          enteringView.loaded();
+          enteringView.fireLoaded();
           this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
         }
       });
@@ -1112,13 +1112,13 @@ export class NavController extends Ion {
       if (leavingView.fireOtherLifecycles) {
         // only fire entering lifecycle if the leaving
         // view hasn't explicitly set not to
-        enteringView.willEnter();
+        enteringView.fireWillEnter();
       }
 
       if (enteringView.fireOtherLifecycles) {
         // only fire leaving lifecycle if the entering
         // view hasn't explicitly set not to
-        leavingView.willLeave();
+        leavingView.fireWillLeave();
       }
 
     } else {
@@ -1224,13 +1224,13 @@ export class NavController extends Ion {
         if (leavingView.fireOtherLifecycles) {
           // only fire entering lifecycle if the leaving
           // view hasn't explicitly set not to
-          enteringView.didEnter();
+          enteringView.fireDidEnter();
         }
 
         if (enteringView.fireOtherLifecycles) {
           // only fire leaving lifecycle if the entering
           // view hasn't explicitly set not to
-          leavingView.didLeave();
+          leavingView.fireDidLeave();
         }
       }
 

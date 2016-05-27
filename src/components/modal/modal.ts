@@ -150,7 +150,7 @@ class ModalCmp {
       this._viewCtrl.setInstance(componentRef.instance);
 
       // manually fire onPageWillEnter() since ModalCmp's  onPageWillEnter already happened
-      this._viewCtrl.willEnter();
+      this._viewCtrl.fireWillEnter();
     });
   }
 }

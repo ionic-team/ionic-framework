@@ -37,6 +37,14 @@ export class ViewController {
   private _cd: ChangeDetectorRef;
   protected _nav: NavController;
 
+  didLoad: EventEmitter<LifeCycleEvent>;
+  willEnter: EventEmitter<LifeCycleEvent>;
+  didEnter: EventEmitter<LifeCycleEvent>;
+  willLeave: EventEmitter<LifeCycleEvent>;
+  didLeave: EventEmitter<LifeCycleEvent>;
+  willUnload: EventEmitter<LifeCycleEvent>;
+  didUnload: EventEmitter<LifeCycleEvent>;
+
   /**
    * @private
    */
@@ -97,6 +105,14 @@ export class ViewController {
   constructor(public componentType?: Type, data?: any) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
+
+    this.didLoad = new EventEmitter();
+    this.willEnter = new EventEmitter();
+    this.didEnter = new EventEmitter();
+    this.willLeave = new EventEmitter();
+    this.didLeave = new EventEmitter();
+    this.willUnload = new EventEmitter();
+    this.didUnload = new EventEmitter();
   }
 
   subscribe(generatorOrNext?: any): any {
@@ -481,8 +497,9 @@ export class ViewController {
    * to put your setup code for the view; however, it is not the
    * recommended method to use when a view becomes active.
    */
-  loaded() {
+  fireLoaded() {
     this._loaded = true;
+    this.dispathLifeCycleEvent(this.didLoad, this.componentType);
     ctrlFn(this, 'onPageLoaded');
   }
 
@@ -490,7 +507,7 @@ export class ViewController {
    * @private
    * The view is about to enter and become the active view.
    */
-  willEnter() {
+  fireWillEnter() {
     if (this._cd) {
       // ensure this has been re-attached to the change detector
       this._cd.reattach();
@@ -498,7 +515,7 @@ export class ViewController {
       // detect changes before we run any user code
       this._cd.detectChanges();
     }
-
+    this.dispathLifeCycleEvent(this.willEnter, this.componentType);
     ctrlFn(this, 'onPageWillEnter');
   }
 
@@ -507,9 +524,10 @@ export class ViewController {
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
-  didEnter() {
+  fireDidEnter() {
     let navbar = this.getNavbar();
     navbar && navbar.didEnter();
+    this.dispathLifeCycleEvent(this.didEnter, this.componentType);
     ctrlFn(this, 'onPageDidEnter');
   }
 
@@ -517,7 +535,8 @@ export class ViewController {
    * @private
    * The view has is about to leave and no longer be the active view.
    */
-  willLeave() {
+  fireWillLeave() {
+    this.dispathLifeCycleEvent(this.willLeave, this.componentType);
     ctrlFn(this, 'onPageWillLeave');
   }
 
@@ -526,7 +545,8 @@ export class ViewController {
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
-  didLeave() {
+  fireDidLeave() {
+    this.dispathLifeCycleEvent(this.didLeave, this.componentType);
     ctrlFn(this, 'onPageDidLeave');
 
     // when this is not the active page
@@ -538,7 +558,8 @@ export class ViewController {
    * @private
    * The view is about to be destroyed and have its elements removed.
    */
-  willUnload() {
+  fireWillUnload() {
+    this.dispathLifeCycleEvent(this.willUnload, this.componentType);
     ctrlFn(this, 'onPageWillUnload');
   }
 
@@ -552,7 +573,17 @@ export class ViewController {
   /**
    * @private
    */
+   dispathLifeCycleEvent(eventEmitter: EventEmitter<LifeCycleEvent>, componentType) {
+     eventEmitter.emit({
+       componentType: componentType
+     });
+   }
+
+  /**
+   * @private
+   */
   destroy() {
+    this.dispathLifeCycleEvent(this.didUnload, this.componentType);
     ctrlFn(this, 'onPageDidUnload');
 
     for (var i = 0; i < this._destroys.length; i++) {
@@ -562,6 +593,10 @@ export class ViewController {
     this._tbRefs.length = 0;
   }
 
+}
+
+export interface LifeCycleEvent {
+  componentType?: any;
 }
 
 function ctrlFn(viewCtrl: ViewController, fnName: string) {
