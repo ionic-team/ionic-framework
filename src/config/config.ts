@@ -105,6 +105,8 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * | `pageTransitionDelay`    | `number`            | The delay in milliseconds before the transition starts while changing pages.                                                                     |
  * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
  * | `pickerLeave`            | `string`            | The name of the transition to use while a picker is dismissed.                                                                                   |
+ * | `popoverEnter`           | `string`            | The name of the transition to use while a popover is presented.                                                                                   |
+ * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.                                                                                   |
  * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
  * | `tabbarHighlight`        | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
  * | `tabbarLayout`           | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-left"`, `"icon-right"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.  |

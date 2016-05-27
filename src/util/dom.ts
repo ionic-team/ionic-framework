@@ -57,6 +57,7 @@ export let CSS: {
   transitionTimingFn?: string,
   transitionStart?: string,
   transitionEnd?: string,
+  transformOrigin?: string
 } = {};
 
 (function() {
@@ -94,6 +95,9 @@ export let CSS: {
 
   // To be sure transitionend works everywhere, include *both* the webkit and non-webkit events
   CSS.transitionEnd = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
+
+  // transform origin
+  CSS.transformOrigin = (isWebkit ? '-webkit-' : '') + 'transform-origin';
 })();
 
 
