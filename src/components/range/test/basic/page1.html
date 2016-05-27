@@ -27,7 +27,7 @@
     <ion-item>
       <div item-left>{{singleValue2}}</div>
       <ion-label>init=150, min=-200, max=200</ion-label>
-      <ion-range min="-200" max="200" [(ngModel)]="singleValue2"></ion-range>
+      <ion-range min="-200" max="200" [(ngModel)]="singleValue2" secondary></ion-range>
       <div item-right>{{singleValue2}}</div>
     </ion-item>
 
@@ -43,7 +43,7 @@
 
     <ion-item>
       <ion-label>dual, {{dualValue | json}}</ion-label>
-      <ion-range dualKnobs="true" [(ngModel)]="dualValue"></ion-range>
+      <ion-range dualKnobs="true" [(ngModel)]="dualValue" danger></ion-range>
     </ion-item>
 
     <ion-item>
