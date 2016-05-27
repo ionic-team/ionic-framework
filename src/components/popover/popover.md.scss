@@ -3,14 +3,14 @@
 // Material Design Popover
 // --------------------------------------------------
 
-$popover-md-width:                     200px !default;
+$popover-md-width:                     250px !default;
 $popover-md-max-height:                90% !default;
 
 $popover-md-border-radius:             2px !default;
 $popover-md-text-color:                #000 !default;
 $popover-md-background:                #fafafa !default;
 $popover-md-box-shadow-color:          rgba(0, 0, 0, .3) !default;
-$popover-md-box-shadow:                0 3px 12px 2px $alert-md-box-shadow-color !default;
+$popover-md-box-shadow:                0 3px 12px 2px $popover-md-box-shadow-color !default;
 
 $popover-md-item-background:           $popover-md-background !default;
 
@@ -23,6 +23,8 @@ $popover-md-item-background:           $popover-md-background !default;
   min-width: 0;
   min-height: 0;
   max-height: $popover-md-max-height;
+
+  transform-origin: top left;  
 
   border-radius: $popover-md-border-radius;
   color: $popover-md-text-color;

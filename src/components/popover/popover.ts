@@ -242,6 +242,9 @@ class PopoverTransition extends Transition {
 
 
   positionView(nativeEle: HTMLElement, ev) {
+    let originY = 'top';
+    let originX = 'left';
+
     // Popover content width and height
     let popoverEle = <HTMLElement>nativeEle.querySelector('.popover-content');
     let popoverDim = popoverEle.getBoundingClientRect();
@@ -289,6 +292,7 @@ class PopoverTransition extends Transition {
       popoverCSS.left = POPOVER_BODY_PADDING;
     } else if (popoverWidth + POPOVER_BODY_PADDING + popoverCSS.left > bodyWidth) {
       popoverCSS.left = bodyWidth - popoverWidth - POPOVER_BODY_PADDING;
+      originX = 'right';
     }
 
     // If the popover when popped down stretches past bottom of screen,
@@ -297,6 +301,7 @@ class PopoverTransition extends Transition {
       arrowCSS.top = targetTop - (arrowHeight + 1);
       popoverCSS.top = targetTop - popoverHeight - (arrowHeight - 1);
       nativeEle.className = nativeEle.className + ' popover-bottom';
+      originY = 'bottom';
     // If there isn't room for it to pop up above the target cut it off
     } else if (targetTop + targetHeight + popoverHeight > bodyHeight) {
       popoverEle.style.bottom = POPOVER_BODY_PADDING + '%';
@@ -307,6 +312,8 @@ class PopoverTransition extends Transition {
 
     popoverEle.style.top = popoverCSS.top + 'px';
     popoverEle.style.left = popoverCSS.left + 'px';
+
+    popoverEle.style.transformOrigin = originY + " " + originX;
   }
 }
 
@@ -370,12 +377,11 @@ class PopoverMdPopIn extends PopoverTransition {
     let content = new Animation(ele.querySelector('.popover-content'));
     let viewport = new Animation(ele.querySelector('.popover-viewport'));
 
-    content.fromTo('maxWidth', '0%', '90%');
-    content.fromTo('maxHeight', '0%', '90%');
+    content.fromTo('scale', '0', '1');
     viewport.fromTo('opacity', '0', '1');
 
     this
-      .easing('ease')
+      .easing('cubic-bezier(.55,0,.55,.2)')
       .duration(500)
       .add(content)
       .add(viewport);
