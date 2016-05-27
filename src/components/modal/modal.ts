@@ -136,21 +136,18 @@ export class Modal extends ViewController {
 
   // Override the load method and load our child component
   loaded(done) {
-    let wrapperDoneLoading = () => {
+    // grab the instance, and proxy the ngAfterViewInit method
+    let originalNgAfterViewInit = this.instance.ngAfterViewInit;
+
+    this.instance.ngAfterViewInit = () => {
+      if ( originalNgAfterViewInit ) {
+        originalNgAfterViewInit();
+      }
       this.instance.loadComponent().then( (componentRef: ComponentRef<any>) => {
         this.setInstance(componentRef.instance);
         done();
       });
     };
-    
-    if ( this.instance.viewInitialized ) {
-      // do the callback right away
-      wrapperDoneLoading();
-    }
-    else {
-      // have the component notify us when it's done initializing
-      this.instance.viewInitializedCallback = wrapperDoneLoading;
-    }
   }
 }
 
@@ -165,11 +162,8 @@ export class Modal extends ViewController {
 export class ModalCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
-  viewInitialized: boolean;
-  viewInitializedCallback: Function;
 
   constructor(protected _eleRef: ElementRef, protected  _loader: DynamicComponentLoader, protected _navParams: NavParams, protected _viewCtrl: ViewController) {
-    //super(_eleRef, _loader, _navParams, _viewCtrl);  
   }
 
   loadComponent(): Promise<ComponentRef<any>> {
@@ -177,38 +171,11 @@ export class ModalCmp {
       return componentRef;
     });
   }
-  
+
   ngAfterViewInit() {
-    this.viewInitialized = true;
-    if ( this.viewInitializedCallback ) {
-      this.viewInitializedCallback();
-    }
+    // intentionally kept empty
   }
 }
-
-/*
-
-Is this a candidate for a base class to abstract the "complicated"
-wait-until-the-view-is-initialized-before-adding-child logic?
-
-export class BaseDCLComponent {
-  
-  viewInitialized: boolean;
-  viewInitializedCallback: Function;
-  
-  constructor(protected _eleRef: ElementRef, protected  _loader: DynamicComponentLoader, protected _navParams: NavParams, protected _viewCtrl: ViewController) {
-  }
-  
-  abstract loadComponent(): Promise<ComponentRef<any>>;
-  
-  ngAfterViewInit() {
-    this.viewInitialized = true;
-    if ( this.viewInitializedCallback ) {
-      this.viewInitializedCallback();
-    }
-  }
-}
-*/
 
 /**
  * Animations for modals
