@@ -1,5 +1,7 @@
-import {Component, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, DynamicComponentLoader, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
 
+import {windowDimensions} from '../../util/dom';
+import {pascalCaseToDashCase} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
@@ -106,9 +108,12 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  */
 export class Modal extends ViewController {
 
+  public modalViewType: string;
+
   constructor(componentType, data: any = {}) {
     data.componentType = componentType;
     super(ModalCmp, data);
+    this.modalViewType = componentType.name;
     this.viewType = 'modal';
     this.isOverlay = true;
   }
@@ -139,18 +144,24 @@ export class Modal extends ViewController {
       '<div #viewport></div>' +
     '</div>'
 })
-class ModalCmp {
+export class ModalCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
-  constructor(private _loader: DynamicComponentLoader, private _navParams: NavParams, private _viewCtrl: ViewController) {}
+  private _resolveFunction: any;
+  constructor(private eleRef: ElementRef, private _loader: DynamicComponentLoader, private _navParams: NavParams, private _viewCtrl: ViewController) {
+  }
 
-  onPageWillEnter() {
+  _ionicProjectContent(): Promise<any> {
+    return new Promise( resolve => {
+      this._resolveFunction = resolve;
+    });
+  }
+
+  ngAfterViewInit() {
     this._loader.loadNextToLocation(this._navParams.data.componentType, this.viewport).then(componentRef => {
       this._viewCtrl.setInstance(componentRef.instance);
-
-      // manually fire onPageWillEnter() since ModalCmp's  onPageWillEnter already happened
-      this._viewCtrl.willEnter();
+      this._resolveFunction();
     });
   }
 }
@@ -166,6 +177,13 @@ class ModalSlideIn extends Transition {
     let backdrop = new Animation(ele.querySelector('.backdrop'));
     backdrop.fromTo('opacity', 0.01, 0.4);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    let page = <HTMLElement> ele.querySelector('ion-page');
+    page.classList.add('show-page');
+
+    // auto-add page css className created from component JS class name
+    let cssClassName = pascalCaseToDashCase((<Modal>enteringView).modalViewType);
+    page.classList.add(cssClassName);
+
     wrapper.fromTo('translateY', '100%', '0%');
     this
       .element(enteringView.pageRef())
@@ -191,10 +209,17 @@ class ModalSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
+
     let backdrop = new Animation(ele.querySelector('.backdrop'));
     backdrop.fromTo('opacity', 0.4, 0.0);
-    let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
-    wrapper.fromTo('translateY', '0%', '100%');
+    let wrapperEle = <HTMLElement> ele.querySelector('.modal-wrapper');
+    let wrapperEleRect = wrapperEle.getBoundingClientRect();
+    let wrapper = new Animation(wrapperEle);
+
+    // height of the screen - top of the container tells us how much to scoot it down
+    // so it's off-screen
+    let screenDimensions = windowDimensions();
+    wrapper.fromTo('translateY', '0px', `${screenDimensions.height - wrapperEleRect.top}px`);
 
     this
       .element(leavingView.pageRef())
@@ -216,6 +241,12 @@ class ModalMDSlideIn extends Transition {
     backdrop.fromTo('opacity', 0.01, 0.4);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
     wrapper.fromTo('translateY', '40px', '0px');
+    let page = <HTMLElement> ele.querySelector('ion-page');
+    page.classList.add('show-page');
+
+    // auto-add page css className created from component JS class name
+    let cssClassName = pascalCaseToDashCase((<Modal>enteringView).modalViewType);
+    page.classList.add(cssClassName);
 
     this
       .element(enteringView.pageRef())

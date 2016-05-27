@@ -1,4 +1,4 @@
-import {NavController, Tabs, NavOptions, Config, ViewController} from '../../../../src';
+import {Modal, Page, NavController, Tabs, NavOptions, Config, ViewController} from '../../../../src';
 
 export function run() {
   describe('NavController', () => {
@@ -1199,6 +1199,46 @@ export function run() {
         expect(nav.length()).toBe(1);
       });
 
+      it('should present ViewController with component where dynamic content projection is required', done => {
+
+        // arrange
+        let enteringView = new ViewController(ComponentToPresent);
+
+        let mockLoader = {
+          loadNextToLocation: () => {}
+        };
+
+        nav.setViewport({});
+        // this is a private API to mock effectively
+        nav._loader = mockLoader;
+        nav.config = {
+          platform: {
+            isRTL: () => true
+          },
+          get: () => "something"
+        };
+        // override the _postRender and skip a bunch of stuff we don't care about for the sake
+        // of this test
+        nav._postRender = (transId, enteringView, leavingView, isTransitioning, opts, done) => {
+          done();
+        }
+        let componentInstance = new ComponentToPresent();
+        let componentRef = {
+          instance: componentInstance,
+          location: {}
+        };
+        spyOn(componentToPresentSpy, '_ionicProjectContent');
+        spyOn(mockLoader, 'loadNextToLocation').and.returnValue(Promise.resolve(componentRef));
+
+        // act
+        nav.present(enteringView).then( () => {
+          // assert
+          expect(componentToPresentSpy._ionicProjectContent).toHaveBeenCalled();
+          done();
+        }).catch(function(err){
+          done(err);
+        });
+      }, 10000);
     });
 
     it('should getActive()', () => {
@@ -1363,3 +1403,21 @@ const STATE_TRANS_LEAVE = 'trans_leave';
 const STATE_REMOVE = 'remove';
 const STATE_REMOVE_AFTER_TRANS = 'remove_after_trans';
 const STATE_FORCE_ACTIVE = 'force_active';
+
+
+let componentToPresentSpy = {
+  _ionicProjectContent: () => {},
+};
+
+@Page({
+  template: `<div class="myComponent"></div>`
+})
+class ComponentToPresent{
+  constructor(){
+  }
+
+  _ionicProjectContent(): Promise<any> {
+    componentToPresentSpy._ionicProjectContent();
+    return Promise.resolve();
+  }
+}
