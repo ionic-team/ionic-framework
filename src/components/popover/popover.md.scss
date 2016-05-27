@@ -24,12 +24,12 @@ $popover-md-item-background:           $popover-md-background !default;
   min-height: 0;
   max-height: $popover-md-max-height;
 
-  transform-origin: top left;  
-
   border-radius: $popover-md-border-radius;
   color: $popover-md-text-color;
   background: $popover-md-background;
   box-shadow: $popover-md-box-shadow;
+
+  transform-origin: top left;
 }
 
 .popover-content .item {
