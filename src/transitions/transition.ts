@@ -36,6 +36,7 @@ export interface TransitionOptions {
   direction: string;
   renderDelay?: number;
   isRTL?: boolean;
+  transitionData?: any;
 }
 
 let TransitionRegistry = {};

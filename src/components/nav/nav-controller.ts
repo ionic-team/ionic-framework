@@ -505,7 +505,8 @@ export class NavController extends Ion {
     enteringView.setLeavingOpts({
       keyboardClose: false,
       direction: 'back',
-      animation: enteringView.getTransitionName('back')
+      animation: enteringView.getTransitionName('back'),
+      transitionData: opts.transitionData
     });
 
     // start the transition
@@ -1157,7 +1158,8 @@ export class NavController extends Ion {
         duration: opts.duration,
         easing: opts.easing,
         renderDelay: opts.transitionDelay || this._trnsDelay,
-        isRTL: this.config.platform.isRTL()
+        isRTL: this.config.platform.isRTL(),
+        transitionData: opts.transitionData
       };
 
       let transAnimation = Transition.createTransition(enteringView,
@@ -1779,6 +1781,7 @@ export interface NavOptions {
   postLoad?: Function;
   progressAnimation?: boolean;
   climbNav?: boolean;
+  transitionData?: any;
 }
 
 const STATE_ACTIVE = 'active';
