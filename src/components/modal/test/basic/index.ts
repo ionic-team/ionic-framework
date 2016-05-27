@@ -68,7 +68,52 @@ class E2EPage {
       animation: 'my-fade-in'
     });
   }
+
+  presentNavigableModal(){
+    let modal = Modal.create(NavigableModal);
+    this.nav.present(modal);
+    //this.nav.push(NavigableModal);
+  }
 }
+
+@Page({
+  template: `
+  <ion-navbar *navbar>
+    <ion-title>Page One</ion-title>
+  </ion-navbar>
+  <ion-content>
+    <button full (click)="submit()">Submit</button>
+  </ion-content>
+  `
+})
+class NavigableModal{
+  constructor(private navController:NavController){
+  }
+
+  submit(){
+    this.navController.push(NavigableModal2);
+  }
+}
+
+@Page({
+  template: `
+  <ion-navbar *navbar>
+    <ion-title>Page Two</ion-title>
+  </ion-navbar>
+  <ion-content>
+    <button full (click)="submit()">Submit</button>
+  </ion-content>
+  `
+})
+class NavigableModal2{
+  constructor(private navController:NavController){
+  }
+
+  submit(){
+    this.navController.pop();
+  }
+}
+
 
 
 @Page({
@@ -103,6 +148,10 @@ class ModalPassData {
 
   submit() {
     this.viewCtrl.dismiss(this.data);
+  }
+
+  onPageLoaded(){
+    console.log("ModalPassData onPageLoaded fired");
   }
 
   onPageWillEnter(){
@@ -280,13 +329,24 @@ class ModalFirstPage {
   push() {
     let page = ModalSecondPage;
     let params = { id: 8675309, myData: [1,2,3,4] };
-    let opts = { animation: 'ios-transition' };
 
-    this.nav.push(page, params, opts);
+    this.nav.push(page, params);
   }
 
   dismiss() {
     this.nav.rootNav.pop();
+  }
+
+  onPageLoaded(){
+    console.log("ModalFirstPage OnPageLoaded fired");
+  }
+
+  onPageWillEnter(){
+    console.log("ModalFirstPage onPageWillEnter fired");
+  }
+
+  onPageDidEnter(){
+    console.log("ModalFirstPage onPageDidEnter fired");
   }
 
   openActionSheet() {
@@ -352,11 +412,20 @@ class ModalFirstPage {
   `
 })
 class ModalSecondPage {
-  constructor(
-    private nav: NavController,
-    params: NavParams
-  ) {
+  constructor(private nav: NavController, params: NavParams) {
     console.log('Second page params:', params);
+  }
+
+  onPageLoaded(){
+    console.log("ModalSecondPage onPageLoaded");
+  }
+
+  onPageWillEnter(){
+    console.log("ModalSecondPage onPageWillEnter");
+  }
+
+  onPageDidEnter(){
+    console.log("ModalSecondPage onPageDidEnter");
   }
 }
 

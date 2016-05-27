@@ -269,20 +269,20 @@ export function run() {
         view4.state = STATE_ACTIVE;
         nav._views = [view1, view2, view3, view4];
 
-        spyOn(view1, 'willLeave');
-        spyOn(view1, 'didLeave');
+        spyOn(view1, 'fireWillLeave');
+        spyOn(view1, 'fireDidLeave');
         spyOn(view1, 'destroy');
 
-        spyOn(view2, 'willLeave');
-        spyOn(view2, 'didLeave');
+        spyOn(view2, 'fireWillLeave');
+        spyOn(view2, 'fireDidLeave');
         spyOn(view2, 'destroy');
 
-        spyOn(view3, 'willLeave');
-        spyOn(view3, 'didLeave');
+        spyOn(view3, 'fireWillLeave');
+        spyOn(view3, 'fireDidLeave');
         spyOn(view3, 'destroy');
 
-        spyOn(view4, 'willLeave');
-        spyOn(view4, 'didLeave');
+        spyOn(view4, 'fireWillLeave');
+        spyOn(view4, 'fireDidLeave');
         spyOn(view4, 'destroy');
 
         nav._remove(1, 3);
@@ -292,20 +292,20 @@ export function run() {
         expect(view3.state).toBe(STATE_REMOVE);
         expect(view4.state).toBe(STATE_INIT_LEAVE);
 
-        expect(view1.willLeave).not.toHaveBeenCalled();
-        expect(view1.didLeave).not.toHaveBeenCalled();
+        expect(view1.fireWillLeave).not.toHaveBeenCalled();
+        expect(view1.fireDidLeave).not.toHaveBeenCalled();
         expect(view1.destroy).not.toHaveBeenCalled();
 
-        expect(view2.willLeave).toHaveBeenCalled();
-        expect(view2.didLeave).toHaveBeenCalled();
+        expect(view2.fireWillLeave).toHaveBeenCalled();
+        expect(view2.fireDidLeave).toHaveBeenCalled();
         expect(view2.destroy).toHaveBeenCalled();
 
-        expect(view3.willLeave).toHaveBeenCalled();
-        expect(view3.didLeave).toHaveBeenCalled();
+        expect(view3.fireWillLeave).toHaveBeenCalled();
+        expect(view3.fireDidLeave).toHaveBeenCalled();
         expect(view3.destroy).toHaveBeenCalled();
 
-        expect(view4.willLeave).not.toHaveBeenCalled();
-        expect(view4.didLeave).not.toHaveBeenCalled();
+        expect(view4.fireWillLeave).not.toHaveBeenCalled();
+        expect(view4.fireDidLeave).not.toHaveBeenCalled();
         expect(view4.destroy).not.toHaveBeenCalled();
       });
     });
@@ -412,11 +412,11 @@ export function run() {
         var done = () => {};
         nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
 
-        spyOn(enteringView, 'willEnter');
+        spyOn(enteringView, 'fireWillEnter');
 
         nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-        expect(enteringView.willEnter).toHaveBeenCalled();
+        expect(enteringView.fireWillEnter).toHaveBeenCalled();
       });
 
       it('should not call willEnter on entering view when it is being preloaded', () => {
@@ -428,11 +428,11 @@ export function run() {
         var done = () => {};
         nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
 
-        spyOn(enteringView, 'willEnter');
+        spyOn(enteringView, 'fireWillEnter');
 
         nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-        expect(enteringView.willEnter).not.toHaveBeenCalled();
+        expect(enteringView.fireWillEnter).not.toHaveBeenCalled();
       });
 
       it('should call willLeave on leaving view', () => {
@@ -442,11 +442,11 @@ export function run() {
         var done = () => {};
         nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
 
-        spyOn(leavingView, 'willLeave');
+        spyOn(leavingView, 'fireWillLeave');
 
         nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-        expect(leavingView.willLeave).toHaveBeenCalled();
+        expect(leavingView.fireWillLeave).toHaveBeenCalled();
       });
 
       it('should not call willEnter when the leaving view has fireOtherLifecycles not true', () => {
@@ -456,15 +456,15 @@ export function run() {
         var done = () => {};
         nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
 
-        spyOn(enteringView, 'willEnter');
-        spyOn(leavingView, 'willLeave');
+        spyOn(enteringView, 'fireWillEnter');
+        spyOn(leavingView, 'fireWillLeave');
 
         leavingView.fireOtherLifecycles = false;
 
         nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-        expect(enteringView.willEnter).not.toHaveBeenCalled();
-        expect(leavingView.willLeave).toHaveBeenCalled();
+        expect(enteringView.fireWillEnter).not.toHaveBeenCalled();
+        expect(leavingView.fireWillLeave).toHaveBeenCalled();
       });
 
       it('should not call willLeave when the entering view has fireOtherLifecycles not true', () => {
@@ -474,15 +474,15 @@ export function run() {
         var done = () => {};
         nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
 
-        spyOn(enteringView, 'willEnter');
-        spyOn(leavingView, 'willLeave');
+        spyOn(enteringView, 'fireWillEnter');
+        spyOn(leavingView, 'fireWillLeave');
 
         enteringView.fireOtherLifecycles = false;
 
         nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-        expect(enteringView.willEnter).toHaveBeenCalled();
-        expect(leavingView.willLeave).not.toHaveBeenCalled();
+        expect(enteringView.fireWillEnter).toHaveBeenCalled();
+        expect(leavingView.fireWillLeave).not.toHaveBeenCalled();
       });
 
       it('should not call willLeave on leaving view when it is being preloaded', () => {
@@ -494,11 +494,11 @@ export function run() {
         var done = () => {};
         nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
 
-        spyOn(leavingView, 'willLeave');
+        spyOn(leavingView, 'fireWillLeave');
 
         nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-        expect(leavingView.willLeave).not.toHaveBeenCalled();
+        expect(leavingView.fireWillLeave).not.toHaveBeenCalled();
       });
 
       it('should set animate false when preloading', () => {
@@ -725,13 +725,13 @@ export function run() {
         let doneCalled = false;
         let done = () => {doneCalled = true;}
 
-        spyOn(enteringView, 'didEnter');
-        spyOn(leavingView, 'didLeave');
+        spyOn(enteringView, 'fireDidEnter');
+        spyOn(leavingView, 'fireDidLeave');
 
         nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-        expect(enteringView.didEnter).toHaveBeenCalled();
-        expect(leavingView.didLeave).toHaveBeenCalled();
+        expect(enteringView.fireDidEnter).toHaveBeenCalled();
+        expect(leavingView.fireDidLeave).toHaveBeenCalled();
         expect(doneCalled).toBe(true);
       });
 
@@ -745,13 +745,13 @@ export function run() {
         let doneCalled = false;
         let done = () => {doneCalled = true;}
 
-        spyOn(enteringView, 'didEnter');
-        spyOn(leavingView, 'didLeave');
+        spyOn(enteringView, 'fireDidEnter');
+        spyOn(leavingView, 'fireDidLeave');
 
         nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-        expect(enteringView.didEnter).not.toHaveBeenCalled();
-        expect(leavingView.didLeave).not.toHaveBeenCalled();
+        expect(enteringView.fireDidEnter).not.toHaveBeenCalled();
+        expect(leavingView.fireDidLeave).not.toHaveBeenCalled();
         expect(doneCalled).toBe(true);
       });
 
@@ -765,13 +765,13 @@ export function run() {
 
         enteringView.fireOtherLifecycles = false;
 
-        spyOn(enteringView, 'didEnter');
-        spyOn(leavingView, 'didLeave');
+        spyOn(enteringView, 'fireDidEnter');
+        spyOn(leavingView, 'fireDidLeave');
 
         nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-        expect(enteringView.didEnter).toHaveBeenCalled();
-        expect(leavingView.didLeave).not.toHaveBeenCalled();
+        expect(enteringView.fireDidEnter).toHaveBeenCalled();
+        expect(leavingView.fireDidLeave).not.toHaveBeenCalled();
         expect(doneCalled).toBe(true);
       });
 
@@ -785,13 +785,13 @@ export function run() {
 
         leavingView.fireOtherLifecycles = false;
 
-        spyOn(enteringView, 'didEnter');
-        spyOn(leavingView, 'didLeave');
+        spyOn(enteringView, 'fireDidEnter');
+        spyOn(leavingView, 'fireDidLeave');
 
         nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-        expect(enteringView.didEnter).not.toHaveBeenCalled();
-        expect(leavingView.didLeave).toHaveBeenCalled();
+        expect(enteringView.fireDidEnter).not.toHaveBeenCalled();
+        expect(leavingView.fireDidLeave).toHaveBeenCalled();
         expect(doneCalled).toBe(true);
       });
 
@@ -803,13 +803,13 @@ export function run() {
         let doneCalled = false;
         let done = () => {doneCalled = true;}
 
-        spyOn(enteringView, 'didEnter');
-        spyOn(leavingView, 'didLeave');
+        spyOn(enteringView, 'fireDidEnter');
+        spyOn(leavingView, 'fireDidLeave');
 
         nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-        expect(enteringView.didEnter).not.toHaveBeenCalled();
-        expect(leavingView.didLeave).not.toHaveBeenCalled();
+        expect(enteringView.fireDidEnter).not.toHaveBeenCalled();
+        expect(leavingView.fireDidLeave).not.toHaveBeenCalled();
         expect(doneCalled).toBe(true);
       });
 
