@@ -194,7 +194,7 @@ class PopoverCmp {
       this._viewCtrl.setInstance(componentRef.instance);
 
       // manually fire onPageWillEnter() since PopoverCmp's onPageWillEnter already happened
-      this._viewCtrl.willEnter();
+      this._viewCtrl.fireWillEnter();
     });
   }
 
@@ -315,7 +315,7 @@ class PopoverTransition extends Transition {
     popoverEle.style.top = popoverCSS.top + 'px';
     popoverEle.style.left = popoverCSS.left + 'px';
 
-    popoverEle.style[CSS.transformOrigin] = originY + " " + originX;
+    popoverEle.style[CSS.transformOrigin] = originY + ' ' + originX;
 
     // Since the transition starts before styling is done we
     // want to wait for the styles to apply before showing the wrapper
