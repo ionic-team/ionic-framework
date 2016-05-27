@@ -1,0 +1,162 @@
+@import "../../globals.ios";
+
+// iOS Range
+// --------------------------------------------------
+
+$range-ios-slider-height:                     42px !default;
+
+$range-ios-hit-width:                         42px !default;
+$range-ios-hit-height:                        $range-ios-slider-height !default;
+
+$range-ios-bar-height:                        2px !default;
+$range-ios-bar-background-color:              #bdbdbd !default;
+$range-ios-bar-active-background-color:       color($colors-ios, primary) !default;
+
+$range-ios-knob-width:                        12px !default;
+$range-ios-knob-height:                       $range-ios-knob-width !default;
+$range-ios-knob-background-color:             $range-ios-bar-active-background-color !default;
+
+$range-ios-tick-width:                        6px !default;
+$range-ios-tick-height:                       $range-ios-tick-width !default;
+$range-ios-tick-background-color:             $range-ios-bar-background-color !default;
+$range-ios-tick-active-background-color:      $range-ios-bar-active-background-color !default;
+
+$range-ios-pin-background-color:              $range-ios-bar-active-background-color !default;
+$range-ios-pin-color:                         color-contrast($colors-ios, $range-ios-pin-background-color) !default;
+$range-ios-pin-font-size:                     12px !default;
+
+
+.item-range .item-inner {
+  overflow: visible;
+}
+
+.item-range .input-wrapper {
+  overflow: visible;
+
+  flex-direction: column;
+}
+
+.item-range ion-range {
+  width: 100%;
+}
+
+ion-range {
+  position: relative;
+  display: block;
+
+  margin-top: -16px;
+  padding: 8px;
+}
+
+.range-slider {
+  position: relative;
+
+  height: $range-ios-slider-height;
+
+  cursor: pointer;
+}
+
+.range-bar {
+  position: absolute;
+  top: ($range-ios-slider-height / 2);
+  left: 0;
+
+  width: 100%;
+  height: $range-ios-bar-height;
+
+  background: $range-ios-bar-background-color;
+
+  pointer-events: none;
+}
+
+.range-pressed .range-bar-active {
+  will-change: left, right;
+}
+
+.range-pressed .range-knob-handle {
+  will-change: left;
+}
+
+.range-bar-active {
+  bottom: 0;
+
+  width: auto;
+
+  background: $range-ios-bar-active-background-color;
+}
+
+.range-knob-handle {
+  position: absolute;
+  top: ($range-ios-slider-height / 2);
+  left: 0%;
+
+  margin-top: -($range-ios-hit-height / 2);
+  margin-left: -($range-ios-hit-width / 2);
+
+  width: $range-ios-hit-width;
+  height: $range-ios-hit-height;
+
+  text-align: center;
+}
+
+.range-knob {
+  position: absolute;
+  top: ($range-ios-hit-height / 2) - ($range-ios-knob-height / 2) + ($range-ios-bar-height / 2);
+  left: ($range-ios-hit-width / 2) - ($range-ios-knob-width / 2);
+
+  width: $range-ios-knob-width;
+  height: $range-ios-knob-height;
+
+  border-radius: 50%;
+
+  background: $range-ios-knob-background-color;
+
+  pointer-events: none;
+}
+
+.range-tick {
+  position: absolute;
+  top: ($range-ios-hit-height / 2) - ($range-ios-tick-height / 2) + ($range-ios-bar-height / 2);
+
+  margin-left: ($range-ios-tick-width / 2) * -1;
+
+  width: $range-ios-tick-width;
+  height: $range-ios-tick-height;
+
+  border-radius: 50%;
+
+  background: $range-ios-tick-background-color;
+
+  pointer-events: none;
+}
+
+.range-tick-active {
+  background: $range-ios-tick-active-background-color;
+}
+
+.range-pin {
+  position: relative;
+  top: -20px;
+  display: inline-block;
+
+  padding: 8px;
+
+  min-width: 28px;
+
+  border-radius: 50px;
+
+  font-size: $range-ios-pin-font-size;
+
+  text-align: center;
+
+  color: $range-ios-pin-color;
+
+  background: $range-ios-pin-background-color;
+
+  transform: translate3d(0, 28px, 0) scale(.01);
+  transition: transform 120ms ease;
+}
+
+.range-knob-pressed .range-pin {
+  transform: translate3d(0, 0, 0) scale(1);
+}
