@@ -504,7 +504,7 @@ export class ViewController {
    */
   fireLoaded() {
     this._loaded = true;
-    this.dispathLifeCycleEvent(this.didLoad, this.componentType);
+    this.didLoad.emit(null);
     ctrlFn(this, 'onPageLoaded');
   }
 
@@ -520,7 +520,7 @@ export class ViewController {
       // detect changes before we run any user code
       this._cd.detectChanges();
     }
-    this.dispathLifeCycleEvent(this.willEnter, this.componentType);
+    this.willEnter.emit(null);
     ctrlFn(this, 'onPageWillEnter');
   }
 
@@ -532,7 +532,7 @@ export class ViewController {
   fireDidEnter() {
     let navbar = this.getNavbar();
     navbar && navbar.didEnter();
-    this.dispathLifeCycleEvent(this.didEnter, this.componentType);
+    this.didEnter.emit(null);
     ctrlFn(this, 'onPageDidEnter');
   }
 
@@ -541,7 +541,7 @@ export class ViewController {
    * The view has is about to leave and no longer be the active view.
    */
   fireWillLeave() {
-    this.dispathLifeCycleEvent(this.willLeave, this.componentType);
+    this.willLeave.emit(null);
     ctrlFn(this, 'onPageWillLeave');
   }
 
@@ -551,7 +551,7 @@ export class ViewController {
    * will fire, whether it is cached or unloaded.
    */
   fireDidLeave() {
-    this.dispathLifeCycleEvent(this.didLeave, this.componentType);
+    this.didLeave.emit(null);
     ctrlFn(this, 'onPageDidLeave');
 
     // when this is not the active page
@@ -564,7 +564,7 @@ export class ViewController {
    * The view is about to be destroyed and have its elements removed.
    */
   fireWillUnload() {
-    this.dispathLifeCycleEvent(this.willUnload, this.componentType);
+    this.willUnload.emit(null);
     ctrlFn(this, 'onPageWillUnload');
   }
 
@@ -578,17 +578,8 @@ export class ViewController {
   /**
    * @private
    */
-   dispathLifeCycleEvent(eventEmitter: EventEmitter<LifeCycleEvent>, componentType) {
-     eventEmitter.emit({
-       componentType: componentType
-     });
-   }
-
-  /**
-   * @private
-   */
   destroy() {
-    this.dispathLifeCycleEvent(this.didUnload, this.componentType);
+    this.didUnload.emit(null);
     ctrlFn(this, 'onPageDidUnload');
 
     for (var i = 0; i < this._destroys.length; i++) {
