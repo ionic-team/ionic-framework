@@ -117,8 +117,8 @@ Config.setModeConfig('wp', {
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
 
-  popoverEnter: 'popover-wp-pop-in',
-  popoverLeave: 'popover-wp-pop-out',
+  popoverEnter: 'popover-md-pop-in',
+  popoverLeave: 'popover-md-pop-out',
 
   spinner: 'circles',
 

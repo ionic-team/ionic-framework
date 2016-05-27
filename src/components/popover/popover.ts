@@ -7,7 +7,7 @@ import {Config} from '../../config/config';
 import {NavParams} from '../nav/nav-params';
 import {Platform} from '../../platform/platform';
 import {isPresent, isUndefined, isDefined} from '../../util/util';
-import {nativeRaf} from '../../util/dom';
+import {nativeRaf, CSS} from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
 
 const POPOVER_BODY_PADDING = 2;
@@ -245,6 +245,8 @@ class PopoverTransition extends Transition {
     let originY = 'top';
     let originX = 'left';
 
+    let popoverWrapperEle = <HTMLElement>nativeEle.querySelector('.popover-wrapper');
+
     // Popover content width and height
     let popoverEle = <HTMLElement>nativeEle.querySelector('.popover-content');
     let popoverDim = popoverEle.getBoundingClientRect();
@@ -313,7 +315,11 @@ class PopoverTransition extends Transition {
     popoverEle.style.top = popoverCSS.top + 'px';
     popoverEle.style.left = popoverCSS.left + 'px';
 
-    popoverEle.style.transformOrigin = originY + " " + originX;
+    popoverEle.style[CSS.transformOrigin] = originY + " " + originX;
+
+    // Since the transition starts before styling is done we
+    // want to wait for the styles to apply before showing the wrapper
+    popoverWrapperEle.style.opacity = '1';
   }
 }
 
@@ -373,16 +379,15 @@ class PopoverMdPopIn extends PopoverTransition {
 
     let ele = enteringView.pageRef().nativeElement;
 
-    let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
     let content = new Animation(ele.querySelector('.popover-content'));
     let viewport = new Animation(ele.querySelector('.popover-viewport'));
 
-    content.fromTo('scale', '0', '1');
+    content.fromTo('scale', '0.001', '1');
     viewport.fromTo('opacity', '0', '1');
 
     this
-      .easing('cubic-bezier(.55,0,.55,.2)')
-      .duration(500)
+      .easing('cubic-bezier(0.36,0.66,0.04,1)')
+      .duration(300)
       .add(content)
       .add(viewport);
   }
@@ -415,51 +420,5 @@ class PopoverMdPopOut extends PopoverTransition {
 }
 Transition.register('popover-md-pop-out', PopoverMdPopOut);
 
-
-
-class PopoverWpPopIn extends PopoverTransition {
-  constructor(private enteringView: ViewController, private leavingView: ViewController, private opts: TransitionOptions) {
-    super(opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-
-    let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
-
-    wrapper.fromTo('opacity', '0.01', '1');
-
-    this
-      .easing('ease')
-      .duration(100)
-      .fadeIn()
-      .add(wrapper);
-  }
-
-  play() {
-    nativeRaf(() => {
-      this.positionView(this.enteringView.pageRef().nativeElement, this.opts.ev);
-      super.play();
-    });
-  }
-}
-Transition.register('popover-wp-pop-in', PopoverWpPopIn);
-
-
-class PopoverWpPopOut extends PopoverTransition {
-  constructor(private enteringView: ViewController, private leavingView: ViewController, private opts: TransitionOptions) {
-    super(opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
-
-    wrapper.fromTo('opacity', '1', '0');
-
-    this
-      .easing('ease')
-      .duration(500)
-      .fadeIn()
-      .add(wrapper);
-  }
-}
-Transition.register('popover-wp-pop-out', PopoverWpPopOut);
 
 let popoverIds = -1;
