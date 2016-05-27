@@ -37,13 +37,13 @@ export class ViewController {
   private _cd: ChangeDetectorRef;
   protected _nav: NavController;
 
-  didLoad: EventEmitter<LifeCycleEvent>;
-  willEnter: EventEmitter<LifeCycleEvent>;
-  didEnter: EventEmitter<LifeCycleEvent>;
-  willLeave: EventEmitter<LifeCycleEvent>;
-  didLeave: EventEmitter<LifeCycleEvent>;
-  willUnload: EventEmitter<LifeCycleEvent>;
-  didUnload: EventEmitter<LifeCycleEvent>;
+  didLoad: EventEmitter<any>;
+  willEnter: EventEmitter<any>;
+  didEnter: EventEmitter<any>;
+  willLeave: EventEmitter<any>;
+  didLeave: EventEmitter<any>;
+  willUnload: EventEmitter<any>;
+  didUnload: EventEmitter<any>;
 
   /**
    * @private

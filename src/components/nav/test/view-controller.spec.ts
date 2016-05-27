@@ -15,7 +15,7 @@ export function run() {
         let viewController = new ViewController(FakePage);
         subscription = viewController.didLoad.subscribe((event:LifeCycleEvent) => {
           // assert
-          expect(event.componentType['name']).toEqual('FakePage');
+          expect(event).toEqual(null);
           done();
         }, err => {
           done(err);
@@ -32,7 +32,7 @@ export function run() {
         let viewController = new ViewController(FakePage);
         subscription = viewController.willEnter.subscribe((event:LifeCycleEvent) => {
           // assert
-          expect(event.componentType['name']).toEqual('FakePage');
+          expect(event).toEqual(null);
           done();
         }, err => {
           done(err);
@@ -49,7 +49,7 @@ export function run() {
         let viewController = new ViewController(FakePage);
         subscription = viewController.didEnter.subscribe((event:LifeCycleEvent) => {
           // assert
-          expect(event.componentType['name']).toEqual('FakePage');
+          expect(event).toEqual(null);
           done();
         }, err => {
           done(err);
@@ -66,7 +66,7 @@ export function run() {
         let viewController = new ViewController(FakePage);
         subscription = viewController.willLeave.subscribe((event:LifeCycleEvent) => {
           // assert
-          expect(event.componentType['name']).toEqual('FakePage');
+          expect(event).toEqual(null);
           done();
         }, err => {
           done(err);
@@ -83,7 +83,7 @@ export function run() {
         let viewController = new ViewController(FakePage);
         subscription = viewController.didLeave.subscribe((event:LifeCycleEvent) => {
           // assert
-          expect(event.componentType['name']).toEqual('FakePage');
+          expect(event).toEqual(null);
           done();
         }, err => {
           done(err);
@@ -99,7 +99,7 @@ export function run() {
         // arrange
         let viewController = new ViewController(FakePage);
         subscription = viewController.willUnload.subscribe((event:LifeCycleEvent) => {
-          expect(event.componentType['name']).toEqual('FakePage');
+          expect(event).toEqual(null);
           done();
         }, err => {
           done(err);
@@ -116,7 +116,7 @@ export function run() {
         let viewController = new ViewController(FakePage);
         subscription = viewController.didUnload.subscribe((event:LifeCycleEvent) => {
           // assert
-          expect(event.componentType['name']).toEqual('FakePage');
+          expect(event).toEqual(null);
           done();
         }, err => {
           done(err);
