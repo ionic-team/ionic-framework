@@ -505,7 +505,8 @@ export class NavController extends Ion {
     enteringView.setLeavingOpts({
       keyboardClose: false,
       direction: 'back',
-      animation: enteringView.getTransitionName('back')
+      animation: enteringView.getTransitionName('back'),
+      ev: opts.ev
     });
 
     // start the transition
@@ -1429,14 +1430,14 @@ export class NavController extends Ion {
 
     // load the page component inside the nav
     this._loader.loadNextToLocation(view.componentType, this._viewport, providers).then(component => {
-      
+
       // a new ComponentRef has been created
       // set the ComponentRef's instance to its ViewController
       view.setInstance(component.instance);
-      
+
       // the component has been loaded, so call the view controller's loaded method to load any dependencies into the dom
       view.loaded( () => {
-        
+
         // the ElementRef of the actual ion-page created
         let pageElementRef = component.location;
 
