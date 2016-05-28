@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, App, Alert, NavController, List, ItemSliding} from '../../../../../src';
+import {ionicBootstrap, App, Alert, NavController, List, ItemSliding, Toast} from '../../../../../src';
 
 
 @Component({
@@ -8,7 +8,7 @@ import {ionicBootstrap, App, Alert, NavController, List, ItemSliding} from '../.
 class E2EPage {
   @ViewChild('myList', {read: List}) list: List;
 
-  items = [];
+  items: number[] = [];
   shouldShow: boolean = true;
 
   constructor(private app: App, private nav: NavController) {
@@ -21,7 +21,14 @@ class E2EPage {
     this.list.closeSlidingItems();
   }
 
-  didClick(item) {
+  unread(item: ItemSliding) {
+    if (item) {
+      item.close();
+    }
+    console.log('UNREAD', item);
+  }
+
+  didClick(item: ItemSliding) {
     console.log('Clicked, ion-item');
 
     let alert = Alert.create({
@@ -31,7 +38,7 @@ class E2EPage {
     this.nav.present(alert);
   }
 
-  archive(item) {
+  archive(item: ItemSliding) {
     console.log('Archive, ion-item-options button', item);
 
     let alert = Alert.create({
@@ -46,7 +53,7 @@ class E2EPage {
     this.nav.present(alert);
   }
 
-  del(item) {
+  del(item: ItemSliding) {
     console.log('Delete ion-item-options button', item);
 
     let alert = Alert.create({
@@ -59,6 +66,21 @@ class E2EPage {
       }]
     });
     this.nav.present(alert);
+  }
+
+  download(item: ItemSliding) {
+    item.setClass('downloading', true);
+    setTimeout(() => {
+      const toast = Toast.create({
+        message: 'Item was downloaded!'
+      });
+      this.nav.present(toast);
+      item.setClass('downloading', false);
+      item.close();
+      setTimeout(() => {
+        toast.dismiss();
+      }, 2000);
+    }, 1500);
   }
 
   reload() {

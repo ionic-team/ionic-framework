@@ -69,20 +69,19 @@ export class List extends Ion {
    * @param {boolean} shouldEnable whether the item-sliding should be enabled or not
    */
   enableSlidingItems(shouldEnable: boolean) {
-    if (this._enableSliding !== shouldEnable) {
-      this._enableSliding = shouldEnable;
+    if (this._enableSliding === shouldEnable) {
+      return;
+    }
 
-      if (shouldEnable) {
-        console.debug('enableSlidingItems');
-        this._zone.runOutsideAngular(() => {
-          setTimeout(() => {
-            this.slidingGesture = new ItemSlidingGesture(this, this.ele);
-          });
-        });
+    this._enableSliding = shouldEnable;
+    if (shouldEnable) {
+      console.debug('enableSlidingItems');
+      this._zone.runOutsideAngular(() => {
+        setTimeout(() => this.slidingGesture = new ItemSlidingGesture(this, this.ele));
+      });
 
-      } else {
-        this.slidingGesture && this.slidingGesture.unlisten();
-      }
+    } else {
+      this.slidingGesture && this.slidingGesture.unlisten();
     }
   }
 
@@ -119,11 +118,8 @@ export class List extends Ion {
   selector: 'ion-list-header'
 })
 export class ListHeader {
-  private _id: string;
 
-  constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') id: string) {
-    this._id = id;
-  }
+  constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') private _id: string) { }
 
   public get id(): string {
     return this._id;
