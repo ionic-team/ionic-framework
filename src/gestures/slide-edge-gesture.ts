@@ -3,9 +3,25 @@ import {defaults} from '../util/util';
 import {windowDimensions} from '../util/dom';
 
 
+const enum Edge {
+  Left,
+  Right,
+  Top,
+  Bottom
+}
+function edgeMapper(value: string): Edge {
+  switch (value) {
+    case 'left': return Edge.Left;
+    case 'right': return Edge.Right;
+    case 'top': return Edge.Top;
+    case 'bottom': return Edge.Bottom;
+    default: throw new Error("invalid edge value: " + value);
+  }
+}
+
 export class SlideEdgeGesture extends SlideGesture {
-  public edges: Array<string>;
-  public maxEdgeStart: any;
+  public maxEdgeStart: number;
+  private _edges: Edge[];
   private _d: any;
 
   constructor(element: HTMLElement, opts: any = {}) {
@@ -15,13 +31,13 @@ export class SlideEdgeGesture extends SlideGesture {
     });
     super(element, opts);
     // Can check corners through use of eg 'left top'
-    this.edges = opts.edge.split(' ');
+    this._edges = opts.edge.split(' ').map(edgeMapper);
     this.maxEdgeStart = opts.maxEdgeStart;
   }
 
   canStart(ev: any): boolean {
     this._d = this.getContainerDimensions();
-    return this.edges.every(edge => this._checkEdge(edge, ev.center));
+    return this._edges.every(edge => this._checkEdge(edge, ev.center));
   }
 
   getContainerDimensions() {
@@ -33,13 +49,15 @@ export class SlideEdgeGesture extends SlideGesture {
     };
   }
 
-  _checkEdge(edge, pos) {
+  private _checkEdge(edge: Edge, pos): boolean {
     switch (edge) {
-      case 'left': return pos.x <= this._d.left + this.maxEdgeStart;
-      case 'right': return pos.x >= this._d.width - this.maxEdgeStart;
-      case 'top': return pos.y <= this._d.top + this.maxEdgeStart;
-      case 'bottom': return pos.y >= this._d.height - this.maxEdgeStart;
+      case Edge.Left: return pos.x <= this._d.left + this.maxEdgeStart;
+      case Edge.Right: return pos.x >= this._d.width - this.maxEdgeStart;
+      case Edge.Top: return pos.y <= this._d.top + this.maxEdgeStart;
+      case Edge.Bottom: return pos.y >= this._d.height - this.maxEdgeStart;
     }
+    console.error('internal error: unreachable');
+    return false;
   }
 
 }
