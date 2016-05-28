@@ -243,7 +243,7 @@ class ToastMdSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
 
     backdrop.fromTo('opacity', 0, 0);
@@ -258,7 +258,7 @@ class ToastMdSlideOut extends Transition {
 
     let ele = leavingView.pageRef().nativeElement;
     let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
 
     wrapper.fromTo('translateY', '0%', '120%');
     backdrop.fromTo('opacity', 0, 0);
@@ -271,7 +271,7 @@ class ToastWpPopIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
@@ -286,7 +286,7 @@ class ToastWpPopOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.toast-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');

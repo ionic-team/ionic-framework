@@ -1,4 +1,4 @@
-import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input, Output, Renderer, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input, Output, Renderer, ChangeDetectionStrategy, ViewEncapsulation, ViewChild} from '@angular/core';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -8,6 +8,7 @@ import {MenuContentGesture, MenuTargetGesture} from  './menu-gestures';
 import {MenuController} from './menu-controller';
 import {MenuType} from './menu-types';
 import {isTrueProperty} from '../../util/util';
+import {Backdrop} from '../backdrop/backdrop';
 
 
 /**
@@ -180,8 +181,7 @@ import {isTrueProperty} from '../../util/util';
   },
   template:
     '<ng-content></ng-content>' +
-    '<div tappable disable-activated class="backdrop"></div>',
-  directives: [forwardRef(() => MenuBackdrop)],
+    '<ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -206,7 +206,7 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  backdrop: MenuBackdrop;
+  @ViewChild(Backdrop) backdrop: Backdrop;
 
   /**
    * @private
@@ -361,6 +361,16 @@ export class Menu extends Ion {
 
     // register this menu with the app's menu controller
     self._menuCtrl.register(self);
+  }
+
+  /**
+   * @private
+   */
+  bdClick(ev) {
+    console.debug('backdrop clicked');
+    ev.preventDefault();
+    ev.stopPropagation();
+    this._menuCtrl.close();
   }
 
   /**
@@ -608,32 +618,4 @@ export class Menu extends Ion {
     this._cntEle = null;
   }
 
-}
-
-
-
-/**
- * @private
- */
-@Directive({
-  selector: '.backdrop',
-  host: {
-    '(click)': 'clicked($event)',
-  }
-})
-export class MenuBackdrop {
-
-  constructor(@Host() private _menuCtrl: Menu, public elementRef: ElementRef) {
-    _menuCtrl.backdrop = this;
-  }
-
-  /**
-   * @private
-   */
-  private clicked(ev: UIEvent) {
-    console.debug('backdrop clicked');
-    ev.preventDefault();
-    ev.stopPropagation();
-    this._menuCtrl.close();
-  }
 }

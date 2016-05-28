@@ -155,7 +155,7 @@ export class Popover extends ViewController {
 @Component({
   selector: 'ion-popover',
   template:
-    '<div class="backdrop" (touchmove)="bdTouch($event)" (click)="bdClick($event)" [class.hide-backdrop]="!d.showBackdrop" disable-activated tappable role="presentation"></div>' +
+    '<ion-backdrop (click)="bdClick($event)" [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
     '<div class="popover-wrapper">' +
       '<div class="popover-arrow"></div>' +
       '<div class="popover-content">' +
@@ -358,7 +358,7 @@ class PopoverTransition extends Transition {
       popoverCSS.top = targetTop - popoverHeight - (arrowHeight - 1);
       nativeEle.className = nativeEle.className + ' popover-bottom';
       originY = 'bottom';
-    // If there isn't room for it to pop up above the target cut it off
+      // If there isn't room for it to pop up above the target cut it off
     } else if (targetTop + targetHeight + popoverHeight > bodyHeight) {
       popoverEle.style.bottom = POPOVER_IOS_BODY_PADDING + '%';
     }
@@ -383,7 +383,7 @@ class PopoverPopIn extends PopoverTransition {
 
     let ele = enteringView.pageRef().nativeElement;
 
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1');
@@ -411,7 +411,7 @@ class PopoverPopOut extends PopoverTransition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0');

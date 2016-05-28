@@ -156,7 +156,7 @@ export class Modal extends ViewController {
 @Component({
   selector: 'ion-modal',
   template:
-    '<div class="backdrop"></div>' +
+    '<ion-backdrop disableScroll="false"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
       '<div #viewport></div>' +
     '</div>'
@@ -165,7 +165,7 @@ export class ModalCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
-  constructor(protected  _loader: DynamicComponentLoader, protected _navParams: NavParams) {}
+  constructor(protected _loader: DynamicComponentLoader, protected _navParams: NavParams) {}
 
   loadComponent(): Promise<ComponentRef<any>> {
     let componentType = this._navParams.data.componentType;
@@ -189,7 +189,7 @@ class ModalSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     backdrop.fromTo('opacity', 0.01, 0.4);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
     let page = <HTMLElement> ele.querySelector('ion-page');
@@ -222,7 +222,7 @@ class ModalSlideOut extends Transition {
 
     let ele = leavingView.pageRef().nativeElement;
 
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     backdrop.fromTo('opacity', 0.4, 0.0);
     let wrapperEle = <HTMLElement> ele.querySelector('.modal-wrapper');
     let wrapperEleRect = wrapperEle.getBoundingClientRect();
@@ -249,7 +249,7 @@ class ModalMDSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     backdrop.fromTo('opacity', 0.01, 0.4);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
     wrapper.fromTo('translateY', '40px', '0px');
@@ -281,7 +281,7 @@ class ModalMDSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     backdrop.fromTo('opacity', 0.4, 0.0);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
     wrapper.fromTo('translateY', '0px', '40px');
