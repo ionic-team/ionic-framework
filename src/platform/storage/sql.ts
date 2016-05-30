@@ -11,13 +11,18 @@ const win: any = window;
  *
  * This is the preferred storage engine, as data will be stored in appropriate
  * app storage, unlike Local Storage which is treated differently by the OS.
+ * 
+ * Before you can use it, you need to install the SQL Lite plugin : 
+ * 
+ * @usage
+ * ionic plugin add cordova-sqlite-storage
  *
  * For convenience, the engine supports key/value storage for simple get/set and blob
  * storage. The full SQL engine is exposed underneath through the `query` method.
  *
  * @usage
  ```js
- * let storage = new Storage(SqlStorage, options);
+ * var storage = new Storage(SqlStorage, options);
  * storage.set('name', 'Max');
  * storage.get('name').then((name) => {
  * });
