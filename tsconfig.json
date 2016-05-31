@@ -5,14 +5,22 @@
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "noImplicitAny": true
   },
+  "filesGlob": [
+    "src/**/*.ts",
+    "!node_modules/**/*"
+  ],
   "exclude": [
     "node_modules",
     "scripts",
     "typings/main",
     "typings/main.d.ts"
   ],
-  "compileOnSave" : false,
-  "buildOnSave": false
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
 }
