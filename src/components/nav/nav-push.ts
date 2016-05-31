@@ -21,7 +21,7 @@ import {NavRegistry} from './nav-registry';
  *
  * ```ts
  * import {LoginPage} from 'login';
- * @Page({
+ * @Component({
  *   template: `<button [navPush]="pushPage" [navParams]="params"></button>`
  * })
  * class MyPage {
@@ -52,7 +52,7 @@ import {NavRegistry} from './nav-registry';
 export class NavPush {
 
   /**
-  * @input {page} the page you want to push
+  * @input {Page} the page you want to push
   */
   @Input() navPush;
 

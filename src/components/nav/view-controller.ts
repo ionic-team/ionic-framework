@@ -12,14 +12,16 @@ import {isPresent} from '../../util/util';
  * Access various features and information about the current view.
  * @usage
  *  ```ts
- *  import {Page, ViewController} from 'ionic-angular';
- *  @Page....
- *  export class MyPage{
- *   constructor(viewCtrl: ViewController){
- *     this.viewCtrl = viewCtrl;
- *   }
- *  }
- *  ```
+ * import {Component} from '@angular/core';
+ * import {ViewController} from 'ionic-angular';
+ *
+ * @Component({...})
+ * export class MyPage{
+ *
+ *   constructor(public viewCtrl: ViewController) {}
+ *
+ * }
+ * ```
  */
 export class ViewController {
   private _cntDir: any;

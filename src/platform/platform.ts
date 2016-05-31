@@ -19,7 +19,7 @@ import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
  * ```ts
  * import {Platform} from 'ionic-angular';
  *
- * @Page({...})
+ * @Component({...})
  * export MyPage {
  *   constructor(platform: Platform) {
  *     this.platform = platform;
@@ -73,7 +73,7 @@ export class Platform {
    * ```
    * import {Platform} from 'ionic-angular';
    *
-   * @Page({...})
+   * @Component({...})
    * export MyPage {
    *   constructor(platform: Platform) {
    *     this.platform = platform;
@@ -116,7 +116,7 @@ export class Platform {
    * ```
    * import {Platform} from 'ionic-angular';
    *
-   * @Page({...})
+   * @Component({...})
    * export MyPage {
    *   constructor(platform: Platform) {
    *     this.platform = platform;
@@ -140,7 +140,7 @@ export class Platform {
    * ```
    * import {Platform} from 'ionic-angular';
    *
-   * @Page({...})
+   * @Component({...})
    * export MyPage {
    *   constructor(platform: Platform) {
    *     this.platform = platform;
@@ -186,9 +186,10 @@ export class Platform {
    * the status bar plugin, so the web should not run status bar plugin logic.
    *
    * ```
-   * import {App, Platform} from 'ionic-angular';
+   * import {Component} from '@angular/core';
+   * import {Platform} from 'ionic-angular';
    *
-   * @App({...})
+   * @Component({...})
    * export MyApp {
    *   constructor(platform: Platform) {
    *     platform.ready().then((readySource) => {

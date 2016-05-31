@@ -68,7 +68,7 @@ import {Scroll} from '../scroll/scroll';
  *
  * @usage
  *
- * You can add slides to a `@Page` using the following template:
+ * You can add slides to a `@Component` using the following template:
  *
  * ```html
  * <ion-slides>
@@ -87,9 +87,10 @@ import {Scroll} from '../scroll/scroll';
  * To add [options](#configuring), we will define them in `mySlideOptions` in our class `MyPage`:
  *
  * ```ts
- * import {Page, Slides} from 'ionic-angular';
+ * import {Component} from '@angular/core';
+ * import {Slides} from 'ionic-angular';
  *
- * @Page({
+ * @Component({
  *   templateUrl: 'my-page.html'
  * })
  * class MyPage {

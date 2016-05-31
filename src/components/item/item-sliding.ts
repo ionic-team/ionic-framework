@@ -83,9 +83,10 @@ export class ItemSliding {
    * ```
    *
    * ```ts
-   * import {Page, ItemSliding} from 'ionic-angular';
+   * import {Component} from '@angular/core';
+   * import {ItemSliding} from 'ionic-angular';
    *
-   * @Page({})
+   * @Component({...})
    * export class MyClass {
    *   constructor() { }
    *
