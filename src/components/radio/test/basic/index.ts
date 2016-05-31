@@ -1,8 +1,9 @@
-import {App} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 import {Control, ControlGroup} from '@angular/common';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EApp {
@@ -71,3 +72,5 @@ class E2EApp {
     console.log('turtleSelect', ev);
   }
 }
+
+ionicBootstrap(E2EApp);

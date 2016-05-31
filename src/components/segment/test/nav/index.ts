@@ -1,13 +1,15 @@
+import {Component} from '@angular/core';
 import {Validators, Control, ControlGroup} from '@angular/common';
-import {App, Page, NavController} from '../../../../../src';
+import {ionicBootstrap, NavController} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html',
 })
 class SegmentPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
+  signInType: string;
+
+  constructor(public nav: NavController) {
     this.signInType = 'new';
   }
 
@@ -16,7 +18,7 @@ class SegmentPage {
   }
 }
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar hideBackButton>
       <button menuToggle>
@@ -38,12 +40,11 @@ class SegmentPage2 {
 }
 
 
-@App({
-  pages: [SegmentPage],
+@Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-class MyApp {
-  constructor() {
-    this.root = SegmentPage;
-  }
+class E2EApp {
+  root = SegmentPage;
 }
+
+ionicBootstrap(E2EApp);

@@ -1,8 +1,9 @@
-import { Alert, Loading, NavController, App, Page } from '../../../../index';
-import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from '@angular/common';
+import {Component} from '@angular/core';
+import {ionicBootstrap, Alert, Loading, NavController} from '../../../../index';
+import {FormBuilder, ControlGroup, Validators} from '@angular/common';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 export class E2EPage {
@@ -32,7 +33,7 @@ export class E2EPage {
 	}
 }
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Another Page</ion-title>
@@ -153,12 +154,11 @@ class AnotherPage {
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  root;
-  constructor() {
-    this.root = E2EPage;
-  }
+  root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);

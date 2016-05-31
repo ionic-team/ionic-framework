@@ -1,8 +1,8 @@
-import {ViewChild} from '@angular/core';
-import {App, Page, IonicApp, Alert, NavController, List, ItemSliding} from '../../../../../src';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, App, Alert, NavController, List, ItemSliding} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -11,7 +11,7 @@ class E2EPage {
   items = [];
   shouldShow: boolean = true;
 
-  constructor(private app: IonicApp, private nav: NavController) {
+  constructor(private app: App, private nav: NavController) {
     for (let x = 0; x < 20; x++) {
       this.items.push(x);
     }
@@ -67,13 +67,11 @@ class E2EPage {
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
   root = E2EPage;
-
-  constructor() {
-
-  }
 }
+
+ionicBootstrap(E2EApp);

@@ -1,7 +1,8 @@
-import {App, Page, ActionSheet, Loading, NavController, ViewController, Platform} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, ActionSheet, Loading, NavController, ViewController, Platform} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -35,7 +36,7 @@ class E2EPage {
 
 }
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Page 2</ion-title>
@@ -47,7 +48,7 @@ class Page2 {
   constructor(private nav: NavController, private platform: Platform) {}
 }
 
-@Page({
+@Component({
   template: `
     <ion-tabs>
       <ion-tab tabTitle="Plain List" tabIcon="star" [root]="root1"></ion-tab>
@@ -66,9 +67,11 @@ export class TabsPage {
   }
 }
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
   root = TabsPage;
 }
+
+ionicBootstrap(E2EApp);

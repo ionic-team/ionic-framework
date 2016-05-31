@@ -1,21 +1,21 @@
-import {ViewChild} from '@angular/core';
-import {App, Page, IonicApp, MenuController, Nav} from '../../../../../src';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, App, MenuController, Nav} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'page1.html'
 })
 class Page1 {
 }
 
-@Page({
+@Component({
   templateUrl: 'page2.html'
 })
 class Page2 {
 }
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EApp {
@@ -26,7 +26,7 @@ class E2EApp {
   page2 = Page2;
   rootPage = Page1;
 
-  constructor(private app: IonicApp, private menu: MenuController) {
+  constructor(private app: App, private menu: MenuController) {
     this.menu1Active();
   }
 
@@ -51,3 +51,5 @@ class E2EApp {
     this.menu.enable(true, 'menu3');
   }
 }
+
+ionicBootstrap(E2EApp);

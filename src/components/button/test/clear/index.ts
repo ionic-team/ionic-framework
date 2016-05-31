@@ -1,13 +1,16 @@
-import {App} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
+class E2EPage {
   clearButton = true;
 
   toggleClear() {
     this.clearButton = !this.clearButton;
   }
 }
+
+ionicBootstrap(E2EPage);

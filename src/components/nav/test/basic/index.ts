@@ -1,6 +1,6 @@
 import {Component, Type, ViewChild} from '@angular/core';
 import {App, NavController, Alert, Content} from '../../../../../src';
-import {Page, Config, IonicApp} from '../../../../../src';
+import {ionicBootstrap, Config} from '../../../../../src';
 import {NavParams, ViewController} from '../../../../../src';;
 
 
@@ -11,7 +11,7 @@ import {NavParams, ViewController} from '../../../../../src';;
 class MyCmpTest{}
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>{{title}}</ion-title>
@@ -129,7 +129,7 @@ class FirstPage {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-content padding>
       <h1>Full page</h1>
@@ -199,7 +199,7 @@ class FullPage {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar primary>
       <ion-title>Primary Color Page Header</ion-title>
@@ -265,7 +265,7 @@ class PrimaryHeaderPage {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar hideBackButton>
       <ion-title>Another Page Header</ion-title>
@@ -367,22 +367,19 @@ class AnotherPage {
 }
 
 
-@App({
-  pages: [FirstPage, FullPage, PrimaryHeaderPage, AnotherPage],
+@Component({
   template: `<ion-nav [root]="root"></ion-nav>`,
   host: {
     '[class.is-change-detecting]': 'isChangeDetecting'
   }
 })
 class E2EApp {
-  root;
-
-  constructor() {
-    this.root = FirstPage;
-  }
+  root = FirstPage;
 
   get isChangeDetecting() {
     console.log('isChangeDetecting');
     return true;
   }
 }
+
+ionicBootstrap(E2EApp);

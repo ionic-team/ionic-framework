@@ -1,17 +1,17 @@
-import {App} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
-  constructor() {
-    this.myParam = '';
-    
-    this.myValues = {
-      value1: 'Dynamic Input',
-      value2: 'Dynamic Textarea'
-    };
-  }
+class E2EPage {
+  myParam = '';
 
+  myValues = {
+    value1: 'Dynamic Input',
+    value2: 'Dynamic Textarea'
+  };
 }
+
+ionicBootstrap(E2EPage);

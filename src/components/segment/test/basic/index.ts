@@ -1,21 +1,19 @@
-import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
+import {Component} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/common';
+import {ionicBootstrap} from '../../../../../src';
 
-import {App, IonicApp} from '../../../../../src';
 
-
-@App({
+@Component({
   templateUrl: 'main.html',
-  providers: [FormBuilder],
-  directives: [FORM_DIRECTIVES]
+  providers: [FormBuilder]
 })
-class MyApp {
+class E2EApp {
   relationship: string = 'enemies';
   modelStyle: string = 'B';
   appType: string = 'free';
   icons: string = 'camera';
   isDisabled: boolean = true;
-
-  myForm;
+  myForm: any;
 
   constructor(fb: FormBuilder) {
     this.myForm = fb.group({
@@ -35,8 +33,10 @@ class MyApp {
     console.log("Segment selected", segmentButton.value);
   }
 
-  doSubmit(event) {
+  doSubmit(ev) {
     console.log('Submitting form', this.myForm.value);
-    event.preventDefault();
+    ev.preventDefault();
   }
 }
+
+ionicBootstrap(E2EApp);

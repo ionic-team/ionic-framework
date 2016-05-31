@@ -1,8 +1,8 @@
-import {App, Page, NavController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController} from '../../../../../src';
 
 
-
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Root</ion-title>
@@ -13,16 +13,15 @@ import {App, Page, NavController} from '../../../../../src';
     </ion-content>`,
 })
 class FirstPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(public nav: NavController) {}
+
   pushPage() {
     this.nav.push(SecondPage)
   }
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Root</ion-title>
@@ -35,16 +34,15 @@ class FirstPage {
   `
 })
 class SecondPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(public nav: NavController) {}
+
   insertPage() {
     this.nav.insert(1, InsertPage)
   }
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Inserted Paged</ion-title>
@@ -54,17 +52,14 @@ class SecondPage {
     </ion-content>
   `
 })
-class InsertPage {
-  constructor() { }
-}
+class InsertPage {}
 
 
-
-@App({
+@Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
 class E2EApp {
-  constructor() {
-    this.root = FirstPage;
-  }
+  root = FirstPage;
 }
+
+ionicBootstrap(E2EApp);

@@ -1,11 +1,12 @@
-import {App, Page, NavController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController} from '../../../../../src';
 
 
 let delay = 100;
 let animate = false;
 let count = 0;
 
-@Page({
+@Component({
   template: `
     <ion-content padding text-center>
       <p>Page 1</p>
@@ -39,7 +40,7 @@ class Page1 {
   }
 }
 
-@Page({
+@Component({
   template: `
     <ion-content padding text-center>
       <p>Page 2</p>
@@ -74,13 +75,11 @@ class Page2 {
 }
 
 
-@App({
+@Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
 class E2EApp {
-  root;
-
-  constructor() {
-    this.root = Page1;
-  }
+  root = Page1;
 }
+
+ionicBootstrap(E2EApp);

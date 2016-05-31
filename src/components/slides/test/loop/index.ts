@@ -1,10 +1,11 @@
-import {ViewChild} from '@angular/core';
-import {App, Slides} from '../../../../../src';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, Slides} from '../../../../../src';
 
-@App({
+
+@Component({
   templateUrl: 'main.html'
 })
-class MyApp {
+class E2EApp {
   slides: any[];
   @ViewChild('loopSlider') loopSlider: Slides;
   startingIndex: number;
@@ -42,3 +43,5 @@ class MyApp {
   }
 
 }
+
+ionicBootstrap(E2EApp);

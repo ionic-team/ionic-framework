@@ -1,11 +1,10 @@
-import {App} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
-@App({
-  templateUrl: 'main.html',
-  directives: []
+
+@Component({
+  templateUrl: 'main.html'
 })
-class MyApp {
-  constructor() {
+class E2EApp {}
 
-  }
-}
+ionicBootstrap(E2EApp);

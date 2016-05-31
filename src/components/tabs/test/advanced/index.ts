@@ -1,11 +1,11 @@
-import {ViewChild} from '@angular/core';
-import {RouteConfig} from '@angular/router';
+import {Component, ViewChild} from '@angular/core';
+import {Routes} from '@angular/router';
 import {Location} from '@angular/common';
 
-import {App, Page, NavController, NavParams, Modal, ViewController, Tabs} from '../../../../../src';
+import {ionicBootstrap, NavController, NavParams, Modal, ViewController, Tabs} from '../../../../../src';
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Sign In</ion-title>
@@ -38,7 +38,7 @@ class SignIn {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-toolbar>
       <ion-title>Chat Modal</ion-title>
@@ -61,7 +61,7 @@ class ChatPage {
 }
 
 
-@Page({
+@Component({
   templateUrl: './tabs.html'
 })
 class TabsPage {
@@ -115,7 +115,7 @@ class TabsPage {
 //
 // tab 1
 //
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 1</ion-title>' +
@@ -178,7 +178,7 @@ class Tab1Page1 {
 }
 
 
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar primary>' +
       '<ion-title>Tabs 1 Page 2</ion-title>' +
@@ -219,7 +219,7 @@ class Tab1Page2 {
 }
 
 
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 3</ion-title>' +
@@ -259,7 +259,7 @@ class Tab1Page3 {
 //
 // tab 2
 //
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 1</ion-title>' +
@@ -299,7 +299,7 @@ class Tab2Page1 {
 }
 
 
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 2</ion-title>' +
@@ -340,7 +340,7 @@ class Tab2Page2 {
 }
 
 
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 3</ion-title>' +
@@ -380,7 +380,7 @@ class Tab2Page3 {
 //
 // tab 3
 //
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 3</ion-title>' +
@@ -411,9 +411,11 @@ class Tab3Page1 {
 }
 
 
-@App()
-@RouteConfig([
-  { path: '/', component: SignIn, as: 'Signin' },
-  { path: '/tabs', component: TabsPage, as: 'Tabs' },
+@Component({})
+@Routes([
+  { path: '/', component: SignIn },
+  { path: '/tabs', component: TabsPage },
 ])
 class E2EApp {}
+
+ionicBootstrap(E2EApp);

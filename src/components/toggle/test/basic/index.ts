@@ -1,17 +1,9 @@
-import {App} from '../../../../../src';
-import {
-  Control,
-  ControlGroup,
-  NgForm,
-  Validators,
-  NgControl,
-  ControlValueAccessor,
-  NgControlName,
-  NgFormModel,
-  FormBuilder
-} from '@angular/common';
+import {Component} from '@angular/core';
+import {Control, ControlGroup, NgFormModel} from '@angular/common';
+import {ionicBootstrap} from '../../../../../src';
 
-@App({
+
+@Component({
   templateUrl: 'main.html'
 })
 class E2EApp {
@@ -66,3 +58,5 @@ class E2EApp {
     ev.preventDefault();
   }
 }
+
+ionicBootstrap(E2EApp);

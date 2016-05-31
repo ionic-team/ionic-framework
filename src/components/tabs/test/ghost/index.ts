@@ -1,11 +1,11 @@
-  import {App, Page, NavController, Tab} from '../../../../../src';
+import {Component, ContentChild, QueryList, ViewChildren} from '@angular/core';
+import {ionicBootstrap, NavController, Tab} from '../../../../../src';
 
-import {ContentChild, QueryList, ViewChildren} from '@angular/core';
 
 //
 // Tab 1
 //
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Heart</ion-title>
@@ -16,15 +16,13 @@ import {ContentChild, QueryList, ViewChildren} from '@angular/core';
     `
 })
 class Tab1 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(public nav: NavController) {}
 }
 
 //
 // Tab 2
 //
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Star</ion-title>
@@ -35,15 +33,13 @@ class Tab1 {
     `
 })
 class Tab2 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(public nav: NavController) {}
 }
 
 //
 // Tab 3
 //
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <button menuToggle>
@@ -57,15 +53,13 @@ class Tab2 {
     `
 })
 class Tab3 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(public nav: NavController) {}
 }
 
 //
 // Tab 3
 //
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <button menuToggle>
@@ -79,12 +73,10 @@ class Tab3 {
     `
 })
 class QuesaritoPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(public nav: NavController) {}
 }
 
-@App({
+@Component({
   template: `
     <ion-menu [content]="content">
       <ion-toolbar secondary>
@@ -106,7 +98,11 @@ class QuesaritoPage {
     </ion-tabs>
   `
 })
-export class TabsPage {
+class TabsPage {
+  root1 = Tab1;
+  root2 = Tab2;
+  root3 = Tab3;
+
   @ViewChildren(Tab) tab : QueryList<Tab>;
 
   ngAfterViewInit() {
@@ -122,12 +118,6 @@ export class TabsPage {
     this.tab.first.setRoot(pages[which])
   }
 
-  constructor() {
-
-    this.root1 = Tab1;
-    this.root2 = Tab2;
-    this.root3 = Tab3;
-  }
-  ngOnInit() {
-  }
 }
+
+ionicBootstrap(TabsPage);

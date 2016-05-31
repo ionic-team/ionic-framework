@@ -1,8 +1,8 @@
-import {ViewEncapsulation} from '@angular/core';
-import {App, Page} from '../../../../../src';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html',
   encapsulation: ViewEncapsulation.None
 })
@@ -73,15 +73,14 @@ class E2EPage {
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>',
 })
 class E2EApp {
-  root;
-  constructor() {
-    this.root = E2EPage;
-  }
+  root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);
 
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 

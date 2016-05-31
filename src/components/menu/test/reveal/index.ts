@@ -1,22 +1,18 @@
-import {ViewChild} from '@angular/core';
-import {App, Page, Nav} from '../../../../../src';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, Nav} from '../../../../../src';
 
 
-@Page({templateUrl: 'page1.html'})
+@Component({templateUrl: 'page1.html'})
 class Page1 {}
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EApp {
   @ViewChild(Nav) nav: Nav;
 
   rootView = Page1;
-
-  constructor() {
-
-  }
 
   openPage(menu, page) {
     // close the menu when clicking a link from the menu
@@ -27,3 +23,5 @@ class E2EApp {
     this.nav.setRoot(page.component);
   }
 }
+
+ionicBootstrap(E2EApp);
