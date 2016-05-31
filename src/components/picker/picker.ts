@@ -103,7 +103,7 @@ export class Picker extends ViewController {
     '(touchend)': 'pointerEnd($event)',
     '(mousedown)': 'pointerStart($event)',
     '(mousemove)': 'pointerMove($event)',
-    '(body:mouseup)': 'pointerEnd($event)',
+    '(body:mouseup)': 'pointerEnd($event)'
   }
 })
 class PickerColumnCmp {
@@ -122,6 +122,8 @@ class PickerColumnCmp {
   maxY: number;
   rotateFactor: number;
   lastIndex: number;
+  receivingEvents: boolean = false;
+
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   constructor(config: Config, private _sanitizer: DomSanitizationService) {
@@ -156,22 +158,18 @@ class PickerColumnCmp {
     this.startY = pointerCoord(ev).y;
 
     // reset everything
+    this.receivingEvents = true;
     this.velocity = 0;
     this.pos.length = 0;
     this.pos.push(this.startY, Date.now());
 
-    let minY = this.col.options.length - 1;
+    let minY = (this.col.options.length - 1);
     let maxY = 0;
 
     for (var i = 0; i < this.col.options.length; i++) {
-      if (this.col.options[i].disabled) {
-        continue;
-      }
-      if (i < minY) {
-        minY = i;
-      }
-      if (i > maxY) {
-        maxY = i;
+      if (!this.col.options[i].disabled) {
+        minY = Math.min(minY, i);
+        maxY = Math.max(maxY, i);
       }
     }
 
@@ -183,33 +181,35 @@ class PickerColumnCmp {
     ev.preventDefault();
     ev.stopPropagation();
 
-    if (this.startY !== null) {
-      if (this.isPrevented(ev)) {
-        return;
-      }
-
-      var currentY = pointerCoord(ev).y;
-      this.pos.push(currentY, Date.now());
-
-      // update the scroll position relative to pointer start position
-      var y = this.y + (currentY - this.startY);
-
-      if (y > this.minY) {
-        // scrolling up higher than scroll area
-        y = Math.pow(y, 0.8);
-        this.bounceFrom = y;
-
-      } else if (y < this.maxY) {
-        // scrolling down below scroll area
-        y += Math.pow(this.maxY - y, 0.9);
-        this.bounceFrom = y;
-
-      } else {
-        this.bounceFrom = 0;
-      }
-
-      this.update(y, 0, false, false);
+    if (this.startY === null) {
+      return;
     }
+
+    if (this.isPrevented(ev)) {
+      return;
+    }
+
+    var currentY = pointerCoord(ev).y;
+    this.pos.push(currentY, Date.now());
+
+    // update the scroll position relative to pointer start position
+    var y = this.y + (currentY - this.startY);
+
+    if (y > this.minY) {
+      // scrolling up higher than scroll area
+      y = Math.pow(y, 0.8);
+      this.bounceFrom = y;
+
+    } else if (y < this.maxY) {
+      // scrolling down below scroll area
+      y += Math.pow(this.maxY - y, 0.9);
+      this.bounceFrom = y;
+
+    } else {
+      this.bounceFrom = 0;
+    }
+
+    this.update(y, 0, false, false);
   }
 
   pointerEnd(ev) {
@@ -217,6 +217,10 @@ class PickerColumnCmp {
       return;
     }
 
+    if (!this.receivingEvents) {
+      return;
+    }
+    this.receivingEvents = false;
     this.velocity = 0;
 
     if (this.bounceFrom > 0) {
@@ -392,14 +396,9 @@ class PickerColumnCmp {
     let max = 0;
 
     for (var i = 0; i < this.col.options.length; i++) {
-      var opt = this.col.options[i];
-      if (!opt.disabled) {
-        if (i < min) {
-          min = i;
-        }
-        if (i > max) {
-          max = i;
-        }
+      if (!this.col.options[i].disabled) {
+        min = Math.min(min, i);
+        max = Math.max(max, i);
       }
     }
 
@@ -411,18 +410,20 @@ class PickerColumnCmp {
     }
   }
 
-  isPrevented(ev) {
+  isPrevented(ev): boolean {
+    let now = Date.now();
     if (ev.type.indexOf('touch') > -1) {
       // this is a touch event, so prevent mouse events for a while
-      this.msPrv = Date.now() + 2000;
+      this.msPrv = now + 2000;
 
-    } else if (this.msPrv > Date.now() && ev.type.indexOf('mouse') > -1) {
+    } else if (this.msPrv > now && ev.type.indexOf('mouse') > -1) {
       // this is a mouse event, and a touch event already happend recently
       // prevent the calling method from continuing
       ev.preventDefault();
       ev.stopPropagation();
       return true;
     }
+    return false;
   }
 
 }
@@ -445,7 +446,7 @@ class PickerColumnCmp {
       '</div>' +
       '<div class="picker-columns">' +
         '<div class="picker-above-highlight"></div>' +
-        '<div *ngFor="let c of d.columns" [col]="c" class="picker-col"> (ionChange)="_colChange($event)"</div>' +
+        '<div *ngFor="let c of d.columns" [col]="c" class="picker-col" (ionChange)="_colChange($event)"></div>' +
         '<div class="picker-below-highlight"></div>' +
       '</div>' +
     '</div>',
