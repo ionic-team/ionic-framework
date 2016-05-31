@@ -157,7 +157,7 @@ Platform.register({
     return p.isPlatformMatch('windows', ['windows phone']);
   },
   versionParser(p: Platform): any {
-    return p.matchUserAgentVersion(/Windows Phone (\d+).(\d+)?/);
+    return p.matchUserAgentVersion(/MSAppHost (\d+).(\d+)?/);
   }
 });
 
