@@ -3,7 +3,8 @@
 // Material Design Range
 // --------------------------------------------------
 
-$range-md-padding:                           8px !default;
+$range-md-padding-vertical:                  8px !default;
+$range-md-padding-horizontal:                8px !default;
 
 $range-md-slider-height:                     42px !default;
 
@@ -18,14 +19,16 @@ $range-md-knob-width:                        12px !default;
 $range-md-knob-height:                       $range-md-knob-width !default;
 $range-md-knob-background-color:             $range-md-bar-active-background-color !default;
 
-$range-md-tick-width:                        0 !default;
+$range-md-tick-width:                        2px !default;
 $range-md-tick-height:                       $range-md-tick-width !default;
-$range-md-tick-background-color:             $range-md-bar-background-color !default;
-$range-md-tick-active-background-color:      $range-md-bar-active-background-color !default;
+$range-md-tick-border-radius:                50% !default;
+$range-md-tick-background-color:             #000 !default;
+$range-md-tick-active-background-color:      $range-md-tick-background-color !default;
 
 $range-md-pin-background-color:              $range-md-bar-active-background-color !default;
 $range-md-pin-color:                         color-contrast($colors-md, $range-md-bar-active-background-color) !default;
 $range-md-pin-font-size:                     12px !default;
+$range-md-pin-padding:                       8px !default;
 
 
 .item-range .item-inner {
@@ -46,7 +49,11 @@ ion-range {
   position: relative;
   display: block;
 
-  padding: $range-md-padding;
+  padding: $range-md-padding-vertical $range-md-padding-horizontal;
+}
+
+.range-has-pin {
+  padding-top: $range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding;
 }
 
 .range-slider {
@@ -102,6 +109,8 @@ ion-range {
 
 .range-knob {
   position: absolute;
+  z-index: 2;
+
   top: ($range-md-hit-height / 2) - ($range-md-knob-height / 2) + ($range-md-bar-height / 2);
   left: ($range-md-hit-width / 2) - ($range-md-knob-width / 2);
 
@@ -117,6 +126,8 @@ ion-range {
 
 .range-tick {
   position: absolute;
+  z-index: 1;
+
   top: ($range-md-hit-height / 2) - ($range-md-tick-height / 2) + ($range-md-bar-height / 2);
 
   margin-left: ($range-md-tick-width / 2) * -1;
@@ -124,7 +135,7 @@ ion-range {
   width: $range-md-tick-width;
   height: $range-md-tick-height;
 
-  border-radius: 50%;
+  border-radius: $range-md-tick-border-radius;
 
   background: $range-md-tick-background-color;
 
@@ -140,11 +151,11 @@ ion-range {
   top: -20px;
   display: inline-block;
 
-  padding: 8px;
+  padding: $range-md-pin-padding;
 
   min-width: 28px;
 
-  border-radius: 50px;
+  border-radius: 50%;
 
   font-size: $range-md-pin-font-size;
 
@@ -166,14 +177,15 @@ ion-range {
   transform: scale(1.5);
 }
 
-// Generate iOS Range Colors
+// Generate Material Design Range Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
   ion-range[#{$color-name}] {
     .range-bar-active,
-    .range-knob {
+    .range-knob,
+    .range-pin {
       background: $color-base;
     }
   }

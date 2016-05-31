@@ -3,7 +3,8 @@
 // Windows Range
 // --------------------------------------------------
 
-$range-wp-padding:                           8px !default;
+$range-wp-padding-vertical:                  8px !default;
+$range-wp-padding-horizontal:                8px !default;
 
 $range-wp-slider-height:                     42px !default;
 
@@ -19,14 +20,16 @@ $range-wp-knob-height:                       $range-wp-knob-width * 3 !default;
 $range-wp-knob-background-color:             $range-wp-bar-active-background-color !default;
 $range-wp-knob-border-radius:                $range-wp-knob-width / 2 !default;
 
-$range-wp-tick-width:                        0 !default;
-$range-wp-tick-height:                       $range-wp-tick-width !default;
+$range-wp-tick-width:                        $range-wp-bar-height !default;
+$range-wp-tick-height:                       $range-wp-tick-width * 3 !default;
+$range-wp-tick-border-radius:                $range-wp-knob-width / 2 !default;
 $range-wp-tick-background-color:             $range-wp-bar-background-color !default;
 $range-wp-tick-active-background-color:      $range-wp-bar-active-background-color !default;
 
 $range-wp-pin-background-color:              $range-wp-bar-active-background-color !default;
 $range-wp-pin-color:                         color-contrast($colors-wp, $range-wp-bar-active-background-color) !default;
 $range-wp-pin-font-size:                     12px !default;
+$range-wp-pin-padding:                       8px !default;
 
 
 .item-range .item-inner {
@@ -47,7 +50,11 @@ ion-range {
   position: relative;
   display: block;
 
-  padding: $range-wp-padding;
+  padding: $range-wp-padding-vertical $range-wp-padding-horizontal;
+}
+
+.range-has-pin {
+  padding-top: $range-wp-padding-vertical + $range-wp-pin-font-size + $range-wp-pin-padding;
 }
 
 .range-slider {
@@ -125,7 +132,7 @@ ion-range {
   width: $range-wp-tick-width;
   height: $range-wp-tick-height;
 
-  border-radius: 50%;
+  border-radius: $range-wp-tick-border-radius;
 
   background: $range-wp-tick-background-color;
 
@@ -138,10 +145,10 @@ ion-range {
 
 .range-pin {
   position: relative;
-  top: -20px;
+  top: -24px;
   display: inline-block;
 
-  padding: 8px;
+  padding: $range-wp-pin-padding;
 
   min-width: 28px;
 
@@ -163,14 +170,16 @@ ion-range {
   transform: translate3d(0, 0, 0) scale(1);
 }
 
-// Generate iOS Range Colors
+// Generate Windows Range Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
   ion-range[#{$color-name}] {
     .range-bar-active,
-    .range-knob {
+    .range-tick-active,
+    .range-knob,
+    .range-pin {
       background: $color-base;
     }
   }

@@ -3,7 +3,8 @@
 // iOS Range
 // --------------------------------------------------
 
-$range-ios-padding:                           8px 16px !default;
+$range-ios-padding-vertical:                  8px !default;
+$range-ios-padding-horizontal:                16px !default;
 
 $range-ios-slider-height:                     42px !default;
 
@@ -20,15 +21,16 @@ $range-ios-knob-box-shadow:                   0 3px 1px rgba(0, 0, 0, 0.1), 0 4p
 $range-ios-knob-border-radius:                50% !default;
 $range-ios-knob-background-color:             #fff !default;
 
-$range-ios-tick-width:                        6px !default;
-$range-ios-tick-height:                       $range-ios-tick-width !default;
+$range-ios-tick-width:                        $range-ios-bar-height !default;
+$range-ios-tick-height:                       8px !default;
+$range-ios-tick-border-radius:                0 !default;
 $range-ios-tick-background-color:             $range-ios-bar-background-color !default;
 $range-ios-tick-active-background-color:      $range-ios-bar-active-background-color !default;
 
 $range-ios-pin-background-color:              transparent !default;
 $range-ios-pin-color:                         $text-ios-color !default;
 $range-ios-pin-font-size:                     12px !default;
-
+$range-ios-pin-padding:                       8px !default;
 
 .item-range .item-inner {
   overflow: visible;
@@ -48,7 +50,11 @@ ion-range {
   position: relative;
   display: block;
 
-  padding: $range-ios-padding;
+  padding: $range-ios-padding-vertical $range-ios-padding-horizontal;
+}
+
+.range-has-pin {
+  padding-top: $range-ios-padding-vertical + $range-ios-pin-font-size;
 }
 
 .range-slider {
@@ -128,7 +134,7 @@ ion-range {
   width: $range-ios-tick-width;
   height: $range-ios-tick-height;
 
-  border-radius: 50%;
+  border-radius: $range-ios-tick-border-radius;
 
   background: $range-ios-tick-background-color;
 
@@ -144,7 +150,7 @@ ion-range {
   top: -20px;
   display: inline-block;
 
-  padding: 8px;
+  padding: $range-ios-pin-padding;
 
   min-width: 28px;
 

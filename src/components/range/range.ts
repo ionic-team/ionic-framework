@@ -127,6 +127,7 @@ export class RangeKnob {
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',
+    '[class.range-has-pin]': '_pin',
   },
   directives: [RangeKnob],
   providers: [RANGE_VALUE_ACCESSOR],
