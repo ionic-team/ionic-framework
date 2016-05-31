@@ -5,6 +5,7 @@
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
+    "noImlicitAny": true,
     "outDir": "dist"
   },
   "exclude": [
