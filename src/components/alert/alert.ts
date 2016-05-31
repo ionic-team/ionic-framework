@@ -282,9 +282,9 @@ export class Alert extends ViewController {
    *  |-------------|-----------|-----------------------------------------------------------------|
    *  | type        | `string`  | The type the input should be, text, tel, number, etc (optional) |
    *  | name        | `string`  | The name for the input (optional)                               |
-   *  | placeHolder | `string`  | The input's placeholder (optional)                              |
+   *  | placeholder | `string`  | The input's placeholder (optional, for textual/numeric inputs)  |
    *  | value       | `string`  | The input's value (optional)                                    |
-   *  | label       | `string`  | The input's label (optional)                                    |
+   *  | label       | `string`  | The input's label (optional, only for radio/checkbox inputs)    |
    *  | checked     | `boolean` | Whether or not the input is checked or not (optional)           |
    *  | id          | `string`  | The input's id (optional)                                       |
    *
