@@ -44,7 +44,7 @@
 
   <ion-item>
     <ion-label>h:mm a</ion-label>
-    <ion-datetime displayFormat="h:mm a" [(ngModel)]="time"></ion-datetime>
+    <ion-datetime (ionChange)="onChange($event)" (ionCancel)="onCancel($event)" displayFormat="h:mm a" [(ngModel)]="time"></ion-datetime>
   </ion-item>
 
   <ion-item>

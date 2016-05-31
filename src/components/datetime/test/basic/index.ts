@@ -26,6 +26,14 @@ class E2EPage {
     'l\u00f8r'
   ];
 
+  onChange(ev) {
+    console.log("Changed", ev);
+  }
+
+  onCancel(ev) {
+    console.log("Canceled", ev);
+  }
+
 }
 
 

@@ -37,6 +37,14 @@ export class ViewController {
   private _cd: ChangeDetectorRef;
   protected _nav: NavController;
 
+  didLoad: EventEmitter<any>;
+  willEnter: EventEmitter<any>;
+  didEnter: EventEmitter<any>;
+  willLeave: EventEmitter<any>;
+  didLeave: EventEmitter<any>;
+  willUnload: EventEmitter<any>;
+  didUnload: EventEmitter<any>;
+
   /**
    * @private
    */
@@ -61,11 +69,6 @@ export class ViewController {
    * @private
    */
   viewType: string = '';
-
-  /**
-   * @private
-   */
-  onReady: Function;
 
   /**
    * @private
@@ -97,6 +100,14 @@ export class ViewController {
   constructor(public componentType?: Type, data?: any) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
+
+    this.didLoad = new EventEmitter();
+    this.willEnter = new EventEmitter();
+    this.didEnter = new EventEmitter();
+    this.willLeave = new EventEmitter();
+    this.didLeave = new EventEmitter();
+    this.willUnload = new EventEmitter();
+    this.didUnload = new EventEmitter();
   }
 
   subscribe(generatorOrNext?: any): any {
@@ -472,6 +483,16 @@ export class ViewController {
   isLoaded(): boolean {
     return this._loaded;
   }
+  /**
+   * The loaded method is used to load any dynamic content/components
+   * into the dom before proceeding with the transition.  If a component needs
+   * dynamic component loading, extending ViewController and overriding
+   * this method is a good option
+   * @param {function} done is a callback that must be called when async loading/actions are completed
+   */
+  loaded(done: (() => any)) {
+    done();
+  }
 
   /**
    * @private
@@ -481,8 +502,9 @@ export class ViewController {
    * to put your setup code for the view; however, it is not the
    * recommended method to use when a view becomes active.
    */
-  loaded() {
+  fireLoaded() {
     this._loaded = true;
+    this.didLoad.emit(null);
     ctrlFn(this, 'onPageLoaded');
   }
 
@@ -490,7 +512,7 @@ export class ViewController {
    * @private
    * The view is about to enter and become the active view.
    */
-  willEnter() {
+  fireWillEnter() {
     if (this._cd) {
       // ensure this has been re-attached to the change detector
       this._cd.reattach();
@@ -498,7 +520,7 @@ export class ViewController {
       // detect changes before we run any user code
       this._cd.detectChanges();
     }
-
+    this.willEnter.emit(null);
     ctrlFn(this, 'onPageWillEnter');
   }
 
@@ -507,9 +529,10 @@ export class ViewController {
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
-  didEnter() {
+  fireDidEnter() {
     let navbar = this.getNavbar();
     navbar && navbar.didEnter();
+    this.didEnter.emit(null);
     ctrlFn(this, 'onPageDidEnter');
   }
 
@@ -517,7 +540,8 @@ export class ViewController {
    * @private
    * The view has is about to leave and no longer be the active view.
    */
-  willLeave() {
+  fireWillLeave() {
+    this.willLeave.emit(null);
     ctrlFn(this, 'onPageWillLeave');
   }
 
@@ -526,7 +550,8 @@ export class ViewController {
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
-  didLeave() {
+  fireDidLeave() {
+    this.didLeave.emit(null);
     ctrlFn(this, 'onPageDidLeave');
 
     // when this is not the active page
@@ -538,7 +563,8 @@ export class ViewController {
    * @private
    * The view is about to be destroyed and have its elements removed.
    */
-  willUnload() {
+  fireWillUnload() {
+    this.willUnload.emit(null);
     ctrlFn(this, 'onPageWillUnload');
   }
 
@@ -553,6 +579,7 @@ export class ViewController {
    * @private
    */
   destroy() {
+    this.didUnload.emit(null);
     ctrlFn(this, 'onPageDidUnload');
 
     for (var i = 0; i < this._destroys.length; i++) {
@@ -562,6 +589,10 @@ export class ViewController {
     this._tbRefs.length = 0;
   }
 
+}
+
+export interface LifeCycleEvent {
+  componentType?: any;
 }
 
 function ctrlFn(viewCtrl: ViewController, fnName: string) {

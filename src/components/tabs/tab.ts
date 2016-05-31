@@ -85,13 +85,13 @@ import {TabButton} from './tab-button';
  * ```
  *
  * Sometimes you may want to call a method instead of navigating to a new
- * page. You can use the `(select)` event to call a method on your class when
+ * page. You can use the `(ionSelect)` event to call a method on your class when
  * the tab is selected. Below is an example of presenting a modal from one of
  * the tabs.
  *
  * ```html
  * <ion-tabs preloadTabs="false">
- *   <ion-tab (select)="chat()"></ion-tab>
+ *   <ion-tab (ionSelect)="chat()"></ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -204,7 +204,7 @@ export class Tab extends NavController {
   /**
    * @output {Tab} Method to call when the current tab is selected
    */
-  @Output() select: EventEmitter<Tab> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<Tab> = new EventEmitter();
 
   constructor(
     @Inject(forwardRef(() => Tabs)) parentTabs: Tabs,

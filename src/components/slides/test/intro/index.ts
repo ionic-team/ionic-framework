@@ -19,6 +19,7 @@ class IntroPage {
   continueText: string = "Skip";
   startingIndex: number = 1;
   mySlideOptions;
+  showSlide: boolean = true;
 
   constructor(private nav: NavController) {
     this.mySlideOptions = {
@@ -40,6 +41,10 @@ class IntroPage {
 
   onSlideMove(slider) {
     console.log("Slide move", slider);
+  }
+
+  toggleLastSlide() {
+    this.showSlide = !this.showSlide;
   }
 
   skip() {

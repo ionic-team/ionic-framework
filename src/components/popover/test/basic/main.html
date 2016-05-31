@@ -19,6 +19,11 @@
 </ion-navbar>
 
 <ion-content #popoverContent padding>
+  <ion-list>
+    <button ion-item (click)="presentListPopover($event)">
+      Present List Popover
+    </button>
+  </ion-list>
 
   <button block (click)="presentListPopover($event)" class="e2eOpenListPopover">
     Present List Popover

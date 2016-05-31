@@ -67,8 +67,16 @@ class E2EApp {
     });
   }
 
-  onMenuOpening(ev) {
-    console.log('onMenuOpening', ev);
+  onDrag(ev) {
+    console.log('Menu is being dragged', ev);
+  }
+
+  onOpen(ev) {
+    console.log('Menu is open', ev);
+  }
+
+  onClose(ev) {
+    console.log('Menu is closed', ev);
   }
 
   isChangeDetecting() {

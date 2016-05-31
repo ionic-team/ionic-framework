@@ -96,7 +96,7 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @output {Toggle} expression to evaluate when the toggle value changes
    */
-  @Output() change: EventEmitter<Toggle> = new EventEmitter();
+  @Output() ionChange: EventEmitter<Toggle> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -195,7 +195,7 @@ export class Toggle implements ControlValueAccessor  {
     if (isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {
-        this.change.emit(this);
+        this.ionChange.emit(this);
       }
       this._item && this._item.setCssClass('item-toggle-checked', isChecked);
     }

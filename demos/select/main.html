@@ -29,7 +29,7 @@
 
     <ion-item>
       <ion-label>Date</ion-label>
-      <ion-select (change)="monthChange($event)">
+      <ion-select (ionChange)="monthChange($event)">
         <ion-option value="01">January</ion-option>
         <ion-option value="02">February</ion-option>
         <ion-option value="03" checked="true">March</ion-option>
@@ -43,7 +43,7 @@
         <ion-option value="11">November</ion-option>
         <ion-option value="12">December</ion-option>
       </ion-select>
-      <ion-select (change)="yearChange($event)">
+      <ion-select (ionChange)="yearChange($event)">
         <ion-option>1989</ion-option>
         <ion-option>1990</ion-option>
         <ion-option>1991</ion-option>

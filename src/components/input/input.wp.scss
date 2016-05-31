@@ -107,8 +107,8 @@ ion-input[clearInput] {
 .text-input-clear-icon {
   @include svg-background-image($text-input-wp-input-clear-icon-svg);
 
+  top: $item-wp-padding-top;
   right: ($item-wp-padding-right / 2);
-  bottom: 7px;
 
   width: $text-input-wp-input-clear-icon-width;
 

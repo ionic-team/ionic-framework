@@ -11,10 +11,10 @@ import {isTrueProperty, isPresent} from '../../util/util';
  * @usage
  * ```html
  * <ion-segment [(ngModel)]="relationship" primary>
- *   <ion-segment-button value="friends" (select)="selectedFriends()">
+ *   <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
  *     Friends
  *   </ion-segment-button>
- *   <ion-segment-button value="enemies" (select)="selectedEnemies()">
+ *   <ion-segment-button value="enemies" (ionSelect)="selectedEnemies()">
  *     Enemies
  *   </ion-segment-button>
  * </ion-segment>
@@ -66,7 +66,7 @@ export class SegmentButton {
   /**
    * @output {SegmentButton} expression to evaluate when a segment button has been clicked
    */
-  @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<SegmentButton> = new EventEmitter();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
@@ -97,7 +97,7 @@ export class SegmentButton {
   @HostListener('click', ['$event'])
   private onClick(ev) {
     console.debug('SegmentButton, select', this.value);
-    this.select.emit(this);
+    this.ionSelect.emit(this);
   }
 
   /**
@@ -130,7 +130,7 @@ export class SegmentButton {
  *
  * @usage
  * ```html
- * <ion-segment [(ngModel)]="relationship" (change)="onSegmentChanged($event)" danger>
+ * <ion-segment [(ngModel)]="relationship" (ionChange)="onSegmentChanged($event)" danger>
  *   <ion-segment-button value="friends">
  *     Friends
  *   </ion-segment-button>
@@ -178,7 +178,7 @@ export class Segment {
   /**
    * @output {Any}  expression to evaluate when a segment button has been changed
    */
-  @Output() change: EventEmitter<SegmentButton> = new EventEmitter();
+  @Output() ionChange: EventEmitter<SegmentButton> = new EventEmitter();
 
 
   /**
@@ -231,10 +231,10 @@ export class Segment {
   ngAfterViewInit() {
    let buttons = this._buttons.toArray();
    for (let button of buttons) {
-     button.select.subscribe((selectedButton) => {
+     button.ionSelect.subscribe((selectedButton) => {
        this.writeValue(selectedButton.value);
        this.onChange(selectedButton.value);
-       this.change.emit(selectedButton);
+       this.ionChange.emit(selectedButton);
      });
 
      if (isPresent(this.value)) {

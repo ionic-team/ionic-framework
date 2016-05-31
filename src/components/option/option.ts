@@ -17,9 +17,9 @@ export class Option {
   private _value;
 
   /**
-   * @input {any} Event to evaluate when option has changed
+   * @input {any} Event to evaluate when option is selected
    */
-  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<any> = new EventEmitter();
 
   constructor(private _elementRef: ElementRef) {}
 
