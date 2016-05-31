@@ -48,7 +48,6 @@ ion-range {
   position: relative;
   display: block;
 
-  margin-top: -8px;
   padding: $range-ios-padding;
 }
 
@@ -173,7 +172,8 @@ ion-range {
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
   ion-range[#{$color-name}] {
-    .range-bar-active {
+    .range-bar-active,
+    .range-tick-active {
       background: $color-base;
     }
   }

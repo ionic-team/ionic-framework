@@ -10,7 +10,19 @@ import {pointerCoord} from '../../util/dom';
 const RANGE_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Range), multi: true});
 
-
+/**
+ * @name Range
+ * @description
+ * The Range slider lets users select from a range of values by moving
+ * the slider knob.
+ *
+ *
+ *
+ *
+ *
+ *
+ * @demo /docs/v2/demos/range/
+ */
 @Component({
   selector: '.range-knob-handle',
   template:
@@ -231,7 +243,7 @@ export class Range {
   /**
    * @output {Range} Expression to evaluate when the range value changes.
    */
-  @Output() rangeChange: EventEmitter<Range> = new EventEmitter();
+  @Output() ionChange: EventEmitter<Range> = new EventEmitter();
 
 
   constructor(
