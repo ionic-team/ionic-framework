@@ -3,7 +3,7 @@ import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, R
 import {Navbar} from '../navbar/navbar';
 import {NavController, NavOptions} from './nav-controller';
 import {NavParams} from './nav-params';
-import {isPresent} from '../../util/util';
+import {isPresent, merge} from '../../util/util';
 
 
 /**
@@ -125,8 +125,9 @@ export class ViewController {
     this._onDismiss = callback;
   }
 
-  dismiss(data?: any, role?: any) {
-    return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts).then(() => {
+  dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
+    let options = merge({}, this._leavingOpts, navOptions);
+    return this._nav.remove(this._nav.indexOf(this), 1, options).then(() => {
       this._onDismiss && this._onDismiss(data, role);
       return data;
     });

@@ -31,6 +31,8 @@ $modal-inset-height-large:                   600px !default;
   z-index: 10;
 
   height: 100%;
+  // hidden by default to prevent flickers, the animation will show it
+  transform: translate3d(0, 100%, 0);
 
   @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
     position: absolute;
