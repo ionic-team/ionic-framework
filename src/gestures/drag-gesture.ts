@@ -5,7 +5,7 @@ import {defaults} from '../util';
 export class DragGesture extends Gesture {
   public dragging: boolean;
 
-  constructor(element, opts = {}) {
+  constructor(element: HTMLElement, opts = {}) {
     defaults(opts, {});
     super(element, opts);
   }
@@ -13,20 +13,20 @@ export class DragGesture extends Gesture {
   listen() {
     super.listen();
 
-    this.on('panstart', ev => {
+    this.on('panstart', (ev: UIEvent) => {
       if (this.onDragStart(ev) !== false) {
         this.dragging = true;
       }
     });
 
-    this.on('panmove', ev => {
+    this.on('panmove', (ev: UIEvent) => {
       if (!this.dragging) return;
       if (this.onDrag(ev) === false) {
         this.dragging = false;
       }
     });
 
-    this.on('panend', ev => {
+    this.on('panend', (ev: UIEvent) => {
       if (!this.dragging) return;
       this.onDragEnd(ev);
       this.dragging = false;

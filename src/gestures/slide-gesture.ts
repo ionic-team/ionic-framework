@@ -5,7 +5,7 @@ import {clamp} from '../util';
 export class SlideGesture extends DragGesture {
   public slide: SlideData = null;
 
-  constructor(element, opts = {}) {
+  constructor(element: HTMLElement, opts = {}) {
     super(element, opts);
     this.element = element;
   }

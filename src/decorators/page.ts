@@ -31,7 +31,7 @@ export interface PageMetadata {
  * @private
  */
 export function Page(config: PageMetadata) {
-  return function(cls) {
+  return function(cls: any) {
     // deprecated warning: added beta.8 2016-05-27
     console.warn('@Page decorator has been deprecated. Please use Angular\'s @Component instead.\nimport {Component} from \'@angular/core\';');
 

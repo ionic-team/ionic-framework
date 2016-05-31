@@ -423,12 +423,6 @@ class AlertCmp {
     // normalize the data
     let data = this.d;
 
-    if (data['body']) {
-      // deprecated warning
-      console.warn('Alert `body` property has been renamed to `message`');
-      data.message = data['body'];
-    }
-
     data.buttons = data.buttons.map(button => {
       if (typeof button === 'string') {
         return { text: button };
@@ -451,7 +445,7 @@ class AlertCmp {
 
     // An alert can be created with several different inputs. Radios,
     // checkboxes and inputs are all accepted, but they cannot be mixed.
-    let inputTypes = [];
+    let inputTypes: any[] = [];
     data.inputs.forEach(input => {
       if (inputTypes.indexOf(input.type) < 0) {
         inputTypes.push(input.type);
@@ -503,7 +497,7 @@ class AlertCmp {
     }
   }
 
-  btnClick(button, dismissDelay?) {
+  btnClick(button: any, dismissDelay?: number) {
     if (!this.isEnabled()) {
       return;
     }
@@ -529,7 +523,7 @@ class AlertCmp {
     }
   }
 
-  rbClick(checkedInput) {
+  rbClick(checkedInput: any) {
     if (this.isEnabled()) {
       this.d.inputs.forEach(input => {
         input.checked = (checkedInput === input);
@@ -538,7 +532,7 @@ class AlertCmp {
     }
   }
 
-  cbClick(checkedInput) {
+  cbClick(checkedInput: any) {
     if (this.isEnabled()) {
       checkedInput.checked = !checkedInput.checked;
     }
@@ -556,7 +550,7 @@ class AlertCmp {
     }
   }
 
-  dismiss(role): Promise<any> {
+  dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(this.getValues(), role);
   }
 

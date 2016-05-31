@@ -433,7 +433,7 @@ export class DateTime {
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev) {
+  private _click(ev: UIEvent) {
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -443,8 +443,8 @@ export class DateTime {
     this.open();
   }
 
-  @HostListener('keyup.space', ['$event'])
-  private _keyup(ev) {
+  @HostListener('keyup.space')
+  private _keyup() {
     if (!this._isOpen) {
       this.open();
     }
@@ -474,7 +474,7 @@ export class DateTime {
       },
       {
         text: this.doneText,
-        handler: (data) => {
+        handler: (data: any) => {
           console.log('datetime, done', data);
           this.onChange(data);
           this.ionChange.emit(data);
@@ -594,7 +594,7 @@ export class DateTime {
 
     // default to assuming this month has 31 days
     let numDaysInMonth = 31;
-    let selectedMonth;
+    let selectedMonth: number;
     if (monthCol) {
       monthOpt = monthCol.options[monthCol.selectedIndex];
       if (monthOpt) {
@@ -655,7 +655,7 @@ export class DateTime {
    */
   divyColumns(picker: Picker) {
     let pickerColumns = picker.getColumns();
-    let columns = [];
+    let columns: number[] = [];
 
     pickerColumns.forEach((col, i) => {
       columns.push(0);
@@ -803,7 +803,7 @@ export class DateTime {
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @private
@@ -845,7 +845,7 @@ function convertToArrayOfNumbers(input: any, type: string): number[] {
 
   if (isArray(input)) {
     // ensure each value is an actual number in the returned array
-    input.forEach(num => {
+    input.forEach((num: any) => {
       num = parseInt(num, 10);
       if (!isNaN(num)) {
         values.push(num);
@@ -877,7 +877,7 @@ function convertToArrayOfStrings(input: any, type: string): string[] {
 
     if (isArray(input)) {
       // trim up each string value
-      input.forEach(val => {
+      input.forEach((val: any) => {
         val = val.trim();
         if (val) {
           values.push(val);

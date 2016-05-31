@@ -147,7 +147,7 @@ export class InfiniteScroll {
     _content.addCssClass('has-infinite-scroll');
   }
 
-  private _onScroll(ev) {
+  private _onScroll() {
     if (this.state === STATE_LOADING || this.state === STATE_DISABLED) {
       return 1;
     }

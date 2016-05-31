@@ -31,7 +31,8 @@ export class Badge {
    */
   private _readAttrs(element: HTMLElement) {
     let elementAttrs = element.attributes;
-    let attrName;
+    let attrName: string;
+
     for (let i = 0, l = elementAttrs.length; i < l; i++) {
       if (elementAttrs[i].value !== '') continue;
 

@@ -233,8 +233,8 @@ export class Button {
     if (childNodes.length > 0) {
       childNodes = childNodes[0].childNodes;
     }
-    let childNode;
-    let nodes = [];
+    let childNode: Node;
+    let nodes: number[] = [];
     for (let i = 0, l = childNodes.length; i < l; i++) {
       childNode = childNodes[i];
 
@@ -274,7 +274,7 @@ export class Button {
    */
   private _readAttrs(element: HTMLElement) {
     let elementAttrs = element.attributes;
-    let attrName;
+    let attrName: string;
     for (let i = 0, l = elementAttrs.length; i < l; i++) {
       if (elementAttrs[i].value !== '') continue;
 
@@ -345,9 +345,9 @@ export class Button {
   /**
    * @private
    */
-  static setRoles(contentButtonChildren, role: string) {
+  static setRoles(contentButtonChildren: any, role: string) {
     let buttons = contentButtonChildren.toArray();
-    buttons.forEach(button => {
+    buttons.forEach((button: any) => {
       button.setRole(role);
     });
   }

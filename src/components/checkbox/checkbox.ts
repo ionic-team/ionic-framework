@@ -102,7 +102,7 @@ export class Checkbox {
    * @private
    */
   @HostListener('click', ['$event'])
-  private _click(ev) {
+  private _click(ev: UIEvent) {
     console.debug('checkbox, checked');
     ev.preventDefault();
     ev.stopPropagation();
@@ -158,7 +158,7 @@ export class Checkbox {
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @input {boolean} whether or not the checkbox is disabled or not.

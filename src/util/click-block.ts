@@ -3,7 +3,8 @@ import {nativeTimeout} from './dom';
 
 const CSS_CLICK_BLOCK = 'click-block-active';
 const DEFAULT_EXPIRE = 330;
-let cbEle, fallbackTimerId;
+let cbEle: HTMLElement;
+let fallbackTimerId: number;
 let isShowing = false;
 
 /**
@@ -15,14 +16,14 @@ export class ClickBlock {
   enable() {
     cbEle = document.createElement('click-block');
     document.body.appendChild(cbEle);
-    cbEle.addEventListener('touchmove', function(ev) {
+    cbEle.addEventListener('touchmove', function(ev: UIEvent) {
       ev.preventDefault();
       ev.stopPropagation();
     });
     this._enabled = true;
   }
 
-  show(shouldShow, expire) {
+  show(shouldShow: boolean, expire: number) {
     if (this._enabled) {
       if (shouldShow) {
         show(expire);
@@ -35,7 +36,7 @@ export class ClickBlock {
 
 }
 
-function show(expire) {
+function show(expire: number) {
   clearTimeout(fallbackTimerId);
   fallbackTimerId = nativeTimeout(hide, expire || DEFAULT_EXPIRE);
 

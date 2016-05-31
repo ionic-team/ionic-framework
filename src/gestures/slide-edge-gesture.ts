@@ -33,7 +33,7 @@ export class SlideEdgeGesture extends SlideGesture {
     };
   }
 
-  _checkEdge(edge, pos) {
+  _checkEdge(edge: string, pos: any) {
     switch (edge) {
       case 'left': return pos.x <= this._d.left + this.maxEdgeStart;
       case 'right': return pos.x >= this._d.width - this.maxEdgeStart;

@@ -144,13 +144,13 @@ export class Config {
       // the user config's platforms, which already contains
       // settings from default platform configs
 
-      let userPlatformValue = undefined;
-      let userDefaultValue = this._s[key];
-      let userPlatformModeValue = undefined;
-      let userDefaultModeValue = undefined;
-      let platformValue = undefined;
-      let platformModeValue = undefined;
-      let configObj = null;
+      let userPlatformValue: any = undefined;
+      let userDefaultValue: any = this._s[key];
+      let userPlatformModeValue: any = undefined;
+      let userDefaultModeValue: any = undefined;
+      let platformValue: any = undefined;
+      let platformModeValue: any = undefined;
+      let configObj: any = null;
 
       if (this.platform) {
         let queryStringValue = this.platform.query('ionic' + key.toLowerCase());
@@ -223,7 +223,7 @@ export class Config {
     // or it was from the users platform configs
     // or it was from the default platform configs
     // in that order
-    let rtnVal;
+    let rtnVal: any;
     if (isFunction(this._c[key])) {
       rtnVal = this._c[key](this.platform);
 
@@ -345,24 +345,24 @@ export class Config {
   /**
    * @private
    */
-  setPlatform(platform) {
+  setPlatform(platform: Platform) {
     this.platform = platform;
   }
 
   /**
    * @private
    */
-  static setModeConfig(mode, config) {
+  static setModeConfig(mode: string, config: any) {
     modeConfigs[mode] = config;
   }
 
   /**
    * @private
    */
-  static getModeConfig(mode) {
+  static getModeConfig(mode: string) {
     return modeConfigs[mode] || null;
   }
 
 }
 
-let modeConfigs = {};
+let modeConfigs: any = {};

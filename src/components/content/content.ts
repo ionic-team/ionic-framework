@@ -111,49 +111,49 @@ export class Content extends Ion {
   /**
    * @private
    */
-  addScrollListener(handler) {
+  addScrollListener(handler: any) {
     return this._addListener('scroll', handler);
   }
 
   /**
    * @private
    */
-  addTouchStartListener(handler) {
+  addTouchStartListener(handler: any) {
     return this._addListener('touchstart', handler);
   }
 
   /**
    * @private
    */
-  addTouchMoveListener(handler) {
+  addTouchMoveListener(handler: any) {
     return this._addListener('touchmove', handler);
   }
 
   /**
    * @private
    */
-  addTouchEndListener(handler) {
+  addTouchEndListener(handler: any) {
     return this._addListener('touchend', handler);
   }
 
   /**
    * @private
    */
-  addMouseDownListener(handler) {
+  addMouseDownListener(handler: any) {
     return this._addListener('mousedown', handler);
   }
 
   /**
    * @private
    */
-  addMouseUpListener(handler) {
+  addMouseUpListener(handler: any) {
     return this._addListener('mouseup', handler);
   }
 
   /**
    * @private
    */
-  addMouseMoveListener(handler) {
+  addMouseMoveListener(handler: any) {
     return this._addListener('mousemove', handler);
   }
 
@@ -177,8 +177,8 @@ export class Content extends Ion {
    * @param {Function} callback The method you want perform when scrolling has ended
    */
   onScrollEnd(callback: Function) {
-    let lastScrollTop = null;
-    let framesUnchanged = 0;
+    let lastScrollTop: number = null;
+    let framesUnchanged: number = 0;
     let _scrollEle = this._scrollEle;
 
     function next() {
@@ -187,6 +187,7 @@ export class Content extends Ion {
 
         if (Math.round(lastScrollTop) === Math.round(currentScrollTop)) {
           framesUnchanged++;
+
         } else {
           framesUnchanged = 0;
         }

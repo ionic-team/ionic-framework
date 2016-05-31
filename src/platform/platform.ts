@@ -43,7 +43,7 @@ export class Platform {
   private _resizeTm: any;
   private _zone: NgZone;
 
-  constructor(platforms = []) {
+  constructor(platforms: string[] = []) {
     this._platforms = platforms;
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }
@@ -727,8 +727,8 @@ class PlatformNode {
         return this;
       }
 
-      let platform = null;
-      let rootPlatform = null;
+      let platform: PlatformNode = null;
+      let rootPlatform: PlatformNode = null;
 
       for (let i = 0; i < parents.length; i++) {
         platform = new PlatformNode(parents[i]);
@@ -745,11 +745,11 @@ class PlatformNode {
     return null;
   }
 
-  getSubsetParents(subsetPlatformName: string): Array<string> {
+  getSubsetParents(subsetPlatformName: string): string[] {
     let platformRegistry = Platform.registry();
 
-    let parentPlatformNames = [];
-    let platform = null;
+    let parentPlatformNames: string[] = [];
+    let platform: PlatformConfig = null;
 
     for (let platformName in platformRegistry) {
       platform = platformRegistry[platformName];

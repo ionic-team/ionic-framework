@@ -101,7 +101,7 @@ export class App {
    */
   getActiveNav(): any {
     var nav = this._rootNav || null;
-    var activeChildNav;
+    var activeChildNav: any;
 
     while (nav) {
       activeChildNav = nav.getActiveChildNav();

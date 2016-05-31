@@ -6,7 +6,7 @@ export function renderDateTime(template: string, value: DateTimeData, locale: Lo
     return '';
   }
 
-  let tokens = [];
+  let tokens: string[] = [];
   let hasText = false;
   FORMAT_KEYS.forEach((format, index) => {
     if (template.indexOf(format.f) > -1) {

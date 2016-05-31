@@ -92,15 +92,15 @@ export class TextInput extends InputBase {
   /**
    * @private
    */
-  inputBlurred(event) {
-    this.blur.emit(event);
+  inputBlurred(ev: UIEvent) {
+    this.blur.emit(ev);
   }
 
   /**
    * @private
    */
-  inputFocused(event) {
-    this.focus.emit(event);
+  inputFocused(ev: UIEvent) {
+    this.focus.emit(ev);
   }
 
   /**
@@ -193,14 +193,14 @@ export class TextArea extends InputBase {
   /**
    * @private
    */
-  inputBlurred(event) {
-    this.blur.emit(event);
+  inputBlurred(ev: UIEvent) {
+    this.blur.emit(ev);
   }
 
   /**
    * @private
    */
-  inputFocused(event) {
-    this.focus.emit(event);
+  inputFocused(ev: UIEvent) {
+    this.focus.emit(ev);
   }
 }

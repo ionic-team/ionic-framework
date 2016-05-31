@@ -360,7 +360,7 @@ export class Animation {
   _asyncEnd(duration: number, shouldComplete: boolean) {
     var self = this;
 
-    function onTransitionEnd(ev) {
+    function onTransitionEnd(ev: any) {
       console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName);
 
       // ensure transition end events and timeouts have been cleared
@@ -817,7 +817,7 @@ interface EffectState {
   unit: string;
 }
 
-const TRANSFORMS = {
+const TRANSFORMS: any = {
   'translateX': 1, 'translateY': 1, 'translateZ': 1,
   'scale': 1, 'scaleX': 1, 'scaleY': 1, 'scaleZ': 1,
   'rotate': 1, 'rotateX': 1, 'rotateY': 1, 'rotateZ': 1,

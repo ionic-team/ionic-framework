@@ -273,9 +273,9 @@ class ActionSheetCmp {
 
   onPageLoaded() {
     // normalize the data
-    let buttons = [];
+    let buttons: any[] = [];
 
-    this.d.buttons.forEach(button => {
+    this.d.buttons.forEach((button: any) => {
       if (typeof button === 'string') {
         button = { text: button };
       }
@@ -327,7 +327,7 @@ class ActionSheetCmp {
     }
   }
 
-  click(button, dismissDelay?) {
+  click(button: any, dismissDelay?: number) {
     if (!this.isEnabled()) {
       return;
     }
@@ -360,7 +360,7 @@ class ActionSheetCmp {
     }
   }
 
-  dismiss(role): Promise<any> {
+  dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
   }
 
@@ -380,7 +380,7 @@ export interface ActionSheetOptions {
 
 
 class ActionSheetSlideIn extends Transition {
-  constructor(enteringView, leavingView, opts: TransitionOptions) {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
