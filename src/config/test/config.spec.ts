@@ -80,7 +80,7 @@ export function run() {
     let userConfig =  new Config({
       mode: 'configInstance'
     })
-    let providers = ionicProviders({config:userConfig});
+    let providers = ionicProviders(null, userConfig);
 
     let config = providers.find(provider => provider.useValue instanceof Config).useValue;
 
@@ -88,9 +88,9 @@ export function run() {
   });
 
   it('should create new Config instance from config object in ionicProviders', () => {
-    let providers = ionicProviders({config: {
+    let providers = ionicProviders(null, {
       mode: 'configObj'
-    }});
+    });
 
     let config = providers.find(provider => provider.useValue instanceof Config).useValue;
 

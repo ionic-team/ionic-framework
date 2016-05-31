@@ -1,11 +1,12 @@
-import {Component, ComponentRef, DynamicComponentLoader, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentRef, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
 
-import {windowDimensions} from '../../util/dom';
-import {pascalCaseToDashCase} from '../../util/util';
-import {NavParams} from '../nav/nav-params';
-import {ViewController} from '../nav/view-controller';
+import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
+import {NavParams} from '../nav/nav-params';
+import {pascalCaseToDashCase} from '../../util/util';
 import {Transition, TransitionOptions} from '../../transitions/transition';
+import {ViewController} from '../nav/view-controller';
+import {windowDimensions} from '../../util/dom';
 
 /**
  * @name Modal
@@ -35,7 +36,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  * ```ts
  * import {Page, Modal, NavController, NavParams} from 'ionic-angular';
  *
- * @Page(...)
+ * @Component(...)
  * class HomePage {
  *
  *  constructor(nav: NavController) {
@@ -49,7 +50,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  *
  * }
  *
- * @Page(...)
+ * @Component(...)
  * class Profile {
  *
  *  constructor(params: NavParams) {
@@ -65,9 +66,10 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  * modal.
  *
  * ```ts
- * import {Page, Modal, NavController, ViewController} from 'ionic-angular';
+ * import {Component} from '@angular/core';
+ * import {Modal, NavController, ViewController} from 'ionic-angular';
  *
- * @Page(...)
+ * @Component(...)
  * class HomePage {
  *
  *  constructor(nav: NavController) {
@@ -89,7 +91,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  *
  * }
  *
- * @Page(...)
+ * @Component(...)
  * class Profile {
  *
  *  constructor(viewCtrl: ViewController) {
@@ -140,7 +142,7 @@ export class Modal extends ViewController {
     let originalNgAfterViewInit = this.instance.ngAfterViewInit;
 
     this.instance.ngAfterViewInit = () => {
-      if ( originalNgAfterViewInit ) {
+      if (originalNgAfterViewInit) {
         originalNgAfterViewInit();
       }
       this.instance.loadComponent().then( (componentRef: ComponentRef<any>) => {
@@ -163,11 +165,13 @@ export class ModalCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
-  constructor(protected _eleRef: ElementRef, protected  _loader: DynamicComponentLoader, protected _navParams: NavParams, protected _viewCtrl: ViewController) {
-  }
+  constructor(protected  _loader: DynamicComponentLoader, protected _navParams: NavParams) {}
 
   loadComponent(): Promise<ComponentRef<any>> {
-    return this._loader.loadNextToLocation(this._navParams.data.componentType, this.viewport).then(componentRef => {
+    let componentType = this._navParams.data.componentType;
+    addSelector(componentType, 'ion-page');
+
+    return this._loader.loadNextToLocation(componentType, this.viewport).then(componentRef => {
       return componentRef;
     });
   }

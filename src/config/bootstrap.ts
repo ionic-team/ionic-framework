@@ -1,36 +1,81 @@
-import {provide, Provider, ComponentRef, NgZone} from '@angular/core';
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {Directive, ReflectiveInjector, Renderer, enableProdMode, ViewContainerRef, provide, PLATFORM_DIRECTIVES, ComponentRef, NgZone, DynamicComponentLoader} from '@angular/core';
 import {ROUTER_PROVIDERS} from '@angular/router';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {HTTP_PROVIDERS} from '@angular/http';
 
+import {App} from '../components/app/app';
 import {ClickBlock} from '../util/click-block';
 import {Config} from './config';
 import {Events} from '../util/events';
 import {FeatureDetect} from '../util/feature-detect';
 import {Form} from '../util/form';
-import {IonicApp} from '../components/app/app';
+import {IONIC_DIRECTIVES} from './directives';
+import {isPresent} from '../util/util';
 import {Keyboard} from '../util/keyboard';
 import {MenuController} from '../components/menu/menu-controller';
+import {nativeTimeout, closest} from '../util/dom';
 import {NavRegistry} from '../components/nav/nav-registry';
 import {Platform} from '../platform/platform';
-import {ready, closest} from '../util/dom';
 import {ScrollView} from '../util/scroll-view';
 import {TapClick} from '../components/tap-click/tap-click';
 import {Translate} from '../translation/translate';
+const _reflect: any = Reflect;
 
-/**
- * @private
- */
-export function ionicProviders(args: any = {}) {
-  let platform = new Platform();
-  let navRegistry = new NavRegistry(args.pages);
 
-  var config = args.config;
+export function ionicBootstrap(appRootComponent: any, customProviders?: Array<any>, config?: any): Promise<ComponentRef<any>> {
+  // get all Ionic Providers
+  let providers = ionicProviders(customProviders, config);
 
+  // automatically set "ion-app" selector to users root component
+  addSelector(appRootComponent, 'ion-app');
+
+  // call angular bootstrap
+  return bootstrap(appRootComponent, providers).then(ngComponentRef => {
+    // ionic app has finished bootstrapping
+    return ionicPostBootstrap(ngComponentRef);
+  });
+}
+
+
+export function ionicPostBootstrap(ngComponentRef: ComponentRef<any>): ComponentRef<any> {
+  //ngComponentRef.injector.get(TapClick);
+  let app: App = ngComponentRef.injector.get(App);
+  app.setAppInjector(ngComponentRef.injector);
+
+  // prepare platform ready
+  let platform: Platform = ngComponentRef.injector.get(Platform);
+  platform.setZone(ngComponentRef.injector.get(NgZone));
+  platform.prepareReady();
+
+  // TODO: Use Renderer
+  ngComponentRef.location.nativeElement.classList.add('app-init');
+
+  return ngComponentRef;
+}
+
+
+export function ionicProviders(customProviders?: Array<any>, config?: any): any[] {
+  // add custom providers to Ionic's dev
+  let directives = IONIC_DIRECTIVES;
+  if (customProviders) {
+    directives.push(customProviders);
+  }
+
+  // create an instance of Config
   if (!(config instanceof Config)) {
     config = new Config(config);
   }
 
+  // enable production mode if config set to true
+  if (config.getBoolean('prodMode')) {
+    enableProdMode();
+  }
+
+  // create an instance of Platform
+  let platform = new Platform();
+
+  // initialize platform
   platform.setUrl(window.location.href);
   platform.setUserAgent(window.navigator.userAgent);
   platform.setNavigatorPlatform(window.navigator.platform);
@@ -38,7 +83,6 @@ export function ionicProviders(args: any = {}) {
   config.setPlatform(platform);
 
   let clickBlock = new ClickBlock();
-
   let events = new Events();
   let featureDetect = new FeatureDetect();
 
@@ -46,50 +90,42 @@ export function ionicProviders(args: any = {}) {
   bindEvents(window, document, platform, events);
 
   return [
-    IonicApp,
+    App,
     provide(ClickBlock, {useValue: clickBlock}),
     provide(Config, {useValue: config}),
-    provide(Platform, {useValue: platform}),
-    provide(FeatureDetect, {useValue: featureDetect}),
     provide(Events, {useValue: events}),
-    provide(NavRegistry, {useValue: navRegistry}),
-    TapClick,
+    provide(FeatureDetect, {useValue: featureDetect}),
     Form,
     Keyboard,
     MenuController,
+    NavRegistry,
+    provide(Platform, {useValue: platform}),
     Translate,
+    TapClick,
+    provide(PLATFORM_DIRECTIVES, {useValue: [directives], multi: true}),
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
     HTTP_PROVIDERS,
   ];
 }
 
-/**
- * @private
- */
-export function postBootstrap(appRef: ComponentRef<any>, prodMode: boolean) {
-  appRef.injector.get(TapClick);
-  let app: IonicApp = appRef.injector.get(IonicApp);
-  let platform: Platform = appRef.injector.get(Platform);
-  platform.setZone(appRef.injector.get(NgZone));
-  platform.prepareReady();
-  app.setProd(prodMode);
-  app.setAppInjector(appRef.injector);
-}
 
-
-function setupDom(window, document, config, platform, clickBlock, featureDetect) {
+function setupDom(window: Window, document: Document, config: Config, platform: Platform, clickBlock: ClickBlock, featureDetect: FeatureDetect) {
   let bodyEle = document.body;
   let mode = config.get('mode');
 
   // if dynamic mode links have been added the fire up the correct one
   let modeLinkAttr = mode + '-href';
-  let linkEle = document.head.querySelector('link[' + modeLinkAttr + ']');
+  let linkEle = <HTMLLinkElement>document.head.querySelector('link[' + modeLinkAttr + ']');
   if (linkEle) {
     let href = linkEle.getAttribute(modeLinkAttr);
     linkEle.removeAttribute(modeLinkAttr);
     linkEle.href = href;
   }
+
+  let headStyle = document.createElement('style');
+  headStyle.innerHTML = 'ion-app{display:none}';
+  document.head.appendChild(headStyle);
 
   // set the mode class name
   // ios/md/wp
@@ -122,10 +158,6 @@ function setupDom(window, document, config, platform, clickBlock, featureDetect)
     bodyEle.classList.add('enable-hover');
   }
 
-  if (config.get('clickBlock')) {
-    clickBlock.enable();
-  }
-
   // run feature detection tests
   featureDetect.run(window, document);
 }
@@ -134,7 +166,7 @@ function setupDom(window, document, config, platform, clickBlock, featureDetect)
 /**
  * Bind some global events and publish on the 'app' channel
  */
-function bindEvents(window, document, platform, events) {
+function bindEvents(window: Window, document: Document, platform: Platform, events: Events) {
   window.addEventListener('online', (ev) => {
     events.publish('app:online', ev);
   }, false);
@@ -150,10 +182,10 @@ function bindEvents(window, document, platform, events) {
   // When that status taps, we respond
   window.addEventListener('statusTap', (ev) => {
     // TODO: Make this more better
-    var el = document.elementFromPoint(platform.width() / 2, platform.height() / 2);
+    let el = <HTMLElement>document.elementFromPoint(platform.width() / 2, platform.height() / 2);
     if (!el) { return; }
 
-    var content = closest(el, 'scroll-content');
+    let content = closest(el, 'scroll-content');
     if (content) {
       var scroll = new ScrollView(content);
       scroll.scrollTo(0, 0, 300);
@@ -161,9 +193,22 @@ function bindEvents(window, document, platform, events) {
   });
 
   // start listening for resizes XXms after the app starts
-  setTimeout(function() {
-    window.addEventListener('resize', function() {
+  nativeTimeout(() => {
+    window.addEventListener('resize', () => {
       platform.windowResize();
     });
   }, 2000);
+}
+
+/**
+ * @private
+ */
+export function addSelector(type: any, selector: string) {
+  if (type) {
+    let annotations = _reflect.getMetadata('annotations', type);
+    if (annotations && !annotations[0].selector) {
+      annotations[0].selector = selector;
+      _reflect.defineMetadata('annotations', annotations, type);
+    }
+  }
 }

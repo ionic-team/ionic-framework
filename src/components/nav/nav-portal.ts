@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Optional, NgZone, Renderer, DynamicComponentLoader, ViewContainerRef} from '@angular/core';
 
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
 import {NavController} from './nav-controller';
@@ -16,7 +16,7 @@ export class NavPortal extends NavController {
   constructor(
     @Optional() viewCtrl: ViewController,
     @Optional() parent: NavController,
-    app: IonicApp,
+    app: App,
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,

@@ -1,4 +1,5 @@
-import {Modal, ModalCmp, Page, NavController, ViewController} from '../../../../src';
+import {Component} from '@angular/core';
+import {Modal, ModalCmp, NavController, ViewController} from '../../../../src';
 
 export function run() {
   describe('Modal', () => {
@@ -51,19 +52,19 @@ export function run() {
 
     it('should return a componentRef object after loading component', (done) => {
       // arrange
-      let mockLoader = {
+      let mockLoader: any = {
         loadNextToLocation: () => {}
       };
-      let mockNavParams = {
+      let mockNavParams: any = {
         data: {
-          componentType: "myComponentType"
+          componentType: function mockComponentType(){}
         }
       };
       let mockComponentRef = {};
 
       spyOn(mockLoader, "loadNextToLocation").and.returnValue(Promise.resolve(mockComponentRef));
-      let modalCmp = new ModalCmp(null, mockLoader, mockNavParams, null);
-      modalCmp.viewport = "mockViewport";
+      let modalCmp = new ModalCmp(mockLoader, mockNavParams);
+      modalCmp.viewport = <any>"mockViewport";
 
       // act
       modalCmp.loadComponent().then(loadedComponentRef => {
@@ -91,7 +92,7 @@ let componentToPresentSpy = {
   _ionicProjectContent: () => {},
 };
 
-@Page({
+@Component({
   template: `<div class="myComponent"></div>`
 })
 class ComponentToPresent{

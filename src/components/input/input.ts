@@ -5,7 +5,7 @@ import {Config} from '../../config/config';
 import {Content} from '../content/content';
 import {Form} from '../../util/form';
 import {InputBase} from './input-base';
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Item} from '../item/item';
 import {Label} from '../label/label';
 import {NativeInput, NextInput} from './native-input';
@@ -79,7 +79,7 @@ export class TextInput extends InputBase {
     config: Config,
     form: Form,
     @Optional() item: Item,
-    app: IonicApp,
+    app: App,
     platform: Platform,
     elementRef: ElementRef,
     @Optional() scrollView: Content,
@@ -170,7 +170,7 @@ export class TextArea extends InputBase {
     config: Config,
     form: Form,
     @Optional() item: Item,
-    app: IonicApp,
+    app: App,
     platform: Platform,
     elementRef: ElementRef,
     @Optional() scrollView: Content,

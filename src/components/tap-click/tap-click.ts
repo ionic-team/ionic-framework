@@ -1,6 +1,6 @@
 import {Injectable, NgZone} from '@angular/core';
 
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {pointerCoord, hasPointerMoved} from '../../util/dom';
 import {Activator} from './activator';
@@ -22,7 +22,7 @@ export class TapClick {
 
   constructor(
     config: Config,
-    private app: IonicApp,
+    private app: App,
     private zone: NgZone
   ) {
     let self = this;

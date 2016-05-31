@@ -1,7 +1,7 @@
 import {Component, ElementRef, Optional, NgZone, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 
 import {Ion} from '../ion';
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
 import {nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
@@ -28,10 +28,10 @@ import {ScrollView} from '../../util/scroll-view';
  * you can use Angular's `@ViewChild` annotation:
  *
  * ```ts
- * import {ViewChild} from '@angular/core';
+ * import {Component, ViewChild} from '@angular/core';
  * import {Content} from 'ionic-angular';
  *
- * @Page({...}
+ * @Component({...})
  * export class MyPage{
  *   @ViewChild(Content) content: Content;
  *
@@ -67,7 +67,7 @@ export class Content extends Ion {
   constructor(
     private _elementRef: ElementRef,
     private _config: Config,
-    private _app: IonicApp,
+    private _app: App,
     private _keyboard: Keyboard,
     private _zone: NgZone,
     @Optional() viewCtrl: ViewController
@@ -217,10 +217,10 @@ export class Content extends Ion {
    * Scroll to the specified position.
    *
    * ```ts
-   * import {ViewChild} from '@angular/core';
+   * import {Component, ViewChild} from '@angular/core';
    * import {Content} from 'ionic-angular';
    *
-   * @Page({
+   * @Component({
    *   template: `<ion-content>
    *                <button (click)="scrollTo()">Down 500px</button>
    *              </ion-content>`
@@ -248,10 +248,10 @@ export class Content extends Ion {
    * Scroll to the top of the content component.
    *
    * ```ts
-   * import {ViewChild} from '@angular/core';
+   * import {Component, ViewChild} from '@angular/core';
    * import {Content} from 'ionic-angular';
    *
-   * @Page({
+   * @Component({
    *   template: `<ion-content>
    *                <button (click)="scrollToTop()">Scroll to top</button>
    *              </ion-content>`
