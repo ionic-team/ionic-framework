@@ -1,13 +1,14 @@
-import {App} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from 'ionic-angular';
 
-@App({
+
+@Component({
   templateUrl: 'main.html'
 })
 class ApiDemoApp {
-  constructor() {
-    this.demo = "Toolbar";
-
-    this.favorites = "recent";
-    this.apps = "free";
-  }
+  demo = "Toolbar";
+  favorites = "recent";
+  apps = "free";
 }
+
+ionicBootstrap(ApiDemoApp);

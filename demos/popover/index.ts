@@ -1,8 +1,8 @@
-import {ViewChild, ElementRef} from '@angular/core';
-import {App, Page, Popover, NavController, Content, NavParams} from 'ionic-angular';
+import {Component, ViewChild, ElementRef, ViewEncapsulation} from '@angular/core';
+import {ionicBootstrap, Popover, NavController, Content, NavParams} from 'ionic-angular';
 
 
-@Page({
+@Component({
   template: `
     <ion-list radio-group [(ngModel)]="fontFamily" (change)="changeFontFamily()">
       <ion-row>
@@ -133,7 +133,7 @@ class PopoverRadioPage {
 }
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class PopoverPage {
@@ -158,11 +158,13 @@ class PopoverPage {
 }
 
 
-@App({
-  template: '<ion-nav [root]="root"></ion-nav>'
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>',
+  styleUrls: ['style.css'],
+  encapsulation: ViewEncapsulation.None
 })
 class ApiDemoApp {
   root = PopoverPage;
 }
 
-document.body.innerHTML += '<link href="style.css" rel="stylesheet">'
+ionicBootstrap(ApiDemoApp);

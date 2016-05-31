@@ -1,21 +1,23 @@
-import {App} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from 'ionic-angular';
 
-@App({
+
+@Component({
   templateUrl: 'main.html'
 })
 class ApiDemoApp {
-  constructor() {
-    this.appType = "paid";
-    this.safari = "links";
-    this.news = "local";
-    this.favorites = "recent";
+  appType = "paid";
+  safari = "links";
+  news = "local";
+  favorites = "recent";
 
-    this.purchased = "all";
-    this.mapStyle = "sat";
-    this.teslaModels = "X";
+  purchased = "all";
+  mapStyle = "sat";
+  teslaModels = "X";
 
-    this.pet = "puppies";
-    this.calendar = "day";
-    this.proxy = "auto";
-  }
+  pet = "puppies";
+  calendar = "day";
+  proxy = "auto";
 }
+
+ionicBootstrap(ApiDemoApp);
