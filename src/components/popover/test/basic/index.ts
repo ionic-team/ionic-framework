@@ -4,7 +4,7 @@ import {App, Page, Popover, NavController, Content, NavParams, ViewController} f
 
 @Page({
   template: `
-    <ion-list radio-group [(ngModel)]="fontFamily" (change)="changeFontFamily()">
+    <ion-list radio-group [(ngModel)]="fontFamily" (ionChange)="changeFontFamily()">
       <ion-row>
         <ion-col>
           <button (click)="changeFontSize('smaller')" ion-item detail-none class="text-button text-smaller">A</button>
