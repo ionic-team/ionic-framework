@@ -1,0 +1,187 @@
+@import "../../globals.wp";
+
+// Windows Range
+// --------------------------------------------------
+
+$range-wp-padding-vertical:                  8px !default;
+$range-wp-padding-horizontal:                8px !default;
+
+$range-wp-slider-height:                     42px !default;
+
+$range-wp-hit-width:                         42px !default;
+$range-wp-hit-height:                        $range-wp-slider-height !default;
+
+$range-wp-bar-height:                        2px !default;
+$range-wp-bar-background-color:              #bdbdbd !default;
+$range-wp-bar-active-background-color:       color($colors-wp, primary) !default;
+
+$range-wp-knob-width:                        8px !default;
+$range-wp-knob-height:                       $range-wp-knob-width * 3 !default;
+$range-wp-knob-background-color:             $range-wp-bar-active-background-color !default;
+$range-wp-knob-border-radius:                $range-wp-knob-width / 2 !default;
+
+$range-wp-tick-width:                        $range-wp-bar-height !default;
+$range-wp-tick-height:                       $range-wp-tick-width * 3 !default;
+$range-wp-tick-border-radius:                $range-wp-knob-width / 2 !default;
+$range-wp-tick-background-color:             $range-wp-bar-background-color !default;
+$range-wp-tick-active-background-color:      $range-wp-bar-active-background-color !default;
+
+$range-wp-pin-background-color:              $range-wp-bar-active-background-color !default;
+$range-wp-pin-color:                         color-contrast($colors-wp, $range-wp-bar-active-background-color) !default;
+$range-wp-pin-font-size:                     12px !default;
+$range-wp-pin-padding:                       8px !default;
+
+
+.item-range .item-inner {
+  overflow: visible;
+}
+
+.item-range .input-wrapper {
+  overflow: visible;
+
+  flex-direction: column;
+}
+
+.item-range ion-range {
+  width: 100%;
+}
+
+ion-range {
+  position: relative;
+  display: block;
+
+  padding: $range-wp-padding-vertical $range-wp-padding-horizontal;
+}
+
+.range-has-pin {
+  padding-top: $range-wp-padding-vertical + $range-wp-pin-font-size + $range-wp-pin-padding;
+}
+
+.range-slider {
+  position: relative;
+
+  height: $range-wp-slider-height;
+
+  cursor: pointer;
+}
+
+.range-bar {
+  position: absolute;
+  top: ($range-wp-slider-height / 2);
+  left: 0;
+
+  width: 100%;
+  height: $range-wp-bar-height;
+
+  background: $range-wp-bar-background-color;
+
+  pointer-events: none;
+}
+
+.range-pressed .range-bar-active {
+  will-change: left, right;
+}
+
+.range-pressed .range-knob-handle {
+  will-change: left;
+}
+
+.range-bar-active {
+  bottom: 0;
+
+  width: auto;
+
+  background: $range-wp-bar-active-background-color;
+}
+
+.range-knob-handle {
+  position: absolute;
+  top: ($range-wp-slider-height / 2);
+  left: 0%;
+
+  margin-top: -($range-wp-hit-height / 2);
+  margin-left: -($range-wp-hit-width / 2);
+
+  width: $range-wp-hit-width;
+  height: $range-wp-hit-height;
+
+  text-align: center;
+}
+
+.range-knob {
+  position: absolute;
+  top: ($range-wp-hit-height / 2) - ($range-wp-knob-height / 2) + ($range-wp-bar-height / 2);
+  left: ($range-wp-hit-width / 2) - ($range-wp-knob-width / 2);
+
+  width: $range-wp-knob-width;
+  height: $range-wp-knob-height;
+
+  border-radius: $range-wp-knob-border-radius;
+
+  background: $range-wp-knob-background-color;
+
+  pointer-events: none;
+}
+
+.range-tick {
+  position: absolute;
+  top: ($range-wp-hit-height / 2) - ($range-wp-tick-height / 2) + ($range-wp-bar-height / 2);
+
+  margin-left: ($range-wp-tick-width / 2) * -1;
+
+  width: $range-wp-tick-width;
+  height: $range-wp-tick-height;
+
+  border-radius: $range-wp-tick-border-radius;
+
+  background: $range-wp-tick-background-color;
+
+  pointer-events: none;
+}
+
+.range-tick-active {
+  background: $range-wp-tick-active-background-color;
+}
+
+.range-pin {
+  position: relative;
+  top: -24px;
+  display: inline-block;
+
+  padding: $range-wp-pin-padding;
+
+  min-width: 28px;
+
+  border-radius: 50px;
+
+  font-size: $range-wp-pin-font-size;
+
+  text-align: center;
+
+  color: $range-wp-pin-color;
+
+  background: $range-wp-pin-background-color;
+
+  transform: translate3d(0, 28px, 0) scale(.01);
+  transition: transform 120ms ease;
+}
+
+.range-knob-pressed .range-pin {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+// Generate Windows Range Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  ion-range[#{$color-name}] {
+    .range-bar-active,
+    .range-tick-active,
+    .range-knob,
+    .range-pin {
+      background: $color-base;
+    }
+  }
+
+}
