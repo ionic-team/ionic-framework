@@ -10,7 +10,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-infinite-scroll (infinite)="doInfinite($event)" threshold="100px">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="100px">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Loading more data...">

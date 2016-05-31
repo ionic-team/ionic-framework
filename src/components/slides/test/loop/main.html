@@ -1,5 +1,5 @@
 <div class="slides-div">
-  <ion-slides [options]="myTopSlideOptions" #loopSlider (didChange)="onSlideChanged($event)" pager>
+  <ion-slides [options]="myTopSlideOptions" #loopSlider (ionDidChange)="onSlideChanged($event)" pager>
     <ion-slide *ngFor="let slide of slides" [ngClass]="slide.class">
       Loop {{ slide.name }}
     </ion-slide>
@@ -8,7 +8,7 @@
 
 
 <div class="slides-div">
-  <ion-slides (didChange)="onSlideChanged($event)" pager>
+  <ion-slides (ionDidChange)="onSlideChanged($event)" pager>
     <ion-slide *ngFor="let slide of slides" [ngClass]="slide.class">
       Don't Loop {{ slide.name }}
     </ion-slide>

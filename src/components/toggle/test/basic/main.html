@@ -19,12 +19,12 @@
 
       <ion-item>
         <ion-label>Apple, ngControl</ion-label>
-        <ion-toggle ngControl="appleCtrl" (change)="appleChange($event)"></ion-toggle>
+        <ion-toggle ngControl="appleCtrl" (ionChange)="appleChange($event)"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>Banana, ngControl</ion-label>
-        <ion-toggle ngControl="bananaCtrl" (change)="bananaChange($event)"></ion-toggle>
+        <ion-toggle ngControl="bananaCtrl" (ionChange)="bananaChange($event)"></ion-toggle>
       </ion-item>
 
       <ion-item>
@@ -38,13 +38,13 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Kiwi, (change) Secondary color</ion-label>
-        <ion-toggle secondary (change)="kiwiChange($event)"></ion-toggle>
+        <ion-label>Kiwi, (ionChange) Secondary color</ion-label>
+        <ion-toggle secondary (ionChange)="kiwiChange($event)"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Strawberry, (change) [checked]="true"</ion-label>
-        <ion-toggle danger (change)="strawberryChange($event)" [checked]="true"></ion-toggle>
+        <ion-label>Strawberry, (ionChange) [checked]="true"</ion-label>
+        <ion-toggle danger (ionChange)="strawberryChange($event)" [checked]="true"></ion-toggle>
       </ion-item>
 
     </ion-list>

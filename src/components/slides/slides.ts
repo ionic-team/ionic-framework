@@ -146,10 +146,10 @@ import {Scroll} from '../scroll/scroll';
  * ```
  *
  * We can also add events to listen to on the `<ion-slides>` element.
- * Let's add the `didChange` event and call a method when the slide changes:
+ * Let's add the `ionDidChange` event and call a method when the slide changes:
  *
  * ```html
- * <ion-slides #mySlider (didChange)="onSlideChanged()" [options]="mySlideOptions">
+ * <ion-slides #mySlider (ionDidChange)="onSlideChanged()" [options]="mySlideOptions">
  * ```
  *
  * In our class, we add the `onSlideChanged()` method which gets the active
@@ -312,29 +312,19 @@ export class Slides extends Ion {
   @Input() zoomMax: any;
 
   /**
-   * @private Deprecated
-   */
-  @Output() slideChangeStart: EventEmitter<any> = new EventEmitter();
-
-  /**
-   * @private Deprecated
-   */
-  @Output() change: EventEmitter<any> = new EventEmitter();
-
-  /**
    * @output {any} Expression to evaluate when a slide change starts.
    */
-  @Output() willChange: EventEmitter<any> = new EventEmitter();
+  @Output() ionWillChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * @output {any} Expression to evaluate when a slide change ends.
    */
-  @Output() didChange: EventEmitter<any> = new EventEmitter();
+  @Output() ionDidChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * @output {any} Expression to evaluate when a slide moves.
    */
-  @Output() move: EventEmitter<any> = new EventEmitter();
+  @Output() ionDrag: EventEmitter<any> = new EventEmitter();
 
 
   constructor(elementRef: ElementRef, renderer: Renderer) {
@@ -371,10 +361,6 @@ export class Slides extends Ion {
       console.warn('The "zoom" attribute has been deprecated. Please pass it in options.');
     }
 
-    // Deprecated 04-18 beta.5
-    console.warn('The "slideChangeStart" event has been deprecated. Please use "willChange" instead. Ignore this if you aren\'t using it.');
-    console.warn('The "change" event has been deprecated. Please use "didChange" instead. Ignore this if you aren\'t using it.');
-
     if (isPresent(this.options.pager)) {
       this.showPager = isTrueProperty(this.options.pager);
     }
@@ -406,17 +392,11 @@ export class Slides extends Ion {
       return this.options.onTransitionEnd && this.options.onTransitionEnd(swiper, e);
     };
     options.onSlideChangeStart = (swiper) => {
-      // TODO deprecated 2016-04-18
-      this.slideChangeStart.emit(swiper);
-
-      this.willChange.emit(swiper);
+      this.ionWillChange.emit(swiper);
       return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
     };
     options.onSlideChangeEnd = (swiper) => {
-      // TODO deprecated 2016-04-18
-      this.change.emit(swiper);
-
-      this.didChange.emit(swiper);
+      this.ionDidChange.emit(swiper);
       return this.options.onSlideChangeEnd && this.options.onSlideChangeEnd(swiper);
     };
     options.onLazyImageLoad = (swiper, slide, img) => {
@@ -426,7 +406,7 @@ export class Slides extends Ion {
       return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
     };
     options.onSliderMove = (swiper, e) => {
-      this.move.emit(swiper);
+      this.ionDrag.emit(swiper);
       return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
     };
 
@@ -784,7 +764,7 @@ export class Slides extends Ion {
    *
    * @param {number} index  The index number of the slide.
    * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `willChange`/`didChange` events. Optional. Default true.
+   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
    */
   slideTo(index: number, speed?: number, runCallbacks?: boolean) {
     this.slider.slideTo(index, speed, runCallbacks);
@@ -794,7 +774,7 @@ export class Slides extends Ion {
    * Transition to the next slide.
    *
    * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `willChange`/`didChange` events. Optional. Default true.
+   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
    */
   slideNext(speed?: number, runCallbacks?: boolean) {
     this.slider.slideNext(runCallbacks, speed);
@@ -804,7 +784,7 @@ export class Slides extends Ion {
    * Transition to the previous slide.
    *
    * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `willChange`/`didChange` events. Optional. Default true.
+   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
    */
   slidePrev(speed?: number, runCallbacks?: boolean) {
     this.slider.slidePrev(runCallbacks, speed);

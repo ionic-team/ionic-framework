@@ -14,7 +14,7 @@
 
   <ion-item>
     <ion-label>Gaming</ion-label>
-    <ion-select [(ngModel)]="gaming" (cancel)="gamingCancel()" (change)="gamingChange($event)">
+    <ion-select [(ngModel)]="gaming" (ionCancel)="gamingCancel()" (ionChange)="gamingChange($event)">
       <ion-option value="nes">NES</ion-option>
       <ion-option value="n64">Nintendo64</ion-option>
       <ion-option value="ps">PlayStation</ion-option>
@@ -56,7 +56,7 @@
       <ion-option>Pearl Jam</ion-option>
       <ion-option>Smashing Pumpkins</ion-option>
       <ion-option>Soundgarden</ion-option>
-      <ion-option (select)="stpSelect()">Stone Temple Pilots</ion-option>
+      <ion-option (ionSelect)="stpSelect()">Stone Temple Pilots</ion-option>
     </ion-select>
   </ion-item>
 

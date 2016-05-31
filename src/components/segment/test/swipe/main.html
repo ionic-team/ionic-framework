@@ -4,7 +4,7 @@
   </ion-title>
 </ion-navbar>
 <ion-toolbar>
-  <ion-segment [(ngModel)]="selectedSegment" (change)="onSegmentChanged($event)">
+  <ion-segment [(ngModel)]="selectedSegment" (ionChange)="onSegmentChanged($event)">
     <ion-segment-button value="first">
       First
     </ion-segment-button>
@@ -19,7 +19,7 @@
 
 <ion-content padding>
 
-  <ion-slides (change)="onSlideChanged($event)" #loopSlider>
+  <ion-slides (ionDidChange)="onSlideChanged($event)" #loopSlider>
     <ion-slide *ngFor="let slide of slides">
       <h1>{{ slide.title }}</h1>
     </ion-slide>

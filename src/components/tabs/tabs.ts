@@ -203,7 +203,7 @@ export class Tabs extends Ion {
   /**
    * @input {any} Expression to evaluate when the tab changes.
    */
-  @Output() change: EventEmitter<Tab> = new EventEmitter();
+  @Output() ionChange: EventEmitter<Tab> = new EventEmitter();
 
   /**
    * @private
@@ -272,7 +272,7 @@ export class Tabs extends Ion {
     }
 
     this._btns.toArray().forEach((tabButton: TabButton) => {
-      tabButton.select.subscribe((tab: Tab) => {
+      tabButton.ionSelect.subscribe((tab: Tab) => {
         this.select(tab);
       });
     });
@@ -365,8 +365,8 @@ export class Tabs extends Ion {
 
     selectedTab.load(opts, () => {
 
-      selectedTab.select.emit(selectedTab);
-      this.change.emit(selectedTab);
+      selectedTab.ionSelect.emit(selectedTab);
+      this.ionChange.emit(selectedTab);
 
       if (selectedTab.root) {
         // only show the selectedTab if it has a root
@@ -445,8 +445,8 @@ export class Tabs extends Ion {
     let instance = active.instance;
 
     // If they have a custom tab selected handler, call it
-    if (instance.tabSelected) {
-      return instance.tabSelected();
+    if (instance.ionSelected) {
+      return instance.ionSelected();
     }
 
     // If we're a few pages deep, pop to root

@@ -73,14 +73,14 @@ class TabsPage {
   constructor(private nav: NavController, private params: NavParams) {}
 
   ngAfterViewInit() {
-    this.tabs.change.subscribe(tab => {
-      console.log('tabs.change.subscribe', tab.index);
+    this.tabs.ionChange.subscribe(tab => {
+      console.log('tabs.ionChange.subscribe', tab.index);
     });
   }
 
   onTabChange() {
     // wired up through the template
-    // <ion-tabs (change)="onTabChange()">
+    // <ion-tabs (ionChange)="onTabChange()">
     console.log('onTabChange');
   }
 

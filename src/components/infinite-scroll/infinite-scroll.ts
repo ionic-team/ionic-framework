@@ -22,7 +22,7 @@ import {Content} from '../content/content';
  *    <ion-item *ngFor="let i of items">{% raw %}{{i}}{% endraw %}</ion-item>
  *  </ion-list>
  *
- *  <ion-infinite-scroll (infinite)="doInfinite($event)">
+ *  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
  *    <ion-infinite-scroll-content></ion-infinite-scroll-content>
  *  </ion-infinite-scroll>
  *
@@ -67,7 +67,7 @@ import {Content} from '../content/content';
  *  ```html
  *  <ion-content>
  *
- *    <ion-infinite-scroll (infinite)="doInfinite($event)">
+ *    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
  *      <ion-infinite-scroll-content
  *        loadingSpinner="bubbles"
  *        loadingText="Loading more data...">
@@ -137,7 +137,7 @@ export class InfiniteScroll {
    * you must call the infinite scroll's `complete()` method when
    * your async operation has completed.
    */
-  @Output() infinite: EventEmitter<InfiniteScroll> = new EventEmitter();
+  @Output() ionInfinite: EventEmitter<InfiniteScroll> = new EventEmitter();
 
   constructor(
     @Host() private _content: Content,
@@ -179,7 +179,7 @@ export class InfiniteScroll {
     if (distanceFromInfinite < 0) {
       this._zone.run(() => {
         this.state = STATE_LOADING;
-        this.infinite.emit(this);
+        this.ionInfinite.emit(this);
       });
       return 5;
     }

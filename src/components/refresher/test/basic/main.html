@@ -2,7 +2,7 @@
 
 <ion-content>
 
-  <ion-refresher (start)="doStart($event)" (pulling)="doPulling($event)" (refresh)="doRefresh($event)">
+  <ion-refresher (ionStart)="doStart($event)" (ionPull)="doPulling($event)" (ionRefresh)="doRefresh($event)">
 
     <ion-refresher-content
       pullingText="Pull to refresh..."

@@ -171,8 +171,8 @@ export class Tab3 {
       </ion-content>
     </ion-menu>
 
-    <ion-tabs #content>
-      <ion-tab tabTitle="Plain List" tabIcon="star" [root]="root1"></ion-tab>
+    <ion-tabs #content (ionChange)="onChange($event)">
+      <ion-tab tabTitle="Plain List" tabIcon="star" [root]="root1" (ionSelect)="onSelect($event)"></ion-tab>
       <ion-tab tabTitle="Schedule" tabIcon="globe" [root]="root2"></ion-tab>
       <ion-tab tabTitle="Stopwatch" tabIcon="stopwatch" [root]="root3"></ion-tab>
     </ion-tabs>
@@ -182,6 +182,14 @@ export class TabsPage {
   root1 = Tab1;
   root2 = Tab2;
   root3 = Tab3;
+
+  onChange(ev) {
+    console.log("Changed tab", ev);
+  }
+
+  onSelect(ev) {
+    console.log("Selected tab", ev);
+  }
 }
 
 @App({

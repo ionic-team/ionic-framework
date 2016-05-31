@@ -22,6 +22,10 @@ class MyPage {
     console.log("Previous index is", previousIndex, "Current index is", currentIndex);
   }
 
+  onSlideMove(ev) {
+    console.log("Slide moving", ev);
+  }
+
   goToPrevSlide() {
     this.slider.slidePrev();
   }

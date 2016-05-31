@@ -407,12 +407,12 @@ export class DateTime {
   /**
    * @output {any} Any expression to evaluate when the datetime selection has changed.
    */
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * @output {any} Any expression to evaluate when the datetime selection was cancelled.
    */
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
+  @Output() ionCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -469,7 +469,7 @@ export class DateTime {
         text: this.cancelText,
         role: 'cancel',
         handler: () => {
-          this.cancel.emit(null);
+          this.ionCancel.emit(null);
         }
       },
       {
@@ -477,7 +477,7 @@ export class DateTime {
         handler: (data) => {
           console.log('datetime, done', data);
           this.onChange(data);
-          this.change.emit(data);
+          this.ionChange.emit(data);
         }
       }
     ];
@@ -485,7 +485,7 @@ export class DateTime {
     this.generate(picker);
     this.validate(picker);
 
-    picker.change.subscribe(() => {
+    picker.ionChange.subscribe(() => {
       this.validate(picker);
     });
 

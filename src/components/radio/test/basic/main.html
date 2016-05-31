@@ -95,17 +95,17 @@
     <code><b>relationship:</b> {{relationship}}</code>
   </div>
 
-  <div radio-group (change)="petChange($event)">
+  <div radio-group (ionChange)="petChange($event)">
     <p>
-      <ion-radio (select)="dogSelect($event)"></ion-radio>
+      <ion-radio (ionSelect)="dogSelect($event)"></ion-radio>
       Dogs
     </p>
     <p>
-      <ion-radio (select)="catSelect($event)"></ion-radio>
+      <ion-radio (ionSelect)="catSelect($event)"></ion-radio>
       Cats
     </p>
     <p>
-      <ion-radio (select)="turtleSelect($event)"></ion-radio>
+      <ion-radio (ionSelect)="turtleSelect($event)"></ion-radio>
       Turtles
     </p>
   </div>

@@ -17,7 +17,7 @@ import {raf, cancelRaf, CSS, pointerCoord} from '../../util/dom';
  */
 export class Picker extends ViewController {
 
-  @Output() change: EventEmitter<any>;
+  @Output() ionChange: EventEmitter<any>;
 
   constructor(opts: PickerOptions = {}) {
     opts.columns = opts.columns || [];
@@ -28,7 +28,7 @@ export class Picker extends ViewController {
     this.viewType = 'picker';
     this.isOverlay = true;
 
-    this.change = new EventEmitter();
+    this.ionChange = new EventEmitter();
 
     // by default, pickers should not fire lifecycle events of other views
     // for example, when an picker enters, the current active view should
@@ -122,7 +122,7 @@ class PickerColumnCmp {
   maxY: number;
   rotateFactor: number;
   lastIndex: number;
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   constructor(config: Config, private _sanitizer: DomSanitizationService) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
@@ -382,7 +382,7 @@ class PickerColumnCmp {
         // new selected index has changed from the last index
         // update the lastIndex and emit that it has changed
         this.lastIndex = this.col.selectedIndex;
-        this.change.emit(this.col.options[this.col.selectedIndex]);
+        this.ionChange.emit(this.col.options[this.col.selectedIndex]);
       }
     }
   }
@@ -445,7 +445,7 @@ class PickerColumnCmp {
       '</div>' +
       '<div class="picker-columns">' +
         '<div class="picker-above-highlight"></div>' +
-        '<div *ngFor="let c of d.columns" [col]="c" class="picker-col"> (change)="_colChange($event)"</div>' +
+        '<div *ngFor="let c of d.columns" [col]="c" class="picker-col"> (ionChange)="_colChange($event)"</div>' +
         '<div class="picker-below-highlight"></div>' +
       '</div>' +
     '</div>',
@@ -538,7 +538,7 @@ class PickerDisplayCmp {
   private _colChange(selectedOption: PickerColumnOption) {
     // one of the columns has changed its selected index
     var picker = <Picker>this._viewCtrl;
-    picker.change.emit(this.getSelected());
+    picker.ionChange.emit(this.getSelected());
   }
 
   @HostListener('body:keyup', ['$event'])
