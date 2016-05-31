@@ -34,6 +34,7 @@ export * from './components/picker/picker';
 export * from './components/popover/popover';
 export * from './components/radio/radio-button';
 export * from './components/radio/radio-group';
+export * from './components/range/range';
 export * from './components/refresher/refresher';
 export * from './components/refresher/refresher-content';
 export * from './components/scroll/scroll';

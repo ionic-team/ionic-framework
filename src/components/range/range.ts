@@ -11,17 +11,7 @@ const RANGE_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Range), multi: true});
 
 /**
- * @name Range
- * @description
- * The Range slider lets users select from a range of values by moving
- * the slider knob.
- *
- *
- *
- *
- *
- *
- * @demo /docs/v2/demos/range/
+ * @private
  */
 @Component({
   selector: '.range-knob-handle',
@@ -111,8 +101,64 @@ export class RangeKnob {
 
 /**
  * @name Range
- *
  * @description
+ * The Range slider lets users select from a range of values by moving
+ * the slider knob. It can accept dual knobs, but by default one knob
+ * controls the value of the range.
+ *
+ *
+ * ### Minimum and Maximum Values
+ * Minimum and maximum values can be passed to the range through the `min`
+ * and `max` properties, respectively. By default, the range sets the `min`
+ * to `0` and the `max` to `100`.
+ *
+ *
+ * ### Steps and Snaps
+ * The `step` property specifies the value granularity of the range's value.
+ * It can be useful to set the `step` when the value isn't in increments of `1`.
+ * Setting the `step` property will show tick marks on the range for each step.
+ * The `snaps` property can be set to automatically move the knob to the nearest
+ * tick mark based on the step property value.
+ *
+ *
+ * ### Dual Knobs
+ * Setting the `dualKnobs` property to `true` on the range component will
+ * enable two knobs on the range. If the range has two knobs, the value will
+ * be an object containing two properties: `lower` and `upper`.
+ *
+ *
+ * @usage
+ * ```html
+ * <ion-list>
+ *   <ion-item>
+ *     <ion-range [(ngModel)]="singleValue" danger pin="true"></ion-range>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-note item-left>-200</ion-note>
+ *     <ion-range min="-200" max="200" pin="true" [(ngModel)]="saturation" secondary></ion-range>
+ *     <ion-note item-right>200</ion-note>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-label>step=2, {{singleValue3}}</ion-label>
+ *     <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3"></ion-range>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-label>step=100, snaps, {{singleValue4}}</ion-label>
+ *     <ion-range min="1000" max="2000" step="100" snaps="true" secondary [(ngModel)]="singleValue4"></ion-range>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-label>dual, step=3, snaps, {{dualValue2 | json}}</ion-label>
+ *     <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range>
+ *   </ion-item>
+ * </ion-list>
+ * ```
+ *
+ *
+ * @demo /docs/v2/demos/range/
  */
 @Component({
   selector: 'ion-range',
@@ -127,7 +173,7 @@ export class RangeKnob {
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',
-    '[class.range-has-pin]': '_pin',
+    '[class.range-has-pin]': '_pin'
   },
   directives: [RangeKnob],
   providers: [RANGE_VALUE_ACCESSOR],
@@ -155,6 +201,9 @@ export class Range {
   private _removes: Function[] = [];
   private _mouseRemove: Function;
 
+  /**
+   * @private
+   */
   value: any;
 
   @ViewChild('bar') private _bar: ElementRef;
@@ -573,7 +622,7 @@ export class Range {
   registerOnTouched(fn) { this.onTouched = fn; }
 
   /**
-   * @input {boolean} whether or not the checkbox is disabled or not.
+   * @input {boolean} Whether or not the range is disabled. Defaults to `false`.
    */
   @Input()
   get disabled(): boolean {
