@@ -11,6 +11,11 @@ class Page1 {
   singleValue4: number = 1300;
   dualValue: any;
   dualValue2 = {lower: 33, upper: 60};
+
+  rangeChange(ev) {
+    console.log(`range, change, ratio: ${ev.ratio}, value: ${ev.value}`);
+  }
+
 }
 
 

@@ -500,6 +500,8 @@ export class Range {
         }
 
         this.onChange(this.value);
+
+        this.ionChange.emit(this);
       }
 
       this.updateBar();
