@@ -1,0 +1,89 @@
+<ion-navbar *navbar>
+
+  <button menuToggle="left">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <ion-title>
+    Range
+  </ion-title>
+
+  <button menuToggle="right" right>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
+</ion-navbar>
+
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-range [(ngModel)]="singleValue" danger pin="true" (ionChange)="rangeChange($event)"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>no init value, default min/max, {{singleValue}}</ion-label>
+      <ion-range [(ngModel)]="singleValue"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <div item-left>{{singleValue2}}</div>
+      <ion-label>init=150, min=-200, max=200</ion-label>
+      <ion-range min="-200" max="200" [(ngModel)]="singleValue2" secondary></ion-range>
+      <div item-right>{{singleValue2}}</div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>step=2, {{singleValue3}}</ion-label>
+      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>step=100, snaps, {{singleValue4}}</ion-label>
+      <ion-range min="1000" max="2000" step="100" snaps="true" secondary [(ngModel)]="singleValue4"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>dual, {{dualValue | json}}</ion-label>
+      <ion-range dualKnobs="true" [(ngModel)]="dualValue" danger></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>dual, step=3, snaps, {{dualValue2 | json}}</ion-label>
+      <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>pin, {{singleValue}}</ion-label>
+      <ion-range [(ngModel)]="singleValue" danger pin="true"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>init=150, min=-200, max=200, {{singleValue2}}</ion-label>
+      <ion-range min="-200" max="200" [(ngModel)]="singleValue2"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>step=2, {{singleValue3}}</ion-label>
+      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>step=100, snaps, pin, {{singleValue4}}</ion-label>
+      <ion-range min="1000" max="2000" step="100" pin="true" snaps="true" [(ngModel)]="singleValue4"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>dual, pin, {{dualValue | json}}</ion-label>
+      <ion-range dualKnobs="true" pin="true" [(ngModel)]="dualValue"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>dual, step=3, snaps, {{dualValue2 | json}}</ion-label>
+      <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
