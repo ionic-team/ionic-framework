@@ -48,6 +48,9 @@ export function ionicPostBootstrap(ngComponentRef: ComponentRef<any>): Component
   platform.setZone(ngComponentRef.injector.get(NgZone));
   platform.prepareReady();
 
+  // TODO: Use PLATFORM_INITIALIZER
+  ngComponentRef.injector.get(TapClick);
+
   // TODO: Use Renderer
   ngComponentRef.location.nativeElement.classList.add('app-init');
 

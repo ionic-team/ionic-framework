@@ -23,15 +23,15 @@ export class TapClick {
   constructor(
     config: Config,
     private app: App,
-    private zone: NgZone
+    zone: NgZone
   ) {
     let self = this;
 
     if (config.get('activator') === 'ripple') {
-      self.activator = new RippleActivator(app, config, zone);
+      self.activator = new RippleActivator(app, config);
 
     } else if (config.get('activator') === 'highlight') {
-      self.activator = new Activator(app, config, zone);
+      self.activator = new Activator(app, config);
     }
 
     self.usePolyfill = (config.get('tapPolyfill') === true);
@@ -46,7 +46,6 @@ export class TapClick {
       addListener('mousedown', self.mouseDown.bind(self), true);
       addListener('mouseup', self.mouseUp.bind(self), true);
     });
-
 
     self.pointerMove = function(ev) {
       if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, self.startCoord, pointerCoord(ev)) ) {

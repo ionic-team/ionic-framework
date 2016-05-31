@@ -1,4 +1,4 @@
-import {rafFrames} from '../../util/dom';
+import {rafFrames, nativeTimeout} from '../../util/dom';
 
 
 export class Activator {
@@ -6,7 +6,7 @@ export class Activator {
   protected _queue: Array<HTMLElement> = [];
   protected _active: Array<HTMLElement> = [];
 
-  constructor(protected app, config, protected _zone) {
+  constructor(protected app, config) {
     this._css = config.get('activatedClass') || 'activated';
   }
 
@@ -20,29 +20,23 @@ export class Activator {
     // queue to have this element activated
     self._queue.push(activatableEle);
 
-    this._zone.runOutsideAngular(() => {
-      rafFrames(2, function() {
-        let activatableEle;
-        for (let i = 0; i < self._queue.length; i++) {
-          activatableEle = self._queue[i];
-          if (activatableEle && activatableEle.parentNode) {
-            self._active.push(activatableEle);
-            activatableEle.classList.add(self._css);
-          }
+    rafFrames(2, function() {
+      let activatableEle;
+      for (let i = 0; i < self._queue.length; i++) {
+        activatableEle = self._queue[i];
+        if (activatableEle && activatableEle.parentNode) {
+          self._active.push(activatableEle);
+          activatableEle.classList.add(self._css);
         }
-        self._queue = [];
-      });
+      }
+      self._queue = [];
     });
   }
 
   upAction(ev: UIEvent, activatableEle: HTMLElement, pointerX: number, pointerY: number) {
     // the user was pressing down, then just let up
-    let self = this;
-    function activateUp() {
-      self.clearState();
-    }
-    this._zone.runOutsideAngular(() => {
-      rafFrames(CLEAR_STATE_DEFERS, activateUp);
+    rafFrames(CLEAR_STATE_DEFERS, () => {
+      this.clearState();
     });
   }
 
@@ -52,7 +46,7 @@ export class Activator {
       // the app is actively disabled, so don't bother deactivating anything.
       // this makes it easier on the GPU so it doesn't have to redraw any
       // buttons during a transition. This will retry in XX milliseconds.
-      setTimeout(() => {
+      nativeTimeout(() => {
         this.clearState();
       }, 600);
 

@@ -1,6 +1,5 @@
 import {Activator} from './activator';
 import {CSS, nativeRaf, rafFrames} from '../../util/dom';
-const win: any = window;
 
 
 /**
@@ -8,8 +7,8 @@ const win: any = window;
  */
 export class RippleActivator extends Activator {
 
-  constructor(app, config, zone) {
-    super(app, config, zone);
+  constructor(app, config) {
+    super(app, config);
   }
 
   downAction(ev, activatableEle, pointerX, pointerY) {
@@ -21,42 +20,39 @@ export class RippleActivator extends Activator {
     // queue to have this element activated
     self._queue.push(activatableEle);
 
-    this._zone.runOutsideAngular(function() {
-      nativeRaf(function() {
-        var i;
+    nativeRaf(function() {
+      var i;
 
-        for (i = 0; i < self._queue.length; i++) {
-          var queuedEle = self._queue[i];
-          if (queuedEle && queuedEle.parentNode) {
-            self._active.push(queuedEle);
+      for (i = 0; i < self._queue.length; i++) {
+        var queuedEle = self._queue[i];
+        if (queuedEle && queuedEle.parentNode) {
+          self._active.push(queuedEle);
 
-            // DOM WRITE
-            queuedEle.classList.add(self._css);
+          // DOM WRITE
+          queuedEle.classList.add(self._css);
 
-            var j = queuedEle.childElementCount;
-            while (j--) {
-              var rippleEle: any = queuedEle.children[j];
-              if (rippleEle.tagName === 'ION-BUTTON-EFFECT') {
-                // DOM WRITE
-                rippleEle.style.left = '-9999px';
-                rippleEle.style.opacity = '';
-                rippleEle.style[CSS.transform] = 'scale(0.001) translateZ(0px)';
-                rippleEle.style[CSS.transition] = '';
+          var j = queuedEle.childElementCount;
+          while (j--) {
+            var rippleEle: any = queuedEle.children[j];
+            if (rippleEle.tagName === 'ION-BUTTON-EFFECT') {
+              // DOM WRITE
+              rippleEle.style.left = '-9999px';
+              rippleEle.style.opacity = '';
+              rippleEle.style[CSS.transform] = 'scale(0.001) translateZ(0px)';
+              rippleEle.style[CSS.transition] = '';
 
-                // DOM READ
-                var clientRect = activatableEle.getBoundingClientRect();
-                rippleEle.$top = clientRect.top;
-                rippleEle.$left = clientRect.left;
-                rippleEle.$width = clientRect.width;
-                rippleEle.$height = clientRect.height;
-                break;
-              }
+              // DOM READ
+              var clientRect = activatableEle.getBoundingClientRect();
+              rippleEle.$top = clientRect.top;
+              rippleEle.$left = clientRect.left;
+              rippleEle.$width = clientRect.width;
+              rippleEle.$height = clientRect.height;
+              break;
             }
           }
         }
-        self._queue = [];
-      });
-
+      }
+      self._queue = [];
     });
   }
 
