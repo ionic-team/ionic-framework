@@ -193,14 +193,14 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * ### App Config Level
  *
  * ```ts
- * @App({
- *   config: {
- *     monthNames: ['janeiro', 'fevereiro', 'mar\u00e7o', ... ],
- *     monthShortNames: ['jan', 'fev', 'mar', ... ],
- *     dayNames: ['domingo', 'segunda-feira', 'ter\u00e7a-feira', ... ],
- *     dayShortNames: ['dom', 'seg', 'ter', ... ],
- *   }
- * })
+ * import {ionicBootstrap} from 'ionic-angular';
+ *
+ * ionicBootstrap(MyApp, customProviders, {
+ *   monthNames: ['janeiro', 'fevereiro', 'mar\u00e7o', ... ],
+ *   monthShortNames: ['jan', 'fev', 'mar', ... ],
+ *   dayNames: ['domingo', 'segunda-feira', 'ter\u00e7a-feira', ... ],
+ *   dayShortNames: ['dom', 'seg', 'ter', ... ],
+ * });
  * ```
  *
  * ### Component Input Level

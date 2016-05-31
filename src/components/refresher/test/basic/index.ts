@@ -1,7 +1,8 @@
-import {App} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EApp {
@@ -83,3 +84,5 @@ const data = [
   'Kick-Ass',
   'Drive Angry'
 ];
+
+ionicBootstrap(E2EApp);

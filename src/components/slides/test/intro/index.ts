@@ -1,18 +1,8 @@
-import {App, Page, NavController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController} from '../../../../../src';
 
 
-@App({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
-})
-class MyApp {
-  rootPage;
-
-  constructor() {
-    this.rootPage = IntroPage;
-  }
-}
-
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class IntroPage {
@@ -52,7 +42,7 @@ class IntroPage {
   }
 }
 
-@Page({
+@Component({
   template: `
   <ion-navbar *navbar>
     <ion-title>Slides</ion-title>
@@ -64,6 +54,14 @@ class IntroPage {
 
   `
 })
-class MainPage {
+class MainPage {}
 
+
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+class E2EApp {
+  root = IntroPage;
 }
+
+ionicBootstrap(E2EApp);

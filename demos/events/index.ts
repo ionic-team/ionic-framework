@@ -1,36 +1,32 @@
-import {ViewChild} from '@angular/core';
-import {App, Page, Events, Nav} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, Events, Nav} from 'ionic-angular';
 
-@Page({templateUrl: 'login.html'})
+
+@Component({templateUrl: 'login.html'})
 class Login {
   user = {
     name: "Administrator",
     username: "admin"
   };
 
-  constructor(private events: Events) {
-
-  }
+  constructor(private events: Events) {}
 
   login() {
     this.events.publish('user:login');
   }
 
-
 }
 
-@Page({templateUrl: 'logout.html'})
+@Component({templateUrl: 'logout.html'})
 class Logout {
-  constructor(private events: Events) {
-
-  }
+  constructor(private events: Events) {}
 
   logout() {
     this.events.publish('user:logout');
   }
 }
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class ApiDemoApp {
@@ -65,3 +61,5 @@ class ApiDemoApp {
     });
   }
 }
+
+ionicBootstrap(ApiDemoApp);

@@ -1,23 +1,17 @@
-import {App, Page, Alert, NavController} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap, Alert, NavController} from 'ionic-angular';
 
 
-@App({
-  templateUrl: 'app.html'
-})
-class ApiDemoApp {
-  constructor() {
-    this.rootPage = InitialPage;
-  }
-}
-
-
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 export class InitialPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  testRadioOpen = false;
+  testRadioResult: any;
+  testCheckboxOpen = false;
+  testCheckboxResult: any;
+
+  constructor(public nav: NavController) {}
 
   doAlert() {
     let alert = Alert.create({
@@ -214,3 +208,13 @@ export class InitialPage {
   }
 
 }
+
+
+@Component({
+  templateUrl: 'app.html'
+})
+class ApiDemoApp {
+  root = InitialPage;
+}
+
+ionicBootstrap(ApiDemoApp);

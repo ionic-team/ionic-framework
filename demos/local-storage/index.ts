@@ -1,4 +1,5 @@
-import {App, Page, IonicApp, Config, Platform} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap, IonicApp, Config, Platform} from 'ionic-angular';
 import {Storage, LocalStorage} from 'ionic-angular';
 import {Pipe, PipeTransform, Injectable} from '@angular/core'
 
@@ -6,6 +7,10 @@ import {Pipe, PipeTransform, Injectable} from '@angular/core'
 @Pipe({name: 'cleanLocalData'})
 @Injectable()
 class CleanLocalDataPipe implements PipeTransform {
+  validKeys: string[];
+  output: any;
+  data: any;
+
   transform(obj:any) : any {
     this.validKeys = ['username', 'name', 'email', 'address'];
     this.output = {};
@@ -19,21 +24,20 @@ class CleanLocalDataPipe implements PipeTransform {
   }
 }
 
-@App({
-  template: '<ion-nav [root]="root"></ion-nav>',
-  pipes: [CleanLocalDataPipe]
-})
-class ApiDemoApp {
-  constructor() {
-    this.root = MainPage;
-  }
-}
 
-@Page({
+@Component({
   templateUrl: 'main.html',
   pipes: [CleanLocalDataPipe]
 })
 class MainPage {
+  local: Storage;
+  localStorageDemo: string;
+  myItem: any;
+  keys = ['username', 'name', 'email', 'address'];
+  values = ['admin', 'Administrator', 'admin@administrator.com', '123 Admin St'];
+  addedKeys = [];
+  delKey: any;
+
   constructor() {
     this.local = new Storage(LocalStorage);
     this.localStorageDemo = '{}';
@@ -43,10 +47,6 @@ class MainPage {
       key: 'username',
       value: 'admin'
     };
-
-    this.keys = ['username', 'name', 'email', 'address'];
-    this.values = ['admin', 'Administrator', 'admin@administrator.com', '123 Admin St'];
-    this.addedKeys = [];
   }
 
   set() {
@@ -77,3 +77,14 @@ class MainPage {
     }
   }
 }
+
+
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>',
+  pipes: [CleanLocalDataPipe]
+})
+class ApiDemoApp {
+  root = MainPage;
+}
+
+ionicBootstrap(ApiDemoApp);

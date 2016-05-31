@@ -1,6 +1,8 @@
-import {App, Page, Toast, NavController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, Toast, NavController} from '../../../../../src';
 
-@Page({
+
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Another Page</ion-title>
@@ -10,11 +12,10 @@ import {App, Page, Toast, NavController} from '../../../../../src';
     </ion-content>
   `
 })
-class AnotherPage {
+class AnotherPage {}
 
-}
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -77,11 +78,11 @@ class E2EPage {
 
 }
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
   root = E2EPage;
-  constructor() {
-  }
 }
+
+ionicBootstrap(E2EApp);

@@ -1,6 +1,6 @@
 import {Component, Inject, forwardRef, ElementRef, NgZone, Renderer, DynamicComponentLoader, ViewContainerRef, ViewChild, Type, ViewEncapsulation, ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {isTrueProperty} from '../../util/util';
 import {Keyboard} from '../../util/keyboard';
@@ -208,7 +208,7 @@ export class Tab extends NavController {
 
   constructor(
     @Inject(forwardRef(() => Tabs)) parentTabs: Tabs,
-    app: IonicApp,
+    app: App,
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,

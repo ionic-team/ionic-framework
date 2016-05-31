@@ -1,11 +1,12 @@
-import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type} from '@angular/core';
+import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type, EventEmitter} from '@angular/core';
 
+import {addSelector} from '../../config/bootstrap';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {Ion} from '../ion';
-import {IonicApp} from '../app/app';
+import {isBlank, pascalCaseToDashCase} from '../../util/util';
 import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
-import {pascalCaseToDashCase, isBlank} from '../../util/util';
 import {MenuController} from '../menu/menu-controller';
 import {NavPortal} from './nav-portal';
 import {SwipeBackGesture} from './swipe-back';
@@ -59,12 +60,9 @@ import {ViewController} from './view-controller';
  *
  *
  * ## Page creation
- * _For more information on the `@Page` decorator see the [@Page API
- * reference](../../../decorators/Page/)._
- *
  * Pages are created when they are added to the navigation stack.  For methods
  * like [push()](#push), the NavController takes any component class that is
- * decorated with `@Page` as its first argument.  The NavController then
+ * decorated with `@Component` as its first argument.  The NavController then
  * compiles that component, adds it to the app and animates it into view.
  *
  * By default, pages are cached and left in the DOM if they are navigated away
@@ -75,10 +73,12 @@ import {ViewController} from './view-controller';
  *
  * ## Lifecycle events
  * Lifecycle events are fired during various stages of navigation.  They can be
- * defined in any `@Page` decorated component class.
+ * defined in any component type which is pushed/popped from a `NavController`.
  *
  * ```ts
- * @Page({
+ * import {Component} from '@angular/core';
+ *
+ * @Component({
  *   template: 'Hello World'
  * })
  * class HelloWorld {
@@ -171,6 +171,14 @@ export class NavController extends Ion {
   protected _trnsTime: number = 0;
   protected _views: Array<ViewController> = [];
 
+  pageDidLoad: EventEmitter<any>;
+  pageWillEnter: EventEmitter<any>;
+  pageDidEnter: EventEmitter<any>;
+  pageWillLeave: EventEmitter<any>;
+  pageDidLeave: EventEmitter<any>;
+  pageWillUnload: EventEmitter<any>;
+  pageDidUnload: EventEmitter<any>;
+
   /**
    * @private
    */
@@ -203,7 +211,7 @@ export class NavController extends Ion {
 
   constructor(
     parent: any,
-    protected _app: IonicApp,
+    protected _app: App,
     config: Config,
     protected _keyboard: Keyboard,
     elementRef: ElementRef,
@@ -227,6 +235,14 @@ export class NavController extends Ion {
     this.providers = ReflectiveInjector.resolve([
       provide(NavController, {useValue: this})
     ]);
+
+    this.pageDidLoad = new EventEmitter();
+    this.pageWillEnter = new EventEmitter();
+    this.pageDidEnter = new EventEmitter();
+    this.pageWillLeave = new EventEmitter();
+    this.pageDidLeave = new EventEmitter();
+    this.pageWillUnload = new EventEmitter();
+    this.pageDidUnload = new EventEmitter();
   }
 
   /**
@@ -509,6 +525,7 @@ export class NavController extends Ion {
       ev: opts.ev
     });
 
+    // present() always uses the root nav
     // start the transition
     return rootNav._insertViews(-1, [enteringView], opts);
   }
@@ -820,9 +837,11 @@ export class NavController extends Ion {
               // Tabs can be a parent, but it is not a collection of views
               // only we're looking for an actual NavController w/ stack of views
               leavingView.fireWillLeave();
+              this.pageWillLeave.emit(leavingView);
 
               return parentNav.pop(opts).then((rtnVal: boolean) => {
                 leavingView.fireDidLeave();
+                this.pageDidLeave.emit(leavingView);
                 return rtnVal;
               });
             }
@@ -920,6 +939,7 @@ export class NavController extends Ion {
       // the first view to be removed, it should init leave
       view.state = STATE_INIT_LEAVE;
       view.fireWillUnload();
+      this.pageWillUnload.emit(view);
 
       // from the index of the leaving view, go backwards and
       // find the first view that is inactive so it can be the entering
@@ -953,7 +973,9 @@ export class NavController extends Ion {
     // apart of any transitions that will eventually happen
     this._views.filter(v => v.state === STATE_REMOVE).forEach(view => {
       view.fireWillLeave();
+      this.pageWillLeave.emit(view);
       view.fireDidLeave();
+      this.pageDidLeave.emit(view);
       this._views.splice(this.indexOf(view), 1);
       view.destroy();
     });
@@ -988,6 +1010,7 @@ export class NavController extends Ion {
       // if no entering view then create a bogus one
       enteringView = new ViewController();
       enteringView.fireLoaded();
+      this.pageDidLoad.emit(enteringView);
     }
 
     /* Async steps to complete a transition
@@ -1044,6 +1067,7 @@ export class NavController extends Ion {
 
       this.loadPage(enteringView, null, opts, () => {
         enteringView.fireLoaded();
+        this.pageDidLoad.emit(enteringView);
         this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
       });
     }
@@ -1103,12 +1127,14 @@ export class NavController extends Ion {
         // only fire entering lifecycle if the leaving
         // view hasn't explicitly set not to
         enteringView.fireWillEnter();
+        this.pageWillEnter.emit(enteringView);
       }
 
       if (enteringView.fireOtherLifecycles) {
         // only fire leaving lifecycle if the entering
         // view hasn't explicitly set not to
         leavingView.fireWillLeave();
+        this.pageWillLeave.emit(leavingView);
       }
 
     } else {
@@ -1215,12 +1241,14 @@ export class NavController extends Ion {
           // only fire entering lifecycle if the leaving
           // view hasn't explicitly set not to
           enteringView.fireDidEnter();
+          this.pageDidEnter.emit(enteringView);
         }
 
         if (enteringView.fireOtherLifecycles) {
           // only fire leaving lifecycle if the entering
           // view hasn't explicitly set not to
           leavingView.fireDidLeave();
+          this.pageDidLeave.emit(leavingView);
         }
       }
 
@@ -1423,10 +1451,14 @@ export class NavController extends Ion {
       return;
     }
 
+    // add more providers to just this page
     let providers = this.providers.concat(ReflectiveInjector.resolve([
       provide(ViewController, {useValue: view}),
       provide(NavParams, {useValue: view.getNavParams()})
     ]));
+
+    // automatically set "ion-page" selector
+    addSelector(view.componentType, 'ion-page');
 
     // load the page component inside the nav
     this._loader.loadNextToLocation(view.componentType, this._viewport, providers).then(component => {

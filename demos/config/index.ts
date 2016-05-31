@@ -1,3 +1,8 @@
+
+import {Component} from '@angular/core';
+import {ionicBootstrap, IonicApp, Platform, NavController} from 'ionic-angular';
+
+
 if (!window.localStorage) {
   Object.defineProperty(window, "localStorage", new (function () {
     var aKeys = [], oStorage = {};
@@ -65,36 +70,22 @@ if (window.localStorage.getItem('configDemo')) {
   CONFIG_DEMO = JSON.parse(window.localStorage.getItem('configDemo'));
 }
 
-import {App, Page, IonicApp, Platform, NavController} from 'ionic-angular';
-
-@App({
-  template: '<ion-nav id="nav" [root]="rootPage" #content></ion-nav>',
-  config: CONFIG_DEMO || {}
-})
-class ApiDemoApp {
-
-  constructor() {
-    this.rootPage = TabPage;
-  }
-}
-
-@Page({
+@Component({
   templateUrl: 'tabs.html'
 })
 export class TabPage {
-  constructor() {
-    this.tabOne = InitialPage;
-  }
+  tabOne = InitialPage;
 }
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 export class InitialPage {
-  constructor(platform: Platform, nav: NavController) {
-    this.platform = platform;
-    this.nav = nav;
+  config: any;
+  initialConfig: any;
+
+  constructor(public platform: Platform, public nav: NavController) {
 
     if (window.localStorage.getItem('configDemo') !== null) {
       this.config = JSON.parse(window.localStorage.getItem('configDemo'));
@@ -126,16 +117,23 @@ export class InitialPage {
   }
 }
 
-@Page({
+@Component({
   templateUrl: 'page.html'
 })
 export class AnotherPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
-
-  }
+  constructor(public nav: NavController) {}
 
   pop() {
     this.nav.pop();
   }
 }
+
+
+@Component({
+  template: '<ion-nav [root]="root" #content></ion-nav>'
+})
+class ApiDemoApp {
+  root = TabPage;
+}
+
+ionicBootstrap(ApiDemoApp, null, CONFIG_DEMO);

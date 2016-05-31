@@ -1,9 +1,9 @@
-import {ViewChild} from '@angular/core';
-import {App, NavParams, NavController, ViewController, MenuController} from '../../../../../src';
-import {Page, Config, Nav} from '../../../../../src';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, NavParams, NavController, ViewController, MenuController} from '../../../../../src';
+import {Config, Nav} from '../../../../../src';
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Login</ion-title>
@@ -22,7 +22,7 @@ export class Login {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-menu [content]="content">
      <ion-toolbar secondary>
@@ -73,7 +73,7 @@ export class Account {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar primary>
       <button menuToggle>
@@ -102,7 +102,7 @@ export class Dashboard {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar danger>
       <button menuToggle>
@@ -132,13 +132,11 @@ export class Profile {
 }
 
 
-@App({
-  template: `<ion-nav id="root-nav" [root]="rootPage" swipeBackEnabled="false"></ion-nav>`
+@Component({
+  template: `<ion-nav [root]="rootPage" swipeBackEnabled="false"></ion-nav>`
 })
 class E2EApp {
   rootPage = Login;
-
-  constructor() {
-
-  }
 }
+
+ionicBootstrap(E2EApp);

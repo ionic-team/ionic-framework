@@ -104,17 +104,16 @@ import {isTrueProperty} from '../../util/util';
  * `push` for all modes, and then set the type to `overlay` for the `ios` mode.
  *
  * ```ts
- * @App({
- *   templateUrl: 'build/app.html',
- *   config: {
- *     menuType: 'push',
- *     platforms: {
- *      ios: {
- *        menuType: 'overlay',
- *      }
+ * import {ionicBootstrap} from 'ionic-angular';
+ *
+ * ionicBootstrap(MyApp, customProviders, {
+ *   menuType: 'push',
+ *   platforms: {
+ *     ios: {
+ *       menuType: 'overlay',
  *     }
  *   }
- * })
+ * });
  * ```
  *
  *
@@ -150,13 +149,12 @@ import {isTrueProperty} from '../../util/util';
  * when it is called.
  *
  * ```ts
- * import{Page, MenuController} from 'ionic-angular';
+ * import {Component} from '@angular/core';
+ * import {MenuController} from 'ionic-angular';
  *
- * @Page({...})
+ * @Component({...})
  * export class MyPage {
- *  constructor(private menu: MenuController) {
- *
- *  }
+ *  constructor(private menu: MenuController) {}
  *
  *  openMenu() {
  *    this.menu.open();

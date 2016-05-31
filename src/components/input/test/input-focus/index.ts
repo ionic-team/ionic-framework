@@ -1,34 +1,36 @@
-import {App} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@App({
-  templateUrl: 'main.html',
-  config: {
-    //scrollAssist: true
-  }
+@Component({
+  templateUrl: 'main.html'
 })
-class E2EApp {
+class E2EPage {
   reload() {
     window.location.reload();
   }
 }
 
-document.addEventListener('click', function(ev) {
+document.addEventListener('click', (ev: any) => {
   console.log(`CLICK, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
 });
 
-document.addEventListener('touchstart', function(ev) {
+document.addEventListener('touchstart', (ev: any) => {
   console.log(`TOUCH START, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
 });
 
-document.addEventListener('touchend', function(ev) {
+document.addEventListener('touchend', (ev: any) => {
   console.log(`TOUCH END, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
 });
 
-document.addEventListener('focusin', function(ev) {console.log(`CLICK, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
+document.addEventListener('focusin', (ev: any) => {
+  console.log(`CLICK, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
   console.log(`FOCUS IN, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
 });
 
-document.addEventListener('focusout', function(ev) {console.log(`CLICK, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
+document.addEventListener('focusout', (ev: any) => {
+  console.log(`CLICK, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
   console.log(`FOCUS OUT, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
 });
+
+ionicBootstrap(E2EPage);

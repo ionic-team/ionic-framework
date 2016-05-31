@@ -1,6 +1,8 @@
-import {App, Page, NavController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController} from '../../../../../src';
 
-@Page({
+
+@Component({
   templateUrl: 'first.html'
 })
 class FirstPage {
@@ -13,12 +15,14 @@ class FirstPage {
   }
 }
 
-@Page({
+@Component({
   templateUrl: 'second.html'
 })
 class SecondPage {
+  searchQuery = '';
+  items: string[];
+
   constructor() {
-    this.searchQuery = '';
     this.initializeItems();
   }
 
@@ -85,11 +89,11 @@ class SecondPage {
   }
 }
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  constructor() {
-    this.root = FirstPage;
-  }
+  root = FirstPage;
 }
+
+ionicBootstrap(E2EApp);

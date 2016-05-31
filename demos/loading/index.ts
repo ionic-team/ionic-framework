@@ -1,10 +1,11 @@
-import {App, Page, ActionSheet, Loading, NavController, ViewController, Platform} from 'ionic-angular';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {ionicBootstrap, Loading, NavController, Platform} from 'ionic-angular';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
-class E2EPage {
+class Page1 {
   constructor(private nav: NavController, private platform: Platform) {}
 
   presentLoadingIos() {
@@ -107,7 +108,7 @@ class E2EPage {
   }
 }
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Page 2</ion-title>
@@ -119,11 +120,13 @@ class Page2 {
   constructor(private nav: NavController, private platform: Platform) {}
 }
 
-@App({
-  template: '<ion-nav [root]="root"></ion-nav>'
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>',
+  styleUrls: ['styles.css'],
+  encapsulation: ViewEncapsulation.None
 })
-class E2EApp {
-  root = E2EPage;
+class ApiDemoApp {
+  root = Page1;
 }
 
-document.body.innerHTML += '<link href="styles.css" rel="stylesheet">'
+ionicBootstrap(ApiDemoApp);

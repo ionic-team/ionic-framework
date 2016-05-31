@@ -1,17 +1,18 @@
-import {App, Page} from '../../../../../src';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@Page({template:'hi'})
+@Component({template:'hi'})
 class E2EPage{}
 
 
-@App({
-  templateUrl: 'main.html'
+@Component({
+  templateUrl: 'main.html',
+  styleUrls: ['styles.css'],
+  encapsulation: ViewEncapsulation.None
 })
 class E2EApp {
-  constructor() {
-    this.root = E2EPage;
-  }
+  root = E2EPage;
 }
 
-document.body.innerHTML += '<link href="styles.css" rel="stylesheet">'
+ionicBootstrap(E2EApp);

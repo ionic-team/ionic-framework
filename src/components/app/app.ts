@@ -7,16 +7,14 @@ import {Platform} from '../../platform/platform';
 
 
 /**
- * App utility service.  Allows you to look up components that have been
- * registered using the [Id directive](../Id/).
+ * Ionic App utility service.
  */
 @Injectable()
-export class IonicApp {
+export class App {
   private _disTime: number = 0;
   private _scrollTime: number = 0;
   private _title: string = '';
   private _titleSrv: Title = new Title();
-  private _isProd: boolean = false;
   private _rootNav: any = null;
   private _appInjector: Injector;
 
@@ -49,23 +47,6 @@ export class IonicApp {
   }
 
   /**
-   * Returns if the app has been set to be in be in production mode or not.
-   * Production mode can only be set within the config of `@App`. Defaults
-   * to `false`.
-   * @return {boolean}
-   */
-  isProd(): boolean {
-    return this._isProd;
-  }
-
-  /**
-   * @private
-   */
-  setProd(val: boolean) {
-    this._isProd = !!val;
-  }
-
-  /**
    * @private
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
@@ -80,9 +61,14 @@ export class IonicApp {
   setEnabled(isEnabled: boolean, duration: number = 700) {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
-    if (duration > 32 || isEnabled) {
-      // only do a click block if the duration is longer than XXms
-      this._clickBlock.show(!isEnabled, duration + 64);
+    if (this._clickBlock) {
+      if (duration > 32) {
+        // only do a click block if the duration is longer than XXms
+        this._clickBlock.show(true, duration + 64);
+
+      } else {
+        this._clickBlock.show(false, 0);
+      }
     }
   }
 

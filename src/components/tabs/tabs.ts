@@ -1,6 +1,6 @@
 import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, ViewEncapsulation} from '@angular/core';
 
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {Tab} from './tab';
 import {TabButton} from './tab-button';
@@ -49,7 +49,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  *
  * @usage
  *
- * You can add a basic tabs template to a `@Page` using the following
+ * You can add a basic tabs template to a `@Component` using the following
  * template:
  *
  * ```html
@@ -63,7 +63,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * Where `tab1Root`, `tab2Root`, and `tab3Root` are each a page:
  *
  *```ts
- * @Page({
+ * @Component({
  *   templateUrl: 'build/pages/tabs/tabs.html'
  * })
  * export class TabsPage {
@@ -223,7 +223,7 @@ export class Tabs extends Ion {
   constructor(
     @Optional() parent: NavController,
     @Optional() viewCtrl: ViewController,
-    private _app: IonicApp,
+    private _app: App,
     private _config: Config,
     private _elementRef: ElementRef,
     private _platform: Platform,

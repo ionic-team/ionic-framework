@@ -1,11 +1,9 @@
-import {NgFor} from '@angular/common';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
-import {App, Page} from '../../../../../src';
 
-
-@Page({
-  templateUrl: 'main.html',
-  directives: [NgFor]
+@Component({
+  templateUrl: 'main.html'
 })
 class E2EPage {
   musicAlertOpts;
@@ -56,13 +54,11 @@ class E2EPage {
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  root;
-
-  constructor() {
-    this.root = E2EPage;
-  }
+  root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);

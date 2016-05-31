@@ -1,7 +1,8 @@
-import {App, Page, MenuController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, MenuController} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'page1.html'
 })
 class Page1 {
@@ -23,13 +24,11 @@ class Page1 {
 }
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EApp {
-  rootPage;
-
-  constructor() {
-    this.rootPage = Page1;
-  }
+  rootPage = Page1;
 }
+
+ionicBootstrap(E2EApp);

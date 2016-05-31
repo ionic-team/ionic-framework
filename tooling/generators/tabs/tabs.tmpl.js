@@ -1,8 +1,9 @@
-import {NavController, Page} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController} from 'ionic-angular';
 <% _.forEach(tabs, function(tab) { %>import {<%= tab.jsClassName %>} from '../<%= tab.fileName %>/<%= tab.fileName %>';
 <% }); %>
 
-@Page({
+@Component({
   templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html'
 })
 export class <%= jsClassName %> {

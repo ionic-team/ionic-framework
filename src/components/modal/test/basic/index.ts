@@ -1,7 +1,8 @@
-import {App, Page, Config, Platform} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, Config, Platform} from '../../../../../src';
 import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../src';
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -76,7 +77,7 @@ class E2EPage {
   }
 }
 
-@Page({
+@Component({
   template: `
   <ion-navbar *navbar>
     <ion-title>Page One</ion-title>
@@ -95,7 +96,7 @@ class NavigableModal{
   }
 }
 
-@Page({
+@Component({
   template: `
   <ion-navbar *navbar>
     <ion-title>Page Two</ion-title>
@@ -116,7 +117,7 @@ class NavigableModal2{
 
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Data in/out</ion-title>
@@ -172,7 +173,7 @@ class ModalPassData {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-toolbar primary>
       <ion-title>Toolbar 1</ion-title>
@@ -203,7 +204,7 @@ class ToolbarModal {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-toolbar secondary>
       <ion-buttons start>
@@ -255,7 +256,7 @@ class ModalWithInputs {
 }
 
 
-@Page({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ContactUs {
@@ -289,7 +290,7 @@ class ContactUs {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>First Page Header</ion-title>
@@ -397,7 +398,7 @@ class ModalFirstPage {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Second Page Header</ion-title>
@@ -430,16 +431,14 @@ class ModalSecondPage {
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  root;
-
-  constructor() {
-    this.root = E2EPage;
-  }
+  root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);
 
 
 class FadeIn extends Transition {

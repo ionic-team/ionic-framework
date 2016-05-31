@@ -1,8 +1,12 @@
-import {App} from 'ionic-angular';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {ionicBootstrap} from 'ionic-angular';
 
-@App({
+
+@Component({
   templateUrl: 'main.html',
+  styleUrls: ['style.css'],
+  encapsulation: ViewEncapsulation.None
 })
 class ApiDemoApp {}
 
-document.body.innerHTML += '<link href="style.css" rel="stylesheet">'
+ionicBootstrap(ApiDemoApp);

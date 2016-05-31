@@ -1,8 +1,8 @@
-import {ViewChild} from '@angular/core';
-import {App, IonicApp, MenuController, Page, NavController, Alert, Nav} from '../../../../../src';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, MenuController, NavController, Alert, Nav} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'page1.html'
 })
 class Page1 {
@@ -24,11 +24,11 @@ class Page1 {
 }
 
 
-@Page({templateUrl: 'page3.html'})
+@Component({templateUrl: 'page3.html'})
 class Page3 {}
 
 
-@Page({templateUrl: 'page2.html'})
+@Component({templateUrl: 'page2.html'})
 class Page2 {
   constructor(private nav: NavController) {}
 
@@ -38,16 +38,16 @@ class Page2 {
 }
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
+class E2EPage {
   rootPage;
   changeDetectionCount: number = 0;
   pages: Array<{title: string, component: any}>;
   @ViewChild(Nav) nav: Nav;
 
-  constructor(private app: IonicApp, private menu: MenuController) {
+  constructor(private menu: MenuController) {
     this.rootPage = Page1;
 
     this.pages = [
@@ -84,3 +84,5 @@ class E2EApp {
     return true;
   }
 }
+
+ionicBootstrap(E2EPage);

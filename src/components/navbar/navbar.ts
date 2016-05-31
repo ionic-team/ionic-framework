@@ -4,7 +4,7 @@ import {Ion} from '../ion';
 import {Icon} from '../icon/icon';
 import {ToolbarBase} from '../toolbar/toolbar';
 import {Config} from '../../config/config';
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {isTrueProperty} from '../../util/util';
 import {ViewController} from '../nav/view-controller';
 import {NavController} from '../nav/nav-controller';
@@ -134,7 +134,7 @@ export class Navbar extends ToolbarBase {
   }
 
   constructor(
-    private _app: IonicApp,
+    private _app: App,
     @Optional() viewCtrl: ViewController,
     elementRef: ElementRef,
     config: Config,

@@ -33,9 +33,10 @@ import {MenuType} from './menu-types';
  * toggling the menu.
  *
  * ```ts
- * import{Page, MenuController} from 'ionic-angular';
+ * import {Component} from '@angular/core';
+ * import {MenuController} from 'ionic-angular';
  *
- * @Page({...})
+ * @Component({...})
  * export class MyPage {
  *
  *  constructor(private menu: MenuController) {

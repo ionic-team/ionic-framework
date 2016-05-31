@@ -3,7 +3,6 @@ export * from './config/bootstrap';
 export * from './config/config';
 export * from './config/directives';
 
-export * from './decorators/app';
 export * from './decorators/page';
 
 export * from './components';

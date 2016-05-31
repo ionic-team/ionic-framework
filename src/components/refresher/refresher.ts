@@ -33,7 +33,7 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
  * ```
  *
  * ```ts
- * @Page({...})
+ * @Component({...})
  * export class NewsFeedPage {
  *
  *   doRefresh(refresher) {

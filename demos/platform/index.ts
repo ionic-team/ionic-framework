@@ -1,6 +1,8 @@
-import {App, Platform} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap, Platform} from 'ionic-angular';
 
-@App({
+
+@Component({
   templateUrl: 'main.html'
 })
 class ApiDemoApp {
@@ -14,3 +16,5 @@ class ApiDemoApp {
     this.isWindows = platform.is('windows');
   }
 }
+
+ionicBootstrap(ApiDemoApp);

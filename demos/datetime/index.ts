@@ -1,7 +1,8 @@
-import {App, Page} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from 'ionic-angular';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class MainPage {
@@ -63,9 +64,11 @@ class MainPage {
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ApiDemoApp {
   root = MainPage;
 }
+
+ionicBootstrap(ApiDemoApp);

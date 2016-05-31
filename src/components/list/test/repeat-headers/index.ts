@@ -1,15 +1,16 @@
-import {App} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
-  constructor() {
-    this.people = [
-      {"name": "Adam Bradley", "components": [ "all the things"]},
-      {"name": "Max Lynch", "components": [ "checkbox", "content", "form"]},
-      {"name": "Tim Lancina", "components": [ "tabs"]}
-    ];
-  }
+class E2EPage {
+  people = [
+    {"name": "Burt", "components": [ "all the things"]},
+    {"name": "Mary", "components": [ "checkbox", "content", "form"]},
+    {"name": "Albert", "components": [ "tabs"]}
+  ];
 }
+
+ionicBootstrap(E2EPage);

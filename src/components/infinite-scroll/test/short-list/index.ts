@@ -1,10 +1,11 @@
-import {App, InfiniteScroll} from '../../../../../src';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, InfiniteScroll} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
+class E2EPage {
   items = [];
 
   constructor() {
@@ -31,6 +32,8 @@ class E2EApp {
   }
 
 }
+
+ionicBootstrap(E2EPage);
 
 function getAsyncData(): Promise<number[]> {
   // async return mock data

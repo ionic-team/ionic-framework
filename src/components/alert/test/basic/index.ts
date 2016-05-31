@@ -1,7 +1,8 @@
-import {App, Page, Alert, Modal, NavController, ViewController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, Alert, Modal, NavController, ViewController} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -9,6 +10,10 @@ class E2EPage {
   testPromptOpen: boolean = false;
   testConfirmResult: string = '';
   testPromptResult: string = '';
+  testRadioOpen: boolean = false;
+  testRadioResult: string = '';
+  testCheckboxOpen: boolean = false;
+  testCheckboxResult: string = '';
 
   constructor(private nav: NavController) { }
 
@@ -288,7 +293,7 @@ class E2EPage {
   }
 }
 
-@Page({
+@Component({
   template: `
     <ion-toolbar>
       <ion-buttons>
@@ -310,12 +315,11 @@ class ModalPage {
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  root;
-  constructor() {
-    this.root = E2EPage;
-  }
+  root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);

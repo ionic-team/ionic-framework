@@ -1,7 +1,8 @@
-import {App, Page, ActionSheet, Loading, NavController, ViewController, Platform} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, ActionSheet, Loading, NavController, ViewController, Platform} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -185,7 +186,7 @@ class E2EPage {
   }
 }
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Page 2</ion-title>
@@ -215,7 +216,7 @@ class Page2 {
   }
 }
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Page 3</ion-title>
@@ -227,11 +228,13 @@ class Page3 {
   constructor(private nav: NavController, private platform: Platform) {}
 }
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
   root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);
 
 document.body.innerHTML += '<link href="styles.css" rel="stylesheet">'

@@ -52,10 +52,10 @@ export class List extends Ion {
    * Enable the sliding items.
    *
    * ```ts
-   * import {Page, List} from 'ionic-angular';
-   * import {ViewChild} from '@angular/core';
+   * import {Component, ViewChild} from '@angular/core';
+   * import {List} from 'ionic-angular';
    *
-   * @Page({})
+   * @Component({...})
    * export class MyClass {
    *   @ViewChild(List) list: List;
    *
@@ -90,10 +90,10 @@ export class List extends Ion {
    * Close the open sliding item.
    *
    * ```ts
-   * import {Page, List} from 'ionic-angular';
-   * import {ViewChild} from '@angular/core';
+   * import {Component, ViewChild} from '@angular/core';
+   * import {List} from 'ionic-angular';
    *
-   * @Page({})
+   * @Component({...})
    * export class MyClass {
    *   @ViewChild(List) list: List;
    *

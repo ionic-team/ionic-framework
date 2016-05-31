@@ -5,7 +5,7 @@ import {Config} from '../../config/config';
 import {Content} from '../content/content';
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {isTrueProperty} from '../../util/util';
 import {Label} from '../label/label';
 import {pointerCoord, hasPointerMoved, closest, copyInputAttributes}  from '../../util/dom';
@@ -41,7 +41,7 @@ export class InputBase {
     config: Config,
     protected _form: Form,
     protected _item: Item,
-    protected _app: IonicApp,
+    protected _app: App,
     protected _platform: Platform,
     protected _elementRef: ElementRef,
     protected _scrollView: Content,

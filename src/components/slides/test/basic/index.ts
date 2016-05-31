@@ -1,12 +1,12 @@
-import {ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Http} from '@angular/http';
-import {App, Slides} from '../../../../../src';
+import {ionicBootstrap, Slides} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class MyApp {
+class E2EApp {
   mySlideOptions: any;
   images: string[] = [];
   @ViewChild(Slides) slider: Slides;
@@ -42,3 +42,5 @@ class MyApp {
   }
 
 }
+
+ionicBootstrap(E2EApp);

@@ -1,15 +1,16 @@
-import {App} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from 'ionic-angular';
+
 
 // Use the toolbar demo but pass in the demo name to change the title
 // this will also hide some of the toolbars that don't use `ion-title`
-@App({
+@Component({
   templateUrl: '../toolbar/main.html'
 })
 class ApiDemoApp {
-  constructor() {
-    this.demo = "Title";
-
-    this.favorites = "recent";
-    this.apps = "free";
-  }
+  demo = "Title";
+  favorites = "recent";
+  apps = "free";
 }
+
+ionicBootstrap(ApiDemoApp);

@@ -1,7 +1,8 @@
-import {App, Page} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@Page({
+@Component({
   template: `
     <ion-content padding text-center>
       Page be loaded!
@@ -11,7 +12,7 @@ import {App, Page} from '../../../../../src';
 class AsyncPage {}
 
 
-@App({
+@Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
 class E2EApp {
@@ -24,3 +25,5 @@ class E2EApp {
 
   }
 }
+
+ionicBootstrap(E2EApp);

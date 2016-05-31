@@ -61,8 +61,8 @@ const POPOVER_MD_BODY_PADDING = 12;
  * </button>
  * ```
  *
- * ```js
- * @Page({})
+ * ```ts
+ * @Component({})
  * class MyPage {
  *   constructor(private nav: NavController) {}
  *
@@ -79,8 +79,8 @@ const POPOVER_MD_BODY_PADDING = 12;
  * can be anything. Below is an example of a page with items
  * that close the popover on click.
  *
- * ```js
- * @Page({
+ * ```ts
+ * @Component({
  *   template: `
  *     <ion-list>
  *       <ion-list-header>Ionic</ion-list-header>

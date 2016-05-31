@@ -1,4 +1,4 @@
-import {IonicApp, Nav, Tabs, Tab, NavOptions, Config, ViewController, Platform} from '../../../../src';
+import {App, Nav, Tabs, Tab, NavOptions, Config, ViewController, Platform} from '../../../../src';
 
 export function run() {
 
@@ -86,7 +86,7 @@ describe('IonicApp', () => {
 
   });
 
-  var app: IonicApp;
+  var app: App;
   var config: Config;
   var platform: Platform;
   var _cd: any;
@@ -106,7 +106,7 @@ describe('IonicApp', () => {
   beforeEach(() => {
     config = new Config();
     platform = new Platform();
-    app = new IonicApp(config, null, platform);
+    app = new App(config, null, platform);
     _cd = {
       reattach: function(){},
       detach: function(){}

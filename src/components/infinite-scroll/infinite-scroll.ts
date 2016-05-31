@@ -30,11 +30,11 @@ import {Content} from '../content/content';
  * ```
  *
  * ```ts
- * @Page({...})
+ * @Component({...})
  * export class NewsFeedPage {
+ *   items = [];
  *
  *   constructor() {
- *     this.items = [];
  *     for (var i = 0; i < 30; i++) {
  *       this.items.push( this.items.length );
  *     }

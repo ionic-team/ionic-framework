@@ -1,25 +1,15 @@
-import {App, Page, IonicApp, Config, Platform, ViewController} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap, IonicApp, Config, Platform, ViewController} from 'ionic-angular';
 import {Modal, NavController, NavParams, Animation} from 'ionic-angular';
 
 
-@App({
-  templateUrl: 'app.html'
-})
-class ApiDemoApp {
-
-  constructor() {
-    this.rootPage = ModalFirstPage;
-  }
-}
-
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 export class ModalFirstPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
-    this.myParam = '';
-  }
+  myParam = '';
+
+  constructor(public nav: NavController) {}
 
   openBasicModal() {
     let myModal = Modal.create(ModalContentPage);
@@ -37,24 +27,34 @@ export class ModalFirstPage {
   }
 }
 
-@Page({
-    templateUrl: "modal-content.html"
+@Component({
+  templateUrl: "modal-content.html"
 })
 export class ModalContentPage {
-    constructor(
-        nav: NavController,
-        params: NavParams,
-        viewCtrl: ViewController
-    ) {
-        this.nav = nav;
-        this.viewCtrl = viewCtrl;
-        this.myParam = params.get('myParam');
-    }
+  myParam: string;
 
-    dismiss() {
-      this.viewCtrl.dismiss();
-    }
+  constructor(
+    public nav: NavController,
+    public viewCtrl: ViewController,
+    params: NavParams
+  ) {
+      this.myParam = params.get('myParam');
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
 }
+
+
+@Component({
+  templateUrl: 'app.html'
+})
+class ApiDemoApp {
+  root = ModalFirstPage;
+}
+
+ionicBootstrap(ApiDemoApp);
 
 
 class FadeIn extends Animation {
