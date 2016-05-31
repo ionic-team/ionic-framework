@@ -39,7 +39,7 @@ export function ionicBootstrap(appRootComponent: any, customProviders?: Array<an
 
 
 export function ionicPostBootstrap(ngComponentRef: ComponentRef<any>): ComponentRef<any> {
-  //ngComponentRef.injector.get(TapClick);
+  // ngComponentRef.injector.get(TapClick);
   let app: App = ngComponentRef.injector.get(App);
   app.setAppInjector(ngComponentRef.injector);
 

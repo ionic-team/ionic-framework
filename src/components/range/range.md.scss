@@ -109,10 +109,11 @@ ion-range {
 
 .range-knob {
   position: absolute;
-  z-index: 2;
 
   top: ($range-md-hit-height / 2) - ($range-md-knob-height / 2) + ($range-md-bar-height / 2);
   left: ($range-md-hit-width / 2) - ($range-md-knob-width / 2);
+
+  z-index: 2;
 
   width: $range-md-knob-width;
   height: $range-md-knob-height;
@@ -126,9 +127,10 @@ ion-range {
 
 .range-tick {
   position: absolute;
-  z-index: 1;
 
   top: ($range-md-hit-height / 2) - ($range-md-tick-height / 2) + ($range-md-bar-height / 2);
+
+  z-index: 1;
 
   margin-left: ($range-md-tick-width / 2) * -1;
 

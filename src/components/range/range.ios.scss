@@ -17,7 +17,7 @@ $range-ios-bar-active-background-color:       color($colors-ios, primary) !defau
 
 $range-ios-knob-width:                        28px !default;
 $range-ios-knob-height:                       $range-ios-knob-width !default;
-$range-ios-knob-box-shadow:                   0 3px 1px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.13), 0 0 0 1px rgba(0, 0, 0, 0.02) !default;
+$range-ios-knob-box-shadow:                   0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02) !default;
 $range-ios-knob-border-radius:                50% !default;
 $range-ios-knob-background-color:             #fff !default;
 
