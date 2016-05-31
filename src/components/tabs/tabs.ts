@@ -2,14 +2,14 @@ import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContai
 
 import {App} from '../app/app';
 import {Config} from '../../config/config';
+import {Ion} from '../ion';
+import {isBlank, isTrueProperty} from '../../util/util';
+import {NavController} from '../nav/nav-controller';
+import {Platform} from '../../platform/platform';
 import {Tab} from './tab';
 import {TabButton} from './tab-button';
 import {TabHighlight} from './tab-highlight';
-import {Ion} from '../ion';
-import {Platform} from '../../platform/platform';
-import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {isBlank, isTrueProperty} from '../../util/util';
 
 
 /**
@@ -138,7 +138,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
       '<tabbar role="tablist">' +
-        '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab">' +
+        '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#">' +
           '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
           '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
           '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +

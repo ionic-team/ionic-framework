@@ -51,8 +51,9 @@ export class TabButton extends Ion {
     this.hasBadge = !!this.tab.tabBadge;
   }
 
-  @HostListener('click')
-  private onClick() {
+  @HostListener('click', ['$event'])
+  private onClick(ev: UIEvent) {
     this.ionSelect.emit(this.tab);
+    ev.preventDefault();
   }
 }

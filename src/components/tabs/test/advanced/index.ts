@@ -411,11 +411,15 @@ class Tab3Page1 {
 }
 
 
-@Component({})
-@Routes([
-  { path: '/', component: SignIn },
-  { path: '/tabs', component: TabsPage },
-])
-class E2EApp {}
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+// @Routes([
+//   { path: '/', component: SignIn },
+//   { path: '/tabs', component: TabsPage },
+// ])
+class E2EApp {
+  root = SignIn;
+}
 
 ionicBootstrap(E2EApp);
