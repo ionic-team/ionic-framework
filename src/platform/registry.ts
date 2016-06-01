@@ -154,10 +154,10 @@ Platform.register({
     hoverCSS: false
   },
   isMatch(p: Platform): boolean {
-    return p.isPlatformMatch('windows', ['windows phone']);
+    return p.isPlatformMatch('windows', ['windows phone', 'msapphost'], ['wow64']);
   },
   versionParser(p: Platform): any {
-    return p.matchUserAgentVersion(/MSAppHost (\d+).(\d+)?/);
+    return p.matchUserAgentVersion(/(MSAppHost)|(Windows Phone)/);
   }
 });
 

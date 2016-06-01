@@ -256,26 +256,26 @@ export function run() {
     expect(platform.is('ipad')).toEqual(false);
     expect(platform.is('tablet')).toEqual(false);
   });
-  
+
   it('should set windows platform via windows 10 mobile user agent', () =>{
     let platform = new Platform();
     platform.setUserAgent(WINDOWS_10_MOBILE_UA);
     platform.load(null);
-    
+
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('mobile')).toEqual(true);
     expect(platform.is('windows')).toEqual(true);
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('ios')).toEqual(false);
   });
-  
+
   it('should set windows platform via windows 10 desktop user agent', () =>{
     let platform = new Platform();
     platform.setUserAgent(WINDOWS_10_DESKTOP_UA);
     platform.load(null);
-    
+
     expect(platform.is('core')).toEqual(false);
-    expect(platform.is('mobile')).toEqual(false);
+    expect(platform.is('mobile')).toEqual(true);
     expect(platform.is('windows')).toEqual(true);
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('ios')).toEqual(false);
@@ -287,12 +287,12 @@ const OSX_10_FIREFOX_43_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:4
 const OSX_10_SAFARI_9_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/601.4.4 (KHTML, like Gecko) Version/9.0.3 Safari/601.4.4';
 const OSX_10_CHROME_49_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36';
 
+const WINDOWS_10_DESKTOP_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; MSAppHost/3.0) Apple WebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36 Edge/14.14342';
+const WINDOWS_10_MOBILE_UA = 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; MSAppHost/3.0; Microsoft; Lumia 550) Apple WebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Mobile Safari/537.36 Edge/14.14322';
+
 const WINDOWS_10_CHROME_40_UA = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36';
 const WINDOWS_10_EDGE_12_UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
 const WINDOWS_8_IE_11_UA = 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko';
-
-const WINDOWS_10_DESKTOP_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; MSAppHost.3.0) Apple WebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36 Edge/14.14342';
-const WINDOWS_10_MOBILE_UA = 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; MSAppHost.3.0; Microsoft; Lumia 550) Apple WebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Mobile Safari/537.36 Edge/14.14322';
 
 const WINDOWS_PHONE_UA = 'Mozilla/5.0 (Mobile; Windows Phone 8.1; Android 4.0; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Lumia 930) like iPhone OS 7_0_3 Mac OS X AppleWebKit/537 (KHTML, like Gecko) Mobile Safari/537';
 const WINDOWS8_PHONE_UA = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 920)';
