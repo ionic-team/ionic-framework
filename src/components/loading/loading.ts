@@ -202,7 +202,7 @@ class LoadingCmp {
     this.showSpinner = isDefined(this.d.spinner) && this.d.spinner !== 'hide';
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     let activeElement: any = document.activeElement;
     if (document.activeElement) {
       activeElement.blur();

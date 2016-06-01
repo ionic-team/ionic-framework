@@ -165,7 +165,7 @@ class ToastCmp {
     }
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     const { activeElement }: any = document;
     if (activeElement) {
       activeElement.blur();

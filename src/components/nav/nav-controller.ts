@@ -82,10 +82,10 @@ import {ViewController} from './view-controller';
  *   template: 'Hello World'
  * })
  * class HelloWorld {
- *   onPageLoaded() {
+ *   ionViewLoaded() {
  *     console.log("I'm alive!");
  *   }
- *   onPageWillLeave() {
+ *   ionViewWillLeave() {
  *     console.log("Looks like I'm about to leave :(");
  *   }
  * }
@@ -93,13 +93,13 @@ import {ViewController} from './view-controller';
  *
  *  | Page Event         | Description                                                                                                                                                                                                                                                                       |
  *  |--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
- *  | `onPageLoaded`     | Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `onPageLoaded` event is good place to put your setup code for the page. |
- *  | `onPageWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                  |
- *  | `onPageDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                            |
- *  | `onPageWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                            |
- *  | `onPageDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                                         |
- *  | `onPageWillUnload` | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                                        |
- *  | `onPageDidUnload`  | Runs after the page has been destroyed and its elements have been removed.
+ *  | `ionViewLoaded`     | Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewLoaded` event is good place to put your setup code for the page. |
+ *  | `ionViewWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                  |
+ *  | `ionViewDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                            |
+ *  | `ionViewWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                            |
+ *  | `ionViewDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                                         |
+ *  | `ionViewWillUnload` | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                                        |
+ *  | `ionViewDidUnload`  | Runs after the page has been destroyed and its elements have been removed.
  *
  *
  * ## Nav Transition Promises
@@ -144,13 +144,13 @@ import {ViewController} from './view-controller';
  * Some methods on `NavController` allow for customizing the current transition.
  * To do this, we can pass an object with the modified properites.
  *
- * | Property  | Value     | Description                                          |
- * |-----------|-----------|------------------------------------------------------|
- * | animate   | `boolean` | Whether or not the transition should animate         |
- * | animation | `string`  | What kind of animation should be used                |
- * | direction | `string`  | The direction the page should animate                |
- * | duration  | `number`  | The length in milliseconds the animation should take |
- * | easing    | `string`  | The easing for the animation                         |
+ * | Property  | Value     | Description                                                                                                |
+ * |-----------|-----------|------------------------------------------------------------------------------------------------------------|
+ * | animate   | `boolean` | Whether or not the transition should animate.                                                              |
+ * | animation | `string`  | What kind of animation should be used.                                                                     |
+ * | direction | `string`  | The conceptual direction the user is navigating. For example, is the user navigating `forward`, or `back`? |
+ * | duration  | `number`  | The length in milliseconds the animation should take.                                                      |
+ * | easing    | `string`  | The easing for the animation.                                                                              |
  *
  *
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
@@ -169,15 +169,15 @@ export class NavController extends Ion {
   protected _ids: number = -1;
   protected _trnsDelay: any;
   protected _trnsTime: number = 0;
-  protected _views: Array<ViewController> = [];
+  protected _views: ViewController[] = [];
 
-  pageDidLoad: EventEmitter<any>;
-  pageWillEnter: EventEmitter<any>;
-  pageDidEnter: EventEmitter<any>;
-  pageWillLeave: EventEmitter<any>;
-  pageDidLeave: EventEmitter<any>;
-  pageWillUnload: EventEmitter<any>;
-  pageDidUnload: EventEmitter<any>;
+  viewDidLoad: EventEmitter<any>;
+  viewWillEnter: EventEmitter<any>;
+  viewDidEnter: EventEmitter<any>;
+  viewWillLeave: EventEmitter<any>;
+  viewDidLeave: EventEmitter<any>;
+  viewWillUnload: EventEmitter<any>;
+  viewDidUnload: EventEmitter<any>;
 
   /**
    * @private
@@ -236,13 +236,13 @@ export class NavController extends Ion {
       provide(NavController, {useValue: this})
     ]);
 
-    this.pageDidLoad = new EventEmitter();
-    this.pageWillEnter = new EventEmitter();
-    this.pageDidEnter = new EventEmitter();
-    this.pageWillLeave = new EventEmitter();
-    this.pageDidLeave = new EventEmitter();
-    this.pageWillUnload = new EventEmitter();
-    this.pageDidUnload = new EventEmitter();
+    this.viewDidLoad = new EventEmitter();
+    this.viewWillEnter = new EventEmitter();
+    this.viewDidEnter = new EventEmitter();
+    this.viewWillLeave = new EventEmitter();
+    this.viewDidLeave = new EventEmitter();
+    this.viewWillUnload = new EventEmitter();
+    this.viewDidUnload = new EventEmitter();
   }
 
   /**
@@ -276,7 +276,7 @@ export class NavController extends Ion {
    *
    *
    *```ts
-   * import {Page, NavController} from 'ionic-angular'
+   * import {NavController} from 'ionic-angular'
    * import {Detail} from '../detail/detail'
    * import {Info} from '../info/info'
    *
@@ -300,7 +300,7 @@ export class NavController extends Ion {
    *
    *
    * ```ts
-   * import {Page, NavController} from 'ionic-angular'
+   * import {NavController} from 'ionic-angular'
    * import {Detail} from '../detail/detail'
    *
    *  export class Home {
@@ -320,7 +320,7 @@ export class NavController extends Ion {
    *
    *
    * ```ts
-   * import {Page, NavController} from 'ionic-angular';
+   * import {NavController} from 'ionic-angular';
    * import {Info} from '../info/info';
    * import {List} from '../list/list';
    * import {Detail} from '../detail/detail';
@@ -454,12 +454,13 @@ export class NavController extends Ion {
   }
 
   /**
-   * Present is how app display overlays on top of the content, from within the
+   * Present is how an app display overlays on top of the content, from within the
    * root level `NavController`. The `present` method is used by overlays, such
    * as `ActionSheet`, `Alert`, and `Modal`. The main difference between `push`
    * and `present` is that `present` takes a `ViewController` instance, whereas
-   * `push` takes a `Page` component class. Additionally, `present` will place
-   * the overlay in the root NavController's stack.
+   * `push` takes a component class which hasn't been instantiated yet.
+   * Additionally, `present` will place the overlay in the root NavController's
+   * stack.
    *
    * ```ts
    * class MyClass{
@@ -577,7 +578,7 @@ export class NavController extends Ion {
     return this._insertViews(insertIndex, views, opts);
   }
 
-  private _insertViews(insertIndex: number, insertViews: Array<ViewController>, opts?: NavOptions): Promise<any> {
+  private _insertViews(insertIndex: number, insertViews: ViewController[], opts?: NavOptions): Promise<any> {
     if (!insertViews || !insertViews.length) {
       return Promise.reject('invalid pages');
     }
@@ -824,11 +825,11 @@ export class NavController extends Ion {
               // Tabs can be a parent, but it is not a collection of views
               // only we're looking for an actual NavController w/ stack of views
               leavingView.fireWillLeave();
-              this.pageWillLeave.emit(leavingView);
+              this.viewWillLeave.emit(leavingView);
 
               return parentNav.pop(opts).then((rtnVal: boolean) => {
                 leavingView.fireDidLeave();
-                this.pageDidLeave.emit(leavingView);
+                this.viewDidLeave.emit(leavingView);
                 return rtnVal;
               });
             }
@@ -926,7 +927,7 @@ export class NavController extends Ion {
       // the first view to be removed, it should init leave
       view.state = STATE_INIT_LEAVE;
       view.fireWillUnload();
-      this.pageWillUnload.emit(view);
+      this.viewWillUnload.emit(view);
 
       // from the index of the leaving view, go backwards and
       // find the first view that is inactive so it can be the entering
@@ -960,9 +961,9 @@ export class NavController extends Ion {
     // apart of any transitions that will eventually happen
     this._views.filter(v => v.state === STATE_REMOVE).forEach(view => {
       view.fireWillLeave();
-      this.pageWillLeave.emit(view);
+      this.viewWillLeave.emit(view);
       view.fireDidLeave();
-      this.pageDidLeave.emit(view);
+      this.viewDidLeave.emit(view);
       this._views.splice(this.indexOf(view), 1);
       view.destroy();
     });
@@ -997,7 +998,7 @@ export class NavController extends Ion {
       // if no entering view then create a bogus one
       enteringView = new ViewController();
       enteringView.fireLoaded();
-      this.pageDidLoad.emit(enteringView);
+      this.viewDidLoad.emit(enteringView);
     }
 
     /* Async steps to complete a transition
@@ -1054,7 +1055,7 @@ export class NavController extends Ion {
 
       this.loadPage(enteringView, null, opts, () => {
         enteringView.fireLoaded();
-        this.pageDidLoad.emit(enteringView);
+        this.viewDidLoad.emit(enteringView);
         this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
       });
     }
@@ -1114,14 +1115,14 @@ export class NavController extends Ion {
         // only fire entering lifecycle if the leaving
         // view hasn't explicitly set not to
         enteringView.fireWillEnter();
-        this.pageWillEnter.emit(enteringView);
+        this.viewWillEnter.emit(enteringView);
       }
 
       if (enteringView.fireOtherLifecycles) {
         // only fire leaving lifecycle if the entering
         // view hasn't explicitly set not to
         leavingView.fireWillLeave();
-        this.pageWillLeave.emit(leavingView);
+        this.viewWillLeave.emit(leavingView);
       }
 
     } else {
@@ -1228,14 +1229,14 @@ export class NavController extends Ion {
           // only fire entering lifecycle if the leaving
           // view hasn't explicitly set not to
           enteringView.fireDidEnter();
-          this.pageDidEnter.emit(enteringView);
+          this.viewDidEnter.emit(enteringView);
         }
 
         if (enteringView.fireOtherLifecycles) {
           // only fire leaving lifecycle if the entering
           // view hasn't explicitly set not to
           leavingView.fireDidLeave();
-          this.pageDidLeave.emit(leavingView);
+          this.viewDidLeave.emit(leavingView);
         }
       }
 

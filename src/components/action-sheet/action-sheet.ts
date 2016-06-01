@@ -271,7 +271,7 @@ class ActionSheetCmp {
     }
   }
 
-  onPageLoaded() {
+  ionViewLoaded() {
     // normalize the data
     let buttons: any[] = [];
 
@@ -305,7 +305,7 @@ class ActionSheetCmp {
     this.d.buttons = buttons;
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     let activeElement: any = document.activeElement;
     if (document.activeElement) {
       activeElement.blur();

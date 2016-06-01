@@ -8,7 +8,7 @@ export function run() {
       it('should do nothing if its the first view in the stack', () => {
         let view1 = new ViewController(Page1);
         view1.state = STATE_ACTIVE;
-        nav._views = [view1];
+        nav.views = [view1];
 
         expect(nav.length()).toBe(1);
 
@@ -32,7 +32,7 @@ export function run() {
         view3.state = STATE_INACTIVE;
         let view4 = new ViewController(Page4);
         view4.state = STATE_ACTIVE;
-        nav._views = [view1, view2, view3, view4];
+        nav.views = [view1, view2, view3, view4];
 
         nav.popToRoot();
         expect(nav.length()).toBe(2);
@@ -58,7 +58,7 @@ export function run() {
         view3.state = STATE_INACTIVE;
         let view4 = new ViewController(Page4);
         view4.state = STATE_ACTIVE;
-        nav._views = [view1, view2, view3, view4];
+        nav.views = [view1, view2, view3, view4];
 
         nav.popTo(view2);
 
@@ -81,7 +81,7 @@ export function run() {
         view1.state = STATE_INACTIVE;
         let view2 = new ViewController(Page2);
         view2.state = STATE_ACTIVE;
-        nav._views = [view1, view2];
+        nav.views = [view1, view2];
 
         nav.remove(1, 1, null);
       });
@@ -97,7 +97,7 @@ export function run() {
         view2.state = STATE_TRANS_LEAVE;
         let view3 = new ViewController(Page3);
         view3.state = STATE_TRANS_ENTER;
-        nav._views = [view1, view2, view3];
+        nav.views = [view1, view2, view3];
 
         nav._remove(2, 1);
 
@@ -116,7 +116,7 @@ export function run() {
         view2.state = STATE_TRANS_ENTER;
         let view3 = new ViewController(Page3);
         view3.state = STATE_TRANS_LEAVE;
-        nav._views = [view1, view2, view3];
+        nav.views = [view1, view2, view3];
 
         nav._remove(1, 2);
         expect(nav.getByIndex(0).state).toBe(STATE_INACTIVE);
@@ -134,7 +134,7 @@ export function run() {
         view2.state = STATE_INIT_ENTER;
         let view3 = new ViewController(Page3);
         view3.state = STATE_INIT_LEAVE;
-        nav._views = [view1, view2, view3];
+        nav.views = [view1, view2, view3];
 
         nav._remove(1, 1);
         expect(nav.length()).toBe(2);
@@ -153,7 +153,7 @@ export function run() {
         view1.state = STATE_INACTIVE;
         let view2 = new ViewController(Page2);
         view2.state = STATE_ACTIVE;
-        nav._views = [view1, view2];
+        nav.views = [view1, view2];
 
         nav._remove(1, 1);
         expect(view1.state).toBe(STATE_INIT_ENTER);
@@ -171,7 +171,7 @@ export function run() {
         view4.state = STATE_INACTIVE;
         let view5 = new ViewController(Page5);
         view5.state = STATE_ACTIVE;
-        nav._views = [view1, view2, view3, view4, view5];
+        nav.views = [view1, view2, view3, view4, view5];
 
         nav._remove(2, 2);
         expect(nav.length()).toBe(3);
@@ -198,7 +198,7 @@ export function run() {
         view3.state = STATE_INACTIVE;
         let view4 = new ViewController(Page4);
         view4.state = STATE_ACTIVE;
-        nav._views = [view1, view2, view3, view4];
+        nav.views = [view1, view2, view3, view4];
 
         nav._remove(1, 9999);
         expect(nav.length()).toBe(2);
@@ -222,7 +222,7 @@ export function run() {
         view3.state = STATE_INACTIVE;
         let view4 = new ViewController(Page4);
         view4.state = STATE_ACTIVE;
-        nav._views = [view1, view2, view3, view4];
+        nav.views = [view1, view2, view3, view4];
 
         nav._remove(1, 3);
         expect(nav.length()).toBe(2);
@@ -242,7 +242,7 @@ export function run() {
         view1.state = STATE_INACTIVE;
         let view2 = new ViewController(Page2);
         view2.state = STATE_ACTIVE;
-        nav._views = [view1, view2];
+        nav.views = [view1, view2];
 
         nav._remove(1, 1);
         expect(view1.state).toBe(STATE_INIT_ENTER);
@@ -252,7 +252,7 @@ export function run() {
       it('should set to remove the only view in the stack', () => {
         let view1 = new ViewController(Page1);
         view1.state = STATE_ACTIVE;
-        nav._views = [view1];
+        nav.views = [view1];
 
         nav._remove(0, 1);
         expect(nav.getByIndex(0).state).toBe(STATE_INIT_LEAVE);
@@ -267,7 +267,7 @@ export function run() {
         view3.state = STATE_INACTIVE;
         let view4 = new ViewController(Page4);
         view4.state = STATE_ACTIVE;
-        nav._views = [view1, view2, view3, view4];
+        nav.views = [view1, view2, view3, view4];
 
         spyOn(view1, 'fireWillLeave');
         spyOn(view1, 'fireDidLeave');
@@ -322,7 +322,7 @@ export function run() {
         view4.state = STATE_TRANS_ENTER;
         let view5 = new ViewController(Page5);
         view5.state = STATE_INACTIVE;
-        nav._views = [view1, view2, view3, view4, view5];
+        nav.views = [view1, view2, view3, view4, view5];
         nav._cleanup();
 
         expect(nav.length()).toBe(3);
@@ -339,7 +339,7 @@ export function run() {
         view1.state = STATE_INACTIVE;
         let view2 = new ViewController(Page2);
         view2.state = STATE_ACTIVE;
-        nav._views = [view1, view2];
+        nav.views = [view1, view2];
         nav._cleanup();
         expect(nav.length()).toBe(2);
       });
@@ -351,7 +351,7 @@ export function run() {
         view2.state = STATE_INACTIVE;
         let view3 = new ViewController(Page3);
         view3.state = STATE_INACTIVE;
-        nav._views = [view1, view2, view3];
+        nav.views = [view1, view2, view3];
 
         spyOn(view1, 'destroy');
         spyOn(view2, 'destroy');
@@ -381,7 +381,7 @@ export function run() {
         view3.state = STATE_ACTIVE;
         view3.zIndex = 1;
 
-        nav._views = [view1, view2, view3];
+        nav.views = [view1, view2, view3];
         nav._cleanup();
 
         expect(view1.zIndex).toEqual(100);
@@ -542,7 +542,7 @@ export function run() {
         var done = () => {};
         nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
         nav._renderer = null;
-        nav._views = [view1, view2, view3];
+        nav.views = [view1, view2, view3];
 
         spyOn(view1, 'domShow');
         spyOn(view2, 'domShow');
@@ -565,7 +565,7 @@ export function run() {
         var done = () => {};
         nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
         nav._renderer = null;
-        nav._views = [view1, view2, view3, view4];
+        nav.views = [view1, view2, view3, view4];
 
         view3.isOverlay = true;
 
@@ -593,7 +593,7 @@ export function run() {
         let enteringView = new ViewController();
         enteringView.setPageRef({});
 
-        nav._views = [leavingView, enteringView];
+        nav.views = [leavingView, enteringView];
 
         nav._setZIndex(enteringView, leavingView, 'forward');
         expect(enteringView.zIndex).toEqual(101);
@@ -605,7 +605,7 @@ export function run() {
         let enteringView = new ViewController();
         enteringView.setPageRef({});
 
-        nav._views = [leavingView, enteringView];
+        nav.views = [leavingView, enteringView];
 
         nav._setZIndex(enteringView, leavingView, 'forward');
         expect(enteringView.zIndex).toEqual(100);
@@ -673,7 +673,7 @@ export function run() {
     describe('_setAnimate', () => {
 
       it('should be unchanged when the nav is a portal', () => {
-        nav._views = [new ViewController()];
+        nav.views = [new ViewController()];
         nav._init = false;
         nav.isPortal = true;
         let opts: NavOptions = {};
@@ -682,7 +682,7 @@ export function run() {
       });
 
       it('should not animate when theres only 1 view, and nav hasnt initialized yet', () => {
-        nav._views = [new ViewController()];
+        nav.views = [new ViewController()];
         nav._init = false;
         let opts: NavOptions = {};
         nav._setAnimate(opts);
@@ -690,7 +690,7 @@ export function run() {
       });
 
       it('should be unchanged when theres only 1 view, and nav has already initialized', () => {
-        nav._views = [new ViewController()];
+        nav.views = [new ViewController()];
         nav._init = true;
         let opts: NavOptions = {};
         nav._setAnimate(opts);
@@ -959,7 +959,7 @@ export function run() {
         let view3 = new ViewController(Page3);
         let view4 = new ViewController(Page4);
         let hasCompleted = true;
-        nav._views = [view1, view2, view3, view4];
+        nav.views = [view1, view2, view3, view4];
 
         view1.isOverlay = true;
 
@@ -987,7 +987,7 @@ export function run() {
         view1.state = STATE_TRANS_ENTER;
         let view2 = new ViewController(Page2);
         view2.state = STATE_TRANS_LEAVE;
-        nav._views = [view1, view2];
+        nav.views = [view1, view2];
 
         let view3 = new ViewController(Page3);
         nav._insert(-1, [view3]);
@@ -1005,7 +1005,7 @@ export function run() {
         view1.state = STATE_INIT_LEAVE;
         let view2 = new ViewController(Page2);
         view2.state = STATE_INIT_ENTER;
-        nav._views = [view1, view2];
+        nav.views = [view1, view2];
 
         let view3 = new ViewController(Page3);
         nav._insert(-1, [view3]);
@@ -1021,7 +1021,7 @@ export function run() {
       it('should insert multiple pages, back to back, with a starting active page', () => {
         let view1 = new ViewController(Page1);
         view1.state = STATE_ACTIVE;
-        nav._views = [view1];
+        nav.views = [view1];
 
         let view2 = new ViewController(Page2);
         nav._insert(-1, [view2]);
@@ -1072,7 +1072,7 @@ export function run() {
         view1.state = STATE_INIT_LEAVE;
         let view2 = new ViewController(Page2);
         view2.state = STATE_INIT_ENTER;
-        nav._views = [view1, view2];
+        nav.views = [view1, view2];
 
         let view3 = new ViewController(Page3);
         nav._insert(-1, [view3]);
@@ -1091,7 +1091,7 @@ export function run() {
         view1.state = STATE_INACTIVE;
         let view2 = new ViewController(Page2);
         view2.state = STATE_ACTIVE;
-        nav._views = [view1, view2];
+        nav.views = [view1, view2];
 
         let view3 = new ViewController(Page3);
         nav._insert(1, [view3]);
@@ -1108,7 +1108,7 @@ export function run() {
       it('should insert a page before the first', () => {
         let view1 = new ViewController(Page1);
         view1.state = STATE_ACTIVE;
-        nav._views = [view1];
+        nav.views = [view1];
 
         let view2 = new ViewController(Page2);
         nav._insert(0, [view2]);
@@ -1121,7 +1121,7 @@ export function run() {
       it('should insert 3 pages', () => {
         let view1 = new ViewController(Page1);
         view1.state = STATE_ACTIVE;
-        nav._views = [view1];
+        nav.views = [view1];
 
         let insertViews = [
           new ViewController(Page2),
@@ -1143,7 +1143,7 @@ export function run() {
       it('should push the second page', () => {
         let view1 = new ViewController(Page1);
         view1.state = STATE_ACTIVE;
-        nav._views = [view1];
+        nav.views = [view1];
 
         let view2 = new ViewController(Page2)
         nav._insert(-1, [view2]);
@@ -1205,7 +1205,7 @@ export function run() {
       expect(nav.getActive()).toBe(null);
       let view1 = new ViewController(Page1);
       view1.state = STATE_INIT_ENTER;
-      nav._views = [view1];
+      nav.views = [view1];
       expect(nav.getActive()).toBe(null);
       view1.state = STATE_ACTIVE;
       expect(nav.getActive()).toBe(view1);
@@ -1218,7 +1218,7 @@ export function run() {
       view1.state = STATE_INIT_ENTER;
       let view2 = new ViewController(Page2);
       view2.state = STATE_INIT_ENTER;
-      nav._views = [view1, view2];
+      nav.views = [view1, view2];
 
       expect(nav.getByState('whatever')).toBe(null);
       expect(nav.getByState(STATE_INIT_ENTER)).toBe(view2);
@@ -1235,7 +1235,7 @@ export function run() {
 
       let view1 = new ViewController(Page1);
       let view2 = new ViewController(Page2);
-      nav._views = [view1, view2];
+      nav.views = [view1, view2];
 
       expect(nav.getPrevious(view1)).toBe(null);
       expect(nav.getPrevious(view2)).toBe(view1);
@@ -1247,12 +1247,12 @@ export function run() {
       view1.setNav(nav);
       let view2 = new ViewController(Page2);
       view2.setNav(nav);
-      nav._views = [view1];
+      nav.views = [view1];
 
       expect(nav.first()).toBe(view1);
       expect(view1.isFirst()).toBe(true);
 
-      nav._views = [view1, view2];
+      nav.views = [view1, view2];
       expect(nav.first()).toBe(view1);
       expect(view1.isFirst()).toBe(true);
       expect(view2.isFirst()).toBe(false);
@@ -1264,12 +1264,12 @@ export function run() {
       view1.setNav(nav);
       let view2 = new ViewController(Page2);
       view2.setNav(nav);
-      nav._views = [view1];
+      nav.views = [view1];
 
       expect(nav.last()).toBe(view1);
       expect(view1.isLast()).toBe(true);
 
-      nav._views = [view1, view2];
+      nav.views = [view1, view2];
       expect(nav.last()).toBe(view2);
       expect(view1.isLast()).toBe(false);
       expect(view2.isLast()).toBe(true);
@@ -1282,7 +1282,7 @@ export function run() {
       expect(nav.length()).toBe(0);
       expect(nav.indexOf(view1)).toBe(-1);
 
-      nav._views = [view1, view2];
+      nav.views = [view1, view2];
       expect(nav.indexOf(view1)).toBe(0);
       expect(nav.indexOf(view2)).toBe(1);
       expect(nav.length()).toBe(2);
@@ -1294,7 +1294,7 @@ export function run() {
 
       let view1 = new ViewController(Page1);
       let view2 = new ViewController(Page2);
-      nav._views = [view1, view2];
+      nav.views = [view1, view2];
 
       expect(nav.getByIndex(-1)).toBe(null);
       expect(nav.getByIndex(0)).toBe(view1);
@@ -1303,7 +1303,7 @@ export function run() {
     });
 
     // setup stuff
-    let nav: NavController;
+    let nav: MockNavController;
     let config = new Config();
 
     class Page1 {}
@@ -1316,10 +1316,10 @@ export function run() {
       nav = mockNav();
     });
 
-    function mockNav() {
+    function mockNav(): MockNavController {
       let elementRef = getElementRef();
 
-      let nav = new NavController(null, null, config, null, elementRef, null, null, null);
+      let nav = new MockNavController(null, null, config, null, elementRef, null, null, null);
 
       nav._keyboard = {
         isOpen: function() {
@@ -1340,7 +1340,7 @@ export function run() {
         setElementStyle: function(){}
       };
 
-      nav._portal = new NavController(null, null, config, null, elementRef, null, null, null);
+      nav._portal = new MockNavController(null, null, config, null, elementRef, null, null, null);
 
       return nav;
     }
@@ -1353,6 +1353,18 @@ export function run() {
 
   });
 }
+
+class MockNavController extends NavController {
+
+  get views(): ViewController[] {
+    return this._views;
+  }
+  set views(views: ViewController[]) {
+    this._views = views;
+  }
+
+}
+
 
 const STATE_ACTIVE = 'active';
 const STATE_INACTIVE = 'inactive';

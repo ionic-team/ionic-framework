@@ -483,7 +483,7 @@ class PickerDisplayCmp {
     this.lastClick = 0;
   }
 
-  onPageLoaded() {
+  ionViewLoaded() {
     // normalize the data
     let data = this.d;
 
@@ -563,7 +563,7 @@ class PickerDisplayCmp {
     }
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     let activeElement: any = document.activeElement;
     if (activeElement) {
       activeElement.blur();

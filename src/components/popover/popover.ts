@@ -190,16 +190,16 @@ class PopoverCmp {
     this.id = (++popoverIds);
   }
 
-  onPageWillEnter() {
+  ionViewWillEnter() {
     this._loader.loadNextToLocation(this._navParams.data.componentType, this.viewport).then(componentRef => {
       this._viewCtrl.setInstance(componentRef.instance);
 
-      // manually fire onPageWillEnter() since PopoverCmp's onPageWillEnter already happened
+      // manually fire ionViewWillEnter() since PopoverCmp's ionViewWillEnter already happened
       this._viewCtrl.fireWillEnter();
     });
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     let activeElement: any = document.activeElement;
     if (document.activeElement) {
       activeElement.blur();

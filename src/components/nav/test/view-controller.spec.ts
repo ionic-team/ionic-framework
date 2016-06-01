@@ -9,23 +9,6 @@ export function run() {
       }
     });
 
-    describe('loaded', () => {
-      it('should emit LifeCycleEvent when called with component data', (done) => {
-        // arrange
-        let viewController = new ViewController(FakePage);
-        subscription = viewController.didLoad.subscribe((event:LifeCycleEvent) => {
-          // assert
-          expect(event).toEqual(null);
-          done();
-        }, err => {
-          done(err);
-        });
-
-        // act
-        viewController.fireLoaded();
-      }, 10000);
-    });
-
     describe('willEnter', () => {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
@@ -34,7 +17,7 @@ export function run() {
           // assert
           expect(event).toEqual(null);
           done();
-        }, err => {
+        }, (err: any) => {
           done(err);
         });
 
@@ -51,7 +34,7 @@ export function run() {
           // assert
           expect(event).toEqual(null);
           done();
-        }, err => {
+        }, (err: any) => {
           done(err);
         });
 
@@ -68,7 +51,7 @@ export function run() {
           // assert
           expect(event).toEqual(null);
           done();
-        }, err => {
+        }, (err: any) => {
           done(err);
         });
 
@@ -85,7 +68,7 @@ export function run() {
           // assert
           expect(event).toEqual(null);
           done();
-        }, err => {
+        }, (err: any) => {
           done(err);
         });
 
@@ -101,7 +84,7 @@ export function run() {
         subscription = viewController.willUnload.subscribe((event:LifeCycleEvent) => {
           expect(event).toEqual(null);
           done();
-        }, err => {
+        }, (err: any) => {
           done(err);
         });
 
@@ -118,7 +101,7 @@ export function run() {
           // assert
           expect(event).toEqual(null);
           done();
-        }, err => {
+        }, (err: any) => {
           done(err);
         });
 
@@ -128,6 +111,6 @@ export function run() {
     });
   });
 
-  let subscription = null;
+  let subscription: any = null;
   class FakePage{}
 }

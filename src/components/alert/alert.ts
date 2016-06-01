@@ -419,7 +419,7 @@ class AlertCmp {
     }
   }
 
-  onPageLoaded() {
+  ionViewLoaded() {
     // normalize the data
     let data = this.d;
 
@@ -485,7 +485,7 @@ class AlertCmp {
     }
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     let activeElement: any = document.activeElement;
     if (document.activeElement) {
       activeElement.blur();

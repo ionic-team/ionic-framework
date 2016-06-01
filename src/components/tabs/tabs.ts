@@ -116,7 +116,7 @@ import {ViewController} from '../nav/view-controller';
  *
  * @ViewChild('myTabs') tabRef: Tabs;
  *
- * onPageDidEnter() {
+ * ionViewDidEnter() {
  *   this.tabRef.select(2);
  *  }
  *
