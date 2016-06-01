@@ -442,6 +442,20 @@ describe('DateTime', () => {
       expect(datetime.getValue()).toEqual({});
     });
 
+    it('should clear out existing value with blank value', () => {
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+      datetime.setValue(null);
+      expect(datetime.getValue()).toEqual({});
+
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+      datetime.setValue(undefined);
+      expect(datetime.getValue()).toEqual({});
+
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+      datetime.setValue('');
+      expect(datetime.getValue()).toEqual({});
+    });
+
     it('should not parse a value with blank value', () => {
       datetime.setValue(null);
       expect(datetime.getValue()).toEqual({});

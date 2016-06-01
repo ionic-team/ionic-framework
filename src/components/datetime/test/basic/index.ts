@@ -27,12 +27,16 @@ class E2EPage {
     'l\u00f8r'
   ];
 
-  onChange(ev) {
+  onChange(ev: any) {
     console.log("Changed", ev);
   }
 
-  onCancel(ev) {
+  onCancel(ev: any) {
     console.log("Canceled", ev);
+  }
+
+  clearLeapYear() {
+    this.leapYearsSummerMonths = null;
   }
 
 }
