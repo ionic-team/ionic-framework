@@ -123,7 +123,7 @@ export class TapClick {
 
       let now = Date.now();
       if (this.lastActivated + 150 < now) {
-        this.activator && this.activator.downAction(ev, activatableEle, this.startCoord.x, this.startCoord.y);
+        this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
         this.lastActivated = now;
       }
 
@@ -135,10 +135,13 @@ export class TapClick {
   }
 
   pointerEnd(ev: any) {
-    let activatableEle = getActivatableTarget(ev.target);
-    if (activatableEle && this.startCoord) {
-      this.activator && this.activator.upAction(ev, activatableEle, this.startCoord.x, this.startCoord.y);
+    if (this.startCoord && this.activator) {
+      let activatableEle = getActivatableTarget(ev.target);
+      if (activatableEle) {
+        this.activator.upAction(ev, activatableEle, this.startCoord);
+      }
     }
+
     this.moveListeners(false);
   }
 
