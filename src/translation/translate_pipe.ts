@@ -21,11 +21,7 @@ export class TranslatePipe implements PipeTransform {
   constructor(translate: Translate) {
     this.translate = translate;
   }
-  transform(value, args) {
-    let lang;
-    if (args.length > 0) {
-      lang = args[0];
-    }
+  transform(value, lang) {
     return this.translate.translate(value, lang);
   }
 
