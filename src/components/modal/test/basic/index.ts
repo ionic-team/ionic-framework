@@ -151,24 +151,24 @@ class ModalPassData {
     this.viewCtrl.dismiss(this.data);
   }
 
-  onPageLoaded(){
-    console.log("ModalPassData onPageLoaded fired");
+  ionViewLoaded(){
+    console.log("ModalPassData ionViewLoaded fired");
   }
 
-  onPageWillEnter(){
-    console.log("ModalPassData onPagewillEnter fired");
+  ionViewWillEnter(){
+    console.log("ModalPassData ionViewWillEnter fired");
   }
 
-  onPageDidEnter(){
-    console.log("ModalPassData onPageDidEnter fired");
+  ionViewDidEnter(){
+    console.log("ModalPassData ionViewDidEnter fired");
   }
 
-  onPageWillLeave(){
-    console.log("ModalPassData onPageWillLeave fired");
+  ionViewWillLeave(){
+    console.log("ModalPassData ionViewWillLeave fired");
   }
 
-  onPageDidLeave(){
-    console.log("ModalPassData onPageDidLeave fired");
+  ionViewDidLeave(){
+    console.log("ModalPassData ionViewDidLeave fired");
   }
 }
 
@@ -266,26 +266,26 @@ class ContactUs {
     console.log('ContactUs constructor');
     this.root = ModalFirstPage;
   }
-  onPageLoaded() {
-    console.log('ContactUs onPageLoaded');
+  ionViewLoaded() {
+    console.log('ContactUs ionViewLoaded');
   }
-  onPageWillEnter() {
-    console.log('ContactUs onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('ContactUs ionViewWillEnter');
   }
-  onPageDidEnter() {
-    console.log('ContactUs onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('ContactUs ionViewDidEnter');
   }
-  onPageWillLeave() {
-    console.log('ContactUs onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('ContactUs ionViewWillLeave');
   }
-  onPageDidLeave() {
-    console.log('ContactUs onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('ContactUs ionViewDidLeave');
   }
-  onPageWillUnload() {
-    console.log('ContactUs onPageWillUnload');
+  ionViewWillUnload() {
+    console.log('ContactUs ionViewWillUnload');
   }
-  onPageDidUnload() {
-    console.log('ContactUs onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('ContactUs ionViewDidUnload');
   }
 }
 
@@ -338,16 +338,16 @@ class ModalFirstPage {
     this.nav.rootNav.pop();
   }
 
-  onPageLoaded(){
-    console.log("ModalFirstPage OnPageLoaded fired");
+  ionViewLoaded(){
+    console.log("ModalFirstPage ionViewLoaded fired");
   }
 
-  onPageWillEnter(){
-    console.log("ModalFirstPage onPageWillEnter fired");
+  ionViewWillEnter(){
+    console.log("ModalFirstPage ionViewWillEnter fired");
   }
 
-  onPageDidEnter(){
-    console.log("ModalFirstPage onPageDidEnter fired");
+  ionViewDidEnter(){
+    console.log("ModalFirstPage ionViewDidEnter fired");
   }
 
   openActionSheet() {
@@ -417,16 +417,16 @@ class ModalSecondPage {
     console.log('Second page params:', params);
   }
 
-  onPageLoaded(){
-    console.log("ModalSecondPage onPageLoaded");
+  ionViewLoaded(){
+    console.log("ModalSecondPage ionViewLoaded");
   }
 
-  onPageWillEnter(){
-    console.log("ModalSecondPage onPageWillEnter");
+  ionViewWillEnter(){
+    console.log("ModalSecondPage ionViewWillEnter");
   }
 
-  onPageDidEnter(){
-    console.log("ModalSecondPage onPageDidEnter");
+  ionViewDidEnter(){
+    console.log("ModalSecondPage ionViewDidEnter");
   }
 }
 

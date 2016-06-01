@@ -205,7 +205,7 @@ class E2EPage {
 class Page2 {
   constructor(private nav: NavController, private platform: Platform) {}
 
-  onPageLoaded() {
+  ionViewLoaded() {
     setTimeout(() => {
       this.nav.push(Page3);
     }, 1000);

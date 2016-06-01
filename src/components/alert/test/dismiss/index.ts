@@ -82,7 +82,7 @@ class AnotherPage {
 		}
 	}
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     this.showConfirm();
   }
 

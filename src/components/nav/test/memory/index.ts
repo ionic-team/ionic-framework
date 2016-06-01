@@ -31,7 +31,7 @@ class Page1 {
     }, delay);
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     this.play();
   }
 
@@ -65,7 +65,7 @@ class Page2 {
     }, delay);
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     this.play();
   }
 

@@ -51,12 +51,12 @@ class SignIn {
 class ChatPage {
   constructor(private viewCtrl: ViewController) {}
 
-  onPageDidLoad() {
-    console.log('ChatPage, onPageDidLoad');
+  ionViewLoaded() {
+    console.log('ChatPage, ionViewLoaded');
   }
 
-  onPageDidUnload() {
-    console.log('ChatPage, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('ChatPage, ionViewDidUnload');
   }
 }
 
@@ -90,24 +90,24 @@ class TabsPage {
     this.nav.present(modal);
   }
 
-  onPageWillEnter() {
-    console.log('TabsPage, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('TabsPage, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('TabsPage, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('TabsPage, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('TabsPage, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('TabsPage, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('TabsPage, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('TabsPage, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('TabsPage, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('TabsPage, ionViewDidUnload');
   }
 }
 
@@ -156,24 +156,24 @@ class Tab1Page1 {
     this.nav.rootNav.setRoot(SignIn, null, { animate: true, direction: 'back' });
   }
 
-  onPageWillEnter() {
-    console.log('Tab1Page1, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab1Page1, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab1Page1, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab1Page1, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab1Page1, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab1Page1, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab1Page1, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab1Page1, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab1Page1, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab1Page1, ionViewDidUnload');
   }
 }
 
@@ -197,24 +197,24 @@ class Tab1Page2 {
     this.nav.push(Tab1Page3)
   }
 
-  onPageWillEnter() {
-    console.log('Tab1Page2, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab1Page2, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab1Page2, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab1Page2, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab1Page2, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab1Page2, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab1Page2, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab1Page2, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab1Page2, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab1Page2, ionViewDidUnload');
   }
 }
 
@@ -233,24 +233,24 @@ class Tab1Page2 {
 class Tab1Page3 {
   constructor(private nav: NavController) {}
 
-  onPageWillEnter() {
-    console.log('Tab1Page3, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab1Page3, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab1Page3, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab1Page3, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab1Page3, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab1Page3, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab1Page3, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab1Page3, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab1Page3, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab1Page3, ionViewDidUnload');
   }
 }
 
@@ -277,24 +277,24 @@ class Tab2Page1 {
     this.nav.push(Tab2Page2)
   }
 
-  onPageWillEnter() {
-    console.log('Tab2Page1, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab2Page1, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab2Page1, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab2Page1, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab2Page1, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab2Page1, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab2Page1, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab2Page1, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab2Page1, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab2Page1, ionViewDidUnload');
   }
 }
 
@@ -318,24 +318,24 @@ class Tab2Page2 {
     this.nav.push(Tab2Page3)
   }
 
-  onPageWillEnter() {
-    console.log('Tab2Page2, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab2Page2, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab2Page2, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab2Page2, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab2Page2, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab2Page2, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab2Page2, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab2Page2, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab2Page2, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab2Page2, ionViewDidUnload');
   }
 }
 
@@ -354,24 +354,24 @@ class Tab2Page2 {
 class Tab2Page3 {
   constructor(private nav: NavController) {}
 
-  onPageWillEnter() {
-    console.log('Tab2Page3, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab2Page3, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab2Page3, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab2Page3, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab2Page3, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab2Page3, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab2Page3, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab2Page3, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab2Page3, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab2Page3, ionViewDidUnload');
   }
 }
 
@@ -389,24 +389,24 @@ class Tab2Page3 {
 })
 class Tab3Page1 {
 
-  onPageWillEnter() {
-    console.log('Tab3Page1, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab3Page1, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab3Page1, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab3Page1, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab3Page1, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab3Page1, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab3Page1, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab3Page1, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab3Page1, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab3Page1, ionViewDidUnload');
   }
 }
 

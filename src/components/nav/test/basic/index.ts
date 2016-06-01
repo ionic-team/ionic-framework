@@ -232,7 +232,7 @@ class PrimaryHeaderPage {
     private viewCtrl: ViewController
   ) {}
 
-  onPageWillEnter() {
+  ionViewWillEnter() {
     this.viewCtrl.setBackButtonText('Previous');
   }
 
@@ -337,28 +337,28 @@ class AnotherPage {
     ++this.bbCount;
   }
 
-  onPageWillEnter() {
-    console.log('Page, AnotherPage, onPageWillEnter', this.viewCtrl.id);
+  ionViewWillEnter() {
+    console.log('Page, AnotherPage, ionViewWillEnter', this.viewCtrl.id);
   }
 
-  onPageDidEnter() {
-    console.log('Page, AnotherPage, onPageDidEnter', this.viewCtrl.id);
+  ionViewDidEnter() {
+    console.log('Page, AnotherPage, ionViewDidEnter', this.viewCtrl.id);
   }
 
-  onPageWillLeave() {
-    console.log('Page, AnotherPage, onPageWillLeave', this.viewCtrl.id);
+  ionViewWillLeave() {
+    console.log('Page, AnotherPage, ionViewWillLeave', this.viewCtrl.id);
   }
 
-  onPageDidLeave() {
-    console.log('Page, AnotherPage, onPageDidLeave', this.viewCtrl.id);
+  ionViewDidLeave() {
+    console.log('Page, AnotherPage, ionViewDidLeave', this.viewCtrl.id);
   }
 
-  onPageWillUnload() {
-    console.log('Page, AnotherPage, onPageWillUnload', this.viewCtrl.id);
+  ionViewWillUnload() {
+    console.log('Page, AnotherPage, ionViewWillUnload', this.viewCtrl.id);
   }
 
-  onPageDidUnload() {
-    console.log('Page, AnotherPage, onPageDidUnload', this.viewCtrl.id);
+  ionViewDidUnload() {
+    console.log('Page, AnotherPage, ionViewDidUnload', this.viewCtrl.id);
   }
 
   ngOnDestroy() {

@@ -284,12 +284,12 @@ class E2EPage {
     this.nav.present(alert);
   }
 
-  onPageDidLeave() {
-    console.log('E2EPage, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('E2EPage, ionViewDidLeave');
   }
 
-  onPageDidEnter() {
-    console.log('E2EPage, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('E2EPage, ionViewDidEnter');
   }
 }
 
