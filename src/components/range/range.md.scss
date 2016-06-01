@@ -114,9 +114,9 @@ ion-range {
 
   background: $range-md-knob-background-color;
 
-  pointer-events: none;
-
   transform: scale(.67);
+
+  pointer-events: none;
 }
 
 .range-tick {
