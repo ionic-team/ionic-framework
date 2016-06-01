@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import {ionicBootstrap, Range} from '../../../../../src';
 
 
 @Component({
@@ -13,7 +13,7 @@ class Page1 {
   dualValue: any;
   dualValue2 = {lower: 33, upper: 60};
 
-  rangeChange(ev) {
+  rangeChange(ev: Range) {
     console.log(`range, change, ratio: ${ev.ratio}, value: ${ev.value}`);
   }
 

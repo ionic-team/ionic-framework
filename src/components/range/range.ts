@@ -4,7 +4,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/common';
 import {Form} from '../../util/form';
 import {isTrueProperty, isNumber, isString, isPresent, clamp} from '../../util/util';
 import {Item} from '../item/item';
-import {pointerCoord, Coordinates} from '../../util/dom';
+import {pointerCoord, Coordinates, raf} from '../../util/dom';
 
 
 const RANGE_VALUE_ACCESSOR = new Provider(
@@ -343,11 +343,11 @@ export class Range {
     this._renderer.setElementStyle(this._bar.nativeElement, 'left', barL);
     this._renderer.setElementStyle(this._bar.nativeElement, 'right', barR);
 
-    this.createTicks();
-
     // add touchstart/mousedown listeners
     this._renderer.listen(this._slider.nativeElement, 'touchstart', this.pointerDown.bind(this));
     this._mouseRemove = this._renderer.listen(this._slider.nativeElement, 'mousedown', this.pointerDown.bind(this));
+
+    this.createTicks();
   }
 
   /**
@@ -544,18 +544,18 @@ export class Range {
    */
   createTicks() {
     if (this._snaps) {
-      this._ticks = [];
-      for (var value = this._min; value <= this._max; value += this._step) {
-        var ratio = this.valueToRatio(value);
-        this._ticks.push({
-          ratio: ratio,
-          left: `${ratio * 100}%`,
-        });
-      }
-      this.updateTicks();
-
-    } else {
-      this._ticks = null;
+      raf(() => {
+        // TODO: Fix to not use RAF
+        this._ticks = [];
+        for (var value = this._min; value <= this._max; value += this._step) {
+          var ratio = this.valueToRatio(value);
+          this._ticks.push({
+            ratio: ratio,
+            left: `${ratio * 100}%`,
+          });
+        }
+        this.updateTicks();
+      });
     }
   }
 
