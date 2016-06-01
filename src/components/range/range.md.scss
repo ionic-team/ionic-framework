@@ -15,7 +15,7 @@ $range-md-bar-height:                        2px !default;
 $range-md-bar-background-color:              #bdbdbd !default;
 $range-md-bar-active-background-color:       color($colors-md, primary) !default;
 
-$range-md-knob-width:                        12px !default;
+$range-md-knob-width:                        18px !default;
 $range-md-knob-height:                       $range-md-knob-width !default;
 $range-md-knob-background-color:             $range-md-bar-active-background-color !default;
 
@@ -115,6 +115,8 @@ ion-range {
   background: $range-md-knob-background-color;
 
   pointer-events: none;
+
+  transform: scale(.67);
 }
 
 .range-tick {
@@ -168,7 +170,7 @@ ion-range {
 }
 
 .range-knob-pressed .range-knob {
-  transform: scale(1.5);
+  transform: scale(1);
 }
 
 // Generate Material Design Range Colors
