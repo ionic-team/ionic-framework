@@ -375,7 +375,7 @@ export class Refresher {
     return 4;
   }
 
-  private _onEnd(ev) {
+  private _onEnd(ev: UIEvent) {
     // only run in a zone when absolutely necessary
 
     if (this.state === STATE_READY) {
@@ -438,9 +438,9 @@ export class Refresher {
   }
 
   private _close(state: string, delay: string) {
-    var timer;
+    var timer: number;
 
-    function close(ev) {
+    function close(ev: any) {
       // closing is done, return to inactive state
       if (ev) {
         clearTimeout(timer);

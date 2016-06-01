@@ -6,7 +6,7 @@
  * @param n the value
  * @param max the maximum
  */
-export function clamp(min, n, max) {
+export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
 }
 
@@ -37,7 +37,7 @@ export function merge(dst: any, ...args: any[]) {
   return _baseExtend(dst, [].slice.call(arguments, 1), true);
 }
 
-function _baseExtend(dst, objs, deep) {
+function _baseExtend(dst: any, objs: any, deep: boolean) {
   for (var i = 0, ii = objs.length; i < ii; ++i) {
     var obj = objs[i];
     if (!obj || !isObject(obj) && !isFunction(obj)) continue;
@@ -59,7 +59,7 @@ function _baseExtend(dst, objs, deep) {
 }
 
 export function debounce(fn: Function, wait: number, immediate: boolean = false): any {
- var timeout, args, context, timestamp: number, result;
+ var timeout: number, args: any, context: any, timestamp: number, result: any;
  return function() {
    context = this;
    args = arguments;
@@ -88,7 +88,7 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
  * the first object.
  * @param the destination to apply defaults to.
  */
-export function defaults(dest, ...args: any[]) {
+export function defaults(dest: any, ...args: any[]) {
   for (let i = arguments.length - 1; i >= 1; i--) {
     let source = arguments[i] || {};
     for (let key in source) {
@@ -100,15 +100,15 @@ export function defaults(dest, ...args: any[]) {
   return dest;
 }
 
-export const isBoolean = val => typeof val === 'boolean';
-export const isString = val => typeof val === 'string';
-export const isNumber = val => typeof val === 'number';
-export const isFunction = val => typeof val === 'function';
-export const isDefined = val => typeof val !== 'undefined';
-export const isUndefined = val => typeof val === 'undefined';
-export const isPresent = val => val !== undefined && val !== null;
-export const isBlank = val => val === undefined || val === null;
-export const isObject = val => typeof val === 'object';
+export const isBoolean = (val: any) => typeof val === 'boolean';
+export const isString = (val: any) => typeof val === 'string';
+export const isNumber = (val: any) => typeof val === 'number';
+export const isFunction = (val: any) => typeof val === 'function';
+export const isDefined = (val: any) => typeof val !== 'undefined';
+export const isUndefined = (val: any) => typeof val === 'undefined';
+export const isPresent = (val: any) => val !== undefined && val !== null;
+export const isBlank = (val: any) => val === undefined || val === null;
+export const isObject = (val: any) => typeof val === 'object';
 export const isArray = Array.isArray;
 
 export const isTrueProperty = function(val: any): boolean {
@@ -153,33 +153,12 @@ export function nextUid(): number {
   return ++uid;
 }
 
-export const array = {
-  find(arr, cb) {
-    for (let i = 0, ii = arr.length; i < ii; i++) {
-      if (cb(arr[i], i)) return arr[i];
-    }
-  },
-  remove(arr, itemOrIndex) {
-    let index = -1;
-    if (isNumber(itemOrIndex)) {
-      index = itemOrIndex;
-    } else {
-      index = arr.indexOf(itemOrIndex);
-    }
-    if (index < 0) {
-      return false;
-    }
-    arr.splice(index, 1);
-    return true;
-  }
-};
-
 /**
  * Grab all query strings keys and values.
  * @param url
  */
 export function getQuerystring(url: string): any {
-  var queryParams = {};
+  var queryParams: any = {};
   if (url) {
     const startIndex = url.indexOf('?');
     if (startIndex !== -1) {
@@ -195,36 +174,4 @@ export function getQuerystring(url: string): any {
     }
   }
   return queryParams;
-}
-
-/**
- * Throttle the given fun, only allowing it to be
- * called at most every `wait` ms.
- */
-export function throttle(fn: Function, wait: number, options: any): any {
-  var context, args, result;
-  var timeout = null;
-  var previous = 0;
-  options || (options = {});
-  var later = function() {
-    previous = options.leading === false ? 0 : Date.now();
-    timeout = null;
-    result = fn.apply(context, args);
-  };
-  return function() {
-    var now = Date.now();
-    if (!previous && options.leading === false) previous = now;
-    var remaining = wait - (now - previous);
-    context = this;
-    args = arguments;
-    if (remaining <= 0) {
-      clearTimeout(timeout);
-      timeout = null;
-      previous = now;
-      result = fn.apply(context, args);
-    } else if (!timeout && options.trailing !== false) {
-      timeout = setTimeout(later, remaining);
-    }
-    return result;
-  };
 }

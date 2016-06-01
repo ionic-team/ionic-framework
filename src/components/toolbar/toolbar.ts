@@ -12,8 +12,8 @@ import {ViewController} from '../nav/view-controller';
  * @private
  */
 export class ToolbarBase extends Ion {
-  itemRefs = [];
-  titleRef = null;
+  itemRefs: ElementRef[] = [];
+  titleRef: any = null;
   titleCmp: any;
 
   constructor(elementRef: ElementRef) {
@@ -23,7 +23,7 @@ export class ToolbarBase extends Ion {
   /**
    * @private
    */
-  setTitleCmp(titleCmp) {
+  setTitleCmp(titleCmp: any) {
     this.titleCmp = titleCmp;
   }
 
@@ -55,7 +55,7 @@ export class ToolbarBase extends Ion {
   /**
    * @private
    */
-  addItemRef(itemElementRef) {
+  addItemRef(itemElementRef: ElementRef) {
     this.itemRefs.push(itemElementRef);
   }
 
@@ -215,7 +215,7 @@ export class ToolbarItem {
   }
 
   @ContentChildren(Button)
-  set _buttons(buttons) {
+  set _buttons(buttons: any) {
     if (this.inToolbar) {
       Button.setRoles(buttons, 'bar-button');
     }

@@ -145,7 +145,7 @@ export class RadioButton {
    * @private
    */
   @HostListener('click', ['$event'])
-  private _click(ev) {
+  private _click(ev: UIEvent) {
     console.debug('radio, select', this.id);
     ev.preventDefault();
     ev.stopPropagation();

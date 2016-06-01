@@ -16,11 +16,11 @@ export class NavRegistry {
     }
   }
 
-  get(pageName) {
+  get(pageName: any) {
     return this._pages.get(pageName);
   }
 
-  set(page) {
+  set(page: any) {
     this._pages.set(page.name, page);
   }
 }

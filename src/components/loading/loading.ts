@@ -212,7 +212,7 @@ class LoadingCmp {
     this.d.duration ? setTimeout(() => this.dismiss('backdrop'), this.d.duration) : null;
   }
 
-  dismiss(role): Promise<any> {
+  dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
   }
 

@@ -14,7 +14,7 @@ import {isPresent, isTrueProperty} from '../../util/util';
 })
 export class Option {
   private _checked: any = false;
-  private _value;
+  private _value: any;
 
   /**
    * @input {any} Event to evaluate when option is selected
@@ -46,7 +46,7 @@ export class Option {
     return this.text;
   }
 
-  set value(val) {
+  set value(val: any) {
     this._value = val;
   }
 

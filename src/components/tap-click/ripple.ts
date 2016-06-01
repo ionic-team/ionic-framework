@@ -1,5 +1,7 @@
 import {Activator} from './activator';
+import {App} from '../app/app';
 import {CSS, nativeRaf, rafFrames} from '../../util/dom';
+import {Config} from '../../config/config';
 
 
 /**
@@ -7,11 +9,11 @@ import {CSS, nativeRaf, rafFrames} from '../../util/dom';
  */
 export class RippleActivator extends Activator {
 
-  constructor(app, config) {
+  constructor(app: App, config: Config) {
     super(app, config);
   }
 
-  downAction(ev, activatableEle, pointerX, pointerY) {
+  downAction(ev: UIEvent, activatableEle: HTMLElement, pointerX: number, pointerY: number) {
     let self = this;
     if (self.disableActivated(ev)) {
       return;
@@ -21,9 +23,7 @@ export class RippleActivator extends Activator {
     self._queue.push(activatableEle);
 
     nativeRaf(function() {
-      var i;
-
-      for (i = 0; i < self._queue.length; i++) {
+      for (var i = 0; i < self._queue.length; i++) {
         var queuedEle = self._queue[i];
         if (queuedEle && queuedEle.parentNode) {
           self._active.push(queuedEle);

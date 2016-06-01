@@ -2,17 +2,17 @@
 export class FeatureDetect {
   private _results: any = {};
 
-  run(window, document) {
+  run(window: Window, document: Document) {
     for (let name in featureDetects) {
       this._results[name] = featureDetects[name](window, document, document.body);
     }
   }
 
-  has(featureName) {
+  has(featureName: string) {
     return !!this._results[featureName];
   }
 
-  static add(name, fn) {
+  static add(name: string, fn: any) {
     featureDetects[name] = fn;
   }
 
@@ -21,15 +21,7 @@ export class FeatureDetect {
 let featureDetects = {};
 
 
-// FeatureDetect.add('sticky', function(window, document) {
-//   // css position sticky
-//   let ele = document.createElement('div');
-//   ele.style.cssText = 'position:-webkit-sticky;position:sticky';
-//   return ele.style.position.indexOf('sticky') > -1;
-// });
-
-
-FeatureDetect.add('hairlines', function(window, document, body) {
+FeatureDetect.add('hairlines', function(window: Window, document: Document, body: HTMLBodyElement) {
   /**
   * Hairline Shim
   * Add the "hairline" CSS class name to the body tag

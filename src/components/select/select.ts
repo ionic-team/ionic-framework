@@ -206,7 +206,7 @@ export class Select {
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev) {
+  private _click(ev: UIEvent) {
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -216,8 +216,8 @@ export class Select {
     this._open();
   }
 
-  @HostListener('keyup.space', ['$event'])
-  private _keyup(ev) {
+  @HostListener('keyup.space')
+  private _keyup() {
     if (!this._isOpen) {
       this._open();
     }
@@ -259,9 +259,8 @@ export class Select {
       this.interface = 'alert';
     }
 
-    let overlay;
+    let overlay: any;
     if (this.interface === 'action-sheet') {
-
       alertOptions.buttons = alertOptions.buttons.concat(options.map(input => {
         return {
           role: (input.checked ? 'selected' : ''),
@@ -305,7 +304,7 @@ export class Select {
 
       overlay.addButton({
         text: this.okText,
-        handler: selectedValues => {
+        handler: (selectedValues: any) => {
           this.onChange(selectedValues);
           this.ionChange.emit(selectedValues);
         }
@@ -426,7 +425,7 @@ export class Select {
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @private

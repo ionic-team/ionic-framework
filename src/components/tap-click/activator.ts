@@ -1,16 +1,18 @@
+import {App} from '../app/app';
+import {Config} from '../../config/config';
 import {rafFrames, nativeTimeout} from '../../util/dom';
 
 
 export class Activator {
   protected _css: string;
-  protected _queue: Array<HTMLElement> = [];
-  protected _active: Array<HTMLElement> = [];
+  protected _queue: HTMLElement[] = [];
+  protected _active: HTMLElement[] = [];
 
-  constructor(protected app, config) {
+  constructor(protected app: App, config: Config) {
     this._css = config.get('activatedClass') || 'activated';
   }
 
-  downAction(ev, activatableEle, pointerX, pointerY) {
+  downAction(ev: UIEvent, activatableEle: HTMLElement, pointerX: number, pointerY: number) {
     // the user just pressed down
     let self = this;
     if (self.disableActivated(ev)) {
@@ -21,7 +23,7 @@ export class Activator {
     self._queue.push(activatableEle);
 
     rafFrames(2, function() {
-      let activatableEle;
+      let activatableEle: HTMLElement;
       for (let i = 0; i < self._queue.length; i++) {
         activatableEle = self._queue[i];
         if (activatableEle && activatableEle.parentNode) {
@@ -69,7 +71,7 @@ export class Activator {
     });
   }
 
-  disableActivated(ev) {
+  disableActivated(ev: any) {
     if (ev.defaultPrevented) return true;
 
     let targetEle = ev.target;

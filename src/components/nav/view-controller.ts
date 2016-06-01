@@ -350,7 +350,7 @@ export class ViewController {
   /**
    * @private
    */
-  setContent(directive) {
+  setContent(directive: any) {
     this._cntDir = directive;
   }
 

@@ -21,13 +21,13 @@ export class TranslatePipe implements PipeTransform {
   constructor(translate: Translate) {
     this.translate = translate;
   }
-  transform(value, args) {
-    let lang;
+  transform(value: any, args: any) {
+    let lang: any;
     if (args.length > 0) {
       lang = args[0];
     }
     return this.translate.translate(value, lang);
   }
 
-  supports(obj) { return true; }
+  supports(obj: any) { return true; }
 }

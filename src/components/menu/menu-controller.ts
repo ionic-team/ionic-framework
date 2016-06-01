@@ -1,5 +1,6 @@
 import {Menu} from './menu';
 import {MenuType} from './menu-types';
+import {Platform} from '../../platform/platform';
 
 
 /**
@@ -292,7 +293,7 @@ export class MenuController {
   /**
    * @private
    */
-  static create(type, menuCmp) {
+  static create(type: string, menuCmp: Menu, platform: Platform) {
     return new menuTypes[type](menuCmp);
   }
 

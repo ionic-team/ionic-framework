@@ -151,7 +151,7 @@ export class ScrollView {
    * @private
    * Used for JS scrolling. May be removed in the future.
    */
-  private _start(ev) {
+  private _start(ev: UIEvent) {
     this._velocity = 0;
     this._pos.length = 0;
     this._max = null;
@@ -162,7 +162,7 @@ export class ScrollView {
    * @private
    * Used for JS scrolling. May be removed in the future.
    */
-  private _move(ev) {
+  private _move(ev: UIEvent) {
     if (this._pos.length) {
       let y = pointerCoord(ev).y;
 
@@ -198,7 +198,7 @@ export class ScrollView {
    * @private
    * Used for JS scrolling. May be removed in the future.
    */
-  private _end(ev) {
+  private _end(ev: UIEvent) {
     // figure out what the scroll position was about 100ms ago
     let positions = this._pos;
     this._velocity = 0;

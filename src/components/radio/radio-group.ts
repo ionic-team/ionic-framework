@@ -140,7 +140,7 @@ export class RadioGroup {
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @private
@@ -174,7 +174,7 @@ export class RadioGroup {
     this._btns.push(button);
 
     // listen for radiobutton select events
-    button.ionSelect.subscribe((val) => {
+    button.ionSelect.subscribe((val: any) => {
       // this radiobutton has been selected
       this.onChange(val);
     });
@@ -199,7 +199,7 @@ export class RadioGroup {
    * @private
    */
   @ContentChild(ListHeader)
-  private set _header(header) {
+  private set _header(header: any) {
     if (header) {
       if (!header.id) {
         header.id = 'rg-hdr-' + this.id;

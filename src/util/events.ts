@@ -7,9 +7,9 @@
  * @usage
  * ```ts
  * import {Events} from 'ionic-angular';
- * 
+ *
  * constructor(public events: Events) {}
- * 
+ *
  * // first page (publish an event when a user is created)
  * function createUser(user) {
  *   console.log('User created!')
@@ -33,7 +33,7 @@ export class Events {
    * @param {string} topic the topic to subscribe to
    * @param {function} handler the event handler
    */
-  subscribe(topic, ...handlers) {
+  subscribe(topic: string, ...handlers: Function[]) {
     if (!this._channels[topic]) {
       this._channels[topic] = [];
     }
@@ -50,7 +50,7 @@ export class Events {
    *
    * @return true if a handler was removed
    */
-  unsubscribe(topic, handler) {
+  unsubscribe(topic: string, handler: Function) {
     let t = this._channels[topic];
     if (!t) {
       // Wasn't found, wasn't removed
@@ -87,14 +87,14 @@ export class Events {
    * @param {string} topic the topic to publish to
    * @param {any} eventData the data to send as the event
    */
-  publish(topic, ...args) {
+  publish(topic: string, ...args: any[]) {
     var t = this._channels[topic];
     if (!t) {
       return null;
     }
 
-    let responses = [];
-    t.forEach((handler) => {
+    let responses: any[] = [];
+    t.forEach((handler: any) => {
       responses.push(handler(args));
     });
     return responses;

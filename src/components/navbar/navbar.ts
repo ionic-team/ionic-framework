@@ -26,7 +26,7 @@ class BackButton extends Ion {
     navbar && navbar.setBackButtonRef(elementRef);
   }
 
-  goBack(ev) {
+  goBack(ev: UIEvent) {
     ev.stopPropagation();
     ev.preventDefault();
     this._nav && this._nav.pop();

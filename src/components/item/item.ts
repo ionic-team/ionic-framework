@@ -144,8 +144,8 @@ export class Item {
    * @private
    */
   @ContentChildren(Button)
-  private set _buttons(buttons) {
-    buttons.toArray().forEach(button => {
+  private set _buttons(buttons: any) {
+    buttons.toArray().forEach((button: any) => {
       // Don't add the item-button class if the user specifies
       // a different size button
       if (!button.isItem && !button._size) {
@@ -158,8 +158,8 @@ export class Item {
    * @private
    */
   @ContentChildren(Icon)
-  private set _icons(icons) {
-    icons.toArray().forEach(icon => {
+  private set _icons(icons: any) {
+    icons.toArray().forEach((icon: any) => {
       icon.addClass('item-icon');
     });
   }

@@ -192,7 +192,7 @@ class ToastCmp {
     }
   }
 
-  dismiss(role): Promise<any> {
+  dismiss(role: any): Promise<any> {
     clearTimeout(this.dismissTimeout);
     this.dismissTimeout = undefined;
     return this._viewCtrl.dismiss(null, role);
@@ -215,7 +215,7 @@ export interface ToastOptions {
 }
 
 class ToastSlideIn extends Transition {
-  constructor(enteringView, leavingView, opts: TransitionOptions) {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;

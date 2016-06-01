@@ -8,17 +8,17 @@ import {Item} from '../item/item';
 import {App} from '../app/app';
 import {isTrueProperty} from '../../util/util';
 import {Label} from '../label/label';
-import {pointerCoord, hasPointerMoved, closest, copyInputAttributes}  from '../../util/dom';
+import {pointerCoord, hasPointerMoved, closest, copyInputAttributes, Coordinates}  from '../../util/dom';
 import {NavController} from '../nav/nav-controller';
 import {NativeInput, NextInput} from './native-input';
 import {Platform} from '../../platform/platform';
 
 
 export class InputBase {
-  protected _coord;
-  protected _deregScroll;
+  protected _coord: Coordinates;
+  protected _deregScroll: Function;
   protected _disabled: boolean = false;
-  protected _keyboardHeight;
+  protected _keyboardHeight: number;
   protected _scrollMove: EventListener;
   protected _type: string = 'text';
   protected _useAssist: boolean;
@@ -31,7 +31,7 @@ export class InputBase {
 
   inputControl: NgControl;
 
-  @Input() clearInput;
+  @Input() clearInput: any;
   @Input() placeholder: string = '';
   @ViewChild(NativeInput) protected _native: NativeInput;
   @Output() blur: EventEmitter<Event> = new EventEmitter;
@@ -122,7 +122,7 @@ export class InputBase {
     }
   }
 
-  private setControlCss(element, control) {
+  private setControlCss(element: any, control: any) {
     element.setCssClass('ng-untouched', control.untouched);
     element.setCssClass('ng-touched', control.touched);
     element.setCssClass('ng-pristine', control.pristine);
@@ -183,12 +183,12 @@ export class InputBase {
       nativeInput.labelledBy(this._item.labelId);
     }
 
-    nativeInput.valueChange.subscribe(inputValue => {
+    nativeInput.valueChange.subscribe((inputValue: any) => {
       this.onChange(inputValue);
     });
 
     this.focusChange(this.hasFocus());
-    nativeInput.focusChange.subscribe(textInputHasFocus => {
+    nativeInput.focusChange.subscribe((textInputHasFocus: any) => {
       this.focusChange(textInputHasFocus);
       this.checkHasValue(nativeInput.getValue());
       if (!textInputHasFocus) {
@@ -257,7 +257,7 @@ export class InputBase {
    * the checked value.
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  writeValue(val) {
+  writeValue(val: any) {
     this._value = val;
     this.checkHasValue(val);
   }
@@ -265,14 +265,14 @@ export class InputBase {
   /**
    * @private
    */
-  onChange(val) {
+  onChange(val: any) {
     this.checkHasValue(val);
   }
 
   /**
    * @private
    */
-  onTouched(val) {}
+  onTouched(val: any) {}
 
   /**
    * @private
@@ -285,7 +285,7 @@ export class InputBase {
   /**
    * @private
    */
-  checkHasValue(inputValue) {
+  checkHasValue(inputValue: any) {
     if (this._item) {
       this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
     }
@@ -303,7 +303,7 @@ export class InputBase {
     }
   }
 
-  private pointerStart(ev) {
+  private pointerStart(ev: any) {
     // input cover touchstart
     console.debug('scroll assist pointerStart', ev.type);
 
@@ -317,7 +317,7 @@ export class InputBase {
     }
   }
 
-  private pointerEnd(ev) {
+  private pointerEnd(ev: any) {
     // input cover touchend/mouseup
     console.debug('scroll assist pointerEnd', ev.type);
 
@@ -435,7 +435,7 @@ export class InputBase {
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
    * @param {Function} fn  the onChange event handler.
    */
-  registerOnChange(fn) { this.onChange = fn; }
+  registerOnChange(fn: any) { this.onChange = fn; }
 
   /**
    * @private
@@ -443,7 +443,7 @@ export class InputBase {
    * the onTouched event handler that marks model (Control) as touched.
    * @param {Function} fn  onTouched event handler.
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @private
@@ -473,7 +473,7 @@ export class InputBase {
   /**
    * @private
    */
-  static getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, plaformHeight) {
+  static getScrollData(inputOffsetTop: number, inputOffsetHeight: number, scrollViewDimensions: any, keyboardHeight: number, plaformHeight: number) {
     // compute input's Y values relative to the body
     let inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
     let inputBottom = (inputTop + inputOffsetHeight);
@@ -590,7 +590,7 @@ export class InputBase {
 
 const SCROLL_ASSIST_SPEED = 0.3;
 
-function getScrollAssistDuration(distanceToScroll) {
+function getScrollAssistDuration(distanceToScroll: number) {
   distanceToScroll = Math.abs(distanceToScroll);
   let duration = distanceToScroll / SCROLL_ASSIST_SPEED;
   return Math.min(400, Math.max(150, duration));

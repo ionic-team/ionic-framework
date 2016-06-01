@@ -78,7 +78,7 @@ export class Scroll extends Ion {
    * @returns {?Function} a function to remove the specified handler, otherwise
    * undefined if the scroll element doesn't exist.
    */
-  addScrollEventListener(handler) {
+  addScrollEventListener(handler: any) {
     if (!this.scrollElement) { return; }
 
     this.scrollElement.addEventListener('scroll', handler);

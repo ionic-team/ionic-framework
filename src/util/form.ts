@@ -7,19 +7,19 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class Form {
   private _blur: HTMLElement;
-  private _focused = null;
+  private _focused: any = null;
   private _ids: number = -1;
-  private _inputs: Array<any> = [];
+  private _inputs: any[] = [];
 
   constructor() {
     this.focusCtrl(document);
   }
 
-  register(input) {
+  register(input: any) {
     this._inputs.push(input);
   }
 
-  deregister(input) {
+  deregister(input: any) {
     let index = this._inputs.indexOf(input);
     if (index > -1) {
       this._inputs.splice(index, 1);
@@ -29,7 +29,7 @@ export class Form {
     }
   }
 
-  focusCtrl(document) {
+  focusCtrl(document: any) {
     // raw DOM fun
     let focusCtrl = document.createElement('focus-ctrl');
     focusCtrl.setAttribute('aria-hidden', true);
@@ -50,14 +50,14 @@ export class Form {
     this._blur.focus();
   }
 
-  setAsFocused(input) {
+  setAsFocused(input: any) {
     this._focused = input;
   }
 
   /**
    * Focuses the next input element, if it exists.
    */
-  tabFocus(currentInput) {
+  tabFocus(currentInput: any) {
     let index = this._inputs.indexOf(currentInput);
     if (index > -1 && (index + 1) < this._inputs.length) {
       let nextInput = this._inputs[index + 1];

@@ -35,7 +35,7 @@ export class MenuClose {
   /**
    * @private
    */
-  @Input() menuClose;
+  @Input() menuClose: string;
 
   constructor(private _menu: MenuController) {}
 

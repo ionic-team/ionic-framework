@@ -112,7 +112,7 @@ export class Modal extends ViewController {
 
   public modalViewType: string;
 
-  constructor(componentType, data: any = {}) {
+  constructor(componentType: any, data: any = {}) {
     data.componentType = componentType;
     super(ModalCmp, data);
     this.modalViewType = componentType.name;
@@ -123,7 +123,7 @@ export class Modal extends ViewController {
   /**
   * @private
   */
-  getTransitionName(direction) {
+  getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'modalLeave' : 'modalEnter');
     return this._nav && this._nav.config.get(key);
   }
@@ -132,12 +132,12 @@ export class Modal extends ViewController {
    * @param {any} componentType Modal
    * @param {object} data Modal options
    */
-  static create(componentType, data = {}) {
+  static create(componentType: any, data = {}) {
     return new Modal(componentType, data);
   }
 
   // Override the load method and load our child component
-  loaded(done) {
+  loaded(done: Function) {
     // grab the instance, and proxy the ngAfterViewInit method
     let originalNgAfterViewInit = this.instance.ngAfterViewInit;
 

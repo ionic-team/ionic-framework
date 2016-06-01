@@ -116,7 +116,7 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @private
    */
-  private pointerDown(ev) {
+  private pointerDown(ev: UIEvent) {
     if (this._isPrevented(ev)) {
       return;
     }
@@ -128,7 +128,7 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @private
    */
-  private pointerMove(ev) {
+  private pointerMove(ev: UIEvent) {
     if (this._startX) {
       if (this._isPrevented(ev)) {
         return;
@@ -155,7 +155,7 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @private
    */
-  private pointerUp(ev) {
+  private pointerUp(ev: UIEvent) {
     if (this._startX) {
 
       if (this._isPrevented(ev)) {
@@ -224,7 +224,7 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   @Input()
   get disabled(): boolean {
@@ -268,7 +268,7 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @private
    */
-  private _isPrevented(ev) {
+  private _isPrevented(ev: UIEvent) {
     if (ev.type.indexOf('touch') > -1) {
       this._msPrv = Date.now() + 2000;
 

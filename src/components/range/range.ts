@@ -4,7 +4,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/common';
 import {Form} from '../../util/form';
 import {isTrueProperty, isNumber, isString, isPresent, clamp} from '../../util/util';
 import {Item} from '../item/item';
-import {pointerCoord} from '../../util/dom';
+import {pointerCoord, Coordinates} from '../../util/dom';
 
 
 const RANGE_VALUE_ACCESSOR = new Provider(
@@ -633,7 +633,7 @@ export class Range {
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @input {boolean} Whether or not the range is disabled. Defaults to `false`.
@@ -701,9 +701,4 @@ export interface ClientRect {
   height?: number;
   xOffset?: number;
   yOffset?: number;
-}
-
-export interface Coordinates {
-  x?: number;
-  y?: number;
 }

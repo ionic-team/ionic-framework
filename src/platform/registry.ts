@@ -23,7 +23,7 @@ Platform.register({
 
 Platform.register({
   name: 'phablet',
-  isMatch(p) {
+  isMatch(p: Platform) {
     let smallest = Math.min(p.width(), p.height());
     let largest = Math.max(p.width(), p.height());
     return (smallest > 390 && smallest < 520) &&
@@ -34,7 +34,7 @@ Platform.register({
 
 Platform.register({
   name: 'tablet',
-  isMatch(p) {
+  isMatch(p: Platform) {
     let smallest = Math.min(p.width(), p.height());
     let largest = Math.max(p.width(), p.height());
     return (smallest > 460 && smallest < 820) &&

@@ -143,7 +143,7 @@ class PickerColumnCmp {
     this.setSelected(this.col.selectedIndex, 0);
   }
 
-  pointerStart(ev) {
+  pointerStart(ev: UIEvent) {
     console.debug('picker, pointerStart', ev.type, this.startY);
 
     if (this.isPrevented(ev)) {
@@ -177,7 +177,7 @@ class PickerColumnCmp {
     this.maxY = (maxY * this.optHeight * -1);
   }
 
-  pointerMove(ev) {
+  pointerMove(ev: UIEvent) {
     ev.preventDefault();
     ev.stopPropagation();
 
@@ -212,7 +212,7 @@ class PickerColumnCmp {
     this.update(y, 0, false, false);
   }
 
-  pointerEnd(ev) {
+  pointerEnd(ev: UIEvent) {
     if (this.isPrevented(ev)) {
       return;
     }
@@ -320,7 +320,7 @@ class PickerColumnCmp {
     }
   }
 
-  optClick(ev, index: number) {
+  optClick(ev: UIEvent, index: number) {
     if (!this.velocity) {
       ev.preventDefault();
       ev.stopPropagation();
@@ -410,7 +410,7 @@ class PickerColumnCmp {
     }
   }
 
-  isPrevented(ev): boolean {
+  isPrevented(ev: UIEvent): boolean {
     let now = Date.now();
     if (ev.type.indexOf('touch') > -1) {
       // this is a touch event, so prevent mouse events for a while
@@ -575,7 +575,7 @@ class PickerDisplayCmp {
     }
   }
 
-  btnClick(button, dismissDelay?) {
+  btnClick(button: any, dismissDelay?: number) {
     if (!this.isEnabled()) {
       return;
     }
@@ -607,7 +607,7 @@ class PickerDisplayCmp {
     }
   }
 
-  dismiss(role): Promise<any> {
+  dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(this.getSelected(), role);
   }
 

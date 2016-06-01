@@ -105,7 +105,7 @@ const POPOVER_MD_BODY_PADDING = 12;
  */
 export class Popover extends ViewController {
 
-  constructor(componentType, data: any = {}, opts: PopoverOptions = {}) {
+  constructor(componentType: any, data: any = {}, opts: PopoverOptions = {}) {
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
@@ -143,7 +143,7 @@ export class Popover extends ViewController {
     * @param {object} data Any data to pass to the Popover view
     * @param {object} opts Popover options
     */
-   static create(componentType, data = {}, opts: PopoverOptions = {}) {
+   static create(componentType: any, data = {}, opts: PopoverOptions = {}) {
      return new Popover(componentType, data, opts);
    }
 
@@ -206,11 +206,11 @@ class PopoverCmp {
     }
   }
 
-  dismiss(role): Promise<any> {
+  dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
   }
 
-  bdTouch(ev) {
+  bdTouch(ev: UIEvent) {
     ev.preventDefault();
     ev.stopPropagation();
   }
@@ -241,7 +241,7 @@ class PopoverTransition extends Transition {
     super(opts);
   }
 
-  mdPositionView(nativeEle: HTMLElement, ev) {
+  mdPositionView(nativeEle: HTMLElement, ev: any) {
     let originY = 'top';
     let originX = 'left';
 
@@ -301,7 +301,7 @@ class PopoverTransition extends Transition {
     popoverWrapperEle.style.opacity = '1';
   }
 
-  iosPositionView(nativeEle: HTMLElement, ev) {
+  iosPositionView(nativeEle: HTMLElement, ev: any) {
     let originY = 'top';
     let originX = 'left';
 

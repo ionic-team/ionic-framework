@@ -1,11 +1,11 @@
 import {ElementRef, Component, Directive, Host, HostBinding, HostListener, ViewChild, Input, Output, EventEmitter, Optional, ViewEncapsulation} from '@angular/core';
 import {NgControl} from '@angular/common';
 
-import {Ion} from '../ion';
+import {Button} from '../button/button';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
-import {Button} from '../button/button';
-import {isPresent, debounce} from '../../util/util';
+import {Ion} from '../ion';
+import {isPresent} from '../../util/util';
 
 
 /**
@@ -15,7 +15,7 @@ import {isPresent, debounce} from '../../util/util';
   selector: '.searchbar-input',
 })
 export class SearchbarInput {
-  constructor(private _elementRef: ElementRef) {}
+  constructor(public elementRef: ElementRef) {}
 }
 
 
@@ -63,7 +63,7 @@ export class Searchbar extends Ion {
   /**
    * @private
    */
-  @ViewChild(SearchbarInput) searchbarInput;
+  @ViewChild(SearchbarInput) searchbarInput: SearchbarInput;
 
   /**
    * @input {string} Sets the cancel button text to the value passed in
@@ -144,12 +144,12 @@ export class Searchbar extends Ion {
   /**
    * @private
    */
-  @HostBinding('class.searchbar-focused') isFocused;
+  @HostBinding('class.searchbar-focused') isFocused: boolean;
 
   /**
    * @private
    */
-  @HostBinding('class.searchbar-left-aligned') shouldLeftAlign;
+  @HostBinding('class.searchbar-left-aligned') shouldLeftAlign: boolean;
 
   constructor(
     private _elementRef: ElementRef,
@@ -248,7 +248,7 @@ export class Searchbar extends Ion {
    * @private
    * Update the Searchbar input value when the input changes
    */
-  inputChanged(ev) {
+  inputChanged(ev: any) {
     let value = ev.target.value;
 
     clearTimeout(this._tmr);
@@ -280,7 +280,7 @@ export class Searchbar extends Ion {
     // blurInput determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this.blurInput === false) {
-      this.searchbarInput._elementRef.nativeElement.focus();
+      this.searchbarInput.elementRef.nativeElement.focus();
       this.blurInput = true;
       return;
     }

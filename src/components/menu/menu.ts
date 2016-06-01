@@ -394,7 +394,7 @@ export class Menu extends Ion {
    */
   private _getType(): MenuType {
     if (!this._type) {
-      this._type = MenuController.create(this.type, this);
+      this._type = MenuController.create(this.type, this, this._platform);
 
       if (this._config.get('animate') === false) {
         this._type.ani.duration(0);
@@ -453,7 +453,7 @@ export class Menu extends Ion {
     // user has finished dragging the menu
     if (this._isEnabled && this._isSwipeEnabled) {
       this._prevent();
-      this._getType().setProgressEnd(shouldComplete, currentStepValue, (isOpen) => {
+      this._getType().setProgressEnd(shouldComplete, currentStepValue, (isOpen: boolean) => {
         console.debug('menu, swipeEnd', this.side);
         this._after(isOpen);
       });
@@ -630,7 +630,7 @@ export class MenuBackdrop {
   /**
    * @private
    */
-  private clicked(ev) {
+  private clicked(ev: UIEvent) {
     console.debug('backdrop clicked');
     ev.preventDefault();
     ev.stopPropagation();

@@ -23,7 +23,7 @@ export class Transition extends Animation {
     return new TransitionClass(enteringView, leavingView, opts);
   }
 
-  static register(name: string, TransitionClass) {
+  static register(name: string, TransitionClass: any) {
     TransitionRegistry[name] = TransitionClass;
   }
 

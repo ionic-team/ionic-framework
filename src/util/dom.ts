@@ -6,7 +6,7 @@
   var rafLastTime = 0;
   const win: any = window;
   if (!win.requestAnimationFrame) {
-    win.requestAnimationFrame = function(callback, element) {
+    win.requestAnimationFrame = function(callback: Function) {
       var currTime = Date.now();
       var timeToCall = Math.max(0, 16 - (currTime - rafLastTime));
 
@@ -20,7 +20,7 @@
   }
 
   if (!win.cancelAnimationFrame) {
-    win.cancelAnimationFrame = function(id) { clearTimeout(id); };
+    win.cancelAnimationFrame = function(id: number) { clearTimeout(id); };
   }
 })();
 
@@ -36,7 +36,7 @@ export const cancelRaf = window.cancelAnimationFrame.bind(window);
 export const nativeTimeout = window[window['Zone']['__symbol__']('setTimeout')]['bind'](window);
 export const clearNativeTimeout = window[window['Zone']['__symbol__']('clearTimeout')]['bind'](window);
 
-export function rafFrames(framesToWait, callback) {
+export function rafFrames(framesToWait: number, callback: Function) {
   framesToWait = Math.ceil(framesToWait);
 
   if (framesToWait < 2) {
@@ -62,7 +62,8 @@ export let CSS: {
 
 (function() {
   // transform
-  var i, keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
+  var i: number;
+  var keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
                  '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
   for (i = 0; i < keys.length; i++) {
@@ -116,7 +117,7 @@ export function transitionEnd(el: HTMLElement, callback: Function) {
     });
   }
 
-  function onEvent(ev) {
+  function onEvent(ev: UIEvent) {
     if (el === ev.target) {
       unregister();
       callback(ev);
@@ -125,7 +126,7 @@ export function transitionEnd(el: HTMLElement, callback: Function) {
 }
 
 export function ready(callback?: Function) {
-  let promise = null;
+  let promise: Promise<any> = null;
 
   if (!callback) {
     // a callback wasn't provided, so let's return a promise instead
@@ -150,7 +151,7 @@ export function ready(callback?: Function) {
 }
 
 export function windowLoad(callback?: Function) {
-  let promise = null;
+  let promise: Promise<any> = null;
 
   if (!callback) {
     // a callback wasn't provided, so let's return a promise instead
@@ -173,7 +174,7 @@ export function windowLoad(callback?: Function) {
   }
 }
 
-export function pointerCoord(ev: any): {x: number, y: number} {
+export function pointerCoord(ev: any): Coordinates {
   // get coordinates for either a mouse click
   // or a touch depending on the given event
   let c = { x: 0, y: 0 };
@@ -188,20 +189,20 @@ export function pointerCoord(ev: any): {x: number, y: number} {
   return c;
 }
 
-export function hasPointerMoved(threshold, startCoord, endCoord) {
+export function hasPointerMoved(threshold: number, startCoord: Coordinates, endCoord: Coordinates) {
   return startCoord && endCoord &&
          (Math.abs(startCoord.x - endCoord.x) > threshold || Math.abs(startCoord.y - endCoord.y) > threshold);
 }
 
-export function isActive(ele) {
+export function isActive(ele: HTMLElement) {
   return !!(ele && (document.activeElement === ele));
 }
 
-export function hasFocus(ele) {
+export function hasFocus(ele: HTMLElement) {
   return isActive(ele) && (ele.parentElement.querySelector(':focus') === ele);
 }
 
-export function isTextInput(ele) {
+export function isTextInput(ele: any) {
   return !!ele &&
          (ele.tagName === 'TEXTAREA' ||
           ele.contentEditable === 'true' ||
@@ -209,7 +210,7 @@ export function isTextInput(ele) {
 }
 
 export function hasFocusedTextInput() {
-  let ele = document.activeElement;
+  let ele = <HTMLElement>document.activeElement;
   if (isTextInput(ele)) {
     return (ele.parentElement.querySelector(':focus') === ele);
   }
@@ -217,7 +218,7 @@ export function hasFocusedTextInput() {
 }
 
 const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id|autofocus|autocomplete|autocorrect)$/i;
-export function copyInputAttributes(srcElement, destElement) {
+export function copyInputAttributes(srcElement: HTMLElement, destElement: HTMLElement) {
   // copy attributes from one element to another
   // however, skip over a few of them as they're already
   // handled in the angular world
@@ -231,7 +232,7 @@ export function copyInputAttributes(srcElement, destElement) {
 }
 
 let matchesFn: string;
-let matchesMethods: Array<string> = ['matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector'];
+let matchesMethods = ['matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector'];
 matchesMethods.some((fn: string) => {
   if (typeof document.documentElement[fn] === 'function') {
     matchesFn = fn;
@@ -309,3 +310,9 @@ export function flushDimensionCache() {
 }
 
 let dimensionCache: any = {};
+
+
+export interface Coordinates {
+  x?: number;
+  y?: number;
+}

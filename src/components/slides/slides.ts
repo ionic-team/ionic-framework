@@ -372,41 +372,41 @@ export class Slides extends Ion {
       pagination: paginationId
     }, this.options);
 
-    options.onTap = (swiper, e) => {
+    options.onTap = (swiper: any, e: any) => {
       this.onTap(swiper, e);
       return this.options.onTap && this.options.onTap(swiper, e);
     };
-    options.onClick = (swiper, e) => {
+    options.onClick = (swiper: any, e: any) => {
       this.onClick(swiper, e);
       return this.options.onClick && this.options.onClick(swiper, e);
     };
-    options.onDoubleTap = (swiper, e) => {
+    options.onDoubleTap = (swiper: any, e: any) => {
       this.onDoubleTap(swiper, e);
       return this.options.onDoubleTap && this.options.onDoubleTap(swiper, e);
     };
-    options.onTransitionStart = (swiper, e) => {
+    options.onTransitionStart = (swiper: any, e: any) => {
       this.onTransitionStart(swiper, e);
       return this.options.onTransitionStart && this.options.onTransitionStart(swiper, e);
     };
-    options.onTransitionEnd = (swiper, e) => {
+    options.onTransitionEnd = (swiper: any, e: any) => {
       this.onTransitionEnd(swiper, e);
       return this.options.onTransitionEnd && this.options.onTransitionEnd(swiper, e);
     };
-    options.onSlideChangeStart = (swiper) => {
+    options.onSlideChangeStart = (swiper: any) => {
       this.ionWillChange.emit(swiper);
       return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
     };
-    options.onSlideChangeEnd = (swiper) => {
+    options.onSlideChangeEnd = (swiper: any) => {
       this.ionDidChange.emit(swiper);
       return this.options.onSlideChangeEnd && this.options.onSlideChangeEnd(swiper);
     };
-    options.onLazyImageLoad = (swiper, slide, img) => {
+    options.onLazyImageLoad = (swiper: any, slide: any, img: any) => {
       return this.options.onLazyImageLoad && this.options.onLazyImageLoad(swiper, slide, img);
     };
-    options.onLazyImageReady = (swiper, slide, img) => {
+    options.onLazyImageReady = (swiper: any, slide: any, img: any) => {
       return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
     };
-    options.onSliderMove = (swiper, e) => {
+    options.onSliderMove = (swiper: any, e: any) => {
       this.ionDrag.emit(swiper);
       return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
     };
@@ -432,32 +432,32 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onTap(swiper, e) {
+  onTap(swiper: any, e: any) {
   }
   /**
    * @private
    */
-  onClick(swiper, e) {
+  onClick(swiper: any, e: any) {
   }
   /**
    * @private
    */
-  onDoubleTap(swiper, e) {
+  onDoubleTap(swiper: any, e: any) {
     this.toggleZoom(swiper, e);
   }
   /**
    * @private
    */
-  onLazyImageLoad(swiper, slide, img) {
+  onLazyImageLoad(swiper: any, slide: any, img: any) {
   }
   /**
    * @private
    */
-  onLazyImageReady(swiper, slide, img) {
+  onLazyImageReady(swiper: any, slide: any, img: any) {
   }
 
   /*
-  nextButton(swiper, e) {
+  nextButton(swiper: any, e: any) {
   }
   prevButton() {
   }
@@ -485,7 +485,7 @@ export class Slides extends Ion {
     this.zoomLastPosY = 0;
 
 
-    let last_scale, startX, startY, posX = 0, posY = 0, zoomRect;
+    let lastScale: number, startX: number, startY: number, posX = 0, posY = 0, zoomRect: any;
 
     this.viewportWidth = this.getNativeElement().offsetWidth;
     this.viewportHeight = this.getNativeElement().offsetHeight;
@@ -502,13 +502,13 @@ export class Slides extends Ion {
       this.onTouchEnd(e);
     });
 
-    this.zoomGesture.on('pinchstart', (e) => {
-      last_scale = this.scale;
+    this.zoomGesture.on('pinchstart', (e: any) => {
+      lastScale = this.scale;
       console.debug('Last scale', e.scale);
     });
 
-    this.zoomGesture.on('pinch', (e) => {
-      this.scale = Math.max(1, Math.min(last_scale * e.scale, 10));
+    this.zoomGesture.on('pinch', (e: any) => {
+      this.scale = Math.max(1, Math.min(lastScale * e.scale, 10));
       console.debug('Scaling', this.scale);
       this.zoomElement.style[CSS.transform] = 'scale(' + this.scale + ')';
 
@@ -534,9 +534,7 @@ export class Slides extends Ion {
    * @private
    */
   resetZoom() {
-
     if (this.zoomElement) {
-
       this.zoomElement.parentElement.style[CSS.transform] = '';
       this.zoomElement.style[CSS.transform] = 'scale(1)';
     }
@@ -549,7 +547,7 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  toggleZoom(swiper, e) {
+  toggleZoom(swiper: any, e: any) {
     console.debug('Try toggle zoom');
     if (!this.enableZoom) { return; }
 
@@ -625,18 +623,18 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onTransitionStart(swiper, e) {
+  onTransitionStart(swiper: any, e: any) {
   }
   /**
    * @private
    */
-  onTransitionEnd(swiper, e) {
+  onTransitionEnd(swiper: any, e: any) {
   }
 
   /**
    * @private
    */
-  onTouchStart(e) {
+  onTouchStart(e: any) {
     console.debug('Touch start', e);
 
     // TODO: Support mice as well
@@ -665,7 +663,7 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onTouchMove(e) {
+  onTouchMove(e: any) {
     this.touch.deltaX = e.touches[0].clientX - this.touch.startX;
     this.touch.deltaY = e.touches[0].clientY - this.touch.startY;
 
@@ -716,14 +714,14 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onTouchEnd(e) {
+  onTouchEnd(e: UIEvent) {
     console.debug('PANEND', e);
 
     if (this.scale > 1) {
 
       if (Math.abs(this.touch.x) > this.viewportWidth) {
         // TODO what is posX?
-        var posX = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
+        var posX: number = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
         console.debug('Setting on posx', this.touch.x);
       }
 
@@ -879,7 +877,7 @@ export class Slide {
   /**
    * @private
    */
-  @Input() zoom;
+  @Input() zoom: any;
 
   constructor(
     elementRef: ElementRef,

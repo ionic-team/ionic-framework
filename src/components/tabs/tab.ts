@@ -267,7 +267,7 @@ export class Tab extends NavController {
         this.load({
           animate: false,
           preload: true,
-          postLoad: (viewCtrl) => {
+          postLoad: (viewCtrl: ViewController) => {
             let navbar = viewCtrl.getNavbar();
             navbar && navbar.setHidden(true);
           }

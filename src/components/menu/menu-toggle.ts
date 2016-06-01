@@ -44,7 +44,7 @@ export class MenuToggle {
   /**
    * @private
    */
-  @Input() menuToggle;
+  @Input() menuToggle: string;
 
   /**
    * @private

@@ -1,5 +1,7 @@
-import {MenuController} from './menu-controller';
 import {Animation} from '../../animations/animation';
+import {Menu} from './menu';
+import {MenuController} from './menu-controller';
+import {Platform} from '../../platform/platform';
 
 
 /**
@@ -62,7 +64,7 @@ export class MenuType {
  * The menu itself, which is under the content, does not move.
  */
 class MenuRevealType extends MenuType {
-  constructor(menu) {
+  constructor(menu: Menu) {
     super();
 
     let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
@@ -86,19 +88,19 @@ MenuController.registerType('reveal', MenuRevealType);
  * The menu itself also slides over to reveal its bad self.
  */
 class MenuPushType extends MenuType {
-  constructor(menu) {
+  constructor(menu: Menu, platform: Platform) {
     super();
 
     this.ani
         .easing('ease')
         .duration(250);
 
-    let contentOpenedX, menuClosedX, menuOpenedX;
+    let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
 
     if (menu.side === 'right') {
       contentOpenedX = -menu.width() + 'px';
-      menuOpenedX = (menu._platform.width() - menu.width()) + 'px';
-      menuClosedX = menu._platform.width() + 'px';
+      menuOpenedX = (platform.width() - menu.width()) + 'px';
+      menuClosedX = platform.width() + 'px';
 
     } else {
       contentOpenedX = menu.width() + 'px';
@@ -125,18 +127,18 @@ MenuController.registerType('push', MenuPushType);
  * itself, which is under the menu, does not move.
  */
 class MenuOverlayType extends MenuType {
-  constructor(menu) {
+  constructor(menu: Menu, platform: Platform) {
     super();
 
     this.ani
         .easing('ease')
         .duration(250);
 
-    let closedX, openedX;
+    let closedX: string, openedX: string;
     if (menu.side === 'right') {
       // right side
-      closedX = menu._platform.width() + 'px';
-      openedX = (menu._platform.width() - menu.width() - 8) + 'px';
+      closedX = platform.width() + 'px';
+      openedX = (platform.width() - menu.width() - 8) + 'px';
 
     } else {
       // left side

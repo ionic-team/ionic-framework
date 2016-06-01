@@ -356,19 +356,6 @@ export class NavController extends Ion {
       opts = {};
     }
 
-    // deprecated warning
-    pages.forEach(pg => {
-      if (pg['componentType']) {
-        pg.page = pg['componentType'];
-        console.warn('setPages() now uses "page" instead of "componentType" in the array of pages. ' +
-                     'What was: setPages([{componentType: About}, {componentType: Contact}]) is now: setPages([{page: About}, {page: Contact}])');
-
-      } else if (!pg['page']) {
-        console.error('setPages() now requires an object containing "page" and optionally "params" in the array of pages. ' +
-                     'What was: setPages([About, Contact]) is now: setPages([{page: About}, {page: Contact}])');
-      }
-    });
-
     // remove existing views
     let leavingView = this._remove(0, this._views.length);
 
@@ -384,7 +371,7 @@ export class NavController extends Ion {
     // set the nav direction to "back" if it wasn't set
     opts.direction = opts.direction || 'back';
 
-    let resolve;
+    let resolve: any;
     let promise = new Promise(res => { resolve = res; });
 
     // start the transition, fire resolve when done...
@@ -611,7 +598,7 @@ export class NavController extends Ion {
       opts.animation = enteringView.getTransitionName(opts.direction);
     }
 
-    let resolve;
+    let resolve: any;
     let promise = new Promise(res => { resolve = res; });
 
     // it's possible that the newly added view doesn't need to
@@ -856,7 +843,7 @@ export class NavController extends Ion {
         return Promise.resolve(false);
       }
 
-      let resolve;
+      let resolve: any;
       let promise = new Promise(res => { resolve = res; });
 
       if (!opts.animation) {
@@ -1040,7 +1027,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _render(transId, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
+  private _render(transId: number, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
     // compile/load the view into the DOM
 
     if (enteringView.state === STATE_INACTIVE) {
@@ -1076,7 +1063,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _postRender(transId, enteringView: ViewController, leavingView: ViewController, isAlreadyTransitioning: boolean, opts: NavOptions, done: Function) {
+  private _postRender(transId: number, enteringView: ViewController, leavingView: ViewController, isAlreadyTransitioning: boolean, opts: NavOptions, done: Function) {
     // called after _render has completed and the view is compiled/loaded
 
     if (enteringView.state === STATE_INACTIVE) {
@@ -1764,7 +1751,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _setZIndex(enteringView: ViewController, leavingView: ViewController, direction) {
+  private _setZIndex(enteringView: ViewController, leavingView: ViewController, direction: string) {
     if (enteringView) {
       // get the leaving view, which could be in various states
       if (!leavingView || !leavingView.isLoaded()) {

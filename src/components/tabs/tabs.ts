@@ -161,7 +161,7 @@ export class Tabs extends Ion {
   private _ids: number = -1;
   private _preloadTabs: boolean = null;
   private _tabs: Array<Tab> = [];
-  private _onReady = null;
+  private _onReady: any = null;
   private _sbPadding: boolean;
   private _useHighlight: boolean;
 
@@ -213,7 +213,7 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  @ViewChildren(TabButton) private _btns;
+  @ViewChildren(TabButton) private _btns: any;
 
   /**
    * @private
@@ -316,7 +316,7 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  private _setConfig(attrKey, fallback) {
+  private _setConfig(attrKey: string, fallback: any) {
     var val = this[attrKey];
     if (isBlank(val)) {
       val = this._config.get(attrKey, fallback);
@@ -335,7 +335,7 @@ export class Tabs extends Ion {
   /**
    * @param {number} index Index of the tab you want to select
    */
-  select(tabOrIndex) {
+  select(tabOrIndex: any) {
     let selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (!selectedTab) {
       return;
@@ -354,7 +354,7 @@ export class Tabs extends Ion {
       animate: false
     };
 
-    let deselectedPage;
+    let deselectedPage: ViewController;
     if (deselectedTab) {
       deselectedPage = deselectedTab.getActive();
       deselectedPage && deselectedPage.fireWillLeave();
