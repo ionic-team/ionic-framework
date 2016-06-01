@@ -87,6 +87,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
   let clickBlock = new ClickBlock();
   let events = new Events();
   let featureDetect = new FeatureDetect();
+  let navRegistry = new NavRegistry();
 
   setupDom(window, document, config, platform, clickBlock, featureDetect);
   bindEvents(window, document, platform, events);
@@ -100,7 +101,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     Form,
     Keyboard,
     MenuController,
-    NavRegistry,
+    provide(NavRegistry, {useValue: navRegistry}),
     provide(Platform, {useValue: platform}),
     Translate,
     TapClick,
