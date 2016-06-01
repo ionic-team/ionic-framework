@@ -36,6 +36,19 @@ ion-range {
   padding: $range-wp-padding-vertical $range-wp-padding-horizontal;
 }
 
+[range-left],
+[range-right] {
+  margin: 0 12px;
+}
+
+[range-left] {
+  margin-left: 0;
+}
+
+[range-right] {
+  margin-right: 0;
+}
+
 .range-has-pin {
   padding-top: $range-wp-padding-vertical + $range-wp-pin-font-size + $range-wp-pin-padding;
 }

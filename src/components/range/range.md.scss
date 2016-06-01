@@ -35,6 +35,19 @@ ion-range {
   padding: $range-md-padding-vertical $range-md-padding-horizontal;
 }
 
+[range-left],
+[range-right] {
+  margin: 0 12px;
+}
+
+[range-left] {
+  margin-left: 0;
+}
+
+[range-right] {
+  margin-right: 0;
+}
+
 .range-has-pin {
   padding-top: $range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding;
 }
