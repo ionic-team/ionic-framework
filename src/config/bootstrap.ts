@@ -56,13 +56,11 @@ export function ionicPostBootstrap(ngComponentRef: ComponentRef<any>): Component
   return ngComponentRef;
 }
 
-
 export function ionicProviders(customProviders?: Array<any>, config?: any): any[] {
-  // add custom providers to Ionic's dev
   let directives = IONIC_DIRECTIVES;
-  if (customProviders) {
-    directives.push(customProviders);
-  }
+
+  // add custom providers to Ionic's app
+  customProviders = isPresent(customProviders) ? customProviders : [];
 
   // create an instance of Config
   if (!(config instanceof Config)) {
@@ -109,6 +107,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
     HTTP_PROVIDERS,
+    customProviders
   ];
 }
 

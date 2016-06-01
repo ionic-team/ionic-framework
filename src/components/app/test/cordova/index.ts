@@ -1,6 +1,25 @@
 import {Component} from '@angular/core';
 import {ionicBootstrap, NavController, Modal, ViewController} from '../../../../../src';
+import {Injectable} from '@angular/core';
 
+
+@Injectable()
+export class SomeData {
+  constructor() {}
+
+  getData() {
+    return "SomeData";
+  }
+}
+
+@Injectable()
+export class OtherData {
+  constructor() {}
+
+  getData() {
+    return "OtherData";
+  }
+}
 
 @Component({
   template: `
@@ -37,7 +56,10 @@ class Page1 {
   page2 = Page2;
   sort: string = 'all';
 
-  constructor(private nav: NavController) {}
+  constructor(private nav: NavController, private someData: SomeData, private otherData: OtherData) {
+    console.log("Got some data from", someData.getData());
+    console.log("Got some data from", otherData.getData());
+  }
 
   goToTabs() {
     this.nav.push(TabsPage);
@@ -119,6 +141,6 @@ class E2EApp {
   root = Page1;
 }
 
-ionicBootstrap(E2EApp, null, {
+ionicBootstrap(E2EApp, [SomeData, OtherData], {
   statusbarPadding: true
 });
