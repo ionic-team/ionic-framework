@@ -28,7 +28,8 @@ $range-md-tick-active-background-color:      $range-md-tick-background-color !de
 $range-md-pin-background-color:              $range-md-bar-active-background-color !default;
 $range-md-pin-color:                         color-contrast($colors-md, $range-md-bar-active-background-color) !default;
 $range-md-pin-font-size:                     12px !default;
-$range-md-pin-padding:                       8px !default;
+$range-md-pin-padding-vertical:              8px !default;
+$range-md-pin-padding-horizontal:            0 !default;
 
 
 ion-range {
@@ -49,7 +50,7 @@ ion-range {
 }
 
 .range-has-pin {
-  padding-top: $range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding;
+  padding-top: $range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical;
 }
 
 .range-slider {
@@ -144,12 +145,13 @@ ion-range {
 
 .range-pin {
   position: relative;
-  top: -20px;
+  top: -24px;
   display: inline-block;
 
-  padding: $range-md-pin-padding;
+  padding: $range-md-pin-padding-vertical $range-md-pin-padding-horizontal;
 
   min-width: 28px;
+  height: 28px;
 
   border-radius: 50%;
 
@@ -163,6 +165,24 @@ ion-range {
 
   transform: translate3d(0, 28px, 0) scale(.01);
   transition: transform 120ms ease;
+
+  &::before {
+    position: absolute;
+    top: 3px;
+    left: 50%;
+    z-index: -1;
+
+    margin-left: -13px;
+
+    width: 26px;
+    height: 26px;
+
+    border-radius: 50% 50% 50% 0;
+    background: $range-md-pin-background-color;
+
+    content: "";
+    transform: rotate(-45deg);
+  }
 }
 
 .range-knob-pressed .range-pin {
@@ -181,7 +201,8 @@ ion-range {
   ion-range[#{$color-name}] {
     .range-bar-active,
     .range-knob,
-    .range-pin {
+    .range-pin,
+    .range-pin::before {
       background: $color-base;
     }
   }
