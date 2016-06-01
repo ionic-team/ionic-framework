@@ -352,7 +352,7 @@ export function convertDataToISO(data: DateTimeData): string {
               rtn += '.' + threeDigit(data.millisecond);
             }
 
-            if (data.tzOffset === 0) {
+            if (isBlank(data.tzOffset) || data.tzOffset === 0) {
               // YYYY-MM-DDTHH:mm:SSZ
               rtn += 'Z';
 

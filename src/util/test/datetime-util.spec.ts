@@ -4,6 +4,20 @@ export function run() {
 
 describe('convertDataToISO', () => {
 
+  it('should convert DateTimeData to datetime string, with blank timezone', () => {
+    var data: datetime.DateTimeData = {
+      year: 1994,
+      month: 12,
+      day: 15,
+      hour: 13,
+      minute: 47,
+      second: 20,
+    };
+
+    var str = datetime.convertDataToISO(data);
+    expect(str).toEqual('1994-12-15T13:47:20Z');
+  });
+
   it('should convert DateTimeData to datetime string, +330 tz offset', () => {
     var data: datetime.DateTimeData = {
       year: 1994,

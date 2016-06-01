@@ -68,6 +68,18 @@
     <code>Leap year, summer months: {{leapYearsSummerMonths}}</code><br>
   </p>
 
-  <button (click)="clearLeapYear()">Clear Leap Years</button>
+  <p>
+    <button (click)="clearLeapYear()">Clear Leap Years</button>
+  </p>
+
+  <ion-item>
+    <ion-label>myDate: {{myDate}}</ion-label>
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>
+  </ion-item>
+
+  <p>
+    <button (click)="convertDate()">Convert myDate To Date</button>
+    {{convertedDate}}
+  </p>
 
 </ion-content>

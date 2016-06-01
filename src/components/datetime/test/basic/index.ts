@@ -14,6 +14,7 @@ class E2EPage {
   webkitOpenSourced = '2005-06-17T11:06Z';
   chromeReleased = '2008-09-02';
   leapYearsSummerMonths = '';
+  convertedDate = '';
 
   leapYearsArray = [2020, 2016, 2008, 2004, 2000, 1996];
 
@@ -38,6 +39,10 @@ class E2EPage {
   clearLeapYear() {
     this.leapYearsSummerMonths = null;
   }
+
+	convertDate() {
+	  this.convertedDate = new Date(this.myDate).toISOString();
+	}
 
 }
 
