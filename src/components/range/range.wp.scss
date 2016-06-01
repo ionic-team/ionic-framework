@@ -32,24 +32,7 @@ $range-wp-pin-font-size:                     12px !default;
 $range-wp-pin-padding:                       8px !default;
 
 
-.item-range .item-inner {
-  overflow: visible;
-}
-
-.item-range .input-wrapper {
-  overflow: visible;
-
-  flex-direction: column;
-}
-
-.item-range ion-range {
-  width: 100%;
-}
-
 ion-range {
-  position: relative;
-  display: block;
-
   padding: $range-wp-padding-vertical $range-wp-padding-horizontal;
 }
 
@@ -58,11 +41,7 @@ ion-range {
 }
 
 .range-slider {
-  position: relative;
-
   height: $range-wp-slider-height;
-
-  cursor: pointer;
 }
 
 .range-bar {

@@ -106,6 +106,13 @@ export class RangeKnob {
  * the slider knob. It can accept dual knobs, but by default one knob
  * controls the value of the range.
  *
+ * ### Range Labels
+ * Labels can be placed on either side of the range by adding the
+ * `range-left` or `range-right` property to the element. The element
+ * doesn't have to be an `ion-label`, it can be added to any element
+ * to place it to the left or right of the range. See [usage](#usage)
+ * below for examples.
+ *
  *
  * ### Minimum and Maximum Values
  * Minimum and maximum values can be passed to the range through the `min`
@@ -135,15 +142,18 @@ export class RangeKnob {
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-note item-left>-200</ion-note>
- *     <ion-range min="-200" max="200" pin="true" [(ngModel)]="saturation" secondary></ion-range>
- *     <ion-note item-right>200</ion-note>
+ *     <ion-range min="-200" max="200" [(ngModel)]="saturation" secondary>
+ *       <ion-label range-left>-200</ion-label>
+ *       <ion-label range-right>200</ion-label>
+ *     </ion-range>
  *   </ion-item>
  *
- *   <ion-item>
- *     <ion-label>step=2, {{singleValue3}}</ion-label>
- *     <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3"></ion-range>
- *   </ion-item>
+ *  <ion-item>
+ *    <ion-range min="20" max="80" step="2" [(ngModel)]="brightness">
+ *      <ion-icon small range-left name="sunny"></ion-icon>
+ *      <ion-icon range-right name="sunny"></ion-icon>
+ *    </ion-range>
+ *  </ion-item>
  *
  *   <ion-item>
  *     <ion-label>step=100, snaps, {{singleValue4}}</ion-label>
@@ -163,13 +173,15 @@ export class RangeKnob {
 @Component({
   selector: 'ion-range',
   template:
+    '<ng-content select="[range-left]"></ng-content>' +
     '<div class="range-slider" #slider>' +
       '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>' +
       '<div class="range-bar"></div>' +
       '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>' +
       '<div class="range-knob-handle"></div>' +
       '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
-    '</div>',
+    '</div>' +
+    '<ng-content select="[range-right]"></ng-content>',
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',

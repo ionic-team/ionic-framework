@@ -9,9 +9,10 @@
       <ion-badge item-right>{{brightness}}</ion-badge>
     </ion-list-header>
     <ion-item>
-      <ion-icon item-left small name="sunny"></ion-icon>
-      <ion-range [(ngModel)]="brightness"></ion-range>
-      <ion-icon item-right name="sunny"></ion-icon>
+      <ion-range [(ngModel)]="brightness">
+        <ion-icon range-left small name="sunny"></ion-icon>
+        <ion-icon range-right name="sunny"></ion-icon>
+      </ion-range>
     </ion-item>
   </ion-list>
 
@@ -21,9 +22,10 @@
       <ion-badge item-right secondary>{{saturation}}</ion-badge>
     </ion-list-header>
     <ion-item>
-      <ion-note item-left>-200</ion-note>
-      <ion-range min="-200" max="200" pin="true" [(ngModel)]="saturation" secondary></ion-range>
-      <ion-note item-right>200</ion-note>
+      <ion-range min="-200" max="200" pin="true" [(ngModel)]="saturation" secondary>
+        <ion-label range-left>-200</ion-label>
+        <ion-label range-right>200</ion-label>
+      </ion-range>
     </ion-item>
   </ion-list>
 
@@ -33,9 +35,10 @@
       <ion-badge item-right danger>{{warmth}}</ion-badge>
     </ion-list-header>
     <ion-item>
-      <ion-icon item-left small danger name="thermometer"></ion-icon>
-      <ion-range min="1000" max="2000" step="100" snaps="true" [(ngModel)]="warmth" danger></ion-range>
-      <ion-icon item-right danger name="thermometer"></ion-icon>
+      <ion-range min="1000" max="2000" step="100" snaps="true" [(ngModel)]="warmth" danger>
+        <ion-icon range-left small danger name="thermometer"></ion-icon>
+        <ion-icon range-right danger name="thermometer"></ion-icon>
+      </ion-range>
     </ion-item>
   </ion-list>
 
@@ -46,9 +49,10 @@
       <ion-badge item-right dark>{{structure.upper}}</ion-badge>
     </ion-list-header>
     <ion-item>
-      <ion-note item-left>0</ion-note>
-      <ion-range dualKnobs="true" pin="true" [(ngModel)]="structure" (ionChange)="onChange($event)" dark></ion-range>
-      <ion-note item-right>100</ion-note>
+      <ion-range dualKnobs="true" pin="true" [(ngModel)]="structure" (ionChange)="onChange($event)" dark>
+        <ion-label range-left>-0</ion-label>
+        <ion-label range-right>100</ion-label>
+      </ion-range>
     </ion-item>
   </ion-list>
 </ion-content>

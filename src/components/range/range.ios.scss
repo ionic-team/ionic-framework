@@ -32,25 +32,22 @@ $range-ios-pin-color:                         $text-ios-color !default;
 $range-ios-pin-font-size:                     12px !default;
 $range-ios-pin-padding:                       8px !default;
 
-.item-range .item-inner {
-  overflow: visible;
-}
-
-.item-range .input-wrapper {
-  overflow: visible;
-
-  flex-direction: column;
-}
-
-.item-range ion-range {
-  width: 100%;
-}
 
 ion-range {
-  position: relative;
-  display: block;
-
   padding: $range-ios-padding-vertical $range-ios-padding-horizontal;
+}
+
+[range-left],
+[range-right] {
+  margin: 0 12px;
+}
+
+[range-left] {
+  margin-left: 0;
+}
+
+[range-right] {
+  margin-right: 0;
 }
 
 .range-has-pin {
@@ -58,11 +55,7 @@ ion-range {
 }
 
 .range-slider {
-  position: relative;
-
   height: $range-ios-slider-height;
-
-  cursor: pointer;
 }
 
 .range-bar {

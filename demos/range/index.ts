@@ -1,6 +1,7 @@
-import {App} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from 'ionic-angular';
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class ApiDemoApp {
@@ -13,3 +14,5 @@ class ApiDemoApp {
     console.log("Changed", ev);
   }
 }
+
+ionicBootstrap(ApiDemoApp);

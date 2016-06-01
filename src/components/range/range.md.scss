@@ -31,24 +31,7 @@ $range-md-pin-font-size:                     12px !default;
 $range-md-pin-padding:                       8px !default;
 
 
-.item-range .item-inner {
-  overflow: visible;
-}
-
-.item-range .input-wrapper {
-  overflow: visible;
-
-  flex-direction: column;
-}
-
-.item-range ion-range {
-  width: 100%;
-}
-
 ion-range {
-  position: relative;
-  display: block;
-
   padding: $range-md-padding-vertical $range-md-padding-horizontal;
 }
 
@@ -57,11 +40,7 @@ ion-range {
 }
 
 .range-slider {
-  position: relative;
-
   height: $range-md-slider-height;
-
-  cursor: pointer;
 }
 
 .range-bar {

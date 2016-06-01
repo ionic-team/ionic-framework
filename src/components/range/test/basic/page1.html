@@ -28,15 +28,19 @@
     </ion-item>
 
     <ion-item>
-      <div item-left>{{singleValue2}}</div>
       <ion-label>init=150, min=-200, max=200</ion-label>
-      <ion-range min="-200" max="200" [(ngModel)]="singleValue2" secondary></ion-range>
-      <div item-right>{{singleValue2}}</div>
+      <ion-range min="-200" max="200" [(ngModel)]="singleValue2" secondary>
+        <ion-label range-left>-200</ion-label>
+        <ion-label range-right>200</ion-label>
+      </ion-range>
     </ion-item>
 
     <ion-item>
       <ion-label>step=2, {{singleValue3}}</ion-label>
-      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3"></ion-range>
+      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3">
+        <ion-icon small range-left name="sunny"></ion-icon>
+        <ion-icon range-right name="sunny"></ion-icon>
+      </ion-range>
     </ion-item>
 
     <ion-item>
