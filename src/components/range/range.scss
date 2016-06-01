@@ -20,6 +20,7 @@
 ion-range {
   position: relative;
   display: flex;
+
   align-items: center;
 
   ion-label {
@@ -28,6 +29,7 @@ ion-range {
 
   ion-icon {
     min-height: 2.4rem;
+
     font-size: 2.4rem;
     line-height: 1;
   }
