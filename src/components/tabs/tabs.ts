@@ -232,8 +232,8 @@ export class Tabs extends Ion {
     super(_elementRef);
     this.parent = parent;
     this.id = ++tabIds;
-    this.subPages = _config.getBoolean('tabSubPages');
-    this._useHighlight = _config.getBoolean('tabbarHighlight');
+    this.subPages = _config.getBoolean('tabSubPages', false);
+    this._useHighlight = _config.getBoolean('tabbarHighlight', false);
     this._sbPadding = _config.getBoolean('statusbarPadding', false);
 
     if (parent) {

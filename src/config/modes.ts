@@ -37,7 +37,10 @@ Config.setModeConfig('ios', {
 
   spinner: 'ios',
 
+  tabbarHighlight: false,
   tabbarPlacement: 'bottom',
+
+  tabSubPages: false,
 
   toastEnter: 'toast-slide-in',
   toastLeave: 'toast-slide-out',
@@ -72,6 +75,7 @@ Config.setModeConfig('md', {
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
+  pickerRotateFactor: 0,
 
   popoverEnter: 'popover-md-pop-in',
   popoverLeave: 'popover-md-pop-out',
@@ -116,6 +120,7 @@ Config.setModeConfig('wp', {
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
+  pickerRotateFactor: 0,
 
   popoverEnter: 'popover-md-pop-in',
   popoverLeave: 'popover-md-pop-out',
