@@ -4,5 +4,5 @@ it('should open action sheet', function() {
 });
 
 it('should close with backdrop click', function() {
-  element(by.css('.backdrop')).click();
+  element(by.css('ion-backdrop')).click();
 });
