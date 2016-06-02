@@ -176,14 +176,14 @@ Platform.register({
           // 3) cordova deviceready event triggered
 
           // add cordova listeners to emit platform events
-          doc.addEventListener('backbutton', function() {
-            p.backButton.emit(null);
+          doc.addEventListener('backbutton', function(ev: Event) {
+            p.backButton.emit(ev);
           });
-          doc.addEventListener('pause', function() {
-            p.pause.emit(null);
+          doc.addEventListener('pause', function(ev: Event) {
+            p.pause.emit(ev);
           });
-          doc.addEventListener('resume', function() {
-            p.resume.emit(null);
+          doc.addEventListener('resume', function(ev: Event) {
+            p.resume.emit(ev);
           });
 
           // cordova has its own exitApp method
