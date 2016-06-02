@@ -308,7 +308,7 @@ class ContactUs {
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <ion-list>
-        <ion-item *ngFor="#item of items">
+        <ion-item *ngFor="let item of items">
           Item Number: {{item.value}}
         </ion-item>
       </ion-list>

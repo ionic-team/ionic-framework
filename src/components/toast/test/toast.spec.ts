@@ -1,4 +1,4 @@
-import {Toast, ToastPosition} from '../../../../src';
+import {Toast} from '../../../../src';
 
 export function run() {
 
@@ -12,7 +12,7 @@ describe('Toast', () => {
         showCloseButton: true
       });
 
-      expect(toast.data.position).toEqual(ToastPosition.Bottom);
+      expect(toast.data.position).toEqual('bottom');
       expect(toast.data.message).toEqual('Please Wait...');
       expect(toast.data.showCloseButton).toEqual(true);
     });
@@ -20,28 +20,28 @@ describe('Toast', () => {
     it('should create toast with position top', () => {
       let toast = Toast.create({
         message: 'Please Wait...',
-        position: ToastPosition.Top
+        position: 'top'
       });
 
-      expect(toast.data.position).toEqual(ToastPosition.Top);
+      expect(toast.data.position).toEqual('top');
     });
 
     it('should create toast with position middle', () => {
       let toast = Toast.create({
         message: 'Please Wait...',
-        position: ToastPosition.Middle
+        position: 'middle'
       });
 
-      expect(toast.data.position).toEqual(ToastPosition.Middle);
+      expect(toast.data.position).toEqual('middle');
     });
 
     it('should create toast with position bottom', () => {
       let toast = Toast.create({
         message: 'Please Wait...',
-        position: ToastPosition.Bottom
+        position: 'bottom'
       });
 
-      expect(toast.data.position).toEqual(ToastPosition.Bottom);
+      expect(toast.data.position).toEqual('bottom');
     });
 
     it('should set a duration', () => {

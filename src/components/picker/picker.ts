@@ -435,7 +435,7 @@ class PickerColumnCmp {
 @Component({
   selector: 'ion-picker-cmp',
   template:
-    '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
+    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
     '<div class="picker-wrapper">' +
       '<div class="picker-toolbar">' +
         '<div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">' +
@@ -665,7 +665,7 @@ class PickerSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.26);
@@ -682,7 +682,7 @@ class PickerSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
 
     backdrop.fromTo('opacity', 0.26, 0);

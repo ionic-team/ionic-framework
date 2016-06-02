@@ -3,7 +3,6 @@
 // Loading Indicator
 // --------------------------------------------------
 
-
 ion-loading {
   position: absolute;
   top: 0;
@@ -25,11 +24,4 @@ ion-loading {
   align-items: center;
 
   opacity: 0;
-}
-
-// Loading Backdrop
-// -----------------------------------------
-
-.hide-backdrop {
-  display: none;
 }

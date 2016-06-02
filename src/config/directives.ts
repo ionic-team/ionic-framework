@@ -4,6 +4,7 @@ import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
 import {Menu} from '../components/menu/menu';
 import {MenuToggle} from '../components/menu/menu-toggle';
 import {MenuClose} from '../components/menu/menu-close';
+import {Backdrop} from '../components/backdrop/backdrop';
 import {Badge} from '../components/badge/badge';
 import {Button} from '../components/button/button';
 import {Content} from '../components/content/content';
@@ -120,6 +121,7 @@ export const IONIC_DIRECTIVES: any[] = [
   MenuToggle,
   MenuClose,
 
+  Backdrop,
   Badge,
   Button,
   Content,

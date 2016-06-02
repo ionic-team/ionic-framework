@@ -13,9 +13,9 @@ $toast-wp-title-color:                           #fff !default;
 $toast-wp-title-font-size:                       1.4rem !default;
 $toast-wp-title-padding:                         1.5rem !default;
 
-
 .toast-wrapper {
   position: absolute;
+  right: 0;
   left: 0;
   z-index: $z-index-overlay-wrapper;
   display: block;

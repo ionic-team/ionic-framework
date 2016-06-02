@@ -311,7 +311,7 @@ export class Alert extends ViewController {
 @Component({
   selector: 'ion-alert',
   template:
-    '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
+    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
     '<div class="alert-wrapper">' +
       '<div class="alert-head">' +
         '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
@@ -612,7 +612,7 @@ class AlertPopIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
@@ -633,7 +633,7 @@ class AlertPopOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
@@ -654,7 +654,7 @@ class AlertMdPopIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
@@ -675,7 +675,7 @@ class AlertMdPopOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
@@ -697,7 +697,7 @@ class AlertWpPopIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
@@ -718,7 +718,7 @@ class AlertWpPopOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');

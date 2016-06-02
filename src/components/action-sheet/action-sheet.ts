@@ -215,7 +215,7 @@ export class ActionSheet extends ViewController {
 @Component({
   selector: 'ion-action-sheet',
   template:
-    '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
+    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
     '<div class="action-sheet-wrapper">' +
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group">' +
@@ -384,7 +384,7 @@ class ActionSheetSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.4);
@@ -401,7 +401,7 @@ class ActionSheetSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.4, 0);
@@ -418,7 +418,7 @@ class ActionSheetMdSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.26);
@@ -435,7 +435,7 @@ class ActionSheetMdSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.26, 0);
@@ -451,7 +451,7 @@ class ActionSheetWpSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.16);
@@ -468,7 +468,7 @@ class ActionSheetWpSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.1, 0);

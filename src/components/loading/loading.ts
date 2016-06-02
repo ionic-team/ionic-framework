@@ -156,7 +156,7 @@ export class Loading extends ViewController {
 @Component({
   selector: 'ion-loading',
   template:
-    '<div disable-activated class="backdrop" [class.hide-backdrop]="!d.showBackdrop" role="presentation"></div>' +
+    '<ion-backdrop [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
     '<div class="loading-wrapper">' +
       '<div *ngIf="showSpinner" class="loading-spinner">' +
         '<ion-spinner [name]="d.spinner"></ion-spinner>' +
@@ -240,7 +240,7 @@ export interface LoadingOptions {
      super(opts);
 
      let ele = enteringView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('.backdrop'));
+     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
      wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
@@ -261,7 +261,7 @@ export interface LoadingOptions {
      super(opts);
 
      let ele = leavingView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('.backdrop'));
+     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
      wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
@@ -282,7 +282,7 @@ export interface LoadingOptions {
      super(opts);
 
      let ele = enteringView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('.backdrop'));
+     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
      wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
@@ -303,7 +303,7 @@ export interface LoadingOptions {
      super(opts);
 
      let ele = leavingView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('.backdrop'));
+     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
      wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
@@ -324,7 +324,7 @@ export interface LoadingOptions {
      super(opts);
 
      let ele = enteringView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('.backdrop'));
+     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
      wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
@@ -345,7 +345,7 @@ export interface LoadingOptions {
      super(opts);
 
      let ele = leavingView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('.backdrop'));
+     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
      wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');
