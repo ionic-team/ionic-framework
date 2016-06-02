@@ -745,6 +745,10 @@ export class NavController extends Ion {
    */
   popTo(view: ViewController, opts?: NavOptions): Promise<any> {
     let startIndex = this.indexOf(view);
+    if (startIndex < 0) {
+      return Promise.reject('View not found to pop to');
+    }
+
     let activeView = this.getByState(STATE_TRANS_ENTER) ||
                      this.getByState(STATE_INIT_ENTER) ||
                      this.getActive();
