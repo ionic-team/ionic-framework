@@ -1,4 +1,5 @@
 @import "../../globals.md";
+@import "./range";
 
 // Material Design Range
 // --------------------------------------------------
@@ -19,6 +20,9 @@ $range-md-knob-width:                        18px !default;
 $range-md-knob-height:                       $range-md-knob-width !default;
 $range-md-knob-background-color:             $range-md-bar-active-background-color !default;
 
+$range-md-knob-min-background-color:         $background-md-color !default;
+$range-md-knob-min-border:                   2px solid $range-md-bar-background-color !default;
+
 $range-md-tick-width:                        2px !default;
 $range-md-tick-height:                       $range-md-tick-width !default;
 $range-md-tick-border-radius:                50% !default;
@@ -30,6 +34,8 @@ $range-md-pin-color:                         color-contrast($colors-md, $range-m
 $range-md-pin-font-size:                     12px !default;
 $range-md-pin-padding-vertical:              8px !default;
 $range-md-pin-padding-horizontal:            0 !default;
+
+$range-md-pin-min-background-color:          $range-md-bar-background-color !default;
 
 
 ion-range {
@@ -116,6 +122,9 @@ ion-range {
   background: $range-md-knob-background-color;
 
   transform: scale(.67);
+  transition-duration: 120ms;
+  transition-property: transform, background-color, border;
+  transition-timing-function: ease;
 
   pointer-events: none;
 }
@@ -164,7 +173,7 @@ ion-range {
   background: $range-md-pin-background-color;
 
   transform: translate3d(0, 28px, 0) scale(.01);
-  transition: transform 120ms ease;
+  transition: transform 120ms ease, background-color 120ms ease;
 
   &::before {
     position: absolute;
@@ -182,6 +191,7 @@ ion-range {
 
     content: "";
     transform: rotate(-45deg);
+    transition: background-color 120ms ease;
   }
 }
 
@@ -193,12 +203,32 @@ ion-range:not(.range-has-pin) .range-knob-pressed .range-knob {
   transform: scale(1);
 }
 
+@mixin md-range-min() {
+  .range-knob-min {
+    .range-knob {
+      border: $range-md-knob-min-border;
+      background: $range-md-knob-min-background-color;
+    }
+
+    .range-pin,
+    .range-pin::before {
+      color: color-contrast($colors-md, $range-md-pin-min-background-color);
+      background: $range-md-pin-min-background-color;
+    }
+  }
+}
+
+@include md-range-min();
+
+
 // Generate Material Design Range Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
   ion-range[#{$color-name}] {
+    @include md-range-min();
+
     .range-bar-active,
     .range-knob,
     .range-pin,
