@@ -145,7 +145,7 @@ ion-range {
 
 .range-pin {
   position: relative;
-  top: -24px;
+  top: -20px;
   display: inline-block;
 
   padding: $range-md-pin-padding-vertical $range-md-pin-padding-horizontal;
@@ -189,7 +189,7 @@ ion-range {
   transform: translate3d(0, 0, 0) scale(1);
 }
 
-.range-knob-pressed .range-knob {
+ion-range:not(.range-has-pin) .range-knob-pressed .range-knob {
   transform: scale(1);
 }
 
