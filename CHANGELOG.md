@@ -113,15 +113,15 @@ Angular has been updated to 2.0.0-rc.1, follow these steps to update Angular.
   ```
   *ngFor="let session of group.sessions"
   ```
-  
+
 7. Replace all template variables in `virtualScroll`. For example:
 
   ```
   *virtualItem="#item"
   ```
-  
+
   becomes
-  
+
   ```
   *virtualItem="let item"
   ```
@@ -133,7 +133,29 @@ Angular has been updated to 2.0.0-rc.1, follow these steps to update Angular.
 
 The `getComponent` method of `IonicApp` has been removed. Please use Angular's [ViewChild](https://angular.io/docs/ts/latest/api/core/ViewChild-var.html) instead.
 
-An example (in TypeScript) of getting the `Nav` ViewChild:
+For example, the following:
+
+```html
+<ion-nav id="nav" [root]="rootPage" #content></ion-nav>
+```
+
+```javascript
+import {IonicApp} from 'ionic-angular';
+
+@App({
+  templateUrl: 'build/app.html'
+})
+class MyApp {
+  constructor(private app: IonicApp) {}
+
+  setPage() {
+    let nav = this.app.getComponent('nav');
+    nav.push(MyPage);
+  }
+}
+```
+
+Should be changed (in TypeScript) to use the `Nav` ViewChild:
 
 ```html
 <ion-nav [root]="rootPage" #content></ion-nav>
@@ -146,10 +168,14 @@ import {Nav} from 'ionic-angular';
 @App({
   templateUrl: 'build/app.html'
 })
-class myApp {
+class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  ...
+  constructor() {}
+
+  setPage() {
+    this.nav.push(MyPage);
+  }
 }
 ```
 
@@ -164,8 +190,12 @@ import {ViewChild} from '@angular/core';
     nav: new ViewChild('content')
   }
 })
-class myApp {
+class MyApp {
+  constructor() {}
 
+  setPage() {
+    this.nav.push(MyPage);
+  }
 }
 ```
 
