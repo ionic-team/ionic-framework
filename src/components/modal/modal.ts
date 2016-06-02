@@ -1,4 +1,4 @@
-import {Component, ComponentRef, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentRef, ElementRef, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
 
 import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
@@ -171,7 +171,7 @@ export class ModalCmp {
     let componentType = this._navParams.data.componentType;
     addSelector(componentType, 'ion-page');
 
-    return this._loader.loadNextToLocation(componentType, this.viewport).then(componentRef => {
+    return this._loader.loadNextToLocation(componentType, this.viewport).then( (componentRef: ComponentRef<any>) => {
       return componentRef;
     });
   }
