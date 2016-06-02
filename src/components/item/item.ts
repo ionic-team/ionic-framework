@@ -48,7 +48,7 @@ import {Label} from '../label/label';
         '<ion-label *ngIf="_viewLabel">' +
           '<ng-content></ng-content>' +
         '</ion-label>' +
-        '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range"></ng-content>' +
+        '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
       '</div>' +
       '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
     '</div>' +
