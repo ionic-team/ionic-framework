@@ -193,20 +193,17 @@ class ModalSlideIn extends Transition {
     backdrop.fromTo('opacity', 0.01, 0.4);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
     let page = <HTMLElement> ele.querySelector('ion-page');
-    page.classList.add('show-page');
 
     // auto-add page css className created from component JS class name
     let cssClassName = pascalCaseToDashCase((<Modal>enteringView).modalViewType);
     page.classList.add(cssClassName);
 
     wrapper.fromTo('translateY', '100%', '0%');
-    this
-      .element(enteringView.pageRef())
-      .easing('cubic-bezier(0.36,0.66,0.04,1)')
-      .duration(400)
-      .before.addClass('show-page')
-      .add(backdrop)
-      .add(wrapper);
+
+    const DURATION = 400;
+    const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
+    this.element(enteringView.pageRef()).easing(EASING).duration(DURATION).add(backdrop).add(wrapper);
+    this.element(new ElementRef(page)).easing(EASING).duration(DURATION).before.addClass('show-page');
 
     if (enteringView.hasNavbar()) {
       // entering page has a navbar
@@ -257,20 +254,16 @@ class ModalMDSlideIn extends Transition {
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
     wrapper.fromTo('translateY', '40px', '0px');
     let page = <HTMLElement> ele.querySelector('ion-page');
-    page.classList.add('show-page');
+
 
     // auto-add page css className created from component JS class name
     let cssClassName = pascalCaseToDashCase((<Modal>enteringView).modalViewType);
     page.classList.add(cssClassName);
 
-    this
-      .element(enteringView.pageRef())
-      .easing('cubic-bezier(0.36,0.66,0.04,1)')
-      .duration(280)
-      .fadeIn()
-      .before.addClass('show-page')
-      .add(backdrop)
-      .add(wrapper);
+    const DURATION = 280;
+    const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
+    this.element(enteringView.pageRef()).easing(EASING).duration(DURATION).fadeIn().add(backdrop).add(wrapper);
+    this.element(new ElementRef(page)).easing(EASING).duration(DURATION).before.addClass('show-page');
 
     if (enteringView.hasNavbar()) {
       // entering page has a navbar
