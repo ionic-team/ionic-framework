@@ -27,7 +27,6 @@ ion-toast {
 .toast-wrapper {
   position: absolute;
   right: 0;
-  bottom: 0;
   left: 0;
   z-index: $z-index-overlay-wrapper;
   display: block;
@@ -39,7 +38,21 @@ ion-toast {
 
   background: $toast-md-background;
 
-  transform: translate3d(0, 100%, 0);
+  &.toast-top {
+    top: 0;
+
+    transform: translate3d(0, -100%, 0);
+  }
+
+  &.toast-bottom {
+    bottom: 0;
+
+    transform: translate3d(0, 100%, 0);
+  }
+
+  &.toast-middle {
+    opacity: .01;
+  }
 }
 
 .toast-message {

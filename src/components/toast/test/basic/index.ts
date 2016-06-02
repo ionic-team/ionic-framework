@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ionicBootstrap, Toast, NavController} from '../../../../../src';
+import {ionicBootstrap, Toast, ToastPosition, NavController} from '../../../../../src';
 
 
 @Component({
@@ -61,11 +61,22 @@ class E2EPage {
     this.nav.present(toast);
   }
 
-  showToastWithCloseButton() {
+  showToastWithCloseButton(positionString:string) {
+    let position:ToastPosition;
+    if ( positionString === 'top' ){
+      position = ToastPosition.Top;
+    }
+    else if ( positionString === 'middle' ){
+      position = ToastPosition.Middle;
+    }
+    else{
+      position = ToastPosition.Bottom
+    }
     const toast = Toast.create({
       message: 'Your internet connection appears to be offline. Data integrity is not gauranteed.',
       showCloseButton: true,
-      closeButtonText: 'Ok'
+      closeButtonText: 'Ok',
+      position: position
     });
     toast.onDismiss(this.dismissHandler);
     this.nav.present(toast);

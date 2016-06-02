@@ -12,22 +12,10 @@ $toast-ios-title-color:                           #fff !default;
 $toast-ios-title-font-size:                       1.4rem !default;
 $toast-ios-title-padding:                         1.5rem !default;
 
-
-ion-toast {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: $z-index-overlay;
-  display: block;
-
-  width: $toast-width;
-  height: $toast-width;
-}
-
 .toast-wrapper {
   position: absolute;
   right: 10px;
-  bottom: 10px;
+
   left: 10px;
   z-index: $z-index-overlay-wrapper;
   display: block;
@@ -40,7 +28,21 @@ ion-toast {
 
   background: $toast-ios-background;
 
-  transform: translate3d(0, 100%, 0);
+  &.toast-top {
+    top: 0;
+
+    transform: translate3d(0, -100%, 0);
+  }
+
+  &.toast-bottom {
+    bottom: 0;
+
+    transform: translate3d(0, 100%, 0);
+  }
+
+  &.toast-middle {
+    opacity: .01;
+  }
 }
 
 .toast-message {

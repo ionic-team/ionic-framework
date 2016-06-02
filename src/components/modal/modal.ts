@@ -1,4 +1,4 @@
-import {Component, ComponentRef, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentRef, DynamicComponentLoader, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
 
 import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
