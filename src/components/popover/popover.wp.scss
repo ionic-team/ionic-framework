@@ -26,6 +26,10 @@ $popover-wp-item-background:           $popover-wp-background !default;
   background: $popover-wp-background;
 
   transform-origin: top left;
+
+  ion-content {
+    background: $popover-wp-background;
+  }
 }
 
 .popover-content .item {
