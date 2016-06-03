@@ -36,10 +36,7 @@ ion-popover {
 
   min-height: 200px;
 
-  ion-page {
+  scroll-content {
     position: relative;
-    display: flex;
-
-    height: auto;
   }
 }
