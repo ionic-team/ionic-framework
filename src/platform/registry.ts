@@ -157,7 +157,7 @@ Platform.register({
     return p.isPlatformMatch('windows', ['windows phone', 'msapphost'], ['wow64']);
   },
   versionParser(p: Platform): any {
-    return p.matchUserAgentVersion(/(MSAppHost)|(Windows Phone)/);
+    return p.matchUserAgentVersion(/(MSAppHost\/\d+.\d+?)|(Windows Phone \d+.\d+?)/);
   }
 });
 
