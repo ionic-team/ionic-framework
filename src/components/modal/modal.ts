@@ -270,11 +270,11 @@ class ModalMDSlideIn extends Transition {
 
     backdrop.fromTo('opacity', 0.01, 0.4);
     wrapper.fromTo('translateY', '40px', '0px');
+    wrapper.fromTo('opacity', '0.01', '1.0');
 
     const DURATION = 280;
     const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
     this.element(enteringView.pageRef()).easing(EASING).duration(DURATION)
-      .fadeIn()
       .add(backdrop)
       .add(wrapper)
       .add(pageAnimation);
@@ -300,12 +300,12 @@ class ModalMDSlideOut extends Transition {
 
     backdrop.fromTo('opacity', 0.4, 0.0);
     wrapper.fromTo('translateY', '0px', '40px');
+    wrapper.fromTo('opacity', '1.0', '0.00');
 
     this
       .element(leavingView.pageRef())
       .duration(200)
       .easing('cubic-bezier(0.47,0,0.745,0.715)')
-      .fadeOut()
       .add(wrapper)
       .add(backdrop);
   }
