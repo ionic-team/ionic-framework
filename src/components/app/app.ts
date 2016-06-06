@@ -59,7 +59,8 @@ export class App {
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
   setEnabled(isEnabled: boolean, duration: number = 700) {
-    this._disTime = (isEnabled ? 0 : Date.now() + duration);
+    const CLICK_BLOCK_PADDING = 64;
+    this._disTime = (isEnabled ? 0 : Date.now() + duration + CLICK_BLOCK_PADDING);
 
     if (this._clickBlock) {
       if ( isEnabled || duration <= 32 ) {
@@ -68,7 +69,7 @@ export class App {
       }
       else {
         // show the click block for duration + some number
-        this._clickBlock.show(true, duration + 64);
+        this._clickBlock.show(true, duration + CLICK_BLOCK_PADDING);
       }
     }
   }
