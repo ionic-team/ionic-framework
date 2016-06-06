@@ -135,7 +135,7 @@ describe('IonicApp', () => {
       app.setEnabled(false, 200);
 
       // assert
-      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 200 + 64);
+      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 200 + 128);
     });
 
     it('should enable click block when false is passed w/o duration', () => {
@@ -153,7 +153,21 @@ describe('IonicApp', () => {
 
       // assert
       // 700 is the default
-      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 700 + 64);
+      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 700 + 128);
+    });
+
+    it('disTime should be not be zero when enabled', () => {
+      app._disTime = null;
+      app.setEnabled(false);
+
+      expect(app._disTime).not.toEqual(0);
+    });
+
+    it('disTime should be not be zero when enabled', () => {
+      app._disTime = null;
+      app.setEnabled(true);
+
+      expect(app._disTime).toEqual(0);
     });
   });
 
