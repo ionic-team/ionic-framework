@@ -140,7 +140,7 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   - `change` -> `ionChange`
 
 
-#### Steps to Upgrade
+#### Steps to Upgrade to Beta 8
 
 1. Replace all instances of `@Page` with `@Component`:
 
