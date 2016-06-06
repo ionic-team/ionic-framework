@@ -27,7 +27,6 @@ export class ClickBlock {
     if (this._enabled) {
       if (shouldShow) {
         show(expire);
-
       } else {
         hide();
       }

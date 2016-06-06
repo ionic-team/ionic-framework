@@ -62,12 +62,13 @@ export class App {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
     if (this._clickBlock) {
-      if (duration > 32) {
-        // only do a click block if the duration is longer than XXms
-        this._clickBlock.show(true, duration + 64);
-
-      } else {
+      if ( isEnabled || duration <= 32 ) {
+        // disable the click block if it's enabled, or the duration is tiny
         this._clickBlock.show(false, 0);
+      }
+      else {
+        // show the click block for duration + some number
+        this._clickBlock.show(true, duration + 64);
       }
     }
   }
