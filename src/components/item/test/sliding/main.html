@@ -83,7 +83,38 @@
         <button danger (click)="del(item)">
           <ion-icon name="trash"></ion-icon>Delete
         </button>
+      </ion-item-options>
+    </ion-item-sliding>
 
+    <ion-item-sliding #item>
+      <ion-item>
+        One Line, dynamic option
+      </ion-item>
+      <ion-item-options>
+        <button primary>
+          <ion-icon name="more"></ion-icon>
+          {{ moreText }}
+        </button>
+        <button secondary (click)="archive(item)">
+          <ion-icon name="archive"></ion-icon>
+          {{ archiveText }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item>
+      <ion-item>
+        One Line, dynamic icon-left option
+      </ion-item>
+      <ion-item-options icon-left>
+        <button primary>
+          <ion-icon name="more"></ion-icon>
+          {{ moreText }}
+        </button>
+        <button secondary (click)="archive(item)">
+          <ion-icon name="archive"></ion-icon>
+          {{ archiveText }}
+        </button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -111,9 +142,10 @@
 
   </ion-list>
 
-  <p>
-    <button (click)="closeOpened()">Close opened items</button>
-  </p>
+  <div padding>
+    <button block (click)="changeDynamic()">Change Dynamic Options</button>
+    <button block (click)="closeOpened()">Close Opened Items</button>
+  </div>
 
 </ion-content>
 
