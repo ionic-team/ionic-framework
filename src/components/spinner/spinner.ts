@@ -206,7 +206,7 @@ const SPINNERS = {
   ios: {
     dur: 1000,
     lines: 12,
-    fn: function(dur, index, total) {
+    fn: function(dur: number, index: number, total: number) {
       return {
         y1: 17,
         y2: 29,
@@ -221,7 +221,7 @@ const SPINNERS = {
   'ios-small': {
     dur: 1000,
     lines: 12,
-    fn: function(dur, index, total) {
+    fn: function(dur: number, index: number, total: number) {
       return {
         y1: 12,
         y2: 20,
@@ -236,7 +236,7 @@ const SPINNERS = {
   bubbles: {
     dur: 1000,
     circles: 9,
-    fn: function(dur, index, total) {
+    fn: function(dur: number, index: number, total: number) {
       return {
         r: 5,
         style: {
@@ -251,7 +251,7 @@ const SPINNERS = {
   circles: {
     dur: 1000,
     circles: 8,
-    fn: function(dur, index, total) {
+    fn: function(dur: number, index: number, total: number) {
       return {
         r: 5,
         style: {
@@ -266,7 +266,7 @@ const SPINNERS = {
   crescent: {
     dur: 750,
     circles: 1,
-    fn: function(dur) {
+    fn: function(dur: number) {
       return {
         r: 26,
         style: {}
@@ -277,7 +277,7 @@ const SPINNERS = {
   dots: {
     dur: 750,
     circles: 3,
-    fn: function(dur, index, total) {
+    fn: function(dur: number, index: number, total: number) {
       return {
         r: 6,
         style: {

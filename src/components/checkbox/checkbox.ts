@@ -83,7 +83,7 @@ export class Checkbox {
   /**
    * @output {Checkbox} expression to evaluate when the checkbox value changes
    */
-  @Output() change: EventEmitter<Checkbox> = new EventEmitter();
+  @Output() ionChange: EventEmitter<Checkbox> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -102,7 +102,7 @@ export class Checkbox {
    * @private
    */
   @HostListener('click', ['$event'])
-  private _click(ev) {
+  private _click(ev: UIEvent) {
     console.debug('checkbox, checked');
     ev.preventDefault();
     ev.stopPropagation();
@@ -129,7 +129,7 @@ export class Checkbox {
     if (isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {
-        this.change.emit(this);
+        this.ionChange.emit(this);
       }
       this._item && this._item.setCssClass('item-checkbox-checked', isChecked);
     }
@@ -158,7 +158,7 @@ export class Checkbox {
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @input {boolean} whether or not the checkbox is disabled or not.

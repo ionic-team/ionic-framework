@@ -68,7 +68,7 @@ import {Scroll} from '../scroll/scroll';
  *
  * @usage
  *
- * You can add slides to a `@Page` using the following template:
+ * You can add slides to a `@Component` using the following template:
  *
  * ```html
  * <ion-slides>
@@ -87,9 +87,10 @@ import {Scroll} from '../scroll/scroll';
  * To add [options](#configuring), we will define them in `mySlideOptions` in our class `MyPage`:
  *
  * ```ts
- * import {Page, Slides} from 'ionic-angular';
+ * import {Component} from '@angular/core';
+ * import {Slides} from 'ionic-angular';
  *
- * @Page({
+ * @Component({
  *   templateUrl: 'my-page.html'
  * })
  * class MyPage {
@@ -146,10 +147,10 @@ import {Scroll} from '../scroll/scroll';
  * ```
  *
  * We can also add events to listen to on the `<ion-slides>` element.
- * Let's add the `didChange` event and call a method when the slide changes:
+ * Let's add the `ionDidChange` event and call a method when the slide changes:
  *
  * ```html
- * <ion-slides #mySlider (didChange)="onSlideChanged()" [options]="mySlideOptions">
+ * <ion-slides #mySlider (ionDidChange)="onSlideChanged()" [options]="mySlideOptions">
  * ```
  *
  * In our class, we add the `onSlideChanged()` method which gets the active
@@ -312,29 +313,19 @@ export class Slides extends Ion {
   @Input() zoomMax: any;
 
   /**
-   * @private Deprecated
-   */
-  @Output() slideChangeStart: EventEmitter<any> = new EventEmitter();
-
-  /**
-   * @private Deprecated
-   */
-  @Output() change: EventEmitter<any> = new EventEmitter();
-
-  /**
    * @output {any} Expression to evaluate when a slide change starts.
    */
-  @Output() willChange: EventEmitter<any> = new EventEmitter();
+  @Output() ionWillChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * @output {any} Expression to evaluate when a slide change ends.
    */
-  @Output() didChange: EventEmitter<any> = new EventEmitter();
+  @Output() ionDidChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * @output {any} Expression to evaluate when a slide moves.
    */
-  @Output() move: EventEmitter<any> = new EventEmitter();
+  @Output() ionDrag: EventEmitter<any> = new EventEmitter();
 
 
   constructor(elementRef: ElementRef, renderer: Renderer) {
@@ -371,10 +362,6 @@ export class Slides extends Ion {
       console.warn('The "zoom" attribute has been deprecated. Please pass it in options.');
     }
 
-    // Deprecated 04-18 beta.5
-    console.warn('The "slideChangeStart" event has been deprecated. Please use "willChange" instead. Ignore this if you aren\'t using it.');
-    console.warn('The "change" event has been deprecated. Please use "didChange" instead. Ignore this if you aren\'t using it.');
-
     if (isPresent(this.options.pager)) {
       this.showPager = isTrueProperty(this.options.pager);
     }
@@ -385,48 +372,42 @@ export class Slides extends Ion {
       pagination: paginationId
     }, this.options);
 
-    options.onTap = (swiper, e) => {
+    options.onTap = (swiper: any, e: any) => {
       this.onTap(swiper, e);
       return this.options.onTap && this.options.onTap(swiper, e);
     };
-    options.onClick = (swiper, e) => {
+    options.onClick = (swiper: any, e: any) => {
       this.onClick(swiper, e);
       return this.options.onClick && this.options.onClick(swiper, e);
     };
-    options.onDoubleTap = (swiper, e) => {
+    options.onDoubleTap = (swiper: any, e: any) => {
       this.onDoubleTap(swiper, e);
       return this.options.onDoubleTap && this.options.onDoubleTap(swiper, e);
     };
-    options.onTransitionStart = (swiper, e) => {
+    options.onTransitionStart = (swiper: any, e: any) => {
       this.onTransitionStart(swiper, e);
       return this.options.onTransitionStart && this.options.onTransitionStart(swiper, e);
     };
-    options.onTransitionEnd = (swiper, e) => {
+    options.onTransitionEnd = (swiper: any, e: any) => {
       this.onTransitionEnd(swiper, e);
       return this.options.onTransitionEnd && this.options.onTransitionEnd(swiper, e);
     };
-    options.onSlideChangeStart = (swiper) => {
-      // TODO deprecated 2016-04-18
-      this.slideChangeStart.emit(swiper);
-
-      this.willChange.emit(swiper);
+    options.onSlideChangeStart = (swiper: any) => {
+      this.ionWillChange.emit(swiper);
       return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
     };
-    options.onSlideChangeEnd = (swiper) => {
-      // TODO deprecated 2016-04-18
-      this.change.emit(swiper);
-
-      this.didChange.emit(swiper);
+    options.onSlideChangeEnd = (swiper: any) => {
+      this.ionDidChange.emit(swiper);
       return this.options.onSlideChangeEnd && this.options.onSlideChangeEnd(swiper);
     };
-    options.onLazyImageLoad = (swiper, slide, img) => {
+    options.onLazyImageLoad = (swiper: any, slide: any, img: any) => {
       return this.options.onLazyImageLoad && this.options.onLazyImageLoad(swiper, slide, img);
     };
-    options.onLazyImageReady = (swiper, slide, img) => {
+    options.onLazyImageReady = (swiper: any, slide: any, img: any) => {
       return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
     };
-    options.onSliderMove = (swiper, e) => {
-      this.move.emit(swiper);
+    options.onSliderMove = (swiper: any, e: any) => {
+      this.ionDrag.emit(swiper);
       return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
     };
 
@@ -451,32 +432,32 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onTap(swiper, e) {
+  onTap(swiper: any, e: any) {
   }
   /**
    * @private
    */
-  onClick(swiper, e) {
+  onClick(swiper: any, e: any) {
   }
   /**
    * @private
    */
-  onDoubleTap(swiper, e) {
+  onDoubleTap(swiper: any, e: any) {
     this.toggleZoom(swiper, e);
   }
   /**
    * @private
    */
-  onLazyImageLoad(swiper, slide, img) {
+  onLazyImageLoad(swiper: any, slide: any, img: any) {
   }
   /**
    * @private
    */
-  onLazyImageReady(swiper, slide, img) {
+  onLazyImageReady(swiper: any, slide: any, img: any) {
   }
 
   /*
-  nextButton(swiper, e) {
+  nextButton(swiper: any, e: any) {
   }
   prevButton() {
   }
@@ -504,7 +485,7 @@ export class Slides extends Ion {
     this.zoomLastPosY = 0;
 
 
-    let last_scale, startX, startY, posX = 0, posY = 0, zoomRect;
+    let lastScale: number, startX: number, startY: number, posX = 0, posY = 0, zoomRect: any;
 
     this.viewportWidth = this.getNativeElement().offsetWidth;
     this.viewportHeight = this.getNativeElement().offsetHeight;
@@ -521,13 +502,13 @@ export class Slides extends Ion {
       this.onTouchEnd(e);
     });
 
-    this.zoomGesture.on('pinchstart', (e) => {
-      last_scale = this.scale;
+    this.zoomGesture.on('pinchstart', (e: any) => {
+      lastScale = this.scale;
       console.debug('Last scale', e.scale);
     });
 
-    this.zoomGesture.on('pinch', (e) => {
-      this.scale = Math.max(1, Math.min(last_scale * e.scale, 10));
+    this.zoomGesture.on('pinch', (e: any) => {
+      this.scale = Math.max(1, Math.min(lastScale * e.scale, 10));
       console.debug('Scaling', this.scale);
       this.zoomElement.style[CSS.transform] = 'scale(' + this.scale + ')';
 
@@ -553,9 +534,7 @@ export class Slides extends Ion {
    * @private
    */
   resetZoom() {
-
     if (this.zoomElement) {
-
       this.zoomElement.parentElement.style[CSS.transform] = '';
       this.zoomElement.style[CSS.transform] = 'scale(1)';
     }
@@ -568,7 +547,7 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  toggleZoom(swiper, e) {
+  toggleZoom(swiper: any, e: any) {
     console.debug('Try toggle zoom');
     if (!this.enableZoom) { return; }
 
@@ -644,18 +623,18 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onTransitionStart(swiper, e) {
+  onTransitionStart(swiper: any, e: any) {
   }
   /**
    * @private
    */
-  onTransitionEnd(swiper, e) {
+  onTransitionEnd(swiper: any, e: any) {
   }
 
   /**
    * @private
    */
-  onTouchStart(e) {
+  onTouchStart(e: any) {
     console.debug('Touch start', e);
 
     // TODO: Support mice as well
@@ -684,7 +663,7 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onTouchMove(e) {
+  onTouchMove(e: any) {
     this.touch.deltaX = e.touches[0].clientX - this.touch.startX;
     this.touch.deltaY = e.touches[0].clientY - this.touch.startY;
 
@@ -735,14 +714,14 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onTouchEnd(e) {
+  onTouchEnd(e: UIEvent) {
     console.debug('PANEND', e);
 
     if (this.scale > 1) {
 
       if (Math.abs(this.touch.x) > this.viewportWidth) {
         // TODO what is posX?
-        var posX = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
+        var posX: number = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
         console.debug('Setting on posx', this.touch.x);
       }
 
@@ -784,7 +763,7 @@ export class Slides extends Ion {
    *
    * @param {number} index  The index number of the slide.
    * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `willChange`/`didChange` events. Optional. Default true.
+   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
    */
   slideTo(index: number, speed?: number, runCallbacks?: boolean) {
     this.slider.slideTo(index, speed, runCallbacks);
@@ -794,7 +773,7 @@ export class Slides extends Ion {
    * Transition to the next slide.
    *
    * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `willChange`/`didChange` events. Optional. Default true.
+   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
    */
   slideNext(speed?: number, runCallbacks?: boolean) {
     this.slider.slideNext(runCallbacks, speed);
@@ -804,7 +783,7 @@ export class Slides extends Ion {
    * Transition to the previous slide.
    *
    * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `willChange`/`didChange` events. Optional. Default true.
+   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
    */
   slidePrev(speed?: number, runCallbacks?: boolean) {
     this.slider.slidePrev(runCallbacks, speed);
@@ -898,16 +877,20 @@ export class Slide {
   /**
    * @private
    */
-  @Input() zoom;
+  @Input() zoom: any;
 
   constructor(
     elementRef: ElementRef,
-    @Host() slides: Slides
+    @Host() private slides: Slides
   ) {
     this.ele = elementRef.nativeElement;
     this.ele.classList.add('swiper-slide');
 
     slides.rapidUpdate();
+  }
+
+  ngOnDestroy() {
+    this.slides.rapidUpdate();
   }
 }
 

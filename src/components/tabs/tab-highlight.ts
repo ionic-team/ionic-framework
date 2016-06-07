@@ -1,6 +1,7 @@
 import {Directive, ElementRef} from '@angular/core';
 
 import {rafFrames} from '../../util/dom';
+import {Tab} from './tab';
 
 /**
  * @private
@@ -13,7 +14,7 @@ export class TabHighlight {
 
   constructor(private _elementRef: ElementRef) {}
 
-  select(tab) {
+  select(tab: Tab) {
     rafFrames(3, () => {
       let d = tab.btn.getDimensions();
       let ele = this._elementRef.nativeElement;

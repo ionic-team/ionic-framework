@@ -1,15 +1,17 @@
-import {App, IonicApp} from '../../../../../src';
+import {Component} from '@angular/core';
+import {App, ionicBootstrap} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
-  constructor(app: IonicApp) {
-    app.setTitle('Basic Buttons');
+class E2EPage {
+  btnColor;
+  testingColors = ['primary', 'secondary', 'danger', 'dark'];
+  testingColorIndex = 0;
 
-    this.testingColors = ['primary', 'secondary', 'danger', 'dark'];
-    this.testingColorIndex = 0;
+  constructor(app: App) {
+    app.setTitle('Basic Buttons');
     this.chgColor();
   }
 
@@ -19,3 +21,5 @@ class E2EApp {
     this.testingColorIndex = (this.testingColorIndex >= this.testingColors.length - 1 ? 0 : this.testingColorIndex + 1);
   }
 }
+
+ionicBootstrap(E2EPage);

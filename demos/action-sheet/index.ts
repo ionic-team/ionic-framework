@@ -1,17 +1,8 @@
-import {App, Page, ActionSheet, NavController, Platform} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap, ActionSheet, NavController, Platform} from 'ionic-angular';
 
 
-@App({
-  templateUrl: 'app.html'
-})
-class ApiDemoApp {
-  constructor() {
-    this.rootPage = InitialPage;
-  }
-}
-
-
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 export class InitialPage {
@@ -64,3 +55,13 @@ export class InitialPage {
     this.nav.present(actionSheet);
   }
 }
+
+
+@Component({
+  templateUrl: 'app.html'
+})
+class ApiDemoApp {
+  root = InitialPage;
+}
+
+ionicBootstrap(ApiDemoApp);

@@ -14,6 +14,7 @@
 
 // Core Components
 @import
+  "components/backdrop/backdrop",
   "components/grid/grid",
   "components/icon/icon",
   "components/img/img",
@@ -21,6 +22,8 @@
   "components/loading/loading",
   "components/menu/menu",
   "components/modal/modal",
+  "components/popover/popover",
+  "components/range/range",
   "components/refresher/refresher",
   "components/scroll/scroll",
   "components/show-hide-when/show-hide-when",

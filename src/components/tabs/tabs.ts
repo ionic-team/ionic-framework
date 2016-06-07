@@ -1,15 +1,15 @@
 import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, ViewEncapsulation} from '@angular/core';
 
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
+import {Ion} from '../ion';
+import {isBlank, isTrueProperty} from '../../util/util';
+import {NavController} from '../nav/nav-controller';
+import {Platform} from '../../platform/platform';
 import {Tab} from './tab';
 import {TabButton} from './tab-button';
 import {TabHighlight} from './tab-highlight';
-import {Ion} from '../ion';
-import {Platform} from '../../platform/platform';
-import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {isBlank, isTrueProperty} from '../../util/util';
 
 
 /**
@@ -49,7 +49,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  *
  * @usage
  *
- * You can add a basic tabs template to a `@Page` using the following
+ * You can add a basic tabs template to a `@Component` using the following
  * template:
  *
  * ```html
@@ -63,7 +63,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  * Where `tab1Root`, `tab2Root`, and `tab3Root` are each a page:
  *
  *```ts
- * @Page({
+ * @Component({
  *   templateUrl: 'build/pages/tabs/tabs.html'
  * })
  * export class TabsPage {
@@ -116,7 +116,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
  *
  * @ViewChild('myTabs') tabRef: Tabs;
  *
- * onPageDidEnter() {
+ * ionViewDidEnter() {
  *   this.tabRef.select(2);
  *  }
  *
@@ -138,7 +138,7 @@ import {isBlank, isTrueProperty} from '../../util/util';
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
       '<tabbar role="tablist">' +
-        '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab">' +
+        '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#">' +
           '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
           '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
           '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
@@ -161,7 +161,7 @@ export class Tabs extends Ion {
   private _ids: number = -1;
   private _preloadTabs: boolean = null;
   private _tabs: Array<Tab> = [];
-  private _onReady = null;
+  private _onReady: any = null;
   private _sbPadding: boolean;
   private _useHighlight: boolean;
 
@@ -203,7 +203,7 @@ export class Tabs extends Ion {
   /**
    * @input {any} Expression to evaluate when the tab changes.
    */
-  @Output() change: EventEmitter<Tab> = new EventEmitter();
+  @Output() ionChange: EventEmitter<Tab> = new EventEmitter();
 
   /**
    * @private
@@ -213,7 +213,7 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  @ViewChildren(TabButton) private _btns;
+  @ViewChildren(TabButton) private _btns: any;
 
   /**
    * @private
@@ -223,7 +223,7 @@ export class Tabs extends Ion {
   constructor(
     @Optional() parent: NavController,
     @Optional() viewCtrl: ViewController,
-    private _app: IonicApp,
+    private _app: App,
     private _config: Config,
     private _elementRef: ElementRef,
     private _platform: Platform,
@@ -232,8 +232,8 @@ export class Tabs extends Ion {
     super(_elementRef);
     this.parent = parent;
     this.id = ++tabIds;
-    this.subPages = _config.getBoolean('tabSubPages');
-    this._useHighlight = _config.getBoolean('tabbarHighlight');
+    this.subPages = _config.getBoolean('tabSubPages', false);
+    this._useHighlight = _config.getBoolean('tabbarHighlight', false);
     this._sbPadding = _config.getBoolean('statusbarPadding', false);
 
     if (parent) {
@@ -252,7 +252,7 @@ export class Tabs extends Ion {
       viewCtrl.setContent(this);
       viewCtrl.setContentRef(_elementRef);
 
-      viewCtrl.onReady = (done) => {
+      viewCtrl.loaded = (done) => {
         this._onReady = done;
       };
     }
@@ -272,7 +272,7 @@ export class Tabs extends Ion {
     }
 
     this._btns.toArray().forEach((tabButton: TabButton) => {
-      tabButton.select.subscribe((tab: Tab) => {
+      tabButton.ionSelect.subscribe((tab: Tab) => {
         this.select(tab);
       });
     });
@@ -316,7 +316,7 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  private _setConfig(attrKey, fallback) {
+  private _setConfig(attrKey: string, fallback: any) {
     var val = this[attrKey];
     if (isBlank(val)) {
       val = this._config.get(attrKey, fallback);
@@ -335,7 +335,7 @@ export class Tabs extends Ion {
   /**
    * @param {number} index Index of the tab you want to select
    */
-  select(tabOrIndex) {
+  select(tabOrIndex: any) {
     let selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (!selectedTab) {
       return;
@@ -354,19 +354,19 @@ export class Tabs extends Ion {
       animate: false
     };
 
-    let deselectedPage;
+    let deselectedPage: ViewController;
     if (deselectedTab) {
       deselectedPage = deselectedTab.getActive();
-      deselectedPage && deselectedPage.willLeave();
+      deselectedPage && deselectedPage.fireWillLeave();
     }
 
     let selectedPage = selectedTab.getActive();
-    selectedPage && selectedPage.willEnter();
+    selectedPage && selectedPage.fireWillEnter();
 
     selectedTab.load(opts, () => {
 
-      selectedTab.select.emit(selectedTab);
-      this.change.emit(selectedTab);
+      selectedTab.ionSelect.emit(selectedTab);
+      this.ionChange.emit(selectedTab);
 
       if (selectedTab.root) {
         // only show the selectedTab if it has a root
@@ -382,8 +382,8 @@ export class Tabs extends Ion {
         }
       }
 
-      selectedPage && selectedPage.didEnter();
-      deselectedPage && deselectedPage.didLeave();
+      selectedPage && selectedPage.fireDidEnter();
+      deselectedPage && deselectedPage.fireDidLeave();
 
       if (this._onReady) {
         this._onReady();
@@ -445,8 +445,8 @@ export class Tabs extends Ion {
     let instance = active.instance;
 
     // If they have a custom tab selected handler, call it
-    if (instance.tabSelected) {
-      return instance.tabSelected();
+    if (instance.ionSelected) {
+      return instance.ionSelected();
     }
 
     // If we're a few pages deep, pop to root

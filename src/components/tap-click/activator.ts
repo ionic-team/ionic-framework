@@ -1,16 +1,18 @@
-import {rafFrames} from '../../util/dom';
+import {App} from '../app/app';
+import {Config} from '../../config/config';
+import {Coordinates, nativeTimeout, rafFrames} from '../../util/dom';
 
 
 export class Activator {
   protected _css: string;
-  protected _queue: Array<HTMLElement> = [];
-  protected _active: Array<HTMLElement> = [];
+  protected _queue: HTMLElement[] = [];
+  protected _active: HTMLElement[] = [];
 
-  constructor(protected app, config, protected _zone) {
+  constructor(protected app: App, config: Config) {
     this._css = config.get('activatedClass') || 'activated';
   }
 
-  downAction(ev, activatableEle, pointerX, pointerY) {
+  downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: Coordinates) {
     // the user just pressed down
     let self = this;
     if (self.disableActivated(ev)) {
@@ -20,29 +22,23 @@ export class Activator {
     // queue to have this element activated
     self._queue.push(activatableEle);
 
-    this._zone.runOutsideAngular(() => {
-      rafFrames(2, function() {
-        let activatableEle;
-        for (let i = 0; i < self._queue.length; i++) {
-          activatableEle = self._queue[i];
-          if (activatableEle && activatableEle.parentNode) {
-            self._active.push(activatableEle);
-            activatableEle.classList.add(self._css);
-          }
+    rafFrames(2, function() {
+      let activatableEle: HTMLElement;
+      for (let i = 0; i < self._queue.length; i++) {
+        activatableEle = self._queue[i];
+        if (activatableEle && activatableEle.parentNode) {
+          self._active.push(activatableEle);
+          activatableEle.classList.add(self._css);
         }
-        self._queue = [];
-      });
+      }
+      self._queue = [];
     });
   }
 
-  upAction(ev: UIEvent, activatableEle: HTMLElement, pointerX: number, pointerY: number) {
+  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: Coordinates) {
     // the user was pressing down, then just let up
-    let self = this;
-    function activateUp() {
-      self.clearState();
-    }
-    this._zone.runOutsideAngular(() => {
-      rafFrames(CLEAR_STATE_DEFERS, activateUp);
+    rafFrames(CLEAR_STATE_DEFERS, () => {
+      this.clearState();
     });
   }
 
@@ -52,7 +48,7 @@ export class Activator {
       // the app is actively disabled, so don't bother deactivating anything.
       // this makes it easier on the GPU so it doesn't have to redraw any
       // buttons during a transition. This will retry in XX milliseconds.
-      setTimeout(() => {
+      nativeTimeout(() => {
         this.clearState();
       }, 600);
 
@@ -75,7 +71,7 @@ export class Activator {
     });
   }
 
-  disableActivated(ev) {
+  disableActivated(ev: any) {
     if (ev.defaultPrevented) return true;
 
     let targetEle = ev.target;

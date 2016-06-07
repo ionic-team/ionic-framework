@@ -1,22 +1,25 @@
-import {App} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
-  constructor() {
-    this.groups = [];
+class E2EPage {
+  groups = [];
 
+  constructor() {
     var letters = "abcdefghijklmnopqrstuvwxyz".split('');
 
-    for(let i = 0; i < letters.length; i++) {
-      let group = [];
-      for(let j = 0; j < 10; j++) {
+    for (var i = 0; i < letters.length; i++) {
+      var group = [];
+
+      for (var j = 0; j < 10; j++) {
         group.push({
           title: letters[i] + j
         });
       }
+
       this.groups.push({
         title: letters[i].toUpperCase(),
         items: group
@@ -24,3 +27,5 @@ class E2EApp {
     }
   }
 }
+
+ionicBootstrap(E2EPage);

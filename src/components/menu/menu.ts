@@ -1,4 +1,4 @@
-import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input, Output, Renderer, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input, Output, Renderer, ChangeDetectionStrategy, ViewEncapsulation, ViewChild} from '@angular/core';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -8,6 +8,7 @@ import {MenuContentGesture, MenuTargetGesture} from  './menu-gestures';
 import {MenuController} from './menu-controller';
 import {MenuType} from './menu-types';
 import {isTrueProperty} from '../../util/util';
+import {Backdrop} from '../backdrop/backdrop';
 
 
 /**
@@ -104,17 +105,16 @@ import {isTrueProperty} from '../../util/util';
  * `push` for all modes, and then set the type to `overlay` for the `ios` mode.
  *
  * ```ts
- * @App({
- *   templateUrl: 'build/app.html',
- *   config: {
- *     menuType: 'push',
- *     platforms: {
- *      ios: {
- *        menuType: 'overlay',
- *      }
+ * import {ionicBootstrap} from 'ionic-angular';
+ *
+ * ionicBootstrap(MyApp, customProviders, {
+ *   menuType: 'push',
+ *   platforms: {
+ *     ios: {
+ *       menuType: 'overlay',
  *     }
  *   }
- * })
+ * });
  * ```
  *
  *
@@ -150,13 +150,12 @@ import {isTrueProperty} from '../../util/util';
  * when it is called.
  *
  * ```ts
- * import{Page, MenuController} from 'ionic-angular';
+ * import {Component} from '@angular/core';
+ * import {MenuController} from 'ionic-angular';
  *
- * @Page({...})
+ * @Component({...})
  * export class MyPage {
- *  constructor(private menu: MenuController) {
- *
- *  }
+ *  constructor(private menu: MenuController) {}
  *
  *  openMenu() {
  *    this.menu.open();
@@ -182,8 +181,7 @@ import {isTrueProperty} from '../../util/util';
   },
   template:
     '<ng-content></ng-content>' +
-    '<div tappable disable-activated class="backdrop"></div>',
-  directives: [forwardRef(() => MenuBackdrop)],
+    '<ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -208,7 +206,7 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  backdrop: MenuBackdrop;
+  @ViewChild(Backdrop) backdrop: Backdrop;
 
   /**
    * @private
@@ -283,17 +281,17 @@ export class Menu extends Ion {
   /**
    * @output {event} When the menu is being dragged open.
    */
-  @Output() opening: EventEmitter<number> = new EventEmitter();
+  @Output() ionDrag: EventEmitter<number> = new EventEmitter();
 
   /**
    * @output {event} When the menu has been opened.
    */
-  @Output() opened: EventEmitter<boolean> = new EventEmitter();
+  @Output() ionOpen: EventEmitter<boolean> = new EventEmitter();
 
   /**
    * @output {event} When the menu has been closed.
    */
-  @Output() closed: EventEmitter<boolean> = new EventEmitter();
+  @Output() ionClose: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private _menuCtrl: MenuController,
@@ -368,6 +366,16 @@ export class Menu extends Ion {
   /**
    * @private
    */
+  bdClick(ev) {
+    console.debug('backdrop clicked');
+    ev.preventDefault();
+    ev.stopPropagation();
+    this._menuCtrl.close();
+  }
+
+  /**
+   * @private
+   */
   private _setListeners() {
     let self = this;
 
@@ -396,7 +404,7 @@ export class Menu extends Ion {
    */
   private _getType(): MenuType {
     if (!this._type) {
-      this._type = MenuController.create(this.type, this);
+      this._type = MenuController.create(this.type, this, this._platform);
 
       if (this._config.get('animate') === false) {
         this._type.ani.duration(0);
@@ -444,7 +452,7 @@ export class Menu extends Ion {
     if (this._isEnabled && this._isSwipeEnabled) {
       this._prevent();
       this._getType().setProgessStep(stepValue);
-      this.opening.next(stepValue);
+      this.ionDrag.emit(stepValue);
     }
   }
 
@@ -455,7 +463,7 @@ export class Menu extends Ion {
     // user has finished dragging the menu
     if (this._isEnabled && this._isSwipeEnabled) {
       this._prevent();
-      this._getType().setProgressEnd(shouldComplete, currentStepValue, (isOpen) => {
+      this._getType().setProgressEnd(shouldComplete, currentStepValue, (isOpen: boolean) => {
         console.debug('menu, swipeEnd', this.side);
         this._after(isOpen);
       });
@@ -490,12 +498,12 @@ export class Menu extends Ion {
 
       if (isOpen) {
         this._cntEle.addEventListener('click', this.onContentClick);
-        this.opened.emit(true);
+        this.ionOpen.emit(true);
 
       } else {
         this.getNativeElement().classList.remove('show-menu');
         this.getBackdropElement().classList.remove('show-backdrop');
-        this.closed.emit(true);
+        this.ionClose.emit(true);
       }
     }
   }
@@ -610,32 +618,4 @@ export class Menu extends Ion {
     this._cntEle = null;
   }
 
-}
-
-
-
-/**
- * @private
- */
-@Directive({
-  selector: '.backdrop',
-  host: {
-    '(click)': 'clicked($event)',
-  }
-})
-export class MenuBackdrop {
-
-  constructor(@Host() private _menuCtrl: Menu, public elementRef: ElementRef) {
-    _menuCtrl.backdrop = this;
-  }
-
-  /**
-   * @private
-   */
-  private clicked(ev) {
-    console.debug('backdrop clicked');
-    ev.preventDefault();
-    ev.stopPropagation();
-    this._menuCtrl.close();
-  }
 }

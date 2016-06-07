@@ -273,7 +273,7 @@ export class Alert extends ViewController {
    *  | cssClass              | `string`  | Any additional class for the alert (optional)                             |
    *  | inputs                | `array`   | An array of inputs for the alert. See input options. (optional)           |
    *  | buttons               | `array`   | An array of buttons for the alert. See buttons options. (optional)        |
-   *  | enableBackdropDismiss | `boolean` | Wheather the alert should be dismissed by tapping the backdrop (optional) |
+   *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop (optional)  |
    *
    *
    *  Input options
@@ -282,9 +282,9 @@ export class Alert extends ViewController {
    *  |-------------|-----------|-----------------------------------------------------------------|
    *  | type        | `string`  | The type the input should be, text, tel, number, etc (optional) |
    *  | name        | `string`  | The name for the input (optional)                               |
-   *  | placeHolder | `string`  | The input's placeholder (optional)                              |
+   *  | placeholder | `string`  | The input's placeholder (optional, for textual/numeric inputs)  |
    *  | value       | `string`  | The input's value (optional)                                    |
-   *  | label       | `string`  | The input's label (optional)                                    |
+   *  | label       | `string`  | The input's label (optional, only for radio/checkbox inputs)    |
    *  | checked     | `boolean` | Whether or not the input is checked or not (optional)           |
    *  | id          | `string`  | The input's id (optional)                                       |
    *
@@ -311,7 +311,7 @@ export class Alert extends ViewController {
 @Component({
   selector: 'ion-alert',
   template:
-    '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
+    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
     '<div class="alert-wrapper">' +
       '<div class="alert-head">' +
         '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
@@ -419,15 +419,9 @@ class AlertCmp {
     }
   }
 
-  onPageLoaded() {
+  ionViewLoaded() {
     // normalize the data
     let data = this.d;
-
-    if (data['body']) {
-      // deprecated warning
-      console.warn('Alert `body` property has been renamed to `message`');
-      data.message = data['body'];
-    }
 
     data.buttons = data.buttons.map(button => {
       if (typeof button === 'string') {
@@ -451,7 +445,7 @@ class AlertCmp {
 
     // An alert can be created with several different inputs. Radios,
     // checkboxes and inputs are all accepted, but they cannot be mixed.
-    let inputTypes = [];
+    let inputTypes: any[] = [];
     data.inputs.forEach(input => {
       if (inputTypes.indexOf(input.type) < 0) {
         inputTypes.push(input.type);
@@ -491,7 +485,7 @@ class AlertCmp {
     }
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     let activeElement: any = document.activeElement;
     if (document.activeElement) {
       activeElement.blur();
@@ -503,7 +497,7 @@ class AlertCmp {
     }
   }
 
-  btnClick(button, dismissDelay?) {
+  btnClick(button: any, dismissDelay?: number) {
     if (!this.isEnabled()) {
       return;
     }
@@ -529,7 +523,7 @@ class AlertCmp {
     }
   }
 
-  rbClick(checkedInput) {
+  rbClick(checkedInput: any) {
     if (this.isEnabled()) {
       this.d.inputs.forEach(input => {
         input.checked = (checkedInput === input);
@@ -538,7 +532,7 @@ class AlertCmp {
     }
   }
 
-  cbClick(checkedInput) {
+  cbClick(checkedInput: any) {
     if (this.isEnabled()) {
       checkedInput.checked = !checkedInput.checked;
     }
@@ -556,7 +550,7 @@ class AlertCmp {
     }
   }
 
-  dismiss(role): Promise<any> {
+  dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(this.getValues(), role);
   }
 
@@ -618,7 +612,7 @@ class AlertPopIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
@@ -639,7 +633,7 @@ class AlertPopOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
@@ -660,7 +654,7 @@ class AlertMdPopIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
@@ -681,7 +675,7 @@ class AlertMdPopOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
@@ -703,7 +697,7 @@ class AlertWpPopIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
@@ -724,7 +718,7 @@ class AlertWpPopOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');

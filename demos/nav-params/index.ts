@@ -1,41 +1,38 @@
-import {App, Page, IonicApp, Config, Platform} from 'ionic-angular';
-import {NavController, NavParams} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController, NavParams} from 'ionic-angular';
 
 
-@App({
-  templateUrl: 'app.html'
-})
-class ApiDemoApp {
-
-  constructor() {
-    this.rootPage = InitialPage;
-  }
-}
-
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 export class InitialPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
-    this.myParam = '';
-  }
+  myParam = '';
+
+  constructor(public nav: NavController) {}
 
   pushParams() {
     this.nav.push(Page2, { 'myParam': this.myParam });
   }
 }
 
-@Page({
-    templateUrl: "page-2.html"
+
+@Component({
+  templateUrl: "page-2.html"
 })
 export class Page2 {
-    constructor(
-        nav: NavController,
-        params: NavParams
-    ) {
-        this.nav = nav;
-        this.myParam = params.get('myParam');
-    }
+  myParam: string;
+
+  constructor(public nav: NavController, params: NavParams) {
+    this.myParam = params.get('myParam');
+  }
 }
 
+
+@Component({
+  templateUrl: 'app.html'
+})
+class ApiDemoApp {
+  root = InitialPage;
+}
+
+ionicBootstrap(ApiDemoApp);

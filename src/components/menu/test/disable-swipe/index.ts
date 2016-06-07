@@ -1,15 +1,15 @@
-import {App, Page, NavController, MenuController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController, MenuController} from '../../../../../src';
 
-@Page({
+
+@Component({
   templateUrl: 'page1.html'
 })
 class Page1 {
   leftMenuSwipeEnabled: boolean = true;
   rightMenuSwipeEnabled: boolean = false;
 
-  constructor(menu: MenuController) {
-    this.menu = menu;
-  }
+  constructor(public menu: MenuController) {}
 
   toggleLeftMenuSwipeable() {
     this.leftMenuSwipeEnabled = !this.leftMenuSwipeEnabled;
@@ -25,11 +25,9 @@ class Page1 {
 }
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EApp {
-  constructor() {
-    this.rootView = Page1;
-  }
+  root = Page1;
 }

@@ -1,8 +1,8 @@
-import {ViewChild} from '@angular/core';
-import {App, Page, InfiniteScroll, NavController} from '../../../../../src';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, InfiniteScroll, NavController} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage1 {
@@ -45,25 +45,23 @@ class E2EPage1 {
 }
 
 
-@Page({
+@Component({
   template: '<ion-content><button (click)="nav.pop()">Pop</button></ion-content>'
 })
 class E2EPage2 {
-
   constructor(private nav: NavController) {}
-
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  root;
-  constructor() {
-    this.root = E2EPage1;
-  }
+  root = E2EPage1;
 }
+
+ionicBootstrap(E2EApp);
+
 
 function getAsyncData(): Promise<any[]> {
   // async return mock data

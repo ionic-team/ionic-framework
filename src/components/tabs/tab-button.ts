@@ -32,7 +32,7 @@ export class TabButton extends Ion {
   private _layout: string;
 
   @Input() tab: Tab;
-  @Output() select: EventEmitter<Tab> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<Tab> = new EventEmitter();
 
   constructor(config: Config, elementRef: ElementRef) {
     super(elementRef);
@@ -51,8 +51,9 @@ export class TabButton extends Ion {
     this.hasBadge = !!this.tab.tabBadge;
   }
 
-  @HostListener('click')
-  private onClick() {
-    this.select.emit(this.tab);
+  @HostListener('click', ['$event'])
+  private onClick(ev: UIEvent) {
+    this.ionSelect.emit(this.tab);
+    ev.preventDefault();
   }
 }

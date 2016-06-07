@@ -27,6 +27,7 @@ import {isTrueProperty} from '../../util/util';
   * @property [fab-center] - Position a fab button towards the center.
   * @property [fab-top] - Position a fab button towards the top.
   * @property [fab-bottom] - Position a fab button towards the bottom.
+  * @property [fab-fixed] - Makes a fab button have a fixed position.
   * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
   *
   * @demo /docs/v2/demos/button/
@@ -232,8 +233,8 @@ export class Button {
     if (childNodes.length > 0) {
       childNodes = childNodes[0].childNodes;
     }
-    let childNode;
-    let nodes = [];
+    let childNode: Node;
+    let nodes: number[] = [];
     for (let i = 0, l = childNodes.length; i < l; i++) {
       childNode = childNodes[i];
 
@@ -273,7 +274,7 @@ export class Button {
    */
   private _readAttrs(element: HTMLElement) {
     let elementAttrs = element.attributes;
-    let attrName;
+    let attrName: string;
     for (let i = 0, l = elementAttrs.length; i < l; i++) {
       if (elementAttrs[i].value !== '') continue;
 
@@ -344,9 +345,9 @@ export class Button {
   /**
    * @private
    */
-  static setRoles(contentButtonChildren, role: string) {
+  static setRoles(contentButtonChildren: any, role: string) {
     let buttons = contentButtonChildren.toArray();
-    buttons.forEach(button => {
+    buttons.forEach((button: any) => {
       button.setRole(role);
     });
   }

@@ -1,10 +1,10 @@
+import {Component, ViewChild} from '@angular/core';
 import {Validators, Control, ControlGroup} from '@angular/common';
 import {Http} from '@angular/http';
-import {ViewChild} from '@angular/core';
-import {App, Page, NavController, Slides} from '../../../../../src';
+import {ionicBootstrap, NavController, Slides} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html',
 })
 class SegmentPage {
@@ -48,13 +48,11 @@ class SegmentPage {
 }
 
 
-@App({
+@Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-class MyApp {
+class E2EApp {
   root = SegmentPage;
-
-  constructor() {
-
-  }
 }
+
+ionicBootstrap(E2EApp);

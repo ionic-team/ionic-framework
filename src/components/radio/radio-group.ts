@@ -86,7 +86,7 @@ export class RadioGroup {
   /**
    * @output {any} expression to be evaluated when selection has been changed
    */
-  @Output() change: EventEmitter<RadioGroup> = new EventEmitter();
+  @Output() ionChange: EventEmitter<RadioGroup> = new EventEmitter();
 
   constructor(
     private _renderer: Renderer,
@@ -105,7 +105,7 @@ export class RadioGroup {
     if (this._init) {
       this._update();
       this.onTouched();
-      this.change.emit(val);
+      this.ionChange.emit(val);
     }
 
     this._init = true;
@@ -133,14 +133,14 @@ export class RadioGroup {
       this.value = val;
       this._update();
       this.onTouched();
-      this.change.emit(val);
+      this.ionChange.emit(val);
     };
   }
 
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @private
@@ -174,7 +174,7 @@ export class RadioGroup {
     this._btns.push(button);
 
     // listen for radiobutton select events
-    button.select.subscribe((val) => {
+    button.ionSelect.subscribe((val: any) => {
       // this radiobutton has been selected
       this.onChange(val);
     });
@@ -199,7 +199,7 @@ export class RadioGroup {
    * @private
    */
   @ContentChild(ListHeader)
-  private set _header(header) {
+  private set _header(header: any) {
     if (header) {
       if (!header.id) {
         header.id = 'rg-hdr-' + this.id;
@@ -217,7 +217,7 @@ export class RadioGroup {
     this.value = val;
     this._update();
     this.onTouched();
-    this.change.emit(val);
+    this.ionChange.emit(val);
   }
 
   /**

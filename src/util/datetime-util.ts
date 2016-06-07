@@ -6,7 +6,7 @@ export function renderDateTime(template: string, value: DateTimeData, locale: Lo
     return '';
   }
 
-  let tokens = [];
+  let tokens: string[] = [];
   let hasText = false;
   FORMAT_KEYS.forEach((format, index) => {
     if (template.indexOf(format.f) > -1) {
@@ -261,6 +261,12 @@ export function updateDate(existingData: DateTimeData, newData: any) {
 
     // eww, invalid data
     console.warn(`Error parsing date: "${newData}". Please provide a valid ISO 8601 datetime format: https://www.w3.org/TR/NOTE-datetime`);
+
+  } else {
+    // blank data, clear everything out
+    for (var k in existingData) {
+      delete existingData[k];
+    }
   }
 }
 
@@ -346,7 +352,7 @@ export function convertDataToISO(data: DateTimeData): string {
               rtn += '.' + threeDigit(data.millisecond);
             }
 
-            if (data.tzOffset === 0) {
+            if (isBlank(data.tzOffset) || data.tzOffset === 0) {
               // YYYY-MM-DDTHH:mm:SSZ
               rtn += 'Z';
 

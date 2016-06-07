@@ -1,20 +1,17 @@
-import {App} from '../../../../../src';
-import {
-  Control,
-  ControlGroup,
-  NgForm,
-  Validators,
-  NgControl,
-  ControlValueAccessor,
-  NgControlName,
-  NgFormModel,
-  FormBuilder
-} from '@angular/common';
+import {Component} from '@angular/core';
+import {Control, ControlGroup} from '@angular/common';
+import {ionicBootstrap} from '../../../../../src';
 
-@App({
+
+@Component({
   templateUrl: 'main.html'
 })
 class E2EApp {
+  fruitsForm: ControlGroup;
+  grapeDisabled = true;
+  grapeChecked = true;
+  formResults: any;
+
   constructor() {
     this.fruitsForm = new ControlGroup({
       "appleCtrl": new Control(),
@@ -22,9 +19,6 @@ class E2EApp {
       "cherryCtrl": new Control(false),
       "grapeCtrl": new Control(true)
     });
-
-    this.grapeDisabled = true;
-    this.grapeChecked = true;
   }
 
   toggleGrapeChecked() {
@@ -41,3 +35,5 @@ class E2EApp {
     ev.preventDefault();
   }
 }
+
+ionicBootstrap(E2EApp);

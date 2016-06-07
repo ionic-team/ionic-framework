@@ -76,7 +76,7 @@ export class RadioButton {
   /**
    * @output {any} expression to be evaluated when selected
    */
-  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -145,13 +145,13 @@ export class RadioButton {
    * @private
    */
   @HostListener('click', ['$event'])
-  private _click(ev) {
+  private _click(ev: UIEvent) {
     console.debug('radio, select', this.id);
     ev.preventDefault();
     ev.stopPropagation();
 
     this.checked = true;
-    this.select.emit(this.value);
+    this.ionSelect.emit(this.value);
   }
 
   /**

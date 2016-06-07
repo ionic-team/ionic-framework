@@ -31,19 +31,19 @@ export class Translate {
   private _transMap: any = {};
   private _language: any = {};
 
-  translations(lang, map) {
+  translations(lang: any, map: any) {
     this._transMap[lang] = map;
   }
 
-  setLanguage(lang) {
+  setLanguage(lang: any) {
     this._language = lang;
   }
 
-  getTranslations(lang) {
+  getTranslations(lang: any) {
     return this._transMap[lang];
   }
 
-  translate(key, lang) {
+  translate(key: any, lang: any) {
     // If the language isn't specified and we have no overridden one, return the string passed.
     if (!lang && !this._language) {
       return key;
@@ -60,7 +60,7 @@ export class Translate {
     return this._getTranslation(map, key);
   }
 
-  _getTranslation(map, key) {
+  _getTranslation(map: any, key: any) {
     return map && map[key] || '';
   }
 }

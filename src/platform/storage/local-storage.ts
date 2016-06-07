@@ -15,8 +15,9 @@ import {StorageEngine} from './storage';
  *
  * @usage
  * ```ts
- * import {Page, Storage, LocalStorage} from 'ionic-angular';
- * @Page({
+ * import {Component} from '@angular/core';
+ * import {Storage, LocalStorage} from 'ionic-angular';
+ * @Component({
  *   template: `<ion-content></ion-content>`
  * });
  * export class MyClass{

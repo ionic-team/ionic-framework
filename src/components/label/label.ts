@@ -47,7 +47,7 @@ import {Directive, ElementRef, Renderer, Input, Optional, Attribute} from '@angu
  *
  * @demo /docs/v2/demos/label/
  * @see {@link ../../../../components#inputs Input Component Docs}
- * @see {@link ../Input Input API Docs}
+ * @see {@link ../../input/Input Input API Docs}
  *
  */
 

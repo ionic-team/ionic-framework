@@ -1,9 +1,10 @@
- import {App, Page, NavController, Alert, Modal, ViewController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController, Alert, Modal, ViewController} from '../../../../../src';
 
 //
 // Modal
 //
-@Page({
+@Component({
   template: `
   <ion-toolbar>
     <ion-buttons start>
@@ -56,7 +57,7 @@ class MyModal {
 //
 // Tab 1
 //
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Heart</ion-title>
@@ -84,7 +85,7 @@ export class Tab1 {
 //
 // Tab 2
 //
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Schedule</ion-title>
@@ -121,7 +122,7 @@ export class Tab2 {
 //
 // Tab 3
 //
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <button menuToggle>
@@ -156,7 +157,7 @@ export class Tab3 {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-menu [content]="content">
       <ion-toolbar secondary>
@@ -171,8 +172,8 @@ export class Tab3 {
       </ion-content>
     </ion-menu>
 
-    <ion-tabs #content>
-      <ion-tab tabTitle="Plain List" tabIcon="star" [root]="root1"></ion-tab>
+    <ion-tabs #content (ionChange)="onChange($event)">
+      <ion-tab tabTitle="Plain List" tabIcon="star" [root]="root1" (ionSelect)="onSelect($event)"></ion-tab>
       <ion-tab tabTitle="Schedule" tabIcon="globe" [root]="root2"></ion-tab>
       <ion-tab tabTitle="Stopwatch" tabIcon="stopwatch" [root]="root3"></ion-tab>
     </ion-tabs>
@@ -182,11 +183,21 @@ export class TabsPage {
   root1 = Tab1;
   root2 = Tab2;
   root3 = Tab3;
+
+  onChange(ev) {
+    console.log("Changed tab", ev);
+  }
+
+  onSelect(ev) {
+    console.log("Selected tab", ev);
+  }
 }
 
-@App({
+@Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-export class e2eApp {
+export class E2EApp {
   root = TabsPage;
 }
+
+ionicBootstrap(E2EApp);

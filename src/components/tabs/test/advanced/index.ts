@@ -1,11 +1,11 @@
-import {ViewChild} from '@angular/core';
-import {RouteConfig} from '@angular/router';
+import {Component, ViewChild} from '@angular/core';
+import {Routes} from '@angular/router';
 import {Location} from '@angular/common';
 
-import {App, Page, NavController, NavParams, Modal, ViewController, Tabs} from '../../../../../src';
+import {ionicBootstrap, NavController, NavParams, Modal, ViewController, Tabs} from '../../../../../src';
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Sign In</ion-title>
@@ -38,7 +38,7 @@ class SignIn {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-toolbar>
       <ion-title>Chat Modal</ion-title>
@@ -51,17 +51,17 @@ class SignIn {
 class ChatPage {
   constructor(private viewCtrl: ViewController) {}
 
-  onPageDidLoad() {
-    console.log('ChatPage, onPageDidLoad');
+  ionViewLoaded() {
+    console.log('ChatPage, ionViewLoaded');
   }
 
-  onPageDidUnload() {
-    console.log('ChatPage, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('ChatPage, ionViewDidUnload');
   }
 }
 
 
-@Page({
+@Component({
   templateUrl: './tabs.html'
 })
 class TabsPage {
@@ -73,14 +73,14 @@ class TabsPage {
   constructor(private nav: NavController, private params: NavParams) {}
 
   ngAfterViewInit() {
-    this.tabs.change.subscribe(tab => {
-      console.log('tabs.change.subscribe', tab.index);
+    this.tabs.ionChange.subscribe(tab => {
+      console.log('tabs.ionChange.subscribe', tab.index);
     });
   }
 
   onTabChange() {
     // wired up through the template
-    // <ion-tabs (change)="onTabChange()">
+    // <ion-tabs (ionChange)="onTabChange()">
     console.log('onTabChange');
   }
 
@@ -90,24 +90,24 @@ class TabsPage {
     this.nav.present(modal);
   }
 
-  onPageWillEnter() {
-    console.log('TabsPage, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('TabsPage, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('TabsPage, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('TabsPage, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('TabsPage, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('TabsPage, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('TabsPage, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('TabsPage, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('TabsPage, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('TabsPage, ionViewDidUnload');
   }
 }
 
@@ -115,7 +115,7 @@ class TabsPage {
 //
 // tab 1
 //
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 1</ion-title>' +
@@ -156,29 +156,29 @@ class Tab1Page1 {
     this.nav.rootNav.setRoot(SignIn, null, { animate: true, direction: 'back' });
   }
 
-  onPageWillEnter() {
-    console.log('Tab1Page1, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab1Page1, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab1Page1, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab1Page1, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab1Page1, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab1Page1, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab1Page1, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab1Page1, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab1Page1, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab1Page1, ionViewDidUnload');
   }
 }
 
 
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar primary>' +
       '<ion-title>Tabs 1 Page 2</ion-title>' +
@@ -197,29 +197,29 @@ class Tab1Page2 {
     this.nav.push(Tab1Page3)
   }
 
-  onPageWillEnter() {
-    console.log('Tab1Page2, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab1Page2, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab1Page2, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab1Page2, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab1Page2, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab1Page2, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab1Page2, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab1Page2, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab1Page2, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab1Page2, ionViewDidUnload');
   }
 }
 
 
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 3</ion-title>' +
@@ -233,24 +233,24 @@ class Tab1Page2 {
 class Tab1Page3 {
   constructor(private nav: NavController) {}
 
-  onPageWillEnter() {
-    console.log('Tab1Page3, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab1Page3, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab1Page3, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab1Page3, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab1Page3, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab1Page3, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab1Page3, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab1Page3, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab1Page3, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab1Page3, ionViewDidUnload');
   }
 }
 
@@ -259,7 +259,7 @@ class Tab1Page3 {
 //
 // tab 2
 //
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 1</ion-title>' +
@@ -277,29 +277,29 @@ class Tab2Page1 {
     this.nav.push(Tab2Page2)
   }
 
-  onPageWillEnter() {
-    console.log('Tab2Page1, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab2Page1, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab2Page1, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab2Page1, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab2Page1, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab2Page1, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab2Page1, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab2Page1, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab2Page1, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab2Page1, ionViewDidUnload');
   }
 }
 
 
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 2</ion-title>' +
@@ -318,29 +318,29 @@ class Tab2Page2 {
     this.nav.push(Tab2Page3)
   }
 
-  onPageWillEnter() {
-    console.log('Tab2Page2, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab2Page2, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab2Page2, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab2Page2, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab2Page2, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab2Page2, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab2Page2, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab2Page2, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab2Page2, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab2Page2, ionViewDidUnload');
   }
 }
 
 
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 3</ion-title>' +
@@ -354,24 +354,24 @@ class Tab2Page2 {
 class Tab2Page3 {
   constructor(private nav: NavController) {}
 
-  onPageWillEnter() {
-    console.log('Tab2Page3, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab2Page3, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab2Page3, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab2Page3, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab2Page3, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab2Page3, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab2Page3, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab2Page3, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab2Page3, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab2Page3, ionViewDidUnload');
   }
 }
 
@@ -380,7 +380,7 @@ class Tab2Page3 {
 //
 // tab 3
 //
-@Page({
+@Component({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 3</ion-title>' +
@@ -389,31 +389,37 @@ class Tab2Page3 {
 })
 class Tab3Page1 {
 
-  onPageWillEnter() {
-    console.log('Tab3Page1, onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('Tab3Page1, ionViewWillEnter');
   }
 
-  onPageDidEnter() {
-    console.log('Tab3Page1, onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('Tab3Page1, ionViewDidEnter');
   }
 
-  onPageWillLeave() {
-    console.log('Tab3Page1, onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('Tab3Page1, ionViewWillLeave');
   }
 
-  onPageDidLeave() {
-    console.log('Tab3Page1, onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('Tab3Page1, ionViewDidLeave');
   }
 
-  onPageDidUnload() {
-    console.log('Tab3Page1, onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('Tab3Page1, ionViewDidUnload');
   }
 }
 
 
-@App()
-@RouteConfig([
-  { path: '/', component: SignIn, as: 'Signin' },
-  { path: '/tabs', component: TabsPage, as: 'Tabs' },
-])
-class E2EApp {}
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+// @Routes([
+//   { path: '/', component: SignIn },
+//   { path: '/tabs', component: TabsPage },
+// ])
+class E2EApp {
+  root = SignIn;
+}
+
+ionicBootstrap(E2EApp);

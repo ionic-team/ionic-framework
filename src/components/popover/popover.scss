@@ -1,0 +1,42 @@
+@import "../../globals.core";
+
+// Popover
+// --------------------------------------------------
+
+
+ion-popover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-overlay;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.popover-wrapper {
+  z-index: $z-index-overlay-wrapper;
+
+  opacity: 0;
+}
+
+.popover-content {
+  position: absolute;
+  z-index: $z-index-overlay-wrapper;
+
+  display: flex;
+
+  overflow: auto;
+
+  flex-direction: column;
+
+  min-height: 200px;
+
+  scroll-content {
+    position: relative;
+  }
+}

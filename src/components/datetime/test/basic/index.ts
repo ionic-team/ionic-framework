@@ -1,7 +1,8 @@
-import {App, Page} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -13,6 +14,7 @@ class E2EPage {
   webkitOpenSourced = '2005-06-17T11:06Z';
   chromeReleased = '2008-09-02';
   leapYearsSummerMonths = '';
+  convertedDate = '';
 
   leapYearsArray = [2020, 2016, 2008, 2004, 2000, 1996];
 
@@ -26,16 +28,30 @@ class E2EPage {
     'l\u00f8r'
   ];
 
+  onChange(ev: any) {
+    console.log("Changed", ev);
+  }
+
+  onCancel(ev: any) {
+    console.log("Canceled", ev);
+  }
+
+  clearLeapYear() {
+    this.leapYearsSummerMonths = null;
+  }
+
+	convertDate() {
+	  this.convertedDate = new Date(this.myDate).toISOString();
+	}
+
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  root;
-
-  constructor() {
-    this.root = E2EPage;
-  }
+  root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);

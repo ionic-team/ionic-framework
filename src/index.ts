@@ -3,10 +3,14 @@ export * from './config/bootstrap';
 export * from './config/config';
 export * from './config/directives';
 
-export * from './decorators/app';
 export * from './decorators/page';
 
 export * from './components';
+
+export * from './gestures/drag-gesture';
+export * from './gestures/gesture';
+export * from './gestures/slide-edge-gesture';
+export * from './gestures/slide-gesture';
 
 export * from './platform/platform';
 export * from './platform/storage';

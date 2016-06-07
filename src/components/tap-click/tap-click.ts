@@ -1,6 +1,6 @@
 import {Injectable, NgZone} from '@angular/core';
 
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {pointerCoord, hasPointerMoved} from '../../util/dom';
 import {Activator} from './activator';
@@ -22,16 +22,16 @@ export class TapClick {
 
   constructor(
     config: Config,
-    private app: IonicApp,
-    private zone: NgZone
+    private app: App,
+    zone: NgZone
   ) {
     let self = this;
 
     if (config.get('activator') === 'ripple') {
-      self.activator = new RippleActivator(app, config, zone);
+      self.activator = new RippleActivator(app, config);
 
     } else if (config.get('activator') === 'highlight') {
-      self.activator = new Activator(app, config, zone);
+      self.activator = new Activator(app, config);
     }
 
     self.usePolyfill = (config.get('tapPolyfill') === true);
@@ -47,20 +47,19 @@ export class TapClick {
       addListener('mouseup', self.mouseUp.bind(self), true);
     });
 
-
-    self.pointerMove = function(ev) {
+    self.pointerMove = function(ev: UIEvent) {
       if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, self.startCoord, pointerCoord(ev)) ) {
         self.pointerCancel(ev);
       }
     };
   }
 
-  touchStart(ev) {
+  touchStart(ev: UIEvent) {
     this.lastTouch = Date.now();
     this.pointerStart(ev);
   }
 
-  touchEnd(ev) {
+  touchEnd(ev: UIEvent) {
     this.lastTouch = Date.now();
 
     if (this.usePolyfill && this.startCoord && this.app.isEnabled()) {
@@ -92,7 +91,7 @@ export class TapClick {
     this.pointerEnd(ev);
   }
 
-  mouseDown(ev) {
+  mouseDown(ev: any) {
     if (this.isDisabledNativeClick()) {
       console.debug('mouseDown prevent ' + ev.target.tagName + ' ' + Date.now());
       // does not prevent default on purpose
@@ -104,7 +103,7 @@ export class TapClick {
     }
   }
 
-  mouseUp(ev) {
+  mouseUp(ev: any) {
     if (this.isDisabledNativeClick()) {
       console.debug('mouseUp prevent ' + ev.target.tagName + ' ' + Date.now());
       ev.preventDefault();
@@ -116,7 +115,7 @@ export class TapClick {
     }
   }
 
-  pointerStart(ev) {
+  pointerStart(ev: any) {
     let activatableEle = getActivatableTarget(ev.target);
 
     if (activatableEle) {
@@ -124,7 +123,7 @@ export class TapClick {
 
       let now = Date.now();
       if (this.lastActivated + 150 < now) {
-        this.activator && this.activator.downAction(ev, activatableEle, this.startCoord.x, this.startCoord.y);
+        this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
         this.lastActivated = now;
       }
 
@@ -135,21 +134,24 @@ export class TapClick {
     }
   }
 
-  pointerEnd(ev) {
-    let activatableEle = getActivatableTarget(ev.target);
-    if (activatableEle && this.startCoord) {
-      this.activator && this.activator.upAction(ev, activatableEle, this.startCoord.x, this.startCoord.y);
+  pointerEnd(ev: any) {
+    if (this.startCoord && this.activator) {
+      let activatableEle = getActivatableTarget(ev.target);
+      if (activatableEle) {
+        this.activator.upAction(ev, activatableEle, this.startCoord);
+      }
     }
+
     this.moveListeners(false);
   }
 
-  pointerCancel(ev) {
+  pointerCancel(ev: UIEvent) {
     console.debug('pointerCancel from ' + ev.type + ' ' + Date.now());
     this.activator && this.activator.clearState();
     this.moveListeners(false);
   }
 
-  moveListeners(shouldAdd) {
+  moveListeners(shouldAdd: boolean) {
     removeListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
 
     if (shouldAdd) {
@@ -158,7 +160,7 @@ export class TapClick {
   }
 
   click(ev: any) {
-    let preventReason = null;
+    let preventReason: string = null;
 
     if (!this.app.isEnabled()) {
       preventReason = 'appDisabled';
@@ -181,7 +183,7 @@ export class TapClick {
 }
 
 
-function getActivatableTarget(ele) {
+function getActivatableTarget(ele: HTMLElement) {
   let targetEle = ele;
   for (let x = 0; x < 4; x++) {
     if (!targetEle) break;
@@ -194,7 +196,7 @@ function getActivatableTarget(ele) {
 /**
  * @private
  */
-export function isActivatable(ele) {
+export function isActivatable(ele: HTMLElement) {
   if (ACTIVATABLE_ELEMENTS.test(ele.tagName)) {
     return true;
   }
@@ -209,11 +211,11 @@ export function isActivatable(ele) {
   return false;
 }
 
-function addListener(type, listener, useCapture?) {
+function addListener(type: string, listener: any, useCapture?: boolean) {
   document.addEventListener(type, listener, useCapture);
 }
 
-function removeListener(type, listener) {
+function removeListener(type: string, listener: any) {
   document.removeEventListener(type, listener);
 }
 

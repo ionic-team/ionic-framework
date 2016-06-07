@@ -1,8 +1,9 @@
-import {App, Page} from '../../../../../src';
+import {Component} from '@angular/core';
 import {Control, ControlGroup} from '@angular/common';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -41,13 +42,11 @@ class E2EPage {
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  root;
-
-  constructor() {
-    this.root = E2EPage;
-  }
+  root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);

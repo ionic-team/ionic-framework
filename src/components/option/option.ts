@@ -14,12 +14,12 @@ import {isPresent, isTrueProperty} from '../../util/util';
 })
 export class Option {
   private _checked: any = false;
-  private _value;
+  private _value: any;
 
   /**
-   * @input {any} Event to evaluate when option has changed
+   * @input {any} Event to evaluate when option is selected
    */
-  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<any> = new EventEmitter();
 
   constructor(private _elementRef: ElementRef) {}
 
@@ -46,7 +46,7 @@ export class Option {
     return this.text;
   }
 
-  set value(val) {
+  set value(val: any) {
     this._value = val;
   }
 

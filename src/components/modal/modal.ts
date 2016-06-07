@@ -1,9 +1,12 @@
-import {Component, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentRef, ElementRef, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
 
-import {NavParams} from '../nav/nav-params';
-import {ViewController} from '../nav/view-controller';
+import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
+import {NavParams} from '../nav/nav-params';
+import {pascalCaseToDashCase} from '../../util/util';
 import {Transition, TransitionOptions} from '../../transitions/transition';
+import {ViewController} from '../nav/view-controller';
+import {windowDimensions} from '../../util/dom';
 
 /**
  * @name Modal
@@ -33,7 +36,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  * ```ts
  * import {Page, Modal, NavController, NavParams} from 'ionic-angular';
  *
- * @Page(...)
+ * @Component(...)
  * class HomePage {
  *
  *  constructor(nav: NavController) {
@@ -47,7 +50,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  *
  * }
  *
- * @Page(...)
+ * @Component(...)
  * class Profile {
  *
  *  constructor(params: NavParams) {
@@ -63,9 +66,10 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  * modal.
  *
  * ```ts
- * import {Page, Modal, NavController, ViewController} from 'ionic-angular';
+ * import {Component} from '@angular/core';
+ * import {Modal, NavController, ViewController} from 'ionic-angular';
  *
- * @Page(...)
+ * @Component(...)
  * class HomePage {
  *
  *  constructor(nav: NavController) {
@@ -87,7 +91,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  *
  * }
  *
- * @Page(...)
+ * @Component(...)
  * class Profile {
  *
  *  constructor(viewCtrl: ViewController) {
@@ -106,9 +110,12 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
  */
 export class Modal extends ViewController {
 
-  constructor(componentType, data: any = {}) {
+  public modalViewType: string;
+
+  constructor(componentType: any, data: any = {}) {
     data.componentType = componentType;
     super(ModalCmp, data);
+    this.modalViewType = componentType.name;
     this.viewType = 'modal';
     this.isOverlay = true;
   }
@@ -116,7 +123,7 @@ export class Modal extends ViewController {
   /**
   * @private
   */
-  getTransitionName(direction) {
+  getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'modalLeave' : 'modalEnter');
     return this._nav && this._nav.config.get(key);
   }
@@ -125,33 +132,52 @@ export class Modal extends ViewController {
    * @param {any} componentType Modal
    * @param {object} data Modal options
    */
-  static create(componentType, data = {}) {
+  static create(componentType: any, data = {}) {
     return new Modal(componentType, data);
   }
 
+  // Override the load method and load our child component
+  loaded(done: Function) {
+    // grab the instance, and proxy the ngAfterViewInit method
+    let originalNgAfterViewInit = this.instance.ngAfterViewInit;
+
+    this.instance.ngAfterViewInit = () => {
+      if (originalNgAfterViewInit) {
+        originalNgAfterViewInit();
+      }
+      this.instance.loadComponent().then( (componentRef: ComponentRef<any>) => {
+        this.setInstance(componentRef.instance);
+        done();
+      });
+    };
+  }
 }
 
 @Component({
   selector: 'ion-modal',
   template:
-    '<div class="backdrop"></div>' +
+    '<ion-backdrop disableScroll="false"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
       '<div #viewport></div>' +
     '</div>'
 })
-class ModalCmp {
+export class ModalCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
-  constructor(private _loader: DynamicComponentLoader, private _navParams: NavParams, private _viewCtrl: ViewController) {}
+  constructor(protected _loader: DynamicComponentLoader, protected _navParams: NavParams) {}
 
-  onPageWillEnter() {
-    this._loader.loadNextToLocation(this._navParams.data.componentType, this.viewport).then(componentRef => {
-      this._viewCtrl.setInstance(componentRef.instance);
+  loadComponent(): Promise<ComponentRef<any>> {
+    let componentType = this._navParams.data.componentType;
+    addSelector(componentType, 'ion-page');
 
-      // manually fire onPageWillEnter() since ModalCmp's  onPageWillEnter already happened
-      this._viewCtrl.willEnter();
+    return this._loader.loadNextToLocation(componentType, this.viewport).then( (componentRef: ComponentRef<any>) => {
+      return componentRef;
     });
+  }
+
+  ngAfterViewInit() {
+    // intentionally kept empty
   }
 }
 
@@ -163,17 +189,21 @@ class ModalSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     backdrop.fromTo('opacity', 0.01, 0.4);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    let page = <HTMLElement> ele.querySelector('ion-page');
+
+    // auto-add page css className created from component JS class name
+    let cssClassName = pascalCaseToDashCase((<Modal>enteringView).modalViewType);
+    page.classList.add(cssClassName);
+
     wrapper.fromTo('translateY', '100%', '0%');
-    this
-      .element(enteringView.pageRef())
-      .easing('cubic-bezier(0.36,0.66,0.04,1)')
-      .duration(400)
-      .before.addClass('show-page')
-      .add(backdrop)
-      .add(wrapper);
+
+    const DURATION = 400;
+    const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
+    this.element(enteringView.pageRef()).easing(EASING).duration(DURATION).add(backdrop).add(wrapper);
+    this.element(new ElementRef(page)).easing(EASING).duration(DURATION).before.addClass('show-page');
 
     if (enteringView.hasNavbar()) {
       // entering page has a navbar
@@ -191,10 +221,17 @@ class ModalSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     backdrop.fromTo('opacity', 0.4, 0.0);
-    let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
-    wrapper.fromTo('translateY', '0%', '100%');
+    let wrapperEle = <HTMLElement> ele.querySelector('.modal-wrapper');
+    let wrapperEleRect = wrapperEle.getBoundingClientRect();
+    let wrapper = new Animation(wrapperEle);
+
+    // height of the screen - top of the container tells us how much to scoot it down
+    // so it's off-screen
+    let screenDimensions = windowDimensions();
+    wrapper.fromTo('translateY', '0px', `${screenDimensions.height - wrapperEleRect.top}px`);
 
     this
       .element(leavingView.pageRef())
@@ -212,19 +249,21 @@ class ModalMDSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     backdrop.fromTo('opacity', 0.01, 0.4);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
     wrapper.fromTo('translateY', '40px', '0px');
+    let page = <HTMLElement> ele.querySelector('ion-page');
 
-    this
-      .element(enteringView.pageRef())
-      .easing('cubic-bezier(0.36,0.66,0.04,1)')
-      .duration(280)
-      .fadeIn()
-      .before.addClass('show-page')
-      .add(backdrop)
-      .add(wrapper);
+
+    // auto-add page css className created from component JS class name
+    let cssClassName = pascalCaseToDashCase((<Modal>enteringView).modalViewType);
+    page.classList.add(cssClassName);
+
+    const DURATION = 280;
+    const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
+    this.element(enteringView.pageRef()).easing(EASING).duration(DURATION).fadeIn().add(backdrop).add(wrapper);
+    this.element(new ElementRef(page)).easing(EASING).duration(DURATION).before.addClass('show-page');
 
     if (enteringView.hasNavbar()) {
       // entering page has a navbar
@@ -242,7 +281,7 @@ class ModalMDSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     backdrop.fromTo('opacity', 0.4, 0.0);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
     wrapper.fromTo('translateY', '0px', '40px');

@@ -1,8 +1,9 @@
-import {App, Page} from '../../../../../src';
-import {FormBuilder, Validators, Control} from '@angular/common';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
+import {FormBuilder, Validators} from '@angular/common';
 
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -53,9 +54,11 @@ class E2EPage {
 
 }
 
-@App({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  rootPage = E2EPage;
+  root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);

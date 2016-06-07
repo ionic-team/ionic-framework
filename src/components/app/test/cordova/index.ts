@@ -1,7 +1,27 @@
-import {App, NavController, Page, IonicApp, Modal, ViewController} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController, Modal, ViewController} from '../../../../../src';
+import {Injectable} from '@angular/core';
 
 
-@Page({
+@Injectable()
+export class SomeData {
+  constructor() {}
+
+  getData() {
+    return "SomeData";
+  }
+}
+
+@Injectable()
+export class OtherData {
+  constructor() {}
+
+  getData() {
+    return "OtherData";
+  }
+}
+
+@Component({
   template: `
   <ion-toolbar>
     <ion-title>This is a modal</ion-title>
@@ -21,9 +41,7 @@ import {App, NavController, Page, IonicApp, Modal, ViewController} from '../../.
   `
 })
 class MyModal {
-  constructor(private viewCtrl: ViewController) {
-
-  }
+  constructor(private viewCtrl: ViewController) {}
 
   dismissModal() {
     this.viewCtrl.dismiss();
@@ -31,14 +49,17 @@ class MyModal {
 }
 
 
-@Page({
+@Component({
   templateUrl: 'page1.html'
 })
 class Page1 {
   page2 = Page2;
   sort: string = 'all';
 
-  constructor(private nav: NavController) {}
+  constructor(private nav: NavController, private someData: SomeData, private otherData: OtherData) {
+    console.log("Got some data from", someData.getData());
+    console.log("Got some data from", otherData.getData());
+  }
 
   goToTabs() {
     this.nav.push(TabsPage);
@@ -46,16 +67,14 @@ class Page1 {
 }
 
 
-@Page({
+@Component({
   templateUrl: 'page2.html'
 })
 class Page2 {
   page1 = Page1;
   page3 = Page3;
 
-  constructor(private nav: NavController) {
-
-  }
+  constructor(private nav: NavController) {}
 
   openModal() {
     let modal = Modal.create(MyModal);
@@ -64,13 +83,11 @@ class Page2 {
 }
 
 
-@Page({
+@Component({
   templateUrl: 'page3.html'
 })
 class Page3 {
-  constructor(private nav: NavController) {
-
-  }
+  constructor(private nav: NavController) {}
 
   goBack() {
     this.nav.pop();
@@ -78,7 +95,7 @@ class Page3 {
 }
 
 
-@Page({
+@Component({
   template: `
   <ion-navbar *navbar>
     <ion-title>This is a tab page</ion-title>
@@ -97,13 +114,11 @@ class Page3 {
   `
 })
 class TabPage1 {
-  constructor(private nav: NavController) {
-
-  }
+  constructor(private nav: NavController) {}
 }
 
 
-@Page({
+@Component({
   templateUrl: 'tabs.html'
 })
 class TabsPage {
@@ -111,9 +126,7 @@ class TabsPage {
   tab2Root = Page2;
   tab3Root = Page3;
 
-  constructor(private nav: NavController) {
-
-  }
+  constructor(private nav: NavController) {}
 
   goBack() {
     this.nav.pop();
@@ -121,12 +134,13 @@ class TabsPage {
 }
 
 
-@App({
-  templateUrl: `./app.html`,
-  config: {
-    statusbarPadding: true
-  }
+@Component({
+  templateUrl: `./app.html`
 })
 class E2EApp {
   root = Page1;
 }
+
+ionicBootstrap(E2EApp, [SomeData, OtherData], {
+  statusbarPadding: true
+});

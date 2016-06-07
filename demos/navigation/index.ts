@@ -1,52 +1,47 @@
-import {App, Page, IonicApp, Config, Platform} from 'ionic-angular';
-import {NavController, NavParams} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap, Config, Platform, NavController, NavParams} from 'ionic-angular';
 
 var PAGE_NUM = 2;
 
-@App({
-  templateUrl: 'app.html'
-})
-class ApiDemoApp {
 
-  constructor() {
-    this.rootPage = InitialPage;
-  }
-}
-
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 export class InitialPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(public nav: NavController) {}
 
   push() {
     this.nav.push(Page2);
   }
 }
 
-@Page({
-    templateUrl: "page-2.html"
+@Component({
+  templateUrl: "page-2.html"
 })
 export class Page2 {
-    constructor(
-        nav: NavController,
-    ) {
-        this.nav = nav;
-        this.pageNum = PAGE_NUM;
-    }
+  pageNum = PAGE_NUM;
 
-    push() {
-      PAGE_NUM++;
-      this.nav.push(Page2);
-    }
+  constructor(private nav: NavController) {}
 
-    pop() {
-      if (PAGE_NUM > 2) {
-        PAGE_NUM--;
-      }
-      this.nav.pop();
+  push() {
+    PAGE_NUM++;
+    this.nav.push(Page2);
+  }
+
+  pop() {
+    if (PAGE_NUM > 2) {
+      PAGE_NUM--;
     }
+    this.nav.pop();
+  }
 }
 
+
+@Component({
+  templateUrl: 'app.html'
+})
+class ApiDemoApp {
+  root = InitialPage;
+}
+
+ionicBootstrap(ApiDemoApp);

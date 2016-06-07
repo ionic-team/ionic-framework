@@ -1,0 +1,43 @@
+@import "../../globals.core";
+
+// Material Design Popover
+// --------------------------------------------------
+
+$popover-md-width:                     250px !default;
+$popover-md-max-height:                90% !default;
+
+$popover-md-border-radius:             2px !default;
+$popover-md-text-color:                #000 !default;
+$popover-md-background:                #fafafa !default;
+$popover-md-box-shadow-color:          rgba(0, 0, 0, .3) !default;
+$popover-md-box-shadow:                0 3px 12px 2px $popover-md-box-shadow-color !default;
+
+$popover-md-item-background:           $popover-md-background !default;
+
+
+.popover-content {
+  width: $popover-md-width;
+  min-width: 0;
+  min-height: 0;
+  max-height: $popover-md-max-height;
+
+  border-radius: $popover-md-border-radius;
+  color: $popover-md-text-color;
+  background: $popover-md-background;
+  box-shadow: $popover-md-box-shadow;
+
+  transform-origin: top left;
+
+  ion-content {
+    background: $popover-md-background;
+  }
+}
+
+.popover-content .item {
+  background-color: $popover-md-item-background;
+}
+
+.popover-viewport {
+  opacity: 0;
+  transition-delay: 100ms;
+}

@@ -17,7 +17,7 @@ import {raf, cancelRaf, CSS, pointerCoord} from '../../util/dom';
  */
 export class Picker extends ViewController {
 
-  @Output() change: EventEmitter<any>;
+  @Output() ionChange: EventEmitter<any>;
 
   constructor(opts: PickerOptions = {}) {
     opts.columns = opts.columns || [];
@@ -28,7 +28,7 @@ export class Picker extends ViewController {
     this.viewType = 'picker';
     this.isOverlay = true;
 
-    this.change = new EventEmitter();
+    this.ionChange = new EventEmitter();
 
     // by default, pickers should not fire lifecycle events of other views
     // for example, when an picker enters, the current active view should
@@ -103,7 +103,7 @@ export class Picker extends ViewController {
     '(touchend)': 'pointerEnd($event)',
     '(mousedown)': 'pointerStart($event)',
     '(mousemove)': 'pointerMove($event)',
-    '(body:mouseup)': 'pointerEnd($event)',
+    '(body:mouseup)': 'pointerEnd($event)'
   }
 })
 class PickerColumnCmp {
@@ -122,7 +122,9 @@ class PickerColumnCmp {
   maxY: number;
   rotateFactor: number;
   lastIndex: number;
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  receivingEvents: boolean = false;
+
+  @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   constructor(config: Config, private _sanitizer: DomSanitizationService) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
@@ -141,7 +143,7 @@ class PickerColumnCmp {
     this.setSelected(this.col.selectedIndex, 0);
   }
 
-  pointerStart(ev) {
+  pointerStart(ev: UIEvent) {
     console.debug('picker, pointerStart', ev.type, this.startY);
 
     if (this.isPrevented(ev)) {
@@ -156,22 +158,18 @@ class PickerColumnCmp {
     this.startY = pointerCoord(ev).y;
 
     // reset everything
+    this.receivingEvents = true;
     this.velocity = 0;
     this.pos.length = 0;
     this.pos.push(this.startY, Date.now());
 
-    let minY = this.col.options.length - 1;
+    let minY = (this.col.options.length - 1);
     let maxY = 0;
 
     for (var i = 0; i < this.col.options.length; i++) {
-      if (this.col.options[i].disabled) {
-        continue;
-      }
-      if (i < minY) {
-        minY = i;
-      }
-      if (i > maxY) {
-        maxY = i;
+      if (!this.col.options[i].disabled) {
+        minY = Math.min(minY, i);
+        maxY = Math.max(maxY, i);
       }
     }
 
@@ -179,44 +177,50 @@ class PickerColumnCmp {
     this.maxY = (maxY * this.optHeight * -1);
   }
 
-  pointerMove(ev) {
+  pointerMove(ev: UIEvent) {
     ev.preventDefault();
     ev.stopPropagation();
 
-    if (this.startY !== null) {
-      if (this.isPrevented(ev)) {
-        return;
-      }
-
-      var currentY = pointerCoord(ev).y;
-      this.pos.push(currentY, Date.now());
-
-      // update the scroll position relative to pointer start position
-      var y = this.y + (currentY - this.startY);
-
-      if (y > this.minY) {
-        // scrolling up higher than scroll area
-        y = Math.pow(y, 0.8);
-        this.bounceFrom = y;
-
-      } else if (y < this.maxY) {
-        // scrolling down below scroll area
-        y += Math.pow(this.maxY - y, 0.9);
-        this.bounceFrom = y;
-
-      } else {
-        this.bounceFrom = 0;
-      }
-
-      this.update(y, 0, false, false);
+    if (this.startY === null) {
+      return;
     }
-  }
 
-  pointerEnd(ev) {
     if (this.isPrevented(ev)) {
       return;
     }
 
+    var currentY = pointerCoord(ev).y;
+    this.pos.push(currentY, Date.now());
+
+    // update the scroll position relative to pointer start position
+    var y = this.y + (currentY - this.startY);
+
+    if (y > this.minY) {
+      // scrolling up higher than scroll area
+      y = Math.pow(y, 0.8);
+      this.bounceFrom = y;
+
+    } else if (y < this.maxY) {
+      // scrolling down below scroll area
+      y += Math.pow(this.maxY - y, 0.9);
+      this.bounceFrom = y;
+
+    } else {
+      this.bounceFrom = 0;
+    }
+
+    this.update(y, 0, false, false);
+  }
+
+  pointerEnd(ev: UIEvent) {
+    if (this.isPrevented(ev)) {
+      return;
+    }
+
+    if (!this.receivingEvents) {
+      return;
+    }
+    this.receivingEvents = false;
     this.velocity = 0;
 
     if (this.bounceFrom > 0) {
@@ -316,7 +320,7 @@ class PickerColumnCmp {
     }
   }
 
-  optClick(ev, index: number) {
+  optClick(ev: UIEvent, index: number) {
     if (!this.velocity) {
       ev.preventDefault();
       ev.stopPropagation();
@@ -382,7 +386,7 @@ class PickerColumnCmp {
         // new selected index has changed from the last index
         // update the lastIndex and emit that it has changed
         this.lastIndex = this.col.selectedIndex;
-        this.change.emit(this.col.options[this.col.selectedIndex]);
+        this.ionChange.emit(this.col.options[this.col.selectedIndex]);
       }
     }
   }
@@ -392,14 +396,9 @@ class PickerColumnCmp {
     let max = 0;
 
     for (var i = 0; i < this.col.options.length; i++) {
-      var opt = this.col.options[i];
-      if (!opt.disabled) {
-        if (i < min) {
-          min = i;
-        }
-        if (i > max) {
-          max = i;
-        }
+      if (!this.col.options[i].disabled) {
+        min = Math.min(min, i);
+        max = Math.max(max, i);
       }
     }
 
@@ -411,18 +410,20 @@ class PickerColumnCmp {
     }
   }
 
-  isPrevented(ev) {
+  isPrevented(ev: UIEvent): boolean {
+    let now = Date.now();
     if (ev.type.indexOf('touch') > -1) {
       // this is a touch event, so prevent mouse events for a while
-      this.msPrv = Date.now() + 2000;
+      this.msPrv = now + 2000;
 
-    } else if (this.msPrv > Date.now() && ev.type.indexOf('mouse') > -1) {
+    } else if (this.msPrv > now && ev.type.indexOf('mouse') > -1) {
       // this is a mouse event, and a touch event already happend recently
       // prevent the calling method from continuing
       ev.preventDefault();
       ev.stopPropagation();
       return true;
     }
+    return false;
   }
 
 }
@@ -434,7 +435,7 @@ class PickerColumnCmp {
 @Component({
   selector: 'ion-picker-cmp',
   template:
-    '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
+    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
     '<div class="picker-wrapper">' +
       '<div class="picker-toolbar">' +
         '<div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">' +
@@ -445,7 +446,7 @@ class PickerColumnCmp {
       '</div>' +
       '<div class="picker-columns">' +
         '<div class="picker-above-highlight"></div>' +
-        '<div *ngFor="let c of d.columns" [col]="c" class="picker-col"> (change)="_colChange($event)"</div>' +
+        '<div *ngFor="let c of d.columns" [col]="c" class="picker-col" (ionChange)="_colChange($event)"></div>' +
         '<div class="picker-below-highlight"></div>' +
       '</div>' +
     '</div>',
@@ -482,7 +483,7 @@ class PickerDisplayCmp {
     this.lastClick = 0;
   }
 
-  onPageLoaded() {
+  ionViewLoaded() {
     // normalize the data
     let data = this.d;
 
@@ -538,7 +539,7 @@ class PickerDisplayCmp {
   private _colChange(selectedOption: PickerColumnOption) {
     // one of the columns has changed its selected index
     var picker = <Picker>this._viewCtrl;
-    picker.change.emit(this.getSelected());
+    picker.ionChange.emit(this.getSelected());
   }
 
   @HostListener('body:keyup', ['$event'])
@@ -562,7 +563,7 @@ class PickerDisplayCmp {
     }
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     let activeElement: any = document.activeElement;
     if (activeElement) {
       activeElement.blur();
@@ -574,7 +575,7 @@ class PickerDisplayCmp {
     }
   }
 
-  btnClick(button, dismissDelay?) {
+  btnClick(button: any, dismissDelay?: number) {
     if (!this.isEnabled()) {
       return;
     }
@@ -606,7 +607,7 @@ class PickerDisplayCmp {
     }
   }
 
-  dismiss(role): Promise<any> {
+  dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(this.getSelected(), role);
   }
 
@@ -664,7 +665,7 @@ class PickerSlideIn extends Transition {
     super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.26);
@@ -681,7 +682,7 @@ class PickerSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
 
     backdrop.fromTo('opacity', 0.26, 0);

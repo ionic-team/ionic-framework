@@ -1,0 +1,25 @@
+@import "../../globals.core";
+
+// Backdrop
+// --------------------------------------------------
+
+$backdrop-color: #000 !default;
+
+ion-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-backdrop;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: $backdrop-color;
+  opacity: .01;
+  transform: translateZ(0);
+}
+
+ion-backdrop.hide-backdrop {
+  display: none;
+}

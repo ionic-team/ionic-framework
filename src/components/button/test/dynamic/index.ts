@@ -1,10 +1,11 @@
-import {App, IonicApp} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
+class E2EPage {
   isDestructive: boolean;
   isSecondary: boolean;
   isCustom: boolean;
@@ -50,3 +51,5 @@ class E2EApp {
 	  this.isClicked = !this.isClicked;
 	}
 }
+
+ionicBootstrap(E2EPage);

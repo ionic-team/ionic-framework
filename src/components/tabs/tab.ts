@@ -1,13 +1,13 @@
 import {Component, Inject, forwardRef, ElementRef, NgZone, Renderer, DynamicComponentLoader, ViewContainerRef, ViewChild, Type, ViewEncapsulation, ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {isTrueProperty} from '../../util/util';
 import {Keyboard} from '../../util/keyboard';
 import {NavController, NavOptions} from '../nav/nav-controller';
-import {ViewController} from '../nav/view-controller';
-import {Tabs} from './tabs';
 import {TabButton} from './tab-button';
+import {Tabs} from './tabs';
+import {ViewController} from '../nav/view-controller';
 
 
 /**
@@ -85,13 +85,13 @@ import {TabButton} from './tab-button';
  * ```
  *
  * Sometimes you may want to call a method instead of navigating to a new
- * page. You can use the `(select)` event to call a method on your class when
+ * page. You can use the `(ionSelect)` event to call a method on your class when
  * the tab is selected. Below is an example of presenting a modal from one of
  * the tabs.
  *
  * ```html
  * <ion-tabs preloadTabs="false">
- *   <ion-tab (select)="chat()"></ion-tab>
+ *   <ion-tab (ionSelect)="chat()"></ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -204,11 +204,11 @@ export class Tab extends NavController {
   /**
    * @output {Tab} Method to call when the current tab is selected
    */
-  @Output() select: EventEmitter<Tab> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<Tab> = new EventEmitter();
 
   constructor(
     @Inject(forwardRef(() => Tabs)) parentTabs: Tabs,
-    app: IonicApp,
+    app: App,
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,
@@ -267,7 +267,7 @@ export class Tab extends NavController {
         this.load({
           animate: false,
           preload: true,
-          postLoad: (viewCtrl) => {
+          postLoad: (viewCtrl: ViewController) => {
             let navbar = viewCtrl.getNavbar();
             navbar && navbar.setHidden(true);
           }
@@ -291,8 +291,12 @@ export class Tab extends NavController {
     }
 
     super.loadPage(viewCtrl, navbarContainerRef, opts, () => {
-      if (viewCtrl.instance) {
-        viewCtrl.instance._tabSubPage = isTabSubPage;
+      if (isTabSubPage) {
+        // add the .tab-subpage css class to tabs pages that should act like subpages
+        let pageEleRef = viewCtrl.pageRef();
+        if (pageEleRef) {
+          this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
+        }
       }
       done();
     });

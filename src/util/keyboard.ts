@@ -70,12 +70,12 @@ export class Keyboard {
  * @param {function} callback method you want to call when the keyboard has been closed
  * @return {function} returns a callback that gets fired when the keyboard is closed
  */
-  onClose(callback, pollingInternval = KEYBOARD_CLOSE_POLLING, pollingChecksMax = KEYBOARD_POLLING_CHECKS_MAX) {
+  onClose(callback: Function, pollingInternval = KEYBOARD_CLOSE_POLLING, pollingChecksMax = KEYBOARD_POLLING_CHECKS_MAX) {
     console.debug('keyboard onClose');
     const self = this;
     let checks = 0;
 
-    let promise = null;
+    let promise: Promise<any> = null;
 
     if (!callback) {
       // a callback wasn't provided, so let's return a promise instead
@@ -120,7 +120,7 @@ export class Keyboard {
 /**
  * @private
  */
-  focusOutline(setting, document) {
+  focusOutline(setting: any, document: any) {
     /* Focus Outline
      * --------------------------------------------------
      * By default, when a keydown event happens from a tab key, then
@@ -151,7 +151,7 @@ export class Keyboard {
     }
 
     // default is to add the focus-outline when the tab key is used
-    function keyDown(ev) {
+    function keyDown(ev: KeyboardEvent) {
       if (!isKeyInputEnabled && ev.keyCode === 9) {
         isKeyInputEnabled = true;
         enableKeyInput();

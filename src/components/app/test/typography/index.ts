@@ -1,11 +1,14 @@
-import {App, IonicApp} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, App} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EApp {
-  constructor(app: IonicApp) {
+  constructor(app: App) {
     app.setTitle('Basic Buttons');
   }
 }
+
+ionicBootstrap(E2EApp);

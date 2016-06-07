@@ -1,7 +1,7 @@
 import {Component, ElementRef, Optional, NgZone, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 
 import {Ion} from '../ion';
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
 import {nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
@@ -28,10 +28,10 @@ import {ScrollView} from '../../util/scroll-view';
  * you can use Angular's `@ViewChild` annotation:
  *
  * ```ts
- * import {ViewChild} from '@angular/core';
+ * import {Component, ViewChild} from '@angular/core';
  * import {Content} from 'ionic-angular';
  *
- * @Page({...}
+ * @Component({...})
  * export class MyPage{
  *   @ViewChild(Content) content: Content;
  *
@@ -67,7 +67,7 @@ export class Content extends Ion {
   constructor(
     private _elementRef: ElementRef,
     private _config: Config,
-    private _app: IonicApp,
+    private _app: App,
     private _keyboard: Keyboard,
     private _zone: NgZone,
     @Optional() viewCtrl: ViewController
@@ -111,49 +111,49 @@ export class Content extends Ion {
   /**
    * @private
    */
-  addScrollListener(handler) {
+  addScrollListener(handler: any) {
     return this._addListener('scroll', handler);
   }
 
   /**
    * @private
    */
-  addTouchStartListener(handler) {
+  addTouchStartListener(handler: any) {
     return this._addListener('touchstart', handler);
   }
 
   /**
    * @private
    */
-  addTouchMoveListener(handler) {
+  addTouchMoveListener(handler: any) {
     return this._addListener('touchmove', handler);
   }
 
   /**
    * @private
    */
-  addTouchEndListener(handler) {
+  addTouchEndListener(handler: any) {
     return this._addListener('touchend', handler);
   }
 
   /**
    * @private
    */
-  addMouseDownListener(handler) {
+  addMouseDownListener(handler: any) {
     return this._addListener('mousedown', handler);
   }
 
   /**
    * @private
    */
-  addMouseUpListener(handler) {
+  addMouseUpListener(handler: any) {
     return this._addListener('mouseup', handler);
   }
 
   /**
    * @private
    */
-  addMouseMoveListener(handler) {
+  addMouseMoveListener(handler: any) {
     return this._addListener('mousemove', handler);
   }
 
@@ -177,8 +177,8 @@ export class Content extends Ion {
    * @param {Function} callback The method you want perform when scrolling has ended
    */
   onScrollEnd(callback: Function) {
-    let lastScrollTop = null;
-    let framesUnchanged = 0;
+    let lastScrollTop: number = null;
+    let framesUnchanged: number = 0;
     let _scrollEle = this._scrollEle;
 
     function next() {
@@ -187,6 +187,7 @@ export class Content extends Ion {
 
         if (Math.round(lastScrollTop) === Math.round(currentScrollTop)) {
           framesUnchanged++;
+
         } else {
           framesUnchanged = 0;
         }
@@ -217,10 +218,10 @@ export class Content extends Ion {
    * Scroll to the specified position.
    *
    * ```ts
-   * import {ViewChild} from '@angular/core';
+   * import {Component, ViewChild} from '@angular/core';
    * import {Content} from 'ionic-angular';
    *
-   * @Page({
+   * @Component({
    *   template: `<ion-content>
    *                <button (click)="scrollTo()">Down 500px</button>
    *              </ion-content>`
@@ -248,10 +249,10 @@ export class Content extends Ion {
    * Scroll to the top of the content component.
    *
    * ```ts
-   * import {ViewChild} from '@angular/core';
+   * import {Component, ViewChild} from '@angular/core';
    * import {Content} from 'ionic-angular';
    *
-   * @Page({
+   * @Component({
    *   template: `<ion-content>
    *                <button (click)="scrollToTop()">Scroll to top</button>
    *              </ion-content>`

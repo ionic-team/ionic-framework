@@ -1,9 +1,12 @@
-import {App, Page, MenuController} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap, MenuController} from 'ionic-angular';
 
-@Page({templateUrl: 'page1.html'})
+
+@Component({templateUrl: 'page1.html'})
 class Page1 {
-  constructor(menu: MenuController) {
-    this.menu = menu;
+  activeMenu: string;
+
+  constructor(public menu: MenuController) {
     this.menu1Active();
   }
   menu1Active() {
@@ -18,11 +21,11 @@ class Page1 {
   }
 }
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class ApiDemoApp {
-  constructor() {
-    this.rootView = Page1;
-  }
+  root = Page1;
 }
+
+ionicBootstrap(ApiDemoApp);

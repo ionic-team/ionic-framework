@@ -1,11 +1,12 @@
-import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type} from '@angular/core';
+import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type, EventEmitter} from '@angular/core';
 
+import {addSelector} from '../../config/bootstrap';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {Ion} from '../ion';
-import {IonicApp} from '../app/app';
+import {isBlank, pascalCaseToDashCase} from '../../util/util';
 import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
-import {pascalCaseToDashCase, isBlank} from '../../util/util';
 import {MenuController} from '../menu/menu-controller';
 import {NavPortal} from './nav-portal';
 import {SwipeBackGesture} from './swipe-back';
@@ -59,12 +60,9 @@ import {ViewController} from './view-controller';
  *
  *
  * ## Page creation
- * _For more information on the `@Page` decorator see the [@Page API
- * reference](../../../decorators/Page/)._
- *
  * Pages are created when they are added to the navigation stack.  For methods
  * like [push()](#push), the NavController takes any component class that is
- * decorated with `@Page` as its first argument.  The NavController then
+ * decorated with `@Component` as its first argument.  The NavController then
  * compiles that component, adds it to the app and animates it into view.
  *
  * By default, pages are cached and left in the DOM if they are navigated away
@@ -75,17 +73,19 @@ import {ViewController} from './view-controller';
  *
  * ## Lifecycle events
  * Lifecycle events are fired during various stages of navigation.  They can be
- * defined in any `@Page` decorated component class.
+ * defined in any component type which is pushed/popped from a `NavController`.
  *
  * ```ts
- * @Page({
+ * import {Component} from '@angular/core';
+ *
+ * @Component({
  *   template: 'Hello World'
  * })
  * class HelloWorld {
- *   onPageLoaded() {
+ *   ionViewLoaded() {
  *     console.log("I'm alive!");
  *   }
- *   onPageWillLeave() {
+ *   ionViewWillLeave() {
  *     console.log("Looks like I'm about to leave :(");
  *   }
  * }
@@ -93,13 +93,13 @@ import {ViewController} from './view-controller';
  *
  *  | Page Event         | Description                                                                                                                                                                                                                                                                       |
  *  |--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
- *  | `onPageLoaded`     | Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `onPageLoaded` event is good place to put your setup code for the page. |
- *  | `onPageWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                  |
- *  | `onPageDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                            |
- *  | `onPageWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                            |
- *  | `onPageDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                                         |
- *  | `onPageWillUnload` | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                                        |
- *  | `onPageDidUnload`  | Runs after the page has been destroyed and its elements have been removed.
+ *  | `ionViewLoaded`     | Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewLoaded` event is good place to put your setup code for the page. |
+ *  | `ionViewWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                  |
+ *  | `ionViewDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                            |
+ *  | `ionViewWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                            |
+ *  | `ionViewDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                                         |
+ *  | `ionViewWillUnload` | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                                        |
+ *  | `ionViewDidUnload`  | Runs after the page has been destroyed and its elements have been removed.
  *
  *
  * ## Nav Transition Promises
@@ -144,13 +144,13 @@ import {ViewController} from './view-controller';
  * Some methods on `NavController` allow for customizing the current transition.
  * To do this, we can pass an object with the modified properites.
  *
- * | Property  | Value     | Description                                          |
- * |-----------|-----------|------------------------------------------------------|
- * | animate   | `boolean` | Whether or not the transition should animate         |
- * | animation | `string`  | What kind of animation should be used                |
- * | direction | `string`  | The direction the page should animate                |
- * | duration  | `number`  | The length in milliseconds the animation should take |
- * | easing    | `string`  | The easing for the animation                         |
+ * | Property  | Value     | Description                                                                                                |
+ * |-----------|-----------|------------------------------------------------------------------------------------------------------------|
+ * | animate   | `boolean` | Whether or not the transition should animate.                                                              |
+ * | animation | `string`  | What kind of animation should be used.                                                                     |
+ * | direction | `string`  | The conceptual direction the user is navigating. For example, is the user navigating `forward`, or `back`? |
+ * | duration  | `number`  | The length in milliseconds the animation should take.                                                      |
+ * | easing    | `string`  | The easing for the animation.                                                                              |
  *
  *
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
@@ -169,7 +169,15 @@ export class NavController extends Ion {
   protected _ids: number = -1;
   protected _trnsDelay: any;
   protected _trnsTime: number = 0;
-  protected _views: Array<ViewController> = [];
+  protected _views: ViewController[] = [];
+
+  viewDidLoad: EventEmitter<any>;
+  viewWillEnter: EventEmitter<any>;
+  viewDidEnter: EventEmitter<any>;
+  viewWillLeave: EventEmitter<any>;
+  viewDidLeave: EventEmitter<any>;
+  viewWillUnload: EventEmitter<any>;
+  viewDidUnload: EventEmitter<any>;
 
   /**
    * @private
@@ -203,7 +211,7 @@ export class NavController extends Ion {
 
   constructor(
     parent: any,
-    protected _app: IonicApp,
+    protected _app: App,
     config: Config,
     protected _keyboard: Keyboard,
     elementRef: ElementRef,
@@ -227,6 +235,14 @@ export class NavController extends Ion {
     this.providers = ReflectiveInjector.resolve([
       provide(NavController, {useValue: this})
     ]);
+
+    this.viewDidLoad = new EventEmitter();
+    this.viewWillEnter = new EventEmitter();
+    this.viewDidEnter = new EventEmitter();
+    this.viewWillLeave = new EventEmitter();
+    this.viewDidLeave = new EventEmitter();
+    this.viewWillUnload = new EventEmitter();
+    this.viewDidUnload = new EventEmitter();
   }
 
   /**
@@ -260,7 +276,7 @@ export class NavController extends Ion {
    *
    *
    *```ts
-   * import {Page, NavController} from 'ionic-angular'
+   * import {NavController} from 'ionic-angular'
    * import {Detail} from '../detail/detail'
    * import {Info} from '../info/info'
    *
@@ -284,7 +300,7 @@ export class NavController extends Ion {
    *
    *
    * ```ts
-   * import {Page, NavController} from 'ionic-angular'
+   * import {NavController} from 'ionic-angular'
    * import {Detail} from '../detail/detail'
    *
    *  export class Home {
@@ -304,7 +320,7 @@ export class NavController extends Ion {
    *
    *
    * ```ts
-   * import {Page, NavController} from 'ionic-angular';
+   * import {NavController} from 'ionic-angular';
    * import {Info} from '../info/info';
    * import {List} from '../list/list';
    * import {Detail} from '../detail/detail';
@@ -340,19 +356,6 @@ export class NavController extends Ion {
       opts = {};
     }
 
-    // deprecated warning
-    pages.forEach(pg => {
-      if (pg['componentType']) {
-        pg.page = pg['componentType'];
-        console.warn('setPages() now uses "page" instead of "componentType" in the array of pages. ' +
-                     'What was: setPages([{componentType: About}, {componentType: Contact}]) is now: setPages([{page: About}, {page: Contact}])');
-
-      } else if (!pg['page']) {
-        console.error('setPages() now requires an object containing "page" and optionally "params" in the array of pages. ' +
-                     'What was: setPages([About, Contact]) is now: setPages([{page: About}, {page: Contact}])');
-      }
-    });
-
     // remove existing views
     let leavingView = this._remove(0, this._views.length);
 
@@ -368,7 +371,7 @@ export class NavController extends Ion {
     // set the nav direction to "back" if it wasn't set
     opts.direction = opts.direction || 'back';
 
-    let resolve;
+    let resolve: any;
     let promise = new Promise(res => { resolve = res; });
 
     // start the transition, fire resolve when done...
@@ -451,12 +454,13 @@ export class NavController extends Ion {
   }
 
   /**
-   * Present is how app display overlays on top of the content, from within the
+   * Present is how an app display overlays on top of the content, from within the
    * root level `NavController`. The `present` method is used by overlays, such
    * as `ActionSheet`, `Alert`, and `Modal`. The main difference between `push`
    * and `present` is that `present` takes a `ViewController` instance, whereas
-   * `push` takes a `Page` component class. Additionally, `present` will place
-   * the overlay in the root NavController's stack.
+   * `push` takes a component class which hasn't been instantiated yet.
+   * Additionally, `present` will place the overlay in the root NavController's
+   * stack.
    *
    * ```ts
    * class MyClass{
@@ -505,9 +509,11 @@ export class NavController extends Ion {
     enteringView.setLeavingOpts({
       keyboardClose: false,
       direction: 'back',
-      animation: enteringView.getTransitionName('back')
+      animation: enteringView.getTransitionName('back'),
+      ev: opts.ev
     });
 
+    // present() always uses the root nav
     // start the transition
     return rootNav._insertViews(-1, [enteringView], opts);
   }
@@ -572,7 +578,7 @@ export class NavController extends Ion {
     return this._insertViews(insertIndex, views, opts);
   }
 
-  private _insertViews(insertIndex: number, insertViews: Array<ViewController>, opts?: NavOptions): Promise<any> {
+  private _insertViews(insertIndex: number, insertViews: ViewController[], opts?: NavOptions): Promise<any> {
     if (!insertViews || !insertViews.length) {
       return Promise.reject('invalid pages');
     }
@@ -593,7 +599,7 @@ export class NavController extends Ion {
       opts.animation = enteringView.getTransitionName(opts.direction);
     }
 
-    let resolve;
+    let resolve: any;
     let promise = new Promise(res => { resolve = res; });
 
     // it's possible that the newly added view doesn't need to
@@ -739,6 +745,10 @@ export class NavController extends Ion {
    */
   popTo(view: ViewController, opts?: NavOptions): Promise<any> {
     let startIndex = this.indexOf(view);
+    if (startIndex < 0) {
+      return Promise.reject('View not found to pop to');
+    }
+
     let activeView = this.getByState(STATE_TRANS_ENTER) ||
                      this.getByState(STATE_INIT_ENTER) ||
                      this.getActive();
@@ -818,10 +828,12 @@ export class NavController extends Ion {
             if (!parentNav['_tabs']) {
               // Tabs can be a parent, but it is not a collection of views
               // only we're looking for an actual NavController w/ stack of views
-              leavingView.willLeave();
+              leavingView.fireWillLeave();
+              this.viewWillLeave.emit(leavingView);
 
               return parentNav.pop(opts).then((rtnVal: boolean) => {
-                leavingView.didLeave();
+                leavingView.fireDidLeave();
+                this.viewDidLeave.emit(leavingView);
                 return rtnVal;
               });
             }
@@ -836,7 +848,7 @@ export class NavController extends Ion {
         return Promise.resolve(false);
       }
 
-      let resolve;
+      let resolve: any;
       let promise = new Promise(res => { resolve = res; });
 
       if (!opts.animation) {
@@ -918,7 +930,8 @@ export class NavController extends Ion {
       // set that it is the init leaving view
       // the first view to be removed, it should init leave
       view.state = STATE_INIT_LEAVE;
-      view.willUnload();
+      view.fireWillUnload();
+      this.viewWillUnload.emit(view);
 
       // from the index of the leaving view, go backwards and
       // find the first view that is inactive so it can be the entering
@@ -951,8 +964,10 @@ export class NavController extends Ion {
     // remove views that have been set to be removed, but not
     // apart of any transitions that will eventually happen
     this._views.filter(v => v.state === STATE_REMOVE).forEach(view => {
-      view.willLeave();
-      view.didLeave();
+      view.fireWillLeave();
+      this.viewWillLeave.emit(view);
+      view.fireDidLeave();
+      this.viewDidLeave.emit(view);
       this._views.splice(this.indexOf(view), 1);
       view.destroy();
     });
@@ -986,7 +1001,8 @@ export class NavController extends Ion {
     if (!enteringView) {
       // if no entering view then create a bogus one
       enteringView = new ViewController();
-      enteringView.loaded();
+      enteringView.fireLoaded();
+      this.viewDidLoad.emit(enteringView);
     }
 
     /* Async steps to complete a transition
@@ -1016,7 +1032,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _render(transId, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
+  private _render(transId: number, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
     // compile/load the view into the DOM
 
     if (enteringView.state === STATE_INACTIVE) {
@@ -1042,19 +1058,9 @@ export class NavController extends Ion {
       this.setTransitioning(true, 500);
 
       this.loadPage(enteringView, null, opts, () => {
-        if (enteringView.onReady) {
-          // this entering view needs to wait for it to be ready
-          // this is used by Tabs to wait for the first page of
-          // the first selected tab to be loaded
-          enteringView.onReady(() => {
-            enteringView.loaded();
-            this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
-          });
-
-        } else {
-          enteringView.loaded();
-          this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
-        }
+        enteringView.fireLoaded();
+        this.viewDidLoad.emit(enteringView);
+        this._postRender(transId, enteringView, leavingView, isAlreadyTransitioning, opts, done);
       });
     }
   }
@@ -1062,7 +1068,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _postRender(transId, enteringView: ViewController, leavingView: ViewController, isAlreadyTransitioning: boolean, opts: NavOptions, done: Function) {
+  private _postRender(transId: number, enteringView: ViewController, leavingView: ViewController, isAlreadyTransitioning: boolean, opts: NavOptions, done: Function) {
     // called after _render has completed and the view is compiled/loaded
 
     if (enteringView.state === STATE_INACTIVE) {
@@ -1112,13 +1118,15 @@ export class NavController extends Ion {
       if (leavingView.fireOtherLifecycles) {
         // only fire entering lifecycle if the leaving
         // view hasn't explicitly set not to
-        enteringView.willEnter();
+        enteringView.fireWillEnter();
+        this.viewWillEnter.emit(enteringView);
       }
 
       if (enteringView.fireOtherLifecycles) {
         // only fire leaving lifecycle if the entering
         // view hasn't explicitly set not to
-        leavingView.willLeave();
+        leavingView.fireWillLeave();
+        this.viewWillLeave.emit(leavingView);
       }
 
     } else {
@@ -1157,7 +1165,8 @@ export class NavController extends Ion {
         duration: opts.duration,
         easing: opts.easing,
         renderDelay: opts.transitionDelay || this._trnsDelay,
-        isRTL: this.config.platform.isRTL()
+        isRTL: this.config.platform.isRTL(),
+        ev: opts.ev,
       };
 
       let transAnimation = Transition.createTransition(enteringView,
@@ -1223,13 +1232,15 @@ export class NavController extends Ion {
         if (leavingView.fireOtherLifecycles) {
           // only fire entering lifecycle if the leaving
           // view hasn't explicitly set not to
-          enteringView.didEnter();
+          enteringView.fireDidEnter();
+          this.viewDidEnter.emit(enteringView);
         }
 
         if (enteringView.fireOtherLifecycles) {
           // only fire leaving lifecycle if the entering
           // view hasn't explicitly set not to
-          leavingView.didLeave();
+          leavingView.fireDidLeave();
+          this.viewDidLeave.emit(leavingView);
         }
       }
 
@@ -1432,63 +1443,72 @@ export class NavController extends Ion {
       return;
     }
 
+    // add more providers to just this page
     let providers = this.providers.concat(ReflectiveInjector.resolve([
       provide(ViewController, {useValue: view}),
       provide(NavParams, {useValue: view.getNavParams()})
     ]));
 
+    // automatically set "ion-page" selector
+    addSelector(view.componentType, 'ion-page');
+
     // load the page component inside the nav
     this._loader.loadNextToLocation(view.componentType, this._viewport, providers).then(component => {
-      // the ElementRef of the actual ion-page created
-      let pageElementRef = component.location;
 
       // a new ComponentRef has been created
       // set the ComponentRef's instance to its ViewController
       view.setInstance(component.instance);
 
-      // remember the ChangeDetectorRef for this ViewController
-      view.setChangeDetector(component.changeDetectorRef);
+      // the component has been loaded, so call the view controller's loaded method to load any dependencies into the dom
+      view.loaded( () => {
 
-      // remember the ElementRef to the ion-page elementRef that was just created
-      view.setPageRef(pageElementRef);
+        // the ElementRef of the actual ion-page created
+        let pageElementRef = component.location;
 
-      // auto-add page css className created from component JS class name
-      let cssClassName = pascalCaseToDashCase(view.componentType['name']);
-      this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
+        // remember the ChangeDetectorRef for this ViewController
+        view.setChangeDetector(component.changeDetectorRef);
 
-      view.onDestroy(() => {
-        // ensure the element is cleaned up for when the view pool reuses this element
-        this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
-        this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
-        component.destroy();
-      });
+        // remember the ElementRef to the ion-page elementRef that was just created
+        view.setPageRef(pageElementRef);
 
-      if (!navbarContainerRef) {
-        // there was not a navbar container ref already provided
-        // so use the location of the actual navbar template
-        navbarContainerRef = view.getNavbarViewRef();
-      }
-
-      // find a navbar template if one is in the page
-      let navbarTemplateRef = view.getNavbarTemplateRef();
-
-      // check if we have both a navbar ViewContainerRef and a template
-      if (navbarContainerRef && navbarTemplateRef) {
-        // let's now create the navbar view
-        let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
+        // auto-add page css className created from component JS class name
+        let cssClassName = pascalCaseToDashCase(view.componentType['name']);
+        this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
 
         view.onDestroy(() => {
-          // manually destroy the navbar when the page is destroyed
-          navbarViewRef.destroy();
+          // ensure the element is cleaned up for when the view pool reuses this element
+          this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
+          this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
+          component.destroy();
         });
-      }
 
-      // options may have had a postLoad method
-      // used mainly by tabs
-      opts.postLoad && opts.postLoad(view);
+        if (!navbarContainerRef) {
+          // there was not a navbar container ref already provided
+          // so use the location of the actual navbar template
+          navbarContainerRef = view.getNavbarViewRef();
+        }
 
-      // our job is done here
-      done(view);
+        // find a navbar template if one is in the page
+        let navbarTemplateRef = view.getNavbarTemplateRef();
+
+        // check if we have both a navbar ViewContainerRef and a template
+        if (navbarContainerRef && navbarTemplateRef) {
+          // let's now create the navbar view
+          let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
+
+          view.onDestroy(() => {
+            // manually destroy the navbar when the page is destroyed
+            navbarViewRef.destroy();
+          });
+        }
+
+        // options may have had a postLoad method
+        // used mainly by tabs
+        opts.postLoad && opts.postLoad(view);
+
+        // our job is done here
+        done(view);
+      });
     });
   }
 
@@ -1736,7 +1756,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _setZIndex(enteringView: ViewController, leavingView: ViewController, direction) {
+  private _setZIndex(enteringView: ViewController, leavingView: ViewController, direction: string) {
     if (enteringView) {
       // get the leaving view, which could be in various states
       if (!leavingView || !leavingView.isLoaded()) {
@@ -1779,6 +1799,7 @@ export interface NavOptions {
   postLoad?: Function;
   progressAnimation?: boolean;
   climbNav?: boolean;
+  ev?: any;
 }
 
 const STATE_ACTIVE = 'active';

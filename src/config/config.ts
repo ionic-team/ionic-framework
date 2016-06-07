@@ -17,66 +17,57 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * You can set the tab placement, icon mode, animations, and more here.
  *
  * ```ts
- * @App({
- *   template: `<ion-nav [root]="root"></ion-nav>`
- *   config: {
- *     backButtonText: 'Go Back',
- *     iconMode: 'ios',
- *     modalEnter: 'modal-slide-in',
- *     modalLeave: 'modal-slide-out',
- *     tabbarPlacement: 'bottom',
- *     pageTransition: 'ios',
- *   }
- * })
+ * import {ionicBootstrap} from 'ionic-angular';
+ *
+ * ionicBootstrap(AppRoot, customProviders, {
+ *   backButtonText: 'Go Back',
+ *   iconMode: 'ios',
+ *   modalEnter: 'modal-slide-in',
+ *   modalLeave: 'modal-slide-out',
+ *   tabbarPlacement: 'bottom',
+ *   pageTransition: 'ios',
+ * });
  * ```
  *
- * To change the mode to always use Material Design (md).
+ *
+ * Config can be overwritten at multiple levels allowing for more granular configuration.
+ * Below is an example where an app can override any setting we want based on a platform.
  *
  * ```ts
- * @App({
- *   template: `<ion-nav [root]="root"></ion-nav>`
- *   config: {
- *     mode: 'md'
+ * import {ionicBootstrap} from 'ionic-angular';
+ *
+ * ionicBootstrap(AppRoot, customProviders, {
+ *   tabbarPlacement: 'bottom',
+ *   platforms: {
+ *   ios: {
+ *     tabbarPlacement: 'top',
  *   }
- * })
+ * });
  * ```
  *
- * Config can be overwritten at multiple levels allowing for more configuration. Taking the example from earlier, we can override any setting we want based on a platform.
- * ```ts
- * @App({
- *   template: `<ion-nav [root]="root"></ion-nav>`
- *   config: {
- *     tabbarPlacement: 'bottom',
- *     platforms: {
- *      ios: {
- *        tabbarPlacement: 'top',
- *      }
- *     }
- *   }
- * })
- * ```
- *
- * We could also configure these values at a component level. Take `tabbarPlacement`, we can configure this as a property on our `ion-tabs`.
+ * We could also configure these values at a component level. Take `tabbarPlacement`,
+ * we can configure this as a property on our `ion-tabs`.
  *
  * ```html
  * <ion-tabs tabbarPlacement="top">
- *    <ion-tab tabTitle="Dash" tabIcon="pulse" [root]="tabRoot"></ion-tab>
- *  </ion-tabs>
+ *   <ion-tab tabTitle="Dash" tabIcon="pulse" [root]="tabRoot"></ion-tab>
+ * </ion-tabs>
  * ```
  *
- * The last way we could configure is through URL query strings. This is useful for testing while in the browser.
- * Simply add `?ionic<PROPERTYNAME>=<value>` to the url.
+ * The last way we could configure is through URL query strings. This is useful for testing
+ * while in the browser. Simply add `?ionic<PROPERTYNAME>=<value>` to the url.
  *
  * ```bash
  * http://localhost:8100/?ionicTabbarPlacement=bottom
  * ```
  *
- * Custom values can be added to config, and looked up at a later point in time.
+ * Any value can be added to config, and looked up at a later in any component.
  *
- * ``` javascript
+ * ```js
  * config.set('ios', 'favoriteColor', 'green');
+ *
  * // from any page in your app:
- * config.get('favoriteColor'); // 'green'
+ * config.get('favoriteColor'); // 'green' when iOS
  * ```
  *
  *
@@ -105,6 +96,9 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * | `pageTransitionDelay`    | `number`            | The delay in milliseconds before the transition starts while changing pages.                                                                     |
  * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
  * | `pickerLeave`            | `string`            | The name of the transition to use while a picker is dismissed.                                                                                   |
+ * | `popoverEnter`           | `string`            | The name of the transition to use while a popover is presented.                                                                                  |
+ * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.                                                                                  |
+ * | `prodMode`               | `boolean`           | Disable development mode, which turns off assertions and other checks within the framework. One important assertion this disables verifies that a change detection pass does not result in additional changes to any bindings (also known as unidirectional data flow).
  * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
  * | `tabbarHighlight`        | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
  * | `tabbarLayout`           | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-left"`, `"icon-right"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.  |
@@ -123,7 +117,7 @@ export class Config {
    */
   platform: Platform;
 
-  constructor(config?) {
+  constructor(config?: any) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
   }
 
@@ -150,13 +144,13 @@ export class Config {
       // the user config's platforms, which already contains
       // settings from default platform configs
 
-      let userPlatformValue = undefined;
-      let userDefaultValue = this._s[key];
-      let userPlatformModeValue = undefined;
-      let userDefaultModeValue = undefined;
-      let platformValue = undefined;
-      let platformModeValue = undefined;
-      let configObj = null;
+      let userPlatformValue: any = undefined;
+      let userDefaultValue: any = this._s[key];
+      let userPlatformModeValue: any = undefined;
+      let userDefaultModeValue: any = undefined;
+      let platformValue: any = undefined;
+      let platformModeValue: any = undefined;
+      let configObj: any = null;
 
       if (this.platform) {
         let queryStringValue = this.platform.query('ionic' + key.toLowerCase());
@@ -229,7 +223,7 @@ export class Config {
     // or it was from the users platform configs
     // or it was from the default platform configs
     // in that order
-    let rtnVal;
+    let rtnVal: any;
     if (isFunction(this._c[key])) {
       rtnVal = this._c[key](this.platform);
 
@@ -351,24 +345,24 @@ export class Config {
   /**
    * @private
    */
-  setPlatform(platform) {
+  setPlatform(platform: Platform) {
     this.platform = platform;
   }
 
   /**
    * @private
    */
-  static setModeConfig(mode, config) {
+  static setModeConfig(mode: string, config: any) {
     modeConfigs[mode] = config;
   }
 
   /**
    * @private
    */
-  static getModeConfig(mode) {
+  static getModeConfig(mode: string) {
     return modeConfigs[mode] || null;
   }
 
 }
 
-let modeConfigs = {};
+let modeConfigs: any = {};

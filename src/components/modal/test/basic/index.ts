@@ -1,7 +1,8 @@
-import {App, Page, Config, Platform} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, Config, Platform} from '../../../../../src';
 import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../src';
 
-@Page({
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
@@ -68,10 +69,55 @@ class E2EPage {
       animation: 'my-fade-in'
     });
   }
+
+  presentNavigableModal(){
+    let modal = Modal.create(NavigableModal);
+    this.nav.present(modal);
+    //this.nav.push(NavigableModal);
+  }
+}
+
+@Component({
+  template: `
+  <ion-navbar *navbar>
+    <ion-title>Page One</ion-title>
+  </ion-navbar>
+  <ion-content>
+    <button full (click)="submit()">Submit</button>
+  </ion-content>
+  `
+})
+class NavigableModal{
+  constructor(private navController:NavController){
+  }
+
+  submit(){
+    this.navController.push(NavigableModal2);
+  }
+}
+
+@Component({
+  template: `
+  <ion-navbar *navbar>
+    <ion-title>Page Two</ion-title>
+  </ion-navbar>
+  <ion-content>
+    <button full (click)="submit()">Submit</button>
+  </ion-content>
+  `
+})
+class NavigableModal2{
+  constructor(private navController:NavController){
+  }
+
+  submit(){
+    this.navController.pop();
+  }
 }
 
 
-@Page({
+
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Data in/out</ion-title>
@@ -105,25 +151,29 @@ class ModalPassData {
     this.viewCtrl.dismiss(this.data);
   }
 
-  onPageWillEnter(){
-    console.log("ModalPassData onPagewillEnter fired");
+  ionViewLoaded(){
+    console.log("ModalPassData ionViewLoaded fired");
   }
 
-  onPageDidEnter(){
-    console.log("ModalPassData onPageDidEnter fired");
+  ionViewWillEnter(){
+    console.log("ModalPassData ionViewWillEnter fired");
   }
 
-  onPageWillLeave(){
-    console.log("ModalPassData onPageWillLeave fired");
+  ionViewDidEnter(){
+    console.log("ModalPassData ionViewDidEnter fired");
   }
 
-  onPageDidLeave(){
-    console.log("ModalPassData onPageDidLeave fired");
+  ionViewWillLeave(){
+    console.log("ModalPassData ionViewWillLeave fired");
+  }
+
+  ionViewDidLeave(){
+    console.log("ModalPassData ionViewDidLeave fired");
   }
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-toolbar primary>
       <ion-title>Toolbar 1</ion-title>
@@ -154,7 +204,7 @@ class ToolbarModal {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-toolbar secondary>
       <ion-buttons start>
@@ -206,7 +256,7 @@ class ModalWithInputs {
 }
 
 
-@Page({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ContactUs {
@@ -216,31 +266,31 @@ class ContactUs {
     console.log('ContactUs constructor');
     this.root = ModalFirstPage;
   }
-  onPageLoaded() {
-    console.log('ContactUs onPageLoaded');
+  ionViewLoaded() {
+    console.log('ContactUs ionViewLoaded');
   }
-  onPageWillEnter() {
-    console.log('ContactUs onPageWillEnter');
+  ionViewWillEnter() {
+    console.log('ContactUs ionViewWillEnter');
   }
-  onPageDidEnter() {
-    console.log('ContactUs onPageDidEnter');
+  ionViewDidEnter() {
+    console.log('ContactUs ionViewDidEnter');
   }
-  onPageWillLeave() {
-    console.log('ContactUs onPageWillLeave');
+  ionViewWillLeave() {
+    console.log('ContactUs ionViewWillLeave');
   }
-  onPageDidLeave() {
-    console.log('ContactUs onPageDidLeave');
+  ionViewDidLeave() {
+    console.log('ContactUs ionViewDidLeave');
   }
-  onPageWillUnload() {
-    console.log('ContactUs onPageWillUnload');
+  ionViewWillUnload() {
+    console.log('ContactUs ionViewWillUnload');
   }
-  onPageDidUnload() {
-    console.log('ContactUs onPageDidUnload');
+  ionViewDidUnload() {
+    console.log('ContactUs ionViewDidUnload');
   }
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>First Page Header</ion-title>
@@ -258,7 +308,7 @@ class ContactUs {
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <ion-list>
-        <ion-item *ngFor="#item of items">
+        <ion-item *ngFor="let item of items">
           Item Number: {{item.value}}
         </ion-item>
       </ion-list>
@@ -280,13 +330,24 @@ class ModalFirstPage {
   push() {
     let page = ModalSecondPage;
     let params = { id: 8675309, myData: [1,2,3,4] };
-    let opts = { animation: 'ios-transition' };
 
-    this.nav.push(page, params, opts);
+    this.nav.push(page, params);
   }
 
   dismiss() {
     this.nav.rootNav.pop();
+  }
+
+  ionViewLoaded(){
+    console.log("ModalFirstPage ionViewLoaded fired");
+  }
+
+  ionViewWillEnter(){
+    console.log("ModalFirstPage ionViewWillEnter fired");
+  }
+
+  ionViewDidEnter(){
+    console.log("ModalFirstPage ionViewDidEnter fired");
   }
 
   openActionSheet() {
@@ -337,7 +398,7 @@ class ModalFirstPage {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>Second Page Header</ion-title>
@@ -352,25 +413,32 @@ class ModalFirstPage {
   `
 })
 class ModalSecondPage {
-  constructor(
-    private nav: NavController,
-    params: NavParams
-  ) {
+  constructor(private nav: NavController, params: NavParams) {
     console.log('Second page params:', params);
+  }
+
+  ionViewLoaded(){
+    console.log("ModalSecondPage ionViewLoaded");
+  }
+
+  ionViewWillEnter(){
+    console.log("ModalSecondPage ionViewWillEnter");
+  }
+
+  ionViewDidEnter(){
+    console.log("ModalSecondPage ionViewDidEnter");
   }
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  root;
-
-  constructor() {
-    this.root = E2EPage;
-  }
+  root = E2EPage;
 }
+
+ionicBootstrap(E2EApp);
 
 
 class FadeIn extends Transition {

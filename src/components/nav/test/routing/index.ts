@@ -1,10 +1,10 @@
+import {Component} from '@angular/core';
 import {Routes} from '@angular/router';
 import {Location} from '@angular/common';
+import {ionicBootstrap, NavParams, ViewController} from '../../../../../src';
 
-import {App, Page, NavParams, ViewController} from '../../../../../src';
 
-
-@Page({templateUrl: 'view1.html'})
+@Component({templateUrl: 'view1.html'})
 class View1Cmp {
   path: string;
   windowHash: string;
@@ -14,13 +14,13 @@ class View1Cmp {
     console.log(`View1Cmp, path: ${this.path}`);
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     this.windowHash = window.location.hash;
   }
 }
 
 
-@Page({templateUrl: 'view2.html'})
+@Component({templateUrl: 'view2.html'})
 class View2Cmp {
   path: string;
   windowHash: string;
@@ -30,13 +30,13 @@ class View2Cmp {
     console.log(`View2Cmp, path: ${this.path}`);
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     this.windowHash = window.location.hash;
   }
 }
 
 
-@Page({templateUrl: 'view3.html'})
+@Component({templateUrl: 'view3.html'})
 class View3Cmp {
   id: string;
   path: string;
@@ -48,18 +48,20 @@ class View3Cmp {
     console.log(`View3Cmp, path: ${this.path}, param id: ${this.id}`);
   }
 
-  onPageDidEnter() {
+  ionViewDidEnter() {
     this.windowHash = window.location.hash;
   }
 }
 
 
-@App()
+@Component({})
 @Routes([
   { path: '/', component: View1Cmp },
   { path: '/2', component: View2Cmp },
   { path: '/3/:id', component: View3Cmp }
 ])
-class InboxApp {
+class E2EApp {
   constructor(private location: Location) {}
 }
+
+ionicBootstrap(E2EApp);

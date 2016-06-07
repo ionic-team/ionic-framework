@@ -21,7 +21,7 @@ import {NavRegistry} from './nav-registry';
  *
  * ```ts
  * import {LoginPage} from 'login';
- * @Page({
+ * @Component({
  *   template: `<button [navPush]="pushPage" [navParams]="params"></button>`
  * })
  * class MyPage {
@@ -52,14 +52,14 @@ import {NavRegistry} from './nav-registry';
 export class NavPush {
 
   /**
-  * @input {page} the page you want to push
+  * @input {Page} the page you want to push
   */
-  @Input() navPush;
+  @Input() navPush: any;
 
   /**
   * @input {any} Any parameters you want to pass along
   */
-  @Input() navParams;
+  @Input() navParams: any;
 
   constructor(
     @Optional() private _nav: NavController,
@@ -74,7 +74,7 @@ export class NavPush {
    * @private
    */
   onClick() {
-    let destination, params;
+    let destination: any, params: any;
 
     if (this.navPush instanceof Array) {
       if (this.navPush.length > 2) {

@@ -1,11 +1,12 @@
-import {App} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@App({
-    templateUrl: 'main.html'
+@Component({
+  templateUrl: 'main.html'
 })
-class E2EApp {
-    constructor() {
-        this.myValue = 'value';
-    }
+class E2EPage {
+  myValue = 'value';
 }
+
+ionicBootstrap(E2EPage);

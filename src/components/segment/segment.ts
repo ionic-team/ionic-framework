@@ -11,10 +11,10 @@ import {isTrueProperty, isPresent} from '../../util/util';
  * @usage
  * ```html
  * <ion-segment [(ngModel)]="relationship" primary>
- *   <ion-segment-button value="friends" (select)="selectedFriends()">
+ *   <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
  *     Friends
  *   </ion-segment-button>
- *   <ion-segment-button value="enemies" (select)="selectedEnemies()">
+ *   <ion-segment-button value="enemies" (ionSelect)="selectedEnemies()">
  *     Enemies
  *   </ion-segment-button>
  * </ion-segment>
@@ -66,7 +66,7 @@ export class SegmentButton {
   /**
    * @output {SegmentButton} expression to evaluate when a segment button has been clicked
    */
-  @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<SegmentButton> = new EventEmitter();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
@@ -94,10 +94,10 @@ export class SegmentButton {
    * @private
    * On click of a SegmentButton
    */
-  @HostListener('click', ['$event'])
-  private onClick(ev) {
+  @HostListener('click')
+  private onClick() {
     console.debug('SegmentButton, select', this.value);
-    this.select.emit(this);
+    this.ionSelect.emit(this);
   }
 
   /**
@@ -112,7 +112,7 @@ export class SegmentButton {
   /**
    * @private
    */
-  set isActive(isActive) {
+  set isActive(isActive: any) {
     this._renderer.setElementClass(this._elementRef.nativeElement, 'segment-activated', isActive);
     this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-pressed', isActive);
   }
@@ -130,7 +130,7 @@ export class SegmentButton {
  *
  * @usage
  * ```html
- * <ion-segment [(ngModel)]="relationship" (change)="onSegmentChanged($event)" danger>
+ * <ion-segment [(ngModel)]="relationship" (ionChange)="onSegmentChanged($event)" danger>
  *   <ion-segment-button value="friends">
  *     Friends
  *   </ion-segment-button>
@@ -178,7 +178,7 @@ export class Segment {
   /**
    * @output {Any}  expression to evaluate when a segment button has been changed
    */
-  @Output() change: EventEmitter<SegmentButton> = new EventEmitter();
+  @Output() ionChange: EventEmitter<SegmentButton> = new EventEmitter();
 
 
   /**
@@ -215,7 +215,7 @@ export class Segment {
    * @private
    * Write a new value to the element.
    */
-  writeValue(value) {
+  writeValue(value: any) {
     this.value = isPresent(value) ? value : '';
     if (this._buttons) {
       let buttons = this._buttons.toArray();
@@ -231,10 +231,10 @@ export class Segment {
   ngAfterViewInit() {
    let buttons = this._buttons.toArray();
    for (let button of buttons) {
-     button.select.subscribe((selectedButton) => {
+     button.ionSelect.subscribe((selectedButton: any) => {
        this.writeValue(selectedButton.value);
        this.onChange(selectedButton.value);
-       this.change.emit(selectedButton);
+       this.ionChange.emit(selectedButton);
      });
 
      if (isPresent(this.value)) {
@@ -251,22 +251,22 @@ export class Segment {
   /**
    * @private
    */
-  onChange = (_) => {};
+  onChange = (_: any) => {};
   /**
    * @private
    */
-  onTouched = (_) => {};
+  onTouched = (_: any) => {};
 
   /**
    * @private
    * Set the function to be called when the control receives a change event.
    */
-  registerOnChange(fn) { this.onChange = fn; }
+  registerOnChange(fn: any) { this.onChange = fn; }
 
   /**
    * @private
    * Set the function to be called when the control receives a touch event.
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
 }

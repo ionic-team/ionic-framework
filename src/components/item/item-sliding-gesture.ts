@@ -9,8 +9,8 @@ export class ItemSlidingGesture extends DragGesture {
   canDrag: boolean = true;
   data = {};
   openItems: number = 0;
-  onTap;
-  onMouseOut;
+  onTap: any;
+  onMouseOut: any;
   preventDrag: boolean = false;
   dragEnded: boolean = true;
 
@@ -22,7 +22,7 @@ export class ItemSlidingGesture extends DragGesture {
 
     this.listen();
 
-    this.onTap = (ev) => {
+    this.onTap = (ev: UIEvent) => {
       if (!isFromOptionButtons(ev.target)) {
         let didClose = this.closeOpened();
         if (didClose) {
@@ -32,7 +32,7 @@ export class ItemSlidingGesture extends DragGesture {
       }
     };
 
-    this.onMouseOut = (ev) => {
+    this.onMouseOut = (ev: any) => {
       if (ev.target.tagName === 'ION-ITEM-SLIDING') {
         console.debug('tap close sliding item');
         this.onDragEnd(ev);
@@ -40,7 +40,7 @@ export class ItemSlidingGesture extends DragGesture {
     };
   }
 
-  onDragStart(ev): boolean {
+  onDragStart(ev: any): boolean {
     let itemContainerEle = getItemContainer(ev.target);
     if (!itemContainerEle) {
       console.debug('onDragStart, no itemContainerEle');
@@ -70,7 +70,7 @@ export class ItemSlidingGesture extends DragGesture {
     return true;
   }
 
-  onDrag(ev): boolean {
+  onDrag(ev: any): boolean {
     if (this.dragEnded || this.preventDrag || Math.abs(ev.deltaY) > 30) {
       console.debug('onDrag preventDrag, dragEnded:', this.dragEnded, 'preventDrag:', this.preventDrag, 'ev.deltaY:', Math.abs(ev.deltaY));
       this.preventDrag = true;
@@ -116,7 +116,7 @@ export class ItemSlidingGesture extends DragGesture {
     });
   }
 
-  onDragEnd(ev) {
+  onDragEnd(ev: any) {
     this.preventDrag = false;
     this.dragEnded = true;
 
@@ -165,7 +165,7 @@ export class ItemSlidingGesture extends DragGesture {
     return didClose;
   }
 
-  open(itemContainerEle, openAmount, isFinal) {
+  open(itemContainerEle: any, openAmount: number, isFinal: boolean) {
     let slidingEle = itemContainerEle.querySelector('ion-item,[ion-item]');
     if (!slidingEle) {
       console.debug('open, no slidingEle, openAmount:', openAmount);
@@ -203,15 +203,15 @@ export class ItemSlidingGesture extends DragGesture {
     }
   }
 
-  getOpenAmount(itemContainerEle) {
+  getOpenAmount(itemContainerEle: any) {
     return this.get(itemContainerEle).openAmount || 0;
   }
 
-  get(itemContainerEle) {
+  get(itemContainerEle: any) {
     return this.data[itemContainerEle && itemContainerEle.$ionSlide] || {};
   }
 
-  set(itemContainerEle, key, value) {
+  set(itemContainerEle: any, key: any, value: any) {
     if (!this.data[itemContainerEle.$ionSlide]) {
       this.data[itemContainerEle.$ionSlide] = {};
     }
@@ -224,32 +224,32 @@ export class ItemSlidingGesture extends DragGesture {
   }
 }
 
-function isItemActive(ele, isActive) {
+function isItemActive(ele: any, isActive: boolean) {
   ele.classList[isActive ? 'add' : 'remove']('active-slide');
   ele.classList[isActive ? 'add' : 'remove']('active-options');
 }
 
-function preventDefault(ev) {
+function preventDefault(ev: any) {
   console.debug('sliding item preventDefault', ev.type);
   ev.preventDefault();
 }
 
-function getItemContainer(ele) {
+function getItemContainer(ele: any) {
   return closest(ele, 'ion-item-sliding', true);
 }
 
-function isFromOptionButtons(ele) {
+function isFromOptionButtons(ele: any) {
   return !!closest(ele, 'ion-item-options', true);
 }
 
-function getOptionsWidth(itemContainerEle) {
+function getOptionsWidth(itemContainerEle: any) {
   let optsEle = itemContainerEle.querySelector('ion-item-options');
   if (optsEle) {
     return optsEle.offsetWidth;
   }
 }
 
-function isActive(itemContainerEle) {
+function isActive(itemContainerEle: any) {
   return itemContainerEle.classList.contains('active-slide');
 }
 

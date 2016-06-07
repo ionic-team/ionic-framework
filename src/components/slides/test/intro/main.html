@@ -8,7 +8,7 @@
 </ion-navbar>
 
 <ion-content>
-  <ion-slides pager [options]="mySlideOptions" (didChange)="onSlideChanged($event)" (willChange)="onSlideChangeStart($event)" (move)="onSlideMove($event)">
+  <ion-slides pager [options]="mySlideOptions" (ionDidChange)="onSlideChanged($event)" (ionWillChange)="onSlideChangeStart($event)" (ionDrag)="onSlideMove($event)">
     <ion-slide>
       <h3>Thank you for choosing the Awesome App!</h3>
       <div id="logo">
@@ -29,8 +29,9 @@
            <li>There is no step 3</li>
          </ol>
        </div>
+       <button (click)="toggleLastSlide()">Toggle Last Slide</button>
     </ion-slide>
-    <ion-slide>
+    <ion-slide *ngIf="showSlide">
       <h3>Any questions?</h3>
     </ion-slide>
   </ion-slides>

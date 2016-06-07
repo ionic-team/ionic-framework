@@ -145,7 +145,7 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * and `23` means `11pm`.
  *
  * It's also important to note that neither the `displayFormat` or `pickerFormat` can
- * set the datetime value's output, which is the value that sent the the component's
+ * set the datetime value's output, which is the value that is set by the component's
  * `ngModel`. The format's are merely for displaying the value as text and the picker's
  * interface, but the datetime's value is always persisted as a valid ISO 8601 datetime
  * string.
@@ -193,14 +193,14 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * ### App Config Level
  *
  * ```ts
- * @App({
- *   config: {
- *     monthNames: ['janeiro', 'fevereiro', 'mar\u00e7o', ... ],
- *     monthShortNames: ['jan', 'fev', 'mar', ... ],
- *     dayNames: ['domingo', 'segunda-feira', 'ter\u00e7a-feira', ... ],
- *     dayShortNames: ['dom', 'seg', 'ter', ... ],
- *   }
- * })
+ * import {ionicBootstrap} from 'ionic-angular';
+ *
+ * ionicBootstrap(MyApp, customProviders, {
+ *   monthNames: ['janeiro', 'fevereiro', 'mar\u00e7o', ... ],
+ *   monthShortNames: ['jan', 'fev', 'mar', ... ],
+ *   dayNames: ['domingo', 'segunda-feira', 'ter\u00e7a-feira', ... ],
+ *   dayShortNames: ['dom', 'seg', 'ter', ... ],
+ * });
  * ```
  *
  * ### Component Input Level
@@ -359,7 +359,7 @@ export class DateTime {
 
   /**
    * @input {array | string} Values used to create the list of selectable hours. By default
-   * the hour values range from `1` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
+   * the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
    * to control exactly which hours to display, the `hourValues` input can take either an
    * array of numbers, or string of comma separated numbers.
    */
@@ -407,12 +407,12 @@ export class DateTime {
   /**
    * @output {any} Any expression to evaluate when the datetime selection has changed.
    */
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * @output {any} Any expression to evaluate when the datetime selection was cancelled.
    */
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
+  @Output() ionCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -433,7 +433,7 @@ export class DateTime {
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev) {
+  private _click(ev: UIEvent) {
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -443,8 +443,8 @@ export class DateTime {
     this.open();
   }
 
-  @HostListener('keyup.space', ['$event'])
-  private _keyup(ev) {
+  @HostListener('keyup.space')
+  private _keyup() {
     if (!this._isOpen) {
       this.open();
     }
@@ -469,15 +469,15 @@ export class DateTime {
         text: this.cancelText,
         role: 'cancel',
         handler: () => {
-          this.cancel.emit(null);
+          this.ionCancel.emit(null);
         }
       },
       {
         text: this.doneText,
-        handler: (data) => {
+        handler: (data: any) => {
           console.log('datetime, done', data);
           this.onChange(data);
-          this.change.emit(data);
+          this.ionChange.emit(data);
         }
       }
     ];
@@ -485,7 +485,7 @@ export class DateTime {
     this.generate(picker);
     this.validate(picker);
 
-    picker.change.subscribe(() => {
+    picker.ionChange.subscribe(() => {
       this.validate(picker);
     });
 
@@ -594,7 +594,7 @@ export class DateTime {
 
     // default to assuming this month has 31 days
     let numDaysInMonth = 31;
-    let selectedMonth;
+    let selectedMonth: number;
     if (monthCol) {
       monthOpt = monthCol.options[monthCol.selectedIndex];
       if (monthOpt) {
@@ -655,7 +655,7 @@ export class DateTime {
    */
   divyColumns(picker: Picker) {
     let pickerColumns = picker.getColumns();
-    let columns = [];
+    let columns: number[] = [];
 
     pickerColumns.forEach((col, i) => {
       columns.push(0);
@@ -803,7 +803,7 @@ export class DateTime {
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @private
@@ -845,7 +845,7 @@ function convertToArrayOfNumbers(input: any, type: string): number[] {
 
   if (isArray(input)) {
     // ensure each value is an actual number in the returned array
-    input.forEach(num => {
+    input.forEach((num: any) => {
       num = parseInt(num, 10);
       if (!isNaN(num)) {
         values.push(num);
@@ -877,7 +877,7 @@ function convertToArrayOfStrings(input: any, type: string): string[] {
 
     if (isArray(input)) {
       // trim up each string value
-      input.forEach(val => {
+      input.forEach((val: any) => {
         val = val.trim();
         if (val) {
           values.push(val);

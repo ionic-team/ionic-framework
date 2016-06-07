@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewContainerRef, DynamicComponentLoader, Input, Optional, NgZone, Renderer, Type, ViewChild, ViewEncapsulation, AfterViewInit} from '@angular/core';
 
-import {IonicApp} from '../app/app';
+import {App} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
 import {isTrueProperty} from '../../util/util';
@@ -28,15 +28,18 @@ import {ViewController} from './view-controller';
  *
  * @usage
  * ```ts
- * import {GettingStartedPage} from 'getting-started';
- * @App({
- *   template: `<ion-nav [root]="rootPage"></ion-nav>`
+ * import {Component} from '@angular/core';
+ * import {ionicBootstrap} from 'ionic-angular';
+ * import {GettingStartedPage} from './getting-started';
+ *
+ * @Component({
+ *   template: `<ion-nav [root]="root"></ion-nav>`
  * })
  * class MyApp {
- *   constructor(){
- *     this.rootPage = GettingStartedPage;
- *   }
+ *   root = GettingStartedPage;
  * }
+ *
+ * ionicBootstrap(MyApp);
  * ```
  *
  * ### Back Navigation
@@ -117,7 +120,7 @@ export class Nav extends NavController implements AfterViewInit {
   constructor(
     @Optional() viewCtrl: ViewController,
     @Optional() parent: NavController,
-    app: IonicApp,
+    app: App,
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,

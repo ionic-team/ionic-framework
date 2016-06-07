@@ -1,5 +1,6 @@
-import {App, InfiniteScroll} from 'ionic-angular';
-import {Injectable} from '@angular/core';
+import {Component, Injectable} from '@angular/core';
+import {ionicBootstrap, InfiniteScroll} from 'ionic-angular';
+
 
 /**
  * Mock Data Access Object
@@ -62,7 +63,7 @@ export class MockProvider {
 }
 
 
-@App({
+@Component({
   templateUrl: 'main.html',
   providers: [MockProvider]
 })
@@ -88,3 +89,5 @@ class ApiDemoApp {
   }
 
 }
+
+ionicBootstrap(ApiDemoApp);

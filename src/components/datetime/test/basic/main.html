@@ -44,7 +44,7 @@
 
   <ion-item>
     <ion-label>h:mm a</ion-label>
-    <ion-datetime displayFormat="h:mm a" [(ngModel)]="time"></ion-datetime>
+    <ion-datetime (ionChange)="onChange($event)" (ionCancel)="onCancel($event)" displayFormat="h:mm a" [(ngModel)]="time"></ion-datetime>
   </ion-item>
 
   <ion-item>
@@ -66,6 +66,20 @@
     <code>chromeReleased: {{chromeReleased}}</code><br>
     <code>time: {{time}}</code><br>
     <code>Leap year, summer months: {{leapYearsSummerMonths}}</code><br>
+  </p>
+
+  <p>
+    <button (click)="clearLeapYear()">Clear Leap Years</button>
+  </p>
+
+  <ion-item>
+    <ion-label>myDate: {{myDate}}</ion-label>
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>
+  </ion-item>
+
+  <p>
+    <button (click)="convertDate()">Convert myDate To Date</button>
+    {{convertedDate}}
   </p>
 
 </ion-content>

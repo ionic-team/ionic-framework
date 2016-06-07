@@ -32,9 +32,15 @@ Config.setModeConfig('ios', {
   pickerLeave: 'picker-slide-out',
   pickerRotateFactor: -0.46,
 
+  popoverEnter: 'popover-pop-in',
+  popoverLeave: 'popover-pop-out',
+
   spinner: 'ios',
 
+  tabbarHighlight: false,
   tabbarPlacement: 'bottom',
+
+  tabSubPages: false,
 
   toastEnter: 'toast-slide-in',
   toastLeave: 'toast-slide-out',
@@ -65,10 +71,14 @@ Config.setModeConfig('md', {
   modalLeave: 'modal-md-slide-out',
 
   pageTransition: 'md-transition',
-  pageTransitionDelay: 96,
+  pageTransitionDelay: 16,
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
+  pickerRotateFactor: 0,
+
+  popoverEnter: 'popover-md-pop-in',
+  popoverLeave: 'popover-md-pop-out',
 
   spinner: 'crescent',
 
@@ -110,6 +120,10 @@ Config.setModeConfig('wp', {
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
+  pickerRotateFactor: 0,
+
+  popoverEnter: 'popover-md-pop-in',
+  popoverLeave: 'popover-md-pop-out',
 
   spinner: 'circles',
 

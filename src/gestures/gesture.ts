@@ -16,7 +16,7 @@ export class Gesture {
   public direction: string;
   public isListening: boolean = false;
 
-  constructor(element, opts: any = {}) {
+  constructor(element: HTMLElement, opts: any = {}) {
     defaults(opts, {
       domEvents: true
     });
@@ -55,11 +55,13 @@ export class Gesture {
   }
 
   unlisten() {
-    var type, i;
+    let eventType: string;
+    let i: number;
+
     if (this._hammer && this.isListening) {
-      for (type in this._callbacks) {
-        for (i = 0; i < this._callbacks[type].length; i++) {
-          this._hammer.off(type, this._callbacks[type]);
+      for (eventType in this._callbacks) {
+        for (i = 0; i < this._callbacks[eventType].length; i++) {
+          this._hammer.off(eventType, this._callbacks[eventType]);
         }
       }
       this._hammer.destroy();

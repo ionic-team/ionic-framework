@@ -1,7 +1,8 @@
-import {App, Page, NavController, NavParams} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController, NavParams} from '../../../../../src';
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>{{session.name}}</ion-title>
@@ -13,22 +14,21 @@ import {App, Page, NavController, NavParams} from '../../../../../src';
   `
 })
 class SessionDetail {
-  constructor(params: NavParams, nav: NavController) {
+  session;
+
+  constructor(params: NavParams, public nav: NavController) {
     this.session = params.data;
-    this.nav = nav;
   }
 }
 
 
-@Page({
+@Component({
   templateUrl: 'session-list.html'
 })
 class SessionList {
+  data = data;
 
-  constructor(nav: NavController) {
-    this.nav = nav;
-    this.data = data;
-  }
+  constructor(public nav: NavController) {}
 
   addFavorite(timeSlot, session, slidingItem) {
     console.error("addFavorite", timeSlot, session, slidingItem);
@@ -45,14 +45,14 @@ class SessionList {
 }
 
 
-@App({
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  constructor() {
-    this.root = SessionList;
-  }
+  root = SessionList;
 }
+
+ionicBootstrap(E2EApp);
 
 
 let data = [

@@ -1,5 +1,5 @@
 import {ElementRef} from '@angular/core';
-import * as dom from '../util/dom';
+import {getDimensions, clearDimensions} from '../util/dom';
 
 let ids: number = 0;
 
@@ -26,19 +26,19 @@ export class Ion {
   getDimensions(): {
     width: number, height: number, left: number, top: number
   } {
-    return dom.getDimensions(this.elementRef.nativeElement, this._id);
+    return getDimensions(this.elementRef.nativeElement, this._id);
   }
 
   width(): number {
-    return dom.getDimensions(this.elementRef.nativeElement, this._id).width;
+    return getDimensions(this.elementRef.nativeElement, this._id).width;
   }
 
   height(): number {
-    return dom.getDimensions(this.elementRef.nativeElement, this._id).height;
+    return getDimensions(this.elementRef.nativeElement, this._id).height;
   }
 
   ngOnDestroy() {
-    dom.clearDimensions(this._id);
+    clearDimensions(this._id);
   }
 
 }

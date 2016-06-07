@@ -1,6 +1,6 @@
 import {Component, Type, ViewChild} from '@angular/core';
 import {App, NavController, Alert, Content} from '../../../../../src';
-import {Page, Config, IonicApp} from '../../../../../src';
+import {ionicBootstrap, Config} from '../../../../../src';
 import {NavParams, ViewController} from '../../../../../src';;
 
 
@@ -11,7 +11,7 @@ import {NavParams, ViewController} from '../../../../../src';;
 class MyCmpTest{}
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar>
       <ion-title>{{title}}</ion-title>
@@ -129,7 +129,7 @@ class FirstPage {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-content padding>
       <h1>Full page</h1>
@@ -199,7 +199,7 @@ class FullPage {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar primary>
       <ion-title>Primary Color Page Header</ion-title>
@@ -232,7 +232,7 @@ class PrimaryHeaderPage {
     private viewCtrl: ViewController
   ) {}
 
-  onPageWillEnter() {
+  ionViewWillEnter() {
     this.viewCtrl.setBackButtonText('Previous');
   }
 
@@ -265,7 +265,7 @@ class PrimaryHeaderPage {
 }
 
 
-@Page({
+@Component({
   template: `
     <ion-navbar *navbar hideBackButton>
       <ion-title>Another Page Header</ion-title>
@@ -337,28 +337,28 @@ class AnotherPage {
     ++this.bbCount;
   }
 
-  onPageWillEnter() {
-    console.log('Page, AnotherPage, onPageWillEnter', this.viewCtrl.id);
+  ionViewWillEnter() {
+    console.log('Page, AnotherPage, ionViewWillEnter', this.viewCtrl.id);
   }
 
-  onPageDidEnter() {
-    console.log('Page, AnotherPage, onPageDidEnter', this.viewCtrl.id);
+  ionViewDidEnter() {
+    console.log('Page, AnotherPage, ionViewDidEnter', this.viewCtrl.id);
   }
 
-  onPageWillLeave() {
-    console.log('Page, AnotherPage, onPageWillLeave', this.viewCtrl.id);
+  ionViewWillLeave() {
+    console.log('Page, AnotherPage, ionViewWillLeave', this.viewCtrl.id);
   }
 
-  onPageDidLeave() {
-    console.log('Page, AnotherPage, onPageDidLeave', this.viewCtrl.id);
+  ionViewDidLeave() {
+    console.log('Page, AnotherPage, ionViewDidLeave', this.viewCtrl.id);
   }
 
-  onPageWillUnload() {
-    console.log('Page, AnotherPage, onPageWillUnload', this.viewCtrl.id);
+  ionViewWillUnload() {
+    console.log('Page, AnotherPage, ionViewWillUnload', this.viewCtrl.id);
   }
 
-  onPageDidUnload() {
-    console.log('Page, AnotherPage, onPageDidUnload', this.viewCtrl.id);
+  ionViewDidUnload() {
+    console.log('Page, AnotherPage, ionViewDidUnload', this.viewCtrl.id);
   }
 
   ngOnDestroy() {
@@ -367,22 +367,19 @@ class AnotherPage {
 }
 
 
-@App({
-  pages: [FirstPage, FullPage, PrimaryHeaderPage, AnotherPage],
+@Component({
   template: `<ion-nav [root]="root"></ion-nav>`,
   host: {
     '[class.is-change-detecting]': 'isChangeDetecting'
   }
 })
 class E2EApp {
-  root;
-
-  constructor() {
-    this.root = FirstPage;
-  }
+  root = FirstPage;
 
   get isChangeDetecting() {
     console.log('isChangeDetecting');
     return true;
   }
 }
+
+ionicBootstrap(E2EApp);

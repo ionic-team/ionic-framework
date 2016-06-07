@@ -57,10 +57,10 @@ export class RefresherContent {
    */
   ngOnInit() {
     if (!this.pullingIcon) {
-      this.pullingIcon = this._config.get('refresherPullingIcon', 'arrow-down');
+      this.pullingIcon = this._config.get('ionPullIcon', 'arrow-down');
     }
     if (!this.refreshingSpinner) {
-      this.refreshingSpinner = this._config.get('refresherRefreshingSpinner', this._config.get('spinner', 'ios'));
+      this.refreshingSpinner = this._config.get('ionRefreshingSpinner', this._config.get('spinner', 'ios'));
     }
   }
 }

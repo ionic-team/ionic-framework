@@ -1,5 +1,6 @@
 import {Menu} from './menu';
 import {MenuType} from './menu-types';
+import {Platform} from '../../platform/platform';
 
 
 /**
@@ -33,9 +34,10 @@ import {MenuType} from './menu-types';
  * toggling the menu.
  *
  * ```ts
- * import{Page, MenuController} from 'ionic-angular';
+ * import {Component} from '@angular/core';
+ * import {MenuController} from 'ionic-angular';
  *
- * @Page({...})
+ * @Component({...})
  * export class MyPage {
  *
  *  constructor(private menu: MenuController) {
@@ -291,8 +293,8 @@ export class MenuController {
   /**
    * @private
    */
-  static create(type, menuCmp) {
-    return new menuTypes[type](menuCmp);
+  static create(type: string, menuCmp: Menu, platform: Platform) {
+    return new menuTypes[type](menuCmp, platform);
   }
 
 }

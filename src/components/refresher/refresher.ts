@@ -25,7 +25,7 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
  * ```html
  * <ion-content>
  *
- *   <ion-refresher (refresh)="doRefresh($event)">
+ *   <ion-refresher (ionRefresh)="doRefresh($event)">
  *     <ion-refresher-content></ion-refresher-content>
  *   </ion-refresher>
  *
@@ -33,7 +33,7 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
  * ```
  *
  * ```ts
- * @Page({...})
+ * @Component({...})
  * export class NewsFeedPage {
  *
  *   doRefresh(refresher) {
@@ -59,7 +59,7 @@ import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
  *  ```html
  *  <ion-content>
  *
- *    <ion-refresher (refresh)="doRefresh($event)">
+ *    <ion-refresher (ionRefresh)="doRefresh($event)">
  *      <ion-refresher-content
  *        pullingIcon="arrow-dropdown"
  *        pullingText="Pull to refresh"
@@ -186,17 +186,17 @@ export class Refresher {
    * updated to `refreshing`. From within your refresh handler, you must call the
    * `complete()` method when your async operation has completed.
    */
-  @Output() refresh: EventEmitter<Refresher> = new EventEmitter();
+  @Output() ionRefresh: EventEmitter<Refresher> = new EventEmitter();
 
   /**
    * @output {event} While the user is pulling down the content and exposing the refresher.
    */
-  @Output() pulling: EventEmitter<Refresher> = new EventEmitter();
+  @Output() ionPull: EventEmitter<Refresher> = new EventEmitter();
 
   /**
    * @output {event} When the user begins to start pulling down.
    */
-  @Output() start: EventEmitter<Refresher> = new EventEmitter();
+  @Output() ionStart: EventEmitter<Refresher> = new EventEmitter();
 
 
   constructor(
@@ -348,11 +348,11 @@ export class Refresher {
     // emit "start" if it hasn't started yet
     if (!this._didStart) {
       this._didStart = true;
-      this.start.emit(this);
+      this.ionStart.emit(this);
     }
 
     // emit "pulling" on every move
-    this.pulling.emit(this);
+    this.ionPull.emit(this);
 
     // do nothing if the delta is less than the pull threshold
     if (this.deltaY < this.pullMin) {
@@ -375,7 +375,7 @@ export class Refresher {
     return 4;
   }
 
-  private _onEnd(ev) {
+  private _onEnd(ev: UIEvent) {
     // only run in a zone when absolutely necessary
 
     if (this.state === STATE_READY) {
@@ -414,7 +414,7 @@ export class Refresher {
 
     // emit "refresh" because it was pulled down far enough
     // and they let go to begin refreshing
-    this.refresh.emit(this);
+    this.ionRefresh.emit(this);
   }
 
   /**
@@ -438,9 +438,9 @@ export class Refresher {
   }
 
   private _close(state: string, delay: string) {
-    var timer;
+    var timer: number;
 
-    function close(ev) {
+    function close(ev: any) {
       // closing is done, return to inactive state
       if (ev) {
         clearTimeout(timer);

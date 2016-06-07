@@ -10,7 +10,7 @@ import * as util from '../../util';
 /**
  * @name Scroll
  * @description
- * Scroll is a non-flexboxed scroll area that can scroll horizontally or vertically. `ion-Scroll` Can be used in places were you may not need a full page scroller, but a highly customized one, such as image scubber or comment scroller.
+ * Scroll is a non-flexboxed scroll area that can scroll horizontally or vertically. `ion-Scroll` Can be used in places where you may not need a full page scroller, but a highly customized one, such as image scubber or comment scroller.
  * @usage
  * ```html
  * <ion-scroll scrollX="true">
@@ -78,7 +78,7 @@ export class Scroll extends Ion {
    * @returns {?Function} a function to remove the specified handler, otherwise
    * undefined if the scroll element doesn't exist.
    */
-  addScrollEventListener(handler) {
+  addScrollEventListener(handler: any) {
     if (!this.scrollElement) { return; }
 
     this.scrollElement.addEventListener('scroll', handler);

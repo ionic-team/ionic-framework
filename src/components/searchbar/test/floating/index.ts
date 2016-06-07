@@ -1,19 +1,15 @@
-import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
+import {Component} from '@angular/core';
+import {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
+import {ionicBootstrap} from '../../../../../src';
 
-import {App} from '../../../../../src';
 
-@App({
-  templateUrl: 'main.html',
-  directives: [FORM_DIRECTIVES]
+@Component({
+  templateUrl: 'main.html'
 })
 class E2EApp {
   defaultSearch: string = 'test';
   customPlaceholder: string = '';
   defaultCancel: string = '';
-
-  constructor() {
-
-  }
 
   onClearSearchbar(searchbar) {
     console.log("Clicked clear input on", searchbar.value);
@@ -35,3 +31,5 @@ class E2EApp {
     console.log("Focused input", searchbar.value);
   }
 }
+
+ionicBootstrap(E2EApp);

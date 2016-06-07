@@ -3,7 +3,7 @@ import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, R
 import {Navbar} from '../navbar/navbar';
 import {NavController, NavOptions} from './nav-controller';
 import {NavParams} from './nav-params';
-import {isPresent} from '../../util/util';
+import {isPresent, merge} from '../../util/util';
 
 
 /**
@@ -12,14 +12,16 @@ import {isPresent} from '../../util/util';
  * Access various features and information about the current view.
  * @usage
  *  ```ts
- *  import {Page, ViewController} from 'ionic-angular';
- *  @Page....
- *  export class MyPage{
- *   constructor(viewCtrl: ViewController){
- *     this.viewCtrl = viewCtrl;
- *   }
- *  }
- *  ```
+ * import {Component} from '@angular/core';
+ * import {ViewController} from 'ionic-angular';
+ *
+ * @Component({...})
+ * export class MyPage{
+ *
+ *   constructor(public viewCtrl: ViewController) {}
+ *
+ * }
+ * ```
  */
 export class ViewController {
   private _cntDir: any;
@@ -36,6 +38,13 @@ export class ViewController {
   private _pgRef: ElementRef;
   private _cd: ChangeDetectorRef;
   protected _nav: NavController;
+
+  willEnter: EventEmitter<any>;
+  didEnter: EventEmitter<any>;
+  willLeave: EventEmitter<any>;
+  didLeave: EventEmitter<any>;
+  willUnload: EventEmitter<any>;
+  didUnload: EventEmitter<any>;
 
   /**
    * @private
@@ -61,11 +70,6 @@ export class ViewController {
    * @private
    */
   viewType: string = '';
-
-  /**
-   * @private
-   */
-  onReady: Function;
 
   /**
    * @private
@@ -97,6 +101,13 @@ export class ViewController {
   constructor(public componentType?: Type, data?: any) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
+
+    this.willEnter = new EventEmitter();
+    this.didEnter = new EventEmitter();
+    this.willLeave = new EventEmitter();
+    this.didLeave = new EventEmitter();
+    this.willUnload = new EventEmitter();
+    this.didUnload = new EventEmitter();
   }
 
   subscribe(generatorOrNext?: any): any {
@@ -114,8 +125,9 @@ export class ViewController {
     this._onDismiss = callback;
   }
 
-  dismiss(data?: any, role?: any) {
-    return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts).then(() => {
+  dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
+    let options = merge({}, this._leavingOpts, navOptions);
+    return this._nav.remove(this._nav.indexOf(this), 1, options).then(() => {
       this._onDismiss && this._onDismiss(data, role);
       return data;
     });
@@ -337,7 +349,7 @@ export class ViewController {
   /**
    * @private
    */
-  setContent(directive) {
+  setContent(directive: any) {
     this._cntDir = directive;
   }
 
@@ -364,14 +376,14 @@ export class ViewController {
   }
 
   /**
-   * You can find out of the current view has a Navbar or not. Be sure to wrap this in an `onPageWillEnter` method in order to make sure the view has rendered fully.
+   * You can find out of the current view has a Navbar or not. Be sure to wrap this in an `ionViewWillEnter` method in order to make sure the view has rendered fully.
    *
    * ```typescript
    * export class Page1 {
    *  constructor(view: ViewController) {
    *    this.view = view
    *  }
-   *  onPageWillEnter(){
+   *  ionViewWillEnter(){
    *    console.log('Do we have a Navbar?', this.view.hasNavbar());
    *  }
    *}
@@ -439,7 +451,7 @@ export class ViewController {
    *  constructor(viewCtrl: ViewController){
    *    this.viewCtrl = viewCtrl
    *  }
-   *  onPageWillEnter() {
+   *  ionViewWillEnter() {
    *    this.viewCtrl.setBackButtonText('Previous');
    *  }
    * }
@@ -456,7 +468,7 @@ export class ViewController {
   }
 
   /**
-   * Set if the back button for the current view is visible or not. Be sure to wrap this in `onPageWillEnter` to make sure the has been compleltly rendered.
+   * Set if the back button for the current view is visible or not. Be sure to wrap this in `ionViewWillEnter` to make sure the has been compleltly rendered.
    * @param {boolean} Set if this Page's back button should show or not.
    */
   showBackButton(shouldShow: boolean) {
@@ -472,6 +484,16 @@ export class ViewController {
   isLoaded(): boolean {
     return this._loaded;
   }
+  /**
+   * The loaded method is used to load any dynamic content/components
+   * into the dom before proceeding with the transition.  If a component needs
+   * dynamic component loading, extending ViewController and overriding
+   * this method is a good option
+   * @param {function} done is a callback that must be called when async loading/actions are completed
+   */
+  loaded(done: (() => any)) {
+    done();
+  }
 
   /**
    * @private
@@ -481,16 +503,16 @@ export class ViewController {
    * to put your setup code for the view; however, it is not the
    * recommended method to use when a view becomes active.
    */
-  loaded() {
+  fireLoaded() {
     this._loaded = true;
-    ctrlFn(this, 'onPageLoaded');
+    ctrlFn(this, 'Loaded');
   }
 
   /**
    * @private
    * The view is about to enter and become the active view.
    */
-  willEnter() {
+  fireWillEnter() {
     if (this._cd) {
       // ensure this has been re-attached to the change detector
       this._cd.reattach();
@@ -498,8 +520,8 @@ export class ViewController {
       // detect changes before we run any user code
       this._cd.detectChanges();
     }
-
-    ctrlFn(this, 'onPageWillEnter');
+    this.willEnter.emit(null);
+    ctrlFn(this, 'WillEnter');
   }
 
   /**
@@ -507,18 +529,20 @@ export class ViewController {
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
-  didEnter() {
+  fireDidEnter() {
     let navbar = this.getNavbar();
     navbar && navbar.didEnter();
-    ctrlFn(this, 'onPageDidEnter');
+    this.didEnter.emit(null);
+    ctrlFn(this, 'DidEnter');
   }
 
   /**
    * @private
    * The view has is about to leave and no longer be the active view.
    */
-  willLeave() {
-    ctrlFn(this, 'onPageWillLeave');
+  fireWillLeave() {
+    this.willLeave.emit(null);
+    ctrlFn(this, 'WillLeave');
   }
 
   /**
@@ -526,8 +550,9 @@ export class ViewController {
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
-  didLeave() {
-    ctrlFn(this, 'onPageDidLeave');
+  fireDidLeave() {
+    this.didLeave.emit(null);
+    ctrlFn(this, 'DidLeave');
 
     // when this is not the active page
     // we no longer need to detect changes
@@ -538,8 +563,9 @@ export class ViewController {
    * @private
    * The view is about to be destroyed and have its elements removed.
    */
-  willUnload() {
-    ctrlFn(this, 'onPageWillUnload');
+  fireWillUnload() {
+    this.willUnload.emit(null);
+    ctrlFn(this, 'WillUnload');
   }
 
   /**
@@ -553,7 +579,8 @@ export class ViewController {
    * @private
    */
   destroy() {
-    ctrlFn(this, 'onPageDidUnload');
+    this.didUnload.emit(null);
+    ctrlFn(this, 'DidUnload');
 
     for (var i = 0; i < this._destroys.length; i++) {
       this._destroys[i]();
@@ -564,12 +591,29 @@ export class ViewController {
 
 }
 
+export interface LifeCycleEvent {
+  componentType?: any;
+}
+
 function ctrlFn(viewCtrl: ViewController, fnName: string) {
-  if (viewCtrl.instance && viewCtrl.instance[fnName]) {
-    try {
-      viewCtrl.instance[fnName]();
-    } catch (e) {
-      console.error(viewCtrl.name + ' ' + fnName + ': ' + e.message);
+  if (viewCtrl.instance) {
+    // deprecated warning: added 2016-06-01, beta.8
+    if (viewCtrl.instance['onPage' + fnName]) {
+      try {
+        console.warn('onPage' + fnName + '() has been deprecated. Please rename to ionView' + fnName + '()');
+        viewCtrl.instance['onPage' + fnName]();
+      } catch (e) {
+        console.error(viewCtrl.name + ' onPage' + fnName + ': ' + e.message);
+      }
+    }
+
+    // fire off ionView lifecycle instance method
+    if (viewCtrl.instance['ionView' + fnName]) {
+      try {
+        viewCtrl.instance['ionView' + fnName]();
+      } catch (e) {
+        console.error(viewCtrl.name + ' ionView' + fnName + ': ' + e.message);
+      }
     }
   }
 }

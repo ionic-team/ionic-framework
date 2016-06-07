@@ -1,8 +1,8 @@
-import {ViewChild} from '@angular/core';
-import {App, Page, Slides} from '../../../../../src';
+import {Component, ViewChild} from '@angular/core';
+import {ionicBootstrap, Slides} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
 class MyPage {
@@ -12,14 +12,14 @@ class MyPage {
     loop: false
   };
 
-  ngAfterViewInit() {
-
-  }
-
   onSlideChanged() {
     let previousIndex = this.slider.getPreviousIndex();
     let currentIndex = this.slider.getActiveIndex();
     console.log("Previous index is", previousIndex, "Current index is", currentIndex);
+  }
+
+  onSlideMove(ev) {
+    console.log("Slide moving", ev);
   }
 
   goToPrevSlide() {
@@ -45,9 +45,12 @@ class MyPage {
   }
 }
 
-@App({
+
+@Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
 class E2EApp {
   root: any = MyPage;
 }
+
+ionicBootstrap(E2EApp);

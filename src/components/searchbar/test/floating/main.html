@@ -1,25 +1,25 @@
 <ion-content>
   <h5 padding-left> Search - Default </h5>
-  <ion-searchbar [(ngModel)]="defaultSearch" debounce="500" (input)="triggerInput($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" (cancel)="onCancelSearchbar($event)" (clear)="onClearSearchbar($event)" class="e2eDefaultFloatingSearchbar"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="defaultSearch" debounce="500" (ionInput)="triggerInput($event)" (ionBlur)="inputBlurred($event)" (ionFocus)="inputFocused($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" class="e2eDefaultFloatingSearchbar"></ion-searchbar>
 
   <p padding-left>
     defaultSearch: <b>{{ defaultSearch }}</b>
   </p>
 
   <h5 padding-left> Search - Custom Placeholder </h5>
-  <ion-searchbar [(ngModel)]="customPlaceholder" (input)="triggerInput($event)" (cancel)="onCancelSearchbar($event)" (clear)="onClearSearchbar($event)" placeholder="Filter Schedules" class="e2eCustomPlaceholderFloatingSearchbar"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="customPlaceholder" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" placeholder="Filter Schedules" class="e2eCustomPlaceholderFloatingSearchbar"></ion-searchbar>
 
   <p padding-left>
     customPlaceholder: <b>{{ customPlaceholder }}</b>
   </p>
 
   <h5 padding-left> Search - Hide Cancel Button </h5>
-  <ion-searchbar [(ngModel)]="defaultCancel" (input)="triggerInput($event)" (cancel)="onCancelSearchbar($event)" (clear)="onClearSearchbar($event)" hideCancelButton class="e2eDefaultCancelButtonFloatingSearchbar"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="defaultCancel" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" hideCancelButton class="e2eDefaultCancelButtonFloatingSearchbar"></ion-searchbar>
 
   <p padding-left>
     defaultCancel: <b>{{ defaultCancel }}</b>
   </p>
 
   <h5 padding-left> Search - Custom Cancel Button Danger </h5>
-  <ion-searchbar (input)="triggerInput($event)" (cancel)="onCancelSearchbar($event)" (clear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" class="e2eCustomCancelButtonFloatingSearchbar" danger></ion-searchbar>
+  <ion-searchbar (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" class="e2eCustomCancelButtonFloatingSearchbar" danger></ion-searchbar>
 </ion-content>

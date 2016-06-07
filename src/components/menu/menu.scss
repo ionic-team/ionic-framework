@@ -28,7 +28,7 @@ ion-menu[side=right] {
   left: auto;
 }
 
-ion-menu .backdrop {
+ion-menu ion-backdrop {
   z-index: -1;
   display: none;
 }
@@ -74,7 +74,7 @@ ion-menu[type=overlay] {
   left: -8px; // make up for the box-shadow hanging over on the left
   z-index: $z-index-menu-overlay;
 
-  .backdrop {
+  ion-backdrop {
     left: -3000px;
     display: block;
 

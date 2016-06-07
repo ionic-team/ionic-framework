@@ -1,11 +1,14 @@
-import {App} from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap} from '../../../../../src';
 
 
-@App({
+@Component({
   templateUrl: 'main.html'
 })
-class MyApp {
+class E2EApp {
   doRefresh() {
     console.log('DOREFRESH')
   }
 }
+
+ionicBootstrap(E2EApp);

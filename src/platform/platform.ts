@@ -19,7 +19,7 @@ import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
  * ```ts
  * import {Platform} from 'ionic-angular';
  *
- * @Page({...})
+ * @Component({...})
  * export MyPage {
  *   constructor(platform: Platform) {
  *     this.platform = platform;
@@ -43,7 +43,7 @@ export class Platform {
   private _resizeTm: any;
   private _zone: NgZone;
 
-  constructor(platforms = []) {
+  constructor(platforms: string[] = []) {
     this._platforms = platforms;
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }
@@ -73,7 +73,7 @@ export class Platform {
    * ```
    * import {Platform} from 'ionic-angular';
    *
-   * @Page({...})
+   * @Component({...})
    * export MyPage {
    *   constructor(platform: Platform) {
    *     this.platform = platform;
@@ -116,7 +116,7 @@ export class Platform {
    * ```
    * import {Platform} from 'ionic-angular';
    *
-   * @Page({...})
+   * @Component({...})
    * export MyPage {
    *   constructor(platform: Platform) {
    *     this.platform = platform;
@@ -140,7 +140,7 @@ export class Platform {
    * ```
    * import {Platform} from 'ionic-angular';
    *
-   * @Page({...})
+   * @Component({...})
    * export MyPage {
    *   constructor(platform: Platform) {
    *     this.platform = platform;
@@ -186,9 +186,10 @@ export class Platform {
    * the status bar plugin, so the web should not run status bar plugin logic.
    *
    * ```
-   * import {App, Platform} from 'ionic-angular';
+   * import {Component} from '@angular/core';
+   * import {Platform} from 'ionic-angular';
    *
-   * @App({...})
+   * @Component({...})
    * export MyApp {
    *   constructor(platform: Platform) {
    *     platform.ready().then((readySource) => {
@@ -301,9 +302,7 @@ export class Platform {
   // called by engines (the browser)that do not provide them
 
   /**
-  * The `exitApp` method is useful when running from a native platform,
-  * such as Cordova. This adds the ability to place the Cordova app
-  * in the background.
+  * @private
   */
   exitApp() {}
 
@@ -318,9 +317,9 @@ export class Platform {
   * with a hardware back button in the same sense an Android or Windows device
   * does. It's important to note that this event does not emit when the Ionic
   * app's back button within the navbar is clicked, but this event is only
-  * referencing the platform's hardward back button.
+  * referencing the platform's hardware back button.
   */
-  backButton: EventEmitter<any> = new EventEmitter();
+  backButton: EventEmitter<Event> = new EventEmitter();
 
   /**
   * The pause event emits when the native platform puts the application
@@ -328,14 +327,14 @@ export class Platform {
   * application. This event would emit when a Cordova app is put into
   * the background, however, it would not fire on a standard web browser.
   */
-  pause: EventEmitter<any> = new EventEmitter();
+  pause: EventEmitter<Event> = new EventEmitter();
 
   /**
   * The resume event emits when the native platform pulls the application
   * out from the background. This event would emit when a Cordova app comes
   * out from the background, however, it would not fire on a standard web browser.
   */
-  resume: EventEmitter<any> = new EventEmitter();
+  resume: EventEmitter<Event> = new EventEmitter();
 
 
   // Getter/Setter Methods
@@ -726,8 +725,8 @@ class PlatformNode {
         return this;
       }
 
-      let platform = null;
-      let rootPlatform = null;
+      let platform: PlatformNode = null;
+      let rootPlatform: PlatformNode = null;
 
       for (let i = 0; i < parents.length; i++) {
         platform = new PlatformNode(parents[i]);
@@ -744,11 +743,11 @@ class PlatformNode {
     return null;
   }
 
-  getSubsetParents(subsetPlatformName: string): Array<string> {
+  getSubsetParents(subsetPlatformName: string): string[] {
     let platformRegistry = Platform.registry();
 
-    let parentPlatformNames = [];
-    let platform = null;
+    let parentPlatformNames: string[] = [];
+    let platform: PlatformConfig = null;
 
     for (let platformName in platformRegistry) {
       platform = platformRegistry[platformName];

@@ -1,0 +1,44 @@
+@import "../../globals.core";
+
+// Range
+// --------------------------------------------------
+
+.item-range .item-inner {
+  overflow: visible;
+}
+
+.item-range .input-wrapper {
+  overflow: visible;
+
+  flex-direction: column;
+}
+
+.item-range ion-range {
+  width: 100%;
+}
+
+ion-range {
+  position: relative;
+  display: flex;
+
+  align-items: center;
+
+  ion-label {
+    flex: initial;
+  }
+
+  ion-icon {
+    min-height: 2.4rem;
+
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+}
+
+.range-slider {
+  position: relative;
+
+  flex: 1;
+
+  cursor: pointer;
+}

@@ -4,6 +4,7 @@ import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
 import {Menu} from '../components/menu/menu';
 import {MenuToggle} from '../components/menu/menu-toggle';
 import {MenuClose} from '../components/menu/menu-close';
+import {Backdrop} from '../components/backdrop/backdrop';
 import {Badge} from '../components/badge/badge';
 import {Button} from '../components/button/button';
 import {Content} from '../components/content/content';
@@ -34,6 +35,7 @@ import {Label} from '../components/label/label';
 import {Segment, SegmentButton} from '../components/segment/segment';
 import {RadioButton} from '../components/radio/radio-button';
 import {RadioGroup} from '../components/radio/radio-group';
+import {Range} from '../components/range/range';
 import {Searchbar, SearchbarInput} from '../components/searchbar/searchbar';
 import {Nav} from '../components/nav/nav';
 import {NavPush, NavPop} from '../components/nav/nav-push';
@@ -45,41 +47,9 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * @name IONIC_DIRECTIVES
  * @description
  * The core Ionic directives as well as Angular's `CORE_DIRECTIVES` and `FORM_DIRECTIVES` are
- * available automatically when you bootstrap your app with the `@App` decorator. This means
- * if you are using custom components you no longer need to import `IONIC_DIRECTIVES` as they
- * are part of the `@App`s default directives.
- *
- * If you would like to **not** have them included by default, you would need to bootstrap
- * the app differently.
- *
- * Instead of starting your app like so:
- *
- * ```typescript
- * @App({
- *  template: "<ion-nav></ion-nav>"
- * })
- *
- * export class MyApp{
- *
- * }
- * ```
- *
- * We would use Angulars default way of bootstrap an app, import `IONIC_DIRECTIVES` and `ionicProviders`, then
- * declare `ionicProviders` as a dependencey.
- *
- * ```typescript
- *  import {IONIC_DIRECTIVES, ionicProviders} from 'ionic-angular';
- *  import {bootstrap} from '@angular/platform/browser';
- *
- *  @Component({
- *      //default selector, and theme.
- *      directives: [IONIC_DIRECTIVES]
- *  })
- *  class App {}
- *
- *  bootstrap(App,ionicProviders())
- * ```
- *
+ * available automatically when you bootstrap your app with the `ionicBootstrap`. This means
+ * if you are using custom components you do not need to import `IONIC_DIRECTIVES` as they
+ * are part of the app's default directives.
  *
  *
  * #### Angular
@@ -151,6 +121,7 @@ export const IONIC_DIRECTIVES: any[] = [
   MenuToggle,
   MenuClose,
 
+  Backdrop,
   Badge,
   Button,
   Content,
@@ -197,6 +168,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Checkbox,
   RadioGroup,
   RadioButton,
+  Range,
   Select,
   Option,
   DateTime,

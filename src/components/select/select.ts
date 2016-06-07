@@ -178,12 +178,12 @@ export class Select {
   /**
    * @output {any} Any expression you want to evaluate when the selection has changed.
    */
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * @output {any} Any expression you want to evaluate when the selection was cancelled.
    */
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
+  @Output() ionCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -206,7 +206,7 @@ export class Select {
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev) {
+  private _click(ev: UIEvent) {
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -216,8 +216,8 @@ export class Select {
     this._open();
   }
 
-  @HostListener('keyup.space', ['$event'])
-  private _keyup(ev) {
+  @HostListener('keyup.space')
+  private _keyup() {
     if (!this._isOpen) {
       this._open();
     }
@@ -239,7 +239,7 @@ export class Select {
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        this.cancel.emit(null);
+        this.ionCancel.emit(null);
       }
     }];
 
@@ -259,16 +259,15 @@ export class Select {
       this.interface = 'alert';
     }
 
-    let overlay;
+    let overlay: any;
     if (this.interface === 'action-sheet') {
-
       alertOptions.buttons = alertOptions.buttons.concat(options.map(input => {
         return {
           role: (input.checked ? 'selected' : ''),
           text: input.text,
           handler: () => {
             this.onChange(input.value);
-            this.change.emit(input.value);
+            this.ionChange.emit(input.value);
           }
         };
       }));
@@ -305,9 +304,9 @@ export class Select {
 
       overlay.addButton({
         text: this.okText,
-        handler: selectedValues => {
+        handler: (selectedValues: any) => {
           this.onChange(selectedValues);
-          this.change.emit(selectedValues);
+          this.ionChange.emit(selectedValues);
         }
       });
 
@@ -426,7 +425,7 @@ export class Select {
   /**
    * @private
    */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
    * @private
