@@ -86,6 +86,90 @@ describe('IonicApp', () => {
 
   });
 
+  describe('registerTransition', () => {
+    it('should disable app when registering a transition', () => {
+      // arrange
+      app._numTransitions = 0;
+      spyOn(app, "setEnabled");
+      let DURATION = 300;
+      // act
+      app.registerTransition(DURATION);
+      // assert
+      expect(app._numTransitions).toEqual(1);
+      expect(app.setEnabled).toHaveBeenCalledWith(false, DURATION);
+    });
+
+    it('should correctly track number of transitions', () => {
+      // arrange
+      app._numTransitions = 0;
+      spyOn(app, "setEnabled");
+
+      // act and assertions together
+
+      // register a transition, check data
+      app.registerTransition(300);
+      expect(app._numTransitions).toEqual(1);
+      expect(app.setEnabled).toHaveBeenCalledWith(false, 300);
+      // reset the spy
+      app.setEnabled.calls.reset();
+
+      // register a transition, check data
+      app.registerTransition(30);
+      expect(app._numTransitions).toEqual(2);
+      expect(app.setEnabled).not.toHaveBeenCalled();
+      // reset the spy
+      app.setEnabled.calls.reset();
+
+      // register a transition, check data
+      app.registerTransition(30);
+      expect(app._numTransitions).toEqual(3);
+      expect(app.setEnabled).not.toHaveBeenCalled();
+      // reset the spy
+      app.setEnabled.calls.reset();
+
+      // register a transition, check data
+      app.registerTransition(300);
+      expect(app._numTransitions).toEqual(4);
+      expect(app.setEnabled).toHaveBeenCalledWith(false, 300);
+    });
+  });
+
+  describe('transitionComplete', () => {
+    it('should decrement the number of transitions', () => {
+      // arrange
+      app._numTransitions = 1;
+      spyOn(app, "setEnabled");
+      // act
+      app.transitionComplete();
+      // assert
+      expect(app._numTransitions).toEqual(0);
+      expect(app.setEnabled).toHaveBeenCalledWith(true);
+    });
+
+    it('should reset numTransitions to 0 if below zero', () => {
+      // arrange
+      app._numTransitions = 0;
+      spyOn(app, "setEnabled");
+      // act
+      app.transitionComplete();
+      // assert
+      expect(app._numTransitions).toEqual(0);
+      expect(app.setEnabled).toHaveBeenCalledWith(true);
+    });
+
+    it('should not call setEnabled if numTransition > 0', () => {
+      // arrange
+      app._numTransitions = 2;
+      spyOn(app, "setEnabled");
+      // act
+      app.transitionComplete();
+      // assert
+      expect(app._numTransitions).toEqual(1);
+      expect(app.setEnabled).not.toHaveBeenCalled();
+    });
+
+  });
+
   var app: App;
   var config: Config;
   var platform: Platform;

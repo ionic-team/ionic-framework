@@ -1182,11 +1182,8 @@ export class NavController extends Ion {
       }
 
       let duration = transAnimation.getDuration();
-      let enableApp = (duration < 64);
-      // block any clicks during the transition and provide a
-      // fallback to remove the clickblock if something goes wrong
-      this._app.setEnabled(enableApp, duration);
-      this.setTransitioning(!enableApp, duration);
+      this._app.registerTransition(duration);
+      this.setTransitioning(true, duration);
 
       if (enteringView.viewType) {
         transAnimation.before.addClass(enteringView.viewType);
@@ -1330,8 +1327,8 @@ export class NavController extends Ion {
         enteringView.state = STATE_INACTIVE;
       }
 
-      // allow clicks and enable the app again
-      this._app && this._app.setEnabled(true);
+      // mark the transition as complete
+      this._app && this._app.transitionComplete();
       this.setTransitioning(false);
 
       if (direction !== null && hasCompleted && !this.isPortal) {
