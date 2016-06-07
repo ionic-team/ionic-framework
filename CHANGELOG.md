@@ -158,6 +158,38 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   ) {
   ```
 
+4. Rename any uses of the lifecycle events, for example:
+
+  ```
+  onPageDidEnter() {		 
+    console.log("Entered page!");
+  }
+  ```
+  
+  becomes
+  
+  ```
+  ionViewDidEnter() {		 
+    console.log("Entered page!");
+  }
+  ```
+  
+  The full list of lifecycle name changes is in the [section above](https://github.com/driftyco/ionic/blob/2.0/CHANGELOG.md#ionic-lifecycle-events-renamed).
+  
+5. Rename any Ionic events, for example:
+
+  ```
+  <ion-slides (slideChangeStart)="onSlideChangeStart($event)">
+  ```
+  
+  becomes
+  
+  ```
+  <ion-slides (ionWillChange)="onSlideChangeStart($event)">
+  ```
+
+  The full list of event name changes is in the [section above](https://github.com/driftyco/ionic/blob/2.0/CHANGELOG.md#ionic-component-events-renamed).
+
 ### Bug Fixes
 
 * **build:** correct link in output.wp.scss file to old ionic directory. ([6113daf](https://github.com/driftyco/ionic/commit/6113daf))
