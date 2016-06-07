@@ -153,7 +153,7 @@ import {ViewController} from '../nav/view-controller';
  *     text: 'Ok',
  *     handler: () => {
  *       // user has clicked the alert button
- *       // begin the alert's dimiss transition
+ *       // begin the alert's dismiss transition
  *       let navTransition = alert.dismiss();
  *
  *       // start some async method
