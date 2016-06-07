@@ -6,7 +6,7 @@
 
 #### Ionic Decorators Removed
 
-We’ve started the process of optimizing Ionic 2 to improve our support for Progressive Web Apps. Because of this, we have removed the Ionic decorators in favor of using Angular's `Component` decorator. The following changes need to be made. For a step by step guide, see the [Steps to Upgrade to Beta 8 section](https://github.com/driftyco/ionic/blob/2.0/CHANGELOG.md#steps-to-upgrade-to-beta-8).
+We’ve started the process of optimizing Ionic 2 to improve our support for Progressive Web Apps and upcoming Angular tooling. Because of this, we have removed the Ionic decorators in favor of using Angular's `Component` decorator. The following changes need to be made. For a step by step guide, see the [Steps to Upgrade to Beta 8 section](https://github.com/driftyco/ionic/blob/2.0/CHANGELOG.md#steps-to-upgrade-to-beta-8).
 
 - `@App` and `@Page` should be replaced with `@Component`.
 - `IonicApp` has been renamed to `App`.
