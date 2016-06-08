@@ -53,21 +53,22 @@ export class App {
    * while views transition, a modal slides up, an action-sheet
    * slides up, etc. After the transition completes it is set back to `true`.
    * @param {boolean} isEnabled
-   * @param {boolean} fallback  When `isEnabled` is set to `false`, this argument
+   * @param {number} duration  When `isEnabled` is set to `false`, this argument
    * is used to set the maximum number of milliseconds that app will wait until
    * it will automatically enable the app again. It's basically a fallback incase
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
   setEnabled(isEnabled: boolean, duration: number = 700) {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
-
+    const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;
     if (this._clickBlock) {
-      if (duration > 32) {
-        // only do a click block if the duration is longer than XXms
-        this._clickBlock.show(true, duration + 64);
-
-      } else {
+      if ( isEnabled || duration <= 32 ) {
+        // disable the click block if it's enabled, or the duration is tiny
         this._clickBlock.show(false, 0);
+      }
+      else {
+        // show the click block for duration + some number
+        this._clickBlock.show(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
       }
     }
   }

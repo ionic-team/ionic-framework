@@ -160,6 +160,10 @@ function setupDom(window: Window, document: Document, config: Config, platform: 
     bodyEle.classList.add('enable-hover');
   }
 
+  if (config.get('clickBlock')) {
+    clickBlock.enable();
+  }
+
   // run feature detection tests
   featureDetect.run(window, document);
 }
