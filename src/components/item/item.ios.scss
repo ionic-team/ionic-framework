@@ -10,6 +10,8 @@ $item-ios-paragraph-text-color:       #666 !default;
 $item-ios-avatar-size:                3.6rem !default;
 $item-ios-thumbnail-size:             5.6rem !default;
 $item-ios-note-color:                 darken($list-ios-border-color, 10%) !default;
+
+$item-ios-detail-push-show:           true !default;
 $item-ios-detail-push-color:          $list-ios-border-color !default;
 
 $item-ios-divider-background:         #f7f7f7 !default;
@@ -163,9 +165,11 @@ ion-note {
   color: $item-ios-note-color;
 }
 
-button.item:not([detail-none]) .item-inner,
-a.item:not([detail-none]) .item-inner,
-.item[detail-push] .item-inner {
+
+// iOS Item Detail Push
+// --------------------------------------------------
+
+@mixin ios-detail-push() {
   @include ios-detail-push-icon($item-ios-detail-push-color);
 
   padding-right: 32px;
@@ -173,6 +177,15 @@ a.item:not([detail-none]) .item-inner,
   background-repeat: no-repeat;
   background-position: right ($item-ios-padding-right - 2) center;
   background-size: 14px 14px;
+}
+
+// Only show the forward arrow icon if true
+@if $item-ios-detail-push-show == true {
+  .item[detail-push] .item-inner,
+  button.item:not([detail-none]) .item-inner,
+  a.item:not([detail-none]) .item-inner {
+    @include ios-detail-push();
+  }
 }
 
 

@@ -13,6 +13,9 @@ $item-md-avatar-size:                4rem !default;
 $item-md-thumbnail-size:             8rem !default;
 $item-md-note-color:                 darken($list-md-border-color, 10%) !default;
 
+$item-md-detail-push-show:           false !default;
+$item-md-detail-push-color:          $list-md-border-color !default;
+
 $item-md-divider-background:         #fff !default;
 $item-md-divider-color:              #222 !default;
 $item-md-divider-padding:            5px 15px !default;
@@ -81,6 +84,29 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   padding-right: ($item-md-padding-right / 2);
 
   border-bottom: 1px solid $list-md-border-color;
+}
+
+
+// Material Design Item Detail Push
+// --------------------------------------------------
+
+@mixin md-detail-push() {
+  @include md-detail-push-icon($item-md-detail-push-color);
+
+  padding-right: 32px;
+
+  background-repeat: no-repeat;
+  background-position: right ($item-md-padding-right - 2) center;
+  background-size: 14px 14px;
+}
+
+// Only show the forward arrow icon if true
+@if $item-md-detail-push-show == true {
+  .item[detail-push] .item-inner,
+  button.item:not([detail-none]) .item-inner,
+  a.item:not([detail-none]) .item-inner {
+    @include md-detail-push();
+  }
 }
 
 

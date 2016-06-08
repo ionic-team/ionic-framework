@@ -88,7 +88,7 @@
     <button outline item-right (click)="testClick($event)">View</button>
   </ion-item>
 
-  <button ion-item *ngFor="let data of [0,1,2,3,4]; #i = index" [class.activated]="i == 1" (click)="testClick($event)">
+  <button ion-item *ngFor="let data of [0,1,2,3,4]; let i = index" [class.activated]="i == 1" (click)="testClick($event)">
     <ion-avatar item-left>
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-avatar>
