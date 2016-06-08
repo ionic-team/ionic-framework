@@ -10,7 +10,7 @@ $modal-inset-width:                          600px !default;
 $modal-inset-height-small:                   500px !default;
 $modal-inset-height-large:                   600px !default;
 
-.modal {
+ion-modal {
   position: absolute;
   top: 0;
   left: 0;
@@ -22,7 +22,7 @@ $modal-inset-height-large:                   600px !default;
 
   ion-backdrop {
     @media not all and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
-      display: none;
+      visibility: hidden;
     }
   }
 }
@@ -31,8 +31,6 @@ $modal-inset-height-large:                   600px !default;
   z-index: 10;
 
   height: 100%;
-  // hidden by default to prevent flickers, the animation will show it
-  transform: translate3d(0, 100%, 0);
 
   @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
     position: absolute;
