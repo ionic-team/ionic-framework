@@ -163,6 +163,10 @@ ion-range {
   transform: translate3d(0, 0, 0) scale(1);
 }
 
+.range-disabled {
+  opacity: .5;
+}
+
 // Generate Windows Range Colors
 // --------------------------------------------------
 
