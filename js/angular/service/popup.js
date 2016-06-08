@@ -365,6 +365,11 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       self.removed = true;
     };
 
+    function clearPopup(base){
+      self.responseDeferred.resolve();
+      document.onclick = base;
+    }
+
     $timeout(function(){
       if(options.outsideCancel){
         var popupContainer = self.element[0].firstChild;
@@ -373,15 +378,10 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         var baseOnClick = document.onclick;
 
         document.onclick = function(e){
-          !(e.clientX >= popupBounds.right || e.clientX <= popupBounds.left || e.clientY >= popupBounds.bottom || e.clientY <= popupBounds.top) ? "" : clearPopup();
-        }
-
-        function clearPopup(){
-          self.responseDeferred.resolve();
-          document.onclick = baseOnClick;
-        }
+          !(e.clientX >= popupBounds.right || e.clientX <= popupBounds.left || e.clientY >= popupBounds.bottom || e.clientY <= popupBounds.top) ? "" : clearPopup(baseOnClick);
+        };
       }
-    },0);
+    }, 0);
 
     return self;
   }
