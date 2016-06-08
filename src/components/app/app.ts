@@ -25,11 +25,14 @@ export class App {
   ) {
     platform.backButton.subscribe(() => {
       let activeNav = this.getActiveNav();
+      let rootNav = this.getRootNav();
       if (activeNav) {
-        if (activeNav.length() === 1) {
-          platform.exitApp();
-        } else {
+        if (activeNav.length() > 1) {
           activeNav.pop();
+        } else if (rootNav && rootNav.length() > 1) {
+          rootNav.pop();
+        } else {
+          platform.exitApp();
         }
       }
     });
