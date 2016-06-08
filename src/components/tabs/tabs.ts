@@ -138,7 +138,7 @@ import {ViewController} from '../nav/view-controller';
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
       '<tabbar role="tablist">' +
-        '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#">' +
+        '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">' +
           '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
           '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
           '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
@@ -178,6 +178,11 @@ export class Tabs extends Ion {
   /**
    * @private
    */
+  selectHistory: string[] = [];
+
+  /**
+   * @private
+   */
   subPages: boolean;
 
   /**
@@ -213,12 +218,7 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  @ViewChildren(TabButton) private _btns: any;
-
-  /**
-   * @private
-   */
-  parent: any;
+  parent: NavController;
 
   constructor(
     @Optional() parent: NavController,
@@ -270,12 +270,6 @@ export class Tabs extends Ion {
         this._highlight.select(this.getSelected());
       });
     }
-
-    this._btns.toArray().forEach((tabButton: TabButton) => {
-      tabButton.ionSelect.subscribe((tab: Tab) => {
-        this.select(tab);
-      });
-    });
 
     let preloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
 
@@ -333,11 +327,11 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @param {number} index Index of the tab you want to select
+   * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
-  select(tabOrIndex: any) {
-    let selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
-    if (!selectedTab) {
+  select(tabOrIndex: number | Tab) {
+    let selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
+    if (isBlank(selectedTab)) {
       return;
     }
 
@@ -390,7 +384,35 @@ export class Tabs extends Ion {
         this._onReady = null;
       }
 
+      // track the order of which tabs have been selected, by their index
+      // do not track if the tab index is the same as the previous
+      if (this.selectHistory[this.selectHistory.length - 1] !== selectedTab.id) {
+        this.selectHistory.push(selectedTab.id);
+      }
+
     });
+  }
+
+  /**
+   * Get the previously selected Tab which is currently not disabled or hidden.
+   * @param {boolean} trimHistory If the selection history should be trimmed up to the previous tab selection or not.
+   * @returns {Tab}
+   */
+  previousTab(trimHistory: boolean = true): Tab {
+    // walk backwards through the tab selection history
+    // and find the first previous tab that is enabled and shown
+    console.log('run previousTab', this.selectHistory)
+    for (var i = this.selectHistory.length - 2; i >= 0; i--) {
+      var tab = this._tabs.find(t => t.id === this.selectHistory[i]);
+      if (tab && tab.enabled && tab.show) {
+        if (trimHistory) {
+          this.selectHistory.splice(i + 1);
+        }
+        return tab;
+      }
+    }
+
+    return null;
   }
 
   /**
