@@ -9,10 +9,10 @@ class E2EPage {
   @ViewChild('myList', {read: List}) list: List;
 
   items: number[] = [];
-  shouldShow: boolean = true;
+  slidingEnabled: boolean = true;
 
-  moreText: string = "Dynamic More";
-  archiveText: string = "Dynamic Archive";
+  moreText: string = 'Dynamic More';
+  archiveText: string = 'Dynamic Archive';
 
   constructor(private app: App, private nav: NavController) {
     for (let x = 0; x < 5; x++) {
@@ -20,13 +20,17 @@ class E2EPage {
     }
   }
 
+  toggleSliding() {
+    this.slidingEnabled = !this.slidingEnabled;
+  }
+
   changeDynamic() {
-    if (this.moreText.includes("Dynamic")) {
-      this.moreText = "Changed More";
-      this.archiveText = "Changed Archive";
+    if (this.moreText.includes('Dynamic')) {
+      this.moreText = 'Changed More';
+      this.archiveText = 'Changed Archive';
     } else {
-      this.moreText = "Dynamic More";
-      this.archiveText = "Dynamic Archive";
+      this.moreText = 'Dynamic More';
+      this.archiveText = 'Dynamic Archive';
     }
   }
 
