@@ -169,10 +169,9 @@ class PopoverCmp {
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
   private d: any;
-  private id: number;
-  private created: number;
-  private showSpinner: boolean;
   private enabled: boolean;
+  private id: number;
+  private showSpinner: boolean;
 
   constructor(private _loader: DynamicComponentLoader,
     private _elementRef: ElementRef,
@@ -182,7 +181,6 @@ class PopoverCmp {
     private _viewCtrl: ViewController
   ) {
     this.d = _navParams.data.opts;
-    this.created = Date.now();
 
     if (this.d.cssClass) {
       _renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);

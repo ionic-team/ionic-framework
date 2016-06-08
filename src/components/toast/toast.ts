@@ -161,11 +161,10 @@ const TOAST_POSITION_BOTTOM: string = 'bottom';
 class ToastCmp {
   private d: any;
   private descId: string;
-  private hdrId: string;
-  private created: number;
-  private id: number;
   private dismissTimeout: number = undefined;
   private enabled: boolean;
+  private hdrId: string;
+  private id: number;
 
   constructor(
     private _nav: NavController,
@@ -177,7 +176,6 @@ class ToastCmp {
   ) {
 
     this.d = params.data;
-    this.created = Date.now();
 
     if (this.d.cssClass) {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);

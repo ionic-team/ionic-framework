@@ -245,10 +245,9 @@ export class ActionSheet extends ViewController {
 class ActionSheetCmp {
   private d: any;
   private descId: string;
+  private enabled: boolean;
   private hdrId: string;
   private id: number;
-  private created: number;
-  private enabled: boolean;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -258,7 +257,6 @@ class ActionSheetCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
-    this.created = Date.now();
 
     if (this.d.cssClass) {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);

@@ -376,14 +376,13 @@ class AlertCmp {
     inputs?: any[];
     enableBackdropDismiss?: boolean;
   };
+  private enabled: boolean;
   private hdrId: string;
   private id: number;
-  private subHdrId: string;
-  private msgId: string;
   private inputType: string;
-  private created: number;
   private lastClick: number;
-  private enabled: boolean;
+  private msgId: string;
+  private subHdrId: string;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -406,7 +405,6 @@ class AlertCmp {
     this.subHdrId = 'alert-subhdr-' + this.id;
     this.msgId = 'alert-msg-' + this.id;
     this.activeId = '';
-    this.created = Date.now();
     this.lastClick = 0;
 
     if (this.d.message) {

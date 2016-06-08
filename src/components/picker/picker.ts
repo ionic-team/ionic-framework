@@ -460,10 +460,9 @@ class PickerColumnCmp {
 class PickerDisplayCmp {
   @ViewChildren(PickerColumnCmp) private _cols: QueryList<PickerColumnCmp>;
   private d: PickerOptions;
-  private created: number;
+  private enabled: boolean;
   private lastClick: number;
   private id: number;
-  private enabled: boolean;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -481,7 +480,6 @@ class PickerDisplayCmp {
     }
 
     this.id = (++pickerIds);
-    this.created = Date.now();
     this.lastClick = 0;
     this.enabled = false;
   }

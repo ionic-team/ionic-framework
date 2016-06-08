@@ -170,10 +170,9 @@ export class Loading extends ViewController {
 })
 class LoadingCmp {
   private d: any;
-  private id: number;
-  private created: number;
-  private showSpinner: boolean;
   private enabled: boolean;
+  private id: number;
+  private showSpinner: boolean;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -183,7 +182,6 @@ class LoadingCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
-    this.created = Date.now();
 
     if (this.d.cssClass) {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
