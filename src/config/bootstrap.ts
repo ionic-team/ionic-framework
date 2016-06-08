@@ -31,12 +31,15 @@ const _reflect: any = Reflect;
  * app as an array for the second argument. You can also pass a config object as the third argument to configure your app's settings.
  *
  * @usage
+ *
+ * ```ts
  * import {ionicBootstrap} from 'ionic-angular';
  * import {Component} from '@angular/core';
  *
  * @Component({
  *   templateUrl: 'build/app.html',
  * })
+ * ```
  *
  * export class MyClass{}
  *
