@@ -265,6 +265,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      *   cancelType: // String (default: 'button-default'). The type of the Cancel button.
      *   okText: // String (default: 'OK'). The text of the OK button.
      *   okType: // String (default: 'button-positive'). The type of the OK button.
+     *   outsideCancel: // Boolean (default: true). Wether or not a touch outide of the popout closes the popout.
      * }
      * ```
      *
@@ -286,7 +287,8 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     options = extend({
       scope: null,
       title: '',
-      buttons: []
+      buttons: [],
+      outsideCancel: true
     }, options || {});
 
     var self = {};
@@ -362,6 +364,24 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
 
       self.removed = true;
     };
+
+    $timeout(function(){
+      if(options.outsideCancel){
+        var popupContainer = self.element[0].firstChild;
+        var popupBounds = popupContainer.getClientRects()[0];
+
+        var baseOnClick = document.onclick;
+
+        document.onclick = function(e){
+          !(e.clientX >= popupBounds.right || e.clientX <= popupBounds.left || e.clientY >= popupBounds.bottom || e.clientY <= popupBounds.top) ? "" : clearPopup();
+        }
+
+        function clearPopup(){
+          self.responseDeferred.resolve();
+          document.onclick = baseOnClick;
+        }
+      }
+    },0);
 
     return self;
   }
