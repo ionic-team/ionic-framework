@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, Output, EventEmitter} from '@angular/core';
+import {Component, ElementRef, Renderer, Output, EventEmitter, AfterViewInit} from '@angular/core';
 
 import {ActionSheet, ActionSheetOptions} from '../action-sheet/action-sheet';
 import {Animation} from '../../animations/animation';
@@ -158,7 +158,7 @@ const TOAST_POSITION_BOTTOM: string = 'bottom';
     '[attr.aria-describedby]': 'descId',
   },
 })
-class ToastCmp {
+class ToastCmp implements AfterViewInit {
   private d: any;
   private descId: string;
   private hdrId: string;
@@ -188,7 +188,7 @@ class ToastCmp {
     }
   }
 
-  ionViewDidEnter() {
+  ngAfterViewInit() {
     const { activeElement }: any = document;
     if (activeElement) {
       activeElement.blur();
