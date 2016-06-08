@@ -24,7 +24,7 @@ const _reflect: any = Reflect;
 
 
 /**
- * @name ionicBoostrap
+ * @name ionicBootstrap
  * @description
  * `ionicBootstrap` allows you to bootstrap your entire application. Similar to Angualr's `bootstrap`, `ionicBootstrap`
  * takes a root component in order to start the app. You can pass along any providers that you may want to inject into your
