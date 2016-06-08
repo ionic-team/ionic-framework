@@ -7,17 +7,21 @@
 </ion-toolbar>
 
 <ion-content>
-
+  <div padding>
+    <button block (click)="toggleSliding()">Toggle sliding</button>
+    <button block (click)="changeDynamic()">Change Dynamic Options</button>
+    <button block (click)="closeOpened()">Close Opened Items</button>
+  </div>
   <ion-list #myList>
 
-    <ion-item-sliding #item>
-      <button ion-item text-wrap (click)="didClick(item)">
+    <ion-item-sliding #item0>
+      <button ion-item text-wrap (click)="didClick(item0)">
         <h2>RIGHT side - no icons</h2>
         <p>Hey do you want to go to the game tonight?</p>
       </button>
-      <ion-item-options>
-        <button primary (click)="archive(item)">Archive</button>
-        <button danger (click)="del(item)">Delete</button>
+      <ion-item-options *ngIf="slidingEnabled">
+        <button primary (click)="archive(item0)">Archive</button>
+        <button danger (click)="del(item0)">Delete</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -26,25 +30,25 @@
         <h2>LEFT side - no icons</h2>
         <p>I think I figured out how to get more Mountain Dew</p>
       </ion-item>
-      <ion-item-options side="left">
+      <ion-item-options side="left" (ionSwipe)="del($event)" *ngIf="slidingEnabled">
         <button primary (click)="archive(item1)">Archive</button>
         <button danger (click)="del(item1)" swipeable>Delete</button>
       </ion-item-options>
     </ion-item-sliding>
 
 
-    <ion-item-sliding #item2 *ngIf="shouldShow">
+    <ion-item-sliding #item2>
       <ion-item text-wrap detail-push>
         <h2>RIGHT/LEFT side - icons</h2>
         <p>I think I figured out how to get more Mountain Dew</p>
       </ion-item>
-      <ion-item-options side="left" (ionSwipe)="unread($event)">
+      <ion-item-options side="left" (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
         <button secondary swipeable (click)="unread(item2)">
           <ion-icon name="ios-checkmark"></ion-icon>Unread
         </button>
       </ion-item-options>
 
-      <ion-item-options side="right" (ionSwipe)="del(item2)">
+      <ion-item-options side="right" (ionSwipe)="del(item2)" *ngIf="slidingEnabled">
         <button primary (click)="archive(item2)">
           <ion-icon name="mail"></ion-icon>Archive
         </button>
@@ -55,12 +59,12 @@
     </ion-item-sliding>
 
 
-    <ion-item-sliding #item3 *ngIf="shouldShow">
+    <ion-item-sliding #item3>
       <ion-item text-wrap detail-push>
         <h2>RIGHT/LEFT side - icons (item-left)</h2>
         <p>I think I figured out how to get more Mountain Dew</p>
       </ion-item>
-      <ion-item-options side="left" icon-left (ionSwipe)="unread($event)">
+      <ion-item-options side="left" icon-left (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
         <button secondary swipeable (click)="unread(item3)">
           <ion-icon name="ios-checkmark"></ion-icon>Unread
         </button>
@@ -70,7 +74,7 @@
         <button primary (click)="archive(item3)">
           <ion-icon name="mail"></ion-icon>Archive
         </button>
-        <button danger (click)="del(item3)" swipeable>
+        <button danger (click)="del(item3)" swipeable *ngIf="slidingEnabled">
           <ion-icon name="trash"></ion-icon>Delete
         </button>
       </ion-item-options>
@@ -83,14 +87,14 @@
         One Line w/ Icon, div only text
       </ion-item>
       <ion-item-options icon-left (ionSwipe)="archive($event)">
-        <button primary (click)="archive(item4)" swipeable>
+        <button primary (click)="archive(item4)" swipeable *ngIf="slidingEnabled">
           <ion-icon name="archive"></ion-icon>Archive
         </button>
       </ion-item-options>
     </ion-item-sliding>
 
 
-    <ion-item-sliding #item5>
+    <ion-item-sliding #item5 *ngIf="slidingEnabled">
       <ion-item>
         <ion-avatar item-left>
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
@@ -110,7 +114,7 @@
       </ion-item-options>
     </ion-item-sliding>
 
-    <ion-item-sliding #item>
+    <ion-item-sliding #item6>
       <ion-item>
         One Line, dynamic option
       </ion-item>
@@ -119,14 +123,14 @@
           <ion-icon name="more"></ion-icon>
           {{ moreText }}
         </button>
-        <button secondary (click)="archive(item)">
+        <button secondary (click)="archive(item6)">
           <ion-icon name="archive"></ion-icon>
           {{ archiveText }}
         </button>
       </ion-item-options>
     </ion-item-sliding>
 
-    <ion-item-sliding #item>
+    <ion-item-sliding #item7>
       <ion-item>
         One Line, dynamic icon-left option
       </ion-item>
@@ -135,14 +139,14 @@
           <ion-icon name="more"></ion-icon>
           {{ moreText }}
         </button>
-        <button secondary (click)="archive(item)">
+        <button secondary (click)="archive(item7)">
           <ion-icon name="archive"></ion-icon>
           {{ archiveText }}
         </button>
       </ion-item-options>
     </ion-item-sliding>
 
-    <ion-item-sliding #item6>
+    <ion-item-sliding #item8>
       <ion-item>
         <ion-thumbnail item-left>
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
@@ -151,10 +155,10 @@
         <p>Paragraph text.</p>
       </ion-item>
       <ion-item-options (ionSwipe)="download($event)">
-        <button primary (click)="archive(item6)">
+        <button primary (click)="archive(item8)">
           <ion-icon name="archive"></ion-icon>Archive
         </button>
-        <button secondary swipeable (click)="download(item6)">
+        <button secondary swipeable (click)="download(item8)">
           <ion-icon name="download" class="download-hide"></ion-icon>
           <div class="download-hide">Download</div>
           <ion-spinner id="download-spinner"></ion-spinner>
@@ -162,7 +166,7 @@
       </ion-item-options>
     </ion-item-sliding>
 
-    <ion-item-sliding>
+    <ion-item-sliding item9>
       <ion-item>
         <ion-thumbnail item-left>
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
@@ -177,7 +181,7 @@
       <p>Paragraph text.</p>
     </ion-item>
 
-    <button ion-item text-wrap (click)="didClick(item)">
+    <button ion-item text-wrap (click)="didClick(item9)">
       <h2>Normal button (no sliding)</h2>
       <p>Hey do you want to go to the game tonight?</p>
     </button>
@@ -186,21 +190,16 @@
 
 
   <ion-list>
-    <ion-item-sliding *ngFor="let data of items" #item8>
+    <ion-item-sliding *ngFor="let data of items" #item9>
       <ion-item text-wrap detail-push>
         <h3>ng-for {{data}}</h3>
       </ion-item>
       <ion-item-options>
-        <button primary (click)="archive(item8)">Archive</button>
+        <button primary (click)="archive(item9)">Archive</button>
       </ion-item-options>
     </ion-item-sliding>
 
   </ion-list>
-
-  <div padding>
-    <button block (click)="changeDynamic()">Change Dynamic Options</button>
-    <button block (click)="closeOpened()">Close Opened Items</button>
-  </div>
 
 </ion-content>
 
