@@ -4,21 +4,22 @@
 // iOS Item
 // --------------------------------------------------
 
-$item-ios-body-text-font-size:        1.6rem !default;
-$item-ios-paragraph-text-color:       #666 !default;
+$item-ios-body-text-font-size:            1.6rem !default;
+$item-ios-paragraph-text-color:           #666 !default;
 
-$item-ios-avatar-size:                3.6rem !default;
-$item-ios-thumbnail-size:             5.6rem !default;
-$item-ios-note-color:                 darken($list-ios-border-color, 10%) !default;
+$item-ios-avatar-size:                    3.6rem !default;
+$item-ios-thumbnail-size:                 5.6rem !default;
+$item-ios-note-color:                     darken($list-ios-border-color, 10%) !default;
 
-$item-ios-detail-push-show:           true !default;
-$item-ios-detail-push-color:          $list-ios-border-color !default;
+$item-ios-detail-push-show:               true !default;
+$item-ios-detail-push-color:              $list-ios-border-color !default;
+$item-ios-detail-push-svg:               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-ios-detail-push-color}'/></svg>" !default;
 
-$item-ios-divider-background:         #f7f7f7 !default;
-$item-ios-divider-color:              #222 !default;
-$item-ios-divider-padding:            5px 15px !default;
+$item-ios-divider-background:             #f7f7f7 !default;
+$item-ios-divider-color:                  #222 !default;
+$item-ios-divider-padding:                5px 15px !default;
 
-$item-ios-sliding-content-background: $list-ios-background-color !default;
+$item-ios-sliding-content-background:     $list-ios-background-color !default;
 
 
 // iOS Item
@@ -170,7 +171,7 @@ ion-note {
 // --------------------------------------------------
 
 @mixin ios-detail-push() {
-  @include ios-detail-push-icon($item-ios-detail-push-color);
+  @include svg-background-image($item-ios-detail-push-svg);
 
   padding-right: 32px;
 

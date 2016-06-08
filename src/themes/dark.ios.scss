@@ -71,17 +71,6 @@ $item-ios-padding-icon-top:           10px !default;
 $item-ios-padding-icon-bottom:        9px !default;
 
 
-// iOS Item Push Icon
-// --------------------------------------------------
-
-$icon-detail-push-background-svg:    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='fg-color'/></svg>" !default;
-
-@mixin ios-detail-push-icon($fg-color) {
-  $svg: str-replace($icon-detail-push-background-svg, "fg-color", $fg-color);
-  @include svg-background-image($svg);
-}
-
-
 // iOS Toggle
 // --------------------------------------------------
 
