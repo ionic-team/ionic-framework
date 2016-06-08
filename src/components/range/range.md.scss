@@ -226,9 +226,9 @@ ion-range:not(.range-has-pin) .range-knob-pressed .range-knob {
   }
 
   .range-knob {
-    transform: scale(.55);
+    outline: 5px solid #fff;
     background-color: $range-md-bar-background-color;
-    outline: 5px solid white;
+    transform: scale(.55);
   }
 
 }
