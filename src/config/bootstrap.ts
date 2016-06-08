@@ -39,11 +39,10 @@ const _reflect: any = Reflect;
  * @Component({
  *   templateUrl: 'build/app.html',
  * })
- * ```
- *
  * export class MyClass{}
  *
  * ionicBootstrap(MyClass, null, {tabbarPlacement: 'bottom'})
+ * ```
  */
 export function ionicBootstrap(appRootComponent: any, customProviders?: Array<any>, config?: any): Promise<ComponentRef<any>> {
   // get all Ionic Providers
