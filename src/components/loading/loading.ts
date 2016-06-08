@@ -173,6 +173,7 @@ class LoadingCmp {
   private id: number;
   private created: number;
   private showSpinner: boolean;
+  private enabled:boolean;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -189,6 +190,7 @@ class LoadingCmp {
     }
 
     this.id = (++loadingIds);
+    this.enabled = false;
   }
 
   ngOnInit() {
@@ -210,6 +212,7 @@ class LoadingCmp {
 
     // If there is a duration, dismiss after that amount of time
     this.d.duration ? setTimeout(() => this.dismiss('backdrop'), this.d.duration) : null;
+    this.enabled = true;
   }
 
   dismiss(role: any): Promise<any> {
@@ -217,8 +220,7 @@ class LoadingCmp {
   }
 
   isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
+    return this.enabled;
   }
 }
 

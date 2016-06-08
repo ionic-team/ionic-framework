@@ -4,6 +4,7 @@ import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {isPresent} from '../../util/util';
+import {KeyboardConstants} from '../../util/keyboard-constants';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -382,6 +383,7 @@ class AlertCmp {
   private inputType: string;
   private created: number;
   private lastClick: number;
+  private enabled: boolean;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -417,6 +419,7 @@ class AlertCmp {
     if (!this.d.message) {
       this.d.message = '';
     }
+    this.enabled = false;
   }
 
   ionViewLoaded() {
@@ -467,7 +470,7 @@ class AlertCmp {
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
     if (this.isEnabled() && this._viewCtrl.isLast()) {
-      if (ev.keyCode === 13) {
+      if (ev.keyCode === KeyboardConstants.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
           // do not fire this click if there recently was already a click
           // this can happen when the button has focus and used the enter
@@ -478,7 +481,7 @@ class AlertCmp {
           this.btnClick(button);
         }
 
-      } else if (ev.keyCode === 27) {
+      } else if (ev.keyCode === KeyboardConstants.ESCAPE) {
         console.debug('alert, escape button');
         this.bdClick();
       }
@@ -495,6 +498,7 @@ class AlertCmp {
     if (focusableEle) {
       focusableEle.focus();
     }
+    this.enabled = true;
   }
 
   btnClick(button: any, dismissDelay?: number) {
@@ -578,8 +582,7 @@ class AlertCmp {
   }
 
   isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
+    return this.enabled;
   }
 }
 

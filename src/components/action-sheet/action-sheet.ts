@@ -5,6 +5,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {isPresent} from '../../util/util';
+import {KeyboardConstants} from '../../util/keyboard-constants';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -247,6 +248,7 @@ class ActionSheetCmp {
   private hdrId: string;
   private id: number;
   private created: number;
+  private enabled: boolean;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -269,6 +271,7 @@ class ActionSheetCmp {
     if (this.d.subTitle) {
       this.descId = 'acst-subhdr-' + this.id;
     }
+    this.enabled = false;
   }
 
   ionViewLoaded() {
@@ -315,12 +318,13 @@ class ActionSheetCmp {
     if (focusableEle) {
       focusableEle.focus();
     }
+    this.enabled = true;
   }
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
     if (this.isEnabled() && this._viewCtrl.isLast()) {
-      if (ev.keyCode === 27) {
+      if (ev.keyCode === KeyboardConstants.ESCAPE) {
         console.debug('actionsheet, escape button');
         this.bdClick();
       }
@@ -365,8 +369,7 @@ class ActionSheetCmp {
   }
 
   isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
+    return this.enabled;
   }
 }
 

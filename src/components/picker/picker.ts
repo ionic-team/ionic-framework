@@ -5,6 +5,7 @@ import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {isPresent, isString, isNumber, clamp} from '../../util/util';
+import {KeyboardConstants} from '../../util/keyboard-constants';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 import {raf, cancelRaf, CSS, pointerCoord} from '../../util/dom';
@@ -462,6 +463,7 @@ class PickerDisplayCmp {
   private created: number;
   private lastClick: number;
   private id: number;
+  private enabled: boolean;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -481,6 +483,7 @@ class PickerDisplayCmp {
     this.id = (++pickerIds);
     this.created = Date.now();
     this.lastClick = 0;
+    this.enabled = false;
   }
 
   ionViewLoaded() {
@@ -545,7 +548,7 @@ class PickerDisplayCmp {
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
     if (this.isEnabled() && this._viewCtrl.isLast()) {
-      if (ev.keyCode === 13) {
+      if (ev.keyCode === KeyboardConstants.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
           // do not fire this click if there recently was already a click
           // this can happen when the button has focus and used the enter
@@ -556,7 +559,7 @@ class PickerDisplayCmp {
           this.btnClick(button);
         }
 
-      } else if (ev.keyCode === 27) {
+      } else if (ev.keyCode === KeyboardConstants.ESCAPE) {
         console.debug('picker, escape button');
         this.bdClick();
       }
@@ -573,6 +576,7 @@ class PickerDisplayCmp {
     if (focusableEle) {
       focusableEle.focus();
     }
+    this.enabled = true;
   }
 
   btnClick(button: any, dismissDelay?: number) {
@@ -625,8 +629,7 @@ class PickerDisplayCmp {
   }
 
   isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
+    return this.enabled;
   }
 }
 

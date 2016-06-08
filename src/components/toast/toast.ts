@@ -165,6 +165,7 @@ class ToastCmp {
   private created: number;
   private id: number;
   private dismissTimeout: number = undefined;
+  private enabled: boolean;
 
   constructor(
     private _nav: NavController,
@@ -186,6 +187,7 @@ class ToastCmp {
     if (this.d.message) {
       this.hdrId = 'toast-hdr-' + this.id;
     }
+    this.enabled = false;
   }
 
   ionViewDidEnter() {
@@ -207,6 +209,7 @@ class ToastCmp {
           this.dismiss('backdrop');
         }, this.d.duration);
     }
+    this.enabled = true;
   }
 
   cbClick() {
@@ -222,8 +225,7 @@ class ToastCmp {
   }
 
   isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
+    return this.enabled;
   }
 
 }

@@ -172,6 +172,7 @@ class PopoverCmp {
   private id: number;
   private created: number;
   private showSpinner: boolean;
+  private enabled: boolean;
 
   constructor(private _loader: DynamicComponentLoader,
     private _elementRef: ElementRef,
@@ -188,6 +189,7 @@ class PopoverCmp {
     }
 
     this.id = (++popoverIds);
+    this.enabled = false;
   }
 
   ionViewWillEnter() {
@@ -204,6 +206,7 @@ class PopoverCmp {
     if (document.activeElement) {
       activeElement.blur();
     }
+    this.enabled = true;
   }
 
   dismiss(role: any): Promise<any> {
@@ -222,8 +225,7 @@ class PopoverCmp {
   }
 
   isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
+    return this.enabled;
   }
 }
 
