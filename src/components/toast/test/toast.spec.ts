@@ -11,7 +11,7 @@ describe('Toast', () => {
         message: 'Please Wait...',
         showCloseButton: true
       });
-
+      
       expect(toast.data.position).toEqual('bottom');
       expect(toast.data.message).toEqual('Please Wait...');
       expect(toast.data.showCloseButton).toEqual(true);
