@@ -27,6 +27,10 @@ $popover-md-item-background:           $popover-md-background !default;
   box-shadow: $popover-md-box-shadow;
 
   transform-origin: top left;
+
+  ion-content {
+    background: $popover-md-background;
+  }
 }
 
 .popover-content .item {

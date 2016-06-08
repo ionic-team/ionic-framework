@@ -11,9 +11,22 @@ class E2EPage {
   items = [];
   shouldShow: boolean = true;
 
+  moreText: string = "Dynamic More";
+  archiveText: string = "Dynamic Archive";
+
   constructor(private app: App, private nav: NavController) {
-    for (let x = 0; x < 20; x++) {
+    for (let x = 0; x < 5; x++) {
       this.items.push(x);
+    }
+  }
+
+  changeDynamic() {
+    if (this.moreText.includes("Dynamic")) {
+      this.moreText = "Changed More";
+      this.archiveText = "Changed Archive";
+    } else {
+      this.moreText = "Dynamic More";
+      this.archiveText = "Dynamic Archive";
     }
   }
 

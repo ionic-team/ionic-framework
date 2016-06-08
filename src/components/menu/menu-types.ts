@@ -64,7 +64,7 @@ export class MenuType {
  * The menu itself, which is under the content, does not move.
  */
 class MenuRevealType extends MenuType {
-  constructor(menu: Menu) {
+  constructor(menu: Menu, platform: Platform) {
     super();
 
     let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';

@@ -30,33 +30,44 @@ import {Platform} from '../../platform/platform';
  * `checkbox`, `radio`, `toggle`, `range`, `select`, etc.
  *
  * @property [type] - The HTML input type (text, password, email, number, search, tel, or url)
- * @property [clearInput] - A clear icon will appear in the input which clears it
+ * @property [clearInput] - A clear icon will appear in the input when there is a value. Clicking it clears the input.
  *
  * @usage
  * ```html
- *  <ion-item>
- *    <ion-label>Username</ion-label>
- *    <ion-input></ion-input>
- *  </ion-item>
+ * <ion-list>
+ *   <ion-item>
+ *     <ion-label primary>Inline Label</ion-label>
+ *     <ion-input placeholder="Text Input"></ion-input>
+ *   </ion-item>
  *
- *  <ion-item>
- *    <ion-label fixed>Website</ion-label>
- *    <ion-input type="url"></ion-input>
- *  </ion-item>
+ *   <ion-item>
+ *     <ion-label primary fixed>Fixed Label</ion-label>
+ *     <ion-input type="tel" placeholder="Tel Input"></ion-input>
+ *   </ion-item>
  *
- *  <ion-item>
- *    <ion-label floating>Email</ion-label>
- *    <ion-input type="email"></ion-input>
- *  </ion-item>
+ *   <ion-item>
+ *     <ion-input type="number" placeholder="Number Input with no label"></ion-input>
+ *   </ion-item>
  *
- *  <ion-item>
- *    <ion-label stacked>Phone</ion-label>
- *    <ion-input type="tel"></ion-input>
- *  </ion-item>
+ *   <ion-item>
+ *     <ion-label primary stacked>Stacked Label</ion-label>
+ *     <ion-input type="email" placeholder="Email Input"></ion-input>
+ *   </ion-item>
  *
- *  <ion-item>
- *    <ion-input placeholder="Username" clearInput></ion-input>
- *  </ion-item>
+ *   <ion-item>
+ *     <ion-label primary stacked>Stacked Label</ion-label>
+ *     <ion-input type="password" placeholder="Password Input"></ion-input>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-label primary floating>Floating Label</ion-label>
+ *     <ion-input></ion-input>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-input placeholder="Clear Input" clearInput></ion-input>
+ *   </ion-item>
+ * </ion-list>
  * ```
  *
  * @demo /docs/v2/demos/input/

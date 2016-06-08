@@ -22,6 +22,10 @@ $popover-ios-arrow-background:          $popover-ios-background !default;
   border-radius: $popover-ios-border-radius;
   color: $popover-ios-text-color;
   background: $popover-ios-background;
+
+  ion-content {
+    background: $popover-ios-background;
+  }
 }
 
 .popover-content .item {

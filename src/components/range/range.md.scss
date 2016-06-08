@@ -220,6 +220,19 @@ ion-range:not(.range-has-pin) .range-knob-pressed .range-knob {
 
 @include md-range-min();
 
+.range-disabled {
+  .range-bar-active {
+    background-color: $range-md-bar-background-color;
+  }
+
+  .range-knob {
+    transform: scale(.55);
+    background-color: $range-md-bar-background-color;
+    outline: 5px solid white;
+  }
+
+}
+
 
 // Generate Material Design Range Colors
 // --------------------------------------------------

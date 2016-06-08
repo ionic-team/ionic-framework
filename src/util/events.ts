@@ -17,8 +17,9 @@
  * }
  *
  * // second page (listen for the user created event)
- * events.subscribe('user:created', (user) => {
- *   console.log('Welcome', user);
+ * events.subscribe('user:created', (userEventData) => {
+ *   // userEventData is an array of parameters, so grab our first and only arg
+ *   console.log('Welcome', userEventData[0]);
  * });
  *
  * ```

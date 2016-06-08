@@ -356,6 +356,12 @@ export class Range {
    * @private
    */
   pointerDown(ev: UIEvent) {
+    // TODO: we could stop listening for events instead of checking this._disabled.
+    // since there are a lot of events involved, this solution is
+    // enough for the moment
+    if (this._disabled) {
+      return;
+    }
     console.debug(`range, ${ev.type}`);
 
     // prevent default so scrolling does not happen

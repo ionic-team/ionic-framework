@@ -213,6 +213,14 @@ export class Button {
   /**
    * @private
    */
+  ngAfterContentChecked() {
+    this._readIcon(this._elementRef.nativeElement);
+    this._assignCss(true);
+  }
+
+  /**
+   * @private
+   */
   addClass(className: string) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
@@ -255,6 +263,9 @@ export class Button {
         }
       }
     }
+
+    // Remove any classes that are set already
+    this._setClass(this._icon, false);
 
     if (nodes.length > 1) {
       if (nodes[0] === ICON && nodes[1] === TEXT) {

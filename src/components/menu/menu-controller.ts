@@ -294,7 +294,7 @@ export class MenuController {
    * @private
    */
   static create(type: string, menuCmp: Menu, platform: Platform) {
-    return new menuTypes[type](menuCmp);
+    return new menuTypes[type](menuCmp, platform);
   }
 
 }

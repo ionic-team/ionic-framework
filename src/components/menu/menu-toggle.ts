@@ -21,12 +21,59 @@ import {MenuController} from './menu-controller';
  * <button menuToggle>Toggle Menu</button>
  * ```
  *
- * To toggle a certain menu by its id or side, give the `menuToggle`
+ * To toggle a specific menu by its id or side, give the `menuToggle`
  * directive a value.
  *
  * ```html
  * <button menuToggle="right">Toggle Right Menu</button>
  * ```
+ *
+ * If placing the `menuToggle` in a navbar or toolbar, it should be
+ * placed as a child of the `<ion-navbar>` or `<ion-toolbar>`, and not in
+ * the `<ion-buttons>` element:
+ *
+ * ```html
+ * <ion-navbar *navbar>
+ *   <ion-buttons start>
+ *     <button>
+ *       <ion-icon name="contact"></ion-icon>
+ *     </button>
+ *   </ion-buttons>
+ *   <button menuToggle>
+ *     <ion-icon name="menu"></ion-icon>
+ *   </button>
+ *   <ion-title>
+ *     Title
+ *   </ion-title>
+ *   <ion-buttons end>
+ *     <button (click)="doClick()">
+ *       <ion-icon name="more"></ion-icon>
+ *     </button>
+ *   </ion-buttons>
+ * </ion-navbar>
+ * ```
+ *
+ * Similar to `<ion-buttons>`, the `menuToggle` can be positioned using
+ * `start`, `end`, `left`, or `right`:
+ *
+ * ```html
+ * <ion-toolbar>
+ *   <button menuToggle right>
+ *     <ion-icon name="menu"></ion-icon>
+ *   </button>
+ *   <ion-title>
+ *     Title
+ *   </ion-title>
+ *   <ion-buttons end>
+ *     <button (click)="doClick()">
+ *       <ion-icon name="more"></ion-icon>
+ *     </button>
+ *   </ion-buttons>
+ * </ion-toolbar>
+ * ```
+ *
+ * See the [Toolbar API docs](../../toolbar/Toolbar) for more information
+ * on the different positions.
  *
  * @demo /docs/v2/demos/menu/
  * @see {@link /docs/v2/components#menus Menu Component Docs}

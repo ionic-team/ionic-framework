@@ -80,7 +80,7 @@ ion-menu[type=overlay] {
 
     width: 6000px;
 
-    opacity: 0.01;
+    opacity: .01;
     transform: translate3d(-9999px, 0, 0);
 
     &.show-backdrop {

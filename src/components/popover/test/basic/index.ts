@@ -4,58 +4,60 @@ import {ionicBootstrap, Popover, NavController, Content, NavParams, ViewControll
 
 @Component({
   template: `
-    <ion-list radio-group [(ngModel)]="fontFamily" (ionChange)="changeFontFamily()">
-      <ion-row>
-        <ion-col>
-          <button (click)="changeFontSize('smaller')" ion-item detail-none class="text-button text-smaller">A</button>
-        </ion-col>
-        <ion-col>
-          <button (click)="changeFontSize('larger')" ion-item detail-none class="text-button text-larger">A</button>
-        </ion-col>
-      </ion-row>
-      <ion-row class="row-dots">
-        <ion-col>
-          <button (click)="changeBackground('white')" category="dot" class="dot-white" [class.selected]="background == 'white'"></button>
-        </ion-col>
-        <ion-col>
-          <button (click)="changeBackground('tan')" category="dot" class="dot-tan" [class.selected]="background == 'tan'"></button>
-        </ion-col>
-        <ion-col>
-          <button (click)="changeBackground('grey')" category="dot" class="dot-grey" [class.selected]="background == 'grey'"></button>
-        </ion-col>
-        <ion-col>
-          <button (click)="changeBackground('black')" category="dot" class="dot-black" [class.selected]="background == 'black'"></button>
-        </ion-col>
-      </ion-row>
-      <ion-item class="text-athelas">
-        <ion-label>Athelas</ion-label>
-        <ion-radio value="Athelas"></ion-radio>
-      </ion-item>
-      <ion-item class="text-charter">
-        <ion-label>Charter</ion-label>
-        <ion-radio value="Charter"></ion-radio>
-      </ion-item>
-      <ion-item class="text-iowan">
-        <ion-label>Iowan</ion-label>
-        <ion-radio value="Iowan"></ion-radio>
-      </ion-item>
-      <ion-item class="text-palatino">
-        <ion-label>Palatino</ion-label>
-        <ion-radio value="Palatino"></ion-radio>
-      </ion-item>
-      <ion-item class="text-san-francisco">
-        <ion-label>San Francisco</ion-label>
-        <ion-radio value="San Francisco"></ion-radio>
-      </ion-item>
-      <ion-item class="text-seravek">
-        <ion-label>Seravek</ion-label>
-        <ion-radio value="Seravek"></ion-radio>
-      </ion-item>
-      <ion-item class="text-times-new-roman">
-        <ion-label>Times New Roman</ion-label>
-        <ion-radio value="Times New Roman"></ion-radio>
-      </ion-item>
-    </ion-list>
+    <ion-content>
+      <ion-list radio-group [(ngModel)]="fontFamily" (ionChange)="changeFontFamily()">
+        <ion-row>
+          <ion-col>
+            <button (click)="changeFontSize('smaller')" ion-item detail-none class="text-button text-smaller">A</button>
+          </ion-col>
+          <ion-col>
+            <button (click)="changeFontSize('larger')" ion-item detail-none class="text-button text-larger">A</button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="row-dots">
+          <ion-col>
+            <button (click)="changeBackground('white')" category="dot" class="dot-white" [class.selected]="background == 'white'"></button>
+          </ion-col>
+          <ion-col>
+            <button (click)="changeBackground('tan')" category="dot" class="dot-tan" [class.selected]="background == 'tan'"></button>
+          </ion-col>
+          <ion-col>
+            <button (click)="changeBackground('grey')" category="dot" class="dot-grey" [class.selected]="background == 'grey'"></button>
+          </ion-col>
+          <ion-col>
+            <button (click)="changeBackground('black')" category="dot" class="dot-black" [class.selected]="background == 'black'"></button>
+          </ion-col>
+        </ion-row>
+        <ion-item class="text-athelas">
+          <ion-label>Athelas</ion-label>
+          <ion-radio value="Athelas"></ion-radio>
+        </ion-item>
+        <ion-item class="text-charter">
+          <ion-label>Charter</ion-label>
+          <ion-radio value="Charter"></ion-radio>
+        </ion-item>
+        <ion-item class="text-iowan">
+          <ion-label>Iowan</ion-label>
+          <ion-radio value="Iowan"></ion-radio>
+        </ion-item>
+        <ion-item class="text-palatino">
+          <ion-label>Palatino</ion-label>
+          <ion-radio value="Palatino"></ion-radio>
+        </ion-item>
+        <ion-item class="text-san-francisco">
+          <ion-label>San Francisco</ion-label>
+          <ion-radio value="San Francisco"></ion-radio>
+        </ion-item>
+        <ion-item class="text-seravek">
+          <ion-label>Seravek</ion-label>
+          <ion-radio value="Seravek"></ion-radio>
+        </ion-item>
+        <ion-item class="text-times-new-roman">
+          <ion-label>Times New Roman</ion-label>
+          <ion-radio value="Times New Roman"></ion-radio>
+        </ion-item>
+      </ion-list>
+    </ion-content>
   `,
 })
 class PopoverRadioPage {
@@ -155,10 +157,12 @@ class PopoverListPage {
 
 @Component({
   template: `
-    <ion-list>
-      <ion-list-header>Ionic</ion-list-header>
-      <button ion-item *ngFor="let item of items">Item {{item}}</button>
-    </ion-list>
+    <ion-content>
+      <ion-list>
+        <ion-list-header>Ionic</ion-list-header>
+        <button ion-item *ngFor="let item of items">Item {{item}}</button>
+      </ion-list>
+    </ion-content>
   `
 })
 class PopoverLongListPage {
