@@ -111,6 +111,13 @@ export class Item {
   /**
    * @private
    */
+  setCssStyle(property: string, value: string) {
+    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
+  }
+
+  /**
+   * @private
+   */
   getLabelText(): string {
     return this._label ? this._label.text : '';
   }

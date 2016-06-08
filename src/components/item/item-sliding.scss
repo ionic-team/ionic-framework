@@ -4,7 +4,6 @@
 // --------------------------------------------------
 // The hidden right-side buttons that can be exposed under a list item with dragging.
 
-
 ion-item-sliding {
   position: relative;
   display: block;
@@ -22,23 +21,35 @@ ion-item-options {
   z-index: $z-index-item-options;
   display: none;
 
+  justify-content: flex-end;
+
   height: 100%;
+
+  font-size: 14px;
 
   visibility: hidden;
 }
 
+ion-item-options[side=left] {
+  right: auto;
+  left: 0;
+
+  justify-content: flex-start;
+}
+
 ion-item-options .button {
   margin: 0;
+  padding: 0 .7em;
 
   height: 100%;
 
   border-radius: 0;
   box-shadow: none;
+
+  box-sizing: content-box;
 }
 
 ion-item-options:not([icon-left]) .button-icon-left {
-  font-size: 14px;
-
   .button-inner {
     flex-direction: column;
   }
@@ -60,15 +71,54 @@ ion-item-sliding.active-slide {
     opacity: 1;
     transition: all 300ms cubic-bezier(.36, .66, .04, 1);
 
-    pointer-events: none;
-
+    pointer-events: all;
   }
 
   ion-item-options {
     display: flex;
   }
 
-  &.active-options ion-item-options {
+  &.active-options-left ion-item-options[side=left] {
     visibility: visible;
   }
+
+  &.active-options-right ion-item-options:not([side=left]) {
+    visibility: visible;
+  }
+}
+
+// Item Swipeable Animation
+// --------------------------------------------------
+
+button[swipeable] {
+  flex-shrink: 0;
+
+  transition-duration: 0;
+  transition-property: none;
+  transition-timing-function: cubic-bezier(.65, .05, .36, 1);
+}
+
+ion-item-sliding.active-swipe-right,
+ion-item-sliding.active-swipe-left {
+  ion-item-options {
+    width: 100%;
+  }
+}
+
+ion-item-sliding.active-swipe-right button[swipeable] {
+  order: 1;
+
+  padding-left: 90%;
+
+  transition-duration: .6s;
+  transition-property: padding-left;
+}
+
+ion-item-sliding.active-swipe-left button[swipeable] {
+  order: -1;
+
+  padding-right: 90%;
+
+  transition-duration: .6s;
+  transition-property: padding-right;
 }

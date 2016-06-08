@@ -1,221 +1,103 @@
-import {DIRECTION_RIGHT} from '../../gestures/hammer';
 import {DragGesture} from '../../gestures/drag-gesture';
+import {ItemSliding} from './item-sliding';
 import {List} from '../list/list';
 
-import {CSS, nativeRaf, closest} from '../../util/dom';
+import {closest} from '../../util/dom';
 
+const DRAG_THRESHOLD = 20;
+const MAX_ATTACK_ANGLE = 20;
 
 export class ItemSlidingGesture extends DragGesture {
-  canDrag: boolean = true;
-  data = {};
-  openItems: number = 0;
   onTap: any;
-  onMouseOut: any;
-  preventDrag: boolean = false;
-  dragEnded: boolean = true;
+  selectedContainer: ItemSliding = null;
+  openContainer: ItemSliding = null;
 
   constructor(public list: List, public listEle: HTMLElement) {
     super(listEle, {
       direction: 'x',
       threshold: DRAG_THRESHOLD
     });
-
     this.listen();
+  }
 
-    this.onTap = (ev: UIEvent) => {
-      if (!isFromOptionButtons(ev.target)) {
-        let didClose = this.closeOpened();
-        if (didClose) {
-          console.debug('tap close sliding item');
-          preventDefault(ev);
-        }
-      }
-    };
-
-    this.onMouseOut = (ev: any) => {
-      if (ev.target.tagName === 'ION-ITEM-SLIDING') {
-        console.debug('tap close sliding item');
-        this.onDragEnd(ev);
-      }
-    };
+  onTapCallback(ev: any) {
+    if (isFromOptionButtons(ev.target)) {
+      return;
+    }
+    let didClose = this.closeOpened();
+    if (didClose) {
+      console.debug('tap close sliding item, preventDefault');
+      ev.preventDefault();
+    }
   }
 
   onDragStart(ev: any): boolean {
-    let itemContainerEle = getItemContainer(ev.target);
-    if (!itemContainerEle) {
+    let angle = Math.abs(ev.angle);
+    if (angle > MAX_ATTACK_ANGLE && Math.abs(angle - 180) > MAX_ATTACK_ANGLE) {
+      this.closeOpened();
+      return false;
+    }
+
+    if (this.selectedContainer) {
+      console.debug('onDragStart, another container is already selected');
+      return false;
+    }
+
+    let container = getContainer(ev);
+    if (!container) {
       console.debug('onDragStart, no itemContainerEle');
       return false;
     }
 
-    this.closeOpened(itemContainerEle);
-
-    let openAmout = this.getOpenAmount(itemContainerEle);
-    let itemData = this.get(itemContainerEle);
-    this.preventDrag = (openAmout > 0);
-
-    if (this.preventDrag) {
+    // Close open container if it is not the selected one.
+    if (container !== this.openContainer) {
       this.closeOpened();
-      console.debug('onDragStart, preventDefault');
-      preventDefault(ev);
-      return;
     }
 
-    itemContainerEle.classList.add('active-slide');
-
-    this.set(itemContainerEle, 'offsetX', openAmout);
-    this.set(itemContainerEle, 'startX', ev.center[this.direction]);
-
-    this.dragEnded = false;
+    // Close all item sliding containers but the selected one
+    this.selectedContainer = container;
+    this.openContainer = container;
+    container.startSliding(ev.center.x);
 
     return true;
   }
 
   onDrag(ev: any): boolean {
-    if (this.dragEnded || this.preventDrag || Math.abs(ev.deltaY) > 30) {
-      console.debug('onDrag preventDrag, dragEnded:', this.dragEnded, 'preventDrag:', this.preventDrag, 'ev.deltaY:', Math.abs(ev.deltaY));
-      this.preventDrag = true;
-      return;
+    if (this.selectedContainer) {
+      this.selectedContainer.moveSliding(ev.center.x);
+      ev.preventDefault();
     }
-
-    let itemContainerEle = getItemContainer(ev.target);
-    if (!itemContainerEle || !isActive(itemContainerEle)) {
-      console.debug('onDrag, no itemContainerEle');
-      return;
-    }
-
-    let itemData = this.get(itemContainerEle);
-
-    if (!itemData.optsWidth) {
-      itemData.optsWidth = getOptionsWidth(itemContainerEle);
-      if (!itemData.optsWidth) {
-        console.debug('onDrag, no optsWidth');
-        return;
-      }
-    }
-
-    let x = ev.center[this.direction];
-    let delta = x - itemData.startX;
-
-    let newX = Math.max(0, itemData.offsetX - delta);
-
-    if (newX > itemData.optsWidth) {
-      // Calculate the new X position, capped at the top of the buttons
-      newX = -Math.min(-itemData.optsWidth, -itemData.optsWidth + (((delta + itemData.optsWidth) * 0.4)));
-    }
-
-    if (newX > 5 && ev.srcEvent.type.indexOf('mouse') > -1 && !itemData.hasMouseOut) {
-      itemContainerEle.addEventListener('mouseout', this.onMouseOut);
-      itemData.hasMouseOut = true;
-    }
-
-    nativeRaf(() => {
-      if (!this.dragEnded && !this.preventDrag) {
-        isItemActive(itemContainerEle, true);
-        this.open(itemContainerEle, newX, false);
-      }
-    });
+    return;
   }
 
   onDragEnd(ev: any) {
-    this.preventDrag = false;
-    this.dragEnded = true;
+    if (this.selectedContainer) {
+      let openAmount = this.selectedContainer.endSliding(ev.velocityX);
+      this.selectedContainer = null;
 
-    let itemContainerEle = getItemContainer(ev.target);
-    if (!itemContainerEle || !isActive(itemContainerEle)) {
-      console.debug('onDragEnd, no itemContainerEle');
-      return;
-    }
-
-    // If we are currently dragging, we want to snap back into place
-    // The final resting point X will be the width of the exposed buttons
-    let itemData = this.get(itemContainerEle);
-
-    var restingPoint = itemData.optsWidth;
-
-    // Check if the drag didn't clear the buttons mid-point
-    // and we aren't moving fast enough to swipe open
-
-    if (this.getOpenAmount(itemContainerEle) < (restingPoint / 2)) {
-
-      // If we are going left but too slow, or going right, go back to resting
-      if (ev.direction & DIRECTION_RIGHT || Math.abs(ev.velocityX) < 0.3) {
-        restingPoint = 0;
-      }
-    }
-
-    itemContainerEle.removeEventListener('mouseout', this.onMouseOut);
-    itemData.hasMouseOut = false;
-
-    nativeRaf(() => {
-      this.open(itemContainerEle, restingPoint, true);
-    });
-  }
-
-  closeOpened(doNotCloseEle?: HTMLElement) {
-    let didClose = false;
-    if (this.openItems) {
-      let openItemElements = this.listEle.querySelectorAll('.active-slide');
-      for (let i = 0; i < openItemElements.length; i++) {
-        if (openItemElements[i] !== doNotCloseEle) {
-          this.open(openItemElements[i], 0, true);
-          didClose = true;
-        }
-      }
-    }
-    return didClose;
-  }
-
-  open(itemContainerEle: any, openAmount: number, isFinal: boolean) {
-    let slidingEle = itemContainerEle.querySelector('ion-item,[ion-item]');
-    if (!slidingEle) {
-      console.debug('open, no slidingEle, openAmount:', openAmount);
-      return;
-    }
-
-    this.set(itemContainerEle, 'openAmount', openAmount);
-
-    clearTimeout(this.get(itemContainerEle).timerId);
-
-    if (openAmount) {
-      this.openItems++;
-
-    } else {
-      let timerId = setTimeout(() => {
-        if (slidingEle.style[CSS.transform] === '') {
-          isItemActive(itemContainerEle, false);
-          this.openItems--;
-        }
-      }, 400);
-      this.set(itemContainerEle, 'timerId', timerId);
-    }
-
-    slidingEle.style[CSS.transition] = (isFinal ? '' : 'none');
-    slidingEle.style[CSS.transform] = (openAmount ? 'translate3d(' + -openAmount + 'px,0,0)' : '');
-
-    if (isFinal) {
-      if (openAmount) {
-        isItemActive(itemContainerEle, true);
-        this.on('tap', this.onTap);
-
-      } else {
+      // TODO: I am not sure listening for a tap event is the best idea
+      // we should try mousedown/touchstart
+      if (openAmount === 0) {
+        this.openContainer = null;
         this.off('tap', this.onTap);
+        this.onTap = null;
+      } else if (!this.onTap) {
+        this.onTap = (event: any) => this.onTapCallback(event);
+        this.on('tap', this.onTap);
       }
     }
   }
 
-  getOpenAmount(itemContainerEle: any) {
-    return this.get(itemContainerEle).openAmount || 0;
-  }
-
-  get(itemContainerEle: any) {
-    return this.data[itemContainerEle && itemContainerEle.$ionSlide] || {};
-  }
-
-  set(itemContainerEle: any, key: any, value: any) {
-    if (!this.data[itemContainerEle.$ionSlide]) {
-      this.data[itemContainerEle.$ionSlide] = {};
+  closeOpened(): boolean {
+    if (this.openContainer) {
+      this.openContainer.close();
+      this.openContainer = null;
+      this.selectedContainer = null;
+      this.off('tap', this.onTap);
+      this.onTap = null;
+      return true;
     }
-    this.data[itemContainerEle.$ionSlide][key] = value;
+    return false;
   }
 
   unlisten() {
@@ -224,34 +106,14 @@ export class ItemSlidingGesture extends DragGesture {
   }
 }
 
-function isItemActive(ele: any, isActive: boolean) {
-  ele.classList[isActive ? 'add' : 'remove']('active-slide');
-  ele.classList[isActive ? 'add' : 'remove']('active-options');
+function getContainer(ev: any): ItemSliding {
+  let ele = closest(ev.target, 'ion-item-sliding', true);
+  if (ele) {
+    return ele['$ionComponent'];
+  }
+  return null;
 }
 
-function preventDefault(ev: any) {
-  console.debug('sliding item preventDefault', ev.type);
-  ev.preventDefault();
-}
-
-function getItemContainer(ele: any) {
-  return closest(ele, 'ion-item-sliding', true);
-}
-
-function isFromOptionButtons(ele: any) {
+function isFromOptionButtons(ele: HTMLElement): boolean {
   return !!closest(ele, 'ion-item-options', true);
 }
-
-function getOptionsWidth(itemContainerEle: any) {
-  let optsEle = itemContainerEle.querySelector('ion-item-options');
-  if (optsEle) {
-    return optsEle.offsetWidth;
-  }
-}
-
-function isActive(itemContainerEle: any) {
-  return itemContainerEle.classList.contains('active-slide');
-}
-
-
-const DRAG_THRESHOLD = 20;
