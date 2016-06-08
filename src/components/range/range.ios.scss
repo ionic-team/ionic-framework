@@ -12,7 +12,7 @@ $range-ios-slider-height:                     42px !default;
 $range-ios-hit-width:                         42px !default;
 $range-ios-hit-height:                        $range-ios-slider-height !default;
 
-$range-ios-bar-height:                        1px !default;
+$range-ios-bar-height:                        2px !default;
 $range-ios-bar-background-color:              #bdbdbd !default;
 $range-ios-bar-active-background-color:       color($colors-ios, primary) !default;
 
@@ -66,6 +66,8 @@ ion-range {
 
   width: 100%;
   height: $range-ios-bar-height;
+
+  border-radius: 1px;
 
   background: $range-ios-bar-background-color;
 
@@ -165,6 +167,11 @@ ion-range {
 .range-knob-pressed .range-pin {
   transform: translate3d(0, 0, 0) scale(1);
 }
+
+.range-disabled {
+  opacity: 0.5;
+}
+
 
 // Generate iOS Range Colors
 // --------------------------------------------------

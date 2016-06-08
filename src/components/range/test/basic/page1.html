@@ -44,6 +44,14 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>disabled</ion-label>
+      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3" disabled=true>
+        <ion-icon small range-left name="sunny"></ion-icon>
+        <ion-icon range-right name="sunny"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
       <ion-label>step=100, snaps, {{singleValue4}}</ion-label>
       <ion-range min="1000" max="2000" step="100" snaps="true" secondary [(ngModel)]="singleValue4"></ion-range>
     </ion-item>
