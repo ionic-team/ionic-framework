@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ionicBootstrap, NavController, Alert, Modal, ViewController} from '../../../../../src';
+import {ionicBootstrap, NavController, App, Alert, Modal, ViewController, Tab, Tabs} from '../../../../../src';
 
 //
 // Modal
@@ -34,6 +34,9 @@ import {ionicBootstrap, NavController, Alert, Modal, ViewController} from '../..
       <button ion-item danger detail-none>
         Reset All Filters
       </button>
+      <button ion-item danger detail-none (click)="appNavPop()">
+        App Nav Pop
+      </button>
     </ion-list>
   </ion-content>
   `
@@ -41,7 +44,7 @@ import {ionicBootstrap, NavController, Alert, Modal, ViewController} from '../..
 class MyModal {
   items: any[] = [];
 
-  constructor(private viewCtrl: ViewController) {
+  constructor(private viewCtrl: ViewController, private app: App) {
     for (var i = 1; i <= 10; i++) {
       this.items.push(i);
     }
@@ -51,6 +54,10 @@ class MyModal {
     // using the injected ViewController this page
     // can "dismiss" itself and pass back data
     this.viewCtrl.dismiss();
+  }
+
+  appNavPop() {
+    this.app.navPop();
   }
 }
 
@@ -69,16 +76,30 @@ class MyModal {
         </ion-list-header>
         <ion-item *ngFor="let i of items">Item {{i}} {{i}} {{i}} {{i}}</ion-item>
       </ion-list>
+      <p>
+        <button (click)="selectPrevious()">Select Previous Tab</button>
+      </p>
+      <p>
+        <button (click)="appNavPop()">App Nav Pop</button>
+      </p>
     </ion-content>
     `
 })
 export class Tab1 {
   items: any[] = [];
 
-  constructor() {
+  constructor(private tabs: Tabs, private app: App) {
     for (var i = 1; i <= 250; i++) {
       this.items.push(i);
     }
+  }
+
+  selectPrevious() {
+    this.tabs.select(this.tabs.previousTab());
+  }
+
+  appNavPop() {
+    this.app.navPop();
   }
 }
 
@@ -103,19 +124,33 @@ export class Tab1 {
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
+      <p>
+        <button (click)="selectPrevious()">Select Previous Tab</button>
+      </p>
+      <p>
+        <button (click)="appNavPop()">App Nav Pop</button>
+      </p>
     </ion-content>
   `
 })
 export class Tab2 {
   sessions: any[] = [];
 
-  constructor() {
+  constructor(private tabs: Tabs, private app: App) {
     for (var i = 1; i <= 250; i++) {
       this.sessions.push({
         name: 'Name ' + i,
         location: 'Location: ' + i
       });
     }
+  }
+
+  selectPrevious() {
+    this.tabs.select(this.tabs.previousTab());
+  }
+
+  appNavPop() {
+    this.app.navPop();
   }
 }
 
@@ -136,11 +171,17 @@ export class Tab2 {
         <button (click)="presentAlert()">Present Alert</button>
         <button (click)="presentModal()">Present Modal</button>
       </p>
+      <p>
+        <button (click)="selectPrevious()">Select Previous Tab</button>
+      </p>
+      <p>
+        <button (click)="appNavPop()">App Nav Pop</button>
+      </p>
     </ion-content>
     `
 })
 export class Tab3 {
-  constructor(private nav: NavController) {}
+  constructor(private nav: NavController, private tabs: Tabs, private app: App) {}
 
   presentAlert() {
     let alert = Alert.create({
@@ -153,6 +194,14 @@ export class Tab3 {
   presentModal() {
     let modal = Modal.create(MyModal);
     this.nav.present(modal);
+  }
+
+  selectPrevious() {
+    this.tabs.select(this.tabs.previousTab());
+  }
+
+  appNavPop() {
+    this.app.navPop();
   }
 }
 
@@ -184,11 +233,11 @@ export class TabsPage {
   root2 = Tab2;
   root3 = Tab3;
 
-  onChange(ev) {
+  onChange(ev: Tab) {
     console.log("Changed tab", ev);
   }
 
-  onSelect(ev) {
+  onSelect(ev: Tab) {
     console.log("Selected tab", ev);
   }
 }

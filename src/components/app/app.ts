@@ -1,9 +1,11 @@
 import {Injectable, Injector} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 
-import {Config} from '../../config/config';
 import {ClickBlock} from '../../util/click-block';
+import {Config} from '../../config/config';
+import {NavController} from '../nav/nav-controller';
 import {Platform} from '../../platform/platform';
+import {Tabs} from '../tabs/tabs';
 
 
 /**
@@ -15,24 +17,17 @@ export class App {
   private _scrollTime: number = 0;
   private _title: string = '';
   private _titleSrv: Title = new Title();
-  private _rootNav: any = null;
+  private _rootNav: NavController = null;
   private _appInjector: Injector;
 
   constructor(
     private _config: Config,
     private _clickBlock: ClickBlock,
-    platform: Platform
+    private _platform: Platform
   ) {
-    platform.backButton.subscribe(() => {
-      let activeNav = this.getActiveNav();
-      if (activeNav) {
-        if (activeNav.length() === 1) {
-          platform.exitApp();
-        } else {
-          activeNav.pop();
-        }
-      }
-    });
+    // listen for hardware back button events
+    // register this back button action with a default priority
+    _platform.registerBackButtonAction(this.navPop.bind(this));
   }
 
   /**
@@ -100,7 +95,7 @@ export class App {
   /**
    * @private
    */
-  getActiveNav(): any {
+  getActiveNav(): NavController {
     var nav = this._rootNav || null;
     var activeChildNav: any;
 
@@ -118,7 +113,7 @@ export class App {
   /**
    * @private
    */
-  getRootNav(): any {
+  getRootNav(): NavController {
     return this._rootNav;
   }
 
@@ -127,6 +122,72 @@ export class App {
    */
   setRootNav(nav: any) {
     this._rootNav = nav;
+  }
+
+  /**
+   * @private
+   */
+  navPop(): Promise<any> {
+    // function used to climb up all parent nav controllers
+    function navPop(nav: any): Promise<any> {
+      if (nav) {
+        if (nav.length && nav.length() > 1) {
+          // this nav controller has more than one view
+          // pop the current view on this nav and we're done here
+          console.debug('app, goBack pop nav');
+          return nav.pop();
+
+        } else if (nav.previousTab) {
+          // FYI, using "nav instanceof Tabs" throws a Promise runtime error for whatever reason, idk
+          // this is a Tabs container
+          // see if there is a valid previous tab to go to
+          let prevTab = nav.previousTab(true);
+          if (prevTab) {
+            console.debug('app, goBack previous tab');
+            nav.select(prevTab);
+            return Promise.resolve();
+          }
+        }
+
+        // try again using the parent nav (if there is one)
+        return navPop(nav.parent);
+      }
+
+      // nerp, never found nav that could pop off a view
+      return null;
+    }
+
+    // app must be enabled and there must be a
+    // root nav controller for go back to work
+    if (this._rootNav && this.isEnabled()) {
+
+      // first check if the root navigation has any overlays
+      // opened in it's portal, like alert/actionsheet/popup
+      let portal = this._rootNav.getPortal && this._rootNav.getPortal();
+      if (portal && portal.length() > 0) {
+        // there is an overlay view in the portal
+        // let's pop this one off to go back
+        console.debug('app, goBack pop overlay');
+        return portal.pop();
+      }
+
+      // next get the active nav, check itself and climb up all
+      // of its parent navs until it finds a nav that can pop
+      let navPromise = navPop(this.getActiveNav());
+      if (navPromise === null) {
+        // no views to go back to
+        // let's exit the app
+        if (this._config.getBoolean('navExitApp', true)) {
+          console.debug('app, goBack exitApp');
+          this._platform.exitApp();
+        }
+
+      } else {
+        return navPromise;
+      }
+    }
+
+    return Promise.resolve();
   }
 
   /**

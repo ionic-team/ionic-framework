@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, NavParams, NavController, ViewController, MenuController} from '../../../../../src';
-import {Config, Nav} from '../../../../../src';
+import {ionicBootstrap, NavController, MenuController} from '../../../../../src';
+import {Config, Nav, App} from '../../../../../src';
 
 
 @Component({
@@ -9,15 +9,20 @@ import {Config, Nav} from '../../../../../src';
       <ion-title>Login</ion-title>
     </ion-navbar>
     <ion-content style="text-align:center;" padding>
-      <button (click)="goToAccount()">Login</button>
+      <p><button (click)="goToAccount()">Login</button></p>
+      <p><button (click)="goBack()">App goBack()</button></p>
     </ion-content>
   `
 })
 export class Login {
-  constructor(private nav: NavController) {}
+  constructor(private nav: NavController, private app: App) {}
 
   goToAccount() {
     this.nav.push(Account);
+  }
+
+  goBack() {
+    this.app.navPop();
   }
 }
 
@@ -39,21 +44,22 @@ export class Login {
          <button ion-item detail-none (click)="logOut()">
            Logout
          </button>
+         <button ion-item detail-none (click)="goBack()">
+           App Go Back
+         </button>
        </ion-list>
      </ion-content>
     </ion-menu>
 
-    <ion-nav id="account-nav" [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+    <ion-nav #accountNav #content [root]="root" swipeBackEnabled="false"></ion-nav>
   `
 })
 export class Account {
-  @ViewChild('account-nav') accountNav: Nav;
+  @ViewChild('accountNav') accountNav: Nav;
 
-  rootPage = Dashboard;
+  root = Dashboard;
 
-  constructor(private menu: MenuController, private nav: NavController) {
-
-  }
+  constructor(private menu: MenuController, private app: App) {}
 
   goToProfile() {
     this.accountNav.setRoot(Profile).then(() => {
@@ -68,7 +74,13 @@ export class Account {
   }
 
   logOut() {
-    this.nav.parent.setRoot(Login, null, { animate: true });
+    this.accountNav.setRoot(Login, null, { animate: true }).then(() => {
+      this.menu.close();
+    });
+  }
+
+  goBack() {
+    this.app.navPop();
   }
 }
 
@@ -84,20 +96,26 @@ export class Account {
     <ion-content padding>
       <p><button (click)="goToProfile()">Profile</button></p>
       <p><button (click)="logOut()">Logout</button></p>
+      <p><button (click)="goBack()">App goBack()</button></p>
     </ion-content>
   `
 })
 export class Dashboard {
-  constructor(private nav: NavController) {}
+  constructor(private nav: NavController, private app: App) {}
 
   goToProfile() {
     this.nav.push(Profile);
   }
+
   logOut() {
     this.nav.parent.setRoot(Login, null, {
       animate: true,
       direction: 'back'
     });
+  }
+
+  goBack() {
+    this.app.navPop();
   }
 }
 
@@ -113,11 +131,12 @@ export class Dashboard {
     <ion-content padding>
       <p><button (click)="goToDashboard()">Dashboard</button></p>
       <p><button (click)="logOut()">Logout</button></p>
+      <p><button (click)="goBack()">App goBack()</button></p>
     </ion-content>
   `
 })
 export class Profile {
-  constructor(private nav: NavController) {}
+  constructor(private nav: NavController, private app: App) {}
 
   goToDashboard() {
     this.nav.push(Dashboard);
@@ -128,6 +147,10 @@ export class Profile {
       animate: true,
       direction: 'back'
     });
+  }
+
+  goBack() {
+    this.app.navPop();
   }
 }
 

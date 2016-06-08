@@ -6,8 +6,8 @@ import {Config} from '../../config/config';
 import {Ion} from '../ion';
 import {isBlank, pascalCaseToDashCase} from '../../util/util';
 import {Keyboard} from '../../util/keyboard';
-import {NavParams} from './nav-params';
 import {MenuController} from '../menu/menu-controller';
+import {NavParams} from './nav-params';
 import {NavPortal} from './nav-portal';
 import {SwipeBackGesture} from './swipe-back';
 import {Transition} from '../../transitions/transition';
@@ -243,6 +243,13 @@ export class NavController extends Ion {
     this.viewDidLeave = new EventEmitter();
     this.viewWillUnload = new EventEmitter();
     this.viewDidUnload = new EventEmitter();
+  }
+
+  /**
+   * @private
+   */
+  getPortal(): NavController {
+    return this._portal;
   }
 
   /**

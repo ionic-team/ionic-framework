@@ -1,9 +1,277 @@
+import {Component} from '@angular/core';
 import {App, Nav, Tabs, Tab, NavOptions, Config, ViewController, Platform} from '../../../../src';
 
 export function run() {
 
 
-describe('IonicApp', () => {
+describe('App', () => {
+
+  describe('navPop', () => {
+
+    it('should select the previous tab', () => {
+      let nav = mockNav();
+      let portal = mockNav();
+      nav.setPortal(portal);
+      app.setRootNav(nav);
+
+      let tabs = mockTabs();
+      let tab1 = mockTab(tabs);
+      let tab2 = mockTab(tabs);
+      nav.registerChildNav(tabs);
+
+      tabs.select(tab1);
+      tabs.select(tab2);
+
+      expect(tabs.selectHistory).toEqual([tab1.id, tab2.id]);
+
+      spyOn(platform, 'exitApp');
+      spyOn(tabs, 'select');
+      spyOn(tab1, 'pop');
+      spyOn(tab2, 'pop');
+      spyOn(portal, 'pop');
+
+      app.navPop();
+
+      expect(tabs.select).toHaveBeenCalledWith(tab1);
+      expect(tab1.pop).not.toHaveBeenCalled();
+      expect(tab2.pop).not.toHaveBeenCalled();
+      expect(portal.pop).not.toHaveBeenCalled();
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+    it('should pop from the active tab, when tabs is nested is the root nav', () => {
+      let nav = mockNav();
+      let portal = mockNav();
+      nav.setPortal(portal);
+      app.setRootNav(nav);
+
+      let tabs = mockTabs();
+      let tab1 = mockTab(tabs);
+      let tab2 = mockTab(tabs);
+      let tab3 = mockTab(tabs);
+      nav.registerChildNav(tabs);
+
+      tab2.setSelected(true);
+
+      spyOn(platform, 'exitApp');
+      spyOn(tab2, 'pop');
+      spyOn(portal, 'pop');
+
+      let view1 = new ViewController();
+      let view2 = new ViewController();
+      tab2._views = [view1, view2];
+
+      app.navPop();
+
+      expect(tab2.pop).toHaveBeenCalled();
+      expect(portal.pop).not.toHaveBeenCalled();
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+    it('should pop from the active tab, when tabs is the root', () => {
+      let tabs = mockTabs();
+      let tab1 = mockTab(tabs);
+      let tab2 = mockTab(tabs);
+      let tab3 = mockTab(tabs);
+      app.setRootNav(tabs);
+
+      tab2.setSelected(true);
+
+      spyOn(platform, 'exitApp');
+      spyOn(tab2, 'pop');
+
+      let view1 = new ViewController();
+      let view2 = new ViewController();
+      tab2._views = [view1, view2];
+
+      app.navPop();
+
+      expect(tab2.pop).toHaveBeenCalled();
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+    it('should pop the root nav when nested nav has less than 2 views', () => {
+      let rootNav = mockNav();
+      let nestedNav = mockNav();
+      let portal = mockNav();
+      rootNav.setPortal(portal);
+      rootNav.registerChildNav(nestedNav);
+      nestedNav.parent = rootNav;
+      app.setRootNav(rootNav);
+
+      spyOn(platform, 'exitApp');
+      spyOn(rootNav, 'pop');
+      spyOn(nestedNav, 'pop');
+      spyOn(portal, 'pop');
+
+      let rootView1 = new ViewController();
+      let rootView2 = new ViewController();
+      rootNav._views = [rootView1, rootView2];
+
+      let nestedView1 = new ViewController();
+      nestedNav._views = [nestedView1];
+
+      app.navPop();
+
+      expect(portal.pop).not.toHaveBeenCalled();
+      expect(rootNav.pop).toHaveBeenCalled();
+      expect(nestedNav.pop).not.toHaveBeenCalled();
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+    it('should pop a view from the nested nav that has more than 1 view', () => {
+      let rootNav = mockNav();
+      let nestedNav = mockNav();
+      let portal = mockNav();
+      rootNav.setPortal(portal);
+      app.setRootNav(rootNav);
+      rootNav.registerChildNav(nestedNav);
+
+      spyOn(platform, 'exitApp');
+      spyOn(rootNav, 'pop');
+      spyOn(nestedNav, 'pop');
+      spyOn(portal, 'pop');
+
+      let rootView1 = new ViewController();
+      let rootView2 = new ViewController();
+      rootNav._views = [rootView1, rootView2];
+
+      let nestedView1 = new ViewController();
+      let nestedView2 = new ViewController();
+      nestedNav._views = [nestedView1, nestedView2];
+
+      app.navPop();
+
+      expect(portal.pop).not.toHaveBeenCalled();
+      expect(rootNav.pop).not.toHaveBeenCalled();
+      expect(nestedNav.pop).toHaveBeenCalled();
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+    it('should pop the overlay in the portal of the root nav', () => {
+      let nav = mockNav();
+      let portal = mockNav();
+      nav.setPortal(portal);
+      app.setRootNav(nav);
+
+      spyOn(platform, 'exitApp');
+      spyOn(nav, 'pop');
+      spyOn(portal, 'pop');
+
+      let view1 = new ViewController();
+      let view2 = new ViewController();
+      nav._views = [view1, view2];
+
+      let overlay = new ViewController();
+      portal._views = [overlay];
+
+      app.navPop();
+
+      expect(portal.pop).toHaveBeenCalled();
+      expect(nav.pop).not.toHaveBeenCalled();
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+    it('should pop the second view in the root nav', () => {
+      let nav = mockNav();
+      let portal = mockNav();
+      nav.setPortal(portal);
+      app.setRootNav(nav);
+
+      spyOn(platform, 'exitApp');
+      spyOn(nav, 'pop');
+      spyOn(portal, 'pop');
+
+      let view1 = new ViewController();
+      let view2 = new ViewController();
+      nav._views = [view1, view2];
+
+      app.navPop();
+
+      expect(portal.pop).not.toHaveBeenCalled();
+      expect(nav.pop).toHaveBeenCalled();
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+    it('should exit app when only one view in the root nav', () => {
+      let nav = mockNav();
+      let portal = mockNav();
+      nav.setPortal(portal);
+      app.setRootNav(nav);
+
+      spyOn(platform, 'exitApp');
+      spyOn(nav, 'pop');
+      spyOn(portal, 'pop');
+
+      let view1 = new ViewController();
+      nav._views = [view1];
+
+      expect(app.getActiveNav()).toBe(nav);
+      expect(nav.first()).toBe(view1);
+
+      app.navPop();
+
+      expect(portal.pop).not.toHaveBeenCalled();
+      expect(nav.pop).not.toHaveBeenCalled();
+      expect(platform.exitApp).toHaveBeenCalled();
+    });
+
+    it('should not exit app when only one view in the root nav, but navExitApp config set', () => {
+      let nav = mockNav();
+      let portal = mockNav();
+      nav.setPortal(portal);
+      app.setRootNav(nav);
+
+      spyOn(platform, 'exitApp');
+      spyOn(nav, 'pop');
+      spyOn(portal, 'pop');
+
+      config.set('navExitApp', false);
+
+      let view1 = new ViewController();
+      nav._views = [view1];
+
+      expect(app.getActiveNav()).toBe(nav);
+      expect(nav.first()).toBe(view1);
+
+      app.navPop();
+
+      expect(portal.pop).not.toHaveBeenCalled();
+      expect(nav.pop).not.toHaveBeenCalled();
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+    it('should not go back if app is not enabled', () => {
+      let nav = mockNav();
+      let portal = mockNav();
+      nav.setPortal(portal);
+      app.setRootNav(nav);
+
+      spyOn(platform, 'exitApp');
+      spyOn(nav, 'pop');
+      spyOn(portal, 'pop');
+
+      let view1 = new ViewController();
+      nav._views = [view1];
+
+      app.setEnabled(false, 10000);
+
+      app.navPop();
+
+      expect(portal.pop).not.toHaveBeenCalled();
+      expect(nav.pop).not.toHaveBeenCalled();
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+    it('should not go back if there is no root nav', () => {
+      spyOn(platform, 'exitApp');
+
+      app.navPop();
+
+      expect(platform.exitApp).not.toHaveBeenCalled();
+    });
+
+  });
 
   describe('getActiveNav', () => {
 
@@ -27,7 +295,7 @@ describe('IonicApp', () => {
       expect(app.getActiveNav()).toBe(nav3);
     });
 
-    it('should get active NavController when using tabs', () => {
+    it('should get active NavController when using tabs, nested in a root nav', () => {
       let nav = mockNav();
       app.setRootNav(nav);
 
@@ -36,6 +304,22 @@ describe('IonicApp', () => {
       let tab2 = mockTab(tabs);
       let tab3 = mockTab(tabs);
       nav.registerChildNav(tabs);
+
+      tab2.setSelected(true);
+
+      expect(app.getActiveNav()).toBe(tab2);
+
+      tab2.setSelected(false);
+      tab3.setSelected(true);
+      expect(app.getActiveNav()).toBe(tab3);
+    });
+
+    it('should get active tab NavController when using tabs, and tabs is the root', () => {
+      let tabs = mockTabs();
+      let tab1 = mockTab(tabs);
+      let tab2 = mockTab(tabs);
+      let tab3 = mockTab(tabs);
+      app.setRootNav(tabs);
 
       tab2.setSelected(true);
 
@@ -170,8 +454,17 @@ describe('IonicApp', () => {
   }
 
   function mockTab(parentTabs: Tabs): Tab {
-    return new Tab(parentTabs, app, config, null, null, null, null, null, _cd);
+    var tab = new Tab(parentTabs, app, config, null, null, null, null, null, _cd);
+    parentTabs.add(tab);
+    tab.root = SomePage;
+    tab.load = function(opts: any, cb: Function) {
+      cb();
+    };
+    return tab;
   }
+
+  @Component({})
+  class SomePage {}
 
   beforeEach(() => {
     config = new Config();

@@ -118,6 +118,7 @@ export class Modal extends ViewController {
     this.modalViewType = componentType.name;
     this.viewType = 'modal';
     this.isOverlay = true;
+    this.usePortal = true;
   }
 
   /**
