@@ -83,7 +83,21 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
 
 #### Steps to Upgrade to Beta 8
 
-1. Replace all instances of `@Page` with `@Component`:
+1. Upgrade to `Beta 8` by running the following command:
+
+  ```
+  npm install --save ionic-angular@2.0.0-beta.8
+  ```
+  
+  _or_ modify the following line to use `beta.8` in your `package.json` and then run `npm install`:
+  
+  ```
+  "ionic-angular": "^2.0.0-beta.8",
+  ```
+  
+  **This is the way to update Ionic to any version, more information can be found in the [docs](http://ionicframework.com/docs/v2/resources/using-npm/).**
+
+2. Replace all instances of `@Page` with `@Component`:
 
   ```
   import {Page} from 'ionic-angular';
@@ -103,7 +117,7 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   })
   ```
 
-2. Replace `@App` with `@Component` and then bootstrap it. Move any `config` properties into the bootstrap:
+3. Replace `@App` with `@Component` and then bootstrap it. Move any `config` properties into the bootstrap:
 
   ```
   import {App, Platform} from 'ionic-angular';
@@ -142,7 +156,7 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   });
   ```
 
-3. Rename any uses of `IonicApp` to `App`:
+4. Rename any uses of `IonicApp` to `App`:
 
   ```
   import {IonicApp} from 'ionic-angular';
@@ -162,7 +176,7 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   ) {
   ```
 
-4. Rename any uses of the lifecycle events, for example:
+5. Rename any uses of the lifecycle events, for example:
 
   ```
   onPageDidEnter() {		 
@@ -180,7 +194,7 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   
   The full list of lifecycle name changes is in the [section above](https://github.com/driftyco/ionic/blob/2.0/CHANGELOG.md#ionic-lifecycle-events-renamed).
   
-5. Rename any Ionic events, for example:
+6. Rename any Ionic events, for example:
 
   ```
   <ion-slides (slideChangeStart)="onSlideChangeStart($event)">
