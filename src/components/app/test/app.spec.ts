@@ -83,7 +83,77 @@ describe('IonicApp', () => {
       expect(app.getActiveNav()).toBeNull();
       expect(app.getRootNav()).toBeNull();
     });
+  });
 
+  describe('setEnabled', () => {
+    it('should disable click block when app is enabled', () => {
+      // arrange
+      let mockClickBlock = {
+        show: () => {}
+      };
+
+      spyOn(mockClickBlock, 'show');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(true);
+
+      // assert
+      expect(mockClickBlock.show).toHaveBeenCalledWith(false, 0);
+    });
+
+    it('should disable click block when app is disabled but duration of less than 32 passed', () => {
+      // arrange
+      let mockClickBlock = {
+        show: () => {}
+      };
+
+      spyOn(mockClickBlock, 'show');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(false, 20);
+
+      // assert
+      expect(mockClickBlock.show).toHaveBeenCalledWith(false, 0);
+    });
+
+    it('should enable click block when false is passed with duration', () => {
+      // arrange
+      let mockClickBlock = {
+        show: () => {}
+      };
+
+      spyOn(mockClickBlock, 'show');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(false, 200);
+
+      // assert
+      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 200 + 64);
+    });
+
+    it('should enable click block when false is passed w/o duration', () => {
+      // arrange
+      let mockClickBlock = {
+        show: () => {}
+      };
+
+      spyOn(mockClickBlock, 'show');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(false);
+
+      // assert
+      // 700 is the default
+      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 700 + 64);
+    });
   });
 
   var app: App;
