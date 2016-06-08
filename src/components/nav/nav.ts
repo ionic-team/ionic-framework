@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewContainerRef, DynamicComponentLoader, Input, Optional, NgZone, Renderer, Type, ViewChild, ViewEncapsulation, AfterViewInit} from '@angular/core';
+import {Component, ElementRef, ViewContainerRef, ComponentResolver, Input, Optional, NgZone, Renderer, ViewChild, ViewEncapsulation, AfterViewInit} from '@angular/core';
 
 import {App} from '../app/app';
 import {Config} from '../../config/config';
@@ -114,7 +114,7 @@ import {ViewController} from './view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class Nav extends NavController implements AfterViewInit {
-  private _root: Type;
+  private _root: any;
   private _hasInit: boolean = false;
 
   constructor(
@@ -126,9 +126,9 @@ export class Nav extends NavController implements AfterViewInit {
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
-    loader: DynamicComponentLoader
+    compiler: ComponentResolver
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, loader);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
@@ -173,10 +173,10 @@ export class Nav extends NavController implements AfterViewInit {
    * @input {Page} The Page component to load as the root page within this nav.
    */
   @Input()
-  get root(): Type {
+  get root(): any {
     return this._root;
   }
-  set root(page: Type) {
+  set root(page: any) {
     this._root = page;
 
     if (this._hasInit) {

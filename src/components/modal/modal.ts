@@ -1,4 +1,4 @@
-import {Component, ComponentRef, ElementRef, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentRef, ElementRef, ViewChild, ViewContainerRef, ComponentResolver} from '@angular/core';
 
 import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
@@ -148,10 +148,7 @@ export class Modal extends ViewController {
       if (originalNgAfterViewInit) {
         originalNgAfterViewInit();
       }
-      this.instance.loadComponent().then( (componentRef: ComponentRef<any>) => {
-        this.setInstance(componentRef.instance);
-        done();
-      });
+      this.instance.loadComponent(done);
     };
   }
 }
@@ -168,14 +165,21 @@ export class ModalCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
-  constructor(protected _loader: DynamicComponentLoader, protected _navParams: NavParams) {}
+  constructor(
+    private _compiler: ComponentResolver,
+    private _navParams: NavParams,
+    private _viewCtrl: ViewController
+  ) {}
 
-  loadComponent(): Promise<ComponentRef<any>> {
-    let componentType = this._navParams.data.componentType;
-    addSelector(componentType, 'ion-page');
+  loadComponent(done: Function) {
+    addSelector(this._navParams.data.componentType, 'ion-modal-inner');
 
-    return this._loader.loadNextToLocation(componentType, this.viewport).then( (componentRef: ComponentRef<any>) => {
-      return componentRef;
+    this._compiler.resolveComponent(this._navParams.data.componentType).then((componentFactory) => {
+      let componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector);
+
+      this._viewCtrl.setInstance(componentRef.instance);
+
+      done();
     });
   }
 

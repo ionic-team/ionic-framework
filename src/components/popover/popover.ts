@@ -1,6 +1,7 @@
-import {Component, ViewChild, ViewContainerRef, DynamicComponentLoader} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, ComponentResolver} from '@angular/core';
 import {Renderer, ElementRef} from '@angular/core';
 
+import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
@@ -173,7 +174,8 @@ class PopoverCmp {
   private created: number;
   private showSpinner: boolean;
 
-  constructor(private _loader: DynamicComponentLoader,
+  constructor(
+    private _compiler: ComponentResolver,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
     private _config: Config,
@@ -191,7 +193,11 @@ class PopoverCmp {
   }
 
   ionViewWillEnter() {
-    this._loader.loadNextToLocation(this._navParams.data.componentType, this.viewport).then(componentRef => {
+    addSelector(this._navParams.data.componentType, 'ion-popover-inner');
+
+    this._compiler.resolveComponent(this._navParams.data.componentType).then((componentFactory) => {
+      let componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector);
+
       this._viewCtrl.setInstance(componentRef.instance);
 
       // manually fire ionViewWillEnter() since PopoverCmp's ionViewWillEnter already happened

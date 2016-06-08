@@ -98,7 +98,7 @@ export class ViewController {
    */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public componentType?: Type, data?: any) {
+  constructor(public componentType?: any, data?: any) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 

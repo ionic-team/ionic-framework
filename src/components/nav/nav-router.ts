@@ -1,10 +1,4 @@
-import {Directive, ViewContainerRef, DynamicComponentLoader, Attribute} from '@angular/core';
-import {
-  RouterOutletMap,
-  Router} from '@angular/router';
-
-import {Nav} from './nav';
-import {ViewController} from './view-controller';
+import {Directive} from '@angular/core';
 
 /**
  * @private

@@ -1,5 +1,5 @@
 import {bootstrap} from '@angular/platform-browser-dynamic';
-import {Directive, ReflectiveInjector, Renderer, enableProdMode, ViewContainerRef, provide, PLATFORM_DIRECTIVES, ComponentRef, NgZone, DynamicComponentLoader} from '@angular/core';
+import {enableProdMode, provide, PLATFORM_DIRECTIVES, ComponentRef, NgZone} from '@angular/core';
 import {ROUTER_PROVIDERS} from '@angular/router';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {HTTP_PROVIDERS} from '@angular/http';

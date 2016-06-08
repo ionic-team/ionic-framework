@@ -1,4 +1,4 @@
-import {ViewContainerRef, DynamicComponentLoader, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, Type, EventEmitter} from '@angular/core';
+import {ViewContainerRef, ComponentResolver, ComponentRef, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, EventEmitter} from '@angular/core';
 
 import {addSelector} from '../../config/bootstrap';
 import {App} from '../app/app';
@@ -187,11 +187,6 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  providers: ResolvedReflectiveProvider[];
-
-  /**
-   * @private
-   */
   routers: any[] = [];
 
   /**
@@ -217,7 +212,7 @@ export class NavController extends Ion {
     elementRef: ElementRef,
     protected _zone: NgZone,
     protected _renderer: Renderer,
-    protected _loader: DynamicComponentLoader
+    protected _compiler: ComponentResolver
   ) {
     super(elementRef);
 
@@ -230,11 +225,6 @@ export class NavController extends Ion {
     this._sbThreshold = config.getNumber('swipeBackThreshold', 40);
 
     this.id = (++ctrlIds).toString();
-
-    // build a new injector for child ViewControllers to use
-    this.providers = ReflectiveInjector.resolve([
-      provide(NavController, {useValue: this})
-    ]);
 
     this.viewDidLoad = new EventEmitter();
     this.viewWillEnter = new EventEmitter();
@@ -268,12 +258,12 @@ export class NavController extends Ion {
 
   /**
    * Set the root for the current navigation stack.
-   * @param {Type} page  The name of the component you want to push on the navigation stack.
+   * @param {Page} page  The name of the component you want to push on the navigation stack.
    * @param {object} [params={}] Any nav-params you want to pass along to the next view.
    * @param {object} [opts={}] Any options you want to use pass to transtion.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  setRoot(page: Type, params?: any, opts?: NavOptions): Promise<any> {
+  setRoot(page: any, params?: any, opts?: NavOptions): Promise<any> {
     return this.setPages([{page, params}], opts);
   }
 
@@ -350,11 +340,11 @@ export class NavController extends Ion {
    *  }
    *```
    *
-   * @param {array<Type>} pages  An arry of page components and their params to load in the stack.
+   * @param {array<Page>} pages  An arry of page components and their params to load in the stack.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  setPages(pages: Array<{page: Type, params?: any}>, opts?: NavOptions): Promise<any> {
+  setPages(pages: Array<{page: any, params?: any}>, opts?: NavOptions): Promise<any> {
     if (!pages || !pages.length) {
       return Promise.resolve(false);
     }
@@ -451,12 +441,12 @@ export class NavController extends Ion {
    *    }
    * }
    * ```
-   * @param {Type} page  The page component class you want to push on to the navigation stack
+   * @param {Page} page  The page component class you want to push on to the navigation stack
    * @param {object} [params={}] Any nav-params you want to pass along to the next view
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  push(page: Type, params?: any, opts?: NavOptions) {
+  push(page: any, params?: any, opts?: NavOptions) {
     return this.insertPages(-1, [{page: page, params: params}], opts);
   }
 
@@ -543,12 +533,12 @@ export class NavController extends Ion {
    * This will insert the `Info` page into the second slot of our navigation stack.
    *
    * @param {number} insertIndex  The index where to insert the page.
-   * @param {Type} page  The component you want to insert into the nav stack.
+   * @param {Page} page  The component you want to insert into the nav stack.
    * @param {object} [params={}] Any nav-params you want to pass along to the next page.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  insert(insertIndex: number, page: Type, params?: any, opts?: NavOptions): Promise<any> {
+  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions): Promise<any> {
     return this.insertPages(insertIndex, [{page: page, params: params}], opts);
   }
 
@@ -576,11 +566,11 @@ export class NavController extends Ion {
    * in and become the active page.
    *
    * @param {number} insertIndex  The index where you want to insert the page.
-   * @param {array<{page: Type, params=: any}>} insertPages  An array of objects, each with a `page` and optionally `params` property.
+   * @param {array<{page: Page, params=: any}>} insertPages  An array of objects, each with a `page` and optionally `params` property.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  insertPages(insertIndex: number, insertPages: Array<{page: Type, params?: any}>, opts?: NavOptions): Promise<any> {
+  insertPages(insertIndex: number, insertPages: Array<{page: any, params?: any}>, opts?: NavOptions): Promise<any> {
     let views = insertPages.map(p => new ViewController(p.page, p.params));
     return this._insertViews(insertIndex, views, opts);
   }
@@ -1450,43 +1440,50 @@ export class NavController extends Ion {
       return;
     }
 
-    // add more providers to just this page
-    let providers = this.providers.concat(ReflectiveInjector.resolve([
-      provide(ViewController, {useValue: view}),
-      provide(NavParams, {useValue: view.getNavParams()})
-    ]));
-
     // automatically set "ion-page" selector
+    // TODO: see about having this set using ComponentFactory
     addSelector(view.componentType, 'ion-page');
 
-    // load the page component inside the nav
-    this._loader.loadNextToLocation(view.componentType, this._viewport, providers).then(component => {
+    this._compiler.resolveComponent(view.componentType).then(componentFactory => {
+
+      // add more providers to just this page
+      let componentProviders = ReflectiveInjector.resolve([
+        provide(NavController, {useValue: this}),
+        provide(ViewController, {useValue: view}),
+        provide(NavParams, {useValue: view.getNavParams()})
+      ]);
+
+      let childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
+
+      let componentRef = componentFactory.create(childInjector, null, null);
+
+      this._viewport.insert(componentRef.hostView, this._viewport.length);
 
       // a new ComponentRef has been created
       // set the ComponentRef's instance to its ViewController
-      view.setInstance(component.instance);
+      view.setInstance(componentRef.instance);
 
       // the component has been loaded, so call the view controller's loaded method to load any dependencies into the dom
-      view.loaded( () => {
+      view.loaded(() => {
 
         // the ElementRef of the actual ion-page created
-        let pageElementRef = component.location;
+        let pageElementRef = componentRef.location;
 
         // remember the ChangeDetectorRef for this ViewController
-        view.setChangeDetector(component.changeDetectorRef);
+        view.setChangeDetector(componentRef.changeDetectorRef);
 
         // remember the ElementRef to the ion-page elementRef that was just created
         view.setPageRef(pageElementRef);
 
         // auto-add page css className created from component JS class name
-        let cssClassName = pascalCaseToDashCase(view.componentType['name']);
+        let cssClassName = pascalCaseToDashCase(view.componentType.name);
         this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
 
         view.onDestroy(() => {
           // ensure the element is cleaned up for when the view pool reuses this element
           this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
           this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
-          component.destroy();
+          componentRef.destroy();
         });
 
         if (!navbarContainerRef) {
