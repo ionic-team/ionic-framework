@@ -401,7 +401,7 @@ export class Tabs extends Ion {
   previousTab(trimHistory: boolean = true): Tab {
     // walk backwards through the tab selection history
     // and find the first previous tab that is enabled and shown
-    console.log('run previousTab', this.selectHistory)
+    console.debug('run previousTab', this.selectHistory);
     for (var i = this.selectHistory.length - 2; i >= 0; i--) {
       var tab = this._tabs.find(t => t.id === this.selectHistory[i]);
       if (tab && tab.enabled && tab.show) {
