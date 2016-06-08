@@ -247,7 +247,7 @@ export class Animation {
     var i: number;
     var duration: number = isDefined(opts.duration) ? opts.duration : self._dur;
 
-    console.debug('Animation, play, duration', duration, 'easing', self._easing);
+    console.debug('Animation, play, duration', duration, 'easing', self._easing, 'ts', Date.now());
 
     // always default that an animation does not tween
     // a tween requires that an Animation class has an element
@@ -361,7 +361,7 @@ export class Animation {
     var self = this;
 
     function onTransitionEnd(ev: any) {
-      console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName);
+      console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName, 'ts', Date.now());
 
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();
@@ -377,7 +377,7 @@ export class Animation {
     }
 
     function onTransitionFallback() {
-      console.debug('Animation onTransitionFallback');
+      console.debug('Animation onTransitionFallback', 'ts', Date.now());
       // oh noz! the transition end event didn't fire in time!
       // instead the fallback timer when first
 

@@ -86,6 +86,91 @@ describe('IonicApp', () => {
 
   });
 
+  describe('setEnabled', () => {
+    it('should disable click block when app is enabled', () => {
+      // arrange
+      let mockClickBlock = {
+        show: () => {}
+      };
+
+      spyOn(mockClickBlock, 'show');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(true);
+
+      // assert
+      expect(mockClickBlock.show).toHaveBeenCalledWith(false, 0);
+    });
+
+    it('should disable click block when app is disabled but duration of less than 32 passed', () => {
+      // arrange
+      let mockClickBlock = {
+        show: () => {}
+      };
+
+      spyOn(mockClickBlock, 'show');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(false, 20);
+
+      // assert
+      expect(mockClickBlock.show).toHaveBeenCalledWith(false, 0);
+    });
+
+    it('should enable click block when false is passed with duration', () => {
+      // arrange
+      let mockClickBlock = {
+        show: () => {}
+      };
+
+      spyOn(mockClickBlock, 'show');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(false, 200);
+
+      // assert
+      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 200 + 128);
+    });
+
+    it('should enable click block when false is passed w/o duration', () => {
+      // arrange
+      let mockClickBlock = {
+        show: () => {}
+      };
+
+      spyOn(mockClickBlock, 'show');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(false);
+
+      // assert
+      // 700 is the default
+      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 700 + 128);
+    });
+
+    it('disTime should be not be zero when enabled', () => {
+      app._disTime = null;
+      app.setEnabled(false);
+
+      expect(app._disTime).not.toEqual(0);
+    });
+
+    it('disTime should be not be zero when enabled', () => {
+      app._disTime = null;
+      app.setEnabled(true);
+
+      expect(app._disTime).toEqual(0);
+    });
+  });
+
   var app: App;
   var config: Config;
   var platform: Platform;
