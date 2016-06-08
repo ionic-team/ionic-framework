@@ -173,7 +173,7 @@ class LoadingCmp {
   private id: number;
   private created: number;
   private showSpinner: boolean;
-  private enabled:boolean;
+  private enabled: boolean;
 
   constructor(
     private _viewCtrl: ViewController,
