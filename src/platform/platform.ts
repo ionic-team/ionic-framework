@@ -41,18 +41,28 @@ export class Platform {
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
   private _resizeTm: any;
-  private _zone: NgZone;
+  private _bbActions: BackButtonAction[] = [];
+
+  zone: NgZone;
 
   constructor(platforms: string[] = []) {
     this._platforms = platforms;
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
+
+    this.backButton.subscribe(() => {
+      // the hardware back button event has been fired
+      console.debug('hardware back button');
+
+      // decide which backbutton action should run
+      this.runBackButtonAction();
+    });
   }
 
   /**
    * @private
    */
   setZone(zone: NgZone) {
-    this._zone = zone;
+    this.zone = zone;
   }
 
 
@@ -212,7 +222,7 @@ export class Platform {
    * such as Cordova or Electron, then it uses the default DOM ready.
    */
   triggerReady(readySource: string) {
-    this._zone.run(() => {
+    this.zone.run(() => {
       this._readyResolve(readySource);
     });
   }
@@ -232,14 +242,14 @@ export class Platform {
   }
 
   /**
-  * Set the app's language direction, which will update the `dir` attribute
-  * on the app's root `<html>` element. We recommend the app's `index.html`
-  * file already has the correct `dir` attribute value set, such as
-  * `<html dir="ltr">` or `<html dir="rtl">`. This method is useful if the
-  * direction needs to be dynamically changed per user/session.
-  * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
-  * @param {string} dir  Examples: `rtl`, `ltr`
-  */
+   * Set the app's language direction, which will update the `dir` attribute
+   * on the app's root `<html>` element. We recommend the app's `index.html`
+   * file already has the correct `dir` attribute value set, such as
+   * `<html dir="ltr">` or `<html dir="rtl">`. This method is useful if the
+   * direction needs to be dynamically changed per user/session.
+   * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
+   * @param {string} dir  Examples: `rtl`, `ltr`
+   */
   setDir(dir: string, updateDocument: boolean) {
     this._dir = (dir || '').toLowerCase();
     if (updateDocument !== false) {
@@ -270,14 +280,14 @@ export class Platform {
   }
 
   /**
-  * Set the app's language and optionally the country code, which will update
-  * the `lang` attribute on the app's root `<html>` element.
-  * We recommend the app's `index.html` file already has the correct `lang`
-  * attribute value set, such as `<html lang="en">`. This method is useful if
-  * the language needs to be dynamically changed per user/session.
-  * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
-  * @param {string} language  Examples: `en-US`, `en-GB`, `ar`, `de`, `zh`, `es-MX`
-  */
+   * Set the app's language and optionally the country code, which will update
+   * the `lang` attribute on the app's root `<html>` element.
+   * We recommend the app's `index.html` file already has the correct `lang`
+   * attribute value set, such as `<html lang="en">`. This method is useful if
+   * the language needs to be dynamically changed per user/session.
+   * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
+   * @param {string} language  Examples: `en-US`, `en-GB`, `ar`, `de`, `zh`, `es-MX`
+   */
   setLang(language: string, updateDocument: boolean) {
     this._lang = language;
     if (updateDocument !== false) {
@@ -302,125 +312,171 @@ export class Platform {
   // called by engines (the browser)that do not provide them
 
   /**
-  * @private
-  */
+   * @private
+   */
   exitApp() {}
 
   // Events meant to be triggered by the engine
   // **********************************************
 
   /**
-  * The back button event is emitted when the user presses the native
-  * platform's back button, also referred to as the "hardware" back button.
-  * This event is only emitted within Cordova apps running on Android and
-  * Windows platforms. This event is not fired on iOS since iOS doesn't come
-  * with a hardware back button in the same sense an Android or Windows device
-  * does. It's important to note that this event does not emit when the Ionic
-  * app's back button within the navbar is clicked, but this event is only
-  * referencing the platform's hardware back button.
-  */
+   * @private
+   */
   backButton: EventEmitter<Event> = new EventEmitter();
 
   /**
-  * The pause event emits when the native platform puts the application
-  * into the background, typically when the user switches to a different
-  * application. This event would emit when a Cordova app is put into
-  * the background, however, it would not fire on a standard web browser.
-  */
+   * The pause event emits when the native platform puts the application
+   * into the background, typically when the user switches to a different
+   * application. This event would emit when a Cordova app is put into
+   * the background, however, it would not fire on a standard web browser.
+   */
   pause: EventEmitter<Event> = new EventEmitter();
 
   /**
-  * The resume event emits when the native platform pulls the application
-  * out from the background. This event would emit when a Cordova app comes
-  * out from the background, however, it would not fire on a standard web browser.
-  */
+   * The resume event emits when the native platform pulls the application
+   * out from the background. This event would emit when a Cordova app comes
+   * out from the background, however, it would not fire on a standard web browser.
+   */
   resume: EventEmitter<Event> = new EventEmitter();
+
+  /**
+   * The back button event is triggered when the user presses the native
+   * platform's back button, also referred to as the "hardware" back button.
+   * This event is only used within Cordova apps running on Android and
+   * Windows platforms. This event is not fired on iOS since iOS doesn't come
+   * with a hardware back button in the same sense an Android or Windows device
+   * does.
+   *
+   * Registering a hardware back button action and setting a priority allows
+   * apps to control which action should be called when the hardware back
+   * button is pressed. This method decides which of the registered back button
+   * actions has the highest priority and should be called.
+   *
+   * @param {Function} callback Called when the back button is pressed,
+   * if this registered action has the highest priority.
+   * @param {number} priority Set the priority for this action. Only the highest priority will execute. Defaults to `0`.
+   * @returns {Function} A function that, when called, will unregister
+   * the its back button action.
+   */
+  registerBackButtonAction(fn: Function, priority: number = 0): Function {
+    let action: BackButtonAction = {fn, priority};
+
+    this._bbActions.push(action);
+
+    // return a function to unregister this back button action
+    return () => {
+      let index = this._bbActions.indexOf(action);
+      if (index > -1) {
+        this._bbActions.splice(index, 1);
+      }
+    };
+  }
+
+  /**
+   * @private
+   */
+  runBackButtonAction() {
+    // decide which one back button action should run
+    let winner: BackButtonAction = null;
+    this._bbActions.forEach((action: BackButtonAction) => {
+      if (!winner || action.priority >= winner.priority) {
+        winner = action;
+      }
+    });
+
+    // run the winning action if there is one
+    winner && winner.fn && winner.fn();
+  }
 
 
   // Getter/Setter Methods
   // **********************************************
 
   /**
-  * @private
-  */
+   * @private
+   */
   setUrl(url: string) {
     this._url = url;
     this._qs = getQuerystring(url);
   }
 
   /**
-  * @private
-  */
+   * @private
+   */
   url(): string {
     return this._url;
   }
 
   /**
-  * @private
-  */
+   * @private
+   */
   query(key: string): string {
     return (this._qs || {})[key];
   }
 
   /**
-  * @private
-  */
+   * @private
+   */
   setUserAgent(userAgent: string) {
     this._ua = userAgent;
   }
 
   /**
-  * @private
-  */
+   * @private
+   */
   userAgent(): string {
     return this._ua || '';
   }
 
   /**
-  * @private
-  */
+   * @private
+   */
   setNavigatorPlatform(navigatorPlatform: string) {
     this._bPlt = navigatorPlatform;
   }
 
   /**
-  * @private
-  */
+   * @private
+   */
   navigatorPlatform(): string {
     return this._bPlt || '';
   }
 
   /**
-  * @private
-  */
+   * Gets the width of the platform's viewport using `window.innerWidth`.
+   * Using this method is preferred since the dimension is a cached value,
+   * which reduces the chance of multiple and expensive DOM reads.
+   */
   width(): number {
     return windowDimensions().width;
   }
 
   /**
-  * @private
-  */
+   * Gets the height of the platform's viewport using `window.innerHeight`.
+   * Using this method is preferred since the dimension is a cached value,
+   * which reduces the chance of multiple and expensive DOM reads.
+   */
   height(): number {
     return windowDimensions().height;
   }
 
   /**
-  * @private
-  */
+   * Returns `true` if the app is in portait mode.
+   */
   isPortrait(): boolean {
     return this.width() < this.height();
   }
 
   /**
-  * @private
-  */
+   * Returns `true` if the app is in landscape mode.
+   */
   isLandscape(): boolean {
     return !this.isPortrait();
   }
 
   /**
-  * @private
-  */
+   * @private
+   */
   windowResize() {
     let self = this;
     clearTimeout(self._resizeTm);
@@ -440,7 +496,6 @@ export class Platform {
 
   /**
    * @private
-   * @returns Unregister function
    */
   onResize(cb: Function): Function {
     let self = this;
@@ -466,8 +521,8 @@ export class Platform {
   }
 
   /**
-  * @private
-  */
+   * @private
+   */
   static registry() {
     return platformRegistry;
   }
@@ -781,4 +836,9 @@ export interface PlatformVersion {
   num?: number;
   major?: number;
   minor?: number;
+}
+
+interface BackButtonAction {
+  fn: Function;
+  priority: number;
 }

@@ -2,6 +2,74 @@ import {Platform} from '../../../src';
 
 export function run() {
 
+describe('Platform', () => {
+
+  describe('registerBackButtonAction', () => {
+
+    it('should register two actions with different priorities, call the highest one', () => {
+      let platform = new Platform();
+
+      let ranAction1 = false;
+      let action1 = () => {
+        ranAction1 = true;
+      };
+
+      let ranAction2 = false;
+      let action2 = () => {
+        ranAction2= true;
+      };
+
+      platform.registerBackButtonAction(action1, 200);
+      platform.registerBackButtonAction(action2, 100);
+      platform.runBackButtonAction();
+
+      expect(ranAction1).toEqual(true);
+      expect(ranAction2).toEqual(false);
+    });
+
+    it('should register two actions with the same priority, call the second one', () => {
+      let platform = new Platform();
+
+      let ranAction1 = false;
+      let action1 = () => {
+        ranAction1 = true;
+      };
+
+      let ranAction2 = false;
+      let action2 = () => {
+        ranAction2= true;
+      };
+
+      platform.registerBackButtonAction(action1, 100);
+      platform.registerBackButtonAction(action2, 100);
+      platform.runBackButtonAction();
+
+      expect(ranAction1).toEqual(false);
+      expect(ranAction2).toEqual(true);
+    });
+
+    it('should register a default action', () => {
+      let platform = new Platform();
+
+      let ranAction1 = false;
+      let action1 = () => {
+        ranAction1 = true;
+      };
+
+      platform.registerBackButtonAction(action1);
+      platform.runBackButtonAction();
+
+      expect(ranAction1).toEqual(true);
+    });
+
+    it('should not run any actions when none registered', () => {
+      let platform = new Platform();
+      platform.runBackButtonAction();
+    });
+
+  });
+
+
   it('should set core as the fallback', () => {
     let platform = new Platform();
     platform.setUserAgent('idk');
@@ -256,6 +324,8 @@ export function run() {
     expect(platform.is('ipad')).toEqual(false);
     expect(platform.is('tablet')).toEqual(false);
   });
+
+});
 
 }
 
