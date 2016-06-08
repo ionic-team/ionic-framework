@@ -8,9 +8,11 @@ import {ionicBootstrap, Toast, NavController} from 'ionic-angular';
 class ApiPage {
   constructor(private nav: NavController) { }
 
-  showToast() {
+  showToast(position: string) {
     const toast = Toast.create({
       message: 'User was created successfully',
+      position: position,
+      duration: 3000
     });
 
     toast.onDismiss(this.dismissHandler);
@@ -20,6 +22,7 @@ class ApiPage {
   showLongToast() {
     const toast = Toast.create({
       message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.',
+      duration: 3000
     });
 
     toast.onDismiss(this.dismissHandler);

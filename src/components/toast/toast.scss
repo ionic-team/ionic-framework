@@ -39,18 +39,3 @@ ion-toast {
 .toast-message {
   flex: 1;
 }
-
-.toast-wrapper {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: $z-index-overlay-wrapper;
-  display: block;
-
-  margin: auto;
-
-  max-width: $toast-max-width;
-
-  transform: translate3d(0, 100%, 0);
-}

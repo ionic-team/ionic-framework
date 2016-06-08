@@ -13,10 +13,9 @@ $toast-wp-title-color:                           #fff !default;
 $toast-wp-title-font-size:                       1.4rem !default;
 $toast-wp-title-padding:                         1.5rem !default;
 
-
 .toast-wrapper {
   position: absolute;
-  bottom: 0;
+  right: 0;
   left: 0;
   z-index: $z-index-overlay-wrapper;
   display: block;
@@ -28,7 +27,21 @@ $toast-wp-title-padding:                         1.5rem !default;
   border-radius: $toast-wp-border-radius;
   background: $toast-wp-background;
 
-  transform: translate3d(0, 100%, 0);
+  &.toast-top {
+    top: 0;
+
+    opacity: .01;
+  }
+
+  &.toast-bottom {
+    bottom: 0;
+
+    opacity: .01;
+  }
+
+  &.toast-middle {
+    opacity: .01;
+  }
 }
 
 .toast-message {

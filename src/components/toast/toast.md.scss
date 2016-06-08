@@ -12,22 +12,9 @@ $toast-md-title-color:                           #fff !default;
 $toast-md-title-font-size:                       1.5rem !default;
 $toast-md-title-padding:                         19px 16px 17px !default;
 
-
-ion-toast {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: $z-index-overlay;
-  display: block;
-
-  width: $toast-width;
-  height: $toast-width;
-}
-
 .toast-wrapper {
   position: absolute;
   right: 0;
-  bottom: 0;
   left: 0;
   z-index: $z-index-overlay-wrapper;
   display: block;
@@ -39,7 +26,21 @@ ion-toast {
 
   background: $toast-md-background;
 
-  transform: translate3d(0, 100%, 0);
+  &.toast-top {
+    top: 0;
+
+    transform: translate3d(0, -100%, 0);
+  }
+
+  &.toast-bottom {
+    bottom: 0;
+
+    transform: translate3d(0, 100%, 0);
+  }
+
+  &.toast-middle {
+    opacity: .01;
+  }
 }
 
 .toast-message {
