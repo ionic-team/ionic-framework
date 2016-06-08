@@ -68,10 +68,12 @@ export class Toast extends ViewController {
   constructor(opts: ToastOptions = {}) {
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
     super(ToastCmp, opts);
+
     // set the position to the bottom if not provided
-    if ( ! opts.position || ! this.isVaidPosition(opts.position)) {
+    if ( ! opts.position || ! this.isValidPosition(opts.position)) {
       opts.position = TOAST_POSITION_BOTTOM;
     }
+
     this.viewType = 'toast';
     this.isOverlay = true;
     this.usePortal = true;
@@ -94,7 +96,7 @@ export class Toast extends ViewController {
   /**
   * @private
   */
-  isVaidPosition(position: string) {
+  isValidPosition(position: string) {
     return position === TOAST_POSITION_TOP || position === TOAST_POSITION_MIDDLE || position === TOAST_POSITION_BOTTOM;
   }
 
@@ -113,7 +115,7 @@ export class Toast extends ViewController {
    *  |-----------------------|-----------|-----------------|---------------------------------------------------------------------------------------------------------------|
    *  | message               | `string`  | -               | The message for the toast. Long strings will wrap and the toast container will expand.                        |
    *  | duration              | `number`  | -               | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.  |
-   *  | position              | `string`    | "bottom"      | The position of the toast on the screen.  "top", "middle", and "bottom" are the accepted values.              |
+   *  | position              | `string`  | "bottom"        | The position of the toast on the screen. Accepted values: "top", "middle", "bottom".                          |
    *  | cssClass              | `string`  | -               | Any additional class for custom styles.                                                                       |
    *  | showCloseButton       | `boolean` | false           | Whether or not to show a button to close the toast.                                                           |
    *  | closeButtonText       | `string`  | "Close"         | Text to display in the close button.                                                                          |
@@ -250,16 +252,14 @@ class ToastSlideIn extends Transition {
       // by default, it is -100% hidden (above the screen)
       // so move from that to 10px below top: 0px;
       wrapper.fromTo('translateY', '-100%', `${10}px`);
-    }
-    else if ( enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE ) {
+    } else if ( enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE ) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
       // DOM WRITE
       wrapperEle.style.top = `${topPosition}px`;
       wrapper.fromTo('opacity', '0.01', '1.0');
-    }
-    else {
+    } else {
       // bottom
       // by default, it is 100% hidden (below the screen),
       // so move from that to 10 px above bottom: 0px
@@ -286,13 +286,11 @@ class ToastSlideOut extends Transition {
       // top
       // reverse arguments from enter transition
       wrapper.fromTo('translateY', `${10}px`, '-100%');
-    }
-    else if ( leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE ) {
+    } else if ( leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE ) {
       // Middle
       // just fade it out
       wrapper.fromTo('opacity', '1.0', '0.0');
-    }
-    else {
+    } else {
       // bottom
       // reverse arguments from enter transition
       wrapper.fromTo('translateY', `${0 - 10}px`, '100%');
@@ -319,16 +317,14 @@ class ToastMdSlideIn extends Transition {
       // by default, it is -100% hidden (above the screen)
       // so move from that to top: 0px;
       wrapper.fromTo('translateY', '-100%', `0px`);
-    }
-    else if ( enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE ) {
+    } else if ( enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE ) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
       // DOM WRITE
       wrapperEle.style.top = `${topPosition}px`;
       wrapper.fromTo('opacity', '0.01', '1.0');
-    }
-    else {
+    } else {
       // bottom
       // by default, it is 100% hidden (below the screen),
       // so move from that to bottom: 0px
@@ -355,13 +351,11 @@ class ToastMdSlideOut extends Transition {
       // top
       // reverse arguments from enter transition
       wrapper.fromTo('translateY', `${0}px`, '-100%');
-    }
-    else if ( leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE ) {
+    } else if ( leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE ) {
       // Middle
       // just fade it out
       wrapper.fromTo('opacity', '1.0', '0.0');
-    }
-    else {
+    } else {
       // bottom
       // reverse arguments from enter transition
       wrapper.fromTo('translateY', `${0}px`, '100%');
@@ -389,8 +383,7 @@ class ToastWpPopIn extends Transition {
       // top
       wrapper.fromTo('opacity', '0.01', '1');
       wrapper.fromTo('scale', '1.3', '1');
-    }
-    else if ( enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE ) {
+    } else if ( enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE ) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
@@ -398,8 +391,7 @@ class ToastWpPopIn extends Transition {
       wrapperEle.style.top = `${topPosition}px`;
       wrapper.fromTo('opacity', '0.01', '1.0');
       wrapper.fromTo('scale', '1.3', '1');
-    }
-    else {
+    } else {
       // bottom
       wrapper.fromTo('opacity', '0.01', '1');
       wrapper.fromTo('scale', '1.3', '1');
@@ -426,14 +418,12 @@ class ToastWpPopOut extends Transition {
       // reverse arguments from enter transition
       wrapper.fromTo('opacity', '1', '0.00');
       wrapper.fromTo('scale', '1', '1.3');
-    }
-    else if ( leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE ) {
+    } else if ( leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE ) {
       // Middle
       // just fade it out
       wrapper.fromTo('opacity', '1.0', '0.00');
       wrapper.fromTo('scale', '1', '1.3');
-    }
-    else {
+    } else {
       // bottom
       // reverse arguments from enter transition
       wrapper.fromTo('opacity', '1', '0.00');
