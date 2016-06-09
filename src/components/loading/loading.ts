@@ -171,7 +171,6 @@ export class Loading extends ViewController {
 class LoadingCmp {
   private d: any;
   private id: number;
-  private created: number;
   private showSpinner: boolean;
 
   constructor(
@@ -182,7 +181,6 @@ class LoadingCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
-    this.created = Date.now();
 
     if (this.d.cssClass) {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
@@ -214,11 +212,6 @@ class LoadingCmp {
 
   dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
-  }
-
-  isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
   }
 }
 

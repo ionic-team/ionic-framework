@@ -170,8 +170,8 @@ class PopoverCmp {
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
   private d: any;
+  private enabled: boolean;
   private id: number;
-  private created: number;
   private showSpinner: boolean;
 
   constructor(
@@ -183,7 +183,6 @@ class PopoverCmp {
     private _viewCtrl: ViewController
   ) {
     this.d = _navParams.data.opts;
-    this.created = Date.now();
 
     if (this.d.cssClass) {
       _renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
@@ -210,6 +209,7 @@ class PopoverCmp {
     if (document.activeElement) {
       activeElement.blur();
     }
+    this.enabled = true;
   }
 
   dismiss(role: any): Promise<any> {
@@ -222,14 +222,9 @@ class PopoverCmp {
   }
 
   bdClick() {
-    if (this.isEnabled() && this.d.enableBackdropDismiss) {
+    if (this.enabled && this.d.enableBackdropDismiss) {
       this.dismiss('backdrop');
     }
-  }
-
-  isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
   }
 }
 

@@ -4,6 +4,7 @@ import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {isPresent} from '../../util/util';
+import {Key} from '../../util/key';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -375,13 +376,13 @@ class AlertCmp {
     inputs?: any[];
     enableBackdropDismiss?: boolean;
   };
+  private enabled: boolean;
   private hdrId: string;
   private id: number;
-  private subHdrId: string;
-  private msgId: string;
   private inputType: string;
-  private created: number;
   private lastClick: number;
+  private msgId: string;
+  private subHdrId: string;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -404,7 +405,6 @@ class AlertCmp {
     this.subHdrId = 'alert-subhdr-' + this.id;
     this.msgId = 'alert-msg-' + this.id;
     this.activeId = '';
-    this.created = Date.now();
     this.lastClick = 0;
 
     if (this.d.message) {
@@ -466,8 +466,8 @@ class AlertCmp {
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
-    if (this.isEnabled() && this._viewCtrl.isLast()) {
-      if (ev.keyCode === 13) {
+    if (this.enabled && this._viewCtrl.isLast()) {
+      if (ev.keyCode === Key.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
           // do not fire this click if there recently was already a click
           // this can happen when the button has focus and used the enter
@@ -478,7 +478,7 @@ class AlertCmp {
           this.btnClick(button);
         }
 
-      } else if (ev.keyCode === 27) {
+      } else if (ev.keyCode === Key.ESCAPE) {
         console.debug('alert, escape button');
         this.bdClick();
       }
@@ -495,10 +495,11 @@ class AlertCmp {
     if (focusableEle) {
       focusableEle.focus();
     }
+    this.enabled = true;
   }
 
   btnClick(button: any, dismissDelay?: number) {
-    if (!this.isEnabled()) {
+    if (!this.enabled) {
       return;
     }
 
@@ -524,7 +525,7 @@ class AlertCmp {
   }
 
   rbClick(checkedInput: any) {
-    if (this.isEnabled()) {
+    if (this.enabled) {
       this.d.inputs.forEach(input => {
         input.checked = (checkedInput === input);
       });
@@ -533,13 +534,13 @@ class AlertCmp {
   }
 
   cbClick(checkedInput: any) {
-    if (this.isEnabled()) {
+    if (this.enabled) {
       checkedInput.checked = !checkedInput.checked;
     }
   }
 
   bdClick() {
-    if (this.isEnabled() && this.d.enableBackdropDismiss) {
+    if (this.enabled && this.d.enableBackdropDismiss) {
       let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {
         this.btnClick(cancelBtn, 1);
@@ -575,11 +576,6 @@ class AlertCmp {
       values[i.name] = i.value;
     });
     return values;
-  }
-
-  isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
   }
 }
 

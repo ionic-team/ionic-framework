@@ -161,10 +161,10 @@ const TOAST_POSITION_BOTTOM: string = 'bottom';
 class ToastCmp implements AfterViewInit {
   private d: any;
   private descId: string;
-  private hdrId: string;
-  private created: number;
-  private id: number;
   private dismissTimeout: number = undefined;
+  private enabled: boolean;
+  private hdrId: string;
+  private id: number;
 
   constructor(
     private _nav: NavController,
@@ -176,7 +176,6 @@ class ToastCmp implements AfterViewInit {
   ) {
 
     this.d = params.data;
-    this.created = Date.now();
 
     if (this.d.cssClass) {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
@@ -209,10 +208,11 @@ class ToastCmp implements AfterViewInit {
     if (focusableEle) {
       focusableEle.focus();
     }
+    this.enabled = true;
   }
 
   cbClick() {
-    if (this.isEnabled()) {
+    if (this.enabled) {
       this.dismiss('close');
     }
   }
@@ -221,11 +221,6 @@ class ToastCmp implements AfterViewInit {
     clearTimeout(this.dismissTimeout);
     this.dismissTimeout = undefined;
     return this._viewCtrl.dismiss(null, role);
-  }
-
-  isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
   }
 
 }

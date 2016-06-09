@@ -5,6 +5,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {isPresent} from '../../util/util';
+import {Key} from '../../util/key';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -244,9 +245,9 @@ export class ActionSheet extends ViewController {
 class ActionSheetCmp {
   private d: any;
   private descId: string;
+  private enabled: boolean;
   private hdrId: string;
   private id: number;
-  private created: number;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -256,7 +257,6 @@ class ActionSheetCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
-    this.created = Date.now();
 
     if (this.d.cssClass) {
       renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
@@ -315,12 +315,13 @@ class ActionSheetCmp {
     if (focusableEle) {
       focusableEle.focus();
     }
+    this.enabled = true;
   }
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
-    if (this.isEnabled() && this._viewCtrl.isLast()) {
-      if (ev.keyCode === 27) {
+    if (this.enabled && this._viewCtrl.isLast()) {
+      if (ev.keyCode === Key.ESCAPE) {
         console.debug('actionsheet, escape button');
         this.bdClick();
       }
@@ -328,7 +329,7 @@ class ActionSheetCmp {
   }
 
   click(button: any, dismissDelay?: number) {
-    if (!this.isEnabled()) {
+    if (! this.enabled ) {
       return;
     }
 
@@ -350,7 +351,7 @@ class ActionSheetCmp {
   }
 
   bdClick() {
-    if (this.isEnabled() && this.d.enableBackdropDismiss) {
+    if (this.enabled && this.d.enableBackdropDismiss) {
       if (this.d.cancelButton) {
         this.click(this.d.cancelButton, 1);
 
@@ -362,11 +363,6 @@ class ActionSheetCmp {
 
   dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
-  }
-
-  isEnabled() {
-    let tm = this._config.getNumber('overlayCreatedDiff', 750);
-    return (this.created + tm < Date.now());
   }
 }
 
