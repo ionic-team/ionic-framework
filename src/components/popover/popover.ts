@@ -1,5 +1,4 @@
-import {Component, ViewChild, ViewContainerRef, ComponentResolver} from '@angular/core';
-import {Renderer, ElementRef} from '@angular/core';
+import {Component, ComponentResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef} from '@angular/core';
 
 import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
@@ -7,6 +6,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {NavParams} from '../nav/nav-params';
 import {Platform} from '../../platform/platform';
+import {Key} from '../../util/key';
 import {isPresent, isUndefined, isDefined} from '../../util/util';
 import {nativeRaf, CSS} from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
@@ -204,7 +204,7 @@ class PopoverCmp {
     });
   }
 
-  ionViewDidEnter() {
+  ngAfterViewInit() {
     let activeElement: any = document.activeElement;
     if (document.activeElement) {
       activeElement.blur();
@@ -224,6 +224,13 @@ class PopoverCmp {
   bdClick() {
     if (this.enabled && this.d.enableBackdropDismiss) {
       this.dismiss('backdrop');
+    }
+  }
+
+  @HostListener('body:keyup', ['$event'])
+  private _keyUp(ev: KeyboardEvent) {
+    if (this.enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE ) {
+      this.bdClick();
     }
   }
 }
