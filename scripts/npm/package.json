@@ -4,6 +4,8 @@
   "description": "An advanced HTML5 mobile app framework built on Angular2",
   "license": "MIT",
   "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp", "cordova"],
+  "main": "index.js",
+  "jsnext:main": "esm/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/driftyco/ionic.git#2.0`"

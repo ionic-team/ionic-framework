@@ -57,7 +57,8 @@ var tscReporter = {
 // See: https://github.com/Microsoft/TypeScript/issues/4801
 // and https://github.com/ivogabe/gulp-typescript/issues/211
 var babelOptions = {
-  modules: 'system',
+  presets: ['es2015'],
+  plugins: ['transform-es2015-modules-systemjs'],
   moduleIds: true,
   getModuleId: function(name) {
     return 'ionic-angular/' + name;
@@ -257,6 +258,21 @@ function tsCompile(options, cacheName){
     .pipe(cache(cacheName, { optimizeMemory: true }))
     .pipe(tsc(options, undefined, tscReporter));
 }
+
+gulp.task('bundle.es6', function() {
+  var babel = require('gulp-babel');
+
+  gulp.src([
+      'src/components/slides/swiper-widget.js'
+    ])
+    .pipe(gulp.dest('dist/esm/components/slides'));
+
+  return tsCompile(getTscOptions('es6'), 'bundle.es6')
+    .pipe(babel({
+      presets: ['es2015-native-modules']
+    }))
+    .pipe(gulp.dest('dist/esm'));
+});
 
 /**
  * Compiles Ionic Sass sources to stylesheets and outputs them to dist/bundles.
@@ -720,7 +736,7 @@ gulp.task('karma', ['tests'], function(done) {
 gulp.task('karma-watch', ['watch.tests', 'bundle.system'], function() {
   watchTask('bundle.system');
   var karma = require('karma').server;
-  return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js' })
+  return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js'})
 });
 
 
@@ -938,7 +954,7 @@ gulp.task('build.release', function(done){
   runSequence(
     'clean',
     'copy.libs',
-    ['bundle', 'sass', 'fonts', 'copy.scss'],
+    ['bundle', 'bundle.es6', 'sass', 'fonts', 'copy.scss'],
     done
   );
 });
