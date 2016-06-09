@@ -12,23 +12,23 @@ class E2EApp {
   defaultCancel: string = '';
 
   onClearSearchbar(searchbar) {
-    console.log("Clicked clear input on", searchbar.value);
+    console.log("ionClear", searchbar.value);
   }
 
   onCancelSearchbar(searchbar) {
-    console.log("Clicked cancel button with", searchbar.value);
+    console.log("ionCancel", searchbar.value);
   }
 
   triggerInput(searchbar) {
-    console.log("Triggered input", searchbar.value);
+    console.log("ionInput", searchbar.value);
   }
 
   inputBlurred(searchbar) {
-    console.log("Blurred input", searchbar.value);
+    console.log("ionBlur", searchbar.value);
   }
 
   inputFocused(searchbar) {
-    console.log("Focused input", searchbar.value);
+    console.log("ionFocus", searchbar.value);
   }
 }
 
