@@ -16,14 +16,17 @@ $datetime-wp-border-color:        $input-wp-border-color !default;
 
 ion-datetime {
   padding: $datetime-wp-padding-top $datetime-wp-padding-right $datetime-wp-padding-bottom $datetime-wp-padding-left;
+
   min-width: $datetime-wp-min-width;
 }
 
 .datetime-text {
+  padding: 0 8px;
+
+  min-height: 3.4rem;
+
   border: $datetime-wp-border-width solid $datetime-wp-border-color;
   line-height: 3rem;
-  min-height: 3.4rem;
-  padding: 0 8px;
 }
 
 .item-datetime ion-label[floating] {
