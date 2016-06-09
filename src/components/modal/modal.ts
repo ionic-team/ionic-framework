@@ -1,4 +1,4 @@
-import {Component, ComponentRef, ElementRef, DynamicComponentLoader, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentRef, ElementRef, ViewChild, ViewContainerRef, ComponentResolver} from '@angular/core';
 
 import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
@@ -7,6 +7,8 @@ import {pascalCaseToDashCase} from '../../util/util';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {ViewController} from '../nav/view-controller';
 import {windowDimensions} from '../../util/dom';
+
+import {nativeRaf, CSS} from '../../util/dom';
 
 /**
  * @name Modal
@@ -146,10 +148,7 @@ export class Modal extends ViewController {
       if (originalNgAfterViewInit) {
         originalNgAfterViewInit();
       }
-      this.instance.loadComponent().then( (componentRef: ComponentRef<any>) => {
-        this.setInstance(componentRef.instance);
-        done();
-      });
+      this.instance.loadComponent(done);
     };
   }
 }
@@ -166,14 +165,21 @@ export class ModalCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
-  constructor(protected _loader: DynamicComponentLoader, protected _navParams: NavParams) {}
+  constructor(
+    private _compiler: ComponentResolver,
+    private _navParams: NavParams,
+    private _viewCtrl: ViewController
+  ) {}
 
-  loadComponent(): Promise<ComponentRef<any>> {
-    let componentType = this._navParams.data.componentType;
-    addSelector(componentType, 'ion-page');
+  loadComponent(done: Function) {
+    addSelector(this._navParams.data.componentType, 'ion-modal-inner');
 
-    return this._loader.loadNextToLocation(componentType, this.viewport).then( (componentRef: ComponentRef<any>) => {
-      return componentRef;
+    this._compiler.resolveComponent(this._navParams.data.componentType).then((componentFactory) => {
+      let componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector);
+
+      this._viewCtrl.setInstance(componentRef.instance);
+
+      done();
     });
   }
 
@@ -185,36 +191,43 @@ export class ModalCmp {
 /**
  * Animations for modals
  */
-class ModalSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+ class ModalSlideIn extends Transition {
+   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+     super(opts);
 
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    backdrop.fromTo('opacity', 0.01, 0.4);
-    let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
-    let page = <HTMLElement> ele.querySelector('ion-page');
+     let ele = enteringView.pageRef().nativeElement;
+     let backdropEle = ele.querySelector('ion-backdrop');
+     let backdrop = new Animation(backdropEle);
+     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+     let page = <HTMLElement> ele.querySelector('ion-page');
+     let pageAnimation = new Animation(page);
 
-    // auto-add page css className created from component JS class name
-    let cssClassName = pascalCaseToDashCase((<Modal>enteringView).modalViewType);
-    page.classList.add(cssClassName);
+     // auto-add page css className created from component JS class name
+     let cssClassName = pascalCaseToDashCase((<Modal>enteringView).modalViewType);
+     pageAnimation.before.addClass(cssClassName);
+     pageAnimation.before.addClass('show-page');
 
-    wrapper.fromTo('translateY', '100%', '0%');
+     backdrop.fromTo('opacity', 0.01, 0.4);
+     wrapper.fromTo('translateY', '100%', '0%');
 
-    const DURATION = 400;
-    const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
-    this.element(enteringView.pageRef()).easing(EASING).duration(DURATION).add(backdrop).add(wrapper);
-    this.element(new ElementRef(page)).easing(EASING).duration(DURATION).before.addClass('show-page');
 
-    if (enteringView.hasNavbar()) {
-      // entering page has a navbar
-      let enteringNavBar = new Animation(enteringView.navbarRef());
-      enteringNavBar.before.addClass('show-navbar');
-      this.add(enteringNavBar);
-    }
-  }
-}
-Transition.register('modal-slide-in', ModalSlideIn);
+     this
+       .element(enteringView.pageRef())
+       .easing('cubic-bezier(0.36,0.66,0.04,1)')
+       .duration(400)
+       .add(backdrop)
+       .add(wrapper)
+       .add(pageAnimation);
+
+     if (enteringView.hasNavbar()) {
+       // entering page has a navbar
+       let enteringNavBar = new Animation(enteringView.navbarRef());
+       enteringNavBar.before.addClass('show-navbar');
+       this.add(enteringNavBar);
+     }
+   }
+ }
+ Transition.register('modal-slide-in', ModalSlideIn);
 
 
 class ModalSlideOut extends Transition {
@@ -222,9 +235,7 @@ class ModalSlideOut extends Transition {
     super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
-
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    backdrop.fromTo('opacity', 0.4, 0.0);
     let wrapperEle = <HTMLElement> ele.querySelector('.modal-wrapper');
     let wrapperEleRect = wrapperEle.getBoundingClientRect();
     let wrapper = new Animation(wrapperEle);
@@ -233,6 +244,7 @@ class ModalSlideOut extends Transition {
     // so it's off-screen
     let screenDimensions = windowDimensions();
     wrapper.fromTo('translateY', '0px', `${screenDimensions.height - wrapperEleRect.top}px`);
+    backdrop.fromTo('opacity', 0.4, 0.0);
 
     this
       .element(leavingView.pageRef())
@@ -251,20 +263,26 @@ class ModalMDSlideIn extends Transition {
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    backdrop.fromTo('opacity', 0.01, 0.4);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
-    wrapper.fromTo('translateY', '40px', '0px');
     let page = <HTMLElement> ele.querySelector('ion-page');
-
+    let pageAnimation = new Animation(page);
 
     // auto-add page css className created from component JS class name
     let cssClassName = pascalCaseToDashCase((<Modal>enteringView).modalViewType);
-    page.classList.add(cssClassName);
+    pageAnimation.before.addClass(cssClassName);
+    pageAnimation.before.addClass('show-page');
+
+
+    backdrop.fromTo('opacity', 0.01, 0.4);
+    wrapper.fromTo('translateY', '40px', '0px');
+    wrapper.fromTo('opacity', '0.01', '1.0');
 
     const DURATION = 280;
     const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
-    this.element(enteringView.pageRef()).easing(EASING).duration(DURATION).fadeIn().add(backdrop).add(wrapper);
-    this.element(new ElementRef(page)).easing(EASING).duration(DURATION).before.addClass('show-page');
+    this.element(enteringView.pageRef()).easing(EASING).duration(DURATION)
+      .add(backdrop)
+      .add(wrapper)
+      .add(pageAnimation);
 
     if (enteringView.hasNavbar()) {
       // entering page has a navbar
@@ -283,15 +301,16 @@ class ModalMDSlideOut extends Transition {
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    backdrop.fromTo('opacity', 0.4, 0.0);
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+
+    backdrop.fromTo('opacity', 0.4, 0.0);
     wrapper.fromTo('translateY', '0px', '40px');
+    wrapper.fromTo('opacity', '1.0', '0.00');
 
     this
       .element(leavingView.pageRef())
       .duration(200)
       .easing('cubic-bezier(0.47,0,0.745,0.715)')
-      .fadeOut()
       .add(wrapper)
       .add(backdrop);
   }

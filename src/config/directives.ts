@@ -19,7 +19,7 @@ import {Tabs} from '../components/tabs/tabs';
 import {Tab} from '../components/tabs/tab';
 import {List, ListHeader} from '../components/list/list';
 import {Item} from '../components/item/item';
-import {ItemSliding} from '../components/item/item-sliding';
+import {ItemSliding, ItemOptions} from '../components/item/item-sliding';
 import {VirtualScroll} from '../components/virtual-scroll/virtual-scroll';
 import {VirtualItem, VirtualHeader, VirtualFooter} from '../components/virtual-scroll/virtual-item';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
@@ -44,6 +44,7 @@ import {NavbarTemplate, Navbar} from '../components/navbar/navbar';
 import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
 
 /**
+ * @private
  * @name IONIC_DIRECTIVES
  * @description
  * The core Ionic directives as well as Angular's `CORE_DIRECTIVES` and `FORM_DIRECTIVES` are
@@ -137,6 +138,7 @@ export const IONIC_DIRECTIVES: any[] = [
   ListHeader,
   Item,
   ItemSliding,
+  ItemOptions,
   VirtualScroll,
   VirtualItem,
   VirtualHeader,

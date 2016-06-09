@@ -15,6 +15,10 @@ $item-wp-avatar-size:                4rem !default;
 $item-wp-thumbnail-size:             8rem !default;
 $item-wp-note-color:                 $input-wp-border-color !default;
 
+$item-wp-detail-push-show:           false !default;
+$item-wp-detail-push-color:          $input-wp-border-color !default;
+$item-wp-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-wp-detail-push-color}'/></svg>" !default;
+
 $item-wp-divider-background:         #fff !default;
 $item-wp-divider-color:              #222 !default;
 $item-wp-divider-padding:            5px 15px !default;
@@ -82,6 +86,29 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   padding-right: ($item-wp-padding-right / 2);
 
   border-bottom: 1px solid $list-wp-border-color;
+}
+
+
+// Windows Item Detail Push
+// --------------------------------------------------
+
+@mixin wp-detail-push() {
+  @include svg-background-image($item-wp-detail-push-svg);
+
+  padding-right: 32px;
+
+  background-repeat: no-repeat;
+  background-position: right ($item-wp-padding-right - 2) center;
+  background-size: 14px 14px;
+}
+
+// Only show the forward arrow icon if true
+@if $item-wp-detail-push-show == true {
+  .item[detail-push] .item-inner,
+  button.item:not([detail-none]) .item-inner,
+  a.item:not([detail-none]) .item-inner {
+    @include wp-detail-push();
+  }
 }
 
 

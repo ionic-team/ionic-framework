@@ -788,7 +788,7 @@ export class Animation {
     return new AnimationClass(null, opts);
   }
 
-  static register(name: string, AnimationClass) {
+  static register(name: string, AnimationClass: any) {
     AnimationRegistry[name] = AnimationClass;
   }
 
@@ -826,4 +826,4 @@ const TRANSFORMS: any = {
 
 const CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
 
-let AnimationRegistry = {};
+let AnimationRegistry: any = {};

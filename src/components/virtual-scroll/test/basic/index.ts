@@ -1,18 +1,33 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import {ionicBootstrap, Platform} from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  items = [];
+  items: any[] = [];
+  webview: string;
 
   @ViewChild('content') content: ElementRef;
 
-  constructor() {
+  constructor(platform: Platform) {
     for (var i = 0; i < 200; i++) {
-      this.items.push(i);
+      this.items.push({
+        value: i,
+        someMethod: function() {
+          return '!!';
+        }
+      });
+    }
+
+    if (platform.is('ios')) {
+      if (window.indexedDB) {
+        this.webview = ': WKWebView';
+
+      } else {
+        this.webview = ': UIWebView';
+      }
     }
   }
 

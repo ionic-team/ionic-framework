@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Optional, NgZone, Renderer, DynamicComponentLoader, ViewContainerRef} from '@angular/core';
+import {Directive, ElementRef, Optional, NgZone, Renderer, ComponentResolver, ViewContainerRef} from '@angular/core';
 
 import {App} from '../app/app';
 import {Config} from '../../config/config';
@@ -22,10 +22,10 @@ export class NavPortal extends NavController {
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
-    loader: DynamicComponentLoader,
+    compiler: ComponentResolver,
     viewPort: ViewContainerRef
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, loader);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler);
     this.isPortal = true;
     this.setViewport(viewPort);
   }

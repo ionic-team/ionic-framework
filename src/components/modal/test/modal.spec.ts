@@ -16,65 +16,8 @@ export function run() {
       });
     });
 
-    describe('loaded', () => {
-      it('should call done after loading component and call original ngAfterViewInit method', (done) => {
-        // arrange
-        let modal = new Modal({}, {});
-        let mockInstance = {
-          ngAfterViewInit: () => {},
-          loadComponent: () => {}
-        };
-        let mockComponentRef = {
-          instance: "someData"
-        };
-        modal.instance = mockInstance;
-
-        let ngAfterViewInitSpy = spyOn(mockInstance, "ngAfterViewInit");
-        spyOn(mockInstance, "loadComponent").and.returnValue(Promise.resolve(mockComponentRef));
-
-        let doneCallback = () => {
-          // assert
-          expect(ngAfterViewInitSpy).toHaveBeenCalled();
-          expect(modal.instance).toEqual("someData");
-          done();
-        };
-
-        // act
-        modal.loaded(doneCallback);
-        // (angular calls ngAfterViewInit, we're not testing angular so manually call it)
-        mockInstance.ngAfterViewInit();
-
-      }, 5000);
-    });
   });
 
-  describe('ModalCmp', () => {
-
-    it('should return a componentRef object after loading component', (done) => {
-      // arrange
-      let mockLoader: any = {
-        loadNextToLocation: () => {}
-      };
-      let mockNavParams: any = {
-        data: {
-          componentType: function mockComponentType(){}
-        }
-      };
-      let mockComponentRef = {};
-
-      spyOn(mockLoader, "loadNextToLocation").and.returnValue(Promise.resolve(mockComponentRef));
-      let modalCmp = new ModalCmp(mockLoader, mockNavParams);
-      modalCmp.viewport = <any>"mockViewport";
-
-      // act
-      modalCmp.loadComponent().then(loadedComponentRef => {
-        // assert
-        expect(loadedComponentRef).toEqual(mockComponentRef);
-        expect(mockLoader.loadNextToLocation).toHaveBeenCalledWith(mockNavParams.data.componentType, modalCmp.viewport);
-        done();
-      });
-    }, 5000);
-  });
 }
 
 const STATE_ACTIVE = 'active';

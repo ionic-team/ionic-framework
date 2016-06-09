@@ -1,5 +1,5 @@
 <ion-navbar *navbar>
-  <ion-title>Virtual Scroll</ion-title>
+  <ion-title>Virtual Scroll{{webview}}</ion-title>
   <ion-buttons end>
     <button (click)="reload()">
       Reload
@@ -18,7 +18,7 @@
     </ion-item-divider>
 
     <ion-item *virtualItem="let item">
-      Item: {{item}}
+      Item: {{item.value}} {{item.someMethod()}}
     </ion-item>
 
   </ion-list>
