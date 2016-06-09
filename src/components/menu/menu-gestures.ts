@@ -77,21 +77,34 @@ export class MenuContentGesture extends SlideEdgeGesture {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
     let stepValue = (slide.distance / z);
     console.debug('menu gesture, onSlide', this.menu.side, 'distance', slide.distance, 'min', slide.min, 'max', slide.max, 'z', z, 'stepValue', stepValue);
-
+    ev.srcEvent.preventDefault();
+    ev.preventDefault();
     this.menu.swipeProgress(stepValue);
   }
 
   onSlideEnd(slide: SlideData, ev: any) {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
-
-    let shouldComplete = (Math.abs(ev.velocityX) > 0.2) ||
-                         (Math.abs(slide.delta) > Math.abs(z) * 0.5);
-
     let currentStepValue = (slide.distance / z);
 
-    console.debug('menu gesture, onSlide', this.menu.side, 'distance', slide.distance, 'delta', slide.delta, 'velocityX', ev.velocityX, 'min', slide.min, 'max', slide.max, 'shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
+    z = Math.abs(z * 0.5);
+    let shouldCompleteRight = (ev.velocityX >= 0)
+      && (ev.velocityX > 0.2 || slide.delta > z);
+    
+    let shouldCompleteLeft = (ev.velocityX <= 0)
+      && (ev.velocityX < -0.2 || slide.delta < -z);
+    
+    console.debug(
+      'menu gesture, onSlide', this.menu.side,
+      'distance', slide.distance,
+      'delta', slide.delta,
+      'velocityX', ev.velocityX,
+      'min', slide.min,
+      'max', slide.max,
+      'shouldCompleteLeft', shouldCompleteLeft,
+      'shouldCompleteRight', shouldCompleteRight,
+      'currentStepValue', currentStepValue);
 
-    this.menu.swipeEnd(shouldComplete, currentStepValue);
+    this.menu.swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue);
   }
 
   getElementStartPos(slide: SlideData, ev: any) {

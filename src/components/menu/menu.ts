@@ -459,11 +459,20 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  swipeEnd(shouldComplete: boolean, currentStepValue: number) {
+  swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number) {
     // user has finished dragging the menu
     if (this._isEnabled && this._isSwipeEnabled) {
       this._prevent();
-      this._getType().setProgressEnd(shouldComplete, currentStepValue, (isOpen: boolean) => {
+
+      let opening = !this.isOpen;
+      let shouldComplete = false;
+      if (opening) {
+        shouldComplete = (this.side === 'right') ? shouldCompleteLeft : shouldCompleteRight;
+      } else {
+        shouldComplete = (this.side === 'right') ? shouldCompleteRight : shouldCompleteLeft;
+      }
+
+      this._getType().setProgressEnd(shouldComplete, stepValue, (isOpen: boolean) => {
         console.debug('menu, swipeEnd', this.side);
         this._after(isOpen);
       });
