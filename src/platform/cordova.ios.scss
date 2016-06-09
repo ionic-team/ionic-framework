@@ -18,7 +18,7 @@ ion-menu {
 }
 
 @media only screen and (max-width: $cordova-ios-statusbar-padding-modal-max-width) {
-  .modal-wrapper > ion-page {
+  .modal-wrapper > ion-modal-inner {
     @include toolbar-statusbar-padding($toolbar-ios-height, $content-ios-padding);
     @include toolbar-title-statusbar-padding($toolbar-ios-height, $content-ios-padding);
   }
