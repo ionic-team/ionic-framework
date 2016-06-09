@@ -196,7 +196,7 @@ function getActivatableTarget(ele: HTMLElement) {
 /**
  * @private
  */
-export function isActivatable(ele: HTMLElement) {
+export const isActivatable = function(ele: HTMLElement) {
   if (ACTIVATABLE_ELEMENTS.test(ele.tagName)) {
     return true;
   }
