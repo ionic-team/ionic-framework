@@ -5,7 +5,7 @@ import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {isPresent, isString, isNumber, clamp} from '../../util/util';
-import {KeyboardConstants} from '../../util/keyboard-constants';
+import {Key} from '../../util/key';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 import {raf, cancelRaf, CSS, pointerCoord} from '../../util/dom';
@@ -481,7 +481,6 @@ class PickerDisplayCmp {
 
     this.id = (++pickerIds);
     this.lastClick = 0;
-    this.enabled = false;
   }
 
   ionViewLoaded() {
@@ -545,8 +544,8 @@ class PickerDisplayCmp {
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
-    if (this.isEnabled() && this._viewCtrl.isLast()) {
-      if (ev.keyCode === KeyboardConstants.ENTER) {
+    if (this.enabled && this._viewCtrl.isLast()) {
+      if (ev.keyCode === Key.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
           // do not fire this click if there recently was already a click
           // this can happen when the button has focus and used the enter
@@ -557,7 +556,7 @@ class PickerDisplayCmp {
           this.btnClick(button);
         }
 
-      } else if (ev.keyCode === KeyboardConstants.ESCAPE) {
+      } else if (ev.keyCode === Key.ESCAPE) {
         console.debug('picker, escape button');
         this.bdClick();
       }
@@ -578,7 +577,7 @@ class PickerDisplayCmp {
   }
 
   btnClick(button: any, dismissDelay?: number) {
-    if (!this.isEnabled()) {
+    if (!this.enabled) {
       return;
     }
 
@@ -604,7 +603,7 @@ class PickerDisplayCmp {
   }
 
   bdClick() {
-    if (this.isEnabled() && this.d.enableBackdropDismiss) {
+    if (this.enabled && this.d.enableBackdropDismiss) {
       this.dismiss('backdrop');
     }
   }
@@ -624,10 +623,6 @@ class PickerDisplayCmp {
       };
     });
     return selected;
-  }
-
-  isEnabled() {
-    return this.enabled;
   }
 }
 

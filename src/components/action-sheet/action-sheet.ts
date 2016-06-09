@@ -5,7 +5,7 @@ import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {isPresent} from '../../util/util';
-import {KeyboardConstants} from '../../util/keyboard-constants';
+import {Key} from '../../util/key';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -269,7 +269,6 @@ class ActionSheetCmp {
     if (this.d.subTitle) {
       this.descId = 'acst-subhdr-' + this.id;
     }
-    this.enabled = false;
   }
 
   ionViewLoaded() {
@@ -321,8 +320,8 @@ class ActionSheetCmp {
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
-    if (this.isEnabled() && this._viewCtrl.isLast()) {
-      if (ev.keyCode === KeyboardConstants.ESCAPE) {
+    if (this.enabled && this._viewCtrl.isLast()) {
+      if (ev.keyCode === Key.ESCAPE) {
         console.debug('actionsheet, escape button');
         this.bdClick();
       }
@@ -330,7 +329,7 @@ class ActionSheetCmp {
   }
 
   click(button: any, dismissDelay?: number) {
-    if (!this.isEnabled()) {
+    if (! this.enabled ) {
       return;
     }
 
@@ -352,7 +351,7 @@ class ActionSheetCmp {
   }
 
   bdClick() {
-    if (this.isEnabled() && this.d.enableBackdropDismiss) {
+    if (this.enabled && this.d.enableBackdropDismiss) {
       if (this.d.cancelButton) {
         this.click(this.d.cancelButton, 1);
 
@@ -364,10 +363,6 @@ class ActionSheetCmp {
 
   dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
-  }
-
-  isEnabled() {
-    return this.enabled;
   }
 }
 

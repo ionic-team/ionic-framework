@@ -170,7 +170,6 @@ export class Loading extends ViewController {
 })
 class LoadingCmp {
   private d: any;
-  private enabled: boolean;
   private id: number;
   private showSpinner: boolean;
 
@@ -188,7 +187,6 @@ class LoadingCmp {
     }
 
     this.id = (++loadingIds);
-    this.enabled = false;
   }
 
   ngOnInit() {
@@ -210,15 +208,10 @@ class LoadingCmp {
 
     // If there is a duration, dismiss after that amount of time
     this.d.duration ? setTimeout(() => this.dismiss('backdrop'), this.d.duration) : null;
-    this.enabled = true;
   }
 
   dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
-  }
-
-  isEnabled() {
-    return this.enabled;
   }
 }
 

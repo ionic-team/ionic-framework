@@ -185,7 +185,6 @@ class ToastCmp {
     if (this.d.message) {
       this.hdrId = 'toast-hdr-' + this.id;
     }
-    this.enabled = false;
   }
 
   ionViewDidEnter() {
@@ -211,7 +210,7 @@ class ToastCmp {
   }
 
   cbClick() {
-    if (this.isEnabled()) {
+    if (this.enabled) {
       this.dismiss('close');
     }
   }
@@ -220,10 +219,6 @@ class ToastCmp {
     clearTimeout(this.dismissTimeout);
     this.dismissTimeout = undefined;
     return this._viewCtrl.dismiss(null, role);
-  }
-
-  isEnabled() {
-    return this.enabled;
   }
 
 }

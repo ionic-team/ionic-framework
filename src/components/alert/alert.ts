@@ -4,7 +4,7 @@ import {Animation} from '../../animations/animation';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {isPresent} from '../../util/util';
-import {KeyboardConstants} from '../../util/keyboard-constants';
+import {Key} from '../../util/key';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -417,7 +417,6 @@ class AlertCmp {
     if (!this.d.message) {
       this.d.message = '';
     }
-    this.enabled = false;
   }
 
   ionViewLoaded() {
@@ -467,8 +466,8 @@ class AlertCmp {
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
-    if (this.isEnabled() && this._viewCtrl.isLast()) {
-      if (ev.keyCode === KeyboardConstants.ENTER) {
+    if (this.enabled && this._viewCtrl.isLast()) {
+      if (ev.keyCode === Key.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
           // do not fire this click if there recently was already a click
           // this can happen when the button has focus and used the enter
@@ -479,7 +478,7 @@ class AlertCmp {
           this.btnClick(button);
         }
 
-      } else if (ev.keyCode === KeyboardConstants.ESCAPE) {
+      } else if (ev.keyCode === Key.ESCAPE) {
         console.debug('alert, escape button');
         this.bdClick();
       }
@@ -500,7 +499,7 @@ class AlertCmp {
   }
 
   btnClick(button: any, dismissDelay?: number) {
-    if (!this.isEnabled()) {
+    if (!this.enabled) {
       return;
     }
 
@@ -526,7 +525,7 @@ class AlertCmp {
   }
 
   rbClick(checkedInput: any) {
-    if (this.isEnabled()) {
+    if (this.enabled) {
       this.d.inputs.forEach(input => {
         input.checked = (checkedInput === input);
       });
@@ -535,13 +534,13 @@ class AlertCmp {
   }
 
   cbClick(checkedInput: any) {
-    if (this.isEnabled()) {
+    if (this.enabled) {
       checkedInput.checked = !checkedInput.checked;
     }
   }
 
   bdClick() {
-    if (this.isEnabled() && this.d.enableBackdropDismiss) {
+    if (this.enabled && this.d.enableBackdropDismiss) {
       let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {
         this.btnClick(cancelBtn, 1);
@@ -577,10 +576,6 @@ class AlertCmp {
       values[i.name] = i.value;
     });
     return values;
-  }
-
-  isEnabled() {
-    return this.enabled;
   }
 }
 

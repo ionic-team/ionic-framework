@@ -187,7 +187,6 @@ class PopoverCmp {
     }
 
     this.id = (++popoverIds);
-    this.enabled = false;
   }
 
   ionViewWillEnter() {
@@ -217,13 +216,9 @@ class PopoverCmp {
   }
 
   bdClick() {
-    if (this.isEnabled() && this.d.enableBackdropDismiss) {
+    if (this.enabled && this.d.enableBackdropDismiss) {
       this.dismiss('backdrop');
     }
-  }
-
-  isEnabled() {
-    return this.enabled;
   }
 }
 
