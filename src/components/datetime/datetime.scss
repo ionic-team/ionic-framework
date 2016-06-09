@@ -6,8 +6,6 @@
 ion-datetime {
   display: flex;
   overflow: hidden;
-
-  max-width: 45%;
 }
 
 .datetime-text {
@@ -20,6 +18,9 @@ ion-datetime {
   font-size: inherit;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  min-height: 1.2em;
+  line-height: 1.2;  
 }
 
 .datetime-disabled,
@@ -27,4 +28,10 @@ ion-datetime {
   opacity: .4;
 
   pointer-events: none;
+}
+
+.item-label-stacked ion-datetime,
+.item-label-floating ion-datetime {
+  width: 100%;
+  padding-left: 0;
 }

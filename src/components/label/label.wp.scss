@@ -20,7 +20,8 @@ ion-label {
 // --------------------------------------------------
 
 .item-input ion-label,
-.item-select ion-label {
+.item-select ion-label,
+.item-datetime ion-label {
   color: $label-wp-text-color;
 }
 

@@ -701,6 +701,15 @@ export class DateTime {
   /**
    * @private
    */
+  checkHasValue(inputValue: any) {
+    if (this._item) {
+      this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
+    }
+  }
+
+  /**
+   * @private
+   */
   updateText() {
     // create the text of the formatted data
     this._text = renderDateTime(this.displayFormat, this._value, this._locale);
@@ -766,6 +775,7 @@ export class DateTime {
     console.debug('datetime, writeValue', val);
     this.setValue(val);
     this.updateText();
+    this.checkHasValue(val);
   }
 
   /**
@@ -792,6 +802,7 @@ export class DateTime {
       console.debug('datetime, onChange', val);
       this.setValue(val);
       this.updateText();
+      this.checkHasValue(val);
 
       // convert DateTimeData value to iso datetime format
       fn(convertDataToISO(this._value));

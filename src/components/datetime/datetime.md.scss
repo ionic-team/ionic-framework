@@ -1,0 +1,15 @@
+@import "../../globals.md";
+@import "./datetime";
+
+// Material Design DateTime
+// --------------------------------------------------
+
+$datetime-md-padding-top:         $item-md-padding-top !default;
+$datetime-md-padding-right:       ($item-md-padding-right / 2) !default;
+$datetime-md-padding-bottom:      $item-md-padding-bottom !default;
+$datetime-md-padding-left:        $item-md-padding-left !default;
+
+
+ion-datetime {
+  padding: $datetime-md-padding-top $datetime-md-padding-right $datetime-md-padding-bottom $datetime-md-padding-left;
+}
