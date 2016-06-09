@@ -44,6 +44,7 @@ import {NavbarTemplate, Navbar} from '../components/navbar/navbar';
 import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
 
 /**
+ * @private
  * @name IONIC_DIRECTIVES
  * @description
  * The core Ionic directives as well as Angular's `CORE_DIRECTIVES` and `FORM_DIRECTIVES` are

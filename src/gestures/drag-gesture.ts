@@ -1,6 +1,9 @@
 import {Gesture} from './gesture';
 import {defaults} from '../util';
 
+/**
+ * @private
+ */
 
 export class DragGesture extends Gesture {
   public dragging: boolean;
