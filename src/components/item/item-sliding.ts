@@ -197,6 +197,7 @@ export class ItemSliding {
   constructor(@Optional() private _list: List, private _renderer: Renderer, private _elementRef: ElementRef) {
     _list.enableSlidingItems(true);
     _elementRef.nativeElement.$ionComponent = this;
+    _renderer.setElementClass(_elementRef.nativeElement, 'item-wrapper', true);
   }
 
 

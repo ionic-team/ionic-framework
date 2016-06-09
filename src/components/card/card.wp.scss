@@ -62,7 +62,7 @@ ion-card {
   }
 
   > .item:last-child,
-  > ion-item-sliding:last-child .item {
+  > .item-wrapper:last-child .item {
     border-bottom: 0;
   }
 

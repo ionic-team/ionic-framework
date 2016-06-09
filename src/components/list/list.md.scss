@@ -42,17 +42,17 @@ ion-list {
   }
 
   > .item:first-child,
-  > ion-item-sliding:first-child .item {
+  > .item-wrapper:first-child .item {
     border-top: 1px solid $list-md-border-color;
   }
 
   > .item:last-child,
-  > ion-item-sliding:last-child .item {
+  > .item-wrapper:last-child .item {
     border-bottom: 1px solid $list-md-border-color;
   }
 
   > .item:last-child,
-  > ion-item-sliding:last-child {
+  > .item-wrapper:last-child {
     ion-label,
     .item-inner {
       border-bottom: 0;

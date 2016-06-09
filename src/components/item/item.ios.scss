@@ -201,7 +201,7 @@ ion-item-group {
   }
 
   .item:last-child .item-inner,
-  ion-item-sliding:last-child .item-inner {
+  .item-wrapper:last-child .item-inner {
     border: 0;
   }
 }
