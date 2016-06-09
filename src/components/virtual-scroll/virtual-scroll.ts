@@ -549,7 +549,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
         if (madeChanges) {
           // do not update images while scrolling
-          this._imgs.toArray().forEach(img => {
+          this._imgs.forEach(img => {
             img.enable(false);
           });
 
