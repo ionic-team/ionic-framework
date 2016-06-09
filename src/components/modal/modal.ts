@@ -1,9 +1,10 @@
-import {Component, ComponentRef, ElementRef, ViewChild, ViewContainerRef, ComponentResolver} from '@angular/core';
+import {Component, ComponentRef, ComponentResolver, ElementRef, HostListener, ViewChild, ViewContainerRef} from '@angular/core';
 
 import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
 import {NavParams} from '../nav/nav-params';
-import {pascalCaseToDashCase} from '../../util/util';
+import {isPresent, pascalCaseToDashCase} from '../../util/util';
+import {Key} from '../../util/key';
 import {Transition, TransitionOptions} from '../../transitions/transition';
 import {ViewController} from '../nav/view-controller';
 import {windowDimensions} from '../../util/dom';
@@ -114,8 +115,11 @@ export class Modal extends ViewController {
 
   public modalViewType: string;
 
-  constructor(componentType: any, data: any = {}) {
+  constructor(componentType: any, data: any = {}, opts: ModalOptions = {}) {
     data.componentType = componentType;
+    opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+    data.opts = opts;
     super(ModalCmp, data);
     this.modalViewType = componentType.name;
     this.viewType = 'modal';
@@ -132,11 +136,20 @@ export class Modal extends ViewController {
   }
 
   /**
-   * @param {any} componentType Modal
-   * @param {object} data Modal options
+   * Create a modal with the following options
+   *
+   * | Option                | Type       | Description                                                                                                      |
+   * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
+   * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
+   * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
+   *
+   *
+   * @param {object} componentType The Modal view
+   * @param {object} data Any data to pass to the Modal view
+   * @param {object} opts Modal options
    */
-  static create(componentType: any, data = {}) {
-    return new Modal(componentType, data);
+  static create(componentType: any, data: any = {}, opts: ModalOptions = {}) {
+    return new Modal(componentType, data, opts);
   }
 
   // Override the load method and load our child component
@@ -153,10 +166,15 @@ export class Modal extends ViewController {
   }
 }
 
+export interface ModalOptions {
+  showBackdrop?: boolean;
+  enableBackdropDismiss?: boolean;
+}
+
 @Component({
   selector: 'ion-modal',
   template:
-    '<ion-backdrop disableScroll="false"></ion-backdrop>' +
+    '<ion-backdrop disableScroll="false" (click)="bdClick($event)"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
       '<div #viewport></div>' +
     '</div>'
@@ -165,11 +183,12 @@ export class ModalCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
-  constructor(
-    private _compiler: ComponentResolver,
-    private _navParams: NavParams,
-    private _viewCtrl: ViewController
-  ) {}
+  private d: any;
+  private enabled: boolean;
+
+  constructor(private _compiler: ComponentResolver, private _navParams: NavParams, private _viewCtrl: ViewController) {
+    this.d = _navParams.data.opts;
+  }
 
   loadComponent(done: Function) {
     addSelector(this._navParams.data.componentType, 'ion-modal-inner');
@@ -178,13 +197,30 @@ export class ModalCmp {
       let componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector);
 
       this._viewCtrl.setInstance(componentRef.instance);
-
+      this.enabled = true;
       done();
     });
   }
 
   ngAfterViewInit() {
     // intentionally kept empty
+  }
+
+  dismiss(role: any): Promise<any> {
+    return this._viewCtrl.dismiss(null, role);
+  }
+
+  bdClick() {
+    if (this.enabled && this.d.enableBackdropDismiss) {
+      this.dismiss('backdrop');
+    }
+  }
+
+  @HostListener('body:keyup', ['$event'])
+  private _keyUp(ev: KeyboardEvent) {
+    if (this.enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE ) {
+      this.bdClick();
+    }
   }
 }
 
