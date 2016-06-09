@@ -209,7 +209,7 @@ export const isActivatable = function(ele: HTMLElement) {
   }
 
   return false;
-}
+};
 
 function addListener(type: string, listener: any, useCapture?: boolean) {
   document.addEventListener(type, listener, useCapture);
