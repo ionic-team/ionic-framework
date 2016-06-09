@@ -119,7 +119,9 @@
 // --------------------------------------------------
 
 @function url-encode($val) {
-  @return str-replace($val, " ", "%20");
+  $spaces: str-replace($val, " ", "%20");
+  $encoded: str-replace($spaces, "#", "%23");
+  @return $encoded;
 }
 
 
