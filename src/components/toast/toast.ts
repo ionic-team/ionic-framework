@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, Output, EventEmitter} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Output, Renderer} from '@angular/core';
 
 import {ActionSheet, ActionSheetOptions} from '../action-sheet/action-sheet';
 import {Animation} from '../../animations/animation';
@@ -158,7 +158,7 @@ const TOAST_POSITION_BOTTOM: string = 'bottom';
     '[attr.aria-describedby]': 'descId',
   },
 })
-class ToastCmp {
+class ToastCmp implements AfterViewInit {
   private d: any;
   private descId: string;
   private hdrId: string;
@@ -188,6 +188,16 @@ class ToastCmp {
     }
   }
 
+  ngAfterViewInit() {
+    // if there's a `duration` set, automatically dismiss.
+    if (this.d.duration) {
+      this.dismissTimeout =
+        setTimeout(() => {
+          this.dismiss('backdrop');
+        }, this.d.duration);
+    }
+  }
+
   ionViewDidEnter() {
     const { activeElement }: any = document;
     if (activeElement) {
@@ -198,14 +208,6 @@ class ToastCmp {
 
     if (focusableEle) {
       focusableEle.focus();
-    }
-
-    // if there's a `duration` set, automatically dismiss.
-    if (this.d.duration) {
-      this.dismissTimeout =
-        setTimeout(() => {
-          this.dismiss('backdrop');
-        }, this.d.duration);
     }
   }
 
