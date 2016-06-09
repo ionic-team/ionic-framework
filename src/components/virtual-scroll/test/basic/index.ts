@@ -6,13 +6,18 @@ import {ionicBootstrap} from '../../../../../src';
   templateUrl: 'main.html'
 })
 class E2EPage {
-  items = [];
+  items: any[] = [];
 
   @ViewChild('content') content: ElementRef;
 
   constructor() {
     for (var i = 0; i < 200; i++) {
-      this.items.push(i);
+      this.items.push({
+        value: i,
+        someMethod: function() {
+          return `!!`
+        }
+      });
     }
   }
 

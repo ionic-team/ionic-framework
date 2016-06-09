@@ -436,7 +436,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
                       this._ftrTmp && this._ftrTmp.templateRef, true);
 
     // ******** DOM WRITE ****************
-    this._cd.detectChanges();
+    this.detectChanges();
 
     // wait a frame before trying to read and calculate the dimensions
     nativeRaf(this.postRenderVirtual.bind(this));
@@ -473,6 +473,20 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   /**
    * @private
    */
+  detectChanges() {
+    let node: VirtualNode;
+    for (var i = 0; i < this._nodes.length; i++) {
+      node = this._nodes[i];
+      if (node.hasChanges) {
+        node.view['detectChanges']();
+        node.hasChanges = false;
+      }
+    }
+  }
+
+  /**
+   * @private
+   */
   scrollUpdate() {
     clearNativeTimeout(this._tmId);
     this._tmId = nativeTimeout(this.onScrollEnd.bind(this), SCROLL_END_TIMEOUT_MS);
@@ -481,14 +495,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     if (this._queue === QUEUE_CHANGE_DETECTION) {
       // ******** DOM WRITE ****************
-      let node: VirtualNode;
-      for (var i = 0; i < this._nodes.length; i++) {
-        node = this._nodes[i];
-        if (node.hasChanges) {
-          node.view['detectChanges']();
-          node.hasChanges = false;
-        }
-      }
+      this.detectChanges();
 
       if (this._eventAssist) {
         // queue updating node positions in the next frame
@@ -573,7 +580,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     adjustRendered(this._cells, this._data);
 
     // ******** DOM WRITE ****************
-    this._cd.detectChanges();
+    this.detectChanges();
 
     // ******** DOM WRITE ****************
     this.setVirtualHeight(
