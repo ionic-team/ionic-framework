@@ -132,18 +132,20 @@ export class ScrollView {
     this._cb = onScrollCallback;
     this._pos = [];
 
-    this._el.addEventListener('touchstart', this._start.bind(this));
-    this._el.addEventListener('touchmove', this._move.bind(this));
-    this._el.addEventListener('touchend', this._end.bind(this));
-
-    this._el.parentElement.classList.add('js-scroll');
+    if (this._el) {
+      this._el.addEventListener('touchstart', this._start.bind(this));
+      this._el.addEventListener('touchmove', this._move.bind(this));
+      this._el.addEventListener('touchend', this._end.bind(this));
+      this._el.parentElement.classList.add('js-scroll');
+    }
 
     return () => {
-      this._el.removeEventListener('touchstart', this._start.bind(this));
-      this._el.removeEventListener('touchmove', this._move.bind(this));
-      this._el.removeEventListener('touchend', this._end.bind(this));
-
-      this._el.parentElement.classList.remove('js-scroll');
+      if (this._el) {
+        this._el.removeEventListener('touchstart', this._start.bind(this));
+        this._el.removeEventListener('touchmove', this._move.bind(this));
+        this._el.removeEventListener('touchend', this._end.bind(this));
+        this._el.parentElement.classList.remove('js-scroll');
+      }
     };
   }
 
