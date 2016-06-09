@@ -8,7 +8,7 @@ it('primary should focus', function() {
 });
 
 it('danger should focus', function() {
-  element(by.css('.e2eDangerToolbarSearchbar input')).sendKeys("CC");
+  element(by.css('.e2eDarkToolbarSearchbar input')).sendKeys("CC");
 });
 
 it('light should focus', function() {

@@ -8,7 +8,7 @@ import {ionicBootstrap} from '../../../../../src';
 class E2EApp {
   defaultToolbarSearch: string = '';
   primaryToolbarSearch: string = '';
-  dangerToolbarSearch: string = '';
+  darkToolbarSearch: string = '';
   lightToolbarSearch: string = '';
 }
 

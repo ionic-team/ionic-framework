@@ -11,7 +11,7 @@ $searchbar-ios-border-color:              rgba(0, 0, 0, .05) !default;
 $searchbar-ios-min-height:                44px !default;
 
 $searchbar-ios-input-search-icon-color:   rgba(0, 0, 0, .5) !default;
-$searchbar-ios-input-search-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'><path fill='" + $searchbar-ios-input-search-icon-color + "' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/><line stroke='" + $searchbar-ios-input-search-icon-color + "' stroke-miterlimit='10' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>" !default;
+$searchbar-ios-input-search-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'><path fill='fg-color' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/><line stroke='fg-color' stroke-miterlimit='10' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>" !default;
 $searchbar-ios-input-search-icon-size:    13px !default;
 
 $searchbar-ios-input-height:              3rem !default;
@@ -23,7 +23,7 @@ $searchbar-ios-input-transition:          all 400ms cubic-bezier(.25, .45, .05, 
 $searchbar-ios-cancel-transition:         all 400ms cubic-bezier(.25, .45, .05, 1) !default;
 
 $searchbar-ios-input-clear-icon-color:    rgba(0, 0, 0, .5) !default;
-$searchbar-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $searchbar-ios-input-clear-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
+$searchbar-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='fg-color' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
 $searchbar-ios-input-clear-icon-size:     18px !default;
 
 $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
@@ -42,11 +42,20 @@ ion-searchbar {
 }
 
 
+// Searchbar Mixin for Icons
+// -----------------------------------------
+
+@mixin ios-searchbar-icon($svg-icon, $fg-color) {
+  $svg: str-replace($svg-icon, 'fg-color', $fg-color);
+  @include svg-background-image($svg);
+}
+
+
 // Searchbar Search Icon
 // -----------------------------------------
 
 .searchbar-search-icon {
-  @include svg-background-image($searchbar-ios-input-search-icon-svg);
+  @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $searchbar-ios-input-search-icon-color);
   @include calc(margin-left, "50% - 60px");
 
   position: absolute;
@@ -90,7 +99,7 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-clear-icon {
-  @include svg-background-image($searchbar-ios-input-clear-icon-svg);
+  @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $searchbar-ios-input-clear-icon-color);
 
   position: absolute;
   top: 0;
@@ -190,11 +199,16 @@ ion-searchbar {
   border-bottom-width: $hairlines-width;
 }
 
+&.hairlines ion-toolbar ion-searchbar {
+  border-bottom-width: 0;
+}
+
 
 // Generate Default Search Bar Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+  $fg-color: rgba($color-contrast, .5);
 
   ion-searchbar[#{$color-name}] {
     .searchbar-ios-cancel {
@@ -207,8 +221,22 @@ ion-searchbar {
   }
 
   .toolbar[#{$color-name}] ion-searchbar {
-    .searchbar-ios-cancel {
+    .searchbar-search-icon {
+      @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
+    }
+
+    .searchbar-input {
+      @include placeholder($fg-color);
       color: $color-contrast;
+      background: rgba($color-contrast, .08);
+    }
+
+    .searchbar-clear-icon {
+      @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $fg-color);
+    }
+
+    .searchbar-ios-cancel {
+      color: color-contrast($colors-ios, $color-base, ios);
     }
   }
 
