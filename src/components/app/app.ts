@@ -19,6 +19,7 @@ export class App {
   private _titleSrv: Title = new Title();
   private _rootNav: NavController = null;
   private _appInjector: Injector;
+  private _numTransitions: number = 0;
 
   constructor(
     private _config: Config,
@@ -67,6 +68,40 @@ export class App {
       }
     }
   }
+
+  /**
+   * @private
+   * This method is used to allow multiple navigation transitions to happen
+   * independently of each and declare when they're starting
+   * so the app can activate/deactive according to the
+   * aggregate of all active transitions
+   */
+   registerTransition(duration: number = 700) {
+     this._numTransitions++;
+     let newDisabledTime = Date.now() + duration;
+     if ( ! this._disTime || newDisabledTime >= this._disTime ) {
+        this._disTime = newDisabledTime;
+        this.setEnabled(false, duration);
+     }
+   }
+
+   /**
+    * @private
+    * This method is used to delcare a navigation transition is complete
+    * so the app can respond activate/deactivate according to the
+    * aggregate of all active transitions
+    */
+    transitionComplete() {
+      this._numTransitions--;
+      if ( this._numTransitions <= 0 ) {
+        // if the number of transition is less than or equal
+        // to zero, set it to zero (just to make sure),
+        // enable the app, and then null out _disTime
+        this._numTransitions = 0;
+        this.setEnabled(true);
+        this._disTime = null;
+      }
+    }
 
   /**
    * @private
