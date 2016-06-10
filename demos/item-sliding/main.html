@@ -8,83 +8,37 @@
       Chats
     </ion-list-header>
 
-    <ion-item-sliding>
+    <ion-item-sliding *ngFor="let chat of chats; let ref = index" [ref]="ref" #item>
       <ion-item>
         <ion-avatar item-left>
-          <img src="./avatar-cher.png">
+          <img [src]="chat.img">
         </ion-avatar>
-        <h2>Cher</h2>
-        <p>Ugh. As if.</p>
+        <h2>{{chat.name}}</h2>
+        <p>{{chat.message}}</p>
         <ion-note item-right>
-          9:38 pm
+          {{chat.time}}
         </ion-note>
       </ion-item>
+
       <ion-item-options>
-        <button secondary>
+        <button secondary (click)="more(item)">
           <ion-icon name="menu"></ion-icon>
           More
         </button>
-        <button dark>
+        <button dark (click)="mute(item)">
           <ion-icon name="volume-off"></ion-icon>
           Mute
         </button>
-        <button danger>
+        <button danger (click)="delete(item)">
           <ion-icon name="trash"></ion-icon>
           Delete
         </button>
       </ion-item-options>
-    </ion-item-sliding>
 
-    <ion-item-sliding>
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="./avatar-dionne.png">
-        </ion-avatar>
-        <h2>Dionne</h2>
-        <p>Mr. Hall was way harsh.</p>
-        <ion-note item-right>
-          8:59 pm
-        </ion-note>
-      </ion-item>
-      <ion-item-options>
-        <button secondary>
-          <ion-icon name="menu"></ion-icon>
-          More
-        </button>
-        <button dark>
-          <ion-icon name="volume-off"></ion-icon>
-          Mute
-        </button>
-        <button danger>
-          <ion-icon name="trash"></ion-icon>
-          Delete
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="./avatar-murray.png">
-        </ion-avatar>
-        <h2>Murray</h2>
-        <p>Excuse me, "Ms. Dione."</p>
-        <ion-note item-right>
-          Wed
-        </ion-note>
-      </ion-item>
-      <ion-item-options>
-        <button secondary>
-          <ion-icon name="menu"></ion-icon>
-          More
-        </button>
-        <button dark>
-          <ion-icon name="volume-off"></ion-icon>
-          Mute
-        </button>
-        <button danger>
-          <ion-icon name="trash"></ion-icon>
-          Delete
+      <ion-item-options side="left">
+        <button primary expandable (click)="archive(item)">
+          <ion-icon name="archive"></ion-icon>
+          Archive
         </button>
       </ion-item-options>
     </ion-item-sliding>
@@ -95,66 +49,26 @@
       Logins
     </ion-list-header>
 
-    <ion-item-sliding>
+    <ion-item-sliding *ngFor="let login of logins" #item>
       <ion-item>
-        <ion-icon name="logo-twitter" item-left></ion-icon>
-        <h2>Twitter</h2>
-        <p>admin</p>
+        <ion-icon [name]="login.icon" item-left></ion-icon>
+        <h2>{{login.name}}</h2>
+        <p>{{login.username}}</p>
       </ion-item>
-      <ion-item-options>
-        <button>
-         edit
-        </button>
+      <ion-item-options side="left">
         <button danger>
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-icon name="logo-github" item-left></ion-icon>
-        <h2>GitHub</h2>
-        <p>admin37</p>
-      </ion-item>
-      <ion-item-options>
-        <button>
-         edit
+      <ion-item-options (ionSwipe)="download(item)">
+        <button dark (click)="more(item)">
+          <ion-icon name="volume-off"></ion-icon>
+          Mute
         </button>
-        <button danger>
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-icon name="logo-instagram" item-left></ion-icon>
-        <h2>Instagram</h2>
-        <p>imanadmin</p>
-      </ion-item>
-      <ion-item-options>
-        <button>
-         edit
-        </button>
-        <button danger>
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-icon name="logo-codepen" item-left dark></ion-icon>
-        <h2>Codepen</h2>
-        <p>administrator</p>
-      </ion-item>
-      <ion-item-options>
-        <button>
-         edit
-        </button>
-        <button danger>
-          <ion-icon name="trash"></ion-icon>
+        <button light expandable (click)="download(item)">
+          <ion-icon name="download" class="download-hide"></ion-icon>
+          <div class="download-hide">Download</div>
+          <ion-spinner id="download-spinner"></ion-spinner>
         </button>
       </ion-item-options>
     </ion-item-sliding>
@@ -164,6 +78,19 @@
 </ion-content>
 
 <style>
+  #download-spinner {
+    display: none;
+  }
+
+  svg circle {
+    stroke: white;
+  }
+  .downloading #download-spinner {
+    display: block;
+  }
+  .downloading .download-hide {
+    display: none;
+  }
   .chat-sliding-demo ion-note {
     font-size: 13px;
     margin-top: -8px;

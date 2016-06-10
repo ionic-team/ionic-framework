@@ -366,7 +366,7 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  bdClick(ev) {
+  bdClick(ev: Event) {
     console.debug('backdrop clicked');
     ev.preventDefault();
     ev.stopPropagation();

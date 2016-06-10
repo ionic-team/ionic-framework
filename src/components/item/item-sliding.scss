@@ -87,10 +87,10 @@ ion-item-sliding.active-slide {
   }
 }
 
-// Item Swipeable Animation
+// Item Expandable Animation
 // --------------------------------------------------
 
-button[swipeable] {
+.button-expandable {
   flex-shrink: 0;
 
   transition-duration: 0;
@@ -105,7 +105,7 @@ ion-item-sliding.active-swipe-left {
   }
 }
 
-ion-item-sliding.active-swipe-right button[swipeable] {
+ion-item-sliding.active-swipe-right .button-expandable {
   order: 1;
 
   padding-left: 90%;
@@ -114,7 +114,7 @@ ion-item-sliding.active-swipe-right button[swipeable] {
   transition-property: padding-left;
 }
 
-ion-item-sliding.active-swipe-left button[swipeable] {
+ion-item-sliding.active-swipe-left .button-expandable {
   order: -1;
 
   padding-right: 90%;
