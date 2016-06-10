@@ -7,12 +7,12 @@
     <ion-card *virtualItem="let item">
 
       <div>
-        <ion-img [src]="item.imgSrc" [height]="item.imgHeight"></ion-img>
+        <ion-img [src]="item.imgSrc" [height]="item.imgHeight" [alt]="item.name"></ion-img>
       </div>
 
       <ion-item>
         <ion-avatar item-left>
-          <ion-img [src]="item.imgSrc"></ion-img>
+          <ion-img [src]="item.avatarSrc" height="40" width="40"></ion-img>
         </ion-avatar>
         <h2>{{ item.name }}</h2>
       </ion-item>

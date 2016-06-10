@@ -140,6 +140,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
   let lastRecordIndex = (records.length - 1);
   let viewInsertIndex: number = null;
   let totalNodes = nodes.length;
+  let templateRef: TemplateRef<any>;
 
   startCellIndex = Math.max(startCellIndex, 0);
   endCellIndex = Math.min(endCellIndex, cells.length - 1);
@@ -216,12 +217,17 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
         }
       }
 
+      // select which templateRef should be used for this cell
+      templateRef = cell.tmpl === TEMPLATE_HEADER ? hdrTmp : cell.tmpl === TEMPLATE_FOOTER ? ftrTmp : itmTmp;
+      if (!templateRef) {
+        console.error(`virtual${cell.tmpl === TEMPLATE_HEADER ? 'Header' : cell.tmpl === TEMPLATE_FOOTER ? 'Footer' : 'Item'} template required`);
+        continue;
+      }
+
       availableNode = {
         tmpl: cell.tmpl,
         view: <EmbeddedViewRef<VirtualContext>>viewContainer.createEmbeddedView(
-          cell.tmpl === TEMPLATE_HEADER ? hdrTmp :
-          cell.tmpl === TEMPLATE_FOOTER ? ftrTmp :
-          itmTmp,
+          templateRef,
           new VirtualContext(null, null, null),
           viewInsertIndex
         )
@@ -246,9 +252,10 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
 
   if (initialLoad) {
     // add nodes that go at the very end, and only represent the last record
-    addLastNodes(nodes, viewContainer, TEMPLATE_HEADER, hdrTmp);
-    addLastNodes(nodes, viewContainer, TEMPLATE_ITEM, itmTmp);
-    addLastNodes(nodes, viewContainer, TEMPLATE_FOOTER, ftrTmp);
+    let lastNodeTempData: any = (records[lastRecordIndex] || {});
+    addLastNodes(nodes, viewContainer, TEMPLATE_HEADER, hdrTmp, lastNodeTempData);
+    addLastNodes(nodes, viewContainer, TEMPLATE_ITEM, itmTmp, lastNodeTempData);
+    addLastNodes(nodes, viewContainer, TEMPLATE_FOOTER, ftrTmp, lastNodeTempData);
   }
 
   return madeChanges;
@@ -256,7 +263,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
 
 
 function addLastNodes(nodes: VirtualNode[], viewContainer: ViewContainerRef,
-                      templateType: number, templateRef: TemplateRef<Object>) {
+                      templateType: number, templateRef: TemplateRef<Object>, temporaryData: any) {
   if (templateRef) {
     let node: VirtualNode = {
       tmpl: templateType,
@@ -264,7 +271,7 @@ function addLastNodes(nodes: VirtualNode[], viewContainer: ViewContainerRef,
       isLastRecord: true,
       hidden: true,
     };
-    node.view.context.$implicit = {};
+    node.view.context.$implicit = temporaryData;
     nodes.push(node);
   }
 }
@@ -409,40 +416,36 @@ export function writeToNodes(nodes: VirtualNode[], cells: VirtualCell[], totalRe
   for (var i = 0, ilen = nodes.length; i < ilen; i++) {
     node = nodes[i];
 
-    if (node.hidden) {
-      continue;
-    }
+    if (!node.hidden) {
+      cell = cells[node.cell];
 
-    cell = cells[node.cell];
+      transform = `translate3d(${cell.left}px,${cell.top}px,0px)`;
 
-    transform = `translate3d(${cell.left}px,${cell.top}px,0px)`;
+      if (node.lastTransform !== transform) {
+        element = getElement(node);
 
-    if (node.lastTransform === transform) {
-      continue;
-    }
+        if (element) {
+          // ******** DOM WRITE ****************
+          element.style[CSS.transform] = node.lastTransform = transform;
 
-    element = getElement(node);
+          // ******** DOM WRITE ****************
+          element.classList.add('virtual-position');
 
-    if (element) {
-      // ******** DOM WRITE ****************
-      element.style[CSS.transform] = node.lastTransform = transform;
+          if (node.isLastRecord) {
+            // its the last record, now with data and safe to show
+            // ******** DOM WRITE ****************
+            element.classList.remove('virtual-hidden');
+          }
 
-      // ******** DOM WRITE ****************
-      element.classList.add('virtual-position');
+          // https://www.w3.org/TR/wai-aria/states_and_properties#aria-posinset
+          // ******** DOM WRITE ****************
+          element.setAttribute('aria-posinset', (node.cell + 1).toString());
 
-      if (node.isLastRecord) {
-        // its the last record, now with data and safe to show
-        // ******** DOM WRITE ****************
-        element.classList.remove('virtual-hidden');
+          // https://www.w3.org/TR/wai-aria/states_and_properties#aria-setsize
+          // ******** DOM WRITE ****************
+          element.setAttribute('aria-setsize', totalCells);
+        }
       }
-
-      // https://www.w3.org/TR/wai-aria/states_and_properties#aria-posinset
-      // ******** DOM WRITE ****************
-      element.setAttribute('aria-posinset', (node.cell + 1).toString());
-
-      // https://www.w3.org/TR/wai-aria/states_and_properties#aria-setsize
-      // ******** DOM WRITE ****************
-      element.setAttribute('aria-setsize', totalCells);
     }
   }
 }

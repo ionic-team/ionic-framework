@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, ChangeDetectionStrategy, ViewEncapsulation, NgZone} from '@angular/core';
+import {Component, Input, HostBinding, ElementRef, ChangeDetectionStrategy, ViewEncapsulation, NgZone} from '@angular/core';
 
 import {nativeRaf} from '../../util/dom';
 import {isPresent} from '../../util/util';
@@ -19,6 +19,7 @@ export class Img {
   private _w: string;
   private _h: string;
   private _enabled: boolean = true;
+  private _init: boolean;
 
   constructor(private _elementRef: ElementRef, private _platform: Platform, private _zone: NgZone) {}
 
@@ -30,11 +31,18 @@ export class Img {
     this._src = isPresent(val) ? val : '';
     this._normalizeSrc = tmpImg.src;
 
+    if (this._init) {
+      this._update();
+    }
+  }
+
+  ngOnInit() {
+    this._init = true;
     this._update();
   }
 
   private _update() {
-    if (this._enabled && this._src !== '' && this.isVisible()) {
+    if (this._enabled && this._src !== '') {
       // actively update the image
 
       for (var i = this._imgs.length - 1; i >= 0; i--) {
@@ -56,8 +64,15 @@ export class Img {
       if (!this._imgs.length) {
         this._zone.runOutsideAngular(() => {
           let img = new Image();
-          img.style.width = this._w;
-          img.style.height = this._h;
+          img.style.width = this._width;
+          img.style.height = this._height;
+
+          if (isPresent(this.alt)) {
+            img.alt = this.alt;
+          }
+          if (isPresent(this.title)) {
+            img.title = this.title;
+          }
 
           img.addEventListener('load', () => {
             if (img.src === this._normalizeSrc) {
@@ -92,19 +107,45 @@ export class Img {
     this._update();
   }
 
-  isVisible() {
-    let bounds = this._elementRef.nativeElement.getBoundingClientRect();
-    return bounds.bottom > 0 && bounds.top < this._platform.height();
-  }
-
   @Input()
   set width(val: string | number) {
-    this._w = (typeof val === 'number') ? val + 'px' : val;
+    this._w = getUnitValue(val);
   }
 
   @Input()
   set height(val: string | number) {
-    this._h = (typeof val === 'number') ? val + 'px' : val;
+    this._h = getUnitValue(val);
   }
 
+  @Input() alt: string;
+
+  @Input() title: string;
+
+  @HostBinding('style.width')
+  get _width(): string {
+    return isPresent(this._w) ? this._w : '';
+  }
+
+  @HostBinding('style.height')
+  get _height(): string {
+    return isPresent(this._h) ? this._h : '';
+  }
+
+}
+
+function getUnitValue(val: any): string {
+  if (isPresent(val)) {
+    if (typeof val === 'string') {
+      if (val.indexOf('%') > -1 || val.indexOf('px') > -1) {
+        return val;
+      }
+      if (val.length) {
+        return val + 'px';
+      }
+
+    } else if (typeof val === 'number') {
+      return val + 'px';
+    }
+  }
+  return '';
 }

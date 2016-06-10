@@ -5,11 +5,18 @@
 
 ion-img {
   position: relative;
-  display: block;
+  display: flex;
+  overflow: hidden;
+
+  align-items: center;
+  justify-content: center;
 }
 
 ion-img img {
-  display: block;
+  flex-shrink: 0;
+
+  min-width: 100%;
+  min-height: 100%;
 }
 
 ion-img .img-placeholder {

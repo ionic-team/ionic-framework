@@ -75,11 +75,11 @@ describe('VirtualScroll', () => {
       data.hdrWidth = data.viewWidth; // 100%, 1 per row
       data.ftrWidth = data.viewWidth; // 100%, 1 per row
 
-      headerFn = function(record) {
+      headerFn = function(record: any) {
         return (record === 0) ? 'Header' : null;
       };
 
-      footerFn = function(record) {
+      footerFn = function(record: any) {
         return (record === 4) ? 'Footer' : null;
       };
 
@@ -159,7 +159,7 @@ describe('VirtualScroll', () => {
       data.itmWidth = 90; // 2 per row
       data.hdrWidth = data.viewWidth; // 100%, 1 per row
 
-      headerFn = function(record) {
+      headerFn = function(record: any) {
         return (record === 0) ? 'Header' : null;
       };
 
@@ -267,10 +267,10 @@ describe('VirtualScroll', () => {
       let endCellIndex = 4;
 
       populateNodeData(startCellIndex, endCellIndex, data.viewWidth, true,
-                    cells, records, nodes, viewContainer,
-                    itmTmp, hdrTmp, ftrTmp, true);
+                       cells, records, nodes, viewContainer,
+                       itmTmp, hdrTmp, ftrTmp, true);
 
-      expect(nodes.length).toBe(3);
+      expect(nodes.length).toBe(6);
 
       expect(nodes[0].cell).toBe(2);
       expect(nodes[1].cell).toBe(3);
@@ -522,9 +522,9 @@ describe('VirtualScroll', () => {
   let headerFn: Function;
   let footerFn: Function;
   let data: VirtualData;
-  let itmTmp = null;
-  let hdrTmp = null;
-  let ftrTmp = null;
+  let itmTmp: any = {};
+  let hdrTmp: any = {};
+  let ftrTmp: any = {};
   let viewContainer: any = {
     createEmbeddedView: function() {
       return getView();

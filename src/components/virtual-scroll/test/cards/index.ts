@@ -7,14 +7,15 @@ import {ionicBootstrap} from '../../../../../src';
   encapsulation: ViewEncapsulation.None
 })
 class E2EPage {
-  items = [];
+  items: any[] = [];
 
   constructor() {
-    for (var i = 0; i < 500; i++) {
+    for (var i = 0; i < 1000; i++) {
       this.items.push({
-        imgSrc: `../../img/img/${images[rotateImg]}.jpg?${Math.random()}`,
-        imgHeight: Math.floor((Math.random() * 50) + 150),
         name: i + ' - ' + images[rotateImg],
+        imgSrc: getImgSrc(),
+        avatarSrc: getImgSrc(),
+        imgHeight: Math.floor((Math.random() * 50) + 150),
         content: lorem.substring(0, (Math.random() * (lorem.length - 100)) + 100)
       });
 
@@ -33,7 +34,9 @@ class E2EApp {
   root = E2EPage;
 }
 
-ionicBootstrap(E2EApp);
+ionicBootstrap(E2EApp, null, {
+  prodMode: true
+});
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
@@ -49,5 +52,12 @@ const images = [
   'knight-rider',
   'mirth-mobile',
 ];
+
+function getImgSrc() {
+  let src = `../../img/img/${images[rotateImg]}.jpg?${Math.round(Math.random() * 10000000)}`;
+  rotateImg++;
+  if (rotateImg === images.length) rotateImg = 0;
+  return src;
+}
 
 let rotateImg = 0;

@@ -53,4 +53,6 @@ class E2EApp {
   root = E2EPage;
 }
 
-ionicBootstrap(E2EApp);
+ionicBootstrap(E2EApp, null, {
+  prodMode: true
+});

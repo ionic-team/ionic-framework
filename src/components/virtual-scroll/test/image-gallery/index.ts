@@ -80,7 +80,9 @@ class E2EApp {
   root = E2EPage;
 }
 
-ionicBootstrap(E2EApp);
+ionicBootstrap(E2EApp, null, {
+  prodMode: true
+});
 
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 

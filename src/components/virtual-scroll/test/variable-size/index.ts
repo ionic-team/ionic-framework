@@ -6,7 +6,7 @@ import {ionicBootstrap} from '../../../../../src';
   templateUrl: 'main.html'
 })
 class E2EPage {
-  items = [];
+  items: any[] = [];
 
   constructor() {
 
@@ -21,7 +21,7 @@ class E2EPage {
     }
   }
 
-  headerFn(record, recordIndex) {
+  headerFn(record: any, recordIndex: number) {
     if (recordIndex > 0 && recordIndex % 100 === 0) {
       return recordIndex;
     }
@@ -38,4 +38,6 @@ class E2EApp {
   root = E2EPage;
 }
 
-ionicBootstrap(E2EApp);
+ionicBootstrap(E2EApp, null, {
+  prodMode: true
+});

@@ -1,15 +1,15 @@
-import {Directive, ContentChild, ContentChildren, QueryList, IterableDiffers, IterableDiffer, TrackByFn, Input, Optional, Renderer, ElementRef, ChangeDetectorRef, NgZone, TemplateRef, ViewContainerRef, DoCheck, AfterContentInit, OnDestroy} from '@angular/core';
+import {Directive, ContentChild, ContentChildren, QueryList, IterableDiffers, IterableDiffer, TrackByFn, Input, Optional, Renderer, ElementRef, ChangeDetectorRef, NgZone, DoCheck, AfterContentInit, OnDestroy} from '@angular/core';
 
+import {adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, writeToNodes} from './virtual-util';
 import {Config} from '../../config/config';
 import {Content} from '../content/content';
+import {Img} from '../img/img';
+import {isBlank, isPresent, isFunction} from '../../util/util';
+import {nativeRaf, nativeTimeout, clearNativeTimeout} from '../../util/dom';
 import {Platform} from '../../platform/platform';
 import {ViewController} from '../nav/view-controller';
-import {VirtualItem, VirtualHeader, VirtualFooter} from './virtual-item';
-import {VirtualCell, VirtualNode, VirtualData} from './virtual-util';
-import {processRecords, populateNodeData, initReadNodes, writeToNodes, updateDimensions, adjustRendered, calcDimensions, estimateHeight} from './virtual-util';
-import {isBlank, isPresent, isFunction} from '../../util/util';
-import {rafFrames, nativeRaf, cancelRaf, pointerCoord, nativeTimeout, clearNativeTimeout} from '../../util/dom';
-import {Img} from '../img/img';
+import {VirtualCell, VirtualData, VirtualNode} from './virtual-util';
+import {VirtualFooter, VirtualHeader, VirtualItem} from './virtual-item';
 
 
 /**
@@ -410,9 +410,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       // ******** DOM WRITE ****************
       self.renderVirtual();
 
-      // ******** DOM WRITE ****************
-      self._renderer.setElementClass(self._elementRef.nativeElement, 'virtual-scroll', true);
-
       // list for scroll events
       self.addScrollListener();
     });
@@ -436,7 +433,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
                       this._ftrTmp && this._ftrTmp.templateRef, true);
 
     // ******** DOM WRITE ****************
-    this.detectChanges();
+    this._cd.detectChanges();
 
     // wait a frame before trying to read and calculate the dimensions
     nativeRaf(this.postRenderVirtual.bind(this));
@@ -447,19 +444,15 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * DOM READ THEN DOM WRITE
    */
   postRenderVirtual() {
-    // ******** DOM READ ****************
-    calcDimensions(this._data, this._elementRef.nativeElement.parentElement,
-                   this.approxItemWidth, this.approxItemHeight,
-                   this.approxHeaderWidth, this.approxHeaderHeight,
-                   this.approxFooterWidth, this.approxFooterHeight,
-                   this.bufferRatio);
-
     // ******** DOM READ THEN DOM WRITE ****************
     initReadNodes(this._nodes, this._cells, this._data);
 
 
     // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
 
+
+    // ******** DOM WRITE ****************
+    this._renderer.setElementClass(this._elementRef.nativeElement, 'virtual-scroll', true);
 
     // ******** DOM WRITE ****************
     writeToNodes(this._nodes, this._cells, this._records.length);
@@ -473,20 +466,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   /**
    * @private
    */
-  detectChanges() {
-    let node: VirtualNode;
-    for (var i = 0; i < this._nodes.length; i++) {
-      node = this._nodes[i];
-      if (node.hasChanges) {
-        node.view['detectChanges']();
-        node.hasChanges = false;
-      }
-    }
-  }
-
-  /**
-   * @private
-   */
   scrollUpdate() {
     clearNativeTimeout(this._tmId);
     this._tmId = nativeTimeout(this.onScrollEnd.bind(this), SCROLL_END_TIMEOUT_MS);
@@ -495,34 +474,23 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     if (this._queue === QUEUE_CHANGE_DETECTION) {
       // ******** DOM WRITE ****************
-      this.detectChanges();
+      this._cd.detectChanges();
 
-      if (this._eventAssist) {
-        // queue updating node positions in the next frame
-        this._queue = QUEUE_WRITE_TO_NODES;
-
-      } else {
-        // update node positions right now
-        // ******** DOM WRITE ****************
-        writeToNodes(this._nodes, this._cells, this._records.length);
-        this._queue = null;
-      }
+      // ******** DOM WRITE ****************
+      writeToNodes(this._nodes, this._cells, this._records.length);
 
       // ******** DOM WRITE ****************
       this.setVirtualHeight(
         estimateHeight(this._records.length, this._cells[this._cells.length - 1], this._vHeight, 0.25)
       );
 
-    } else if (this._queue === QUEUE_WRITE_TO_NODES) {
-      // ******** DOM WRITE ****************
-      writeToNodes(this._nodes, this._cells, this._records.length);
       this._queue = null;
 
     } else {
 
       data.scrollDiff = (data.scrollTop - this._lastCheck);
 
-      if (Math.abs(data.scrollDiff) > 10) {
+      if (Math.abs(data.scrollDiff) > SCROLL_DIFFERENCE_MINIMUM) {
         // don't bother updating if the scrollTop hasn't changed much
         this._lastCheck = data.scrollTop;
 
@@ -531,7 +499,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
           let stopAtHeight = (data.scrollTop + data.renderHeight);
 
           processRecords(stopAtHeight, this._records, this._cells,
-                        this._hdrFn, this._ftrFn, data);
+                         this._hdrFn, this._ftrFn, data);
         }
 
         // ******** DOM READ ****************
@@ -570,7 +538,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   onScrollEnd() {
     // scrolling is done, allow images to be updated now
-    this._imgs.toArray().forEach(img => {
+    this._imgs.forEach(img => {
       img.enable(true);
     });
 
@@ -580,13 +548,14 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     adjustRendered(this._cells, this._data);
 
     // ******** DOM WRITE ****************
-    this.detectChanges();
+    this._cd.detectChanges();
 
     // ******** DOM WRITE ****************
     this.setVirtualHeight(
       estimateHeight(this._records.length, this._cells[this._cells.length - 1], this._vHeight, 0.05)
     );
   }
+
   /**
    * @private
    * DOM WRITE
@@ -595,6 +564,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     if (newVirtualHeight !== this._vHeight) {
       // ******** DOM WRITE ****************
       this._renderer.setElementStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
+
       this._vHeight = newVirtualHeight;
       console.debug('VirtualScroll, height', newVirtualHeight);
     }
@@ -646,6 +616,5 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 }
 
 const SCROLL_END_TIMEOUT_MS = 140;
-
+const SCROLL_DIFFERENCE_MINIMUM = 20;
 const QUEUE_CHANGE_DETECTION = 0;
-const QUEUE_WRITE_TO_NODES = 1;
