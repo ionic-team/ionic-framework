@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
-<% _.forEach(tabs, function(tab) { %>import {<%= tab.jsClassName %>} from '../<%= tab.fileName %>/<%= tab.fileName %>';
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+<% _.forEach(tabs, function(tab) { %>import { <%= tab.jsClassName %> } from '../<%= tab.fileName %>/<%= tab.fileName %>';
 <% }); %>
 
 @Component({

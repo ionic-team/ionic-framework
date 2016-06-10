@@ -1,4 +1,4 @@
-import {Directive} from '@angular/core';
+import { Directive } from '@angular/core';
 
 /*
   Generated class for the <%= jsClassName %> directive.

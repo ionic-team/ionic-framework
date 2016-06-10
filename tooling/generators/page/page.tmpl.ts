@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
 /*
   Generated class for the <%= jsClassName %> page.
@@ -11,5 +11,5 @@ import {NavController} from 'ionic-angular';
   templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html',
 })
 export class <%= jsClassName %> {
-  constructor(public nav: NavController) {}
+  constructor(private nav: NavController) {}
 }

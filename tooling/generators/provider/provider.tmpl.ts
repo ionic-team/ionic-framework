@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -10,9 +10,11 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class <%= jsClassName %> {
-  data: any = null;
+  data: any;
 
-  constructor(public http: Http) {}
+  constructor(private http: Http) {
+    this.data = null;
+  }
 
   load() {
     if (this.data) {

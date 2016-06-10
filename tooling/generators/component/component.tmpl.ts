@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 /*
   Generated class for the <%= jsClassName %> component.
@@ -11,6 +11,9 @@ import {Component} from '@angular/core';
   templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html'
 })
 export class <%= jsClassName %> {
+
+  text: string;
+
   constructor() {
     this.text = 'Hello World';
   }
