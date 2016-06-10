@@ -1,8 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
-import {Routes} from '@angular/router';
 import {Location} from '@angular/common';
 
-import {ionicBootstrap, NavController, NavParams, Modal, ViewController, Tabs} from '../../../../../src';
+import {ionicBootstrap, NavController, NavParams, Modal, ViewController, Tabs, Tab} from '../../../../../src';
 
 
 @Component({
@@ -73,7 +72,7 @@ class TabsPage {
   constructor(private nav: NavController, private params: NavParams) {}
 
   ngAfterViewInit() {
-    this.tabs.ionChange.subscribe(tab => {
+    this.tabs.ionChange.subscribe((tab: Tab) => {
       console.log('tabs.ionChange.subscribe', tab.index);
     });
   }
@@ -414,10 +413,6 @@ class Tab3Page1 {
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-// @Routes([
-//   { path: '/', component: SignIn },
-//   { path: '/tabs', component: TabsPage },
-// ])
 class E2EApp {
   root = SignIn;
 }

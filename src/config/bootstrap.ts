@@ -1,7 +1,5 @@
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {enableProdMode, provide, PLATFORM_DIRECTIVES, ComponentRef, NgZone} from '@angular/core';
-import {ROUTER_PROVIDERS} from '@angular/router';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {HTTP_PROVIDERS} from '@angular/http';
 
 import {App} from '../components/app/app';
@@ -131,8 +129,6 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     Translate,
     TapClick,
     provide(PLATFORM_DIRECTIVES, {useValue: [directives], multi: true}),
-    ROUTER_PROVIDERS,
-    provide(LocationStrategy, {useClass: HashLocationStrategy}),
     HTTP_PROVIDERS,
     customProviders
   ];

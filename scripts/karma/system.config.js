@@ -32,10 +32,6 @@ System.config({
       main: 'index.js',
       defaultExtension: 'js'
     },
-    '@angular/router-deprecated': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
     '@angular/http': {
       main: 'index.js',
       defaultExtension: 'js'
