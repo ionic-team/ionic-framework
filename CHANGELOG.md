@@ -89,10 +89,11 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   npm install --save ionic-angular@2.0.0-beta.8
   ```
   
-  _or_ modify the following line to use `beta.8` in your `package.json` and then run `npm install`:
+  _or_ modify the following lines to use `beta.8` in your `package.json` and then run `npm install`:
   
   ```
   "ionic-angular": "^2.0.0-beta.8",
+  "rxjs": "^5.0.0-beta.7",
   ```
   
   **This is the way to update Ionic to any version, more information can be found in the [docs](http://ionicframework.com/docs/v2/resources/using-npm/).**
