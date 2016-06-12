@@ -32,7 +32,7 @@
       </ion-item>
       <ion-item-options side="left" (ionSwipe)="del($event)" *ngIf="slidingEnabled">
         <button primary (click)="archive(item1)">Archive</button>
-        <button danger (click)="del(item1)" swipeable>Delete</button>
+        <button danger (click)="del(item1)">Delete</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -43,7 +43,7 @@
         <p>I think I figured out how to get more Mountain Dew</p>
       </ion-item>
       <ion-item-options side="left" (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
-        <button secondary swipeable (click)="unread(item2)">
+        <button secondary expandable (click)="unread(item2)">
           <ion-icon name="ios-checkmark"></ion-icon>Unread
         </button>
       </ion-item-options>
@@ -52,7 +52,7 @@
         <button primary (click)="archive(item2)">
           <ion-icon name="mail"></ion-icon>Archive
         </button>
-        <button danger (click)="del(item2)" swipeable>
+        <button danger (click)="del(item2)" expandable>
           <ion-icon name="trash"></ion-icon>Delete
         </button>
       </ion-item-options>
@@ -65,7 +65,7 @@
         <p>I think I figured out how to get more Mountain Dew</p>
       </ion-item>
       <ion-item-options side="left" icon-left (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
-        <button secondary swipeable (click)="unread(item3)">
+        <button secondary expandable (click)="unread(item3)">
           <ion-icon name="ios-checkmark"></ion-icon>Unread
         </button>
       </ion-item-options>
@@ -74,7 +74,7 @@
         <button primary (click)="archive(item3)">
           <ion-icon name="mail"></ion-icon>Archive
         </button>
-        <button danger (click)="del(item3)" swipeable *ngIf="slidingEnabled">
+        <button danger (click)="del(item3)" expandable *ngIf="slidingEnabled">
           <ion-icon name="trash"></ion-icon>Delete
         </button>
       </ion-item-options>
@@ -87,7 +87,7 @@
         One Line w/ Icon, div only text
       </ion-item>
       <ion-item-options icon-left (ionSwipe)="archive($event)">
-        <button primary (click)="archive(item4)" swipeable *ngIf="slidingEnabled">
+        <button primary (click)="archive(item4)" expandable *ngIf="slidingEnabled">
           <ion-icon name="archive"></ion-icon>Archive
         </button>
       </ion-item-options>
@@ -102,7 +102,7 @@
         One Line w/ Avatar, div only text
       </ion-item>
       <ion-item-options>
-        <button primary swipeable>
+        <button primary expandable>
           <ion-icon name="more"></ion-icon>More
         </button>
         <button secondary (click)="archive(item5)">
@@ -158,7 +158,7 @@
         <button primary (click)="archive(item8)">
           <ion-icon name="archive"></ion-icon>Archive
         </button>
-        <button secondary swipeable (click)="download(item8)">
+        <button secondary expandable (click)="download(item8)">
           <ion-icon name="download" class="download-hide"></ion-icon>
           <div class="download-hide">Download</div>
           <ion-spinner id="download-spinner"></ion-spinner>
