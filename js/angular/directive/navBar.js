@@ -42,7 +42,6 @@
  * @param {boolean=} no-tap-scroll By default, the navbar will scroll the content
  * to the top when tapped.  Set no-tap-scroll to true to disable this behavior.
  *
- * </table><br/>
  */
 IonicModule
 .directive('ionNavBar', function() {
