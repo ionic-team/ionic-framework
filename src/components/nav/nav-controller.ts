@@ -1178,12 +1178,12 @@ export class NavController extends Ion {
         transAnimation.duration(0);
       }
 
-      let KEYBOARD_DURATION_PADDING = 0;
-      if ( this._keyboard.isOpen() ){
-        // add 700ms to the click block just to be sure the keyboard is closed
-        KEYBOARD_DURATION_PADDING = 700;
+      let keyboardDurationPadding = 0;
+      if ( this._keyboard.isOpen() ) {
+        // add XXms to the duration the app is disabled when the keyboard is open
+        keyboardDurationPadding = 600;
       }
-      let duration = transAnimation.getDuration() + KEYBOARD_DURATION_PADDING;
+      let duration = transAnimation.getDuration() + keyboardDurationPadding;
       let enableApp = (duration < 64);
       // block any clicks during the transition and provide a
       // fallback to remove the clickblock if something goes wrong
