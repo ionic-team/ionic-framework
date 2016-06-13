@@ -46,6 +46,6 @@ ion-searchbar {
   min-height: 0;
 }
 
-.searchbar-has-value.searchbar-focused .searchbar-clear-icon {
+.searchbar-has-value.searchbar-has-focus .searchbar-clear-icon {
   display: block;
 }

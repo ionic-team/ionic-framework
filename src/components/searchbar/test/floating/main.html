@@ -7,14 +7,14 @@
   </p>
 
   <h5 padding-left> Search - Custom Placeholder </h5>
-  <ion-searchbar [(ngModel)]="customPlaceholder" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" placeholder="Filter Schedules" class="e2eCustomPlaceholderFloatingSearchbar"></ion-searchbar>
+  <ion-searchbar [autocorrect]="isAutocorrect" [autocomplete]="isAutocomplete" [spellcheck]="isSpellcheck" type="number" [(ngModel)]="customPlaceholder" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" placeholder="Filter Schedules" class="e2eCustomPlaceholderFloatingSearchbar"></ion-searchbar>
 
   <p padding-left>
     customPlaceholder: <b>{{ customPlaceholder }}</b>
   </p>
 
   <h5 padding-left> Search - Hide Cancel Button </h5>
-  <ion-searchbar [(ngModel)]="defaultCancel" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" hideCancelButton class="e2eDefaultCancelButtonFloatingSearchbar"></ion-searchbar>
+  <ion-searchbar autocorrect="off" autocomplete="off" spellcheck="true" type="text" [(ngModel)]="defaultCancel" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" hideCancelButton class="e2eDefaultCancelButtonFloatingSearchbar"></ion-searchbar>
 
   <p padding-left>
     defaultCancel: <b>{{ defaultCancel }}</b>
@@ -22,4 +22,8 @@
 
   <h5 padding-left> Search - Custom Cancel Button Danger </h5>
   <ion-searchbar (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" class="e2eCustomCancelButtonFloatingSearchbar" danger></ion-searchbar>
+
+  <p padding>
+    <button block (click)="changeValue()">Change Value</button>
+  </p>
 </ion-content>

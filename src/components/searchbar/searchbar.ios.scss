@@ -148,7 +148,7 @@ ion-searchbar {
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-focused {
+.searchbar-has-focus {
   .searchbar-ios-cancel {
     flex: 0 0 auto;
 
@@ -177,7 +177,7 @@ ion-searchbar {
     }
   }
 
-  .searchbar-focused .searchbar-ios-cancel {
+  .searchbar-has-focus .searchbar-ios-cancel {
     padding-left: 8px;
   }
 

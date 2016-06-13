@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {ionicBootstrap} from '../../../../../src';
 
@@ -8,27 +8,44 @@ import {ionicBootstrap} from '../../../../../src';
 })
 class E2EApp {
   defaultSearch: string = 'test';
-  customPlaceholder: string = '';
+  customPlaceholder: number = 2;
   defaultCancel: string = '';
 
-  onClearSearchbar(searchbar) {
-    console.log("ionClear", searchbar.value);
+  isAutocorrect: string = 'on';
+  isAutocomplete: string = 'on';
+  isSpellcheck: boolean = true;
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
+
   }
 
-  onCancelSearchbar(searchbar) {
-    console.log("ionCancel", searchbar.value);
+  onClearSearchbar(ev: any) {
+    console.log("ionClear", ev.target.value);
   }
 
-  triggerInput(searchbar) {
-    console.log("ionInput", searchbar.value);
+  onCancelSearchbar(ev: any) {
+    console.log("ionCancel", ev.target.value);
   }
 
-  inputBlurred(searchbar) {
-    console.log("ionBlur", searchbar.value);
+  triggerInput(ev: any) {
+    console.log("ionInput", ev.target.value);
   }
 
-  inputFocused(searchbar) {
-    console.log("ionFocus", searchbar.value);
+  inputBlurred(ev: any) {
+    console.log("ionBlur", ev.target.value);
+  }
+
+  inputFocused(ev: any) {
+    console.log("ionFocus", ev.target.value);
+  }
+
+  ngAfterViewInit() {
+    this.customPlaceholder = 33;
+    this.changeDetectorRef.detectChanges();
+  }
+
+  changeValue() {
+    this.defaultSearch = "changed";
   }
 }
 

@@ -115,7 +115,7 @@ ion-searchbar {
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-focused .searchbar-input-container {
+.searchbar-has-focus .searchbar-input-container {
   border-color: $searchbar-wp-border-color-focused;
 }
 
@@ -158,7 +158,7 @@ ion-searchbar {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  ion-searchbar[#{$color-name}].searchbar-focused .searchbar-input-container {
+  ion-searchbar[#{$color-name}].searchbar-has-focus .searchbar-input-container {
     border-color: $color-base;
   }
 
