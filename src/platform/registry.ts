@@ -10,18 +10,14 @@ Platform.register({
   name: 'core',
   settings: {
     mode: 'md',
-    keyboardHeight: 290,
-    clickBlock: true
+    keyboardHeight: 290
   }
 });
 Platform.setDefault('core');
 
 
 Platform.register({
-  name: 'mobile',
-  settings: {
-    clickBlock: true
-  }
+  name: 'mobile'
 });
 
 
