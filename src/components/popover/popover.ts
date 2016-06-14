@@ -268,8 +268,9 @@ class PopoverTransition extends Transition {
     // If ev was passed, use that for target element
     let targetDim = ev && ev.target && ev.target.getBoundingClientRect();
 
-    let targetTop = targetDim && targetDim.top || (bodyHeight / 2) - (popoverHeight / 2);
-    let targetLeft = targetDim && targetDim.left || bodyWidth / 2 - (popoverWidth / 2);
+    let targetTop = (targetDim && 'top' in targetDim) ? targetDim.top : (bodyHeight / 2) - (popoverHeight / 2);
+    let targetLeft = (targetDim && 'left' in targetDim) ? targetDim.left : (bodyWidth / 2) - (popoverWidth / 2);
+
     let targetWidth = targetDim && targetDim.width || 0;
     let targetHeight = targetDim && targetDim.height || 0;
 
@@ -328,8 +329,8 @@ class PopoverTransition extends Transition {
     // If ev was passed, use that for target element
     let targetDim = ev && ev.target && ev.target.getBoundingClientRect();
 
-    let targetTop = targetDim && targetDim.top || (bodyHeight / 2) - (popoverHeight / 2);
-    let targetLeft = targetDim && targetDim.left || bodyWidth / 2;
+    let targetTop = (targetDim && 'top' in targetDim) ? targetDim.top : (bodyHeight / 2) - (popoverHeight / 2);
+    let targetLeft = (targetDim && 'left' in targetDim) ? targetDim.left : (bodyWidth / 2);
     let targetWidth = targetDim && targetDim.width || 0;
     let targetHeight = targetDim && targetDim.height || 0;
 
