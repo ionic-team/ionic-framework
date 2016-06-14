@@ -978,6 +978,52 @@ export function run() {
         expect(view4.domShow).toHaveBeenCalled();
       });
 
+      it('should re-enable the app when transition time <= 0', () => {
+        // arrange
+        let enteringView = new ViewController(Page1);
+        enteringView.state = 'somethingelse';
+        let leavingView = new ViewController(Page2);
+        leavingView.state = 'somethingelse';
+        nav._transIds = 1;
+        nav._app = {
+          setEnabled: () => {}
+        };
+
+        spyOn(nav._app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        // act
+        nav._transFinish(nav._transIds, enteringView, leavingView, 'forward', true);
+
+        // assert
+        expect(nav._app.setEnabled).toHaveBeenCalledWith(true);
+        expect(nav.setTransitioning).toHaveBeenCalledWith(false);
+      });
+
+      it('should not re-enable app when transition time > 0', () => {
+        // arrange
+        let enteringView = new ViewController(Page1);
+        enteringView.state = 'somethingelse';
+        let leavingView = new ViewController(Page2);
+        leavingView.state = 'somethingelse';
+        nav._transIds = 1;
+        nav._app = {
+          setEnabled: () => {}
+        };
+
+        spyOn(nav._app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        nav._getLongestTrans = () => { return 50 };
+
+        // act
+        nav._transFinish(nav._transIds, enteringView, leavingView, 'forward', true);
+
+        // assert
+        expect(nav._app.setEnabled).not.toHaveBeenCalled();
+        expect(nav.setTransitioning).toHaveBeenCalledWith(false);
+      });
+
     });
 
     describe('_insert', () => {
@@ -1198,108 +1244,402 @@ export function run() {
         expect(nav._portal.length()).toBe(0);
         expect(nav.length()).toBe(1);
       });
-
     });
 
-    it('should getActive()', () => {
-      expect(nav.getActive()).toBe(null);
-      let view1 = new ViewController(Page1);
-      view1.state = STATE_INIT_ENTER;
-      nav.views = [view1];
-      expect(nav.getActive()).toBe(null);
-      view1.state = STATE_ACTIVE;
-      expect(nav.getActive()).toBe(view1);
+    describe('getActive', () => {
+      it('should getActive()', () => {
+        expect(nav.getActive()).toBe(null);
+        let view1 = new ViewController(Page1);
+        view1.state = STATE_INIT_ENTER;
+        nav.views = [view1];
+        expect(nav.getActive()).toBe(null);
+        view1.state = STATE_ACTIVE;
+        expect(nav.getActive()).toBe(view1);
+      });
     });
 
-    it('should getByState()', () => {
-      expect(nav.getByState(null)).toBe(null);
+    describe('getByState', () => {
+      it('should getByState()', () => {
+        expect(nav.getByState(null)).toBe(null);
 
-      let view1 = new ViewController(Page1);
-      view1.state = STATE_INIT_ENTER;
-      let view2 = new ViewController(Page2);
-      view2.state = STATE_INIT_ENTER;
-      nav.views = [view1, view2];
+        let view1 = new ViewController(Page1);
+        view1.state = STATE_INIT_ENTER;
+        let view2 = new ViewController(Page2);
+        view2.state = STATE_INIT_ENTER;
+        nav.views = [view1, view2];
 
-      expect(nav.getByState('whatever')).toBe(null);
-      expect(nav.getByState(STATE_INIT_ENTER)).toBe(view2);
+        expect(nav.getByState('whatever')).toBe(null);
+        expect(nav.getByState(STATE_INIT_ENTER)).toBe(view2);
 
-      view2.state = STATE_INACTIVE;
-      expect(nav.getByState(STATE_INIT_ENTER)).toBe(view1);
+        view2.state = STATE_INACTIVE;
+        expect(nav.getByState(STATE_INIT_ENTER)).toBe(view1);
 
-      view2.state = STATE_ACTIVE;
-      expect(nav.getActive()).toBe(view2);
+        view2.state = STATE_ACTIVE;
+        expect(nav.getActive()).toBe(view2);
+      });
     });
 
-    it('should getPrevious()', () => {
-      expect(nav.getPrevious(null)).toBe(null);
+    describe('getPrevious', () => {
+      it('should getPrevious()', () => {
+        expect(nav.getPrevious(null)).toBe(null);
 
-      let view1 = new ViewController(Page1);
-      let view2 = new ViewController(Page2);
-      nav.views = [view1, view2];
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+        nav.views = [view1, view2];
 
-      expect(nav.getPrevious(view1)).toBe(null);
-      expect(nav.getPrevious(view2)).toBe(view1);
+        expect(nav.getPrevious(view1)).toBe(null);
+        expect(nav.getPrevious(view2)).toBe(view1);
+      });
     });
 
-    it('should get first()', () => {
-      expect(nav.first()).toBe(null);
-      let view1 = new ViewController(Page1);
-      view1.setNav(nav);
-      let view2 = new ViewController(Page2);
-      view2.setNav(nav);
-      nav.views = [view1];
+    describe('first', () => {
+      it('should get first()', () => {
+        expect(nav.first()).toBe(null);
+        let view1 = new ViewController(Page1);
+        view1.setNav(nav);
+        let view2 = new ViewController(Page2);
+        view2.setNav(nav);
+        nav.views = [view1];
 
-      expect(nav.first()).toBe(view1);
-      expect(view1.isFirst()).toBe(true);
+        expect(nav.first()).toBe(view1);
+        expect(view1.isFirst()).toBe(true);
 
-      nav.views = [view1, view2];
-      expect(nav.first()).toBe(view1);
-      expect(view1.isFirst()).toBe(true);
-      expect(view2.isFirst()).toBe(false);
+        nav.views = [view1, view2];
+        expect(nav.first()).toBe(view1);
+        expect(view1.isFirst()).toBe(true);
+        expect(view2.isFirst()).toBe(false);
+      });
     });
 
-    it('should get last()', () => {
-      expect(nav.last()).toBe(null);
-      let view1 = new ViewController(Page1);
-      view1.setNav(nav);
-      let view2 = new ViewController(Page2);
-      view2.setNav(nav);
-      nav.views = [view1];
+    describe('last', () => {
+      it('should get last()', () => {
+        expect(nav.last()).toBe(null);
+        let view1 = new ViewController(Page1);
+        view1.setNav(nav);
+        let view2 = new ViewController(Page2);
+        view2.setNav(nav);
+        nav.views = [view1];
 
-      expect(nav.last()).toBe(view1);
-      expect(view1.isLast()).toBe(true);
+        expect(nav.last()).toBe(view1);
+        expect(view1.isLast()).toBe(true);
 
-      nav.views = [view1, view2];
-      expect(nav.last()).toBe(view2);
-      expect(view1.isLast()).toBe(false);
-      expect(view2.isLast()).toBe(true);
+        nav.views = [view1, view2];
+        expect(nav.last()).toBe(view2);
+        expect(view1.isLast()).toBe(false);
+        expect(view2.isLast()).toBe(true);
+      });
     });
 
-    it('should get indexOf()', () => {
-      let view1 = new ViewController(Page1);
-      let view2 = new ViewController(Page2);
+    describe('indexOf', () => {
+      it('should get indexOf()', () => {
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
 
-      expect(nav.length()).toBe(0);
-      expect(nav.indexOf(view1)).toBe(-1);
+        expect(nav.length()).toBe(0);
+        expect(nav.indexOf(view1)).toBe(-1);
 
-      nav.views = [view1, view2];
-      expect(nav.indexOf(view1)).toBe(0);
-      expect(nav.indexOf(view2)).toBe(1);
-      expect(nav.length()).toBe(2);
+        nav.views = [view1, view2];
+        expect(nav.indexOf(view1)).toBe(0);
+        expect(nav.indexOf(view2)).toBe(1);
+        expect(nav.length()).toBe(2);
+      });
     });
 
-    it('should get getByIndex()', () => {
-      expect(nav.getByIndex(-99)).toBe(null);
-      expect(nav.getByIndex(99)).toBe(null);
+    describe('getByIndex', () => {
+      it('should get getByIndex()', () => {
+        expect(nav.getByIndex(-99)).toBe(null);
+        expect(nav.getByIndex(99)).toBe(null);
 
-      let view1 = new ViewController(Page1);
-      let view2 = new ViewController(Page2);
-      nav.views = [view1, view2];
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+        nav.views = [view1, view2];
 
-      expect(nav.getByIndex(-1)).toBe(null);
-      expect(nav.getByIndex(0)).toBe(view1);
-      expect(nav.getByIndex(1)).toBe(view2);
-      expect(nav.getByIndex(2)).toBe(null);
+        expect(nav.getByIndex(-1)).toBe(null);
+        expect(nav.getByIndex(0)).toBe(view1);
+        expect(nav.getByIndex(1)).toBe(view2);
+        expect(nav.getByIndex(2)).toBe(null);
+      });
+    });
+
+    /* private method */
+    describe('_beforeTrans', () => {
+
+      it('shouldnt disable app on short transition', () => {
+        // arrange
+        let executeAssertions = () => {
+          // assertions triggerd by callbacks
+          expect(app.setEnabled).toHaveBeenCalledWith(true, 50);
+          expect(nav.setTransitioning).toHaveBeenCalledWith(false, 50);
+        };
+        let mockTransition = {
+          play: () => {
+            executeAssertions();
+          },
+          getDuration: () => { return 50},
+          onFinish: () => {}
+        };
+        nav.createTransitionWrapper = () => {
+          return mockTransition;
+        };
+        nav.config = {
+          platform : {
+            isRTL: () => {}
+          }
+        };
+        let app = {
+          setEnabled: () => {}
+        };
+        nav._app = app;
+
+        spyOn(app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+
+        // act
+        nav._beforeTrans(view1, view2, {}, () => {});
+      });
+
+      it('should disable app on longer transition', () => {
+        // arrange
+        let executeAssertions = () => {
+          // assertions triggerd by callbacks
+          expect(app.setEnabled).toHaveBeenCalledWith(false, 200);
+          expect(nav.setTransitioning).toHaveBeenCalledWith(true, 200);
+        };
+        let mockTransition = {
+          play: () => {
+            executeAssertions();
+          },
+          getDuration: () => { return 200},
+          onFinish: () => {}
+        };
+        nav.createTransitionWrapper = () => {
+          return mockTransition;
+        };
+        nav.config = {
+          platform : {
+            isRTL: () => {}
+          }
+        };
+        let app = {
+          setEnabled: () => {}
+        };
+        nav._app = app;
+
+        spyOn(app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+
+        // act
+        nav._beforeTrans(view1, view2, {}, () => {});
+      });
+
+      it('should disable app w/ padding when keyboard is open', () => {
+        // arrange
+        let executeAssertions = () => {
+          // assertions triggerd by callbacks
+          expect(app.setEnabled.calls.mostRecent().args[0]).toEqual(false);
+          expect(app.setEnabled.calls.mostRecent().args[1]).toBeGreaterThan(200);
+
+          expect(nav.setTransitioning.calls.mostRecent().args[0]).toEqual(true);
+          expect(nav.setTransitioning.calls.mostRecent().args[1]).toBeGreaterThan(200);
+        };
+        let mockTransition = {
+          play: () => {
+            executeAssertions();
+          },
+          getDuration: () => { return 200},
+          onFinish: () => {}
+        };
+        nav.createTransitionWrapper = () => {
+          return mockTransition;
+        };
+        nav.config = {
+          platform : {
+            isRTL: () => {}
+          }
+        };
+        let app = {
+          setEnabled: () => {}
+        };
+        nav._app = app;
+        nav._keyboard = {
+          isOpen: () => true
+        };
+
+        spyOn(app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+
+        // act
+        nav._beforeTrans(view1, view2, {}, () => {});
+      });
+
+      it('shouldnt update app enabled when parent transition is occurring', () => {
+        // arrange
+        let executeAssertions = () => {
+          // assertions triggerd by callbacks
+          expect(app.setEnabled).not.toHaveBeenCalled();
+          expect(nav.setTransitioning.calls.mostRecent().args[0]).toEqual(true);
+        };
+        let mockTransition = {
+          play: () => {
+            executeAssertions();
+          },
+          getDuration: () => { return 200},
+          onFinish: () => {}
+        };
+        nav.createTransitionWrapper = () => {
+          return mockTransition;
+        };
+        nav.config = {
+          platform : {
+            isRTL: () => {}
+          }
+        };
+        let app = {
+          setEnabled: () => {}
+        };
+        nav._app = app;
+
+        spyOn(app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        nav._getLongestTrans = () => { return Date.now() + 100 };
+
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+
+        // act
+        nav._beforeTrans(view1, view2, {}, () => {});
+      });
+    });
+
+    /* private method */
+    describe('_getLongestTrans', () => {
+      it('should return 0 when transition end time is less than 0', () => {
+        // arrange
+        nav.parent = null;
+        // act
+        let returnedValue = nav._getLongestTrans(Date.now());
+        // asssert
+        expect(returnedValue).toEqual(0);
+      });
+
+      it('should return 0 when transition end time is less than now', () => {
+        // arrange
+        nav.parent = {
+          _trnsTime: Date.now() - 5
+        };
+        // act
+        let returnedValue = nav._getLongestTrans(Date.now());
+        // asssert
+        expect(returnedValue).toEqual(0);
+      });
+
+      it('should return 0 when parent transition time not set', () => {
+        // arrange
+        nav.parent = {
+          _trnsTime: undefined
+        };
+        // act
+        let returnedValue = nav._getLongestTrans(Date.now());
+        // asssert
+        expect(returnedValue).toEqual(0);
+      });
+
+      it('should return transitionEndTime when transition end time is greater than now', () => {
+        // arrange
+        let expectedReturnValue = Date.now() + 100;
+        nav.parent = {
+          _trnsTime: expectedReturnValue
+        };
+        // act
+        let returnedValue = nav._getLongestTrans(Date.now());
+        // asssert
+        expect(returnedValue).toEqual(expectedReturnValue);
+      });
+
+      it('should return the greatest end of transition time if found on first parent', () => {
+        // arrange
+        let expectedReturnValue = Date.now() + 100;
+        let firstParent = {
+          _trnsTime: expectedReturnValue
+        };
+        let secondParent = {
+          _trnsTime: Date.now() + 50
+        };
+        let thirdParent = {
+          _trnsTime: Date.now()
+        };
+        let fourthParent = {
+          _trnsTime: Date.now() + 20
+        };
+        firstParent.parent = secondParent;
+        secondParent.parent = thirdParent;
+        thirdParent.parent = fourthParent;
+        nav.parent = firstParent;
+        // act
+        let returnedValue = nav._getLongestTrans(Date.now());
+        // asssert
+        expect(returnedValue).toEqual(expectedReturnValue);
+      });
+
+      it('should return the greatest end of transition time if found on middle parent', () => {
+        // arrange
+        let expectedReturnValue = Date.now() + 100;
+        let firstParent = {
+          _trnsTime: Date.now()
+        };
+        let secondParent = {
+          _trnsTime: Date.now() + 50
+        };
+        let thirdParent = {
+          _trnsTime: expectedReturnValue
+        };
+        let fourthParent = {
+          _trnsTime: Date.now() + 20
+        };
+        firstParent.parent = secondParent;
+        secondParent.parent = thirdParent;
+        thirdParent.parent = fourthParent;
+        nav.parent = firstParent;
+        // act
+        let returnedValue = nav._getLongestTrans(Date.now());
+        // asssert
+        expect(returnedValue).toEqual(expectedReturnValue);
+      });
+
+      it('should return the greatest end of transition time if found on last parent', () => {
+        // arrange
+        let expectedReturnValue = Date.now() + 100;
+        let firstParent = {
+          _trnsTime: Date.now()
+        };
+        let secondParent = {
+          _trnsTime: Date.now() + 50
+        };
+        let thirdParent = {
+          _trnsTime: Date.now() + 20
+        };
+        let fourthParent = {
+          _trnsTime: expectedReturnValue
+        };
+        firstParent.parent = secondParent;
+        secondParent.parent = thirdParent;
+        thirdParent.parent = fourthParent;
+        nav.parent = firstParent;
+        // act
+        let returnedValue = nav._getLongestTrans(Date.now());
+        // asssert
+        expect(returnedValue).toEqual(expectedReturnValue);
+      });
     });
 
     // setup stuff

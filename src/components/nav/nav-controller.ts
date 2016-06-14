@@ -169,7 +169,6 @@ export class NavController extends Ion {
   protected _sbEnabled: boolean;
   protected _ids: number = -1;
   protected _trnsDelay: any;
-  protected _trnsTime: number = 0;
   protected _views: ViewController[] = [];
 
   viewDidLoad: EventEmitter<any>;
@@ -204,6 +203,11 @@ export class NavController extends Ion {
    * @private
    */
   isPortal: boolean = false;
+
+  /**
+   * @private
+   */
+  _trnsTime: number = 0;
 
   constructor(
     parent: any,
@@ -1167,9 +1171,7 @@ export class NavController extends Ion {
         ev: opts.ev,
       };
 
-      let transAnimation = Transition.createTransition(enteringView,
-                                                       leavingView,
-                                                       transitionOpts);
+      let transAnimation = this.createTransitionWrapper(enteringView, leavingView, transitionOpts);
 
       this._trans && this._trans.destroy();
       this._trans = transAnimation;
@@ -1179,17 +1181,25 @@ export class NavController extends Ion {
         transAnimation.duration(0);
       }
 
-      let keyboardDurationPadding = 0;
-      if ( this._keyboard.isOpen() ) {
-        // add XXms to the duration the app is disabled when the keyboard is open
-        keyboardDurationPadding = 600;
+      // check if a parent is transitioning and get the time that it ends
+      let parentTransitionEndTime = this._getLongestTrans(Date.now());
+      if (parentTransitionEndTime > 0) {
+        // the parent is already transitioning and has disabled the app
+        // so just update the local transitioning information
+        let duration = parentTransitionEndTime - Date.now();
+        this.setTransitioning(true, duration);
+      } else {
+        // this is the only active transition (for now), so disable the app
+        let keyboardDurationPadding = 0;
+        if (this._keyboard.isOpen()) {
+          // add XXms to the duration the app is disabled when the keyboard is open
+          keyboardDurationPadding = 600;
+        }
+        let duration = transAnimation.getDuration() + keyboardDurationPadding;
+        let enableApp = (duration < 64);
+        this._app.setEnabled(enableApp, duration);
+        this.setTransitioning(!enableApp, duration);
       }
-      let duration = transAnimation.getDuration() + keyboardDurationPadding;
-      let enableApp = (duration < 64);
-      // block any clicks during the transition and provide a
-      // fallback to remove the clickblock if something goes wrong
-      this._app.setEnabled(enableApp, duration);
-      this.setTransitioning(!enableApp, duration);
 
       if (enteringView.viewType) {
         transAnimation.before.addClass(enteringView.viewType);
@@ -1333,8 +1343,14 @@ export class NavController extends Ion {
         enteringView.state = STATE_INACTIVE;
       }
 
-      // allow clicks and enable the app again
-      this._app && this._app.setEnabled(true);
+      // check if there is a parent actively transitioning
+      let transitionEndTime = this._getLongestTrans(Date.now());
+      // if transitionEndTime is greater than 0, there is a parent transition occurring
+      // so delegate enabling the app to the parent.  If it <= 0, go ahead and enable the app
+      if (transitionEndTime <= 0) {
+        this._app && this._app.setEnabled(true);
+      }
+
       this.setTransitioning(false);
 
       if (direction !== null && hasCompleted && !this.isPortal) {
@@ -1370,6 +1386,16 @@ export class NavController extends Ion {
         leavingView.state = STATE_INACTIVE;
       }
     }
+  }
+
+  /**
+   *@private
+   * This method is just a wrapper to the Transition function of same name
+   * to make it easy/possible to mock the method call by overriding the function.
+   * In testing we don't want to actually do the animation, we want to return a stub instead
+   */
+  private createTransitionWrapper(enteringView: ViewController, leavingView: ViewController, transitionOpts: any) {
+    return Transition.createTransition(enteringView, leavingView, transitionOpts);
   }
 
   private _cleanup() {
@@ -1647,6 +1673,26 @@ export class NavController extends Ion {
   setTransitioning(isTransitioning: boolean, fallback: number = 700) {
     this._trnsTime = (isTransitioning ? Date.now() + fallback : 0);
   }
+
+  /**
+   * @private
+   * This method traverses the tree of parents upwards
+   * and looks at the time the transition ends (if it's transitioning)
+   * and returns the value that is the furthest into the future
+   * thus giving us the longest transition duration
+   */
+   private _getLongestTrans(now: number) {
+     let parentNav: NavController = <NavController> this.parent;
+     let transitionEndTime: number = -1;
+     while (parentNav) {
+       if (parentNav._trnsTime > transitionEndTime) {
+         transitionEndTime = parentNav._trnsTime;
+       }
+       parentNav = <NavController> parentNav.parent;
+     }
+     // only check if the transitionTime is greater than the current time once
+     return transitionEndTime > 0 && transitionEndTime > now ? transitionEndTime : 0;
+   }
 
   /**
    * @private
