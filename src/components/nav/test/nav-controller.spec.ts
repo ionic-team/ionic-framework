@@ -978,6 +978,52 @@ export function run() {
         expect(view4.domShow).toHaveBeenCalled();
       });
 
+      it('should re-enable the app when transition time <= 0', () => {
+        // arrange
+        let enteringView = new ViewController(Page1);
+        enteringView.state = 'somethingelse';
+        let leavingView = new ViewController(Page2);
+        leavingView.state = 'somethingelse';
+        nav._transIds = 1;
+        nav._app = {
+          setEnabled: () => {}
+        };
+
+        spyOn(nav._app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        // act
+        nav._transFinish(nav._transIds, enteringView, leavingView, 'forward', true);
+
+        // assert
+        expect(nav._app.setEnabled).toHaveBeenCalledWith(true);
+        expect(nav.setTransitioning).toHaveBeenCalledWith(false);
+      });
+
+      it('should not re-enable app when transition time > 0', () => {
+        // arrange
+        let enteringView = new ViewController(Page1);
+        enteringView.state = 'somethingelse';
+        let leavingView = new ViewController(Page2);
+        leavingView.state = 'somethingelse';
+        nav._transIds = 1;
+        nav._app = {
+          setEnabled: () => {}
+        };
+
+        spyOn(nav._app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        nav._getLongestTrans = () => { return 50 };
+
+        // act
+        nav._transFinish(nav._transIds, enteringView, leavingView, 'forward', true);
+
+        // assert
+        expect(nav._app.setEnabled).not.toHaveBeenCalled();
+        expect(nav.setTransitioning).toHaveBeenCalledWith(false);
+      });
+
     });
 
     describe('_insert', () => {
@@ -1312,6 +1358,166 @@ export function run() {
         expect(nav.getByIndex(0)).toBe(view1);
         expect(nav.getByIndex(1)).toBe(view2);
         expect(nav.getByIndex(2)).toBe(null);
+      });
+    });
+
+    /* private method */
+    describe('_beforeTrans', () => {
+
+      it('shouldnt disable app on short transition', () => {
+        // arrange
+        let executeAssertions = () => {
+          // assertions triggerd by callbacks
+          expect(app.setEnabled).toHaveBeenCalledWith(true, 50);
+          expect(nav.setTransitioning).toHaveBeenCalledWith(false, 50);
+        };
+        let mockTransition = {
+          play: () => {
+            executeAssertions();
+          },
+          getDuration: () => { return 50},
+          onFinish: () => {}
+        };
+        nav.createTransitionWrapper = () => {
+          return mockTransition;
+        };
+        nav.config = {
+          platform : {
+            isRTL: () => {}
+          }
+        };
+        let app = {
+          setEnabled: () => {}
+        };
+        nav._app = app;
+
+        spyOn(app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+
+        // act
+        nav._beforeTrans(view1, view2, {}, () => {});
+      });
+
+      it('should disable app on longer transition', () => {
+        // arrange
+        let executeAssertions = () => {
+          // assertions triggerd by callbacks
+          expect(app.setEnabled).toHaveBeenCalledWith(false, 200);
+          expect(nav.setTransitioning).toHaveBeenCalledWith(true, 200);
+        };
+        let mockTransition = {
+          play: () => {
+            executeAssertions();
+          },
+          getDuration: () => { return 200},
+          onFinish: () => {}
+        };
+        nav.createTransitionWrapper = () => {
+          return mockTransition;
+        };
+        nav.config = {
+          platform : {
+            isRTL: () => {}
+          }
+        };
+        let app = {
+          setEnabled: () => {}
+        };
+        nav._app = app;
+
+        spyOn(app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+
+        // act
+        nav._beforeTrans(view1, view2, {}, () => {});
+      });
+
+      it('should disable app w/ padding when keyboard is open', () => {
+        // arrange
+        let executeAssertions = () => {
+          // assertions triggerd by callbacks
+          expect(app.setEnabled.calls.mostRecent().args[0]).toEqual(false);
+          expect(app.setEnabled.calls.mostRecent().args[1]).toBeGreaterThan(200);
+
+          expect(nav.setTransitioning.calls.mostRecent().args[0]).toEqual(true);
+          expect(nav.setTransitioning.calls.mostRecent().args[1]).toBeGreaterThan(200);
+        };
+        let mockTransition = {
+          play: () => {
+            executeAssertions();
+          },
+          getDuration: () => { return 200},
+          onFinish: () => {}
+        };
+        nav.createTransitionWrapper = () => {
+          return mockTransition;
+        };
+        nav.config = {
+          platform : {
+            isRTL: () => {}
+          }
+        };
+        let app = {
+          setEnabled: () => {}
+        };
+        nav._app = app;
+        nav._keyboard = {
+          isOpen: () => true
+        };
+
+        spyOn(app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+
+        // act
+        nav._beforeTrans(view1, view2, {}, () => {});
+      });
+
+      it('shouldnt update app enabled when parent transition is occurring', () => {
+        // arrange
+        let executeAssertions = () => {
+          // assertions triggerd by callbacks
+          expect(app.setEnabled).not.toHaveBeenCalled();
+          expect(nav.setTransitioning.calls.mostRecent().args[0]).toEqual(true);
+        };
+        let mockTransition = {
+          play: () => {
+            executeAssertions();
+          },
+          getDuration: () => { return 200},
+          onFinish: () => {}
+        };
+        nav.createTransitionWrapper = () => {
+          return mockTransition;
+        };
+        nav.config = {
+          platform : {
+            isRTL: () => {}
+          }
+        };
+        let app = {
+          setEnabled: () => {}
+        };
+        nav._app = app;
+
+        spyOn(app, 'setEnabled');
+        spyOn(nav, 'setTransitioning');
+
+        nav._getLongestTrans = () => { return Date.now() + 100 };
+
+        let view1 = new ViewController(Page1);
+        let view2 = new ViewController(Page2);
+
+        // act
+        nav._beforeTrans(view1, view2, {}, () => {});
       });
     });
 

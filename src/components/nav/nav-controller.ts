@@ -169,7 +169,6 @@ export class NavController extends Ion {
   protected _sbEnabled: boolean;
   protected _ids: number = -1;
   protected _trnsDelay: any;
-  protected _transitionDuration: number;
   protected _views: ViewController[] = [];
 
   viewDidLoad: EventEmitter<any>;
@@ -1172,9 +1171,7 @@ export class NavController extends Ion {
         ev: opts.ev,
       };
 
-      let transAnimation = Transition.createTransition(enteringView,
-                                                       leavingView,
-                                                       transitionOpts);
+      let transAnimation = this.createTransitionWrapper(enteringView, leavingView, transitionOpts);
 
       this._trans && this._trans.destroy();
       this._trans = transAnimation;
@@ -1389,6 +1386,16 @@ export class NavController extends Ion {
         leavingView.state = STATE_INACTIVE;
       }
     }
+  }
+
+  /**
+   *@private
+   * This method is just a wrapper to the Transition function of same name
+   * to make it easy/possible to mock the method call by overriding the function.
+   * In testing we don't want to actually do the animation, we want to return a stub instead
+   */
+  private createTransitionWrapper(enteringView: ViewController, leavingView: ViewController, transitionOpts: any) {
+    return Transition.createTransition(enteringView, leavingView, transitionOpts);
   }
 
   private _cleanup() {
