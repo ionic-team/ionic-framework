@@ -15,12 +15,11 @@ $searchbar-ios-input-search-icon-svg:     "<svg xmlns='http://www.w3.org/2000/sv
 $searchbar-ios-input-search-icon-size:    13px !default;
 
 $searchbar-ios-input-height:              3rem !default;
-$searchbar-ios-input-line-height:         $searchbar-ios-input-height !default;
 $searchbar-ios-input-placeholder-color:   rgba(0, 0, 0, .5) !default;
 $searchbar-ios-input-text-color:          #000 !default;
 $searchbar-ios-input-background-color:    #fff !default;
-$searchbar-ios-input-transition:          all 400ms cubic-bezier(.25, .45, .05, 1) !default;
-$searchbar-ios-cancel-transition:         all 400ms cubic-bezier(.25, .45, .05, 1) !default;
+$searchbar-ios-input-transition:          all 300ms ease !default;
+$searchbar-ios-cancel-transition:         all 300ms ease !default;
 
 $searchbar-ios-input-clear-icon-color:    rgba(0, 0, 0, .5) !default;
 $searchbar-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='fg-color' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
@@ -86,7 +85,6 @@ ion-searchbar {
   border-radius: 5px;
   font-size: 1.4rem;
   font-weight: 400;
-  line-height: $searchbar-ios-input-line-height;
 
   color: $searchbar-ios-input-text-color;
   background-color: $searchbar-ios-input-background-color;
@@ -118,17 +116,18 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-ios-cancel {
-  flex: 0 0 0%;
+  flex-shrink: 0;
 
-  margin-right: 0;
+  margin-right: -100%;
   margin-left: 0;
   padding: 0;
+  padding-left: 8px;
 
   height: 30px;
-
-  visibility: hidden;
-  transform: translateX(calc(100% + #{$searchbar-ios-padding-left-right}));
+  transform: translate3d(0, 0, 0);
   transition: $searchbar-ios-cancel-transition;
+  cursor: pointer;
+  pointer-events: none;
 }
 
 
@@ -145,19 +144,16 @@ ion-searchbar {
   }
 }
 
-// Searchbar Focused
+
+// Searchbar Has Focus
 // -----------------------------------------
 
 .searchbar-has-focus {
   .searchbar-ios-cancel {
-    flex: 0 0 auto;
-
-    padding-left: 8px;
-
-    visibility: visible;
-    transform: translateX(0);
+    pointer-events: auto;
   }
 }
+
 
 // Searchbar in Toolbar
 // -----------------------------------------

@@ -23,6 +23,9 @@
   <h5 padding-left> Search - Custom Cancel Button Danger </h5>
   <ion-searchbar (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" class="e2eCustomCancelButtonFloatingSearchbar" danger></ion-searchbar>
 
+  <h5 padding-left> Search - Value passed </h5>
+  <ion-searchbar value="mysearch" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" class="e2eCustomCancelButtonFloatingSearchbar" danger></ion-searchbar>
+
   <p padding>
     <button block (click)="changeValue()">Change Value</button>
   </p>

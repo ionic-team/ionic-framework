@@ -36,7 +36,7 @@ import {Segment, SegmentButton} from '../components/segment/segment';
 import {RadioButton} from '../components/radio/radio-button';
 import {RadioGroup} from '../components/radio/radio-group';
 import {Range} from '../components/range/range';
-import {Searchbar, SearchbarInput} from '../components/searchbar/searchbar';
+import {Searchbar} from '../components/searchbar/searchbar';
 import {Nav} from '../components/nav/nav';
 import {NavPush, NavPop} from '../components/nav/nav-push';
 import {NavRouter} from '../components/nav/nav-router';
@@ -89,7 +89,6 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * - Icon
  * - Spinner
  * - Searchbar
- * - SearchbarInput
  * - Segment
  * - SegmentButton
  * - Checkbox
@@ -164,7 +163,6 @@ export const IONIC_DIRECTIVES: any[] = [
 
   // Forms
   Searchbar,
-  SearchbarInput,
   Segment,
   SegmentButton,
   Checkbox,

@@ -6,17 +6,6 @@ import {isPresent} from '../../util/util';
 
 
 /**
-* @private
-*/
-@Directive({
-  selector: '.searchbar-input',
-})
-export class SearchbarInput {
-  constructor(public elementRef: ElementRef) {}
-}
-
-
-/**
  * @name Searchbar
  * @module ionic
  * @description
@@ -39,7 +28,9 @@ export class SearchbarInput {
   selector: 'ion-searchbar',
   host: {
     '[class.searchbar-has-value]': '_value',
-    '[class.searchbar-hide-cancel]': 'hideCancelButton'
+    '[class.searchbar-active]': '_isActive',
+    '[class.searchbar-hide-cancel]': 'hideCancelButton',
+    '[class.searchbar-left-aligned]': 'shouldAlignLeft()'
   },
   template:
     '<div class="searchbar-input-container">' +
@@ -47,21 +38,18 @@ export class SearchbarInput {
         '<ion-icon name="arrow-back"></ion-icon>' +
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
-      '<input [(ngModel)]="_value" [attr.placeholder]="placeholder" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" class="searchbar-input">' +
+      '<input #searchbarInput [(ngModel)]="_value" [attr.placeholder]="placeholder" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" class="searchbar-input">' +
       '<button clear class="searchbar-clear-icon" (click)="clearInput($event)" (mousedown)="clearInput($event)"></button>' +
     '</div>' +
-    '<button clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
-  directives: [SearchbarInput],
+    '<button #cancelButton clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
   encapsulation: ViewEncapsulation.None
 })
 export class Searchbar {
   private _value: string|number = '';
   private _tmr: any;
   private _shouldBlur: boolean = true;
-
-  private inputEle: any;
-  private iconEle: any;
-  private mode: string;
+  private _isActive: boolean = false;
+  private _searchbarInput: ElementRef;
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
@@ -131,12 +119,7 @@ export class Searchbar {
   /**
    * @private
    */
-  @HostBinding('class.searchbar-has-focus') isFocused: boolean;
-
-  /**
-   * @private
-   */
-  @HostBinding('class.searchbar-left-aligned') shouldLeftAlign: boolean;
+  @HostBinding('class.searchbar-has-focus') _sbHasFocus: boolean;
 
   constructor(
     private _elementRef: ElementRef,
@@ -152,27 +135,31 @@ export class Searchbar {
   /**
    * @private
    */
-  @ViewChild(SearchbarInput)
-  private set _searchbarInput(searchbarInput: SearchbarInput) {
-    this.inputEle = searchbarInput.elementRef.nativeElement;
+  @ViewChild('searchbarInput')
+  private set searchbarInput(searchbarInput: ElementRef) {
+    this._searchbarInput = searchbarInput;
+
+    let inputEle = searchbarInput.nativeElement;
 
     // By defalt set autocomplete="off" unless specified by the input
     let autoComplete = (this.autocomplete === '' || this.autocomplete === 'on') ? 'on' : this._config.get('autocomplete', 'off');
-    this.inputEle.setAttribute('autocomplete', autoComplete);
+    inputEle.setAttribute('autocomplete', autoComplete);
 
     // by default set autocorrect="off" unless specified by the input
     let autoCorrect = (this.autocorrect === '' || this.autocorrect === 'on') ? 'on' : this._config.get('autocorrect', 'off');
-    this.inputEle.setAttribute('autocorrect', autoCorrect);
+    inputEle.setAttribute('autocorrect', autoCorrect);
 
     // by default set spellcheck="false" unless specified by the input
     let spellCheck = (this.spellcheck === '' || this.spellcheck === 'true' || this.spellcheck === true) ? true : this._config.getBoolean('spellcheck', false);
-    this.inputEle.setAttribute('spellcheck', spellCheck);
+    inputEle.setAttribute('spellcheck', spellCheck);
 
     // by default set type="search" unless specified by the input
-    this.inputEle.setAttribute('type', this.type);
+    inputEle.setAttribute('type', this.type);
   }
 
   @ViewChild('searchbarIcon') _searchbarIcon: ElementRef;
+
+  @ViewChild('cancelButton', {read: ElementRef}) _cancelButton: ElementRef;
 
   /**
    * @input {string} Set the input value.
@@ -191,38 +178,44 @@ export class Searchbar {
    * On Initialization check for attributes
    */
   ngOnInit() {
-    this.mode = this._config.get('mode');
-
     let hideCancelButton = this.hideCancelButton;
     if (typeof hideCancelButton === 'string') {
       this.hideCancelButton = (hideCancelButton === '' || hideCancelButton === 'true');
     }
-
-    this.shouldLeftAlign = this._value && this._value.toString().trim() !== '';
   }
 
   /**
    * @private
-   * After View Initialization check the value
+   * After View Initialization position the elements
    */
   ngAfterViewInit() {
-    this.iconEle = this._searchbarIcon.nativeElement;
-    this.setElementLeft();
+    this.positionElements();
   }
 
   /**
    * @private
-   * Determines whether or not to add style to the element
-   * to center it properly (ios only)
+   * After Content is checked position the elements
    */
-  setElementLeft() {
-    if (this.mode !== 'ios') return;
+  ngAfterContentChecked() {
+    this.positionElements();
+  }
 
-    if (this.shouldLeftAlign) {
-      this.inputEle.removeAttribute('style');
-      this.iconEle.removeAttribute('style');
-    } else {
-      this.addElementLeft();
+  /**
+   * @private
+   * Positions the input search icon, placeholder, and the cancel button
+   * based on the input value and if it is focused. (ios only)
+   */
+  positionElements() {
+    if (this._config.get('mode') !== 'ios') return;
+
+    // Position the input placeholder & search icon
+    if (this._searchbarInput && this._searchbarIcon) {
+      this.positionInputPlaceholder(this._searchbarInput.nativeElement, this._searchbarIcon.nativeElement);
+    }
+
+    // Position the cancel button
+    if (this._cancelButton && this._cancelButton.nativeElement) {
+      this.positionCancelButton(this._cancelButton.nativeElement);
     }
   }
 
@@ -231,23 +224,50 @@ export class Searchbar {
    * Calculates the amount of padding/margin left for the elements
    * in order to center them based on the placeholder width
    */
-  addElementLeft() {
-    // Create a dummy span to get the placeholder width
-    let tempSpan = document.createElement('span');
-    tempSpan.innerHTML = this.placeholder;
-    document.body.appendChild(tempSpan);
+  positionInputPlaceholder(inputEle: HTMLElement, iconEle: HTMLElement) {
+    if (this.shouldAlignLeft()) {
+      inputEle.removeAttribute('style');
+      iconEle.removeAttribute('style');
+    } else {
+      // Create a dummy span to get the placeholder width
+      let tempSpan = document.createElement('span');
+      tempSpan.innerHTML = this.placeholder;
+      document.body.appendChild(tempSpan);
 
-    // Get the width of the span then remove it
-    let textWidth = tempSpan.offsetWidth;
-    tempSpan.remove();
+      // Get the width of the span then remove it
+      let textWidth = tempSpan.offsetWidth;
+      tempSpan.remove();
 
-    // Set the input padding left
-    let inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
-    this.inputEle.style.paddingLeft = inputLeft;
+      // Set the input padding left
+      let inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
+      inputEle.style.paddingLeft = inputLeft;
 
-    // Set the icon margin left
-    let iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
-    this.iconEle.style.marginLeft = iconLeft;
+      // Set the icon margin left
+      let iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
+      iconEle.style.marginLeft = iconLeft;
+    }
+  }
+
+  /**
+   * @private
+   * Show the iOS Cancel button on focus, hide it offscreen otherwise
+   */
+  positionCancelButton(cancelButtonEle: HTMLElement) {
+    if (cancelButtonEle.offsetWidth > 0) {
+      if (this._sbHasFocus) {
+        cancelButtonEle.style.marginRight = '0';
+      } else {
+        cancelButtonEle.style.marginRight = -cancelButtonEle.offsetWidth + 'px';
+      }
+    }
+  }
+
+  /**
+   * @private
+   * Align the input placeholder left on focus or if a value exists
+   */
+  shouldAlignLeft() {
+    return ( (this._value && this._value.toString().trim() != '') || this._sbHasFocus == true );
   }
 
   /**
@@ -267,14 +287,14 @@ export class Searchbar {
 
   /**
    * @private
-   * Sets the Searchbar to focused and aligned left on input focus.
+   * Sets the Searchbar to focused and active on input focus.
    */
   inputFocused(ev: UIEvent) {
     this.ionFocus.emit(ev);
 
-    this.isFocused = true;
-    this.shouldLeftAlign = true;
-    this.setElementLeft();
+    this._sbHasFocus = true;
+    this._isActive = true;
+    this.positionElements();
   }
 
   /**
@@ -286,15 +306,14 @@ export class Searchbar {
     // _shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this._shouldBlur === false) {
-      this.inputEle.focus();
+      this._searchbarInput.nativeElement.focus();
       this._shouldBlur = true;
       return;
     }
     this.ionBlur.emit(ev);
 
-    this.isFocused = false;
-    this.shouldLeftAlign = this._value && this._value.toString().trim() !== '';
-    this.setElementLeft();
+    this._sbHasFocus = false;
+    this.positionElements();
   }
 
   /**
@@ -324,6 +343,7 @@ export class Searchbar {
 
     this.clearInput(ev);
     this._shouldBlur = true;
+    this._isActive = false;
   }
 
   /**
