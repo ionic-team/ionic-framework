@@ -183,7 +183,7 @@ function setupDom(window: Window, document: Document, config: Config, platform: 
     bodyEle.classList.add('enable-hover');
   }
 
-  if ( config.get('clickBlock') !== false ) {
+  if ( config.getBoolean('clickBlock', true) !== false ) {
     clickBlock.enable();
   }
 

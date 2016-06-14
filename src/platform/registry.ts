@@ -10,7 +10,7 @@ Platform.register({
   name: 'core',
   settings: {
     mode: 'md',
-    keyboardHeight: 290,
+    keyboardHeight: 290
   }
 });
 Platform.setDefault('core');

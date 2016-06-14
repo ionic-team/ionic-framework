@@ -158,6 +158,9 @@ angular_controller: APIDemoCtrl <@ endif @>
 <$ doc.name | dashCase $>
 <@ else @>
 <$ doc.name $>
+<@- if doc.directiveInfo @>
+<h3><code><$ doc.directiveInfo.properties[0].values $></code></h3>
+<@ endif -@>
 <@ endif @>
 
 <@ if doc.parent @>
@@ -191,10 +194,6 @@ Improve this doc
 <@ endblock @>
 
 
-<@- if doc.directiveInfo @>
-<h2><a class="anchor" name="<$ doc.directiveInfo.type $>" href="#<$ doc.directiveInfo.type $>"></a><$ doc.directiveInfo.type $></h2>
-<h3><$ doc.directiveInfo.properties[0].name $>: <code><$ doc.directiveInfo.properties[0].values $></code></h3>
-<@ endif -@>
 
 <!-- @usage tag -->
 <@ if doc.usage @>
