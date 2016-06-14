@@ -15,7 +15,7 @@ import {isPresent} from '../../util/util';
  * ```html
  * <ion-searchbar
  *   [(ngModel)]="myInput"
- *   [hideCancelButton]="shouldHideCancel"
+ *   [showCancelButton]="shouldShowCancel"
  *   (ionInput)="onInput($event)"
  *   (ionCancel)="onCancel($event)">
  * </ion-searchbar>
@@ -29,19 +29,19 @@ import {isPresent} from '../../util/util';
   host: {
     '[class.searchbar-has-value]': '_value',
     '[class.searchbar-active]': '_isActive',
-    '[class.searchbar-hide-cancel]': 'hideCancelButton',
+    '[class.searchbar-show-cancel]': 'showCancelButton',
     '[class.searchbar-left-aligned]': 'shouldAlignLeft()'
   },
   template:
     '<div class="searchbar-input-container">' +
-      '<button (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" [hidden]="hideCancelButton" clear dark class="searchbar-md-cancel">' +
+      '<button (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" clear dark class="searchbar-md-cancel">' +
         '<ion-icon name="arrow-back"></ion-icon>' +
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
       '<input #searchbarInput [(ngModel)]="_value" [attr.placeholder]="placeholder" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" class="searchbar-input">' +
       '<button clear class="searchbar-clear-icon" (click)="clearInput($event)" (mousedown)="clearInput($event)"></button>' +
     '</div>' +
-    '<button #cancelButton [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
+    '<button #cancelButton [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
   encapsulation: ViewEncapsulation.None
 })
 export class Searchbar {
@@ -59,7 +59,7 @@ export class Searchbar {
   /**
    * @input {boolean} Whether to hide the cancel button or not. Default: `"false"`.
    */
-  @Input() hideCancelButton: any = false;
+  @Input() showCancelButton: any = false;
 
   /**
    * @input {number} How long, in milliseconds, to wait to trigger the `input` event after each keystroke. Default `250`.
@@ -178,9 +178,9 @@ export class Searchbar {
    * On Initialization check for attributes
    */
   ngOnInit() {
-    let hideCancelButton = this.hideCancelButton;
-    if (typeof hideCancelButton === 'string') {
-      this.hideCancelButton = (hideCancelButton === '' || hideCancelButton === 'true');
+    let showCancelButton = this.showCancelButton;
+    if (typeof showCancelButton === 'string') {
+      this.showCancelButton = (showCancelButton === '' || showCancelButton === 'true');
     }
   }
 

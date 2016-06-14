@@ -128,8 +128,12 @@ ion-searchbar {
   transition: $searchbar-ios-cancel-transition;
   cursor: pointer;
   pointer-events: none;
+  display: none;
 }
 
+.searchbar-show-cancel .searchbar-ios-cancel {
+  display: block;
+}
 
 // Searchbar Left Aligned (iOS only)
 // -----------------------------------------
