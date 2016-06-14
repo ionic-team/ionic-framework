@@ -195,6 +195,7 @@ class ToastCmp implements AfterViewInit {
           this.dismiss('backdrop');
         }, this.d.duration);
     }
+    this.enabled = true;
   }
 
   ionViewDidEnter() {
@@ -208,7 +209,6 @@ class ToastCmp implements AfterViewInit {
     if (focusableEle) {
       focusableEle.focus();
     }
-    this.enabled = true;
   }
 
   cbClick() {
