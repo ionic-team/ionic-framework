@@ -41,6 +41,7 @@ class E2EApp {
 
   ngAfterViewInit() {
     this.customPlaceholder = 33;
+    this.defaultCancel = "after view";
     this.changeDetectorRef.detectChanges();
   }
 
