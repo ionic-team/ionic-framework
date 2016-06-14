@@ -129,6 +129,7 @@ ion-searchbar {
   cursor: pointer;
   pointer-events: none;
   display: none;
+  opacity: 0;
 }
 
 .searchbar-show-cancel .searchbar-ios-cancel {
@@ -155,6 +156,7 @@ ion-searchbar {
 .searchbar-has-focus {
   .searchbar-ios-cancel {
     pointer-events: auto;
+    opacity: 1;
   }
 }
 
