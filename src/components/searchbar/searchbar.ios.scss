@@ -116,6 +116,8 @@ ion-searchbar {
 // -----------------------------------------
 
 .searchbar-ios-cancel {
+  display: none;
+
   flex-shrink: 0;
 
   margin-right: -100%;
@@ -124,12 +126,15 @@ ion-searchbar {
   padding-left: 8px;
 
   height: 30px;
+
+  cursor: pointer;
+
+  opacity: 0;
+
   transform: translate3d(0, 0, 0);
   transition: $searchbar-ios-cancel-transition;
-  cursor: pointer;
+
   pointer-events: none;
-  display: none;
-  opacity: 0;
 }
 
 .searchbar-show-cancel .searchbar-ios-cancel {
@@ -155,8 +160,9 @@ ion-searchbar {
 
 .searchbar-has-focus {
   .searchbar-ios-cancel {
-    pointer-events: auto;
     opacity: 1;
+
+    pointer-events: auto;
   }
 }
 
