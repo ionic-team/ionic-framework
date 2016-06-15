@@ -8,6 +8,8 @@ ion-item-sliding {
   position: relative;
   display: block;
   overflow: hidden;
+  
+  width: 100%;
 
   .item {
     position: static;
