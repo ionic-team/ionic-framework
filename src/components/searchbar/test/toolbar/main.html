@@ -5,22 +5,22 @@
 <ion-content>
   <h5 padding-left padding-top> Search - Default Toolbar </h5>
   <ion-toolbar>
-    <ion-searchbar [(ngModel)]="defaultToolbarSearch" class="e2eDefaultToolbarSearchbar"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="defaultToolbarSearch"></ion-searchbar>
   </ion-toolbar>
 
   <h5 padding-left padding-top> Search - Primary Toolbar </h5>
   <ion-toolbar primary>
-    <ion-searchbar dark [(ngModel)]="primaryToolbarSearch" showCancelButton class="e2ePrimaryToolbarSearchbar"></ion-searchbar>
+    <ion-searchbar dark [(ngModel)]="primaryToolbarSearch" showCancelButton></ion-searchbar>
   </ion-toolbar>
 
   <h5 padding-left padding-top> Search - Dark Toolbar </h5>
   <ion-toolbar dark>
-    <ion-searchbar dark [(ngModel)]="darkToolbarSearch" class="e2eDarkToolbarSearchbar"></ion-searchbar>
+    <ion-searchbar dark placeholder="Filter Schedules" [(ngModel)]="darkToolbarSearch"></ion-searchbar>
   </ion-toolbar>
 
   <h5 padding-left padding-top> Search - Light Toolbar </h5>
   <ion-toolbar light>
-    <ion-searchbar [(ngModel)]="lightToolbarSearch" showCancelButton class="e2eLightToolbarSearchbar"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="lightToolbarSearch" showCancelButton></ion-searchbar>
   </ion-toolbar>
 
 </ion-content>

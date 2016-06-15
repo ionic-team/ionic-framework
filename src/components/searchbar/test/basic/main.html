@@ -1,0 +1,32 @@
+<ion-content>
+  <h5 padding-left> Search - Default </h5>
+  <ion-searchbar [(ngModel)]="defaultSearch" showCancelButton debounce="500" (ionInput)="triggerInput($event)" (ionBlur)="inputBlurred($event)" (ionFocus)="inputFocused($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+
+  <p padding-left>
+    defaultSearch: <b>{{ defaultSearch }}</b>
+  </p>
+
+  <h5 padding-left> Search - Custom Placeholder </h5>
+  <ion-searchbar [autocorrect]="isAutocorrect" showCancelButton="true" [autocomplete]="isAutocomplete" [spellcheck]="isSpellcheck" type="number" [(ngModel)]="customPlaceholder" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" placeholder="Filter Schedules"></ion-searchbar>
+
+  <p padding-left>
+    customPlaceholder: <b>{{ customPlaceholder }}</b>
+  </p>
+
+  <h5 padding-left> Search - No Cancel Button </h5>
+  <ion-searchbar autocorrect="off" autocomplete="off" spellcheck="true" type="text" [(ngModel)]="defaultCancel" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+
+  <p padding-left>
+    defaultCancel: <b>{{ defaultCancel }}</b>
+  </p>
+
+  <h5 padding-left> Search - Custom Cancel Button Danger </h5>
+  <ion-searchbar (ionInput)="triggerInput($event)" showCancelButton (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" danger></ion-searchbar>
+
+  <h5 padding-left> Search - Value passed </h5>
+  <ion-searchbar value="mysearch" showCancelButton (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" dark></ion-searchbar>
+
+  <p padding>
+    <button block (click)="changeValue()">Change Value</button>
+  </p>
+</ion-content>
