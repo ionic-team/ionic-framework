@@ -22,6 +22,8 @@
  *
  * Note: do not place ion-tabs inside of an ion-content element; it has been known to cause a
  * certain CSS bug.
+ * 
+ * Note2: in the auto created tabs template the following code is in tabs.html file
  *
  * @usage
  * ```html
