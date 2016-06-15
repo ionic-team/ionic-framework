@@ -1,4 +1,4 @@
 
-it('should navigate to searchbar', function() {
-  element(by.css('.e2eSearchbarNav')).click();
+it('should navigate to details', function() {
+  element(by.css('.e2eSearchbarNavItem')).click();
 });

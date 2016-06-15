@@ -194,14 +194,6 @@ export class Searchbar {
 
   /**
    * @private
-   * After Content is checked position the elements
-   */
-  ngAfterContentChecked() {
-    this.positionElements();
-  }
-
-  /**
-   * @private
    * Positions the input search icon, placeholder, and the cancel button
    * based on the input value and if it is focused. (ios only)
    */
@@ -352,6 +344,7 @@ export class Searchbar {
    */
   writeValue(val: any) {
     this._value = val;
+    this.positionElements();
   }
 
   /**

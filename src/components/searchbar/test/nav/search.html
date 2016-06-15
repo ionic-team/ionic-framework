@@ -1,0 +1,17 @@
+<ion-navbar *navbar>
+  <ion-title>Searchbar</ion-title>
+</ion-navbar>
+
+<ion-toolbar>
+  <ion-searchbar primary (ionInput)="getItems($event)" placeholder="Filter Schedules">
+  </ion-searchbar>
+</ion-toolbar>
+
+<ion-content>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="showDetail(item)" class="e2eSearchbarNavItem">
+      {{ item }}
+    </button>
+  </ion-list>
+</ion-content>

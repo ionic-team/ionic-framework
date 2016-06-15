@@ -1,29 +1,30 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, NavController} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap, NavController, NavParams } from '../../../../../src';
 
 
 @Component({
-  templateUrl: 'first.html'
+  templateUrl: 'main.html'
 })
-class FirstPage {
-  constructor(private _nav: NavController) {
-
-  }
+class MainPage {
+  constructor(private _nav: NavController) { }
 
   goToSecond() {
-    this._nav.push(SecondPage);
+    this._nav.push(SearchPage);
   }
 }
 
 @Component({
-  templateUrl: 'second.html'
+  templateUrl: 'search.html'
 })
-class SecondPage {
-  searchQuery = '';
+class SearchPage {
   items: string[];
 
-  constructor() {
+  constructor(private _nav: NavController) {
     this.initializeItems();
+  }
+
+  showDetail(item: any) {
+    this._nav.push(DetailPage, {city: item});
   }
 
   initializeItems() {
@@ -68,15 +69,15 @@ class SecondPage {
     ];
   }
 
-  getItems(searchbar) {
+  getItems(ev: any) {
     // Reset items back to all of the items
     this.initializeItems();
 
     // set q to the value of the searchbar
-    var q = searchbar.value;
+    var q = ev.target.value;
 
     // if the value is an empty string don't filter the items
-    if (q.trim() == '') {
+    if (!q || q.trim() === '') {
       return;
     }
 
@@ -90,10 +91,29 @@ class SecondPage {
 }
 
 @Component({
+  templateUrl: 'detail.html'
+})
+class DetailPage {
+  city: string;
+
+  constructor(private _navParams: NavParams) {
+    this.city = _navParams.get('city');
+  }
+}
+
+@Component({
+  templateUrl: 'tabs.html'
+})
+class TabsPage {
+  mainPage = MainPage;
+  searchPage = SearchPage;
+}
+
+@Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  root = FirstPage;
+  root = TabsPage;
 }
 
 ionicBootstrap(E2EApp);
