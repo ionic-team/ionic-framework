@@ -1378,7 +1378,7 @@ export function run() {
           getDuration: () => { return 50},
           onFinish: () => {}
         };
-        nav.createTransitionWrapper = () => {
+        nav._createTrans = () => {
           return mockTransition;
         };
         nav.config = {
@@ -1415,7 +1415,7 @@ export function run() {
           getDuration: () => { return 200},
           onFinish: () => {}
         };
-        nav.createTransitionWrapper = () => {
+        nav._createTrans = () => {
           return mockTransition;
         };
         nav.config = {
@@ -1455,7 +1455,7 @@ export function run() {
           getDuration: () => { return 200},
           onFinish: () => {}
         };
-        nav.createTransitionWrapper = () => {
+        nav._createTrans = () => {
           return mockTransition;
         };
         nav.config = {
@@ -1495,7 +1495,7 @@ export function run() {
           getDuration: () => { return 200},
           onFinish: () => {}
         };
-        nav.createTransitionWrapper = () => {
+        nav._createTrans = () => {
           return mockTransition;
         };
         nav.config = {
