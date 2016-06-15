@@ -60,8 +60,7 @@ export class App {
       if ( isEnabled || duration <= 32 ) {
         // disable the click block if it's enabled, or the duration is tiny
         this._clickBlock.show(false, 0);
-      }
-      else {
+      } else {
         // show the click block for duration + some number
         this._clickBlock.show(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
       }
