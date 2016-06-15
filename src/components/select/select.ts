@@ -116,7 +116,8 @@ const SELECT_VALUE_ACCESSOR = new Provider(
 @Component({
   selector: 'ion-select',
   template:
-    '<div class="select-text">{{_text}}</div>' +
+    '<div *ngIf="!_text" class="select-placeholder select-text">{{placeholder}}</div>' +
+    '<div *ngIf="_text" class="select-text">{{_text}}</div>' +
     '<div class="select-icon">' +
       '<div class="select-icon-inner"></div>' +
     '</div>' +
@@ -158,6 +159,11 @@ export class Select {
    * @input {string} The text to display on the ok button. Default: `OK`.
    */
   @Input() okText: string = 'OK';
+
+  /**
+   * @input {string} The text to display when the select is empty.
+   */
+  @Input() placeholder: string;
 
   /**
    * @input {any} Any addition options that the alert interface can take.

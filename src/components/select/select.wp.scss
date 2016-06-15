@@ -17,7 +17,9 @@ $select-wp-border-color:        $input-wp-border-color !default;
 
 $select-wp-icon-width:          18px !default;
 $select-wp-icon-arrow-width:    2px !default;
+
 $select-wp-icon-color:          $select-wp-border-color !default;
+$select-wp-placeholder-color:   $select-wp-icon-color !default;
 
 
 ion-select {
@@ -30,6 +32,10 @@ ion-select {
 
   border: $select-wp-border-width solid $select-wp-border-color;
   line-height: 3rem;
+}
+
+.select-placeholder {
+  color: $select-wp-placeholder-color;
 }
 
 .item-select ion-label {

@@ -10,10 +10,15 @@ $select-md-padding-bottom:      $item-md-padding-bottom !default;
 $select-md-padding-left:        $item-md-padding-left !default;
 
 $select-md-icon-color:          #999 !default;
+$select-md-placeholder-color:   $select-md-icon-color !default;
 
 
 ion-select {
   padding: $select-md-padding-top $select-md-padding-right $select-md-padding-bottom $select-md-padding-left;
+}
+
+.select-placeholder {
+  color: $select-md-placeholder-color;
 }
 
 .item-select ion-label {
