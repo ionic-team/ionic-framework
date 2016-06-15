@@ -54,7 +54,6 @@ export class ItemSlidingGesture extends DragGesture {
       this.closeOpened();
     }
 
-    // Close all item sliding containers but the selected one
     this.selectedContainer = container;
     this.openContainer = container;
     container.startSliding(ev.center.x);
@@ -72,6 +71,8 @@ export class ItemSlidingGesture extends DragGesture {
 
   onDragEnd(ev: any) {
     if (this.selectedContainer) {
+      ev.preventDefault();
+
       let openAmount = this.selectedContainer.endSliding(ev.velocityX);
       this.selectedContainer = null;
 
@@ -109,7 +110,7 @@ export class ItemSlidingGesture extends DragGesture {
 function getContainer(ev: any): ItemSliding {
   let ele = closest(ev.target, 'ion-item-sliding', true);
   if (ele) {
-    return ele['$ionComponent'];
+    return (<any>ele)['$ionComponent'];
   }
   return null;
 }

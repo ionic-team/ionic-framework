@@ -137,7 +137,7 @@ class Tab1Page1 {
   }
 
   push() {
-    this.nav.push(Tab1Page2)
+    this.nav.push(Tab1Page2);
   }
 
   goBack() {
@@ -193,7 +193,7 @@ class Tab1Page2 {
   constructor(private nav: NavController) {}
 
   push() {
-    this.nav.push(Tab1Page3)
+    this.nav.push(Tab1Page3);
   }
 
   ionViewWillEnter() {
@@ -273,7 +273,7 @@ class Tab2Page1 {
   constructor(private nav: NavController) {}
 
   push() {
-    this.nav.push(Tab2Page2)
+    this.nav.push(Tab2Page2);
   }
 
   ionViewWillEnter() {
@@ -314,7 +314,7 @@ class Tab2Page2 {
   constructor(private nav: NavController) {}
 
   push() {
-    this.nav.push(Tab2Page3)
+    this.nav.push(Tab2Page3);
   }
 
   ionViewWillEnter() {
