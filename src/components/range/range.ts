@@ -5,6 +5,7 @@ import {Form} from '../../util/form';
 import {isTrueProperty, isNumber, isString, isPresent, clamp} from '../../util/util';
 import {Item} from '../item/item';
 import {pointerCoord, Coordinates, raf} from '../../util/dom';
+import {Debouncer} from '../../util/debouncer';
 
 
 const RANGE_VALUE_ACCESSOR = new Provider(
@@ -214,6 +215,7 @@ export class Range {
   private _snaps: boolean = false;
   private _removes: Function[] = [];
   private _mouseRemove: Function;
+  private _debouncer: Debouncer = new Debouncer(0);
 
   /**
    * @private
@@ -291,6 +293,17 @@ export class Range {
   }
   set pin(val: boolean) {
     this._pin = isTrueProperty(val);
+  }
+
+  /**
+   * @input {number} If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
+   */
+  @Input()
+  get debounce(): number {
+    return this._debouncer.wait;
+  }
+  set debounce(val: number) {
+    this._debouncer.wait = val;
   }
 
   /**
@@ -519,9 +532,10 @@ export class Range {
           this.value = newVal;
         }
 
-        this.onChange(this.value);
-
-        this.ionChange.emit(this);
+        this._debouncer.debounce(() => {
+          this.onChange(this.value);
+          this.ionChange.emit(this);
+        });
       }
 
       this.updateBar();
