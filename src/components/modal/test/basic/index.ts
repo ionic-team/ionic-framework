@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {ionicBootstrap, Config, Platform} from '../../../../../src';
-import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from '../../../../../src';
+import {Modal, ActionSheet, NavController, NavParams, PageTransition, TransitionOptions, ViewController} from '../../../../../src';
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  platforms;
+  platforms: string[];
 
   constructor(private nav: NavController, config: Config, platform: Platform) {
     console.log('platforms', platform.platforms());
@@ -36,7 +36,7 @@ class E2EPage {
     let modal = Modal.create(ModalPassData, { userId: 8675309 });
     this.nav.present(modal);
 
-    modal.onDismiss(data => {
+    modal.onDismiss((data: any) => {
       console.log('modal data', data);
     });
   }
@@ -50,14 +50,14 @@ class E2EPage {
     let modal = Modal.create(ToolbarModal);
     this.nav.present(modal);
 
-    modal.subscribe(data => {
+    modal.subscribe((data: any) => {
       console.log('modal data', data);
     });
   }
 
   presentModalWithInputs() {
 	  let modal = Modal.create(ModalWithInputs);
-    modal.onDismiss((data) => {
+    modal.onDismiss((data: any) => {
       console.log('Modal with inputs data:', data);
     });
     this.nav.present(modal);
@@ -79,9 +79,12 @@ class E2EPage {
 
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>Page One</ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>Page One</ion-title>
+    </ion-navbar>
+  </ion-header>
+
   <ion-content>
     <button full (click)="submit()">Submit</button>
   </ion-content>
@@ -98,9 +101,12 @@ class NavigableModal{
 
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>Page Two</ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>Page Two</ion-title>
+    </ion-navbar>
+  </ion-header>
+
   <ion-content>
     <button full (click)="submit()">Submit</button>
   </ion-content>
@@ -119,9 +125,11 @@ class NavigableModal2{
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Data in/out</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Data in/out</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content>
       <ion-list>
         <ion-item>
@@ -138,7 +146,7 @@ class NavigableModal2{
   `
 })
 class ModalPassData {
-  data;
+  data: any;
 
   constructor(params: NavParams, private viewCtrl: ViewController) {
     this.data = {
@@ -175,13 +183,15 @@ class ModalPassData {
 
 @Component({
   template: `
-    <ion-toolbar primary>
-      <ion-title>Toolbar 1</ion-title>
-    </ion-toolbar>
+    <ion-header>
+      <ion-toolbar primary>
+        <ion-title>Toolbar 1</ion-title>
+      </ion-toolbar>
 
-    <ion-toolbar>
-      <ion-title>Toolbar 2</ion-title>
-    </ion-toolbar>
+      <ion-toolbar>
+        <ion-title>Toolbar 2</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
     <ion-content padding>
       <button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
@@ -220,12 +230,15 @@ class ToolbarModal {
 
 @Component({
   template: `
-    <ion-toolbar secondary>
-      <ion-buttons start>
-        <button (click)="dismiss()">Close</button>
-      </ion-buttons>
-      <ion-title>Modal w/ Inputs</ion-title>
-    </ion-toolbar>
+    <ion-header>
+      <ion-toolbar secondary>
+        <ion-buttons start>
+          <button (click)="dismiss()">Close</button>
+        </ion-buttons>
+        <ion-title>Modal w/ Inputs</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
     <ion-content>
       <form #addForm="ngForm" (submit)="save($event)" novalidate>
         <ion-list>
@@ -250,7 +263,7 @@ class ToolbarModal {
   `
 })
 class ModalWithInputs {
-  data;
+  data: any;
 
   constructor(private viewCtrl: ViewController) {
     this.data = {
@@ -260,7 +273,7 @@ class ModalWithInputs {
     };
   }
 
-  public save(ev) {
+  public save(ev: any) {
     this.viewCtrl.dismiss(this.data);
   }
 
@@ -274,11 +287,10 @@ class ModalWithInputs {
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ContactUs {
-  root;
+  root = ModalFirstPage;
 
   constructor() {
     console.log('ContactUs constructor');
-    this.root = ModalFirstPage;
   }
   ionViewLoaded() {
     console.log('ContactUs ionViewLoaded');
@@ -306,12 +318,15 @@ class ContactUs {
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>First Page Header</ion-title>
-      <ion-buttons start>
-        <button class="e2eCloseMenu" (click)="dismiss()">Close</button>
-      </ion-buttons>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>First Page Header</ion-title>
+        <ion-buttons start>
+          <button class="e2eCloseMenu" (click)="dismiss()">Close</button>
+        </ion-buttons>
+      </ion-navbar>
+    </ion-header>
+
     <ion-content padding>
       <p>
         <button (click)="push()">Push (Go to 2nd)</button>
@@ -414,9 +429,11 @@ class ModalFirstPage {
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Second Page Header</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Second Page Header</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       <p>
         <button (click)="nav.pop()">Pop (Go back to 1st)</button>
@@ -455,29 +472,29 @@ class E2EApp {
 ionicBootstrap(E2EApp);
 
 
-class FadeIn extends Transition {
+class FadeIn extends PageTransition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
     this
       .element(enteringView.pageRef())
       .easing('ease')
       .duration(1000)
       .fromTo('translateY', '0%', '0%')
-      .fadeIn()
+      .fromTo('opacity', 0, 1, true)
       .before.addClass('show-page');
   }
 }
-Transition.register('my-fade-in', FadeIn);
+PageTransition.register('my-fade-in', FadeIn);
 
-class FadeOut extends Transition {
+class FadeOut extends PageTransition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
     this
       .element(leavingView.pageRef())
       .easing('ease')
       .duration(500)
-      .fadeOut()
+      .fromTo('opacity', 1, 0)
       .before.addClass('show-page');
   }
 }
-Transition.register('my-fade-out', FadeOut);
+PageTransition.register('my-fade-out', FadeOut);
