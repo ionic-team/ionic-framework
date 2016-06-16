@@ -90,7 +90,8 @@ ion-menu[type=overlay] {
 }
 
 ion-menu[type=overlay][side=right] {
-  left: 8px;
+  left: auto;
+  right: -8px;
 }
 
 ion-menu[type=push][side=right] {
