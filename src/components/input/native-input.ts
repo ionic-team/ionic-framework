@@ -31,7 +31,7 @@ export class NativeInput {
   }
 
   @HostListener('input', ['$event'])
-  private _change(ev) {
+  private _change(ev: any) {
     this.valueChange.emit(ev.target.value);
   }
 
@@ -40,9 +40,9 @@ export class NativeInput {
     var self = this;
 
     self.focusChange.emit(true);
-
-    function docTouchEnd(ev) {
-      var tapped: HTMLElement = ev.target;
+    
+    function docTouchEnd(ev: TouchEvent) {
+      var tapped = <HTMLElement>ev.target;
       if (tapped && self.element()) {
         if (tapped.tagName !== 'INPUT' && tapped.tagName !== 'TEXTAREA' && !tapped.classList.contains('input-cover')) {
           self.element().blur();
@@ -178,7 +178,7 @@ export class NativeInput {
 
 }
 
-function cloneInput(focusedInputEle, addCssClass) {
+function cloneInput(focusedInputEle: any, addCssClass: string) {
   let clonedInputEle = focusedInputEle.cloneNode(true);
   clonedInputEle.classList.add('cloned-input');
   clonedInputEle.classList.add(addCssClass);
@@ -191,7 +191,7 @@ function cloneInput(focusedInputEle, addCssClass) {
   return clonedInputEle;
 }
 
-function removeClone(focusedInputEle, queryCssClass) {
+function removeClone(focusedInputEle: any, queryCssClass: string) {
   let clonedInputEle = focusedInputEle.parentElement.querySelector('.' + queryCssClass);
   if (clonedInputEle) {
     clonedInputEle.parentNode.removeChild(clonedInputEle);
