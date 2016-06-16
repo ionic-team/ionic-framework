@@ -71,7 +71,7 @@ Config.setModeConfig('md', {
   modalLeave: 'modal-md-slide-out',
 
   pageTransition: 'md-transition',
-  pageTransitionDelay: 16,
+  pageTransitionDelay: 64,
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',

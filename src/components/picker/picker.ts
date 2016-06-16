@@ -613,7 +613,7 @@ class PickerDisplayCmp {
   }
 
   getSelected(): any {
-    let selected = {};
+    let selected: {[k: string]: any} = {};
     this.d.columns.forEach((col, index) => {
       let selectedColumn = col.options[col.selectedIndex];
       selected[col.name] = {
@@ -658,7 +658,7 @@ export interface PickerColumnOption {
  */
 class PickerSlideIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -675,7 +675,7 @@ Transition.register('picker-slide-in', PickerSlideIn);
 
 class PickerSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));

@@ -6,19 +6,21 @@ import {ionicBootstrap, NavController, App, Alert, Modal, ViewController, Tab, T
 //
 @Component({
   template: `
-  <ion-toolbar>
-    <ion-buttons start>
-      <button (click)="dismiss()">Cancel</button>
-    </ion-buttons>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons start>
+        <button (click)="dismiss()">Cancel</button>
+      </ion-buttons>
 
-    <ion-title>
-      Filter Sessions
-    </ion-title>
+      <ion-title>
+        Filter Sessions
+      </ion-title>
 
-    <ion-buttons end>
-      <button (click)="dismiss()">Done</button>
-    </ion-buttons>
-  </ion-toolbar>
+      <ion-buttons end>
+        <button (click)="dismiss()">Done</button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
   <ion-content class="outer-content">
     <ion-list>
@@ -66,9 +68,12 @@ class MyModal {
 //
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Heart</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Heart</ion-title>
+      </ion-navbar>
+    </ion-header>
+
     <ion-content>
       <ion-list>
         <ion-list-header>
@@ -108,9 +113,12 @@ export class Tab1 {
 //
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Schedule</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Schedule</ion-title>
+      </ion-navbar>
+    </ion-header>
+
     <ion-content>
       <ion-list>
         <ion-item-sliding *ngFor="let session of sessions" #slidingItem>
@@ -159,12 +167,15 @@ export class Tab2 {
 //
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Stopwatch</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Stopwatch</ion-title>
+      </ion-navbar>
+    </ion-header>
+
     <ion-content padding>
       <h2>Tab 3</h2>
       <p>

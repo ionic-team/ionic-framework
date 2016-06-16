@@ -16,7 +16,7 @@ $tab-button-wp-inactive-color:       $toolbar-wp-inactive-color !default;
 
 $tab-button-wp-background-activated: rgba(0, 0, 0, .1) !default;
 
-tabbar {
+ion-tabbar {
   background: $tabbar-wp-background;
 }
 
@@ -94,7 +94,7 @@ tabbar {
 
 @mixin tabbar-wp($color-name, $color-base, $color-contrast) {
 
-  ion-tabs[#{$color-name}] tabbar {
+  ion-tabs[#{$color-name}] ion-tabbar {
     background-color: $color-base;
 
     .tab-button {

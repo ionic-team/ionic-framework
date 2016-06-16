@@ -1,4 +1,4 @@
-import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject, ViewContainerRef, Input} from '@angular/core';
+import {Component, Directive, Optional, ElementRef, Renderer, forwardRef, Inject, Input} from '@angular/core';
 
 import {Ion} from '../ion';
 import {Icon} from '../icon/icon';
@@ -137,8 +137,7 @@ export class Navbar extends ToolbarBase {
     private _app: App,
     @Optional() viewCtrl: ViewController,
     elementRef: ElementRef,
-    config: Config,
-    private _renderer: Renderer
+    config: Config
   ) {
     super(elementRef);
 
@@ -230,14 +229,13 @@ export class Navbar extends ToolbarBase {
   selector: 'template[navbar]'
 })
 export class NavbarTemplate {
-  constructor(
-    viewContainerRef: ViewContainerRef,
-    templateRef: TemplateRef<Object>,
-    @Optional() viewCtrl: ViewController
-  ) {
-    if (viewCtrl) {
-      viewCtrl.setNavbarTemplateRef(templateRef);
-      viewCtrl.setNavbarViewRef(viewContainerRef);
-    }
+  constructor() {
+    // deprecated warning: added 2016-06-14, beta.10
+    console.warn('ion-navbar no longer requires *navbar attribute. Please restructure header to:\n' +
+                 '<ion-header>\n' +
+                 '  <ion-navbar>\n' +
+                 '    ...\n' +
+                 '  </ion-navbar>\n' +
+                 '</ion-header>');
   }
 }

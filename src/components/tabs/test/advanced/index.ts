@@ -1,30 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
-import {Location} from '@angular/common';
 
 import {ionicBootstrap, NavController, NavParams, Modal, ViewController, Tabs, Tab} from '../../../../../src';
 
 
 @Component({
-  template: `
-    <ion-navbar *navbar>
-      <ion-title>Sign In</ion-title>
-    </ion-navbar>
-    <ion-content padding>
-      <ion-card>
-        <ion-item>
-          <ion-label>Username:</ion-label>
-          <ion-input></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Password:</ion-label>
-          <ion-input type="password"></ion-input>
-        </ion-item>
-        <ion-item>
-          <button block id="signIn" (click)="push()">Sign In</button>
-        </ion-item>
-      </ion-card>
-    </ion-content>
-  `
+  templateUrl: './signIn.html'
 })
 class SignIn {
   constructor(private nav: NavController) {}
@@ -38,14 +18,7 @@ class SignIn {
 
 
 @Component({
-  template: `
-    <ion-toolbar>
-      <ion-title>Chat Modal</ion-title>
-    </ion-toolbar>
-    <ion-content padding>
-      <p><button (click)="viewCtrl.dismiss()">Close Modal</button></p>
-    </ion-content>
-  `
+  templateUrl: './modalChat.html'
 })
 class ChatPage {
   constructor(private viewCtrl: ViewController) {}
@@ -115,19 +88,7 @@ class TabsPage {
 // tab 1
 //
 @Component({
-  template: '' +
-    '<ion-navbar *navbar>' +
-      '<ion-title>Tabs 1 Page 1</ion-title>' +
-    '</ion-navbar>' +
-    '<ion-content padding>' +
-      '<p><button id="goToTab1Page2" (click)="push()">Go to Tab 1, Page 2</button></p>' +
-      '<p><button (click)="logout()">Logout</button></p>' +
-      '<p><button (click)="favoritesTab()">Favorites Tab</button></p>' +
-      '<p><button (click)="goBack()">Go Back</button></p>' +
-      '<p>UserId: {{userId}}</p>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>'
+  templateUrl: './tab1page1.html'
 })
 class Tab1Page1 {
   userId: string;
@@ -178,16 +139,7 @@ class Tab1Page1 {
 
 
 @Component({
-  template: '' +
-    '<ion-navbar *navbar primary>' +
-      '<ion-title>Tabs 1 Page 2</ion-title>' +
-    '</ion-navbar>' +
-    '<ion-content padding>' +
-      '<p><button (click)="push()">Go to Tab 1, Page 3</button></p>' +
-      '<p><button id="backToTab1Page1" (click)="nav.pop()">Back to Tab 1, Page 1</button></p>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>'
+  templateUrl: './tab1page2.html'
 })
 class Tab1Page2 {
   constructor(private nav: NavController) {}
@@ -219,15 +171,7 @@ class Tab1Page2 {
 
 
 @Component({
-  template: '' +
-    '<ion-navbar *navbar>' +
-      '<ion-title>Tabs 1 Page 3</ion-title>' +
-    '</ion-navbar>' +
-    '<ion-content padding>' +
-      '<p><button (click)="nav.pop()">Back to Tab 1, Page 2</button></p>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>'
+  templateUrl: './tab1page3.html'
 })
 class Tab1Page3 {
   constructor(private nav: NavController) {}
@@ -254,20 +198,11 @@ class Tab1Page3 {
 }
 
 
-
 //
 // tab 2
 //
 @Component({
-  template: '' +
-    '<ion-navbar *navbar>' +
-      '<ion-title>Tabs 2 Page 1</ion-title>' +
-    '</ion-navbar>' +
-    '<ion-content padding>' +
-      '<p><button (click)="push()">Go to Tab 2, Page 2</button></p>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>'
+  templateUrl: './tab2page1.html'
 })
 class Tab2Page1 {
   constructor(private nav: NavController) {}
@@ -299,16 +234,7 @@ class Tab2Page1 {
 
 
 @Component({
-  template: '' +
-    '<ion-navbar *navbar>' +
-      '<ion-title>Tabs 2 Page 2</ion-title>' +
-    '</ion-navbar>' +
-    '<ion-content padding>' +
-      '<p><button (click)="push()">Go to Tab 2, Page 3</button></p>' +
-      '<p><button (click)="nav.pop()">Back to Tab 2, Page 1</button></p>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>'
+  templateUrl: './tab2page2.html'
 })
 class Tab2Page2 {
   constructor(private nav: NavController) {}
@@ -340,15 +266,7 @@ class Tab2Page2 {
 
 
 @Component({
-  template: '' +
-    '<ion-navbar *navbar>' +
-      '<ion-title>Tabs 2 Page 3</ion-title>' +
-    '</ion-navbar>' +
-    '<ion-content padding>' +
-      '<p><button (click)="nav.pop()">Back to Tab 2, Page 2</button></p>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>'
+  templateUrl: './tab2page3.html'
 })
 class Tab2Page3 {
   constructor(private nav: NavController) {}
@@ -375,16 +293,11 @@ class Tab2Page3 {
 }
 
 
-
 //
 // tab 3
 //
 @Component({
-  template: '' +
-    '<ion-navbar *navbar>' +
-      '<ion-title>Tabs 3</ion-title>' +
-    '</ion-navbar>' +
-    '<ion-content padding><h2>Tabs 3</h2></ion-content>'
+  templateUrl: './tab3page1.html'
 })
 class Tab3Page1 {
 
@@ -411,7 +324,7 @@ class Tab3Page1 {
 
 
 @Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
+  template: `<ion-nav [root]="root"></ion-nav>`
 })
 class E2EApp {
   root = SignIn;

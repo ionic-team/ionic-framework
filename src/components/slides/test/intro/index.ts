@@ -51,7 +51,6 @@ class IntroPage {
   <ion-content padding>
     <h1>Another Page</h1>
   </ion-content>
-
   `
 })
 class MainPage {}

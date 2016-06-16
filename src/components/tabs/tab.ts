@@ -207,7 +207,7 @@ export class Tab extends NavController {
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter();
 
   constructor(
-    @Inject(forwardRef(() => Tabs)) parentTabs: Tabs,
+    @Inject(forwardRef(() => Tabs)) public parent: Tabs,
     app: App,
     config: Config,
     keyboard: Keyboard,
@@ -218,9 +218,9 @@ export class Tab extends NavController {
     private _cd: ChangeDetectorRef
   ) {
     // A Tab is a NavController for its child pages
-    super(parentTabs, app, config, keyboard, elementRef, zone, renderer, compiler);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler);
 
-    parentTabs.add(this);
+    parent.add(this);
 
     this._panelId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
@@ -266,11 +266,7 @@ export class Tab extends NavController {
         console.debug('Tabs, preload', this.id);
         this.load({
           animate: false,
-          preload: true,
-          postLoad: (viewCtrl: ViewController) => {
-            let navbar = viewCtrl.getNavbar();
-            navbar && navbar.setHidden(true);
-          }
+          preload: true
         }, function(){});
       }
     }, wait);
@@ -279,18 +275,14 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  loadPage(viewCtrl: ViewController, navbarContainerRef: any, opts: NavOptions, done: Function) {
-    // by default a page's navbar goes into the shared tab's navbar section
-    navbarContainerRef = this.parent.navbarContainerRef;
-
+  loadPage(viewCtrl: ViewController, viewport: ViewContainerRef, opts: NavOptions, done: Function) {
     let isTabSubPage = (this.parent.subPages && viewCtrl.index > 0);
+
     if (isTabSubPage) {
-      // a subpage, that's not the first index
-      // should not use the shared tabs navbar section, but use it's own
-      navbarContainerRef = null;
+      viewport = this.parent.portal;
     }
 
-    super.loadPage(viewCtrl, navbarContainerRef, opts, () => {
+    super.loadPage(viewCtrl, viewport, opts, () => {
       if (isTabSubPage) {
         // add the .tab-subpage css class to tabs pages that should act like subpages
         let pageEleRef = viewCtrl.pageRef();
@@ -316,18 +308,6 @@ export class Tab extends NavController {
       // this tab is not selected, do not detect changes
       this._cd.detach();
     }
-
-    this.hideNavbars(!isSelected);
-  }
-
-  /**
-   * @private
-   */
-  hideNavbars(shouldHideNavbars: boolean) {
-    this._views.forEach(viewCtrl => {
-      let navbar = viewCtrl.getNavbar();
-      navbar && navbar.setHidden(shouldHideNavbars);
-    });
   }
 
   /**

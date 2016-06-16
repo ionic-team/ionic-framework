@@ -7,9 +7,11 @@ import {ionicBootstrap, NavController, Tab} from '../../../../../src';
 //
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Heart</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Heart</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       <h2>Tab 1</h2>
     </ion-content>
@@ -24,9 +26,11 @@ class Tab1 {
 //
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Star</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Star</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       <h2>Tab 2</h2>
     </ion-content>
@@ -41,12 +45,14 @@ class Tab2 {
 //
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Stopwatch</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Stopwatch</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       <h2>Tab 3</h2>
     </ion-content>
@@ -61,12 +67,14 @@ class Tab3 {
 //
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Quesarito</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Quesarito</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       <h2>Quesarito</h2>
     </ion-content>

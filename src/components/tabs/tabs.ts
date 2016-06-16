@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, Optional, ViewChild, ViewContainerRef, EventEmitter, Output, Input, Renderer, ViewEncapsulation} from '@angular/core';
 
 import {App} from '../app/app';
 import {Config} from '../../config/config';
@@ -133,34 +133,26 @@ import {ViewController} from '../nav/view-controller';
 @Component({
   selector: 'ion-tabs',
   template:
-    '<ion-navbar-section [class.statusbar-padding]="_sbPadding">' +
-      '<template navbar-anchor></template>' +
-    '</ion-navbar-section>' +
-    '<ion-tabbar-section>' +
-      '<tabbar role="tablist">' +
-        '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">' +
-          '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
-          '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
-          '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
-          '<ion-button-effect></ion-button-effect>' +
-        '</a>' +
-        '<tab-highlight></tab-highlight>' +
-      '</tabbar>' +
-    '</ion-tabbar-section>' +
-    '<ion-content-section>' +
-      '<ng-content></ng-content>' +
-    '</ion-content-section>',
+    '<ion-tabbar role="tablist" #tabbar>' +
+      '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">' +
+        '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
+        '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
+        '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
+        '<ion-button-effect></ion-button-effect>' +
+      '</a>' +
+      '<tab-highlight></tab-highlight>' +
+    '</ion-tabbar>' +
+    '<ng-content></ng-content>' +
+    '<div #portal tab-portal></div>',
   directives: [
     TabButton,
-    TabHighlight,
-    forwardRef(() => TabNavBarAnchor)
+    TabHighlight
   ],
   encapsulation: ViewEncapsulation.None,
 })
 export class Tabs extends Ion {
   private _ids: number = -1;
-  private _preloadTabs: boolean = null;
-  private _tabs: Array<Tab> = [];
+  private _tabs: Tab[] = [];
   private _onReady: any = null;
   private _sbPadding: boolean;
   private _useHighlight: boolean;
@@ -169,11 +161,6 @@ export class Tabs extends Ion {
    * @private
    */
   id: number;
-
-  /**
-   * @private
-   */
-  navbarContainerRef: ViewContainerRef;
 
   /**
    * @private
@@ -218,6 +205,16 @@ export class Tabs extends Ion {
   /**
    * @private
    */
+  @ViewChild('tabbar') private _tabbar: ElementRef;
+
+  /**
+   * @private
+   */
+  @ViewChild('portal', {read: ViewContainerRef}) portal: ViewContainerRef;
+
+  /**
+   * @private
+   */
   parent: NavController;
 
   constructor(
@@ -230,11 +227,12 @@ export class Tabs extends Ion {
     private _renderer: Renderer
   ) {
     super(_elementRef);
+
     this.parent = parent;
     this.id = ++tabIds;
-    this.subPages = _config.getBoolean('tabSubPages', false);
-    this._useHighlight = _config.getBoolean('tabbarHighlight', false);
-    this._sbPadding = _config.getBoolean('statusbarPadding', false);
+    this.subPages = _config.getBoolean('tabSubPages');
+    this._useHighlight = _config.getBoolean('tabbarHighlight');
+    this._sbPadding = _config.getBoolean('statusbarPadding');
 
     if (parent) {
       // this Tabs has a parent Nav
@@ -501,17 +499,17 @@ export class Tabs extends Ion {
     return nav;
   }
 
+  /**
+   * @private
+   */
+  setTabbarPosition(top: number, bottom: number) {
+    let tabbarEle = <HTMLElement>this._tabbar.nativeElement;
+
+    tabbarEle.style.top = (top > -1 ? top + 'px' : '');
+    tabbarEle.style.bottom = (bottom > -1 ? bottom + 'px' : '');
+    tabbarEle.classList.add('show-tabbar');
+  }
+
 }
 
 let tabIds = -1;
-
-
-/**
- * @private
- */
-@Directive({selector: 'template[navbar-anchor]'})
-class TabNavBarAnchor {
-  constructor(@Host() tabs: Tabs, viewContainerRef: ViewContainerRef) {
-    tabs.navbarContainerRef = viewContainerRef;
-  }
-}

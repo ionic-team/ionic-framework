@@ -57,7 +57,9 @@ import {ScrollView} from '../../util/scroll-view';
   }
 })
 export class Content extends Ion {
-  private _padding: number = 0;
+  private _paddingTop: number = 0;
+  private _paddingBottom: number = 0;
+  private _scrollPadding: number = 0;
   private _inputPolling: boolean = false;
   private _scroll: ScrollView;
   private _scLsn: Function;
@@ -370,12 +372,22 @@ export class Content extends Ion {
    * so content below the keyboard can be scrolled into view.
    */
   addScrollPadding(newPadding: number) {
-    if (newPadding > this._padding) {
+    if (newPadding > this._scrollPadding) {
       console.debug('content addScrollPadding', newPadding);
 
-      this._padding = newPadding;
+      this._scrollPadding = newPadding;
       this._scrollEle.style.paddingBottom = newPadding + 'px';
     }
+  }
+
+  /**
+   * @private
+   */
+  setContentPadding(paddingTop: number, paddingBottom: number) {
+    this._paddingTop = paddingTop;
+    this._paddingBottom = paddingBottom;
+    this._scrollEle.style.paddingTop = (paddingTop > 0 ? paddingTop + 'px' : '');
+    this._scrollEle.style.paddingBottom = (paddingBottom > 0 ? paddingBottom + 'px' : '');
   }
 
   /**
@@ -386,8 +398,8 @@ export class Content extends Ion {
       this._inputPolling = true;
 
       this._keyboard.onClose(() => {
-        this._padding = 0;
-        this._scrollEle.style.paddingBottom = '';
+        this._scrollPadding = 0;
+        this._scrollEle.style.paddingBottom = (this._paddingBottom > 0 ? this._paddingBottom + 'px' : '');
         this._inputPolling = false;
         this.addScrollPadding(0);
       }, 200, Infinity);

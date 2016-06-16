@@ -15,12 +15,12 @@ $tab-button-ios-active-color:         $toolbar-ios-active-color !default;
 $tab-button-ios-inactive-color:       $toolbar-ios-inactive-color !default;
 
 
-tabbar {
+ion-tabbar {
   border-top: 1px solid $toolbar-ios-border-color;
   background: $tabbar-ios-background;
 }
 
-ion-tabs[tabbarPlacement=top] tabbar {
+ion-tabs[tabbarPlacement=top] ion-tabbar {
   border-top: 0;
   border-bottom: 1px solid $toolbar-ios-border-color;
 }
@@ -98,11 +98,11 @@ ion-tabs[tabbarPlacement=top] tabbar {
 
 &.hairlines ion-tabs {
 
-  tabbar {
+  ion-tabbar {
     border-top-width: $hairlines-width;
   }
 
-  &[tabbarPlacement="top"] tabbar {
+  &[tabbarPlacement="top"] ion-tabbar {
     border-bottom-width: $hairlines-width;
   }
 
@@ -114,7 +114,7 @@ ion-tabs[tabbarPlacement=top] tabbar {
 
 @mixin tabbar-ios($color-name, $color-base, $color-contrast) {
 
-  ion-tabs[#{$color-name}] tabbar {
+  ion-tabs[#{$color-name}] ion-tabbar {
     border-color: darken($color-base, 10%);
     background-color: $color-base;
 

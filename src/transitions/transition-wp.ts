@@ -1,15 +1,16 @@
 import {Animation} from '../animations/animation';
-import {Transition, TransitionOptions} from './transition';
+import {PageTransition} from './page-transition';
+import {TransitionOptions} from './transition';
 import {ViewController} from '../components/nav/view-controller';
 
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 const SCALE_SMALL = .95;
 
 
-class WPTransition extends Transition {
+class WPTransition extends PageTransition {
 
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');
@@ -18,20 +19,15 @@ class WPTransition extends Transition {
     let enteringHasNavbar = enteringView.hasNavbar();
     let leavingHasNavbar = leavingView && leavingView.hasNavbar();
 
-    // entering content scale from smaller to larger
-    let enteringPage = new Animation(enteringView.pageRef());
-    enteringPage.before.addClass('show-page');
-    this.add(enteringPage);
-
     if (backDirection) {
       this.duration(opts.duration || 120).easing('cubic-bezier(0.47,0,0.745,0.715)');
-      enteringPage.before.clearStyles(['scale']);
+      this.enteringPage.before.clearStyles(['scale']);
 
     } else {
       this.duration(opts.duration || 280).easing('cubic-bezier(0,0 0.05,1)');
-      enteringPage
+      this.enteringPage
         .fromTo('scale', SCALE_SMALL, 1, true)
-        .fadeIn();
+        .fromTo('opacity', 0.01, 1, true);
     }
 
     if (enteringHasNavbar) {
@@ -53,11 +49,11 @@ class WPTransition extends Transition {
       // leaving content
       this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
       let leavingPage = new Animation(leavingView.pageRef());
-      this.add(leavingPage.fromTo('scale', 1, SCALE_SMALL).fadeOut());
+      this.add(leavingPage.fromTo('scale', 1, SCALE_SMALL).fromTo('opacity', 0.99, 0));
     }
 
   }
 
 }
 
-Transition.register('wp-transition', WPTransition);
+PageTransition.register('wp-transition', WPTransition);

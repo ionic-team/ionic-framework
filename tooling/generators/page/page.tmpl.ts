@@ -11,5 +11,9 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html',
 })
 export class <%= jsClassName %> {
-  constructor(private nav: NavController) {}
+
+  constructor(private nav: NavController) {
+
+  }
+
 }

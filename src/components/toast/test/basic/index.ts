@@ -4,9 +4,11 @@ import {ionicBootstrap, Toast, NavController} from '../../../../../src';
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Another Page</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Another Page</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       <p>This is another page to show that the toast stays.</p>
     </ion-content>

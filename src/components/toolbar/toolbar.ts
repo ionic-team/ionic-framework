@@ -8,6 +8,48 @@ import {Navbar} from '../navbar/navbar';
 import {ViewController} from '../nav/view-controller';
 
 
+@Directive({
+  selector: 'ion-header'
+})
+export class Header {
+  private _h: number = 0;
+
+  constructor(viewCtr: ViewController, private _elementRef: ElementRef) {
+    viewCtr.setHeader(this);
+  }
+
+  setHeight(heightPixels: number) {
+    this._h = heightPixels;
+    this._elementRef.nativeElement.style.height = (heightPixels > 0 ? heightPixels + 'px' : '');
+  }
+
+  getHeight(): number {
+    return this._h;
+  }
+}
+
+
+@Directive({
+  selector: 'ion-footer'
+})
+export class Footer {
+  private _h: number = 0;
+
+  constructor(viewCtr: ViewController, private _elementRef: ElementRef) {
+    viewCtr.setFooter(this);
+  }
+
+  setHeight(heightPixels: number) {
+    this._h = heightPixels;
+    this._elementRef.nativeElement.style.height = (heightPixels > 0 ? heightPixels + 'px' : '');
+  }
+
+  getHeight(): number {
+    return this._h;
+  }
+}
+
+
 /**
  * @private
  */
@@ -160,90 +202,8 @@ export class Toolbar extends ToolbarBase {
     config: Config
   ) {
     super(elementRef);
-    this._sbPadding = config.getBoolean('statusbarPadding', false);
     viewCtrl && viewCtrl.setToolbarRef(elementRef);
+    this._sbPadding = config.getBoolean('statusbarPadding');
   }
 
-}
-
-/**
- * @name Title
- * @description
- * `ion-title` is a component that sets the title of the `Toolbar` or `Navbar`
- *
- * @usage
- *
- * ```html
- * <ion-navbar *navbar>
- *    <ion-title>Tab 1</ion-title>
- * </ion-navbar>
- * ```
- *
- * Or to create a navbar with a toolbar as a subheader:
- *
- * ```html
- * <ion-navbar *navbar>
- *    <ion-title>Tab 1</ion-title>
- * </ion-navbar>
- *
- * <ion-toolbar>
- *   <ion-title>Subheader</ion-title>
- * </ion-toolbar>
- * ```
- *
- * @demo /docs/v2/demos/title/
- */
-@Component({
-  selector: 'ion-title',
-  template:
-    '<div class="toolbar-title">' +
-      '<ng-content></ng-content>' +
-    '</div>',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-})
-export class ToolbarTitle extends Ion {
-  constructor(
-    elementRef: ElementRef,
-    @Optional() toolbar: Toolbar,
-    @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
-  ) {
-    super(elementRef);
-    toolbar && toolbar.setTitleCmp(this);
-    navbar && navbar.setTitleCmp(this);
-  }
-  /**
-   * @private
-   */
-  getTitleText() {
-    return this.getNativeElement().textContent;
-  }
-}
-
-
-/**
- * @private
- */
-@Directive({
-  selector: 'ion-buttons,[menuToggle],ion-nav-items'
-})
-export class ToolbarItem {
-  inToolbar: boolean;
-
-  constructor(
-    elementRef: ElementRef,
-    @Optional() toolbar: Toolbar,
-    @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
-  ) {
-    toolbar && toolbar.addItemRef(elementRef);
-    navbar && navbar.addItemRef(elementRef);
-    this.inToolbar = !!(toolbar || navbar);
-  }
-
-  @ContentChildren(Button)
-  set _buttons(buttons: any) {
-    if (this.inToolbar) {
-      Button.setRoles(buttons, 'bar-button');
-    }
-  }
 }

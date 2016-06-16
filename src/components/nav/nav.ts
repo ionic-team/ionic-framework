@@ -109,7 +109,7 @@ import {ViewController} from './view-controller';
  */
 @Component({
   selector: 'ion-nav',
-  template: '<div #viewport></div><div nav-portal></div>',
+  template: '<div #viewport nav-viewport></div><div nav-portal></div>',
   directives: [NavPortal],
   encapsulation: ViewEncapsulation.None,
 })

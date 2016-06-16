@@ -1,11 +1,13 @@
-<ion-navbar *navbar>
-  <ion-buttons end>
-    <button (click)="skip()">
-      {{continueText}}
-    </button>
-  </ion-buttons>
-  <ion-title>Slides</ion-title>
-</ion-navbar>
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button (click)="skip()">
+        {{continueText}}
+      </button>
+    </ion-buttons>
+    <ion-title>Slides</ion-title>
+  </ion-navbar>
+</ion-header>
 
 <ion-content>
   <ion-slides pager [options]="mySlideOptions" (ionDidChange)="onSlideChanged($event)" (ionWillChange)="onSlideChangeStart($event)" (ionDrag)="onSlideMove($event)">

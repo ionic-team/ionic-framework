@@ -230,14 +230,14 @@ export interface LoadingOptions {
  */
  class LoadingPopIn extends Transition {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(opts);
+     super(enteringView, leavingView, opts);
 
      let ele = enteringView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
-     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
-     backdrop.fromTo('opacity', '0.01', '0.3');
+     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
+     backdrop.fromTo('opacity', 0.01, 0.3);
 
      this
        .easing('ease-in-out')
@@ -251,14 +251,14 @@ export interface LoadingOptions {
 
  class LoadingPopOut extends Transition {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(opts);
+     super(enteringView, leavingView, opts);
 
      let ele = leavingView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
-     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
-     backdrop.fromTo('opacity', '0.3', '0');
+     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
+     backdrop.fromTo('opacity', 0.3, 0);
 
      this
        .easing('ease-in-out')
@@ -272,14 +272,14 @@ export interface LoadingOptions {
 
  class LoadingMdPopIn extends Transition {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(opts);
+     super(enteringView, leavingView, opts);
 
      let ele = enteringView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
-     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
-     backdrop.fromTo('opacity', '0.01', '0.50');
+     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
+     backdrop.fromTo('opacity', 0.01, 0.5);
 
      this
        .easing('ease-in-out')
@@ -293,14 +293,14 @@ export interface LoadingOptions {
 
  class LoadingMdPopOut extends Transition {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(opts);
+     super(enteringView, leavingView, opts);
 
      let ele = leavingView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
-     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
-     backdrop.fromTo('opacity', '0.50', '0');
+     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
+     backdrop.fromTo('opacity', 0.5, 0);
 
      this
        .easing('ease-in-out')
@@ -314,14 +314,14 @@ export interface LoadingOptions {
 
  class LoadingWpPopIn extends Transition {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(opts);
+     super(enteringView, leavingView, opts);
 
      let ele = enteringView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
-     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.3', '1');
-     backdrop.fromTo('opacity', '0.01', '0.16');
+     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.3, 1);
+     backdrop.fromTo('opacity', 0.01, 0.16);
 
      this
        .easing('cubic-bezier(0,0 0.05,1)')
@@ -335,14 +335,14 @@ export interface LoadingOptions {
 
  class LoadingWpPopOut extends Transition {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(opts);
+     super(enteringView, leavingView, opts);
 
      let ele = leavingView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
-     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '1.3');
-     backdrop.fromTo('opacity', '0.16', '0');
+     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 1.3);
+     backdrop.fromTo('opacity', 0.16, 0);
 
      this
        .easing('ease-out')

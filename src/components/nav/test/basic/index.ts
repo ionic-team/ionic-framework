@@ -13,15 +13,18 @@ class MyCmpTest{}
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>{{title}}</ion-title>
-      <ion-buttons start>
-        <button><ion-icon name="star"></ion-icon></button>
-      </ion-buttons>
-      <ion-buttons end>
-        <button>S1g</button>
-      </ion-buttons>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>{{title}}</ion-title>
+        <ion-buttons start>
+          <button><ion-icon name="star"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons end>
+          <button>S1g</button>
+        </ion-buttons>
+      </ion-navbar>
+    </ion-header>
+
     <ion-content>
       <ion-list>
         <ion-list-header>
@@ -57,7 +60,7 @@ class MyCmpTest{}
   directives: [MyCmpTest]
 })
 class FirstPage {
-  pushPage;
+  pushPage = FullPage;
   title = 'First Page';
   pages: Array<number> = [];
   @ViewChild(Content) content: Content;
@@ -66,8 +69,6 @@ class FirstPage {
     private nav: NavController,
     private view: ViewController
   ) {
-    this.pushPage = FullPage;
-
     for (var i = 1; i <= 50; i++) {
       this.pages.push(i);
     }
@@ -201,12 +202,15 @@ class FullPage {
 
 @Component({
   template: `
-    <ion-navbar *navbar primary>
-      <ion-title>Primary Color Page Header</ion-title>
-      <ion-buttons end>
-        <button>S1g</button>
-      </ion-buttons>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar primary>
+        <ion-title>Primary Color Page Header</ion-title>
+        <ion-buttons end>
+          <button>S1g</button>
+        </ion-buttons>
+      </ion-navbar>
+    </ion-header>
+
     <ion-content padding>
       <p><button class="e2eFrom3To2" (click)="nav.pop()">Pop</button></p>
       <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
@@ -221,9 +225,12 @@ class FullPage {
       </ion-fixed>
       <ion-fixed style="pointer-events: none; top:0; bottom:0; right:0; width:50%; background: rgba(0,0,0,0.5);"></ion-fixed>
     </ion-content>
-    <ion-toolbar position="bottom">
-      Footer
-    </ion-toolbar>
+
+    <ion-footer>
+      <ion-toolbar>
+        Footer
+      </ion-toolbar>
+    </ion-footer>
   `
 })
 class PrimaryHeaderPage {
@@ -267,9 +274,12 @@ class PrimaryHeaderPage {
 
 @Component({
   template: `
-    <ion-navbar *navbar hideBackButton>
-      <ion-title>Another Page Header</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar hideBackButton>
+        <ion-title>Another Page Header</ion-title>
+      </ion-navbar>
+    </ion-header>
+
     <ion-content>
       <ion-list>
 
@@ -289,9 +299,11 @@ class PrimaryHeaderPage {
       </ion-list>
     </ion-content>
 
-    <ion-toolbar position="bottom">
-      Another Page Footer
-    </ion-toolbar>
+    <ion-footer>
+      <ion-toolbar>
+        Another Page Footer
+      </ion-toolbar>
+    </ion-footer>
   `
 })
 class AnotherPage {

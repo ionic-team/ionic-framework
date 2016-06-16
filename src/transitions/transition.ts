@@ -1,13 +1,28 @@
 import {Animation} from '../animations/animation';
+import {closest} from '../util/dom';
+import {Content} from '../components/content/content';
+import {Tabs} from '../components/tabs/tabs';
 import {ViewController} from '../components/nav/view-controller';
 
 
 /**
  * @private
- **/
+ *
+ * - play
+ * - Add before classes - DOM WRITE
+ * - Remove before classes - DOM WRITE
+ * - Add before inline styles - DOM WRITE
+ * - set inline FROM styles - DOM WRITE
+ * - RAF
+ * - read toolbar dimensions - DOM READ
+ * - write content top/bottom padding - DOM WRITE
+ * - set css transition duration/easing - DOM WRITE
+ * - RAF
+ * - set inline TO styles - DOM WRITE
+ */
 export class Transition extends Animation {
 
-  constructor(opts: TransitionOptions) {
+  constructor(public enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(null, {
       renderDelay: opts.renderDelay
     });
@@ -39,4 +54,4 @@ export interface TransitionOptions {
   ev?: any;
 }
 
-let TransitionRegistry = {};
+let TransitionRegistry: any = {};

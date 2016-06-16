@@ -1,15 +1,15 @@
-import {Component, ComponentRef, ComponentResolver, ElementRef, HostListener, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentResolver, HostListener, ViewChild, ViewContainerRef} from '@angular/core';
 
 import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
 import {NavParams} from '../nav/nav-params';
 import {isPresent, pascalCaseToDashCase} from '../../util/util';
 import {Key} from '../../util/key';
-import {Transition, TransitionOptions} from '../../transitions/transition';
+import {PageTransition} from '../../transitions/page-transition';
+import {TransitionOptions} from '../../transitions/transition';
 import {ViewController} from '../nav/view-controller';
 import {windowDimensions} from '../../util/dom';
 
-import {nativeRaf, CSS} from '../../util/dom';
 
 /**
  * @name Modal
@@ -191,7 +191,7 @@ export class ModalCmp {
   }
 
   loadComponent(done: Function) {
-    addSelector(this._navParams.data.componentType, 'ion-modal-inner');
+    addSelector(this._navParams.data.componentType, 'ion-page');
 
     this._compiler.resolveComponent(this._navParams.data.componentType).then((componentFactory) => {
       let componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector);
@@ -227,9 +227,9 @@ export class ModalCmp {
 /**
  * Animations for modals
  */
- class ModalSlideIn extends Transition {
+ class ModalSlideIn extends PageTransition {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(opts);
+     super(enteringView, leavingView, opts);
 
      let ele = enteringView.pageRef().nativeElement;
      let backdropEle = ele.querySelector('ion-backdrop');
@@ -263,12 +263,12 @@ export class ModalCmp {
      }
    }
  }
- Transition.register('modal-slide-in', ModalSlideIn);
+ PageTransition.register('modal-slide-in', ModalSlideIn);
 
 
-class ModalSlideOut extends Transition {
+class ModalSlideOut extends PageTransition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -290,12 +290,12 @@ class ModalSlideOut extends Transition {
       .add(wrapper);
   }
 }
-Transition.register('modal-slide-out', ModalSlideOut);
+PageTransition.register('modal-slide-out', ModalSlideOut);
 
 
-class ModalMDSlideIn extends Transition {
+class ModalMDSlideIn extends PageTransition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -311,7 +311,7 @@ class ModalMDSlideIn extends Transition {
 
     backdrop.fromTo('opacity', 0.01, 0.4);
     wrapper.fromTo('translateY', '40px', '0px');
-    wrapper.fromTo('opacity', '0.01', '1.0');
+    wrapper.fromTo('opacity', 0.01, 1);
 
     const DURATION = 280;
     const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
@@ -328,12 +328,12 @@ class ModalMDSlideIn extends Transition {
     }
   }
 }
-Transition.register('modal-md-slide-in', ModalMDSlideIn);
+PageTransition.register('modal-md-slide-in', ModalMDSlideIn);
 
 
-class ModalMDSlideOut extends Transition {
+class ModalMDSlideOut extends PageTransition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -341,7 +341,7 @@ class ModalMDSlideOut extends Transition {
 
     backdrop.fromTo('opacity', 0.4, 0.0);
     wrapper.fromTo('translateY', '0px', '40px');
-    wrapper.fromTo('opacity', '1.0', '0.00');
+    wrapper.fromTo('opacity', 0.99, 0);
 
     this
       .element(leavingView.pageRef())
@@ -351,4 +351,4 @@ class ModalMDSlideOut extends Transition {
       .add(backdrop);
   }
 }
-Transition.register('modal-md-slide-out', ModalMDSlideOut);
+PageTransition.register('modal-md-slide-out', ModalMDSlideOut);

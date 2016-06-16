@@ -22,7 +22,9 @@ import {Item} from '../components/item/item';
 import {ItemSliding, ItemOptions} from '../components/item/item-sliding';
 import {VirtualScroll} from '../components/virtual-scroll/virtual-scroll';
 import {VirtualItem, VirtualHeader, VirtualFooter} from '../components/virtual-scroll/virtual-item';
-import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
+import {Toolbar, Header, Footer} from '../components/toolbar/toolbar';
+import {ToolbarItem} from '../components/toolbar/toolbar-item';
+import {ToolbarTitle} from '../components/toolbar/toolbar-title';
 import {Icon} from '../components/icon/icon';
 import {Spinner} from '../components/spinner/spinner';
 import {Checkbox} from '../components/checkbox/checkbox';
@@ -83,6 +85,8 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * - SlideLazy
  * - Tabs
  * - Tab
+ * - Header
+ * - Footer
  * - Toolbar
  * - ToolbarTitle
  * - ToolbarItem
@@ -153,6 +157,8 @@ export const IONIC_DIRECTIVES: any[] = [
   Tab,
 
   // Toolbar
+  Header,
+  Footer,
   Toolbar,
   ToolbarTitle,
   ToolbarItem,

@@ -5,17 +5,12 @@
 
 
 .toolbar {
-  position: relative;
-  z-index: $z-index-toolbar;
-
   display: flex;
   overflow: hidden;
 
-  flex: 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  order: $flex-order-toolbar-top;
 
   width: 100%;
 }
@@ -33,10 +28,6 @@
   transform: translateZ(0);
 
   pointer-events: none;
-}
-
-.toolbar[position=bottom] {
-  order: $flex-order-toolbar-bottom;
 }
 
 ion-title {

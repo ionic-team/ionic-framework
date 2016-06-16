@@ -1,5 +1,6 @@
 import {Animation} from '../animations/animation';
-import {Transition, TransitionOptions} from './transition';
+import {PageTransition} from './page-transition';
+import {TransitionOptions} from './transition';
 import {ViewController} from '../components/nav/view-controller';
 
 const TRANSLATEY = 'translateY';
@@ -8,10 +9,10 @@ const CENTER = '0px';
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 
-class MDTransition extends Transition {
+class MDTransition extends PageTransition {
 
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');
@@ -20,20 +21,15 @@ class MDTransition extends Transition {
     let enteringHasNavbar = enteringView.hasNavbar();
     let leavingHasNavbar = leavingView && leavingView.hasNavbar();
 
-    // entering content item moves in bottom to center
-    let enteringPage = new Animation(enteringView.pageRef());
-    enteringPage.before.addClass('show-page');
-    this.add(enteringPage);
-
     if (backDirection) {
       this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-      enteringPage.before.clearStyles([TRANSLATEY]);
+      this.enteringPage.before.clearStyles([TRANSLATEY]);
 
     } else {
       this.duration(opts.duration || 280).easing('cubic-bezier(0.36,0.66,0.04,1)');
-      enteringPage
+      this.enteringPage
         .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER, true)
-        .fadeIn();
+        .fromTo('opacity', 0.01, 1, true);
     }
 
     if (enteringHasNavbar) {
@@ -55,11 +51,11 @@ class MDTransition extends Transition {
       // leaving content
       this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
       let leavingPage = new Animation(leavingView.pageRef());
-      this.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fadeOut());
+      this.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fromTo('opacity', 0.99, 0));
     }
 
   }
 
 }
 
-Transition.register('md-transition', MDTransition);
+PageTransition.register('md-transition', MDTransition);

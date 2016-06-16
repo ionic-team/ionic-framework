@@ -7,18 +7,20 @@ import {ionicBootstrap, NavController, App, Alert, Modal, ViewController, Tab, T
 //
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        Tab 1
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
 
   <ion-content class="home">
     <ion-nav [root]="root"></ion-nav>
   </ion-content>
     `
 })
-export class Tab1 {
+class Tab1 {
   root = SecondPage;
 }
 
@@ -27,18 +29,20 @@ export class Tab1 {
 //
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        Tab 2
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
 
   <ion-content class="home">
     <ion-nav [root]="root"></ion-nav>
   </ion-content>
     `
 })
-export class Tab2 {
+class Tab2 {
   root = SecondPage;
 }
 
@@ -47,18 +51,20 @@ export class Tab2 {
 //
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        Tab 3
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
 
   <ion-content class="home">
     <ion-nav [root]="root"></ion-nav>
   </ion-content>
     `
 })
-export class Tab3 {
+class Tab3 {
   root = SecondPage;
 }
 
@@ -88,11 +94,13 @@ class ThirdPage{
 
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>
-      Fourth Page Comp
-    </ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        Fourth Page Comp
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
   <ion-content>
     <ion-list>
       <ion-item *ngFor="let item of items">
@@ -124,7 +132,7 @@ class FourthPage{
     </ion-tabs>
   `
 })
-export class TabsPage {
+class TabsPage {
   root1 = Tab1;
   root2 = Tab2;
   root3 = Tab3;
@@ -133,7 +141,7 @@ export class TabsPage {
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-export class E2EApp {
+class E2EApp {
   root = TabsPage;
 }
 

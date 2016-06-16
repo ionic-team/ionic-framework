@@ -32,7 +32,7 @@ class FadeIn extends Animation {
     this
       .easing('ease-in')
       .duration(400)
-      .fadeIn();
+      .fromTo('opacity', 0.001, 1, true);
   }
 }
 Animation.register('fade-in', FadeIn);
@@ -44,7 +44,7 @@ class FadeOut extends Animation {
     this
       .easing('ease-out')
       .duration(250)
-      .fadeOut();
+      .fromTo('opacity', 0.999, 0);
   }
 }
 Animation.register('fade-out', FadeOut);

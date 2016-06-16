@@ -1,5 +1,6 @@
 import {Animation} from '../animations/animation';
-import {Transition, TransitionOptions} from './transition';
+import {PageTransition} from './page-transition';
+import {TransitionOptions} from './transition';
 import {ViewController} from '../components/nav/view-controller';
 
 const DURATION = 500;
@@ -13,10 +14,10 @@ const OFF_OPACITY = 0.8;
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 
-class IOSTransition extends Transition {
+class IOSTransition extends PageTransition {
 
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     this.duration(opts.duration || DURATION);
     this.easing(opts.easing || EASING);
@@ -27,10 +28,6 @@ class IOSTransition extends Transition {
     // do they have navbars?
     let enteringHasNavbar = enteringView.hasNavbar();
     let leavingHasNavbar = leavingView && leavingView.hasNavbar();
-
-    let enteringPage = new Animation(enteringView.pageRef());
-    enteringPage.before.addClass('show-page');
-    this.add(enteringPage);
 
     // entering content
     let enteringContent = new Animation(enteringView.contentRef());
@@ -66,8 +63,8 @@ class IOSTransition extends Transition {
         .add(enteringNavbarBg)
         .add(enteringBackButton);
 
-      enteringTitle.fadeIn();
-      enteringNavbarItems.fadeIn();
+      enteringTitle.fromTo(OPACITY, 0.01, 1, true);
+      enteringNavbarItems.fromTo(OPACITY, 0.01, 1, true);
 
       // set properties depending on direction
       if (backDirection) {
@@ -78,7 +75,7 @@ class IOSTransition extends Transition {
           // back direction, entering page has a back button
           enteringBackButton
             .before.addClass(SHOW_BACK_BTN_CSS)
-            .fadeIn();
+            .fromTo(OPACITY, 0.01, 1, true);
         }
 
       } else {
@@ -90,7 +87,7 @@ class IOSTransition extends Transition {
           // should just fade in, no sliding
           enteringNavbarBg
             .before.clearStyles([TRANSLATEX])
-            .fadeIn();
+            .fromTo(OPACITY, 0.01, 1, true);
 
         } else {
           // entering navbar, forward direction, and there's no leaving navbar
@@ -105,7 +102,7 @@ class IOSTransition extends Transition {
           // forward direction, entering page has a back button
           enteringBackButton
             .before.addClass(SHOW_BACK_BTN_CSS)
-            .fadeIn();
+            .fromTo(OPACITY, 0.01, 1, true);
 
           let enteringBackBtnText = new Animation(enteringView.backBtnTextRef());
           enteringBackBtnText.fromTo(TRANSLATEX, '100px', '0px');
@@ -153,9 +150,9 @@ class IOSTransition extends Transition {
         this.add(leavingNavBar);
 
         // fade out leaving navbar items
-        leavingBackButton.fadeOut();
-        leavingTitle.fadeOut();
-        leavingNavbarItems.fadeOut();
+        leavingBackButton.fromTo(OPACITY, 0.99, 0);
+        leavingTitle.fromTo(OPACITY, 0.99, 0);
+        leavingNavbarItems.fromTo(OPACITY, 0.99, 0);
 
         if (backDirection) {
           // leaving navbar, back direction
@@ -166,7 +163,7 @@ class IOSTransition extends Transition {
             // should just fade out, no sliding
             leavingNavbarBg
               .before.clearStyles([TRANSLATEX])
-              .fadeOut();
+              .fromTo('opacity', 0.99, 0);
 
           } else {
             // leaving navbar, back direction, and there's no entering navbar
@@ -191,4 +188,4 @@ class IOSTransition extends Transition {
 
 }
 
-Transition.register('ios-transition', IOSTransition);
+PageTransition.register('ios-transition', IOSTransition);

@@ -70,7 +70,7 @@ export class Toast extends ViewController {
     super(ToastCmp, opts);
 
     // set the position to the bottom if not provided
-    if ( ! opts.position || ! this.isValidPosition(opts.position)) {
+    if (! opts.position || ! this.isValidPosition(opts.position)) {
       opts.position = TOAST_POSITION_BOTTOM;
     }
 
@@ -173,7 +173,7 @@ class ToastCmp implements AfterViewInit {
     private _elementRef: ElementRef,
     params: NavParams,
     renderer: Renderer
-  ) {
+ ) {
 
     this.d = params.data;
 
@@ -237,25 +237,27 @@ export interface ToastOptions {
 
 class ToastSlideIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     // DOM READS
     let ele = enteringView.pageRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if ( enteringView.data && enteringView.data.position === TOAST_POSITION_TOP ) {
+    if (enteringView.data && enteringView.data.position === TOAST_POSITION_TOP) {
       // top
       // by default, it is -100% hidden (above the screen)
       // so move from that to 10px below top: 0px;
       wrapper.fromTo('translateY', '-100%', `${10}px`);
-    } else if ( enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE ) {
+
+    } else if (enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
       // DOM WRITE
       wrapperEle.style.top = `${topPosition}px`;
-      wrapper.fromTo('opacity', '0.01', '1.0');
+      wrapper.fromTo('opacity', 0.01, 1);
+
     } else {
       // bottom
       // by default, it is 100% hidden (below the screen),
@@ -263,168 +265,159 @@ class ToastSlideIn extends Transition {
       wrapper.fromTo('translateY', '100%', `${0 - 10}px`);
     }
 
-    const EASE: string = 'cubic-bezier(.36,.66,.04,1)';
-    const DURATION: number = 400;
-    // DOM WRITES
-    this.easing(EASE).duration(DURATION).add(wrapper);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(wrapper);
   }
 }
 
 class ToastSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
-    // DOM reads
     let ele = leavingView.pageRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if ( leavingView.data && leavingView.data.position === TOAST_POSITION_TOP ) {
+    if (leavingView.data && leavingView.data.position === TOAST_POSITION_TOP) {
       // top
       // reverse arguments from enter transition
       wrapper.fromTo('translateY', `${10}px`, '-100%');
-    } else if ( leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE ) {
+
+    } else if (leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just fade it out
-      wrapper.fromTo('opacity', '1.0', '0.0');
+      wrapper.fromTo('opacity', 0.99, 0);
+
     } else {
       // bottom
       // reverse arguments from enter transition
       wrapper.fromTo('translateY', `${0 - 10}px`, '100%');
     }
 
-    const EASE: string = 'cubic-bezier(.36,.66,.04,1)';
-    const DURATION: number = 300;
-    // DOM writes
-    this.easing(EASE).duration(DURATION).add(wrapper);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add(wrapper);
   }
 }
 
 class ToastMdSlideIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     // DOM reads
     let ele = enteringView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if ( enteringView.data && enteringView.data.position === TOAST_POSITION_TOP ) {
+    if (enteringView.data && enteringView.data.position === TOAST_POSITION_TOP) {
       // top
       // by default, it is -100% hidden (above the screen)
       // so move from that to top: 0px;
-      wrapper.fromTo('translateY', '-100%', `0px`);
-    } else if ( enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE ) {
+      wrapper.fromTo('translateY', '-100%', `0%`);
+
+    } else if (enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
       // DOM WRITE
       wrapperEle.style.top = `${topPosition}px`;
-      wrapper.fromTo('opacity', '0.01', '1.0');
+      wrapper.fromTo('opacity', 0.01, 1);
+
     } else {
       // bottom
       // by default, it is 100% hidden (below the screen),
       // so move from that to bottom: 0px
-      wrapper.fromTo('translateY', '100%', `0px`);
+      wrapper.fromTo('translateY', '100%', `0%`);
     }
 
-    const EASE: string = 'cubic-bezier(.36,.66,.04,1)';
-    const DURATION: number = 400;
-
-    this.easing(EASE).duration(DURATION).add(wrapper);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(wrapper);
   }
 }
 
 class ToastMdSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
-    // DOM reads
     let ele = leavingView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if ( leavingView.data && leavingView.data.position === TOAST_POSITION_TOP ) {
+    if (leavingView.data && leavingView.data.position === TOAST_POSITION_TOP) {
       // top
       // reverse arguments from enter transition
-      wrapper.fromTo('translateY', `${0}px`, '-100%');
-    } else if ( leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE ) {
+      wrapper.fromTo('translateY', `${0}%`, '-100%');
+
+    } else if (leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just fade it out
-      wrapper.fromTo('opacity', '1.0', '0.0');
+      wrapper.fromTo('opacity', 0.99, 0);
+
     } else {
       // bottom
       // reverse arguments from enter transition
-      wrapper.fromTo('translateY', `${0}px`, '100%');
+      wrapper.fromTo('translateY', `${0}%`, '100%');
     }
 
-    // DOM writes
-
-    const EASE: string = 'cubic-bezier(.36,.66,.04,1)';
-    const DURATION: number = 450;
-
-    this.easing(EASE).duration(DURATION).add(wrapper);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(wrapper);
   }
 }
 
 class ToastWpPopIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
-    // DOM reads
     let ele = enteringView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if ( enteringView.data && enteringView.data.position === TOAST_POSITION_TOP ) {
+    if (enteringView.data && enteringView.data.position === TOAST_POSITION_TOP) {
       // top
-      wrapper.fromTo('opacity', '0.01', '1');
-      wrapper.fromTo('scale', '1.3', '1');
-    } else if ( enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE ) {
+      wrapper.fromTo('opacity', 0.01, 1);
+      wrapper.fromTo('scale', 1.3, 1);
+
+    } else if (enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
+
       // DOM WRITE
       wrapperEle.style.top = `${topPosition}px`;
-      wrapper.fromTo('opacity', '0.01', '1.0');
-      wrapper.fromTo('scale', '1.3', '1');
+      wrapper.fromTo('opacity', 0.01, 1);
+      wrapper.fromTo('scale', 1.3, 1);
+
     } else {
       // bottom
-      wrapper.fromTo('opacity', '0.01', '1');
-      wrapper.fromTo('scale', '1.3', '1');
+      wrapper.fromTo('opacity', 0.01, 1);
+      wrapper.fromTo('scale', 1.3, 1);
     }
 
-    // DOM writes
-    const EASE: string = 'cubic-bezier(0,0 0.05,1)';
-    const DURATION: number = 200;
-    this.easing(EASE).duration(DURATION).add(wrapper);
+    this.easing('cubic-bezier(0,0 0.05,1)').duration(200).add(wrapper);
   }
 }
 
 class ToastWpPopOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     // DOM reads
     let ele = leavingView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if ( leavingView.data && leavingView.data.position === TOAST_POSITION_TOP ) {
+    if (leavingView.data && leavingView.data.position === TOAST_POSITION_TOP) {
       // top
       // reverse arguments from enter transition
-      wrapper.fromTo('opacity', '1', '0.00');
-      wrapper.fromTo('scale', '1', '1.3');
-    } else if ( leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE ) {
+      wrapper.fromTo('opacity', 0.99, 0);
+      wrapper.fromTo('scale', 1, 1.3);
+
+    } else if (leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just fade it out
-      wrapper.fromTo('opacity', '1.0', '0.00');
-      wrapper.fromTo('scale', '1', '1.3');
+      wrapper.fromTo('opacity', 0.99, 0);
+      wrapper.fromTo('scale', 1, 1.3);
+
     } else {
       // bottom
       // reverse arguments from enter transition
-      wrapper.fromTo('opacity', '1', '0.00');
-      wrapper.fromTo('scale', '1', '1.3');
+      wrapper.fromTo('opacity', 0.99, 0);
+      wrapper.fromTo('scale', 1, 1.3);
     }
 
     // DOM writes

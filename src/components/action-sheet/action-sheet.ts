@@ -377,7 +377,7 @@ export interface ActionSheetOptions {
 
 class ActionSheetSlideIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -394,7 +394,7 @@ Transition.register('action-sheet-slide-in', ActionSheetSlideIn);
 
 class ActionSheetSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -411,7 +411,7 @@ Transition.register('action-sheet-slide-out', ActionSheetSlideOut);
 
 class ActionSheetMdSlideIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -428,7 +428,7 @@ Transition.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
 
 class ActionSheetMdSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -444,7 +444,7 @@ Transition.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);
 
 class ActionSheetWpSlideIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -461,7 +461,7 @@ Transition.register('action-sheet-wp-slide-in', ActionSheetWpSlideIn);
 
 class ActionSheetWpSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(opts);
+    super(enteringView, leavingView, opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));

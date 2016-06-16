@@ -15,6 +15,8 @@ $z-index-refresher:              0;
 
 $z-index-navbar-section:         10;
 
+$z-index-page-container:         0;
+$z-index-selected-tab:           1;
 $z-index-toolbar:                10;
 $z-index-toolbar-background:     -1;
 
@@ -85,63 +87,137 @@ body {
   text-size-adjust: none;
 }
 
-ion-app.app-init,
+
+// Nav Container Structure
+// --------------------------------------------------
+
+ion-app,
 ion-nav,
+ion-tab,
 ion-tabs {
   position: absolute;
   top: 0;
   left: 0;
-  display: flex;
+  z-index: $z-index-page-container;
+  display: block;
   overflow: hidden;
 
-  flex-direction: column;
-
   width: 100%;
   height: 100%;
 }
 
-ion-navbar-section {
-  display: block;
-
-  width: 100%;
-  min-height: 50px;
+ion-tab scroll-cotent {
+  display: none;
 }
 
-ion-content-section {
-  position: relative;
-  display: block;
-
-  flex: 1;
-
-  width: 100%;
-  height: 100%;
+ion-tab.show-tab {
+  z-index: $z-index-selected-tab;
 }
+
+ion-tab.show-tab scroll-cotent {
+  display: block;
+}
+
+
+// Page Container Structure
+// --------------------------------------------------
 
 ion-page {
   position: absolute;
   top: 0;
   left: 0;
-  display: none;
-
-  flex-direction: column;
+  display: block;
 
   width: 100%;
   height: 100%;
 
-  &.show-page {
-    display: flex;
-  }
+  // do not show, but still render so we can get dimensions
+  visibility: hidden;
 }
 
 ion-content {
   position: relative;
+  top: 0;
+  left: 0;
   display: block;
-
-  flex: 1;
 
   width: 100%;
   height: 100%;
 }
+
+ion-page > ion-content {
+  position: absolute;
+}
+
+ion-page scroll-content {
+  // do not render the scroll-content at all until ready
+  display: none;
+}
+
+ion-page.show-page {
+  // show the page now that it's ready
+  visibility: visible;
+}
+
+ion-page.show-page scroll-content {
+  // render the content when ready
+  display: block;
+}
+
+ion-page.tab-subpage {
+  position: fixed;
+  z-index: 10;
+}
+
+
+// Toolbar Container Structure
+// --------------------------------------------------
+
+ion-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-toolbar;
+  display: block;
+
+  width: 100%;
+}
+
+ion-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-toolbar;
+  display: block;
+
+  width: 100%;
+}
+
+ion-tabbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-toolbar;
+  display: flex;
+
+  width: 100%;
+
+  // default to hidden until ready
+  visibility: hidden;
+}
+
+ion-tabbar.show-tabbar {
+  visibility: visible;
+}
+
+[tabbarPlacement=top] > ion-tabbar {
+  top: 0;
+  bottom: auto;
+}
+
+
+// Scrollable Content
+// --------------------------------------------------
 
 scroll-content {
   position: absolute;
@@ -169,59 +245,9 @@ ion-content.js-scroll > scroll-content {
   will-change: initial;
 }
 
-ion-tabbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
 
-  width: 100%;
-  min-height: 50px;
-}
-
-ion-tab-section {
-  position: relative;
-  top: 0;
-  left: 0;
-  display: block;
-  overflow: hidden;
-
-  width: 100%;
-  height: 100%;
-}
-
-ion-page.tab-subpage {
-  position: fixed;
-  z-index: 10;
-}
-
-ion-navbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: $z-index-navbar-section;
-  display: block;
-
-  width: 100%;
-  min-height: 50px;
-}
-
-ion-navbar-section ion-navbar.toolbar {
-  position: absolute;
-}
-
-ion-toolbar {
-  display: block;
-
-  width: 100%;
-}
-
-ion-toolbar[position=bottom] {
-  bottom: 0;
-  z-index: $z-index-toolbar;
-}
-
-.sticky {
-  position: sticky;
-  top: 0;
+[nav-viewport],
+[nav-portal],
+[tab-portal] {
+  display: none;
 }
