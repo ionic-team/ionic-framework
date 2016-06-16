@@ -71,7 +71,6 @@ ion-menu[type=reveal].show-menu {
 // itself, which is under the menu, does not move.
 
 ion-menu[type=overlay] {
-  left: -8px; // make up for the box-shadow hanging over on the left
   z-index: $z-index-menu-overlay;
 
   ion-backdrop {
@@ -87,13 +86,4 @@ ion-menu[type=overlay] {
       transform: translate3d(0, 0, 0);
     }
   }
-}
-
-ion-menu[type=overlay][side=right] {
-  left: auto;
-  right: -8px;
-}
-
-ion-menu[type=push][side=right] {
-  left: 0;
 }

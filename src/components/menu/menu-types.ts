@@ -98,9 +98,10 @@ class MenuPushType extends MenuType {
     let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
 
     if (menu.side === 'right') {
+      // right side
       contentOpenedX = -menu.width() + 'px';
-      menuOpenedX = (platform.width() - menu.width()) + 'px';
-      menuClosedX = platform.width() + 'px';
+      menuClosedX = menu.width() + 'px';
+      menuOpenedX = '0px';
 
     } else {
       contentOpenedX = menu.width() + 'px';
@@ -137,13 +138,13 @@ class MenuOverlayType extends MenuType {
     let closedX: string, openedX: string;
     if (menu.side === 'right') {
       // right side
-      closedX = menu.width() + 'px';
+      closedX = 8 + menu.width() + 'px';
       openedX = '0px';
 
     } else {
       // left side
-      closedX = -menu.width() + 'px';
-      openedX = '8px';
+      closedX = -(8 + menu.width()) + 'px';
+      openedX = '0px';
     }
 
     let menuAni = new Animation(menu.getMenuElement());
