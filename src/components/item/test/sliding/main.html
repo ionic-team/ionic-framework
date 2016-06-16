@@ -14,6 +14,32 @@
   </div>
   <ion-list #myList>
 
+    <ion-item-sliding #item100>
+      <a ion-item>
+        <h2>HubStruck Notifications</h2>
+        <p>A new message from a repo in your network</p>
+        <p>Oceanic Next has joined your network</p>
+        <ion-note item-right>
+          10:45 AM
+        </ion-note>
+      </a>
+
+      <ion-item-options side="left">
+        <button (click)="unread(item100)">
+          <ion-icon name="mail"></ion-icon>
+        </button>
+      </ion-item-options>
+      <ion-item-options side="right">
+        <button danger (click)="share(item100)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+        <button (click)="favorite(item100)" >
+          <ion-icon name="star"></ion-icon>
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
     <ion-item-sliding #item0>
       <button ion-item text-wrap (click)="didClick(item0)">
         <h2>RIGHT side - no icons</h2>
@@ -26,10 +52,10 @@
     </ion-item-sliding>
 
     <ion-item-sliding #item1>
-      <ion-item text-wrap detail-push class="activated">
+      <a ion-item text-wrap detail-push class="activated">
         <h2>LEFT side - no icons</h2>
         <p>I think I figured out how to get more Mountain Dew</p>
-      </ion-item>
+      </a>
       <ion-item-options side="left" (ionSwipe)="del($event)" *ngIf="slidingEnabled">
         <button primary (click)="archive(item1)">Archive</button>
         <button danger (click)="del(item1)">Delete</button>

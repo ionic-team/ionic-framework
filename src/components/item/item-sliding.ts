@@ -1,10 +1,9 @@
 import {ChangeDetectionStrategy, Component, ContentChildren, ContentChild,  Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation} from '@angular/core';
 
 import {List} from '../list/list';
-import {Ion} from '../ion';
 import {Item} from './item';
 import {isPresent} from '../../util/util';
-import {CSS} from '../../util/dom';
+import {CSS, nativeRaf, nativeTimeout} from '../../util/dom';
 
 const SWIPE_FACTOR = 1.1;
 const ELASTIC_FACTOR = 0.55;
@@ -22,19 +21,18 @@ export const enum SideFlags {
 @Directive({
   selector: 'ion-item-options',
 })
-export class ItemOptions extends Ion {
+export class ItemOptions {
   @Input() side: string;
   @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter();
 
-  constructor(elementRef: ElementRef, private _renderer: Renderer) {
-    super(elementRef);
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer) {
   }
 
   /**
    * @private
    */
   setCssStyle(property: string, value: string) {
-    this._renderer.setElementStyle(this.elementRef.nativeElement, property, value);
+    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
   }
 
   /**
@@ -46,6 +44,10 @@ export class ItemOptions extends Ion {
     } else {
       return SideFlags.Right;
     }
+  }
+
+  width() {
+    return this._elementRef.nativeElement.offsetWidth;
   }
 
 }
@@ -224,10 +226,14 @@ export class ItemSliding {
    * @private
    */
   startSliding(startX: number) {
+    if (this._timer) {
+      clearTimeout(this._timer);
+      this._timer = null;
+    }
     if (this._openAmount === 0) {
+      this._optsDirty = true;
       this._setState(SlidingState.Enabled);
     }
-    this._optsDirty = true;
     this._startX = startX + this._openAmount;
     this.item.setCssStyle(CSS.transition, 'none');
   }
@@ -236,7 +242,10 @@ export class ItemSliding {
    * @private
    */
   moveSliding(x: number): number {
-    this.calculateOptsWidth();
+    if (this._optsDirty) {
+      this.calculateOptsWidth();
+      return;
+    }
 
     let openAmount = this._startX - x;
     switch (this._sides) {
@@ -290,17 +299,20 @@ export class ItemSliding {
   }
 
   calculateOptsWidth() {
-    if (this._optsDirty) {
-      this._optsWidthRightSide = 0;
-      if (this._rightOptions) {
-        this._optsWidthRightSide = this._rightOptions.width();
+    nativeRaf(() => {
+      if (this._optsDirty) {
+        this._optsWidthRightSide = 0;
+        if (this._rightOptions) {
+          this._optsWidthRightSide = this._rightOptions.width();
+        }
+
+        this._optsWidthLeftSide = 0;
+        if (this._leftOptions) {
+          this._optsWidthLeftSide = this._leftOptions.width();
+        }
+        this._optsDirty = false;
       }
-      this._optsWidthLeftSide = 0;
-      if (this._leftOptions) {
-        this._optsWidthLeftSide = this._leftOptions.width();
-      }
-      this._optsDirty = false;
-    }
+    });
   }
 
   /**
@@ -317,7 +329,7 @@ export class ItemSliding {
     if (didEnd) {
       // TODO: refactor. there must exist a better way
       // if sliding ended, we wait 400ms until animation finishes
-      this._timer = setTimeout(() => {
+      this._timer = nativeTimeout(() => {
         this._setState(SlidingState.Disabled);
         this._timer = null;
       }, 400);
@@ -347,6 +359,10 @@ export class ItemSliding {
       this.setClass('active-slide', state !== SlidingState.Disabled);
       this.setClass('active-options-right', state === SlidingState.Right);
       this.setClass('active-options-left', state === SlidingState.Left);
+      if (state === SlidingState.Disabled || state === SlidingState.Enabled) {
+        this.setClass('active-swipe-right', false);
+        this.setClass('active-swipe-left', false);
+      }
     }
   }
 
