@@ -1,6 +1,7 @@
 <a name="2.0.0-beta.9"></a>
 # [2.0.0-beta.9](https://github.com/driftyco/ionic/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2016-06-16)
 
+
 ### Features
 
 * **backButton:** register back button actions ([84f37cf](https://github.com/driftyco/ionic/commit/84f37cf))
