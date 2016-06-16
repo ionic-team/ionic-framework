@@ -2,14 +2,13 @@ import {Component, ComponentResolver, ElementRef, HostListener, Renderer, ViewCh
 
 import {addSelector} from '../../config/bootstrap';
 import {Animation} from '../../animations/animation';
+import {Config} from '../../config/config';
+import {CSS, nativeRaf} from '../../util/dom';
+import {isPresent, pascalCaseToDashCase} from '../../util/util';
+import {Key} from '../../util/key';
+import {NavParams} from '../nav/nav-params';
 import {PageTransition} from '../../transitions/page-transition';
 import {TransitionOptions} from '../../transitions/transition';
-import {Config} from '../../config/config';
-import {NavParams} from '../nav/nav-params';
-import {Platform} from '../../platform/platform';
-import {Key} from '../../util/key';
-import {isPresent, isUndefined, isDefined} from '../../util/util';
-import {nativeRaf, CSS} from '../../util/dom';
 import {ViewController} from '../nav/view-controller';
 
 const POPOVER_IOS_BODY_PADDING = 2;
@@ -114,7 +113,6 @@ export class Popover extends ViewController {
     data.componentType = componentType;
     data.opts = opts;
     super(PopoverCmp, data);
-    this.viewType = 'popover';
     this.isOverlay = true;
 
     // by default, popovers should not fire lifecycle events of other views
@@ -123,13 +121,13 @@ export class Popover extends ViewController {
     this.fireOtherLifecycles = false;
   }
 
-   /**
+  /**
    * @private
    */
-   getTransitionName(direction: string) {
-     let key = (direction === 'back' ? 'popoverLeave' : 'popoverEnter');
-     return this._nav && this._nav.config.get(key);
-   }
+  getTransitionName(direction: string) {
+    let key = (direction === 'back' ? 'popoverLeave' : 'popoverEnter');
+    return this._nav && this._nav.config.get(key);
+  }
 
    /**
     * Create a popover with the following options
@@ -162,7 +160,7 @@ export class Popover extends ViewController {
       '<div class="popover-arrow"></div>' +
       '<div class="popover-content">' +
         '<div class="popover-viewport">' +
-          '<div #viewport></div>' +
+          '<div #viewport nav-viewport></div>' +
         '</div>' +
       '</div>' +
     '</div>'
@@ -230,7 +228,7 @@ class PopoverCmp {
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
-    if (this.enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE ) {
+    if (this.enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
       this.bdClick();
     }
   }

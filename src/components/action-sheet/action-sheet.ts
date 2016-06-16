@@ -141,7 +141,6 @@ export class ActionSheet extends ViewController {
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(ActionSheetCmp, opts);
-    this.viewType = 'action-sheet';
     this.isOverlay = true;
 
     // by default, actionsheets should not fire lifecycle events of other views

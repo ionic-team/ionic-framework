@@ -21,6 +21,7 @@ export * from './util/keyboard';
 export * from './util/form';
 
 export * from './animations/animation';
+export * from './transitions/page-transition';
 export * from './transitions/transition';
 
 export * from './translation/translate';

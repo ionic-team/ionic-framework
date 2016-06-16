@@ -70,11 +70,6 @@ export class ViewController {
 
   /**
    * @private
-   */
-  viewType: string = '';
-
-  /**
-   * @private
    * If this is currently the active view, then set to false
    * if it does not want the other views to fire their own lifecycles.
    */

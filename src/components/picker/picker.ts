@@ -26,7 +26,6 @@ export class Picker extends ViewController {
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(PickerDisplayCmp, opts);
-    this.viewType = 'picker';
     this.isOverlay = true;
 
     this.ionChange = new EventEmitter();

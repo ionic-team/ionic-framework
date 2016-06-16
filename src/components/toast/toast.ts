@@ -74,7 +74,6 @@ export class Toast extends ViewController {
       opts.position = TOAST_POSITION_BOTTOM;
     }
 
-    this.viewType = 'toast';
     this.isOverlay = true;
     this.usePortal = true;
 

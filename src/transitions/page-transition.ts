@@ -2,7 +2,7 @@ import {Animation} from '../animations/animation';
 import {closest} from '../util/dom';
 import {Content} from '../components/content/content';
 import {Tabs} from '../components/tabs/tabs';
-import {Transition} from './transition';
+import {Transition, TransitionOptions} from './transition';
 import {ViewController} from '../components/nav/view-controller';
 
 
@@ -128,15 +128,5 @@ export class PageTransition extends Transition {
 
 function parsePxUnit(val: string): number {
   return (val.indexOf('px') > 0) ? parseInt(val, 10) : 0;
-}
-
-export interface TransitionOptions {
-  animation: string;
-  duration: number;
-  easing: string;
-  direction: string;
-  renderDelay?: number;
-  isRTL?: boolean;
-  ev?: any;
 }
 

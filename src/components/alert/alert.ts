@@ -194,7 +194,6 @@ export class Alert extends ViewController {
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(AlertCmp, opts);
-    this.viewType = 'alert';
     this.isOverlay = true;
 
     // by default, alerts should not fire lifecycle events of other views

@@ -111,7 +111,6 @@ export class Loading extends ViewController {
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
 
     super(LoadingCmp, opts);
-    this.viewType = 'loading';
     this.isOverlay = true;
     this.usePortal = true;
 

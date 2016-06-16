@@ -1201,10 +1201,6 @@ export class NavController extends Ion {
         this.setTransitioning(!enableApp, duration);
       }
 
-      if (enteringView.viewType) {
-        transAnimation.before.addClass(enteringView.viewType);
-      }
-
       // create a callback for when the animation is done
       transAnimation.onFinish((trans: Transition) => {
         // transition animation has ended
@@ -1472,8 +1468,8 @@ export class NavController extends Ion {
       return;
     }
 
-    // automatically set "ion-page" selector
-    // TODO: see about having this set using ComponentFactory
+    // TEMPORARY: automatically set selector w/ dah reflector
+    // TODO: use componentFactory.create once fixed
     addSelector(view.componentType, 'ion-page');
 
     this._compiler.resolveComponent(view.componentType).then(componentFactory => {
