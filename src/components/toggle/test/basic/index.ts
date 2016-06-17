@@ -6,7 +6,7 @@ import {ionicBootstrap} from '../../../../../src';
 @Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
+class E2EPage {
   fruitsForm: ControlGroup;
   grapeDisabled: boolean;
   grapeChecked: boolean;
@@ -57,6 +57,13 @@ class E2EApp {
     this.formResults = JSON.stringify(this.fruitsForm.value);
     ev.preventDefault();
   }
+}
+
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+class E2EApp {
+  root = E2EPage;
 }
 
 ionicBootstrap(E2EApp);

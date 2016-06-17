@@ -1,10 +1,11 @@
-ion-tabs[no-navbar] {
+ion-tabs {
   margin-bottom: 20px;
 }
 
-ion-tabs[no-navbar],
-ion-tabs[no-navbar] ion-tabbar {
+ion-tabs,
+ion-tabs ion-tabbar {
   position: relative;
   top: auto;
   height: auto;
+  visibility: visible;
 }
