@@ -33,24 +33,28 @@ import {MenuController} from './menu-controller';
  * the `<ion-buttons>` element:
  *
  * ```html
- * <ion-navbar *navbar>
- *   <ion-buttons start>
- *     <button>
- *       <ion-icon name="contact"></ion-icon>
+ * <ion-header>
+ *
+ *   <ion-navbar>
+ *     <ion-buttons start>
+ *       <button>
+ *         <ion-icon name="contact"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *     <button menuToggle>
+ *       <ion-icon name="menu"></ion-icon>
  *     </button>
- *   </ion-buttons>
- *   <button menuToggle>
- *     <ion-icon name="menu"></ion-icon>
- *   </button>
- *   <ion-title>
- *     Title
- *   </ion-title>
- *   <ion-buttons end>
- *     <button (click)="doClick()">
- *       <ion-icon name="more"></ion-icon>
- *     </button>
- *   </ion-buttons>
- * </ion-navbar>
+ *     <ion-title>
+ *       Title
+ *     </ion-title>
+ *     <ion-buttons end>
+ *       <button (click)="doClick()">
+ *         <ion-icon name="more"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *   </ion-navbar>
+ *
+ * </ion-header>
  * ```
  *
  * Similar to `<ion-buttons>`, the `menuToggle` can be positioned using

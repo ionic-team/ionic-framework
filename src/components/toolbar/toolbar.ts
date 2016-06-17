@@ -108,8 +108,9 @@ export class ToolbarBase extends Ion {
  * @description
  * A Toolbar is a generic bar that is positioned above or below content.
  * Unlike a [Navbar](../../nav/Navbar), a toolbar can be used as a subheader.
- * Toolbars are positioned automatically at the `top`, but they can be
- * positioned at the bottom by setting `position="bottom"` on the component.
+ * When toolbars are placed within an `<ion-header>` or `<ion-footer>`,
+ * they stay fixed in their respective location. When placed within
+ * `<ion-content>`, toolbars will scroll with the content.
  *
  *
  * ### Buttons in a Toolbar
@@ -132,48 +133,62 @@ export class ToolbarBase extends Ion {
  *
  * @usage
  * ```html
- * <ion-toolbar>
- *   <ion-buttons start>
- *     <button>
- *       <ion-icon name="contact"></ion-icon>
- *     </button>
- *     <button>
- *       <ion-icon name="search"></ion-icon>
- *     </button>
- *   </ion-buttons>
- *   <ion-title>My Toolbar Title</ion-title>
- * </ion-toolbar>
+ * <ion-header>
  *
- * <ion-toolbar>
- *   <ion-title>I'm a subheader</ion-title>
- * </ion-toolbar>
+ *   <ion-toolbar>
+ *     <ion-buttons start>
+ *       <button>
+ *         <ion-icon name="contact"></ion-icon>
+ *       </button>
+ *       <button>
+ *         <ion-icon name="search"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *     <ion-title>My Toolbar Title</ion-title>
+ *   </ion-toolbar>
  *
- * <ion-content></ion-content>
+ *   <ion-toolbar>
+ *     <ion-title>I'm a subheader</ion-title>
+ *   </ion-toolbar>
  *
- * <ion-toolbar position="bottom">
- *   <ion-title>I'm a subfooter</ion-title>
- *   <ion-buttons right>
- *     <button>
- *       <ion-icon name="menu"></ion-icon>
- *     </button>
- *   </ion-buttons>
- * </ion-toolbar>
+ * <ion-header>
  *
- * <ion-toolbar position="bottom">
- *   <ion-title>I'm a footer</ion-title>
- *   <ion-buttons end>
- *     <button>
- *       <ion-icon name="more"></ion-icon>
- *     </button>
- *     <button>
- *       <ion-icon name="options"></ion-icon>
- *     </button>
- *   </ion-buttons>
- * </ion-toolbar>
+ *
+ * <ion-content>
+ *
+ *   <ion-toolbar>
+ *     <ion-title>Scrolls with the content</ion-title>
+ *   </ion-toolbar>
+ *
+ * </ion-content>
+ *
+ *
+ * <ion-footer>
+ *
+ *   <ion-toolbar>
+ *     <ion-title>I'm a subfooter</ion-title>
+ *     <ion-buttons right>
+ *       <button>
+ *         <ion-icon name="menu"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *   </ion-toolbar>
+ *
+ *   <ion-toolbar>
+ *     <ion-title>I'm a footer</ion-title>
+ *     <ion-buttons end>
+ *       <button>
+ *         <ion-icon name="more"></ion-icon>
+ *       </button>
+ *       <button>
+ *         <ion-icon name="options"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *   </ion-toolbar>
+ *
+ * </ion-footer>
  *  ```
  *
- * @property {any} [position] - set position of the toolbar, `top` or `bottom`.
- * Default `top`.
  * @demo /docs/v2/demos/toolbar/
  * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */

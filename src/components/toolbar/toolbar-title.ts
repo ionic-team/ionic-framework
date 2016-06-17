@@ -14,9 +14,11 @@ import {Toolbar} from './toolbar';
  *
  * ```html
  * <ion-header>
+ *
  *   <ion-navbar>
- *     <ion-title>Tab 1</ion-title>
+ *     <ion-title>Settings</ion-title>
  *   </ion-navbar>
+ *
  * </ion-header>
  * ```
  *
@@ -24,14 +26,16 @@ import {Toolbar} from './toolbar';
  *
  * ```html
  * <ion-header>
- *   <ion-navbar>
- *     <ion-title>Tab 1</ion-title>
- *   </ion-navbar>
- * </ion-header>
  *
- * <ion-toolbar>
- *   <ion-title>Subheader</ion-title>
- * </ion-toolbar>
+ *   <ion-navbar>
+ *     <ion-title>Main Heder</ion-title>
+ *   </ion-navbar>
+ *
+ *   <ion-toolbar>
+ *     <ion-title>Subheader</ion-title>
+ *   </ion-toolbar>
+ *
+ * </ion-header>
  * ```
  *
  * @demo /docs/v2/demos/title/
