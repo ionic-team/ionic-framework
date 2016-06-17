@@ -33,4 +33,11 @@ document.addEventListener('focusout', (ev: any) => {
   console.log(`FOCUS OUT, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
 });
 
-ionicBootstrap(E2EPage);
+@Component({
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
+})
+class E2EApp {
+  rootPage = E2EPage;
+}
+
+ionicBootstrap(E2EApp);

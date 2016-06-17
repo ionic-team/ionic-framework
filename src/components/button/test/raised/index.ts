@@ -7,4 +7,11 @@ import {ionicBootstrap} from '../../../../../src';
 })
 class E2EPage {}
 
-ionicBootstrap(E2EPage);
+@Component({
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
+})
+class E2EApp {
+  rootPage = E2EPage;
+}
+
+ionicBootstrap(E2EApp);
