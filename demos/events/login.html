@@ -1,15 +1,19 @@
+<ion-header>
 
-<ion-navbar *navbar>
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Events
+    </ion-title>
+  </ion-navbar>
 
-  <ion-title>
-    Events
-  </ion-title>
-</ion-navbar>
+</ion-header>
+
 
 <ion-content #content>
+
   <h3 margin-left>Login</h3>
   <p margin>Click the login button to use the credentials below. Then, toggle the menu to see the menu items change.</p>
 
@@ -28,4 +32,5 @@
     <button block (click)="login()">Login</button>
     <button block secondary menuToggle>Toggle Menu</button>
   </div>
+
 </ion-content>

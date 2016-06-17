@@ -1,9 +1,14 @@
-<ion-toolbar>
-  <ion-title>Refresher</ion-title>
-</ion-toolbar>
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Refresher</ion-title>
+  </ion-toolbar>
+
+</ion-header>
 
 
 <ion-content>
+
   <ion-refresher (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
     <ion-refresher-content
       pullingText="Pull to refresh..."

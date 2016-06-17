@@ -1,61 +1,67 @@
-<ion-toolbar>
-  <ion-title>Segment</ion-title>
-</ion-toolbar>
+<ion-header>
 
-<ion-toolbar>
-  <ion-segment [(ngModel)]="appType">
-    <ion-segment-button value="paid">
-      Paid
-    </ion-segment-button>
-    <ion-segment-button value="free">
-      Free
-    </ion-segment-button>
-    <ion-segment-button value="top">
-      Top
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Segment</ion-title>
+  </ion-toolbar>
 
-<ion-toolbar>
-  <ion-segment [(ngModel)]="news" secondary>
-    <ion-segment-button value="worldwide">
-      Worldwide
-    </ion-segment-button>
-    <ion-segment-button value="local">
-      Local
-    </ion-segment-button>
-    <ion-segment-button value="headlines">
-      Headlines
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="appType">
+      <ion-segment-button value="paid">
+        Paid
+      </ion-segment-button>
+      <ion-segment-button value="free">
+        Free
+      </ion-segment-button>
+      <ion-segment-button value="top">
+        Top
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
-<ion-toolbar>
-  <ion-segment [(ngModel)]="safari" dark class="icon-segment-demo">
-    <ion-segment-button value="bookmarks">
-      <ion-icon name="book"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="history">
-      <ion-icon ios="ios-glasses-outline" md="md-glasses"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="links">
-      <ion-icon ios="ios-at-outline" md="md-at"></ion-icon>
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="news" secondary>
+      <ion-segment-button value="worldwide">
+        Worldwide
+      </ion-segment-button>
+      <ion-segment-button value="local">
+        Local
+      </ion-segment-button>
+      <ion-segment-button value="headlines">
+        Headlines
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
-<ion-toolbar>
-  <ion-segment [(ngModel)]="favorites" danger>
-    <ion-segment-button value="featured">
-      Featured
-    </ion-segment-button>
-    <ion-segment-button value="recent">
-      Recent
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="safari" dark class="icon-segment-demo">
+      <ion-segment-button value="bookmarks">
+        <ion-icon name="book"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="history">
+        <ion-icon ios="ios-glasses-outline" md="md-glasses"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="links">
+        <ion-icon ios="ios-at-outline" md="md-at"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="favorites" danger>
+      <ion-segment-button value="featured">
+        Featured
+      </ion-segment-button>
+      <ion-segment-button value="recent">
+        Recent
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
 
 <ion-content padding>
+
   <p>Segments can be placed in a toolbar or anywhere in the content.</p>
 
   <ion-segment [(ngModel)]="purchased" primary margin-bottom>
@@ -93,44 +99,49 @@
 
 </ion-content>
 
-<ion-toolbar position="bottom" primary>
-  <ion-segment [(ngModel)]="pet" light>
-    <ion-segment-button value="puppies">
-      Puppies
-    </ion-segment-button>
-    <ion-segment-button value="kittens">
-      Kittens
-    </ion-segment-button>
-    <ion-segment-button value="ducklings">
-      Ducklings
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
 
-<ion-toolbar position="bottom" dark>
-  <ion-segment [(ngModel)]="calendar" primary>
-    <ion-segment-button value="list">
-      List
-    </ion-segment-button>
-    <ion-segment-button value="day">
-      Day
-    </ion-segment-button>
-    <ion-segment-button value="month" checked>
-      Month
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+<ion-footer>
 
-<ion-toolbar position="bottom" danger>
-  <ion-segment [(ngModel)]="proxy" light>
-    <ion-segment-button value="off">
-      Off
-    </ion-segment-button>
-    <ion-segment-button value="manual">
-      Manual
-    </ion-segment-button>
-    <ion-segment-button value="auto">
-      Auto
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+  <ion-toolbar primary>
+    <ion-segment [(ngModel)]="pet" light>
+      <ion-segment-button value="puppies">
+        Puppies
+      </ion-segment-button>
+      <ion-segment-button value="kittens">
+        Kittens
+      </ion-segment-button>
+      <ion-segment-button value="ducklings">
+        Ducklings
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar dark>
+    <ion-segment [(ngModel)]="calendar" primary>
+      <ion-segment-button value="list">
+        List
+      </ion-segment-button>
+      <ion-segment-button value="day">
+        Day
+      </ion-segment-button>
+      <ion-segment-button value="month" checked>
+        Month
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar danger>
+    <ion-segment [(ngModel)]="proxy" light>
+      <ion-segment-button value="off">
+        Off
+      </ion-segment-button>
+      <ion-segment-button value="manual">
+        Manual
+      </ion-segment-button>
+      <ion-segment-button value="auto">
+        Auto
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-footer>

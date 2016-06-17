@@ -1,8 +1,14 @@
-<ion-toolbar>
-  <ion-title>Loading</ion-title>
-</ion-toolbar>
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Loading</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
 
 <ion-content class="outer-content">
+
   <ion-list>
     <ion-list-header>
       Spinner Loading Indicators
@@ -47,11 +53,16 @@
 
 </ion-content>
 
-<ion-toolbar position="bottom">
-  <ion-buttons end>
-    <button (click)="goToPage2()">
-      Show Loading and Navigate
-      <ion-icon name="arrow-forward"></ion-icon>
-    </button>
-  </ion-buttons>
-</ion-toolbar>
+
+<ion-footer>
+
+  <ion-toolbar>
+    <ion-buttons end>
+      <button (click)="goToPage2()">
+        Show Loading and Navigate
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-footer>

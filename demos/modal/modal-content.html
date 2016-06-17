@@ -1,9 +1,14 @@
-<ion-navbar *navbar>
-  <ion-buttons start>
-    <button (click)="dismiss()">Close</button>
-  </ion-buttons>
-  <ion-title>Modals</ion-title>
-</ion-navbar>
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start>
+      <button (click)="dismiss()">Close</button>
+    </ion-buttons>
+    <ion-title>Modals</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
 
 <ion-content padding>
   <div [hidden]="!myParam">
@@ -18,4 +23,5 @@
     <p>No parameters passed.</p>
   </div>
   <button danger full (click)="dismiss()">Close Modal</button>
+
 </ion-content>

@@ -1,11 +1,16 @@
-<ion-navbar *navbar>
-  <ion-title>Modals</ion-title>
-</ion-navbar>
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Modals</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
 
 <ion-content>
+
   <div padding>
     <button block (click)="openBasicModal()">Open Basic Modal</button>
-    <!-- <button block secondary (click)="openCustomAnimationModal()">Open with Custom Animation</button> -->
   </div>
 
   <ion-list no-margin>
@@ -28,4 +33,5 @@
   <div padding>
     <button block danger (click)="openModalWithParams()">Open with Parameters</button>
   </div>
+
 </ion-content>
