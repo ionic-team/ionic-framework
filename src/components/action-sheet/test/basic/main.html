@@ -1,9 +1,14 @@
+<ion-header>
 
-<ion-navbar *navbar>
-  <ion-title>Action Sheet</ion-title>
-</ion-navbar>
+  <ion-navbar>
+    <ion-title>Action Sheet</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
 
 <ion-content padding>
+
   <button block class="e2eOpenActionSheet" (click)="presentActionSheet1()">Present Action Sheet 1</button>
   <button block (click)="presentActionSheet2()">Present Action Sheet 2</button>
   <button block (click)="presentActionSheet3()">Present Action Sheet 3</button>
@@ -11,4 +16,5 @@
   <pre>
     Result: {{result}}
   </pre>
+
 </ion-content>

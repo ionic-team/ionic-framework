@@ -4,12 +4,14 @@ import {ionicBootstrap, NavController} from '../../../../../src';
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Root</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Root</ion-title>
+      </ion-navbar>
+    </ion-header>
 
     <ion-content padding>
-    <button block (click)="pushPage()">Push Page</button>
+      <button block (click)="pushPage()">Push Page</button>
     </ion-content>`,
 })
 class FirstPage {
@@ -23,13 +25,15 @@ class FirstPage {
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Root</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Root</ion-title>
+      </ion-navbar>
+    </ion-header>
 
     <ion-content padding>
       <h1>Second page</h1>
-    <button block (click)="insertPage()">Insert Page</button>
+      <button block (click)="insertPage()">Insert Page</button>
     </ion-content>
   `
 })
@@ -44,9 +48,11 @@ class SecondPage {
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Inserted Paged</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Inserted Paged</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       Inserted Page
     </ion-content>

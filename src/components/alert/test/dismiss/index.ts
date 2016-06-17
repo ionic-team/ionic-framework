@@ -24,7 +24,7 @@ export class E2EPage {
       ]
     });
 
-    alert.onDismiss((asdf) => {
+    alert.onDismiss(() => {
       console.log('dismiss');
       this.nav.push(AnotherPage);
     });
@@ -35,9 +35,11 @@ export class E2EPage {
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Another Page</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Another Page</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       <form [ngFormModel]="form" (ngSubmit)="submit(form.value)">
     		<ion-list>

@@ -1,31 +1,37 @@
-<ion-toolbar>
-  <ion-segment id="segment" [(ngModel)]="relationship" (ionChange)="onSegmentChanged($event)">
-    <ion-segment-button value="friends" (ionSelect)="onSegmentSelected($event)" class="e2eSegmentFriends">
-      Friends
-    </ion-segment-button>
-    <ion-segment-button value="enemies" (ionSelect)="onSegmentSelected($event)">
-      Enemies
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+<ion-header>
 
-<ion-toolbar>
-  <ion-buttons end>
-    <button>
-      <ion-icon name="search"></ion-icon>
-    </button>
-  </ion-buttons>
-  <ion-segment [(ngModel)]="icons" secondary>
-    <ion-segment-button value="camera">
-      <ion-icon name="camera"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="bookmark">
-      <ion-icon name="bookmark"></ion-icon>
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+  <ion-toolbar>
+    <ion-segment id="segment" [(ngModel)]="relationship" (ionChange)="onSegmentChanged($event)">
+      <ion-segment-button value="friends" (ionSelect)="onSegmentSelected($event)" class="e2eSegmentFriends">
+        Friends
+      </ion-segment-button>
+      <ion-segment-button value="enemies" (ionSelect)="onSegmentSelected($event)">
+        Enemies
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-buttons end>
+      <button>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-segment [(ngModel)]="icons" secondary>
+      <ion-segment-button value="camera">
+        <ion-icon name="camera"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="bookmark">
+        <ion-icon name="bookmark"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
 
 <ion-content padding>
+
   <div>Are we friends or enemies? <b>{{ relationship }}</b></div>
 
   <h4>Map mode: NgControl</h4>
@@ -91,46 +97,53 @@
   </ion-segment>
 
   <button block dark (click)="toggleDisabled()">Toggle Disabled</button>
+
 </ion-content>
 
-<ion-toolbar position="bottom" primary>
-  <ion-segment [(ngModel)]="appType" light>
-    <ion-segment-button value="paid">
-      Primary
-    </ion-segment-button>
-    <ion-segment-button value="free">
-      Toolbar
-    </ion-segment-button>
-    <ion-segment-button value="top" class="e2eSegmentTopGrossing">
-      Light Segment
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
 
-<ion-toolbar position="bottom">
-  <ion-segment [(ngModel)]="appType" danger>
-    <ion-segment-button value="paid">
-      Default
-    </ion-segment-button>
-    <ion-segment-button value="free">
-      Toolbar
-    </ion-segment-button>
-    <ion-segment-button value="top">
-      Danger Segment
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+<ion-footer>
 
-<ion-toolbar position="bottom">
-  <ion-segment [(ngModel)]="appType" dark [disabled]="isDisabled">
-    <ion-segment-button value="paid">
-      Default
-    </ion-segment-button>
-    <ion-segment-button value="free">
-      Toolbar
-    </ion-segment-button>
-    <ion-segment-button value="top">
-      Dark Segment
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+  <ion-toolbar primary>
+    <ion-segment [(ngModel)]="appType" light>
+      <ion-segment-button value="paid">
+        Primary
+      </ion-segment-button>
+      <ion-segment-button value="free">
+        Toolbar
+      </ion-segment-button>
+      <ion-segment-button value="top" class="e2eSegmentTopGrossing">
+        Light Segment
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="appType" danger>
+      <ion-segment-button value="paid">
+        Default
+      </ion-segment-button>
+      <ion-segment-button value="free">
+        Toolbar
+      </ion-segment-button>
+      <ion-segment-button value="top">
+        Danger Segment
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="appType" dark [disabled]="isDisabled">
+      <ion-segment-button value="paid">
+        Default
+      </ion-segment-button>
+      <ion-segment-button value="free">
+        Toolbar
+      </ion-segment-button>
+      <ion-segment-button value="top">
+        Dark Segment
+      </ion-segment-button>
+    </ion-segment>
+
+  </ion-toolbar>
+
+</ion-footer>

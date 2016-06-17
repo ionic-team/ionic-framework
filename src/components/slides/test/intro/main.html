@@ -1,4 +1,5 @@
 <ion-header>
+
   <ion-navbar>
     <ion-buttons end>
       <button (click)="skip()">
@@ -7,9 +8,12 @@
     </ion-buttons>
     <ion-title>Slides</ion-title>
   </ion-navbar>
+
 </ion-header>
 
+
 <ion-content>
+
   <ion-slides pager [options]="mySlideOptions" (ionDidChange)="onSlideChanged($event)" (ionWillChange)="onSlideChangeStart($event)" (ionDrag)="onSlideMove($event)">
     <ion-slide>
       <h3>Thank you for choosing the Awesome App!</h3>
@@ -37,6 +41,7 @@
       <h3>Any questions?</h3>
     </ion-slide>
   </ion-slides>
+
 </ion-content>
 
 <style>

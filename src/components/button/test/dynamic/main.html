@@ -1,15 +1,20 @@
+<ion-header>
 
-<ion-toolbar>
-  <ion-buttons start>
-    <button [color]="isDestructive ? 'danger' : 'primary'" [outline]="isOutline">Outline</button>
-  </ion-buttons>
-  <ion-title>Default Buttons</ion-title>
-  <ion-buttons end>
-    <button [color]="isSecondary ? 'secondary' : 'primary'" [solid]="isSolid">Solid</button>
-  </ion-buttons>
-</ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button [color]="isDestructive ? 'danger' : 'primary'" [outline]="isOutline">Outline</button>
+    </ion-buttons>
+    <ion-title>Default Buttons</ion-title>
+    <ion-buttons end>
+      <button [color]="isSecondary ? 'secondary' : 'primary'" [solid]="isSolid">Solid</button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
 
 <ion-content padding>
+
   <button block [solid]="isSolid">Solid</button>
   <button block [color]="isDestructive ? 'danger' : 'primary'" [outline]="isOutline">Danger (Outline)</button>
   <button block [color]="isSecondary ? 'secondary' : 'primary'"  [clear]="isClear">Secondary (Clear)</button>
@@ -22,4 +27,5 @@
   <hr/>
   <button block outline danger (click)="unify()" class="e2eButtonDynamicUnify">Unify all buttons</button>
   <button block clear danger (click)="reset()">Reset all buttons</button>
+
 </ion-content>

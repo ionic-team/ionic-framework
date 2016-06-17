@@ -23,17 +23,19 @@ export class OtherData {
 
 @Component({
   template: `
-  <ion-toolbar>
-    <ion-title>This is a modal</ion-title>
-    <button menuToggle class="e2eCordovaOpenLeftMenu">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-buttons end>
-      <button>
-        <ion-icon name="funnel"></ion-icon>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>This is a modal</ion-title>
+      <button menuToggle class="e2eCordovaOpenLeftMenu">
+        <ion-icon name="menu"></ion-icon>
       </button>
-    </ion-buttons>
-  </ion-toolbar>
+      <ion-buttons end>
+        <button>
+          <ion-icon name="funnel"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
   <ion-content padding>
     <p>The modal toolbar should have status bar padding.</p>
     <button block (click)="dismissModal()">Close modal</button>
@@ -97,17 +99,19 @@ class Page3 {
 
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>This is a tab page</ion-title>
-    <button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-buttons end>
-      <button>
-        <ion-icon name="funnel"></ion-icon>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>This is a tab page</ion-title>
+      <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
       </button>
-    </ion-buttons>
-  </ion-navbar>
+      <ion-buttons end>
+        <button>
+          <ion-icon name="funnel"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
   <ion-content padding>
     <p>The toolbar should have status bar padding.</p>
   </ion-content>

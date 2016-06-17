@@ -1,4 +1,5 @@
 <ion-header>
+
   <ion-navbar>
     <ion-title>Virtual Scroll{{webview}}</ion-title>
     <ion-buttons end>
@@ -7,10 +8,11 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+
 </ion-header>
 
-<ion-content>
 
+<ion-content>
 
   <ion-list [virtualScroll]="items"
             [headerFn]="headerFn">
@@ -24,6 +26,5 @@
     </ion-item>
 
   </ion-list>
-
 
 </ion-content>

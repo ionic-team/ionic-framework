@@ -1,7 +1,14 @@
-<ion-toolbar><ion-title>List Headers Borders</ion-title></ion-toolbar>
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>List Headers Borders</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
 
 <ion-content class="outer-content">
-  
+
   <ion-list class="outer-content" *ngFor="let person of people">
     <ion-list-header>
       {{person.name}}
@@ -13,4 +20,5 @@
       </div>
     </ion-item>
   </ion-list>
+
 </ion-content>

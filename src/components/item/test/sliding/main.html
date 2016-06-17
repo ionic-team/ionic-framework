@@ -1,17 +1,23 @@
+<ion-header>
 
-<ion-toolbar>
-  <ion-title>Sliding Items</ion-title>
-  <ion-buttons end>
-    <button (click)="reload()">Reload</button>
-  </ion-buttons>
-</ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Sliding Items</ion-title>
+    <ion-buttons end>
+      <button (click)="reload()">Reload</button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
 
 <ion-content>
+
   <div padding>
     <button block (click)="toggleSliding()">Toggle sliding</button>
     <button block (click)="changeDynamic()">Change Dynamic Options</button>
     <button block (click)="closeOpened()">Close Opened Items</button>
   </div>
+
   <ion-list #myList>
 
     <ion-item-sliding #item100>
@@ -228,6 +234,7 @@
   </ion-list>
 
 </ion-content>
+
 
 <style>
   img {

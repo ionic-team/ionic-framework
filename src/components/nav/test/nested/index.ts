@@ -5,9 +5,11 @@ import {Config, Nav, App} from '../../../../../src';
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Login</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Login</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content style="text-align:center;" padding>
       <p><button (click)="goToAccount()">Login</button></p>
       <p><button (click)="goBack()">App goBack()</button></p>
@@ -87,12 +89,14 @@ export class Account {
 
 @Component({
   template: `
-    <ion-navbar *navbar primary>
-      <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Account Dashboard</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar primary>
+        <button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Account Dashboard</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       <p><button (click)="goToProfile()">Profile</button></p>
       <p><button (click)="logOut()">Logout</button></p>
@@ -122,12 +126,14 @@ export class Dashboard {
 
 @Component({
   template: `
-    <ion-navbar *navbar danger>
-      <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Account Profile</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar danger>
+        <button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Account Profile</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>
       <p><button (click)="goToDashboard()">Dashboard</button></p>
       <p><button (click)="logOut()">Logout</button></p>

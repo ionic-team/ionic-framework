@@ -188,18 +188,22 @@ class E2EPage {
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Page 2</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Page 2</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>Some content</ion-content>
-    <ion-toolbar position="bottom">
-      <ion-buttons end>
-        <button (click)="goToPage3()">
-          Navigate
-          <ion-icon name="arrow-forward"></ion-icon>
-        </button>
-      </ion-buttons>
-    </ion-toolbar>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons end>
+          <button (click)="goToPage3()">
+            Navigate
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
   `
 })
 class Page2 {
@@ -218,9 +222,11 @@ class Page2 {
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Page 3</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Page 3</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>Some content</ion-content>
   `
 })

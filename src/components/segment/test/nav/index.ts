@@ -20,14 +20,16 @@ class SegmentPage {
 
 @Component({
   template: `
-    <ion-navbar *navbar hideBackButton>
-      <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>
-        Second Page
-      </ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar hideBackButton>
+        <button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+          Second Page
+        </ion-title>
+      </ion-navbar>
+    </ion-header>
 
     <ion-content>
       <h1>Page 2</h1>

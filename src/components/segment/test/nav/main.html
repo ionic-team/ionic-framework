@@ -1,21 +1,27 @@
-<ion-navbar *navbar>
-  <ion-title>
-    Segment under Navbar
-  </ion-title>
-</ion-navbar>
-<ion-toolbar>
-  <ion-segment [(ngModel)]="signInType">
-    <ion-segment-button value="new">
-      New
-    </ion-segment-button>
-    <ion-segment-button value="existing" class="e2eSegmentExistingSegment">
-      Existing
-    </ion-segment-button>
-    <ion-segment-button value="test">
-      Test
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>
+      Segment under Navbar
+    </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="signInType">
+      <ion-segment-button value="new">
+        New
+      </ion-segment-button>
+      <ion-segment-button value="existing" class="e2eSegmentExistingSegment">
+        Existing
+      </ion-segment-button>
+      <ion-segment-button value="test">
+        Test
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
 
 <ion-content padding>
 

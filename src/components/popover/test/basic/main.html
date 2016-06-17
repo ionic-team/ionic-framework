@@ -1,24 +1,30 @@
-<ion-navbar *navbar primary>
-  <ion-buttons left>
-    <button (click)="presentRadioPopover($event)">
-      <ion-icon name="person"></ion-icon>
-    </button>
-    <button (click)="presentLongListPopover($event)">
-      <ion-icon name="search"></ion-icon>
-    </button>
-  </ion-buttons>
-  <ion-title>Popover</ion-title>
-  <ion-buttons end>
-    <button (click)="presentListPopover($event)">
-      <ion-icon name="options"></ion-icon>
-    </button>
-    <button (click)="presentRadioPopover($event)">
-      <ion-icon name="more"></ion-icon>
-    </button>
-  </ion-buttons>
-</ion-navbar>
+<ion-header>
+
+  <ion-navbar primary>
+    <ion-buttons left>
+      <button (click)="presentRadioPopover($event)">
+        <ion-icon name="person"></ion-icon>
+      </button>
+      <button (click)="presentLongListPopover($event)">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Popover</ion-title>
+    <ion-buttons end>
+      <button (click)="presentListPopover($event)">
+        <ion-icon name="options"></ion-icon>
+      </button>
+      <button (click)="presentRadioPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
 
 <ion-content #popoverContent>
+
   <ion-list>
     <button ion-item (click)="presentListPopover($event)" class="e2eOpenListPopover">
       Present List Popover
@@ -55,16 +61,22 @@
 
     <div>Aenean rhoncus urna at interdum blandit. Donec ac massa nec libero vehicula tincidunt. Sed sit amet hendrerit risus. Aliquam vitae vestibulum ipsum, non feugiat orci. Vivamus eu rutrum elit. Nulla dapibus tortor non dignissim pretium. Nulla in luctus turpis. Etiam non mattis tortor, at aliquet ex. Nunc ut ante varius, auctor dui vel, volutpat elit. Nunc laoreet augue sit amet ultrices porta. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum pellentesque lobortis est, ut tincidunt ligula mollis sit amet. In porta risus arcu, quis pellentesque dolor mattis non. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</div>
   </div>
+
 </ion-content>
 
-<ion-toolbar position="bottom">
-  <ion-title>Popover</ion-title>
-  <ion-buttons start>
-    <button (click)="presentListPopover($event)">
-      <ion-icon name="more"></ion-icon>
-    </button>
-    <button (click)="presentLongListPopover($event)">
-      <ion-icon name="search"></ion-icon>
-    </button>
-  </ion-buttons>
-</ion-toolbar>
+
+<ion-footer>
+
+  <ion-toolbar>
+    <ion-title>Popover</ion-title>
+    <ion-buttons start>
+      <button (click)="presentListPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+      <button (click)="presentLongListPopover($event)">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-footer>

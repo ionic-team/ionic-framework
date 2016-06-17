@@ -12,13 +12,15 @@ ionicBootstrap(E2EApp);
 
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>
-      Landing Page Comp
-    </ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        Landing Page Comp
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
 
-  <ion-content class="home">
+  <ion-content>
     <button primary (click)="goToPage()" class="nested-children-test">
       Nested Children Test
     </button>
@@ -37,13 +39,15 @@ class LandingPage{
 
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>
-      First Page Comp
-    </ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        First Page Comp
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
 
-  <ion-content class="home">
+  <ion-content>
     <h3>Sub Header First Page</h3>
     <ion-nav [root]="root"></ion-nav>
   </ion-content>
@@ -55,13 +59,15 @@ class FirstPage{
 
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>
-      Second Page Comp
-    </ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        Second Page Comp
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
 
-  <ion-content class="home">
+  <ion-content>
     <h3>Sub Header Second Page</h3>
     <ion-nav [root]="root"></ion-nav>
   </ion-content>
@@ -73,13 +79,15 @@ class SecondPage{
 
 @Component({
   template: `
-  <ion-navbar *navbar>
-    <ion-title>
-      Third Page Comp
-    </ion-title>
-  </ion-navbar>
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        Third Page Comp
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
 
-  <ion-content class="home">
+  <ion-content>
     <h3>Sub Header Third Page</h3>
     <ion-nav [root]="root"></ion-nav>
   </ion-content>

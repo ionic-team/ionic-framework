@@ -1,9 +1,14 @@
+<ion-header>
 
-<ion-navbar *navbar>
-  <ion-title>Loading</ion-title>
-</ion-navbar>
+  <ion-navbar>
+    <ion-title>Loading</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
 
 <ion-content padding>
+
   <button block (click)="presentLoadingIos()">iOS Spinner</button>
   <button block (click)="presentLoadingDots()">Dots Spinner</button>
   <button block (click)="presentLoadingBubbles()">Bubbles Spinner</button>
@@ -14,13 +19,19 @@
   <button block (click)="presentLoadingText()" dark>Content Only w/ Nav</button>
   <button block (click)="presentLoadingMultiple()" danger>Multiple Loading</button>
   <button block (click)="presentLoadingMultipleNav()" danger>Multiple Nav Loading</button>
+
 </ion-content>
 
-<ion-toolbar position="bottom">
-  <ion-buttons end>
-    <button (click)="goToPage2()">
-      Navigate
-      <ion-icon name="arrow-forward"></ion-icon>
-    </button>
-  </ion-buttons>
-</ion-toolbar>
+
+<ion-footer>
+
+  <ion-toolbar>
+    <ion-buttons end>
+      <button (click)="goToPage2()">
+        Navigate
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-footer>

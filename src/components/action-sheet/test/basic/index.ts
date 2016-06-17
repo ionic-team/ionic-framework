@@ -154,12 +154,14 @@ class E2EPage {
 
 @Component({
   template: `
-    <ion-toolbar>
-      <ion-buttons start>
-        <button (click)="dismiss()">Close</button>
-      </ion-buttons>
-      <ion-title>Modal</ion-title>
-    </ion-toolbar>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons start>
+          <button (click)="dismiss()">Close</button>
+        </ion-buttons>
+        <ion-title>Modal</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-content padding>
       Hi, I'm Bob, and I'm a modal.
     </ion-content>
