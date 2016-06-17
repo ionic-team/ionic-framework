@@ -1,12 +1,14 @@
 import {Component, ElementRef, Optional, NgZone, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 
-import {Ion} from '../ion';
 import {App} from '../app/app';
+import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
 import {nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
-import {ViewController} from '../nav/view-controller';
 import {ScrollView} from '../../util/scroll-view';
+import {Tabs} from '../tabs/tabs';
+import {ViewController} from '../nav/view-controller';
+
 
 /**
  * @name Content
@@ -57,9 +59,14 @@ import {ScrollView} from '../../util/scroll-view';
   }
 })
 export class Content extends Ion {
-  private _paddingTop: number = 0;
-  private _paddingBottom: number = 0;
-  private _scrollPadding: number = 0;
+  private _computedTop: number;
+  private _computedBottom: number;
+  private _paddingTop: number;
+  private _paddingBottom: number;
+  private _scrollPadding: number;
+  private _headerHeight: number;
+  private _footerHeight: number;
+  private _tabbarOnTop: boolean = null;
   private _inputPolling: boolean = false;
   private _scroll: ScrollView;
   private _scLsn: Function;
@@ -72,7 +79,8 @@ export class Content extends Ion {
     private _app: App,
     private _keyboard: Keyboard,
     private _zone: NgZone,
-    @Optional() viewCtrl: ViewController
+    @Optional() viewCtrl: ViewController,
+    @Optional() private _tabs: Tabs
   ) {
     super(_elementRef);
     this._sbPadding = _config.getBoolean('statusbarPadding', false);
@@ -308,6 +316,7 @@ export class Content extends Ion {
 
   /**
    * @private
+   * DOM WRITE
    */
   addCssClass(className: string) {
     this.getNativeElement().classList.add(className);
@@ -315,6 +324,7 @@ export class Content extends Ion {
 
   /**
    * @private
+   * DOM WRITE
    */
   removeCssClass(className: string) {
     this.getNativeElement().classList.remove(className);
@@ -322,6 +332,7 @@ export class Content extends Ion {
 
   /**
    * @private
+   * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
     this._scrollEle.style[prop] = val;
@@ -368,6 +379,7 @@ export class Content extends Ion {
 
   /**
    * @private
+   * DOM WRITE
    * Adds padding to the bottom of the scroll element when the keyboard is open
    * so content below the keyboard can be scrolled into view.
    */
@@ -382,16 +394,7 @@ export class Content extends Ion {
 
   /**
    * @private
-   */
-  setContentPadding(paddingTop: number, paddingBottom: number) {
-    this._paddingTop = paddingTop;
-    this._paddingBottom = paddingBottom;
-    this._scrollEle.style.paddingTop = (paddingTop > 0 ? paddingTop + 'px' : '');
-    this._scrollEle.style.paddingBottom = (paddingBottom > 0 ? paddingBottom + 'px' : '');
-  }
-
-  /**
-   * @private
+   * DOM WRITE
    */
   clearScrollPaddingFocusOut() {
     if (!this._inputPolling) {
@@ -406,4 +409,97 @@ export class Content extends Ion {
     }
   }
 
+  /**
+   * @private
+   * DOM READ
+   */
+  readDimensions() {
+    this._computedTop = 0 ;
+    this._computedBottom = 0;
+    this._paddingTop = 0;
+    this._paddingBottom = 0;
+    this._headerHeight = 0;
+    this._footerHeight = 0;
+
+    let ele: HTMLElement = this._elementRef.nativeElement;
+    let parentEle: HTMLElement = ele.parentElement;
+    let computedStyle: any;
+
+    for (var i = 0; i < parentEle.children.length; i++) {
+      ele = <HTMLElement>parentEle.children[i];
+
+      if (ele.tagName === 'ION-CONTENT') {
+        computedStyle = getComputedStyle(ele);
+        this._computedTop = parsePxUnit(computedStyle.paddingTop);
+        this._paddingTop += this._computedTop;
+
+        this._computedBottom = parsePxUnit(computedStyle.paddingBottom);
+        this._paddingBottom += this._computedBottom;
+
+      } else if (ele.tagName === 'ION-HEADER') {
+        this._headerHeight = ele.clientHeight;
+        this._paddingTop += this._headerHeight;
+
+      } else if (ele.tagName === 'ION-FOOTER') {
+        this._footerHeight = ele.clientHeight;
+        this._paddingBottom += this._footerHeight;
+      }
+    }
+
+    ele = parentEle;
+    let tabbarEle: HTMLElement;
+    let tabbarOnTop: boolean;
+
+    while (ele && ele.tagName !== 'ION-MODAL' && !ele.classList.contains('tab-subpage')) {
+
+      if (ele.tagName === 'ION-TABS') {
+        tabbarEle = <HTMLElement>ele.firstElementChild;
+        tabbarOnTop = ele.getAttribute('tabbarplacement') === 'top';
+
+        if (tabbarOnTop) {
+          this._paddingTop += tabbarEle.clientHeight;
+
+        } else {
+          this._paddingBottom += tabbarEle.clientHeight;
+        }
+
+        if (this._tabbarOnTop === null) {
+          // this is the first tabbar found, remember it's position
+          this._tabbarOnTop = tabbarOnTop;
+        }
+      }
+
+      ele = ele.parentElement;
+    }
+  }
+
+  /**
+   * @private
+   * DOM WRITE
+   */
+  writeDimensions() {
+    // only add inline padding styles if the computed padding value, which would
+    // have come from the app's css, is different than the new padding value
+    if (this._paddingTop !== this._computedTop) {
+      this._scrollEle.style.paddingTop = (this._paddingTop > 0 ? this._paddingTop + 'px' : '');
+    }
+
+    if (this._paddingBottom !== this._computedBottom) {
+      this._scrollEle.style.paddingBottom = (this._paddingBottom > 0 ? this._paddingBottom + 'px' : '');
+    }
+
+    if (this._tabbarOnTop && this._tabs) {
+      if (this._tabbarOnTop) {
+        this._tabs.setTabbarPosition(this._headerHeight, -1);
+
+      } else {
+        this._tabs.setTabbarPosition(-1, 0);
+      }
+    }
+  }
+
+}
+
+function parsePxUnit(val: string): number {
+  return (val.indexOf('px') > 0) ? parseInt(val, 10) : 0;
 }

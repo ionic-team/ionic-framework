@@ -8,25 +8,31 @@ import {Navbar} from '../navbar/navbar';
 import {ViewController} from '../nav/view-controller';
 
 
+/**
+ * @private
+ */
 @Directive({
   selector: 'ion-header'
 })
 export class Header {
 
-  constructor(@Optional() viewCtr: ViewController) {
-    viewCtr && viewCtr.setHeader(this);
+  constructor(@Optional() viewCtrl: ViewController) {
+    viewCtrl && viewCtrl.setHeader(this);
   }
 
 }
 
 
+/**
+ * @private
+ */
 @Directive({
   selector: 'ion-footer'
 })
 export class Footer {
 
-  constructor(@Optional() viewCtr: ViewController) {
-    viewCtr && viewCtr.setFooter(this);
+  constructor(@Optional() viewCtrl: ViewController) {
+    viewCtrl && viewCtrl.setFooter(this);
   }
 
 }
