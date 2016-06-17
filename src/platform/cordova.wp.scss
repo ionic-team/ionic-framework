@@ -7,16 +7,15 @@
 $cordova-wp-statusbar-padding-modal-max-width:         $cordova-statusbar-padding-modal-max-width !default;
 
 
-@include navbar-section-statusbar-padding($toolbar-wp-height);
-
-.tab-subpage,
 ion-nav > ion-page,
+ion-nav > ion-page > ion-header,
+ion-tab > ion-page > ion-header,
 ion-menu {
   @include toolbar-statusbar-padding($toolbar-wp-height, $content-wp-padding);
 }
 
 @media only screen and (max-width: $cordova-wp-statusbar-padding-modal-max-width) {
-  .modal-wrapper > ion-modal-inner {
+  .modal-wrapper > ion-page > ion-header {
     @include toolbar-statusbar-padding($toolbar-wp-height, $content-wp-padding);
   }
 }
