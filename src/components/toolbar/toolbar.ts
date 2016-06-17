@@ -12,20 +12,11 @@ import {ViewController} from '../nav/view-controller';
   selector: 'ion-header'
 })
 export class Header {
-  private _h: number = 0;
 
-  constructor(viewCtr: ViewController, private _elementRef: ElementRef) {
-    viewCtr.setHeader(this);
+  constructor(@Optional() viewCtr: ViewController) {
+    viewCtr && viewCtr.setHeader(this);
   }
 
-  setHeight(heightPixels: number) {
-    this._h = heightPixels;
-    this._elementRef.nativeElement.style.height = (heightPixels > 0 ? heightPixels + 'px' : '');
-  }
-
-  getHeight(): number {
-    return this._h;
-  }
 }
 
 
@@ -33,20 +24,11 @@ export class Header {
   selector: 'ion-footer'
 })
 export class Footer {
-  private _h: number = 0;
 
-  constructor(viewCtr: ViewController, private _elementRef: ElementRef) {
-    viewCtr.setFooter(this);
+  constructor(@Optional() viewCtr: ViewController) {
+    viewCtr && viewCtr.setFooter(this);
   }
 
-  setHeight(heightPixels: number) {
-    this._h = heightPixels;
-    this._elementRef.nativeElement.style.height = (heightPixels > 0 ? heightPixels + 'px' : '');
-  }
-
-  getHeight(): number {
-    return this._h;
-  }
 }
 
 
@@ -109,7 +91,7 @@ export class ToolbarBase extends Ion {
  * A Toolbar is a generic bar that is positioned above or below content.
  * Unlike a [Navbar](../../nav/Navbar), a toolbar can be used as a subheader.
  * When toolbars are placed within an `<ion-header>` or `<ion-footer>`,
- * they stay fixed in their respective location. When placed within
+ * the toolbars stay fixed in their respective location. When placed within
  * `<ion-content>`, toolbars will scroll with the content.
  *
  *
