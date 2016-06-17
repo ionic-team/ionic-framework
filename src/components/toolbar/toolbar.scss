@@ -1,8 +1,8 @@
 @import "../../globals.core";
 
+
 // Toolbar
 // --------------------------------------------------
-
 
 .toolbar {
   display: flex;
@@ -67,6 +67,7 @@ ion-buttons div {
   pointer-events: auto;
 }
 
+
 // Transparent Toolbar
 // --------------------------------------------------
 
@@ -83,6 +84,7 @@ ion-buttons,
 
   transform: translateZ(0);
 }
+
 
 // Navbar
 // --------------------------------------------------
