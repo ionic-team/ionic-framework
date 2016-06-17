@@ -1,12 +1,10 @@
-
-ion-tabs {
-  position: relative;
-  top: auto;
-  height: auto;
+ion-tabs[no-navbar] {
   margin-bottom: 20px;
 }
 
-ion-navbar-section,
-ion-content-section {
-  display: none !important;
+ion-tabs[no-navbar],
+ion-tabs[no-navbar] ion-tabbar {
+  position: relative;
+  top: auto;
+  height: auto;
 }
