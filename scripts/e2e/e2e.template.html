@@ -115,7 +115,6 @@
 <body>
 
   <ion-app>
-    <ion-loading-icon></ion-loading-icon>
   </ion-app>
 
   <script>
@@ -124,8 +123,6 @@
     } else {
       document.body.classList.remove('rtl');
     }
-
-
     System.import('index.js').then(function(m) {}, console.error.bind(console));
   </script>
 

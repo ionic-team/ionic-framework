@@ -88,36 +88,3 @@ click-block {
 .click-block-active {
   transform: translate3d(0, 0, 0);
 }
-
-
-// Loading Icon
-// --------------------------------------------------
-
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(359deg);
-  }
-}
-
-ion-loading-icon {
-  display: flex;
-
-  align-self: center;
-
-  margin: auto;
-
-  font-family: "Ionicons";
-
-  font-size: 128px;
-  color: #666;
-
-  animation: rotation 45s infinite linear;
-
-  &::before {
-    content: "\f44e";
-  }
-}
