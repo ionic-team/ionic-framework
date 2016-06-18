@@ -2,8 +2,10 @@ import {Component, ElementRef, Optional, ViewChild, ViewContainerRef, EventEmitt
 
 import {App} from '../app/app';
 import {Config} from '../../config/config';
+import {Content} from '../content/content';
 import {Ion} from '../ion';
 import {isBlank, isTrueProperty} from '../../util/util';
+import {nativeRaf} from '../../util/dom';
 import {NavController} from '../nav/nav-controller';
 import {Platform} from '../../platform/platform';
 import {Tab} from './tab';
@@ -355,7 +357,7 @@ export class Tabs extends Ion {
     let selectedPage = selectedTab.getActive();
     selectedPage && selectedPage.fireWillEnter();
 
-    selectedTab.load(opts, () => {
+    selectedTab.load(opts, (initialLoad: boolean) => {
 
       selectedTab.ionSelect.emit(selectedTab);
       this.ionChange.emit(selectedTab);
@@ -388,6 +390,18 @@ export class Tabs extends Ion {
         this.selectHistory.push(selectedTab.id);
       }
 
+      // if this is not the Tab's initial load then we need
+      // to refresh the tabbar and content dimensions to be sure
+      // they're lined up correctly
+      if (!initialLoad && selectedPage) {
+        var content = <Content>selectedPage.getContent();
+        if (content && content instanceof Content) {
+          nativeRaf(() => {
+            content.readDimensions();
+            content.writeDimensions();
+          });
+        }
+      }
     });
   }
 
@@ -501,6 +515,7 @@ export class Tabs extends Ion {
 
   /**
    * @private
+   * DOM WRITE
    */
   setTabbarPosition(top: number, bottom: number) {
     let tabbarEle = <HTMLElement>this._tabbar.nativeElement;

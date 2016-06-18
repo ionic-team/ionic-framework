@@ -247,12 +247,12 @@ export class Tab extends NavController {
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
       this.push(this.root, this.rootParams, opts).then(() => {
-        done();
+        done(true);
       });
       this._loaded = true;
 
     } else {
-      done();
+      done(false);
     }
   }
 
