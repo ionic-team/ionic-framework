@@ -488,7 +488,7 @@ export class Content extends Ion {
       this._scrollEle.style.paddingBottom = (this._paddingBottom > 0 ? this._paddingBottom + 'px' : '');
     }
 
-    if (this._tabbarOnTop && this._tabs) {
+    if (this._tabbarOnTop !== null && this._tabs) {
       if (this._tabbarOnTop) {
         this._tabs.setTabbarPosition(this._headerHeight, -1);
 

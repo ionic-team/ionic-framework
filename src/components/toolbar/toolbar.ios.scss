@@ -37,27 +37,41 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 }
 
 
+// iOS Header Toolbar
+// --------------------------------------------------
+
+ion-header {
+  border: 0;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: $toolbar-ios-border-color;
+}
+
+&.hairlines ion-header {
+  border-bottom-width: $hairlines-width;
+}
+
+
+// iOS Footer Toolbar
+// --------------------------------------------------
+
+ion-footer {
+  border: 0;
+  border-top-width: 1px;
+  border-style: solid;
+  border-color: $toolbar-ios-border-color;
+}
+
+&.hairlines ion-footer {
+  border-top-width: $hairlines-width;
+}
+
+
 // iOS Toolbar Background
 // --------------------------------------------------
 
 .toolbar-background {
-  border-bottom-width: 1px;
-  border-style: solid;
-  border-color: $toolbar-ios-border-color;
   background: $toolbar-ios-background;
-}
-
-&.hairlines .toolbar-background {
-  border-bottom-width: $hairlines-width;
-}
-
-.toolbar[position=bottom] .toolbar-background {
-  border-top-width: 1px;
-  border-bottom-width: 0;
-}
-
-&.hairlines .toolbar[position=bottom] .toolbar-background {
-  border-top-width: $hairlines-width;
 }
 
 
