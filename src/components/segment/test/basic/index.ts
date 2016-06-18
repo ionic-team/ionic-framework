@@ -7,7 +7,7 @@ import {ionicBootstrap} from '../../../../../src';
   templateUrl: 'main.html',
   providers: [FormBuilder]
 })
-class E2EApp {
+class E2EPage {
   relationship: string = 'enemies';
   modelStyle: string = 'B';
   appType: string = 'free';
@@ -37,6 +37,13 @@ class E2EApp {
     console.log('Submitting form', this.myForm.value);
     ev.preventDefault();
   }
+}
+
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+class E2EApp {
+  root = E2EPage;
 }
 
 ionicBootstrap(E2EApp);
