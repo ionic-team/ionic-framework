@@ -652,7 +652,12 @@ export class Animation {
       if (addWillChange) {
         for (prop in this._fx) {
           if (this._fx[prop].wc !== '') {
-            wc.push(this._fx[prop].wc);
+            if (this._fx[prop].wc === 'webkitTransform') {
+              wc.push('transform', '-webkit-transform');
+
+            } else {
+              wc.push(this._fx[prop].wc);
+            }
           }
         }
       }
