@@ -123,7 +123,7 @@ import {ViewController} from '../nav/view-controller';
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
-  template: '<div #viewport></div>',
+  template: '<div #viewport></div><div class="nav-decor"></div>',
   encapsulation: ViewEncapsulation.None,
 })
 export class Tab extends NavController {

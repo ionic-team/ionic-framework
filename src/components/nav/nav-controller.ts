@@ -1324,9 +1324,6 @@ export class NavController extends Ion {
         // class to the nav when it's finished its first transition
         if (!this._init) {
           this._init = true;
-          if (!this.isPortal) {
-            this._renderer.setElementClass(this.getNativeElement(), 'has-views', true);
-          }
         }
 
       } else {

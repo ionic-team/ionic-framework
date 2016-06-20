@@ -7,7 +7,7 @@
 $content-ios-outer-background:          #efeff4 !default;
 $content-ios-padding:                   $content-padding !default;
 $content-ios-margin:                    $content-margin !default;
-$content-ios-has-views-background:      #000 !default;
+$content-ios-transition-background:     #000 !default;
 
 ion-content {
   background-color: $background-ios-color;
@@ -17,9 +17,21 @@ ion-content {
   background: $content-ios-outer-background;
 }
 
-ion-nav.has-views,
-ion-tab.has-views {
-  background: $content-ios-has-views-background;
+ion-page.show-page ~ .nav-decor {
+  // when ios pages transition, the leaving page grays out
+  // this is the black square behind all pages so they gray out
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  background: $content-ios-transition-background;
+
+  pointer-events: none;
 }
 
 
