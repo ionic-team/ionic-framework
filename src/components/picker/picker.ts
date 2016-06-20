@@ -9,6 +9,7 @@ import {Key} from '../../util/key';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 import {raf, cancelRaf, CSS, pointerCoord} from '../../util/dom';
+import {UIEventManager} from '../../util/ui-event-manager';
 
 
 /**
@@ -99,12 +100,6 @@ export class Picker extends ViewController {
     '[style.min-width]': 'col.columnWidth',
     '[class.picker-opts-left]': 'col.align=="left"',
     '[class.picker-opts-right]': 'col.align=="right"',
-    '(touchstart)': 'pointerStart($event)',
-    '(touchmove)': 'pointerMove($event)',
-    '(touchend)': 'pointerEnd($event)',
-    '(mousedown)': 'pointerStart($event)',
-    '(mousemove)': 'pointerMove($event)',
-    '(body:mouseup)': 'pointerEnd($event)'
   }
 })
 class PickerColumnCmp {
@@ -115,7 +110,6 @@ class PickerColumnCmp {
   optHeight: number;
   velocity: number;
   pos: number[] = [];
-  msPrv: number = 0;
   startY: number = null;
   rafId: number;
   bounceFrom: number;
@@ -124,10 +118,11 @@ class PickerColumnCmp {
   rotateFactor: number;
   lastIndex: number;
   receivingEvents: boolean = false;
+  events: UIEventManager = new UIEventManager();
 
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(config: Config, private _sanitizer: DomSanitizationService) {
+  constructor(config: Config, private elementRef: ElementRef, private _sanitizer: DomSanitizationService) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
   }
 
@@ -142,15 +137,21 @@ class PickerColumnCmp {
 
     // set the scroll position for the selected option
     this.setSelected(this.col.selectedIndex, 0);
+
+    // Listening for pointer events    
+    this.events.pointerEventsRef(this.elementRef,
+      (ev: any) => this.pointerStart(ev),
+      (ev: any) => this.pointerMove(ev),
+      (ev: any) => this.pointerEnd(ev)
+    );
+  }
+  
+  ngOnDestroy() {
+    this.events.unlistenAll();
   }
 
-  pointerStart(ev: UIEvent) {
+  pointerStart(ev: UIEvent): boolean {
     console.debug('picker, pointerStart', ev.type, this.startY);
-
-    if (this.isPrevented(ev)) {
-      // do not both with mouse events if a touch event already fired
-      return;
-    }
 
     // cancel any previous raf's that haven't fired yet
     cancelRaf(this.rafId);
@@ -176,6 +177,7 @@ class PickerColumnCmp {
 
     this.minY = (minY * this.optHeight * -1);
     this.maxY = (maxY * this.optHeight * -1);
+    return true;
   }
 
   pointerMove(ev: UIEvent) {
@@ -183,10 +185,6 @@ class PickerColumnCmp {
     ev.stopPropagation();
 
     if (this.startY === null) {
-      return;
-    }
-
-    if (this.isPrevented(ev)) {
       return;
     }
 
@@ -214,10 +212,6 @@ class PickerColumnCmp {
   }
 
   pointerEnd(ev: UIEvent) {
-    if (this.isPrevented(ev)) {
-      return;
-    }
-
     if (!this.receivingEvents) {
       return;
     }
@@ -409,22 +403,6 @@ class PickerColumnCmp {
       var y = (selectedIndex * this.optHeight) * -1;
       this.update(y, 150, true, true);
     }
-  }
-
-  isPrevented(ev: UIEvent): boolean {
-    let now = Date.now();
-    if (ev.type.indexOf('touch') > -1) {
-      // this is a touch event, so prevent mouse events for a while
-      this.msPrv = now + 2000;
-
-    } else if (this.msPrv > now && ev.type.indexOf('mouse') > -1) {
-      // this is a mouse event, and a touch event already happend recently
-      // prevent the calling method from continuing
-      ev.preventDefault();
-      ev.stopPropagation();
-      return true;
-    }
-    return false;
   }
 
 }
