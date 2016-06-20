@@ -12,8 +12,8 @@ export class ItemSlidingGesture extends DragGesture {
   selectedContainer: ItemSliding = null;
   openContainer: ItemSliding = null;
 
-  constructor(public list: List, public listEle: HTMLElement) {
-    super(listEle, {
+  constructor(public list: List) {
+    super(list.getNativeElement(), {
       direction: 'x',
       threshold: DRAG_THRESHOLD
     });
