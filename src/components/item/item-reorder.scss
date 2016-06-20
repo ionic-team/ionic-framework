@@ -1,0 +1,48 @@
+
+// Item reorder
+// --------------------------------------------------
+
+ion-reorder {
+  display: none;
+
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 40px;
+  height: 100%;
+
+  font-size: 1.6em;
+
+  pointer-events: all;
+  touch-action: manipulation;
+  
+  ion-icon {
+    pointer-events: none;
+  }
+}
+
+.reorder-enabled {
+
+  ion-item {
+    will-change: transform;
+  }
+
+  ion-reorder {
+    display: flex;
+  }
+}
+
+ion-item.reorder-active {
+  z-index: 4;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+  opacity: .8;
+  transition: none;
+  
+  pointer-events: none;
+
+  ion-reorder {
+    pointer-events: none;
+  }
+}
