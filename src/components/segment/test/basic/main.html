@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-bottom>
     <ion-segment id="segment" [(ngModel)]="relationship" (ionChange)="onSegmentChanged($event)">
       <ion-segment-button value="friends" (ionSelect)="onSegmentSelected($event)" class="e2eSegmentFriends">
         Friends
@@ -11,7 +11,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-buttons end>
       <button>
         <ion-icon name="search"></ion-icon>
@@ -117,7 +117,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top no-border-bottom>
     <ion-segment [(ngModel)]="appType" danger>
       <ion-segment-button value="paid">
         Default
@@ -131,7 +131,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="appType" dark [disabled]="isDisabled">
       <ion-segment-button value="paid">
         Default

@@ -68,7 +68,7 @@ export class Animation {
     var i: number;
 
     if (ele) {
-      if (Array.isArray(ele)) {
+      if (ele.length) {
         for (i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }

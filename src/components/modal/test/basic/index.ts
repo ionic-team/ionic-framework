@@ -188,7 +188,7 @@ class ModalPassData {
         <ion-title>Toolbar 1</ion-title>
       </ion-toolbar>
 
-      <ion-toolbar>
+      <ion-toolbar no-border-top>
         <ion-title>Toolbar 2</ion-title>
       </ion-toolbar>
     </ion-header>

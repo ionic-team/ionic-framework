@@ -38,41 +38,35 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 }
 
 
-// iOS Header Toolbar
-// --------------------------------------------------
-
-ion-header {
-  border: 0;
-  border-bottom-width: 1px;
-  border-style: solid;
-  border-color: $toolbar-ios-border-color;
-}
-
-&.hairlines ion-header {
-  border-bottom-width: $hairlines-width;
-}
-
-
-// iOS Footer Toolbar
-// --------------------------------------------------
-
-ion-footer {
-  border: 0;
-  border-top-width: 1px;
-  border-style: solid;
-  border-color: $toolbar-ios-border-color;
-}
-
-&.hairlines ion-footer {
-  border-top-width: $hairlines-width;
-}
-
-
 // iOS Toolbar Background
 // --------------------------------------------------
 
 .toolbar-background {
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: $toolbar-ios-border-color;
   background: $toolbar-ios-background;
+}
+
+&.hairlines .toolbar-background {
+  border-top-width: $hairlines-width;
+  border-bottom-width: $hairlines-width;
+}
+
+
+// iOS Toolbar Borders
+// --------------------------------------------------
+
+ion-header .toolbar:first-child .toolbar-background,
+ion-menu > .toolbar:first-child .toolbar-background,
+.toolbar[no-border-top] .toolbar-background {
+  border-top-width: 0;
+}
+
+ion-footer .toolbar:last-child .toolbar-background,
+.toolbar[no-border-bottom] .toolbar-background {
+  border-bottom-width: 0;
 }
 
 

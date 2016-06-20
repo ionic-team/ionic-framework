@@ -209,6 +209,9 @@ class FullPage {
           <button>S1g</button>
         </ion-buttons>
       </ion-navbar>
+      <ion-toolbar no-border-top>
+        <ion-title>I'm a sub header!</ion-title>
+      </ion-toolbar>
     </ion-header>
 
     <ion-content padding>
@@ -227,8 +230,11 @@ class FullPage {
     </ion-content>
 
     <ion-footer>
-      <ion-toolbar>
-        Footer
+      <ion-toolbar no-border-bottom>
+        I'm a sub footer!
+      </ion-toolbar>
+      <ion-toolbar no-border-top>
+        <ion-title>Footer</ion-title>
       </ion-toolbar>
     </ion-footer>
   `
@@ -281,6 +287,11 @@ class PrimaryHeaderPage {
     </ion-header>
 
     <ion-content>
+
+      <ion-toolbar no-border-top>
+        I'm a sub header in the content!
+      </ion-toolbar>
+
       <ion-list>
 
         <ion-item>
@@ -296,7 +307,17 @@ class PrimaryHeaderPage {
         <button ion-item (click)="setRoot()">setRoot(FirstPage)</button>
         <button ion-item (click)="toggleBackButton()">Toggle hideBackButton</button>
         <button ion-item (click)="setBackButtonText()">Set Back Button Text</button>
+        <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       </ion-list>
+
+      <ion-toolbar no-border-bottom>
+        I'm a sub footer in the content!
+      </ion-toolbar>
+
+      <ion-toolbar no-border-bottom no-border-top>
+        And I'm a sub footer in the content too!
+      </ion-toolbar>
+
     </ion-content>
 
     <ion-footer>
