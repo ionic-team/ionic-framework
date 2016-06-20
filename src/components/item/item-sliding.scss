@@ -73,7 +73,7 @@ ion-item-sliding.active-slide {
     opacity: 1;
     transition: all 300ms cubic-bezier(.36, .66, .04, 1);
 
-    pointer-events: all;
+    pointer-events: none;
   }
 
   ion-item-options {
