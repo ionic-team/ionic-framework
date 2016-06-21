@@ -158,6 +158,8 @@ export class Tabs extends Ion {
   private _onReady: any = null;
   private _sbPadding: boolean;
   private _useHighlight: boolean;
+  private _top: number;
+  private _bottom: number;
 
   /**
    * @private
@@ -518,11 +520,15 @@ export class Tabs extends Ion {
    * DOM WRITE
    */
   setTabbarPosition(top: number, bottom: number) {
-    let tabbarEle = <HTMLElement>this._tabbar.nativeElement;
+    if (this._top !== top || this._bottom !== bottom) {
+      let tabbarEle = <HTMLElement>this._tabbar.nativeElement;
+      tabbarEle.style.top = (top > -1 ? top + 'px' : '');
+      tabbarEle.style.bottom = (bottom > -1 ? bottom + 'px' : '');
+      tabbarEle.classList.add('show-tabbar');
 
-    tabbarEle.style.top = (top > -1 ? top + 'px' : '');
-    tabbarEle.style.bottom = (bottom > -1 ? bottom + 'px' : '');
-    tabbarEle.classList.add('show-tabbar');
+      this._top = top;
+      this._bottom = bottom;
+    }
   }
 
 }

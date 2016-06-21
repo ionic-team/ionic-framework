@@ -214,7 +214,7 @@ class FullPage {
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content padding fullscreen>
       <p><button class="e2eFrom3To2" (click)="nav.pop()">Pop</button></p>
       <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
       <p><button (click)="pushFullPage()">Push to FullPage</button></p>

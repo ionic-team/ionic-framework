@@ -1,4 +1,4 @@
-import {Component, ElementRef, Optional, NgZone, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, Optional, ViewEncapsulation} from '@angular/core';
 
 import {App} from '../app/app';
 import {Ion} from '../ion';
@@ -8,6 +8,7 @@ import {nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
 import {ScrollView} from '../../util/scroll-view';
 import {Tabs} from '../tabs/tabs';
 import {ViewController} from '../nav/view-controller';
+import {isTrueProperty} from '../../util/util';
 
 
 /**
@@ -59,19 +60,23 @@ import {ViewController} from '../nav/view-controller';
   }
 })
 export class Content extends Ion {
-  private _computedTop: number;
-  private _computedBottom: number;
   private _paddingTop: number;
+  private _paddingRight: number;
   private _paddingBottom: number;
+  private _paddingLeft: number;
+  private _lastTop: number;
+  private _lastBottom: number;
   private _scrollPadding: number;
   private _headerHeight: number;
   private _footerHeight: number;
-  private _tabbarOnTop: boolean = null;
+  private _tabbarHeight: number;
+  private _tabbarPlacement: string;
   private _inputPolling: boolean = false;
   private _scroll: ScrollView;
   private _scLsn: Function;
   private _scrollEle: HTMLElement;
   private _sbPadding: boolean;
+  private _fullscreen: boolean;
 
   constructor(
     private _elementRef: ElementRef,
@@ -323,6 +328,22 @@ export class Content extends Ion {
   }
 
   /**
+   * @input {boolean} By default, content is positioned between the headers
+   * and footers. However, using `fullscreen="true"`, the content will be
+   * able to scroll "under" the headers and footers. At first glance the
+   * fullscreen option may not look any different than the default, however,
+   * by adding a transparency effect to a header then the content can be
+   * seen under the header as the user scrolls.
+   */
+  @Input()
+  get fullscreen(): boolean {
+    return !!this._fullscreen;
+  }
+  set fullscreen(val: boolean) {
+    this._fullscreen = isTrueProperty(val);
+  }
+
+  /**
    * @private
    * DOM WRITE
    */
@@ -414,13 +435,12 @@ export class Content extends Ion {
    * DOM READ
    */
   readDimensions() {
-    this._computedTop = 0 ;
-    this._computedBottom = 0;
     this._paddingTop = 0;
+    this._paddingRight = 0;
     this._paddingBottom = 0;
+    this._paddingLeft = 0;
     this._headerHeight = 0;
-    this._footerHeight = 0;
-    this._tabbarOnTop = null;
+    this._tabbarPlacement = null;
 
     let ele: HTMLElement = this._elementRef.nativeElement;
     let parentEle: HTMLElement = ele.parentElement;
@@ -430,43 +450,34 @@ export class Content extends Ion {
       ele = <HTMLElement>parentEle.children[i];
 
       if (ele.tagName === 'ION-CONTENT') {
-        computedStyle = getComputedStyle(ele);
-        this._computedTop = parsePxUnit(computedStyle.paddingTop);
-        this._paddingTop += this._computedTop;
-
-        this._computedBottom = parsePxUnit(computedStyle.paddingBottom);
-        this._paddingBottom += this._computedBottom;
+        if (this._fullscreen) {
+          computedStyle = getComputedStyle(ele);
+          this._paddingTop = parsePxUnit(computedStyle.paddingTop);
+          this._paddingBottom = parsePxUnit(computedStyle.paddingBottom);
+          this._paddingRight = parsePxUnit(computedStyle.paddingRight);
+          this._paddingLeft = parsePxUnit(computedStyle.paddingLeft);
+        }
 
       } else if (ele.tagName === 'ION-HEADER') {
         this._headerHeight = ele.clientHeight;
-        this._paddingTop += this._headerHeight;
 
       } else if (ele.tagName === 'ION-FOOTER') {
         this._footerHeight = ele.clientHeight;
-        this._paddingBottom += this._footerHeight;
       }
     }
 
     ele = parentEle;
     let tabbarEle: HTMLElement;
-    let tabbarOnTop: boolean;
 
     while (ele && ele.tagName !== 'ION-MODAL' && !ele.classList.contains('tab-subpage')) {
 
       if (ele.tagName === 'ION-TABS') {
         tabbarEle = <HTMLElement>ele.firstElementChild;
-        tabbarOnTop = ele.getAttribute('tabbarplacement') === 'top';
+        this._tabbarHeight = tabbarEle.clientHeight;
 
-        if (tabbarOnTop) {
-          this._paddingTop += tabbarEle.clientHeight;
-
-        } else {
-          this._paddingBottom += tabbarEle.clientHeight;
-        }
-
-        if (this._tabbarOnTop === null) {
+        if (this._tabbarPlacement === null) {
           // this is the first tabbar found, remember it's position
-          this._tabbarOnTop = tabbarOnTop;
+          this._tabbarPlacement = ele.getAttribute('tabbarplacement');
         }
       }
 
@@ -479,18 +490,54 @@ export class Content extends Ion {
    * DOM WRITE
    */
   writeDimensions() {
-    // only add inline padding styles if the computed padding value, which would
-    // have come from the app's css, is different than the new padding value
-    if (this._paddingTop !== this._computedTop) {
-      this._scrollEle.style.paddingTop = (this._paddingTop > 0 ? this._paddingTop + 'px' : '');
+    let newVal: number;
+
+    // only write when it has changed
+    if (this._fullscreen) {
+      // adjust the content with padding, allowing content to scroll under headers/footers
+      // however, on iOS you cannot control the margins of the scrollbar (last tested iOS9.2)
+      // only add inline padding styles if the computed padding value, which would
+      // have come from the app's css, is different than the new padding value
+
+      newVal = this._headerHeight + this._paddingTop;
+      if (this._tabbarPlacement === 'top') {
+        newVal += this._tabbarHeight;
+      }
+      if (newVal !== this._lastTop) {
+        this._scrollEle.style.paddingTop = (newVal > 0 ? newVal + 'px' : '');
+      }
+
+      newVal = this._footerHeight + this._paddingBottom;
+      if (this._tabbarPlacement === 'bottom') {
+        newVal += this._tabbarHeight;
+      }
+      if (newVal !== this._lastBottom) {
+        this._scrollEle.style.paddingBottom = (newVal > 0 ? newVal + 'px' : '');
+      }
+
+    } else {
+      // adjust the content with margins
+      newVal = this._headerHeight;
+      if (this._tabbarPlacement === 'top') {
+        newVal += this._tabbarHeight;
+      }
+      if (newVal !== this._lastTop) {
+        this._scrollEle.style.marginTop = (newVal > 0 ? newVal + 'px' : '');
+      }
+
+      newVal = this._footerHeight;
+      if (this._tabbarPlacement === 'bottom') {
+        newVal += this._tabbarHeight;
+      }
+      if (newVal !== this._lastBottom) {
+        this._scrollEle.style.marginBottom = (newVal > 0 ? newVal + 'px' : '');
+      }
     }
 
-    if (this._paddingBottom !== this._computedBottom) {
-      this._scrollEle.style.paddingBottom = (this._paddingBottom > 0 ? this._paddingBottom + 'px' : '');
-    }
 
-    if (this._tabbarOnTop !== null && this._tabs) {
-      if (this._tabbarOnTop) {
+    if (this._tabbarPlacement !== null && this._tabs) {
+      // set the position of the tabbar
+      if (this._tabbarPlacement === 'top') {
         this._tabs.setTabbarPosition(this._headerHeight, -1);
 
       } else {
