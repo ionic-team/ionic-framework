@@ -1,10 +1,9 @@
-import {Directive, ElementRef, EventEmitter, Host, Input, Output, NgZone} from '@angular/core';
+import { Directive, EventEmitter, Host, Input, Output, NgZone } from '@angular/core';
 
-import {Content} from '../content/content';
-import {Icon} from '../icon/icon';
-import {isTrueProperty} from '../../util/util';
-import {CSS, pointerCoord, transitionEnd} from '../../util/dom';
-import {PointerEvents, UIEventManager} from '../../util/ui-event-manager';
+import { Content } from '../content/content';
+import { CSS, pointerCoord } from '../../util/dom';
+import { isTrueProperty } from '../../util/util';
+import { PointerEvents, UIEventManager } from '../../util/ui-event-manager';
 
 
 /**
@@ -90,7 +89,8 @@ import {PointerEvents, UIEventManager} from '../../util/ui-event-manager';
 @Directive({
   selector: 'ion-refresher',
   host: {
-    '[class.refresher-active]': 'state !== "inactive"'
+    '[class.refresher-active]': 'state !== "inactive"',
+    '[style.top]': '_top'
   }
 })
 export class Refresher {
@@ -100,6 +100,7 @@ export class Refresher {
   private _isEnabled: boolean = true;
   private _events: UIEventManager = new UIEventManager(false);
   private _pointerEvents: PointerEvents;
+  private _top: string = '';
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -195,23 +196,8 @@ export class Refresher {
   @Output() ionStart: EventEmitter<Refresher> = new EventEmitter();
 
 
-  constructor(
-    @Host() private _content: Content,
-    private _zone: NgZone,
-    elementRef: ElementRef) {
+  constructor(@Host() private _content: Content, private _zone: NgZone) {
     _content.addCssClass('has-refresher');
-
-    // deprecated warning
-    let ele = elementRef.nativeElement;
-    let deprecatedAttrs = ['pullingIcon', 'pullingText', 'refreshingIcon', 'refreshingText', 'spinner'];
-    deprecatedAttrs.forEach(attrName => {
-      if (ele.hasAttribute(attrName)) {
-        console.warn('<ion-refresher> property "' + attrName + '" should now be placed on the inner <ion-refresher-content> component instead of <ion-refresher>. Please review the Refresher docs for API updates.');
-      }
-    });
-    if (!ele.children.length) {
-      console.warn('<ion-refresher> should now have an inner <ion-refresher-content> component. Please review the Refresher docs for API updates.');
-    }
   }
 
   private _onStart(ev: TouchEvent): any {
@@ -232,6 +218,13 @@ export class Refresher {
 
     let coord = pointerCoord(ev);
     console.debug('Pull-to-refresh, onStart', ev.type, 'y:', coord.y);
+
+    if (this._content.adjustedTop > 0) {
+      let newTop = this._content.adjustedTop + 'px';
+      if (this._top !== newTop) {
+        this._top = newTop;
+      }
+    }
 
     this.startY = this.currentY = coord.y;
     this.progress = 0;

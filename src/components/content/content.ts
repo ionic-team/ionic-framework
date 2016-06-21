@@ -64,8 +64,6 @@ export class Content extends Ion {
   private _paddingRight: number;
   private _paddingBottom: number;
   private _paddingLeft: number;
-  private _lastTop: number;
-  private _lastBottom: number;
   private _scrollPadding: number;
   private _headerHeight: number;
   private _footerHeight: number;
@@ -77,6 +75,16 @@ export class Content extends Ion {
   private _scrollEle: HTMLElement;
   private _sbPadding: boolean;
   private _fullscreen: boolean;
+
+  /**
+   * @private
+   */
+  adjustedTop: number;
+
+  /**
+   * @private
+   */
+  adjustedBottom: number;
 
   constructor(
     private _elementRef: ElementRef,
@@ -185,7 +193,7 @@ export class Content extends Ion {
       }
     };
   }
-  
+
   /**
    * @private
    */
@@ -510,16 +518,18 @@ export class Content extends Ion {
       if (this._tabbarPlacement === 'top') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this._lastTop) {
+      if (newVal !== this.adjustedTop) {
         this._scrollEle.style.paddingTop = (newVal > 0 ? newVal + 'px' : '');
+        this.adjustedTop = newVal;
       }
 
       newVal = this._footerHeight + this._paddingBottom;
       if (this._tabbarPlacement === 'bottom') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this._lastBottom) {
+      if (newVal !== this.adjustedBottom) {
         this._scrollEle.style.paddingBottom = (newVal > 0 ? newVal + 'px' : '');
+        this.adjustedBottom = newVal;
       }
 
     } else {
@@ -528,16 +538,18 @@ export class Content extends Ion {
       if (this._tabbarPlacement === 'top') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this._lastTop) {
+      if (newVal !== this.adjustedTop) {
         this._scrollEle.style.marginTop = (newVal > 0 ? newVal + 'px' : '');
+        this.adjustedTop = newVal;
       }
 
       newVal = this._footerHeight;
       if (this._tabbarPlacement === 'bottom') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this._lastBottom) {
+      if (newVal !== this.adjustedBottom) {
         this._scrollEle.style.marginBottom = (newVal > 0 ? newVal + 'px' : '');
+        this.adjustedBottom = newVal;
       }
     }
 

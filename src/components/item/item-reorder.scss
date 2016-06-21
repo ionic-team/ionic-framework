@@ -16,7 +16,7 @@ ion-reorder {
 
   pointer-events: all;
   touch-action: manipulation;
-  
+
   ion-icon {
     pointer-events: none;
   }
@@ -39,7 +39,7 @@ ion-item.reorder-active {
   box-shadow: 0 0 10px rgba(0, 0, 0, .5);
   opacity: .8;
   transition: none;
-  
+
   pointer-events: none;
 
   ion-reorder {

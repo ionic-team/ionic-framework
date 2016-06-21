@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import {ionicBootstrap, Refresher} from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
-  items = [];
+class Page1 {
+  items: string[] = [];
 
   constructor() {
     for (var i = 0; i < 15; i++) {
@@ -14,10 +14,10 @@ class E2EApp {
     }
   }
 
-  doRefresh(refresher) {
+  doRefresh(refresher: Refresher) {
     console.info('Begin async operation');
 
-    getAsyncData().then(newData => {
+    getAsyncData().then((newData: string[]) => {
       for (var i = 0; i < newData.length; i++) {
         this.items.unshift( newData[i] );
       }
@@ -27,11 +27,11 @@ class E2EApp {
     });
   }
 
-  doStart(refresher) {
+  doStart(refresher: Refresher) {
     console.info('Refresher, start');
   }
 
-  doPulling(refresher) {
+  doPulling(refresher: Refresher) {
     console.info('Pulling', refresher.progress);
   }
 
@@ -42,7 +42,7 @@ function getAsyncData() {
   return new Promise(resolve => {
 
     setTimeout(() => {
-      let data = [];
+      let data: string[] = [];
       for (var i = 0; i < 3; i++) {
         data.push( getRandomData() );
       }
@@ -84,5 +84,13 @@ const data = [
   'Kick-Ass',
   'Drive Angry'
 ];
+
+
+@Component({
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
+})
+class E2EApp {
+  rootPage = Page1;
+}
 
 ionicBootstrap(E2EApp);
