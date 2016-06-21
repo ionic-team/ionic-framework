@@ -37,7 +37,7 @@
 
       if (angular.isArray(data[k])) {
         for (x = 0; x < data[k].length; x++) {
-          if (data[k][x].fn) {
+          if (angular.isObject(data[k][x]) && data[k][x].fn) {
             for (y = 0; y < data[k][x].t; y++) {
               createSvgElement(k, data[k][x].fn(y, spinnerName), ele, spinnerName);
             }
