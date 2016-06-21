@@ -1,9 +1,12 @@
 import {ElementRef} from '@angular/core';
 
-const MOUSE_WAIT = 2 * 1000;
 
 
-class PointerEvents {
+
+/**
+ * @private
+ */
+export class PointerEvents {
   private rmTouchStart: Function = null;
   private rmTouchMove: Function = null;
   private rmTouchEnd: Function = null;
@@ -13,6 +16,8 @@ class PointerEvents {
   private rmMouseUp: Function = null;
 
   private lastTouchEvent: number = 0;
+
+  mouseWait: number = 2 * 1000;
 
   constructor(private ele: any,
     private pointerDown: any,
@@ -26,7 +31,7 @@ class PointerEvents {
   }
 
   private handleTouchStart(ev: any) {
-    this.lastTouchEvent = Date.now() + MOUSE_WAIT;
+    this.lastTouchEvent = Date.now() + this.mouseWait;
     if (!this.pointerDown(ev)) {
       return;
     }
@@ -72,22 +77,27 @@ class PointerEvents {
     this.pointerUp(ev);
   }
 
-  destroy() {
-    this.rmTouchStart && this.rmTouchStart();
+  stop() {
     this.rmTouchMove && this.rmTouchMove();
     this.rmTouchEnd && this.rmTouchEnd();
-
-    this.rmMouseStart && this.rmMouseStart();
-    this.rmMouseMove && this.rmMouseMove();
-    this.rmMouseUp && this.rmMouseUp();
-
-    this.rmTouchStart = null;
     this.rmTouchMove = null;
     this.rmTouchEnd = null;
-    this.rmMouseStart = null;
+
+    this.rmMouseMove && this.rmMouseMove();
+    this.rmMouseUp && this.rmMouseUp();
     this.rmMouseMove = null;
     this.rmMouseUp = null;
+  }
 
+  destroy() {
+    this.rmTouchStart && this.rmTouchStart();
+    this.rmTouchStart = null;
+    
+    this.rmMouseStart && this.rmMouseStart();
+    this.rmMouseStart = null;
+
+    this.stop();    
+    
     this.pointerDown = null;
     this.pointerMove = null;
     this.pointerUp = null;
@@ -97,6 +107,10 @@ class PointerEvents {
   
 }
 
+
+/**
+ * @private
+ */
 export class UIEventManager {
   private events: Function[] = [];
 
@@ -109,8 +123,11 @@ export class UIEventManager {
   pointerEventsRef(ref: ElementRef, pointerStart: any, pointerMove: any, pointerEnd: any, option?: any): Function {
     return this.pointerEvents(ref.nativeElement, pointerStart, pointerMove, pointerEnd, option);
   }
-  
-  pointerEvents(element: any, pointerDown: any, pointerMove: any, pointerUp: any, option: any = false): Function {
+
+  pointerEvents(element: any, pointerDown: any, pointerMove: any, pointerUp: any, option: any = false): PointerEvents {
+    if (!element) {
+      return;
+    }
     let submanager = new PointerEvents(
       element,
       pointerDown,
@@ -121,10 +138,13 @@ export class UIEventManager {
     
     let removeFunc = () => submanager.destroy();
     this.events.push(removeFunc);
-    return removeFunc;
+    return submanager;
   }
 
   listen(element: any, eventName: string, callback: any, option: any = false): Function {
+    if (!element) {
+      return;
+    }
     let removeFunc = listenEvent(element, eventName, this.zoneWrapped, option, callback);
     this.events.push(removeFunc);
     return removeFunc;
