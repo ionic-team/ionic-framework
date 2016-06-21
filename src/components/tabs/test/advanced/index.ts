@@ -411,7 +411,7 @@ class Tab3Page1 {
 
 
 @Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
+  template: '<ion-nav [root]="root" swipeBackEnabled="false"></ion-nav>'
 })
 class E2EApp {
   root = SignIn;

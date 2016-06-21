@@ -202,6 +202,17 @@ export class Tab extends NavController {
   }
 
   /**
+   * @input {boolean} Whether it's possible to swipe-to-go-back on this tab or not.
+   */
+  @Input()
+  get swipeBackEnabled(): boolean {
+    return this._sbEnabled;
+  }
+  set swipeBackEnabled(val: boolean) {
+    this._sbEnabled = isTrueProperty(val);
+  }
+
+  /**
    * @output {Tab} Method to call when the current tab is selected
    */
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter();
@@ -221,6 +232,10 @@ export class Tab extends NavController {
     super(parentTabs, app, config, keyboard, elementRef, zone, renderer, compiler);
 
     parentTabs.add(this);
+
+    if (parentTabs.rootNav) {
+      this._sbEnabled = parentTabs.rootNav.isSwipeBackEnabled();
+    }    
 
     this._panelId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
