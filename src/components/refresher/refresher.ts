@@ -151,7 +151,7 @@ export class Refresher {
    * will automatically go into the `refreshing` state. By default, the pull
    * maximum will be the result of `pullMin + 60`.
    */
-  @Input() pullMax: number = null;
+  @Input() pullMax: number = this.pullMin + 60;
 
   /**
    * @input {number} How many milliseconds it takes to close the refresher. Default is `280`.
@@ -219,16 +219,23 @@ export class Refresher {
     if (ev.touches && ev.touches.length > 1) {
       return false;
     }
+    if (this.state !== STATE_INACTIVE) {
+      return false;
+    }
+
+    let scrollHostScrollTop = this._content.getContentDimensions().scrollTop;
+    // if the scrollTop is greater than zero then it's
+    // not possible to pull the content down yet
+    if (scrollHostScrollTop > 0) {
+      return false;
+    }
 
     let coord = pointerCoord(ev);
     console.debug('Pull-to-refresh, onStart', ev.type, 'y:', coord.y);
 
     this.startY = this.currentY = coord.y;
     this.progress = 0;
-
-    if (!this.pullMax) {
-      this.pullMax = (this.pullMin + 60);
-    }
+    this.state = STATE_PULLING;
     return true;
   }
 
