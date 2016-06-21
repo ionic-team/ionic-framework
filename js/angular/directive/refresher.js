@@ -101,7 +101,9 @@ IonicModule
 
         $scope.$on('scroll.refreshComplete', function() {
           $scope.$evalAsync(function() {
-            scrollCtrl.scrollView.finishPullToRefresh();
+            if(scrollCtrl.scrollView){
+              scrollCtrl.scrollView.finishPullToRefresh();
+            }
           });
         });
       }
