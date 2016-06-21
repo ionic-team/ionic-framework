@@ -25,7 +25,7 @@ export class PointerEvents {
     private pointerUp: any,
     private zone: boolean,
     private option: any) {
-    
+
     this.rmTouchStart = listenEvent(ele, 'touchstart', zone, option, (ev: any) => this.handleTouchStart(ev));
     this.rmMouseStart = listenEvent(ele, 'mousedown', zone, option, (ev: any) => this.handleMouseDown(ev));
   }
@@ -92,19 +92,19 @@ export class PointerEvents {
   destroy() {
     this.rmTouchStart && this.rmTouchStart();
     this.rmTouchStart = null;
-    
+
     this.rmMouseStart && this.rmMouseStart();
     this.rmMouseStart = null;
 
-    this.stop();    
-    
+    this.stop();
+
     this.pointerDown = null;
     this.pointerMove = null;
     this.pointerUp = null;
 
     this.ele = null;
-  }  
-  
+  }
+
 }
 
 
@@ -119,8 +119,8 @@ export class UIEventManager {
   listenRef(ref: ElementRef, eventName: string, callback: any, option?: any): Function {
     return this.listen(ref.nativeElement, eventName, callback, option);
   }
-  
-  pointerEventsRef(ref: ElementRef, pointerStart: any, pointerMove: any, pointerEnd: any, option?: any): Function {
+
+  pointerEventsRef(ref: ElementRef, pointerStart: any, pointerMove: any, pointerEnd: any, option?: any): PointerEvents {
     return this.pointerEvents(ref.nativeElement, pointerStart, pointerMove, pointerEnd, option);
   }
 
@@ -135,7 +135,7 @@ export class UIEventManager {
       pointerUp,
       this.zoneWrapped,
       option);
-    
+
     let removeFunc = () => submanager.destroy();
     this.events.push(removeFunc);
     return submanager;
@@ -155,7 +155,7 @@ export class UIEventManager {
       event();
     }
     this.events.length = 0;
-  }  
+  }
 }
 
 function listenEvent(ele: any, eventName: string, zoneWrapped: boolean, option: any, callback: any): Function {
