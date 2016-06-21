@@ -1753,6 +1753,13 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
+   */
+  isSwipeBackEnabled(): boolean {
+    return this._sbEnabled;
+  }
+
+  /**
    * Returns the root `NavController`.
    * @returns {NavController}
    */

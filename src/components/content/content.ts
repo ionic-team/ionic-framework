@@ -185,6 +185,13 @@ export class Content extends Ion {
       }
     };
   }
+  
+  /**
+   * @private
+   */
+  getScrollElement(): HTMLElement {
+    return this._scrollEle;
+  }
 
   /**
    * @private

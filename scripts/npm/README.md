@@ -11,7 +11,7 @@ In the root of the package are ES5 sources in the CommonJS module format, their 
 Usually, the only import required by the user is `ionic-angular`, as everything from Ionic is exported by the package:
 
 ```
-  import {App, Page} from 'ionic-angular';
+  import {App} from 'ionic-angular';
 ```
 
 ### Bundles

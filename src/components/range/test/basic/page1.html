@@ -19,7 +19,7 @@
 
   <ion-list>
     <ion-item>
-      <ion-range [(ngModel)]="singleValue" danger pin="true" (ionChange)="rangeChange($event)"></ion-range>
+      <ion-range [(ngModel)]="singleValue" danger pin="true" (ionChange)="rangeChange($event)" [debounce]="100"></ion-range>
     </ion-item>
 
     <ion-item>

@@ -3,6 +3,7 @@ import {NgControl} from '@angular/common';
 
 import {Config} from '../../config/config';
 import {isPresent} from '../../util/util';
+import {Debouncer} from '../../util/debouncer';
 
 
 /**
@@ -46,10 +47,10 @@ import {isPresent} from '../../util/util';
 })
 export class Searchbar {
   private _value: string|number = '';
-  private _tmr: any;
   private _shouldBlur: boolean = true;
   private _isActive: boolean = false;
   private _searchbarInput: ElementRef;
+  private _debouncer: Debouncer = new Debouncer(250);
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
@@ -64,7 +65,13 @@ export class Searchbar {
   /**
    * @input {number} How long, in milliseconds, to wait to trigger the `input` event after each keystroke. Default `250`.
    */
-  @Input() debounce: number = 250;
+  @Input()
+  get debounce(): number {
+    return this._debouncer.wait;
+  }
+  set debounce(val: number) {
+    this._debouncer.wait = val;
+  }
 
   /**
    * @input {string} Set the input's placeholder. Default `"Search"`.
@@ -268,13 +275,11 @@ export class Searchbar {
    */
   inputChanged(ev: any) {
     let value = ev.target.value;
-
-    clearTimeout(this._tmr);
-    this._tmr = setTimeout(() => {
+    this._debouncer.debounce(() => {
       this._value = value;
       this.onChange(this._value);
       this.ionInput.emit(ev);
-    }, Math.round(this.debounce));
+    });
   }
 
   /**

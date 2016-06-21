@@ -191,7 +191,6 @@ export class Nav extends NavController implements AfterViewInit {
   get swipeBackEnabled(): boolean {
     return this._sbEnabled;
   }
-
   set swipeBackEnabled(val: boolean) {
     this._sbEnabled = isTrueProperty(val);
   }

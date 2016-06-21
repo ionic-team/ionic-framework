@@ -5,6 +5,7 @@ import {Form} from '../../util/form';
 import {isTrueProperty} from '../../util/util';
 import {Item} from '../item/item';
 import {pointerCoord} from '../../util/dom';
+import {UIEventManager} from '../../util/ui-event-manager';
 
 
 const TOGGLE_VALUE_ACCESSOR = new Provider(
@@ -87,6 +88,7 @@ export class Toggle implements ControlValueAccessor  {
   private _startX: number;
   private _msPrv: number = 0;
   private _fn: Function;
+  private _events: UIEventManager = new UIEventManager();
 
   /**
    * @private
@@ -113,27 +115,14 @@ export class Toggle implements ControlValueAccessor  {
     }
   }
 
-  /**
-   * @private
-   */
-  private pointerDown(ev: UIEvent) {
-    if (this._isPrevented(ev)) {
-      return;
-    }
-
+  private pointerDown(ev: UIEvent): boolean {
     this._startX = pointerCoord(ev).x;
     this._activated = true;
+    return true;
   }
 
-  /**
-   * @private
-   */
   private pointerMove(ev: UIEvent) {
     if (this._startX) {
-      if (this._isPrevented(ev)) {
-        return;
-      }
-
       let currentX = pointerCoord(ev).x;
       console.debug('toggle, pointerMove', ev.type, currentX);
 
@@ -152,16 +141,8 @@ export class Toggle implements ControlValueAccessor  {
     }
   }
 
-  /**
-   * @private
-   */
   private pointerUp(ev: UIEvent) {
     if (this._startX) {
-
-      if (this._isPrevented(ev)) {
-        return;
-      }
-
       let endX = pointerCoord(ev).x;
 
       if (this.checked) {
@@ -188,9 +169,7 @@ export class Toggle implements ControlValueAccessor  {
     this.onChange(this._checked);
   }
 
-  /**
-   * @private
-   */
+
   private _setChecked(isChecked: boolean) {
     if (isChecked !== this._checked) {
       this._checked = isChecked;
@@ -256,6 +235,11 @@ export class Toggle implements ControlValueAccessor  {
    */
   ngAfterContentInit() {
     this._init = true;
+    this._events.pointerEventsRef(this._elementRef,
+      (ev: any) => this.pointerDown(ev),
+      (ev: any) => this.pointerMove(ev),
+      (ev: any) => this.pointerUp(ev)
+    );
   }
 
   /**
@@ -263,20 +247,7 @@ export class Toggle implements ControlValueAccessor  {
    */
   ngOnDestroy() {
     this._form.deregister(this);
-  }
-
-  /**
-   * @private
-   */
-  private _isPrevented(ev: UIEvent) {
-    if (ev.type.indexOf('touch') > -1) {
-      this._msPrv = Date.now() + 2000;
-
-    } else if (this._msPrv > Date.now() && ev.type.indexOf('mouse') > -1) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      return true;
-    }
+    this._events.unlistenAll();
   }
 
 }

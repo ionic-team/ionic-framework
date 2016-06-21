@@ -1,3 +1,61 @@
+<a name="2.0.0-beta.9"></a>
+# [2.0.0-beta.9](https://github.com/driftyco/ionic/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2016-06-16)
+
+
+### Features
+
+* **backButton:** register back button actions ([84f37cf](https://github.com/driftyco/ionic/commit/84f37cf))
+* **item:** add the ability to show a forward arrow on md and wp modes ([c41f24d](https://github.com/driftyco/ionic/commit/c41f24d))
+* **item:** two-way sliding of items ([c28aa53](https://github.com/driftyco/ionic/commit/c28aa53)), closes [#5073](https://github.com/driftyco/ionic/issues/5073)
+* **item-sliding:** two-way item sliding gestures ([5d873ff](https://github.com/driftyco/ionic/commit/5d873ff))
+* **modal:** background click and escape key dismiss (#6831) ([e5473b6](https://github.com/driftyco/ionic/commit/e5473b6)), closes [#6738](https://github.com/driftyco/ionic/issues/6738)
+* **navPop:** add nav pop method on the app instance ([9f293e8](https://github.com/driftyco/ionic/commit/9f293e8))
+* **popover:** background dismiss, escape dismiss ([1d78f78](https://github.com/driftyco/ionic/commit/1d78f78)), closes [#6817](https://github.com/driftyco/ionic/issues/6817)
+* **range:** range can be disabled ([ccd926b](https://github.com/driftyco/ionic/commit/ccd926b))
+* **select:** add placeholder as an input for select ([461ba11](https://github.com/driftyco/ionic/commit/461ba11)), closes [#6862](https://github.com/driftyco/ionic/issues/6862)
+* **tabs:** track tab selecting history, create previousTab() method ([d98f3c9](https://github.com/driftyco/ionic/commit/d98f3c9))
+
+### Bug Fixes
+
+* **button:** check for icon and add css after content checked ([f7b2ea2](https://github.com/driftyco/ionic/commit/f7b2ea2)), closes [#6662](https://github.com/driftyco/ionic/issues/6662)
+* **click-block:** click block is now showing on all screns. ([761a1f6](https://github.com/driftyco/ionic/commit/761a1f6))
+* **click-block:** fix for the click block logic ([9b78aeb](https://github.com/driftyco/ionic/commit/9b78aeb))
+* **datetime:** add styling for datetime with different labels ([adcd2fc](https://github.com/driftyco/ionic/commit/adcd2fc)), closes [#6764](https://github.com/driftyco/ionic/issues/6764)
+* **decorators:** change to match angular style guide ([9315c68](https://github.com/driftyco/ionic/commit/9315c68))
+* **item:** change ion-item-swiping to use .item-wrapper css instead ([31f62e7](https://github.com/driftyco/ionic/commit/31f62e7))
+* **item:** encode hex value in the detail arrow so it works on firefox ([03986d4](https://github.com/driftyco/ionic/commit/03986d4)), closes [#6830](https://github.com/driftyco/ionic/issues/6830)
+* **item:** improve open/close logic, update demos ([db9fa7e](https://github.com/driftyco/ionic/commit/db9fa7e))
+* **item:** item-options width calculated correctly ([64af0c8](https://github.com/driftyco/ionic/commit/64af0c8))
+* **item:** sliding item supports dynamic options + tests ([14d29e6](https://github.com/driftyco/ionic/commit/14d29e6)), closes [#5192](https://github.com/driftyco/ionic/issues/5192)
+* **item:** sliding item's width must be 100% ([efcdd20](https://github.com/driftyco/ionic/commit/efcdd20))
+* **menu:** push/overlay working correctly in landscape ([0c88589](https://github.com/driftyco/ionic/commit/0c88589))
+* **menu:** swiping menu distinguishes between opening and closing direction ([29791f8](https://github.com/driftyco/ionic/commit/29791f8)), closes [#5511](https://github.com/driftyco/ionic/issues/5511)
+* **Menu:** fix right overlay menu when rotating device ([07d55c5](https://github.com/driftyco/ionic/commit/07d55c5))
+* **modal:** add status bar padding to modal ([181129b](https://github.com/driftyco/ionic/commit/181129b))
+* **modal:** change modal display so you can scroll the entire height ([01bbc94](https://github.com/driftyco/ionic/commit/01bbc94)), closes [#6839](https://github.com/driftyco/ionic/issues/6839)
+* **navigation:** keep the click block up longer if the keyboard is open (#6884) ([d6b7d5d](https://github.com/driftyco/ionic/commit/d6b7d5d))
+* **popover:** allow target element to be positioned at left:0 ([ea450d4](https://github.com/driftyco/ionic/commit/ea450d4)), closes [#6896](https://github.com/driftyco/ionic/issues/6896)
+* **popover:** hide arrow if no event was passed ([8350df0](https://github.com/driftyco/ionic/commit/8350df0)), closes [#6796](https://github.com/driftyco/ionic/issues/6796)
+* **range:** bar height for ios should be 1px, add disabled for wp ([f2a9f2d](https://github.com/driftyco/ionic/commit/f2a9f2d))
+* **range:** stop sliding after releasing mouse outside the window ([9b2e934](https://github.com/driftyco/ionic/commit/9b2e934)), closes [#6802](https://github.com/driftyco/ionic/issues/6802)
+* **scrollView:** ensure scroll element exists for event listeners ([1188730](https://github.com/driftyco/ionic/commit/1188730))
+* **searchbar:** add opacity so the searchbar doesn't show when it's moved over ([b5f93f9](https://github.com/driftyco/ionic/commit/b5f93f9))
+* **searchbar:** only trigger the input event on clear if there is a value ([99fdcc0](https://github.com/driftyco/ionic/commit/99fdcc0)), closes [#6382](https://github.com/driftyco/ionic/issues/6382)
+* **searchbar:** position elements when the value changes not after content checked ([31c7e59](https://github.com/driftyco/ionic/commit/31c7e59))
+* **searchbar:** set a negative tabindex for the cancel button ([614ace4](https://github.com/driftyco/ionic/commit/614ace4))
+* **searchbar:** use the contrast color for the background in a toolbar ([b4028c6](https://github.com/driftyco/ionic/commit/b4028c6)), closes [#6379](https://github.com/driftyco/ionic/issues/6379)
+* **tabs:** reduce padding on tabs for ios ([fd9cdc7](https://github.com/driftyco/ionic/commit/fd9cdc7)), closes [#6679](https://github.com/driftyco/ionic/issues/6679)
+* **tap:** export isActivatable as a const so its transpiled correctly ([ce3da97](https://github.com/driftyco/ionic/commit/ce3da97))
+* **toast:** close toasts when two or more are open (#6814) ([8ff2476](https://github.com/driftyco/ionic/commit/8ff2476)), closes [(#6814](https://github.com/(/issues/6814)
+* **toast:** toast will now be enabled (#6904) ([c068828](https://github.com/driftyco/ionic/commit/c068828))
+* **virtualScroll:** detect changes in individual nodes ([f049521](https://github.com/driftyco/ionic/commit/f049521)), closes [#6137](https://github.com/driftyco/ionic/issues/6137)
+
+### Performance Improvements
+
+* **virtualScroll:** improve UIWebView virtual scroll ([ff1daa6](https://github.com/driftyco/ionic/commit/ff1daa6))
+
+
+
 <a name="2.0.0-beta.8"></a>
 # [2.0.0-beta.8](https://github.com/driftyco/ionic/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2016-06-06)
 
@@ -36,7 +94,7 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   - `change` -> `ionChange`
 - **DateTime**
   - `change` -> `ionChange`
-  - `cancel` -> `ionCancel`  
+  - `cancel` -> `ionCancel`
 - **InfiniteScroll**
   - `infinite` -> `ionInfinite`
 - **Menu**
@@ -88,13 +146,13 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   ```
   npm install --save ionic-angular@2.0.0-beta.8
   ```
-  
+
   _or_ modify the following line to use `beta.8` in your `package.json` and then run `npm install`:
-  
+
   ```
   "ionic-angular": "^2.0.0-beta.8",
   ```
-  
+
   **This is the way to update Ionic to any version, more information can be found in the [docs](http://ionicframework.com/docs/v2/resources/using-npm/).**
 
 2. Replace all instances of `@Page` with `@Component`:
@@ -179,29 +237,29 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
 5. Rename any uses of the lifecycle events, for example:
 
   ```
-  onPageDidEnter() {		 
+  onPageDidEnter() {
     console.log("Entered page!");
   }
   ```
-  
+
   becomes
-  
+
   ```
-  ionViewDidEnter() {		 
+  ionViewDidEnter() {
     console.log("Entered page!");
   }
   ```
-  
+
   The full list of lifecycle name changes is in the [section above](https://github.com/driftyco/ionic/blob/2.0/CHANGELOG.md#ionic-lifecycle-events-renamed).
-  
+
 6. Rename any Ionic events, for example:
 
   ```
   <ion-slides (slideChangeStart)="onSlideChangeStart($event)">
   ```
-  
+
   becomes
-  
+
   ```
   <ion-slides (ionWillChange)="onSlideChangeStart($event)">
   ```
@@ -1144,6 +1202,6 @@ Enjoy!
 
 ### Breaking Changes
 
-The Web Animations polyfill is no longer shipped with the framework and may cause build errors.  
+The Web Animations polyfill is no longer shipped with the framework and may cause build errors.
 
 Projects will need to be [updated accordingly](https://github.com/driftyco/ionic-conference-app/commit/2ed59e6fd275c4616792c7b2e5aa9da4a20fb188).
