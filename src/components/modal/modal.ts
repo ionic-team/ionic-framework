@@ -194,7 +194,9 @@ export class ModalCmp {
     this._compiler.resolveComponent(componentType).then((componentFactory) => {
       let componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector);
       this._renderer.setElementClass(componentRef.location.nativeElement, 'show-page', true);
-      this._renderer.setElementClass(componentRef.location.nativeElement, componentType.name, true);
+      // auto-add page css className created from component JS class name
+      let cssClassName = pascalCaseToDashCase(componentType.name);
+      this._renderer.setElementClass(componentRef.location.nativeElement, cssClassName, true);
       this._viewCtrl.setInstance(componentRef.instance);
       this.enabled = true;
       done();

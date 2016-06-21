@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, Config, Platform} from '../../../../../src';
-import {Modal, ActionSheet, NavController, NavParams, PageTransition, TransitionOptions, ViewController} from '../../../../../src';
+import { Component } from '@angular/core';
+
+import { ActionSheet, Config, ionicBootstrap, Modal, NavController, NavParams, PageTransition, Platform, TransitionOptions, ViewController } from '../../../../../src';
 
 @Component({
   templateUrl: 'main.html'
@@ -25,7 +25,7 @@ class E2EPage {
     console.log('android', platform.is('android'));
     console.log('windows phone', platform.is('windows'));
 
-    platform.ready().then((readySource) => {
+    platform.ready().then((readySource: string) => {
       console.log('platform.ready, readySource:', readySource);
     });
 
@@ -73,7 +73,6 @@ class E2EPage {
   presentNavigableModal(){
     let modal = Modal.create(NavigableModal);
     this.nav.present(modal);
-    //this.nav.push(NavigableModal);
   }
 }
 
@@ -90,8 +89,8 @@ class E2EPage {
   </ion-content>
   `
 })
-class NavigableModal{
-  constructor(private navController:NavController){
+class NavigableModal {
+  constructor(private navController:NavController) {
   }
 
   submit(){
@@ -112,8 +111,8 @@ class NavigableModal{
   </ion-content>
   `
 })
-class NavigableModal2{
-  constructor(private navController:NavController){
+class NavigableModal2 {
+  constructor(private navController:NavController) {
   }
 
   submit(){
