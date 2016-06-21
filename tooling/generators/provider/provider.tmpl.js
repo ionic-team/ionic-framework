@@ -10,9 +10,9 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class <%= jsClassName %> {
-  static get parameters(){
+  static get parameters() {
     return [[Http]]
-  }  
+  }
 
   constructor(http) {
     this.http = http;
