@@ -123,7 +123,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
   setupDom(window, document, config, platform, clickBlock, featureDetect);
   bindEvents(window, document, platform, events);
 
-  return [
+  let providers: any[] = [
     App,
     provide(ClickBlock, {useValue: clickBlock}),
     provide(Config, {useValue: config}),
@@ -136,9 +136,14 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     Translate,
     TapClick,
     provide(PLATFORM_DIRECTIVES, {useValue: IONIC_DIRECTIVES, multi: true}),
-    HTTP_PROVIDERS,
-    customProviders
+    HTTP_PROVIDERS
   ];
+
+  if (isPresent(customProviders)) {
+    providers.push(customProviders);
+  }
+
+  return providers;
 }
 
 
