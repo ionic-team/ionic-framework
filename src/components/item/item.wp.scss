@@ -82,7 +82,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   border-width: 0;
 }
 
-.item-inner {
+.item .item-inner {
   padding-right: ($item-wp-padding-right / 2);
 
   border-bottom: 1px solid $list-wp-border-color;
@@ -191,7 +191,7 @@ ion-note {
 // --------------------------------------------------
 
 ion-item-divider {
-  padding: $item-wp-padding-top $item-wp-padding-right $item-wp-padding-bottom $item-wp-padding-left;
+  padding-left: $item-wp-padding-left;
 
   color: $item-wp-divider-color;
   background-color: $item-wp-divider-background;

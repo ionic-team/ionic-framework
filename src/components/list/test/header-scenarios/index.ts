@@ -6,18 +6,17 @@ import {ionicBootstrap} from '../../../../../src';
   templateUrl: 'main.html'
 })
 class E2EPage {
-  myValue = 'value';
-
-  clicked() {
-    console.log("clicked button");
+  testClick(ev: UIEvent) {
+    console.log(ev);
   }
 }
 
+
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  rootPage = E2EPage;
+  root = E2EPage;
 }
 
 ionicBootstrap(E2EApp);

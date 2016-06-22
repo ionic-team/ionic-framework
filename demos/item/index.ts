@@ -1,12 +1,19 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from 'ionic-angular';
+import { Component } from '@angular/core';
 
-// Uses the list's demo but passes the demo var to change the title
+import { ionicBootstrap } from 'ionic-angular';
+
 @Component({
-  templateUrl: '../list/main.html'
+  templateUrl: 'main.html'
+})
+class ApiDemoPage {
+
+}
+
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ApiDemoApp {
-  demo = "Item";
+  root = ApiDemoPage;
 }
 
 ionicBootstrap(ApiDemoApp);

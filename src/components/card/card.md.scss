@@ -50,14 +50,6 @@ ion-card {
 
   ion-list {
     margin-bottom: 0;
-
-    ion-label {
-      padding: 0;
-    }
-
-    .item-inner {
-      border-bottom: 1px solid $list-md-border-color;
-    }
   }
 
   > .item:last-child,
@@ -65,7 +57,7 @@ ion-card {
     border-bottom: 0;
   }
 
-  .item-inner {
+  .item .item-inner {
     border: 0;
   }
 

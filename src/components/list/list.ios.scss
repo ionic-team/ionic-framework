@@ -15,7 +15,7 @@ $list-inset-ios-margin-bottom:        16px !default;
 $list-inset-ios-margin-left:          16px !default;
 $list-inset-ios-border-radius:        4px !default;
 
-$list-ios-header-padding:             10px $item-ios-padding-right 10px $item-ios-padding-left !default;
+$list-ios-header-padding-left:             $item-ios-padding-left !default;
 $list-ios-header-font-size:           1.2rem !default;
 $list-ios-header-font-weight:         500 !default;
 $list-ios-header-letter-spacing:      .1rem !default;
@@ -29,7 +29,7 @@ $list-ios-header-color:               #333 !default;
 ion-list-header {
   position: relative;
 
-  padding: $list-ios-header-padding;
+  padding-left: $list-ios-header-padding-left;
 
   border-bottom: 1px solid $list-ios-border-color;
   font-size: $list-ios-header-font-size;
@@ -58,7 +58,7 @@ ion-list {
     }
   }
 
-  .item-inner {
+  .item .item-inner {
     border-bottom: 1px solid $list-ios-border-color;
   }
 
@@ -97,8 +97,6 @@ ion-list {
 }
 
 ion-list + ion-list {
-  margin-top: $list-ios-margin-top + $list-ios-margin-bottom;
-
   ion-list-header {
     margin-top: -$list-ios-margin-top;
     padding-top: 0;

@@ -13,15 +13,12 @@
     <ion-item>
       Plain Ol' div with some text
     </ion-item>
-
-    <ion-item>
-      Single line text that should have ellipses when it doesn't all fit in the item
-    </ion-item>
   </ion-item-group>
 
   <ion-item-group>
     <ion-item-divider>
       Item Divider
+      <button item-right>button</button>
     </ion-item-divider>
 
     <ion-item text-wrap>
@@ -31,37 +28,51 @@
   </ion-item-group>
 
   <ion-item-group>
-    <ion-item-divider dark>Dark</ion-item-divider>
+    <ion-item-divider dark>
+      <button item-left clear>
+        <ion-icon name="cloudy"></ion-icon>
+      </button>
+      <button item-left clear light>
+        <ion-icon name="rainy"></ion-icon>
+      </button>
+      Dark
+    </ion-item-divider>
 
     <ion-item text-wrap>
       <h1>H1 Title Text</h1>
-      <p>Paragraph line 1</p>
     </ion-item>
 
     <ion-item text-wrap>
       <h2>H2 Title Text</h2>
-      <p>Paragraph line 1</p>
     </ion-item>
   </ion-item-group>
 
   <ion-item-group>
-    <ion-item-divider light>Light</ion-item-divider>
+    <ion-item-divider light>
+      <ion-avatar item-left>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+      Light
+      <button item-right clear danger>
+        <ion-icon name="sunny"></ion-icon>
+      </button>
+    </ion-item-divider>
 
     <ion-item text-wrap>
       <h3>H3 Title Text</h3>
-      <p>Paragraph line 1</p>
-      <p>Paragraph line 2</p>
     </ion-item>
   </ion-item-group>
 
   <ion-item-group>
-    <ion-item-divider primary>Primary</ion-item-divider>
+    <ion-item-divider primary>
+      Primary
+      <ion-thumbnail item-right>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-thumbnail>
+    </ion-item-divider>
 
     <ion-item text-wrap>
       <h4>H4 Title Text</h4>
-      <p>Paragraph line 1</p>
-      <p>Paragraph line 2</p>
-      <p>Paragraph line 3</p>
     </ion-item>
   </ion-item-group>
 
@@ -80,5 +91,10 @@
       </ion-label>
     </ion-item>
   </ion-item-group>
-
 </ion-content>
+
+<style>
+  img {
+    height: 100px;
+  }
+</style>

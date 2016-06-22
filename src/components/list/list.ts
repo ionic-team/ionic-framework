@@ -1,11 +1,11 @@
-import {Directive, ElementRef, EventEmitter, Renderer, Input, Optional, Output, Attribute, NgZone} from '@angular/core';
+import { Attribute, Directive, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer } from '@angular/core';
 
-import {Content} from '../content/content';
-import {Ion} from '../ion';
-import {ItemSlidingGesture} from '../item/item-sliding-gesture';
-import {ItemReorderGesture} from '../item/item-reorder-gesture';
-import {isTrueProperty} from '../../util/util';
-import {nativeTimeout} from '../../util/dom';
+import { Content } from '../content/content';
+import { Ion } from '../ion';
+import { isTrueProperty } from '../../util/util';
+import { ItemSlidingGesture } from '../item/item-sliding-gesture';
+import { ItemReorderGesture } from '../item/item-reorder-gesture';
+import { nativeTimeout } from '../../util/dom';
 
 /**
  * The List is a widely used interface element in almost any mobile app,
@@ -26,7 +26,7 @@ import {nativeTimeout} from '../../util/dom';
 @Directive({
   selector: 'ion-list',
   host: {
-    '[class.reorder-enabled]': '_enableReorder', 
+    '[class.reorder-enabled]': '_enableReorder',
   }
 })
 export class List extends Ion {
@@ -79,7 +79,6 @@ export class List extends Ion {
     if (shouldEnable) {
       console.debug('enableSlidingItems');
       nativeTimeout(() => this._slidingGesture = new ItemSlidingGesture(this));
-
     } else {
       this._slidingGesture && this._slidingGesture.unlisten();
     }
@@ -125,7 +124,7 @@ export class List extends Ion {
 
   /**
    * @private
-   */  
+   */
   scrollContent(scroll: number) {
     let scrollTop = this._content.getScrollTop() + scroll;
     if (scroll !== 0) {
@@ -133,10 +132,10 @@ export class List extends Ion {
     }
     return scrollTop;
   }
-  
+
   /**
    * @private
-   */  
+   */
   reorderReset() {
     let children = this.elementRef.nativeElement.children;
     let len = children.length;
@@ -145,10 +144,10 @@ export class List extends Ion {
     }
     this._lastToIndex = -1;
   }
-  
+
   /**
    * @private
-   */  
+   */
   reorderMove(fromIndex: number, toIndex: number, itemHeight: number) {
     if (this._lastToIndex === -1) {
       this._lastToIndex = fromIndex;
@@ -176,7 +175,7 @@ export class List extends Ion {
     }
   }
 
-  @Input()  
+  @Input()
   get reorder(): boolean {
     return this._enableReorder;
   }
@@ -207,7 +206,6 @@ export class List extends Ion {
   selector: 'ion-list-header'
 })
 export class ListHeader {
-
   constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') private _id: string) { }
 
   public get id(): string {
@@ -218,5 +216,4 @@ export class ListHeader {
     this._id = val;
     this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', val);
   }
-
 }

@@ -4,11 +4,17 @@
 // --------------------------------------------------
 
 ion-list-header {
-  display: block;
+  display: flex;
   overflow: hidden;
 
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  min-height: 4rem;
 }
 
 ion-list {

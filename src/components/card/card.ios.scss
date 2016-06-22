@@ -48,14 +48,6 @@ ion-card {
 
   ion-list {
     margin-bottom: 0;
-
-    .item {
-      padding-right: 0;
-    }
-
-    ion-label {
-      padding: 0;
-    }
   }
 
   > .item:last-child,
@@ -63,7 +55,7 @@ ion-card {
     border-bottom: 0;
   }
 
-  .item-inner {
+  .item .item-inner {
     border: 0;
   }
 

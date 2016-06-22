@@ -81,7 +81,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   border-width: 0;
 }
 
-.item-inner {
+.item .item-inner {
   padding-right: ($item-md-padding-right / 2);
 
   border-bottom: 1px solid $list-md-border-color;
@@ -202,7 +202,7 @@ ion-item-group {
 // --------------------------------------------------
 
 ion-item-divider {
-  padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
+  padding-left: $item-md-padding-left;
 
   color: $item-md-divider-color;
   background-color: $item-md-divider-background;

@@ -15,7 +15,7 @@ $list-inset-md-margin-bottom:    16px !default;
 $list-inset-md-margin-left:      16px !default;
 $list-inset-md-border-radius:    2px !default;
 
-$list-md-header-padding:         16px $item-md-padding-right 16px $item-md-padding-left !default;
+$list-md-header-padding-left:         $item-md-padding-left !default;
 $list-md-header-font-size:       1.4rem !default;
 $list-md-header-color:           #858585 !default;
 
@@ -27,7 +27,7 @@ $list-md-header-color:           #858585 !default;
 ion-list-header,
 ion-item-divider {
   margin-left: 0;
-  padding: $list-md-header-padding;
+  padding-left: $list-md-header-padding-left;
 
   border-bottom: 1px solid $list-md-border-color;
   font-size: $list-md-header-font-size;
@@ -37,7 +37,7 @@ ion-item-divider {
 ion-list {
   margin: 0 $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
 
-  .item-inner {
+  .item .item-inner {
     border-bottom: 1px solid $list-md-border-color;
   }
 
@@ -93,8 +93,6 @@ ion-list {
   }
 
   + ion-list {
-    margin-top: $list-md-margin-top + $list-md-margin-bottom;
-
     ion-list-header {
       margin-top: -$list-md-margin-top;
       padding-top: 0;

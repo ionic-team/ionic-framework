@@ -12,8 +12,14 @@
   <ion-list>
 
     <ion-item>
-      <ion-label>Text 1:</ion-label>
+      <ion-label>Input Clear:</ion-label>
       <ion-input class="e2eClearInput" [(ngModel)]="myValue" clearInput></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Button:</ion-label>
+      <ion-input class="e2eClearInput" [(ngModel)]="myValue"></ion-input>
+      <button item-right (click)="clicked()">Button</button>
     </ion-item>
 
   </ion-list>

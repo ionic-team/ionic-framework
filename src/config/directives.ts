@@ -18,7 +18,7 @@ import {Slides, Slide, SlideLazy} from '../components/slides/slides';
 import {Tabs} from '../components/tabs/tabs';
 import {Tab} from '../components/tabs/tab';
 import {List, ListHeader} from '../components/list/list';
-import {Item} from '../components/item/item';
+import {Item, ItemContent} from '../components/item/item';
 import {ItemSliding, ItemOptions} from '../components/item/item-sliding';
 import {VirtualScroll} from '../components/virtual-scroll/virtual-scroll';
 import {VirtualItem, VirtualHeader, VirtualFooter} from '../components/virtual-scroll/virtual-item';
@@ -75,6 +75,7 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * - List
  * - ListHeader
  * - Item
+ * - ItemContent
  * - ItemSliding
  * - VirtualScroll
  * - VirtualItem
@@ -140,6 +141,7 @@ export const IONIC_DIRECTIVES: any[] = [
   List,
   ListHeader,
   Item,
+  ItemContent,
   ItemSliding,
   ItemOptions,
   VirtualScroll,

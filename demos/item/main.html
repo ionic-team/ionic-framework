@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-toolbar>
-    <ion-title>List</ion-title>
+    <ion-title>Item</ion-title>
   </ion-toolbar>
 
 </ion-header>
@@ -12,25 +12,35 @@
   <ion-list>
     <ion-list-header>
       Settings
+      <button item-right clear>
+        <ion-icon name="cog"></ion-icon>
+      </button>
     </ion-list-header>
 
-    <ion-item>
-      <ion-icon name="plane" item-left danger></ion-icon>
-      <ion-label>Airplane Mode</ion-label>
-      <ion-toggle secondary></ion-toggle>
-    </ion-item>
+    <ion-item-group>
+      <ion-item>
+        <ion-icon name="plane" item-left danger></ion-icon>
+        <ion-label>Airplane Mode</ion-label>
+        <ion-toggle secondary></ion-toggle>
+      </ion-item>
 
-    <button ion-item>
-      <ion-icon name="wifi" item-left primary></ion-icon>
-      <ion-label>Wi-Fi</ion-label>
-      <ion-note item-right>The Interwebz</ion-note>
-    </button>
+      <button ion-item>
+        <ion-icon name="wifi" item-left primary></ion-icon>
+        <ion-label>Wi-Fi</ion-label>
+        <ion-note item-right>The Interwebz</ion-note>
+      </button>
 
-    <button ion-item>
-      <ion-icon name="bluetooth" item-left primary></ion-icon>
-      <ion-label>Bluetooth</ion-label>
-      <ion-note item-right>Off</ion-note>
-    </button>
+      <button ion-item>
+        <ion-icon name="bluetooth" item-left primary></ion-icon>
+        <ion-label>Bluetooth</ion-label>
+        <ion-note item-right>Off</ion-note>
+      </button>
+    </ion-item-group>
+
+    <ion-item-divider primary>
+      Other Settings
+      <button item-right outline light>Clear</button>
+    </ion-item-divider>
 
     <button ion-item>
       <ion-icon name="call" item-left secondary></ion-icon>
@@ -46,6 +56,7 @@
 
   <ion-list radio-group>
     <ion-list-header>
+      <ion-icon item-left name="phone-portrait"></ion-icon>
       Silence Phone
     </ion-list-header>
 
