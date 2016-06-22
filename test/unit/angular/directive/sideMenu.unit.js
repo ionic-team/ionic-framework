@@ -181,6 +181,11 @@ describe('Ionic Angular Side Menu', function() {
       gesture: {
         srcEvent: {
           defaultPrevented: false
+        },
+        startEvent: {
+          center: {
+            pageX: 50
+          }
         }
       },
       target: {

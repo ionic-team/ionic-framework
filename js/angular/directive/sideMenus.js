@@ -71,6 +71,9 @@ IonicModule
  * and the user cannot swipe to open the menu. When going back to the root page of the side menu (the
  * page without a back button visible), then any menuToggle buttons will show again, and menus will be
  * enabled again.
+ * @param {bool=} enable-menu-swipe-with-back-views Determines whether the side menu is enabled when the
+ * back button is showing. When set to `false`, the user cannot swipe to open the menu. When going back
+ * to the root page of the side menu (the page without a back button visible), menus will be enabled again.
  * @param {string=} delegate-handle The handle used to identify this side menu
  * with {@link ionic.service:$ionicSideMenuDelegate}.
  *
@@ -86,6 +89,7 @@ IonicModule
       function prelink($scope, $element, $attrs, ctrl) {
 
         ctrl.enableMenuWithBackViews($scope.$eval($attrs.enableMenuWithBackViews));
+        ctrl.enableMenuSwipeWithBackViews($scope.$eval($attrs.enableMenuSwipeWithBackViews));
 
         $scope.$on('$ionicExposeAside', function(evt, isAsideExposed) {
           if (!$scope.$exposeAside) $scope.$exposeAside = {};
