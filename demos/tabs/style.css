@@ -1,3 +1,7 @@
+ion-tabs:first-child {
+  margin-top: 60px;
+}
+
 ion-tabs {
   margin-bottom: 20px;
 }
