@@ -1,5 +1,6 @@
-import {Component, Injectable} from '@angular/core';
-import {ionicBootstrap, Refresher} from 'ionic-angular';
+import { Component, Injectable } from '@angular/core';
+
+import { ionicBootstrap, Refresher } from 'ionic-angular';
 
 
 /**
@@ -67,7 +68,7 @@ export class MockProvider {
   templateUrl: 'main.html',
   providers: [MockProvider]
 })
-class ApiDemoApp {
+class ApiDemoPage {
   items: string[];
 
   constructor(private mockProvider: MockProvider) {
@@ -89,6 +90,14 @@ class ApiDemoApp {
   doPulling(refresher: Refresher) {
     console.log('DOPULLING', refresher.progress);
   }
+}
+
+
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+class ApiDemoApp {
+  root = ApiDemoPage;
 }
 
 ionicBootstrap(ApiDemoApp);

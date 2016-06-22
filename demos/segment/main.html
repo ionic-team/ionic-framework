@@ -1,10 +1,10 @@
 <ion-header>
 
-  <ion-toolbar>
+  <ion-navbar>
     <ion-title>Segment</ion-title>
-  </ion-toolbar>
+  </ion-navbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="appType">
       <ion-segment-button value="paid">
         Paid
@@ -18,7 +18,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="news" secondary>
       <ion-segment-button value="worldwide">
         Worldwide
@@ -32,7 +32,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="safari" dark class="icon-segment-demo">
       <ion-segment-button value="bookmarks">
         <ion-icon name="book"></ion-icon>
@@ -46,7 +46,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="favorites" danger>
       <ion-segment-button value="featured">
         Featured
@@ -102,7 +102,7 @@
 
 <ion-footer>
 
-  <ion-toolbar primary>
+  <ion-toolbar no-border-bottom primary>
     <ion-segment [(ngModel)]="pet" light>
       <ion-segment-button value="puppies">
         Puppies
@@ -116,7 +116,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar dark>
+  <ion-toolbar no-border-bottom dark>
     <ion-segment [(ngModel)]="calendar" primary>
       <ion-segment-button value="list">
         List
@@ -130,7 +130,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar danger>
+  <ion-toolbar no-border-bottom danger>
     <ion-segment [(ngModel)]="proxy" light>
       <ion-segment-button value="off">
         Off

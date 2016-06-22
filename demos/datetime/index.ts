@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from 'ionic-angular';
+import { Component } from '@angular/core';
+
+import { ionicBootstrap } from 'ionic-angular';
 
 
 @Component({
   templateUrl: 'main.html'
 })
-class MainPage {
+class ApiDemoPage {
   wwwReleased = '1991';
   netscapeReleased = '1994-12-15T13:47:20.789';
   operaReleased = '1995-04-15';
@@ -68,7 +69,7 @@ class MainPage {
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ApiDemoApp {
-  root = MainPage;
+  root = ApiDemoPage;
 }
 
 ionicBootstrap(ApiDemoApp);

@@ -1,8 +1,11 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, Events, Nav} from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+
+import { Events, ionicBootstrap, Nav } from 'ionic-angular';
 
 
-@Component({templateUrl: 'login.html'})
+@Component({
+  templateUrl: 'login.html'
+})
 class Login {
   user = {
     name: "Administrator",
@@ -17,7 +20,10 @@ class Login {
 
 }
 
-@Component({templateUrl: 'logout.html'})
+
+@Component({
+  templateUrl: 'logout.html'
+})
 class Logout {
   constructor(private events: Events) {}
 
@@ -26,18 +32,22 @@ class Logout {
   }
 }
 
+
 @Component({
-  templateUrl: 'main.html'
+  templateUrl: 'app.html'
 })
 class ApiDemoApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootView = Login;
+  root = Login;
   loggedIn = false;
 
-  pages = [
-    { title: 'Logout', component: Logout, showLoggedIn: true },
-    { title: 'Login', component: Login, showLoggedIn: false },
+  loggedInPages = [
+    { title: 'Logout', component: Logout }
+  ];
+
+  loggedOutPages = [
+    { title: 'Login', component: Login }
   ];
 
   constructor(private events: Events) {

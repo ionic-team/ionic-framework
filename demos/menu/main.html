@@ -1,34 +1,27 @@
-<ion-menu [content]="content" id="menu1">
+<ion-header>
 
-  <ion-toolbar secondary>
-    <ion-title>Menu 1</ion-title>
-  </ion-toolbar>
+  <ion-navbar>
+    <button [menuToggle]="activeMenu">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Menu
+    </ion-title>
+  </ion-navbar>
 
-  <ion-content>
-    <ion-list>
-      <button ion-item menuClose="menu1" detail-none>
-        Close Menu 1
-      </button>
-    </ion-list>
-  </ion-content>
-
-</ion-menu>
+</ion-header>
 
 
-<ion-menu [content]="content" id="menu2">
+<ion-content padding>
 
-  <ion-toolbar danger>
-    <ion-title>Menu 2</ion-title>
-  </ion-toolbar>
+  <h4>Active Menu: <b primary>{{ (activeMenu == 'menu1') ? 'Menu 1' : 'Menu 2' }}</b></h4>
 
-  <ion-content>
-    <ion-list>
-      <button ion-item menuClose="menu2" detail-none>
-        Close Menu 2
-      </button>
-    </ion-list>
-  </ion-content>
+  <p>This page has two menus with different id's, but only one is active at a time.</p>
 
-</ion-menu>
+  <button block secondary (click)="menu1Active()">Make Menu 1 Active</button>
 
-<ion-nav [root]="root" #content swipeBackEnabled="false"></ion-nav>
+  <button block danger (click)="menu2Active()">Make Menu 2 Active</button>
+
+  <button block [menuToggle]="activeMenu">Toggle Menu</button>
+
+</ion-content>

@@ -1,5 +1,6 @@
-import {Component, ViewChild, ElementRef, ViewEncapsulation} from '@angular/core';
-import {ionicBootstrap, Popover, NavController, Content, NavParams} from 'ionic-angular';
+import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+
+import { Content, ionicBootstrap, NavController, NavParams, Popover } from 'ionic-angular';
 
 
 @Component({
@@ -136,7 +137,7 @@ class PopoverRadioPage {
 @Component({
   templateUrl: 'main.html'
 })
-class PopoverPage {
+class ApiDemoPage {
   @ViewChild('popoverContent', {read: ElementRef}) content: ElementRef;
   @ViewChild('popoverText', {read: ElementRef}) text: ElementRef;
 
@@ -164,7 +165,7 @@ class PopoverPage {
   encapsulation: ViewEncapsulation.None
 })
 class ApiDemoApp {
-  root = PopoverPage;
+  root = ApiDemoPage;
 }
 
 ionicBootstrap(ApiDemoApp);

@@ -1,25 +1,26 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, NavController, NavParams} from 'ionic-angular';
+import { Component } from '@angular/core';
+
+import { ionicBootstrap, NavController, NavParams } from 'ionic-angular';
 
 
 @Component({
   templateUrl: 'main.html'
 })
-export class InitialPage {
-  myParam = '';
+export class ApiDemoPage {
+  myParam: string = '';
 
   constructor(public nav: NavController) {}
 
   pushParams() {
-    this.nav.push(Page2, { 'myParam': this.myParam });
+    this.nav.push(PushPage, { 'myParam': this.myParam });
   }
 }
 
 
 @Component({
-  templateUrl: "page-2.html"
+  templateUrl: "page.html"
 })
-export class Page2 {
+export class PushPage {
   myParam: string;
 
   constructor(public nav: NavController, params: NavParams) {
@@ -29,10 +30,10 @@ export class Page2 {
 
 
 @Component({
-  templateUrl: 'app.html'
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ApiDemoApp {
-  root = InitialPage;
+  root = ApiDemoPage;
 }
 
 ionicBootstrap(ApiDemoApp);

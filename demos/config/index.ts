@@ -1,6 +1,6 @@
+import { Component } from '@angular/core';
 
-import {Component} from '@angular/core';
-import {ionicBootstrap, IonicApp, Platform, NavController} from 'ionic-angular';
+import { ionicBootstrap, IonicApp, Platform, NavController } from 'ionic-angular';
 
 
 if (!window.localStorage) {
@@ -74,14 +74,14 @@ if (window.localStorage.getItem('configDemo')) {
   templateUrl: 'tabs.html'
 })
 export class TabPage {
-  tabOne = InitialPage;
+  tabOne = ApiDemoPage;
 }
 
 
 @Component({
   templateUrl: 'main.html'
 })
-export class InitialPage {
+export class ApiDemoPage {
   config: any;
   initialConfig: any;
 
@@ -113,14 +113,14 @@ export class InitialPage {
   }
 
   push() {
-    this.nav.push(AnotherPage);
+    this.nav.push(PushPage);
   }
 }
 
 @Component({
   templateUrl: 'page.html'
 })
-export class AnotherPage {
+export class PushPage {
   constructor(public nav: NavController) {}
 
   pop() {

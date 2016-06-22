@@ -46,14 +46,15 @@
     </button>
   </div>
 
+  <p class="note">Any config for your app should be passed as the third argument to ionicBootstrap.</p>
+
   <!-- this has to be formatted weird for pre -->
-  <pre margin>@App({
-  config: {
-    backButtonIcon: "{{initialConfig.backButtonIcon}}"
-    iconMode: "{{initialConfig.iconMode}}"
-    tabbarPlacement: "{{initialConfig.tabbarPlacement}}"
-  }
-})</pre>
+  <pre margin>
+ionicBootstrap(MyApp, [], {
+  backButtonIcon: "{{initialConfig.backButtonIcon}}"
+  iconMode: "{{initialConfig.iconMode}}"
+  tabbarPlacement: "{{initialConfig.tabbarPlacement}}"
+});</pre>
 
   <div padding>
     <button block secondary (click)="push()">

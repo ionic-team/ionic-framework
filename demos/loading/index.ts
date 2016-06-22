@@ -1,5 +1,6 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {ionicBootstrap, Loading, NavController, Platform} from 'ionic-angular';
+import { Component, ViewEncapsulation } from '@angular/core';
+
+import { ionicBootstrap, Loading, NavController, Platform } from 'ionic-angular';
 
 
 @Component({

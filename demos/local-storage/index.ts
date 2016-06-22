@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, IonicApp, Config, Platform} from 'ionic-angular';
-import {Storage, LocalStorage} from 'ionic-angular';
-import {Pipe, PipeTransform, Injectable} from '@angular/core'
+import { Component, Injectable, Pipe, PipeTransform } from '@angular/core';
+
+import { Config, IonicApp, ionicBootstrap, LocalStorage, Platform, Storage } from 'ionic-angular';
 
 
-@Pipe({name: 'cleanLocalData'})
+@Pipe({
+  name: 'cleanLocalData'
+})
 @Injectable()
 class CleanLocalDataPipe implements PipeTransform {
   validKeys: string[];
@@ -29,7 +30,7 @@ class CleanLocalDataPipe implements PipeTransform {
   templateUrl: 'main.html',
   pipes: [CleanLocalDataPipe]
 })
-class MainPage {
+class ApiDemoPage {
   local: Storage;
   localStorageDemo: string;
   myItem: any;
@@ -84,7 +85,7 @@ class MainPage {
   pipes: [CleanLocalDataPipe]
 })
 class ApiDemoApp {
-  root = MainPage;
+  root = ApiDemoPage;
 }
 
 ionicBootstrap(ApiDemoApp);

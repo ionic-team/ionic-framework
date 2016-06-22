@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, Toast, NavController} from 'ionic-angular';
+import { Component } from '@angular/core';
+
+import { ionicBootstrap, NavController, Toast } from 'ionic-angular';
 
 
 @Component({
   templateUrl: 'main.html'
 })
-class ApiPage {
+class ApiDemoPage {
   constructor(private nav: NavController) { }
 
   showToast(position: string) {
@@ -59,7 +60,7 @@ class ApiPage {
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ApiDemoApp {
-  root = ApiPage;
+  root = ApiDemoPage;
 }
 
 ionicBootstrap(ApiDemoApp);

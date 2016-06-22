@@ -1,19 +1,19 @@
 <ion-header>
 
-  <ion-toolbar>
+  <ion-navbar>
     <ion-title>{{demo}}</ion-title>
-  </ion-toolbar>
+  </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-title>Long title that never ends. It just goes on and on my friend.</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-buttons start>
       <button>
         <ion-icon name="contact"></ion-icon>
@@ -30,7 +30,7 @@
     <ion-title>Default Buttons</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-buttons start>
       <button danger>
         <ion-icon name="contact"></ion-icon>
@@ -47,7 +47,7 @@
     <ion-title>Colored Buttons</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-buttons start>
       <button solid>
         <ion-icon name="contact"></ion-icon>
@@ -62,7 +62,7 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-buttons start>
       <button outline>
         <ion-icon name="contact"></ion-icon>
@@ -77,21 +77,21 @@
     <ion-title>Outline</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Left Menu</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-border-top>
     <ion-title>Right Menu</ion-title>
     <button menuToggle right>
       <ion-icon name="menu"></ion-icon>
     </button>
   </ion-toolbar>
 
-  <ion-toolbar *ngIf="demo != 'Title'">
+  <ion-toolbar no-border-top *ngIf="demo != 'Title'">
     <ion-buttons end>
       <button #button2 (click)="buttonClick(button2)">
         <ion-icon name="search"></ion-icon>
@@ -107,7 +107,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar *ngIf="demo != 'Title'">
+  <ion-toolbar no-border-top *ngIf="demo != 'Title'">
     <ion-segment [(ngModel)]="apps">
       <ion-segment-button value="paid">
         Paid
@@ -121,11 +121,11 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar *ngIf="demo != 'Title'">
+  <ion-toolbar no-border-top *ngIf="demo != 'Title'">
     <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 
-  <ion-toolbar primary *ngIf="demo != 'Title'">
+  <ion-toolbar no-border-top primary *ngIf="demo != 'Title'">
     <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 

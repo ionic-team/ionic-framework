@@ -1,5 +1,12 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {ionicBootstrap} from 'ionic-angular';
+import { Component, ViewEncapsulation } from '@angular/core';
+
+import { ionicBootstrap } from 'ionic-angular';
+
+
+@Component({
+  template: 'tab',
+})
+class TabPage {}
 
 
 @Component({
@@ -7,6 +14,16 @@ import {ionicBootstrap} from 'ionic-angular';
   styleUrls: ['style.css'],
   encapsulation: ViewEncapsulation.None
 })
-class ApiDemoApp {}
+class ApiDemoPage {
+  root = TabPage;
+}
+
+
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+class ApiDemoApp {
+  root = ApiDemoPage;
+}
 
 ionicBootstrap(ApiDemoApp);

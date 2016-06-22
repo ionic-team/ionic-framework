@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, IonicApp, Config, Platform, ViewController} from 'ionic-angular';
-import {Modal, NavController, NavParams, Animation} from 'ionic-angular';
+import { Component } from '@angular/core';
+
+import { Animation, Config, IonicApp, ionicBootstrap, Modal, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
 
 
 @Component({
@@ -27,6 +27,7 @@ export class ModalFirstPage {
   }
 }
 
+
 @Component({
   templateUrl: "modal-content.html"
 })
@@ -48,7 +49,7 @@ export class ModalContentPage {
 
 
 @Component({
-  templateUrl: 'app.html'
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ApiDemoApp {
   root = ModalFirstPage;

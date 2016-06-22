@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, ItemSliding, Toast, NavController} from 'ionic-angular';
+import { Component } from '@angular/core';
+
+import { ionicBootstrap, ItemSliding, NavController, Toast } from 'ionic-angular';
 
 
 @Component({
   templateUrl: 'main.html'
 })
-class InitialPage {
+class ApiDemoPage {
   chats: any[];
   logins: any[];
 
@@ -89,7 +90,7 @@ class InitialPage {
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 class ApiDemoApp {
-  root = InitialPage;
+  root = ApiDemoPage;
 }
 
 ionicBootstrap(ApiDemoApp);
