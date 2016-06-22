@@ -58,7 +58,7 @@ export class Searchbar {
   @Input() cancelButtonText: string = 'Cancel';
 
   /**
-   * @input {boolean} Whether to hide the cancel button or not. Default: `"false"`.
+   * @input {boolean} Whether to show the cancel button or not. Default: `"false"`.
    */
   @Input() showCancelButton: any = false;
 
