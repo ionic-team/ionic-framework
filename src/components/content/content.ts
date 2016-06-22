@@ -72,9 +72,10 @@ export class Content extends Ion {
   private _inputPolling: boolean = false;
   private _scroll: ScrollView;
   private _scLsn: Function;
-  private _scrollEle: HTMLElement;
   private _sbPadding: boolean;
   private _fullscreen: boolean;
+  private _scrollEle: HTMLElement;
+  private _footerEle: HTMLElement;
 
   /**
    * @private
@@ -128,7 +129,7 @@ export class Content extends Ion {
   ngOnDestroy() {
     this._scLsn && this._scLsn();
     this._scroll && this._scroll.destroy();
-    this._scrollEle = this._scLsn = null;
+    this._scrollEle = this._footerEle = this._scLsn = null;
   }
 
   /**
@@ -478,6 +479,7 @@ export class Content extends Ion {
 
       } else if (ele.tagName === 'ION-FOOTER') {
         this._footerHeight = ele.clientHeight;
+        this._footerEle = ele;
       }
     }
 
@@ -506,6 +508,7 @@ export class Content extends Ion {
    */
   writeDimensions() {
     let newVal: number;
+    let scrollEle = this._scrollEle;
 
     // only write when it has changed
     if (this._fullscreen) {
@@ -519,7 +522,7 @@ export class Content extends Ion {
         newVal += this._tabbarHeight;
       }
       if (newVal !== this.adjustedTop) {
-        this._scrollEle.style.paddingTop = (newVal > 0 ? newVal + 'px' : '');
+        scrollEle.style.paddingTop = (newVal > 0 ? newVal + 'px' : '');
         this.adjustedTop = newVal;
       }
 
@@ -528,8 +531,12 @@ export class Content extends Ion {
         newVal += this._tabbarHeight;
       }
       if (newVal !== this.adjustedBottom) {
-        this._scrollEle.style.paddingBottom = (newVal > 0 ? newVal + 'px' : '');
+        scrollEle.style.paddingBottom = (newVal > 0 ? newVal + 'px' : '');
         this.adjustedBottom = newVal;
+
+        if (newVal > 0 && this._footerEle) {
+          this._footerEle.style.bottom = (newVal - this._footerHeight) + 'px';
+        }
       }
 
     } else {
@@ -539,7 +546,7 @@ export class Content extends Ion {
         newVal += this._tabbarHeight;
       }
       if (newVal !== this.adjustedTop) {
-        this._scrollEle.style.marginTop = (newVal > 0 ? newVal + 'px' : '');
+        scrollEle.style.marginTop = (newVal > 0 ? newVal + 'px' : '');
         this.adjustedTop = newVal;
       }
 
@@ -548,8 +555,12 @@ export class Content extends Ion {
         newVal += this._tabbarHeight;
       }
       if (newVal !== this.adjustedBottom) {
-        this._scrollEle.style.marginBottom = (newVal > 0 ? newVal + 'px' : '');
+        scrollEle.style.marginBottom = (newVal > 0 ? newVal + 'px' : '');
         this.adjustedBottom = newVal;
+
+        if (newVal > 0 && this._footerEle) {
+          this._footerEle.style.bottom = (newVal - this._footerHeight) + 'px';
+        }
       }
     }
 
