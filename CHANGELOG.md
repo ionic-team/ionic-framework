@@ -1,6 +1,34 @@
 <a name="2.0.0-beta.9"></a>
 # [2.0.0-beta.9](https://github.com/driftyco/ionic/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2016-06-16)
 
+### BREAKING CHANGES
+
+#### Searchbar Refactored
+
+- Searchbar's events no longer emit the Searchbar itself, they now emit the input's `$event` for each native input event. Instead of grabbing the value from the searchbar, you should grab it from the event target. For example:
+
+  Previously when an event was called the function called would look similar to this:
+  
+  ```
+  getItems(searchbar) {
+    // set q to the value of the searchbar input
+    var q = searchbar.value;
+  }
+  ```
+  
+  Now it should be similar to this:
+  
+  ```
+  getItems(ev) {
+    // set q to the value of the searchbar input
+    var q = ev.target.value;
+  }
+  ```
+  
+- `ngModel` is no longer required on Searchbar, but it can still be used. You can get the value of the input through Searchbar's [Output Events](http://ionicframework.com/docs/v2/api/components/searchbar/Searchbar/#output-events).
+- Added the ability to pass `autocomplete`, `autocorrect`, `spellcheck`, and `type` to the searchbar which is passed to the input.
+- The `hideCancelButton` attribute was removed in favor of `showCancelButton` which is set to `false` by default.
+  
 
 ### Features
 
