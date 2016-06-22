@@ -1,6 +1,3 @@
-
-
-
 /**
  * @name NavParams
  * @description

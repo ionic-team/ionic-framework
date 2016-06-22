@@ -1,6 +1,6 @@
-import {Directive, ElementRef, Input, Output, EventEmitter} from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
-import {isPresent, isTrueProperty} from '../../util/util';
+import { isPresent, isTrueProperty } from '../../util/util';
 
 /**
  * @name Option

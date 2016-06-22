@@ -1,11 +1,8 @@
-import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, Inject, Optional, QueryList, ViewEncapsulation } from '@angular/core';
 
-import {Button} from '../button/button';
-import {Config} from '../../config/config';
-import {Ion} from '../ion';
-import {MenuToggle} from '../menu/menu-toggle';
-import {Navbar} from '../navbar/navbar';
-import {ViewController} from '../nav/view-controller';
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
+import { ViewController } from '../nav/view-controller';
 
 
 /**

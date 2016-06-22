@@ -1,9 +1,9 @@
-import {Component, Optional, Input, Output, EventEmitter, HostListener, Provider, forwardRef, ViewEncapsulation} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/common';
+import { Component, EventEmitter, forwardRef, HostListener, Input, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/common';
 
-import {Form} from '../../util/form';
-import {Item} from '../item/item';
-import {isTrueProperty} from '../../util/util';
+import { Form } from '../../util/form';
+import { Item } from '../item/item';
+import { isTrueProperty } from '../../util/util';
 
 const CHECKBOX_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Checkbox), multi: true});
@@ -83,7 +83,7 @@ export class Checkbox {
   /**
    * @output {Checkbox} expression to evaluate when the checkbox value changes
    */
-  @Output() ionChange: EventEmitter<Checkbox> = new EventEmitter();
+  @Output() ionChange: EventEmitter<Checkbox> = new EventEmitter<Checkbox>();
 
   constructor(
     private _form: Form,

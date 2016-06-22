@@ -1,11 +1,11 @@
-import {Component, ElementRef, Renderer, Input, Output, EventEmitter, Optional, Provider, forwardRef, ViewEncapsulation} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/common';
+import { Component, ElementRef, EventEmitter, forwardRef, Input, Optional, Output, Provider, Renderer, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/common';
 
-import {Form} from '../../util/form';
-import {isTrueProperty} from '../../util/util';
-import {Item} from '../item/item';
-import {pointerCoord} from '../../util/dom';
-import {UIEventManager} from '../../util/ui-event-manager';
+import { Form } from '../../util/form';
+import { isTrueProperty } from '../../util/util';
+import { Item } from '../item/item';
+import { pointerCoord } from '../../util/dom';
+import { UIEventManager } from '../../util/ui-event-manager';
 
 
 const TOGGLE_VALUE_ACCESSOR = new Provider(
@@ -91,7 +91,7 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @output {Toggle} expression to evaluate when the toggle value changes
    */
-  @Output() ionChange: EventEmitter<Toggle> = new EventEmitter();
+  @Output() ionChange: EventEmitter<Toggle> = new EventEmitter<Toggle>();
 
   constructor(
     private _form: Form,

@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Input, Optional, Attribute} from '@angular/core';
+import { Attribute, Directive, ElementRef, Renderer, Input } from '@angular/core';
 
 
 /**

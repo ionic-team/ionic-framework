@@ -1,4 +1,4 @@
-import {Directive, Input, Output, EventEmitter, Host, NgZone, ElementRef} from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Host, Input, NgZone, Output } from '@angular/core';
 
 import {Content} from '../content/content';
 
@@ -137,7 +137,7 @@ export class InfiniteScroll {
    * you must call the infinite scroll's `complete()` method when
    * your async operation has completed.
    */
-  @Output() ionInfinite: EventEmitter<InfiniteScroll> = new EventEmitter();
+  @Output() ionInfinite: EventEmitter<InfiniteScroll> = new EventEmitter<InfiniteScroll>();
 
   constructor(
     @Host() private _content: Content,

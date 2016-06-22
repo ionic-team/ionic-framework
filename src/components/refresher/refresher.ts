@@ -183,17 +183,17 @@ export class Refresher {
    * updated to `refreshing`. From within your refresh handler, you must call the
    * `complete()` method when your async operation has completed.
    */
-  @Output() ionRefresh: EventEmitter<Refresher> = new EventEmitter();
+  @Output() ionRefresh: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 
   /**
    * @output {event} While the user is pulling down the content and exposing the refresher.
    */
-  @Output() ionPull: EventEmitter<Refresher> = new EventEmitter();
+  @Output() ionPull: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 
   /**
    * @output {event} When the user begins to start pulling down.
    */
-  @Output() ionStart: EventEmitter<Refresher> = new EventEmitter();
+  @Output() ionStart: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 
 
   constructor(@Host() private _content: Content, private _zone: NgZone) {

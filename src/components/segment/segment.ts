@@ -1,7 +1,7 @@
-import {Directive, Component, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList, ViewEncapsulation} from '@angular/core';
-import {NgControl} from '@angular/common';
+import { Component, ContentChildren, Directive, ElementRef, EventEmitter, HostListener, Input, Output, Optional, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
+import { NgControl } from '@angular/common';
 
-import {isTrueProperty, isPresent} from '../../util/util';
+import { isPresent, isTrueProperty } from '../../util/util';
 
 
 /**
@@ -66,7 +66,7 @@ export class SegmentButton {
   /**
    * @output {SegmentButton} expression to evaluate when a segment button has been clicked
    */
-  @Output() ionSelect: EventEmitter<SegmentButton> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<SegmentButton> = new EventEmitter<SegmentButton>();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
@@ -178,7 +178,7 @@ export class Segment {
   /**
    * @output {Any}  expression to evaluate when a segment button has been changed
    */
-  @Output() ionChange: EventEmitter<SegmentButton> = new EventEmitter();
+  @Output() ionChange: EventEmitter<SegmentButton> = new EventEmitter<SegmentButton>();
 
 
   /**

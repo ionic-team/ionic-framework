@@ -1,13 +1,13 @@
-import {Component, Inject, forwardRef, ElementRef, NgZone, Renderer, ComponentResolver, ViewContainerRef, ViewChild, Type, ViewEncapsulation, ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
-import {App} from '../app/app';
-import {Config} from '../../config/config';
-import {isTrueProperty} from '../../util/util';
-import {Keyboard} from '../../util/keyboard';
-import {NavController, NavOptions} from '../nav/nav-controller';
-import {TabButton} from './tab-button';
-import {Tabs} from './tabs';
-import {ViewController} from '../nav/view-controller';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { isTrueProperty} from '../../util/util';
+import { Keyboard} from '../../util/keyboard';
+import { NavController, NavOptions} from '../nav/nav-controller';
+import { TabButton} from './tab-button';
+import { Tabs} from './tabs';
+import { ViewController} from '../nav/view-controller';
 
 
 /**
@@ -148,7 +148,7 @@ export class Tab extends NavController {
   /**
    * @input {Page} Set the root page for this tab.
    */
-  @Input() root: Type;
+  @Input() root: any;
 
   /**
    * @input {object} Any nav-params to pass to the root page of this tab.
@@ -215,7 +215,7 @@ export class Tab extends NavController {
   /**
    * @output {Tab} Method to call when the current tab is selected
    */
-  @Output() ionSelect: EventEmitter<Tab> = new EventEmitter();
+  @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
   constructor(
     @Inject(forwardRef(() => Tabs)) public parent: Tabs,

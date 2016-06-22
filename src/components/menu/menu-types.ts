@@ -1,7 +1,7 @@
-import {Animation} from '../../animations/animation';
-import {Menu} from './menu';
-import {MenuController} from './menu-controller';
-import {Platform} from '../../platform/platform';
+import { Animation } from '../../animations/animation';
+import { Menu } from './menu';
+import { MenuController } from './menu-controller';
+import { Platform } from '../../platform/platform';
 
 
 /**

@@ -1,15 +1,15 @@
-import {Component, ElementRef, Input, Output, EventEmitter, ViewChildren, QueryList, ViewChild, Renderer, HostListener, ViewEncapsulation} from '@angular/core';
-import {DomSanitizationService} from '@angular/platform-browser';
+import { Component, ElementRef, EventEmitter, Input, HostListener, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { DomSanitizationService } from '@angular/platform-browser';
 
-import {Animation} from '../../animations/animation';
-import {Transition, TransitionOptions} from '../../transitions/transition';
-import {Config} from '../../config/config';
-import {isPresent, isString, isNumber, clamp} from '../../util/util';
-import {Key} from '../../util/key';
-import {NavParams} from '../nav/nav-params';
-import {ViewController} from '../nav/view-controller';
-import {raf, cancelRaf, CSS, pointerCoord} from '../../util/dom';
-import {UIEventManager} from '../../util/ui-event-manager';
+import { Animation } from '../../animations/animation';
+import { cancelRaf, pointerCoord, raf } from '../../util/dom';
+import { clamp, isNumber, isPresent, isString } from '../../util/util';
+import { Config } from '../../config/config';
+import { Key } from '../../util/key';
+import { NavParams } from '../nav/nav-params';
+import { Transition, TransitionOptions } from '../../transitions/transition';
+import { UIEventManager } from '../../util/ui-event-manager';
+import { ViewController } from '../nav/view-controller';
 
 
 /**
@@ -29,7 +29,7 @@ export class Picker extends ViewController {
     super(PickerDisplayCmp, opts);
     this.isOverlay = true;
 
-    this.ionChange = new EventEmitter();
+    this.ionChange = new EventEmitter<any>();
 
     // by default, pickers should not fire lifecycle events of other views
     // for example, when an picker enters, the current active view should
@@ -137,14 +137,14 @@ class PickerColumnCmp {
     // set the scroll position for the selected option
     this.setSelected(this.col.selectedIndex, 0);
 
-    // Listening for pointer events    
+    // Listening for pointer events
     this.events.pointerEventsRef(this.elementRef,
       (ev: any) => this.pointerStart(ev),
       (ev: any) => this.pointerMove(ev),
       (ev: any) => this.pointerEnd(ev)
     );
   }
-  
+
   ngOnDestroy() {
     this.events.unlistenAll();
   }

@@ -1,17 +1,17 @@
-import {Component, ElementRef, Optional, ViewChild, ViewContainerRef, EventEmitter, Output, Input, Renderer, ViewEncapsulation} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
-import {App} from '../app/app';
-import {Config} from '../../config/config';
-import {Content} from '../content/content';
-import {Ion} from '../ion';
-import {isBlank, isTrueProperty} from '../../util/util';
-import {nativeRaf} from '../../util/dom';
-import {NavController} from '../nav/nav-controller';
-import {Platform} from '../../platform/platform';
-import {Tab} from './tab';
-import {TabButton} from './tab-button';
-import {TabHighlight} from './tab-highlight';
-import {ViewController} from '../nav/view-controller';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { Content } from '../content/content';
+import { Ion } from '../ion';
+import { isBlank, isTrueProperty } from '../../util/util';
+import { nativeRaf } from '../../util/dom';
+import { NavController } from '../nav/nav-controller';
+import { Platform } from '../../platform/platform';
+import { Tab } from './tab';
+import { TabButton } from './tab-button';
+import { TabHighlight } from './tab-highlight';
+import { ViewController } from '../nav/view-controller';
 
 
 /**
@@ -199,7 +199,7 @@ export class Tabs extends Ion {
   /**
    * @input {any} Expression to evaluate when the tab changes.
    */
-  @Output() ionChange: EventEmitter<Tab> = new EventEmitter();
+  @Output() ionChange: EventEmitter<Tab> = new EventEmitter<Tab>();
 
   /**
    * @private

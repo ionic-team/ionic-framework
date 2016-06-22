@@ -1,8 +1,8 @@
-import {Directive, Attribute, ElementRef, Renderer, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {NgControl} from '@angular/common';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer} from '@angular/core';
+import { NgControl} from '@angular/common';
 
-import {Config} from '../../config/config';
-import {CSS, hasFocus}  from '../../util/dom';
+import { Config} from '../../config/config';
+import { CSS, hasFocus }  from '../../util/dom';
 
 
 /**
@@ -17,8 +17,8 @@ export class NativeInput {
   private _blurring: boolean;
   private _unrefBlur: Function;
 
-  @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
-  @Output() valueChange: EventEmitter<string> = new EventEmitter();
+  @Output() focusChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private _elementRef: ElementRef,
@@ -40,7 +40,7 @@ export class NativeInput {
     var self = this;
 
     self.focusChange.emit(true);
-    
+
     function docTouchEnd(ev: TouchEvent) {
       var tapped = <HTMLElement>ev.target;
       if (tapped && self.element()) {
@@ -207,7 +207,7 @@ function removeClone(focusedInputEle: any, queryCssClass: string) {
   selector: '[next-input]'
 })
 export class NextInput {
-  @Output() focused: EventEmitter<boolean> = new EventEmitter();
+  @Output() focused: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @HostListener('focus')
   receivedFocus() {

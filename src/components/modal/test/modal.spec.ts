@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {Modal, ModalCmp, NavController, ViewController} from '../../../../src';
+import {Modal, NavController, ViewController} from '../../../../src';
+import {ModalCmp} from '../../../../src/components/modal/modal';
 
 export function run() {
   describe('Modal', () => {

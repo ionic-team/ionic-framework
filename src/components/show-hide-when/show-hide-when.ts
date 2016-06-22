@@ -1,6 +1,6 @@
-import {Directive, Attribute, NgZone} from '@angular/core';
+import { Attribute, Directive, NgZone } from '@angular/core';
 
-import {Platform} from '../../platform/platform';
+import { Platform } from '../../platform/platform';
 
 
 /**

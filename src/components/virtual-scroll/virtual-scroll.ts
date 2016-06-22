@@ -1,15 +1,15 @@
-import {Directive, ContentChild, ContentChildren, QueryList, IterableDiffers, IterableDiffer, TrackByFn, Input, Optional, Renderer, ElementRef, ChangeDetectorRef, NgZone, DoCheck, AfterContentInit, OnDestroy} from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, ContentChildren, Directive, DoCheck, ElementRef, Input, IterableDiffers, IterableDiffer, NgZone, OnDestroy, Optional, QueryList, Renderer, TrackByFn } from '@angular/core';
 
-import {adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, writeToNodes} from './virtual-util';
-import {Config} from '../../config/config';
-import {Content} from '../content/content';
-import {Img} from '../img/img';
-import {isBlank, isPresent, isFunction} from '../../util/util';
-import {nativeRaf, nativeTimeout, clearNativeTimeout} from '../../util/dom';
-import {Platform} from '../../platform/platform';
-import {ViewController} from '../nav/view-controller';
-import {VirtualCell, VirtualData, VirtualNode} from './virtual-util';
-import {VirtualFooter, VirtualHeader, VirtualItem} from './virtual-item';
+import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, writeToNodes } from './virtual-util';
+import { clearNativeTimeout, nativeRaf, nativeTimeout } from '../../util/dom';
+import { Config } from '../../config/config';
+import { Content } from '../content/content';
+import { Img } from '../img/img';
+import { isBlank, isFunction, isPresent } from '../../util/util';
+import { Platform } from '../../platform/platform';
+import { ViewController } from '../nav/view-controller';
+import { VirtualCell, VirtualData, VirtualNode } from './virtual-util';
+import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
 
 
 /**

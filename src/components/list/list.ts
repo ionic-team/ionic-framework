@@ -36,7 +36,7 @@ export class List extends Ion {
   private _reorderGesture: ItemReorderGesture;
   private _lastToIndex: number = -1;
 
-  @Output() ionItemReorder: EventEmitter<{ from: number, to: number }> = new EventEmitter();
+  @Output() ionItemReorder: EventEmitter<{ from: number, to: number }> = new EventEmitter<{ from: number, to: number }>();
 
   constructor(elementRef: ElementRef, private _zone: NgZone, @Optional() private _content: Content) {
     super(elementRef);

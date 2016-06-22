@@ -1,7 +1,7 @@
-import {Component, Input, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
-import {Config} from '../../config/config';
-import {Refresher} from './refresher';
+import { Config } from '../../config/config';
+import { Refresher } from './refresher';
 
 
 /**

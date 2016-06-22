@@ -1,11 +1,10 @@
-import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, Renderer, ChangeDetectorRef} from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, ElementRef, Output, Renderer } from '@angular/core';
 
-import {Header, Footer} from '../toolbar/toolbar';
-import {isPresent, merge} from '../../util/util';
-import {Navbar} from '../navbar/navbar';
-import {NavController, NavOptions} from './nav-controller';
-import {NavParams} from './nav-params';
-import {Tabs} from '../tabs/tabs';
+import { Footer, Header } from '../toolbar/toolbar';
+import { isPresent, merge } from '../../util/util';
+import { Navbar } from '../navbar/navbar';
+import { NavController, NavOptions } from './nav-controller';
+import { NavParams } from './nav-params';
 
 
 /**
@@ -14,8 +13,8 @@ import {Tabs} from '../tabs/tabs';
  * Access various features and information about the current view.
  * @usage
  *  ```ts
- * import {Component} from '@angular/core';
- * import {ViewController} from 'ionic-angular';
+ * import { Component } from '@angular/core';
+ * import { ViewController } from 'ionic-angular';
  *
  * @Component({...})
  * export class MyPage{

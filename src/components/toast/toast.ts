@@ -1,14 +1,12 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Output, Renderer} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
 
-import {ActionSheet, ActionSheetOptions} from '../action-sheet/action-sheet';
-import {Animation} from '../../animations/animation';
-import {Transition, TransitionOptions} from '../../transitions/transition';
-
-import {Config} from '../../config/config';
-import {isPresent} from '../../util/util';
-import {NavParams} from '../nav/nav-params';
-import {NavController} from '../nav/nav-controller';
-import {ViewController} from '../nav/view-controller';
+import { Animation } from '../../animations/animation';
+import { Config } from '../../config/config';
+import { isPresent } from '../../util/util';
+import { NavController } from '../nav/nav-controller';
+import { NavParams } from '../nav/nav-params';
+import { Transition, TransitionOptions } from '../../transitions/transition';
+import { ViewController } from '../nav/view-controller';
 
 /**
  * @name Toast

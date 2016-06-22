@@ -1,16 +1,16 @@
-import {Component, Optional, ElementRef, ViewChild, ViewEncapsulation} from '@angular/core';
-import {NgControl} from '@angular/common';
+import { Component, Optional, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NgControl } from '@angular/common';
 
-import {Config} from '../../config/config';
-import {Content} from '../content/content';
-import {Form} from '../../util/form';
-import {InputBase} from './input-base';
-import {App} from '../app/app';
-import {Item} from '../item/item';
-import {Label} from '../label/label';
-import {NativeInput, NextInput} from './native-input';
-import {NavController} from '../nav/nav-controller';
-import {Platform} from '../../platform/platform';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { Content } from '../content/content';
+import { Form } from '../../util/form';
+import { InputBase } from './input-base';
+import { Item } from '../item/item';
+import { Label } from '../label/label';
+import { NativeInput, NextInput } from './native-input';
+import { NavController } from '../nav/nav-controller';
+import { Platform } from '../../platform/platform';
 
 
 /**

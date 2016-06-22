@@ -1,15 +1,15 @@
-import {Component, ComponentResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, ComponentResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
-import {addSelector} from '../../config/bootstrap';
-import {Animation} from '../../animations/animation';
-import {Config} from '../../config/config';
-import {CSS, nativeRaf} from '../../util/dom';
-import {isPresent, pascalCaseToDashCase} from '../../util/util';
-import {Key} from '../../util/key';
-import {NavParams} from '../nav/nav-params';
-import {PageTransition} from '../../transitions/page-transition';
-import {TransitionOptions} from '../../transitions/transition';
-import {ViewController} from '../nav/view-controller';
+import { addSelector } from '../../config/bootstrap';
+import { Animation } from '../../animations/animation';
+import { Config } from '../../config/config';
+import { CSS, nativeRaf } from '../../util/dom';
+import { isPresent, pascalCaseToDashCase } from '../../util/util';
+import { Key } from '../../util/key';
+import { NavParams } from '../nav/nav-params';
+import { PageTransition } from '../../transitions/page-transition';
+import { TransitionOptions } from '../../transitions/transition';
+import { ViewController } from '../nav/view-controller';
 
 const POPOVER_IOS_BODY_PADDING = 2;
 const POPOVER_MD_BODY_PADDING = 12;

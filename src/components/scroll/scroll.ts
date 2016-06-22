@@ -1,11 +1,6 @@
-import {Component, ElementRef, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import { Component, ElementRef, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
-import {Ion} from '../ion';
-import {Gesture} from '../../gestures/gesture';
-import {CSS} from '../../util/dom';
-import {Animation} from '../../animations/animation';
-
-import * as util from '../../util';
+import { Ion } from '../ion';
 
 /**
  * @name Scroll

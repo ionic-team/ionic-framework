@@ -1,9 +1,8 @@
-import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, HostListener, EventEmitter, Output, Input, Renderer} from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
-import {Tab} from './tab';
-import {Ion} from '../ion';
-import {Config} from '../../config/config';
-
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
+import { Tab } from './tab';
 
 /**
  * @private
@@ -29,23 +28,24 @@ export class TabButton extends Ion {
   private hasTitleOnly: boolean;
   private hasIconOnly: boolean;
   private hasBadge: boolean;
-  private _layout: string;
+  private layout: string;
 
   @Input() tab: Tab;
-  @Output() ionSelect: EventEmitter<Tab> = new EventEmitter();
+
+  @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
   constructor(config: Config, elementRef: ElementRef) {
     super(elementRef);
     this.disHover = (config.get('hoverCSS') === false);
-    this._layout = config.get('tabbarLayout');
+    this.layout = config.get('tabbarLayout');
   }
 
   ngOnInit() {
     this.tab.btn = this;
-    this._layout = this.tab.parent.tabbarLayout || this._layout;
+    this.layout = this.tab.parent.tabbarLayout || this.layout;
 
     this.hasTitle = !!this.tab.tabTitle;
-    this.hasIcon = !!this.tab.tabIcon && this._layout !== 'icon-hide';
+    this.hasIcon = !!this.tab.tabIcon && this.layout !== 'icon-hide';
     this.hasTitleOnly = (this.hasTitle && !this.hasIcon);
     this.hasIconOnly = (this.hasIcon && !this.hasTitle);
     this.hasBadge = !!this.tab.tabBadge;

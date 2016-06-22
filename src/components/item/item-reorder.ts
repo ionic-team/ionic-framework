@@ -1,5 +1,6 @@
-import {Component, ElementRef, Inject, forwardRef} from '@angular/core';
-import {Item} from './item';
+import { Component, ElementRef, forwardRef, Inject } from '@angular/core';
+
+import { Item } from './item';
 
 /**
  * @private

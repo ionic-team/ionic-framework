@@ -1,9 +1,9 @@
-import {Directive, ElementRef, Renderer, Optional, Input, Output, Provider, forwardRef, HostListener, ContentChild, EventEmitter} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/common';
+import { ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, Provider, Renderer } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/common';
 
-import {RadioButton} from './radio-button';
-import {ListHeader} from '../list/list';
-import {isPresent, isCheckedProperty} from '../../util/util';
+import { ListHeader } from '../list/list';
+import { isCheckedProperty } from '../../util/util';
+import { RadioButton } from './radio-button';
 
 const RADIO_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => RadioGroup), multi: true});
@@ -86,7 +86,7 @@ export class RadioGroup {
   /**
    * @output {any} expression to be evaluated when selection has been changed
    */
-  @Output() ionChange: EventEmitter<RadioGroup> = new EventEmitter();
+  @Output() ionChange: EventEmitter<RadioGroup> = new EventEmitter<RadioGroup>();
 
   constructor(
     private _renderer: Renderer,

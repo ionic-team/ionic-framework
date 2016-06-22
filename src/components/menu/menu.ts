@@ -1,14 +1,14 @@
-import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input, Output, Renderer, ChangeDetectionStrategy, ViewEncapsulation, ViewChild} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import {Ion} from '../ion';
-import {Config} from '../../config/config';
-import {Platform} from '../../platform/platform';
-import {Keyboard} from '../../util/keyboard';
-import {MenuContentGesture, MenuTargetGesture} from  './menu-gestures';
-import {MenuController} from './menu-controller';
-import {MenuType} from './menu-types';
-import {isTrueProperty} from '../../util/util';
-import {Backdrop} from '../backdrop/backdrop';
+import { Backdrop } from '../backdrop/backdrop';
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
+import { isTrueProperty } from '../../util/util';
+import { Keyboard } from '../../util/keyboard';
+import { MenuContentGesture, MenuTargetGesture } from  './menu-gestures';
+import { MenuController } from './menu-controller';
+import { MenuType } from './menu-types';
+import { Platform } from '../../platform/platform';
 
 
 /**
@@ -105,7 +105,7 @@ import {Backdrop} from '../backdrop/backdrop';
  * `push` for all modes, and then set the type to `overlay` for the `ios` mode.
  *
  * ```ts
- * import {ionicBootstrap} from 'ionic-angular';
+ * import { ionicBootstrap } from 'ionic-angular';
  *
  * ionicBootstrap(MyApp, customProviders, {
  *   menuType: 'push',
@@ -150,8 +150,8 @@ import {Backdrop} from '../backdrop/backdrop';
  * when it is called.
  *
  * ```ts
- * import {Component} from '@angular/core';
- * import {MenuController} from 'ionic-angular';
+ * import { Component } from '@angular/core';
+ * import { MenuController } from 'ionic-angular';
  *
  * @Component({...})
  * export class MyPage {

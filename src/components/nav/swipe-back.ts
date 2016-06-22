@@ -1,8 +1,8 @@
-import {MenuController} from '../menu/menu-controller';
-import {NavController} from './nav-controller';
-import {SlideEdgeGesture} from '../../gestures/slide-edge-gesture';
-import {SlideData} from '../../gestures/slide-gesture';
-import {assign} from '../../util/util';
+import { assign } from '../../util/util';
+import { MenuController } from '../menu/menu-controller';
+import { NavController } from './nav-controller';
+import { SlideData } from '../../gestures/slide-gesture';
+import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 
 
 export class SwipeBackGesture extends SlideEdgeGesture {

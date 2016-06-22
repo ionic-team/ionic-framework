@@ -1,8 +1,6 @@
-import {Component, Input, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
-import {NgStyle} from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 
-import {Config} from '../../config/config';
-
+import { Config } from '../../config/config';
 
 /**
  * @name Spinner
@@ -106,7 +104,6 @@ import {Config} from '../../config/config';
     '<svg viewBox="0 0 64 64" *ngFor="let i of _l" [ngStyle]="i.style">' +
      '<line [attr.y1]="i.y1" [attr.y2]="i.y2" transform="translate(32,32)"></line>' +
     '</svg>',
-  directives: [NgStyle],
   host: {
     '[class]': '_applied',
     '[class.spinner-paused]': 'paused'
@@ -201,7 +198,7 @@ export class Spinner {
 
 }
 
-const SPINNERS = {
+const SPINNERS: any = {
 
   ios: {
     dur: 1000,

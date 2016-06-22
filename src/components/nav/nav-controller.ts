@@ -1,17 +1,17 @@
-import {ViewContainerRef, ComponentResolver, ComponentFactory, ComponentRef, provide, ReflectiveInjector, ResolvedReflectiveProvider, ElementRef, NgZone, Renderer, EventEmitter} from '@angular/core';
+import { ComponentResolver, ElementRef, EventEmitter, NgZone, provide, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
 
-import {addSelector} from '../../config/bootstrap';
-import {App} from '../app/app';
-import {Config} from '../../config/config';
-import {Ion} from '../ion';
-import {isBlank, pascalCaseToDashCase} from '../../util/util';
-import {Keyboard} from '../../util/keyboard';
-import {MenuController} from '../menu/menu-controller';
-import {NavParams} from './nav-params';
-import {NavPortal} from './nav-portal';
-import {SwipeBackGesture} from './swipe-back';
-import {Transition} from '../../transitions/transition';
-import {ViewController} from './view-controller';
+import { addSelector } from '../../config/bootstrap';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
+import { isBlank, pascalCaseToDashCase } from '../../util/util';
+import { Keyboard } from '../../util/keyboard';
+import { MenuController } from '../menu/menu-controller';
+import { NavParams } from './nav-params';
+import { NavPortal } from './nav-portal';
+import { SwipeBackGesture } from './swipe-back';
+import { Transition } from '../../transitions/transition';
+import { ViewController } from './view-controller';
 
 /**
  * @name NavController
@@ -76,7 +76,7 @@ import {ViewController} from './view-controller';
  * defined in any component type which is pushed/popped from a `NavController`.
  *
  * ```ts
- * import {Component} from '@angular/core';
+ * import {Component } from '@angular/core';
  *
  * @Component({
  *   template: 'Hello World'
@@ -278,9 +278,9 @@ export class NavController extends Ion {
    *
    *
    *```ts
-   * import {NavController} from 'ionic-angular'
-   * import {Detail} from '../detail/detail'
-   * import {Info} from '../info/info'
+   * import {NavController } from 'ionic-angular'
+   * import {Detail } from '../detail/detail'
+   * import {Info } from '../info/info'
    *
    *  export class Home {
    *    constructor(nav: NavController) {
@@ -302,8 +302,8 @@ export class NavController extends Ion {
    *
    *
    * ```ts
-   * import {NavController} from 'ionic-angular'
-   * import {Detail} from '../detail/detail'
+   * import {NavController } from 'ionic-angular'
+   * import {Detail } from '../detail/detail'
    *
    *  export class Home {
    *    constructor(nav: NavController) {
@@ -322,10 +322,10 @@ export class NavController extends Ion {
    *
    *
    * ```ts
-   * import {NavController} from 'ionic-angular';
-   * import {Info} from '../info/info';
-   * import {List} from '../list/list';
-   * import {Detail} from '../detail/detail';
+   * import {NavController } from 'ionic-angular';
+   * import {Info } from '../info/info';
+   * import {List } from '../list/list';
+   * import {Detail } from '../detail/detail';
    *
    *  export class Home {
    *    constructor(nav: NavController) {

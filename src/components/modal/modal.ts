@@ -1,14 +1,14 @@
-import {Component, ComponentResolver, HostListener, Renderer, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, ComponentResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
-import {addSelector} from '../../config/bootstrap';
-import {Animation} from '../../animations/animation';
-import {isPresent, pascalCaseToDashCase} from '../../util/util';
-import {Key} from '../../util/key';
-import {NavParams} from '../nav/nav-params';
-import {PageTransition} from '../../transitions/page-transition';
-import {TransitionOptions} from '../../transitions/transition';
-import {ViewController} from '../nav/view-controller';
-import {windowDimensions} from '../../util/dom';
+import { addSelector } from '../../config/bootstrap';
+import { Animation } from '../../animations/animation';
+import { isPresent, pascalCaseToDashCase } from '../../util/util';
+import { Key } from '../../util/key';
+import { NavParams } from '../nav/nav-params';
+import { PageTransition } from '../../transitions/page-transition';
+import { TransitionOptions } from '../../transitions/transition';
+import { ViewController } from '../nav/view-controller';
+import { windowDimensions } from '../../util/dom';
 
 
 /**
@@ -37,7 +37,7 @@ import {windowDimensions} from '../../util/dom';
  *
  * @usage
  * ```ts
- * import {Page, Modal, NavController, NavParams} from 'ionic-angular';
+ * import { Page, Modal, NavController, NavParams } from 'ionic-angular';
  *
  * @Component(...)
  * class HomePage {
@@ -69,8 +69,8 @@ import {windowDimensions} from '../../util/dom';
  * modal.
  *
  * ```ts
- * import {Component} from '@angular/core';
- * import {Modal, NavController, ViewController} from 'ionic-angular';
+ * import { Component } from '@angular/core';
+ * import { Modal, NavController, ViewController } from 'ionic-angular';
  *
  * @Component(...)
  * class HomePage {

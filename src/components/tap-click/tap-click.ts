@@ -1,10 +1,10 @@
-import {Injectable, NgZone} from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
-import {App} from '../app/app';
-import {Config} from '../../config/config';
-import {pointerCoord, hasPointerMoved} from '../../util/dom';
-import {Activator} from './activator';
-import {RippleActivator} from './ripple';
+import { Activator } from './activator';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { hasPointerMoved, pointerCoord } from '../../util/dom';
+import { RippleActivator } from './ripple';
 
 
 /**

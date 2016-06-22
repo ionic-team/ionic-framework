@@ -1,10 +1,9 @@
-import {Component, Optional, Input, Output, HostListener, EventEmitter, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
 
-import {Form} from '../../util/form';
-import {isTrueProperty, isPresent, isBlank, isCheckedProperty} from '../../util/util';
-import {Item} from '../item/item';
-import {ListHeader} from '../list/list';
-import {RadioGroup} from './radio-group';
+import { Form } from '../../util/form';
+import { isBlank, isCheckedProperty, isPresent, isTrueProperty } from '../../util/util';
+import { Item } from '../item/item';
+import { RadioGroup } from './radio-group';
 
 
 /**

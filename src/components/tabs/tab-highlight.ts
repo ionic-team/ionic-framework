@@ -1,7 +1,7 @@
-import {Directive, ElementRef} from '@angular/core';
+import { Directive, ElementRef } from '@angular/core';
 
-import {rafFrames} from '../../util/dom';
-import {Tab} from './tab';
+import { rafFrames } from '../../util/dom';
+import { Tab } from './tab';
 
 /**
  * @private

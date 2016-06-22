@@ -1,13 +1,12 @@
-import {Component, Directive, Optional, ElementRef, Renderer, forwardRef, Inject, Input} from '@angular/core';
+import { Component, Directive, ElementRef, forwardRef, Inject, Input, Optional } from '@angular/core';
 
-import {Ion} from '../ion';
-import {Icon} from '../icon/icon';
-import {ToolbarBase} from '../toolbar/toolbar';
-import {Config} from '../../config/config';
-import {App} from '../app/app';
-import {isTrueProperty} from '../../util/util';
-import {ViewController} from '../nav/view-controller';
-import {NavController} from '../nav/nav-controller';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
+import { isTrueProperty } from '../../util/util';
+import { NavController } from '../nav/nav-controller';
+import { ToolbarBase } from '../toolbar/toolbar';
+import { ViewController } from '../nav/view-controller';
 
 
 @Directive({

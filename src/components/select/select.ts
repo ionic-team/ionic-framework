@@ -1,13 +1,13 @@
-import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forwardRef, EventEmitter, HostListener, ContentChildren, QueryList, ViewEncapsulation} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/common';
+import { Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, Optional, Output, Provider, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/common';
 
-import {Alert} from '../alert/alert';
-import {ActionSheet} from '../action-sheet/action-sheet';
-import {Form} from '../../util/form';
-import {Item} from '../item/item';
-import {merge, isTrueProperty, isBlank, isCheckedProperty} from '../../util/util';
-import {NavController} from '../nav/nav-controller';
-import {Option} from '../option/option';
+import { ActionSheet } from '../action-sheet/action-sheet';
+import { Alert } from '../alert/alert';
+import { Form } from '../../util/form';
+import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/util';
+import { Item } from '../item/item';
+import { NavController } from '../nav/nav-controller';
+import { Option } from '../option/option';
 
 const SELECT_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Select), multi: true});

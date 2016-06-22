@@ -54,13 +54,13 @@
     Map mode: <b>{{myForm.controls.mapStyle.value}}</b> -
 
     <span [ngSwitch]="myForm.controls.mapStyle.value">
-      <span *ngSwitchWhen="'standard'">
+      <span *ngSwitchCase="'standard'">
         <b>Standard</b>
       </span>
-      <span *ngSwitchWhen="'hybrid'">
+      <span *ngSwitchCase="'hybrid'">
         <b>Hybrid</b>
       </span>
-      <span *ngSwitchWhen="'sat'">
+      <span *ngSwitchCase="'sat'">
         <b>Satellite</b>
       </span>
     </span>

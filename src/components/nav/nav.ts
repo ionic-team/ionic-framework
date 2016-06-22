@@ -1,12 +1,12 @@
-import {Component, ElementRef, ViewContainerRef, ComponentResolver, Input, Optional, NgZone, Renderer, ViewChild, ViewEncapsulation, AfterViewInit} from '@angular/core';
+import { AfterViewInit, Component, ComponentResolver, ElementRef, Input, Optional, NgZone, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
-import {App} from '../app/app';
-import {Config} from '../../config/config';
-import {Keyboard} from '../../util/keyboard';
-import {isTrueProperty} from '../../util/util';
-import {NavController} from './nav-controller';
-import {NavPortal} from './nav-portal';
-import {ViewController} from './view-controller';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { Keyboard } from '../../util/keyboard';
+import { isTrueProperty } from '../../util/util';
+import { NavController } from './nav-controller';
+import { NavPortal } from './nav-portal';
+import { ViewController } from './view-controller';
 
 /**
  * @name Nav

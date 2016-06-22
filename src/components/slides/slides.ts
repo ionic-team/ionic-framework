@@ -1,16 +1,12 @@
-import {Directive, Component, ElementRef, Renderer, Host, EventEmitter, Input, Output, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
-import {NgClass} from '@angular/common';
+import { ChangeDetectionStrategy, Component, Directive, ElementRef, EventEmitter, Input, Host, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
-import {Ion} from '../ion';
-import {Animation} from '../../animations/animation';
-import {Gesture} from '../../gestures/gesture';
-import {DragGesture} from '../../gestures/drag-gesture';
-import {dom} from '../../util';
-import {CSS} from '../../util/dom';
-import {debounce, isTrueProperty, isPresent, defaults} from '../../util/util';
-
-import {Swiper} from './swiper-widget';
-import {Scroll} from '../scroll/scroll';
+import { Animation } from '../../animations/animation';
+import { Gesture } from '../../gestures/gesture';
+import { CSS } from '../../util/dom';
+import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
+import { dom } from '../../util';
+import { Ion } from '../ion';
+import { Swiper} from './swiper-widget';
 
 
 /**
@@ -193,7 +189,6 @@ import {Scroll} from '../scroll/scroll';
       '</div>' +
       '<div [class.hide]="!showPager" class="swiper-pagination"></div>' +
     '</div>',
-  directives: [NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })

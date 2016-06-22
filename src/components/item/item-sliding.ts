@@ -1,14 +1,14 @@
-import {ChangeDetectionStrategy, Component, ContentChildren, ContentChild,  Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
 
-import {List} from '../list/list';
-import {Item} from './item';
-import {isPresent} from '../../util/util';
-import {CSS, nativeRaf, nativeTimeout} from '../../util/dom';
+import { CSS, nativeRaf, nativeTimeout } from '../../util/dom';
+import { Item } from './item';
+import { isPresent } from '../../util/util';
+import { List } from '../list/list';
 
 const SWIPE_FACTOR = 1.1;
 const ELASTIC_FACTOR = 0.55;
 
-export const enum SideFlags {
+export const enum ItemSideFlags {
   None = 0,
   Left = 1 << 0,
   Right = 1 << 1,
@@ -50,7 +50,7 @@ export class ItemOptions {
   /**
    * @output {event} Expression to evaluate when the item has been fully swiped.
    */
-  @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter();
+  @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
   constructor(private _elementRef: ElementRef, private _renderer: Renderer) {
   }
@@ -65,11 +65,11 @@ export class ItemOptions {
   /**
    * @private
    */
-  getSides(): SideFlags {
+  getSides(): ItemSideFlags {
     if (isPresent(this.side) && this.side === 'left') {
-      return SideFlags.Left;
+      return ItemSideFlags.Left;
     } else {
-      return SideFlags.Right;
+      return ItemSideFlags.Right;
     }
   }
 
@@ -187,7 +187,7 @@ export class ItemSliding {
   private _startX: number = 0;
   private _optsWidthRightSide: number = 0;
   private _optsWidthLeftSide: number = 0;
-  private _sides: SideFlags;
+  private _sides: ItemSideFlags;
   private _timer: number = null;
   private _leftOptions: ItemOptions;
   private _rightOptions: ItemOptions;
@@ -225,7 +225,7 @@ export class ItemSliding {
    * ```
    *
    */
-  @Output() ionDrag: EventEmitter<number> = new EventEmitter();
+  @Output() ionDrag: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(@Optional() private _list: List, private _renderer: Renderer, private _elementRef: ElementRef) {
     _list.enableSlidingItems(true);
@@ -242,7 +242,7 @@ export class ItemSliding {
     let sides = 0;
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();
-      if (side === SideFlags.Left) {
+      if (side === ItemSideFlags.Left) {
         this._leftOptions = item;
       } else {
         this._rightOptions = item;
@@ -280,9 +280,9 @@ export class ItemSliding {
 
     let openAmount = this._startX - x;
     switch (this._sides) {
-      case SideFlags.Right: openAmount = Math.max(0, openAmount); break;
-      case SideFlags.Left: openAmount = Math.min(0, openAmount); break;
-      case SideFlags.Both: break;
+      case ItemSideFlags.Right: openAmount = Math.max(0, openAmount); break;
+      case ItemSideFlags.Left: openAmount = Math.min(0, openAmount); break;
+      case ItemSideFlags.Both: break;
       default: return;
     }
 

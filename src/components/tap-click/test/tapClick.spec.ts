@@ -1,4 +1,4 @@
-import * as tapClick from '../../../../src';
+import {isActivatable} from '../../../../src';
 
 export function run() {
 
@@ -8,33 +8,33 @@ export function run() {
 
       it('should be activatable on <a> element', () => {
         let ele = document.createElement('a');
-        expect( tapClick.isActivatable(ele) ).toBe(true);
+        expect( isActivatable(ele) ).toBe(true);
       });
 
       it('should be activatable on <button> element', () => {
         let ele = document.createElement('button');
-        expect( tapClick.isActivatable(ele) ).toBe(true);
+        expect( isActivatable(ele) ).toBe(true);
       });
 
       it('should be activatable on <ion-item-sliding> element', () => {
         let ele = document.createElement('ion-item-sliding');
-        expect( tapClick.isActivatable(ele) ).toBe(false);
+        expect( isActivatable(ele) ).toBe(false);
       });
 
       it('should be not activatable on <ion-item> element', () => {
         let ele = document.createElement('ion-item');
-        expect( tapClick.isActivatable(ele) ).toBe(false);
+        expect( isActivatable(ele) ).toBe(false);
       });
 
       it('should be not activatable on <div> element', () => {
         let ele = document.createElement('div');
-        expect( tapClick.isActivatable(ele) ).toBe(false);
+        expect( isActivatable(ele) ).toBe(false);
       });
 
       it('should be activatable with "tappable" attribute', () => {
         let ele = document.createElement('div');
-        ele.setAttribute('tappable', true);
-        expect( tapClick.isActivatable(ele) ).toBe(true);
+        ele.setAttribute('tappable', 'true');
+        expect( isActivatable(ele) ).toBe(true);
       });
 
     });

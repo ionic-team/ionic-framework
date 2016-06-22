@@ -1,7 +1,7 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
-import {Config} from '../../config/config';
-import {InfiniteScroll} from './infinite-scroll';
+import { Config } from '../../config/config';
+import { InfiniteScroll } from './infinite-scroll';
 
 
 /**

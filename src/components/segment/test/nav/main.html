@@ -38,13 +38,13 @@
   </ion-row>
 
   <div [ngSwitch]="signInType">
-    <div *ngSwitchWhen="'existing'">
+    <div *ngSwitchCase="'existing'">
       Signing up as an <b>Existing User</b>.
     </div>
-    <div *ngSwitchWhen="'new'">
+    <div *ngSwitchCase="'new'">
       Signing up as a <b>New User</b>.
     </div>
-    <div *ngSwitchWhen="'test'">
+    <div *ngSwitchCase="'test'">
       Signing up as a <b>Test User</b>.
     </div>
  </div>

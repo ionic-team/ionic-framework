@@ -1,11 +1,11 @@
-import {Component, Renderer, ElementRef, HostListener, ViewEncapsulation} from '@angular/core';
+import { Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
 
-import {Animation} from '../../animations/animation';
-import {Transition, TransitionOptions} from '../../transitions/transition';
-import {Config} from '../../config/config';
-import {isPresent, isUndefined, isDefined} from '../../util/util';
-import {NavParams} from '../nav/nav-params';
-import {ViewController} from '../nav/view-controller';
+import { Animation } from '../../animations/animation';
+import { Config } from '../../config/config';
+import { isDefined, isPresent, isUndefined } from '../../util/util';
+import { NavParams } from '../nav/nav-params';
+import { Transition, TransitionOptions } from '../../transitions/transition';
+import { ViewController} from '../nav/view-controller';
 
 
 /**

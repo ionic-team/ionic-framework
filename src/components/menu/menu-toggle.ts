@@ -1,8 +1,8 @@
-import {Directive, ElementRef, Optional, Input, HostListener} from '@angular/core';
+import { Directive, ElementRef, Input, HostListener, Optional } from '@angular/core';
 
-import {ViewController} from '../nav/view-controller';
-import {Navbar} from '../navbar/navbar';
-import {MenuController} from './menu-controller';
+import { MenuController } from './menu-controller';
+import { Navbar } from '../navbar/navbar';
+import { ViewController } from '../nav/view-controller';
 
 /**
  * @name MenuToggle

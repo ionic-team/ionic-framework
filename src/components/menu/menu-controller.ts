@@ -1,6 +1,6 @@
-import {Menu} from './menu';
-import {MenuType} from './menu-types';
-import {Platform} from '../../platform/platform';
+import { Menu } from './menu';
+import { MenuType } from './menu-types';
+import { Platform } from '../../platform/platform';
 
 
 /**

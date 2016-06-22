@@ -1,12 +1,12 @@
-import {Component, Optional, Input, Output, EventEmitter, ViewChild, ViewChildren, QueryList, Renderer, ElementRef, Provider, Inject, forwardRef, ViewEncapsulation} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/common';
+import { Component, ElementRef, EventEmitter, forwardRef, Input, Inject, Optional, Output, Provider, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/common';
 
-import {Form} from '../../util/form';
-import {isTrueProperty, isNumber, isString, isPresent, clamp} from '../../util/util';
-import {Item} from '../item/item';
-import {UIEventManager} from '../../util/ui-event-manager';
-import {pointerCoord, Coordinates, raf} from '../../util/dom';
-import {Debouncer} from '../../util/debouncer';
+import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
+import { Coordinates, pointerCoord, raf } from '../../util/dom';
+import { Debouncer } from '../../util/debouncer';
+import { Form } from '../../util/form';
+import { Item } from '../item/item';
+import { UIEventManager } from '../../util/ui-event-manager';
 
 
 const RANGE_VALUE_ACCESSOR = new Provider(
@@ -216,7 +216,7 @@ export class Range {
   private _snaps: boolean = false;
 
   private _debouncer: Debouncer = new Debouncer(0);
-  private _events: UIEventManager = new UIEventManager();  
+  private _events: UIEventManager = new UIEventManager();
   /**
    * @private
    */
@@ -320,7 +320,7 @@ export class Range {
   /**
    * @output {Range} Expression to evaluate when the range value changes.
    */
-  @Output() ionChange: EventEmitter<Range> = new EventEmitter();
+  @Output() ionChange: EventEmitter<Range> = new EventEmitter<Range>();
 
 
   constructor(
