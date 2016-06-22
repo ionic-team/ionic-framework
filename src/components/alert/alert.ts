@@ -320,7 +320,7 @@ export class Alert extends ViewController {
       '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
-        '<template ngSwitchWhen="radio">' +
+        '<template ngSwitchCase="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
             '<button category="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
               '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
@@ -331,7 +331,7 @@ export class Alert extends ViewController {
           '</div>' +
         '</template>' +
 
-        '<template ngSwitchWhen="checkbox">' +
+        '<template ngSwitchCase="checkbox">' +
           '<div class="alert-checkbox-group">' +
             '<button category="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" class="alert-tappable alert-checkbox" role="checkbox">' +
               '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +

@@ -23,7 +23,6 @@
     "@angular/core": "^<%= angularVersion %>",
     "@angular/platform-browser": "^<%= angularVersion %>",
     "@angular/platform-browser-dynamic": "^<%= angularVersion %>",
-    "@angular/http": "^<%= angularVersion %>",
-    "@angular/router": "^<%= angularVersion %>"
+    "@angular/http": "^<%= angularVersion %>"
   }
 }
