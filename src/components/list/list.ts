@@ -38,7 +38,7 @@ export class List extends Ion {
 
   @Output() ionItemReorder: EventEmitter<{ from: number, to: number }> = new EventEmitter<{ from: number, to: number }>();
 
-  constructor(elementRef: ElementRef, private _zone: NgZone, @Optional() private _content: Content) {
+  constructor(elementRef: ElementRef, private _rendered: Renderer, private _zone: NgZone, @Optional() private _content: Content) {
     super(elementRef);
   }
 
@@ -107,6 +107,14 @@ export class List extends Ion {
     this._slidingGesture && this._slidingGesture.closeOpened();
   }
 
+  setCssClass(classname: string, add: boolean) {
+    this._rendered.setElementClass(this.getNativeElement(), classname, add);
+  }
+
+  reorderStart() {
+    this.setCssClass('reorder-active', true);
+  }
+
   /**
    * @private
    */
@@ -139,6 +147,7 @@ export class List extends Ion {
   reorderReset() {
     let children = this.elementRef.nativeElement.children;
     let len = children.length;
+    this.setCssClass('reorder-active', false);
     for (let i = 0; i < len; i++) {
       children[i].style.transform = '';
     }
@@ -155,7 +164,13 @@ export class List extends Ion {
     let lastToIndex = this._lastToIndex;
     this._lastToIndex = toIndex;
 
+    // TODO: I think both loops can be merged into a single one
+    // but I had no luck last time I tried
+
+    /********* DOM READ ********** */
     let children = this.elementRef.nativeElement.children;
+
+    /********* DOM WRITE ********* */
     if (toIndex >= lastToIndex) {
       for (var i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {

@@ -406,6 +406,13 @@ export class Item {
   /**
    * @private
    */
+  getNativeElement() {
+    return this._elementRef.nativeElement;
+  }
+
+  /**
+   * @private
+   */
   height(): number {
     return this._elementRef.nativeElement.offsetHeight;
   }

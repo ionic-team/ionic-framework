@@ -24,7 +24,7 @@ ion-reorder {
 
 .reorder-enabled {
 
-  ion-item {
+  .item {
     will-change: transform;
   }
 
@@ -33,7 +33,14 @@ ion-reorder {
   }
 }
 
-ion-item.reorder-active {
+.reorder-active {
+  .item-inner {
+    pointer-events: none;
+  }
+}
+
+
+.item.reorder-active {
   z-index: 4;
 
   box-shadow: 0 0 10px rgba(0, 0, 0, .5);
@@ -41,8 +48,4 @@ ion-item.reorder-active {
   transition: none;
 
   pointer-events: none;
-
-  ion-reorder {
-    pointer-events: none;
-  }
 }
