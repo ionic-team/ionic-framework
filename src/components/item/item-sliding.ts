@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { CSS, nativeRaf, nativeTimeout } from '../../util/dom';
+import { CSS, nativeRaf, nativeTimeout, clearNativeTimeout } from '../../util/dom';
 import { Item } from './item';
 import { isPresent } from '../../util/util';
 import { List } from '../list/list';
 
-const SWIPE_FACTOR = 1.1;
+const SWIPE_MARGIN = 20;
 const ELASTIC_FACTOR = 0.55;
 
 export const enum ItemSideFlags {
@@ -52,8 +52,7 @@ export class ItemOptions {
    */
   @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
-  constructor(private _elementRef: ElementRef, private _renderer: Renderer) {
-  }
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer) {}
 
   /**
    * @private
@@ -83,10 +82,13 @@ export class ItemOptions {
 }
 
 const enum SlidingState {
-  Disabled = 0,
-  Enabled = 1,
-  Right = 2,
-  Left = 3
+  Disabled = 1 << 1,
+  Enabled = 1 << 2,
+  Right = 1 << 3,
+  Left = 1 << 4,
+
+  SwipeRight = 1 << 5,
+  SwipeLeft = 1 << 6,
 }
 
 
@@ -194,23 +196,15 @@ export class ItemSliding {
   private _optsDirty: boolean = true;
   private _state: SlidingState = SlidingState.Disabled;
 
-  /**
-  * @private
-  * */
-  slidingPercent: number = 0;
-
-  /**
-  * @private
-  * */
   @ContentChild(Item) private item: Item;
-
 
   /**
    * @output {event} Expression to evaluate when the sliding position changes.
    * It reports the relative position.
    *
    * ```ts
-   * ondrag(percent) {
+   * ondrag(item) {
+   *   let percent = item.getSlidingPercent();
    *   if (percent > 0) {
    *     // positive
    *     console.log('right side');
@@ -225,20 +219,16 @@ export class ItemSliding {
    * ```
    *
    */
-  @Output() ionDrag: EventEmitter<number> = new EventEmitter<number>();
+  @Output() ionDrag: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
-  constructor(@Optional() private _list: List, private _renderer: Renderer, private _elementRef: ElementRef) {
-    _list.enableSlidingItems(true);
+  constructor( @Optional() list: List, private _renderer: Renderer, private _elementRef: ElementRef) {
+    list && list.containsSlidingItem(true);
     _elementRef.nativeElement.$ionComponent = this;
-    _renderer.setElementClass(_elementRef.nativeElement, 'item-wrapper', true);
+    this.setCssClass('item-wrapper', true);
   }
 
-
-  /**
-   * @private
-   */
   @ContentChildren(ItemOptions)
-  set _itemOptions(itemOptions: QueryList<ItemOptions>) {
+  private set _itemOptions(itemOptions: QueryList<ItemOptions>) {
     let sides = 0;
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();
@@ -256,9 +246,30 @@ export class ItemSliding {
   /**
    * @private
    */
+  getOpenAmount(): number {
+    return this._openAmount;
+  }
+
+  /**
+   * @private
+   */  
+  getSlidingPercent(): number {
+    let openAmount = this._openAmount;
+    if (openAmount > 0) {
+      return openAmount / this._optsWidthRightSide;
+    } else if (openAmount < 0) {
+      return openAmount / this._optsWidthLeftSide;
+    } else {
+      return 0;
+    }
+  }
+
+  /**
+   * @private
+   */
   startSliding(startX: number) {
     if (this._timer) {
-      clearTimeout(this._timer);
+      clearNativeTimeout(this._timer);
       this._timer = null;
     }
     if (this._openAmount === 0) {
@@ -278,7 +289,7 @@ export class ItemSliding {
       return;
     }
 
-    let openAmount = this._startX - x;
+    let openAmount = (this._startX - x);
     switch (this._sides) {
       case ItemSideFlags.Right: openAmount = Math.max(0, openAmount); break;
       case ItemSideFlags.Left: openAmount = Math.min(0, openAmount); break;
@@ -316,105 +327,88 @@ export class ItemSliding {
       restingPoint = 0;
     }
 
-    this.fireSwipeEvent();
     this._setOpenAmount(restingPoint, true);
+    this.fireSwipeEvent();
     return restingPoint;
   }
 
-  /**
-  * @private
-  * */
-  fireSwipeEvent() {
-    if (this.slidingPercent > SWIPE_FACTOR) {
+  private fireSwipeEvent() {
+    if (this._state & SlidingState.SwipeRight) {
       this._rightOptions.ionSwipe.emit(this);
-    } else if (this.slidingPercent < -SWIPE_FACTOR) {
+    } else if (this._state & SlidingState.SwipeLeft) {
       this._leftOptions.ionSwipe.emit(this);
     }
   }
 
-  /**
-  * @private
-  * */
-  calculateOptsWidth() {
+  private calculateOptsWidth() {
     nativeRaf(() => {
-      if (this._optsDirty) {
-        this._optsWidthRightSide = 0;
-        if (this._rightOptions) {
-          this._optsWidthRightSide = this._rightOptions.width();
-        }
-
-        this._optsWidthLeftSide = 0;
-        if (this._leftOptions) {
-          this._optsWidthLeftSide = this._leftOptions.width();
-        }
-        this._optsDirty = false;
+      if (!this._optsDirty) {
+        return;
       }
+      this._optsWidthRightSide = 0;
+      if (this._rightOptions) {
+        this._optsWidthRightSide = this._rightOptions.width();
+      }
+
+      this._optsWidthLeftSide = 0;
+      if (this._leftOptions) {
+        this._optsWidthLeftSide = this._leftOptions.width();
+      }
+      this._optsDirty = false;
     });
   }
 
-  /**
-   * @private
-   */
   private _setOpenAmount(openAmount: number, isFinal: boolean) {
     if (this._timer) {
-      clearTimeout(this._timer);
+      clearNativeTimeout(this._timer);
       this._timer = null;
     }
     this._openAmount = openAmount;
+    
+    if (isFinal) {
+      this.item.setCssStyle(CSS.transition, '');
 
-    let didEnd = openAmount === 0;
-    if (didEnd) {
-      // TODO: refactor. there must exist a better way
-      // if sliding ended, we wait 400ms until animation finishes
+    } else {
+      if (openAmount > 0) {
+        let state = (openAmount >= (this._optsWidthRightSide + SWIPE_MARGIN))
+          ? SlidingState.Right | SlidingState.SwipeRight
+          : SlidingState.Right;
+
+        this._setState(state);
+
+      } else if (openAmount < 0) {
+        let state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
+          ? SlidingState.Left | SlidingState.SwipeLeft
+          : SlidingState.Left;
+      
+        this._setState(state);
+      }
+    }
+    if (openAmount === 0) {
       this._timer = nativeTimeout(() => {
         this._setState(SlidingState.Disabled);
         this._timer = null;
-      }, 400);
-      this.slidingPercent = 0;
-
-    } else if (openAmount > 0) {
-      this._setState(SlidingState.Right);
-      this.slidingPercent = openAmount / this._optsWidthRightSide;
-    } else if (openAmount < 0) {
-      this._setState(SlidingState.Left);
-      this.slidingPercent = openAmount / this._optsWidthLeftSide;
+      }, 600);
+      this.item.setCssStyle(CSS.transform, '');
+      return;
     }
-    if (!isFinal) {
-      this.setClass('active-swipe-right', this.slidingPercent > SWIPE_FACTOR);
-      this.setClass('active-swipe-left', this.slidingPercent < -SWIPE_FACTOR);
-    } else {
-      this.item.setCssStyle(CSS.transition, '');
-    }
-
-    this.ionDrag.emit(this.slidingPercent);
-    this.item.setCssStyle(CSS.transform, (didEnd ? '' : 'translate3d(' + -openAmount + 'px,0,0)'));
+ 
+    this.item.setCssStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
+    this.ionDrag.emit(this);
   }
 
   private _setState(state: SlidingState) {
-    if (state !== this._state) {
-      this._state = state;
-      this.setClass('active-slide', state !== SlidingState.Disabled);
-      this.setClass('active-options-right', state === SlidingState.Right);
-      this.setClass('active-options-left', state === SlidingState.Left);
-      if (state === SlidingState.Disabled || state === SlidingState.Enabled) {
-        this.setClass('active-swipe-right', false);
-        this.setClass('active-swipe-left', false);
-      }
+    if (state === this._state) {
+      return;
     }
+    this.setCssClass('active-slide', (state !== SlidingState.Disabled));
+    this.setCssClass('active-options-right', !!(state & SlidingState.Right));
+    this.setCssClass('active-options-left', !!(state & SlidingState.Left));
+    this.setCssClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
+    this.setCssClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
+    this._state = state;
   }
 
-  /**
-   * @private
-   */
-  setClass(className: string, add: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
-  }
-  /**
-   * @private
-   */
-  getOpenAmount(): number {
-    return this._openAmount;
-  }
 
   /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
@@ -454,24 +448,37 @@ export class ItemSliding {
     this._setOpenAmount(0, true);
   }
 
+  /**
+   * @private
+   */
+  setCssClass(cssClass: string, shouldAdd: boolean) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
+  }
+
+  /**
+   * @private
+   */
+  setCssStyle(property: string, value: string) {
+    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
+  }
 }
 
 function shouldClose(isCloseDirection: boolean, isMovingFast: boolean, isOnCloseZone: boolean): boolean {
-    // The logic required to know when the sliding item should close (openAmount=0)
-    // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
-    // and it ended up being too complicated to be written manually without errors
-    // so the truth table is attached below: (0=false, 1=true)
-    // isCloseDirection | isMovingFast | isOnCloseZone || shouldClose
-    //         0        |       0      |       0       ||    0
-    //         0        |       0      |       1       ||    1
-    //         0        |       1      |       0       ||    0
-    //         0        |       1      |       1       ||    0
-    //         1        |       0      |       0       ||    0
-    //         1        |       0      |       1       ||    1
-    //         1        |       1      |       0       ||    1
-    //         1        |       1      |       1       ||    1
-    // The resulting expression was generated by resolving the K-map (Karnaugh map):
-    let shouldClose = (!isMovingFast && isOnCloseZone) || (isCloseDirection && isMovingFast);
-    return shouldClose;
+  // The logic required to know when the sliding item should close (openAmount=0)
+  // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
+  // and it ended up being too complicated to be written manually without errors
+  // so the truth table is attached below: (0=false, 1=true)
+  // isCloseDirection | isMovingFast | isOnCloseZone || shouldClose
+  //         0        |       0      |       0       ||    0
+  //         0        |       0      |       1       ||    1
+  //         0        |       1      |       0       ||    0
+  //         0        |       1      |       1       ||    0
+  //         1        |       0      |       0       ||    0
+  //         1        |       0      |       1       ||    1
+  //         1        |       1      |       0       ||    1
+  //         1        |       1      |       1       ||    1
+  // The resulting expression was generated by resolving the K-map (Karnaugh map):
+  let shouldClose = (!isMovingFast && isOnCloseZone) || (isCloseDirection && isMovingFast);
+  return shouldClose;
 }
 

@@ -10,8 +10,7 @@
 <ion-content>
   
   <ion-list [reorder]="isReordering" (ionItemReorder)="reorder($event)">
-    <ion-item *ngFor="let item of items; let index=index"
-    [index]="index"
+    <ion-item *ngFor="let item of items"
     [style.background]="'rgb('+(255-item*4)+','+(255-item*4)+','+(255-item*4)+')'"
     [style.height]="item*2+35+'px'"> 
       {{item}}

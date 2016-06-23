@@ -1,5 +1,5 @@
 import {Component, ChangeDetectorRef} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import {ionicBootstrap, reorderArray} from '../../../../../src';
 
 
 @Component({
@@ -21,9 +21,7 @@ class E2EPage {
   }
 
   reorder(indexes: any) {
-    let element = this.items[indexes.from];
-    this.items.splice(indexes.from, 1);
-    this.items.splice(indexes.to, 0, element);
+    this.items = reorderArray(this.items, indexes);
   }
 }
 
