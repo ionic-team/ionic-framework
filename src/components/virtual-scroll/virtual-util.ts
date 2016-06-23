@@ -284,7 +284,9 @@ export function initReadNodes(nodes: VirtualNode[], cells: VirtualCell[], data: 
   if (nodes.length && cells.length) {
     // first node
     // ******** DOM READ ****************
-    cells[0].top = getElement(nodes[0]).offsetTop;
+    let firstEle = getElement(nodes[0]);
+    cells[0].top = firstEle.clientTop;
+    cells[0].left = firstEle.clientLeft;
     cells[0].row = 0;
 
     // ******** DOM READ ****************
@@ -606,13 +608,14 @@ function calcHeight(viewportHeight: number, approxHeight: string): number {
 /**
  * NO DOM
  */
-function getElement(node: VirtualNode) {
+function getElement(node: VirtualNode): HTMLElement {
   let rootNodes = node.view.rootNodes;
   for (var i = 0; i < rootNodes.length; i++) {
     if (rootNodes[i].nodeType === 1) {
       return rootNodes[i];
     }
   }
+  return null;
 }
 
 

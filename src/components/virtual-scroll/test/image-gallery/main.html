@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header style="opacity: 0.9">
   <ion-navbar>
     <ion-title>Virtual Scroll: Image Gallery</ion-title>
     <ion-buttons end>
@@ -10,7 +10,11 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content fullscreen>
+
+  <h4 padding>
+    Name these cars:
+  </h4>
 
   <ion-list [virtualScroll]="items"
             [headerFn]="headerFn"
@@ -36,6 +40,10 @@
     </div>
 
   </ion-list>
+
+  <h4 padding>
+    How many did you get right?
+  </h4>
 
 </ion-content>
 

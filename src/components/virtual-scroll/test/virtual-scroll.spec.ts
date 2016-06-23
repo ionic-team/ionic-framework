@@ -543,6 +543,8 @@ describe('VirtualScroll', () => {
         offsetHeight: height,
         offsetTop: top,
         offsetLeft: left,
+        clientTop: top,
+        clientLeft: left,
         style: {
           top: '',
           left: ''
