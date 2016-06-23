@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 /*
@@ -12,7 +13,7 @@ import 'rxjs/add/operator/map';
 export class <%= jsClassName %> {
   static get parameters(){
     return [[Http]]
-  }  
+  }
 
   constructor(http) {
     this.http = http;
@@ -26,19 +27,22 @@ export class <%= jsClassName %> {
     }
 
     // don't have the data yet
-    return new Promise(resolve => {
-      // We're using Angular Http provider to request the data,
-      // then on the response it'll map the JSON data to a parsed JS object.
-      // Next we process the data and resolve the promise with the new data.
-      this.http.get('path/to/data.json')
-        .map(res => res.json())
-        .subscribe(data => {
-          // we've got back the raw data, now generate the core schedule data
-          // and save the data for later reference
-          this.data = data;
-          resolve(this.data);
-        });
+    return this.http.get('path/to/data.json')
+      .map(res => res.json())
+      .catch(this.handleError)
+      .toPromise()
+      .then(data => {
+        // we've got back the raw data, now generate the core schedule data
+        // and save the data for later reference
+        this.data = data;
+        return this.data;
+      });
+  }
+
+  handleError(error) {
+    return Observable.throw({
+      message: error.json().error || 'Server error',
+      status: error.status
     });
   }
 }
-
