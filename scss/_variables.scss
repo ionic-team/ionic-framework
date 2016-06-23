@@ -93,9 +93,6 @@ $button-bar-button-height:        32px !default;
 $button-bar-button-padding:       8px !default;
 $button-bar-button-icon-size:     20px !default;
 
-$button-default-border:           transparent !default;
-$button-default-active-border:    null !default;
-
 $button-light-bg:                 $light !default;
 $button-light-text:               #444 !default;
 $button-light-border:             #ddd !default;
@@ -152,9 +149,9 @@ $button-dark-active-border:       #000 !default;
 
 $button-default-bg:               $button-stable-bg !default;
 $button-default-text:             $button-stable-text !default;
-$button-default-border:           $button-stable-border !default;
+$button-default-border:           transparent !default;
 $button-default-active-bg:        $button-stable-active-bg !default;
-$button-default-active-border:    $button-stable-active-border !default;
+$button-default-active-border:    null !default;
 
 
 // Bars
