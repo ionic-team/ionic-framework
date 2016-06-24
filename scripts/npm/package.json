@@ -8,7 +8,7 @@
   "jsnext:main": "esm/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/driftyco/ionic.git#2.0`"
+    "url": "https://github.com/driftyco/ionic.git"
   },
   "dependencies": {
     "colors": "^1.1.2",

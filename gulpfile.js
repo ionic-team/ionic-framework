@@ -804,7 +804,7 @@ gulp.task('git-pull-latest', function() {
   }
 
   //Pull latest
-  var gitPullResult = spawnSync('git', ['pull', 'origin', '2.0']);
+  var gitPullResult = spawnSync('git', ['pull', 'origin', 'master']);
   if (gitPullResult.status !== 0) {
     fail('There was an error running \'git pull\':\n' + gitPullResult.stderr.toString());
   }
@@ -858,7 +858,7 @@ gulp.task('publish.github', function(done){
     github.releases.createRelease({
       owner: 'driftyco',
       repo: 'ionic',
-      target_commitish: '2.0',
+      target_commitish: 'master',
       tag_name: 'v' + packageJSON.version,
       name: packageJSON.version,
       body: file.toString(),
