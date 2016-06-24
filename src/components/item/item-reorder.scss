@@ -24,7 +24,8 @@ ion-reorder {
 
 .reorder-enabled {
 
-  .item, .item-wrapper {
+  .item,
+  .item-wrapper {
     transition: transform 300ms;
 
     will-change: transform;
