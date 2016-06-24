@@ -10,8 +10,8 @@ class Page1 {
 
   presentAlert() {
     let alert = Alert.create({
-      title: "New Friend!",
-      message: "Your friend, Obi wan Kenobi, just accepted your friend request!",
+      title: 'New Friend!',
+      message: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
       cssClass: 'my-alert',
       buttons: ['Ok']
     });
@@ -42,7 +42,7 @@ class Page2 {
   templateUrl: 'main.html'
 })
 class E2EPage {
-  rootPage;
+  rootPage: any;
   changeDetectionCount: number = 0;
   pages: Array<{title: string, component: any}>;
   @ViewChild(Nav) nav: Nav;
@@ -57,7 +57,7 @@ class E2EPage {
     ];
   }
 
-  openPage(page) {
+  openPage(page: any) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component).then(() => {
@@ -67,15 +67,15 @@ class E2EPage {
     });
   }
 
-  onDrag(ev) {
+  onDrag(ev: any) {
     console.log('Menu is being dragged', ev);
   }
 
-  onOpen(ev) {
+  onOpen(ev: any) {
     console.log('Menu is open', ev);
   }
 
-  onClose(ev) {
+  onClose(ev: any) {
     console.log('Menu is closed', ev);
   }
 
