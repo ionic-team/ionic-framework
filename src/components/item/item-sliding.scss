@@ -71,7 +71,7 @@ ion-item-sliding.active-slide {
     z-index: $z-index-item-options + 1;
 
     opacity: 1;
-    transition: transform 500ms cubic-bezier(.36, .66, .04, 1); 
+    transition: transform 500ms cubic-bezier(.36, .66, .04, 1);
 
     pointer-events: none;
 

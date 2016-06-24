@@ -110,7 +110,7 @@ export class Reorder {
     this.setCssClass('reorder-active', false);
     let transform = CSS.transform;
     for (let i = 0; i < len; i++) {
-      children[i].style[transform] = '';
+      (<any>children[i]).style[transform] = '';
     }
     this._lastToIndex = -1;
   }
@@ -136,7 +136,7 @@ export class Reorder {
     if (toIndex >= lastToIndex) {
       for (var i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {
-          children[i].style[transform] = (i > fromIndex)
+          (<any>children[i]).style[transform] = (i > fromIndex)
             ? `translateY(${-itemHeight}px)` : '';
         }
       }
@@ -145,7 +145,7 @@ export class Reorder {
     if (toIndex <= lastToIndex) {
       for (var i = toIndex; i <= lastToIndex; i++) {
         if (i !== fromIndex) {
-          children[i].style[transform] = (i < fromIndex)
+          (<any>children[i]).style[transform] = (i < fromIndex)
             ? `translateY(${itemHeight}px)` : '';
         }
       }
