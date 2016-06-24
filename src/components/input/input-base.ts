@@ -142,6 +142,7 @@ export class InputBase {
 
   set value(val) {
     this._value = val;
+    this.checkHasValue(val);
   }
 
   @Input()
