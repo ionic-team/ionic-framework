@@ -19,6 +19,7 @@ import { Tabs } from '../components/tabs/tabs';
 import { Tab } from '../components/tabs/tab';
 import { List, ListHeader } from '../components/list/list';
 import { Item, ItemContent } from '../components/item/item';
+import { Reorder } from '../components/item/item-reorder';
 import { ItemSliding, ItemOptions } from '../components/item/item-sliding';
 import { VirtualScroll } from '../components/virtual-scroll/virtual-scroll';
 import { VirtualItem, VirtualHeader, VirtualFooter } from '../components/virtual-scroll/virtual-item';
@@ -145,6 +146,7 @@ export const IONIC_DIRECTIVES: any[] = [
   ItemContent,
   ItemSliding,
   ItemOptions,
+  Reorder,
   VirtualScroll,
   VirtualItem,
   VirtualHeader,

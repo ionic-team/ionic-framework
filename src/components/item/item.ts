@@ -294,11 +294,6 @@ export class Item {
   /**
    * @private
    */
-  @Input() index: number;
-
-  /**
-   * @private
-   */
   id: string;
 
   /**
@@ -308,7 +303,6 @@ export class Item {
 
   constructor(form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
     this.id = form.nextId().toString();
-    _elementRef.nativeElement['$ionComponent'] = this;
   }
 
   /**
@@ -331,20 +325,6 @@ export class Item {
     if (this._inputs.length > 1) {
       this.setCssClass('item-multiple-inputs', true);
     }
-  }
-
-  /**
-   * @private
-   */
-  setCssClass(cssClass: string, shouldAdd: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
-  }
-
-  /**
-   * @private
-   */
-  setCssStyle(property: string, value: string) {
-    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
   }
 
   /**
@@ -406,15 +386,22 @@ export class Item {
   /**
    * @private
    */
-  getNativeElement() {
-    return this._elementRef.nativeElement;
+  setCssClass(cssClass: string, shouldAdd: boolean) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
   /**
    * @private
    */
-  height(): number {
-    return this._elementRef.nativeElement.offsetHeight;
+  setCssStyle(property: string, value: string) {
+    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
+  }
+
+  /**
+   * @private
+   */
+  getNativeElement(): HTMLElement {
+    return this._elementRef.nativeElement;
   }
 }
 

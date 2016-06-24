@@ -175,3 +175,11 @@ export function getQuerystring(url: string): any {
   }
   return queryParams;
 }
+
+
+export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
+  let element = array[indexes.from];
+  array.splice(indexes.from, 1);
+  array.splice(indexes.to, 0, element);
+  return array;
+}

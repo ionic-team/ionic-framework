@@ -2,19 +2,24 @@
 
   <ion-navbar>
     <ion-title>Item Sliding</ion-title>
+    <ion-buttons end>
+      <button (click)="toggleEdit()">{{editButton}}</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content class="outer-content">
+<ion-content class="outer-content" fullscreen>
 
-  <ion-list class="chat-sliding-demo">
+  <ion-list class="chat-sliding-demo" [sliding]="!editing">
     <ion-list-header>
       Chats
     </ion-list-header>
 
-    <ion-item-sliding *ngFor="let chat of chats; let ref = index" [ref]="ref" #item>
+    <ion-item-group [reorder]="editing">
+
+    <ion-item-sliding *ngFor="let chat of chats" #item>
       <ion-item>
         <ion-avatar item-left>
           <img [src]="chat.img">
@@ -41,13 +46,14 @@
         </button>
       </ion-item-options>
 
-      <ion-item-options side="left">
+      <ion-item-options side="left" (ionSwipe)="archive(item)">
         <button primary expandable (click)="archive(item)">
           <ion-icon name="archive"></ion-icon>
           Archive
         </button>
       </ion-item-options>
     </ion-item-sliding>
+    </ion-item-group>
   </ion-list>
 
   <ion-list class="login-sliding-demo">
@@ -86,6 +92,12 @@
 <style>
   #download-spinner {
     display: none;
+  }
+  
+  div.toolbar-background {
+    background-color: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
   }
 
   svg circle {

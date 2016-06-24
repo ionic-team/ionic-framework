@@ -70,38 +70,40 @@ export class ItemSlidingGesture extends DragGesture {
   }
 
   onDragEnd(ev: any) {
-    if (this.selectedContainer) {
-      ev.preventDefault();
+    if (!this.selectedContainer) {
+      return;
+    }
+    ev.preventDefault();
 
-      let openAmount = this.selectedContainer.endSliding(ev.velocityX);
-      this.selectedContainer = null;
+    let openAmount = this.selectedContainer.endSliding(ev.velocityX);
+    this.selectedContainer = null;
 
-      // TODO: I am not sure listening for a tap event is the best idea
-      // we should try mousedown/touchstart
-      if (openAmount === 0) {
-        this.openContainer = null;
-        this.off('tap', this.onTap);
-        this.onTap = null;
-      } else if (!this.onTap) {
-        this.onTap = (event: any) => this.onTapCallback(event);
-        this.on('tap', this.onTap);
-      }
+    // TODO: I am not sure listening for a tap event is the best idea
+    // we should try mousedown/touchstart
+    if (openAmount === 0) {
+      this.openContainer = null;
+      this.off('tap', this.onTap);
+      this.onTap = null;
+    } else if (!this.onTap) {
+      this.onTap = (event: any) => this.onTapCallback(event);
+      this.on('tap', this.onTap);
     }
   }
 
   closeOpened(): boolean {
-    if (this.openContainer) {
-      this.openContainer.close();
-      this.openContainer = null;
-      this.selectedContainer = null;
-      this.off('tap', this.onTap);
-      this.onTap = null;
-      return true;
+    if (!this.openContainer) {
+      return false;
     }
-    return false;
+    this.openContainer.close();
+    this.openContainer = null;
+    this.selectedContainer = null;
+    this.off('tap', this.onTap);
+    this.onTap = null;
+    return true;
   }
 
   unlisten() {
+    this.closeOpened();
     super.unlisten();
     this.list = null;
   }
