@@ -96,7 +96,9 @@ input.text-input:-webkit-autofill {
 }
 
 .input-has-focus input,
-.input-has-focus textarea {
+.input-has-focus textarea,
+.input-has-focus a,
+.input-has-focus button {
   pointer-events: auto;
 }
 
@@ -136,7 +138,7 @@ input.text-input:-webkit-autofill {
   background-position: center;
 }
 
-.input-has-value .text-input-clear-icon {
+.input-has-focus.input-has-value .text-input-clear-icon {
   display: block;
 }
 
