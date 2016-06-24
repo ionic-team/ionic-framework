@@ -22,8 +22,6 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
  *
  * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
  * for more info on forms and inputs.
- * @property {boolean} [checked] - whether the toggle it toggled or not
- * @property {boolean} [disabled] - whether the toggle is disabled or not
  *
  * @usage
  * ```html
@@ -108,12 +106,18 @@ export class Toggle implements ControlValueAccessor  {
     }
   }
 
+  /**
+   * @private
+   */
   private pointerDown(ev: UIEvent): boolean {
     this._startX = pointerCoord(ev).x;
     this._activated = true;
     return true;
   }
 
+  /**
+   * @private
+   */
   private pointerMove(ev: UIEvent) {
     if (this._startX) {
       let currentX = pointerCoord(ev).x;
@@ -134,6 +138,9 @@ export class Toggle implements ControlValueAccessor  {
     }
   }
 
+  /**
+   * @private
+   */
   private pointerUp(ev: UIEvent) {
     if (this._startX) {
       let endX = pointerCoord(ev).x;
@@ -152,6 +159,9 @@ export class Toggle implements ControlValueAccessor  {
     }
   }
 
+  /**
+   * @input {boolean} whether the toggle it toggled or not
+   */
   @Input()
   get checked(): boolean {
     return this._checked;
@@ -198,6 +208,9 @@ export class Toggle implements ControlValueAccessor  {
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
+  /**
+   * @input {boolean} whether the toggle is disabled or not
+   */
   @Input()
   get disabled(): boolean {
     return this._disabled;
