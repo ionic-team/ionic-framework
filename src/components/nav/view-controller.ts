@@ -36,7 +36,8 @@ export class ViewController {
   private _leavingOpts: NavOptions = null;
   private _loaded: boolean = false;
   private _nbDir: Navbar;
-  private _onDismiss: Function = null;
+  private _onDidDismiss: Function = null;
+  private _onWillDismiss: Function = null;
   private _pgRef: ElementRef;
   private _cd: ChangeDetectorRef;
   protected _nav: NavController;
@@ -120,7 +121,23 @@ export class ViewController {
    * @private
    */
   onDismiss(callback: Function) {
-    this._onDismiss = callback;
+    // deprecated warning: added beta.11 2016-06-30
+    console.warn('onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead');
+    this.onDidDismiss(callback);
+  }
+
+  /**
+   * @private
+   */
+  onDidDismiss(callback: Function) {
+    this._onDidDismiss = callback;
+  }
+
+  /**
+   * @private
+   */
+  onWillDismiss(callback: Function) {
+    this._onWillDismiss = callback;
   }
 
   /**
@@ -128,8 +145,9 @@ export class ViewController {
    */
   dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
     let options = merge({}, this._leavingOpts, navOptions);
+    this._onWillDismiss && this._onWillDismiss(data, role);
     return this._nav.remove(this._nav.indexOf(this), 1, options).then(() => {
-      this._onDismiss && this._onDismiss(data, role);
+      this._onDidDismiss && this._onDidDismiss(data, role);
       return data;
     });
   }

@@ -136,8 +136,8 @@ class E2EPage {
       this.testPromptOpen = true;
     });
 
-    alert.onDismiss((data: any, role: any) => {
-      console.log('onDismiss, data:', data, 'role:', role);
+    alert.onDidDismiss((data: any, role: any) => {
+      console.log('onDidDismiss, data:', data, 'role:', role);
     });
   }
 

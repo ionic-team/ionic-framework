@@ -103,7 +103,7 @@ export class Toast extends ViewController {
  * by passing the number of milliseconds to display it in the `duration` of
  * the toast options. If `showCloseButton` is set to true, then the close button
  * will dismiss the toast. To dismiss the toast after creation, call the `dismiss()`
- * method on the Toast instance. The `onDismiss` function can be called to perform an action after the toast
+ * method on the Toast instance. The `onDidDismiss` function can be called to perform an action after the toast
  * is dismissed.
  *
  * @usage
@@ -119,7 +119,7 @@ export class Toast extends ViewController {
  *     position: 'top'
  *   });
  *
- *   toast.onDismiss(() => {
+ *   toast.onDidDismiss(() => {
  *     console.log('Dismissed toast');
  *   });
  *

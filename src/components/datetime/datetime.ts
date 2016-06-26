@@ -489,7 +489,7 @@ export class DateTime {
     picker.present(pickerOptions);
 
     this._isOpen = true;
-    picker.onDismiss(() => {
+    picker.onDidDismiss(() => {
       this._isOpen = false;
     });
   }

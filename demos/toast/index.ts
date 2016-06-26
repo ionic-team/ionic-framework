@@ -16,7 +16,7 @@ class ApiDemoPage {
       duration: 3000
     });
 
-    toast.onDismiss(this.dismissHandler);
+    toast.onDidDismiss(this.dismissHandler);
     toast.present();
   }
 
@@ -26,7 +26,7 @@ class ApiDemoPage {
       duration: 3000
     });
 
-    toast.onDismiss(this.dismissHandler);
+    toast.onDidDismiss(this.dismissHandler);
     toast.present();
   }
 
@@ -35,7 +35,7 @@ class ApiDemoPage {
       message: 'I am dismissed after 1.5 seconds',
       duration: 1500
     });
-    toast.onDismiss(this.dismissHandler);
+    toast.onDidDismiss(this.dismissHandler);
     toast.present();
   }
 
@@ -45,12 +45,12 @@ class ApiDemoPage {
       showCloseButton: true,
       closeButtonText: 'Ok'
     });
-    toast.onDismiss(this.dismissHandler);
+    toast.onDidDismiss(this.dismissHandler);
     toast.present();
   }
 
   private dismissHandler() {
-    console.info('Toast onDismiss()');
+    console.info('Toast onDidDismiss()');
   }
 
 }

@@ -15,7 +15,7 @@ class E2EPage {
       cssClass: 'my-custom-loader'
     });
 
-    loading.onDismiss(() => {
+    loading.onDidDismiss(() => {
      console.log('Dismissed loading');
     });
 

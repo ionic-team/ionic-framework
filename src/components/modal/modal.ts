@@ -145,7 +145,7 @@ export class Modal extends ViewController {
  *
  *  presentProfileModal() {
  *    let profileModal = this.modalCtrl.create(Profile, { userId: 8675309 });
- *    profileModal.onDismiss(data => {
+ *    profileModal.onDidDismiss(data => {
  *      console.log(data);
  *    });
  *    profileModal.present();
