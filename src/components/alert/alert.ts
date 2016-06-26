@@ -322,7 +322,7 @@ export class Alert extends ViewController {
 
         '<template ngSwitchCase="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
-            '<button category="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
+            '<button category="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" [disabled]="i.disabled" class="alert-tappable alert-radio" role="radio">' +
               '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
               '<div class="alert-radio-label">' +
                 '{{i.label}}' +
@@ -333,7 +333,7 @@ export class Alert extends ViewController {
 
         '<template ngSwitchCase="checkbox">' +
           '<div class="alert-checkbox-group">' +
-            '<button category="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" class="alert-tappable alert-checkbox" role="checkbox">' +
+            '<button category="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
               '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
               '<div class="alert-checkbox-label">' +
                 '{{i.label}}' +
@@ -437,6 +437,7 @@ class AlertCmp {
         value: isPresent(input.value) ? input.value : '',
         label: input.label,
         checked: !!input.checked,
+        disabled: !!input.disabled,
         id: 'alert-input-' + this.id + '-' + index
       };
     });

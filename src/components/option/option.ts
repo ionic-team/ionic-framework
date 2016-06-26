@@ -14,6 +14,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
 })
 export class Option {
   private _checked: any = false;
+  private _disabled: any = false;
   private _value: any;
 
   /**
@@ -48,6 +49,18 @@ export class Option {
 
   set value(val: any) {
     this._value = val;
+  }
+
+  /**
+   * @input {boolean} Whether or not the option is disabled
+   */
+  @Input()
+  get disabled() {
+    return this._disabled;
+  }
+
+  set disabled(val) {
+    this._disabled = isTrueProperty(val);
   }
 
   /**

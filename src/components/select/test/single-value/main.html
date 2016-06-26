@@ -86,6 +86,15 @@
     </ion-select>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Statuses</ion-label>
+    <ion-select [(ngModel)]="status">
+      <ion-option value="checked" checked="true">Checked</ion-option>
+      <ion-option value="default">Default</ion-option>
+      <ion-option value="disabled" disabled="true">Disabled</ion-option>
+    </ion-select>
+  </ion-item>
+
   <button (click)="resetGender()">Reset Gender</button>
 
   <p aria-hidden="true" padding>

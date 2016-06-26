@@ -15,6 +15,7 @@ class E2EPage {
   year: string;
   years: Array<number>;
   notification: string;
+  status: string;
 
   constructor() {
     this.gaming = '';
@@ -23,6 +24,7 @@ class E2EPage {
     this.month = '12';
     this.year = '1994';
     this.notification = 'enable';
+    this.status = "checked";
 
     this.years = [1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999];
 
