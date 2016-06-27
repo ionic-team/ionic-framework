@@ -182,6 +182,7 @@ ion-list[inset] + ion-list[inset] {
 ion-list[no-lines],
 &.hairlines ion-list[no-lines] {
   ion-list-header,
+  ion-item-options,
   .item,
   .item .item-inner {
     border-width: 0;
