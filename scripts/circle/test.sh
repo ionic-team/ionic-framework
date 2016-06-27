@@ -14,14 +14,14 @@ function init {
 function run {
   cd ../..
 
-  if [[ "$(git symbolic-ref --short HEAD)" == "master" ]]; then
-    IS_MASTER=true
+  if [[ "$(git symbolic-ref --short HEAD)" == "1.x" ]]; then
+    IS_V1=true
   fi
 
   node_modules/.bin/gulp demos --demo-version=nightly
   TEST_ID=$CIRCLE_SHA1-$CIRCLE_BUILD_NUM
 
-  [ -z $IS_MASTER ] || node_modules/.bin/gulp ddescribe-iit
+  [ -z $IS_V1 ] || node_modules/.bin/gulp ddescribe-iit
   node_modules/.bin/gulp eslint
   node_modules/.bin/gulp karma --browsers=PhantomJS --reporters=dots,coverage
 

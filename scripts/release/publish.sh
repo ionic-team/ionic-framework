@@ -4,7 +4,7 @@ function init {
   RELEASE_DIR=$HOME/ionic-release
   ../clone/clone.sh --repository="ionic" \
     --directory="$RELEASE_DIR" \
-    --branch="master"
+    --branch="1.x"
 }
 
 echo "##### "
@@ -40,7 +40,7 @@ function run {
   git commit -am "release: v$VERSION \"$CODENAME\""
   git tag -f v$VERSION
 
-  git push -q origin master
+  git push -q origin 1.x
   git push -q origin v$VERSION
 
   echo "-- Published ionic v$VERSION \"$CODENAME\" successfully!"

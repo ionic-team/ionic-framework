@@ -21,6 +21,6 @@ test:
     - ./scripts/circle/test.sh --index=$CIRCLE_NODE_INDEX --total=$CIRCLE_NODE_TOTAL
 deployment:
  tasks:
-   branch: master
+   branch: "1.x"
    commands:
      - ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM
