@@ -1,8 +1,6 @@
 import {ElementRef} from '@angular/core';
 
 
-
-
 /**
  * @private
  */
@@ -10,6 +8,7 @@ export class PointerEvents {
   private rmTouchStart: Function = null;
   private rmTouchMove: Function = null;
   private rmTouchEnd: Function = null;
+  private rmTouchCancel: Function = null;
 
   private rmMouseStart: Function = null;
   private rmMouseMove: Function = null;
@@ -26,8 +25,8 @@ export class PointerEvents {
     private zone: boolean,
     private option: any) {
 
-    this.rmTouchStart = listenEvent(ele, 'touchstart', zone, option, (ev: any) => this.handleTouchStart(ev));
-    this.rmMouseStart = listenEvent(ele, 'mousedown', zone, option, (ev: any) => this.handleMouseDown(ev));
+    this.rmTouchStart = listenEvent(ele, 'touchstart', zone, option, this.handleTouchStart.bind(this));
+    this.rmMouseStart = listenEvent(ele, 'mousedown', zone, option, this.handleMouseDown.bind(this));
   }
 
   private handleTouchStart(ev: any) {
@@ -38,8 +37,12 @@ export class PointerEvents {
     if (!this.rmTouchMove) {
       this.rmTouchMove = listenEvent(this.ele, 'touchmove', this.zone, this.option, this.pointerMove);
     }
+    let handleTouchEnd = (ev: any) => this.handleTouchEnd(ev);
     if (!this.rmTouchEnd) {
-      this.rmTouchEnd = listenEvent(this.ele, 'touchend', this.zone, this.option, (ev: any) => this.handleTouchEnd(ev));
+      this.rmTouchEnd = listenEvent(this.ele, 'touchend', this.zone, this.option, handleTouchEnd);
+    }
+    if (!this.rmTouchCancel) {
+      this.rmTouchCancel = listenEvent(this.ele, 'touchcancel', this.zone, this.option, handleTouchEnd);
     }
   }
 
@@ -60,33 +63,36 @@ export class PointerEvents {
   }
 
   private handleTouchEnd(ev: any) {
-    this.rmTouchMove && this.rmTouchMove();
-    this.rmTouchMove = null;
-    this.rmTouchEnd && this.rmTouchEnd();
-    this.rmTouchEnd = null;
-
+    this.stopTouch();
     this.pointerUp(ev);
   }
 
   private handleMouseUp(ev: any) {
-    this.rmMouseMove && this.rmMouseMove();
-    this.rmMouseMove = null;
-    this.rmMouseUp && this.rmMouseUp();
-    this.rmMouseUp = null;
-
+    this.stopMouse();
     this.pointerUp(ev);
   }
 
-  stop() {
+  private stopTouch() {
     this.rmTouchMove && this.rmTouchMove();
     this.rmTouchEnd && this.rmTouchEnd();
+    this.rmTouchCancel && this.rmTouchCancel();
+
     this.rmTouchMove = null;
     this.rmTouchEnd = null;
+    this.rmTouchCancel = null;
+  }
 
+  private stopMouse() {
     this.rmMouseMove && this.rmMouseMove();
     this.rmMouseUp && this.rmMouseUp();
+
     this.rmMouseMove = null;
     this.rmMouseUp = null;
+  }
+
+  stop() {
+    this.stopTouch();
+    this.stopMouse();
   }
 
   destroy() {
