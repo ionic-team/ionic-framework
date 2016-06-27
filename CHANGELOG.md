@@ -1,3 +1,163 @@
+<a name="2.0.0-beta.10"></a>
+# [2.0.0-beta.10](https://github.com/driftyco/ionic/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2016-06-27)
+
+### BREAKING CHANGES
+
+- `ion-content` now takes up 100% of the viewport height, but it has margin added to the top and bottom to adjust for headers, footers, and tabs.
+- `ion-content` now accepts `fullscreen` as an attribute to to tell the content to scroll behind the header. This allows for transparent toolbars and tab pages without navbars!
+- `ion-navbar` no longer has the `*navbar` attribute.
+- `ion-navbar` should now be wrapped in an `ion-header`
+
+  ```
+  <ion-header>
+    <ion-navbar></ion-navbar>
+  </ion-header>
+  ```
+
+- `ios` only: `ion-toolbar`/`ion-navbar` will always have borders to both the top and bottom of the element. Use the attributes `no-border-top` and `no-border-bottom` to remove the respective borders.
+- An `ion-nav` or `ion-tabs` is required in the root component. If one of these does not exist your content may be pushed up behind your header.
+- The `position` attribute has been removed from the `ion-toolbar`, it should now be placed in an `ion-header` or an `ion-footer`. It can also be placed inside of an `ion-content`.
+- The only elements that should be children of a page are `ion-header`, `ion-content`, and `ion-footer`.
+
+
+#### Steps to Upgrade to Beta 10
+
+1. Run the following command from your command prompt/terminal to update to the latest version of the Ionic framework 2:
+
+  ```
+  npm install --save ionic-angular@nightly @angular/common@2.0.0-rc.3 @angular/compiler@2.0.0-rc.3 @angular/platform-browser@2.0.0-rc.3 @angular/platform-browser-dynamic@2.0.0-rc.3 @angular/http@2.0.0-rc.3 @angular/core@2.0.0-rc.3  @angular/router@2.0.0-rc.2
+  ```
+
+2. Remove the `*navbar` attribute so this:
+
+  ```
+  <ion-navbar *navbar>
+  ```
+
+  becomes this:
+
+  ```
+  <ion-navbar>
+  ```
+
+3. Wrap any toolbars/navbars above the `ion-content` in an `ion-header`. The following:
+
+  ```
+  <ion-navbar>
+    <ion-title>
+      Navbar Title
+    </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-title>
+      Toolbar Title
+    </ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+
+  </ion-content>
+  ```
+
+  becomes:
+
+  ```
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        Navbar Title
+      </ion-title>
+    </ion-navbar>
+
+    <ion-toolbar>
+      <ion-title>
+        Toolbar Title
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+  </ion-content>
+  ```
+
+4. Wrap any toolbars/navbars after the `ion-content` in an `ion-footer`. The following:
+
+  ```
+  <ion-content>
+
+  </ion-content>
+
+  <ion-toolbar position="bottom">
+    <ion-title>Footer Toolbar</ion-title>
+  </ion-toolbar>
+  ```
+
+  becomes:
+
+  ```
+  <ion-content>
+
+  </ion-content>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-title>Footer Toolbar</ion-title>
+    </ion-toolbar>
+  </ion-footer>
+  ```
+
+
+### Bug Fixes
+
+* **animation:** correctly apply will-change: transform ([a1223da](https://github.com/driftyco/ionic/commit/a1223da))
+* **bootstrap:** only add customProviders when present ([0e9e85c](https://github.com/driftyco/ionic/commit/0e9e85c))
+* **content:** adjust footer bottom based on the tabbar without padding ([4567de2](https://github.com/driftyco/ionic/commit/4567de2))
+* **content:** set footer height to 0 so it won't be undefined ([3db67f9](https://github.com/driftyco/ionic/commit/3db67f9))
+* **cordova:** fix the status bar padding with the new structure ([15642e4](https://github.com/driftyco/ionic/commit/15642e4))
+* **demos:** updates @angular paths ([b7826ba](https://github.com/driftyco/ionic/commit/b7826ba))
+* **footer:** show footer toolbar w/ tabbar bottom ([99c50a1](https://github.com/driftyco/ionic/commit/99c50a1))
+* **generator:** fix closing tag for header ([47e09a1](https://github.com/driftyco/ionic/commit/47e09a1))
+* **header:** optional ViewController injection ([5a85d82](https://github.com/driftyco/ionic/commit/5a85d82))
+* **input:** allow button click when input has focus ([ae86ab8](https://github.com/driftyco/ionic/commit/ae86ab8)), closes [#6514](https://github.com/driftyco/ionic/issues/6514) [#6944](https://github.com/driftyco/ionic/issues/6944)
+* **input:** check if there is a value when setting value ([d0b1930](https://github.com/driftyco/ionic/commit/d0b1930))
+* **input:** fix the clear input button to always be vertically aligned ([e4cc672](https://github.com/driftyco/ionic/commit/e4cc672))
+* **item:** inherit overflow and text-overflow from the parent item in a paragraph ([4009575](https://github.com/driftyco/ionic/commit/4009575))
+* **item:** listEle does not longer exist ([22fad4c](https://github.com/driftyco/ionic/commit/22fad4c))
+* **item:** sliding item works with and without borders ([2303c16](https://github.com/driftyco/ionic/commit/2303c16)), closes [#7081](https://github.com/driftyco/ionic/issues/7081)
+* **item:** sliding items don't fire (click) when swiped ([38ab17b](https://github.com/driftyco/ionic/commit/38ab17b))
+* **modal:** add class name to modal ([6e34739](https://github.com/driftyco/ionic/commit/6e34739)), closes [#7000](https://github.com/driftyco/ionic/issues/7000)
+* **nav:** auto set iOS black transition bg via css ([7842991](https://github.com/driftyco/ionic/commit/7842991))
+* **picker:** adds align to the PickerColumn interface ([b8551de](https://github.com/driftyco/ionic/commit/b8551de))
+* **refresher:** adjust location after layout updates ([603000f](https://github.com/driftyco/ionic/commit/603000f))
+* **refresher:** only listen for mousemove/touchmove when needed ([1a58a41](https://github.com/driftyco/ionic/commit/1a58a41))
+* **tabs:** don't add outline to the class name if it is a logo icon ([af22287](https://github.com/driftyco/ionic/commit/af22287)), closes [#6899](https://github.com/driftyco/ionic/issues/6899)
+* **tabs:** fix tabs rootNav ([ae40edf](https://github.com/driftyco/ionic/commit/ae40edf))
+* **tabs:** hide tab's navbar when a page comes without a navbar ([2d68089](https://github.com/driftyco/ionic/commit/2d68089)), closes [#5556](https://github.com/driftyco/ionic/issues/5556)
+* **tabs:** reference parent instead of parentTabs ([ed6d0fa](https://github.com/driftyco/ionic/commit/ed6d0fa))
+* **tabs:** swipeBackEnabled works with tabs as expected ([2bff535](https://github.com/driftyco/ionic/commit/2bff535))
+* **toggle:** host listeners are not longer needed ([4aa322d](https://github.com/driftyco/ionic/commit/4aa322d))
+* **toolbar:** place iOS border on ion-header/footer ([48c1ffd](https://github.com/driftyco/ionic/commit/48c1ffd))
+* **toolbar:** position toolbar relative and add z-index ([1d8ba4a](https://github.com/driftyco/ionic/commit/1d8ba4a))
+* **virtualScroll:** first node should use clientTop/clientLeft ([2197d49](https://github.com/driftyco/ionic/commit/2197d49))
+
+### Features
+
+* **feature-detect:** detect if backdrop-filter is supported ([89564f1](https://github.com/driftyco/ionic/commit/89564f1))
+* **fullscreen:** add fullscreen property to ion-content ([f20c7e4](https://github.com/driftyco/ionic/commit/f20c7e4))
+* **item:** sliding items work with list reorder ([bfdc898](https://github.com/driftyco/ionic/commit/bfdc898))
+* **list:** add list headers and item dividers as items ([712ff81](https://github.com/driftyco/ionic/commit/712ff81)), closes [#5561](https://github.com/driftyco/ionic/issues/5561)
+* **list:** reorder list items ([5c38921](https://github.com/driftyco/ionic/commit/5c38921))
+* **range:** add debounce input for ionChange event ([55eccb3](https://github.com/driftyco/ionic/commit/55eccb3)), closes [#6894](https://github.com/driftyco/ionic/issues/6894)
+* **toolbar:** control toolbar borders on top/bottom ([3a7addf](https://github.com/driftyco/ionic/commit/3a7addf))
+
+### Performance Improvements
+
+* **reorder:** hit test refactored ([6a52a4a](https://github.com/driftyco/ionic/commit/6a52a4a))
+
+
+
 <a name="2.0.0-beta.9"></a>
 # [2.0.0-beta.9](https://github.com/driftyco/ionic/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2016-06-16)
 
@@ -8,27 +168,27 @@
 - Searchbar's events no longer emit the Searchbar itself, they now emit the input's `$event` for each native input event. Instead of grabbing the value from the searchbar, you should grab it from the event target. For example:
 
   Previously when an event was called the function called would look similar to this:
-  
+
   ```
   getItems(searchbar) {
     // set q to the value of the searchbar input
     var q = searchbar.value;
   }
   ```
-  
+
   Now it should be similar to this:
-  
+
   ```
   getItems(ev) {
     // set q to the value of the searchbar input
     var q = ev.target.value;
   }
   ```
-  
+
 - `ngModel` is no longer required on Searchbar, but it can still be used. You can get the value of the input through Searchbar's [Output Events](http://ionicframework.com/docs/v2/api/components/searchbar/Searchbar/#output-events).
 - Added the ability to pass `autocomplete`, `autocorrect`, `spellcheck`, and `type` to the searchbar which is passed to the input.
 - The `hideCancelButton` attribute was removed in favor of `showCancelButton` which is set to `false` by default.
-  
+
 
 ### Features
 
