@@ -612,6 +612,7 @@ export interface PickerOptions {
 
 export interface PickerColumn {
   name?: string;
+  align?: string;
   selectedIndex?: number;
   prefix?: string;
   suffix?: string;
