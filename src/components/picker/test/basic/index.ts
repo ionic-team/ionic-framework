@@ -21,8 +21,8 @@ class E2EPage {
         },
         {
           text: 'Done',
-          handler: (data) => {
-            this.smoothie = `${data.flavor1} ${data.flavor2}`;
+          handler: (data: any) => {
+            this.smoothie = `${data.flavor1.value} ${data.flavor2.value}`;
           }
         }
       ],
@@ -86,8 +86,8 @@ class E2EPage {
         },
         {
           text: 'Woot!',
-          handler: (data) => {
-            this.smoothie = `${data.flavor1}`;
+          handler: (data: any) => {
+            this.smoothie = `${data.flavor1.value}`;
           }
         }
       ],
@@ -130,8 +130,8 @@ class E2EPage {
         },
         {
           text: 'Si',
-          handler: (data) => {
-            this.smoothie = `${data.flavor1}`;
+          handler: (data: any) => {
+            this.smoothie = `${data.flavor1.value}`;
           }
         }
       ],
@@ -175,8 +175,8 @@ class E2EPage {
 
     picker.addButton({
       text: 'Set Timer',
-      handler: (data) => {
-        this.timer = `${data.hour}:${data.min}`;
+      handler: (data: any) => {
+        this.timer = `${data.hour.value}:${data.min.value}`;
       }
     });
 
@@ -188,7 +188,7 @@ class E2EPage {
       options: Array.apply(null, {length: 23}).map(Number.call, Number)
     });
 
-    var minuteOptions = [];
+    let minuteOptions = [];
 
     for (var i = 0; i < 60; i++) {
       minuteOptions.push({
