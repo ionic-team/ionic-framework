@@ -77,7 +77,6 @@ ion-input[clearInput] {
   @include svg-background-image($text-input-ios-input-clear-icon-svg);
 
   right: ($item-ios-padding-right / 2);
-  bottom: 0;
 
   width: $text-input-ios-input-clear-icon-width;
 
