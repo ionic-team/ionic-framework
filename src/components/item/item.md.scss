@@ -65,10 +65,13 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   }
 
   p {
+    overflow: inherit;
+
     margin: 0 0 2px;
 
     font-size: 1.4rem;
     line-height: normal;
+    text-overflow: inherit;
     color: $item-md-paragraph-text-color;
   }
 }
