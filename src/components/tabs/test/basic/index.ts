@@ -219,9 +219,11 @@ export class Tab3 {
 @Component({
   template: `
     <ion-menu [content]="content">
-      <ion-toolbar secondary>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
+      <ion-header>
+        <ion-toolbar secondary>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
       <ion-content>
         <ion-list>
           <button ion-item menuClose detail-none>
