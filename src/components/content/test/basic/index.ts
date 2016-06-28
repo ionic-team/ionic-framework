@@ -6,7 +6,8 @@ import {ionicBootstrap} from '../../../../../src';
   templateUrl: 'tabs.html'
 })
 class TabsPage {
-  page1 = E2EPage;
+  main = E2EPage;
+  page1 = Page1;
   page2 = Page2;
   page3 = Page3;
   page4 = Page4;
@@ -38,10 +39,18 @@ class Page2 {
 
 
 @Component({
+  templateUrl: 'page1.html'
+})
+class Page1 {
+  page2 = Page2;
+}
+
+
+@Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  page2 = Page2;
+  page1 = Page1;
 }
 
 
