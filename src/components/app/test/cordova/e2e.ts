@@ -15,6 +15,6 @@ it('should open modal', function() {
   element(by.css('.e2eCordovaOpenModal')).click();
 });
 
-it('should open left menu', function() {
-  element(by.css('.e2eCordovaOpenLeftMenu')).click();
+it('should close modal', function() {
+  element(by.css('.e2eCordovaCloseModal')).click();
 });

@@ -1,21 +1,21 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, MenuController, NavController, Alert, Nav} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, MenuController, NavController, AlertController, Nav } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'page1.html'
 })
 class Page1 {
-  constructor(private nav: NavController) {}
+  constructor(private nav: NavController, private alertCtrl: AlertController) {}
 
   presentAlert() {
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'New Friend!',
       message: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
       cssClass: 'my-alert',
       buttons: ['Ok']
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   goToPage2() {

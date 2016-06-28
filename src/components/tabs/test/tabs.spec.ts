@@ -135,7 +135,7 @@ describe('Tabs', () => {
     it('should get the tab', () => {
       var tabs = mockTabs();
       var tab0 = mockTab(tabs);
-      tab0.setRoot()
+      tab0.setRoot(<any>{});
       var tab1 = mockTab(tabs);
       tabs.add(tab0);
       tabs.add(tab1);
@@ -199,7 +199,7 @@ describe('Tabs', () => {
   beforeEach(() => {
     config = new Config();
     platform = new Platform();
-    app = new App(config, null, platform);
+    app = new App(config, platform);
     _cd = {
       reattach: function(){},
       detach: function(){}

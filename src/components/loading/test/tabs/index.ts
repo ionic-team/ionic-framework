@@ -1,29 +1,29 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, ActionSheet, Loading, NavController, ViewController, Platform} from '../../../../../src';
+import { Component} from '@angular/core';
+import { ionicBootstrap, LoadingController, NavController } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  constructor(private nav: NavController, private platform: Platform) {}
+  constructor(private loadingCtrl: LoadingController, private nav: NavController) {}
 
   presentLoading() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: 'Loading...',
       duration: 1000
     });
 
-    this.nav.present(loading);
+    loading.present();
   }
 
   presentLoadingNav() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       content: 'Please wait...',
     });
 
-    this.nav.present(loading);
+    loading.present();
 
     setTimeout(() => {
       this.nav.push(Page2);
@@ -46,9 +46,7 @@ class E2EPage {
     <ion-content padding>Some content</ion-content>
   `
 })
-class Page2 {
-  constructor(private nav: NavController, private platform: Platform) {}
-}
+class Page2 {}
 
 @Component({
   template: `
@@ -63,10 +61,6 @@ export class TabsPage {
   private root1 = E2EPage;
   private root2 = Page2;
   private root3 = E2EPage;
-
-  constructor() {
-
-  }
 }
 
 @Component({

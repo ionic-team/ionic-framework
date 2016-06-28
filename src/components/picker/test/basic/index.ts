@@ -1,5 +1,5 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {ionicBootstrap, Picker, NavController} from '../../../../../src';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ionicBootstrap, PickerController } from '../../../../../src';
 
 
 @Component({
@@ -10,10 +10,10 @@ class E2EPage {
   smoothie: string;
   timer: string;
 
-  constructor(private nav: NavController) {}
+  constructor(private pickerCtrl: PickerController) {}
 
   twoColumns() {
-    let picker = Picker.create({
+    let picker = this.pickerCtrl.create({
       buttons: [
         {
           text: 'Cancel',
@@ -74,11 +74,11 @@ class E2EPage {
       ]
     });
 
-    this.nav.present(picker);
+    picker.present();
   }
 
   prefixLabel() {
-    let picker = Picker.create({
+    let picker = this.pickerCtrl.create({
       buttons: [
         {
           text: 'Nerp',
@@ -118,11 +118,11 @@ class E2EPage {
       ]
     });
 
-    this.nav.present(picker);
+    picker.present();
   }
 
   suffixLabel() {
-    let picker = Picker.create({
+    let picker = this.pickerCtrl.create({
       buttons: [
         {
           text: 'No',
@@ -162,11 +162,11 @@ class E2EPage {
       ]
     });
 
-    this.nav.present(picker);
+    picker.present();
   }
 
   columnSizes() {
-    let picker = Picker.create();
+    let picker = this.pickerCtrl.create();
 
     picker.addButton({
       text: 'Cancel',
@@ -188,7 +188,7 @@ class E2EPage {
       options: Array.apply(null, {length: 23}).map(Number.call, Number)
     });
 
-    let minuteOptions = [];
+    let minuteOptions: any[] = [];
 
     for (var i = 0; i < 60; i++) {
       minuteOptions.push({
@@ -205,7 +205,7 @@ class E2EPage {
       options: minuteOptions
     });
 
-    this.nav.present(picker);
+    picker.present();
   }
 }
 
