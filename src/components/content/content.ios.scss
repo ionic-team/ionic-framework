@@ -45,3 +45,27 @@ ion-page.show-page ~ .nav-decor {
 // --------------------------------------------------
 
 @include content-margin($content-ios-margin);
+
+
+// iOS Content Scroll
+// --------------------------------------------------
+
+ion-content:not([no-bounce]) > scroll-content {
+  &::before,
+  &::after {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    content: "";
+  }
+
+  &::before {
+    bottom: -1px;
+  }
+
+  &::after {
+    top: -1px;
+  }
+}
