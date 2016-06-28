@@ -111,9 +111,11 @@ class Page1 {
 
 @Component({
   template: `
-    <ion-navbar *navbar>
-      <ion-title>Page 2</ion-title>
-    </ion-navbar>
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Page 2</ion-title>
+      </ion-navbar>
+    </ion-header>
     <ion-content padding>This is another page!</ion-content>
   `
 })
