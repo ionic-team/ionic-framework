@@ -14,7 +14,7 @@ export class Activator implements ActivatorBase {
   clearDelay = CLEAR_STATE_DEFERS;
 
   constructor(protected app: App, config: Config) {
-    this._css = config.get('activatedClass') || 'activated';
+    this._css = config.get('activatedClass', 'activated');
   }
 
   clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {

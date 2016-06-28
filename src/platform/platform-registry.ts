@@ -112,6 +112,7 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
       tapPolyfill: isIOSUI,
       virtualScrollEventAssist: isIOSUI,
       disableScrollAssist: isIOS,
+      backdropEffects: supportsBackdropFilter
     },
     isMatch(p: Platform) {
       return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
@@ -217,6 +218,10 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
     }
   }
 };
+
+function supportsBackdropFilter(p: Platform) {
+  return 'webkitBackdropFilter' in document.body.style;
+}
 
 function isCordova(): boolean {
   return !!((<any>window).cordova);

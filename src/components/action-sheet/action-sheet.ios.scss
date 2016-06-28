@@ -142,3 +142,49 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   font-weight: $action-sheet-ios-button-cancel-font-weight;
   background: $action-sheet-ios-button-cancel-background;
 }
+
+&.hairlines {
+  .action-sheet-title,
+  .action-sheet-button {
+    border-bottom-width: $hairlines-width;
+  }
+}
+
+
+// iOS backdrop filter (blur effect)
+// --------------------------------------------------
+
+.action-sheet-ios.backdrop-effect .action-sheet-button:not(.action-sheet-cancel),
+.action-sheet-ios.backdrop-effect .action-sheet-title {
+  margin-bottom: 1px;
+  border-bottom: $hairlines-width solid rgba(0, 0, 0, .1);
+
+  background-color: rgba(250, 250, 250, .85);
+
+  background-clip: border-box;
+}
+
+.action-sheet-ios.backdrop-effect .action-sheet-button.activated {
+  background-color: rgba(216, 216, 220, 0.65);
+}
+
+.action-sheet-ios.backdrop-effect .action-sheet-group {
+  background: transparent;
+
+  transform: translateZ(0);
+}
+
+.action-sheet-ios.backdrop-effect .action-sheet-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: -1;
+
+  display: block;
+
+  -webkit-backdrop-filter: blur(20px) brightness(220%) saturate(140%);
+  backdrop-filter: blur(20px) brightness(220%) saturate(140%);
+}
