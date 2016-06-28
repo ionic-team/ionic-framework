@@ -1,4 +1,3 @@
-import { forwardRef } from '@angular/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 
 import { Menu } from '../components/menu/menu';

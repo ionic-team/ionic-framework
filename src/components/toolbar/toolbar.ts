@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, Inject, Optional, QueryList, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Optional, QueryList, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
