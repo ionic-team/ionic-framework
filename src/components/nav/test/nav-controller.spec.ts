@@ -1,4 +1,4 @@
-import {NavController, Tabs, NavOptions, Config, ViewController} from '../../../../src';
+import { NavController, Tabs, NavOptions, Config, ViewController, App, Platform } from '../../../../src';
 
 export function run() {
   describe('NavController', () => {
@@ -1219,33 +1219,6 @@ export function run() {
 
     });
 
-    describe('present', () => {
-
-      it('should present in portal', () => {
-        let enteringView = new ViewController();
-        enteringView.setPageRef({});
-        enteringView.usePortal = true;
-
-        expect(nav._portal.length()).toBe(0);
-        expect(nav.length()).toBe(0);
-        nav.present(enteringView);
-        expect(nav._portal.length()).toBe(1);
-        expect(nav.length()).toBe(0);
-      });
-
-      it('should present in main nav', () => {
-        let enteringView = new ViewController();
-        enteringView.setPageRef({});
-        enteringView.usePortal = false;
-
-        expect(nav._portal.length()).toBe(0);
-        expect(nav.length()).toBe(0);
-        nav.present(enteringView);
-        expect(nav._portal.length()).toBe(0);
-        expect(nav.length()).toBe(1);
-      });
-    });
-
     describe('getActive', () => {
       it('should getActive()', () => {
         expect(nav.getActive()).toBe(null);
@@ -1645,6 +1618,7 @@ export function run() {
     // setup stuff
     let nav: MockNavController;
     let config = new Config();
+    let platform = new Platform();
 
     class Page1 {}
     class Page2 {}
@@ -1659,7 +1633,8 @@ export function run() {
     function mockNav(): MockNavController {
       let elementRef = getElementRef();
 
-      let nav = new MockNavController(null, null, config, null, elementRef, null, null, null);
+      let app = new App(config, platform);
+      let nav = new MockNavController(null, app, config, null, elementRef, null, null, null);
 
       nav._keyboard = {
         isOpen: function() {
@@ -1679,8 +1654,6 @@ export function run() {
         setElementClass: function(){},
         setElementStyle: function(){}
       };
-
-      nav._portal = new MockNavController(null, null, config, null, elementRef, null, null, null);
 
       return nav;
     }

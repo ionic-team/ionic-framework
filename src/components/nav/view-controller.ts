@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, EventEmitter, ElementRef, Output, Renderer } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
 import { Footer, Header } from '../toolbar/toolbar';
 import { isPresent, merge } from '../../util/util';
 import { Navbar } from '../navbar/navbar';
-import { NavController, NavOptions } from './nav-controller';
+import { NavController } from './nav-controller';
+import { NavOptions } from './nav-options';
 import { NavParams } from './nav-params';
 
 
@@ -78,11 +79,6 @@ export class ViewController {
    * @private
    */
   isOverlay: boolean = false;
-
-  /**
-   * @private
-   */
-  usePortal: boolean = false;
 
   /**
    * @private

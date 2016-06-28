@@ -4,7 +4,8 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { isTrueProperty} from '../../util/util';
 import { Keyboard} from '../../util/keyboard';
-import { NavController, NavOptions} from '../nav/nav-controller';
+import { NavController} from '../nav/nav-controller';
+import { NavOptions} from '../nav/nav-options';
 import { TabButton} from './tab-button';
 import { Tabs} from './tabs';
 import { ViewController} from '../nav/view-controller';
@@ -97,13 +98,13 @@ import { ViewController} from '../nav/view-controller';
  *
  * ```ts
  * export class Tabs {
- *   constructor(nav: NavController) {
- *     this.nav = nav;
+ *   constructor(private modalCtrl: ModalController) {
+ *
  *   }
  *
  *   chat() {
- *     let modal = Modal.create(ChatPage);
- *     this.nav.present(modal);
+ *     let modal = this.modalCtrl.create(ChatPage);
+ *     modal.present();
  *   }
  * }
  * ```

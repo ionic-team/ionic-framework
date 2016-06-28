@@ -1,15 +1,65 @@
-import { Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { Animation } from '../../animations/animation';
+import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { isDefined, isPresent, isUndefined } from '../../util/util';
-import { NavParams } from '../nav/nav-params';
-import { Transition, TransitionOptions } from '../../transitions/transition';
+import { isPresent } from '../../util/util';
+import { LoadingCmp } from './loading-component';
+import { LoadingOptions } from './loading-options';
+import { NavOptions } from '../nav/nav-options';
 import { ViewController} from '../nav/view-controller';
+
+/**
+ * @private
+ */
+export class Loading extends ViewController {
+  private _app: App;
+
+  constructor(app: App, opts: LoadingOptions = {}) {
+    opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
+    opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
+
+    super(LoadingCmp, opts);
+    this._app = app;
+    this.isOverlay = true;
+
+    // by default, loading indicators should not fire lifecycle events of other views
+    // for example, when an loading indicators enters, the current active view should
+    // not fire its lifecycle events because it's not conceptually leaving
+    this.fireOtherLifecycles = false;
+  }
+
+  /**
+   * @private
+   */
+  getTransitionName(direction: string) {
+    let key = (direction === 'back' ? 'loadingLeave' : 'loadingEnter');
+    return this._nav && this._nav.config.get(key);
+  }
+
+  /**
+   * Present the loading instance.
+   *
+   * @param {NavOptions} [opts={}] Nav options to go with this transition.
+   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
+   */
+  present(navOptions: NavOptions = {}) {
+    return this._app.present(this, navOptions);
+  }
+
+  /**
+   * @private
+   * DEPRECATED: Please inject LoadingController instead
+   */
+  private static create(opt: any) {
+    // deprecated warning: added beta.11 2016-06-27
+    console.warn('Loading.create(..) has been deprecated. Please inject LoadingController instead');
+  }
+
+}
 
 
 /**
- * @name Loading
+ * @name LoadingController
  * @description
  * An overlay that can be used to indicate activity while blocking user
  * interaction. The loading indicator appears on top of the app's content,
@@ -19,7 +69,7 @@ import { ViewController} from '../nav/view-controller';
  *
  * ### Creating
  * You can pass all of the loading options in the first argument of
- * the create method: `Loading.create(opts)`. The spinner name should be
+ * the create method: `create(opts)`. The spinner name should be
  * passed in the `spinner` property, and any optional HTML can be passed
  * in the `content` property. If you do not pass a value to `spinner`
  * the loading indicator will use the spinner specified by the mode. To
@@ -50,16 +100,16 @@ import { ViewController} from '../nav/view-controller';
  *
  * @usage
  * ```ts
- * constructor(nav: NavController) {
- *   this.nav = nav;
+ * constructor(private loadingCtrl: LoadingController) {
+ *
  * }
  *
  * presentLoadingDefault() {
- *   let loading = Loading.create({
+ *   let loading = this.loadingCtrl.create({
  *     content: 'Please wait...'
  *   });
  *
- *   this.nav.present(loading);
+ *   loading.present();
  *
  *   setTimeout(() => {
  *     loading.dismiss();
@@ -67,7 +117,7 @@ import { ViewController} from '../nav/view-controller';
  * }
  *
  * presentLoadingCustom() {
- *   let loading = Loading.create({
+ *   let loading = this.loadingCtrl.create({
  *     spinner: 'hide',
  *     content: `
  *       <div class="custom-spinner-container">
@@ -80,16 +130,16 @@ import { ViewController} from '../nav/view-controller';
  *     console.log('Dismissed loading');
  *   });
  *
- *   this.nav.present(loading);
+ *   loading.present();
  * }
  *
  * presentLoadingText() {
- *   let loading = Loading.create({
+ *   let loading = this.loadingCtrl.create({
  *     spinner: 'hide',
  *     content: 'Loading Please Wait...'
  *   });
  *
- *   this.nav.present(loading);
+ *   loading.present();
  *
  *   setTimeout(() => {
  *     this.nav.push(Page2);
@@ -104,252 +154,27 @@ import { ViewController} from '../nav/view-controller';
  * @demo /docs/v2/demos/loading/
  * @see {@link /docs/v2/api/components/spinner/Spinner Spinner API Docs}
  */
-export class Loading extends ViewController {
+@Injectable()
+export class LoadingController {
 
-  constructor(opts: LoadingOptions = {}) {
-    opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
-    opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
-
-    super(LoadingCmp, opts);
-    this.isOverlay = true;
-    this.usePortal = true;
-
-    // by default, loading indicators should not fire lifecycle events of other views
-    // for example, when an loading indicators enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
-  }
-
-   /**
-   * @private
+  constructor(private _app: App) {}
+  /**
+   * Create a loading indicator with the following options
+   *
+   * | Option                | Type       | Description                                                                                                      |
+   * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
+   * | spinner               |`string`    | The name of the SVG spinner for the loading indicator.                                                           |
+   * | content               |`string`    | The html content for the loading indicator.                                                                      |
+   * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
+   * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
+   * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
+   * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `dismiss()` is called. |
+   *
+   *
+   * @param {LoadingOptions} opts Loading options
    */
-   getTransitionName(direction: string) {
-     let key = (direction === 'back' ? 'loadingLeave' : 'loadingEnter');
-     return this._nav && this._nav.config.get(key);
-   }
-
-   /**
-    * Create a loading indicator with the following options
-    *
-    * | Option                | Type       | Description                                                                                                      |
-    * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
-    * | spinner               |`string`    | The name of the SVG spinner for the loading indicator.                                                           |
-    * | content               |`string`    | The html content for the loading indicator.                                                                      |
-    * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
-    * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
-    * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
-    * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `dismiss()` is called. |
-    *
-    *
-    * @param {object} opts Loading options
-    */
-   static create(opts: LoadingOptions = {}) {
-     return new Loading(opts);
-   }
-
- }
-
-/**
-* @private
-*/
-@Component({
-  selector: 'ion-loading',
-  template:
-    '<ion-backdrop [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
-    '<div class="loading-wrapper">' +
-      '<div *ngIf="showSpinner" class="loading-spinner">' +
-        '<ion-spinner [name]="d.spinner"></ion-spinner>' +
-      '</div>' +
-      '<div *ngIf="d.content" [innerHTML]="d.content" class="loading-content"></div>' +
-    '</div>',
-  host: {
-    'role': 'dialog'
-  },
-  encapsulation: ViewEncapsulation.None,
-})
-class LoadingCmp {
-  private d: any;
-  private id: number;
-  private showSpinner: boolean;
-
-  constructor(
-    private _viewCtrl: ViewController,
-    private _config: Config,
-    private _elementRef: ElementRef,
-    params: NavParams,
-    renderer: Renderer
-  ) {
-    this.d = params.data;
-
-    if (this.d.cssClass) {
-      renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
-    }
-
-    this.id = (++loadingIds);
+  create(opts: LoadingOptions = {}) {
+    return new Loading(this._app, opts);
   }
 
-  ngOnInit() {
-    // If no spinner was passed in loading options we need to fall back
-    // to the loadingSpinner in the app's config, then the mode spinner
-    if (isUndefined(this.d.spinner)) {
-      this.d.spinner = this._config.get('loadingSpinner', this._config.get('spinner', 'ios'));
-    }
-
-    // If the user passed hide to the spinner we don't want to show it
-    this.showSpinner = isDefined(this.d.spinner) && this.d.spinner !== 'hide';
-  }
-
-  ionViewDidEnter() {
-    let activeElement: any = document.activeElement;
-    if (document.activeElement) {
-      activeElement.blur();
-    }
-
-    // If there is a duration, dismiss after that amount of time
-    this.d.duration ? setTimeout(() => this.dismiss('backdrop'), this.d.duration) : null;
-  }
-
-  dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(null, role);
-  }
 }
-
-export interface LoadingOptions {
-  spinner?: string;
-  content?: string;
-  cssClass?: string;
-  showBackdrop?: boolean;
-  dismissOnPageChange?: boolean;
-  delay?: number;
-  duration?: number;
-}
-
-/**
- * Animations for loading
- */
- class LoadingPopIn extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = enteringView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
-     backdrop.fromTo('opacity', 0.01, 0.3);
-
-     this
-       .easing('ease-in-out')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-pop-in', LoadingPopIn);
-
-
- class LoadingPopOut extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = leavingView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
-     backdrop.fromTo('opacity', 0.3, 0);
-
-     this
-       .easing('ease-in-out')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-pop-out', LoadingPopOut);
-
-
- class LoadingMdPopIn extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = enteringView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
-     backdrop.fromTo('opacity', 0.01, 0.5);
-
-     this
-       .easing('ease-in-out')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-md-pop-in', LoadingMdPopIn);
-
-
- class LoadingMdPopOut extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = leavingView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
-     backdrop.fromTo('opacity', 0.5, 0);
-
-     this
-       .easing('ease-in-out')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-md-pop-out', LoadingMdPopOut);
-
-
- class LoadingWpPopIn extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = enteringView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.3, 1);
-     backdrop.fromTo('opacity', 0.01, 0.16);
-
-     this
-       .easing('cubic-bezier(0,0 0.05,1)')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-wp-pop-in', LoadingWpPopIn);
-
-
- class LoadingWpPopOut extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = leavingView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 1.3);
-     backdrop.fromTo('opacity', 0.16, 0);
-
-     this
-       .easing('ease-out')
-       .duration(150)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-wp-pop-out', LoadingWpPopOut);
-
-let loadingIds = -1;

@@ -3,6 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/common';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
+import { App } from '../app/app';
 import { Form } from '../../util/form';
 import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/util';
 import { Item } from '../item/item';
@@ -192,6 +193,7 @@ export class Select {
   @Output() ionCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
+    private _app: App,
     private _form: Form,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
@@ -204,10 +206,6 @@ export class Select {
       this.id = 'sel-' + _item.registerInput('select');
       this._labelId = 'lbl-' + _item.id;
       this._item.setCssClass('item-select', true);
-    }
-
-    if (!_nav) {
-      console.error('parent <ion-nav> required for <ion-select>');
     }
   }
 
@@ -279,7 +277,7 @@ export class Select {
       }));
       alertOptions.cssClass = 'select-action-sheet';
 
-      overlay = ActionSheet.create(alertOptions);
+      overlay = new ActionSheet(this._app, alertOptions);
 
     } else {
       // default to use the alert interface
@@ -297,7 +295,7 @@ export class Select {
       });
 
       // create the alert instance from our built up alertOptions
-      overlay = Alert.create(alertOptions);
+      overlay = new Alert(this._app, alertOptions);
 
       if (this._multi) {
         // use checkboxes
@@ -318,7 +316,7 @@ export class Select {
 
     }
 
-    this._nav.present(overlay, alertOptions);
+    overlay.present(alertOptions);
 
     this._isOpen = true;
     overlay.onDismiss(() => {
