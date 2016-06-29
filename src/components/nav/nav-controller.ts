@@ -831,6 +831,10 @@ export class NavController extends Ion {
         // it should be removed after the transition
         view.state = STATE_REMOVE_AFTER_TRANS;
 
+      } else if (view.state === STATE_INIT_ENTER) {
+        // asked to be removed before it even entered!
+        view.state = STATE_CANCEL_ENTER;
+
       } else {
         // if this view is already leaving then no need to immediately
         // remove it, otherwise set the remove state
@@ -1087,9 +1091,9 @@ export class NavController extends Ion {
     // create the transitions animation, play the animation
     // when the transition ends call wait for it to end
 
-    if (enteringView.state === STATE_INACTIVE) {
-      // this entering view is already set to inactive, so this
-      // transition must be canceled, so don't continue
+    if (enteringView.state === STATE_INACTIVE || enteringView.state === STATE_CANCEL_ENTER) {
+      // this entering view is already set to inactive or has been canceled
+      // so this transition must not begin, so don't continue
       return done();
     }
 
@@ -1185,9 +1189,10 @@ export class NavController extends Ion {
           this._app.viewDidEnter.emit(enteringView);
         }
 
-        if (enteringView.fireOtherLifecycles) {
+        if (enteringView.fireOtherLifecycles && this._init) {
           // only fire leaving lifecycle if the entering
           // view hasn't explicitly set not to
+          // and after the nav has initialized
           leavingView.fireDidLeave();
           this.viewDidLeave.emit(leavingView);
           this._app.viewDidLeave.emit(leavingView);
@@ -1223,6 +1228,11 @@ export class NavController extends Ion {
   private _transFinish(transId: number, enteringView: ViewController, leavingView: ViewController, direction: string, hasCompleted: boolean) {
     // a transition has completed, but not sure if it's the last one or not
     // check if this transition is the most recent one or not
+
+    if (enteringView.state === STATE_CANCEL_ENTER) {
+      // this view was told to leave before it finished entering
+      this.remove(enteringView.index, 1);
+    }
 
     if (transId === this._transIds) {
       // ok, good news, there were no other transitions that kicked
@@ -1263,9 +1273,7 @@ export class NavController extends Ion {
 
         // this check only needs to happen once, which will add the css
         // class to the nav when it's finished its first transition
-        if (!this._init) {
-          this._init = true;
-        }
+        this._init = true;
 
       } else {
         // this transition has not completed, meaning the
@@ -1405,6 +1413,14 @@ export class NavController extends Ion {
     addSelector(view.componentType, 'ion-page');
 
     this._compiler.resolveComponent(view.componentType).then(componentFactory => {
+
+      if (view.state === STATE_CANCEL_ENTER) {
+        // view may have already been removed from the stack
+        // if so, don't even bother adding it
+        view.destroy();
+        this._views.splice(view.index, 1);
+        return;
+      }
 
       // add more providers to just this page
       let componentProviders = ReflectiveInjector.resolve([
@@ -1613,7 +1629,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  getByState(state: string): ViewController {
+  getByState(state: number): ViewController {
     for (var i = this._views.length - 1; i >= 0; i--) {
       if (this._views[i].state === state) {
         return this._views[i];
@@ -1708,6 +1724,7 @@ export class NavController extends Ion {
 
   /**
    * @private
+   * Dismiss all pages which have set the `dismissOnPageChange` property.
    */
   dismissPageChangeViews() {
     this._views.forEach(view => {
@@ -1765,15 +1782,17 @@ export class NavController extends Ion {
 
 }
 
-const STATE_ACTIVE = 'active';
-const STATE_INACTIVE = 'inactive';
-const STATE_INIT_ENTER = 'init_enter';
-const STATE_INIT_LEAVE = 'init_leave';
-const STATE_TRANS_ENTER = 'trans_enter';
-const STATE_TRANS_LEAVE = 'trans_leave';
-const STATE_REMOVE = 'remove';
-const STATE_REMOVE_AFTER_TRANS = 'remove_after_trans';
-const STATE_FORCE_ACTIVE = 'force_active';
+const STATE_ACTIVE = 1;
+const STATE_INACTIVE = 2;
+const STATE_INIT_ENTER = 3;
+const STATE_INIT_LEAVE = 4;
+const STATE_TRANS_ENTER = 5;
+const STATE_TRANS_LEAVE = 6;
+const STATE_REMOVE = 7;
+const STATE_REMOVE_AFTER_TRANS = 8;
+const STATE_CANCEL_ENTER = 9;
+const STATE_FORCE_ACTIVE = 10;
+
 const INIT_ZINDEX = 100;
 const PORTAL_ZINDEX = 9999;
 

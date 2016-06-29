@@ -66,7 +66,7 @@ export class ViewController {
   /**
    * @private
    */
-  state: string = '';
+  state: number = 0;
 
   /**
    * @private
