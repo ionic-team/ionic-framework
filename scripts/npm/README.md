@@ -1,8 +1,10 @@
 ## Ionic Framework 2.x
 
-The official npm package for [Ionic](http://ionicframework.com/) 2, complete with pre-built ES5 bundles, TypeScript definitions, Sass files, module-ready ES5 files, and more.
+The official npm package for [Ionic 2](http://ionicframework.com/), complete with pre-built ES5 bundles, TypeScript definitions, Sass files, CommonJS ES5 files, and more.
 
-To get started with Ionic 2, please read the [Installation](http://ionicframework.com/docs/v2/getting-started/installation/) guide.
+To get started with Ionic 2, please read the [Installation Guide](http://ionicframework.com/docs/v2/getting-started/installation/).
+
+[Ionic 2 Documentation](http://ionicframework.com/docs/v2/)
 
 ### Source files
 
@@ -11,7 +13,7 @@ In the root of the package are ES5 sources in the CommonJS module format, their 
 Usually, the only import required by the user is `ionic-angular`, as everything from Ionic is exported by the package:
 
 ```
-  import {App} from 'ionic-angular';
+  import { App, NavController } from 'ionic-angular';
 ```
 
 ### Bundles

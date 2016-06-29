@@ -2,7 +2,7 @@
   "private": "true",
   "name": "ionic2",
   "version": "2.0.0-beta.10",
-  "description": "An advanced HTML5 mobile app framework built on Angular2",
+  "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular 2",
   "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp", "cordova", "progressive web app", "pwa"],
   "license": "MIT",
   "repository": {
