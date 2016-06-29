@@ -1,15 +1,15 @@
 {
   "name": "ionic-angular",
-  "version": "<%= ionicVersion %>",
-  "description": "An advanced HTML5 mobile app framework built on Angular2",
-  "license": "MIT",
-  "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp", "cordova"],
-  "main": "index.js",
-  "jsnext:main": "esm/index.js",
+  "version": "`gulp package` generates dist/package.json from this template using the root ./package.json",
+  "description": "",
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "https://github.com/driftyco/ionic.git"
   },
+  "license": "MIT",
+  "main": "index.js",
+  "jsnext:main": "esm/index.js",
   "dependencies": {
     "colors": "^1.1.2",
     "inquirer": "0.11.0",
@@ -18,11 +18,12 @@
     "q": "1.4.1"
   },
   "peerDependencies": {
-    "@angular/common": "^<%= angularVersion %>",
-    "@angular/compiler": "^<%= angularVersion %>",
-    "@angular/core": "^<%= angularVersion %>",
-    "@angular/platform-browser": "^<%= angularVersion %>",
-    "@angular/platform-browser-dynamic": "^<%= angularVersion %>",
-    "@angular/http": "^<%= angularVersion %>"
+    "@angular/common": "// versions dynamically pulled from root ./package.json",
+    "@angular/compiler": "",
+    "@angular/core": "",
+    "@angular/forms": "",
+    "@angular/http": "",
+    "@angular/platform-browser": "",
+    "@angular/platform-browser-dynamic": ""
   }
 }
