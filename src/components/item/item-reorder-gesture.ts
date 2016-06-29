@@ -1,7 +1,7 @@
-import {Item} from './item';
-import {ItemReorder} from '../item/item-reorder';
-import {UIEventManager} from '../../util/ui-event-manager';
-import {closest, Coordinates, pointerCoord, CSS, nativeRaf} from '../../util/dom';
+import { Item } from './item';
+import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
+import { UIEventManager } from '../../util/ui-event-manager';
+import { closest, Coordinates, pointerCoord, CSS, nativeRaf } from '../../util/dom';
 
 
 const AUTO_SCROLL_MARGIN = 60;
@@ -39,9 +39,16 @@ export class ItemReorderGesture {
       return false;
     }
 
-    let item = reorderElement['$ionReorderNode'];
+    let reorderMark = reorderElement['$ionComponent'];
+    if (!reorderMark) {
+      console.error('ion-reorder does not contain $ionComponent');
+      return false;
+    }
+    this.list.reorderPrepare();
+
+    let item = reorderMark.getReorderNode();
     if (!item) {
-      console.error('item does not contain ion ionReorderNode');
+      console.error('reorder node not found');
       return false;
     }
     ev.preventDefault();
@@ -49,7 +56,8 @@ export class ItemReorderGesture {
     // Preparing state
     this.selectedItemEle = item;
     this.selectedItemHeight = item.offsetHeight;
-    this.lastYcoord = this.lastToIndex = -100;
+    this.lastYcoord = -100;
+    this.lastToIndex = indexForItem(item);
 
     this.windowHeight = window.innerHeight - AUTO_SCROLL_MARGIN;
     this.lastScrollPosition = this.list.scrollContent(0);
@@ -81,7 +89,7 @@ export class ItemReorderGesture {
       let overItem = this.itemForCoord(coord);
       if (overItem) {
         let toIndex = indexForItem(overItem);
-        if (toIndex && (toIndex !== this.lastToIndex || this.emptyZone)) {
+        if (toIndex !== undefined && (toIndex !== this.lastToIndex || this.emptyZone)) {
           let fromIndex = indexForItem(this.selectedItemEle);
           this.lastToIndex = toIndex;
           this.lastYcoord = posY;
@@ -142,16 +150,5 @@ function itemForPosition(x: number, y: number): HTMLElement {
   if (element.nodeName !== 'ION-ITEM' && !element.hasAttribute('ion-item')) {
     return null;
   }
-  if (indexForItem(element)) {
-    return element;
-  }
-  let parent = element.parentNode;
-  if (indexForItem(parent)) {
-    return <HTMLElement>parent;
-  }
-  return null;
-}
-
-function indexForItem(element: any): number {
-  return element['$ionIndex'];
+  return findReorderItem(element);
 }

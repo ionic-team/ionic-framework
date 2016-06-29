@@ -114,13 +114,13 @@ class ApiDemoPage {
   }
 
   download(item: ItemSliding) {
-    item.setClass('downloading', true);
+    item.setCssClass('downloading', true);
     setTimeout(() => {
       const toast = this.toastCtrl.create({
         message: 'Item was downloaded!'
       });
       toast.present();
-      item.setClass('downloading', false);
+      item.setCssClass('downloading', false);
       item.close();
 
       // Wait 2s to close toast

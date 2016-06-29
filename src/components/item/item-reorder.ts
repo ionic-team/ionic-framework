@@ -125,7 +125,7 @@ export interface ReorderIndexes {
  * @see {@link ../Item Item API Docs}
  */
 @Directive({
-  selector: '[reorder]',
+  selector: 'ion-list[reorder],ion-item-group[reorder]',
   host: {
     '[class.reorder-enabled]': '_enableReorder',
   }
@@ -181,13 +181,19 @@ export class ItemReorder {
   /**
    * @private
    */
-  reorderStart() {
+  reorderPrepare() {
     let children = this._element.children;
     let len = children.length;
-    this.setCssClass('reorder-active', true);
     for (let i = 0; i < len; i++) {
       children[i]['$ionIndex'] = i;
     }
+  }
+
+  /**
+   * @private
+   */
+  reorderStart() {
+    this.setCssClass('reorder-list-active', true);
   }
 
   /**
@@ -223,7 +229,7 @@ export class ItemReorder {
     let children = this._element.children;
     let len = children.length;
 
-    this.setCssClass('reorder-active', false);
+    this.setCssClass('reorder-list-active', false);
     let transform = CSS.transform;
     for (let i = 0; i < len; i++) {
       (<any>children[i]).style[transform] = '';
@@ -294,16 +300,35 @@ export class Reorder {
   constructor(
     @Inject(forwardRef(() => Item)) private item: Item,
     private elementRef: ElementRef) {
+    elementRef.nativeElement['$ionComponent'] = this;
   }
 
-  ngAfterContentInit() {
-    let item = this.item.getNativeElement();
-    if (item.parentNode.nodeName === 'ION-ITEM-SLIDING') {
-      this.elementRef.nativeElement['$ionReorderNode'] = item.parentNode;
-    } else {
-      this.elementRef.nativeElement['$ionReorderNode'] = item;
-    }
+  getReorderNode() {
+    let node = <any>this.item.getNativeElement();
+    return findReorderItem(node);
   }
-
 
 }
+
+/**
+ * @private
+ */
+export function findReorderItem(node: any): HTMLElement {
+  let nested = 0;
+  while (node && nested < 4) {
+    if (indexForItem(node) !== undefined ) {
+      return node;
+    }
+    node = node.parentNode;
+    nested++;
+  }
+  return null;
+}
+
+/**
+ * @private
+ */
+export function indexForItem(element: any): number {
+  return element['$ionIndex'];
+}
+
