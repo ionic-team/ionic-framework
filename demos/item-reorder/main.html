@@ -10,41 +10,19 @@
 </ion-header>
 
 
-<ion-content class="outer-content" fullscreen>
+<ion-content fullscreen>
 
   <ion-list class="chat-sliding-demo">
     <ion-list-header>
-      Chats
+      Playlist
     </ion-list-header>
 
     <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">
-
-      <ion-item *ngFor="let chat of chats">
-        <ion-avatar item-left>
-          <img [src]="chat.img">
-        </ion-avatar>
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.message}}</p>
-        <ion-note item-right>
-          {{chat.time}}
-        </ion-note>
+      <ion-item *ngFor="let song of songs">
+        <h2>{{ song.title }}</h2>
+        <p>{{ song.band }} <b>&#183;</b> {{ song.album }}</p>
       </ion-item>
-
     </ion-item-group>
   </ion-list>
 
 </ion-content>
-
-<style>
-
-  .chat-sliding-demo ion-item-options .button-inner {
-    font-size: 14px;
-    flex-direction: column;
-  }
-
-  .chat-sliding-demo ion-item-options ion-icon {
-    padding-right: 0;
-    padding-bottom: 0.3em;
-  }
-
-</style>

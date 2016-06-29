@@ -7,59 +7,56 @@ import { ionicBootstrap, ItemSliding, NavController, Toast, reorderArray } from 
   encapsulation: ViewEncapsulation.None
 })
 class ApiDemoPage {
-  chats: any[];
-  editButton: string = 'Reorder';
+  songs: any[];
+  editButton: string = 'Edit';
   editing: boolean = false;
 
   constructor(private nav: NavController) {
-    this.chats = [
+    this.songs = [
     {
-      img: './avatar-cher.png',
-      name: 'Cher',
-      message: 'Ugh. As if.',
-      time: '9:38 pm'
-    }, {
-      img: './avatar-dionne.png',
-      name: 'Dionne',
-      message: 'Mr. Hall was way harsh.',
-      time: '8:59 pm'
-    }, {
-      img: './avatar-murray.png',
-      name: 'Murray',
-      message: 'Excuse me, "Ms. Dione."',
-      time: 'Wed'
+      title: 'Everything Beta',
+      band: 'Phoria',
+      album: 'Volition'
     },
     {
-      img: './avatar-cher.png',
-      name: 'Cher',
-      message: 'Ugh. As if.',
-      time: '9:38 pm'
-    }, {
-      img: './avatar-dionne.png',
-      name: 'Dionne',
-      message: 'Mr. Hall was way harsh.',
-      time: '8:59 pm'
-    }, {
-      img: './avatar-murray.png',
-      name: 'Murray',
-      message: 'Excuse me, "Ms. Dione."',
-      time: 'Wed'
+      title: 'Hello',
+      band: 'Adele',
+      album: '25'
     },
     {
-      img: './avatar-cher.png',
-      name: 'Cher',
-      message: 'Ugh. As if.',
-      time: '9:38 pm'
-    }, {
-      img: './avatar-dionne.png',
-      name: 'Dionne',
-      message: 'Mr. Hall was way harsh.',
-      time: '8:59 pm'
-    }, {
-      img: './avatar-murray.png',
-      name: 'Murray',
-      message: 'Excuse me, "Ms. Dione."',
-      time: 'Wed'
+      title: 'Bohemian Rhapsody',
+      band: 'Queen',
+      album: 'A Night at the Opera'
+    },
+    {
+      title: 'Don\'t Stop Believin\'',
+      band: 'Journey',
+      album: 'Escape'
+    },
+    {
+      title: 'Smells Like Teen Spirit',
+      band: 'Nirvana',
+      album: 'Nevermind'
+    },
+    {
+      title: 'All You Need Is Love',
+      band: 'The Beatles',
+      album: 'Magical Mystery Tour'
+    },
+    {
+      title: 'Hotel California',
+      band: 'The Eagles',
+      album: 'Hotel California'
+    },
+    {
+      title: 'The Hand That Feeds',
+      band: 'Nine Inch Nails',
+      album: 'With Teeth'
+    },
+    {
+      title: 'Who Are You',
+      band: 'The Who',
+      album: 'Who Are You'
     }];
   }
 
@@ -68,12 +65,12 @@ class ApiDemoPage {
     if (this.editing) {
       this.editButton = 'Done';
     } else {
-      this.editButton = 'Reorder';
+      this.editButton = 'Edit';
     }
   }
 
   reorderData(indexes: any) {
-    this.chats = reorderArray(this.chats, indexes);
+    this.songs = reorderArray(this.songs, indexes);
   }
 }
 

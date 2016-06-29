@@ -17,7 +17,7 @@ export interface ReorderIndexes {
  * @description
  * Item reorder adds the ability to change an item's order in a group.
  * It can be used within an `ion-list` or `ion-item-group` to provide a
- * visual drap and drop interface.
+ * visual drag and drop interface.
  *
  * ## Grouping Items
  *
