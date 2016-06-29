@@ -196,6 +196,9 @@ export class ItemSliding {
   private _optsDirty: boolean = true;
   private _state: SlidingState = SlidingState.Disabled;
 
+  /**
+   * @private
+   */
   @ContentChild(Item) private item: Item;
 
   /**
@@ -332,6 +335,9 @@ export class ItemSliding {
     return restingPoint;
   }
 
+  /**
+   * @private
+   */
   private fireSwipeEvent() {
     if (this._state & SlidingState.SwipeRight) {
       this._rightOptions.ionSwipe.emit(this);
@@ -340,6 +346,9 @@ export class ItemSliding {
     }
   }
 
+  /**
+   * @private
+   */
   private calculateOptsWidth() {
     nativeRaf(() => {
       if (!this._optsDirty) {
@@ -481,4 +490,3 @@ function shouldClose(isCloseDirection: boolean, isMovingFast: boolean, isOnClose
   let shouldClose = (!isMovingFast && isOnCloseZone) || (isCloseDirection && isMovingFast);
   return shouldClose;
 }
-
