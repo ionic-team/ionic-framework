@@ -21,7 +21,7 @@ export class ItemSlidingGesture extends DragGesture {
   }
 
   onTapCallback(ev: any) {
-    if (isFromOptionButtons(ev.target)) {
+    if (isFromOptionButtons(ev)) {
       return;
     }
     let didClose = this.closeOpened();
@@ -117,6 +117,10 @@ function getContainer(ev: any): ItemSliding {
   return null;
 }
 
-function isFromOptionButtons(ele: HTMLElement): boolean {
-  return !!closest(ele, 'ion-item-options', true);
+function isFromOptionButtons(ev: any): boolean {
+  let button = closest(ev.target, '.button', true);
+  if (!button) {
+    return false;
+  }
+  return !!closest(button, 'ion-item-options', true);
 }
