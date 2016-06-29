@@ -1,55 +1,55 @@
 import { Component } from '@angular/core';
 
-import { ionicBootstrap, NavController, Toast } from 'ionic-angular';
+import { ionicBootstrap, ToastController } from 'ionic-angular';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class ApiDemoPage {
-  constructor(private nav: NavController) { }
+  constructor(private toastCtrl: ToastController) { }
 
   showToast(position: string) {
-    const toast = Toast.create({
+    const toast = this.toastCtrl.create({
       message: 'User was created successfully',
       position: position,
       duration: 3000
     });
 
     toast.onDismiss(this.dismissHandler);
-    this.nav.present(toast);
+    toast.present();
   }
 
   showLongToast() {
-    const toast = Toast.create({
+    const toast = this.toastCtrl.create({
       message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.',
       duration: 3000
     });
 
     toast.onDismiss(this.dismissHandler);
-    this.nav.present(toast);
+    toast.present();
   }
 
   showDismissDurationToast() {
-    const toast = Toast.create({
+    const toast = this.toastCtrl.create({
       message: 'I am dismissed after 1.5 seconds',
       duration: 1500
     });
     toast.onDismiss(this.dismissHandler);
-    this.nav.present(toast);
+    toast.present();
   }
 
   showToastWithCloseButton() {
-    const toast = Toast.create({
+    const toast = this.toastCtrl.create({
       message: 'Your internet connection appears to be offline. Data integrity is not guaranteed.',
       showCloseButton: true,
       closeButtonText: 'Ok'
     });
     toast.onDismiss(this.dismissHandler);
-    this.nav.present(toast);
+    toast.present();
   }
 
-  private dismissHandler(toast: Toast) {
+  private dismissHandler() {
     console.info('Toast onDismiss()');
   }
 

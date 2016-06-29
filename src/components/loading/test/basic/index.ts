@@ -1,15 +1,15 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, ActionSheet, Loading, NavController, ViewController, Platform} from '../../../../../src';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ionicBootstrap, LoadingController, NavController } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  constructor(private nav: NavController, private platform: Platform) {}
+  constructor(private loadingCtrl: LoadingController, private nav: NavController) {}
 
   presentLoadingIos() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'ios',
       duration: 1000,
       cssClass: 'my-custom-loader'
@@ -19,58 +19,58 @@ class E2EPage {
      console.log('Dismissed loading');
     });
 
-    this.nav.present(loading);
+    loading.present();
   }
 
   presentLoadingDots() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'dots',
       content: 'Loading...',
       duration: 1000
     });
 
-    this.nav.present(loading);
+    loading.present();
   }
 
   presentLoadingBubbles() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Loading...',
       duration: 1000
     });
 
-    this.nav.present(loading);
+    loading.present();
   }
 
   presentLoadingCircles() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'circles',
       content: 'Loading...',
       duration: 1000
     });
 
-    this.nav.present(loading);
+    loading.present();
   }
 
   presentLoadingCrescent() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'crescent',
       content: 'Please wait...',
       duration: 1000
     });
 
-    this.nav.present(loading);
+    loading.present();
   }
 
   // Pass the fixed-spinner class so we can turn off
   // spinner animation for the e2e test
   presentLoadingDefault() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       content: 'Please wait...',
       cssClass: 'fixed-spinner'
     });
 
-    this.nav.present(loading);
+    loading.present();
 
     setTimeout(() => {
       loading.dismiss();
@@ -78,7 +78,7 @@ class E2EPage {
   }
 
   presentLoadingCustom() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: `
         <div class="custom-spinner-container">
@@ -87,16 +87,16 @@ class E2EPage {
       duration: 1000
     });
 
-    this.nav.present(loading);
+    loading.present();
   }
 
   presentLoadingText() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: 'Loading Please Wait...'
     });
 
-    this.nav.present(loading);
+    loading.present();
 
     setTimeout(() => {
       this.nav.push(Page2);
@@ -112,29 +112,29 @@ class E2EPage {
   }
 
   presentLoadingMultiple() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: 'Loading 1 Please Wait...'
     });
 
-    this.nav.present(loading);
+    loading.present();
 
-    let loading2 = Loading.create({
+    let loading2 = this.loadingCtrl.create({
       spinner: 'hide',
       content: 'Loading 2 Please Wait...'
     });
 
     setTimeout(() => {
-      this.nav.present(loading2);
+      loading2.present();
     }, 1000);
 
-    let loading3 = Loading.create({
+    let loading3 = this.loadingCtrl.create({
       spinner: 'hide',
       content: 'Loading 3 Please Wait...'
     });
 
     setTimeout(() => {
-      this.nav.present(loading3);
+      loading3.present();
 
       setTimeout(() => {
         loading3.dismiss();
@@ -152,32 +152,32 @@ class E2EPage {
   }
 
   presentLoadingMultipleNav() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: 'Loading 1 Please Wait...',
       dismissOnPageChange: true
     });
 
-    this.nav.present(loading);
+    loading.present();
 
-    let loading2 = Loading.create({
+    let loading2 = this.loadingCtrl.create({
       spinner: 'hide',
       content: 'Loading 2 Please Wait...',
       dismissOnPageChange: true
     });
 
     setTimeout(() => {
-      this.nav.present(loading2);
+      loading2.present();
     }, 500);
 
-    let loading3 = Loading.create({
+    let loading3 = this.loadingCtrl.create({
       spinner: 'hide',
       content: 'Loading 3 Please Wait...',
       dismissOnPageChange: true
     });
 
     setTimeout(() => {
-      this.nav.present(loading3);
+      loading3.present();
 
       setTimeout(() => {
         this.nav.push(Page2);
@@ -207,7 +207,7 @@ class E2EPage {
   `
 })
 class Page2 {
-  constructor(private nav: NavController, private platform: Platform) {}
+  constructor(private nav: NavController) {}
 
   ionViewLoaded() {
     setTimeout(() => {
@@ -230,17 +230,17 @@ class Page2 {
     <ion-content padding>Some content</ion-content>
   `
 })
-class Page3 {
-  constructor(private nav: NavController, private platform: Platform) {}
-}
+class Page3 {}
 
 @Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
+  template: `
+    <link href="styles.css" rel="stylesheet">
+    <ion-nav [root]="root"></ion-nav>
+  `,
+  encapsulation: ViewEncapsulation.None
 })
 class E2EApp {
   root = E2EPage;
 }
 
 ionicBootstrap(E2EApp);
-
-document.body.innerHTML += '<link href="styles.css" rel="stylesheet">'

@@ -32,9 +32,11 @@ export class Login {
 @Component({
   template: `
     <ion-menu [content]="content">
-     <ion-toolbar secondary>
-       <ion-title>Account Menu</ion-title>
-     </ion-toolbar>
+     <ion-header>
+      <ion-toolbar secondary>
+        <ion-title>Account Menu</ion-title>
+      </ion-toolbar>
+     </ion-header>
      <ion-content>
        <ion-list>
          <button ion-item (click)="goToProfile()">

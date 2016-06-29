@@ -5,7 +5,6 @@ import { Config } from '../../config/config';
 import { Keyboard } from '../../util/keyboard';
 import { isTrueProperty } from '../../util/util';
 import { NavController } from './nav-controller';
-import { NavPortal } from './nav-portal';
 import { ViewController } from './view-controller';
 
 /**
@@ -22,8 +21,7 @@ import { ViewController } from './view-controller';
  * For more information on using navigation controllers like Nav or [Tab](../../Tabs/Tab/),
  * take a look at the [NavController API Docs](../NavController/).
  *
- * You must set a root page (where page is any [@Page](../../config/Page/)
- * component) to be loaded initially by any Nav you create, using
+ * You must set a root page to be loaded initially by any Nav you create, using
  * the 'root' property:
  *
  * @usage
@@ -109,8 +107,10 @@ import { ViewController } from './view-controller';
  */
 @Component({
   selector: 'ion-nav',
-  template: '<div #viewport nav-viewport></div><div class="nav-decor"></div><div nav-portal></div>',
-  directives: [NavPortal],
+  template: `
+    <div #viewport nav-viewport></div>
+    <div class="nav-decor"></div>
+  `,
   encapsulation: ViewEncapsulation.None,
 })
 export class Nav extends NavController implements AfterViewInit {
@@ -195,8 +195,4 @@ export class Nav extends NavController implements AfterViewInit {
     this._sbEnabled = isTrueProperty(val);
   }
 
-  @ViewChild(NavPortal)
-  private set _np(val: NavPortal) {
-    this.setPortal(val);
-  }
 }

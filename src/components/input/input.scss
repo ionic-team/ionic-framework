@@ -129,10 +129,13 @@ input.text-input:-webkit-autofill {
 
 .text-input-clear-icon {
   position: absolute;
+  top: 0;
   display: none;
 
   margin: 0;
   padding: 0;
+
+  height: 100%;
 
   background-repeat: no-repeat;
   background-position: center;

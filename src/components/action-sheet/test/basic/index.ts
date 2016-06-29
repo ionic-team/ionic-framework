@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, ActionSheet, Alert, Modal, NavController, ViewController, Platform} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../../../../../src';
 
 
 @Component({
@@ -8,12 +8,12 @@ import {ionicBootstrap, ActionSheet, Alert, Modal, NavController, ViewController
 class E2EPage {
   result: string = '';
 
-  constructor(private nav: NavController, private platform: Platform) {}
+  constructor(private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController, private modalCtrl: ModalController, private platform: Platform) {}
 
   presentActionSheet1() {
     this.result = '';
 
-    let actionSheet = ActionSheet.create({
+    let actionSheet = this.actionSheetCtrl.create({
       title: 'Albums',
       buttons: [
         {
@@ -37,8 +37,8 @@ class E2EPage {
           text: 'Play',
           icon: !this.platform.is('ios') ? 'arrow-dropright-circle' : null,
           handler: () => {
-            let modal = Modal.create(ModalPage);
-            this.nav.present(modal);
+            let modal = this.modalCtrl.create(ModalPage);
+            modal.present();
 
             // returning false does not allow the actionsheet to be closed
             return false;
@@ -64,13 +64,13 @@ class E2EPage {
       ]
     });
 
-    this.nav.present(actionSheet);
+    actionSheet.present();
   }
 
-  presentActionSheet2(ev) {
+  presentActionSheet2() {
     this.result = '';
 
-    let actionSheet = ActionSheet.create({
+    let actionSheet = this.actionSheetCtrl.create({
       enableBackdropDismiss: false,
       buttons: [
         {
@@ -99,20 +99,20 @@ class E2EPage {
       ]
     });
 
-    this.nav.present(actionSheet);
+    actionSheet.present(actionSheet);
   }
 
-  presentActionSheet3(ev) {
+  presentActionSheet3() {
     this.result = '';
 
-    let actionSheet = ActionSheet.create({
+    let actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           text: 'Open Alert',
           handler: () => {
             this.result = 'Opened alert';
 
-            let alert = Alert.create();
+            let alert = this.alertCtrl.create();
             alert.setTitle('Alert!');
             alert.setMessage('Alert opened from an action sheet');
             alert.addButton({
@@ -129,7 +129,7 @@ class E2EPage {
               }
             });
 
-            this.nav.present(alert).then(() => {
+            alert.present().then(() => {
               this.result = 'Alert from action sheet opened';
             });
 
@@ -147,7 +147,7 @@ class E2EPage {
       ]
     });
 
-    this.nav.present(actionSheet);
+    actionSheet.present();
   }
 
 }

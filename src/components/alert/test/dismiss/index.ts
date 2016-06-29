@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, Alert, Loading, NavController} from '../../../../index';
-import {FormBuilder, ControlGroup, Validators} from '@angular/common';
+import { Component } from '@angular/core';
+import { ionicBootstrap, AlertController, LoadingController, NavController } from '../../../../index';
+import { FormBuilder, ControlGroup, Validators } from '@angular/common';
 
 
 @Component({
@@ -8,10 +8,10 @@ import {FormBuilder, ControlGroup, Validators} from '@angular/common';
 })
 export class E2EPage {
 
-  constructor(private nav: NavController) {}
+  constructor(private alertCtrl: AlertController, private nav: NavController) {}
 
 	submit() {
-    var alert = Alert.create({
+    var alert = this.alertCtrl.create({
       title: 'Not logged in',
       message: 'Sign in to continue.',
       buttons: [
@@ -29,7 +29,7 @@ export class E2EPage {
       this.nav.push(AnotherPage);
     });
 
-    this.nav.present(alert);
+    alert.present();
 	}
 }
 
@@ -63,7 +63,7 @@ export class E2EPage {
 class AnotherPage {
   form: ControlGroup;
 
-	constructor(private nav: NavController, private builder: FormBuilder) {
+	constructor(private nav: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private builder: FormBuilder) {
 		this.form = builder.group({
 			name: builder.control('', Validators.compose([
 			    Validators.required,
@@ -75,12 +75,13 @@ class AnotherPage {
 	submit(value: any): void {
 		if (this.form.valid) {
 			console.log(value);
+
 		} else {
-			this.nav.present(Alert.create({
+			this.alertCtrl.create({
 				title: 'Invalid input data',
 				subTitle: "Please correct the errors and resubmit the data.",
 				buttons: [ 'OK' ]
-			}));
+			}).present();
 		}
 	}
 
@@ -89,7 +90,7 @@ class AnotherPage {
   }
 
   showConfirm() {
-    const alert = Alert.create({
+    const alert = this.alertCtrl.create({
       title: `Hi there`,
       buttons: [
         {
@@ -110,21 +111,21 @@ class AnotherPage {
         }
       ]
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   doFastPop() {
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'Async Nav Transition',
       message: 'This is an example of dismissing an alert, then quickly starting another transition on the same nav controller.',
       buttons: [{
         text: 'Ok',
         handler: () => {
           // present a loading indicator
-          let loading = Loading.create({
+          let loading = this.loadingCtrl.create({
             content: 'Loading...'
           });
-          this.nav.present(loading);
+          loading.present();
 
           // start an async operation
           setTimeout(() => {
@@ -150,7 +151,7 @@ class AnotherPage {
         }
       }]
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
 }

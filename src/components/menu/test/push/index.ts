@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, Nav, Alert} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, Nav, AlertController } from '../../../../../src';
 
 
 @Component({templateUrl: 'page1.html'})
@@ -14,6 +14,8 @@ class E2EApp {
 
   rootView = Page1;
 
+  constructor(private alertCtrl: AlertController) { }
+
   openPage(menu: any, page: any) {
     // close the menu when clicking a link from the menu
     menu.close();
@@ -24,11 +26,11 @@ class E2EApp {
   }
 
   showAlert() {
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'Alert example',
       buttons: ['Ok']
     });
-    this.nav.present(alert);
+    alert.present();
   }
 }
 

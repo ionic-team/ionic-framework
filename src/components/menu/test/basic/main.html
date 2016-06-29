@@ -1,8 +1,10 @@
 <ion-menu [content]="content" side="left" persistent="true" (ionDrag)="onDrag($event)" (ionOpen)="onOpen($event)" (ionClose)="onClose($event)">
 
-  <ion-toolbar secondary>
-    <ion-title>Left Menu</ion-title>
-  </ion-toolbar>
+  <ion-header>
+    <ion-toolbar secondary>
+      <ion-title>Left Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
   <ion-content>
 
@@ -63,14 +65,22 @@
     </ion-list>
   </ion-content>
 
+  <ion-footer>
+    <ion-toolbar secondary>
+      <ion-title>Footer</ion-title>
+    </ion-toolbar>
+  </ion-footer>
+
 </ion-menu>
 
 
 <ion-menu [content]="content" side="right">
 
-  <ion-toolbar danger>
-    <ion-title>Right Menu</ion-title>
-  </ion-toolbar>
+  <ion-header>
+    <ion-toolbar danger>
+      <ion-title>Right Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
   <ion-content>
 

@@ -1,7 +1,7 @@
-import {Component, Type, ViewChild} from '@angular/core';
-import {App, NavController, Alert, Content} from '../../../../../src';
-import {ionicBootstrap, Config} from '../../../../../src';
-import {NavParams, ViewController} from '../../../../../src';;
+import { Component, ViewChild } from '@angular/core';
+import { NavController, AlertController, Content } from '../../../../../src';
+import { ionicBootstrap } from '../../../../../src';
+import { NavParams, ViewController } from '../../../../../src';;
 
 
 @Component({
@@ -148,6 +148,7 @@ class FirstPage {
 class FullPage {
   constructor(
     private nav: NavController,
+    private alertCtrl: AlertController,
     private params: NavParams
   ) {}
 
@@ -173,7 +174,7 @@ class FullPage {
   }
 
   presentAlert() {
-    let alert = Alert.create();
+    let alert = this.alertCtrl.create();
     alert.setTitle('Hello Alert');
     alert.setMessage('Dismiss this alert, then pop one page');
     alert.addButton({
@@ -194,7 +195,7 @@ class FullPage {
         return false;
       }
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
 }
@@ -242,6 +243,7 @@ class FullPage {
 class PrimaryHeaderPage {
   constructor(
     private nav: NavController,
+    private alertCtrl: AlertController,
     private viewCtrl: ViewController
   ) {}
 
@@ -270,10 +272,10 @@ class PrimaryHeaderPage {
   }
 
   presentAlert() {
-    let alert = Alert.create();
+    let alert = this.alertCtrl.create();
     alert.setTitle('Hello Alert');
     alert.addButton({ text: 'Dismiss', role: 'cancel', });
-    this.nav.present(alert);
+    alert.present();
   }
 }
 

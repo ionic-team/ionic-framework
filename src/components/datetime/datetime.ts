@@ -1,13 +1,14 @@
-import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forwardRef, EventEmitter, HostListener, ViewEncapsulation} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/common';
+import { Component, EventEmitter, forwardRef, HostListener, Input, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/common';
 
-import {Config} from '../../config/config';
-import {Picker, PickerColumn, PickerColumnOption} from '../picker/picker';
-import {Form} from '../../util/form';
-import {Item} from '../item/item';
-import {merge, isBlank, isPresent, isTrueProperty, isArray, isString} from '../../util/util';
-import {dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, convertDataToISO, daysInMonth, dateSortValue, dateDataSortValue, LocaleData} from '../../util/datetime-util';
-import {NavController} from '../nav/nav-controller';
+import { Config } from '../../config/config';
+import { Picker, PickerController } from '../picker/picker';
+import { PickerColumn, PickerColumnOption } from '../picker/picker-options';
+import { Form } from '../../util/form';
+import { Item } from '../item/item';
+import { merge, isBlank, isPresent, isTrueProperty, isArray, isString } from '../../util/util';
+import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, convertDataToISO, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
+import { NavController } from '../nav/nav-controller';
 
 const DATETIME_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => DateTime), multi: true});
@@ -193,7 +194,7 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  * ### App Config Level
  *
  * ```ts
- * import {ionicBootstrap} from 'ionic-angular';
+ * import { ionicBootstrap } from 'ionic-angular';
  *
  * ionicBootstrap(MyApp, customProviders, {
  *   monthNames: ['janeiro', 'fevereiro', 'mar\u00e7o', ... ],
@@ -418,17 +419,13 @@ export class DateTime {
     private _form: Form,
     private _config: Config,
     @Optional() private _item: Item,
-    @Optional() private _nav: NavController
+    @Optional() private _pickerCtrl: PickerController
   ) {
     this._form.register(this);
     if (_item) {
       this.id = 'dt-' + _item.registerInput('datetime');
       this._labelId = 'lbl-' + _item.id;
       this._item.setCssClass('item-datetime', true);
-    }
-
-    if (!_nav) {
-      console.error('parent <ion-nav> required for <ion-datetime>');
     }
   }
 
@@ -463,7 +460,7 @@ export class DateTime {
     // the user may have assigned some options specifically for the alert
     let pickerOptions = merge({}, this.pickerOptions);
 
-    let picker = Picker.create(pickerOptions);
+    let picker = this._pickerCtrl.create(pickerOptions);
     pickerOptions.buttons = [
       {
         text: this.cancelText,
@@ -489,7 +486,7 @@ export class DateTime {
       this.validate(picker);
     });
 
-    this._nav.present(picker, pickerOptions);
+    picker.present(pickerOptions);
 
     this._isOpen = true;
     picker.onDismiss(() => {

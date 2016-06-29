@@ -1,4 +1,4 @@
-import {NavController, Tabs, NavOptions, Config, ViewController} from '../../../../src';
+import { NavController, Tabs, NavOptions, Config, ViewController, App, Platform } from '../../../../src';
 
 export function run() {
   describe('NavController', () => {
@@ -137,15 +137,17 @@ export function run() {
         nav.views = [view1, view2, view3];
 
         nav._remove(1, 1);
-        expect(nav.length()).toBe(2);
+        expect(nav.length()).toBe(3);
         expect(view1.state).toBe(STATE_INIT_ENTER);
-        expect(view2.state).toBe(STATE_REMOVE);
+        expect(view2.state).toBe(STATE_CANCEL_ENTER);
         expect(view3.state).toBe(STATE_INIT_LEAVE);
 
         expect(nav.getByIndex(0).state).toBe(STATE_INIT_ENTER);
         expect(nav.getByIndex(0).componentType).toBe(Page1);
-        expect(nav.getByIndex(1).state).toBe(STATE_INIT_LEAVE);
-        expect(nav.getByIndex(1).componentType).toBe(Page3);
+        expect(nav.getByIndex(1).state).toBe(STATE_CANCEL_ENTER);
+        expect(nav.getByIndex(1).componentType).toBe(Page2);
+        expect(nav.getByIndex(2).state).toBe(STATE_INIT_LEAVE);
+        expect(nav.getByIndex(2).componentType).toBe(Page3);
       });
 
       it('should set to pop the active and enter the previous', () => {
@@ -728,6 +730,7 @@ export function run() {
         spyOn(enteringView, 'fireDidEnter');
         spyOn(leavingView, 'fireDidLeave');
 
+        nav._init = true;
         nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
         expect(enteringView.fireDidEnter).toHaveBeenCalled();
@@ -748,6 +751,7 @@ export function run() {
         spyOn(enteringView, 'fireDidEnter');
         spyOn(leavingView, 'fireDidLeave');
 
+        nav._init = true;
         nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
         expect(enteringView.fireDidEnter).not.toHaveBeenCalled();
@@ -788,6 +792,7 @@ export function run() {
         spyOn(enteringView, 'fireDidEnter');
         spyOn(leavingView, 'fireDidLeave');
 
+        nav._init = true;
         nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
         expect(enteringView.fireDidEnter).not.toHaveBeenCalled();
@@ -816,6 +821,19 @@ export function run() {
     });
 
     describe('_transFinish', () => {
+
+      it('should remove entering view if it was already set to cancel', () => {
+        let enteringView = new ViewController(Page1);
+        let leavingView = new ViewController(Page2);
+        enteringView.state = STATE_CANCEL_ENTER;
+
+        spyOn(nav, 'remove');
+
+        nav._transFinish(1, enteringView, leavingView, 'forward', true);
+
+        expect(nav.remove).toHaveBeenCalled();
+        expect(enteringView.state).toBe(STATE_CANCEL_ENTER);
+      });
 
       it('should not entering/leaving state, after transition that isnt the most recent, and state already changed', () => {
         let enteringView = new ViewController(Page1);
@@ -1219,33 +1237,6 @@ export function run() {
 
     });
 
-    describe('present', () => {
-
-      it('should present in portal', () => {
-        let enteringView = new ViewController();
-        enteringView.setPageRef({});
-        enteringView.usePortal = true;
-
-        expect(nav._portal.length()).toBe(0);
-        expect(nav.length()).toBe(0);
-        nav.present(enteringView);
-        expect(nav._portal.length()).toBe(1);
-        expect(nav.length()).toBe(0);
-      });
-
-      it('should present in main nav', () => {
-        let enteringView = new ViewController();
-        enteringView.setPageRef({});
-        enteringView.usePortal = false;
-
-        expect(nav._portal.length()).toBe(0);
-        expect(nav.length()).toBe(0);
-        nav.present(enteringView);
-        expect(nav._portal.length()).toBe(0);
-        expect(nav.length()).toBe(1);
-      });
-    });
-
     describe('getActive', () => {
       it('should getActive()', () => {
         expect(nav.getActive()).toBe(null);
@@ -1519,6 +1510,36 @@ export function run() {
         // act
         nav._beforeTrans(view1, view2, {}, () => {});
       });
+
+      it('should not begin transition when entering stated is inactive', () => {
+        let view1 = new ViewController(Page1);
+        view1.state = STATE_INACTIVE;
+
+        let wasDoneCalled = false;
+        let done = () => {
+          wasDoneCalled = true;
+        };
+
+        nav._beforeTrans(view1, null, {}, done);
+
+        expect(wasDoneCalled).toEqual(true);
+        expect(view1.state).toEqual(STATE_INACTIVE);
+      });
+
+      it('should not begin transition when entering state is canceled', () => {
+        let view1 = new ViewController(Page1);
+        view1.state = STATE_CANCEL_ENTER;
+
+        let wasDoneCalled = false;
+        let done = () => {
+          wasDoneCalled = true;
+        };
+
+        nav._beforeTrans(view1, null, {}, done);
+
+        expect(wasDoneCalled).toEqual(true);
+        expect(view1.state).toEqual(STATE_CANCEL_ENTER);
+      });
     });
 
     /* private method */
@@ -1645,6 +1666,7 @@ export function run() {
     // setup stuff
     let nav: MockNavController;
     let config = new Config();
+    let platform = new Platform();
 
     class Page1 {}
     class Page2 {}
@@ -1659,7 +1681,8 @@ export function run() {
     function mockNav(): MockNavController {
       let elementRef = getElementRef();
 
-      let nav = new MockNavController(null, null, config, null, elementRef, null, null, null);
+      let app = new App(config, platform);
+      let nav = new MockNavController(null, app, config, null, elementRef, null, null, null);
 
       nav._keyboard = {
         isOpen: function() {
@@ -1679,8 +1702,6 @@ export function run() {
         setElementClass: function(){},
         setElementStyle: function(){}
       };
-
-      nav._portal = new MockNavController(null, null, config, null, elementRef, null, null, null);
 
       return nav;
     }
@@ -1706,12 +1727,13 @@ class MockNavController extends NavController {
 }
 
 
-const STATE_ACTIVE = 'active';
-const STATE_INACTIVE = 'inactive';
-const STATE_INIT_ENTER = 'init_enter';
-const STATE_INIT_LEAVE = 'init_leave';
-const STATE_TRANS_ENTER = 'trans_enter';
-const STATE_TRANS_LEAVE = 'trans_leave';
-const STATE_REMOVE = 'remove';
-const STATE_REMOVE_AFTER_TRANS = 'remove_after_trans';
-const STATE_FORCE_ACTIVE = 'force_active';
+const STATE_ACTIVE = 1;
+const STATE_INACTIVE = 2;
+const STATE_INIT_ENTER = 3;
+const STATE_INIT_LEAVE = 4;
+const STATE_TRANS_ENTER = 5;
+const STATE_TRANS_LEAVE = 6;
+const STATE_REMOVE = 7;
+const STATE_REMOVE_AFTER_TRANS = 8;
+const STATE_CANCEL_ENTER = 9;
+const STATE_FORCE_ACTIVE = 10;

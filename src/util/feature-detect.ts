@@ -1,6 +1,6 @@
 
 export class FeatureDetect {
-  private _results: any = {};
+  private _results: {[featureName: string]: boolean} = {};
 
   run(window: Window, document: Document) {
     for (let name in featureDetects) {
@@ -8,7 +8,7 @@ export class FeatureDetect {
     }
   }
 
-  has(featureName: string) {
+  has(featureName: string): boolean {
     return !!this._results[featureName];
   }
 
@@ -18,10 +18,10 @@ export class FeatureDetect {
 
 }
 
-let featureDetects = {};
+let featureDetects: {[featureName: string]: Function} = {};
 
 
-FeatureDetect.add('hairlines', function(window: Window, document: Document, body: HTMLBodyElement) {
+FeatureDetect.add('hairlines', function(window: Window, document: Document, body: HTMLBodyElement): boolean {
   /**
   * Hairline Shim
   * Add the "hairline" CSS class name to the body tag
@@ -41,3 +41,18 @@ FeatureDetect.add('hairlines', function(window: Window, document: Document, body
   }
   return canDo;
 });
+
+FeatureDetect.add('backdrop-filter', function(window: Window, document: Document, body: HTMLBodyElement): boolean {
+  /**
+  * backdrop-filter Shim
+  * Checks if css backdrop-filter is implemented by the browser.
+  */
+  let styles = <any>body.style;
+  let backdrop = styles['backdrop-filter'] !== undefined ||
+    styles['-webkit-backdrop-filter'] !== undefined;
+  if (backdrop) {
+    body.classList.add('backdrop-filter');
+  }
+  return backdrop;
+});
+

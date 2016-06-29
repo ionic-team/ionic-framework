@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import {ionicBootstrap, NavController, NavParams, Modal, ViewController, Tabs, Tab} from '../../../../../src';
+import { ionicBootstrap, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../src';
 
 
 @Component({
@@ -42,7 +42,7 @@ class TabsPage {
   tab3Root = Tab3Page1;
   @ViewChild(Tabs) tabs: Tabs;
 
-  constructor(private nav: NavController, private params: NavParams) {}
+  constructor(private modalCtrl: ModalController, private params: NavParams) {}
 
   ngAfterViewInit() {
     this.tabs.ionChange.subscribe((tab: Tab) => {
@@ -58,8 +58,7 @@ class TabsPage {
 
   chat() {
     console.log('Chat clicked!');
-    let modal = Modal.create(ChatPage);
-    this.nav.present(modal);
+    this.modalCtrl.create(ChatPage).present();
   }
 
   ionViewWillEnter() {

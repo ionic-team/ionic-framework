@@ -87,9 +87,11 @@ class QuesaritoPage {
 @Component({
   template: `
     <ion-menu [content]="content">
-      <ion-toolbar secondary>
-        <ion-title>Secret Menu</ion-title>
-      </ion-toolbar>
+      <ion-header>
+        <ion-toolbar secondary>
+          <ion-title>Secret Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
       <ion-content>
         <ion-list>
           <button ion-item menuClose detail-none (click)="openPage('quesarito')">

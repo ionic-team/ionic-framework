@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, App, Alert, NavController, List, ItemSliding, Toast} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, AlertController, NavController, List, ItemSliding, ToastController } from '../../../../../src';
 
 
 @Component({
@@ -14,7 +14,7 @@ class E2EPage {
   moreText: string = 'Dynamic More';
   archiveText: string = 'Dynamic Archive';
 
-  constructor(private app: App, private nav: NavController) {
+  constructor(private nav: NavController, private alertCtrl: AlertController, private toastCtrl: ToastController) {
     for (let x = 0; x < 5; x++) {
       this.items.push(x);
     }
@@ -28,6 +28,7 @@ class E2EPage {
     if (this.moreText.includes('Dynamic')) {
       this.moreText = 'Changed More';
       this.archiveText = 'Changed Archive';
+
     } else {
       this.moreText = 'Dynamic More';
       this.archiveText = 'Dynamic Archive';
@@ -48,17 +49,17 @@ class E2EPage {
   didClick(item: ItemSliding) {
     console.log('Clicked, ion-item');
 
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'Clicked ion-item!',
       buttons: ['Ok']
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   archive(item: ItemSliding) {
     console.log('Archive, ion-item-options button', item);
 
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'Archived!',
       buttons: [{
         text: 'Ok',
@@ -67,13 +68,13 @@ class E2EPage {
         }
       }]
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   del(item: ItemSliding) {
     console.log('Delete ion-item-options button', item);
 
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'Deleted!',
       buttons: [{
         text: 'Ok',
@@ -82,17 +83,18 @@ class E2EPage {
         }
       }]
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   download(item: ItemSliding) {
-    item.setClass('downloading', true);
+    item.setCssClass('downloading', true);
     setTimeout(() => {
-      const toast = Toast.create({
+      const toast = this.toastCtrl.create({
         message: 'Item was downloaded!'
       });
-      this.nav.present(toast);
-      item.setClass('downloading', false);
+      toast.present();
+
+      item.setCssClass('downloading', false);
       item.close();
       setTimeout(() => {
         toast.dismiss();

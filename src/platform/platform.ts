@@ -1,6 +1,5 @@
 import {EventEmitter, NgZone} from '@angular/core';
 
-import {Config} from '../config/config';
 import {getQuerystring} from '../util/util';
 import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
 
@@ -322,7 +321,7 @@ export class Platform {
   /**
    * @private
    */
-  backButton: EventEmitter<Event> = new EventEmitter();
+  backButton: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
    * The pause event emits when the native platform puts the application
@@ -330,14 +329,14 @@ export class Platform {
    * application. This event would emit when a Cordova app is put into
    * the background, however, it would not fire on a standard web browser.
    */
-  pause: EventEmitter<Event> = new EventEmitter();
+  pause: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
    * The resume event emits when the native platform pulls the application
    * out from the background. This event would emit when a Cordova app comes
    * out from the background, however, it would not fire on a standard web browser.
    */
-  resume: EventEmitter<Event> = new EventEmitter();
+  resume: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
    * The back button event is triggered when the user presses the native
@@ -602,7 +601,7 @@ export class Platform {
   /**
    * @private
    */
-  load(config: Config) {
+  load() {
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;
     let self = this;
@@ -665,7 +664,7 @@ export class Platform {
 
       platformNode = rootPlatformNode;
       while (platformNode) {
-        platformNode.initialize(this, config);
+        platformNode.initialize(this);
 
         // set the array of active platforms with
         // the last one in the array the most important
@@ -752,8 +751,8 @@ class PlatformNode {
     return this.c.isMatch && this.c.isMatch(p) || false;
   }
 
-  initialize(platform: Platform, config: Config) {
-    this.c.initialize && this.c.initialize(platform, config);
+  initialize(platform: Platform) {
+    this.c.initialize && this.c.initialize(platform);
   }
 
   version(p: Platform): PlatformVersion {

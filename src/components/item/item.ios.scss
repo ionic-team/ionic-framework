@@ -62,10 +62,13 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   }
 
   p {
+    overflow: inherit;
+
     margin: 0 0 2px;
 
     font-size: 1.2rem;
     line-height: normal;
+    text-overflow: inherit;
     color: $item-ios-paragraph-text-color;
   }
 

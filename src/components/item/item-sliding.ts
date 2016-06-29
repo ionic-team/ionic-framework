@@ -252,7 +252,7 @@ export class ItemSliding {
 
   /**
    * @private
-   */  
+   */
   getSlidingPercent(): number {
     let openAmount = this._openAmount;
     if (openAmount > 0) {
@@ -364,7 +364,7 @@ export class ItemSliding {
       this._timer = null;
     }
     this._openAmount = openAmount;
-    
+
     if (isFinal) {
       this.item.setCssStyle(CSS.transition, '');
 
@@ -380,7 +380,7 @@ export class ItemSliding {
         let state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
           ? SlidingState.Left | SlidingState.SwipeLeft
           : SlidingState.Left;
-      
+
         this._setState(state);
       }
     }
@@ -392,7 +392,7 @@ export class ItemSliding {
       this.item.setCssStyle(CSS.transform, '');
       return;
     }
- 
+
     this.item.setCssStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
     this.ionDrag.emit(this);
   }

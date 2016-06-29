@@ -530,14 +530,14 @@ export class Content extends Ion {
       newVal = this._footerHeight + this._paddingBottom;
       if (this._tabbarPlacement === 'bottom') {
         newVal += this._tabbarHeight;
+
+        if (newVal > 0 && this._footerEle) {
+          this._footerEle.style.bottom = (newVal - this._footerHeight - this._paddingBottom) + 'px';
+        }
       }
       if (newVal !== this.adjustedBottom) {
         scrollEle.style.paddingBottom = (newVal > 0 ? newVal + 'px' : '');
         this.adjustedBottom = newVal;
-
-        if (newVal > 0 && this._footerEle) {
-          this._footerEle.style.bottom = (newVal - this._footerHeight) + 'px';
-        }
       }
 
     } else {

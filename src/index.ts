@@ -1,7 +1,8 @@
 
-export * from './config/bootstrap';
-export * from './config/config';
-export * from './config/directives';
+export { ionicBootstrap, ionicPostBootstrap } from './config/bootstrap';
+export { Config } from './config/config';
+export { IONIC_DIRECTIVES } from './config/directives';
+export { ionicProviders } from './config/providers';
 
 export * from './decorators/page';
 

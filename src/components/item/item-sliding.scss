@@ -83,10 +83,14 @@ ion-item-sliding.active-slide {
   }
 
   &.active-options-left ion-item-options[side=left] {
+    width: 100%;
+
     visibility: visible;
   }
 
   &.active-options-right ion-item-options:not([side=left]) {
+    width: 100%;
+
     visibility: visible;
   }
 }
@@ -100,13 +104,6 @@ ion-item-sliding.active-slide {
   transition-duration: 0;
   transition-property: none;
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
-}
-
-ion-item-sliding.active-swipe-right,
-ion-item-sliding.active-swipe-left {
-  ion-item-options {
-    width: 100%;
-  }
 }
 
 ion-item-sliding.active-swipe-right .button-expandable {

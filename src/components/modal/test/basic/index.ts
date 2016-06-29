@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ActionSheet, Config, ionicBootstrap, Modal, NavController, NavParams, PageTransition, Platform, TransitionOptions, ViewController } from '../../../../../src';
+import { ActionSheetController, Config, ionicBootstrap, ModalController, NavController, NavParams, PageTransition, Platform, TransitionOptions, ViewController } from '../../../../../src';
 
 @Component({
   templateUrl: 'main.html'
@@ -8,7 +8,7 @@ import { ActionSheet, Config, ionicBootstrap, Modal, NavController, NavParams, P
 class E2EPage {
   platforms: string[];
 
-  constructor(private nav: NavController, config: Config, platform: Platform) {
+  constructor(private nav: NavController, private modalCtrl: ModalController, config: Config, platform: Platform) {
     console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
@@ -33,8 +33,8 @@ class E2EPage {
   }
 
   presentModal() {
-    let modal = Modal.create(ModalPassData, { userId: 8675309 });
-    this.nav.present(modal);
+    let modal = this.modalCtrl.create(ModalPassData, { userId: 8675309 });
+    modal.present();
 
     modal.onDismiss((data: any) => {
       console.log('modal data', data);
@@ -42,13 +42,12 @@ class E2EPage {
   }
 
   presentModalChildNav() {
-    let modal = Modal.create(ContactUs);
-    this.nav.present(modal);
+    this.modalCtrl.create(ContactUs).present();
   }
 
   presentToolbarModal() {
-    let modal = Modal.create(ToolbarModal);
-    this.nav.present(modal);
+    let modal = this.modalCtrl.create(ToolbarModal);
+    modal.present();
 
     modal.subscribe((data: any) => {
       console.log('modal data', data);
@@ -56,23 +55,22 @@ class E2EPage {
   }
 
   presentModalWithInputs() {
-	  let modal = Modal.create(ModalWithInputs);
+	  let modal = this.modalCtrl.create(ModalWithInputs);
     modal.onDismiss((data: any) => {
       console.log('Modal with inputs data:', data);
     });
-    this.nav.present(modal);
+    modal.present();
   }
 
   presentModalCustomAnimation() {
-    let modal = Modal.create(ContactUs);
-    this.nav.present(modal, {
+    let modal = this.modalCtrl.create(ContactUs);
+    modal.present({
       animation: 'my-fade-in'
     });
   }
 
   presentNavigableModal(){
-    let modal = Modal.create(NavigableModal);
-    this.nav.present(modal);
+    this.modalCtrl.create(NavigableModal).present();
   }
 }
 
@@ -346,7 +344,7 @@ class ContactUs {
 class ModalFirstPage {
 
   private items:any[];
-  constructor(private nav: NavController) {
+  constructor(private nav: NavController, private actionSheetCtrl: ActionSheetController) {
     this.items = [];
     for ( let i = 0; i < 50; i++ ){
       this.items.push({
@@ -379,7 +377,7 @@ class ModalFirstPage {
   }
 
   openActionSheet() {
-    let actionSheet = ActionSheet.create({
+    let actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           text: 'Destructive',
@@ -421,7 +419,7 @@ class ModalFirstPage {
       ]
     });
 
-    this.nav.present(actionSheet);
+    actionSheet.present();
   }
 }
 

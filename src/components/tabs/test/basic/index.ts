@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ionicBootstrap, NavController, App, Alert, Modal, ViewController, Tab, Tabs} from '../../../../../src';
+import {ionicBootstrap, NavController, App, AlertController, ModalController, ViewController, Tab, Tabs} from '../../../../../src';
 
 //
 // Modal
@@ -192,19 +192,18 @@ export class Tab2 {
     `
 })
 export class Tab3 {
-  constructor(private nav: NavController, private tabs: Tabs, private app: App) {}
+  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private tabs: Tabs, private app: App) {}
 
   presentAlert() {
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'Alert Title!',
       buttons: ['Dismiss']
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   presentModal() {
-    let modal = Modal.create(MyModal);
-    this.nav.present(modal);
+    this.modalCtrl.create(MyModal).present();
   }
 
   selectPrevious() {
@@ -220,9 +219,11 @@ export class Tab3 {
 @Component({
   template: `
     <ion-menu [content]="content">
-      <ion-toolbar secondary>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
+      <ion-header>
+        <ion-toolbar secondary>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
       <ion-content>
         <ion-list>
           <button ion-item menuClose detail-none>

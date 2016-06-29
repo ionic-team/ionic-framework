@@ -23,6 +23,12 @@ ion-menu {
   transform: translate3d(-9999px, 0, 0);
 }
 
+ion-menu > ion-header,
+ion-menu > ion-content,
+ion-menu > ion-footer {
+  position: relative;
+}
+
 ion-menu[side=right] {
   right: 0;
   left: auto;

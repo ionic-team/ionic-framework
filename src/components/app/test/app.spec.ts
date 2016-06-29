@@ -11,7 +11,7 @@ describe('App', () => {
     it('should select the previous tab', () => {
       let nav = mockNav();
       let portal = mockNav();
-      nav.setPortal(portal);
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       let tabs = mockTabs();
@@ -42,7 +42,7 @@ describe('App', () => {
     it('should pop from the active tab, when tabs is nested is the root nav', () => {
       let nav = mockNav();
       let portal = mockNav();
-      nav.setPortal(portal);
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       let tabs = mockTabs();
@@ -94,7 +94,7 @@ describe('App', () => {
       let rootNav = mockNav();
       let nestedNav = mockNav();
       let portal = mockNav();
-      rootNav.setPortal(portal);
+      app.setPortal(portal);
       rootNav.registerChildNav(nestedNav);
       nestedNav.parent = rootNav;
       app.setRootNav(rootNav);
@@ -123,7 +123,7 @@ describe('App', () => {
       let rootNav = mockNav();
       let nestedNav = mockNav();
       let portal = mockNav();
-      rootNav.setPortal(portal);
+      app.setPortal(portal);
       app.setRootNav(rootNav);
       rootNav.registerChildNav(nestedNav);
 
@@ -151,7 +151,7 @@ describe('App', () => {
     it('should pop the overlay in the portal of the root nav', () => {
       let nav = mockNav();
       let portal = mockNav();
-      nav.setPortal(portal);
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -175,7 +175,7 @@ describe('App', () => {
     it('should pop the second view in the root nav', () => {
       let nav = mockNav();
       let portal = mockNav();
-      nav.setPortal(portal);
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -196,7 +196,7 @@ describe('App', () => {
     it('should exit app when only one view in the root nav', () => {
       let nav = mockNav();
       let portal = mockNav();
-      nav.setPortal(portal);
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -219,7 +219,7 @@ describe('App', () => {
     it('should not exit app when only one view in the root nav, but navExitApp config set', () => {
       let nav = mockNav();
       let portal = mockNav();
-      nav.setPortal(portal);
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -244,7 +244,7 @@ describe('App', () => {
     it('should not go back if app is not enabled', () => {
       let nav = mockNav();
       let portal = mockNav();
-      nav.setPortal(portal);
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -372,71 +372,71 @@ describe('App', () => {
   describe('setEnabled', () => {
     it('should disable click block when app is enabled', () => {
       // arrange
-      let mockClickBlock = {
-        show: () => {}
+      let mockClickBlock: any = {
+        activate: () => {}
       };
 
-      spyOn(mockClickBlock, 'show');
+      spyOn(mockClickBlock, 'activate');
 
-      app._clickBlock = mockClickBlock;
+      app.clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(true);
 
       // assert
-      expect(mockClickBlock.show).toHaveBeenCalledWith(false, 0);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(false, 0);
     });
 
     it('should disable click block when app is disabled but duration of less than 32 passed', () => {
       // arrange
-      let mockClickBlock = {
-        show: () => {}
+      let mockClickBlock: any = {
+        activate: () => {}
       };
 
-      spyOn(mockClickBlock, 'show');
+      spyOn(mockClickBlock, 'activate');
 
-      app._clickBlock = mockClickBlock;
+      app.clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(false, 20);
 
       // assert
-      expect(mockClickBlock.show).toHaveBeenCalledWith(false, 0);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(false, 0);
     });
 
     it('should enable click block when false is passed with duration', () => {
       // arrange
-      let mockClickBlock = {
-        show: () => {}
+      let mockClickBlock: any = {
+        activate: () => {}
       };
 
-      spyOn(mockClickBlock, 'show');
+      spyOn(mockClickBlock, 'activate');
 
-      app._clickBlock = mockClickBlock;
+      app.clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(false, 200);
 
       // assert
-      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 200 + 64);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 200 + 64);
     });
 
     it('should enable click block when false is passed w/o duration', () => {
       // arrange
-      let mockClickBlock = {
-        show: () => {}
+      let mockClickBlock: any = {
+        activate: () => {}
       };
 
-      spyOn(mockClickBlock, 'show');
+      spyOn(mockClickBlock, 'activate');
 
-      app._clickBlock = mockClickBlock;
+      app.clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(false);
 
       // assert
       // 700 is the default
-      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 700 + 64);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 700 + 64);
     });
   });
 
@@ -469,7 +469,7 @@ describe('App', () => {
   beforeEach(() => {
     config = new Config();
     platform = new Platform();
-    app = new App(config, null, platform);
+    app = new App(config, platform);
     _cd = {
       reattach: function(){},
       detach: function(){}

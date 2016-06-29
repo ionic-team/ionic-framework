@@ -1,17 +1,85 @@
-import {Component, Renderer, ElementRef, HostListener, ViewEncapsulation} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import {Animation} from '../../animations/animation';
-import {Transition, TransitionOptions} from '../../transitions/transition';
-import {Config} from '../../config/config';
-import {Icon} from '../icon/icon';
-import {isPresent} from '../../util/util';
-import {Key} from '../../util/key';
-import {NavParams} from '../nav/nav-params';
-import {ViewController} from '../nav/view-controller';
+import { ActionSheetCmp } from './action-sheet-component';
+import { ActionSheetOptions } from './action-sheet-options';
+import { App } from '../app/app';
+import { isPresent } from '../../util/util';
+import { NavOptions } from '../nav/nav-options';
+import { ViewController } from '../nav/view-controller';
+
+/**
+ * @private
+ */
+export class ActionSheet extends ViewController {
+  private _app: App;
+
+  constructor(app: App, opts: ActionSheetOptions) {
+    opts.buttons = opts.buttons || [];
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+
+    super(ActionSheetCmp, opts);
+    this._app = app;
+    this.isOverlay = true;
+
+    // by default, actionsheets should not fire lifecycle events of other views
+    // for example, when an actionsheets enters, the current active view should
+    // not fire its lifecycle events because it's not conceptually leaving
+    this.fireOtherLifecycles = false;
+  }
+
+  /**
+   * @private
+   */
+  getTransitionName(direction: string) {
+    let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
+    return this._nav && this._nav.config.get(key);
+  }
+
+  /**
+   * @param {string} title Action sheet title
+   */
+  setTitle(title: string) {
+    this.data.title = title;
+  }
+
+  /**
+   * @param {string} subTitle Action sheet subtitle
+   */
+  setSubTitle(subTitle: string) {
+    this.data.subTitle = subTitle;
+  }
+
+  /**
+   * @param {object} button Action sheet button
+   */
+  addButton(button: any) {
+    this.data.buttons.push(button);
+  }
+
+  /**
+   * Present the action sheet instance.
+   *
+   * @param {NavOptions} [opts={}] Nav options to go with this transition.
+   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
+   */
+  present(navOptions: NavOptions = {}) {
+    return this._app.present(this, navOptions);
+  }
+
+  /**
+   * @private
+   * DEPRECATED: Please inject ActionSheetController instead
+   */
+  private static create(opt: any) {
+    // deprecated warning: added beta.11 2016-06-27
+    console.warn('ActionSheet.create(..) has been deprecated. Please inject ActionSheetController instead');
+  }
+
+}
 
 
 /**
- * @name ActionSheet
+ * @name ActionSheetController
  * @description
  * An Action Sheet is a dialog that lets the user choose from a set of
  * options. It appears on top of the app's content, and must be manually
@@ -40,12 +108,12 @@ import {ViewController} from '../nav/view-controller';
  *
  * @usage
  * ```ts
- * constructor(nav: NavController) {
- *   this.nav = nav;
+ * constructor(private actionSheetCtrl: ActionSheetController) {
+ *
  * }
  *
  * presentActionSheet() {
- *   let actionSheet = ActionSheet.create({
+ *   let actionSheet = this.actionSheetCtrl.create({
  *     title: 'Modify your album',
  *     buttons: [
  *       {
@@ -71,7 +139,7 @@ import {ViewController} from '../nav/view-controller';
  *     ]
  *   });
  *
- *   this.nav.present(actionSheet);
+ *   actionSheet.present();
  * }
  * ```
  *
@@ -95,7 +163,7 @@ import {ViewController} from '../nav/view-controller';
  * out first, *then* start the next transition.
  *
  * ```ts
- * let actionSheet = ActionSheet.create({
+ * let actionSheet = this.actionSheetCtrl.create({
  *   title: 'Hello',
  *   buttons: [{
  *     text: 'Ok',
@@ -119,7 +187,7 @@ import {ViewController} from '../nav/view-controller';
  *   }]
  * });
  *
- * this.nav.present(actionSheet);
+ * actionSheet.present();
  * ```
  *
  * It's important to note that the handler returns `false`. A feature of
@@ -134,344 +202,38 @@ import {ViewController} from '../nav/view-controller';
  * @demo /docs/v2/demos/action-sheet/
  * @see {@link /docs/v2/components#action-sheets ActionSheet Component Docs}
  */
-export class ActionSheet extends ViewController {
+@Injectable()
+export class ActionSheetController {
 
-  constructor(opts: ActionSheetOptions = {}) {
-    opts.buttons = opts.buttons || [];
-    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+  constructor(private _app: App) {}
 
-    super(ActionSheetCmp, opts);
-    this.isOverlay = true;
-
-    // by default, actionsheets should not fire lifecycle events of other views
-    // for example, when an actionsheets enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
-  }
-
-   /**
-   * @private
+  /**
+   * Open an action sheet with the following options
+   *
+   * | Option                | Type       | Description                                                     |
+   * |-----------------------|------------|-----------------------------------------------------------------|
+   * | title                 |`string`    | The title for the actionsheet                                   |
+   * | subTitle              |`string`    | The sub-title for the actionsheet                               |
+   * | cssClass              |`string`    | An additional class for custom styles                           |
+   * | enableBackdropDismiss |`boolean`   | If the actionsheet should close when the user taps the backdrop |
+   * | buttons               |`array<any>`| An array of buttons to display                                  |
+   *
+   * For the buttons:
+   *
+   * | Option   | Type     | Description                                                                                                                                      |
+   * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+   * | text     | `string` | The buttons text                                                                                                                                 |
+   * | icon     | `icon`   | The buttons icons                                                                                                                                |
+   * | handler  | `any`    | An express the button should evaluate                                                                                                            |
+   * | cssClass | `string` | An additional class for custom styles                                                                                                            |
+   * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles |
+   *
+   *
+   *
+   * @param {ActionSheetOptions} opts Action sheet options
    */
-   getTransitionName(direction: string) {
-     let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
-     return this._nav && this._nav.config.get(key);
-   }
-
-   /**
-    * @param {string} title Action sheet title
-    */
-   setTitle(title: string) {
-     this.data.title = title;
-   }
-
-   /**
-    * @param {string} subTitle Action sheet subtitle
-    */
-   setSubTitle(subTitle: string) {
-     this.data.subTitle = subTitle;
-   }
-
-   /**
-    * @param {object} button Action sheet button
-    */
-   addButton(button: any) {
-     this.data.buttons.push(button);
-   }
-
-   /**
-    * Open an action sheet with the following options
-    *
-    * | Option                | Type       | Description                                                     |
-    * |-----------------------|------------|-----------------------------------------------------------------|
-    * | title                 |`string`    | The title for the actionsheet                                   |
-    * | subTitle              |`string`    | The sub-title for the actionsheet                               |
-    * | cssClass              |`string`    | An additional class for custom styles                           |
-    * | enableBackdropDismiss |`boolean`   | If the actionsheet should close when the user taps the backdrop |
-    * | buttons               |`array<any>`| An array of buttons to display                                  |
-    *
-    * For the buttons:
-    *
-    * | Option   | Type     | Description                                                                                                                                      |
-    * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-    * | text     | `string` | The buttons text                                                                                                                                 |
-    * | icon     | `icon`   | The buttons icons                                                                                                                                |
-    * | handler  | `any`    | An express the button should evaluate                                                                                                            |
-    * | cssClass | `string` | An additional class for custom styles                                                                                                            |
-    * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles |
-    *
-    *
-    *
-    * @param {object} opts Action sheet options
-    */
-   static create(opts: ActionSheetOptions = {}) {
-     return new ActionSheet(opts);
-   }
-
- }
-
-/**
-* @private
-*/
-@Component({
-  selector: 'ion-action-sheet',
-  template:
-    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
-    '<div class="action-sheet-wrapper">' +
-      '<div class="action-sheet-container">' +
-        '<div class="action-sheet-group">' +
-          '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
-          '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
-          '<button category="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">' +
-            '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon> ' +
-            '{{b.text}}' +
-          '</button>' +
-        '</div>' +
-        '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
-          '<button category="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
-            '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon> ' +
-            '{{d.cancelButton.text}}' +
-          '</button>' +
-        '</div>' +
-      '</div>' +
-    '</div>',
-  host: {
-    'role': 'dialog',
-    '[attr.aria-labelledby]': 'hdrId',
-    '[attr.aria-describedby]': 'descId'
-  },
-  encapsulation: ViewEncapsulation.None,
-})
-class ActionSheetCmp {
-  private d: any;
-  private descId: string;
-  private enabled: boolean;
-  private hdrId: string;
-  private id: number;
-
-  constructor(
-    private _viewCtrl: ViewController,
-    private _config: Config,
-    private _elementRef: ElementRef,
-    params: NavParams,
-    renderer: Renderer
-  ) {
-    this.d = params.data;
-
-    if (this.d.cssClass) {
-      renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
-    }
-
-    this.id = (++actionSheetIds);
-    if (this.d.title) {
-      this.hdrId = 'acst-hdr-' + this.id;
-    }
-    if (this.d.subTitle) {
-      this.descId = 'acst-subhdr-' + this.id;
-    }
+  create(opts: ActionSheetOptions = {}): ActionSheet {
+    return new ActionSheet(this._app, opts);
   }
 
-  ionViewLoaded() {
-    // normalize the data
-    let buttons: any[] = [];
-
-    this.d.buttons.forEach((button: any) => {
-      if (typeof button === 'string') {
-        button = { text: button };
-      }
-      if (!button.cssClass) {
-        button.cssClass = '';
-      }
-
-      // deprecated warning
-      if (button.style) {
-        console.warn('Action sheet "style" property has been renamed to "role"');
-        button.role = button.style;
-      }
-
-      if (button.role === 'cancel') {
-        this.d.cancelButton = button;
-
-      } else {
-        if (button.role === 'destructive') {
-          button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-destructive';
-        } else if (button.role === 'selected') {
-          button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-selected';
-        }
-        buttons.push(button);
-      }
-    });
-
-    this.d.buttons = buttons;
-  }
-
-  ionViewDidEnter() {
-    let activeElement: any = document.activeElement;
-    if (document.activeElement) {
-      activeElement.blur();
-    }
-
-    let focusableEle = this._elementRef.nativeElement.querySelector('button');
-    if (focusableEle) {
-      focusableEle.focus();
-    }
-    this.enabled = true;
-  }
-
-  @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
-    if (this.enabled && this._viewCtrl.isLast()) {
-      if (ev.keyCode === Key.ESCAPE) {
-        console.debug('actionsheet, escape button');
-        this.bdClick();
-      }
-    }
-  }
-
-  click(button: any, dismissDelay?: number) {
-    if (! this.enabled ) {
-      return;
-    }
-
-    let shouldDismiss = true;
-
-    if (button.handler) {
-      // a handler has been provided, execute it
-      if (button.handler() === false) {
-        // if the return value of the handler is false then do not dismiss
-        shouldDismiss = false;
-      }
-    }
-
-    if (shouldDismiss) {
-      setTimeout(() => {
-        this.dismiss(button.role);
-      }, dismissDelay || this._config.get('pageTransitionDelay'));
-    }
-  }
-
-  bdClick() {
-    if (this.enabled && this.d.enableBackdropDismiss) {
-      if (this.d.cancelButton) {
-        this.click(this.d.cancelButton, 1);
-
-      } else {
-        this.dismiss('backdrop');
-      }
-    }
-  }
-
-  dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(null, role);
-  }
 }
-
-export interface ActionSheetOptions {
-  title?: string;
-  subTitle?: string;
-  cssClass?: string;
-  buttons?: Array<any>;
-  enableBackdropDismiss?: boolean;
-}
-
-
-class ActionSheetSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.01, 0.4);
-    wrapper.fromTo('translateY', '100%', '0%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-slide-in', ActionSheetSlideIn);
-
-
-class ActionSheetSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.4, 0);
-    wrapper.fromTo('translateY', '0%', '100%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-slide-out', ActionSheetSlideOut);
-
-
-class ActionSheetMdSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.01, 0.26);
-    wrapper.fromTo('translateY', '100%', '0%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
-
-
-class ActionSheetMdSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.26, 0);
-    wrapper.fromTo('translateY', '0%', '100%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);
-
-class ActionSheetWpSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.01, 0.16);
-    wrapper.fromTo('translateY', '100%', '0%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-wp-slide-in', ActionSheetWpSlideIn);
-
-
-class ActionSheetWpSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.1, 0);
-    wrapper.fromTo('translateY', '0%', '100%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-wp-slide-out', ActionSheetWpSlideOut);
-
-let actionSheetIds = -1;

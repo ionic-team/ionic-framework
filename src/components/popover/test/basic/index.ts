@@ -1,5 +1,5 @@
-import {Component, ViewChild, ElementRef, ViewEncapsulation} from '@angular/core';
-import {ionicBootstrap, Popover, NavController, Content, NavParams, ViewController} from '../../../../../src';
+import { Component, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { ionicBootstrap, PopoverController, NavParams, ViewController } from '../../../../../src';
 
 
 @Component({
@@ -64,9 +64,9 @@ class PopoverRadioPage {
   background: string;
   contentEle: any;
   textEle: any;
-  fontFamily;
+  fontFamily: any;
 
-  colors = {
+  colors: any = {
     'white': {
       'bg': 'rgb(255, 255, 255)',
       'fg': 'rgb(0, 0, 0)'
@@ -85,9 +85,7 @@ class PopoverRadioPage {
     },
   };
 
-  constructor(private navParams: NavParams) {
-
-  }
+  constructor(private navParams: NavParams) {}
 
   ngOnInit() {
     if (this.navParams.data) {
@@ -99,7 +97,7 @@ class PopoverRadioPage {
     }
   }
 
-  getColorName(background) {
+  getColorName(background: any) {
     let colorName = 'white';
 
     if (!background) return 'white';
@@ -119,13 +117,13 @@ class PopoverRadioPage {
     }
   }
 
-  changeBackground(color) {
+  changeBackground(color: any) {
     this.background = color;
     this.contentEle.style.backgroundColor = this.colors[color].bg;
     this.textEle.style.color = this.colors[color].fg;
   }
 
-  changeFontSize(direction) {
+  changeFontSize(direction: any) {
     this.textEle.style.fontSize = direction;
   }
 
@@ -166,9 +164,7 @@ class PopoverListPage {
   `
 })
 class PopoverLongListPage {
-  items = [];
-
-  constructor(private viewCtrl: ViewController) {}
+  items: number[] = [];
 
   ngOnInit() {
     for(let i = 1; i < 21; i++) {
@@ -185,38 +181,35 @@ class E2EPage {
   @ViewChild('popoverContent', {read: ElementRef}) content: ElementRef;
   @ViewChild('popoverText', {read: ElementRef}) text: ElementRef;
 
-  constructor(private nav: NavController) {
+  constructor(private popoverCtrl: PopoverController) {}
 
-  }
-
-  presentListPopover(ev) {
-    let popover = Popover.create(PopoverListPage);
-    this.nav.present(popover, {
+  presentListPopover(ev: UIEvent) {
+    let popover = this.popoverCtrl.create(PopoverListPage);
+    popover.present({
       ev: ev
     });
   }
 
-  presentLongListPopover(ev) {
-    let popover = Popover.create(PopoverLongListPage);
-    this.nav.present(popover, {
+  presentLongListPopover(ev: UIEvent) {
+    let popover = this.popoverCtrl.create(PopoverLongListPage);
+    popover.present({
       ev: ev
     });
   }
 
-  presentRadioPopover(ev) {
-    let popover = Popover.create(PopoverRadioPage, {
+  presentRadioPopover(ev: UIEvent) {
+    let popover = this.popoverCtrl.create(PopoverRadioPage, {
       contentEle: this.content.nativeElement,
       textEle: this.text.nativeElement
     });
 
-    this.nav.present(popover, {
+    popover.present({
       ev: ev
     });
   }
 
   presentNoEventPopover() {
-    let popover = Popover.create(PopoverListPage);
-    this.nav.present(popover);
+    this.popoverCtrl.create(PopoverListPage).present();
   }
 
 }
