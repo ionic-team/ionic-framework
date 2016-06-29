@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Dire
 import { Button } from '../button/button';
 import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
-import { ItemReorder } from '../item/item-reorder';
+import { Reorder } from '../item/item-reorder';
 import { Label } from '../label/label';
 
 
@@ -281,7 +281,7 @@ import { Label } from '../label/label';
       '<ion-reorder></ion-reorder>' +
     '</div>' +
     '<ion-button-effect></ion-button-effect>',
-  directives: [forwardRef(() => ItemReorder)],
+  directives: [forwardRef(() => Reorder)],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })

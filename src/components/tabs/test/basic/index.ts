@@ -248,11 +248,11 @@ export class TabsPage {
   root3 = Tab3;
 
   onChange(ev: Tab) {
-    console.log("Changed tab", ev);
+    console.log('Changed tab', ev);
   }
 
   onSelect(ev: Tab) {
-    console.log("Selected tab", ev);
+    console.log('Selected tab', ev);
   }
 }
 

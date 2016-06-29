@@ -1,5 +1,5 @@
 import {Item} from './item';
-import {Reorder} from '../item/item-reorder';
+import {ItemReorder} from '../item/item-reorder';
 import {UIEventManager} from '../../util/ui-event-manager';
 import {closest, Coordinates, pointerCoord, CSS, nativeRaf} from '../../util/dom';
 
@@ -25,7 +25,7 @@ export class ItemReorderGesture {
 
   private events: UIEventManager = new UIEventManager(false);
 
-  constructor(public list: Reorder) {
+  constructor(public list: ItemReorder) {
     let element = this.list.getNativeElement();
     this.events.pointerEvents(element,
       this.onDragStart.bind(this),
