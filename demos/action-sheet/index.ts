@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { ActionSheet, ionicBootstrap, NavController, Platform } from 'ionic-angular';
+import { ActionSheetController, ionicBootstrap, Platform } from 'ionic-angular';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 export class ApiDemoPage {
-  constructor(public nav: NavController, public platform: Platform) { }
+  constructor(public alertCtrl: ActionSheetController, public platform: Platform) { }
 
   present() {
-    let actionSheet = ActionSheet.create({
+    let actionSheet = this.alertCtrl.create({
       title: 'Albums',
       buttons: [
         {
@@ -53,7 +53,7 @@ export class ApiDemoPage {
       ]
     });
 
-    this.nav.present(actionSheet);
+    actionSheet.present();
   }
 }
 

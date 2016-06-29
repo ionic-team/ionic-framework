@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Alert, ionicBootstrap, NavController } from 'ionic-angular';
+import { AlertController, ionicBootstrap } from 'ionic-angular';
 
 
 @Component({
@@ -12,20 +12,20 @@ export class ApiDemoPage {
   testCheckboxOpen = false;
   testCheckboxResult: any;
 
-  constructor(public nav: NavController) {}
+  constructor(public alertCtrl: AlertController) {}
 
   doAlert() {
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'New Friend!',
       subTitle: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
       buttons: ['Ok']
     });
 
-    this.nav.present(alert);
+    alert.present();
   }
 
   doConfirm() {
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'Use this lightsaber?',
       body: 'Do you agree to use this lightsaber to do good across the intergalactic galaxy?',
       buttons: [
@@ -44,11 +44,11 @@ export class ApiDemoPage {
       ]
     });
 
-    this.nav.present(alert);
+    alert.present();
   }
 
   doPrompt() {
-    let alert = Alert.create({
+    let alert = this.alertCtrl.create({
       title: 'Login',
       body: "Enter a name for this new album you're so keen on adding",
       inputs: [
@@ -60,24 +60,24 @@ export class ApiDemoPage {
       buttons: [
         {
           text: 'Cancel',
-          handler: data => {
+          handler: (data: any) => {
             console.log('Cancel clicked');
           }
         },
         {
           text: 'Save',
-          handler: data => {
+          handler: (data: any) => {
             console.log('Saved clicked');
           }
         }
       ]
     });
 
-    this.nav.present(alert);
+    alert.present();
   }
 
   doRadio() {
-    let alert = Alert.create();
+    let alert = this.alertCtrl.create();
     alert.setTitle('Lightsaber color');
 
     alert.addInput({
@@ -126,18 +126,18 @@ export class ApiDemoPage {
     alert.addButton('Cancel');
     alert.addButton({
       text: 'Ok',
-      handler: data => {
+      handler: (data: any) => {
         console.log('Radio data:', data);
         this.testRadioOpen = false;
         this.testRadioResult = data;
       }
     });
 
-    this.nav.present(alert);
+    alert.present();
   }
 
   doCheckbox() {
-    let alert = Alert.create();
+    let alert = this.alertCtrl.create();
     alert.setTitle('Which planets have you visited?');
 
     alert.addInput({
@@ -198,14 +198,14 @@ export class ApiDemoPage {
     alert.addButton('Cancel');
     alert.addButton({
       text: 'Okay',
-      handler: data => {
+      handler: (data: any) => {
           console.log('Checkbox data:', data);
           this.testCheckboxOpen = false;
           this.testCheckboxResult = data;
       }
     });
 
-    this.nav.present(alert);
+    alert.present();
   }
 
 }

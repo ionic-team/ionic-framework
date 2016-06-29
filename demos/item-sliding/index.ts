@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { ionicBootstrap, ItemSliding, NavController, Toast } from 'ionic-angular';
+import { ionicBootstrap, ItemSliding, ToastController } from 'ionic-angular';
 
 
 @Component({
@@ -13,7 +13,7 @@ class ApiDemoPage {
   editButton: string = 'Edit';
   editing: boolean = false;
 
-  constructor(private nav: NavController) {
+  constructor(private toastCtrl: ToastController) {
     this.chats = [
     {
       img: './avatar-cher.png',
@@ -116,10 +116,10 @@ class ApiDemoPage {
   download(item: ItemSliding) {
     item.setClass('downloading', true);
     setTimeout(() => {
-      const toast = Toast.create({
+      const toast = this.toastCtrl.create({
         message: 'Item was downloaded!'
       });
-      this.nav.present(toast);
+      toast.present();
       item.setClass('downloading', false);
       item.close();
 
