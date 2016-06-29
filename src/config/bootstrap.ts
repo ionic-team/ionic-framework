@@ -5,6 +5,7 @@ import { AppRoot, UserComponent } from '../components/app/app';
 import { nativeRaf } from '../util/dom';
 import { ionicProviders } from './providers';
 import { Platform } from '../platform/platform';
+import { TapClick } from '../components/tap-click/tap-click';
 const _reflect: any = Reflect;
 
 
@@ -52,6 +53,7 @@ export function ionicPostBootstrap(ngComponentRef: ComponentRef<any>) {
   let platform: Platform = ngComponentRef.injector.get(Platform);
   platform.setZone(ngComponentRef.injector.get(NgZone));
   platform.prepareReady();
+  ngComponentRef.injector.get(TapClick);
 
   return ngComponentRef;
 }
