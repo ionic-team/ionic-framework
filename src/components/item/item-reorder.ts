@@ -7,7 +7,7 @@ import { ItemReorderGesture } from '../item/item-reorder-gesture';
 import { isTrueProperty } from '../../util/util';
 
 
-export interface ReorderIndices {
+export interface ReorderIndexes {
   from: number;
   to: number;
 }
@@ -61,9 +61,9 @@ export interface ReorderIndices {
  * Once the user drags an item and drops it in the new position, this directive fires the `(ionItemReorder)`
  * event providing the initial index (from) and the new index (to) of the reordered item.
  * For example, if an user drags the first item to the 5th position, `(ionItemReorder)` would fire
- * `{from:0, to: 4}` (note that the indices start at zero).
+ * `{from:0, to: 4}` (note that the index starts at zero).
  *
- * In order to integrate reordering in your app, it's a MUST to implement your own function that takes this indices and perform
+ * In order to integrate reordering in your app, it's a MUST to implement your own function that takes this indexes and perform
  * the actual reordering of the data models. Here's is an example of how this can be done:
  *
  * @usage
@@ -78,14 +78,14 @@ export interface ReorderIndices {
  *     }
  *   }
  *
- *   reorderItem(indices) {
- *     let element = this.items[indices.from];
- *     this.items.splice(indices.from, 1);
- *     this.items.splice(indices.to, 0, element);
+ *   reorderItem(indexes) {
+ *     let element = this.items[indexes.from];
+ *     this.items.splice(indexes.from, 1);
+ *     this.items.splice(indexes.to, 0, element);
  *
  *     // For maximum convenience, ionic already provides an helper function:
  *     // import { reorderArray } from 'ionic-angular';
- *     // this.item = reorderArray(this.item, indices);
+ *     // this.item = reorderArray(this.item, indexes);
  *   }
  * }
  *  ```
@@ -117,7 +117,7 @@ export class ItemReorder {
   private _lastToIndex: number = -1;
   private _element: HTMLElement;
 
-  @Output() ionItemReorder: EventEmitter<ReorderIndices> = new EventEmitter<ReorderIndices>();
+  @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();
 
   constructor(
     elementRef: ElementRef,

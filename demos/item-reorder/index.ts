@@ -72,8 +72,8 @@ class ApiDemoPage {
     }
   }
 
-  reorderData(indices: any) {
-    this.chats = reorderArray(this.chats, indices);
+  reorderData(indexes: any) {
+    this.chats = reorderArray(this.chats, indexes);
   }
 }
 
