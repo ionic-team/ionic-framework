@@ -15,61 +15,73 @@ export interface ReorderIndexes {
 /**
  * @name ItemReorder
  * @description
- * ItemReorder can be used with `ion-list` or `ion-item-group` to provide a visual
- * drap and drop interface for reordering of items in a list.
+ * Item reorder adds the ability to change an item's order in a group.
+ * It can be used within an `ion-list` or `ion-item-group` to provide a
+ * visual drap and drop interface.
  *
- * ## Usage
- * It is very important to follow the rules below in order to integrate reordering in your app.
+ * ## Grouping Items
  *
- * ### All items in a reorder list have to be part of the same set
- * You can not have non-reorderable and reorderable items in the same list or item's group.
- *
- *  ```html
- *  <ion-list reorder="true">
- *    <ion-item *ngFor="let item of items">{{item.name}}</ion-item
- *  </ion-list>
- *  ```
- *
- * **GOOD!**
+ * All reorderable items must be grouped in the same element. If an item
+ * should not be reordered, it shouldn't be included in this group. For
+ * example, the following code works because the items are grouped in the
+ * `<ion-list>`:
  *
  *  ```html
  *  <ion-list reorder="true">
- *    <ion-list-header>HEADER</ion-list-header>
- *    <ion-item *ngFor="let item of items">{{item.name}}</ion-item>
+ *    <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
  *  </ion-list>
  *  ```
  *
- * **BAD!** There is a `ion-list-header` that is not part of the same set.
+ * However, the below list includes a header that shouldn't be reordered:
  *
- * In order to mix different sets of items, `ion-item-group` has to be used:
+ *  ```html
+ *  <ion-list reorder="true">
+ *    <ion-list-header>Header</ion-list-header>
+ *    <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
+ *  </ion-list>
+ *  ```
+ *
+ * In order to mix different sets of items, `ion-item-group` should be used to
+ * group the reorderable items:
  *
  *  ```html
  *  <ion-list>
- *    <ion-list-header>HEADER</ion-list-header>
+ *    <ion-list-header>Header</ion-list-header>
  *    <ion-item-group reorder="true">
- *      <ion-item *ngFor="let item of items">{{item.name}}</ion-item>
+ *      <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
  *    </ion-item-group>
  *  </ion-list>
  *  ```
  *
- * **GOOD!** It's important to notice that in this case, the `[reorder]` directive it applied to `ion-item-group` instead of
- * `ion-list`. This way we are able to have a list-header and satisfy the first gold rule at the same time.
+ * It's important to note that in this example, the `[reorder]` directive is applied to
+ * the `<ion-item-group>` instead of the `<ion-list>`. This way makes it possible to
+ * mix items that should and shouldn't be reordered.
  *
  *
- * ### Implement a reorder function
+ * ## Implementing the Reorder Function
  *
- * Once the user drags an item and drops it in the new position, this directive fires the `(ionItemReorder)`
- * event providing the initial index (from) and the new index (to) of the reordered item.
- * For example, if an user drags the first item to the 5th position, `(ionItemReorder)` would fire
- * `{from:0, to: 4}` (note that the index starts at zero).
+ * When the item is dragged and dropped into the new position, the `(ionItemReorder)` event is
+ * emitted. This event provides the initial index (from) and the new index (to) of the reordered
+ * item. For example, if the first item is dragged to the fifth position, the event will emit
+ * `{from: 0, to: 4}`. Note that the index starts at zero.
  *
- * In order to integrate reordering in your app, it's a MUST to implement your own function that takes this indexes and perform
- * the actual reordering of the data models. Here's is an example of how this can be done:
+ * A function should be called when the event is emitted that handles the reordering of the items.
+ * See [usage](#usage) below for some examples.
+ *
  *
  * @usage
  *
- *  ```ts
- * class E2EPage {
+ * ```html
+ * <ion-list>
+ *   <ion-list-header>Header</ion-list-header>
+ *   <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event)">
+ *     <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
+ *   </ion-item-group>
+ * </ion-list>
+ * ```
+ *
+ * ```ts
+ * class MyComponent {
  *   items = [];
  *
  *   constructor() {
@@ -78,27 +90,34 @@ export interface ReorderIndexes {
  *     }
  *   }
  *
- *   reorderItem(indexes) {
+ *   reorderItems(indexes) {
  *     let element = this.items[indexes.from];
  *     this.items.splice(indexes.from, 1);
  *     this.items.splice(indexes.to, 0, element);
- *
- *     // For maximum convenience, ionic already provides an helper function:
- *     // import { reorderArray } from 'ionic-angular';
- *     // this.item = reorderArray(this.item, indexes);
  *   }
  * }
- *  ```
+ * ```
  *
- *  ```html
- *  <ion-list>
- *    <ion-list-header>HEADER</ion-list-header>
- *    <ion-item-group reorder="true" (ionItemReorder)="reorderItem($event)">
- *      <ion-item *ngFor="let item of items">Number: {{item}}</ion-item>
- *    </ion-item-group>
- *  </ion-list>
- *  ```
+ * Ionic also provides a helper function called `reorderArray` to
+ * reorder the array of items. This can be used instead:
  *
+ * ```ts
+ * import { reorderArray } from 'ionic-angular';
+ *
+ * class MyComponent {
+ *   items = [];
+ *
+ *   constructor() {
+ *     for (let x = 0; x < 5; x++) {
+ *       this.items.push(x);
+ *     }
+ *   }
+ *
+ *   reorderItems(indexes) {
+ *     this.items = reorderArray(this.items, indexes);
+ *   }
+ * }
+ * ```
  *
  * @demo /docs/v2/demos/item-reorder/
  * @see {@link /docs/v2/components#lists List Component Docs}
@@ -117,6 +136,10 @@ export class ItemReorder {
   private _lastToIndex: number = -1;
   private _element: HTMLElement;
 
+  /**
+   * @output {object} The expression to evaluate when the item is reordered. Emits an object
+   * with `from` and `to` properties.
+   */
   @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();
 
   constructor(
@@ -135,7 +158,9 @@ export class ItemReorder {
     this._reorderGesture && this._reorderGesture.destroy();
   }
 
-
+  /**
+   * @private
+   */
   @Input()
   get reorder(): boolean {
     return this._enableReorder;
