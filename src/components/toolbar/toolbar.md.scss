@@ -44,16 +44,16 @@ ion-footer::before,
   height: 5px;
 
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==);
-  background-position: 0 -2px;
   background-repeat: repeat-x;
+  background-position: 0 -2px;
 
   content: "";
 }
 
 ion-footer::before,
 [tabbarplacement="bottom"] > ion-tabbar::before {
-  bottom: auto;
   top: -2px;
+  bottom: auto;
 
   height: 2px;
 
