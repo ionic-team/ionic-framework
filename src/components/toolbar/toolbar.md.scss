@@ -29,11 +29,14 @@ $toolbar-md-button-border-radius:        2px !default;
 $navbar-md-height:                       $toolbar-md-height !default;
 
 
-ion-header::after {
+ion-header::after,
+[tabbarplacement="top"] > ion-tabbar::after {
   // using datauri png background image for improved scroll performance
   // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
   // noticable performance difference on older Android devices
   position: absolute;
+  bottom: -5px;
+  left: 0;
 
   width: 100%;
   height: 5px;
