@@ -107,7 +107,7 @@ export class App {
    * @return {boolean}
    */
   isScrolling(): boolean {
-    return (this._scrollTime + 64 > Date.now());
+    return (this._scrollTime + 48 > Date.now());
   }
 
   /**

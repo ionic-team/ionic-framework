@@ -91,7 +91,7 @@ export class Content extends Ion {
 
   constructor(
     private _elementRef: ElementRef,
-    private _config: Config,
+    config: Config,
     private _app: App,
     private _keyboard: Keyboard,
     private _zone: NgZone,
@@ -99,7 +99,7 @@ export class Content extends Ion {
     @Optional() private _tabs: Tabs
   ) {
     super(_elementRef);
-    this._sbPadding = _config.getBoolean('statusbarPadding', false);
+    this._sbPadding = config.getBoolean('statusbarPadding', false);
 
     if (viewCtrl) {
       viewCtrl.setContent(this);
@@ -111,17 +111,11 @@ export class Content extends Ion {
    * @private
    */
   ngOnInit() {
-    let self = this;
-    self._scrollEle = self._elementRef.nativeElement.children[0];
+    this._scrollEle = this._elementRef.nativeElement.children[0];
 
-    self._zone.runOutsideAngular(function() {
-      self._scroll = new ScrollView(self._scrollEle);
-
-      if (self._config.getBoolean('tapPolyfill')) {
-        self._scLsn = self.addScrollListener(function() {
-          self._app.setScrolling();
-        });
-      }
+    this._zone.runOutsideAngular(() => {
+      this._scroll = new ScrollView(this._scrollEle);
+      this._scLsn = this.addScrollListener(this._app.setScrolling);
     });
   }
 
@@ -131,7 +125,7 @@ export class Content extends Ion {
   ngOnDestroy() {
     this._scLsn && this._scLsn();
     this._scroll && this._scroll.destroy();
-    this._scrollEle = this._footerEle = this._scLsn = null;
+    this._scrollEle = this._footerEle = this._scLsn = this._scroll = null;
   }
 
   /**
