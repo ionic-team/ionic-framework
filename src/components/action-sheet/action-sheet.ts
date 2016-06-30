@@ -108,40 +108,66 @@ export class ActionSheet extends ViewController {
  *
  * @usage
  * ```ts
- * constructor(private actionSheetCtrl: ActionSheetController) {
+ * import {ActionSheetController} from 'ionic-angular'
  *
- * }
+ * export class MyClass{
  *
- * presentActionSheet() {
- *   let actionSheet = this.actionSheetCtrl.create({
- *     title: 'Modify your album',
- *     buttons: [
- *       {
- *         text: 'Destructive',
- *         role: 'destructive',
- *         handler: () => {
- *           console.log('Destructive clicked');
- *         }
- *       },
- *       {
- *         text: 'Archive',
- *         handler: () => {
- *           console.log('Archive clicked');
- *         }
- *       },
- *       {
- *         text: 'Cancel',
- *         role: 'cancel',
- *         handler: () => {
- *           console.log('Cancel clicked');
- *         }
- *       }
- *     ]
- *   });
+ *  constructor(private actionSheetCtrl: ActionSheetController) {}
  *
- *   actionSheet.present();
+ *  presentActionSheet() {
+ *    let actionSheet = this.actionSheetCtrl.create({
+ *      title: 'Modify your album',
+ *      buttons: [
+ *        {
+ *          text: 'Destructive',
+ *          role: 'destructive',
+ *          handler: () => {
+ *            console.log('Destructive clicked');
+ *          }
+ *        },
+ *        {
+ *          text: 'Archive',
+ *          handler: () => {
+ *            console.log('Archive clicked');
+ *          }
+ *        },
+ *        {
+ *          text: 'Cancel',
+ *          role: 'cancel',
+ *          handler: () => {
+ *            console.log('Cancel clicked');
+ *          }
+ *        }
+ *      ]
+ *    });
+ *
+ *    actionSheet.present();
+ *  }
  * }
  * ```
+ *
+ * @advanced
+ *
+ * ActionSheet create options
+ *
+ * | Option                | Type       | Description                                                     |
+ * |-----------------------|------------|-----------------------------------------------------------------|
+ * | title                 |`string`    | The title for the actionsheet                                   |
+ * | subTitle              |`string`    | The sub-title for the actionsheet                               |
+ * | cssClass              |`string`    | An additional class for custom styles                           |
+ * | enableBackdropDismiss |`boolean`   | If the actionsheet should close when the user taps the backdrop |
+ * | buttons               |`array<any>`| An array of buttons to display                                  |
+ *
+ * ActionSheet button options
+ *
+ * | Option   | Type     | Description                                                                                                                                      |
+ * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+ * | text     | `string` | The buttons text                                                                                                                                 |
+ * | icon     | `icon`   | The buttons icons                                                                                                                                |
+ * | handler  | `any`    | An express the button should evaluate                                                                                                            |
+ * | cssClass | `string` | An additional class for custom styles                                                                                                            |
+ * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles |
+ *
  *
  *
  * ### Dismissing And Async Navigation
@@ -208,28 +234,7 @@ export class ActionSheetController {
   constructor(private _app: App) {}
 
   /**
-   * Open an action sheet with the following options
-   *
-   * | Option                | Type       | Description                                                     |
-   * |-----------------------|------------|-----------------------------------------------------------------|
-   * | title                 |`string`    | The title for the actionsheet                                   |
-   * | subTitle              |`string`    | The sub-title for the actionsheet                               |
-   * | cssClass              |`string`    | An additional class for custom styles                           |
-   * | enableBackdropDismiss |`boolean`   | If the actionsheet should close when the user taps the backdrop |
-   * | buttons               |`array<any>`| An array of buttons to display                                  |
-   *
-   * For the buttons:
-   *
-   * | Option   | Type     | Description                                                                                                                                      |
-   * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-   * | text     | `string` | The buttons text                                                                                                                                 |
-   * | icon     | `icon`   | The buttons icons                                                                                                                                |
-   * | handler  | `any`    | An express the button should evaluate                                                                                                            |
-   * | cssClass | `string` | An additional class for custom styles                                                                                                            |
-   * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles |
-   *
-   *
-   *
+   * Open an action sheet with a title, subTitle, and an array of buttons
    * @param {ActionSheetOptions} opts Action sheet options
    */
   create(opts: ActionSheetOptions = {}): ActionSheet {
