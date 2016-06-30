@@ -16,5 +16,6 @@ export interface AlertInputOptions {
   value?: string;
   label?: string;
   checked?: boolean;
+  disabled?: boolean;
   id?: string;
 }

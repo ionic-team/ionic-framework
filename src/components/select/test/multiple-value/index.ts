@@ -12,6 +12,7 @@ class E2EPage {
   pets: Array<string>;
   petOptions: Array<{text: string, value: string}>;
   authForm: ControlGroup;
+  status: string;
 
   constructor() {
     this.toppings = ['bacon', 'xcheese'];
@@ -24,6 +25,7 @@ class E2EPage {
       { text: 'Honey Badger', value: 'honeybadger' },
       { text: 'Pig', value: 'pig' },
     ];
+    this.status = "checked";
 
     this.authForm = new ControlGroup({
       name: new Control(''),

@@ -290,7 +290,8 @@ export class Select {
           type: (this._multi ? 'checkbox' : 'radio'),
           label: input.text,
           value: input.value,
-          checked: input.checked
+          checked: input.checked,
+          disabled: input.disabled
         };
       });
 
