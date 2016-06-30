@@ -217,7 +217,8 @@ export class NavController extends Ion {
     elementRef: ElementRef,
     protected _zone: NgZone,
     protected _renderer: Renderer,
-    protected _compiler: ComponentResolver
+    protected _compiler: ComponentResolver,
+    protected _menuCtrl: MenuController
   ) {
     super(elementRef);
 
@@ -1532,8 +1533,7 @@ export class NavController extends Ion {
           edge: 'left',
           threshold: this._sbThreshold
         };
-        let menuCtrl = this._app.getAppInjector().get(MenuController);
-        this._sbGesture = new SwipeBackGesture(this.getNativeElement(), opts, this, menuCtrl);
+        this._sbGesture = new SwipeBackGesture(this.getNativeElement(), opts, this, this._menuCtrl);
       }
 
       if (this.canSwipeBack()) {

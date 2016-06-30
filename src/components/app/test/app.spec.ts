@@ -446,7 +446,7 @@ describe('App', () => {
   var _cd: any;
 
   function mockNav(): Nav {
-    return new Nav(null, null, null, config, null, null, null, null, null);
+    return new Nav(null, null, null, config, null, null, null, null, null, null);
   }
 
   function mockTabs(): Tabs {
@@ -454,7 +454,7 @@ describe('App', () => {
   }
 
   function mockTab(parentTabs: Tabs): Tab {
-    var tab = new Tab(parentTabs, app, config, null, null, null, null, null, _cd);
+    var tab = new Tab(parentTabs, app, config, null, null, null, null, null, _cd, null);
     parentTabs.add(tab);
     tab.root = SomePage;
     tab.load = function(opts: any, cb: Function) {

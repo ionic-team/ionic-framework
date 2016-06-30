@@ -3,6 +3,7 @@ import { ComponentResolver, Directive, ElementRef, forwardRef, Inject, NgZone, O
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Keyboard } from '../../util/keyboard';
+import { MenuController } from '../menu/menu-controller';
 import { NavController } from '../nav/nav-controller';
 
 /**
@@ -20,9 +21,10 @@ export class NavPortal extends NavController {
     zone: NgZone,
     renderer: Renderer,
     compiler: ComponentResolver,
+    menuCtrl: MenuController,
     viewPort: ViewContainerRef
   ) {
-    super(null, app, config, keyboard, elementRef, zone, renderer, compiler);
+    super(null, app, config, keyboard, elementRef, zone, renderer, compiler, menuCtrl);
     this.isPortal = true;
     this.setViewport(viewPort);
     app.setPortal(this);
