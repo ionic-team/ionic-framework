@@ -141,7 +141,6 @@
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
@@ -153,7 +152,7 @@
   .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
@@ -170,22 +169,23 @@
   })
 
   .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
+    url: '/browse',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/browse.html'
       }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
+    }
+  })
+
+  .state('app.playlists', {
+    url: '/playlists',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/playlists.html',
+        controller: 'PlaylistsCtrl'
       }
-    })
+    }
+  })
 
   .state('app.single', {
     url: '/playlists/:playlistId',
@@ -265,7 +265,6 @@
     users.push({imagePath: gandalf, name: 'Gandalf the Grey', subTitle: 'You shall not pass!'});
     users.push({imagePath: sam, name: 'Samwise Gamgee', subTitle: 'I made a promise, Mr. Frodo! Don\'t you leave him Samwise Gamgee'});
     $scope.users = users;
-
   })
 
   .component('userCell', {
@@ -275,7 +274,6 @@
       subTitle: "="
     },
     controller: function(){
-
       this.$onInit = function(){
         console.log("$onInit called: ", this);
       }

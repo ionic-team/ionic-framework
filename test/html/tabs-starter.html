@@ -107,7 +107,6 @@
         <ion-nav-view name="tab-account"></ion-nav-view>
       </ion-tab>
 
-
     </ion-tabs>
   </script>
 
@@ -139,7 +138,7 @@
     $stateProvider
 
     // setup an abstract state for the tabs directive
-      .state('tab', {
+    .state('tab', {
       url: '/tab',
       abstract: true,
       templateUrl: 'templates/tabs.html'
@@ -158,23 +157,24 @@
     })
 
     .state('tab.chats', {
-        url: '/chats',
-        views: {
-          'tab-chats': {
-            templateUrl: 'templates/tab-chats.html',
-            controller: 'ChatsCtrl'
-          }
+      url: '/chats',
+      views: {
+        'tab-chats': {
+          templateUrl: 'templates/tab-chats.html',
+          controller: 'ChatsCtrl'
         }
-      })
-      .state('tab.chat-detail', {
-        url: '/chats/:chatId',
-        views: {
-          'tab-chats': {
-            templateUrl: 'templates/chat-detail.html',
-            controller: 'ChatDetailCtrl'
-          }
+      }
+    })
+
+    .state('tab.chat-detail', {
+      url: '/chats/:chatId',
+      views: {
+        'tab-chats': {
+          templateUrl: 'templates/chat-detail.html',
+          controller: 'ChatDetailCtrl'
         }
-      })
+      }
+    })
 
     .state('tab.account', {
       url: '/account',
@@ -193,84 +193,83 @@
 
   angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+  .controller('DashCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+  .controller('ChatsCtrl', function($scope, Chats) {
+    // With the new view caching in Ionic, Controllers are only called
+    // when they are recreated or on app start, instead of every page change.
+    // To listen for when this page is active (for example, to refresh data),
+    // listen for the $ionicView.enter event:
+    //
+    //$scope.$on('$ionicView.enter', function(e) {
+    //});
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
+    $scope.chats = Chats.all();
+    $scope.remove = function(chat) {
+      Chats.remove(chat);
+    };
+  })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+  .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+    $scope.chat = Chats.get($stateParams.chatId);
+  })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-});
+  .controller('AccountCtrl', function($scope) {
+    $scope.settings = {
+      enableFriends: true
+    };
+  });
 
-angular.module('starter.services', [])
+  angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+  .factory('Chats', function() {
+    // Might use a resource here that returns a JSON array
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
+    // Some fake testing data
+    var chats = [{
+      id: 0,
+      name: 'Ben Sparrow',
+      lastText: 'You on your way?',
+      face: 'img/ben.png'
+    }, {
+      id: 1,
+      name: 'Max Lynx',
+      lastText: 'Hey, it\'s me',
+      face: 'img/max.png'
+    }, {
+      id: 2,
+      name: 'Adam Bradleyson',
+      lastText: 'I should buy a boat',
+      face: 'img/adam.jpg'
+    }, {
+      id: 3,
+      name: 'Perry Governor',
+      lastText: 'Look at my mukluks!',
+      face: 'img/perry.png'
+    }, {
+      id: 4,
+      name: 'Mike Harrington',
+      lastText: 'This is wicked good ice cream.',
+      face: 'img/mike.png'
+    }];
 
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    return {
+      all: function() {
+        return chats;
+      },
+      remove: function(chat) {
+        chats.splice(chats.indexOf(chat), 1);
+      },
+      get: function(chatId) {
+        for (var i = 0; i < chats.length; i++) {
+          if (chats[i].id === parseInt(chatId)) {
+            return chats[i];
+          }
         }
+        return null;
       }
-      return null;
-    }
-  };
-});
-
+    };
+  });
 
   </script>
 
