@@ -119,8 +119,9 @@ export class ViewController {
 
   /**
    * @private
+   * onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead
    */
-  onDismiss(callback: Function) {
+  private onDismiss(callback: Function) {
     // deprecated warning: added beta.11 2016-06-30
     console.warn('onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead');
     this.onDidDismiss(callback);
