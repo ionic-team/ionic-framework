@@ -23,8 +23,8 @@ export class Animation {
   private _el: HTMLElement[] = [];
   private _opts: AnimationOptions;
   private _fx: {[key: string]: EffectProperty} = {};
-  private _dur: number;
-  private _easing: string;
+  private _dur: number = null;
+  private _easing: string = null;
   private _bfSty: { [property: string]: any; } = {};
   private _bfAdd: string[] = [];
   private _bfRmv: string[] = [];
