@@ -146,6 +146,15 @@ export class Popover extends ViewController {
  *   }
  * }
  * ```
+ * @advanced
+ * Popover Options
+ *
+ * | Option                | Type       | Description                                                                                                      |
+ * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
+ * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
+ * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
+ * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
+ *
  *
  *
  * @demo /docs/v2/demos/popover/
@@ -156,15 +165,7 @@ export class PopoverController {
   constructor(private _app: App) {}
 
   /**
-   * Create a popover with the following options
-   *
-   * | Option                | Type       | Description                                                                                                      |
-   * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
-   * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
-   * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
-   * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
-   *
-   *
+   * Present a popover. See below for options
    * @param {object} componentType The Popover
    * @param {object} data Any data to pass to the Popover view
    * @param {PopoverOptions} opts Popover options

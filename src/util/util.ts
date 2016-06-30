@@ -177,6 +177,9 @@ export function getQuerystring(url: string): any {
 }
 
 
+/**
+ * @private
+ */
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
   let element = array[indexes.from];
   array.splice(indexes.from, 1);

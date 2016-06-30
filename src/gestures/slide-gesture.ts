@@ -2,6 +2,9 @@ import {DragGesture} from './drag-gesture';
 import {clamp} from '../util';
 
 
+/**
+ * @private
+ */
 export class SlideGesture extends DragGesture {
   public slide: SlideData = null;
 

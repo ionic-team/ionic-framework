@@ -93,6 +93,7 @@ export class Picker extends ViewController {
 
 
 /**
+ * @private
  * @name PickerController
  * @description
  *

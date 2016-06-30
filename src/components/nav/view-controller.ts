@@ -42,11 +42,40 @@ export class ViewController {
   private _cd: ChangeDetectorRef;
   protected _nav: NavController;
 
+  /**
+   * Observable to be subscribed to when the current component will become active
+   * @returns {Observable} Returns an observable
+   */
   willEnter: EventEmitter<any>;
+
+  /**
+   * Observable to be subscribed to when the current component has become active
+   * @returns {Observable} Returns an observable
+   */
   didEnter: EventEmitter<any>;
+
+  /**
+   * Observable to be subscribed to when the current component will no longer be active
+   * @returns {Observable} Returns an observable
+   */
   willLeave: EventEmitter<any>;
+
+  /**
+   * Observable to be subscribed to when the current component is no long active
+   * @returns {Observable} Returns an observable
+   */
   didLeave: EventEmitter<any>;
+
+  /**
+   * Observable to be subscribed to when the current component will be destroyed
+   * @returns {Observable} Returns an observable
+   */
   willUnload: EventEmitter<any>;
+
+  /**
+   * Observable to be subscribed to when the current component has been destroyed
+   * @returns {Observable} Returns an observable
+   */
   didUnload: EventEmitter<any>;
 
   /**
@@ -226,17 +255,7 @@ export class ViewController {
   }
 
   /**
-   * You can find out the index of the current view is in the current navigation stack.
-   *
-   * ```ts
-   *  export class Page1 {
-   *    constructor(private view: ViewController){
-   *      // Just log out the index
-   *      console.log(this.view.index);
-   *    }
-   *  }
-   * ```
-   *
+   * Get the index of the current component in the current navigation stack.
    * @returns {number} Returns the index of this page within its `NavController`.
    */
   get index(): number {
@@ -387,20 +406,10 @@ export class ViewController {
   }
 
   /**
-   * You can find out of the current view has a Navbar or not. Be sure
+   *
+   * Find out if the current component has a NavBar or not. Be sure
    * to wrap this in an `ionViewWillEnter` method in order to make sure
    * the view has rendered fully.
-   *
-   * ```ts
-   * export class Page1 {
-   *  constructor(private viewCtrl: ViewController) {}
-   *
-   *  ionViewWillEnter(){
-   *    console.log('Do we have a Navbar?', this.viewCtrl.hasNavbar());
-   *  }
-   *}
-   * ```
-   *
    * @returns {boolean} Returns a boolean if this Page has a navbar or not.
    */
   hasNavbar(): boolean {
@@ -456,19 +465,8 @@ export class ViewController {
   }
 
   /**
-   * You can change the text of the back button on a view-by-view basis.
-   *
-   * ```ts
-   * export class MyClass{
-   *  constructor(private viewCtrl: ViewController) {}
-   *
-   *  ionViewWillEnter() {
-   *    this.viewCtrl.setBackButtonText('Previous');
-   *  }
-   * }
-   * ```
-   * Make sure you use the view events when calling this method, otherwise the back-button will not have been created
-   *
+   * Change the title of the back-button. Be sure to call this
+   * after `ionViewWillEnter` to make sure the  DOM has been rendered.
    * @param {string} backButtonText Set the back button text.
    */
   setBackButtonText(val: string) {
@@ -479,7 +477,8 @@ export class ViewController {
   }
 
   /**
-   * Set if the back button for the current view is visible or not. Be sure to wrap this in `ionViewWillEnter` to make sure the has been compleltly rendered.
+   * Set if the back button for the current view is visible or not. Be sure to call this
+   * after `ionViewWillEnter` to make sure the  DOM has been rendered.
    * @param {boolean} Set if this Page's back button should show or not.
    */
   showBackButton(shouldShow: boolean) {
