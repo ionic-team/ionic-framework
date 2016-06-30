@@ -150,6 +150,18 @@ export class Loading extends ViewController {
  *   }, 5000);
  * }
  * ```
+ * @advanced
+ *
+ * Loading options
+ *
+ * | Option                | Type       | Description                                                                                                      |
+ * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
+ * | spinner               |`string`    | The name of the SVG spinner for the loading indicator.                                                           |
+ * | content               |`string`    | The html content for the loading indicator.                                                                      |
+ * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
+ * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
+ * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
+ * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `dismiss()` is called. |
  *
  * @demo /docs/v2/demos/loading/
  * @see {@link /docs/v2/api/components/spinner/Spinner Spinner API Docs}
@@ -159,18 +171,7 @@ export class LoadingController {
 
   constructor(private _app: App) {}
   /**
-   * Create a loading indicator with the following options
-   *
-   * | Option                | Type       | Description                                                                                                      |
-   * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
-   * | spinner               |`string`    | The name of the SVG spinner for the loading indicator.                                                           |
-   * | content               |`string`    | The html content for the loading indicator.                                                                      |
-   * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
-   * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
-   * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
-   * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `dismiss()` is called. |
-   *
-   *
+   * Create a loading indicator. See below for options.
    * @param {LoadingOptions} opts Loading options
    */
   create(opts: LoadingOptions = {}) {

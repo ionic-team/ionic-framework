@@ -228,8 +228,42 @@ export class Alert extends ViewController {
  *   alert.present();
  * }
  * ```
+ * @advanced
  *
  *
+ *  Alert options
+ *
+ *  | Property              | Type      | Description                                                               |
+ *  |-----------------------|-----------|---------------------------------------------------------------------------|
+ *  | title                 | `string`  | The string for the alert (optional)                                       |
+ *  | subTitle              | `string`  | The subtitle for the alert (optional)                                     |
+ *  | message               | `string`  | The message for the alert (optional)                                      |
+ *  | cssClass              | `string`  | Any additional class for the alert (optional)                             |
+ *  | inputs                | `array`   | An array of inputs for the alert. See input options. (optional)           |
+ *  | buttons               | `array`   | An array of buttons for the alert. See buttons options. (optional)        |
+ *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop (optional)  |
+ *
+ *
+ *  Input options
+ *
+ *  | Property    | Type      | Description                                                     |
+ *  |-------------|-----------|-----------------------------------------------------------------|
+ *  | type        | `string`  | The type the input should be, text, tel, number, etc (optional) |
+ *  | name        | `string`  | The name for the input (optional)                               |
+ *  | placeholder | `string`  | The input's placeholder (optional, for textual/numeric inputs)  |
+ *  | value       | `string`  | The input's value (optional)                                    |
+ *  | label       | `string`  | The input's label (optional, only for radio/checkbox inputs)    |
+ *  | checked     | `boolean` | Whether or not the input is checked or not (optional)           |
+ *  | id          | `string`  | The input's id (optional)                                       |
+ *
+ *  Button options
+ *
+ *  | Property | Type     | Description                                                    |
+ *  |----------|----------|----------------------------------------------------------------|
+ *  | text     | `string` | The buttons displayed text                                     |
+ *  | handler  | `any`    | Expression that should be evaluated when the button is pressed |
+ *  | cssClass | `string` | An additional CSS class for the button                         |
+ *  | role     | `string` | The buttons role, null or `cancel`                             |
  * ### Dismissing And Async Navigation
  *
  * After an alert has been dismissed, the app may need to also transition
@@ -292,42 +326,8 @@ export class AlertController {
 
   constructor(private _app: App) {}
   /**
-   *
-   *  Alert options
-   *
-   *  | Property              | Type      | Description                                                               |
-   *  |-----------------------|-----------|---------------------------------------------------------------------------|
-   *  | title                 | `string`  | The string for the alert (optional)                                       |
-   *  | subTitle              | `string`  | The subtitle for the alert (optional)                                     |
-   *  | message               | `string`  | The message for the alert (optional)                                      |
-   *  | cssClass              | `string`  | Any additional class for the alert (optional)                             |
-   *  | inputs                | `array`   | An array of inputs for the alert. See input options. (optional)           |
-   *  | buttons               | `array`   | An array of buttons for the alert. See buttons options. (optional)        |
-   *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop (optional)  |
-   *
-   *
-   *  Input options
-   *
-   *  | Property    | Type      | Description                                                     |
-   *  |-------------|-----------|-----------------------------------------------------------------|
-   *  | type        | `string`  | The type the input should be, text, tel, number, etc (optional) |
-   *  | name        | `string`  | The name for the input (optional)                               |
-   *  | placeholder | `string`  | The input's placeholder (optional, for textual/numeric inputs)  |
-   *  | value       | `string`  | The input's value (optional)                                    |
-   *  | label       | `string`  | The input's label (optional, only for radio/checkbox inputs)    |
-   *  | checked     | `boolean` | Whether or not the input is checked or not (optional)           |
-   *  | id          | `string`  | The input's id (optional)                                       |
-   *
-   *  Button options
-   *
-   *  | Property | Type     | Description                                                    |
-   *  |----------|----------|----------------------------------------------------------------|
-   *  | text     | `string` | The buttons displayed text                                     |
-   *  | handler  | `any`    | Expression that should be evaluated when the button is pressed |
-   *  | cssClass | `string` | An additional CSS class for the button                         |
-   *  | role     | `string` | The buttons role, null or `cancel`                             |
-   *
-   * @param {AlertOptions} opts Alert. See the table above
+   * Display an alert with a title, inputs, and buttons
+   * @param {AlertOptions} opts Alert. See the table below
    */
   create(opts: AlertOptions = {}): Alert {
     return new Alert(this._app, opts);

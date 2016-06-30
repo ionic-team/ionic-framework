@@ -122,6 +122,13 @@ export class Modal extends ViewController {
  * }
  * ```
  *
+ * @advanced
+ *
+ * | Option                | Type       | Description                                                                                                      |
+ * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
+ * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
+ * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
+ *
  * A modal can also emit data, which is useful when it is used to add or edit
  * data. For example, a profile page could slide up in a modal, and on submit,
  * the submit button could pass the updated profile data, then dismiss the
@@ -175,13 +182,7 @@ export class ModalController {
 
   constructor(private _app: App) {}
   /**
-   * Create a modal with the following options
-   *
-   * | Option                | Type       | Description                                                                                                      |
-   * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
-   * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
-   * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
-   *
+   * Create a modal to display. See below for options.
    *
    * @param {object} componentType The Modal view
    * @param {object} data Any data to pass to the Modal view
