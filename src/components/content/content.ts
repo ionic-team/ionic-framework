@@ -460,6 +460,8 @@ export class Content extends Ion {
     this._tabbarPlacement = null;
 
     let ele: HTMLElement = this._elementRef.nativeElement;
+    if (!ele) return;
+
     let parentEle: HTMLElement = ele.parentElement;
     let computedStyle: any;
 
@@ -510,6 +512,8 @@ export class Content extends Ion {
   writeDimensions() {
     let newVal: number;
     let scrollEle = this._scrollEle;
+
+    if (!scrollEle) return;
 
     // only write when it has changed
     if (this._fullscreen) {
