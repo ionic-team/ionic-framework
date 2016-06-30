@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { Content, ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -50,7 +50,14 @@ class Page1 {
   templateUrl: 'main.html'
 })
 class E2EPage {
+  @ViewChild(Content) content: Content;
   page1 = Page1;
+  showToolbar: boolean = false;
+
+  toggleToolbar() {
+    this.showToolbar = !this.showToolbar;
+    this.content.resize();
+  }
 }
 
 
