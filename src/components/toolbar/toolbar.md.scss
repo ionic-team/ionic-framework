@@ -30,7 +30,9 @@ $navbar-md-height:                       $toolbar-md-height !default;
 
 
 ion-header::after,
-[tabbarplacement="top"] > ion-tabbar::after {
+[tabbarplacement="top"] > ion-tabbar::after,
+ion-footer::before,
+[tabbarplacement="bottom"] > ion-tabbar::before {
   // using datauri png background image for improved scroll performance
   // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
   // noticable performance difference on older Android devices
@@ -41,12 +43,22 @@ ion-header::after,
   width: 100%;
   height: 5px;
 
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAIBAMAAAARjyJQAAAAFVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAASAQCkAAAAB3RSTlMBLRUGDSA4cBS/RQAAACBJREFUeF5jSEMCDIJIgCEUCTAoIQEGFyTAYIwEGHACAG7+EL36X1OAAAAAAElFTkSuQmCC);
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==);
+  background-position: 0 -2px;
   background-repeat: repeat-x;
 
   content: "";
 }
 
+ion-footer::before,
+[tabbarplacement="bottom"] > ion-tabbar::before {
+  bottom: auto;
+  top: -2px;
+
+  height: 2px;
+
+  background-position: 0 0;
+}
 
 .toolbar {
   padding: $toolbar-md-padding;
