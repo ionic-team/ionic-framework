@@ -78,14 +78,16 @@ export class Content extends Ion {
   private _footerEle: HTMLElement;
 
   /**
-   * @private
+   * A number representing how many pixels the top of the content has been
+   * adjusted, which could be by either padding or margin.
    */
-  adjustedTop: number;
+  contentTop: number;
 
   /**
-   * @private
+   * A number representing how many pixels the bottom of the content has been
+   * adjusted, which could be by either padding or margin.
    */
-  adjustedBottom: number;
+  contentBottom: number;
 
   constructor(
     private _elementRef: ElementRef,
@@ -526,9 +528,9 @@ export class Content extends Ion {
       if (this._tabbarPlacement === 'top') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this.adjustedTop) {
+      if (newVal !== this.contentTop) {
         scrollEle.style.paddingTop = (newVal > 0 ? newVal + 'px' : '');
-        this.adjustedTop = newVal;
+        this.contentTop = newVal;
       }
 
       newVal = this._footerHeight + this._paddingBottom;
@@ -539,9 +541,9 @@ export class Content extends Ion {
           this._footerEle.style.bottom = (newVal - this._footerHeight - this._paddingBottom) + 'px';
         }
       }
-      if (newVal !== this.adjustedBottom) {
+      if (newVal !== this.contentBottom) {
         scrollEle.style.paddingBottom = (newVal > 0 ? newVal + 'px' : '');
-        this.adjustedBottom = newVal;
+        this.contentBottom = newVal;
       }
 
     } else {
@@ -550,18 +552,18 @@ export class Content extends Ion {
       if (this._tabbarPlacement === 'top') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this.adjustedTop) {
+      if (newVal !== this.contentTop) {
         scrollEle.style.marginTop = (newVal > 0 ? newVal + 'px' : '');
-        this.adjustedTop = newVal;
+        this.contentTop = newVal;
       }
 
       newVal = this._footerHeight;
       if (this._tabbarPlacement === 'bottom') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this.adjustedBottom) {
+      if (newVal !== this.contentBottom) {
         scrollEle.style.marginBottom = (newVal > 0 ? newVal + 'px' : '');
-        this.adjustedBottom = newVal;
+        this.contentBottom = newVal;
 
         if (newVal > 0 && this._footerEle) {
           this._footerEle.style.bottom = (newVal - this._footerHeight) + 'px';

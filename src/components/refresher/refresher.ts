@@ -219,8 +219,8 @@ export class Refresher {
     let coord = pointerCoord(ev);
     console.debug('Pull-to-refresh, onStart', ev.type, 'y:', coord.y);
 
-    if (this._content.adjustedTop > 0) {
-      let newTop = this._content.adjustedTop + 'px';
+    if (this._content.contentTop > 0) {
+      let newTop = this._content.contentTop + 'px';
       if (this._top !== newTop) {
         this._top = newTop;
       }
