@@ -29,7 +29,7 @@ class E2EPage {
       message: 'User was created successfully'
     });
 
-    toast.onDismiss(() => {
+    toast.onDidDismiss(() => {
       console.log('Dismissed toast');
     });
 
@@ -50,7 +50,7 @@ class E2EPage {
       duration: 5000
     });
 
-    toast.onDismiss(this.dismissHandler);
+    toast.onDidDismiss(this.dismissHandler);
     toast.present();
   }
 
@@ -59,7 +59,7 @@ class E2EPage {
       message: 'I am dismissed after 1.5 seconds',
       duration: 1500
     });
-    toast.onDismiss(this.dismissHandler);
+    toast.onDidDismiss(this.dismissHandler);
     toast.present();
   }
 
@@ -70,12 +70,12 @@ class E2EPage {
       closeButtonText: 'Ok',
       position: positionString
     });
-    toast.onDismiss(this.dismissHandler);
+    toast.onDidDismiss(this.dismissHandler);
     toast.present();
   }
 
   private dismissHandler(toast: Toast) {
-    console.info('Toast onDismiss()');
+    console.info('Toast onDidDismiss()');
   }
 
 }

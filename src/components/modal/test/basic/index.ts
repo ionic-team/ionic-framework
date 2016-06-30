@@ -36,8 +36,13 @@ class E2EPage {
     let modal = this.modalCtrl.create(ModalPassData, { userId: 8675309 });
     modal.present();
 
-    modal.onDismiss((data: any) => {
+    modal.onWillDismiss((data: any) => {
+      console.log('WILL DISMISS with data', data);
+      console.timeEnd('modal');
+    });
+    modal.onDidDismiss((data: any) => {
       console.log('modal data', data);
+      console.timeEnd('modal');
     });
   }
 
@@ -56,7 +61,7 @@ class E2EPage {
 
   presentModalWithInputs() {
 	  let modal = this.modalCtrl.create(ModalWithInputs);
-    modal.onDismiss((data: any) => {
+    modal.onDidDismiss((data: any) => {
       console.log('Modal with inputs data:', data);
     });
     modal.present();
@@ -153,27 +158,28 @@ class ModalPassData {
   }
 
   submit() {
+    console.time('modal');
     this.viewCtrl.dismiss(this.data);
   }
 
   ionViewLoaded(){
-    console.log("ModalPassData ionViewLoaded fired");
+    console.log('ModalPassData ionViewLoaded fired');
   }
 
   ionViewWillEnter(){
-    console.log("ModalPassData ionViewWillEnter fired");
+    console.log('ModalPassData ionViewWillEnter fired');
   }
 
   ionViewDidEnter(){
-    console.log("ModalPassData ionViewDidEnter fired");
+    console.log('ModalPassData ionViewDidEnter fired');
   }
 
   ionViewWillLeave(){
-    console.log("ModalPassData ionViewWillLeave fired");
+    console.log('ModalPassData ionViewWillLeave fired');
   }
 
   ionViewDidLeave(){
-    console.log("ModalPassData ionViewDidLeave fired");
+    console.log('ModalPassData ionViewDidLeave fired');
   }
 }
 
@@ -365,15 +371,15 @@ class ModalFirstPage {
   }
 
   ionViewLoaded(){
-    console.log("ModalFirstPage ionViewLoaded fired");
+    console.log('ModalFirstPage ionViewLoaded fired');
   }
 
   ionViewWillEnter(){
-    console.log("ModalFirstPage ionViewWillEnter fired");
+    console.log('ModalFirstPage ionViewWillEnter fired');
   }
 
   ionViewDidEnter(){
-    console.log("ModalFirstPage ionViewDidEnter fired");
+    console.log('ModalFirstPage ionViewDidEnter fired');
   }
 
   openActionSheet() {
@@ -446,15 +452,15 @@ class ModalSecondPage {
   }
 
   ionViewLoaded(){
-    console.log("ModalSecondPage ionViewLoaded");
+    console.log('ModalSecondPage ionViewLoaded');
   }
 
   ionViewWillEnter(){
-    console.log("ModalSecondPage ionViewWillEnter");
+    console.log('ModalSecondPage ionViewWillEnter');
   }
 
   ionViewDidEnter(){
-    console.log("ModalSecondPage ionViewDidEnter");
+    console.log('ModalSecondPage ionViewDidEnter');
   }
 }
 

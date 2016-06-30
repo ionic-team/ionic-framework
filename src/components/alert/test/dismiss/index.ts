@@ -24,7 +24,7 @@ export class E2EPage {
       ]
     });
 
-    alert.onDismiss(() => {
+    alert.onDidDismiss(() => {
       console.log('dismiss');
       this.nav.push(AnotherPage);
     });

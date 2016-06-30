@@ -87,7 +87,7 @@ export class Popover extends ViewController {
  * To dismiss the popover after creation, call the `dismiss()` method on the
  * `Popover` instance. The popover can also be dismissed from within the popover's
  * view by calling the `dismiss()` method on the [ViewController](../../nav/ViewController).
- * The `onDismiss` function can be called to perform an action after the popover
+ * The `onDidDismiss` function can be called to perform an action after the popover
  * is dismissed. The popover will dismiss when the backdrop is clicked, but this
  * can be disabled by setting `enableBackdropDismiss` to `false` in the popover
  * options.

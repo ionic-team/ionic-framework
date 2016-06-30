@@ -320,7 +320,7 @@ export class Select {
     overlay.present(alertOptions);
 
     this._isOpen = true;
-    overlay.onDismiss(() => {
+    overlay.onDidDismiss(() => {
       this._isOpen = false;
     });
   }

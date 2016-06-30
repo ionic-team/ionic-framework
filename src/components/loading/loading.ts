@@ -85,7 +85,7 @@ export class Loading extends ViewController {
  * will show even during page changes, but this can be disabled by setting
  * `dismissOnPageChange` to `true`. To dismiss the loading indicator after
  * creation, call the `dismiss()` method on the Loading instance. The
- * `onDismiss` function can be called to perform an action after the loading
+ * `onDidDismiss` function can be called to perform an action after the loading
  * indicator is dismissed.
  *
  * >Note that after the component is dismissed, it will not be usable anymore
@@ -126,7 +126,7 @@ export class Loading extends ViewController {
  *     duration: 5000
  *   });
  *
- *   loading.onDismiss(() => {
+ *   loading.onDidDismiss(() => {
  *     console.log('Dismissed loading');
  *   });
  *
