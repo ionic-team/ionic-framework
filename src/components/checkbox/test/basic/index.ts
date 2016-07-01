@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {Control, ControlGroup} from '@angular/common';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ionicBootstrap, Checkbox } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  fruitsForm: ControlGroup;
+  fruitsForm: FormGroup;
   grapeDisabled: boolean;
   grapeChecked: boolean;
   kiwiValue: boolean;
@@ -16,11 +16,11 @@ class E2EPage {
   formResults: string;
 
   constructor() {
-    this.fruitsForm = new ControlGroup({
-      "appleCtrl": new Control(true),
-      "bananaCtrl": new Control(true),
-      "cherryCtrl": new Control(false),
-      "grapeCtrl": new Control(true)
+    this.fruitsForm = new FormGroup({
+      "appleCtrl": new FormControl(true),
+      "bananaCtrl": new FormControl(true),
+      "cherryCtrl": new FormControl(false),
+      "grapeCtrl": new FormControl(true)
     });
 
     this.grapeDisabled = true;
@@ -36,17 +36,17 @@ class E2EPage {
     this.grapeDisabled = !this.grapeDisabled;
   }
 
-  kiwiChange(ev) {
-    console.log('kiwiChange', ev);
-    this.kiwiValue = ev.checked;
+  kiwiChange(checkbox: Checkbox) {
+    console.log('kiwiChange', checkbox);
+    this.kiwiValue = checkbox.checked;
   }
 
-  strawberryChange(ev) {
-    console.log('strawberryChange', ev);
-    this.strawberryValue = ev.checked;
+  strawberryChange(checkbox: Checkbox) {
+    console.log('strawberryChange', checkbox);
+    this.strawberryValue = checkbox.checked;
   }
 
-  doSubmit(ev) {
+  doSubmit(ev: UIEvent) {
     console.log('Submitting form', this.fruitsForm.value);
     this.formResults = JSON.stringify(this.fruitsForm.value);
     ev.preventDefault();

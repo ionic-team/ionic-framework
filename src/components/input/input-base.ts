@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { NgControl } from '@angular/common';
+import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
 import { closest, copyInputAttributes, Coordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
@@ -430,16 +430,15 @@ export class InputBase {
 
   /**
    * @private
-   * Angular2 Forms API method called by the view (NgControl) to register the
+   * Angular2 Forms API method called by the view (formControlName) to register the
    * onChange event handler that updates the model (Control).
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
    * @param {Function} fn  the onChange event handler.
    */
   registerOnChange(fn: any) { this.onChange = fn; }
 
   /**
    * @private
-   * Angular2 Forms API method called by the view (NgControl) to register
+   * Angular2 Forms API method called by the view (formControlName) to register
    * the onTouched event handler that marks model (Control) as touched.
    * @param {Function} fn  onTouched event handler.
    */

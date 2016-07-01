@@ -1,4 +1,5 @@
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 
 import { Menu } from '../components/menu/menu';
 import { MenuToggle } from '../components/menu/menu-toggle';
@@ -120,7 +121,7 @@ import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when'
 export const IONIC_DIRECTIVES: any[] = [
   // Angular
   CORE_DIRECTIVES,
-  FORM_DIRECTIVES,
+  REACTIVE_FORM_DIRECTIVES,
 
   // Content
   Menu,

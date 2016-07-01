@@ -9,28 +9,28 @@
 
 <ion-content>
 
-  <form (submit)="doSubmit($event)" [ngFormModel]="fruitsForm">
+  <form (submit)="doSubmit($event)" [formGroup]="fruitsForm">
 
     <ion-list>
 
       <ion-item>
-        <ion-label>Apple, ngControl</ion-label>
-        <ion-checkbox ngControl="appleCtrl"></ion-checkbox>
+        <ion-label>Apple, formControlName</ion-label>
+        <ion-checkbox formControlName="appleCtrl"></ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>Banana, ngControl</ion-label>
-        <ion-checkbox ngControl="bananaCtrl"></ion-checkbox>
+        <ion-label>Banana, formControlName</ion-label>
+        <ion-checkbox formControlName="bananaCtrl"></ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>Cherry, ngControl, disabled</ion-label>
-        <ion-checkbox disabled="true" ngControl="cherryCtrl"></ion-checkbox>
+        <ion-label>Cherry, formControlName, disabled</ion-label>
+        <ion-checkbox disabled="true" formControlName="cherryCtrl"></ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>Grape, ngControl, checked, disabled</ion-label>
-        <ion-checkbox [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl"></ion-checkbox>
+        <ion-label>Grape, formControlName, checked, disabled</ion-label>
+        <ion-checkbox [checked]="grapeChecked" [disabled]="grapeDisabled" formControlName="grapeCtrl"></ion-checkbox>
       </ion-item>
 
       <ion-item>

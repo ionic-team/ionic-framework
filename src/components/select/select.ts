@@ -1,5 +1,5 @@
-import { Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, Optional, Output, Provider, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/common';
+import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Provider, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
@@ -135,7 +135,7 @@ const SELECT_VALUE_ACCESSOR = new Provider(
   providers: [SELECT_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select {
+export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy {
   private _disabled: any = false;
   private _labelId: string;
   private _multi: boolean = false;
@@ -217,17 +217,20 @@ export class Select {
     }
     ev.preventDefault();
     ev.stopPropagation();
-    this._open();
+    this.open();
   }
 
   @HostListener('keyup.space')
   private _keyup() {
     if (!this._isOpen) {
-      this._open();
+      this.open();
     }
   }
 
-  private _open() {
+  /**
+   * Open the select interface.
+   */
+  open() {
     if (this._disabled) {
       return;
     }
@@ -436,8 +439,8 @@ export class Select {
    * @private
    */
   onChange(val: any) {
-    // onChange used when there is not an ngControl
-    console.debug('select, onChange w/out ngControl', val);
+    // onChange used when there is not an formControlName
+    console.debug('select, onChange w/out formControlName', val);
     this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
     this._updOpts();
     this.onTouched();

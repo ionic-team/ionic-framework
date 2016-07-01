@@ -247,15 +247,15 @@ class ToolbarModal {
         <ion-list>
           <ion-item>
             <ion-label floating>Title <span [hidden]="title.valid">(Required)</span></ion-label>
-            <ion-input ngControl="title" type="text" [(ngModel)]="data.title" #title="ngForm" required autofocus></ion-input>
+            <ion-input formControlName="title" type="text" [(ngModel)]="data.title" #title="ngForm" required autofocus></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Note <span [hidden]="note.valid">(Required)</span></ion-label>
-            <ion-input ngControl="note" type="text" [(ngModel)]="data.note" #note="ngForm" required></ion-input>
+            <ion-input formControlName="note" type="text" [(ngModel)]="data.note" #note="ngForm" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Icon</ion-label>
-            <ion-input ngControl="icon" type="text" [(ngModel)]="data.icon" #icon="ngForm" autocomplete="on" autocorrect="on"></ion-input>
+            <ion-input formControlName="icon" type="text" [(ngModel)]="data.icon" #icon="ngForm" autocomplete="on" autocorrect="on"></ion-input>
           </ion-item>
         </ion-list>
         <div padding>

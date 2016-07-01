@@ -1,5 +1,5 @@
 import { Component, Optional, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgControl } from '@angular/common';
+import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';

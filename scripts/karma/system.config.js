@@ -28,7 +28,7 @@ System.config({
       main: 'index.js',
       defaultExtension: 'js'
     },
-    '@angular/router': {
+    '@angular/forms': {
       main: 'index.js',
       defaultExtension: 'js'
     },

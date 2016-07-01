@@ -1,5 +1,5 @@
-import { Component, EventEmitter, forwardRef, HostListener, Input, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/common';
+import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Form } from '../../util/form';
 import { Item } from '../item/item';
@@ -68,7 +68,7 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
   providers: [CHECKBOX_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Checkbox {
+export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestroy {
   private _checked: boolean = false;
   private _init: boolean;
   private _disabled: boolean = false;
@@ -177,7 +177,7 @@ export class Checkbox {
    * @private
    */
   onChange(isChecked: boolean) {
-    // used when this input does not have an ngModel or ngControl
+    // used when this input does not have an ngModel or formControlName
     console.debug('checkbox, onChange (no ngModel)', isChecked);
     this._setChecked(isChecked);
     this.onTouched();

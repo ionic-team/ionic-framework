@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {Control, ControlGroup} from '@angular/common';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -11,7 +11,7 @@ class E2EPage {
   carFeatures: Array<string>;
   pets: Array<string>;
   petOptions: Array<{text: string, value: string}>;
-  authForm: ControlGroup;
+  authForm: FormGroup;
   status: string;
 
   constructor() {
@@ -27,17 +27,17 @@ class E2EPage {
     ];
     this.status = "checked";
 
-    this.authForm = new ControlGroup({
-      name: new Control(''),
-      select: new Control([1, '3'])
+    this.authForm = new FormGroup({
+      name: new FormControl(''),
+      select: new FormControl([1, '3'])
     });
   }
 
-  carChange(selectedValues) {
+  carChange(selectedValues: any) {
     console.log('carChange', selectedValues);
   }
 
-  onSubmit(data) {
+  onSubmit(data: any) {
     console.log('onSubmit', data);
   }
 

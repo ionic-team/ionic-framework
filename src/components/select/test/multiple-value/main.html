@@ -66,14 +66,14 @@
     <code>pets: {{pets}}</code><br>
   </p>
 
-  <form [ngFormModel]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
     <ion-list padding-vertical>
       <ion-item>
-        <ion-input ngControl="name" type="text"></ion-input>
+        <ion-input formControlName="name" type="text"></ion-input>
       </ion-item>
       <ion-item class="no-border">
         <ion-label>Select</ion-label>
-        <ion-select multiple="true" ngControl="select">
+        <ion-select multiple="true" formControlName="select">
           <ion-option>1</ion-option>
           <ion-option>2</ion-option>
           <ion-option>3</ion-option>

@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/common';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ionicBootstrap, SegmentButton } from '../../../../../src';
 
 
 @Component({
-  templateUrl: 'main.html',
-  providers: [FormBuilder]
+  templateUrl: 'main.html'
 })
 class E2EPage {
   relationship: string = 'enemies';
@@ -25,15 +24,15 @@ class E2EPage {
     this.isDisabled = !this.isDisabled;
   }
 
-  onSegmentChanged(segmentButton) {
+  onSegmentChanged(segmentButton: SegmentButton) {
     console.log("Segment changed to", segmentButton.value);
   }
 
-  onSegmentSelected(segmentButton) {
+  onSegmentSelected(segmentButton: SegmentButton) {
     console.log("Segment selected", segmentButton.value);
   }
 
-  doSubmit(ev) {
+  doSubmit(ev: UIEvent) {
     console.log('Submitting form', this.myForm.value);
     ev.preventDefault();
   }

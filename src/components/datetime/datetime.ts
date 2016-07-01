@@ -1,5 +1,5 @@
-import { Component, EventEmitter, forwardRef, HostListener, Input, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/common';
+import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
 import { Picker, PickerController } from '../picker/picker';
@@ -264,7 +264,7 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
   providers: [DATETIME_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class DateTime {
+export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestroy {
   private _disabled: any = false;
   private _labelId: string;
   private _text: string = '';
@@ -817,8 +817,8 @@ export class DateTime {
    * @private
    */
   onChange(val: any) {
-    // onChange used when there is not an ngControl
-    console.debug('datetime, onChange w/out ngControl', val);
+    // onChange used when there is not an formControlName
+    console.debug('datetime, onChange w/out formControlName', val);
     this.setValue(val);
     this.updateText();
     this.onTouched();

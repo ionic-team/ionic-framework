@@ -1,31 +1,31 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
-import {Control, ControlGroup} from '@angular/common';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ionicBootstrap, RadioButton, RadioGroup } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  fruits: Control;
-  fruitsForm: ControlGroup;
-  currenciesControl: Control;
-  currencyForm: ControlGroup;
+  fruits: FormControl;
+  fruitsForm: FormGroup;
+  currenciesControl: FormControl;
+  currencyForm: FormGroup;
   currencies: Array<string>;
   items: Array<{description: string, value: any}>;
   relationship: string;
   selectedTime: number = 60;
 
   constructor() {
-    this.fruits = new Control('apple');
+    this.fruits = new FormControl('apple');
 
-    this.fruitsForm = new ControlGroup({
+    this.fruitsForm = new FormGroup({
       'fruits': this.fruits
     });
 
     this.currencies = ['USD', 'EUR'];
-    this.currenciesControl = new Control('EUR');
-    this.currencyForm = new ControlGroup({
+    this.currenciesControl = new FormControl('EUR');
+    this.currencyForm = new FormGroup({
       'currenciesControl': this.currenciesControl
     });
 
@@ -51,25 +51,25 @@ class E2EPage {
     this.fruits.updateValue('cherry');
   }
 
-  doSubmit(event) {
+  doSubmit(ev: UIEvent) {
     console.log('Submitting form', this.fruitsForm.value);
-    event.preventDefault();
+    ev.preventDefault();
   }
 
-  petChange(ev) {
-    console.log('petChange', ev);
+  petChange(radioGroup: RadioGroup) {
+    console.log('petChange', radioGroup);
   }
 
-  dogSelect(ev) {
-    console.log('dogSelect', ev);
+  dogSelect(radioButton: RadioButton) {
+    console.log('dogSelect', radioButton);
   }
 
-  catSelect(ev) {
-    console.log('catSelect', ev);
+  catSelect(radioButton: RadioButton) {
+    console.log('catSelect', radioButton);
   }
 
-  turtleSelect(ev) {
-    console.log('turtleSelect', ev);
+  turtleSelect(radioButton: RadioButton) {
+    console.log('turtleSelect', radioButton);
   }
 }
 

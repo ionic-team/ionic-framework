@@ -1,4 +1,5 @@
 import { enableProdMode, PLATFORM_DIRECTIVES, provide } from '@angular/core';
+import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { HTTP_PROVIDERS } from '@angular/http';
 
 import { ActionSheetController } from '../components/action-sheet/action-sheet';
@@ -59,6 +60,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     AlertController,
     App,
     provide(Config, {useValue: config}),
+    disableDeprecatedForms(),
     provide(Events, {useValue: events}),
     provide(FeatureDetect, {useValue: featureDetect}),
     Form,
@@ -71,6 +73,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     PopoverController,
     provide(Platform, {useValue: platform}),
     provide(PLATFORM_DIRECTIVES, {useValue: IONIC_DIRECTIVES, multi: true}),
+    provideForms(),
     TapClick,
     ToastController,
     Translate,

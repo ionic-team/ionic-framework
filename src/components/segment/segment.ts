@@ -1,5 +1,5 @@
 import { Component, ContentChildren, Directive, ElementRef, EventEmitter, HostListener, Input, Output, Optional, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
-import { NgControl } from '@angular/common';
+import { NgControl } from '@angular/forms';
 
 import { isPresent, isTrueProperty } from '../../util/util';
 
@@ -152,8 +152,8 @@ export class SegmentButton {
  *   </ion-segment>
  *
  *   <!-- Segment in a form -->
- *   <form [ngFormModel]="myForm">
- *     <ion-segment ngControl="mapStyle" danger>
+ *   <form [formGroup]="myForm">
+ *     <ion-segment formControlName="mapStyle" danger>
  *       <ion-segment-button value="standard">
  *         Standard
  *       </ion-segment-button>

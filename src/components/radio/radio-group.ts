@@ -1,5 +1,5 @@
-import { ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, Provider, Renderer } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/common';
+import { AfterContentInit, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, Provider, Renderer } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ListHeader } from '../list/list';
 import { isCheckedProperty } from '../../util/util';
@@ -67,7 +67,7 @@ const RADIO_VALUE_ACCESSOR = new Provider(
   },
   providers: [RADIO_VALUE_ACCESSOR]
 })
-export class RadioGroup {
+export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   private _btns: Array<RadioButton> = [];
   private _fn: Function;
   private _ids: number = -1;
@@ -98,6 +98,16 @@ export class RadioGroup {
   /**
    * @private
    */
+  ngAfterContentInit() {
+    let activeButton = this._btns.find(b => b.checked);
+    if (activeButton) {
+      this._setActive(activeButton);
+    }
+  }
+
+  /**
+   * @private
+   */
   writeValue(val: any) {
     console.debug('radio group, writeValue', val);
     this.value = val;
@@ -114,20 +124,10 @@ export class RadioGroup {
   /**
    * @private
    */
-  ngAfterContentInit() {
-    let activeButton = this._btns.find(b => b.checked);
-    if (activeButton) {
-      this._setActive(activeButton);
-    }
-  }
-
-  /**
-   * @private
-   */
   registerOnChange(fn: Function): void {
     this._fn = fn;
     this.onChange = (val: any) => {
-      // onChange used when there's an ngControl
+      // onChange used when there's an formControlName
       console.debug('radio group, onChange', val);
       fn(val);
       this.value = val;
@@ -212,8 +212,8 @@ export class RadioGroup {
    * @private
    */
   onChange(val: any) {
-    // onChange used when there is not an ngControl
-    console.debug('radio group, onChange w/out ngControl', val);
+    // onChange used when there is not an formControlName
+    console.debug('radio group, onChange w/out formControlName', val);
     this.value = val;
     this._update();
     this.onTouched();

@@ -10,8 +10,8 @@ module.exports = {
       '@angular/common': {
         commonjs2: ['angular2', 'common']
       },
-      '@angular/router' : {
-        commonjs2: ['angular2', 'router']
+      '@angular/forms' : {
+        commonjs2: ['angular2', 'forms']
       },
       '@angular/http': {
         commonjs2: ['angular2', 'http']

@@ -41,11 +41,11 @@ export class E2EPage {
       </ion-navbar>
     </ion-header>
     <ion-content padding>
-      <form [ngFormModel]="form" (ngSubmit)="submit(form.value)">
+      <form [formGroup]="form" (ngSubmit)="submit(form.value)">
     		<ion-list>
     			<ion-item [class.error]="!form.controls.name.valid && form.controls.name.touched">
     				<ion-label>Name</ion-label>
-    				<ion-input type="text" [(ngFormControl)]="form.controls.name"></ion-input>
+    				<ion-input type="text" [(formControl)]="form.controls.name"></ion-input>
     			</ion-item>
   			</ion-list>
   			<div padding style="padding-top: 0 !important;">

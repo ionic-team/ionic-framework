@@ -1,9 +1,9 @@
-import {Component, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, ViewChild, ViewEncapsulation} from '@angular/core';
-import {NgControl} from '@angular/common';
+import { Component, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NgControl} from '@angular/forms';
 
-import {Config} from '../../config/config';
-import {isPresent} from '../../util/util';
-import {Debouncer} from '../../util/debouncer';
+import { Config } from '../../config/config';
+import { isPresent } from '../../util/util';
+import { Debouncer } from '../../util/debouncer';
 
 
 /**

@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, Inject, Optional, Output, Provider, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Inject, OnDestroy, OnInit, Optional, Output, Provider, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
 import { Coordinates, pointerCoord, raf } from '../../util/dom';
@@ -34,7 +34,7 @@ const RANGE_VALUE_ACCESSOR = new Provider(
     'tabindex': '0'
   }
 })
-export class RangeKnob {
+export class RangeKnob implements OnInit {
   private _ratio: number;
   private _val: number;
   private _x: string;
@@ -195,7 +195,7 @@ export class RangeKnob {
   providers: [RANGE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Range {
+export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   private _dual: boolean = false;
   private _pin: boolean;
   private _disabled: boolean = false;
@@ -661,7 +661,7 @@ export class Range {
    * @private
    */
   onChange(val: any) {
-    // used when this input does not have an ngModel or ngControl
+    // used when this input does not have an ngModel or formControlName
     this.onTouched();
   }
 
