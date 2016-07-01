@@ -1,8 +1,11 @@
 import { Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 
 import { App } from '../app/app';
+import { Badge } from '../badge/badge';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
+import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
 import { isBlank, isTrueProperty } from '../../util/util';
 import { nativeRaf } from '../../util/dom';
@@ -134,22 +137,20 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-tabs',
-  template:
-    '<ion-tabbar role="tablist" #tabbar>' +
-      '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">' +
-        '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
-        '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
-        '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
-        '<ion-button-effect></ion-button-effect>' +
-      '</a>' +
-      '<tab-highlight></tab-highlight>' +
-    '</ion-tabbar>' +
-    '<ng-content></ng-content>' +
-    '<div #portal tab-portal></div>',
-  directives: [
-    TabButton,
-    TabHighlight
-  ],
+  template: `
+    <ion-tabbar role="tablist" #tabbar>
+      <a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">
+        <ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>
+        <span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>
+        <ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>
+        <ion-button-effect></ion-button-effect>
+      </a>
+      <tab-highlight></tab-highlight>
+    </ion-tabbar>
+    <ng-content></ng-content>
+    <div #portal tab-portal></div>
+  `,
+  directives: [Badge, Icon, NgClass, NgFor, NgIf, TabButton, TabHighlight],
   encapsulation: ViewEncapsulation.None,
 })
 export class Tabs extends Ion {

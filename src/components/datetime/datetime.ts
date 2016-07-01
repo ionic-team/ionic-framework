@@ -10,7 +10,7 @@ import { merge, isBlank, isPresent, isTrueProperty, isArray, isString } from '..
 import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, convertDataToISO, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
 import { NavController } from '../nav/nav-controller';
 
-const DATETIME_VALUE_ACCESSOR = new Provider(
+export const DATETIME_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => DateTime), multi: true});
 
 
@@ -248,16 +248,17 @@ const DATETIME_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: 'ion-datetime',
-  template:
-    '<div class="datetime-text">{{_text}}</div>' +
-    '<button aria-haspopup="true" ' +
-            'type="button" ' +
-            '[id]="id" ' +
-            'category="item-cover" ' +
-            '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
-    '</button>',
+  template: `
+    <div class="datetime-text">{{_text}}</div>
+    <button aria-haspopup="true"
+            type="button"
+            [id]="id"
+            category="item-cover"
+            [attr.aria-labelledby]="_labelId"
+            [attr.aria-disabled]="_disabled"
+            class="item-cover">
+    </button>
+  `,
   host: {
     '[class.datetime-disabled]': '_disabled'
   },

@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Inject, OnDestroy, OnInit, Optional, Output, Provider, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
@@ -9,7 +10,7 @@ import { Item } from '../item/item';
 import { UIEventManager } from '../../util/ui-event-manager';
 
 
-const RANGE_VALUE_ACCESSOR = new Provider(
+export const RANGE_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Range), multi: true});
 
 /**
@@ -17,9 +18,11 @@ const RANGE_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: '.range-knob-handle',
-  template:
-    '<div class="range-pin" *ngIf="range.pin">{{_val}}</div>' +
-    '<div class="range-knob"></div>',
+  template: `
+    <div class="range-pin" *ngIf="range.pin">{{_val}}</div>
+    <div class="range-knob"></div>
+  `,
+  directives: [NgIf],
   host: {
     '[class.range-knob-pressed]': 'pressed',
     '[class.range-knob-min]': '_val===range.min',
@@ -176,22 +179,23 @@ export class RangeKnob implements OnInit {
  */
 @Component({
   selector: 'ion-range',
-  template:
-    '<ng-content select="[range-left]"></ng-content>' +
-    '<div class="range-slider" #slider>' +
-      '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>' +
-      '<div class="range-bar"></div>' +
-      '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>' +
-      '<div class="range-knob-handle"></div>' +
-      '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
-    '</div>' +
-    '<ng-content select="[range-right]"></ng-content>',
+  template: `
+    <ng-content select="[range-left]"></ng-content>
+    <div class="range-slider" #slider>
+      <div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>
+      <div class="range-bar"></div>
+      <div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>
+      <div class="range-knob-handle"></div>
+      <div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>
+    </div>
+    <ng-content select="[range-right]"></ng-content>
+  `,
+  directives: [NgFor, NgIf, RangeKnob],
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',
     '[class.range-has-pin]': '_pin'
   },
-  directives: [RangeKnob],
   providers: [RANGE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })

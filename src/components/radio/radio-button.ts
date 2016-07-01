@@ -43,19 +43,20 @@ import { RadioGroup } from './radio-group';
  */
 @Component({
   selector: 'ion-radio',
-  template:
-    '<div class="radio-icon" [class.radio-checked]="_checked">' +
-      '<div class="radio-inner"></div>' +
-    '</div>' +
-    '<button role="radio" ' +
-            'type="button" ' +
-            'category="item-cover" ' +
-            '[id]="id" ' +
-            '[attr.aria-checked]="_checked" ' +
-            '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
-    '</button>',
+  template: `
+    <div class="radio-icon" [class.radio-checked]="_checked">
+      <div class="radio-inner"></div>
+    </div>
+    <button role="radio"
+            type="button"
+            category="item-cover"
+            [id]="id"
+            [attr.aria-checked]="_checked"
+            [attr.aria-labelledby]="_labelId"
+            [attr.aria-disabled]="_disabled"
+            class="item-cover">
+    </button>
+  `,
   host: {
     '[class.radio-disabled]': '_disabled'
   },

@@ -2,6 +2,7 @@ import { Component, Directive, ElementRef, forwardRef, Inject, Input, Optional }
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { NavController } from '../nav/nav-controller';
@@ -94,28 +95,29 @@ class ToolbarBackground {
  */
 @Component({
   selector: 'ion-navbar',
-  template:
-    '<div class="toolbar-background"></div>' +
-    '<button category="bar-button" class="back-button" [hidden]="_hideBb">' +
-      '<span class="button-inner">' +
-        '<ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>' +
-        '<span class="back-button-text">' +
-          '<span class="back-default">{{_bbText}}</span>' +
-        '</span>' +
-      '</span>' +
-    '</button>' +
-    '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
-    '<ng-content select="ion-buttons[start]"></ng-content>' +
-    '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
-    '<div class="toolbar-content">' +
-      '<ng-content></ng-content>' +
-    '</div>',
+  template: `
+    <div class="toolbar-background"></div>
+    <button category="bar-button" class="back-button" [hidden]="_hideBb">
+      <span class="button-inner">
+        <ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>
+        <span class="back-button-text">
+          <span class="back-default">{{_bbText}}</span>
+        </span>
+      </span>
+    </button>
+    <ng-content select="[menuToggle],ion-buttons[left]"></ng-content>
+    <ng-content select="ion-buttons[start]"></ng-content>
+    <ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>
+    <div class="toolbar-content">
+      <ng-content></ng-content>
+    </div>
+  `,
+  directives: [BackButton, BackButtonText, Icon, ToolbarBackground],
   host: {
     '[hidden]': '_hidden',
     'class': 'toolbar',
     '[class.statusbar-padding]': '_sbPadding'
-  },
-  directives: [BackButton, BackButtonText, ToolbarBackground]
+  }
 })
 export class Navbar extends ToolbarBase {
   private _bbIcon: string;

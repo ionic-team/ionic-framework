@@ -1,12 +1,15 @@
-import {Component, ElementRef, Renderer, HostListener, ViewEncapsulation} from '@angular/core';
+import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
+import { NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { NgModel } from '@angular/forms';
 
-import {Animation} from '../../animations/animation';
-import {Config} from '../../config/config';
-import {isPresent} from '../../util/util';
-import {Key} from '../../util/key';
-import {NavParams} from '../nav/nav-params';
-import {Transition, TransitionOptions} from '../../transitions/transition';
-import {ViewController} from '../nav/view-controller';
+import { Animation } from '../../animations/animation';
+import { Backdrop } from '../backdrop/backdrop';
+import { Config } from '../../config/config';
+import { isPresent } from '../../util/util';
+import { Key } from '../../util/key';
+import { NavParams } from '../nav/nav-params';
+import { Transition, TransitionOptions } from '../../transitions/transition';
+import { ViewController } from '../nav/view-controller';
 
 
 /**
@@ -62,6 +65,7 @@ import {ViewController} from '../nav/view-controller';
       </div>
     </div>
     `,
+  directives: [Backdrop, NgClass, NgFor, NgIf, NgModel, NgSwitch, NgSwitchCase, NgSwitchDefault],
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',

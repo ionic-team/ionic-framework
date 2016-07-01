@@ -5,7 +5,7 @@ import { ListHeader } from '../list/list';
 import { isCheckedProperty } from '../../util/util';
 import { RadioButton } from './radio-button';
 
-const RADIO_VALUE_ACCESSOR = new Provider(
+export const RADIO_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => RadioGroup), multi: true});
 
 /**

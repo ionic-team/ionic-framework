@@ -2,9 +2,10 @@ import { Component, ComponentResolver, HostListener, Renderer, ViewChild, ViewCo
 
 import { addSelector } from '../../config/bootstrap';
 import { Animation } from '../../animations/animation';
-import { pascalCaseToDashCase } from '../../util/util';
+import { Backdrop } from '../backdrop/backdrop';
 import { Key } from '../../util/key';
 import { NavParams } from '../nav/nav-params';
+import { pascalCaseToDashCase } from '../../util/util';
 import { PageTransition } from '../../transitions/page-transition';
 import { TransitionOptions } from '../../transitions/transition';
 import { ViewController } from '../nav/view-controller';
@@ -21,7 +22,8 @@ import { windowDimensions } from '../../util/dom';
     <div class="modal-wrapper">
       <div #viewport nav-viewport></div>
     </div>
-  `
+  `,
+  directives: [Backdrop]
 })
 export class ModalCmp {
 

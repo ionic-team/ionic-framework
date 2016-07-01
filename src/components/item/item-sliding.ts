@@ -178,9 +178,10 @@ const enum SlidingState {
  */
 @Component({
   selector: 'ion-item-sliding',
-  template:
-    '<ng-content select="ion-item,[ion-item]"></ng-content>' +
-    '<ng-content select="ion-item-options"></ng-content>',
+  template: `
+    <ng-content select="ion-item,[ion-item]"></ng-content>
+    <ng-content select="ion-item-options"></ng-content>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

@@ -42,9 +42,10 @@ import { isPresent, isTrueProperty } from '../../util/util';
  */
 @Component({
   selector: 'ion-segment-button',
-  template:
-    '<ng-content></ng-content>' +
-    '<ion-button-effect></ion-button-effect>',
+  template: `
+    <ng-content></ng-content>
+    <ion-button-effect></ion-button-effect>
+  `,
   host: {
     'tappable': '',
     'class': 'segment-button',

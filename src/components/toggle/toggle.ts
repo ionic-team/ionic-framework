@@ -8,7 +8,7 @@ import { pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../util/ui-event-manager';
 
 
-const TOGGLE_VALUE_ACCESSOR = new Provider(
+export const TOGGLE_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Toggle), multi: true});
 
 
@@ -51,19 +51,20 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: 'ion-toggle',
-  template:
-    '<div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">' +
-      '<div class="toggle-inner"></div>' +
-    '</div>' +
-    '<button role="checkbox" ' +
-            'type="button" ' +
-            'category="item-cover" ' +
-            '[id]="id" ' +
-            '[attr.aria-checked]="_checked" ' +
-            '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
-    '</button>',
+  template: `
+    <div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">
+      <div class="toggle-inner"></div>
+    </div>
+    <button role="checkbox"
+            type="button"
+            category="item-cover"
+            [id]="id"
+            [attr.aria-checked]="_checked"
+            [attr.aria-labelledby]="_labelId"
+            [attr.aria-disabled]="_disabled"
+            class="item-cover">
+    </button>
+  `,
   host: {
     '[class.toggle-disabled]': '_disabled'
   },

@@ -2,6 +2,7 @@ import { Component, ComponentResolver, ElementRef, HostListener, Renderer, ViewC
 
 import { addSelector } from '../../config/bootstrap';
 import { Animation } from '../../animations/animation';
+import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { CSS, nativeRaf } from '../../util/dom';
 import { isPresent, pascalCaseToDashCase } from '../../util/util';
@@ -27,7 +28,8 @@ import { ViewController } from '../nav/view-controller';
         </div>
       </div>
     </div>
-  `
+  `,
+  directives: [Backdrop]
 })
 export class PopoverCmp {
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;

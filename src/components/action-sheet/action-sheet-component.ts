@@ -1,8 +1,11 @@
 import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 
 import { Animation } from '../../animations/animation';
+import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
+import { Icon } from '../icon/icon';
 import { Key } from '../../util/key';
 import { NavParams } from '../nav/nav-params';
 import { Transition, TransitionOptions } from '../../transitions/transition';
@@ -35,6 +38,7 @@ import { ViewController } from '../nav/view-controller';
       </div>
     </div>
     `,
+  directives: [Backdrop, Icon, NgClass, NgFor, NgIf],
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',

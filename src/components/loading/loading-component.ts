@@ -1,9 +1,12 @@
 import { Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
+import { NgIf } from '@angular/common';
 
 import { Animation } from '../../animations/animation';
+import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { isDefined, isPresent, isUndefined } from '../../util/util';
 import { NavParams } from '../nav/nav-params';
+import { Spinner } from '../spinner/spinner';
 import { Transition, TransitionOptions } from '../../transitions/transition';
 import { ViewController} from '../nav/view-controller';
 
@@ -13,14 +16,16 @@ import { ViewController} from '../nav/view-controller';
 */
 @Component({
   selector: 'ion-loading',
-  template:
-    '<ion-backdrop [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
-    '<div class="loading-wrapper">' +
-      '<div *ngIf="showSpinner" class="loading-spinner">' +
-        '<ion-spinner [name]="d.spinner"></ion-spinner>' +
-      '</div>' +
-      '<div *ngIf="d.content" [innerHTML]="d.content" class="loading-content"></div>' +
-    '</div>',
+  template: `
+    <ion-backdrop [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>
+    <div class="loading-wrapper">
+      <div *ngIf="showSpinner" class="loading-spinner">
+        <ion-spinner [name]="d.spinner"></ion-spinner>
+      </div>
+      <div *ngIf="d.content" [innerHTML]="d.content" class="loading-content"></div>
+    </div>
+  `,
+  directives: [Backdrop, NgIf, Spinner],
   host: {
     'role': 'dialog'
   },

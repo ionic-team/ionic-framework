@@ -1,7 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { DomSanitizationService } from '@angular/platform-browser';
 
 import { Animation } from '../../animations/animation';
+import { Backdrop } from '../backdrop/backdrop';
 import { cancelRaf, pointerCoord, raf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString } from '../../util/util';
 import { Config } from '../../config/config';
@@ -28,6 +30,7 @@ import { ViewController } from '../nav/view-controller';
     </div>
     <div *ngIf="col.suffix" class="picker-suffix" [style.width]="col.suffixWidth">{{col.suffix}}</div>
   `,
+  directives: [NgFor, NgIf],
   host: {
     '[style.min-width]': 'col.columnWidth',
     '[class.picker-opts-left]': 'col.align=="left"',
@@ -363,10 +366,10 @@ export class PickerColumnCmp {
       </div>
     </div>
   `,
+  directives: [Backdrop, NgClass, NgFor, PickerColumnCmp],
   host: {
     'role': 'dialog'
   },
-  directives: [PickerColumnCmp],
   encapsulation: ViewEncapsulation.None,
 })
 export class PickerCmp {

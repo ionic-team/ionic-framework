@@ -179,9 +179,11 @@ import { Platform } from '../../platform/platform';
   host: {
     'role': 'navigation'
   },
-  template:
-    '<ng-content></ng-content>' +
-    '<ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>',
+  template: `
+    <ng-content></ng-content>
+    <ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>
+  `,
+  directives: [Backdrop],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -281,17 +283,17 @@ export class Menu extends Ion {
   /**
    * @output {event} When the menu is being dragged open.
    */
-  @Output() ionDrag: EventEmitter<number> = new EventEmitter();
+  @Output() ionDrag: EventEmitter<number> = new EventEmitter<number>();
 
   /**
    * @output {event} When the menu has been opened.
    */
-  @Output() ionOpen: EventEmitter<boolean> = new EventEmitter();
+  @Output() ionOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   /**
    * @output {event} When the menu has been closed.
    */
-  @Output() ionClose: EventEmitter<boolean> = new EventEmitter();
+  @Output() ionClose: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private _menuCtrl: MenuController,
