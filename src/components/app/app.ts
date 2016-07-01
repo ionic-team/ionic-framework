@@ -240,7 +240,7 @@ export class App {
   /**
    * @private
    */
-  getRegisteredComponent(cls: any): any {
+  private getRegisteredComponent(cls: any): any {
     // deprecated warning: added 2016-04-28, beta7
     console.warn('Using app.getRegisteredComponent() to query components has been deprecated. ' +
                  'Please use Angular\'s ViewChild annotation instead:\n\nhttp://learnangular2.com/viewChild/');

@@ -343,20 +343,6 @@ export class Slides extends Ion {
       this.options = {};
     }
 
-    if (isPresent(this.pager)) {
-      // beta.5 2016-04-18 deprecated warning
-      // Pager should be passed as an option
-      console.warn('The "pager" attribute has been deprecated. Please pass it in options.');
-      // Remove this with the deprecation warning
-      this.showPager = isTrueProperty(this.pager);
-    }
-
-    if (isPresent(this.zoom)) {
-      // beta.5 2016-04-18 deprecated warning
-      // Zoom should be passed as an option
-      console.warn('The "zoom" attribute has been deprecated. Please pass it in options.');
-    }
-
     if (isPresent(this.options.pager)) {
       this.showPager = isTrueProperty(this.options.pager);
     }
