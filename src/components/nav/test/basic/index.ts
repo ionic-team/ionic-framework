@@ -417,4 +417,6 @@ class E2EApp {
   }
 }
 
-ionicBootstrap(E2EApp);
+ionicBootstrap(E2EApp).then((componetRef) => {
+  console.log('ionicBootstrap', componetRef);
+});

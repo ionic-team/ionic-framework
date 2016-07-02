@@ -35,11 +35,14 @@ export function ionicBootstrap(appRootComponent: any, customProviders?: Array<an
   let providers = ionicProviders(customProviders, config);
   providers.push({provide: UserComponent, useValue: appRootComponent});
 
-  cssReady(() => {
-    // call angular bootstrap
-    bootstrap(AppRoot, providers).then(ngComponentRef => {
-      // ionic app has finished bootstrapping
-      ionicPostBootstrap(ngComponentRef);
+  return new Promise((resolve) => {
+    cssReady(() => {
+      // call angular bootstrap
+      bootstrap(AppRoot, providers).then(ngComponentRef => {
+        // ionic app has finished bootstrapping
+        ionicPostBootstrap(ngComponentRef);
+        resolve(ngComponentRef);
+      });
     });
   });
 }
