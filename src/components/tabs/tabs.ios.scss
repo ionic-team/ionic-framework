@@ -16,9 +16,10 @@ $tab-button-ios-inactive-color:       $toolbar-ios-inactive-color !default;
 
 
 ion-tabbar {
+  justify-content: center;
+
   border-top: 1px solid $toolbar-ios-border-color;
   background: $tabbar-ios-background;
-  justify-content: center;
 }
 
 ion-tabs[tabbarPlacement=top] ion-tabbar {
