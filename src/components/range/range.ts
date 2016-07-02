@@ -300,7 +300,8 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @input {number} If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
+   * @input {number} How long, in milliseconds, to wait to trigger the `ionChange`
+   * event after each change in the range value. Default `0`.
    */
   @Input()
   get debounce(): number {
