@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, ElementRef, Input } from '@angular/core';
 
 import { AppRoot } from '../app/app';
 import { isTrueProperty } from '../../util/util';
@@ -39,7 +39,7 @@ export class Backdrop {
   private pushed: boolean = false;
   @Input() disableScroll = true;
 
-  constructor(private _appRoot: AppRoot) {}
+  constructor(private _appRoot: AppRoot, private _elementRef: ElementRef) {}
 
   ngOnInit() {
     if (isTrueProperty(this.disableScroll)) {
@@ -53,6 +53,10 @@ export class Backdrop {
       Backdrop.pop(this._appRoot);
       this.pushed = false;
     }
+  }
+
+  getNativeElement(): HTMLElement {
+    return this._elementRef.nativeElement;
   }
 
 }

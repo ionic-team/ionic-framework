@@ -614,7 +614,7 @@ export class Menu extends Ion {
    * @private
    */
   getBackdropElement(): HTMLElement {
-    return this.backdrop.elementRef.nativeElement;
+    return this.backdrop.getNativeElement();
   }
 
   /**
