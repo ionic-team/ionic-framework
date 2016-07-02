@@ -113,8 +113,18 @@ export class ItemReorderGesture {
 
     let toIndex = this.lastToIndex;
     let fromIndex = indexForItem(this.selectedItemEle);
-    this.selectedItemEle.classList.remove(ITEM_REORDER_ACTIVE);
-    this.selectedItemEle = null;
+    let reorderInactive = () => {
+      this.selectedItemEle.style.transition = '';
+      this.selectedItemEle.classList.remove(ITEM_REORDER_ACTIVE);
+      this.selectedItemEle = null;
+    };
+
+    if (toIndex === fromIndex) {
+      this.selectedItemEle.style.transition = 'transform 200ms ease-in-out';
+      setTimeout(reorderInactive, 200);
+    } else {
+      reorderInactive();
+    }
     this.list.reorderEmit(fromIndex, toIndex);
   }
 
