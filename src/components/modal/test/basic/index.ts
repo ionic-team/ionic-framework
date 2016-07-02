@@ -1,6 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 
 import { ActionSheetController, Config, ionicBootstrap, ModalController, NavController, NavParams, PageTransition, Platform, TransitionOptions, ViewController } from '../../../../../src';
+
+
+@Injectable()
+class SomeComponentProvider {
+  constructor(private config: Config) {
+    console.log('SomeComponentProvider constructor')
+  }
+
+  getName() {
+    return 'Jenny';
+  }
+}
+
+@Injectable()
+class SomeAppProvider {
+  constructor(private config: Config) {
+    console.log('SomeAppProvider constructor')
+  }
+
+  getData() {
+    return 'Some data';
+  }
+}
+
 
 @Component({
   templateUrl: 'main.html'
@@ -145,16 +169,18 @@ class NavigableModal2 {
       </ion-list>
       <button full (click)="submit()">Submit</button>
     </ion-content>
-  `
+  `,
+  providers: [SomeComponentProvider]
 })
 class ModalPassData {
   data: any;
 
-  constructor(params: NavParams, private viewCtrl: ViewController) {
+  constructor(params: NavParams, private viewCtrl: ViewController, someComponentProvider: SomeComponentProvider, someAppProvider: SomeAppProvider) {
     this.data = {
       userId: params.get('userId'),
-      name: 'Jenny'
+      name: someComponentProvider.getName()
     };
+    console.log('SomeAppProvider Data', someAppProvider.getData());
   }
 
   submit() {
@@ -472,7 +498,7 @@ class E2EApp {
   root = E2EPage;
 }
 
-ionicBootstrap(E2EApp);
+ionicBootstrap(E2EApp, [SomeAppProvider]);
 
 
 class FadeIn extends PageTransition {
