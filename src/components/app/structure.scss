@@ -211,6 +211,11 @@ ion-content.js-scroll > scroll-content {
   will-change: initial;
 }
 
+.disable-scroll ion-page > ion-content > scroll-content {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
 
 [nav-viewport],
 [nav-portal],

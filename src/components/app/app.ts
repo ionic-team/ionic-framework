@@ -1,4 +1,4 @@
-import { Component, ComponentResolver, EventEmitter, Injectable, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentResolver, EventEmitter, HostBinding, Injectable, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { ClickBlock } from '../../util/click-block';
@@ -296,6 +296,8 @@ export class AppRoot {
       this._viewport.insert(componentRef.hostView, 0);
     });
   }
+
+  @HostBinding('class.disable-scroll') disableScroll: boolean = false;
 
 }
 
