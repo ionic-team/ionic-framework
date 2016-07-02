@@ -72,8 +72,12 @@ ion-tab scroll-cotent {
   display: none;
 }
 
+ion-tab {
+  transform: translateY(-200%);
+}
+
 ion-tab.show-tab {
-  z-index: $z-index-selected-tab;
+  transform: translateY(0);
 }
 
 ion-tab.show-tab scroll-cotent {
