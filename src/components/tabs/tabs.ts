@@ -139,13 +139,15 @@ import { ViewController } from '../nav/view-controller';
   selector: 'ion-tabs',
   template: `
     <ion-tabbar role="tablist" #tabbar>
-      <a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">
-        <ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>
-        <span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>
-        <ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>
-        <ion-button-effect></ion-button-effect>
-      </a>
-      <tab-highlight></tab-highlight>
+      <div class="tabbar-container">
+        <a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">
+          <ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>
+          <span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>
+          <ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>
+          <ion-button-effect></ion-button-effect>
+        </a>
+        <tab-highlight></tab-highlight>
+      </div>
     </ion-tabbar>
     <ng-content></ng-content>
     <div #portal tab-portal></div>

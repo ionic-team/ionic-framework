@@ -14,10 +14,11 @@ $tab-button-ios-max-width:            240px !default;
 $tab-button-ios-active-color:         $toolbar-ios-active-color !default;
 $tab-button-ios-inactive-color:       $toolbar-ios-inactive-color !default;
 
+.tabbar-container {
+  justify-content: center;
+}
 
 ion-tabbar {
-  justify-content: center;
-
   border-top: 1px solid $toolbar-ios-border-color;
   background: $tabbar-ios-background;
 }
