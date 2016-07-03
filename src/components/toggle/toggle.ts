@@ -242,11 +242,12 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
    */
   ngAfterContentInit() {
     this._init = true;
-    this._events.pointerEventsRef(this._elementRef,
-      (ev: any) => this.pointerDown(ev),
-      (ev: any) => this.pointerMove(ev),
-      (ev: any) => this.pointerUp(ev)
-    );
+    this._events.pointerEvents({
+      elementRef: this._elementRef,
+      pointerDown: this.pointerDown.bind(this),
+      pointerMove: this.pointerMove.bind(this),
+      pointerUp: this.pointerUp.bind(this)
+    });
   }
 
   /**

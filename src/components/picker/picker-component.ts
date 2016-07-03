@@ -74,11 +74,12 @@ export class PickerColumnCmp {
     this.setSelected(this.col.selectedIndex, 0);
 
     // Listening for pointer events
-    this.events.pointerEventsRef(this.elementRef,
-      (ev: any) => this.pointerStart(ev),
-      (ev: any) => this.pointerMove(ev),
-      (ev: any) => this.pointerEnd(ev)
-    );
+    this.events.pointerEvents({
+      elementRef: this.elementRef,
+      pointerDown: this.pointerStart.bind(this),
+      pointerMove: this.pointerMove.bind(this),
+      pointerUp: this.pointerEnd.bind(this)
+    });
   }
 
   ngOnDestroy() {
