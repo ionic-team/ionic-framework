@@ -27,10 +27,12 @@ export class ItemReorderGesture {
 
   constructor(public list: ItemReorder) {
     let element = this.list.getNativeElement();
-    this.events.pointerEvents(element,
-      this.onDragStart.bind(this),
-      this.onDragMove.bind(this),
-      this.onDragEnd.bind(this));
+    this.events.pointerEvents({
+      element: element,
+      pointerDown: this.onDragStart.bind(this),
+      pointerMove: this.onDragMove.bind(this),
+      pointerUp: this.onDragEnd.bind(this)
+    });
   }
 
   private onDragStart(ev: any): boolean {

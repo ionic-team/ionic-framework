@@ -364,11 +364,12 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
     this._renderer.setElementStyle(this._bar.nativeElement, 'right', barR);
 
     // add touchstart/mousedown listeners
-    this._events.pointerEventsRef(this._slider,
-      this.pointerDown.bind(this),
-      this.pointerMove.bind(this),
-      this.pointerUp.bind(this));
-
+    this._events.pointerEvents({
+      elementRef: this._slider,
+      pointerDown: this.pointerDown.bind(this),
+      pointerMove: this.pointerMove.bind(this),
+      pointerUp: this.pointerUp.bind(this)
+    });
     this.createTicks();
   }
 
