@@ -16,6 +16,7 @@ class E2EPage {
   myColor1: string;
   myColor2: string;
   multiColor: Array<string>;
+  showIf: boolean = true;
 
   constructor() {
 		this.reset();

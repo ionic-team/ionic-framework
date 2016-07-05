@@ -3,7 +3,6 @@ import { Directive, ElementRef, Input } from '@angular/core';
 import { AppRoot } from '../app/app';
 import { isTrueProperty } from '../../util/util';
 
-const DISABLE_SCROLL = 'disable-scroll';
 
 /**
  * @private

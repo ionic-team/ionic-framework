@@ -226,7 +226,10 @@ export class Button {
    * @private
    */
   setRole(val: string) {
+    this._assignCss(false);
     this._role = val;
+    this._readIcon(this._elementRef.nativeElement);
+    this._assignCss(true);
   }
 
   /**
@@ -348,16 +351,6 @@ export class Button {
         });
       });
     }
-  }
-
-  /**
-   * @private
-   */
-  static setRoles(contentButtonChildren: any, role: string) {
-    let buttons = contentButtonChildren.toArray();
-    buttons.forEach((button: any) => {
-      button.setRole(role);
-    });
   }
 
 }
