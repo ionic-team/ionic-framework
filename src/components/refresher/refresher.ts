@@ -2,6 +2,7 @@ import { Directive, EventEmitter, Host, Input, Output, NgZone } from '@angular/c
 
 import { Content } from '../content/content';
 import { CSS, pointerCoord } from '../../util/dom';
+import { GestureController, GestureDelegate, GesturePriority } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { PointerEvents, UIEventManager } from '../../util/ui-event-manager';
 
@@ -98,6 +99,7 @@ export class Refresher {
   private _didStart: boolean;
   private _lastCheck: number = 0;
   private _isEnabled: boolean = true;
+  private _gesture: GestureDelegate;
   private _events: UIEventManager = new UIEventManager(false);
   private _pointerEvents: PointerEvents;
   private _top: string = '';
@@ -196,8 +198,11 @@ export class Refresher {
   @Output() ionStart: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 
 
-  constructor(@Host() private _content: Content, private _zone: NgZone) {
+  constructor(@Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
     _content.addCssClass('has-refresher');
+    this._gesture = gestureCtrl.create('refresher', {
+      priority: GesturePriority.Interactive,
+    });
   }
 
   private _onStart(ev: TouchEvent): any {
@@ -216,6 +221,10 @@ export class Refresher {
       return false;
     }
 
+    if (!this._gesture.canStart()) {
+      return false;
+    }
+
     let coord = pointerCoord(ev);
     console.debug('Pull-to-refresh, onStart', ev.type, 'y:', coord.y);
 
@@ -228,7 +237,7 @@ export class Refresher {
 
     this.startY = this.currentY = coord.y;
     this.progress = 0;
-    this.state = STATE_PULLING;
+    this.state = STATE_INACTIVE;
     return true;
   }
 
@@ -240,6 +249,10 @@ export class Refresher {
     // if multitouch then get out immediately
     if (ev.touches && ev.touches.length > 1) {
       return 1;
+    }
+
+    if (!this._gesture.canStart()) {
+      return 0;
     }
 
     // do nothing if it's actively refreshing
@@ -484,6 +497,7 @@ export class Refresher {
    * @private
    */
   ngOnDestroy() {
+    this._gesture.destroy();
     this._setListeners(false);
   }
 

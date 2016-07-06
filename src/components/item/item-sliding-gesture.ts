@@ -3,6 +3,7 @@ import { List } from '../list/list';
 
 import { closest, Coordinates, pointerCoord } from '../../util/dom';
 import { PointerEvents, UIEventManager } from '../../util/ui-event-manager';
+import { GestureDelegate, GestureOptions, GesturePriority } from '../../gestures/gesture-controller';
 
 const DRAG_THRESHOLD = 10;
 const MAX_ATTACK_ANGLE = 20;
@@ -16,8 +17,13 @@ export class ItemSlidingGesture {
   private pointerEvents: PointerEvents;
   private firstCoordX: number;
   private firstTimestamp: number;
+  private gesture: GestureDelegate;
 
   constructor(public list: List) {
+    this.gesture = list.gestureCtrl.create('item-sliding', {
+      priority: GesturePriority.Interactive,
+    });
+
     this.pointerEvents = this.events.pointerEvents({
       element: list.getNativeElement(),
       pointerDown: this.pointerStart.bind(this),
@@ -36,8 +42,15 @@ export class ItemSlidingGesture {
       this.closeOpened();
       return false;
     }
+
     // Close open container if it is not the selected one.
     if (container !== this.openContainer && this.closeOpened()) {
+      return false;
+    }
+
+    // Try to start gesture
+    if (!this.gesture.start()) {
+      this.gesture.release();
       return false;
     }
 
@@ -56,16 +69,19 @@ export class ItemSlidingGesture {
     }
     let coord = pointerCoord(ev);
     if (this.panDetector.detect(coord)) {
-      if (!this.panDetector.isPanX()) {
-        this.pointerEvents.stop();
-        this.closeOpened();
-      } else {
-        this.onDragStart(ev, coord);
+      if (this.panDetector.isPanX() && this.gesture.capture()) {
+          this.onDragStart(ev, coord);
+          return;
       }
+
+      // Detection/capturing was not successful, aborting!
+      this.closeOpened();
+      this.pointerEvents.stop();
     }
   }
 
   private pointerEnd(ev: any) {
+    this.gesture.release();
     if (this.selectedContainer) {
       this.onDragEnd(ev);
     } else {
@@ -103,18 +119,21 @@ export class ItemSlidingGesture {
   }
 
   closeOpened(): boolean {
-    if (!this.openContainer) {
-      return false;
-    }
-    this.openContainer.close();
-    this.openContainer = null;
     this.selectedContainer = null;
-    return true;
+    this.gesture.release();
+
+    if (this.openContainer) {
+      this.openContainer.close();
+      this.openContainer = null;
+      return true;
+    }
+    return false;
   }
 
-  unlisten() {
-    this.closeOpened();
+  destroy() {
+    this.gesture.destroy();
     this.events.unlistenAll();
+    this.closeOpened();
 
     this.list = null;
     this.preSelectedContainer = null;

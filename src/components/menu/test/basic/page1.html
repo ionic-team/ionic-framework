@@ -35,9 +35,19 @@
 
   <h3>Page 1</h3>
 
-  <p>
-    <button class="e2eContentToggleLeftMenu" menuToggle="left">Toggle Left Menu</button>
-  </p>
+  <ion-list>
+    <ion-item-sliding>
+      <button ion-item class="e2eContentToggleLeftMenu" menuToggle="left">Toggle Left Menu</button>
+
+      <ion-item-options side="left">
+        <button>Test</button>
+      </ion-item-options>
+      <ion-item-options>
+        <button>Test</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
 
   <p>
     <button class="e2eContentToggleRightMenu" menuToggle="right">Toggle Right Menu</button>

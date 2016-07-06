@@ -1,4 +1,4 @@
-<ion-menu [content]="content" side="left" persistent="true" (ionDrag)="onDrag($event)" (ionOpen)="onOpen($event)" (ionClose)="onClose($event)">
+<ion-menu [content]="content" side="left" persistent="true">
 
   <ion-header>
     <ion-toolbar secondary>
@@ -10,9 +10,17 @@
 
     <ion-list>
 
-      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
+      <ion-item-sliding *ngFor="let p of pages">
+        <button ion-item (click)="openPage(p)">
+          {{p.title}}
+        </button>
+        <ion-item-options side="left">
+          <button>Test</button>
+        </ion-item-options>
+        <ion-item-options>
+          <button>Test</button>
+        </ion-item-options>
+      </ion-item-sliding>
 
       <button ion-item menuClose="left" class="e2eCloseLeftMenu" detail-none>
         Close Menu
@@ -149,5 +157,3 @@
 </ion-menu>
 
 <ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>
-
-<div [hidden]="isChangeDetecting()"></div>

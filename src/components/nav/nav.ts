@@ -3,8 +3,8 @@ import { AfterViewInit, Component, ComponentResolver, ElementRef, Input, Optiona
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Keyboard } from '../../util/keyboard';
+import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { MenuController } from '../menu/menu-controller';
 import { NavController } from './nav-controller';
 import { ViewController } from './view-controller';
 
@@ -128,9 +128,9 @@ export class Nav extends NavController implements AfterViewInit {
     zone: NgZone,
     renderer: Renderer,
     compiler: ComponentResolver,
-    menuCtrl: MenuController
+    gestureCtrl: GestureController
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, menuCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav

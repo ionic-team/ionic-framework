@@ -9,6 +9,7 @@ import { MenuContentGesture, MenuTargetGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
+import { GestureController } from '../../gestures/gesture-controller';
 
 
 /**
@@ -302,7 +303,8 @@ export class Menu extends Ion {
     private _platform: Platform,
     private _renderer: Renderer,
     private _keyboard: Keyboard,
-    private _zone: NgZone
+    private _zone: NgZone,
+    public gestureCtrl: GestureController
   ) {
     super(_elementRef);
   }
