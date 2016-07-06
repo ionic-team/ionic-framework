@@ -396,7 +396,7 @@ export class Slides extends Ion {
     setTimeout(() => {
       var swiper = new Swiper(this.getNativeElement().children[0], options);
       this.slider = swiper;
-    });
+    }, 300);
 
     /*
     * TODO: Finish this
@@ -736,7 +736,7 @@ export class Slides extends Ion {
       if (this.length() > 10) {
         this.showPager = false;
       }
-    });
+    }, 300);
   }
 
   /**
