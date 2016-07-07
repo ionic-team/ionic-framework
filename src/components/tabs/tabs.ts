@@ -251,13 +251,13 @@ export class Tabs extends Ion {
 
     // TODO deprecated 07-07-2016 beta.11
     if (_config.get('tabSubPages') !== null) {
-      console.warn("Config option 'tabSubPages' has been deprecated. Please use 'tabsHideOnSubPages' instead.");
+      console.warn('Config option "tabSubPages" has been deprecated. Please use "tabsHideOnSubPages" instead.');
       this.subPages = _config.getBoolean('tabSubPages');
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (_config.get('tabbarHighlight') !== null) {
-      console.warn("Config option 'tabbarHighlight' has been deprecated. Please use 'tabsHighlight' instead.");
+      console.warn('Config option "tabbarHighlight" has been deprecated. Please use "tabsHighlight" instead.');
       this._useHighlight = _config.getBoolean('tabbarHighlight');
     }
 
@@ -296,27 +296,27 @@ export class Tabs extends Ion {
 
     // TODO deprecated 07-07-2016 beta.11
     if (this.tabbarPlacement !== undefined) {
-      console.warn("Input 'tabbarPlacement' has been deprecated. Please use 'tabsPlacement' instead.");
+      console.warn('Input "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
       this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this.tabbarPlacement);
       this.tabsPlacement = this.tabbarPlacement;
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (this._config.get('tabbarPlacement') !== null) {
-      console.warn("Config option 'tabbarPlacement' has been deprecated. Please use 'tabsPlacement' instead.");
+      console.warn('Config option "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
       this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this._config.get('tabbarPlacement'));
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (this.tabbarLayout !== undefined) {
-      console.warn("Input 'tabbarLayout' has been deprecated. Please use 'tabsLayout' instead.");
+      console.warn('Input "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
       this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this.tabbarLayout);
       this.tabsLayout = this.tabbarLayout;
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (this._config.get('tabbarLayout') !== null) {
-      console.warn("Config option 'tabbarLayout' has been deprecated. Please use 'tabsLayout' instead.");
+      console.warn('Config option "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
       this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this._config.get('tabsLayout'));
     }
 
