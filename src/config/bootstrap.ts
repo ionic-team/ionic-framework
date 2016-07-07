@@ -27,7 +27,7 @@ const _reflect: any = Reflect;
  * })
  * export class MyClass{}
  *
- * ionicBootstrap(MyClass, null, {tabbarPlacement: 'bottom'})
+ * ionicBootstrap(MyClass, null, {tabsPlacement: 'bottom'})
  * ```
  */
 export function ionicBootstrap(appRootComponent: any, customProviders?: Array<any>, config?: any) {

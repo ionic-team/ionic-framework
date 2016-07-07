@@ -105,7 +105,7 @@ export function run() {
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
-    expect(config.get('tabbarPlacement')).toEqual('top');
+    expect(config.get('tabsPlacement')).toEqual('top');
   });
 
   it('should override mode settings from platforms setting', () => {
@@ -120,7 +120,7 @@ export function run() {
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
-    expect(config.get('tabbarPlacement')).toEqual('top');
+    expect(config.get('tabsPlacement')).toEqual('top');
   });
 
   it('should get boolean value from querystring', () => {
@@ -231,27 +231,27 @@ export function run() {
 
   it('should override ios mode config with user platform setting', () => {
     let config = new Config({
-      tabbarPlacement: 'hide',
+      tabsPlacement: 'hide',
       platforms: {
         ios: {
-          tabbarPlacement: 'top'
+          tabsPlacement: 'top'
         }
       }
     });
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    expect(config.get('tabbarPlacement')).toEqual('top');
+    expect(config.get('tabsPlacement')).toEqual('top');
   });
 
   it('should override ios mode config with user setting', () => {
     let config = new Config({
-      tabbarPlacement: 'top'
+      tabsPlacement: 'top'
     });
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    expect(config.get('tabbarPlacement')).toEqual('top');
+    expect(config.get('tabsPlacement')).toEqual('top');
   });
 
   it('should get setting from md mode', () => {
@@ -259,7 +259,7 @@ export function run() {
     let platform = new Platform(['android']);
     config.setPlatform(platform);
 
-    expect(config.get('tabbarPlacement')).toEqual('top');
+    expect(config.get('tabsPlacement')).toEqual('top');
   });
 
   it('should get setting from ios mode', () => {
@@ -267,7 +267,7 @@ export function run() {
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    expect(config.get('tabbarPlacement')).toEqual('bottom');
+    expect(config.get('tabsPlacement')).toEqual('bottom');
   });
 
   it('should set/get platform setting from set()', () => {
@@ -275,10 +275,10 @@ export function run() {
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    config.set('tabbarPlacement', 'bottom');
-    config.set('ios', 'tabbarPlacement', 'top');
+    config.set('tabsPlacement', 'bottom');
+    config.set('ios', 'tabsPlacement', 'top');
 
-    expect(config.get('tabbarPlacement')).toEqual('top');
+    expect(config.get('tabsPlacement')).toEqual('top');
   });
 
   it('should set/get setting from set()', () => {
@@ -286,9 +286,9 @@ export function run() {
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    config.set('tabbarPlacement', 'top');
+    config.set('tabsPlacement', 'top');
 
-    expect(config.get('tabbarPlacement')).toEqual('top');
+    expect(config.get('tabsPlacement')).toEqual('top');
   });
 
   it('should set ios platform settings from settings()', () => {

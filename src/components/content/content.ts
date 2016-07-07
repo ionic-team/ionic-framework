@@ -68,7 +68,7 @@ export class Content extends Ion {
   private _headerHeight: number;
   private _footerHeight: number;
   private _tabbarHeight: number;
-  private _tabbarPlacement: string;
+  private _tabsPlacement: string;
   private _inputPolling: boolean = false;
   private _scroll: ScrollView;
   private _scLsn: Function;
@@ -492,7 +492,7 @@ export class Content extends Ion {
     this._paddingLeft = 0;
     this._headerHeight = 0;
     this._footerHeight = 0;
-    this._tabbarPlacement = null;
+    this._tabsPlacement = null;
 
     let ele: HTMLElement = this._elementRef.nativeElement;
     if (!ele) return;
@@ -530,9 +530,9 @@ export class Content extends Ion {
         tabbarEle = <HTMLElement>ele.firstElementChild;
         this._tabbarHeight = tabbarEle.clientHeight;
 
-        if (this._tabbarPlacement === null) {
+        if (this._tabsPlacement === null) {
           // this is the first tabbar found, remember it's position
-          this._tabbarPlacement = ele.getAttribute('tabbarplacement');
+          this._tabsPlacement = ele.getAttribute('tabsplacement');
         }
       }
 
@@ -558,7 +558,7 @@ export class Content extends Ion {
       // have come from the app's css, is different than the new padding value
 
       newVal = this._headerHeight + this._paddingTop;
-      if (this._tabbarPlacement === 'top') {
+      if (this._tabsPlacement === 'top') {
         newVal += this._tabbarHeight;
       }
       if (newVal !== this.contentTop) {
@@ -567,7 +567,7 @@ export class Content extends Ion {
       }
 
       newVal = this._footerHeight + this._paddingBottom;
-      if (this._tabbarPlacement === 'bottom') {
+      if (this._tabsPlacement === 'bottom') {
         newVal += this._tabbarHeight;
 
         if (newVal > 0 && this._footerEle) {
@@ -582,7 +582,7 @@ export class Content extends Ion {
     } else {
       // adjust the content with margins
       newVal = this._headerHeight;
-      if (this._tabbarPlacement === 'top') {
+      if (this._tabsPlacement === 'top') {
         newVal += this._tabbarHeight;
       }
       if (newVal !== this.contentTop) {
@@ -591,7 +591,7 @@ export class Content extends Ion {
       }
 
       newVal = this._footerHeight;
-      if (this._tabbarPlacement === 'bottom') {
+      if (this._tabsPlacement === 'bottom') {
         newVal += this._tabbarHeight;
       }
       if (newVal !== this.contentBottom) {
@@ -605,9 +605,9 @@ export class Content extends Ion {
     }
 
 
-    if (this._tabbarPlacement !== null && this._tabs) {
+    if (this._tabsPlacement !== null && this._tabs) {
       // set the position of the tabbar
-      if (this._tabbarPlacement === 'top') {
+      if (this._tabsPlacement === 'top') {
         this._tabs.setTabbarPosition(this._headerHeight, -1);
 
       } else {

@@ -24,7 +24,7 @@
 
 
 <!-- Icons below text -->
-<ion-tabs tabbarLayout="icon-bottom" no-navbar>
+<ion-tabs tabsLayout="icon-bottom" no-navbar>
   <ion-tab tabTitle="Recents" tabIcon="call"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" tabBadge="577" tabBadgeStyle="dark"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings"></ion-tab>
@@ -32,21 +32,21 @@
 
 
 <!-- Icons right of text -->
-<ion-tabs tabbarLayout="icon-right" primary no-navbar>
+<ion-tabs tabsLayout="icon-right" primary no-navbar>
   <ion-tab tabTitle="Recents" tabIcon="call"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" tabBadge="1030" tabBadgeStyle="light"></ion-tab>
 </ion-tabs>
 
 <!-- Icons left of text -->
-<ion-tabs tabbarLayout="icon-left" no-navbar>
+<ion-tabs tabsLayout="icon-left" no-navbar>
   <ion-tab tabTitle="Recents" tabIcon="call" tabBadge="32" tabBadgeStyle="danger"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings"></ion-tab>
 </ion-tabs>
 
 <!-- No icons -->
-<ion-tabs no-navbar tabbarLayout="icon-hide">
+<ion-tabs no-navbar tabsLayout="icon-hide">
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root" tabBadge="4"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -54,14 +54,14 @@
 
 
 <!-- No title -->
-<ion-tabs tabbarLayout="title-hide" secondary no-navbar>
+<ion-tabs tabsLayout="title-hide" secondary no-navbar>
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root" tabBadge="7" tabBadgeStyle="light"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
 </ion-tabs>
 
 <!-- Dynamic Badge -->
-<ion-tabs tabbarLayout="icon-left" no-navbar>
+<ion-tabs tabsLayout="icon-left" no-navbar>
   <ion-tab tabTitle="Recents" tabIcon="call"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [tabBadge]="myBadge" tabBadgeStyle="primary"></ion-tab>

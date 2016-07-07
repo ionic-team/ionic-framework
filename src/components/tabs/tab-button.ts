@@ -37,12 +37,17 @@ export class TabButton extends Ion {
   constructor(config: Config, elementRef: ElementRef) {
     super(elementRef);
     this.disHover = (config.get('hoverCSS') === false);
-    this.layout = config.get('tabbarLayout');
+    this.layout = config.get('tabsLayout');
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (config.get('tabbarLayout') !== undefined) {
+      this.layout = config.get('tabbarLayout');
+    }
   }
 
   ngOnInit() {
     this.tab.btn = this;
-    this.layout = this.tab.parent.tabbarLayout || this.layout;
+    this.layout = this.tab.parent.tabsLayout || this.layout;
 
     this.hasTitle = !!this.tab.tabTitle;
     this.hasIcon = !!this.tab.tabIcon && this.layout !== 'icon-hide';

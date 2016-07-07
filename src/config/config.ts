@@ -24,7 +24,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  *   iconMode: 'ios',
  *   modalEnter: 'modal-slide-in',
  *   modalLeave: 'modal-slide-out',
- *   tabbarPlacement: 'bottom',
+ *   tabsPlacement: 'bottom',
  *   pageTransition: 'ios',
  * });
  * ```
@@ -37,19 +37,19 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * import {ionicBootstrap} from 'ionic-angular';
  *
  * ionicBootstrap(AppRoot, customProviders, {
- *   tabbarPlacement: 'bottom',
+ *   tabsPlacement: 'bottom',
  *   platforms: {
  *   ios: {
- *     tabbarPlacement: 'top',
+ *     tabsPlacement: 'top',
  *   }
  * });
  * ```
  *
- * We could also configure these values at a component level. Take `tabbarPlacement`,
+ * We could also configure these values at a component level. Take `tabsPlacement`,
  * we can configure this as a property on our `ion-tabs`.
  *
  * ```html
- * <ion-tabs tabbarPlacement="top">
+ * <ion-tabs tabsPlacement="top">
  *   <ion-tab tabTitle="Dash" tabIcon="pulse" [root]="tabRoot"></ion-tab>
  * </ion-tabs>
  * ```
@@ -58,7 +58,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * while in the browser. Simply add `?ionic<PROPERTYNAME>=<value>` to the url.
  *
  * ```bash
- * http://localhost:8100/?ionicTabbarPlacement=bottom
+ * http://localhost:8100/?ionicTabsPlacement=bottom
  * ```
  *
  * Any value can be added to config, and looked up at a later in any component.
@@ -100,10 +100,10 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.                                                                                  |
  * | `prodMode`               | `boolean`           | Disable development mode, which turns off assertions and other checks within the framework. One important assertion this disables verifies that a change detection pass does not result in additional changes to any bindings (also known as unidirectional data flow).
  * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
- * | `tabbarHighlight`        | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
- * | `tabbarLayout`           | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-left"`, `"icon-right"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.  |
- * | `tabbarPlacement`        | `string`            | The position of the tabs. Available options: `"top"`, `"bottom"`                                                                                 |
- * | `tabSubPages`            | `boolean`           | Whether to hide the tabs on child pages or not. If `true` it will not show the tabs on child pages.                                              |
+ * | `tabsHighlight`          | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
+ * | `tabsLayout`             | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-left"`, `"icon-right"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.  |
+ * | `tabsPlacement`          | `string`            | The position of the tabs relative to the content. Available options: `"top"`, `"bottom"`                                                         |
+ * | `tabsHideOnSubPages`     | `boolean`           | Whether to hide the tabs on child pages or not. If `true` it will not show the tabs on child pages.                                              |
  * | `toastEnter`             | `string`            | The name of the transition to use while a toast is presented.                                                                                    |
  * | `toastLeave`             | `string`            | The name of the transition to use while a toast is dismissed.                                                                                    |
  *

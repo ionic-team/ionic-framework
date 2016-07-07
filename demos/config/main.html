@@ -31,7 +31,7 @@
 
     <ion-item>
       <ion-label>Tab Placement</ion-label>
-      <ion-select [(ngModel)]="config.tabbarPlacement">
+      <ion-select [(ngModel)]="config.tabsPlacement">
         <ion-option value="bottom">bottom</ion-option>
         <ion-option value="top">top</ion-option>
       </ion-select>
@@ -53,7 +53,7 @@
 ionicBootstrap(MyApp, [], {
   backButtonIcon: "{{initialConfig.backButtonIcon}}"
   iconMode: "{{initialConfig.iconMode}}"
-  tabbarPlacement: "{{initialConfig.tabbarPlacement}}"
+  tabsPlacement: "{{initialConfig.tabsPlacement}}"
 });</pre>
 
   <div padding>

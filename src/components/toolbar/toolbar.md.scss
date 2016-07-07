@@ -30,9 +30,9 @@ $navbar-md-height:                       $toolbar-md-height !default;
 
 
 ion-header::after,
-[tabbarplacement="top"] > ion-tabbar::after,
+[tabsPlacement="top"] > ion-tabbar::after,
 ion-footer::before,
-[tabbarplacement="bottom"] > ion-tabbar::before {
+[tabsPlacement="bottom"] > ion-tabbar::before {
   // using datauri png background image for improved scroll performance
   // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
   // noticable performance difference on older Android devices
@@ -51,7 +51,7 @@ ion-footer::before,
 }
 
 ion-footer::before,
-[tabbarplacement="bottom"] > ion-tabbar::before {
+[tabsPlacement="bottom"] > ion-tabbar::before {
   top: -2px;
   bottom: auto;
 

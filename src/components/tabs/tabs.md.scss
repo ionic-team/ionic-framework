@@ -52,13 +52,13 @@ ion-tabbar {
   font-size: $tabbar-md-item-icon-size;
 }
 
-[tabbarLayout=icon-bottom] .tab-button {
+[tabsLayout=icon-bottom] .tab-button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-[tabbarLayout=icon-right] .tab-button,
-[tabbarLayout=icon-left] .tab-button {
+[tabsLayout=icon-right] .tab-button,
+[tabsLayout=icon-left] .tab-button {
   padding-bottom: 10px;
 
   ion-icon {
@@ -66,8 +66,8 @@ ion-tabbar {
   }
 }
 
-[tabbarLayout=icon-hide] .tab-button,
-[tabbarLayout=title-hide] .tab-button,
+[tabsLayout=icon-hide] .tab-button,
+[tabsLayout=title-hide] .tab-button,
 .tab-button.icon-only,
 .tab-button.has-title-only {
   padding: 6px 10px;
@@ -91,7 +91,7 @@ tab-highlight {
   }
 }
 
-[tabbarPlacement=bottom] tab-highlight {
+[tabsPlacement=bottom] tab-highlight {
   top: 0;
 }
 

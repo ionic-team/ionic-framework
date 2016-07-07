@@ -176,7 +176,7 @@ ion-tabbar.show-tabbar {
   opacity: 1;
 }
 
-[tabbarPlacement=top] > ion-tabbar {
+[tabsPlacement=top] > ion-tabbar {
   top: 0;
   bottom: auto;
 }

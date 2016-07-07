@@ -22,7 +22,7 @@ ion-tabbar {
   background: $tabbar-ios-background;
 }
 
-ion-tabs[tabbarPlacement=top] ion-tabbar {
+ion-tabs[tabsPlacement=top] ion-tabbar {
   border-top: 0;
   border-bottom: 1px solid $toolbar-ios-border-color;
 }
@@ -65,8 +65,8 @@ ion-tabs[tabbarPlacement=top] ion-tabbar {
   }
 }
 
-[tabbarLayout=icon-right] .tab-button,
-[tabbarLayout=icon-left] .tab-button {
+[tabsLayout=icon-right] .tab-button,
+[tabsLayout=icon-left] .tab-button {
 
   .tab-button-text {
     font-size: 1.4rem;
@@ -81,7 +81,7 @@ ion-tabs[tabbarPlacement=top] ion-tabbar {
   }
 }
 
-[tabbarLayout=icon-hide] .tab-button,
+[tabsLayout=icon-hide] .tab-button,
 .tab-button.has-title-only {
   min-height: $tabbar-ios-height - 8;
 
@@ -93,7 +93,7 @@ ion-tabs[tabbarPlacement=top] ion-tabbar {
   }
 }
 
-[tabbarLayout=title-hide] .tab-button,
+[tabsLayout=title-hide] .tab-button,
 .tab-button.icon-only {
   min-height: $tabbar-ios-height - 8;
 }
@@ -104,7 +104,7 @@ ion-tabs[tabbarPlacement=top] ion-tabbar {
     border-top-width: $hairlines-width;
   }
 
-  &[tabbarPlacement="top"] ion-tabbar {
+  &[tabsPlacement="top"] ion-tabbar {
     border-bottom-width: $hairlines-width;
   }
 

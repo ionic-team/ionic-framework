@@ -29,21 +29,21 @@ import { ViewController } from '../nav/view-controller';
  * The position of the tabs relative to the content varies based on
  * the mode. By default, the tabs are placed at the bottom of the screen
  * for `ios` mode, and at the top for the `md` and `wp` modes. You can
- * configure the position using the `tabbarPlacement` property on the
+ * configure the position using the `tabsPlacement` property on the
  * `<ion-tabs>` element, or in your app's [config](../../config/Config/).
  * See the [Input Properties](#input-properties) below for the available
- * values of `tabbarPlacement`.
+ * values of `tabsPlacement`.
  *
  * ### Layout
  *
- * The layout for all of the tabs can be defined using the `tabbarLayout`
+ * The layout for all of the tabs can be defined using the `tabsLayout`
  * property. If the individual tab has a title and icon, the icons will
  * show on top of the title by default. All tabs can be changed by setting
- * the value of `tabbarLayout` on the `<ion-tabs>` element, or in your
+ * the value of `tabsLayout` on the `<ion-tabs>` element, or in your
  * app's [config](../../config/Config/). For example, this is useful if
  * you want to show tabs with a title only on Android, but show icons
  * and a title for iOS. See the [Input Properties](#input-properties)
- * below for the available values of `tabbarLayout`.
+ * below for the available values of `tabsLayout`.
  *
  * ### Selecting a Tab
  *
@@ -188,14 +188,24 @@ export class Tabs extends Ion {
   @Input() preloadTabs: any;
 
   /**
+   * @private DEPRECATED. Please use `tabsLayout` instead.
+   */
+  @Input() private tabbarLayout: string;
+
+  /**
    * @input {string} Set the tabbar layout: `icon-top`, `icon-left`, `icon-right`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
-  @Input() tabbarLayout: string;
+  @Input() tabsLayout: string;
+
+  /**
+   * @private DEPRECATED. Please use `tabsPlacement` instead.
+   */
+  @Input() private tabbarPlacement: string;
 
   /**
    * @input {string} Set position of the tabbar: `top`, `bottom`.
    */
-  @Input() tabbarPlacement: string;
+  @Input() tabsPlacement: string;
 
   /**
    * @input {any} Expression to evaluate when the tab changes.
@@ -235,9 +245,21 @@ export class Tabs extends Ion {
 
     this.parent = parent;
     this.id = ++tabIds;
-    this.subPages = _config.getBoolean('tabSubPages');
-    this._useHighlight = _config.getBoolean('tabbarHighlight');
     this._sbPadding = _config.getBoolean('statusbarPadding');
+    this.subPages = _config.getBoolean('tabsHideOnSubPages');
+    this._useHighlight = _config.getBoolean('tabsHighlight');
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (_config.get('tabSubPages') !== null) {
+      console.warn("Config option 'tabSubPages' has been deprecated. Please use 'tabsHideOnSubPages' instead.");
+      this.subPages = _config.getBoolean('tabSubPages');
+    }
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (_config.get('tabbarHighlight') !== null) {
+      console.warn("Config option 'tabbarHighlight' has been deprecated. Please use 'tabsHighlight' instead.");
+      this._useHighlight = _config.getBoolean('tabbarHighlight');
+    }
 
     if (parent) {
       // this Tabs has a parent Nav
@@ -265,8 +287,38 @@ export class Tabs extends Ion {
    * @private
    */
   ngAfterViewInit() {
+    this._setConfig('tabsPlacement', 'bottom');
+    this._setConfig('tabsLayout', 'icon-top');
+
+    // TODO deprecated 07-07-2016 beta.11
     this._setConfig('tabbarPlacement', 'bottom');
     this._setConfig('tabbarLayout', 'icon-top');
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (this.tabbarPlacement !== undefined) {
+      console.warn("Input 'tabbarPlacement' has been deprecated. Please use 'tabsPlacement' instead.");
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this.tabbarPlacement);
+      this.tabsPlacement = this.tabbarPlacement;
+    }
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (this._config.get('tabbarPlacement') !== null) {
+      console.warn("Config option 'tabbarPlacement' has been deprecated. Please use 'tabsPlacement' instead.");
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this._config.get('tabbarPlacement'));
+    }
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (this.tabbarLayout !== undefined) {
+      console.warn("Input 'tabbarLayout' has been deprecated. Please use 'tabsLayout' instead.");
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this.tabbarLayout);
+      this.tabsLayout = this.tabbarLayout;
+    }
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (this._config.get('tabbarLayout') !== null) {
+      console.warn("Config option 'tabbarLayout' has been deprecated. Please use 'tabsLayout' instead.");
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this._config.get('tabsLayout'));
+    }
 
     if (this._useHighlight) {
       this._platform.onResize(() => {
