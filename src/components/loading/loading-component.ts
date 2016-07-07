@@ -75,7 +75,7 @@ export class LoadingCmp {
   }
 
   dismiss(role: any): Promise<any> {
-    if (this.d.duration) {
+    if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
     return this._viewCtrl.dismiss(null, role);
