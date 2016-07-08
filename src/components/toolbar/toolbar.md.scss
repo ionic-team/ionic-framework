@@ -29,6 +29,25 @@ $toolbar-md-button-border-radius:        2px !default;
 $navbar-md-height:                       $toolbar-md-height !default;
 
 
+.toolbar {
+  padding: $toolbar-md-padding;
+
+  min-height: $toolbar-md-height;
+}
+
+
+// Material Design Toolbar Background
+// --------------------------------------------------
+
+.toolbar-background {
+  border-color: $toolbar-md-border-color;
+  background: $toolbar-md-background;
+}
+
+
+// Material Design Header / Footer / Tabs Box Shadow
+// --------------------------------------------------
+
 ion-header::after,
 [tabsPlacement="top"] > ion-tabbar::after,
 ion-footer::before,
@@ -60,21 +79,12 @@ ion-footer::before,
   background-position: 0 0;
 }
 
-.toolbar {
-  padding: $toolbar-md-padding;
-
-  min-height: $toolbar-md-height;
+ion-header[no-shadow]::after,
+ion-footer[no-shadow]::before,
+[tabsPlacement="top"][no-shadow] > ion-tabbar::after,
+[tabsPlacement="bottom"][no-shadow] > ion-tabbar::before {
+  display: none;
 }
-
-
-// Material Design Toolbar Background
-// --------------------------------------------------
-
-.toolbar-background {
-  border-color: $toolbar-md-border-color;
-  background: $toolbar-md-background;
-}
-
 
 // Material Design Toolbar Content
 // --------------------------------------------------
