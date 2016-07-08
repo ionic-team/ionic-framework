@@ -1,9 +1,12 @@
 @import "../../globals.core";
+@import "./popover";
 
 // Material Design Popover
 // --------------------------------------------------
 
 $popover-md-width:                     250px !default;
+$popover-md-min-width:                 0 !default;
+$popover-md-min-height:                0 !default;
 $popover-md-max-height:                90% !default;
 
 $popover-md-border-radius:             2px !default;
@@ -17,8 +20,8 @@ $popover-md-item-background:           $popover-md-background !default;
 
 .popover-content {
   width: $popover-md-width;
-  min-width: 0;
-  min-height: 0;
+  min-width: $popover-md-min-width;
+  min-height: $popover-md-min-height;
   max-height: $popover-md-max-height;
 
   border-radius: $popover-md-border-radius;

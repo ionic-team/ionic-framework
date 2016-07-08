@@ -1,9 +1,12 @@
 @import "../../globals.core";
+@import "./popover";
 
 // Windows Popover
 // --------------------------------------------------
 
 $popover-wp-width:                     200px !default;
+$popover-wp-min-width:                 0 !default;
+$popover-wp-min-height:                0 !default;
 $popover-wp-max-height:                90% !default;
 
 $popover-wp-border:                    2px solid #ccc !default;
@@ -16,8 +19,8 @@ $popover-wp-item-background:           $popover-wp-background !default;
 
 .popover-content {
   width: $popover-wp-width;
-  min-width: 0;
-  min-height: 0;
+  min-width: $popover-wp-min-width;
+  min-height: $popover-wp-min-height;
   max-height: $popover-wp-max-height;
 
   border: $popover-wp-border;
