@@ -1,6 +1,9 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {ionicBootstrap} from '../../../../../src';
 
+@Component({template:'hi'})
+class E2EPage{}
+
 
 @Component({
   templateUrl: 'main.html',
@@ -8,7 +11,8 @@ import {ionicBootstrap} from '../../../../../src';
   encapsulation: ViewEncapsulation.None
 })
 class E2EApp {
-  myBadge:number = 55;
+  root = E2EPage;
+  myBadge: number = 55;
 }
 
 ionicBootstrap(E2EApp);
