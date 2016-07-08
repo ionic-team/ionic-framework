@@ -30,7 +30,8 @@ class E2EPage {
 
     this.musicAlertOpts = {
       title: '1994 Music',
-      subTitle: 'Select your favorite'
+      subTitle: 'Select your favorite',
+      cssClass: 'music-select'
     };
   }
 

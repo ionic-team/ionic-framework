@@ -103,7 +103,8 @@ export class AlertCmp {
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
-        renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+        // Make sure the class isn't whitespace, otherwise it throws exceptions
+        if (cssClass.trim() !== '') renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
       });
     }
 

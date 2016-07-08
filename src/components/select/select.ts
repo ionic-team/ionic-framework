@@ -301,17 +301,22 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
         };
       });
 
+      var selectCssClass = 'select-alert';
+
       // create the alert instance from our built up alertOptions
       overlay = new Alert(this._app, alertOptions);
 
       if (this._multi) {
         // use checkboxes
-        overlay.setCssClass('select-alert multiple-select-alert');
-
+        selectCssClass += ' multiple-select-alert';
       } else {
         // use radio buttons
-        overlay.setCssClass('select-alert single-select-alert');
+        selectCssClass += ' single-select-alert';
       }
+
+      // If the user passed a cssClass for the select, add it
+      selectCssClass += alertOptions.cssClass ? ' ' + alertOptions.cssClass : '';
+      overlay.setCssClass(selectCssClass);
 
       overlay.addButton({
         text: this.okText,
