@@ -82,7 +82,7 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @param {string} cssClass CSS class name to add to the alert's outer wrapper
+   * @param {string} cssClass Set the CSS class names on the alert's outer wrapper.
    */
   setCssClass(cssClass: string) {
     this.data.cssClass = cssClass;
