@@ -40,8 +40,8 @@ ion-label[fixed] {
   max-width: 200px;
 }
 
-.item-label-stacked > ion-label,
-.item-label-floating > ion-label {
+.item-label-stacked ion-label,
+.item-label-floating ion-label {
   align-self: stretch;
 
   width: auto;
