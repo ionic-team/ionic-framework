@@ -15,6 +15,10 @@
 
 .item-range ion-range {
   width: 100%;
+
+  ion-label {
+    align-self: center;
+  }
 }
 
 ion-range {
