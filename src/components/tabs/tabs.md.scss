@@ -12,7 +12,7 @@ $tabbar-md-item-icon-size:           2.4rem !default;
 $tabbar-md-item-height:              4.8rem !default;
 
 $tab-button-md-active-color:         $toolbar-md-active-color !default;
-$tab-button-md-inactive-color:       $toolbar-md-inactive-color !default;
+$tab-button-md-inactive-color:       rgba($toolbar-md-inactive-color, .7) !default;
 
 
 ion-tabbar {
@@ -31,11 +31,9 @@ ion-tabbar {
   font-weight: $tabbar-md-item-font-weight;
   color: $tab-button-md-inactive-color;
   box-shadow: none;
-  opacity: .7;
 
   &[aria-selected=true] {
     color: $tab-button-md-active-color;
-    opacity: 1;
   }
 }
 
