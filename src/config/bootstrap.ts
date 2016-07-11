@@ -48,13 +48,23 @@ export function ionicBootstrap(appRootComponent: any, customProviders?: Array<an
   // automatically set "ion-app" selector to users root component
   addSelector(appRootComponent, 'ion-app');
 
-  cssReady(() => {
+  // Do not check if CSS is ready if isBrowser flag is set to true
+  // since it makes the site loading slow (~8 seconds)
+  if (config.isBrowser) {
     // call angular bootstrap
     bootstrap(appRootComponent, providers).then(ngComponentRef => {
       // ionic app has finished bootstrapping
       ionicPostBootstrap(ngComponentRef);
     });
-  });
+  } else {
+    cssReady(() => {
+      // call angular bootstrap
+      bootstrap(appRootComponent, providers).then(ngComponentRef => {
+        // ionic app has finished bootstrapping
+        ionicPostBootstrap(ngComponentRef);
+      });
+    });
+  }
 }
 
 
