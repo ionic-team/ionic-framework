@@ -11,6 +11,7 @@
       this.el = opts.el;
       this.isEnabled = (typeof opts.isEnabled === 'undefined') ? true : opts.isEnabled;
       this.setWidth(opts.width);
+      this.leaveContentActive = (typeof opts.leaveContentActive === 'undefined') ? false : opts.leaveContentActive;
     },
     getFullWidth: function() {
       return this.width;
@@ -31,6 +32,9 @@
       if(this.el.style.zIndex !== '-1') {
         this.el.style.zIndex = '-1';
       }
+    },
+    setLeaveContentActive: function(leaveContentActive) {
+      this.leaveContentActive = leaveContentActive;
     }
   });
 

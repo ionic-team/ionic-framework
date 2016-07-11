@@ -146,18 +146,21 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
    */
   self.openPercentage = function(percentage) {
     var p = percentage / 100;
+    var leaveContentActive = false;
 
     if (self.left && percentage >= 0) {
       self.openAmount(self.left.width * p);
+      leaveContentActive = self.left.leaveContentActive;
     } else if (self.right && percentage < 0) {
       self.openAmount(self.right.width * p);
+      leaveContentActive = self.right.leaveContentActive;
     }
 
-    // add the CSS class "menu-open" if the percentage does not
-    // equal 0, otherwise remove the class from the body element
-    $ionicBody.enableClass((percentage !== 0), 'menu-open');
+    // add the CSS class "menu-open" if don't want to leave content active and the
+    // percentage does not equal 0, otherwise remove the class from the body element
+    $ionicBody.enableClass((!leaveContentActive && percentage !== 0), 'menu-open');
 
-    self.content.setCanScroll(percentage == 0);
+    self.content.setCanScroll(leaveContentActive || percentage == 0);
   };
 
   /*
