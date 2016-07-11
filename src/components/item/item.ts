@@ -123,6 +123,10 @@ import { Label } from '../label/label';
  * Any element directly placed inside of an `<ion-item>` that does not have one of the previously mentioned
  * attributes and isn't one of the above elements will be placed inside of a [Label](../../label/Label).
  *
+ * ### Text Alignment
+ * By default, Items will align text to the left and add an ellipsis when the text is wider than the item.
+ * See the [Utility Attributes Documentation](../../../../theming/css-utilities/) for attributes that can
+ * be added to `ion-item` to transform the text.
  *
  * @usage
  *
