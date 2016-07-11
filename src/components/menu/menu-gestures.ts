@@ -1,8 +1,8 @@
-import {Menu} from './menu';
-import {SlideEdgeGesture} from '../../gestures/slide-edge-gesture';
-import {SlideData} from '../../gestures/slide-gesture';
-import {assign} from '../../util/util';
-
+import { Menu } from './menu';
+import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
+import { SlideData } from '../../gestures/slide-gesture';
+import { assign } from '../../util/util';
+import { GesturePriority } from '../../gestures/gesture-controller';
 
 /**
  * Gesture attached to the content which the menu is assigned to
@@ -10,61 +10,29 @@ import {assign} from '../../util/util';
 export class MenuContentGesture extends SlideEdgeGesture {
 
   constructor(public menu: Menu, contentEle: HTMLElement, options: any = {}) {
-
     super(contentEle, assign({
       direction: 'x',
       edge: menu.side,
       threshold: 0,
-      maxEdgeStart: menu.maxEdgeStart || 75
+      maxEdgeStart: menu.maxEdgeStart || 50,
+      maxAngle: 40,
+      gesture: menu.gestureCtrl.create('menu-swipe', {
+        priority: GesturePriority.MenuSwipe,
+      })
     }, options));
   }
 
-  canStart(ev: any) {
+  canStart(ev: any): boolean {
     let menu = this.menu;
-
     if (!menu.enabled || !menu.swipeEnabled) {
-      console.debug('menu can not start, isEnabled:', menu.enabled, 'isSwipeEnabled:', menu.swipeEnabled, 'side:', menu.side);
       return false;
     }
-
-    if (ev.distance > 50) {
-      // the distance is longer than you'd expect a side menu swipe to be
-      console.debug('menu can not start, distance too far:', ev.distance, 'side:', menu.side);
+    if (menu.isOpen) {
+      return true;
+    } else if (menu.getMenuController().getOpen()) {
       return false;
     }
-
-    console.debug('menu canStart,', menu.side, 'isOpen', menu.isOpen, 'angle', ev.angle, 'distance', ev.distance);
-
-    if (menu.side === 'right') {
-      // right side
-      if (menu.isOpen) {
-        // right side, opened
-        return true;
-
-      } else {
-        // right side, closed
-        if ((ev.angle > 140 && ev.angle <= 180) || (ev.angle > -140 && ev.angle <= -180)) {
-          return super.canStart(ev);
-        }
-      }
-
-    } else {
-      // left side
-      if (menu.isOpen) {
-        // left side, opened
-        return true;
-
-      } else {
-        // left side, closed
-        if (ev.angle > -40 && ev.angle < 40) {
-          return super.canStart(ev);
-        }
-      }
-
-    }
-
-    // didn't pass the test, don't open this menu
-    return false;
+    return super.canStart(ev);
   }
 
   // Set CSS, then wait one frame for it to apply before sliding starts
@@ -77,7 +45,6 @@ export class MenuContentGesture extends SlideEdgeGesture {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
     let stepValue = (slide.distance / z);
     console.debug('menu gesture, onSlide', this.menu.side, 'distance', slide.distance, 'min', slide.min, 'max', slide.max, 'z', z, 'stepValue', stepValue);
-    ev.srcEvent.preventDefault();
     ev.preventDefault();
     this.menu.swipeProgress(stepValue);
   }
@@ -85,25 +52,24 @@ export class MenuContentGesture extends SlideEdgeGesture {
   onSlideEnd(slide: SlideData, ev: any) {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
     let currentStepValue = (slide.distance / z);
-
+    let velocity = slide.velocity;
     z = Math.abs(z * 0.5);
-    let shouldCompleteRight = (ev.velocityX >= 0)
-      && (ev.velocityX > 0.2 || slide.delta > z);
-    
-    let shouldCompleteLeft = (ev.velocityX <= 0)
-      && (ev.velocityX < -0.2 || slide.delta < -z);
-    
+    let shouldCompleteRight = (velocity >= 0)
+      && (velocity > 0.2 || slide.delta > z);
+
+    let shouldCompleteLeft = (velocity <= 0)
+      && (velocity < -0.2 || slide.delta < -z);
+
     console.debug(
       'menu gesture, onSlide', this.menu.side,
       'distance', slide.distance,
       'delta', slide.delta,
-      'velocityX', ev.velocityX,
+      'velocity', velocity,
       'min', slide.min,
       'max', slide.max,
       'shouldCompleteLeft', shouldCompleteLeft,
       'shouldCompleteRight', shouldCompleteRight,
       'currentStepValue', currentStepValue);
-
     this.menu.swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue);
   }
 
@@ -134,14 +100,3 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 }
 
-
-/**
- * Gesture attached to the actual menu itself
- */
-export class MenuTargetGesture extends MenuContentGesture {
-  constructor(menu: Menu, menuEle: HTMLElement) {
-    super(menu, menuEle, {
-      maxEdgeStart: 0
-    });
-  }
-}

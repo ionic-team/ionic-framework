@@ -17,9 +17,6 @@ module.exports = {
       'angular2/common': {
         commonjs2: ['angular2', 'common']
       },
-      'angular2/router' : {
-        commonjs2: ['angular2', 'router']
-      },
       'angular2/http': {
         commonjs2: ['angular2', 'http']
       },

@@ -30,7 +30,7 @@ export { Modal, ModalController } from './components/modal/modal';
 export { ModalOptions } from './components/modal/modal-options';
 export { Nav } from './components/nav/nav';
 export { NavController } from './components/nav/nav-controller';
-export { NavOptions } from './components/nav/nav-options';
+export { NavOptions } from './components/nav/nav-interfaces';
 export { NavParams } from './components/nav/nav-params';
 export { NavPop } from './components/nav/nav-pop';
 export { NavPush } from './components/nav/nav-push';

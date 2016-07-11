@@ -36,19 +36,11 @@ System.config({
       main: 'index.js',
       defaultExtension: 'js'
     },
-    '@angular/upgrade': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
     '@angular/platform-browser': {
       main: 'index.js',
       defaultExtension: 'js'
     },
     '@angular/platform-browser-dynamic': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    '@angular/platform-server': {
       main: 'index.js',
       defaultExtension: 'js'
     }

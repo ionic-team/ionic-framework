@@ -22,11 +22,31 @@ function run {
   #compile API Demos
   ./node_modules/.bin/gulp demos --production=true
 
-  # process new docs
-  if [ -d "$DOCS_DEST/api" ]; then
-    rm -R $DOCS_DEST/api
+  # if release, copy old version to seperate folder and blow out docs root api
+  if $IS_RELEASE; then
+
+    echo "BUILDING RELEASE DOCS"
+
+    if [ -d "$DOCS_DEST/api" ]; then
+      rm -R $DOCS_DEST/api
+    fi
+    if [ -d "$DOCS_DEST/nightly/api" ]; then
+      rm -R $DOCS_DEST/nightly/api
+    fi
+
+    ./node_modules/.bin/gulp docs --doc-version="$VERSION_NAME" --initial-build true
+    ./node_modules/.bin/gulp docs --doc-version="$VERSION_NAME"
+    ./node_modules/.bin/gulp docs --doc-version="nightly"
+
+  else
+
+    if [ -d "$DOCS_DEST/nightly/api" ]; then
+      rm -R $DOCS_DEST/nightly/api
+    fi
+
+    ./node_modules/.bin/gulp docs --doc-version="$VERSION_NAME"
+
   fi
-  ./node_modules/.bin/gulp docs --doc-version="$VERSION_NAME"
 
   # compile sass vars json for ionic-site docs
   ./node_modules/.bin/gulp docs.sass-variables

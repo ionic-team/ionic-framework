@@ -2,7 +2,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-options';
+import { NavOptions } from '../nav/nav-interfaces';
 import { PickerCmp } from './picker-component';
 import { PickerOptions, PickerColumn } from './picker-options';
 import { ViewController } from '../nav/view-controller';

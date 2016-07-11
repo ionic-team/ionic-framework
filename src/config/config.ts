@@ -103,7 +103,6 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * | `tabsHighlight`          | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
  * | `tabsLayout`             | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-left"`, `"icon-right"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.  |
  * | `tabsPlacement`          | `string`            | The position of the tabs relative to the content. Available options: `"top"`, `"bottom"`                                                         |
- * | `tabsHideOnSubPages`     | `boolean`           | Whether to hide the tabs on child pages or not. If `true` it will not show the tabs on child pages.                                              |
  * | `toastEnter`             | `string`            | The name of the transition to use while a toast is presented.                                                                                    |
  * | `toastLeave`             | `string`            | The name of the transition to use while a toast is dismissed.                                                                                    |
  *

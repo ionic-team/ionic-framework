@@ -1,6 +1,6 @@
-import {SlideGesture} from './slide-gesture';
-import {defaults} from '../util/util';
-import {windowDimensions} from '../util/dom';
+import { SlideGesture } from './slide-gesture';
+import { defaults } from '../util/util';
+import { pointerCoord, windowDimensions } from '../util/dom';
 
 /**
  * @private
@@ -22,8 +22,9 @@ export class SlideEdgeGesture extends SlideGesture {
   }
 
   canStart(ev: any): boolean {
+    let coord = pointerCoord(ev);
     this._d = this.getContainerDimensions();
-    return this.edges.every(edge => this._checkEdge(edge, ev.center));
+    return this.edges.every(edge => this._checkEdge(edge, coord));
   }
 
   getContainerDimensions() {

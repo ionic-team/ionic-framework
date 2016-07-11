@@ -11,7 +11,7 @@ var _ = require('lodash');
 var config = require('../config.json');
 
 // Define the dgeni package for generating the docs
-module.exports = function(currentVersion) {
+module.exports = function(currentVersion, initialVersionBuild) {
 
   return new Package('ionic-v2-docs',
                      [jsdocPackage, nunjucksPackage, typescriptPackage,
@@ -70,10 +70,10 @@ module.exports = function(currentVersion) {
   //First semver valid version is latest
   var latestVersion = _.find(versions, semver.valid);
   versions = versions.map(function(version) {
-    //Latest version is in docs root
-    //var folder = version == latestVersion ? '' : version;
-    // Instead set nightly as docs root
-    var folder = version == 'nightly' ? '' : version;
+    // Set nightly as docs root
+    //var folder = version == 'nightly' ? '' : version;
+    //Instead set latest version in docs root if not initial build
+    var folder = (version == latestVersion) && !initialVersionBuild ? '' : version;
     return {
       href: path.join('/' + config.v2DocsDir, folder),
       folder: folder,
@@ -84,7 +84,8 @@ module.exports = function(currentVersion) {
   var versionData = {
     list: versions,
     current: _.find(versions, { name: currentVersion }),
-    latest: _.find(versions, {name: latestVersion}) || _.first(versions)
+    latest: _.find(versions, {name: latestVersion}) || _.first(versions),
+    initialVersionBuild: initialVersionBuild
   };
 
   renderDocsProcessor.extraData.version = versionData;
