@@ -4,7 +4,7 @@ import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
 import { AlertOptions, AlertInputOptions } from './alert-options';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-options';
+import { NavOptions } from '../nav/nav-interfaces';
 import { ViewController } from '../nav/view-controller';
 
 

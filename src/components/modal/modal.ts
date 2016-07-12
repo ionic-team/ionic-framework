@@ -4,7 +4,7 @@ import { App } from '../app/app';
 import { isPresent } from '../../util/util';
 import { ModalCmp } from './modal-component';
 import { ModalOptions } from './modal-options';
-import { NavOptions } from '../nav/nav-options';
+import { NavOptions } from '../nav/nav-interfaces';
 import { ViewController } from '../nav/view-controller';
 
 

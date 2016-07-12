@@ -1,6 +1,6 @@
 import { Directive, Optional } from '@angular/core';
-
 import { NavController } from './nav-controller';
+
 
 /**
  * @name NavPop
@@ -10,10 +10,11 @@ import { NavController } from './nav-controller';
  * @usage
  * ```html
  * <ion-content>
- *  <div block button nav-pop>go back</div>
+ *
+ *  <button navPop>Go Back</button>
+ *
  * </ion-content>
  * ```
- * This will go back one page in the navigation stack
  *
  * Similar to {@link /docs/v2/api/components/nav/NavPush/ `NavPush` }
  * @demo /docs/v2/demos/navigation/
@@ -34,6 +35,7 @@ export class NavPop {
       console.error('nav-pop must be within a NavController');
     }
   }
+
   /**
    * @private
    */

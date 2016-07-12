@@ -1556,7 +1556,7 @@ export function run() {
       it('should return 0 when transition end time is less than now', () => {
         // arrange
         nav.parent = {
-          _trnsTime: Date.now() - 5
+          trnsTime: Date.now() - 5
         };
         // act
         let returnedValue = nav._getLongestTrans(Date.now());
@@ -1567,7 +1567,7 @@ export function run() {
       it('should return 0 when parent transition time not set', () => {
         // arrange
         nav.parent = {
-          _trnsTime: undefined
+          trnsTime: undefined
         };
         // act
         let returnedValue = nav._getLongestTrans(Date.now());
@@ -1579,7 +1579,7 @@ export function run() {
         // arrange
         let expectedReturnValue = Date.now() + 100;
         nav.parent = {
-          _trnsTime: expectedReturnValue
+          trnsTime: expectedReturnValue
         };
         // act
         let returnedValue = nav._getLongestTrans(Date.now());
@@ -1591,16 +1591,16 @@ export function run() {
         // arrange
         let expectedReturnValue = Date.now() + 100;
         let firstParent = {
-          _trnsTime: expectedReturnValue
+          trnsTime: expectedReturnValue
         };
         let secondParent = {
-          _trnsTime: Date.now() + 50
+          trnsTime: Date.now() + 50
         };
         let thirdParent = {
-          _trnsTime: Date.now()
+          trnsTime: Date.now()
         };
         let fourthParent = {
-          _trnsTime: Date.now() + 20
+          trnsTime: Date.now() + 20
         };
         firstParent.parent = secondParent;
         secondParent.parent = thirdParent;
@@ -1616,16 +1616,16 @@ export function run() {
         // arrange
         let expectedReturnValue = Date.now() + 100;
         let firstParent = {
-          _trnsTime: Date.now()
+          trnsTime: Date.now()
         };
         let secondParent = {
-          _trnsTime: Date.now() + 50
+          trnsTime: Date.now() + 50
         };
         let thirdParent = {
-          _trnsTime: expectedReturnValue
+          trnsTime: expectedReturnValue
         };
         let fourthParent = {
-          _trnsTime: Date.now() + 20
+          trnsTime: Date.now() + 20
         };
         firstParent.parent = secondParent;
         secondParent.parent = thirdParent;
@@ -1641,16 +1641,16 @@ export function run() {
         // arrange
         let expectedReturnValue = Date.now() + 100;
         let firstParent = {
-          _trnsTime: Date.now()
+          trnsTime: Date.now()
         };
         let secondParent = {
-          _trnsTime: Date.now() + 50
+          trnsTime: Date.now() + 50
         };
         let thirdParent = {
-          _trnsTime: Date.now() + 20
+          trnsTime: Date.now() + 20
         };
         let fourthParent = {
-          _trnsTime: expectedReturnValue
+          trnsTime: expectedReturnValue
         };
         firstParent.parent = secondParent;
         secondParent.parent = thirdParent;

@@ -9,7 +9,7 @@ import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
 import { isBlank, isTrueProperty } from '../../util/util';
 import { nativeRaf } from '../../util/dom';
-import { NavController } from '../nav/nav-controller';
+import { NavController, DIRECTION_FORWARD } from '../nav/nav-controller';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabButton } from './tab-button';
@@ -234,7 +234,7 @@ export class Tabs extends Ion {
 
   constructor(
     @Optional() parent: NavController,
-    @Optional() viewCtrl: ViewController,
+    @Optional() public viewCtrl: ViewController,
     private _app: App,
     private _config: Config,
     private _elementRef: ElementRef,
@@ -326,6 +326,14 @@ export class Tabs extends Ion {
       });
     }
 
+    this.initTabs();
+  }
+
+  /**
+   * @private
+   */
+  initTabs() {
+    // first check if preloadTab is set as an input @Input, then check the config
     let preloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
 
     // get the selected index
@@ -397,7 +405,7 @@ export class Tabs extends Ion {
       return this._touchActive(selectedTab);
     }
 
-    console.debug('Tabs, select', selectedTab.id);
+    console.debug(`Tabs, select: ${selectedTab.id}`);
 
     let opts = {
       animate: false
@@ -413,7 +421,6 @@ export class Tabs extends Ion {
     selectedPage && selectedPage.fireWillEnter();
 
     selectedTab.load(opts, (initialLoad: boolean) => {
-
       selectedTab.ionSelect.emit(selectedTab);
       this.ionChange.emit(selectedTab);
 

@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
 import { NavController } from '../nav/nav-controller';
-import { NavOptions } from '../nav/nav-options';
+import { NavOptions } from '../nav/nav-interfaces';
 import { NavPortal } from '../nav/nav-portal';
 import { Platform } from '../../platform/platform';
 

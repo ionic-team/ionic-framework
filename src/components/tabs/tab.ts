@@ -5,8 +5,8 @@ import { Config } from '../../config/config';
 import { isTrueProperty} from '../../util/util';
 import { Keyboard} from '../../util/keyboard';
 import { MenuController } from '../menu/menu-controller';
-import { NavController} from '../nav/nav-controller';
-import { NavOptions} from '../nav/nav-options';
+import { NavController } from '../nav/nav-controller';
+import { NavOptions} from '../nav/nav-interfaces';
 import { TabButton} from './tab-button';
 import { Tabs} from './tabs';
 import { ViewController} from '../nav/view-controller';
@@ -121,7 +121,7 @@ import { ViewController} from '../nav/view-controller';
   selector: 'ion-tab',
   host: {
     '[class.show-tab]': 'isSelected',
-    '[attr.id]': '_panelId',
+    '[attr.id]': '_tabId',
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
@@ -132,7 +132,7 @@ export class Tab extends NavController {
   private _isInitial: boolean;
   private _isEnabled: boolean = true;
   private _isShown: boolean = true;
-  private _panelId: string;
+  private _tabId: string;
   private _btnId: string;
   private _loaded: boolean;
   private _loadTmr: any;
@@ -240,7 +240,7 @@ export class Tab extends NavController {
       this._sbEnabled = parent.rootNav.isSwipeBackEnabled();
     }
 
-    this._panelId = 'tabpanel-' + this.id;
+    this._tabId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
   }
 

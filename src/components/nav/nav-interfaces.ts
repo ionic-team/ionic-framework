@@ -5,6 +5,7 @@ export interface NavOptions {
   direction?: string;
   duration?: number;
   easing?: string;
+  id?: string;
   keyboardClose?: boolean;
   preload?: boolean;
   transitionDelay?: number;

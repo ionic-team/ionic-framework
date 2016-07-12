@@ -7,8 +7,8 @@ import { Ion } from '../ion';
 import { isBlank, pascalCaseToDashCase } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { MenuController } from '../menu/menu-controller';
+import { NavOptions } from './nav-interfaces';
 import { NavParams } from './nav-params';
-import { NavOptions } from './nav-options';
 import { SwipeBackGesture } from './swipe-back';
 import { Transition } from '../../transitions/transition';
 import { ViewController } from './view-controller';
@@ -221,11 +221,6 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  routers: any[] = [];
-
-  /**
-   * @private
-   */
   parent: any;
 
   /**
@@ -241,7 +236,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  _trnsTime: number = 0;
+  trnsTime: number = 0;
 
   constructor(
     parent: any,
@@ -325,7 +320,7 @@ export class NavController extends Ion {
     }
 
     // set the nav direction to "back" if it wasn't set
-    opts.direction = opts.direction || 'back';
+    opts.direction = opts.direction || DIRECTION_BACK;
 
     let resolve: any;
     let promise = new Promise(res => { resolve = res; });
@@ -493,7 +488,7 @@ export class NavController extends Ion {
       view.state = STATE_INACTIVE;
 
       // give this inserted view an ID
-      this._incId(view);
+      view.id = this.id + '-' + (++this._ids);
 
       // insert the entering view into the correct index in the stack
       this._views.splice(insertIndex + i, 0, view);
@@ -584,7 +579,7 @@ export class NavController extends Ion {
     }
 
     // default the direction to "back"
-    opts.direction = opts.direction || 'back';
+    opts.direction = opts.direction || DIRECTION_BACK;
 
     // figure out the states of each view in the stack
     let leavingView = this._remove(startIndex, removeCount);
@@ -989,6 +984,7 @@ export class NavController extends Ion {
         // so just update the local transitioning information
         let duration = parentTransitionEndTime - Date.now();
         this.setTransitioning(true, duration);
+
       } else {
         // this is the only active transition (for now), so disable the app
         let keyboardDurationPadding = 0;
@@ -1151,15 +1147,8 @@ export class NavController extends Ion {
         this._app && this._app.setEnabled(true);
       }
 
+      // update that this nav is not longer actively transitioning
       this.setTransitioning(false);
-
-      if (direction !== null && hasCompleted && !this.isPortal) {
-        // notify router of the state change if a direction was provided
-        // multiple routers can exist and each should be notified
-        this.routers.forEach(router => {
-          router.stateChange(direction, enteringView);
-        });
-      }
 
       // see if we should add the swipe back gesture listeners or not
       this._sbCheck();
@@ -1332,7 +1321,7 @@ export class NavController extends Ion {
   swipeBackStart() {
     // default the direction to "back"
     let opts: NavOptions = {
-      direction: 'back',
+      direction: DIRECTION_BACK,
       progressAnimation: true
     };
 
@@ -1440,15 +1429,19 @@ export class NavController extends Ion {
    * Returns if the nav controller is actively transitioning or not.
    * @return {boolean}
    */
-  isTransitioning(): boolean {
-    return (this._trnsTime > Date.now());
+  isTransitioning(includeAncestors?: boolean): boolean {
+    let now = Date.now();
+    if (includeAncestors && this._getLongestTrans(now) > 0) {
+      return true;
+    }
+    return (this.trnsTime > now);
   }
 
   /**
    * @private
    */
   setTransitioning(isTransitioning: boolean, fallback: number = 700) {
-    this._trnsTime = (isTransitioning ? Date.now() + fallback : 0);
+    this.trnsTime = (isTransitioning ? Date.now() + fallback : 0);
   }
 
   /**
@@ -1459,13 +1452,13 @@ export class NavController extends Ion {
    * thus giving us the longest transition duration
    */
    private _getLongestTrans(now: number) {
-     let parentNav: NavController = <NavController> this.parent;
-     let transitionEndTime: number = -1;
+     let parentNav = <NavController>this.parent;
+     let transitionEndTime = -1;
      while (parentNav) {
-       if (parentNav._trnsTime > transitionEndTime) {
-         transitionEndTime = parentNav._trnsTime;
+       if (parentNav.trnsTime > transitionEndTime) {
+         transitionEndTime = parentNav.trnsTime;
        }
-       parentNav = <NavController> parentNav.parent;
+       parentNav = parentNav.parent;
      }
      // only check if the transitionTime is greater than the current time once
      return transitionEndTime > 0 && transitionEndTime > now ? transitionEndTime : 0;
@@ -1594,20 +1587,6 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  registerRouter(router: any) {
-    this.routers.push(router);
-  }
-
-  /**
-   * @private
-   */
-  private _incId(view: ViewController) {
-    view.id = this.id + '-' + (++this._ids);
-  }
-
-  /**
-   * @private
-   */
   private _setZIndex(enteringView: ViewController, leavingView: ViewController, direction: string) {
     if (enteringView) {
       // get the leaving view, which could be in various states
@@ -1626,7 +1605,7 @@ export class NavController extends Ion {
           enteringView.setZIndex(this.isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, this._renderer);
         }
 
-      } else if (direction === 'back') {
+      } else if (direction === DIRECTION_BACK) {
         // moving back
         enteringView.setZIndex(leavingView.zIndex - 1, this._renderer);
 
@@ -1649,6 +1628,9 @@ const STATE_REMOVE = 7;
 const STATE_REMOVE_AFTER_TRANS = 8;
 const STATE_CANCEL_ENTER = 9;
 const STATE_FORCE_ACTIVE = 10;
+
+export const DIRECTION_BACK = 'back';
+export const DIRECTION_FORWARD = 'forward';
 
 const INIT_ZINDEX = 100;
 const PORTAL_ZINDEX = 9999;
