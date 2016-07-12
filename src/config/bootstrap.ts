@@ -42,19 +42,37 @@ const _reflect: any = Reflect;
  * ```
  */
 export function ionicBootstrap(appRootComponent: any, customProviders?: Array<any>, config?: any) {
+  // create an instance of Config
+  if (!(config instanceof Config)) {
+    config = new Config(config);
+  }
+
   // get all Ionic Providers
   let providers = ionicProviders(customProviders, config);
+
+  const platform = new Platform();
+  this.initializePlatform(platform, config);
 
   // automatically set "ion-app" selector to users root component
   addSelector(appRootComponent, 'ion-app');
 
-  cssReady(() => {
+  // Do not check if CSS is ready if platform is 'core'
+  // since it makes the site loading slow (~8 seconds)
+  if (platform.is('core')) {
     // call angular bootstrap
     bootstrap(appRootComponent, providers).then(ngComponentRef => {
       // ionic app has finished bootstrapping
       ionicPostBootstrap(ngComponentRef);
     });
-  });
+  } else {
+    cssReady(() => {
+      // call angular bootstrap
+      bootstrap(appRootComponent, providers).then(ngComponentRef => {
+        // ionic app has finished bootstrapping
+        ionicPostBootstrap(ngComponentRef);
+      });
+    });
+  }
 }
 
 
@@ -108,13 +126,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
 
   // create an instance of Platform
   let platform = new Platform();
-
-  // initialize platform
-  platform.setUrl(window.location.href);
-  platform.setUserAgent(window.navigator.userAgent);
-  platform.setNavigatorPlatform(window.navigator.platform);
-  platform.load(config);
-  config.setPlatform(platform);
+  this.initializePlatform(platform, config);
 
   let clickBlock = new ClickBlock();
   let events = new Events();
@@ -248,4 +260,16 @@ export function addSelector(type: any, selector: string) {
       _reflect.defineMetadata('annotations', annotations, type);
     }
   }
+}
+
+/**
+ * @private
+ */
+export function initializePlatform(platform: Platform, config: Config) {
+  // initialize platform
+  platform.setUrl(window.location.href);
+  platform.setUserAgent(window.navigator.userAgent);
+  platform.setNavigatorPlatform(window.navigator.platform);
+  platform.load(config);
+  config.setPlatform(platform);
 }
