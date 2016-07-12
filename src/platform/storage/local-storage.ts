@@ -50,6 +50,22 @@ export class LocalStorage extends StorageEngine {
       }
     });
   }
+  
+  /**
+   * Get the value of a object or array in LocalStorage
+   * @param {string} key the key you want to lookup in LocalStorage
+   * @returns {Promise} Returns a promise which is resolved when the value has been retrieved and parsed
+   */
+  getJson(key: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      try {
+        let value = JSON.parse(window.localStorage.getItem(key));
+        resolve(value);
+      } catch (e) {
+        reject(e);
+      }
+    })
+  }
 
   /**
    * Set a key value pair and save it to LocalStorage
@@ -61,6 +77,23 @@ export class LocalStorage extends StorageEngine {
     return new Promise((resolve, reject) => {
       try {
         window.localStorage.setItem(key, value);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+  
+  /**
+   * Set an object or array and save it to LocalStorage
+   * @param {string} key the key you want to save to LocalStorage
+   * @param {Object|any[]} value the object you want to save
+   * @returns {Promise} Returns a promise which is resolved when the key value pair has been stringified and set
+   */
+  setJson(key: string, value: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      try {
+        window.localStorage.setItem(key, JSON.stringify(value));
         resolve();
       } catch (e) {
         reject(e);
