@@ -396,6 +396,8 @@ export class Slides extends Ion {
     setTimeout(() => {
       var swiper = new Swiper(this.getNativeElement().children[0], options);
       this.slider = swiper;
+
+      this.rapidUpdate();
     }, 300);
 
     /*
@@ -866,8 +868,6 @@ export class Slide {
   ) {
     this.ele = elementRef.nativeElement;
     this.ele.classList.add('swiper-slide');
-
-    slides.rapidUpdate();
   }
 
   ngOnDestroy() {
