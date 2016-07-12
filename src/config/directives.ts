@@ -43,7 +43,6 @@ import { Searchbar } from '../components/searchbar/searchbar';
 import { Nav } from '../components/nav/nav';
 import { NavPop } from '../components/nav/nav-pop';
 import { NavPush } from '../components/nav/nav-push';
-import { NavRouter } from '../components/nav/nav-router';
 import { NavbarTemplate, Navbar } from '../components/navbar/navbar';
 import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when';
 
@@ -113,7 +112,6 @@ import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when'
  * - Navbar
  * - NavPush
  * - NavPop
- * - NavRouter
  * - IdRef
  * - ShowWhen
  * - HideWhen
@@ -195,7 +193,6 @@ export const IONIC_DIRECTIVES: any[] = [
 
   NavPush,
   NavPop,
-  NavRouter,
 
   ShowWhen,
   HideWhen
