@@ -111,6 +111,10 @@ export const isBlank = (val: any) => val === undefined || val === null;
 export const isObject = (val: any) => typeof val === 'object';
 export const isArray = Array.isArray;
 
+export const isPrimitive = function(val: any) {
+  return isString(val) || isBoolean(val) || (isNumber(val) && !isNaN(val));
+};
+
 export const isTrueProperty = function(val: any): boolean {
   if (typeof val === 'string') {
     val = val.toLowerCase().trim();
