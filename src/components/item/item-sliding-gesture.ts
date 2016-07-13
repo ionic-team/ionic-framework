@@ -44,8 +44,8 @@ export class ItemSlidingGesture {
     }
 
     // Close open container if it is not the selected one.
-    if (container !== this.openContainer && this.closeOpened()) {
-      return false;
+    if (container !== this.openContainer) {
+      this.closeOpened();
     }
 
     // Try to start gesture

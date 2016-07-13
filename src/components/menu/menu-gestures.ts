@@ -51,12 +51,13 @@ export class MenuContentGesture extends SlideEdgeGesture {
       return true;
     }
 
+    let cosine = Math.cos(ev.angle * (Math.PI / 180));
     if (menu.side === 'right') {
-      if ((ev.angle > 140 && ev.angle <= 180) || (ev.angle > -140 && ev.angle <= -180)) {
+      if (cosine < -0.95) {
         return super.canStart(ev);
       }
     } else {
-      if (ev.angle > -40 && ev.angle < 40) {
+      if (cosine > 0.95) {
         return super.canStart(ev);
       }
     }
