@@ -1,5 +1,5 @@
-import {Gesture} from './gesture';
-import {defaults} from '../util';
+import { Gesture } from './gesture';
+import { defaults } from '../util';
 
 /**
  * @private

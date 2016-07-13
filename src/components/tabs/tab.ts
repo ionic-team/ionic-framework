@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitt
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty} from '../../util/util';
 import { Keyboard} from '../../util/keyboard';
-import { MenuController } from '../menu/menu-controller';
 import { NavController } from '../nav/nav-controller';
 import { NavOptions} from '../nav/nav-interfaces';
 import { TabButton} from './tab-button';
@@ -229,10 +229,10 @@ export class Tab extends NavController {
     renderer: Renderer,
     compiler: ComponentResolver,
     private _cd: ChangeDetectorRef,
-    menuCtrl: MenuController
+    gestureCtrl: GestureController
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, menuCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
 
     parent.add(this);
 

@@ -10,6 +10,7 @@ import { closest, nativeTimeout } from '../util/dom';
 import { Events } from '../util/events';
 import { FeatureDetect } from '../util/feature-detect';
 import { Form } from '../util/form';
+import { GestureController } from '../gestures/gesture-controller';
 import { IONIC_DIRECTIVES } from './directives';
 import { isPresent } from '../util/util';
 import { Keyboard } from '../util/keyboard';
@@ -77,6 +78,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     TapClick,
     ToastController,
     Translate,
+    GestureController,
   ];
 
   if (isPresent(customProviders)) {

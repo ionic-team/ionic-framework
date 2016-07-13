@@ -1,0 +1,84 @@
+<ion-header>
+
+  <ion-navbar>
+
+    <button menuToggle="left">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+      Menu
+    </ion-title>
+
+    <button menuToggle="right" right secondary>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+
+    <ion-refresher-content
+      pullingText="Pull to refresh..."
+      refreshingSpinner="bubbles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+
+  </ion-refresher>
+
+  <h3>Page 1</h3>
+
+  <ion-list padding>
+    <ion-item-sliding>
+      <button ion-item class="e2eContentToggleLeftMenu" menuToggle="left">Toggle Left Menu</button>
+
+      <ion-item-options side="left">
+        <button>Test</button>
+      </ion-item-options>
+      <ion-item-options>
+        <button>Test</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+  <ion-list>
+
+    <ion-item-sliding>
+      <button ion-item class="e2eContentToggleRightMenu" menuToggle="right">Toggle Right Menu</button>
+
+      <ion-item-options side="left">
+        <button>Test</button>
+      </ion-item-options>
+      <ion-item-options>
+        <button>Test</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <button ion-item (click)="goToPage1()">Push same page</button>
+
+    <ion-item>
+      <ion-label>RANGE</ion-label>
+      <ion-range></ion-range>
+    </ion-item>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label>SLIDING ITEM + RANGE</ion-label>
+        <ion-range></ion-range>
+      </ion-item>
+      <ion-item-options side="left">
+        <button>Test</button>
+      </ion-item-options>
+      <ion-item-options>
+        <button>Test</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+
+</ion-content>

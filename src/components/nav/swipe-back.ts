@@ -1,4 +1,5 @@
 import { assign } from '../../util/util';
+import { GestureController, GestureDelegate, GesturePriority } from '../../gestures/gesture-controller';
 import { MenuController } from '../menu/menu-controller';
 import { NavController } from './nav-controller';
 import { SlideData } from '../../gestures/slide-gesture';
@@ -7,39 +8,43 @@ import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 
 export class SwipeBackGesture extends SlideEdgeGesture {
 
+  private gesture: GestureDelegate;
+
   constructor(
     element: HTMLElement,
     options: any,
     private _nav: NavController,
-    private _menuCtrl: MenuController
+    gestureCtlr: GestureController
   ) {
     super(element, assign({
       direction: 'x',
       maxEdgeStart: 75
     }, options));
+
+    this.gesture = gestureCtlr.create('goback-swipe', {
+      priority: GesturePriority.Navigation,
+    });
   }
 
-  canStart(ev: any) {
+  canStart(ev: any): boolean {
+    this.gesture.release();
+
     // the gesture swipe angle must be mainly horizontal and the
     // gesture distance would be relatively short for a swipe back
     // and swipe back must be possible on this nav controller
-    if (ev.angle > -40 &&
-        ev.angle < 40 &&
-        ev.distance < 50 &&
-        this._nav.canSwipeBack()) {
-	    // passed the tests, now see if the super says it's cool or not
-      return super.canStart(ev);
-    }
-
-    // nerp, not today
-    return false;
+    return (
+      ev.angle > -40 &&
+      ev.angle < 40 &&
+      ev.distance < 50 &&
+      this._nav.canSwipeBack() &&
+      super.canStart(ev) &&
+      this.gesture.capture()
+    );
   }
 
   onSlideBeforeStart(slideData: SlideData, ev: any) {
     console.debug('swipeBack, onSlideBeforeStart', ev.srcEvent.type);
     this._nav.swipeBackStart();
-
-    this._menuCtrl.tempDisable(true);
   }
 
   onSlide(slide: SlideData) {
@@ -57,7 +62,17 @@ export class SwipeBackGesture extends SlideEdgeGesture {
 
     this._nav.swipeBackEnd(shouldComplete, currentStepValue);
 
-    this._menuCtrl.tempDisable(false);
+    this.gesture.release();
+  }
+
+  unlisten() {
+    this.gesture.release();
+    super.unlisten();
+  }
+
+  destroy() {
+    this.gesture.destroy();
+    super.destroy();
   }
 
 }

@@ -3,10 +3,10 @@ import { ComponentResolver, ElementRef, EventEmitter, NgZone, provide, Reflectiv
 import { addSelector } from '../../config/bootstrap';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { GestureController } from '../../gestures/gesture-controller';
 import { Ion } from '../ion';
 import { isBlank, pascalCaseToDashCase } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
-import { MenuController } from '../menu/menu-controller';
 import { NavOptions } from './nav-interfaces';
 import { NavParams } from './nav-params';
 import { SwipeBackGesture } from './swipe-back';
@@ -247,7 +247,7 @@ export class NavController extends Ion {
     protected _zone: NgZone,
     protected _renderer: Renderer,
     protected _compiler: ComponentResolver,
-    protected _menuCtrl: MenuController
+    private _gestureCtrl: GestureController
   ) {
     super(elementRef);
 
@@ -1379,7 +1379,7 @@ export class NavController extends Ion {
           edge: 'left',
           threshold: this._sbThreshold
         };
-        this._sbGesture = new SwipeBackGesture(this.getNativeElement(), opts, this, this._menuCtrl);
+        this._sbGesture = new SwipeBackGesture(this.getNativeElement(), opts, this, this._gestureCtrl);
       }
 
       if (this.canSwipeBack()) {

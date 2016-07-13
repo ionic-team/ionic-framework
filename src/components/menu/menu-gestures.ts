@@ -1,27 +1,39 @@
-import {Menu} from './menu';
-import {SlideEdgeGesture} from '../../gestures/slide-edge-gesture';
-import {SlideData} from '../../gestures/slide-gesture';
-import {assign} from '../../util/util';
+import { Menu } from './menu';
+import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
+import { SlideData } from '../../gestures/slide-gesture';
+import { assign } from '../../util/util';
+import { GestureDelegate, GesturePriority } from '../../gestures/gesture-controller';
 
 
 /**
  * Gesture attached to the content which the menu is assigned to
  */
 export class MenuContentGesture extends SlideEdgeGesture {
+  gesture: GestureDelegate;
 
   constructor(public menu: Menu, contentEle: HTMLElement, options: any = {}) {
-
     super(contentEle, assign({
       direction: 'x',
       edge: menu.side,
       threshold: 0,
       maxEdgeStart: menu.maxEdgeStart || 75
     }, options));
+
+    this.gesture = menu.gestureCtrl.create('menu-swipe', {
+      priority: GesturePriority.NavigationOptional,
+    });
   }
 
-  canStart(ev: any) {
-    let menu = this.menu;
+  canStart(ev: any): boolean {
+    if (this.shouldStart(ev)) {
+      return this.gesture.capture();
+    }
+    this.gesture.release();
+    return false;
+  }
 
+  shouldStart(ev: any): boolean {
+    let menu = this.menu;
     if (!menu.enabled || !menu.swipeEnabled) {
       console.debug('menu can not start, isEnabled:', menu.enabled, 'isSwipeEnabled:', menu.swipeEnabled, 'side:', menu.side);
       return false;
@@ -33,40 +45,23 @@ export class MenuContentGesture extends SlideEdgeGesture {
       return false;
     }
 
-    console.debug('menu canStart,', menu.side, 'isOpen', menu.isOpen, 'angle', ev.angle, 'distance', ev.distance);
+    console.debug('menu shouldCapture,', menu.side, 'isOpen', menu.isOpen, 'angle', ev.angle, 'distance', ev.distance);
 
-    if (menu.side === 'right') {
-      // right side
-      if (menu.isOpen) {
-        // right side, opened
-        return true;
-
-      } else {
-        // right side, closed
-        if ((ev.angle > 140 && ev.angle <= 180) || (ev.angle > -140 && ev.angle <= -180)) {
-          return super.canStart(ev);
-        }
-      }
-
-    } else {
-      // left side
-      if (menu.isOpen) {
-        // left side, opened
-        return true;
-
-      } else {
-        // left side, closed
-        if (ev.angle > -40 && ev.angle < 40) {
-          return super.canStart(ev);
-        }
-      }
-
+    if (menu.isOpen) {
+      return true;
     }
 
-    // didn't pass the test, don't open this menu
+    if (menu.side === 'right') {
+      if ((ev.angle > 140 && ev.angle <= 180) || (ev.angle > -140 && ev.angle <= -180)) {
+        return super.canStart(ev);
+      }
+    } else {
+      if (ev.angle > -40 && ev.angle < 40) {
+        return super.canStart(ev);
+      }
+    }
     return false;
   }
-
   // Set CSS, then wait one frame for it to apply before sliding starts
   onSlideBeforeStart(slide: SlideData, ev: any) {
     console.debug('menu gesture, onSlideBeforeStart', this.menu.side);
@@ -83,16 +78,18 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   onSlideEnd(slide: SlideData, ev: any) {
+    this.gesture.release();
+
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
     let currentStepValue = (slide.distance / z);
 
     z = Math.abs(z * 0.5);
     let shouldCompleteRight = (ev.velocityX >= 0)
       && (ev.velocityX > 0.2 || slide.delta > z);
-    
+
     let shouldCompleteLeft = (ev.velocityX <= 0)
       && (ev.velocityX < -0.2 || slide.delta < -z);
-    
+
     console.debug(
       'menu gesture, onSlide', this.menu.side,
       'distance', slide.distance,
@@ -103,7 +100,6 @@ export class MenuContentGesture extends SlideEdgeGesture {
       'shouldCompleteLeft', shouldCompleteLeft,
       'shouldCompleteRight', shouldCompleteRight,
       'currentStepValue', currentStepValue);
-
     this.menu.swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue);
   }
 
@@ -132,6 +128,16 @@ export class MenuContentGesture extends SlideEdgeGesture {
       max: this.menu.width()
     };
   }
+
+  unlisten() {
+    this.gesture.release();
+    super.unlisten();
+  }
+
+  destroy() {
+    this.gesture.destroy();
+    super.destroy();
+  }
 }
 
 
@@ -143,5 +149,6 @@ export class MenuTargetGesture extends MenuContentGesture {
     super(menu, menuEle, {
       maxEdgeStart: 0
     });
+    this.gesture.priority++;
   }
 }
