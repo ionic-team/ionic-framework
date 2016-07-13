@@ -13,7 +13,8 @@
  * ```html
  * <ion-side-menu-content
  *   edge-drag-threshold="true"
- *   drag-content="true">
+ *   drag-content="true"
+ *   close-menu-on-tap="true">
  * </ion-side-menu-content>
  * ```
  * For a complete side menu example, see the
@@ -24,6 +25,7 @@
    *  - If a non-zero number is given, that many pixels is used as the maximum allowed distance from the edge that starts dragging the side menu.
    *  - If true is given, the default number of pixels (25) is used as the maximum allowed distance.
    *  - If false or 0 is given, the edge drag threshold is disabled, and dragging from anywhere on the content is allowed.
+ * @param {boolean=} close-menu-on-tap Whether the content tap should close side menus.  Default true.
  *
  */
 IonicModule
@@ -59,9 +61,15 @@ function($timeout, $ionicGesture, $window) {
           });
         }
 
+        if (isDefined(attr.closeMenuOnTap)) {
+          $scope.$watch(attr.closeMenuOnTap, function(value) {
+            sideMenuCtrl.closeMenuOnTap(value);
+          });
+        }
+
         // Listen for taps on the content to close the menu
         function onContentTap(gestureEvt) {
-          if (sideMenuCtrl.getOpenAmount() !== 0) {
+          if (sideMenuCtrl.closeMenuOnTap() && sideMenuCtrl.getOpenAmount() !== 0) {
             sideMenuCtrl.close();
             gestureEvt.gesture.srcEvent.preventDefault();
             startCoord = null;

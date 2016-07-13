@@ -378,6 +378,14 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     return self.edgeThresholdEnabled;
   };
 
+  $scope.closeMenuOnTap = true;
+  self.closeMenuOnTap = function(closeMenu) {
+    if (arguments.length) {
+      $scope.closeMenuOnTap = !!closeMenu;
+    }
+    return $scope.closeMenuOnTap;
+  };
+
   self.isDraggableTarget = function(e) {
     //Only restrict edge when sidemenu is closed and restriction is enabled
     var shouldOnlyAllowEdgeDrag = self.edgeThresholdEnabled && !self.isOpen();
