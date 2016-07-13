@@ -31,6 +31,11 @@ export class App {
    */
   clickBlock: ClickBlock;
 
+  /**
+   * @private
+   */
+  appRoot: AppRoot;
+
   viewDidLoad: EventEmitter<any> = new EventEmitter();
   viewWillEnter: EventEmitter<any> = new EventEmitter();
   viewDidEnter: EventEmitter<any> = new EventEmitter();
@@ -84,6 +89,17 @@ export class App {
         this.clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
       }
     }
+  }
+
+  /**
+   * @private
+   */
+  setScrollDisabled(disabled: boolean) {
+    if (!this.appRoot) {
+      console.error('appRoot is missing, scrolling can not be enabled/disabled');
+      return;
+    }
+    this.appRoot.disableScroll = disabled;
   }
 
   /**
@@ -282,9 +298,13 @@ export class AppRoot {
   @ViewChild('anchor', {read: ViewContainerRef}) private _viewport: ViewContainerRef;
 
   constructor(
-      private _cmp: UserComponent,
-      private _cr: ComponentResolver,
-      private _renderer: Renderer) {}
+    private _cmp: UserComponent,
+    private _cr: ComponentResolver,
+    private _renderer: Renderer,
+    app: App
+  ) {
+    app.appRoot = this;
+  }
 
   ngAfterViewInit() {
     // load the user app's root component

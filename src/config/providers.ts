@@ -65,6 +65,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     provide(Events, {useValue: events}),
     provide(FeatureDetect, {useValue: featureDetect}),
     Form,
+    GestureController,
     HTTP_PROVIDERS,
     Keyboard,
     LoadingController,
@@ -78,7 +79,6 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     TapClick,
     ToastController,
     Translate,
-    GestureController,
   ];
 
   if (isPresent(customProviders)) {

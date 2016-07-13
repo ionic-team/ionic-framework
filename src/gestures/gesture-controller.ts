@@ -1,6 +1,5 @@
 
-import { Injectable } from '@angular/core';
-
+import { forwardRef, Inject, Injectable } from '@angular/core';
 import { App } from '../components/app/app';
 
 export const enum GesturePriority {
@@ -30,12 +29,17 @@ export class GestureController {
   private requestedStart: { [eventId: number]: number } = {};
   private disabledGestures: { [eventName: string]: Set<number> } = {};
   private disabledScroll: Set<number> = new Set<number>();
-  private appRoot: App;
   private capturedID: number = null;
 
+  constructor(@Inject(forwardRef(() => App)) private _app: App) { }
+
   create(name: string, opts: GestureOptions = {}): GestureDelegate {
+    return new GestureDelegate(name, this.newID(), this, opts);
+  }
+
+  newID(): number {
     let id = this.id; this.id++;
-    return new GestureDelegate(name, id, this, opts);
+    return id;
   }
 
   start(gestureName: string, id: number, priority: number): boolean {
@@ -94,16 +98,18 @@ export class GestureController {
   disableScroll(id: number) {
     let isEnabled = !this.isScrollDisabled();
     this.disabledScroll.add(id);
-    if (isEnabled && this.isScrollDisabled()) {
-      // this.appRoot.disableScroll = true;
+    if (this._app && isEnabled && this.isScrollDisabled()) {
+      console.debug('GestureController: Disabling scrolling');
+      this._app.setScrollDisabled(true);
     }
   }
 
   enableScroll(id: number) {
     let isDisabled = this.isScrollDisabled();
     this.disabledScroll.delete(id);
-    if (isDisabled && !this.isScrollDisabled()) {
-      // this.appRoot.disableScroll = false;
+    if (this._app && isDisabled && !this.isScrollDisabled()) {
+      console.debug('GestureController: Enabling scrolling');
+      this._app.setScrollDisabled(false);
     }
   }
 
