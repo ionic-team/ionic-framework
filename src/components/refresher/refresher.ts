@@ -462,10 +462,12 @@ export class Refresher {
     this._events.unlistenAll();
     this._pointerEvents = null;
     if (shouldListen) {
-      this._pointerEvents = this._events.pointerEvents(this._content.getScrollElement(),
-        this._onStart.bind(this),
-        this._onMove.bind(this),
-        this._onEnd.bind(this));
+      this._pointerEvents = this._events.pointerEvents({
+        element: this._content.getScrollElement(),
+        pointerDown: this._onStart.bind(this),
+        pointerMove: this._onMove.bind(this),
+        pointerUp: this._onEnd.bind(this)
+      });
     }
   }
 
