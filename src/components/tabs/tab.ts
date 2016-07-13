@@ -294,20 +294,7 @@ export class Tab extends NavController {
    * @private
    */
   loadPage(viewCtrl: ViewController, viewport: ViewContainerRef, opts: NavOptions, done: Function) {
-    let isTabSubPage = (this.parent.subPages && viewCtrl.index > 0);
-
-    if (isTabSubPage) {
-      viewport = this.parent.portal;
-    }
-
     super.loadPage(viewCtrl, viewport, opts, () => {
-      if (isTabSubPage) {
-        // add the .tab-subpage css class to tabs pages that should act like subpages
-        let pageEleRef = viewCtrl.pageRef();
-        if (pageEleRef) {
-          this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
-        }
-      }
       done();
     });
   }

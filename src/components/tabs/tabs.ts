@@ -148,7 +148,6 @@ import { ViewController } from '../nav/view-controller';
       <tab-highlight></tab-highlight>
     </ion-tabbar>
     <ng-content></ng-content>
-    <div #portal tab-portal></div>
   `,
   directives: [Badge, Icon, NgClass, NgFor, NgIf, TabButton, TabHighlight],
   encapsulation: ViewEncapsulation.None,
@@ -171,11 +170,6 @@ export class Tabs extends Ion {
    * @private
    */
   selectHistory: string[] = [];
-
-  /**
-   * @private
-   */
-  subPages: boolean;
 
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
@@ -225,11 +219,6 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  @ViewChild('portal', {read: ViewContainerRef}) portal: ViewContainerRef;
-
-  /**
-   * @private
-   */
   parent: NavController;
 
   constructor(
@@ -246,13 +235,11 @@ export class Tabs extends Ion {
     this.parent = parent;
     this.id = ++tabIds;
     this._sbPadding = _config.getBoolean('statusbarPadding');
-    this.subPages = _config.getBoolean('tabsHideOnSubPages');
     this._useHighlight = _config.getBoolean('tabsHighlight');
 
     // TODO deprecated 07-07-2016 beta.11
     if (_config.get('tabSubPages') !== null) {
-      console.warn('Config option "tabSubPages" has been deprecated. Please use "tabsHideOnSubPages" instead.');
-      this.subPages = _config.getBoolean('tabSubPages');
+      console.warn('Config option "tabSubPages" has been deprecated. The Material Design spec now supports Bottom Navigation: https://material.google.com/components/bottom-navigation.html');
     }
 
     // TODO deprecated 07-07-2016 beta.11
