@@ -198,7 +198,6 @@ export class Menu extends Ion {
   private _isSwipeEnabled: boolean = true;
   private _isPers: boolean = false;
   private _init: boolean = false;
-  private _prevEnabled: boolean;
 
   /**
    * @private
@@ -414,7 +413,7 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  setOpen(shouldOpen: boolean): Promise<boolean> {
+  setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
     // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the MenuToggle button
     if ((shouldOpen && this.isOpen) || this._isPrevented()) {
@@ -424,7 +423,7 @@ export class Menu extends Ion {
     this._before();
 
     return new Promise(resolve => {
-      this._getType().setOpen(shouldOpen, () => {
+      this._getType().setOpen(shouldOpen, animated, () => {
         this._after(shouldOpen);
         resolve(this.isOpen);
       });
@@ -515,21 +514,6 @@ export class Menu extends Ion {
     }
   }
 
-  /**
-   * @private
-   */
-  tempDisable(temporarilyDisable: boolean) {
-    if (temporarilyDisable) {
-      this._prevEnabled = this._isEnabled;
-      this._getType().setProgessStep(0);
-      this.enable(false);
-
-    } else {
-      this.enable(this._prevEnabled);
-      this._after(false);
-    }
-  }
-
   private _prevent() {
     // used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the MenuToggle
@@ -611,6 +595,13 @@ export class Menu extends Ion {
    */
   getBackdropElement(): HTMLElement {
     return this.backdrop.getNativeElement();
+  }
+
+  /**
+   * @private
+   */
+  getMenuController(): MenuController {
+    return this._menuCtrl;
   }
 
   /**

@@ -14,6 +14,10 @@
         {{p.title}}
       </button>
 
+      <button ion-item (click)="openRightMenu()">
+        Open Right Menu
+      </button>
+
       <button ion-item menuClose="left" class="e2eCloseLeftMenu" detail-none>
         Close Menu
       </button>
@@ -88,6 +92,10 @@
 
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
+      </button>
+
+      <button ion-item (click)="openLeftMenu()">
+        Open Left Menu
       </button>
 
       <button ion-item menuClose="right" class="e2eCloseRightMenu" detail-none>
