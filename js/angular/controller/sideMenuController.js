@@ -205,7 +205,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     self.content.setTranslateX(amount);
 
     if (amount >= 0) {
-      leftShowing = true;
+      leftShowing = amount > 0;
       rightShowing = false;
 
       if (amount > 0) {
