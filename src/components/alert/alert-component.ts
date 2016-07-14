@@ -61,9 +61,12 @@ import { ViewController } from '../nav/view-controller';
 
         <template ngSwitchDefault>
           <div class="alert-input-group">
-            <div *ngFor="let i of d.inputs" class="alert-input-wrapper">
-              <input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">
-            </div>
+            <template ngFor let-i [ngForOf]="d.inputs">
+              <div *ngIf="i && i.filtered" class="alert-input-wrapper">
+                <div class="alert-input-label" *ngIf="i.label">{{ i.label }}</div>
+                <input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">
+              </div>
+            </template>
           </div>
         </template>
 
@@ -189,9 +192,11 @@ export class AlertCmp {
 
   private _filterOut(event: string) {
     for (let input of this.d.inputs)
-      input.filtered = event === '' && true ||
-        (input.value.toUpperCase().indexOf(event.toUpperCase()) > -1 ||
-        input.label.toUpperCase().indexOf(event.toUpperCase()) > -1);
+      input.filtered = event === '' && true || (
+        (isPresent(input.name) && typeof input.name === 'string' && input.name.toUpperCase().indexOf(event.toUpperCase()) > -1) ||
+        (isPresent(input.placeholder) && typeof input.placeholder === 'string' && input.placeholder.toUpperCase().indexOf(event.toUpperCase()) > -1) ||
+        (isPresent(input.value) && typeof input.value === 'string' && input.value.toUpperCase().indexOf(event.toUpperCase()) > -1) ||
+        (isPresent(input.label) && typeof input.label === 'string' && input.label.toUpperCase().indexOf(event.toUpperCase()) > -1) );
   };
 
   @HostListener('body:keyup', ['$event'])

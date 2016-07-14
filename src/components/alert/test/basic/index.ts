@@ -286,34 +286,27 @@ class E2EPage {
   doAlertWithSearch() {
     let alert = this.alertCtrl.create();
     alert.setTitle('Search!');
+    alert.setSubTitle('1st input named "from Name"');
     alert.setHasSearch(true);
 
     alert.addInput({
-      type: 'radio',
-      label: 'Radio Cool',
-      value: 'cool',
-      checked: true
+      name: 'from Name',
+    });
+
+    alert.addInput({
+      value: 'from Value'
+    });
+
+    alert.addInput({
+      placeholder: 'from Placeholder',
     });
 
     alert.addInput({
       type: 'radio',
-      label: 'Radio Nerd',
-      value: 'nerd'
+      label: 'from Label'
     });
 
-    alert.addInput({
-      type: 'radio',
-      label: 'Radio Geek',
-      value: 'geek'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Radio Startupper',
-      value: 'startupper'
-    });
-
-    alert.addButton('Cancel');
+    alert.addButton('OK');
 
     alert.present();
   }
