@@ -554,14 +554,13 @@
       var self = this;
       var container = self.__container;
 
-      container.removeEventListener('resetScrollView', self.resetScrollView);
       container.removeEventListener('scroll', self.onScroll);
-
       container.removeEventListener('scrollChildIntoView', self.scrollChildIntoView);
-      container.removeEventListener('resetScrollView', self.resetScrollView);
 
       container.removeEventListener(ionic.EVENTS.touchstart, self.handleTouchMove);
       container.removeEventListener(ionic.EVENTS.touchmove, self.handleTouchMove);
+
+      document.removeEventListener('resetScrollView', self.resetScrollView);
 
       ionic.tap.removeClonedInputs(container, self);
 
