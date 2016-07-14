@@ -4,8 +4,8 @@ import { SlideData } from '../../gestures/slide-gesture';
 import { assign } from '../../util/util';
 import { GestureDelegate, GesturePriority } from '../../gestures/gesture-controller';
 
-const DEGRESS_TO_RADIANS = Math.PI / 180;
-const MIN_COSINE = Math.cos(40 * DEGRESS_TO_RADIANS);
+const DEGREES_TO_RADIANS = Math.PI / 180;
+const MIN_COSINE = Math.cos(40 * DEGREES_TO_RADIANS);
 
 /**
  * Gesture attached to the content which the menu is assigned to
@@ -53,7 +53,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
       return true;
     }
 
-    let cosine = Math.cos(ev.angle * DEGRESS_TO_RADIANS);
+    let cosine = Math.cos(ev.angle * DEGREES_TO_RADIANS);
     if (menu.side === 'right') {
       if (cosine < -MIN_COSINE) {
         return super.canStart(ev);
