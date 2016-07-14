@@ -5,7 +5,7 @@ import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
-import { MenuContentGesture, MenuTargetGesture } from  './menu-gestures';
+import { MenuContentGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
@@ -191,8 +191,7 @@ import { GestureController } from '../../gestures/gesture-controller';
 export class Menu extends Ion {
   private _preventTime: number = 0;
   private _cntEle: HTMLElement;
-  private _cntGesture: MenuTargetGesture;
-  private _menuGesture: MenuContentGesture;
+  private _cntGesture: MenuContentGesture;
   private _type: MenuType;
   private _resizeUnreg: Function;
   private _isEnabled: boolean = true;
@@ -337,8 +336,7 @@ export class Menu extends Ion {
     self._renderer.setElementAttribute(self._elementRef.nativeElement, 'type', self.type);
 
     // add the gestures
-    self._cntGesture = new MenuContentGesture(self, self.getContentElement());
-    self._menuGesture = new MenuTargetGesture(self, self.getNativeElement());
+    self._cntGesture = new MenuContentGesture(self, document.body);
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side
@@ -389,16 +387,12 @@ export class Menu extends Ion {
       if (self._isEnabled && self._isSwipeEnabled && !self._cntGesture.isListening) {
         // should listen, but is not currently listening
         console.debug('menu, gesture listen', self.side);
-        self._zone.runOutsideAngular(function() {
-          self._cntGesture.listen();
-          self._menuGesture.listen();
-        });
+        self._cntGesture.listen();
 
       } else if (self._cntGesture.isListening && (!self._isEnabled || !self._isSwipeEnabled)) {
         // should not listen, but is currently listening
         console.debug('menu, gesture unlisten', self.side);
         self._cntGesture.unlisten();
-        self._menuGesture.unlisten();
       }
     }
   }
@@ -625,7 +619,6 @@ export class Menu extends Ion {
   ngOnDestroy() {
     this._menuCtrl.unregister(this);
     this._cntGesture && this._cntGesture.destroy();
-    this._menuGesture && this._menuGesture.destroy();
     this._type && this._type.destroy();
     this._resizeUnreg && this._resizeUnreg();
     this._cntEle = null;

@@ -92,6 +92,7 @@ export class List extends Ion {
     } else if (!this._slidingGesture) {
       console.debug('enableSlidingItems');
       this._slidingGesture = new ItemSlidingGesture(this);
+      this._slidingGesture.listen();
     }
   }
 
