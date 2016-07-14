@@ -283,6 +283,41 @@ class E2EPage {
     alert.present();
   }
 
+  doAlertWithSearch() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Search!');
+    alert.setHasSearch(true);
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio Cool',
+      value: 'cool',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio Nerd',
+      value: 'nerd'
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio Geek',
+      value: 'geek'
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio Startupper',
+      value: 'startupper'
+    });
+
+    alert.addButton('Cancel');
+
+    alert.present();
+  }
+
   ionViewDidLeave() {
     console.log('E2EPage, ionViewDidLeave');
   }

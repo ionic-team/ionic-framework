@@ -27,25 +27,35 @@ import { ViewController } from '../nav/view-controller';
       <div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>
       <div *ngIf="d.inputs.length" [ngSwitch]="inputType">
 
+        <div *ngIf="d.hasSearch" class="alert-input-group">
+          <div class="alert-input-wrapper">
+            <input placeholder="Search" [ngModel]="searchModel" (ngModelChange)="_filterOut($event)" class="alert-input">
+          </div>
+        </div>
+
         <template ngSwitchCase="radio">
           <div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">
-            <button category="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">
-              <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
-              <div class="alert-radio-label">
-                {{i.label}}
-              </div>
-            </button>
+            <template ngFor let-i [ngForOf]="d.inputs">
+              <button category="alert-radio-button" *ngIf="i && i.filtered" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">
+                <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
+                <div class="alert-radio-label">
+                  {{i.label}}
+                </div>
+              </button>
+            </template>
           </div>
         </template>
 
         <template ngSwitchCase="checkbox">
           <div class="alert-checkbox-group">
-            <button category="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">
-              <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
-              <div class="alert-checkbox-label">
-                {{i.label}}
-              </div>
-            </button>
+            <template ngFor let-i [ngForOf]="d.inputs">
+              <button category="alert-checkbox-button" *ngIf="i && i.filtered" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">
+                <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
+                <div class="alert-checkbox-label">
+                  {{i.label}}
+                </div>
+              </button>
+            </template>
           </div>
         </template>
 
@@ -83,6 +93,7 @@ export class AlertCmp {
     buttons?: any[];
     inputs?: any[];
     enableBackdropDismiss?: boolean;
+    hasSearch?: boolean;
   };
   private enabled: boolean;
   private hdrId: string;
@@ -91,6 +102,7 @@ export class AlertCmp {
   private lastClick: number;
   private msgId: string;
   private subHdrId: string;
+  private searchModel: string;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -148,6 +160,7 @@ export class AlertCmp {
         label: input.label,
         checked: !!input.checked,
         disabled: !!input.disabled,
+        filtered: true,
         id: 'alert-input-' + this.id + '-' + index
       };
     });
@@ -173,6 +186,13 @@ export class AlertCmp {
       this.activeId = checkedInput.id;
     }
   }
+
+  private _filterOut(event: string) {
+    for (let input of this.d.inputs)
+      input.filtered = event === '' && true ||
+        (input.value.toUpperCase().indexOf(event.toUpperCase()) > -1 ||
+        input.label.toUpperCase().indexOf(event.toUpperCase()) > -1);
+  };
 
   @HostListener('body:keyup', ['$event'])
   private _keyUp(ev: KeyboardEvent) {
