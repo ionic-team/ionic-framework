@@ -583,6 +583,17 @@ export class ViewController {
   /**
    * @private
    */
+  fireCanGoBack(): boolean {
+    let response = ctrlFn(this, 'CanGoBack');
+    if (response === false) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * @private
+   */
   onDestroy(destroyFn: Function) {
     this._destroyFn = destroyFn;
   }
@@ -610,7 +621,7 @@ function ctrlFn(viewCtrl: ViewController, fnName: string) {
     if (viewCtrl.instance['onPage' + fnName]) {
       try {
         console.warn('onPage' + fnName + '() has been deprecated. Please rename to ionView' + fnName + '()');
-        viewCtrl.instance['onPage' + fnName]();
+        return viewCtrl.instance['onPage' + fnName]();
       } catch (e) {
         console.error(viewCtrl.name + ' onPage' + fnName + ': ' + e.message);
       }
@@ -619,7 +630,7 @@ function ctrlFn(viewCtrl: ViewController, fnName: string) {
     // fire off ionView lifecycle instance method
     if (viewCtrl.instance['ionView' + fnName]) {
       try {
-        viewCtrl.instance['ionView' + fnName]();
+        return viewCtrl.instance['ionView' + fnName]();
       } catch (e) {
         console.error(viewCtrl.name + ' ionView' + fnName + ': ' + e.message);
       }

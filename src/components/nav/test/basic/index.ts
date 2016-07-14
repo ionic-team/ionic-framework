@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, AlertController, Content } from '../../../../../src';
 import { ionicBootstrap } from '../../../../../src';
-import { NavParams, ViewController } from '../../../../../src';;
+import { NavParams, ViewController } from '../../../../../src';
 
 
 @Component({
   selector: 'my-cmp',
   template: `<p>My Custom Component Test <ion-icon name="star"></ion-icon></p>`
 })
-class MyCmpTest{}
+class MyCmpTest {}
 
 
 @Component({
@@ -271,6 +271,22 @@ class PrimaryHeaderPage {
     this.nav.setRoot(AnotherPage);
   }
 
+  ionViewCanGoBack() {
+    let alert = this.alertCtrl.create({
+      title: 'Are you sure?',
+      message: 'There are pending changes.',
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: 'Continue',
+          handler: () => this.nav.pop()
+        }
+      ]
+    });
+    alert.present();
+    return false;
+  }
+
   presentAlert() {
     let alert = this.alertCtrl.create();
     alert.setTitle('Hello Alert');
@@ -357,7 +373,7 @@ class AnotherPage {
   }
 
   toggleBackButton() {
-    this.bbHideToggleVal = !this.bbHideToggleVal
+    this.bbHideToggleVal = !this.bbHideToggleVal;
     this.viewCtrl.showBackButton(this.bbHideToggleVal);
   }
 

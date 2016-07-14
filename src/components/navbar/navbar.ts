@@ -19,6 +19,7 @@ import { ViewController } from '../nav/view-controller';
 class BackButton extends Ion {
   constructor(
     @Optional() private _nav: NavController,
+    @Optional() private _viewController: ViewController,
     elementRef: ElementRef,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
@@ -29,7 +30,16 @@ class BackButton extends Ion {
   goBack(ev: UIEvent) {
     ev.stopPropagation();
     ev.preventDefault();
-    this._nav && this._nav.pop();
+
+    if (this._nav) {
+      let shouldGoBack = true;
+      if (this._viewController) {
+        shouldGoBack = this._viewController.fireCanGoBack();
+      }
+      if (shouldGoBack) {
+        this._nav.pop();
+      }
+    }
   }
 }
 
