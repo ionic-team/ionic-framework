@@ -187,7 +187,6 @@ class AngleRecognizer {
   }
 }
 
-const degresToRadians = Math.PI / 180;
 
 class PanXRecognizer extends AngleRecognizer {
   private _isPanX: boolean;
@@ -195,7 +194,7 @@ class PanXRecognizer extends AngleRecognizer {
 
   constructor(threshold: number, maxAngle: number) {
     super(threshold);
-    this.maxAngle = maxAngle * degresToRadians;
+    this.maxAngle = maxAngle * (Math.PI / 180);
   }
 
   start(coord: Coordinates) {
