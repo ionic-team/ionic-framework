@@ -1,7 +1,7 @@
 import { assign } from '../../util/util';
 import { GestureController, GestureDelegate, GesturePriority } from '../../gestures/gesture-controller';
 import { MenuController } from '../menu/menu-controller';
-import { NavController } from './nav-controller';
+import { NavControllerBase } from './nav-controller-base';
 import { SlideData } from '../../gestures/slide-gesture';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 
@@ -11,7 +11,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
   constructor(
     element: HTMLElement,
     options: any,
-    private _nav: NavController,
+    private _nav: NavControllerBase,
     gestureCtlr: GestureController
   ) {
     super(element, assign({
