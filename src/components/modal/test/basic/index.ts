@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 
-import { ActionSheetController, Config, ionicBootstrap, ModalController, NavController, NavParams, PageTransition, Platform, TransitionOptions, ViewController } from '../../../../../src';
+import { ActionSheetController, App, Config, ionicBootstrap, ModalController, NavController, NavParams, PageTransition, Platform, TransitionOptions, ViewController } from '../../../../../src';
 
 
 @Injectable()
@@ -117,11 +117,11 @@ class E2EPage {
   `
 })
 class NavigableModal {
-  constructor(private navController:NavController) {
+  constructor(private nav: NavController) {
   }
 
   submit(){
-    this.navController.push(NavigableModal2);
+    this.nav.push(NavigableModal2);
   }
 }
 
@@ -376,7 +376,7 @@ class ContactUs {
 class ModalFirstPage {
 
   private items:any[];
-  constructor(private nav: NavController, private actionSheetCtrl: ActionSheetController) {
+  constructor(private nav: NavController, private app: App, private actionSheetCtrl: ActionSheetController) {
     this.items = [];
     for ( let i = 0; i < 50; i++ ){
       this.items.push({
@@ -393,7 +393,7 @@ class ModalFirstPage {
   }
 
   dismiss() {
-    this.nav.rootNav.pop();
+    this.app.getRootNav().pop();
   }
 
   ionViewLoaded(){
@@ -430,8 +430,8 @@ class ModalFirstPage {
             // overlays are added and removed from the root navigation
             // find the root navigation, and pop this alert
             // when the alert is done animating out, then pop off the modal
-            this.nav.rootNav.pop().then(() => {
-              this.nav.rootNav.pop();
+            this.app.getRootNav().pop().then(() => {
+              this.app.getRootNav().pop();
             });
 
             // by default an alert will dismiss itself
