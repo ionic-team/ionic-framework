@@ -16,6 +16,14 @@ $text-input-ios-input-clear-icon-color:    rgba(0, 0, 0, .5) !default;
 $text-input-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $text-input-ios-input-clear-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
 $text-input-ios-input-clear-icon-size:     18px !default;
 
+$text-input-ios-show-focus-highlight:      false !default;
+$text-input-ios-show-valid-highlight:      $text-input-ios-show-focus-highlight !default;
+$text-input-ios-show-invalid-highlight:    $text-input-ios-show-focus-highlight !default;
+
+$text-input-ios-highlight-color:           color($colors-ios, primary) !default;
+$text-input-ios-highlight-color-valid:     color($colors-ios, secondary) !default;
+$text-input-ios-highlight-color-invalid:   color($colors-ios, danger) !default;
+
 
 // iOS Default Input
 // --------------------------------------------------
@@ -81,4 +89,62 @@ ion-input[clearInput] {
   width: $text-input-ios-input-clear-icon-width;
 
   background-size: $text-input-ios-input-clear-icon-size;
+}
+
+
+// iOS Highlighted Input
+// --------------------------------------------------
+
+// Input highlight mixin for focus, valid, and invalid states
+@mixin ios-input-highlight($highlight-color) {
+  border-bottom-color: $highlight-color;
+}
+
+// Show the focus highlight when the input has focus
+@if ($text-input-ios-show-focus-highlight) {
+  // In order to get a 2px border we need to add an inset
+  // box-shadow 1px (this is to avoid the div resizing)
+  .item-input.input-has-focus .item-inner {
+    @include ios-input-highlight($text-input-ios-highlight-color);
+  }
+
+  // The last item in a list has a border on the item, not the
+  // inner item, so add it to the item itself
+  ion-list .item-input.input-has-focus:last-child {
+    @include ios-input-highlight($text-input-ios-highlight-color);
+
+    .item-inner {
+      box-shadow: none;
+    }
+  }
+}
+
+// Show the valid highlight when it has the .ng-valid class and a value
+@if ($text-input-ios-show-valid-highlight) {
+  .item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+    @include ios-input-highlight($text-input-ios-highlight-color-valid);
+  }
+
+  ion-list .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
+    @include ios-input-highlight($text-input-ios-highlight-color-valid);
+
+    .item-inner {
+      box-shadow: none;
+    }
+  }
+}
+
+// Show the invalid highlight when it has the invalid class and has been touched
+@if ($text-input-ios-show-invalid-highlight) {
+  .item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+    @include ios-input-highlight($text-input-ios-highlight-color-invalid);
+  }
+
+  ion-list .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
+    @include ios-input-highlight($text-input-ios-highlight-color-invalid);
+
+    .item-inner {
+      box-shadow: none;
+    }
+  }
 }
