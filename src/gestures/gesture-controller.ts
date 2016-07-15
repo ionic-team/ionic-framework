@@ -4,11 +4,16 @@ import { App } from '../components/app/app';
 
 export const enum GesturePriority {
   Minimun = -10000,
-  NavigationOptional = -20,
-  Navigation = -10,
+  VeryLow = -20,
+  Low = -10,
   Normal = 0,
-  Interactive = 10,
-  Input = 20,
+  High = 10,
+  VeryHigh = 20,
+
+  SlidingItem = Low,
+  MenuSwipe = High,
+  GoBackSwipe = VeryHigh,
+  Refresher = Normal,
 }
 
 export const enum DisableScroll {
