@@ -24,7 +24,7 @@ import { ViewController } from '../nav/view-controller';
   template: `
     <div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>
     <div class="picker-opts" #colEle [style.width]="col.optionsWidth">
-      <button *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" [style.transitionDuration]="o._dur" [class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" (click)="optClick($event, i)" type="button" category="picker-opt">
+      <button *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" [style.transitionDuration]="o._dur" [style.webkitTransform]="o._trans" [style.webkitTransitionDuration]="o._dur" [class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" (click)="optClick($event, i)" type="button" category="picker-opt">
         {{o.text}}
       </button>
     </div>

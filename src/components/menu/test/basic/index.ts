@@ -67,6 +67,14 @@ class E2EPage {
     });
   }
 
+  openRightMenu() {
+    this.menu.open('right');
+  }
+
+  openLeftMenu() {
+    this.menu.open('left');
+  }
+
   onDrag(ev: any) {
     console.log('Menu is being dragged', ev);
   }

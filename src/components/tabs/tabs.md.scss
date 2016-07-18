@@ -12,7 +12,8 @@ $tabbar-md-item-icon-size:           2.4rem !default;
 $tabbar-md-item-height:              4.8rem !default;
 
 $tab-button-md-active-color:         $toolbar-md-active-color !default;
-$tab-button-md-inactive-color:       rgba($toolbar-md-inactive-color, .7) !default;
+$tab-button-md-inactive-opacity:     .7 !default;
+$tab-button-md-inactive-color:       rgba($toolbar-md-inactive-color, $tab-button-md-inactive-opacity) !default;
 
 
 ion-tabbar {
@@ -103,7 +104,7 @@ tab-highlight {
     background-color: $color-base;
 
     .tab-button {
-      color: $color-contrast;
+      color: rgba($color-contrast, $tab-button-md-inactive-opacity);
     }
 
     .tab-button:hover:not(.disable-hover),

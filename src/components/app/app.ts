@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
 import { NavController } from '../nav/nav-controller';
+import { isTabs, isNav } from '../nav/nav-controller-base';
 import { NavOptions } from '../nav/nav-interfaces';
 import { NavPortal } from '../nav/nav-portal';
 import { Platform } from '../../platform/platform';
@@ -195,13 +196,7 @@ export class App {
     // function used to climb up all parent nav controllers
     function navPop(nav: any): Promise<any> {
       if (nav) {
-        if (nav.length && nav.length() > 1) {
-          // this nav controller has more than one view
-          // pop the current view on this nav and we're done here
-          console.debug('app, goBack pop nav');
-          return nav.pop();
-
-        } else if (nav.previousTab) {
+        if (isTabs(nav)) {
           // FYI, using "nav instanceof Tabs" throws a Promise runtime error for whatever reason, idk
           // this is a Tabs container
           // see if there is a valid previous tab to go to
@@ -211,6 +206,12 @@ export class App {
             nav.select(prevTab);
             return Promise.resolve();
           }
+
+        } else if (isNav(nav) && nav.length() > 1) {
+          // this nav controller has more than one view
+          // pop the current view on this nav and we're done here
+          console.debug('app, goBack pop nav');
+          return nav.pop();
         }
 
         // try again using the parent nav (if there is one)
@@ -244,10 +245,9 @@ export class App {
           console.debug('app, goBack exitApp');
           this._platform.exitApp();
         }
-
-      } else {
-        return navPromise;
       }
+
+      return navPromise;
     }
 
     return Promise.resolve();

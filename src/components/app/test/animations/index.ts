@@ -6,8 +6,8 @@ import {ionicBootstrap, Config, Animation} from '../../../../../src';
   templateUrl: 'main.html'
 })
 class E2EPage {
-  duration;
-  easing;
+  duration: string;
+  easing: string;
 
   constructor(config: Config) {
     this.duration = '1000';

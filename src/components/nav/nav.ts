@@ -5,7 +5,7 @@ import { Config } from '../../config/config';
 import { Keyboard } from '../../util/keyboard';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { NavController } from './nav-controller';
+import { NavControllerBase } from './nav-controller-base';
 import { ViewController } from './view-controller';
 
 /**
@@ -114,13 +114,13 @@ import { ViewController } from './view-controller';
   `,
   encapsulation: ViewEncapsulation.None,
 })
-export class Nav extends NavController implements AfterViewInit {
+export class Nav extends NavControllerBase implements AfterViewInit {
   private _root: any;
   private _hasInit: boolean = false;
 
   constructor(
     @Optional() viewCtrl: ViewController,
-    @Optional() parent: NavController,
+    @Optional() parent: NavControllerBase,
     app: App,
     config: Config,
     keyboard: Keyboard,
@@ -164,9 +164,6 @@ export class Nav extends NavController implements AfterViewInit {
     this._hasInit = true;
 
     if (this._root) {
-      if (typeof this._root !== 'function') {
-        throw 'The [root] property in <ion-nav> must be given a reference to a component class from within the constructor.';
-      }
       this.push(this._root);
     }
   }

@@ -4,7 +4,6 @@ import { NgIf } from '@angular/common';
 import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
-import { NavController } from '../nav/nav-controller';
 import { NavParams } from '../nav/nav-params';
 import { Transition, TransitionOptions } from '../../transitions/transition';
 import { ViewController } from '../nav/view-controller';
@@ -44,7 +43,6 @@ export class ToastCmp implements AfterViewInit {
   private id: number;
 
   constructor(
-    private _nav: NavController,
     private _viewCtrl: ViewController,
     private _config: Config,
     private _elementRef: ElementRef,

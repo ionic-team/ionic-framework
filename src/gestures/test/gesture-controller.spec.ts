@@ -3,13 +3,13 @@ import { GestureController, DisableScroll } from '../../../src';
 export function run() {
 
   it('should create an instance of GestureController', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     expect(c.isCaptured()).toEqual(false);
     expect(c.isScrollDisabled()).toEqual(false);
   });
 
   it('should test scrolling enable/disable stack', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     c.enableScroll(1);
     expect(c.isScrollDisabled()).toEqual(false);
 
@@ -37,7 +37,7 @@ export function run() {
   });
 
   it('should test gesture enable/disable stack', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     c.enableGesture('swipe', 1);
     expect(c.isDisabled('swipe')).toEqual(false);
 
@@ -71,7 +71,7 @@ export function run() {
 
 
   it('should test if canStart', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     expect(c.canStart('event')).toEqual(true);
     expect(c.canStart('event1')).toEqual(true);
     expect(c.canStart('event')).toEqual(true);
@@ -82,7 +82,7 @@ export function run() {
 
 
   it('should initialize a delegate without options', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     let g = c.create('event');
     expect(g['name']).toEqual('event');
     expect(g.priority).toEqual(0);
@@ -97,7 +97,7 @@ export function run() {
 
 
   it('should initialize a delegate with options', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     let g = c.create('swipe', {
       priority: -123,
       disableScroll: DisableScroll.DuringCapture,
@@ -112,7 +112,7 @@ export function run() {
   });
 
   it('should test if several gestures can be started', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     let g1 = c.create('swipe');
     let g2 = c.create('swipe1', {priority: 3});
     let g3 = c.create('swipe2', {priority: 4});
@@ -147,7 +147,7 @@ export function run() {
 
 
   it('should test if several gestures try to capture at the same time', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     let g1 = c.create('swipe1');
     let g2 = c.create('swipe2', { priority: 2 });
     let g3 = c.create('swipe3', { priority: 3 });
@@ -199,7 +199,7 @@ export function run() {
 
 
   it('should destroy correctly', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     let g = c.create('swipe', {
       priority: 123,
       disableScroll: DisableScroll.Always,
@@ -233,7 +233,7 @@ export function run() {
 
 
   it('should disable some events', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
 
     let goback = c.create('goback');
     expect(goback.canStart()).toEqual(true);
@@ -276,7 +276,7 @@ export function run() {
   });
 
   it('should disable scrolling on capture', () => {
-    let c = new GestureController();
+    let c = new GestureController(null);
     let g = c.create('goback', {
       disableScroll: DisableScroll.DuringCapture,
     });

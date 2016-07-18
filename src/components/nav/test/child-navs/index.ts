@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, NavController} from '../../../../../src';
+import { Component} from '@angular/core';
+import { ionicBootstrap, NavController } from '../../../../../src';
 
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`,
@@ -29,11 +29,11 @@ ionicBootstrap(E2EApp);
 })
 class LandingPage{
 
-  constructor(private _navController: NavController){
+  constructor(private nav: NavController){
   }
 
   goToPage(){
-    this._navController.push(FirstPage);
+    this.nav.push(FirstPage);
   }
 }
 
