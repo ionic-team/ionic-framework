@@ -11,6 +11,7 @@
       this.el = opts.el;
       this.isEnabled = (typeof opts.isEnabled === 'undefined') ? true : opts.isEnabled;
       this.setWidth(opts.width);
+      this.displayType = (typeof opts.displayType === 'undefined') ? 'push' : opts.displayType;
     },
     getFullWidth: function() {
       return this.width;
@@ -31,6 +32,9 @@
       if(this.el.style.zIndex !== '-1') {
         this.el.style.zIndex = '-1';
       }
+    },
+    setDisplayType: function(displayType) {
+      this.displayType = displayType;
     }
   });
 
