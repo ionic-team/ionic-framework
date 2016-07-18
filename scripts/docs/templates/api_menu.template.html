@@ -1,12 +1,14 @@
 <@ for ver in version.list @>
+  <@ if ver.name != version.latest.name @>
     <@ if loop.first @>
 {% if page.versionHref == "<$ ver.href $>" %}
     <@ else @>
 {% elsif page.versionHref == "<$ ver.href $>" %}
     <@ endif @>
   {% include v2_fluid/api_menu_flat_<$ ver.name $>.html %}
+  <@ endif @>
 <@ endfor @>
 <# make the last case always be to show latest version #>
 {% else %}
-  {% include v2_fluid/api_menu_flat_nightly.html %}
+  {% include v2_fluid/api_menu_flat_<$ version.latest.name $>.html %}
 {% endif %}

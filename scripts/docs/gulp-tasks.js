@@ -5,12 +5,13 @@ module.exports = function(gulp, flags) {
     var semver = require('semver');
 
     var docVersion = flags['doc-version'] || 'nightly';
+    var initialVersionBuild = flags['initial-build'] || false;
     if (docVersion != 'nightly' && !semver.valid(docVersion)) {
       console.log('Usage: gulp docs --doc-version=(nightly|versionName)\nversionName must be a valid semver version.');
       return process.exit(1);
     }
     try {
-      var ionicPackage = require('./dgeni-config')(docVersion);
+      var ionicPackage = require('./dgeni-config')(docVersion, initialVersionBuild);
       var dgeni = new Dgeni([ionicPackage]);
       return dgeni.generate();
     } catch (err) {
