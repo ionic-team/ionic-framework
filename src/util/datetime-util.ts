@@ -390,15 +390,15 @@ export function convertDataToISO(data: DateTimeData): string {
 }
 
 function twoDigit(val: number): string {
-  return ('0' + (isPresent(val) ? val : '0')).slice(-2);
+  return ('0' + (isPresent(val) ? Math.abs(val) : '0')).slice(-2);
 }
 
 function threeDigit(val: number): string {
-  return ('00' + (isPresent(val) ? val : '0')).slice(-3);
+  return ('00' + (isPresent(val) ? Math.abs(val) : '0')).slice(-3);
 }
 
 function fourDigit(val: number): string {
-  return ('000' + (isPresent(val) ? val : '0')).slice(-4);
+  return ('000' + (isPresent(val) ? Math.abs(val) : '0')).slice(-4);
 }
 
 
