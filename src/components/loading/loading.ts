@@ -119,6 +119,14 @@ export class Loading extends ViewController {
     // not fire its lifecycle events because it's not conceptually leaving
     this.fireOtherLifecycles = false;
   }
+  
+  /**
+   * Updates the content of the loading component
+   * @param content {string} The new content
+   */
+  updateContent(content: string): void {
+    this.data.content = content;
+  }
 
    /**
    * @private
