@@ -37,6 +37,11 @@ IonicModule
       angular.isUndefined(attr.displayType) && attr.$set('displayType', 'push');
 
       element.addClass('menu menu-' + attr.side);
+      if (attr.displayType == 'overlay') {
+        element.addClass('menu-animated');
+        element[0].style[attr.side] = '-' + attr.width + 'px';
+        element[0].style.zIndex = 2147483647; // top most, maximum zIndex value
+      }
 
       return function($scope, $element, $attr, sideMenuCtrl) {
         $scope.side = $attr.side || 'left';

@@ -11,7 +11,7 @@ IonicModule
   '$rootScope',
 function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate, IONIC_BACK_PRIORITY, $rootScope) {
   var self = this;
-  var rightShowing, leftShowing, isDragging;
+  var isDragging;
   var startX, lastX, offsetX, isAsideExposed;
   var enableMenuWithBackViews = true;
 
@@ -61,7 +61,11 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     if (arguments.length === 0) {
       shouldOpen = openAmount <= 0;
     }
-    self.content.enableAnimation();
+    if (self.left.displayType == 'overlay') {
+      self.left.enableAnimation();
+    } else {
+      self.content.enableAnimation();
+    }
     if (!shouldOpen) {
       self.openPercentage(0);
       $rootScope.$emit('$ionicSideMenuClose', 'left');
@@ -80,7 +84,11 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     if (arguments.length === 0) {
       shouldOpen = openAmount >= 0;
     }
-    self.content.enableAnimation();
+    if (self.right.displayType == 'overlay') {
+      self.right.enableAnimation();
+    } else {
+      self.content.enableAnimation();
+    }
     if (!shouldOpen) {
       self.openPercentage(0);
       $rootScope.$emit('$ionicSideMenuClose', 'right');
@@ -111,7 +119,17 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
    * @return {float} The amount the side menu is open, either positive or negative for left (positive), or right (negative)
    */
   self.getOpenAmount = function() {
-    return self.content && self.content.getTranslateX() || 0;
+    var retOpenAmount = 0;
+    if ((isNaN(retOpenAmount) || retOpenAmount === 0) && self.right && self.right.displayType == 'overlay') {
+      retOpenAmount = self.right.getTranslateX();
+    }
+    if ((isNaN(retOpenAmount) || retOpenAmount === 0) && self.left && self.left.displayType == 'overlay') {
+      retOpenAmount = self.left.getTranslateX();
+    }
+    if ((isNaN(retOpenAmount) || retOpenAmount === 0) && self.content) {
+      retOpenAmount = self.content.getTranslateX();
+    }
+    return retOpenAmount;
   };
 
   /**
@@ -181,6 +199,18 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     var maxLeft = self.left && self.left.width || 0;
     var maxRight = self.right && self.right.width || 0;
 
+    var overlayLeft = self.left && self.left.displayType == 'overlay' || false;
+    var overlayRight = self.right && self.right.displayType == 'overlay' || false;
+    var openLeft = overlayLeft && self.left.getTranslateX() || 0;
+    var openRight = overlayRight && self.right.getTranslateX() || 0;
+    var openContent = self.content.getTranslateX() || 0;
+
+    if (amount > maxLeft) {
+      amount = maxLeft;
+    } else if (amount < -maxRight) {
+      amount = -maxRight;
+    }
+
     // Check if we can move to that side, depending if the left/right panel is enabled
     if (!(self.left && self.left.isEnabled) && amount > 0) {
       self.content.setTranslateX(0);
@@ -192,31 +222,30 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
       return;
     }
 
-    if (leftShowing && amount > maxLeft) {
-      self.content.setTranslateX(maxLeft);
-      return;
+    if (amount > 0) {
+      if (overlayLeft) { self.left.setTranslateX(amount); }
+      if (overlayRight && openRight) { self.right.setTranslateX(0); }
+      if (!(overlayLeft && openLeft)) { self.content.setTranslateX(overlayLeft ? 0 : amount); }
+    } else if (amount < 0) {
+      if (overlayRight) { self.right.setTranslateX(amount); }
+      if (overlayLeft && openLeft) { self.left.setTranslateX(0); }
+      if (!(overlayRight && openRight)) { self.content.setTranslateX(overlayRight ? 0 : amount); }
+    } else /* if (amount === 0) */ {
+      if (overlayLeft && openLeft) { self.left.setTranslateX(amount); }
+      if (overlayRight && openRight) { self.right.setTranslateX(amount); }
+      if (!(overlayRight && openRight) && openContent) { self.content.setTranslateX(amount); }
     }
-
-    if (rightShowing && amount < -maxRight) {
-      self.content.setTranslateX(-maxRight);
-      return;
-    }
-
-    self.content.setTranslateX(amount);
-
-    leftShowing = amount > 0;
-    rightShowing = amount < 0;
 
     if (amount > 0) {
       // Push the z-index of the right menu down
-      self.right && self.right.pushDown && self.right.pushDown();
+      self.right && self.right.displayType != 'overlay' && self.right.pushDown && self.right.pushDown();
       // Bring the z-index of the left menu up
-      self.left && self.left.bringUp && self.left.bringUp();
+      self.left && self.left.displayType != 'overlay' && self.left.bringUp && self.left.bringUp();
     } else {
       // Bring the z-index of the right menu up
-      self.right && self.right.bringUp && self.right.bringUp();
+      self.right && self.right.displayType != 'overlay' && self.right.bringUp && self.right.bringUp();
       // Push the z-index of the left menu down
-      self.left && self.left.pushDown && self.left.pushDown();
+      self.left && self.left.displayType != 'overlay' && self.left.pushDown && self.left.pushDown();
     }
   };
 
@@ -348,6 +377,12 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
       isDragging = true;
       // Initialize dragging
       self.content.disableAnimation();
+      if (self.left.displayType == 'overlay') {
+        self.left.disableAnimation();
+      }
+      if (self.right.displayType == 'overlay') {
+        self.right.disableAnimation();
+      }
       offsetX = self.getOpenAmount();
     }
 
