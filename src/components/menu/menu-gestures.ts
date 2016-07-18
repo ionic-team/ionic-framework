@@ -24,11 +24,15 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
   canStart(ev: any): boolean {
     let menu = this.menu;
-    return (
-      menu.enabled &&
-      menu.swipeEnabled &&
-      (menu.isOpen || super.canStart(ev))
-    );
+    if (!menu.enabled || !menu.swipeEnabled) {
+      return false;
+    }
+    if (menu.isOpen) {
+      return true;
+    } else if (menu.getMenuController().getOpen()) {
+      return false;
+    }
+    return super.canStart(ev);
   }
 
   // Set CSS, then wait one frame for it to apply before sliding starts

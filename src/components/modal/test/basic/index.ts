@@ -6,7 +6,7 @@ import { ActionSheetController, App, Config, ionicBootstrap, ModalController, Na
 @Injectable()
 class SomeComponentProvider {
   constructor(private config: Config) {
-    console.log('SomeComponentProvider constructor')
+    console.log('SomeComponentProvider constructor');
   }
 
   getName() {
@@ -17,7 +17,7 @@ class SomeComponentProvider {
 @Injectable()
 class SomeAppProvider {
   constructor(private config: Config) {
-    console.log('SomeAppProvider constructor')
+    console.log('SomeAppProvider constructor');
   }
 
   getData() {
@@ -84,7 +84,7 @@ class E2EPage {
   }
 
   presentModalWithInputs() {
-	  let modal = this.modalCtrl.create(ModalWithInputs);
+    let modal = this.modalCtrl.create(ModalWithInputs);
     modal.onDidDismiss((data: any) => {
       console.log('Modal with inputs data:', data);
     });
@@ -98,7 +98,7 @@ class E2EPage {
     });
   }
 
-  presentNavigableModal(){
+  presentNavigableModal() {
     this.modalCtrl.create(NavigableModal).present();
   }
 }
@@ -139,10 +139,10 @@ class NavigableModal {
   `
 })
 class NavigableModal2 {
-  constructor(private navController:NavController) {
+  constructor(private navController: NavController) {
   }
 
-  submit(){
+  submit() {
     this.navController.pop();
   }
 }
@@ -188,23 +188,23 @@ class ModalPassData {
     this.viewCtrl.dismiss(this.data);
   }
 
-  ionViewLoaded(){
+  ionViewLoaded() {
     console.log('ModalPassData ionViewLoaded fired');
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     console.log('ModalPassData ionViewWillEnter fired');
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     console.log('ModalPassData ionViewDidEnter fired');
   }
 
-  ionViewWillLeave(){
+  ionViewWillLeave() {
     console.log('ModalPassData ionViewWillLeave fired');
   }
 
-  ionViewDidLeave(){
+  ionViewDidLeave() {
     console.log('ModalPassData ionViewDidLeave fired');
   }
 }
@@ -375,10 +375,10 @@ class ContactUs {
 })
 class ModalFirstPage {
 
-  private items:any[];
+  private items: any[];
   constructor(private nav: NavController, private app: App, private actionSheetCtrl: ActionSheetController) {
     this.items = [];
-    for ( let i = 0; i < 50; i++ ){
+    for ( let i = 0; i < 50; i++ ) {
       this.items.push({
         value: (i + 1)
       });
@@ -387,7 +387,7 @@ class ModalFirstPage {
 
   push() {
     let page = ModalSecondPage;
-    let params = { id: 8675309, myData: [1,2,3,4] };
+    let params = { id: 8675309, myData: [1, 2, 3, 4] };
 
     this.nav.push(page, params);
   }
@@ -396,15 +396,15 @@ class ModalFirstPage {
     this.app.getRootNav().pop();
   }
 
-  ionViewLoaded(){
+  ionViewLoaded() {
     console.log('ModalFirstPage ionViewLoaded fired');
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     console.log('ModalFirstPage ionViewWillEnter fired');
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     console.log('ModalFirstPage ionViewDidEnter fired');
   }
 
@@ -477,15 +477,15 @@ class ModalSecondPage {
     console.log('Second page params:', params);
   }
 
-  ionViewLoaded(){
+  ionViewLoaded() {
     console.log('ModalSecondPage ionViewLoaded');
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     console.log('ModalSecondPage ionViewWillEnter');
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     console.log('ModalSecondPage ionViewDidEnter');
   }
 }
