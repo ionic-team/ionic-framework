@@ -69,6 +69,18 @@ describe('$ionicSideMenus controller', function() {
     expect(ctrl.right.isEnabled).toEqual(true);
   });
 
+  // Menu displayType
+  it('should set displayType', function() {
+    ctrl.left.setDisplayType('overlay');
+    ctrl.right.setDisplayType('overlay');
+    expect(ctrl.left.displayType).toEqual('overlay');
+    expect(ctrl.right.displayType).toEqual('overlay');
+    ctrl.left.setDisplayType('push');
+    ctrl.right.setDisplayType('push');
+    expect(ctrl.left.displayType).toEqual('push');
+    expect(ctrl.right.displayType).toEqual('push');
+  });
+
   // Menu widths
   it('should init widths', function() {
     expect(ctrl.left.width).toEqual(270);
