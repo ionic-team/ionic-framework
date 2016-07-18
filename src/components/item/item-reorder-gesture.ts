@@ -155,11 +155,5 @@ export class ItemReorderGesture {
 
 function itemForPosition(x: number, y: number): HTMLElement {
   let element = <HTMLElement>document.elementFromPoint(x, y);
-  if (!element) {
-    return null;
-  }
-  if (element.nodeName !== 'ION-ITEM' && !element.hasAttribute('ion-item')) {
-    return null;
-  }
   return findReorderItem(element);
 }
