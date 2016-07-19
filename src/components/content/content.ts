@@ -68,7 +68,7 @@ export class Content extends Ion {
   private _headerHeight: number;
   private _footerHeight: number;
   private _tabbarHeight: number;
-  private _tabbarPlacement: string;
+  private _tabsPlacement: string;
   private _inputPolling: boolean = false;
   private _scroll: ScrollView;
   private _scLsn: Function;
@@ -78,18 +78,20 @@ export class Content extends Ion {
   private _footerEle: HTMLElement;
 
   /**
-   * @private
+   * A number representing how many pixels the top of the content has been
+   * adjusted, which could be by either padding or margin.
    */
-  adjustedTop: number;
+  contentTop: number;
 
   /**
-   * @private
+   * A number representing how many pixels the bottom of the content has been
+   * adjusted, which could be by either padding or margin.
    */
-  adjustedBottom: number;
+  contentBottom: number;
 
   constructor(
     private _elementRef: ElementRef,
-    private _config: Config,
+    config: Config,
     private _app: App,
     private _keyboard: Keyboard,
     private _zone: NgZone,
@@ -97,7 +99,7 @@ export class Content extends Ion {
     @Optional() private _tabs: Tabs
   ) {
     super(_elementRef);
-    this._sbPadding = _config.getBoolean('statusbarPadding', false);
+    this._sbPadding = config.getBoolean('statusbarPadding', false);
 
     if (viewCtrl) {
       viewCtrl.setContent(this);
@@ -109,17 +111,11 @@ export class Content extends Ion {
    * @private
    */
   ngOnInit() {
-    let self = this;
-    self._scrollEle = self._elementRef.nativeElement.children[0];
+    this._scrollEle = this._elementRef.nativeElement.children[0];
 
-    self._zone.runOutsideAngular(function() {
-      self._scroll = new ScrollView(self._scrollEle);
-
-      if (self._config.getBoolean('tapPolyfill')) {
-        self._scLsn = self.addScrollListener(function() {
-          self._app.setScrolling();
-        });
-      }
+    this._zone.runOutsideAngular(() => {
+      this._scroll = new ScrollView(this._scrollEle);
+      this._scLsn = this.addScrollListener(this._app.setScrolling);
     });
   }
 
@@ -129,7 +125,7 @@ export class Content extends Ion {
   ngOnDestroy() {
     this._scLsn && this._scLsn();
     this._scroll && this._scroll.destroy();
-    this._scrollEle = this._footerEle = this._scLsn = null;
+    this._scrollEle = this._footerEle = this._scLsn = this._scroll = null;
   }
 
   /**
@@ -447,6 +443,45 @@ export class Content extends Ion {
   }
 
   /**
+   * Tell the content to recalculate its dimensions. This should be called
+   * after dynamically adding headers, footers, or tabs.
+   *
+   * ```ts
+   * @Component({
+   *   template: `
+   *     <ion-header>
+   *       <ion-navbar>
+   *         <ion-title>Main Navbar</ion-title>
+   *       </ion-navbar>
+   *       <ion-toolbar *ngIf="showToolbar">
+   *         <ion-title>Dynamic Toolbar</ion-title>
+   *       </ion-toolbar>
+   *     </ion-header>
+   *     <ion-content>
+   *       <button (click)="toggleToolbar()">Toggle Toolbar</button>
+   *     </ion-content>
+   * `})
+   *
+   * class E2EPage {
+   *   @ViewChild(Content) content: Content;
+   *   showToolbar: boolean = false;
+   *
+   *   toggleToolbar() {
+   *     this.showToolbar = !this.showToolbar;
+   *     this.content.resize();
+   *   }
+   * }
+   * ```
+   *
+   */
+  resize() {
+    nativeRaf(() => {
+      this.readDimensions();
+      this.writeDimensions();
+    });
+  }
+
+  /**
    * @private
    * DOM READ
    */
@@ -456,9 +491,12 @@ export class Content extends Ion {
     this._paddingBottom = 0;
     this._paddingLeft = 0;
     this._headerHeight = 0;
-    this._tabbarPlacement = null;
+    this._footerHeight = 0;
+    this._tabsPlacement = null;
 
     let ele: HTMLElement = this._elementRef.nativeElement;
+    if (!ele) return;
+
     let parentEle: HTMLElement = ele.parentElement;
     let computedStyle: any;
 
@@ -486,15 +524,15 @@ export class Content extends Ion {
     ele = parentEle;
     let tabbarEle: HTMLElement;
 
-    while (ele && ele.tagName !== 'ION-MODAL' && !ele.classList.contains('tab-subpage')) {
+    while (ele && ele.tagName !== 'ION-MODAL') {
 
       if (ele.tagName === 'ION-TABS') {
         tabbarEle = <HTMLElement>ele.firstElementChild;
         this._tabbarHeight = tabbarEle.clientHeight;
 
-        if (this._tabbarPlacement === null) {
+        if (this._tabsPlacement === null) {
           // this is the first tabbar found, remember it's position
-          this._tabbarPlacement = ele.getAttribute('tabbarplacement');
+          this._tabsPlacement = ele.getAttribute('tabsplacement');
         }
       }
 
@@ -510,6 +548,8 @@ export class Content extends Ion {
     let newVal: number;
     let scrollEle = this._scrollEle;
 
+    if (!scrollEle) return;
+
     // only write when it has changed
     if (this._fullscreen) {
       // adjust the content with padding, allowing content to scroll under headers/footers
@@ -518,45 +558,45 @@ export class Content extends Ion {
       // have come from the app's css, is different than the new padding value
 
       newVal = this._headerHeight + this._paddingTop;
-      if (this._tabbarPlacement === 'top') {
+      if (this._tabsPlacement === 'top') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this.adjustedTop) {
+      if (newVal !== this.contentTop) {
         scrollEle.style.paddingTop = (newVal > 0 ? newVal + 'px' : '');
-        this.adjustedTop = newVal;
+        this.contentTop = newVal;
       }
 
       newVal = this._footerHeight + this._paddingBottom;
-      if (this._tabbarPlacement === 'bottom') {
+      if (this._tabsPlacement === 'bottom') {
         newVal += this._tabbarHeight;
-      }
-      if (newVal !== this.adjustedBottom) {
-        scrollEle.style.paddingBottom = (newVal > 0 ? newVal + 'px' : '');
-        this.adjustedBottom = newVal;
 
         if (newVal > 0 && this._footerEle) {
-          this._footerEle.style.bottom = (newVal - this._footerHeight) + 'px';
+          this._footerEle.style.bottom = (newVal - this._footerHeight - this._paddingBottom) + 'px';
         }
+      }
+      if (newVal !== this.contentBottom) {
+        scrollEle.style.paddingBottom = (newVal > 0 ? newVal + 'px' : '');
+        this.contentBottom = newVal;
       }
 
     } else {
       // adjust the content with margins
       newVal = this._headerHeight;
-      if (this._tabbarPlacement === 'top') {
+      if (this._tabsPlacement === 'top') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this.adjustedTop) {
+      if (newVal !== this.contentTop) {
         scrollEle.style.marginTop = (newVal > 0 ? newVal + 'px' : '');
-        this.adjustedTop = newVal;
+        this.contentTop = newVal;
       }
 
       newVal = this._footerHeight;
-      if (this._tabbarPlacement === 'bottom') {
+      if (this._tabsPlacement === 'bottom') {
         newVal += this._tabbarHeight;
       }
-      if (newVal !== this.adjustedBottom) {
+      if (newVal !== this.contentBottom) {
         scrollEle.style.marginBottom = (newVal > 0 ? newVal + 'px' : '');
-        this.adjustedBottom = newVal;
+        this.contentBottom = newVal;
 
         if (newVal > 0 && this._footerEle) {
           this._footerEle.style.bottom = (newVal - this._footerHeight) + 'px';
@@ -565,9 +605,9 @@ export class Content extends Ion {
     }
 
 
-    if (this._tabbarPlacement !== null && this._tabs) {
+    if (this._tabsPlacement !== null && this._tabs) {
       // set the position of the tabbar
-      if (this._tabbarPlacement === 'top') {
+      if (this._tabsPlacement === 'top') {
         this._tabs.setTabbarPosition(this._headerHeight, -1);
 
       } else {

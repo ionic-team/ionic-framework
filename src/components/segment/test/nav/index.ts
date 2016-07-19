@@ -1,6 +1,5 @@
-import {Component} from '@angular/core';
-import {Validators, Control, ControlGroup} from '@angular/common';
-import {ionicBootstrap, NavController} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap, NavController } from '../../../../../src';
 
 
 @Component({
@@ -36,10 +35,7 @@ class SegmentPage {
     </ion-content>
   `
 })
-class SegmentPage2 {
-  constructor() {
-  }
-}
+class SegmentPage2 {}
 
 
 @Component({

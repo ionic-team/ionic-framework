@@ -6,14 +6,9 @@ import {Injectable} from '@angular/core';
  */
 @Injectable()
 export class Form {
-  private _blur: HTMLElement;
   private _focused: any = null;
   private _ids: number = -1;
   private _inputs: any[] = [];
-
-  constructor() {
-    this.focusCtrl(document);
-  }
 
   register(input: any) {
     this._inputs.push(input);
@@ -29,25 +24,9 @@ export class Form {
     }
   }
 
-  focusCtrl(document: any) {
-    // raw DOM fun
-    let focusCtrl = document.createElement('focus-ctrl');
-    focusCtrl.setAttribute('aria-hidden', true);
-
-    this._blur = document.createElement('button');
-    this._blur.tabIndex = -1;
-    focusCtrl.appendChild(this._blur);
-
-    document.body.appendChild(focusCtrl);
-  }
-
   focusOut() {
-    console.debug('focusOut');
-    let activeElement: any = document.activeElement;
-    if (activeElement) {
-      activeElement.blur();
-    }
-    this._blur.focus();
+    let activeElement = <HTMLElement>document.activeElement;
+    activeElement && activeElement.blur && activeElement.blur();
   }
 
   setAsFocused(input: any) {

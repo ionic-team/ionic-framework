@@ -45,6 +45,47 @@ $navbar-md-height:                       $toolbar-md-height !default;
 }
 
 
+// Material Design Header / Footer / Tabs Box Shadow
+// --------------------------------------------------
+
+ion-header::after,
+[tabsPlacement="top"] > ion-tabbar::after,
+ion-footer::before,
+[tabsPlacement="bottom"] > ion-tabbar::before {
+  // using datauri png background image for improved scroll performance
+  // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
+  // noticable performance difference on older Android devices
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+
+  width: 100%;
+  height: 5px;
+
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==);
+  background-repeat: repeat-x;
+  background-position: 0 -2px;
+
+  content: "";
+}
+
+ion-footer::before,
+[tabsPlacement="bottom"] > ion-tabbar::before {
+  top: -2px;
+  bottom: auto;
+
+  height: 2px;
+
+  background-position: 0 0;
+}
+
+ion-header[no-shadow]::after,
+ion-footer[no-shadow]::before,
+[tabsPlacement="top"][no-shadow] > ion-tabbar::after,
+[tabsPlacement="bottom"][no-shadow] > ion-tabbar::before {
+  display: none;
+}
+
 // Material Design Toolbar Content
 // --------------------------------------------------
 

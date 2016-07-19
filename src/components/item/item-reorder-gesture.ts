@@ -1,7 +1,7 @@
-import {Item} from './item';
-import {Reorder} from '../item/item-reorder';
-import {UIEventManager} from '../../util/ui-event-manager';
-import {closest, Coordinates, pointerCoord, CSS, nativeRaf} from '../../util/dom';
+import { Item } from './item';
+import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
+import { UIEventManager } from '../../util/ui-event-manager';
+import { closest, Coordinates, pointerCoord, CSS, nativeRaf } from '../../util/dom';
 
 
 const AUTO_SCROLL_MARGIN = 60;
@@ -25,12 +25,13 @@ export class ItemReorderGesture {
 
   private events: UIEventManager = new UIEventManager(false);
 
-  constructor(public list: Reorder) {
-    let element = this.list.getNativeElement();
-    this.events.pointerEvents(element,
-      this.onDragStart.bind(this),
-      this.onDragMove.bind(this),
-      this.onDragEnd.bind(this));
+  constructor(public reorderList: ItemReorder) {
+    this.events.pointerEvents({
+      element: this.reorderList.getNativeElement(),
+      pointerDown: this.onDragStart.bind(this),
+      pointerMove: this.onDragMove.bind(this),
+      pointerUp: this.onDragEnd.bind(this)
+    });
   }
 
   private onDragStart(ev: any): boolean {
@@ -39,9 +40,16 @@ export class ItemReorderGesture {
       return false;
     }
 
-    let item = reorderElement['$ionReorderNode'];
+    let reorderMark = reorderElement['$ionComponent'];
+    if (!reorderMark) {
+      console.error('ion-reorder does not contain $ionComponent');
+      return false;
+    }
+    this.reorderList.reorderPrepare();
+
+    let item = reorderMark.getReorderNode();
     if (!item) {
-      console.error('item does not contain ion ionReorderNode');
+      console.error('reorder node not found');
       return false;
     }
     ev.preventDefault();
@@ -49,16 +57,17 @@ export class ItemReorderGesture {
     // Preparing state
     this.selectedItemEle = item;
     this.selectedItemHeight = item.offsetHeight;
-    this.lastYcoord = this.lastToIndex = -100;
+    this.lastYcoord = -100;
+    this.lastToIndex = indexForItem(item);
 
     this.windowHeight = window.innerHeight - AUTO_SCROLL_MARGIN;
-    this.lastScrollPosition = this.list.scrollContent(0);
+    this.lastScrollPosition = this.reorderList.scrollContent(0);
 
     this.offset = pointerCoord(ev);
     this.offset.y += this.lastScrollPosition;
 
     item.classList.add(ITEM_REORDER_ACTIVE);
-    this.list.reorderStart();
+    this.reorderList.reorderStart();
     return true;
   }
 
@@ -81,12 +90,12 @@ export class ItemReorderGesture {
       let overItem = this.itemForCoord(coord);
       if (overItem) {
         let toIndex = indexForItem(overItem);
-        if (toIndex && (toIndex !== this.lastToIndex || this.emptyZone)) {
+        if (toIndex !== undefined && (toIndex !== this.lastToIndex || this.emptyZone)) {
           let fromIndex = indexForItem(this.selectedItemEle);
           this.lastToIndex = toIndex;
           this.lastYcoord = posY;
           this.emptyZone = false;
-          this.list.reorderMove(fromIndex, toIndex, this.selectedItemHeight);
+          this.reorderList.reorderMove(fromIndex, toIndex, this.selectedItemHeight);
         }
       } else {
         this.emptyZone = true;
@@ -105,9 +114,19 @@ export class ItemReorderGesture {
 
     let toIndex = this.lastToIndex;
     let fromIndex = indexForItem(this.selectedItemEle);
-    this.selectedItemEle.classList.remove(ITEM_REORDER_ACTIVE);
-    this.selectedItemEle = null;
-    this.list.reorderEmit(fromIndex, toIndex);
+    let reorderInactive = () => {
+      this.selectedItemEle.style.transition = '';
+      this.selectedItemEle.classList.remove(ITEM_REORDER_ACTIVE);
+      this.selectedItemEle = null;
+    };
+
+    if (toIndex === fromIndex) {
+      this.selectedItemEle.style.transition = 'transform 200ms ease-in-out';
+      setTimeout(reorderInactive, 200);
+    } else {
+      reorderInactive();
+    }
+    this.reorderList.reorderEmit(fromIndex, toIndex);
   }
 
   private itemForCoord(coord: Coordinates): HTMLElement {
@@ -116,9 +135,9 @@ export class ItemReorderGesture {
 
   private scroll(posY: number): number {
     if (posY < AUTO_SCROLL_MARGIN) {
-      this.lastScrollPosition = this.list.scrollContent(-SCROLL_JUMP);
+      this.lastScrollPosition = this.reorderList.scrollContent(-SCROLL_JUMP);
     } else if (posY > this.windowHeight) {
-      this.lastScrollPosition = this.list.scrollContent(SCROLL_JUMP);
+      this.lastScrollPosition = this.reorderList.scrollContent(SCROLL_JUMP);
     }
     return this.lastScrollPosition;
   }
@@ -130,28 +149,11 @@ export class ItemReorderGesture {
     this.onDragEnd();
     this.events.unlistenAll();
     this.events = null;
-    this.list = null;
+    this.reorderList = null;
   }
 }
 
 function itemForPosition(x: number, y: number): HTMLElement {
   let element = <HTMLElement>document.elementFromPoint(x, y);
-  if (!element) {
-    return null;
-  }
-  if (element.nodeName !== 'ION-ITEM' && !element.hasAttribute('ion-item')) {
-    return null;
-  }
-  if (indexForItem(element)) {
-    return element;
-  }
-  let parent = element.parentNode;
-  if (indexForItem(parent)) {
-    return <HTMLElement>parent;
-  }
-  return null;
-}
-
-function indexForItem(element: any): number {
-  return element['$ionIndex'];
+  return findReorderItem(element);
 }

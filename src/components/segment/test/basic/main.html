@@ -34,10 +34,10 @@
 
   <div>Are we friends or enemies? <b>{{ relationship }}</b></div>
 
-  <h4>Map mode: NgControl</h4>
+  <h4>Map mode: formControlName</h4>
 
-  <form (submit)="doSubmit($event)" [ngFormModel]="myForm">
-    <ion-segment ngControl="mapStyle" danger>
+  <form (submit)="doSubmit($event)" [formGroup]="myForm">
+    <ion-segment formControlName="mapStyle" danger>
       <ion-segment-button value="active" class="e2eSegmentStandard">
         Active
       </ion-segment-button>

@@ -27,7 +27,9 @@ export class ToolbarItem {
   @ContentChildren(Button)
   set _buttons(buttons: any) {
     if (this.inToolbar) {
-      Button.setRoles(buttons, 'bar-button');
+      buttons.forEach((button: Button) => {
+        button.setRole('bar-button');
+      });
     }
   }
 }

@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {Control, ControlGroup, NgFormModel} from '@angular/common';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ionicBootstrap, Toggle } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  fruitsForm: ControlGroup;
+  fruitsForm: FormGroup;
   grapeDisabled: boolean;
   grapeChecked: boolean;
   kiwiValue: boolean;
@@ -15,11 +15,11 @@ class E2EPage {
   formResults: string;
 
   constructor() {
-    this.fruitsForm = new ControlGroup({
-      "appleCtrl": new Control(false),
-      "bananaCtrl": new Control(true),
-      "cherryCtrl": new Control(false),
-      "grapeCtrl": new Control(true)
+    this.fruitsForm = new FormGroup({
+      "appleCtrl": new FormControl(false),
+      "bananaCtrl": new FormControl(true),
+      "cherryCtrl": new FormControl(false),
+      "grapeCtrl": new FormControl(true)
     });
 
     this.grapeChecked = true;
@@ -34,25 +34,25 @@ class E2EPage {
     this.grapeDisabled = !this.grapeDisabled;
   }
 
-  appleChange(ev) {
-    console.log('appleChange', ev);
+  appleChange(toggle: Toggle) {
+    console.log('appleChange', toggle);
   }
 
-  bananaChange(ev) {
-    console.log('bananaChange', ev);
+  bananaChange(toggle: Toggle) {
+    console.log('bananaChange', toggle);
   }
 
-  kiwiChange(ev) {
-    console.log('kiwiChange', ev);
-    this.kiwiValue = ev.checked;
+  kiwiChange(toggle: Toggle) {
+    console.log('kiwiChange', toggle);
+    this.kiwiValue = toggle.checked;
   }
 
-  strawberryChange(ev) {
-    console.log('strawberryChange', ev);
-    this.strawberryValue = ev.checked;
+  strawberryChange(toggle: Toggle) {
+    console.log('strawberryChange', toggle);
+    this.strawberryValue = toggle.checked;
   }
 
-  doSubmit(ev) {
+  doSubmit(ev: UIEvent) {
     console.log('Submitting form', this.fruitsForm.value);
     this.formResults = JSON.stringify(this.fruitsForm.value);
     ev.preventDefault();

@@ -1,7 +1,9 @@
 {
   "private": "true",
   "name": "ionic2",
-  "version": "2.0.0-beta.9",
+  "version": "2.0.0-beta.10",
+  "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular 2",
+  "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp", "cordova", "progressive web app", "pwa"],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -13,12 +15,13 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "@angular/common": "2.0.0-rc.3",
-    "@angular/compiler": "2.0.0-rc.3",
-    "@angular/core": "2.0.0-rc.3",
-    "@angular/platform-browser": "2.0.0-rc.3",
-    "@angular/platform-browser-dynamic": "2.0.0-rc.3",
-    "@angular/http": "2.0.0-rc.3",
+    "@angular/common": "2.0.0-rc.4",
+    "@angular/compiler": "2.0.0-rc.4",
+    "@angular/core": "2.0.0-rc.4",
+    "@angular/forms": "0.2.0",
+    "@angular/http": "2.0.0-rc.4",
+    "@angular/platform-browser": "2.0.0-rc.4",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.4",
     "colors": "^1.1.2",
     "es6-shim": "^0.35.0",
     "inquirer": "0.11.0",

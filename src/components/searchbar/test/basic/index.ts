@@ -1,6 +1,5 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
-import {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
-import {ionicBootstrap} from '../../../../../src';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({

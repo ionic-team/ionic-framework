@@ -1,7 +1,7 @@
-import {Component, Type, ViewChild} from '@angular/core';
-import {App, NavController, Alert, Content} from '../../../../../src';
-import {ionicBootstrap, Config} from '../../../../../src';
-import {NavParams, ViewController} from '../../../../../src';;
+import { Component, ViewChild } from '@angular/core';
+import { NavController, AlertController, Content } from '../../../../../src';
+import { ionicBootstrap, App } from '../../../../../src';
+import { NavParams, ViewController } from '../../../../../src';;
 
 
 @Component({
@@ -148,6 +148,8 @@ class FirstPage {
 class FullPage {
   constructor(
     private nav: NavController,
+    private app: App,
+    private alertCtrl: AlertController,
     private params: NavParams
   ) {}
 
@@ -173,7 +175,7 @@ class FullPage {
   }
 
   presentAlert() {
-    let alert = Alert.create();
+    let alert = this.alertCtrl.create();
     alert.setTitle('Hello Alert');
     alert.setMessage('Dismiss this alert, then pop one page');
     alert.addButton({
@@ -183,8 +185,8 @@ class FullPage {
         // overlays are added and removed from the root navigation
         // ensure you using the root navigation, and pop this alert
         // when the alert is done animating out, then pop off the active page
-        this.nav.rootNav.pop().then(() => {
-          this.nav.rootNav.pop();
+        this.app.getRootNav().pop().then(() => {
+          this.app.getRootNav().pop();
         });
 
         // by default an alert will dismiss itself
@@ -194,7 +196,7 @@ class FullPage {
         return false;
       }
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
 }
@@ -242,6 +244,7 @@ class FullPage {
 class PrimaryHeaderPage {
   constructor(
     private nav: NavController,
+    private alertCtrl: AlertController,
     private viewCtrl: ViewController
   ) {}
 
@@ -270,10 +273,10 @@ class PrimaryHeaderPage {
   }
 
   presentAlert() {
-    let alert = Alert.create();
+    let alert = this.alertCtrl.create();
     alert.setTitle('Hello Alert');
     alert.addButton({ text: 'Dismiss', role: 'cancel', });
-    this.nav.present(alert);
+    alert.present();
   }
 }
 
@@ -415,4 +418,6 @@ class E2EApp {
   }
 }
 
-ionicBootstrap(E2EApp);
+ionicBootstrap(E2EApp).then((componetRef) => {
+  console.log('ionicBootstrap', componetRef);
+});

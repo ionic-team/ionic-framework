@@ -1,21 +1,21 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, MenuController, NavController, Alert, Nav} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, MenuController, NavController, AlertController, Nav } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'page1.html'
 })
 class Page1 {
-  constructor(private nav: NavController) {}
+  constructor(private nav: NavController, private alertCtrl: AlertController) {}
 
   presentAlert() {
-    let alert = Alert.create({
-      title: "New Friend!",
-      message: "Your friend, Obi wan Kenobi, just accepted your friend request!",
+    let alert = this.alertCtrl.create({
+      title: 'New Friend!',
+      message: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
       cssClass: 'my-alert',
       buttons: ['Ok']
     });
-    this.nav.present(alert);
+    alert.present();
   }
 
   goToPage2() {
@@ -42,7 +42,7 @@ class Page2 {
   templateUrl: 'main.html'
 })
 class E2EPage {
-  rootPage;
+  rootPage: any;
   changeDetectionCount: number = 0;
   pages: Array<{title: string, component: any}>;
   @ViewChild(Nav) nav: Nav;
@@ -57,7 +57,7 @@ class E2EPage {
     ];
   }
 
-  openPage(page) {
+  openPage(page: any) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component).then(() => {
@@ -67,15 +67,23 @@ class E2EPage {
     });
   }
 
-  onDrag(ev) {
+  openRightMenu() {
+    this.menu.open('right');
+  }
+
+  openLeftMenu() {
+    this.menu.open('left');
+  }
+
+  onDrag(ev: any) {
     console.log('Menu is being dragged', ev);
   }
 
-  onOpen(ev) {
+  onOpen(ev: any) {
     console.log('Menu is open', ev);
   }
 
-  onClose(ev) {
+  onClose(ev: any) {
     console.log('Menu is closed', ev);
   }
 

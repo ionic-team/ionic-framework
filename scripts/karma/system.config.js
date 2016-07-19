@@ -28,15 +28,11 @@ System.config({
       main: 'index.js',
       defaultExtension: 'js'
     },
-    '@angular/router': {
+    '@angular/forms': {
       main: 'index.js',
       defaultExtension: 'js'
     },
     '@angular/http': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    '@angular/upgrade': {
       main: 'index.js',
       defaultExtension: 'js'
     },
@@ -45,10 +41,6 @@ System.config({
       defaultExtension: 'js'
     },
     '@angular/platform-browser-dynamic': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    '@angular/platform-server': {
       main: 'index.js',
       defaultExtension: 'js'
     }

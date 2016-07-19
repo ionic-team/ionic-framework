@@ -1,7 +1,8 @@
 
-export * from './config/bootstrap';
-export * from './config/config';
-export * from './config/directives';
+export { ionicBootstrap, ionicPostBootstrap } from './config/bootstrap';
+export { Config } from './config/config';
+export { IONIC_DIRECTIVES } from './config/directives';
+export { ionicProviders } from './config/providers';
 
 export * from './decorators/page';
 
@@ -11,6 +12,7 @@ export * from './gestures/drag-gesture';
 export * from './gestures/gesture';
 export * from './gestures/slide-edge-gesture';
 export * from './gestures/slide-gesture';
+export * from './gestures/gesture-controller';
 
 export * from './platform/platform';
 export * from './platform/storage';

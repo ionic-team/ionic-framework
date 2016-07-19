@@ -1,6 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 
-import { ActionSheet, Config, ionicBootstrap, Modal, NavController, NavParams, PageTransition, Platform, TransitionOptions, ViewController } from '../../../../../src';
+import { ActionSheetController, App, Config, ionicBootstrap, ModalController, NavController, NavParams, PageTransition, Platform, TransitionOptions, ViewController } from '../../../../../src';
+
+
+@Injectable()
+class SomeComponentProvider {
+  constructor(private config: Config) {
+    console.log('SomeComponentProvider constructor');
+  }
+
+  getName() {
+    return 'Jenny';
+  }
+}
+
+@Injectable()
+class SomeAppProvider {
+  constructor(private config: Config) {
+    console.log('SomeAppProvider constructor');
+  }
+
+  getData() {
+    return 'Some data';
+  }
+}
+
 
 @Component({
   templateUrl: 'main.html'
@@ -8,7 +32,7 @@ import { ActionSheet, Config, ionicBootstrap, Modal, NavController, NavParams, P
 class E2EPage {
   platforms: string[];
 
-  constructor(private nav: NavController, config: Config, platform: Platform) {
+  constructor(private nav: NavController, private modalCtrl: ModalController, config: Config, platform: Platform) {
     console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
@@ -33,22 +57,26 @@ class E2EPage {
   }
 
   presentModal() {
-    let modal = Modal.create(ModalPassData, { userId: 8675309 });
-    this.nav.present(modal);
+    let modal = this.modalCtrl.create(ModalPassData, { userId: 8675309 });
+    modal.present();
 
-    modal.onDismiss((data: any) => {
+    modal.onWillDismiss((data: any) => {
+      console.log('WILL DISMISS with data', data);
+      console.timeEnd('modal');
+    });
+    modal.onDidDismiss((data: any) => {
       console.log('modal data', data);
+      console.timeEnd('modal');
     });
   }
 
   presentModalChildNav() {
-    let modal = Modal.create(ContactUs);
-    this.nav.present(modal);
+    this.modalCtrl.create(ContactUs).present();
   }
 
   presentToolbarModal() {
-    let modal = Modal.create(ToolbarModal);
-    this.nav.present(modal);
+    let modal = this.modalCtrl.create(ToolbarModal);
+    modal.present();
 
     modal.subscribe((data: any) => {
       console.log('modal data', data);
@@ -56,23 +84,22 @@ class E2EPage {
   }
 
   presentModalWithInputs() {
-	  let modal = Modal.create(ModalWithInputs);
-    modal.onDismiss((data: any) => {
+    let modal = this.modalCtrl.create(ModalWithInputs);
+    modal.onDidDismiss((data: any) => {
       console.log('Modal with inputs data:', data);
     });
-    this.nav.present(modal);
+    modal.present();
   }
 
   presentModalCustomAnimation() {
-    let modal = Modal.create(ContactUs);
-    this.nav.present(modal, {
+    let modal = this.modalCtrl.create(ContactUs);
+    modal.present({
       animation: 'my-fade-in'
     });
   }
 
-  presentNavigableModal(){
-    let modal = Modal.create(NavigableModal);
-    this.nav.present(modal);
+  presentNavigableModal() {
+    this.modalCtrl.create(NavigableModal).present();
   }
 }
 
@@ -90,11 +117,11 @@ class E2EPage {
   `
 })
 class NavigableModal {
-  constructor(private navController:NavController) {
+  constructor(private nav: NavController) {
   }
 
   submit(){
-    this.navController.push(NavigableModal2);
+    this.nav.push(NavigableModal2);
   }
 }
 
@@ -112,10 +139,10 @@ class NavigableModal {
   `
 })
 class NavigableModal2 {
-  constructor(private navController:NavController) {
+  constructor(private navController: NavController) {
   }
 
-  submit(){
+  submit() {
     this.navController.pop();
   }
 }
@@ -142,40 +169,43 @@ class NavigableModal2 {
       </ion-list>
       <button full (click)="submit()">Submit</button>
     </ion-content>
-  `
+  `,
+  providers: [SomeComponentProvider]
 })
 class ModalPassData {
   data: any;
 
-  constructor(params: NavParams, private viewCtrl: ViewController) {
+  constructor(params: NavParams, private viewCtrl: ViewController, someComponentProvider: SomeComponentProvider, someAppProvider: SomeAppProvider) {
     this.data = {
       userId: params.get('userId'),
-      name: 'Jenny'
+      name: someComponentProvider.getName()
     };
+    console.log('SomeAppProvider Data', someAppProvider.getData());
   }
 
   submit() {
+    console.time('modal');
     this.viewCtrl.dismiss(this.data);
   }
 
-  ionViewLoaded(){
-    console.log("ModalPassData ionViewLoaded fired");
+  ionViewLoaded() {
+    console.log('ModalPassData ionViewLoaded fired');
   }
 
-  ionViewWillEnter(){
-    console.log("ModalPassData ionViewWillEnter fired");
+  ionViewWillEnter() {
+    console.log('ModalPassData ionViewWillEnter fired');
   }
 
-  ionViewDidEnter(){
-    console.log("ModalPassData ionViewDidEnter fired");
+  ionViewDidEnter() {
+    console.log('ModalPassData ionViewDidEnter fired');
   }
 
-  ionViewWillLeave(){
-    console.log("ModalPassData ionViewWillLeave fired");
+  ionViewWillLeave() {
+    console.log('ModalPassData ionViewWillLeave fired');
   }
 
-  ionViewDidLeave(){
-    console.log("ModalPassData ionViewDidLeave fired");
+  ionViewDidLeave() {
+    console.log('ModalPassData ionViewDidLeave fired');
   }
 }
 
@@ -243,15 +273,15 @@ class ToolbarModal {
         <ion-list>
           <ion-item>
             <ion-label floating>Title <span [hidden]="title.valid">(Required)</span></ion-label>
-            <ion-input ngControl="title" type="text" [(ngModel)]="data.title" #title="ngForm" required autofocus></ion-input>
+            <ion-input formControlName="title" type="text" [(ngModel)]="data.title" #title="ngForm" required autofocus></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Note <span [hidden]="note.valid">(Required)</span></ion-label>
-            <ion-input ngControl="note" type="text" [(ngModel)]="data.note" #note="ngForm" required></ion-input>
+            <ion-input formControlName="note" type="text" [(ngModel)]="data.note" #note="ngForm" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Icon</ion-label>
-            <ion-input ngControl="icon" type="text" [(ngModel)]="data.icon" #icon="ngForm" autocomplete="on" autocorrect="on"></ion-input>
+            <ion-input formControlName="icon" type="text" [(ngModel)]="data.icon" #icon="ngForm" autocomplete="on" autocorrect="on"></ion-input>
           </ion-item>
         </ion-list>
         <div padding>
@@ -345,10 +375,10 @@ class ContactUs {
 })
 class ModalFirstPage {
 
-  private items:any[];
-  constructor(private nav: NavController) {
+  private items: any[];
+  constructor(private nav: NavController, private app: App, private actionSheetCtrl: ActionSheetController) {
     this.items = [];
-    for ( let i = 0; i < 50; i++ ){
+    for ( let i = 0; i < 50; i++ ) {
       this.items.push({
         value: (i + 1)
       });
@@ -357,29 +387,29 @@ class ModalFirstPage {
 
   push() {
     let page = ModalSecondPage;
-    let params = { id: 8675309, myData: [1,2,3,4] };
+    let params = { id: 8675309, myData: [1, 2, 3, 4] };
 
     this.nav.push(page, params);
   }
 
   dismiss() {
-    this.nav.rootNav.pop();
+    this.app.getRootNav().pop();
   }
 
-  ionViewLoaded(){
-    console.log("ModalFirstPage ionViewLoaded fired");
+  ionViewLoaded() {
+    console.log('ModalFirstPage ionViewLoaded fired');
   }
 
-  ionViewWillEnter(){
-    console.log("ModalFirstPage ionViewWillEnter fired");
+  ionViewWillEnter() {
+    console.log('ModalFirstPage ionViewWillEnter fired');
   }
 
-  ionViewDidEnter(){
-    console.log("ModalFirstPage ionViewDidEnter fired");
+  ionViewDidEnter() {
+    console.log('ModalFirstPage ionViewDidEnter fired');
   }
 
   openActionSheet() {
-    let actionSheet = ActionSheet.create({
+    let actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           text: 'Destructive',
@@ -400,8 +430,8 @@ class ModalFirstPage {
             // overlays are added and removed from the root navigation
             // find the root navigation, and pop this alert
             // when the alert is done animating out, then pop off the modal
-            this.nav.rootNav.pop().then(() => {
-              this.nav.rootNav.pop();
+            this.app.getRootNav().pop().then(() => {
+              this.app.getRootNav().pop();
             });
 
             // by default an alert will dismiss itself
@@ -421,7 +451,7 @@ class ModalFirstPage {
       ]
     });
 
-    this.nav.present(actionSheet);
+    actionSheet.present();
   }
 }
 
@@ -447,16 +477,16 @@ class ModalSecondPage {
     console.log('Second page params:', params);
   }
 
-  ionViewLoaded(){
-    console.log("ModalSecondPage ionViewLoaded");
+  ionViewLoaded() {
+    console.log('ModalSecondPage ionViewLoaded');
   }
 
-  ionViewWillEnter(){
-    console.log("ModalSecondPage ionViewWillEnter");
+  ionViewWillEnter() {
+    console.log('ModalSecondPage ionViewWillEnter');
   }
 
-  ionViewDidEnter(){
-    console.log("ModalSecondPage ionViewDidEnter");
+  ionViewDidEnter() {
+    console.log('ModalSecondPage ionViewDidEnter');
   }
 }
 
@@ -468,7 +498,7 @@ class E2EApp {
   root = E2EPage;
 }
 
-ionicBootstrap(E2EApp);
+ionicBootstrap(E2EApp, [SomeAppProvider]);
 
 
 class FadeIn extends PageTransition {

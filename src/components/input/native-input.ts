@@ -1,7 +1,7 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer} from '@angular/core';
-import { NgControl} from '@angular/common';
+import { Directive, ElementRef, EventEmitter, HostListener, Output, Renderer } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
-import { Config} from '../../config/config';
+import { Config } from '../../config/config';
 import { CSS, hasFocus }  from '../../util/dom';
 
 

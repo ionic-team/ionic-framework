@@ -35,11 +35,8 @@ import {isTrueProperty} from '../../util/util';
  */
 @Component({
   selector: 'button:not([ion-item]),[button]',
-  template:
-    '<span class="button-inner">' +
-      '<ng-content></ng-content>' +
-    '</span>' +
-    '<ion-button-effect></ion-button-effect>',
+  // NOTE: template must not contain spaces between elements
+  template: '<span class="button-inner"><ng-content></ng-content></span><ion-button-effect></ion-button-effect>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -229,7 +226,10 @@ export class Button {
    * @private
    */
   setRole(val: string) {
+    this._assignCss(false);
     this._role = val;
+    this._readIcon(this._elementRef.nativeElement);
+    this._assignCss(true);
   }
 
   /**
@@ -351,16 +351,6 @@ export class Button {
         });
       });
     }
-  }
-
-  /**
-   * @private
-   */
-  static setRoles(contentButtonChildren: any, role: string) {
-    let buttons = contentButtonChildren.toArray();
-    buttons.forEach((button: any) => {
-      button.setRole(role);
-    });
   }
 
 }

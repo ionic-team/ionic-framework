@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { Content, ionicBootstrap, NavController, NavParams, Popover } from 'ionic-angular';
+import { ionicBootstrap, NavParams, PopoverController } from 'ionic-angular';
 
 
 @Component({
@@ -63,9 +63,9 @@ class PopoverRadioPage {
   background: string;
   contentEle: any;
   textEle: any;
-  fontFamily;
+  fontFamily: string;
 
-  colors = {
+  colors: any = {
     'white': {
       'bg': 'rgb(255, 255, 255)',
       'fg': 'rgb(0, 0, 0)'
@@ -98,7 +98,7 @@ class PopoverRadioPage {
     }
   }
 
-  getColorName(background) {
+  getColorName(background: any) {
     let colorName = 'white';
 
     if (!background) return 'white';
@@ -118,13 +118,13 @@ class PopoverRadioPage {
     }
   }
 
-  changeBackground(color) {
+  changeBackground(color: any) {
     this.background = color;
     this.contentEle.style.backgroundColor = this.colors[color].bg;
     this.textEle.style.color = this.colors[color].fg;
   }
 
-  changeFontSize(direction) {
+  changeFontSize(direction: string) {
     this.textEle.style.fontSize = direction;
   }
 
@@ -141,17 +141,15 @@ class ApiDemoPage {
   @ViewChild('popoverContent', {read: ElementRef}) content: ElementRef;
   @ViewChild('popoverText', {read: ElementRef}) text: ElementRef;
 
-  constructor(private nav: NavController) {
+  constructor(private popoverCtrl: PopoverController) {}
 
-  }
-
-  presentRadioPopover(ev) {
-    let popover = Popover.create(PopoverRadioPage, {
+  presentRadioPopover(ev: UIEvent) {
+    let popover = this.popoverCtrl.create(PopoverRadioPage, {
       contentEle: this.content.nativeElement,
       textEle: this.text.nativeElement
     });
 
-    this.nav.present(popover, {
+    popover.present({
       ev: ev
     });
   }

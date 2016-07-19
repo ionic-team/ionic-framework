@@ -66,7 +66,7 @@ export function renderTextFormat(format: string, value: any, date: DateTimeData,
 
   if (format === FORMAT_YY || format === FORMAT_MM ||
       format === FORMAT_DD || format === FORMAT_HH ||
-      format === FORMAT_mm) {
+      format === FORMAT_mm || format === FORMAT_ss) {
     return twoDigit(value);
   }
 
@@ -132,6 +132,12 @@ export function dateValueRange(format: string, min: DateTimeData, max: DateTimeD
 
   } else if (format === FORMAT_mm || format === FORMAT_m) {
     // minutes
+    for (i = 0; i < 60; i++) {
+      opts.push(i);
+    }
+
+  } else if (format === FORMAT_ss || format === FORMAT_s) {
+    // seconds
     for (i = 0; i < 60; i++) {
       opts.push(i);
     }
@@ -432,6 +438,8 @@ const FORMAT_hh = 'hh';
 const FORMAT_h = 'h';
 const FORMAT_mm = 'mm';
 const FORMAT_m = 'm';
+const FORMAT_ss = 'ss';
+const FORMAT_s = 's';
 const FORMAT_A = 'A';
 const FORMAT_a = 'a';
 
@@ -447,11 +455,13 @@ const FORMAT_KEYS = [
   { f: FORMAT_HH, k: 'hour' },
   { f: FORMAT_hh, k: 'hour' },
   { f: FORMAT_mm, k: 'minute' },
+  { f: FORMAT_ss, k: 'second' },
   { f: FORMAT_M, k: 'month' },
   { f: FORMAT_D, k: 'day' },
   { f: FORMAT_H, k: 'hour' },
   { f: FORMAT_h, k: 'hour' },
   { f: FORMAT_m, k: 'minute' },
+  { f: FORMAT_s, k: 'second' },
   { f: FORMAT_A, k: 'ampm' },
   { f: FORMAT_a, k: 'ampm' },
 ];

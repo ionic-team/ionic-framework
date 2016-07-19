@@ -1,17 +1,17 @@
-import {Component} from '@angular/core';
-import {App, Nav, Tabs, Tab, NavOptions, Config, ViewController, Platform} from '../../../../src';
+import { Component } from '@angular/core';
+import { App, Config, Nav, NavOptions, Platform, Tab, Tabs, ViewController } from '../../../../src';
+import { mockNavController, mockTab, mockTabs } from '../../../../src/util/mock-providers';
 
 export function run() {
-
 
 describe('App', () => {
 
   describe('navPop', () => {
 
     it('should select the previous tab', () => {
-      let nav = mockNav();
-      let portal = mockNav();
-      nav.setPortal(portal);
+      let nav = mockNavController();
+      let portal = mockNavController();
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       let tabs = mockTabs();
@@ -40,9 +40,9 @@ describe('App', () => {
     });
 
     it('should pop from the active tab, when tabs is nested is the root nav', () => {
-      let nav = mockNav();
-      let portal = mockNav();
-      nav.setPortal(portal);
+      let nav = mockNavController();
+      let portal = mockNavController();
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       let tabs = mockTabs();
@@ -91,10 +91,10 @@ describe('App', () => {
     });
 
     it('should pop the root nav when nested nav has less than 2 views', () => {
-      let rootNav = mockNav();
-      let nestedNav = mockNav();
-      let portal = mockNav();
-      rootNav.setPortal(portal);
+      let rootNav = mockNavController();
+      let nestedNav = mockNavController();
+      let portal = mockNavController();
+      app.setPortal(portal);
       rootNav.registerChildNav(nestedNav);
       nestedNav.parent = rootNav;
       app.setRootNav(rootNav);
@@ -120,10 +120,10 @@ describe('App', () => {
     });
 
     it('should pop a view from the nested nav that has more than 1 view', () => {
-      let rootNav = mockNav();
-      let nestedNav = mockNav();
-      let portal = mockNav();
-      rootNav.setPortal(portal);
+      let rootNav = mockNavController();
+      let nestedNav = mockNavController();
+      let portal = mockNavController();
+      app.setPortal(portal);
       app.setRootNav(rootNav);
       rootNav.registerChildNav(nestedNav);
 
@@ -149,9 +149,9 @@ describe('App', () => {
     });
 
     it('should pop the overlay in the portal of the root nav', () => {
-      let nav = mockNav();
-      let portal = mockNav();
-      nav.setPortal(portal);
+      let nav = mockNavController();
+      let portal = mockNavController();
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -173,9 +173,9 @@ describe('App', () => {
     });
 
     it('should pop the second view in the root nav', () => {
-      let nav = mockNav();
-      let portal = mockNav();
-      nav.setPortal(portal);
+      let nav = mockNavController();
+      let portal = mockNavController();
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -194,9 +194,9 @@ describe('App', () => {
     });
 
     it('should exit app when only one view in the root nav', () => {
-      let nav = mockNav();
-      let portal = mockNav();
-      nav.setPortal(portal);
+      let nav = mockNavController();
+      let portal = mockNavController();
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -217,9 +217,9 @@ describe('App', () => {
     });
 
     it('should not exit app when only one view in the root nav, but navExitApp config set', () => {
-      let nav = mockNav();
-      let portal = mockNav();
-      nav.setPortal(portal);
+      let nav = mockNavController();
+      let portal = mockNavController();
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -242,9 +242,9 @@ describe('App', () => {
     });
 
     it('should not go back if app is not enabled', () => {
-      let nav = mockNav();
-      let portal = mockNav();
-      nav.setPortal(portal);
+      let nav = mockNavController();
+      let portal = mockNavController();
+      app.setPortal(portal);
       app.setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -276,7 +276,7 @@ describe('App', () => {
   describe('getActiveNav', () => {
 
     it('should get active NavController when using tabs with nested nav', () => {
-      let nav = mockNav();
+      let nav = mockNavController();
       app.setRootNav(nav);
 
       let tabs = mockTabs();
@@ -285,9 +285,9 @@ describe('App', () => {
       nav.registerChildNav(tabs);
 
       tab2.setSelected(true);
-      let nav2 = mockNav();
-      let nav3 = mockNav();
-      let nav4 = mockNav();
+      let nav2 = mockNavController();
+      let nav3 = mockNavController();
+      let nav4 = mockNavController();
       tab1.registerChildNav(nav4);
       tab2.registerChildNav(nav2);
       tab2.registerChildNav(nav3);
@@ -296,7 +296,7 @@ describe('App', () => {
     });
 
     it('should get active NavController when using tabs, nested in a root nav', () => {
-      let nav = mockNav();
+      let nav = mockNavController();
       app.setRootNav(nav);
 
       let tabs = mockTabs();
@@ -331,9 +331,9 @@ describe('App', () => {
     });
 
     it('should get active NavController when nested 3 deep', () => {
-      let nav1 = mockNav();
-      let nav2 = mockNav();
-      let nav3 = mockNav();
+      let nav1 = mockNavController();
+      let nav2 = mockNavController();
+      let nav3 = mockNavController();
       app.setRootNav(nav1);
 
       nav1.registerChildNav(nav2);
@@ -343,8 +343,8 @@ describe('App', () => {
     });
 
     it('should get active NavController when nested 2 deep', () => {
-      let nav1 = mockNav();
-      let nav2 = mockNav();
+      let nav1 = mockNavController();
+      let nav2 = mockNavController();
       app.setRootNav(nav1);
 
       nav1.registerChildNav(nav2);
@@ -352,13 +352,13 @@ describe('App', () => {
     });
 
     it('should get active NavController when only one nav controller', () => {
-      let nav = mockNav();
+      let nav = mockNavController();
       app.setRootNav(nav);
       expect(app.getActiveNav()).toBe(nav);
     });
 
     it('should set/get the root nav controller', () => {
-      let nav = mockNav();
+      let nav = mockNavController();
       app.setRootNav(nav);
       expect(app.getRootNav()).toBe(nav);
     });
@@ -372,111 +372,84 @@ describe('App', () => {
   describe('setEnabled', () => {
     it('should disable click block when app is enabled', () => {
       // arrange
-      let mockClickBlock = {
-        show: () => {}
+      let mockClickBlock: any = {
+        activate: () => {}
       };
 
-      spyOn(mockClickBlock, 'show');
+      spyOn(mockClickBlock, 'activate');
 
-      app._clickBlock = mockClickBlock;
+      app.clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(true);
 
       // assert
-      expect(mockClickBlock.show).toHaveBeenCalledWith(false, 0);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(false, 0);
     });
 
     it('should disable click block when app is disabled but duration of less than 32 passed', () => {
       // arrange
-      let mockClickBlock = {
-        show: () => {}
+      let mockClickBlock: any = {
+        activate: () => {}
       };
 
-      spyOn(mockClickBlock, 'show');
+      spyOn(mockClickBlock, 'activate');
 
-      app._clickBlock = mockClickBlock;
+      app.clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(false, 20);
 
       // assert
-      expect(mockClickBlock.show).toHaveBeenCalledWith(false, 0);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(false, 0);
     });
 
     it('should enable click block when false is passed with duration', () => {
       // arrange
-      let mockClickBlock = {
-        show: () => {}
+      let mockClickBlock: any = {
+        activate: () => {}
       };
 
-      spyOn(mockClickBlock, 'show');
+      spyOn(mockClickBlock, 'activate');
 
-      app._clickBlock = mockClickBlock;
+      app.clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(false, 200);
 
       // assert
-      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 200 + 64);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 200 + 64);
     });
 
     it('should enable click block when false is passed w/o duration', () => {
       // arrange
-      let mockClickBlock = {
-        show: () => {}
+      let mockClickBlock: any = {
+        activate: () => {}
       };
 
-      spyOn(mockClickBlock, 'show');
+      spyOn(mockClickBlock, 'activate');
 
-      app._clickBlock = mockClickBlock;
+      app.clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(false);
 
       // assert
       // 700 is the default
-      expect(mockClickBlock.show).toHaveBeenCalledWith(true, 700 + 64);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 700 + 64);
     });
   });
 
   var app: App;
   var config: Config;
   var platform: Platform;
-  var _cd: any;
-
-  function mockNav(): Nav {
-    return new Nav(null, null, null, config, null, null, null, null, null);
-  }
-
-  function mockTabs(): Tabs {
-    return new Tabs(null, null, null, config, null, null, null);
-  }
-
-  function mockTab(parentTabs: Tabs): Tab {
-    var tab = new Tab(parentTabs, app, config, null, null, null, null, null, _cd);
-    parentTabs.add(tab);
-    tab.root = SomePage;
-    tab.load = function(opts: any, cb: Function) {
-      cb();
-    };
-    return tab;
-  }
-
-  @Component({})
-  class SomePage {}
 
   beforeEach(() => {
     config = new Config();
     platform = new Platform();
-    app = new App(config, null, platform);
-    _cd = {
-      reattach: function(){},
-      detach: function(){}
-    };
+    app = new App(config, platform);
   });
 
 });
-
 
 }

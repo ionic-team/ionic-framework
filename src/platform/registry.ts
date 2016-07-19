@@ -1,5 +1,4 @@
 import {Platform} from './platform';
-import {Config} from '../config/config';
 import {windowLoad} from '../util/dom';
 
 const win: any = window;
@@ -163,7 +162,7 @@ Platform.register({
 Platform.register({
   name: 'cordova',
   isEngine: true,
-  initialize: function(p: Platform, config: Config) {
+  initialize: function(p: Platform) {
 
     // prepare a custom "ready" for cordova "deviceready"
     p.prepareReady = function() {

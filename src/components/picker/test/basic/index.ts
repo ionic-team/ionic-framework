@@ -1,5 +1,5 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {ionicBootstrap, Picker, NavController} from '../../../../../src';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ionicBootstrap, PickerController } from '../../../../../src';
 
 
 @Component({
@@ -10,10 +10,10 @@ class E2EPage {
   smoothie: string;
   timer: string;
 
-  constructor(private nav: NavController) {}
+  constructor(private pickerCtrl: PickerController) {}
 
   twoColumns() {
-    let picker = Picker.create({
+    let picker = this.pickerCtrl.create({
       buttons: [
         {
           text: 'Cancel',
@@ -21,8 +21,8 @@ class E2EPage {
         },
         {
           text: 'Done',
-          handler: (data) => {
-            this.smoothie = `${data.flavor1} ${data.flavor2}`;
+          handler: (data: any) => {
+            this.smoothie = `${data.flavor1.value} ${data.flavor2.value}`;
           }
         }
       ],
@@ -74,11 +74,11 @@ class E2EPage {
       ]
     });
 
-    this.nav.present(picker);
+    picker.present();
   }
 
   prefixLabel() {
-    let picker = Picker.create({
+    let picker = this.pickerCtrl.create({
       buttons: [
         {
           text: 'Nerp',
@@ -86,8 +86,8 @@ class E2EPage {
         },
         {
           text: 'Woot!',
-          handler: (data) => {
-            this.smoothie = `${data.flavor1}`;
+          handler: (data: any) => {
+            this.smoothie = `${data.flavor1.value}`;
           }
         }
       ],
@@ -118,11 +118,11 @@ class E2EPage {
       ]
     });
 
-    this.nav.present(picker);
+    picker.present();
   }
 
   suffixLabel() {
-    let picker = Picker.create({
+    let picker = this.pickerCtrl.create({
       buttons: [
         {
           text: 'No',
@@ -130,8 +130,8 @@ class E2EPage {
         },
         {
           text: 'Si',
-          handler: (data) => {
-            this.smoothie = `${data.flavor1}`;
+          handler: (data: any) => {
+            this.smoothie = `${data.flavor1.value}`;
           }
         }
       ],
@@ -162,11 +162,11 @@ class E2EPage {
       ]
     });
 
-    this.nav.present(picker);
+    picker.present();
   }
 
   columnSizes() {
-    let picker = Picker.create();
+    let picker = this.pickerCtrl.create();
 
     picker.addButton({
       text: 'Cancel',
@@ -175,8 +175,8 @@ class E2EPage {
 
     picker.addButton({
       text: 'Set Timer',
-      handler: (data) => {
-        this.timer = `${data.hour}:${data.min}`;
+      handler: (data: any) => {
+        this.timer = `${data.hour.value}:${data.min.value}`;
       }
     });
 
@@ -188,7 +188,7 @@ class E2EPage {
       options: Array.apply(null, {length: 23}).map(Number.call, Number)
     });
 
-    var minuteOptions = [];
+    let minuteOptions: any[] = [];
 
     for (var i = 0; i < 60; i++) {
       minuteOptions.push({
@@ -205,7 +205,7 @@ class E2EPage {
       options: minuteOptions
     });
 
-    this.nav.present(picker);
+    picker.present();
   }
 }
 

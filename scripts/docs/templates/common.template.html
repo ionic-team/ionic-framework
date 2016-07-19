@@ -53,7 +53,7 @@ angular_controller: APIDemoCtrl <@ endif @>
 <@- endmacro -@>
 
 <@ macro githubViewLink(doc) -@>
-  <a href="https://github.com/<$ versionInfo.gitRepoInfo.owner $>/<$ versionInfo.gitRepoInfo.repo $>/tree/2.0/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line+1 $>-L<$ doc.location.end.line+1 $>"><$ doc.fileInfo.relativePath $> (line <$ doc.location.start.line+1 $>)</a>
+  <a href="https://github.com/<$ versionInfo.gitRepoInfo.owner $>/<$ versionInfo.gitRepoInfo.repo $>/tree/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line+1 $>-L<$ doc.location.end.line+1 $>"><$ doc.fileInfo.relativePath $> (line <$ doc.location.start.line+1 $>)</a>
 <@- endmacro -@>
 
 <@ macro paramTable(params, isDirective) -@>
@@ -179,7 +179,7 @@ Delegate: <$ doc.delegate $>
 
 </h1>
 
-<a class="improve-v2-docs" href="http://github.com/driftyco/ionic/edit/2.0/<$ doc.fileInfo.relativePath|replace('/home/ubuntu/ionic', '')|replace('//','/') $>#L<$ doc.location.start.line $>">
+<a class="improve-v2-docs" href="http://github.com/driftyco/ionic/edit/master/<$ doc.fileInfo.relativePath|replace('/home/ubuntu/ionic', '')|replace('//','/') $>#L<$ doc.location.start.line $>">
 Improve this doc
 </a>
 

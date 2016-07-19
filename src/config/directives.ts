@@ -1,5 +1,5 @@
-import { forwardRef } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 
 import { Menu } from '../components/menu/menu';
 import { MenuToggle } from '../components/menu/menu-toggle';
@@ -19,7 +19,7 @@ import { Tabs } from '../components/tabs/tabs';
 import { Tab } from '../components/tabs/tab';
 import { List, ListHeader } from '../components/list/list';
 import { Item, ItemContent } from '../components/item/item';
-import { Reorder } from '../components/item/item-reorder';
+import { ItemReorder } from '../components/item/item-reorder';
 import { ItemSliding, ItemOptions } from '../components/item/item-sliding';
 import { VirtualScroll } from '../components/virtual-scroll/virtual-scroll';
 import { VirtualItem, VirtualHeader, VirtualFooter } from '../components/virtual-scroll/virtual-item';
@@ -43,7 +43,6 @@ import { Searchbar } from '../components/searchbar/searchbar';
 import { Nav } from '../components/nav/nav';
 import { NavPop } from '../components/nav/nav-pop';
 import { NavPush } from '../components/nav/nav-push';
-import { NavRouter } from '../components/nav/nav-router';
 import { NavbarTemplate, Navbar } from '../components/navbar/navbar';
 import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when';
 
@@ -113,7 +112,6 @@ import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when'
  * - Navbar
  * - NavPush
  * - NavPop
- * - NavRouter
  * - IdRef
  * - ShowWhen
  * - HideWhen
@@ -121,7 +119,7 @@ import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when'
 export const IONIC_DIRECTIVES: any[] = [
   // Angular
   CORE_DIRECTIVES,
-  FORM_DIRECTIVES,
+  REACTIVE_FORM_DIRECTIVES,
 
   // Content
   Menu,
@@ -146,7 +144,7 @@ export const IONIC_DIRECTIVES: any[] = [
   ItemContent,
   ItemSliding,
   ItemOptions,
-  Reorder,
+  ItemReorder,
   VirtualScroll,
   VirtualItem,
   VirtualHeader,
@@ -195,7 +193,6 @@ export const IONIC_DIRECTIVES: any[] = [
 
   NavPush,
   NavPop,
-  NavRouter,
 
   ShowWhen,
   HideWhen

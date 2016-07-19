@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {Modal, NavController, ViewController} from '../../../../src';
-import {ModalCmp} from '../../../../src/components/modal/modal';
+import { Component } from '@angular/core';
+import { ModalController, ViewController } from '../../../../src';
+import { ModalCmp } from '../../../../src/components/modal/modal-component';
 
 export function run() {
   describe('Modal', () => {
@@ -8,7 +8,8 @@ export function run() {
     describe('create', () => {
 
       it('should have the correct properties on modal view controller instance', () => {
-        let modalViewController = Modal.create(ComponentToPresent);
+        let modalCtrl = new ModalController(null);
+        let modalViewController = modalCtrl.create(ComponentToPresent);
         expect(modalViewController.componentType).toEqual(ModalCmp);
         expect(modalViewController.isOverlay).toEqual(true);
         expect(modalViewController instanceof ViewController).toEqual(true);
@@ -19,25 +20,7 @@ export function run() {
 
 }
 
-const STATE_ACTIVE = 'active';
-const STATE_INACTIVE = 'inactive';
-const STATE_INIT_ENTER = 'init_enter';
-const STATE_INIT_LEAVE = 'init_leave';
-const STATE_TRANS_ENTER = 'trans_enter';
-const STATE_TRANS_LEAVE = 'trans_leave';
-const STATE_REMOVE = 'remove';
-const STATE_REMOVE_AFTER_TRANS = 'remove_after_trans';
-const STATE_FORCE_ACTIVE = 'force_active';
-
-
-let componentToPresentSpy = {
-  _ionicProjectContent: () => {},
-};
-
 @Component({
   template: `<div class="myComponent"></div>`
 })
-class ComponentToPresent{
-  constructor(){
-  }
-}
+class ComponentToPresent{}

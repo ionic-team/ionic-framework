@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
-import {FormBuilder, Validators} from '@angular/common';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/common';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -35,7 +35,7 @@ class E2EPage {
     });
   }
 
-  emailValidator(control) {
+  emailValidator(control: any) {
     var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
     if (!EMAIL_REGEXP.test(control.value)) {
@@ -43,7 +43,7 @@ class E2EPage {
     }
   }
 
-  submit(ev, value) {
+  submit(ev: UIEvent, value: any) {
     console.log("Submitted", value);
     this.submitted = true;
   }

@@ -7,18 +7,83 @@ import { ionicBootstrap } from 'ionic-angular';
   templateUrl: 'main.html'
 })
 class ApiDemoPage {
-  appType = "paid";
-  safari = "links";
-  news = "local";
-  favorites = "recent";
+  appType = "Paid";
+  safari = "Shared Links";
+  weather = "sunny";
 
-  purchased = "all";
-  mapStyle = "sat";
-  teslaModels = "X";
+  apps = {
+    "Paid": [
+      {
+        name: 'Monopoly',
+        price: '$0.99'
+      },
+      {
+        name: 'Angry Birds',
+        price: '$2.99'
+      }
+    ],
+    "Free": [
+      {
+        name: 'Snapchat',
+        price: 'GET'
+      },
+      {
+        name: 'Instagram',
+        price: 'OPEN'
+      }
+    ],
+    "Top": [
+      {
+        name: 'Spotify',
+        price: 'OPEN'
+      },
+      {
+        name: 'Pandora',
+        price: 'GET'
+      }
+    ]
+  };
 
-  pet = "puppies";
-  calendar = "day";
-  proxy = "auto";
+  items = {
+    "Bookmarks": [
+      {
+        name: 'Favorites',
+        icon: 'ios-star-outline'
+      },
+      {
+        name: 'History',
+        icon: 'ios-clock-outline'
+      }
+    ],
+    "Reading List": [
+      {
+        name: 'Terms of Service',
+        icon: 'create'
+      },
+      {
+        name: 'User Guide',
+        icon: 'book'
+      }
+    ],
+    "Shared Links": [
+      {
+        name: 'Ionic Framework',
+        icon: 'ionic'
+      },
+      {
+        name: 'Learn Angular',
+        icon: 'logo-angular'
+      }
+    ]
+  };
+
+  getItems(type) {
+    return this.apps[type];
+  }
+
+  getSafariItems(type) {
+    return this.items[type];
+  }
 }
 
 

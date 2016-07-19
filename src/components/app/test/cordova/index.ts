@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ionicBootstrap, NavController, Modal, ViewController} from '../../../../../src';
+import {ionicBootstrap, NavController, ModalController, ViewController} from '../../../../../src';
 import {Injectable} from '@angular/core';
 
 
@@ -26,9 +26,11 @@ export class OtherData {
   <ion-header>
     <ion-toolbar>
       <ion-title>This is a modal</ion-title>
-      <button menuToggle class="e2eCordovaOpenLeftMenu">
-        <ion-icon name="menu"></ion-icon>
-      </button>
+      <ion-buttons left>
+        <button (click)="dismissModal()" class="e2eCordovaCloseModal">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
       <ion-buttons end>
         <button>
           <ion-icon name="funnel"></ion-icon>
@@ -76,11 +78,10 @@ class Page2 {
   page1 = Page1;
   page3 = Page3;
 
-  constructor(private nav: NavController) {}
+  constructor(private modalCtrl: ModalController) {}
 
   openModal() {
-    let modal = Modal.create(MyModal);
-    this.nav.present(modal);
+    this.modalCtrl.create(MyModal).present();
   }
 }
 

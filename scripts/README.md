@@ -66,7 +66,7 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 ### Running Sass Linter
 
-1. See the [Sass Guidelines](https://github.com/driftyco/ionic/blob/2.0/CONTRIBUTING.md#sass-guidelines) for editing Sass and running the linter.
+1. See the [Sass Guidelines](https://github.com/driftyco/ionic/blob/master/CONTRIBUTING.md#sass-guidelines) for editing Sass and running the linter.
 
 # Releasing
 

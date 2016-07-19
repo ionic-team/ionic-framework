@@ -1,4 +1,4 @@
-import {Toast} from '../../../../src';
+import { ToastController, App, Platform, Config } from '../../../../src';
 
 export function run() {
 
@@ -7,18 +7,18 @@ describe('Toast', () => {
   describe('create', () => {
 
     it('should create toast with close button', () => {
-      let toast = Toast.create({
+      let toast = toastCtrl.create({
         message: 'Please Wait...',
         showCloseButton: true
       });
-      
+
       expect(toast.data.position).toEqual('bottom');
       expect(toast.data.message).toEqual('Please Wait...');
       expect(toast.data.showCloseButton).toEqual(true);
     });
 
     it('should create toast with position top', () => {
-      let toast = Toast.create({
+      let toast = toastCtrl.create({
         message: 'Please Wait...',
         position: 'top'
       });
@@ -27,7 +27,7 @@ describe('Toast', () => {
     });
 
     it('should create toast with position middle', () => {
-      let toast = Toast.create({
+      let toast = toastCtrl.create({
         message: 'Please Wait...',
         position: 'middle'
       });
@@ -36,7 +36,7 @@ describe('Toast', () => {
     });
 
     it('should create toast with position bottom', () => {
-      let toast = Toast.create({
+      let toast = toastCtrl.create({
         message: 'Please Wait...',
         position: 'bottom'
       });
@@ -45,7 +45,7 @@ describe('Toast', () => {
     });
 
     it('should set a duration', () => {
-      let toast = Toast.create({
+      let toast = toastCtrl.create({
         message: 'Please Wait...',
         duration: 3000
       });
@@ -53,6 +53,15 @@ describe('Toast', () => {
       expect(toast.data.duration).toEqual(3000);
     });
   });
+
+  let toastCtrl: ToastController;
+  beforeEach(() => {
+    let config = new Config();
+    let platform = new Platform();
+    let app = new App(config, platform);
+    toastCtrl = new ToastController(app);
+  });
+
 });
 
 }

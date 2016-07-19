@@ -37,10 +37,8 @@ Config.setModeConfig('ios', {
 
   spinner: 'ios',
 
-  tabbarHighlight: false,
-  tabbarPlacement: 'bottom',
-
-  tabSubPages: false,
+  tabsHighlight: false,
+  tabsPlacement: 'bottom',
 
   toastEnter: 'toast-slide-in',
   toastLeave: 'toast-slide-out',
@@ -82,10 +80,8 @@ Config.setModeConfig('md', {
 
   spinner: 'crescent',
 
-  tabbarHighlight: true,
-  tabbarPlacement: 'top',
-
-  tabSubPages: true,
+  tabsHighlight: true,
+  tabsPlacement: 'bottom',
 
   toastEnter: 'toast-md-slide-in',
   toastLeave: 'toast-md-slide-out',
@@ -127,9 +123,8 @@ Config.setModeConfig('wp', {
 
   spinner: 'circles',
 
-  tabbarPlacement: 'top',
-
-  tabSubPages: true,
+  tabsHighlight: false,
+  tabsPlacement: 'top',
 
   toastEnter: 'toast-wp-slide-in',
   toastLeave: 'toast-wp-slide-out',

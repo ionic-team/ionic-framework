@@ -12,7 +12,8 @@ $tabbar-wp-item-icon-size:           2.4rem !default;
 $tabbar-wp-item-height:              4.8rem !default;
 
 $tab-button-wp-active-color:         $toolbar-wp-active-color !default;
-$tab-button-wp-inactive-color:       $toolbar-wp-inactive-color !default;
+$tab-button-wp-inactive-opacity:     .7 !default;
+$tab-button-wp-inactive-color:       rgba($toolbar-wp-inactive-color, $tab-button-wp-inactive-opacity) !default;
 
 $tab-button-wp-background-activated: rgba(0, 0, 0, .1) !default;
 
@@ -32,12 +33,10 @@ ion-tabbar {
   font-weight: $tabbar-wp-item-font-weight;
   color: $tab-button-wp-inactive-color;
   box-shadow: none;
-  opacity: .7;
 
   &[aria-selected=true] {
     border-bottom-color: $tab-button-wp-active-color;
     color: $tab-button-wp-active-color;
-    opacity: 1;
   }
 
   &.activated {
@@ -56,13 +55,13 @@ ion-tabbar {
   font-size: $tabbar-wp-item-icon-size;
 }
 
-[tabbarLayout=icon-bottom] .tab-button {
+[tabsLayout=icon-bottom] .tab-button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-[tabbarLayout=icon-right] .tab-button,
-[tabbarLayout=icon-left] .tab-button {
+[tabsLayout=icon-right] .tab-button,
+[tabsLayout=icon-left] .tab-button {
   padding-bottom: 10px;
 
   ion-icon {
@@ -70,14 +69,14 @@ ion-tabbar {
   }
 }
 
-[tabbarLayout=icon-hide] .tab-button,
-[tabbarLayout=title-hide] .tab-button,
+[tabsLayout=icon-hide] .tab-button,
+[tabsLayout=title-hide] .tab-button,
 .tab-button.icon-only,
 .tab-button.has-title-only {
   padding: 6px 10px;
 }
 
-[tabbarPlacement=bottom] .tab-button {
+[tabsPlacement=bottom] .tab-button {
   border-top: 2px solid transparent;
   border-bottom-width: 0;
 
@@ -98,7 +97,7 @@ ion-tabbar {
     background-color: $color-base;
 
     .tab-button {
-      color: $color-contrast;
+      color: rgba($color-contrast, $tab-button-wp-inactive-opacity);
     }
 
     .tab-button:hover:not(.disable-hover),

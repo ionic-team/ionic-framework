@@ -1,13 +1,14 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
+  myDate: any;
   wwwInvented = '1989';
-  time = '13:47';
+  time = '13:47:00';
   netscapeReleased = '1994-12-15T13:47:20.789';
   operaReleased = '1995-04-15';
   firefoxReleased = '2002-09-23T15:03:46.789';

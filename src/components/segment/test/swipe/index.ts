@@ -1,7 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {Validators, Control, ControlGroup} from '@angular/common';
-import {Http} from '@angular/http';
-import {ionicBootstrap, NavController, Slides} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, Slides, SegmentButton } from '../../../../../src';
 
 
 @Component({
@@ -30,7 +28,7 @@ class SegmentPage {
 
   }
 
-  onSegmentChanged(segmentButton) {
+  onSegmentChanged(segmentButton: SegmentButton) {
     console.log("Segment changed to", segmentButton.value);
 
     const selectedIndex = this.slides.findIndex((slide) => {
@@ -39,7 +37,7 @@ class SegmentPage {
     this.sliderComponent.slideTo(selectedIndex);
   }
 
-  onSlideChanged(slider) {
+  onSlideChanged(slider: any) {
     console.log('Slide changed', slider);
 
     const currentSlide = this.slides[slider.activeIndex];
