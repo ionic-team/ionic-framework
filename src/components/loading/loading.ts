@@ -121,10 +121,10 @@ export class Loading extends ViewController {
   }
   
   /**
-   * Updates the content of the loading component
+   * Sets the content of the loading component
    * @param content {string} The new content
    */
-  updateContent(content: string): void {
+  setContent(content: string): void {
     this.data.content = content;
   }
 
