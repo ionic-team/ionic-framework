@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, AlertController, Content } from '../../../../../src';
-import { ionicBootstrap, App } from '../../../../../src';
+import { ionicBootstrap } from '../../../../../src';
 import { NavParams, ViewController } from '../../../../../src';;
 
 
@@ -148,7 +148,6 @@ class FirstPage {
 class FullPage {
   constructor(
     private nav: NavController,
-    private app: App,
     private alertCtrl: AlertController,
     private params: NavParams
   ) {}
@@ -185,8 +184,8 @@ class FullPage {
         // overlays are added and removed from the root navigation
         // ensure you using the root navigation, and pop this alert
         // when the alert is done animating out, then pop off the active page
-        this.app.getRootNav().pop().then(() => {
-          this.app.getRootNav().pop();
+        this.nav.rootNav.pop().then(() => {
+          this.nav.rootNav.pop();
         });
 
         // by default an alert will dismiss itself

@@ -2,9 +2,9 @@ import { ComponentResolver, Directive, ElementRef, forwardRef, Inject, NgZone, O
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { GestureController } from '../../gestures/gesture-controller';
 import { Keyboard } from '../../util/keyboard';
-import { NavControllerBase } from '../nav/nav-controller-base';
+import { MenuController } from '../menu/menu-controller';
+import { NavController } from '../nav/nav-controller';
 
 /**
  * @private
@@ -12,7 +12,7 @@ import { NavControllerBase } from '../nav/nav-controller-base';
 @Directive({
   selector: '[nav-portal]'
 })
-export class NavPortal extends NavControllerBase {
+export class NavPortal extends NavController {
   constructor(
     @Inject(forwardRef(() => App)) app: App,
     config: Config,
@@ -21,11 +21,11 @@ export class NavPortal extends NavControllerBase {
     zone: NgZone,
     renderer: Renderer,
     compiler: ComponentResolver,
-    gestureCtrl: GestureController,
+    menuCtrl: MenuController,
     viewPort: ViewContainerRef
   ) {
-    super(null, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
-    this._isPortal = true;
+    super(null, app, config, keyboard, elementRef, zone, renderer, compiler, menuCtrl);
+    this.isPortal = true;
     this.setViewport(viewPort);
     app.setPortal(this);
 

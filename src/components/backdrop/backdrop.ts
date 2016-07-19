@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 
-import { DisableScroll, GestureController, GestureDelegate } from '../../gestures/gesture-controller';
+import { AppRoot } from '../app/app';
 import { isTrueProperty } from '../../util/util';
 
 
@@ -16,21 +16,41 @@ import { isTrueProperty } from '../../util/util';
   },
 })
 export class Backdrop {
-  private _gestureID: number = null;
+  private static nuBackDrops: number = 0;
+
+  private static push(appRoot: AppRoot) {
+    if (this.nuBackDrops === 0) {
+      appRoot.disableScroll = true;
+    }
+    this.nuBackDrops++;
+  }
+
+  private static pop(appRoot: AppRoot) {
+    if (this.nuBackDrops > 0) {
+      this.nuBackDrops--;
+
+      if (this.nuBackDrops === 0) {
+        appRoot.disableScroll = false;
+      }
+    }
+  }
+
+  private pushed: boolean = false;
   @Input() disableScroll = true;
 
-  constructor(private _gestureCtrl: GestureController, private _elementRef: ElementRef) {}
+  constructor(private _appRoot: AppRoot, private _elementRef: ElementRef) {}
 
   ngOnInit() {
     if (isTrueProperty(this.disableScroll)) {
-      this._gestureID = this._gestureCtrl.newID();
-      this._gestureCtrl.disableScroll(this._gestureID);
+      Backdrop.push(this._appRoot);
+      this.pushed = true;
     }
   }
 
   ngOnDestroy() {
-    if (this._gestureID) {
-      this._gestureCtrl.enableScroll(this._gestureID);
+    if (this.pushed) {
+      Backdrop.pop(this._appRoot);
+      this.pushed = false;
     }
   }
 

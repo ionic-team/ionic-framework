@@ -1,15 +1,16 @@
-import { PanGesture } from './drag-gesture';
-import { clamp } from '../util';
-import { pointerCoord } from '../util/dom';
+import {DragGesture} from './drag-gesture';
+import {clamp} from '../util';
+
 
 /**
  * @private
  */
-export class SlideGesture extends PanGesture {
+export class SlideGesture extends DragGesture {
   public slide: SlideData = null;
 
   constructor(element: HTMLElement, opts = {}) {
     super(element, opts);
+    this.element = element;
   }
 
   /*
@@ -19,7 +20,7 @@ export class SlideGesture extends PanGesture {
   getSlideBoundaries(slide: SlideData, ev: any) {
     return {
       min: 0,
-      max: this.getNativeElement().offsetWidth
+      max: this.element.offsetWidth
     };
   }
 
@@ -32,43 +33,48 @@ export class SlideGesture extends PanGesture {
     return 0;
   }
 
-  onDragStart(ev: any) {
+  canStart(ev: any): boolean {
+    return true;
+  }
+
+  onDragStart(ev: any): boolean {
+    if (!this.canStart(ev)) {
+      return false;
+    }
+
     this.slide = {};
     this.onSlideBeforeStart(this.slide, ev);
 
-    let {min, max} = this.getSlideBoundaries(this.slide, ev);
-    let coord = <any>pointerCoord(ev);
+    var {min, max} = this.getSlideBoundaries(this.slide, ev);
     this.slide.min = min;
     this.slide.max = max;
     this.slide.elementStartPos = this.getElementStartPos(this.slide, ev);
-    this.slide.pos = this.slide.pointerStartPos = coord[this.direction];
-    this.slide.timestamp = Date.now();
+    this.slide.pointerStartPos = ev.center[this.direction];
     this.slide.started = true;
-    this.slide.velocity = 0;
     this.onSlideStart(this.slide, ev);
+
+    return true;
   }
 
-  onDragMove(ev: any) {
-    let coord = <any>pointerCoord(ev);
-    let newPos = coord[this.direction];
-    let newTimestamp = Date.now();
-    let velocity = (newPos - this.slide.pos) / (newTimestamp - this.slide.timestamp);
+  onDrag(ev: any): boolean {
+    if (!this.slide || !this.slide.started) {
+      return false;
+    }
 
-    this.slide.pos = newPos;
-    this.slide.timestamp = newTimestamp;
+    this.slide.pos = ev.center[this.direction];
     this.slide.distance = clamp(
       this.slide.min,
-      newPos - this.slide.pointerStartPos + this.slide.elementStartPos,
+      this.slide.pos - this.slide.pointerStartPos + this.slide.elementStartPos,
       this.slide.max
     );
-    this.slide.velocity = velocity;
-    this.slide.delta = newPos - this.slide.pointerStartPos;
+    this.slide.delta = this.slide.pos - this.slide.pointerStartPos;
     this.onSlide(this.slide, ev);
 
     return true;
   }
 
   onDragEnd(ev: any) {
+    if (!this.slide || !this.slide.started) return;
     this.onSlideEnd(this.slide, ev);
     this.slide = null;
   }
@@ -79,9 +85,6 @@ export class SlideGesture extends PanGesture {
   onSlideEnd(slide?: SlideData, ev?: any): void {}
 }
 
-/**
- * @private
- */
 export interface SlideData {
   min?: number;
   max?: number;
@@ -89,8 +92,6 @@ export interface SlideData {
   delta?: number;
   started?: boolean;
   pos?: any;
-  timestamp?: number;
   pointerStartPos?: number;
   elementStartPos?: number;
-  velocity?: number;
 }

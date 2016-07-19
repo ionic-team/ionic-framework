@@ -125,10 +125,6 @@ export class MenuController {
   open(menuId?: string): Promise<boolean> {
     let menu = this.get(menuId);
     if (menu) {
-      let openedMenu = this.getOpen();
-      if (openedMenu && menu !== openedMenu) {
-        openedMenu.setOpen(false, false);
-      }
       return menu.open();
     }
 
@@ -151,7 +147,7 @@ export class MenuController {
 
     } else {
       // find the menu that is open
-      menu = this.getOpen();
+      menu = this._menus.find(m => m.isOpen);
     }
 
     if (menu) {
@@ -162,6 +158,11 @@ export class MenuController {
     return Promise.resolve(false);
   }
 
+  tempDisable(temporarilyDisable: boolean) {
+    this._menus.forEach(menu => {
+      menu.tempDisable(temporarilyDisable);
+    });
+  }
 
   /**
    * Toggle the menu. If it's closed, it will open, and if opened, it
@@ -172,10 +173,6 @@ export class MenuController {
   toggle(menuId?: string): Promise<boolean> {
     let menu = this.get(menuId);
     if (menu) {
-      let openedMenu = this.getOpen();
-      if (openedMenu && menu !== openedMenu) {
-        openedMenu.setOpen(false, false);
-      }
       return menu.toggle();
     }
     return Promise.resolve(false);
@@ -232,7 +229,7 @@ export class MenuController {
    * provided, then it'll try to find the menu using the menu's `id`
    * property. If a menu is not found then it'll return `null`.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
-   * @return {Menu} Returns the instance of the menu if found, otherwise `null`.
+   * @return {Menu}  Returns the instance of the menu if found, otherwise `null`.
    */
   get(menuId?: string): Menu {
     var menu: Menu;
@@ -255,19 +252,10 @@ export class MenuController {
 
     // return the first enabled menu
     menu = this._menus.find(m => m.enabled);
-    if (menu) {
-      return menu;
-    }
+    if (menu) return menu;
 
     // get the first menu in the array, if one exists
     return (this._menus.length ? this._menus[0] : null);
-  }
-
-  /**
-   * @return {Menu} Returns the instance of the menu already opened, otherwise `null`.
-   */
-  getOpen(): Menu {
-    return this._menus.find(m => m.isOpen);
   }
 
 

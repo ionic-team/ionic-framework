@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-import { ionicBootstrap, NavController } from '../../../../../src';
+import {Component} from '@angular/core';
+import {ionicBootstrap, NavController} from '../../../../../src';
 
 
 let delay = 100;
@@ -16,7 +16,7 @@ let count = 0;
   `
 })
 class Page1 {
-  tmr: number;
+  tmr;
 
   constructor(private nav: NavController) {}
 
@@ -50,7 +50,7 @@ class Page1 {
   `
 })
 class Page2 {
-  tmr: number;
+  tmr;
 
   constructor(private nav: NavController) {}
 

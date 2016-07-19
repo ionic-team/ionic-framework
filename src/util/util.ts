@@ -1,6 +1,4 @@
 
-export function noop() {}
-
 /**
  * Given a min and max, restrict the given number
  * to the range.

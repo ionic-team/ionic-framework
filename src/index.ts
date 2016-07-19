@@ -12,7 +12,6 @@ export * from './gestures/drag-gesture';
 export * from './gestures/gesture';
 export * from './gestures/slide-edge-gesture';
 export * from './gestures/slide-gesture';
-export * from './gestures/gesture-controller';
 
 export * from './platform/platform';
 export * from './platform/storage';

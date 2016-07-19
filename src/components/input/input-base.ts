@@ -10,7 +10,6 @@ import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { NativeInput, NextInput } from './native-input';
 import { NavController } from '../nav/nav-controller';
-import { NavControllerBase } from '../nav/nav-controller-base';
 import { Platform } from '../../platform/platform';
 
 
@@ -28,7 +27,6 @@ export class InputBase {
   protected _autoFocusAssist: string;
   protected _autoComplete: string;
   protected _autoCorrect: string;
-  protected _nav: NavControllerBase;
 
   inputControl: NgControl;
 
@@ -46,10 +44,9 @@ export class InputBase {
     protected _platform: Platform,
     protected _elementRef: ElementRef,
     protected _scrollView: Content,
-    nav: NavController,
+    protected _nav: NavController,
     ngControl: NgControl
   ) {
-    this._nav = <NavControllerBase>nav;
     this._useAssist = config.getBoolean('scrollAssist', false);
     this._usePadding = config.getBoolean('scrollPadding', this._useAssist);
     this._keyboardHeight = config.getNumber('keyboardHeight');

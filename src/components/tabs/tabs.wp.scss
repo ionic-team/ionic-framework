@@ -12,8 +12,7 @@ $tabbar-wp-item-icon-size:           2.4rem !default;
 $tabbar-wp-item-height:              4.8rem !default;
 
 $tab-button-wp-active-color:         $toolbar-wp-active-color !default;
-$tab-button-wp-inactive-opacity:     .7 !default;
-$tab-button-wp-inactive-color:       rgba($toolbar-wp-inactive-color, $tab-button-wp-inactive-opacity) !default;
+$tab-button-wp-inactive-color:       rgba($toolbar-wp-inactive-color, .7) !default;
 
 $tab-button-wp-background-activated: rgba(0, 0, 0, .1) !default;
 
@@ -97,7 +96,7 @@ ion-tabbar {
     background-color: $color-base;
 
     .tab-button {
-      color: rgba($color-contrast, $tab-button-wp-inactive-opacity);
+      color: $color-contrast;
     }
 
     .tab-button:hover:not(.disable-hover),

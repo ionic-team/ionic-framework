@@ -364,12 +364,11 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
     this._renderer.setElementStyle(this._bar.nativeElement, 'right', barR);
 
     // add touchstart/mousedown listeners
-    this._events.pointerEvents({
-      elementRef: this._slider,
-      pointerDown: this.pointerDown.bind(this),
-      pointerMove: this.pointerMove.bind(this),
-      pointerUp: this.pointerUp.bind(this)
-    });
+    this._events.pointerEventsRef(this._slider,
+      this.pointerDown.bind(this),
+      this.pointerMove.bind(this),
+      this.pointerUp.bind(this));
+
     this.createTicks();
   }
 
@@ -431,12 +430,18 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
     ev.preventDefault();
     ev.stopPropagation();
 
-    // update the ratio for the active knob
-    this.updateKnob(pointerCoord(ev), this._rect);
+    if (this._start !== null && this._active !== null) {
+      // only use pointer move if it's a valid pointer
+      // and we already have start coordinates
 
-    // update the active knob's position
-    this._active.position();
-    this._pressed = this._active.pressed = true;
+      // update the ratio for the active knob
+      this.updateKnob(pointerCoord(ev), this._rect);
+
+      // update the active knob's position
+      this._active.position();
+      this._pressed = this._active.pressed = true;
+
+    }
   }
 
   /**

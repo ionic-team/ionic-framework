@@ -3,9 +3,9 @@ import { AfterViewInit, Component, ComponentResolver, ElementRef, Input, Optiona
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Keyboard } from '../../util/keyboard';
-import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { NavControllerBase } from './nav-controller-base';
+import { MenuController } from '../menu/menu-controller';
+import { NavController } from './nav-controller';
 import { ViewController } from './view-controller';
 
 /**
@@ -114,13 +114,13 @@ import { ViewController } from './view-controller';
   `,
   encapsulation: ViewEncapsulation.None,
 })
-export class Nav extends NavControllerBase implements AfterViewInit {
+export class Nav extends NavController implements AfterViewInit {
   private _root: any;
   private _hasInit: boolean = false;
 
   constructor(
     @Optional() viewCtrl: ViewController,
-    @Optional() parent: NavControllerBase,
+    @Optional() parent: NavController,
     app: App,
     config: Config,
     keyboard: Keyboard,
@@ -128,9 +128,9 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     zone: NgZone,
     renderer: Renderer,
     compiler: ComponentResolver,
-    gestureCtrl: GestureController
+    menuCtrl: MenuController
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, menuCtrl);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
@@ -164,6 +164,9 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     this._hasInit = true;
 
     if (this._root) {
+      if (typeof this._root !== 'function') {
+        throw 'The [root] property in <ion-nav> must be given a reference to a component class from within the constructor.';
+      }
       this.push(this._root);
     }
   }

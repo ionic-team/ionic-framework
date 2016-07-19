@@ -1,12 +1,11 @@
-import { Directive, HostListener, Input, Optional } from '@angular/core';
+import { Directive, Optional } from '@angular/core';
 import { NavController } from './nav-controller';
-import { noop } from '../../util/util';
+
 
 /**
  * @name NavPop
  * @description
- * Directive to declaratively pop the current page off from the
- * navigation stack.
+ * Directive for declaratively pop the current page off from the navigation stack.
  *
  * @usage
  * ```html
@@ -23,7 +22,11 @@ import { noop } from '../../util/util';
  * @see {@link ../NavPush NavPush API Docs}
  */
 @Directive({
-  selector: '[navPop]'
+  selector: '[nav-pop]',
+  host: {
+    '(click)': 'onClick()',
+    'role': 'link'
+  }
 })
 export class NavPop {
 
@@ -33,15 +36,10 @@ export class NavPop {
     }
   }
 
-  @HostListener('click')
-  onClick(): boolean {
-    // If no target, or if target is _self, prevent default browser behavior
-    if (this._nav) {
-      this._nav.pop(null, noop);
-      return false;
-    }
-
-    return true;
+  /**
+   * @private
+   */
+  onClick() {
+    this._nav && this._nav.pop();
   }
-
 }

@@ -289,12 +289,11 @@ export class Animation {
     var self = this;
     var i: number;
 
-    let dur = this._dur;
     if (isDefined(opts.duration)) {
-      dur = opts.duration;
+      self._dur = opts.duration;
     }
 
-    console.debug('Animation, play, duration', dur, 'easing', this._easing);
+    console.debug('Animation, play, duration', self._dur, 'easing', self._easing);
 
     // always default that an animation does not tween
     // a tween requires that an Animation class has an element
@@ -314,7 +313,7 @@ export class Animation {
     // ensure all past transition end events have been cleared
     self._clearAsync();
 
-    if (dur > 30) {
+    if (self._dur > 30) {
       // this animation has a duration, so it should animate
       // place all the elements with their FROM properties
 
@@ -329,7 +328,7 @@ export class Animation {
       // set the async TRANSITION END event
       // and run onFinishes when the transition ends
       // ******** DOM WRITE ****************
-      self._asyncEnd(dur, true);
+      self._asyncEnd(self._dur, true);
 
       // begin each animation when everything is rendered in their place
       // and the transition duration/easing is ready to go

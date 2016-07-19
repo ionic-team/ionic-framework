@@ -10,7 +10,6 @@ import { closest, nativeTimeout } from '../util/dom';
 import { Events } from '../util/events';
 import { FeatureDetect } from '../util/feature-detect';
 import { Form } from '../util/form';
-import { GestureController } from '../gestures/gesture-controller';
 import { IONIC_DIRECTIVES } from './directives';
 import { isPresent } from '../util/util';
 import { Keyboard } from '../util/keyboard';
@@ -65,7 +64,6 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     provide(Events, {useValue: events}),
     provide(FeatureDetect, {useValue: featureDetect}),
     Form,
-    GestureController,
     HTTP_PROVIDERS,
     Keyboard,
     LoadingController,

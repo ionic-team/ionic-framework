@@ -16,18 +16,15 @@ $text-input-wp-padding-vertical:            0 !default;
 $text-input-wp-padding-horizontal:          8px !default;
 $text-input-wp-line-height:                 3rem !default;
 
+$text-input-wp-highlight-color:             color($colors-wp, primary) !default;
+$text-input-wp-hightlight-color-valid:      color($colors-wp, secondary) !default;
+$text-input-wp-hightlight-color-invalid:    color($colors-wp, danger) !default;
+
 $text-input-wp-input-clear-icon-width:      30px !default;
 $text-input-wp-input-clear-icon-color:      $input-wp-border-color !default;
 $text-input-wp-input-clear-icon-svg:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $text-input-wp-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
 $text-input-wp-input-clear-icon-size:       22px !default;
 
-$text-input-wp-show-focus-highlight:        true !default;
-$text-input-wp-show-valid-highlight:        $text-input-wp-show-focus-highlight !default;
-$text-input-wp-show-invalid-highlight:      $text-input-wp-show-focus-highlight !default;
-
-$text-input-wp-highlight-color:             color($colors-wp, primary) !default;
-$text-input-wp-highlight-color-valid:       color($colors-wp, secondary) !default;
-$text-input-wp-highlight-color-invalid:     color($colors-wp, danger) !default;
 
 
 // Windows Default Input
@@ -56,25 +53,16 @@ $text-input-wp-highlight-color-invalid:     color($colors-wp, danger) !default;
 // Windows Highlighted Input
 // --------------------------------------------------
 
-// Show the focus highlight when the input has focus
-@if ($text-input-wp-show-focus-highlight) {
-  .item-input.input-has-focus .text-input {
-    border-color: $text-input-wp-highlight-color;
-  }
+.input-has-focus .text-input {
+  border-color: $text-input-wp-highlight-color;
 }
 
-// Show the valid highlight when it has the .ng-valid class and a value
-@if ($text-input-wp-show-valid-highlight) {
-  .item-input.ng-valid.input-has-value:not(.input-has-focus) .text-input {
-    border-color: $text-input-wp-highlight-color-valid;
-  }
+ion-input.ng-valid.input-has-value .text-input {
+  border-color: $text-input-wp-hightlight-color-valid;
 }
 
-// Show the invalid highlight when it has the invalid class and has been touched
-@if ($text-input-wp-show-invalid-highlight) {
-  .item-input.ng-invalid.ng-touched:not(.input-has-focus) .text-input {
-    border-color: $text-input-wp-highlight-color-invalid;
-  }
+ion-input.ng-invalid.ng-touched .text-input {
+  border-color: $text-input-wp-hightlight-color-invalid;
 }
 
 

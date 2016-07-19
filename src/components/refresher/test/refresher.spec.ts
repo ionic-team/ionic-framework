@@ -1,4 +1,4 @@
-import { Refresher, Content, Config, GestureController, Ion } from '../../../../src';
+import {Refresher, Content, Config, Ion} from '../../../../src';
 
 export function run() {
 
@@ -218,19 +218,17 @@ describe('Refresher', () => {
   let refresher: Refresher;
   let content: Content;
   let contentElementRef;
-  let gestureController: GestureController;
   let zone = {
-    run: function (cb) { cb(); },
-    runOutsideAngular: function (cb) { cb(); }
+    run: function(cb) {cb()},
+    runOutsideAngular: function(cb) {cb()}
   };
 
   beforeEach(() => {
     contentElementRef = mockElementRef();
-    gestureController = new GestureController();
-    content = new Content(contentElementRef, config, null, null, zone, null, null);
+    content = new Content(contentElementRef, config, null, null, null);
     content._scrollEle = document.createElement('scroll-content');
 
-    refresher = new Refresher(content, zone, gestureController);
+    refresher = new Refresher(content, zone, mockElementRef());
   });
 
   function touchEv(y: number) {

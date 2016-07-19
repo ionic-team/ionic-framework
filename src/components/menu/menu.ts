@@ -5,11 +5,10 @@ import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
-import { MenuContentGesture } from  './menu-gestures';
+import { MenuContentGesture, MenuTargetGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
-import { GestureController } from '../../gestures/gesture-controller';
 
 
 /**
@@ -191,13 +190,15 @@ import { GestureController } from '../../gestures/gesture-controller';
 export class Menu extends Ion {
   private _preventTime: number = 0;
   private _cntEle: HTMLElement;
-  private _cntGesture: MenuContentGesture;
+  private _cntGesture: MenuTargetGesture;
+  private _menuGesture: MenuContentGesture;
   private _type: MenuType;
   private _resizeUnreg: Function;
   private _isEnabled: boolean = true;
   private _isSwipeEnabled: boolean = true;
   private _isPers: boolean = false;
   private _init: boolean = false;
+  private _prevEnabled: boolean;
 
   /**
    * @private
@@ -301,8 +302,7 @@ export class Menu extends Ion {
     private _platform: Platform,
     private _renderer: Renderer,
     private _keyboard: Keyboard,
-    private _zone: NgZone,
-    public gestureCtrl: GestureController
+    private _zone: NgZone
   ) {
     super(_elementRef);
   }
@@ -335,7 +335,8 @@ export class Menu extends Ion {
     self._renderer.setElementAttribute(self._elementRef.nativeElement, 'type', self.type);
 
     // add the gestures
-    self._cntGesture = new MenuContentGesture(self, document.body);
+    self._cntGesture = new MenuContentGesture(self, self.getContentElement());
+    self._menuGesture = new MenuTargetGesture(self, self.getNativeElement());
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side
@@ -386,12 +387,16 @@ export class Menu extends Ion {
       if (self._isEnabled && self._isSwipeEnabled && !self._cntGesture.isListening) {
         // should listen, but is not currently listening
         console.debug('menu, gesture listen', self.side);
-        self._cntGesture.listen();
+        self._zone.runOutsideAngular(function() {
+          self._cntGesture.listen();
+          self._menuGesture.listen();
+        });
 
       } else if (self._cntGesture.isListening && (!self._isEnabled || !self._isSwipeEnabled)) {
         // should not listen, but is currently listening
         console.debug('menu, gesture unlisten', self.side);
         self._cntGesture.unlisten();
+        self._menuGesture.unlisten();
       }
     }
   }
@@ -413,7 +418,7 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
+  setOpen(shouldOpen: boolean): Promise<boolean> {
     // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the MenuToggle button
     if ((shouldOpen && this.isOpen) || this._isPrevented()) {
@@ -423,7 +428,7 @@ export class Menu extends Ion {
     this._before();
 
     return new Promise(resolve => {
-      this._getType().setOpen(shouldOpen, animated, () => {
+      this._getType().setOpen(shouldOpen, () => {
         this._after(shouldOpen);
         resolve(this.isOpen);
       });
@@ -514,6 +519,21 @@ export class Menu extends Ion {
     }
   }
 
+  /**
+   * @private
+   */
+  tempDisable(temporarilyDisable: boolean) {
+    if (temporarilyDisable) {
+      this._prevEnabled = this._isEnabled;
+      this._getType().setProgessStep(0);
+      this.enable(false);
+
+    } else {
+      this.enable(this._prevEnabled);
+      this._after(false);
+    }
+  }
+
   private _prevent() {
     // used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the MenuToggle
@@ -600,16 +620,10 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  getMenuController(): MenuController {
-    return this._menuCtrl;
-  }
-
-  /**
-   * @private
-   */
   ngOnDestroy() {
     this._menuCtrl.unregister(this);
     this._cntGesture && this._cntGesture.destroy();
+    this._menuGesture && this._menuGesture.destroy();
     this._type && this._type.destroy();
     this._resizeUnreg && this._resizeUnreg();
     this._cntEle = null;

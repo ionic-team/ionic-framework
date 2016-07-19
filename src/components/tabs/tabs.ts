@@ -7,11 +7,9 @@ import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
-import { isBlank, isPresent, isTrueProperty } from '../../util/util';
+import { isBlank, isTrueProperty } from '../../util/util';
 import { nativeRaf } from '../../util/dom';
-import { NavController } from '../nav/nav-controller';
-import { NavControllerBase } from '../nav/nav-controller-base';
-import { NavOptions, DIRECTION_FORWARD } from '../nav/nav-interfaces';
+import { NavController, DIRECTION_FORWARD } from '../nav/nav-controller';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabButton } from './tab-button';
@@ -150,6 +148,7 @@ import { ViewController } from '../nav/view-controller';
       <tab-highlight></tab-highlight>
     </ion-tabbar>
     <ng-content></ng-content>
+    <div #portal tab-portal></div>
   `,
   directives: [Badge, Icon, NgClass, NgFor, NgIf, TabButton, TabHighlight],
   encapsulation: ViewEncapsulation.None,
@@ -166,12 +165,17 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  id: string;
+  id: number;
 
   /**
    * @private
    */
   selectHistory: string[] = [];
+
+  /**
+   * @private
+   */
+  subPages: boolean;
 
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
@@ -221,7 +225,12 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  parent: NavControllerBase;
+  @ViewChild('portal', {read: ViewContainerRef}) portal: ViewContainerRef;
+
+  /**
+   * @private
+   */
+  parent: NavController;
 
   constructor(
     @Optional() parent: NavController,
@@ -234,14 +243,16 @@ export class Tabs extends Ion {
   ) {
     super(_elementRef);
 
-    this.parent = <NavControllerBase>parent;
-    this.id = 't' + (++tabIds);
+    this.parent = parent;
+    this.id = ++tabIds;
     this._sbPadding = _config.getBoolean('statusbarPadding');
+    this.subPages = _config.getBoolean('tabsHideOnSubPages');
     this._useHighlight = _config.getBoolean('tabsHighlight');
 
     // TODO deprecated 07-07-2016 beta.11
     if (_config.get('tabSubPages') !== null) {
-      console.warn('Config option "tabSubPages" has been deprecated. The Material Design spec now supports Bottom Navigation: https://material.google.com/components/bottom-navigation.html');
+      console.warn('Config option "tabSubPages" has been deprecated. Please use "tabsHideOnSubPages" instead.');
+      this.subPages = _config.getBoolean('tabSubPages');
     }
 
     // TODO deprecated 07-07-2016 beta.11
@@ -250,9 +261,9 @@ export class Tabs extends Ion {
       this._useHighlight = _config.getBoolean('tabbarHighlight');
     }
 
-    if (this.parent) {
+    if (parent) {
       // this Tabs has a parent Nav
-      this.parent.registerChildNav(this);
+      parent.registerChildNav(this);
 
     } else if (this._app) {
       // this is the root navcontroller for the entire app
@@ -322,32 +333,41 @@ export class Tabs extends Ion {
    * @private
    */
   initTabs() {
-    // get the selected index from the input
-    // otherwise default it to use the first index
-    let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(this.selectedIndex, 10));
+    // first check if preloadTab is set as an input @Input, then check the config
+    let preloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
 
-    // get the selectedIndex and ensure it isn't hidden or disabled
-    let selectedTab = this._tabs.find((t, i) => i === selectedIndex && t.enabled && t.show);
-    if (!selectedTab) {
-      // wasn't able to select the tab they wanted
-      // try to find the first tab that's available
-      selectedTab = this._tabs.find(t => t.enabled && t.show);
+    // get the selected index
+    let selectedIndex = this.selectedIndex ? parseInt(this.selectedIndex, 10) : 0;
+
+    // ensure the selectedIndex isn't a hidden or disabled tab
+    // also find the first available index incase we need it later
+    let availableIndex = -1;
+    this._tabs.forEach((tab, index) => {
+      if (tab.enabled && tab.show && availableIndex < 0) {
+        // we know this tab index is safe to show
+        availableIndex = index;
+      }
+
+      if (index === selectedIndex && (!tab.enabled || !tab.show)) {
+        // the selectedIndex is not safe to show
+        selectedIndex = -1;
+      }
+    });
+
+    if (selectedIndex < 0) {
+      // the selected index wasn't safe to show
+      // instead use an available index found to be safe to show
+      selectedIndex = availableIndex;
     }
 
-    if (selectedTab) {
-      // we found a tab to select
-      this.select(selectedTab);
-    }
+    this._tabs.forEach((tab, index) => {
+      if (index === selectedIndex) {
+        this.select(tab);
 
-    // check if preloadTab is set as an input @Input
-    // otherwise check the preloadTabs config
-    let shouldPreloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
-    if (shouldPreloadTabs) {
-      // preload all the tabs which isn't the selected tab
-      this._tabs.filter((t) => t !== selectedTab).forEach((tab, index) => {
-        tab.preload(this._config.getNumber('tabsPreloadDelay', 1000) * index);
-      });
-    }
+      } else if (preloadTabs) {
+        tab.preload(1000 * index);
+      }
+    });
   }
 
   /**
@@ -372,32 +392,30 @@ export class Tabs extends Ion {
   /**
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
-  select(tabOrIndex: number | Tab, opts: NavOptions = {}, done?: Function): Promise<any> {
-    let promise: Promise<any>;
-    if (!done) {
-      promise = new Promise(res => { done = res; });
-    }
-
+  select(tabOrIndex: number | Tab) {
     let selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (isBlank(selectedTab)) {
-      return Promise.resolve();
+      return;
     }
 
     let deselectedTab = this.getSelected();
+
     if (selectedTab === deselectedTab) {
       // no change
-      this._touchActive(selectedTab);
-      return Promise.resolve();
+      return this._touchActive(selectedTab);
     }
+
     console.debug(`Tabs, select: ${selectedTab.id}`);
+
+    let opts = {
+      animate: false
+    };
 
     let deselectedPage: ViewController;
     if (deselectedTab) {
       deselectedPage = deselectedTab.getActive();
       deselectedPage && deselectedPage.fireWillLeave();
     }
-
-    opts.animate = false;
 
     let selectedPage = selectedTab.getActive();
     selectedPage && selectedPage.fireWillEnter();
@@ -446,11 +464,7 @@ export class Tabs extends Ion {
           });
         }
       }
-
-      done();
     });
-
-    return promise;
   }
 
   /**
@@ -514,13 +528,6 @@ export class Tabs extends Ion {
 
   /**
    * @private
-   */
-  length(): number {
-    return this._tabs.length;
-  }
-
-  /**
-   * @private
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
@@ -552,6 +559,20 @@ export class Tabs extends Ion {
 
     // And failing all of that, we do something safe and secure
     return Promise.resolve();
+  }
+
+  /**
+   * @private
+   * Returns the root NavController. Returns `null` if Tabs is not
+   * within a NavController.
+   * @returns {NavController}
+   */
+  get rootNav(): NavController {
+    let nav = this.parent;
+    while (nav && nav.parent) {
+      nav = nav.parent;
+    }
+    return nav;
   }
 
   /**

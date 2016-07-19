@@ -14,16 +14,16 @@ class E2EApp {
   constructor() {
     this.slides = [
       {
-        name: 'Slide 1',
-        class: 'yellow'
+        name: "Slide 1",
+        class: "yellow"
       },
       {
-        name: 'Slide 2',
-        class: 'red'
+        name: "Slide 2",
+        class: "red"
       },
       {
-        name: 'Slide 3',
-        class: 'blue'
+        name: "Slide 3",
+        class: "blue"
       }
     ];
 

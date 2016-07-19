@@ -7,7 +7,7 @@ import {ionicBootstrap, InfiniteScroll, NavController} from '../../../../../src'
 })
 class E2EPage1 {
   @ViewChild(InfiniteScroll) infiniteScroll: InfiniteScroll;
-  items: number[] = [];
+  items = [];
   enabled: boolean = true;
 
   constructor(private nav: NavController) {
@@ -68,7 +68,7 @@ function getAsyncData(): Promise<any[]> {
   return new Promise(resolve => {
 
     setTimeout(() => {
-      let data: number[] = [];
+      let data = [];
       for (var i = 0; i < 30; i++) {
         data.push(i);
       }

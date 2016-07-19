@@ -13,6 +13,3 @@ export interface NavOptions {
   climbNav?: boolean;
   ev?: any;
 }
-
-export const DIRECTION_BACK = 'back';
-export const DIRECTION_FORWARD = 'forward';

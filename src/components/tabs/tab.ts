@@ -1,11 +1,11 @@
-import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty} from '../../util/util';
 import { Keyboard} from '../../util/keyboard';
-import { NavControllerBase } from '../nav/nav-controller-base';
+import { MenuController } from '../menu/menu-controller';
+import { NavController } from '../nav/nav-controller';
 import { NavOptions} from '../nav/nav-interfaces';
 import { TabButton} from './tab-button';
 import { Tabs} from './tabs';
@@ -128,7 +128,7 @@ import { ViewController} from '../nav/view-controller';
   template: '<div #viewport></div><div class="nav-decor"></div>',
   encapsulation: ViewEncapsulation.None,
 })
-export class Tab extends NavControllerBase {
+export class Tab extends NavController {
   private _isInitial: boolean;
   private _isEnabled: boolean = true;
   private _isShown: boolean = true;
@@ -229,12 +229,16 @@ export class Tab extends NavControllerBase {
     renderer: Renderer,
     compiler: ComponentResolver,
     private _cd: ChangeDetectorRef,
-    gestureCtrl: GestureController
+    menuCtrl: MenuController
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, menuCtrl);
 
     parent.add(this);
+
+    if (parent.rootNav) {
+      this._sbEnabled = parent.rootNav.isSwipeBackEnabled();
+    }
 
     this._tabId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
@@ -260,7 +264,7 @@ export class Tab extends NavControllerBase {
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
-      this.push(this.root, this.rootParams, opts, () => {
+      this.push(this.root, this.rootParams, opts).then(() => {
         done(true);
       });
       this._loaded = true;
@@ -290,7 +294,20 @@ export class Tab extends NavControllerBase {
    * @private
    */
   loadPage(viewCtrl: ViewController, viewport: ViewContainerRef, opts: NavOptions, done: Function) {
+    let isTabSubPage = (this.parent.subPages && viewCtrl.index > 0);
+
+    if (isTabSubPage) {
+      viewport = this.parent.portal;
+    }
+
     super.loadPage(viewCtrl, viewport, opts, () => {
+      if (isTabSubPage) {
+        // add the .tab-subpage css class to tabs pages that should act like subpages
+        let pageEleRef = viewCtrl.pageRef();
+        if (pageEleRef) {
+          this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
+        }
+      }
       done();
     });
   }

@@ -4,7 +4,6 @@ import { Title } from '@angular/platform-browser';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
 import { NavController } from '../nav/nav-controller';
-import { isTabs, isNav } from '../nav/nav-controller-base';
 import { NavOptions } from '../nav/nav-interfaces';
 import { NavPortal } from '../nav/nav-portal';
 import { Platform } from '../../platform/platform';
@@ -31,11 +30,6 @@ export class App {
    * @private
    */
   clickBlock: ClickBlock;
-
-  /**
-   * @private
-   */
-  appRoot: AppRoot;
 
   viewDidLoad: EventEmitter<any> = new EventEmitter();
   viewWillEnter: EventEmitter<any> = new EventEmitter();
@@ -90,17 +84,6 @@ export class App {
         this.clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
       }
     }
-  }
-
-  /**
-   * @private
-   */
-  setScrollDisabled(disabled: boolean) {
-    if (!this.appRoot) {
-      console.error('appRoot is missing, scrolling can not be enabled/disabled');
-      return;
-    }
-    this.appRoot.disableScroll = disabled;
   }
 
   /**
@@ -196,7 +179,13 @@ export class App {
     // function used to climb up all parent nav controllers
     function navPop(nav: any): Promise<any> {
       if (nav) {
-        if (isTabs(nav)) {
+        if (nav.length && nav.length() > 1) {
+          // this nav controller has more than one view
+          // pop the current view on this nav and we're done here
+          console.debug('app, goBack pop nav');
+          return nav.pop();
+
+        } else if (nav.previousTab) {
           // FYI, using "nav instanceof Tabs" throws a Promise runtime error for whatever reason, idk
           // this is a Tabs container
           // see if there is a valid previous tab to go to
@@ -206,12 +195,6 @@ export class App {
             nav.select(prevTab);
             return Promise.resolve();
           }
-
-        } else if (isNav(nav) && nav.length() > 1) {
-          // this nav controller has more than one view
-          // pop the current view on this nav and we're done here
-          console.debug('app, goBack pop nav');
-          return nav.pop();
         }
 
         // try again using the parent nav (if there is one)
@@ -245,9 +228,10 @@ export class App {
           console.debug('app, goBack exitApp');
           this._platform.exitApp();
         }
-      }
 
-      return navPromise;
+      } else {
+        return navPromise;
+      }
     }
 
     return Promise.resolve();
@@ -298,13 +282,9 @@ export class AppRoot {
   @ViewChild('anchor', {read: ViewContainerRef}) private _viewport: ViewContainerRef;
 
   constructor(
-    private _cmp: UserComponent,
-    private _cr: ComponentResolver,
-    private _renderer: Renderer,
-    app: App
-  ) {
-    app.appRoot = this;
-  }
+      private _cmp: UserComponent,
+      private _cr: ComponentResolver,
+      private _renderer: Renderer) {}
 
   ngAfterViewInit() {
     // load the user app's root component

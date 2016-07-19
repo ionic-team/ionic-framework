@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { App, ionicBootstrap, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../src';
+import { ionicBootstrap, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../src';
 
 
 @Component({
@@ -92,7 +92,7 @@ class TabsPage {
 class Tab1Page1 {
   userId: string;
 
-  constructor(private nav: NavController, private app: App, private tabs: Tabs, private params: NavParams) {
+  constructor(private nav: NavController, private tabs: Tabs, private params: NavParams) {
     this.userId = params.get('userId');
   }
 
@@ -102,7 +102,7 @@ class Tab1Page1 {
 
   goBack() {
     console.log('go back begin');
-    this.nav.pop().then((val: any) => {
+    this.nav.pop().then((val) => {
       console.log('go back completed', val);
     });;
   }
@@ -112,7 +112,7 @@ class Tab1Page1 {
   }
 
   logout() {
-    this.app.getRootNav().setRoot(SignIn, null, { animate: true, direction: 'back' });
+    this.nav.rootNav.setRoot(SignIn, null, { animate: true, direction: 'back' });
   }
 
   ionViewWillEnter() {
@@ -323,8 +323,10 @@ class Tab3Page1 {
 
 
 @Component({
-  template: '<ion-nav swipeBackEnabled="false"></ion-nav>'
+  template: '<ion-nav [root]="root" swipeBackEnabled="false"></ion-nav>'
 })
-class E2EApp {}
+class E2EApp {
+  root = SignIn;
+}
 
 ionicBootstrap(E2EApp);

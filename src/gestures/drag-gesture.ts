@@ -1,142 +1,42 @@
-
-import { defaults } from '../util';
-import { GestureDelegate } from '../gestures/gesture-controller';
-import { PointerEvents, UIEventManager } from '../util/ui-event-manager';
-import { PanRecognizer } from './recognizers';
-import { pointerCoord, Coordinates } from '../util/dom';
+import {Gesture} from './gesture';
+import {defaults} from '../util';
 
 /**
  * @private
  */
-export interface PanGestureConfig {
-  threshold?: number;
-  maxAngle?: number;
-  direction?: 'x' | 'y';
-  gesture?: GestureDelegate;
-}
 
-/**
- * @private
- */
-export class PanGesture {
-  private dragging: boolean;
-  private events: UIEventManager = new UIEventManager(false);
-  private pointerEvents: PointerEvents;
-  private detector: PanRecognizer;
-  private started: boolean = false;
-  private captured: boolean = false;
-  public isListening: boolean = false;
-  protected gestute: GestureDelegate;
-  protected direction: string;
+export class DragGesture extends Gesture {
+  public dragging: boolean;
 
-  constructor(private element: HTMLElement, opts: PanGestureConfig = {}) {
-    defaults(opts, {
-      threshold: 20,
-      maxAngle: 40,
-      direction: 'x'
-    });
-    this.gestute = opts.gesture;
-    this.direction = opts.direction;
-    this.detector = new PanRecognizer(opts.direction, opts.threshold, opts.maxAngle);
+  constructor(element: HTMLElement, opts = {}) {
+    defaults(opts, {});
+    super(element, opts);
   }
 
   listen() {
-    if (!this.isListening) {
-      this.pointerEvents = this.events.pointerEvents({
-        element: this.element,
-        pointerDown: this.pointerDown.bind(this),
-        pointerMove: this.pointerMove.bind(this),
-        pointerUp: this.pointerUp.bind(this),
-      });
-      this.isListening = true;
-    }
-  }
+    super.listen();
 
-  unlisten() {
-    this.gestute && this.gestute.release();
-    this.events.unlistenAll();
-    this.isListening = false;
-  }
-
-  destroy() {
-    this.gestute && this.gestute.destroy();
-    this.unlisten();
-    this.element = null;
-  }
-
-  pointerDown(ev: any): boolean {
-    if (this.started) {
-      return;
-    }
-    if (!this.canStart(ev)) {
-      return false;
-    }
-    if (this.gestute) {
-      // Release fallback
-      this.gestute.release();
-      // Start gesture
-      if (!this.gestute.start()) {
-        return false;
+    this.on('panstart', (ev: UIEvent) => {
+      if (this.onDragStart(ev) !== false) {
+        this.dragging = true;
       }
-    }
+    });
 
-    let coord = pointerCoord(ev);
-    this.detector.start(coord);
-    this.started = true;
-    this.captured = false;
-    return true;
-  }
-
-  pointerMove(ev: any) {
-    if (!this.started) {
-      return;
-    }
-    if (this.captured) {
-      this.onDragMove(ev);
-      return;
-    }
-    let coord = pointerCoord(ev);
-    if (this.detector.detect(coord)) {
-
-      if (this.detector.pan() !== 0 && this.canCapture(ev) &&
-        (!this.gestute || this.gestute.capture())) {
-        this.onDragStart(ev);
-        this.captured = true;
-        return;
+    this.on('panmove', (ev: UIEvent) => {
+      if (!this.dragging) return;
+      if (this.onDrag(ev) === false) {
+        this.dragging = false;
       }
+    });
 
-      // Detection/capturing was not successful, aborting!
-      this.started = false;
-      this.captured = false;
-      this.pointerEvents.stop();
-      this.notCaptured(ev);
-    }
-  }
-
-  pointerUp(ev: any) {
-    if (!this.started) {
-      return;
-    }
-    this.gestute && this.gestute.release();
-
-    if (this.captured) {
+    this.on('panend', (ev: UIEvent) => {
+      if (!this.dragging) return;
       this.onDragEnd(ev);
-    } else {
-      this.notCaptured(ev);
-    }
-    this.captured = false;
-    this.started = false;
+      this.dragging = false;
+    });
   }
 
-  getNativeElement(): HTMLElement {
-    return this.element;
-  }
-
-  // Implemented in a subclass
-  canStart(ev: any): boolean { return true; }
-  canCapture(ev: any): boolean { return true; }
-  onDragStart(ev: any) { }
-  onDragMove(ev: any) { }
-  onDragEnd(ev: any) { }
-  notCaptured(ev: any) { }
+  onDrag(ev: any): boolean { return true; }
+  onDragStart(ev: any): boolean { return true; }
+  onDragEnd(ev: any): void {}
 }
