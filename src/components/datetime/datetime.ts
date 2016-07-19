@@ -517,8 +517,16 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
       // make sure no day name replacer is left in the string
       template = template.replace(/{~}/g, '');
 
-      let pickerDisplayValue: DateTimeData = this._value ? this._value : new Date();
-      console.log(pickerDisplayValue);
+      let pickerDisplayValue: DateTimeData;
+      if (this._value) {
+        pickerDisplayValue = this._value;
+        console.log("value");
+      }
+      else {
+          pickerDisplayValue = new Date();
+          console.log("new date");
+      }
+
 
       // parse apart the given template into an array of "formats"
       parseTemplate(template).forEach(format => {
