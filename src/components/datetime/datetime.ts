@@ -565,7 +565,6 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
           // cool, we've loaded up the columns with options
           // preselect the option for this column
           var selected = column.options.find(opt => opt.value === getValueFromFormat(pickerDisplayValue, format));
-          console.log(selected);
           if (selected) {
             // set the select index for this column's options
             column.selectedIndex = column.options.indexOf(selected);
