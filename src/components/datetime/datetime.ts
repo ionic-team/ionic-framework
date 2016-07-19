@@ -517,6 +517,8 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
       // make sure no day name replacer is left in the string
       template = template.replace(/{~}/g, '');
 
+      let pickerValue: DateTimeData = this._value ? this._value : new Date();
+
       // parse apart the given template into an array of "formats"
       parseTemplate(template).forEach(format => {
         // loop through each format in the template
@@ -547,7 +549,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
         if (column.options.length) {
           // cool, we've loaded up the columns with options
           // preselect the option for this column
-          var selected = column.options.find(opt => opt.value === getValueFromFormat(this._value, format));
+          var selected = column.options.find(opt => opt.value === getValueFromFormat(pickerValue, format));
           if (selected) {
             // set the select index for this column's options
             column.selectedIndex = column.options.indexOf(selected);
