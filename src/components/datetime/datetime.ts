@@ -517,7 +517,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
       // make sure no day name replacer is left in the string
       template = template.replace(/{~}/g, '');
 
-      let pickerDisplayValue: DateTimeData = this._value.millisecond ? this._value : new Date();
+      let pickerDisplayValue: DateTimeData;
 
       if (this._text)
         pickerDisplayValue = this._value;
