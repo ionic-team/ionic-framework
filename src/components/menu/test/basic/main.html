@@ -14,6 +14,10 @@
         {{p.title}}
       </button>
 
+      <button ion-item (click)="openRightMenu()">
+        Open Right Menu
+      </button>
+
       <button ion-item menuClose="left" class="e2eCloseLeftMenu" detail-none>
         Close Menu
       </button>
@@ -90,6 +94,10 @@
         {{p.title}}
       </button>
 
+      <button ion-item (click)="openLeftMenu()">
+        Open Left Menu
+      </button>
+
       <button ion-item menuClose="right" class="e2eCloseRightMenu" detail-none>
         Close Menu
       </button>
@@ -148,6 +156,6 @@
 
 </ion-menu>
 
-<ion-nav [root]="rootPage" #content></ion-nav>
+<ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>
 
 <div [hidden]="isChangeDetecting()"></div>

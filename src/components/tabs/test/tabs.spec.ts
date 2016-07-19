@@ -1,9 +1,88 @@
-import {Component} from '@angular/core';
-import {App, Nav, Tabs, Tab, NavOptions, Config, ViewController, Platform} from '../../../../src';
+import { Component } from '@angular/core';
+import { App, Config, Nav, NavOptions, Platform, Tab, Tabs, ViewController } from '../../../../src';
+import { mockTab, mockTabs } from '../../../../src/util/mock-providers';
 
 export function run() {
 
 describe('Tabs', () => {
+
+  describe('initTabs', () => {
+
+    it('should preload all tabs', () => {
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
+      tab0.root = SomePage;
+      tab1.root = SomePage;
+
+      tab0.preload = () => {};
+      tab1.preload = () => {};
+
+      spyOn(tab0, 'preload');
+      spyOn(tab1, 'preload');
+
+      tabs.preloadTabs = true;
+
+      tabs.initTabs();
+
+      expect(tab0.isSelected).toEqual(true);
+      expect(tab1.isSelected).toEqual(false);
+
+      expect(tab0.preload).not.toHaveBeenCalled();
+      expect(tab1.preload).toHaveBeenCalled();
+    });
+
+    it('should not select a hidden or disabled tab', () => {
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
+      tab0.root = SomePage;
+      tab1.root = SomePage;
+
+      tab1.enabled = false;
+      tab1.show = false;
+
+      tabs.selectedIndex = '1';
+      tabs.initTabs();
+
+      expect(tab0.isSelected).toEqual(true);
+      expect(tab1.isSelected).toEqual(false);
+    });
+
+    it('should select the second tab from selectedIndex input', () => {
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
+      tab0.root = SomePage;
+      tab1.root = SomePage;
+
+      tabs.selectedIndex = '1';
+      tabs.initTabs();
+
+      expect(tab0.isSelected).toEqual(false);
+      expect(tab1.isSelected).toEqual(true);
+    });
+
+    it('should select the first tab by default', () => {
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
+      tab0.root = SomePage;
+      tab1.root = SomePage;
+
+      spyOn(tab0, 'preload');
+      spyOn(tab1, 'preload');
+
+      tabs.initTabs();
+
+      expect(tab0.isSelected).toEqual(true);
+      expect(tab1.isSelected).toEqual(false);
+
+      expect(tab0.preload).not.toHaveBeenCalled();
+      expect(tab1.preload).not.toHaveBeenCalled();
+    });
+
+  });
 
   describe('previousTab', () => {
 
@@ -12,9 +91,6 @@ describe('Tabs', () => {
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
       var tab2 = mockTab(tabs);
-      tabs.add(tab0);
-      tabs.add(tab1);
-      tabs.add(tab2);
       tab0.root = SomePage;
       tab1.root = SomePage;
       tab2.root = SomePage;
@@ -36,8 +112,6 @@ describe('Tabs', () => {
       var tabs = mockTabs();
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
-      tabs.add(tab0);
-      tabs.add(tab1);
       tab0.root = SomePage;
       tab1.root = SomePage;
 
@@ -56,8 +130,6 @@ describe('Tabs', () => {
       var tabs = mockTabs();
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
-      tabs.add(tab0);
-      tabs.add(tab1);
       tab0.root = SomePage;
       tab1.root = SomePage;
 
@@ -87,8 +159,6 @@ describe('Tabs', () => {
       var tabs = mockTabs();
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
-      tabs.add(tab0);
-      tabs.add(tab1);
 
       tab0.root = SomePage;
       tab1.root = SomePage;
@@ -103,12 +173,11 @@ describe('Tabs', () => {
       var tabs = mockTabs();
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
-      tabs.add(tab0);
-      tabs.add(tab1);
 
       tab0.root = SomePage;
       tab1.root = SomePage;
 
+      expect(tabs.length()).toEqual(2);
       expect(tab0.isSelected).toBeUndefined();
       expect(tab1.isSelected).toBeUndefined();
 
@@ -116,16 +185,6 @@ describe('Tabs', () => {
 
       expect(tab0.isSelected).toEqual(true);
       expect(tab1.isSelected).toEqual(false);
-    });
-
-    it('should not select an invalid tab index', () => {
-      var tabs = mockTabs();
-      var tab0 = mockTab(tabs);
-      var tab1 = mockTab(tabs);
-      tabs.add(tab0);
-      tabs.add(tab1);
-
-      expect(tabs.select(22)).toBeUndefined();
     });
 
   });
@@ -137,8 +196,6 @@ describe('Tabs', () => {
       var tab0 = mockTab(tabs);
       tab0.setRoot(<any>{});
       var tab1 = mockTab(tabs);
-      tabs.add(tab0);
-      tabs.add(tab1);
 
       expect(tabs.getIndex(tab0)).toEqual(0);
       expect(tabs.getIndex(tab1)).toEqual(1);
@@ -152,8 +209,6 @@ describe('Tabs', () => {
       var tabs = mockTabs();
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
-      tabs.add(tab0);
-      tabs.add(tab1);
 
       tab1.setSelected(true);
 
@@ -164,47 +219,14 @@ describe('Tabs', () => {
       var tabs = mockTabs();
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
-      tabs.add(tab0);
-      tabs.add(tab1);
 
       expect(tabs.getSelected()).toEqual(null);
     });
 
   });
 
-  var app: App;
-  var config: Config;
-  var platform: Platform;
-  var _cd: any;
-
-  function mockNav(): Nav {
-    return new Nav(null, null, null, config, null, null, null, null, null);
-  }
-
-  function mockTabs(): Tabs {
-    return new Tabs(null, null, null, config, null, null, null);
-  }
-
-  function mockTab(parentTabs: Tabs): Tab {
-    var tab = new Tab(parentTabs, app, config, null, null, null, null, null, _cd);
-    tab.load = function(opts: any, cb: Function) {
-      cb();
-    };
-    return tab;
-  }
-
   @Component({})
   class SomePage {}
-
-  beforeEach(() => {
-    config = new Config();
-    platform = new Platform();
-    app = new App(config, platform);
-    _cd = {
-      reattach: function(){},
-      detach: function(){}
-    };
-  });
 
 });
 
