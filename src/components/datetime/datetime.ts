@@ -519,14 +519,20 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
 
       let pickerDisplayValue: DateTimeData = this._value.millisecond ? this._value : new Date();
 
-      console.log(pickerDisplayValue.day);
-      console.log(pickerDisplayValue.hour);
-      console.log(pickerDisplayValue.millisecond);
-      console.log(pickerDisplayValue.minute);
-      console.log(pickerDisplayValue.month);
-      console.log(pickerDisplayValue.second);
-      console.log(pickerDisplayValue.tzOffset);
-      console.log(pickerDisplayValue.year);
+      if (this._value.millisecond)
+        pickerDisplayValue = this._value;
+      else {
+        let displayDate = new Date();
+        pickerDisplayValue = {
+          day: displayDate.getDay(),
+          hour: displayDate.getHours(),
+          minute: displayDate.getMinutes(),
+          month: displayDate.getMonth(),
+          second: displayDate.getSeconds(),
+          tzOffset: displayDate.getTimezoneOffset(),
+          year: displayDate.getFullYear()
+        };
+      }
 
       // parse apart the given template into an array of "formats"
       parseTemplate(template).forEach(format => {
