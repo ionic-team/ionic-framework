@@ -1,7 +1,7 @@
-import {Activator} from './activator';
-import {App} from '../app/app';
-import {Coordinates, CSS, hasPointerMoved, nativeRaf, pointerCoord, rafFrames} from '../../util/dom';
-import {Config} from '../../config/config';
+import { Activator } from './activator';
+import { App } from '../app/app';
+import { Coordinates, CSS, hasPointerMoved, nativeRaf, pointerCoord, rafFrames } from '../../util/dom';
+import { Config } from '../../config/config';
 
 
 /**

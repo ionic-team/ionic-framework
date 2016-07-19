@@ -1,5 +1,5 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -42,7 +42,7 @@ class E2EPage {
 
       return {
         date: monthNames[this.lastMonth] + ' ' + record.date.getFullYear()
-      }
+      };
     }
 
     return null;
@@ -63,7 +63,7 @@ class E2EPage {
   }
 
   ngDoCheck() {
-    console.log('DoCheck')
+    console.log('DoCheck');
   }
 
   reload() {

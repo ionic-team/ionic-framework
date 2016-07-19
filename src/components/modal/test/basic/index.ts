@@ -120,7 +120,7 @@ class NavigableModal {
   constructor(private nav: NavController) {
   }
 
-  submit(){
+  submit() {
     this.nav.push(NavigableModal2);
   }
 }

@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -19,38 +19,38 @@ class E2EPage {
   showIf: boolean = true;
 
   constructor() {
-		this.reset();
-	}
+    this.reset();
+  }
 
-	unify() {
-	  this.isDestructive = false;
-	  this.isSecondary = false;
-	  this.isCustom = false;
-	  this.isSolid = false;
-	  this.isOutline = false;
-	  this.isClear = false;
-	  this.isClicked = false;
-	  this.myColor1 = 'primary';
-	  this.myColor2 = 'primary';
-	  this.multiColor = ['primary'];
-	}
+  unify() {
+    this.isDestructive = false;
+    this.isSecondary = false;
+    this.isCustom = false;
+    this.isSolid = false;
+    this.isOutline = false;
+    this.isClear = false;
+    this.isClicked = false;
+    this.myColor1 = 'primary';
+    this.myColor2 = 'primary';
+    this.multiColor = ['primary'];
+  }
 
-	reset() {
-	  this.isDestructive = true;
-	  this.isSecondary = true;
-	  this.isCustom = true;
-	  this.isSolid = true;
-	  this.isOutline = true;
-	  this.isClear = true;
-	  this.isClicked = false;
-	  this.myColor1 = 'custom1';
-	  this.myColor2 = 'custom2';
-	  this.multiColor = ['primary','secondary'];
-	}
+  reset() {
+    this.isDestructive = true;
+    this.isSecondary = true;
+    this.isCustom = true;
+    this.isSolid = true;
+    this.isOutline = true;
+    this.isClear = true;
+    this.isClicked = false;
+    this.myColor1 = 'custom1';
+    this.myColor2 = 'custom2';
+    this.multiColor = ['primary', 'secondary'];
+  }
 
-	toggle() {
-	  this.isClicked = !this.isClicked;
-	}
+  toggle() {
+    this.isClicked = !this.isClicked;
+  }
 }
 
 @Component({

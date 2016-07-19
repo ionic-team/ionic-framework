@@ -1,5 +1,5 @@
-import {defaults, assign} from '../util';
-import {Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL} from './hammer';
+import { defaults, assign } from '../util';
+import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
 
 /**
  * @private

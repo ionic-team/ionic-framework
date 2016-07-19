@@ -72,7 +72,7 @@ import { ViewController } from './view-controller';
  * defined in any component type which is pushed/popped from a `NavController`.
  *
  * ```ts
- * import {Component } from '@angular/core';
+ * import { Component } from '@angular/core';
  *
  * @Component({
  *   template: 'Hello World'

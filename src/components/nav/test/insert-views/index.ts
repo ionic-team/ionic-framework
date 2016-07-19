@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ionicBootstrap, NavController } from '../../../../../src';
 
 
@@ -18,7 +18,7 @@ class FirstPage {
   constructor(public nav: NavController) {}
 
   pushPage() {
-    this.nav.push(SecondPage)
+    this.nav.push(SecondPage);
   }
 }
 
@@ -41,7 +41,7 @@ class SecondPage {
   constructor(public nav: NavController) {}
 
   insertPage() {
-    this.nav.insert(1, InsertPage)
+    this.nav.insert(1, InsertPage);
   }
 }
 

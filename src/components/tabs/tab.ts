@@ -3,13 +3,13 @@ import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitt
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { GestureController } from '../../gestures/gesture-controller';
-import { isTrueProperty} from '../../util/util';
-import { Keyboard} from '../../util/keyboard';
+import { isTrueProperty } from '../../util/util';
+import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../nav/nav-controller-base';
-import { NavOptions} from '../nav/nav-interfaces';
-import { TabButton} from './tab-button';
-import { Tabs} from './tabs';
-import { ViewController} from '../nav/view-controller';
+import { NavOptions } from '../nav/nav-interfaces';
+import { TabButton } from './tab-button';
+import { Tabs } from './tabs';
+import { ViewController } from '../nav/view-controller';
 
 
 /**
@@ -38,7 +38,7 @@ import { ViewController} from '../nav/view-controller';
  * Then, in your class you can set `chatRoot` to an imported class:
  *
  * ```ts
- * import {ChatPage} from '../chat/chat';
+ * import { ChatPage } from '../chat/chat';
  *
  * export class Tabs {
  *   // here we'll set the property of chatRoot to

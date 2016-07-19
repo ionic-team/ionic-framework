@@ -1,4 +1,4 @@
-import {Config, Platform, ionicProviders} from '../../../src';
+import { Config, Platform, ionicProviders } from '../../../src';
 
 export function run() {
 
@@ -81,7 +81,7 @@ describe('Config', () => {
   it('should used passed in Config instance in ionicProviders', () => {
     let userConfig =  new Config({
       mode: 'configInstance'
-    })
+    });
     let providers = ionicProviders(null, userConfig);
 
     let config = providers.find(provider => provider.useValue instanceof Config).useValue;
@@ -128,13 +128,13 @@ describe('Config', () => {
   it('should get boolean value from querystring', () => {
     let config = new Config();
     let platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicanimate=true')
+    platform.setUrl('http://biff.com/?ionicanimate=true');
     config.setPlatform(platform);
     expect(config.get('animate')).toEqual(true);
 
     config = new Config();
     platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicanimate=false')
+    platform.setUrl('http://biff.com/?ionicanimate=false');
     config.setPlatform(platform);
     expect(config.get('animate')).toEqual(false);
   });
@@ -144,7 +144,7 @@ describe('Config', () => {
       mode: 'a'
     });
     let platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicConfigKey=b')
+    platform.setUrl('http://biff.com/?ionicConfigKey=b');
     config.setPlatform(platform);
 
     expect(config.get('configKey')).toEqual('b');
@@ -155,7 +155,7 @@ describe('Config', () => {
       mode: 'modeA'
     });
     let platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicmode=modeB')
+    platform.setUrl('http://biff.com/?ionicmode=modeB');
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('modeB');
@@ -542,7 +542,7 @@ describe('Config', () => {
     config = new Config();
     expect(config.settings()).toEqual({});
 
-    config = new Config([1,2,3]);
+    config = new Config([1, 2, 3]);
     expect(config.settings()).toEqual({});
 
     config = new Config('im bad, you know it');

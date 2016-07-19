@@ -405,7 +405,7 @@ describe('NavController', () => {
       var done = () => {
         wasCalled = true;
       };
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
 
       nav._postRender(1, view1, null, false, null, done);
 
@@ -417,7 +417,7 @@ describe('NavController', () => {
       let leavingView = new ViewController(Page2);
       var navOptions: NavOptions = {};
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
 
       spyOn(enteringView, 'fireWillEnter');
 
@@ -433,7 +433,7 @@ describe('NavController', () => {
         preload: true
       };
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
 
       spyOn(enteringView, 'fireWillEnter');
 
@@ -447,7 +447,7 @@ describe('NavController', () => {
       let leavingView = new ViewController(Page2);
       var navOptions: NavOptions = {};
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
 
       spyOn(leavingView, 'fireWillLeave');
 
@@ -461,7 +461,7 @@ describe('NavController', () => {
       let leavingView = new ViewController(Page2);
       var navOptions: NavOptions = {};
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
 
       spyOn(enteringView, 'fireWillEnter');
       spyOn(leavingView, 'fireWillLeave');
@@ -479,7 +479,7 @@ describe('NavController', () => {
       let leavingView = new ViewController(Page2);
       var navOptions: NavOptions = {};
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
 
       spyOn(enteringView, 'fireWillEnter');
       spyOn(leavingView, 'fireWillLeave');
@@ -499,7 +499,7 @@ describe('NavController', () => {
         preload: true
       };
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
 
       spyOn(leavingView, 'fireWillLeave');
 
@@ -515,7 +515,7 @@ describe('NavController', () => {
         preload: true
       };
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
 
       nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
@@ -528,7 +528,7 @@ describe('NavController', () => {
       let isAlreadyTransitioning = true;
       var navOptions: NavOptions = {};
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
       nav._renderer = null;
 
       spyOn(enteringView, 'domShow');
@@ -547,7 +547,7 @@ describe('NavController', () => {
       let isAlreadyTransitioning = false;
       var navOptions: NavOptions = {};
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
       nav._renderer = null;
       nav._views = [view1, view2, view3];
 
@@ -570,11 +570,11 @@ describe('NavController', () => {
       let isAlreadyTransitioning = false;
       var navOptions: NavOptions = {};
       var done = () => {};
-      nav._beforeTrans = () => {}; //prevent running beforeTrans for tests
+      nav._beforeTrans = () => {}; // prevent running beforeTrans for tests
       nav._renderer = null;
       nav._views = [view1, view2, view3, view4];
 
-      nav._isPortal = true
+      nav._isPortal = true;
 
       spyOn(view1, 'domShow');
       spyOn(view2, 'domShow');
@@ -729,7 +729,7 @@ describe('NavController', () => {
       let navOpts: NavOptions = {};
       let hasCompleted = true;
       let doneCalled = false;
-      let done = () => {doneCalled = true;}
+      let done = () => {doneCalled = true; };
 
       spyOn(enteringView, 'fireDidEnter');
       spyOn(leavingView, 'fireDidLeave');
@@ -750,7 +750,7 @@ describe('NavController', () => {
       };
       let hasCompleted = true;
       let doneCalled = false;
-      let done = () => {doneCalled = true;}
+      let done = () => {doneCalled = true; };
 
       spyOn(enteringView, 'fireDidEnter');
       spyOn(leavingView, 'fireDidLeave');
@@ -769,7 +769,7 @@ describe('NavController', () => {
       let navOpts: NavOptions = {};
       let hasCompleted = true;
       let doneCalled = false;
-      let done = () => {doneCalled = true;}
+      let done = () => {doneCalled = true; };
 
       enteringView.fireOtherLifecycles = false;
 
@@ -789,7 +789,7 @@ describe('NavController', () => {
       let navOpts: NavOptions = {};
       let hasCompleted = true;
       let doneCalled = false;
-      let done = () => {doneCalled = true;}
+      let done = () => {doneCalled = true; };
 
       leavingView.fireOtherLifecycles = false;
 
@@ -810,7 +810,7 @@ describe('NavController', () => {
       let navOpts: NavOptions = {};
       let hasCompleted = false;
       let doneCalled = false;
-      let done = () => {doneCalled = true;}
+      let done = () => {doneCalled = true; };
 
       spyOn(enteringView, 'fireDidEnter');
       spyOn(leavingView, 'fireDidLeave');
@@ -1038,7 +1038,7 @@ describe('NavController', () => {
       spyOn(nav._app, 'setEnabled');
       spyOn(nav, 'setTransitioning');
 
-      nav.getLongestTrans = () => { return 50 };
+      nav.getLongestTrans = () => { return 50; };
 
       // act
       nav._transFinish(nav._transIds, enteringView, leavingView, direction, updateUrl, hasCompleted);
@@ -1215,7 +1215,7 @@ describe('NavController', () => {
       view1.state = STATE_ACTIVE;
       nav._views = [view1];
 
-      let view2 = new ViewController(Page2)
+      let view2 = new ViewController(Page2);
       nav._insert(-1, [view2]);
       expect(nav.length()).toBe(2);
       expect(nav.getByIndex(0).state).toBe(STATE_INIT_LEAVE);
@@ -1225,7 +1225,7 @@ describe('NavController', () => {
     });
 
     it('should push the first page, using a number greater than the length', () => {
-      let view1 = new ViewController(Page1)
+      let view1 = new ViewController(Page1);
       nav._insert(8675309, [view1]);
 
       expect(nav.length()).toBe(1);
@@ -1233,7 +1233,7 @@ describe('NavController', () => {
     });
 
     it('should push the first page, using -1', () => {
-      let view1 = new ViewController(Page1)
+      let view1 = new ViewController(Page1);
       nav._insert(-1, [view1]);
 
       expect(nav.getByIndex(0).id).toBeDefined();
@@ -1438,7 +1438,7 @@ describe('NavController', () => {
       spyOn(nav._app, 'setEnabled');
       spyOn(nav, 'setTransitioning');
 
-      nav.getLongestTrans = () => { return Date.now() + 100 };
+      nav.getLongestTrans = () => { return Date.now() + 100; };
 
       let view1 = new ViewController(Page1);
       let view2 = new ViewController(Page2);

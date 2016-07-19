@@ -1,12 +1,12 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, InfiniteScroll} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, InfiniteScroll } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  items = [];
+  items: number[] = [];
 
   constructor() {
     for (var i = 0; i < 5; i++) {
@@ -47,7 +47,7 @@ function getAsyncData(): Promise<number[]> {
   return new Promise(resolve => {
 
     setTimeout(() => {
-      let data = [];
+      let data: number[] = [];
       for (var i = 0; i < 30; i++) {
         data.push(i);
       }

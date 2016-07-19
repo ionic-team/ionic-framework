@@ -27,9 +27,9 @@ import { ViewController } from './view-controller';
  *
  * @usage
  * ```ts
- * import {Component} from '@angular/core';
- * import {ionicBootstrap} from 'ionic-angular';
- * import {GettingStartedPage} from './getting-started';
+ * import { Component } from '@angular/core';
+ * import { ionicBootstrap } from 'ionic-angular';
+ * import { GettingStartedPage } from './getting-started';
  *
  * @Component({
  *   template: `<ion-nav [root]="root"></ion-nav>`

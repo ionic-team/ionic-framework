@@ -1,7 +1,7 @@
-import {Animation} from '../animations/animation';
-import {PageTransition} from './page-transition';
-import {TransitionOptions} from './transition';
-import {ViewController} from '../components/nav/view-controller';
+import { Animation } from '../animations/animation';
+import { PageTransition } from './page-transition';
+import { TransitionOptions } from './transition';
+import { ViewController } from '../components/nav/view-controller';
 
 const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';

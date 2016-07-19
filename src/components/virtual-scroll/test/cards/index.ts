@@ -1,5 +1,5 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({

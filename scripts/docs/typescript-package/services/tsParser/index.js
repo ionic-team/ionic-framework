@@ -48,7 +48,7 @@ module.exports = function tsParser(createCompilerHost, log) {
         tsModule.exportArray = typeChecker.getExportsOfModule(tsModule);
 
         // Although 'star' imports (e.g. `export * from 'some/module';) get resolved automatically
-        // by the compiler/binder, it seems that explicit imports (e.g. `export {SomeClass} from 'some/module'`)
+        // by the compiler/binder, it seems that explicit imports (e.g. `export { SomeClass } from 'some/module'`)
         // do not so we have to do a little work.
         tsModule.exportArray.forEach(function(moduleExport) {
           if (moduleExport.flags & ts.SymbolFlags.Alias) {

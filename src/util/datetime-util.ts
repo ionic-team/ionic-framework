@@ -1,4 +1,4 @@
-import {isBlank, isPresent, isString, isObject, assign} from './util';
+import { isBlank, isPresent, isString, isObject, assign } from './util';
 
 
 export function renderDateTime(template: string, value: DateTimeData, locale: LocaleData) {

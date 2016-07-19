@@ -1,5 +1,5 @@
-import {Component, ContentChild, QueryList, ViewChildren} from '@angular/core';
-import {ionicBootstrap, NavController, Tab} from '../../../../../src';
+import { Component, ContentChild, QueryList, ViewChildren } from '@angular/core';
+import { ionicBootstrap, NavController, Tab } from '../../../../../src';
 
 
 //
@@ -113,19 +113,19 @@ class TabsPage {
   root2 = Tab2;
   root3 = Tab3;
 
-  @ViewChildren(Tab) tab : QueryList<Tab>;
+  @ViewChildren(Tab) tab: QueryList<Tab>;
 
   ngAfterViewInit() {
     console.log('Tab', this.tab);
     console.log(this.tab.first.setRoot);
   }
 
-  openPage(which) {
+  openPage(which: string) {
     let pages = {
       'quesarito': QuesaritoPage
     };
 
-    this.tab.first.setRoot(pages[which])
+    this.tab.first.setRoot(pages[which]);
   }
 
 }

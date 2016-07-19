@@ -1,5 +1,5 @@
 
-import {Config} from './config';
+import { Config } from './config';
 
 
 // iOS Mode Settings

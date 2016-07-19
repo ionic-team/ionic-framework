@@ -63,7 +63,7 @@ class E2EPage {
     toast.present();
   }
 
-  showToastWithCloseButton(positionString:string) {
+  showToastWithCloseButton(positionString: string) {
     const toast = this.toastCtrl.create({
       message: 'Your internet connection appears to be offline. Data integrity is not gauranteed.',
       showCloseButton: true,

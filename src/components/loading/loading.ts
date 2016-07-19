@@ -6,7 +6,7 @@ import { isPresent } from '../../util/util';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';
 import { NavOptions } from '../nav/nav-interfaces';
-import { ViewController} from '../nav/view-controller';
+import { ViewController } from '../nav/view-controller';
 
 /**
  * @private

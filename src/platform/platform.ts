@@ -1,7 +1,7 @@
-import {EventEmitter, NgZone} from '@angular/core';
+import { EventEmitter, NgZone } from '@angular/core';
 
-import {getQuerystring} from '../util/util';
-import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
+import { getQuerystring } from '../util/util';
+import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
 
 /**
  * @name Platform
@@ -16,7 +16,7 @@ import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
  *
  * @usage
  * ```ts
- * import {Platform} from 'ionic-angular';
+ * import { Platform } from 'ionic-angular';
  *
  * @Component({...})
  * export MyPage {
@@ -80,7 +80,7 @@ export class Platform {
    * from a web browser on the iPad then `mobileweb` would be `true`.
    *
    * ```
-   * import {Platform} from 'ionic-angular';
+   * import { Platform } from 'ionic-angular';
    *
    * @Component({...})
    * export MyPage {
@@ -123,7 +123,7 @@ export class Platform {
    * it would return `mobile`, `ios`, and `iphone`.
    *
    * ```
-   * import {Platform} from 'ionic-angular';
+   * import { Platform } from 'ionic-angular';
    *
    * @Component({...})
    * export MyPage {
@@ -147,7 +147,7 @@ export class Platform {
    * Returns an object containing version information about all of the platforms.
    *
    * ```
-   * import {Platform} from 'ionic-angular';
+   * import { Platform } from 'ionic-angular';
    *
    * @Component({...})
    * export MyPage {
@@ -195,8 +195,8 @@ export class Platform {
    * the status bar plugin, so the web should not run status bar plugin logic.
    *
    * ```
-   * import {Component} from '@angular/core';
-   * import {Platform} from 'ionic-angular';
+   * import { Component } from '@angular/core';
+   * import { Platform } from 'ionic-angular';
    *
    * @Component({...})
    * export MyApp {

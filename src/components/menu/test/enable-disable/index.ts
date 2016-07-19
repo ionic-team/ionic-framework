@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, App, MenuController, Nav} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, App, MenuController, Nav } from '../../../../../src';
 
 
 @Component({

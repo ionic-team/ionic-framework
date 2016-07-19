@@ -1,5 +1,5 @@
-import {Platform} from './platform';
-import {windowLoad} from '../util/dom';
+import { Platform } from './platform';
+import { windowLoad } from '../util/dom';
 
 const win: any = window;
 const doc: any = document;

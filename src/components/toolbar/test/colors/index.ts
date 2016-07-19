@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -7,7 +7,7 @@ import {ionicBootstrap} from '../../../../../src';
 })
 class E2EApp {
 
-  buttonClick(button) {
+  buttonClick(button: any) {
     console.log(button);
   }
 

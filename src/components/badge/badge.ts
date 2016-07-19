@@ -1,6 +1,6 @@
-import {Directive, ElementRef, Renderer, Attribute} from '@angular/core';
+import { Directive, ElementRef, Renderer, Attribute } from '@angular/core';
 
-import {Config} from '../../config/config';
+import { Config } from '../../config/config';
 
 
 /**

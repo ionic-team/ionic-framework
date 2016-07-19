@@ -48,8 +48,8 @@ export class List extends Ion {
    * Enable the sliding items.
    *
    * ```ts
-   * import {Component, ViewChild} from '@angular/core';
-   * import {List} from 'ionic-angular';
+   * import { Component, ViewChild } from '@angular/core';
+   * import { List } from 'ionic-angular';
    *
    * @Component({...})
    * export class MyClass {
@@ -101,8 +101,8 @@ export class List extends Ion {
    * Close the open sliding item.
    *
    * ```ts
-   * import {Component, ViewChild} from '@angular/core';
-   * import {List} from 'ionic-angular';
+   * import { Component, ViewChild } from '@angular/core';
+   * import { List } from 'ionic-angular';
    *
    * @Component({...})
    * export class MyClass {

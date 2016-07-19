@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, Slides} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, Slides } from '../../../../../src';
 
 
 @Component({

@@ -23,4 +23,4 @@ export function run() {
 @Component({
   template: `<div class="myComponent"></div>`
 })
-class ComponentToPresent{}
+class ComponentToPresent {}

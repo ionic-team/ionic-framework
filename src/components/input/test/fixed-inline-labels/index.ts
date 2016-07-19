@@ -1,16 +1,16 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class PageOne {
-  url;
+  url: string;
   input1: string = 'Text 1';
 
-  onEvent(event) {
-    console.log("Did Event:", event.type);
+  onEvent(event: any) {
+    console.log('Did Event:', event.type);
   }
 }
 

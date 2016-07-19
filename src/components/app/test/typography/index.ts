@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, App} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap, App } from '../../../../../src';
 
 
 @Component({

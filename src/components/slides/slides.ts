@@ -6,7 +6,7 @@ import { CSS } from '../../util/dom';
 import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
 import { dom } from '../../util';
 import { Ion } from '../ion';
-import { Swiper} from './swiper-widget';
+import { Swiper } from './swiper-widget';
 
 
 /**
@@ -83,8 +83,8 @@ import { Swiper} from './swiper-widget';
  * To add [options](#configuring), we will define them in `mySlideOptions` in our class `MyPage`:
  *
  * ```ts
- * import {Component} from '@angular/core';
- * import {Slides} from 'ionic-angular';
+ * import { Component } from '@angular/core';
+ * import { Slides } from 'ionic-angular';
  *
  * @Component({
  *   templateUrl: 'my-page.html'
@@ -118,7 +118,7 @@ import { Swiper} from './swiper-widget';
  * Next, we can use `ViewChild` to assign the Slides instance to `slider`:
  *
  * ```ts
- * import {ViewChild} from '@angular/core';
+ * import { ViewChild } from '@angular/core';
  *
  * class MyPage {
  *   @ViewChild('mySlider') slider: Slides;

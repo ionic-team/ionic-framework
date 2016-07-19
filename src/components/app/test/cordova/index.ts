@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, NavController, ModalController, ViewController} from '../../../../../src';
-import {Injectable} from '@angular/core';
+import { Component } from '@angular/core';
+import { ionicBootstrap, NavController, ModalController, ViewController } from '../../../../../src';
+import { Injectable } from '@angular/core';
 
 
 @Injectable()
@@ -8,7 +8,7 @@ export class SomeData {
   constructor() {}
 
   getData() {
-    return "SomeData";
+    return 'SomeData';
   }
 }
 
@@ -17,7 +17,7 @@ export class OtherData {
   constructor() {}
 
   getData() {
-    return "OtherData";
+    return 'OtherData';
   }
 }
 
@@ -61,8 +61,8 @@ class Page1 {
   sort: string = 'all';
 
   constructor(private nav: NavController, private someData: SomeData, private otherData: OtherData) {
-    console.log("Got some data from", someData.getData());
-    console.log("Got some data from", otherData.getData());
+    console.log('Got some data from', someData.getData());
+    console.log('Got some data from', otherData.getData());
   }
 
   goToTabs() {

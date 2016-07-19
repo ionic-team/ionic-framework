@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ionicBootstrap, NavController } from '../../../../../src';
 
 @Component({
@@ -27,12 +27,12 @@ ionicBootstrap(E2EApp);
   </ion-content>
   `
 })
-class LandingPage{
+class LandingPage {
 
-  constructor(private nav: NavController){
+  constructor(private nav: NavController) {
   }
 
-  goToPage(){
+  goToPage() {
     this.nav.push(FirstPage);
   }
 }
@@ -53,7 +53,7 @@ class LandingPage{
   </ion-content>
   `
 })
-class FirstPage{
+class FirstPage {
   root = SecondPage;
 }
 
@@ -73,7 +73,7 @@ class FirstPage{
   </ion-content>
   `
 })
-class SecondPage{
+class SecondPage {
   root = ThirdPage;
 }
 
@@ -93,7 +93,7 @@ class SecondPage{
   </ion-content>
   `
 })
-class ThirdPage{
+class ThirdPage {
   root = FourthPage;
 }
 
@@ -108,12 +108,12 @@ class ThirdPage{
   </ion-content>
   `
 })
-class FourthPage{
+class FourthPage {
   private items: string[];
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     let items: string[] = [];
-    for ( let i = 0 ; i < 500; i++ ){
+    for ( let i = 0 ; i < 500; i++ ) {
       items.push(`Item ${(i + 1)}`);
     }
     this.items = items;

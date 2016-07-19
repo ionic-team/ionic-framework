@@ -104,7 +104,7 @@ class Tab1Page1 {
     console.log('go back begin');
     this.nav.pop().then((val: any) => {
       console.log('go back completed', val);
-    });;
+    });
   }
 
   favoritesTab() {
