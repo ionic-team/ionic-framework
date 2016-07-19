@@ -519,7 +519,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
 
       let pickerDisplayValue: DateTimeData = this._value.millisecond ? this._value : new Date();
 
-      if (this._value.millisecond)
+      if (this._text)
         pickerDisplayValue = this._value;
       else {
         let displayDate = new Date();
