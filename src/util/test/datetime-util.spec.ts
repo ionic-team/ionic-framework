@@ -34,6 +34,22 @@ describe('convertDataToISO', () => {
     expect(str).toEqual('1994-12-15T13:47:20.789+05:30');
   });
 
+  it('should convert DateTimeData to datetime string, -300 tz offset', () => {
+    var data: datetime.DateTimeData = {
+      year: 1994,
+      month: 12,
+      day: 15,
+      hour: 13,
+      minute: 47,
+      second: 20,
+      millisecond: 789,
+      tzOffset: -300,
+    };
+
+    var str = datetime.convertDataToISO(data);
+    expect(str).toEqual('1994-12-15T13:47:20.789-05:00');
+  });
+
   it('should convert DateTimeData to datetime string, Z timezone', () => {
     var data: datetime.DateTimeData = {
       year: 1994,
