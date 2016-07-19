@@ -8,7 +8,7 @@ $menu-ios-box-shadow-color:      rgba(0, 0, 0, .25) !default;
 $menu-ios-box-shadow:            0 0 10px $menu-ios-box-shadow-color !default;
 
 
-ion-menu {
+.menu-inner {
   background: $menu-ios-background;
 }
 
@@ -20,6 +20,6 @@ ion-menu {
   box-shadow: $menu-ios-box-shadow;
 }
 
-ion-menu[type=overlay] {
+ion-menu[type=overlay] .menu-inner {
   box-shadow: $menu-ios-box-shadow;
 }

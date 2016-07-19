@@ -49,21 +49,22 @@ export class SlideGesture extends PanGesture {
   }
 
   onDragMove(ev: any) {
+    let slide = this.slide;
     let coord = <any>pointerCoord(ev);
     let newPos = coord[this.direction];
     let newTimestamp = Date.now();
-    let velocity = (newPos - this.slide.pos) / (newTimestamp - this.slide.timestamp);
+    let velocity = (newPos - slide.pos) / (newTimestamp - slide.timestamp);
 
-    this.slide.pos = newPos;
-    this.slide.timestamp = newTimestamp;
-    this.slide.distance = clamp(
-      this.slide.min,
-      newPos - this.slide.pointerStartPos + this.slide.elementStartPos,
-      this.slide.max
+    slide.pos = newPos;
+    slide.timestamp = newTimestamp;
+    slide.distance = clamp(
+      slide.min,
+      newPos - slide.pointerStartPos + slide.elementStartPos,
+      slide.max
     );
-    this.slide.velocity = velocity;
-    this.slide.delta = newPos - this.slide.pointerStartPos;
-    this.onSlide(this.slide, ev);
+    slide.velocity = velocity;
+    slide.delta = newPos - slide.pointerStartPos;
+    this.onSlide(slide, ev);
 
     return true;
   }

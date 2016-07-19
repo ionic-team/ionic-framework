@@ -10,6 +10,21 @@ $menu-small-width:           $menu-width - 40px !default;
 ion-menu {
   position: absolute;
   top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: none;
+
+  &.show-menu {
+    display: block;
+  }
+}
+
+
+.menu-inner {
+  position: absolute;
+  top: 0;
   right: auto;
   bottom: 0;
   left: 0;
@@ -23,13 +38,13 @@ ion-menu {
   transform: translate3d(-9999px, 0, 0);
 }
 
-ion-menu > ion-header,
-ion-menu > ion-content,
-ion-menu > ion-footer {
+.menu-inner > ion-header,
+.menu-inner > ion-content,
+.menu-inner > ion-footer {
   position: relative;
 }
 
-ion-menu[side=right] {
+ion-menu[side=right] > .menu-inner {
   right: 0;
   left: auto;
 }
@@ -37,6 +52,8 @@ ion-menu[side=right] {
 ion-menu ion-backdrop {
   z-index: -1;
   display: none;
+
+  opacity: .1;
 }
 
 .menu-content {
@@ -54,7 +71,7 @@ ion-menu ion-backdrop {
 
 @media (max-width: 340px) {
 
-  ion-menu {
+  .menu-inner {
     width: $menu-small-width;
   }
 
@@ -66,7 +83,11 @@ ion-menu ion-backdrop {
 // The content slides over to reveal the menu underneath.
 // The menu itself, which is under the content, does not move.
 
-ion-menu[type=reveal].show-menu {
+ion-menu[type=reveal] {
+  z-index: 0;
+}
+
+ion-menu[type=reveal].show-menu .menu-inner {
   transform: translate3d(0, 0, 0);
 }
 
@@ -79,17 +100,7 @@ ion-menu[type=reveal].show-menu {
 ion-menu[type=overlay] {
   z-index: $z-index-menu-overlay;
 
-  ion-backdrop {
-    left: -3000px;
+  .show-backdrop {
     display: block;
-
-    width: 6000px;
-
-    opacity: .01;
-    transform: translate3d(-9999px, 0, 0);
-
-    &.show-backdrop {
-      transform: translate3d(0, 0, 0);
-    }
   }
 }
