@@ -95,12 +95,16 @@ export class App {
   /**
    * @private
    */
-  setScrollDisabled(disabled: boolean) {
+  setScrollDisabled(disableScroll: boolean) {
+    let enabled = this._config.get('canDisableScroll', true);
+    if (!enabled) {
+      return;
+    }
     if (!this.appRoot) {
       console.error('appRoot is missing, scrolling can not be enabled/disabled');
       return;
     }
-    this.appRoot.disableScroll = disabled;
+    this.appRoot.disableScroll = disableScroll;
   }
 
   /**
