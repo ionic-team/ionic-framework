@@ -1,7 +1,14 @@
 import {ElementRef} from '@angular/core';
 
-
-
+export interface PointerEventsConfig {
+  element?: HTMLElement;
+  elementRef?: ElementRef;
+  pointerDown: (ev: any) => boolean;
+  pointerMove: (ev: any) => void;
+  pointerUp: (ev: any) => void;
+  nativeOptions?: any;
+  zone?: boolean;
+}
 
 /**
  * @private
@@ -10,10 +17,14 @@ export class PointerEvents {
   private rmTouchStart: Function = null;
   private rmTouchMove: Function = null;
   private rmTouchEnd: Function = null;
+  private rmTouchCancel: Function = null;
 
   private rmMouseStart: Function = null;
   private rmMouseMove: Function = null;
   private rmMouseUp: Function = null;
+
+  private bindTouchEnd: Function;
+  private bindMouseUp: Function;
 
   private lastTouchEvent: number = 0;
 
@@ -24,10 +35,14 @@ export class PointerEvents {
     private pointerMove: any,
     private pointerUp: any,
     private zone: boolean,
-    private option: any) {
+    private option: any
+  ) {
 
-    this.rmTouchStart = listenEvent(ele, 'touchstart', zone, option, (ev: any) => this.handleTouchStart(ev));
-    this.rmMouseStart = listenEvent(ele, 'mousedown', zone, option, (ev: any) => this.handleMouseDown(ev));
+    this.bindTouchEnd = this.handleTouchEnd.bind(this);
+    this.bindMouseUp = this.handleMouseUp.bind(this);
+
+    this.rmTouchStart = listenEvent(ele, 'touchstart', zone, option, this.handleTouchStart.bind(this));
+    this.rmMouseStart = listenEvent(ele, 'mousedown', zone, option, this.handleMouseDown.bind(this));
   }
 
   private handleTouchStart(ev: any) {
@@ -39,7 +54,10 @@ export class PointerEvents {
       this.rmTouchMove = listenEvent(this.ele, 'touchmove', this.zone, this.option, this.pointerMove);
     }
     if (!this.rmTouchEnd) {
-      this.rmTouchEnd = listenEvent(this.ele, 'touchend', this.zone, this.option, (ev: any) => this.handleTouchEnd(ev));
+      this.rmTouchEnd = listenEvent(this.ele, 'touchend', this.zone, this.option, this.bindTouchEnd);
+    }
+    if (!this.rmTouchCancel) {
+      this.rmTouchCancel = listenEvent(this.ele, 'touchcancel', this.zone, this.option, this.bindTouchEnd);
     }
   }
 
@@ -55,38 +73,41 @@ export class PointerEvents {
       this.rmMouseMove = listenEvent(window, 'mousemove', this.zone, this.option, this.pointerMove);
     }
     if (!this.rmMouseUp) {
-      this.rmMouseUp = listenEvent(window, 'mouseup', this.zone, this.option, (ev: any) => this.handleMouseUp(ev));
+      this.rmMouseUp = listenEvent(window, 'mouseup', this.zone, this.option, this.bindMouseUp);
     }
   }
 
   private handleTouchEnd(ev: any) {
-    this.rmTouchMove && this.rmTouchMove();
-    this.rmTouchMove = null;
-    this.rmTouchEnd && this.rmTouchEnd();
-    this.rmTouchEnd = null;
-
+    this.stopTouch();
     this.pointerUp(ev);
   }
 
   private handleMouseUp(ev: any) {
-    this.rmMouseMove && this.rmMouseMove();
-    this.rmMouseMove = null;
-    this.rmMouseUp && this.rmMouseUp();
-    this.rmMouseUp = null;
-
+    this.stopMouse();
     this.pointerUp(ev);
   }
 
-  stop() {
+  private stopTouch() {
     this.rmTouchMove && this.rmTouchMove();
     this.rmTouchEnd && this.rmTouchEnd();
+    this.rmTouchCancel && this.rmTouchCancel();
+
     this.rmTouchMove = null;
     this.rmTouchEnd = null;
+    this.rmTouchCancel = null;
+  }
 
+  private stopMouse() {
     this.rmMouseMove && this.rmMouseMove();
     this.rmMouseUp && this.rmMouseUp();
+
     this.rmMouseMove = null;
     this.rmMouseUp = null;
+  }
+
+  stop() {
+    this.stopTouch();
+    this.stopMouse();
   }
 
   destroy() {
@@ -120,21 +141,26 @@ export class UIEventManager {
     return this.listen(ref.nativeElement, eventName, callback, option);
   }
 
-  pointerEventsRef(ref: ElementRef, pointerStart: any, pointerMove: any, pointerEnd: any, option?: any): PointerEvents {
-    return this.pointerEvents(ref.nativeElement, pointerStart, pointerMove, pointerEnd, option);
-  }
-
-  pointerEvents(element: any, pointerDown: any, pointerMove: any, pointerUp: any, option: any = false): PointerEvents {
+  pointerEvents(config: PointerEventsConfig): PointerEvents {
+    let element = config.element;
     if (!element) {
+      element = config.elementRef.nativeElement;
+    }
+
+    if (!element || !config.pointerDown || !config.pointerMove || !config.pointerUp) {
+      console.error('PointerEvents config is invalid');
       return;
     }
+    let zone = config.zone || this.zoneWrapped;
+    let options = config.nativeOptions || false;
+
     let submanager = new PointerEvents(
       element,
-      pointerDown,
-      pointerMove,
-      pointerUp,
-      this.zoneWrapped,
-      option);
+      config.pointerDown,
+      config.pointerMove,
+      config.pointerUp,
+      zone,
+      options);
 
     let removeFunc = () => submanager.destroy();
     this.events.push(removeFunc);

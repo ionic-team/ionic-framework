@@ -5,7 +5,7 @@ import { Item } from './item';
 import { isPresent } from '../../util/util';
 import { List } from '../list/list';
 
-const SWIPE_MARGIN = 20;
+const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
 export const enum ItemSideFlags {
