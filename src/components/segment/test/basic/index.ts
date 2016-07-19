@@ -25,11 +25,11 @@ class E2EPage {
   }
 
   onSegmentChanged(segmentButton: SegmentButton) {
-    console.log("Segment changed to", segmentButton.value);
+    console.log('Segment changed to', segmentButton.value);
   }
 
   onSegmentSelected(segmentButton: SegmentButton) {
-    console.log("Segment selected", segmentButton.value);
+    console.log('Segment selected', segmentButton.value);
   }
 
   doSubmit(ev: UIEvent) {

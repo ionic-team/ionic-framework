@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, AlertController, Content } from '../../../../../src';
 import { ionicBootstrap, App } from '../../../../../src';
-import { NavParams, ViewController } from '../../../../../src';;
+import { NavParams, ViewController } from '../../../../../src';
 
 
 @Component({
   selector: 'my-cmp',
   template: `<p>My Custom Component Test <ion-icon name="star"></ion-icon></p>`
 })
-class MyCmpTest{}
+class MyCmpTest {}
 
 
 @Component({
@@ -358,7 +358,7 @@ class AnotherPage {
   }
 
   toggleBackButton() {
-    this.bbHideToggleVal = !this.bbHideToggleVal
+    this.bbHideToggleVal = !this.bbHideToggleVal;
     this.viewCtrl.showBackButton(this.bbHideToggleVal);
   }
 

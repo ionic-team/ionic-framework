@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -16,7 +16,7 @@ class AsyncPage {}
   template: `<ion-nav [root]="root"></ion-nav>`
 })
 class E2EApp {
-  root;
+  root: AsyncPage;
 
   constructor() {
     setTimeout(() => {

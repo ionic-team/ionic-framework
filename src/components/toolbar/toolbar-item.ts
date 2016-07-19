@@ -1,8 +1,8 @@
-import {Directive, ElementRef, Optional, forwardRef, Inject, ContentChildren} from '@angular/core';
+import { Directive, ElementRef, Optional, forwardRef, Inject, ContentChildren } from '@angular/core';
 
-import {Button} from '../button/button';
-import {Navbar} from '../navbar/navbar';
-import {Toolbar} from './toolbar';
+import { Button } from '../button/button';
+import { Navbar } from '../navbar/navbar';
+import { Toolbar } from './toolbar';
 
 
 /**

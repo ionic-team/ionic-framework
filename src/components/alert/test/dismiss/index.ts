@@ -10,7 +10,7 @@ export class E2EPage {
 
   constructor(private alertCtrl: AlertController, private nav: NavController) {}
 
-	submit() {
+  submit() {
     var alert = this.alertCtrl.create({
       title: 'Not logged in',
       message: 'Sign in to continue.',
@@ -30,7 +30,7 @@ export class E2EPage {
     });
 
     alert.present();
-	}
+  }
 }
 
 @Component({
@@ -42,18 +42,18 @@ export class E2EPage {
     </ion-header>
     <ion-content padding>
       <form [formGroup]="form" (ngSubmit)="submit(form.value)">
-    		<ion-list>
-    			<ion-item [class.error]="!form.controls.name.valid && form.controls.name.touched">
-    				<ion-label>Name</ion-label>
-    				<ion-input type="text" [(formControl)]="form.controls.name"></ion-input>
-    			</ion-item>
-  			</ion-list>
-  			<div padding style="padding-top: 0 !important;">
-    			<button list-item primary block>
-      			Submit
-      		</button>
-    		</div>
-			</form>
+        <ion-list>
+          <ion-item [class.error]="!form.controls.name.valid && form.controls.name.touched">
+            <ion-label>Name</ion-label>
+            <ion-input type="text" [(formControl)]="form.controls.name"></ion-input>
+          </ion-item>
+        </ion-list>
+        <div padding style="padding-top: 0 !important;">
+          <button list-item primary block>
+            Submit
+          </button>
+        </div>
+      </form>
       <p>
         <button block (click)="doFastPop()">Fast Loading Dismiss, Nav Pop</button>
       </p>
@@ -63,27 +63,27 @@ export class E2EPage {
 class AnotherPage {
   form: ControlGroup;
 
-	constructor(private nav: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private builder: FormBuilder) {
-		this.form = builder.group({
-			name: builder.control('', Validators.compose([
-			    Validators.required,
-			    Validators.minLength(5)
-			]))
-		});
-	}
+  constructor(private nav: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private builder: FormBuilder) {
+    this.form = builder.group({
+      name: builder.control('', Validators.compose([
+        Validators.required,
+        Validators.minLength(5)
+      ]))
+    });
+  }
 
-	submit(value: any): void {
-		if (this.form.valid) {
-			console.log(value);
+  submit(value: any): void {
+    if (this.form.valid) {
+      console.log(value);
 
-		} else {
-			this.alertCtrl.create({
-				title: 'Invalid input data',
-				subTitle: "Please correct the errors and resubmit the data.",
-				buttons: [ 'OK' ]
-			}).present();
-		}
-	}
+    } else {
+      this.alertCtrl.create({
+        title: 'Invalid input data',
+        subTitle: 'Please correct the errors and resubmit the data.',
+        buttons: ['OK']
+      }).present();
+    }
+  }
 
   ionViewDidEnter() {
     this.showConfirm();

@@ -1,5 +1,5 @@
-import {CSS, rafFrames, transitionEnd, nativeTimeout} from '../util/dom';
-import {assign, isDefined} from '../util/util';
+import { CSS, rafFrames, transitionEnd, nativeTimeout } from '../util/dom';
+import { assign, isDefined } from '../util/util';
 
 
 /**

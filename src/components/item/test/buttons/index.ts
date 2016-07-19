@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  testClick(ev) {
+  testClick(ev: any) {
     console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
   }
 }

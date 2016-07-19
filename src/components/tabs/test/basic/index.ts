@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ionicBootstrap, App, AlertController, ModalController, ViewController, Tab, Tabs } from '../../../../../src';
 
 //

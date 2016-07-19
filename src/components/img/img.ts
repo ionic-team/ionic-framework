@@ -1,8 +1,8 @@
-import {Component, Input, HostBinding, ElementRef, ChangeDetectionStrategy, ViewEncapsulation, NgZone} from '@angular/core';
+import { Component, Input, HostBinding, ElementRef, ChangeDetectionStrategy, ViewEncapsulation, NgZone } from '@angular/core';
 
-import {nativeRaf} from '../../util/dom';
-import {isPresent} from '../../util/util';
-import {Platform} from '../../platform/platform';
+import { nativeRaf } from '../../util/dom';
+import { isPresent } from '../../util/util';
+import { Platform } from '../../platform/platform';
 
 
 @Component({

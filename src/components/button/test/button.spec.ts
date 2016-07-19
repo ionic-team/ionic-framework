@@ -1,4 +1,4 @@
-import {Button, Config} from '../../../../src';
+import { Button, Config } from '../../../../src';
 
 export function run() {
 
@@ -108,7 +108,7 @@ export function run() {
 
       b = mockButton(['solid']);
       b._assignCss(true);
-      expect(hasClass(b, 'button-solid')).toEqual(true);      
+      expect(hasClass(b, 'button-solid')).toEqual(true);
 
       b = mockButton(['clear', 'outline', 'small', 'full']);
       b._assignCss(true);

@@ -108,7 +108,7 @@ export class ActionSheet extends ViewController {
  *
  * @usage
  * ```ts
- * import {ActionSheetController} from 'ionic-angular'
+ * import { ActionSheetController } from 'ionic-angular'
  *
  * export class MyClass{
  *

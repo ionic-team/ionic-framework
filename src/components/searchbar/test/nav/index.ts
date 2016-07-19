@@ -86,7 +86,7 @@ class SearchPage {
         return true;
       }
       return false;
-    })
+    });
   }
 }
 

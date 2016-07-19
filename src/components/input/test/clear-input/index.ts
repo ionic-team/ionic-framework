@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -9,7 +9,7 @@ class E2EPage {
   myValue = 'value';
 
   clicked() {
-    console.log("clicked button");
+    console.log('clicked button');
   }
 }
 

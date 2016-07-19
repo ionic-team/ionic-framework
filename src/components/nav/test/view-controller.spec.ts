@@ -1,10 +1,10 @@
-import {LifeCycleEvent, ViewController} from '../../../../src';
+import { LifeCycleEvent, ViewController } from '../../../../src';
 
 export function run() {
   describe('ViewController', () => {
 
     afterEach(() => {
-      if ( subscription ){
+      if ( subscription ) {
         subscription.unsubscribe();
       }
     });
@@ -13,7 +13,7 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        subscription = viewController.willEnter.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.willEnter.subscribe((event: LifeCycleEvent) => {
           // assert
           expect(event).toEqual(null);
           done();
@@ -30,7 +30,7 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        subscription = viewController.didEnter.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.didEnter.subscribe((event: LifeCycleEvent) => {
           // assert
           expect(event).toEqual(null);
           done();
@@ -47,7 +47,7 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        subscription = viewController.willLeave.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.willLeave.subscribe((event: LifeCycleEvent) => {
           // assert
           expect(event).toEqual(null);
           done();
@@ -64,7 +64,7 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        subscription = viewController.didLeave.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.didLeave.subscribe((event: LifeCycleEvent) => {
           // assert
           expect(event).toEqual(null);
           done();
@@ -81,7 +81,7 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        subscription = viewController.willUnload.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.willUnload.subscribe((event: LifeCycleEvent) => {
           expect(event).toEqual(null);
           done();
         }, (err: any) => {
@@ -97,7 +97,7 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        subscription = viewController.didUnload.subscribe((event:LifeCycleEvent) => {
+        subscription = viewController.didUnload.subscribe((event: LifeCycleEvent) => {
           // assert
           expect(event).toEqual(null);
           done();
@@ -112,5 +112,5 @@ export function run() {
   });
 
   let subscription: any = null;
-  class FakePage{}
+  class FakePage {}
 }

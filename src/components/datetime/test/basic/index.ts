@@ -30,20 +30,20 @@ class E2EPage {
   ];
 
   onChange(ev: any) {
-    console.log("Changed", ev);
+    console.log('Changed', ev);
   }
 
   onCancel(ev: any) {
-    console.log("Canceled", ev);
+    console.log('Canceled', ev);
   }
 
   clearLeapYear() {
     this.leapYearsSummerMonths = null;
   }
 
-	convertDate() {
-	  this.convertedDate = new Date(this.myDate).toISOString();
-	}
+  convertDate() {
+    this.convertedDate = new Date(this.myDate).toISOString();
+  }
 
 }
 

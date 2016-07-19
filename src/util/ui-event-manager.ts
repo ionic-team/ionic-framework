@@ -1,4 +1,4 @@
-import {ElementRef} from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 export interface PointerEventsConfig {
   element?: HTMLElement;

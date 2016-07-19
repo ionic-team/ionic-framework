@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, Config, Animation} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap, Config, Animation } from '../../../../../src';
 
 
 @Component({
@@ -13,7 +13,7 @@ class E2EPage {
     this.duration = '1000';
     this.easing = 'ease-in-out';
 
-    console.log('isProd', config.prodMode);
+    console.log('isProd', config.getBoolean('prodMode'));
   }
 
   playGreen() {
@@ -39,9 +39,9 @@ class E2EPage {
 
       let a = new Animation('.green');
       a.fromTo('translateX', '0px', '200px');
-      a.duration(self.duration);
+      a.duration(parseInt(self.duration));
       a.easing(self.easing);
-      a.onFinish((animation) => {
+      a.onFinish((animation: Animation) => {
         setTimeout(() => {
           play();
         }, 100);

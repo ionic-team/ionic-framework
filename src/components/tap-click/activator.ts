@@ -1,6 +1,6 @@
-import {App} from '../app/app';
-import {Config} from '../../config/config';
-import {Coordinates, nativeTimeout, rafFrames} from '../../util/dom';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { Coordinates, nativeTimeout, rafFrames } from '../../util/dom';
 
 
 export class Activator {

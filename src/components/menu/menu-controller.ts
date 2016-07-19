@@ -34,8 +34,8 @@ import { Platform } from '../../platform/platform';
  * toggling the menu.
  *
  * ```ts
- * import {Component} from '@angular/core';
- * import {MenuController} from 'ionic-angular';
+ * import { Component } from '@angular/core';
+ * import { MenuController } from 'ionic-angular';
  *
  * @Component({...})
  * export class MyPage {

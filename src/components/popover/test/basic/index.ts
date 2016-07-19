@@ -102,8 +102,8 @@ class PopoverRadioPage {
 
     if (!background) return 'white';
 
-    for(var key in this.colors) {
-      if (this.colors[key].bg == background) {
+    for (var key in this.colors) {
+      if (this.colors[key].bg === background) {
         colorName = key;
       }
     }
@@ -113,7 +113,7 @@ class PopoverRadioPage {
 
   setFontFamily() {
     if (this.textEle.style.fontFamily) {
-      this.fontFamily = this.textEle.style.fontFamily.replace(/'/g, "");
+      this.fontFamily = this.textEle.style.fontFamily.replace(/'/g, '');
     }
   }
 
@@ -165,7 +165,7 @@ class PopoverLongListPage {
   items: number[] = [];
 
   ngOnInit() {
-    for(let i = 1; i < 21; i++) {
+    for (let i = 1; i < 21; i++) {
       this.items.push(i);
     }
   }

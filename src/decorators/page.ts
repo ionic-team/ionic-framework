@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, ViewEncapsulation, Type} from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, Type } from '@angular/core';
 
 const _reflect: any = Reflect;
 
@@ -33,7 +33,7 @@ export interface PageMetadata {
 export function Page(config: PageMetadata) {
   return function(cls: any) {
     // deprecated warning: added beta.8 2016-05-27
-    console.warn('@Page decorator has been deprecated. Please use Angular\'s @Component instead.\nimport {Component} from \'@angular/core\';');
+    console.warn('@Page decorator has been deprecated. Please use Angular\'s @Component instead.\nimport { Component} from \'@angular/core\';');
 
     config.selector = 'ion-page';
     config.host = config.host || {};

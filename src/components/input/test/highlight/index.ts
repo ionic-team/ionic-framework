@@ -18,14 +18,14 @@ class E2EPage {
 
   constructor(fb: FormBuilder) {
     this.loginForm = fb.group({
-      email: ["", Validators.compose([
+      email: ['', Validators.compose([
         Validators.required,
         this.emailValidator
       ])],
-      username: [""],
-      password: ["", Validators.required],
-      comments: ["", Validators.required],
-      inset: ["", Validators.required]
+      username: [''],
+      password: ['', Validators.required],
+      comments: ['', Validators.required],
+      inset: ['', Validators.required]
     });
   }
 
@@ -38,7 +38,7 @@ class E2EPage {
   }
 
   submit(ev: UIEvent, value: any) {
-    console.log("Submitted", value);
+    console.log('Submitted', value);
     this.submitted = true;
   }
 

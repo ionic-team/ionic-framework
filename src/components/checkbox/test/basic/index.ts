@@ -17,10 +17,10 @@ class E2EPage {
 
   constructor() {
     this.fruitsForm = new FormGroup({
-      "appleCtrl": new FormControl(true),
-      "bananaCtrl": new FormControl(true),
-      "cherryCtrl": new FormControl(false),
-      "grapeCtrl": new FormControl(true)
+      'appleCtrl': new FormControl(true),
+      'bananaCtrl': new FormControl(true),
+      'cherryCtrl': new FormControl(false),
+      'grapeCtrl': new FormControl(true)
     });
 
     this.grapeDisabled = true;
