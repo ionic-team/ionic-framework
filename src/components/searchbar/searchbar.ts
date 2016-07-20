@@ -227,8 +227,8 @@ export class Searchbar {
    */
   positionInputPlaceholder(inputEle: HTMLElement, iconEle: HTMLElement) {
     if (this.shouldAlignLeft()) {
-      inputEle.removeAttribute('style');
-      iconEle.removeAttribute('style');
+      inputEle.setAttribute('style', '');
+      iconEle.setAttribute('style', '');
     } else {
       // Create a dummy span to get the placeholder width
       let tempSpan = document.createElement('span');
