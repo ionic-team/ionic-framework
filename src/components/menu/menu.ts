@@ -181,14 +181,14 @@ import { GestureController } from '../../gestures/gesture-controller';
     'role': 'navigation'
   },
   template: `
-    <ng-content></ng-content>
+    <div class="menu-inner"><ng-content></ng-content></div>
     <ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>
   `,
   directives: [Backdrop],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class Menu extends Ion {
+export class Menu {
   private _preventTime: number = 0;
   private _cntEle: HTMLElement;
   private _cntGesture: MenuContentGesture;
@@ -303,9 +303,7 @@ export class Menu extends Ion {
     private _keyboard: Keyboard,
     private _zone: NgZone,
     public gestureCtrl: GestureController
-  ) {
-    super(_elementRef);
-  }
+  ) { }
 
   /**
    * @private
@@ -576,11 +574,15 @@ export class Menu extends Ion {
     return this;
   }
 
+  getNativeElement(): HTMLElement {
+    return this._elementRef.nativeElement;
+  }
+
   /**
    * @private
    */
   getMenuElement(): HTMLElement {
-    return this.getNativeElement();
+    return <HTMLElement>this.getNativeElement().querySelector('.menu-inner');
   }
 
   /**
@@ -595,6 +597,10 @@ export class Menu extends Ion {
    */
   getBackdropElement(): HTMLElement {
     return this.backdrop.getNativeElement();
+  }
+
+  width(): number {
+    return this.getMenuElement().offsetWidth;
   }
 
   /**
