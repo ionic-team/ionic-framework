@@ -21,8 +21,11 @@ import { StorageEngine } from './storage';
  *   template: `<ion-content></ion-content>`
  * });
  * export class MyClass{
+ * 
+ *  public local: LocalStorage;
+ * 
  *  constructor(){
- *    this.local = new Storage(LocalStorage);
+ *    this.local = new LocalStorage(LocalStorage);
  *    this.local.set('didTutorial', 'true');
  *  }
  *}
