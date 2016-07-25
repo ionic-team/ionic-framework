@@ -24,6 +24,7 @@ module.exports = function(currentVersion, initialVersionBuild) {
 .processor(require('./processors/hide-private-api'))
 .processor(require('./processors/collect-inputs-outputs'))
 .processor(require('./processors/parse-returns-object'))
+.processor(require('./processors/parse-optional'))
 
 // for debugging docs
 // .processor(function test(){

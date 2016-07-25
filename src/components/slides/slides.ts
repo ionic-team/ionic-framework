@@ -743,8 +743,8 @@ export class Slides extends Ion {
    * Transition to the specified slide.
    *
    * @param {number} index  The index number of the slide.
-   * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
+   * @param {number} [speed]  Transition duration (in ms).
+   * @param {boolean} [runCallbacks] Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
    */
   slideTo(index: number, speed?: number, runCallbacks?: boolean) {
     this.slider.slideTo(index, speed, runCallbacks);
@@ -753,8 +753,8 @@ export class Slides extends Ion {
   /**
    * Transition to the next slide.
    *
-   * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
+   * @param {number} [speed]  Transition duration (in ms).
+   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
    */
   slideNext(speed?: number, runCallbacks?: boolean) {
     this.slider.slideNext(runCallbacks, speed);
@@ -763,8 +763,8 @@ export class Slides extends Ion {
   /**
    * Transition to the previous slide.
    *
-   * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
+   * @param {number} [speed]  Transition duration (in ms).
+   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
    */
   slidePrev(speed?: number, runCallbacks?: boolean) {
     this.slider.slidePrev(runCallbacks, speed);
