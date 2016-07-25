@@ -8,7 +8,7 @@ import { Attribute, Directive, ElementRef, Renderer, Input } from '@angular/core
  * to describe an `ion-input`, `ion-toggle`, `ion-checkbox`, and more.
  *
  * @property [fixed] - A persistent label that sits next the input.
- * @property [floating] - A label that will float about the input if the input is empty or loses focus.
+ * @property [floating] - A label that will float above the input if the input is empty or loses focus.
  * @property [stacked] - A stacked label will always appear on top of the input.
 
  *
