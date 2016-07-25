@@ -294,7 +294,7 @@ export class Animation {
       dur = opts.duration;
     }
 
-    console.debug('Animation, play, duration', dur, 'easing', this._easing);
+    //console.debug('Animation, play, duration', dur, 'easing', this._easing);
 
     // always default that an animation does not tween
     // a tween requires that an Animation class has an element
@@ -457,7 +457,7 @@ export class Animation {
     var self = this;
 
     function onTransitionEnd(ev: any) {
-      console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName);
+      //console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName);
 
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();
@@ -475,7 +475,7 @@ export class Animation {
     }
 
     function onTransitionFallback() {
-      console.debug('Animation onTransitionFallback');
+      //console.debug('Animation onTransitionFallback');
       // oh noz! the transition end event didn't fire in time!
       // instead the fallback timer when first
 
@@ -873,7 +873,7 @@ export class Animation {
    * DOM WRITE
    */
   progressEnd(shouldComplete: boolean, currentStepValue: number) {
-    console.debug('Animation, progressEnd, shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
+    //console.debug('Animation, progressEnd, shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
     for (var i = 0; i < this._c.length; i++) {
       // ******** DOM WRITE ****************

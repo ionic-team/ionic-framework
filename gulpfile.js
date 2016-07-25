@@ -246,7 +246,7 @@ gulp.task('transpile', function(){
 
 function tsCompile(options, cacheName){
   return gulp.src([
-      'typings/main.d.ts',
+      'typings/index.d.ts',
       'src/**/*.ts',
       '!src/**/*.d.ts',
       '!src/components/*/test/**/*',

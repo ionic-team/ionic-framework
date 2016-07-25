@@ -1,9 +1,7 @@
 {
-  "name": "ionic2",
-  "dependencies": {},
-  "devDependencies": {},
-  "ambientDevDependencies": {
-    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#6697d6f7dadbf5773cb40ecda35a76027e0783b2",
-    "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4"
+  "globalDependencies": {
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
+    "hammerjs": "registry:dt/hammerjs#2.0.4+20160622233604",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255"
   }
 }

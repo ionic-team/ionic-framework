@@ -25,6 +25,9 @@ import { TapClick } from '../components/tap-click/tap-click';
 import { ToastController } from '../components/toast/toast';
 import { Translate } from '../translation/translate';
 
+import { PanGestureRecognizerProvider } from '../gestures/hammer-providers/pan-gesture-recognizer';
+import { SwipeGestureRecognizerProvider } from '../gestures/hammer-providers/swipe-gesture-recognizer';
+import { TapGestureRecognizerProvider } from '../gestures/hammer-providers/tap-gesture-recognizer';
 
 /**
  * @private
@@ -79,6 +82,11 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     TapClick,
     ToastController,
     Translate,
+
+
+    PanGestureRecognizerProvider,
+    SwipeGestureRecognizerProvider,
+    TapGestureRecognizerProvider
   ];
 
   if (isPresent(customProviders)) {

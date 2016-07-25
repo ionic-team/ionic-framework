@@ -112,6 +112,7 @@ export class GestureController {
   enableScroll(id: number) {
     let isDisabled = this.isScrollDisabled();
     this.disabledScroll.delete(id);
+    console.debug("Attempting to enable scrolling");
     if (this._app && isDisabled && !this.isScrollDisabled()) {
       console.debug('GestureController: Enabling scrolling');
       this._app.setScrollDisabled(false);

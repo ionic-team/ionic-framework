@@ -10,13 +10,12 @@
   },
   "filesGlob": [
     "src/**/*.ts",
+    "typings/index.d.ts",
     "!node_modules/**/*"
   ],
   "exclude": [
     "node_modules",
-    "scripts",
-    "typings/main",
-    "typings/main.d.ts"
+    "scripts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,
