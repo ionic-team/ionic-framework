@@ -138,7 +138,15 @@ export class GestureRecognizer {
       this.recognizer.dropRequireFailure(gestureRecognizer.getRecognizer());
     }
 
-    getRecognizer(){
+    recognizeWith(gestureRecognizer: GestureRecognizer ) {
+      this.recognizer.requireFailure(gestureRecognizer.getRecognizer());
+    }
+
+    dropRecognizeWith(gestureRecognizer: GestureRecognizer ) {
+      this.recognizer.dropRequireFailure(gestureRecognizer.getRecognizer());
+    }
+
+    getRecognizer() {
       return this.recognizer;
     }
 

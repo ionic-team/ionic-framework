@@ -5,52 +5,50 @@ import {DisableScroll, GestureController, GestureDelegate, GesturePriority} from
 import {GestureDirection} from './gesture-direction';
 import {CaptureError, GestureRecognizer} from './gesture-recognizer';
 
-const DEFAULT_THRESHOLD: number = 1;
+export class RotateGestureRecognizer extends GestureRecognizer {
 
-export class PanGestureRecognizer extends GestureRecognizer {
+  public onRotateStart = new EventEmitter<HammerInput>();
+  public onRotateMove = new EventEmitter<HammerInput>();
+  public onRotateEnd = new EventEmitter<HammerInput>();
+  public onRotateCancel = new EventEmitter<HammerInput>();
 
-  public onPanStart = new EventEmitter<HammerInput>();
-  public onPanMove = new EventEmitter<HammerInput>();
-  public onPanEnd = new EventEmitter<HammerInput>();
-  public onPanCancel = new EventEmitter<HammerInput>();
-
-  private _onPanStartHandler = (event: HammerInput) => {
-    this.onPanStartHandler(event);
+  private _onRotateStartHandler = (event: HammerInput) => {
+    this.onRotateStartHandler(event);
   }
 
-  private _onPanMoveHandler = (event: HammerInput) => {
-    this.onPanMoveHandler(event);
+  private _onRotateMoveHandler = (event: HammerInput) => {
+    this.onRotateMoveHandler(event);
   }
 
-  private _onPanEndHandler = (event: HammerInput) => {
-    this.onPanEndHandler(event);
+  private _onRotateEndHandler = (event: HammerInput) => {
+    this.onRotateEndHandler(event);
   }
 
-  private _onPanCancelHandler = (event: HammerInput) => {
-    this.onPanCancelHandler(event);
+  private _onRotateCancelHandler = (event: HammerInput) => {
+    this.onRotateCancelHandler(event);
   }
 
-  constructor(delegate: GestureDelegate, elementRef: ElementRef, options: PanGestureRecognizerOptions) {
-    super(delegate, hammer.Pan, options, elementRef);
+  constructor(delegate: GestureDelegate, elementRef: ElementRef, options: RotateGestureRecognizerOptions) {
+    super(delegate, hammer.Rotate, options, elementRef);
   }
 
   listen() {
     super.listen();
-    this.hammerManager.on('panstart', this._onPanStartHandler);
-    this.hammerManager.on('panmove', this._onPanMoveHandler);
-    this.hammerManager.on('panend', this._onPanEndHandler);
-    this.hammerManager.on('pancancel', this._onPanCancelHandler);
+    this.hammerManager.on('rotatestart', this._onRotateStartHandler);
+    this.hammerManager.on('rotatemove', this._onRotateMoveHandler);
+    this.hammerManager.on('rotateend', this._onRotateEndHandler);
+    this.hammerManager.on('rotatecancel', this._onRotateCancelHandler);
   }
 
   unlisten() {
     super.unlisten();
-    this.hammerManager.off('panstart', this._onPanStartHandler);
-    this.hammerManager.off('panmove', this._onPanMoveHandler);
-    this.hammerManager.off('panend', this._onPanEndHandler);
-    this.hammerManager.off('pancancel', this._onPanCancelHandler);
+    this.hammerManager.off('rotatestart', this._onRotateStartHandler);
+    this.hammerManager.off('rotatemove', this._onRotateMoveHandler);
+    this.hammerManager.off('rotateend', this._onRotateEndHandler);
+    this.hammerManager.off('rotatecancel', this._onRotateCancelHandler);
   }
 
-  onPanStartHandler(event: HammerInput) {
+  onRotateStartHandler(event: HammerInput) {
     try {
       if ( this.started ) {
         throw new Error("Already started");
@@ -79,10 +77,10 @@ export class PanGestureRecognizer extends GestureRecognizer {
         throw new CaptureError("Failed to capture");
       }
 
-      this.onPanStart.emit(event);
+      this.onRotateStart.emit(event);
     }
     catch (ex) {
-      console.debug(`onPanStartHandler: Error occured - ${ex.message}`);
+      console.debug(`onRotateStartHandler: Error occured - ${ex.message}`);
       if ( ex instanceof CaptureError ) {
         this.started = false;
         this.captured = false;
@@ -90,7 +88,7 @@ export class PanGestureRecognizer extends GestureRecognizer {
     }
   }
 
-  onPanMoveHandler(event: HammerInput) {
+  onRotateMoveHandler(event: HammerInput) {
     try {
       if ( ! this.started ) {
         throw new Error('Not started');
@@ -100,14 +98,14 @@ export class PanGestureRecognizer extends GestureRecognizer {
         throw new Error('Not captured');
       }
 
-      this.onPanMove.emit(event);
+      this.onRotateMove.emit(event);
     }
     catch (ex) {
-      console.debug(`onPanMoveHandler: Error occured - ${ex.message}`);
+      console.debug(`onRotateMoveHandler: Error occured - ${ex.message}`);
     }
   }
 
-  onPanEndHandler(event: HammerInput) {
+  onRotateEndHandler(event: HammerInput) {
     try {
       if ( ! this.started ) {
         throw new Error('Not started');
@@ -117,10 +115,10 @@ export class PanGestureRecognizer extends GestureRecognizer {
         throw new Error('Not captured');
       }
 
-      this.onPanEnd.emit(event);
+      this.onRotateEnd.emit(event);
     }
     catch (ex) {
-      console.debug(`onPanEndHandler: Error occured - ${ex.message}`);
+      console.debug(`onRotateEndHandler: Error occured - ${ex.message}`);
     }
     finally {
       if ( this.delegate ) {
@@ -131,12 +129,12 @@ export class PanGestureRecognizer extends GestureRecognizer {
     }
   }
 
-  onPanCancelHandler(event: HammerInput) {
+  onRotateCancelHandler(event: HammerInput) {
     try {
-      this.onPanCancel.emit(event);
+      this.onRotateCancel.emit(event);
     }
     catch (ex) {
-      console.debug(`onPanCancelHandler: Error occured - ${ex.message}`);
+      console.debug(`onRotateCancelHandler: Error occured - ${ex.message}`);
     }
     finally {
       if ( this.delegate ) {
@@ -148,34 +146,35 @@ export class PanGestureRecognizer extends GestureRecognizer {
   }
 }
 
-export interface PanGestureRecognizerOptions {
+export interface RotateGestureRecognizerOptions {
   threshold?: number,
   pointers?: number,
-  direction?: GestureDirection,
   priority?: GesturePriority,
   disableScroll? : DisableScroll
 }
 
 @Injectable()
-export class PanGestureRecognizerProvider{
+export class RotateGestureRecognizerProvider{
   constructor(private gestureController: GestureController) {
   }
 
-  create(elementRef:ElementRef, options: PanGestureRecognizerOptions) {
-    // assign reasonable defaults
-    options.direction = !!options.direction ? options.direction : GestureDirection.ALL;
+  create(elementRef:ElementRef, options: RotateGestureRecognizerOptions) {
     options.threshold = !!options.threshold ? options.threshold : DEFAULT_THRESHOLD;
-    options.pointers = !!options.pointers ? options.pointers : 1;
+    options.pointers = !!options.pointers ? options.pointers : DEFAULT_NUM_POINTERS;
     options.priority = !!options.priority ? options.priority : GesturePriority.Normal;
     options.disableScroll = !!options.disableScroll ? options.disableScroll : DisableScroll.DuringCapture;
 
-    let delegate = this.gestureController.create(`pan-gesture-#${++count}`, {
+    let delegate = this.gestureController.create(`rotate-gesture-#${++count}`, {
       priority: options.priority,
       disableScroll: options.disableScroll
     });
 
-    return new PanGestureRecognizer(delegate, elementRef, options);
+    return new RotateGestureRecognizer(delegate, elementRef, options);
   }
 }
 
 let count = 0;
+
+
+const DEFAULT_THRESHOLD: number = 0;
+const DEFAULT_NUM_POINTERS = 2;

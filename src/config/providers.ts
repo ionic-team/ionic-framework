@@ -26,6 +26,9 @@ import { ToastController } from '../components/toast/toast';
 import { Translate } from '../translation/translate';
 
 import { PanGestureRecognizerProvider } from '../gestures/hammer-providers/pan-gesture-recognizer';
+import { PinchGestureRecognizerProvider } from '../gestures/hammer-providers/pinch-gesture-recognizer';
+import { PressGestureRecognizerProvider } from '../gestures/hammer-providers/press-gesture-recognizer';
+import { RotateGestureRecognizerProvider } from '../gestures/hammer-providers/rotate-gesture-recognizer';
 import { SwipeGestureRecognizerProvider } from '../gestures/hammer-providers/swipe-gesture-recognizer';
 import { TapGestureRecognizerProvider } from '../gestures/hammer-providers/tap-gesture-recognizer';
 
@@ -85,6 +88,9 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
 
 
     PanGestureRecognizerProvider,
+    PinchGestureRecognizerProvider,
+    PressGestureRecognizerProvider,
+    RotateGestureRecognizerProvider,
     SwipeGestureRecognizerProvider,
     TapGestureRecognizerProvider
   ];

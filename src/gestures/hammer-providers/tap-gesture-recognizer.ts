@@ -29,8 +29,8 @@ export class TapGestureRecognizer extends GestureRecognizer {
 
   onTapHandler(event:HammerInput): void {
     try {
-      if ( ! this.started ) {
-        throw new Error('Not started');
+      if ( this.started ) {
+        throw new Error('Already started');
       }
 
       if ( this.captured ) {
@@ -41,12 +41,18 @@ export class TapGestureRecognizer extends GestureRecognizer {
         throw new Error('Missing delegate');
       }
 
+      this.delegate.release();
+      this.started = this.delegate.start();
+
+      if ( ! this.started ) {
+        throw new Error('Failed to start');
+      }
+
       this.captured = this.delegate.capture();
 
       if ( ! this.captured ) {
         throw new CaptureError("Failed to capture");
       }
-
       this.onTap.emit(event);
 
     }
@@ -57,14 +63,30 @@ export class TapGestureRecognizer extends GestureRecognizer {
       }
     }
     finally{
+      this.delegate.release();
       this.started = false;
       this.captured = false;
     }
   }
 
   pointerDown(event: HammerInput) {
-    super.pointerDown(event);
-    this.started = true;
+    try {
+      if ( ! this.canStart(event) ) {
+        throw new Error('Cannot start');
+      }
+
+      if ( ! this.delegate ) {
+        throw new Error('Missing delegate');
+      }
+      this.recognizerEnabled = true;
+    }
+    catch(ex) {
+        console.log(`TapGestureRecognizer: Error occured during pointerdown - ${ex.message}`);
+    }
+  }
+
+  pointerUp(event: HammerInput) {
+    // taps utilize pointer down and pointer up, and there can be multiple taps, so don't use this
   }
 }
 
@@ -75,7 +97,6 @@ export interface TapGestureRecognizerOptions {
   time?: number,
   threshold?: number,
   posThreshold?: number,
-  name?: string,
   priority?: GesturePriority,
   disableScroll? : DisableScroll
 }
@@ -86,16 +107,15 @@ export class TapGestureRecognizerProvider{
   }
 
   create(elementRef:ElementRef, options:TapGestureRecognizerOptions) {
-    options.pointers = options.pointers ? options.pointers : DEFAULT_NUM_POINTERS;
-    options.taps = options.taps ? options.taps : DEFAULT_NUM_TAPS;
-    options.interval = options.interval ? options.interval : DEFAULT_INTERVAL;
-    options.time = options.time ? options.time : DEFAULT_TIME;
-    options.threshold = options.threshold ? options.threshold : DEFAULT_THRESHOLD;
-    options.posThreshold = options.posThreshold ? options.posThreshold : DEFAULT_POSITION_THRESHOLD;
-    options.name = !! !!options.name ? options.name : "tap-gesture";
+    options.pointers = !!options.pointers ? options.pointers : DEFAULT_NUM_POINTERS;
+    options.taps = !!options.taps ? options.taps : DEFAULT_NUM_TAPS;
+    options.interval = !!options.interval ? options.interval : DEFAULT_INTERVAL;
+    options.time = !!options.time ? options.time : DEFAULT_TIME;
+    options.threshold = !!options.threshold ? options.threshold : DEFAULT_THRESHOLD;
+    options.posThreshold = !!options.posThreshold ? options.posThreshold : DEFAULT_POSITION_THRESHOLD;
     options.priority = !!options.priority ? options.priority : GesturePriority.Normal;
     options.disableScroll = !!options.disableScroll ? options.disableScroll : DisableScroll.Never;
-    let delegate = this.gestureController.create(options.name, {
+    let delegate = this.gestureController.create(`tap-gesture-#${++count}`, {
       priority: options.priority,
       disableScroll: options.disableScroll
     });
@@ -103,6 +123,8 @@ export class TapGestureRecognizerProvider{
     return new TapGestureRecognizer(delegate, elementRef, options);
   }
 }
+
+let count = 0;
 
 const DEFAULT_NUM_POINTERS: number = 1;
 const DEFAULT_NUM_TAPS : number = 1;

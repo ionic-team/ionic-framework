@@ -29,16 +29,24 @@ export class SwipeGestureRecognizer extends GestureRecognizer {
 
   onSwipeHandler(event: HammerInput) {
     try {
-      if ( ! this.started ) {
-        throw new Error('Not started');
+
+      if ( ! this.delegate ) {
+        throw new Error('Delegate missing');
+      }
+
+      if ( this.started ) {
+        throw new Error('Already started');
       }
 
       if ( this.captured ) {
         throw new Error('Already captured');
       }
 
-      if ( ! this.delegate ) {
-        throw new Error('Delegate missing');
+      this.delegate.release();
+
+      this.started = this.delegate.start();
+      if ( !this.started ) {
+        throw new Error('Failed to start');
       }
 
       this.captured = this.delegate.capture();
@@ -72,7 +80,6 @@ export interface SwipeGestureRecognizerOptions {
   threshold?: number,
   pointers?: number,
   direction?: GestureDirection,
-  name?: string,
   priority?: GesturePriority,
   disableScroll? : DisableScroll
 }
@@ -87,10 +94,9 @@ export class SwipeGestureRecognizerProvider {
     options.direction = !!options.direction ? options.direction : GestureDirection.ALL;
     options.threshold = !!options.threshold ? options.threshold : DEFAULT_THRESHOLD;
     options.pointers = !!options.pointers ? options.pointers : DEFAULT_NUM_POINTERS;
-    options.name = !! !!options.name ? options.name : "swipe-gesture";
     options.priority = !!options.priority ? options.priority : GesturePriority.Normal;
     options.disableScroll = !!options.disableScroll ? options.disableScroll : DisableScroll.DuringCapture;
-    let delegate = this.gestureController.create(options.name, {
+    let delegate = this.gestureController.create(`swipe-gesture-#${++count}`, {
       priority: options.priority,
       disableScroll: options.disableScroll
     });
@@ -98,6 +104,8 @@ export class SwipeGestureRecognizerProvider {
     return new SwipeGestureRecognizer(delegate, elementRef, options);
   }
 }
+
+let count = 0;
 
 const DEFAULT_NUM_POINTERS: number = 1;
 const DEFAULT_THRESHOLD: number = 10;
