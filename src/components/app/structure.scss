@@ -88,7 +88,7 @@ ion-tab.show-tab scroll-cotent {
 // Page Container Structure
 // --------------------------------------------------
 
-ion-page {
+.ion-page {
   position: absolute;
   top: 0;
   left: 0;
@@ -111,21 +111,21 @@ ion-content {
   height: 100%;
 }
 
-ion-page > ion-content {
+.ion-page > ion-content {
   position: absolute;
 }
 
-ion-page scroll-content {
+.ion-page scroll-content {
   // do not render the scroll-content at all until ready
   display: none;
 }
 
-ion-page.show-page {
+.ion-page.show-page {
   // show the page now that it's ready
   opacity: 1;
 }
 
-ion-page.show-page scroll-content {
+.ion-page.show-page scroll-content {
   // render the content when ready
   display: block;
 }
@@ -211,7 +211,7 @@ ion-content.js-scroll > scroll-content {
   will-change: initial;
 }
 
-.disable-scroll ion-page scroll-content {
+.disable-scroll .ion-page scroll-content {
   overflow-y: hidden;
   overflow-x: hidden;
 }

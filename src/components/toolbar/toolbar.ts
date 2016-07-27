@@ -62,30 +62,6 @@ export class ToolbarBase extends Ion {
     return (this.titleCmp && this.titleCmp.getTitleText()) || '';
   }
 
-  /**
-   * @private
-   */
-  getTitleRef() {
-    return this.titleCmp && this.titleCmp.elementRef;
-  }
-
-  /**
-   * @private
-   * A toolbar items include the left and right side `ion-buttons`,
-   * and every `menu-toggle`. It does not include the `ion-title`.
-   * @returns {TODO} Array of this toolbar's item ElementRefs.
-   */
-  getItemRefs() {
-    return this.itemRefs;
-  }
-
-  /**
-   * @private
-   */
-  addItemRef(itemElementRef: ElementRef) {
-    this.itemRefs.push(itemElementRef);
-  }
-
 }
 
 /**

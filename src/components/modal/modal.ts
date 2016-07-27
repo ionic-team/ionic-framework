@@ -34,22 +34,6 @@ export class Modal extends ViewController {
   }
 
   /**
-   * @private
-   * Override the load method and load our child component
-   */
-  loaded(done: Function) {
-    // grab the instance, and proxy the ngAfterViewInit method
-    let originalNgAfterViewInit = this.instance.ngAfterViewInit;
-
-    this.instance.ngAfterViewInit = () => {
-      if (originalNgAfterViewInit) {
-        originalNgAfterViewInit();
-      }
-      this.instance.loadComponent(done);
-    };
-  }
-
-  /**
    * Present the action sheet instance.
    *
    * @param {NavOptions} [opts={}] Nav options to go with this transition.

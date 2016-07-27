@@ -264,11 +264,10 @@ export class Tabs extends Ion {
     // then skip this and don't treat it as it's own ViewController
     if (viewCtrl) {
       viewCtrl.setContent(this);
-      viewCtrl.setContentRef(_elementRef);
 
-      viewCtrl.loaded = (done) => {
-        this._onReady = done;
-      };
+      // viewCtrl.loaded = (done) => {
+      //   this._onReady = done;
+      // };
     }
   }
 
@@ -354,7 +353,7 @@ export class Tabs extends Ion {
    * @private
    */
   private _setConfig(attrKey: string, fallback: any) {
-    var val = this[attrKey];
+    var val = (<any>this)[attrKey];
     if (isBlank(val)) {
       val = this._config.get(attrKey, fallback);
     }

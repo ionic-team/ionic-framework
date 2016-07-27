@@ -1,6 +1,5 @@
-import { ComponentResolver, ElementRef, EventEmitter, NgZone, provide, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
 
-import { addSelector } from '../../config/bootstrap';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { GestureController } from '../../gestures/gesture-controller';
@@ -53,7 +52,7 @@ export class NavControllerBase extends Ion implements NavController {
     elementRef: ElementRef,
     public _zone: NgZone,
     public _renderer: Renderer,
-    public _compiler: ComponentResolver,
+    public _cfr: ComponentFactoryResolver,
     public _gestureCtrl: GestureController
   ) {
     super(elementRef);
@@ -977,64 +976,57 @@ export class NavControllerBase extends Ion implements NavController {
       return;
     }
 
-    // TEMPORARY: automatically set selector w/ dah reflector
-    // TODO: use componentFactory.create once fixed
-    addSelector(view.componentType, 'ion-page');
+    // add more providers to just this page
+    let componentProviders = ReflectiveInjector.resolve([
+      { provide: NavController, useValue: this },
+      { provide: ViewController, useValue: view },
+      { provide: NavParams, useValue: view.getNavParams() }
+    ]);
 
-    this._compiler.resolveComponent(view.componentType).then(componentFactory => {
+    const componentFactory = this._cfr.resolveComponentFactory(view.componentType);
+    const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
 
-      if (view.state === STATE_CANCEL_ENTER) {
-        // view may have already been removed from the stack
-        // if so, don't even bother adding it
-        view.destroy();
-        this._views.splice(view.index, 1);
-        return;
-      }
+    let componentRef = viewport.createComponent(componentFactory, viewport.length, childInjector, []);
 
-      // add more providers to just this page
-      let componentProviders = ReflectiveInjector.resolve([
-        provide(NavController, {useValue: this}),
-        provide(ViewController, {useValue: view}),
-        provide(NavParams, {useValue: view.getNavParams()})
-      ]);
+    if (view.state === STATE_CANCEL_ENTER) {
+      // view may have already been removed from the stack
+      // if so, don't even bother adding it
+      view.destroy();
+      this._views.splice(view.index, 1);
+      return;
+    }
 
-      let childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
+    // a new ComponentRef has been created
+    // set the ComponentRef's instance to its ViewController
+    view.setInstance(componentRef.instance);
 
-      let componentRef = componentFactory.create(childInjector, null, null);
+    // the ElementRef of the actual ion-page created
+    let pageElementRef = componentRef.location;
 
-      viewport.insert(componentRef.hostView, viewport.length);
+    this._renderer.setElementClass(pageElementRef.nativeElement, 'ion-page', true);
 
-      // a new ComponentRef has been created
-      // set the ComponentRef's instance to its ViewController
-      view.setInstance(componentRef.instance);
+    // remember the ChangeDetectorRef for this ViewController
+    view.setChangeDetector(componentRef.changeDetectorRef);
 
-      // the component has been loaded, so call the view controller's loaded method to load any dependencies into the dom
-      view.loaded(() => {
+    // remember the ElementRef to the ion-page elementRef that was just created
+    view.setPageElementRef(pageElementRef);
 
-        // the ElementRef of the actual ion-page created
-        let pageElementRef = componentRef.location;
+    // auto-add page css className created from component JS class name
+    let cssClassName = pascalCaseToDashCase(view.componentType.name);
+    this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
 
-        // remember the ChangeDetectorRef for this ViewController
-        view.setChangeDetector(componentRef.changeDetectorRef);
-
-        // remember the ElementRef to the ion-page elementRef that was just created
-        view.setPageRef(pageElementRef);
-
-        // auto-add page css className created from component JS class name
-        let cssClassName = pascalCaseToDashCase(view.componentType.name);
-        this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
-
-        view.onDestroy(() => {
-          // ensure the element is cleaned up for when the view pool reuses this element
-          this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
-          this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
-          componentRef.destroy();
-        });
-
-        // our job is done here
-        done(view);
-      });
+    view.onDestroy(() => {
+      // ensure the element is cleaned up for when the view pool reuses this element
+      this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
+      this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
+      componentRef.destroy();
     });
+
+
+    componentRef.changeDetectorRef.detectChanges();
+
+    // our job is done here
+    done(view);
   }
 
   /**

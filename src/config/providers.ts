@@ -1,4 +1,4 @@
-import { enableProdMode, PLATFORM_DIRECTIVES, provide } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { HTTP_PROVIDERS } from '@angular/http';
 
@@ -11,7 +11,7 @@ import { Events } from '../util/events';
 import { FeatureDetect } from '../util/feature-detect';
 import { Form } from '../util/form';
 import { GestureController } from '../gestures/gesture-controller';
-import { IONIC_DIRECTIVES } from './directives';
+import { IONIC_DIRECTIVES } from '../directives';
 import { isPresent } from '../util/util';
 import { Keyboard } from '../util/keyboard';
 import { LoadingController } from '../components/loading/loading';
@@ -29,7 +29,7 @@ import { Translate } from '../translation/translate';
 /**
  * @private
  */
-export function ionicProviders(customProviders?: Array<any>, config?: any): any[] {
+export function ionicProviders(config?: any, deepLinks?: any[]): any[] {
   // create an instance of Config
   if (!(config instanceof Config)) {
     config = new Config(config);
@@ -60,10 +60,10 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     ActionSheetController,
     AlertController,
     App,
-    provide(Config, {useValue: config}),
+    { provide: Config, useValue: config },
     disableDeprecatedForms(),
-    provide(Events, {useValue: events}),
-    provide(FeatureDetect, {useValue: featureDetect}),
+    { provide: Events, useValue: events },
+    { provide: FeatureDetect, useValue: featureDetect },
     Form,
     GestureController,
     HTTP_PROVIDERS,
@@ -73,17 +73,12 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     ModalController,
     PickerController,
     PopoverController,
-    provide(Platform, {useValue: platform}),
-    provide(PLATFORM_DIRECTIVES, {useValue: IONIC_DIRECTIVES, multi: true}),
+    { provide: Platform, useValue: platform },
     provideForms(),
     TapClick,
     ToastController,
     Translate,
   ];
-
-  if (isPresent(customProviders)) {
-    providers.push(customProviders);
-  }
 
   return providers;
 }

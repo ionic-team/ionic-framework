@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { NgModule, Component, ViewChild } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NavController, AlertController, Content } from '../../../../../src';
-import { ionicBootstrap, App } from '../../../../../src';
+import { App, IonicModule } from '../../../../../src';
 import { NavParams, ViewController } from '../../../../../src';
 
 
@@ -418,6 +419,26 @@ class E2EApp {
   }
 }
 
-ionicBootstrap(E2EApp).then((componetRef) => {
-  console.log('ionicBootstrap', componetRef);
-});
+@NgModule({
+  declarations: [
+    E2EApp,
+    FirstPage,
+    AnotherPage,
+    MyCmpTest,
+    FullPage,
+    PrimaryHeaderPage
+  ],
+  imports: [
+    IonicModule.forRoot(E2EApp)
+  ],
+  entryComponents: [
+    FirstPage,
+    AnotherPage,
+    MyCmpTest,
+    FullPage,
+    PrimaryHeaderPage
+  ]
+})
+export class AppModule {}
+
+platformBrowserDynamic().bootstrapModule(AppModule);

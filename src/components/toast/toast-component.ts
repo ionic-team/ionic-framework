@@ -106,7 +106,7 @@ class ToastSlideIn extends Transition {
     super(enteringView, leavingView, opts);
 
     // DOM READS
-    let ele = enteringView.pageRef().nativeElement;
+    let ele = enteringView.pageElementRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
@@ -139,7 +139,7 @@ class ToastSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageRef().nativeElement;
+    let ele = leavingView.pageElementRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
@@ -168,7 +168,7 @@ class ToastMdSlideIn extends Transition {
     super(enteringView, leavingView, opts);
 
     // DOM reads
-    let ele = enteringView.pageRef().nativeElement;
+    let ele = enteringView.pageElementRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
@@ -201,7 +201,7 @@ class ToastMdSlideOut extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageRef().nativeElement;
+    let ele = leavingView.pageElementRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
@@ -229,7 +229,7 @@ class ToastWpPopIn extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
 
-    let ele = enteringView.pageRef().nativeElement;
+    let ele = enteringView.pageElementRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
@@ -263,7 +263,7 @@ class ToastWpPopOut extends Transition {
     super(enteringView, leavingView, opts);
 
     // DOM reads
-    let ele = leavingView.pageRef().nativeElement;
+    let ele = leavingView.pageElementRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 

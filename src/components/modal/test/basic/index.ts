@@ -505,7 +505,7 @@ class FadeIn extends PageTransition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
     this
-      .element(enteringView.pageRef())
+      .element(enteringView.pageElementRef())
       .easing('ease')
       .duration(1000)
       .fromTo('translateY', '0%', '0%')
@@ -519,7 +519,7 @@ class FadeOut extends PageTransition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
     this
-      .element(leavingView.pageRef())
+      .element(leavingView.pageElementRef())
       .easing('ease')
       .duration(500)
       .fromTo('opacity', 1, 0)

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -227,12 +227,12 @@ export class Tab extends NavControllerBase {
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
-    compiler: ComponentResolver,
+    cfr: ComponentFactoryResolver,
     private _cd: ChangeDetectorRef,
     gestureCtrl: GestureController
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl);
 
     parent.add(this);
 

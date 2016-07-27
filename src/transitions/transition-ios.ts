@@ -22,15 +22,18 @@ class IOSTransition extends PageTransition {
     this.duration(opts.duration || DURATION);
     this.easing(opts.easing || EASING);
 
+    // get the native element for the entering page
+    let enteringPageEle: Element = enteringView.pageElementRef().nativeElement;
+
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');
 
     // do they have navbars?
     let enteringHasNavbar = enteringView.hasNavbar();
-    let leavingHasNavbar = leavingView && leavingView.hasNavbar();
+    let leavingHasNavbar = (leavingView && leavingView.hasNavbar());
 
     // entering content
-    let enteringContent = new Animation(enteringView.contentRef());
+    let enteringContent = new Animation(enteringPageEle.querySelector('ion-content'));
     enteringContent.element(enteringView.toolbarRefs());
     this.add(enteringContent);
 
@@ -49,14 +52,16 @@ class IOSTransition extends PageTransition {
 
     if (enteringHasNavbar) {
       // entering page has a navbar
-      let enteringNavBar = new Animation(enteringView.navbarRef());
+      let enteringNavbarEle: Element = enteringPageEle.querySelector('ion-navbar');
+
+      let enteringNavBar = new Animation(enteringNavbarEle);
       enteringNavBar.before.addClass('show-navbar');
       this.add(enteringNavBar);
 
-      let enteringTitle = new Animation(enteringView.titleRef());
-      let enteringNavbarItems = new Animation(enteringView.navbarItemRefs());
-      let enteringNavbarBg = new Animation(enteringView.navbarBgRef());
-      let enteringBackButton = new Animation(enteringView.backBtnRef());
+      let enteringTitle = new Animation(enteringNavbarEle.querySelector('ion-title'));
+      let enteringNavbarItems = new Animation(enteringNavbarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+      let enteringNavbarBg = new Animation(enteringNavbarEle.querySelector('.toolbar-background'));
+      let enteringBackButton = new Animation(enteringNavbarEle.querySelector('.back-button'));
       enteringNavBar
         .add(enteringTitle)
         .add(enteringNavbarItems)
@@ -104,7 +109,7 @@ class IOSTransition extends PageTransition {
             .before.addClass(SHOW_BACK_BTN_CSS)
             .fromTo(OPACITY, 0.01, 1, true);
 
-          let enteringBackBtnText = new Animation(enteringView.backBtnTextRef());
+          let enteringBackBtnText = new Animation(enteringNavbarEle.querySelector('.back-button-text'));
           enteringBackBtnText.fromTo(TRANSLATEX, '100px', '0px');
           enteringNavBar.add(enteringBackBtnText);
 
@@ -117,7 +122,9 @@ class IOSTransition extends PageTransition {
     // setup leaving view
     if (leavingView) {
       // leaving content
-      let leavingContent = new Animation(leavingView.contentRef());
+      let leavingPageEle: Element = leavingView.pageElementRef().nativeElement;
+
+      let leavingContent = new Animation(leavingPageEle.querySelector('ion-content'));
       leavingContent.element(leavingView.toolbarRefs());
       this.add(leavingContent);
 
@@ -136,16 +143,18 @@ class IOSTransition extends PageTransition {
 
       if (leavingHasNavbar) {
         // leaving page has a navbar
-        let leavingNavBar = new Animation(leavingView.navbarRef());
-        let leavingBackButton = new Animation(leavingView.backBtnRef());
-        let leavingTitle = new Animation(leavingView.titleRef());
-        let leavingNavbarItems = new Animation(leavingView.navbarItemRefs());
-        let leavingNavbarBg = new Animation(leavingView.navbarBgRef());
+        let leavingNavbarEle: Element = leavingPageEle.querySelector('ion-navbar');
+
+        let leavingNavBar = new Animation(leavingNavbarEle);
+        let leavingTitle = new Animation(leavingNavbarEle.querySelector('ion-title'));
+        let leavingNavbarItems = new Animation(leavingNavbarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+        let leavingNavbarBg = new Animation(leavingNavbarEle.querySelector('.back-button'));
+        let leavingBackButton = new Animation(leavingNavbarEle.querySelector('.back-button'));
 
         leavingNavBar
-          .add(leavingBackButton)
           .add(leavingTitle)
           .add(leavingNavbarItems)
+          .add(leavingBackButton)
           .add(leavingNavbarBg);
         this.add(leavingNavBar);
 
@@ -173,7 +182,7 @@ class IOSTransition extends PageTransition {
               .fromTo(TRANSLATEX, CENTER, '100%');
           }
 
-          let leavingBackBtnText = new Animation(leavingView.backBtnTextRef());
+          let leavingBackBtnText = new Animation(leavingNavbarEle.querySelector('.back-button-text'));
           leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (300) + 'px');
           leavingNavBar.add(leavingBackBtnText);
 

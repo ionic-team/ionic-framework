@@ -1,7 +1,7 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { ComponentRef, NgZone } from '@angular/core';
 
-import { AppRoot, UserComponent } from '../components/app/app';
+import { AppRoot } from '../components/app/app';
 import { nativeRaf } from '../util/dom';
 import { ionicProviders } from './providers';
 import { Platform } from '../platform/platform';
@@ -30,62 +30,48 @@ const _reflect: any = Reflect;
  * ionicBootstrap(MyClass, null, {tabsPlacement: 'bottom'})
  * ```
  */
-export function ionicBootstrap(appRootComponent: any, customProviders?: Array<any>, config?: any) {
-  // get all Ionic Providers
-  let providers = ionicProviders(customProviders, config);
-  providers.push({provide: UserComponent, useValue: appRootComponent});
+// export function ionicBootstrap(appRootComponent: any, customProviders?: Array<any>, config?: any) {
+//   // get all Ionic Providers
+//   let providers = ionicProviders(customProviders, config);
+//   providers.push({provide: UserComponent, useValue: appRootComponent});
 
-  return new Promise((resolve) => {
-    cssReady(() => {
-      // call angular bootstrap
-      bootstrap(AppRoot, providers).then(ngComponentRef => {
-        // ionic app has finished bootstrapping
-        ionicPostBootstrap(ngComponentRef);
-        resolve(ngComponentRef);
-      });
-    });
-  });
-}
-
-
-/**
- * @private
- */
-export function ionicPostBootstrap(ngComponentRef: ComponentRef<any>) {
-  // prepare platform ready
-  let platform: Platform = ngComponentRef.injector.get(Platform);
-  platform.setZone(ngComponentRef.injector.get(NgZone));
-  platform.prepareReady();
-  ngComponentRef.injector.get(TapClick);
-
-  return ngComponentRef;
-}
-
-let cssLoadAttempt = 0;
-function cssReady(done: Function) {
-  let appEle = <HTMLElement>document.body.querySelector('ion-app');
-
-  if (!appEle || appEle.clientHeight > 0 || cssLoadAttempt > 300) {
-    done();
-
-  } else {
-    nativeRaf(() => {
-      cssLoadAttempt++;
-      cssReady(done);
-    });
-  }
-}
+//   return new Promise((resolve) => {
+//     cssReady(() => {
+//       // call angular bootstrap
+//       bootstrap(AppRoot, providers).then(ngComponentRef => {
+//         // ionic app has finished bootstrapping
+//         ionicPostBootstrap(ngComponentRef);
+//         resolve(ngComponentRef);
+//       });
+//     });
+//   });
+// }
 
 
 /**
  * @private
  */
-export function addSelector(type: any, selector: string) {
-  if (type) {
-    let annotations = _reflect.getMetadata('annotations', type);
-    if (annotations && !annotations[0].selector) {
-      annotations[0].selector = selector;
-      _reflect.defineMetadata('annotations', annotations, type);
-    }
-  }
-}
+// export function ionicPostBootstrap(ngComponentRef: ComponentRef<any>) {
+//   // prepare platform ready
+//   let platform: Platform = ngComponentRef.injector.get(Platform);
+//   platform.setZone(ngComponentRef.injector.get(NgZone));
+//   platform.prepareReady();
+//   ngComponentRef.injector.get(TapClick);
+
+//   return ngComponentRef;
+// }
+
+// let cssLoadAttempt = 0;
+// function cssReady(done: Function) {
+//   let appEle = <HTMLElement>document.body.querySelector('ion-app');
+
+//   if (!appEle || appEle.clientHeight > 0 || cssLoadAttempt > 300) {
+//     done();
+
+//   } else {
+//     nativeRaf(() => {
+//       cssLoadAttempt++;
+//       cssReady(done);
+//     });
+//   }
+// }

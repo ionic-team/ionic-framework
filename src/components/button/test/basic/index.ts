@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { App, ionicBootstrap } from '../../../../../src';
+import { NgModule, Component } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { IonicModule, App } from '../../../../../src';
 
 
 @Component({
@@ -29,4 +30,20 @@ class E2EApp {
   rootPage = E2EPage;
 }
 
-ionicBootstrap(E2EApp);
+
+@NgModule({
+  declarations: [
+    E2EApp,
+    E2EPage
+  ],
+  imports: [
+    IonicModule.forRoot(E2EApp)
+  ],
+  entryComponents: [
+    E2EPage
+  ]
+})
+export class AppModule {}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+

@@ -374,17 +374,17 @@ describe('NavController', () => {
 
     it('should reset zIndexes if their is a negative zindex', () => {
       let view1 = new ViewController(Page1);
-      view1.setPageRef( mockElementRef() );
+      view1.setPageElementRef( mockElementRef() );
       view1.state = STATE_INACTIVE;
       view1.zIndex = -1;
 
       let view2 = new ViewController(Page2);
-      view2.setPageRef( mockElementRef() );
+      view2.setPageElementRef( mockElementRef() );
       view2.state = STATE_INACTIVE;
       view2.zIndex = 0;
 
       let view3 = new ViewController(Page3);
-      view3.setPageRef( mockElementRef() );
+      view3.setPageElementRef( mockElementRef() );
       view3.state = STATE_ACTIVE;
       view3.zIndex = 1;
 
@@ -598,7 +598,7 @@ describe('NavController', () => {
       leavingView.zIndex = 100;
       leavingView.fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageRef(mockElementRef());
+      enteringView.setPageElementRef(mockElementRef());
 
       nav._views = [leavingView, enteringView];
 
@@ -609,7 +609,7 @@ describe('NavController', () => {
     it('should set zIndex 100 when leaving view is not loaded', () => {
       let leavingView = new ViewController();
       let enteringView = new ViewController();
-      enteringView.setPageRef(mockElementRef());
+      enteringView.setPageElementRef(mockElementRef());
 
       nav._views = [leavingView, enteringView];
 
@@ -619,7 +619,7 @@ describe('NavController', () => {
 
     it('should set zIndex 100 on first entering view', () => {
       let enteringView = new ViewController();
-      enteringView.setPageRef(mockElementRef());
+      enteringView.setPageElementRef(mockElementRef());
       nav._setZIndex(enteringView, null, 'forward');
       expect(enteringView.zIndex).toEqual(100);
     });
@@ -629,7 +629,7 @@ describe('NavController', () => {
       leavingView.zIndex = 0;
       leavingView.fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageRef(mockElementRef());
+      enteringView.setPageElementRef(mockElementRef());
       nav._setZIndex(enteringView, leavingView, 'forward');
       expect(enteringView.zIndex).toEqual(1);
     });
@@ -639,14 +639,14 @@ describe('NavController', () => {
       leavingView.zIndex = 1;
       leavingView.fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageRef(mockElementRef());
+      enteringView.setPageElementRef(mockElementRef());
       nav._setZIndex(enteringView, leavingView, 'back');
       expect(enteringView.zIndex).toEqual(0);
     });
 
     it('should set zIndex 9999 on first entering portal view', () => {
       let enteringView = new ViewController();
-      enteringView.setPageRef(mockElementRef());
+      enteringView.setPageElementRef(mockElementRef());
       nav._isPortal = true;
       nav._setZIndex(enteringView, null, 'forward');
       expect(enteringView.zIndex).toEqual(9999);
@@ -657,7 +657,7 @@ describe('NavController', () => {
       leavingView.zIndex = 9999;
       leavingView.fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageRef(mockElementRef());
+      enteringView.setPageElementRef(mockElementRef());
       nav._isPortal = true;
       nav._setZIndex(enteringView, leavingView, 'forward');
       expect(enteringView.zIndex).toEqual(10000);
@@ -668,7 +668,7 @@ describe('NavController', () => {
       leavingView.zIndex = 10000;
       leavingView.fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageRef(mockElementRef());
+      enteringView.setPageElementRef(mockElementRef());
       nav._isPortal = true;
       nav._setZIndex(enteringView, leavingView, 'back');
       expect(enteringView.zIndex).toEqual(9999);

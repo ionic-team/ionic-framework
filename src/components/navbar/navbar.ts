@@ -2,62 +2,12 @@ import { Component, Directive, ElementRef, forwardRef, Inject, Input, Optional }
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
-import { isTrueProperty } from '../../util/util';
+import { isTrueProperty, noop } from '../../util/util';
 import { NavController } from '../nav/nav-controller';
 import { ToolbarBase } from '../toolbar/toolbar';
 import { ViewController } from '../nav/view-controller';
 
-
-@Directive({
-  selector: '.back-button',
-  host: {
-    '(click)': 'goBack($event)'
-  }
-})
-class BackButton extends Ion {
-  constructor(
-    @Optional() private _nav: NavController,
-    elementRef: ElementRef,
-    @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
-  ) {
-    super(elementRef);
-    navbar && navbar.setBackButtonRef(elementRef);
-  }
-
-  goBack(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-    this._nav && this._nav.pop();
-  }
-}
-
-
-@Directive({
-  selector: '.back-button-text'
-})
-class BackButtonText {
-  constructor(
-    elementRef: ElementRef,
-    @Inject(forwardRef(() => Navbar)) navbar: Navbar
-  ) {
-    navbar.setBackButtonTextRef(elementRef);
-  }
-}
-
-
-@Directive({
-  selector: '.toolbar-background'
-})
-class ToolbarBackground {
-  constructor(
-    elementRef: ElementRef,
-    @Inject(forwardRef(() => Navbar)) navbar: Navbar
-  ) {
-    navbar.setBackgroundRef(elementRef);
-  }
-}
 
 /**
  * @name Navbar
@@ -97,7 +47,7 @@ class ToolbarBackground {
   selector: 'ion-navbar',
   template: `
     <div class="toolbar-background"></div>
-    <button category="bar-button" class="back-button" [hidden]="_hideBb">
+    <button (click)="backButtonClick($event)" category="bar-button" class="back-button" [hidden]="_hideBb">
       <span class="button-inner">
         <ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>
         <span class="back-button-text">
@@ -112,7 +62,6 @@ class ToolbarBackground {
       <ng-content></ng-content>
     </div>
   `,
-  directives: [BackButton, BackButtonText, Icon, ToolbarBackground],
   host: {
     '[hidden]': '_hidden',
     'class': 'toolbar',
@@ -124,9 +73,6 @@ export class Navbar extends ToolbarBase {
   private _bbText: string;
   private _hidden: boolean = false;
   private _hideBb: boolean = false;
-  private _bbRef: ElementRef;
-  private _bbtRef: ElementRef;
-  private _bgRef: ElementRef;
   private _sbPadding: boolean;
 
   /**
@@ -143,6 +89,7 @@ export class Navbar extends ToolbarBase {
   constructor(
     private _app: App,
     @Optional() viewCtrl: ViewController,
+    @Optional() private navCtrl: NavController,
     elementRef: ElementRef,
     config: Config
   ) {
@@ -152,7 +99,14 @@ export class Navbar extends ToolbarBase {
 
     this._bbIcon = config.get('backButtonIcon');
     this._bbText = config.get('backButtonText');
-    this._sbPadding = config.getBoolean('statusbarPadding', false);
+    this._sbPadding = config.getBoolean('statusbarPadding');
+  }
+
+  backButtonClick(ev: UIEvent) {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    this.navCtrl && this.navCtrl.pop(null, noop);
   }
 
   /**
@@ -160,48 +114,6 @@ export class Navbar extends ToolbarBase {
    */
   setBackButtonText(text: string) {
     this._bbText = text;
-  }
-
-  /**
-   * @private
-   */
-  getBackButtonRef() {
-    return this._bbRef;
-  }
-
-  /**
-   * @private
-   */
-  setBackButtonRef(backButtonElementRef: ElementRef) {
-    this._bbRef = backButtonElementRef;
-  }
-
-  /**
-   * @private
-   */
-  getBackButtonTextRef() {
-    return this._bbtRef;
-  }
-
-  /**
-   * @private
-   */
-  setBackButtonTextRef(backButtonTextElementRef: ElementRef) {
-    this._bbtRef = backButtonTextElementRef;
-  }
-
-  /**
-   * @private
-   */
-  setBackgroundRef(backgrouneElementRef: ElementRef) {
-    this._bgRef = backgrouneElementRef;
-  }
-
-  /**
-   * @private
-   */
-  getBackgroundRef() {
-    return this._bgRef;
   }
 
   /**

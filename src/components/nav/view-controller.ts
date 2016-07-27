@@ -35,7 +35,7 @@ export class ViewController {
   private _hdAttr: string = null;
   private _leavingOpts: NavOptions = null;
   private _loaded: boolean = false;
-  private _nbDir: Navbar;
+  private _nb: Navbar;
   private _onDidDismiss: Function = null;
   private _onWillDismiss: Function = null;
   private _pgRef: ElementRef;
@@ -307,7 +307,7 @@ export class ViewController {
   /**
    * @private
    */
-  setPageRef(elementRef: ElementRef) {
+  setPageElementRef(elementRef: ElementRef) {
     this._pgRef = elementRef;
   }
 
@@ -315,23 +315,8 @@ export class ViewController {
    * @private
    * @returns {elementRef} Returns the Page's ElementRef
    */
-  pageRef(): ElementRef {
+  pageElementRef(): ElementRef {
     return this._pgRef;
-  }
-
-  /**
-   * @private
-   */
-  setContentRef(elementRef: ElementRef) {
-    this._cntRef = elementRef;
-  }
-
-  /**
-   * @private
-   * @returns {elementRef} Returns the Page's Content ElementRef
-   */
-  contentRef(): ElementRef {
-    return this._cntRef;
   }
 
   /**
@@ -395,14 +380,14 @@ export class ViewController {
    * @private
    */
   setNavbar(directive: Navbar) {
-    this._nbDir = directive;
+    this._nb = directive;
   }
 
   /**
    * @private
    */
-  getNavbar() {
-    return this._nbDir;
+  getNavbar(): Navbar {
+    return this._nb;
   }
 
   /**
@@ -413,55 +398,7 @@ export class ViewController {
    * @returns {boolean} Returns a boolean if this Page has a navbar or not.
    */
   hasNavbar(): boolean {
-    return !!this.getNavbar();
-  }
-
-  /**
-   * @private
-   */
-  navbarRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getElementRef();
-  }
-
-  /**
-   * @private
-   */
-  titleRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getTitleRef();
-  }
-
-  /**
-   * @private
-   */
-  navbarItemRefs(): Array<ElementRef> {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getItemRefs();
-  }
-
-  /**
-   * @private
-   */
-  backBtnRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getBackButtonRef();
-  }
-
-  /**
-   * @private
-   */
-  backBtnTextRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getBackButtonTextRef();
-  }
-
-  /**
-   * @private
-   */
-  navbarBgRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getBackgroundRef();
+    return !!this._nb;
   }
 
   /**
@@ -470,10 +407,7 @@ export class ViewController {
    * @param {string} backButtonText Set the back button text.
    */
   setBackButtonText(val: string) {
-    let navbar = this.getNavbar();
-    if (navbar) {
-      navbar.setBackButtonText(val);
-    }
+    this._nb && this._nb.setBackButtonText(val);
   }
 
   /**
@@ -482,9 +416,8 @@ export class ViewController {
    * @param {boolean} Set if this Page's back button should show or not.
    */
   showBackButton(shouldShow: boolean) {
-    let navbar = this.getNavbar();
-    if (navbar) {
-      navbar.hideBackButton = !shouldShow;
+    if (this._nb) {
+      this._nb.hideBackButton = !shouldShow;
     }
   }
 
@@ -493,18 +426,6 @@ export class ViewController {
    */
   isLoaded(): boolean {
     return this._loaded;
-  }
-
-  /**
-   * The loaded method is used to load any dynamic content/components
-   * into the dom before proceeding with the transition.  If a component
-   * needs dynamic component loading, extending ViewController and
-   * overriding this method is a good option
-   * @param {function} done is a callback that must be called when async
-   * loading/actions are completed
-   */
-  loaded(done: (() => any)) {
-    done();
   }
 
   /**
@@ -542,8 +463,7 @@ export class ViewController {
    * will fire, whether it was the first load or loaded from the cache.
    */
   fireDidEnter() {
-    let navbar = this.getNavbar();
-    navbar && navbar.didEnter();
+    this._nb && this._nb.didEnter();
     this.didEnter.emit(null);
     ctrlFn(this, 'DidEnter');
   }

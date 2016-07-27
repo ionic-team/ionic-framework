@@ -34,9 +34,9 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
-    "babel-plugin-transform-es2015-modules-systemjs": "^6.9.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-es2015-native-modules": "^6.6.0",
+    "babel-plugin-transform-es2015-modules-systemjs": "6.9.0",
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-es2015-native-modules": "6.9.0",
     "canonical-path": "0.0.2",
     "connect": "^3.3.4",
     "conventional-changelog": "^0.5.3",

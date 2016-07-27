@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentResolver, ElementRef, Input, Optional, NgZone, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, Input, Optional, NgZone, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -127,16 +127,15 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
-    compiler: ComponentResolver,
+    cfr: ComponentFactoryResolver,
     gestureCtrl: GestureController
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
       // this would happen when an ion-nav nests a child ion-nav.
       viewCtrl.setContent(this);
-      viewCtrl.setContentRef(elementRef);
     }
 
     if (parent) {
@@ -157,9 +156,6 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     this.setViewport(val);
   }
 
-  /**
-   * @private
-   */
   ngAfterViewInit() {
     this._hasInit = true;
 

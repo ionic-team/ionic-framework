@@ -18,7 +18,7 @@ import { Spinner } from '../spinner/spinner';
       '</div>' +
       '<div class="infinite-loading-text" [innerHTML]="loadingText" *ngIf="loadingText"></div>' +
     '</div>',
-  directives: [NgIf, Spinner],
+  directives: [Spinner],
   host: {
     '[attr.state]': 'inf.state'
   },

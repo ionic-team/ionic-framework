@@ -1,4 +1,4 @@
-import { ComponentResolver, Directive, ElementRef, forwardRef, Inject, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, forwardRef, Inject, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -20,11 +20,11 @@ export class NavPortal extends NavControllerBase {
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
-    compiler: ComponentResolver,
+    cfr: ComponentFactoryResolver,
     gestureCtrl: GestureController,
     viewPort: ViewContainerRef
   ) {
-    super(null, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
+    super(null, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl);
     this._isPortal = true;
     this.setViewport(viewPort);
     app.setPortal(this);

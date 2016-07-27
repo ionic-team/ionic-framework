@@ -90,7 +90,7 @@ export class LoadingCmp {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
      super(enteringView, leavingView, opts);
 
-     let ele = enteringView.pageRef().nativeElement;
+     let ele = enteringView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -111,7 +111,7 @@ export class LoadingCmp {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
      super(enteringView, leavingView, opts);
 
-     let ele = leavingView.pageRef().nativeElement;
+     let ele = leavingView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -132,7 +132,7 @@ export class LoadingCmp {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
      super(enteringView, leavingView, opts);
 
-     let ele = enteringView.pageRef().nativeElement;
+     let ele = enteringView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -153,7 +153,7 @@ export class LoadingCmp {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
      super(enteringView, leavingView, opts);
 
-     let ele = leavingView.pageRef().nativeElement;
+     let ele = leavingView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -174,7 +174,7 @@ export class LoadingCmp {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
      super(enteringView, leavingView, opts);
 
-     let ele = enteringView.pageRef().nativeElement;
+     let ele = enteringView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -195,7 +195,7 @@ export class LoadingCmp {
    constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
      super(enteringView, leavingView, opts);
 
-     let ele = leavingView.pageRef().nativeElement;
+     let ele = leavingView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 

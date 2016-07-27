@@ -15,7 +15,7 @@ export class PageTransition extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
 
-    this.enteringPage = new Animation(this.enteringView.pageRef());
+    this.enteringPage = new Animation(this.enteringView.pageElementRef());
     this.enteringPage.before.addClass('show-page');
     this.add(this.enteringPage);
 

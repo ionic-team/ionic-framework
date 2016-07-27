@@ -31,11 +31,14 @@ class WPTransition extends PageTransition {
     }
 
     if (enteringHasNavbar) {
-      let enteringNavBar = new Animation(enteringView.navbarRef());
+      let enteringPageEle: Element = enteringView.pageElementRef().nativeElement;
+      let enteringNavbarEle: Element = enteringPageEle.querySelector('ion-navbar');
+
+      let enteringNavBar = new Animation(enteringNavbarEle);
       enteringNavBar.before.addClass('show-navbar');
       this.add(enteringNavBar);
 
-      let enteringBackButton = new Animation(enteringView.backBtnRef());
+      let enteringBackButton = new Animation(enteringNavbarEle.querySelector('.back-button'));
       this.add(enteringBackButton);
       if (enteringView.enableBack()) {
         enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
@@ -48,7 +51,7 @@ class WPTransition extends PageTransition {
     if (leavingView && backDirection) {
       // leaving content
       this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-      let leavingPage = new Animation(leavingView.pageRef());
+      let leavingPage = new Animation(leavingView.pageElementRef());
       this.add(leavingPage.fromTo('scale', 1, SCALE_SMALL).fromTo('opacity', 0.99, 0));
     }
 

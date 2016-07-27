@@ -103,7 +103,6 @@ export class Content extends Ion {
 
     if (viewCtrl) {
       viewCtrl.setContent(this);
-      viewCtrl.setContentRef(_elementRef);
     }
   }
 
@@ -368,7 +367,7 @@ export class Content extends Ion {
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
-    this._scrollEle.style[prop] = val;
+    (<any>this._scrollEle.style)[prop] = val;
   }
 
   /**

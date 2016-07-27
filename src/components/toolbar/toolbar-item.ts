@@ -19,8 +19,6 @@ export class ToolbarItem {
     @Optional() toolbar: Toolbar,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
-    toolbar && toolbar.addItemRef(elementRef);
-    navbar && navbar.addItemRef(elementRef);
     this.inToolbar = !!(toolbar || navbar);
   }
 

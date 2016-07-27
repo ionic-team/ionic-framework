@@ -1,6 +1,7 @@
-import { Component, ComponentResolver, EventEmitter, HostBinding, Injectable, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, HostBinding, Inject, Injectable, OpaqueToken, ReflectiveInjector, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
+import { IonicModule } from '../../ionic-module';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
 import { NavController } from '../nav/nav-controller';
@@ -8,11 +9,6 @@ import { isTabs, isNav } from '../nav/nav-controller-base';
 import { NavOptions } from '../nav/nav-interfaces';
 import { NavPortal } from '../nav/nav-portal';
 import { Platform } from '../../platform/platform';
-
-/**
- * @private
- */
-export abstract class UserComponent {}
 
 
 /**
@@ -301,9 +297,11 @@ export class AppRoot {
 
   @ViewChild('anchor', {read: ViewContainerRef}) private _viewport: ViewContainerRef;
 
+  static userComponent = new OpaqueToken('USER_COMPONENT');
+
   constructor(
-    private _cmp: UserComponent,
-    private _cr: ComponentResolver,
+    @Inject(AppRoot.userComponent) private _userCmp: any,
+    private _cfr: ComponentFactoryResolver,
     private _renderer: Renderer,
     app: App
   ) {
@@ -312,13 +310,9 @@ export class AppRoot {
 
   ngAfterViewInit() {
     // load the user app's root component
-    this._cr.resolveComponent(<any>this._cmp).then(componentFactory => {
-      let appEle: HTMLElement = this._renderer.createElement(null, componentFactory.selector || 'div', null);
-      appEle.setAttribute('class', 'app-root');
-
-      let componentRef = componentFactory.create(this._viewport.injector, null, appEle);
-      this._viewport.insert(componentRef.hostView, 0);
-    });
+    const factory = this._cfr.resolveComponentFactory(this._userCmp);
+    const componentRef = this._viewport.createComponent(factory);
+    componentRef.changeDetectorRef.detectChanges();
   }
 
   @HostBinding('class.disable-scroll') disableScroll: boolean = false;
