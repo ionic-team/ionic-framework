@@ -12,7 +12,9 @@
   "scripts": {
     "test": "gulp karma",
     "test:generators": "jasmine-node ./tooling/spec",
-    "link": "npm install && gulp src && npm link"
+    "link": "npm install && gulp src && npm link",
+    "ngc": "ngc -p ngcConfig.json && cp src/components/slides/swiper-widget.es2015.js dist/components/slides/swiper-widget.js"
+
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.4",
@@ -34,6 +36,8 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
+    "@angular/compiler-cli": "^0.4.1",
+    "@angular/platform-server": "^2.0.0-rc.4",
     "babel-plugin-transform-es2015-modules-systemjs": "6.9.0",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-es2015-native-modules": "6.9.0",
@@ -93,7 +97,7 @@
     "through2": "^0.6.3",
     "tslint": "^3.10.2",
     "tslint-ionic-rules": "0.0.2",
-    "typescript": "1.8.7",
+    "typescript": "^2.0.0",
     "vinyl": "^0.4.6",
     "webpack": "^1.12.2",
     "yargs": "^3.6.0"

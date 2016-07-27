@@ -1,6 +1,15 @@
 import { CORE_DIRECTIVES } from '@angular/common';
 import { REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 
+import { ActionSheetCmp } from './components/action-sheet/action-sheet-component';
+import { AlertCmp } from './components/alert/alert-component';
+import { LoadingCmp } from './components/loading/loading-component';
+import { ModalCmp } from './components/modal/modal-component';
+import { PickerCmp } from './components/picker/picker-component';
+import { PopoverCmp } from './components/popover/popover-component';
+import { ToastCmp } from './components/toast/toast-component';
+
+
 import { Menu } from './components/menu/menu';
 import { MenuToggle } from './components/menu/menu-toggle';
 import { MenuClose } from './components/menu/menu-close';
@@ -161,7 +170,16 @@ export const IONIC_COMPONENTS: any[] = [
 
   // Nav
   Nav,
-  Navbar
+  Navbar,
+
+  ActionSheetCmp,
+  AlertCmp,
+  LoadingCmp,
+  ModalCmp,
+  PickerCmp,
+  PopoverCmp,
+  ToastCmp
+
 ];
 
 

@@ -218,6 +218,13 @@ gulp.task('bundle.system', function(){
  * definitions and does typechecking.
  */
 gulp.task('transpile', function(){
+  var exec = require('child_process').exec;
+  var gitStatusResult = exec('npm run ngc', function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stdErr);
+    done(err);
+  });
+  /*
   var gulpif = require('gulp-if');
   var stripDebug = require('gulp-strip-debug');
 
@@ -242,6 +249,7 @@ gulp.task('transpile', function(){
 
   if (!DEBUG) tsResult = tsResult.pipe(stripDebug());
   return tsResult.pipe(gulp.dest('dist'));
+  */
 });
 
 function tsCompile(options, cacheName){

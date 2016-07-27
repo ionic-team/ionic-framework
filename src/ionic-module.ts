@@ -3,7 +3,7 @@ import { ModuleWithProviders, OpaqueToken, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
-import { AppRoot } from './components/app/app'
+import { AppRoot, userComponent } from './components/app/app'
 import { IONIC_COMPONENTS, IONIC_DIRECTIVES } from './directives'
 import { ionicProviders } from './config/providers'
 
@@ -36,7 +36,7 @@ export class IonicModule {
           multi: true
         },
         {
-          provide: AppRoot.userComponent,
+          provide: userComponent,
           useValue: userRoot
         },
       ]

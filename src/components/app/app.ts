@@ -282,6 +282,7 @@ export class App {
 }
 
 
+export const userComponent = new OpaqueToken('USER_COMPONENT');
 /**
  * @private
  */
@@ -297,10 +298,9 @@ export class AppRoot {
 
   @ViewChild('anchor', {read: ViewContainerRef}) private _viewport: ViewContainerRef;
 
-  static userComponent = new OpaqueToken('USER_COMPONENT');
 
   constructor(
-    @Inject(AppRoot.userComponent) private _userCmp: any,
+    @Inject(userComponent) private _userCmp: any,
     private _cfr: ComponentFactoryResolver,
     private _renderer: Renderer,
     app: App
