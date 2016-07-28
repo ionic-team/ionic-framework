@@ -38,6 +38,7 @@ export function Page(config: PageMetadata) {
     config.selector = 'ion-page';
     config.host = config.host || {};
     config.host['[hidden]'] = '_hidden';
+    config.host['[class.tab-subpage]'] = '_tabSubPage';
     var annotations = _reflect.getMetadata('annotations', cls) || [];
     annotations.push(new Component(config));
     _reflect.defineMetadata('annotations', annotations, cls);

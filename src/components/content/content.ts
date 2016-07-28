@@ -524,7 +524,7 @@ export class Content extends Ion {
     ele = parentEle;
     let tabbarEle: HTMLElement;
 
-    while (ele && ele.tagName !== 'ION-MODAL') {
+    while (ele && ele.tagName !== 'ION-MODAL' && !ele.classList.contains('tab-subpage')) {
 
       if (ele.tagName === 'ION-TABS') {
         tabbarEle = <HTMLElement>ele.firstElementChild;

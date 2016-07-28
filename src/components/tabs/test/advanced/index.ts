@@ -323,8 +323,10 @@ class Tab3Page1 {
 
 
 @Component({
-  template: '<ion-nav swipeBackEnabled="false"></ion-nav>'
+  template: '<ion-nav [root]="root" swipeBackEnabled="false"></ion-nav>'
 })
-class E2EApp {}
+class E2EApp {
+  root = TabsPage;
+}
 
 ionicBootstrap(E2EApp);

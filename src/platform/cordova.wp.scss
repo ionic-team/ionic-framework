@@ -10,6 +10,7 @@ $cordova-wp-statusbar-padding-modal-max-width:         $cordova-statusbar-paddin
 ion-nav > ion-page,
 ion-nav > ion-page > ion-header,
 ion-tab > ion-page > ion-header,
+ion-tabs > ion-page.tab-subpage > ion-header,
 ion-menu {
   @include toolbar-statusbar-padding($toolbar-wp-height, $content-wp-padding);
 }
