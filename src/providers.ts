@@ -16,10 +16,10 @@ import { LoadingController } from './components/loading/loading';
 import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal';
 import { PickerController } from './components/picker/picker';
-import { Platform, providePlatform, UserAgent } from './platform/platform';
+import { Platform, providePlatform, UserAgent, UserNavigatorPlatform } from './platform/platform';
 import { PopoverController } from './components/popover/popover';
 import { QueryParams, provideQueryParams, UserUrl } from './platform/query-params';
-import { TapClick } from './components/tap-click/tap-click';
+import { TapClick, provideTapClick } from './components/tap-click/tap-click';
 import { ToastController } from './components/toast/toast';
 import { Translate } from './translation/translate';
 
@@ -32,6 +32,7 @@ export function ionicProviders(userRoot: any, userConfig?: any, deepLinks?: any[
     { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: userRoot, multi: true },
     { provide: UserAgent, useValue: window.navigator.userAgent },
     { provide: UserConfig, useValue: userConfig },
+    { provide: UserNavigatorPlatform, useValue: window.navigator.platform },
     { provide: UserRoot, useValue: userRoot },
     { provide: UserUrl, useValue: window.location.href },
 
@@ -40,6 +41,7 @@ export function ionicProviders(userRoot: any, userConfig?: any, deepLinks?: any[
     provideForms(),
     providePlatform(),
     provideQueryParams(),
+    provideTapClick(),
     disableDeprecatedForms(),
 
     ActionSheetController,

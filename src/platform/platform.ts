@@ -588,7 +588,6 @@ export class Platform {
   load() {
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;
-    let self = this;
 
     // figure out the most specific platform and active engine
     let tmpPlatform: PlatformNode;
@@ -826,16 +825,18 @@ interface BackButtonAction {
   priority: number;
 }
 
-export function setupPlatform(queryParams: QueryParams, userAgent: string, zone: NgZone): Platform {
+export function setupPlatform(queryParams: QueryParams, userAgent: string, navigatorPlatform: string, zone: NgZone): Platform {
   const p = new Platform();
   p.setUserAgent(userAgent);
   p.setQueryParams(queryParams);
+  p.setNavigatorPlatform(navigatorPlatform);
   p.setZone(zone);
   p.load();
   return p;
 }
 
 export const UserAgent = new OpaqueToken('USERAGENT');
+export const UserNavigatorPlatform = new OpaqueToken('USERNAVPLT');
 
 
 export function providePlatform(): any {
@@ -845,6 +846,7 @@ export function providePlatform(): any {
     deps: [
       QueryParams,
       UserAgent,
+      UserNavigatorPlatform,
       NgZone
     ]
   };

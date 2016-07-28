@@ -1,3 +1,5 @@
+import { APP_INITIALIZER } from '@angular/core';
+
 import { closest, nativeTimeout } from '../util/dom';
 import { Platform } from '../platform/platform';
 import { ScrollView } from '../util/scroll-view';
@@ -139,17 +141,20 @@ export function setupEvents(platform: Platform): Events {
     window.addEventListener('resize', () => {
       platform.windowResize();
     });
+
   }, 2000);
 
   return events;
 }
 
-export function provideEvents(): any {
+
+export function provideEvents() {
   return {
-    provide: Events,
-    useFactory: setupEvents,
+    provide: APP_INITIALIZER,
+    useFactory: (platform: Platform) => () => setupEvents(platform),
     deps: [
       Platform
-    ]
+    ],
+    multi: true
   };
 }

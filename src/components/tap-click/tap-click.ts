@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, APP_INITIALIZER } from '@angular/core';
 
 import { Activator } from './activator';
 import { App } from '../app/app';
@@ -224,3 +224,16 @@ const ACTIVATABLE_ATTRIBUTES = /tappable|button/i;
 const POINTER_TOLERANCE = 4;
 const POINTER_MOVE_UNTIL_CANCEL = 10;
 const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
+
+export function provideTapClick() {
+  return {
+    provide: APP_INITIALIZER,
+    useFactory: (config: Config, app: App, zone: NgZone) => () => new TapClick(config, app, zone),
+    deps: [
+      Config,
+      App,
+      NgZone
+    ],
+    multi: true
+  };
+}
