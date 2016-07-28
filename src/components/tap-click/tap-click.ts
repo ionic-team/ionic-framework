@@ -74,11 +74,11 @@ export class TapClick {
 
         if (this.app.isScrolling()) {
           // do not fire off a click event while the app was scrolling
-          //console.debug('click from touch prevented by scrolling ' + Date.now());
+          console.debug('click from touch prevented by scrolling ' + Date.now());
 
         } else {
           // dispatch a mouse click event
-          //console.debug('create click from touch ' + Date.now());
+          console.debug('create click from touch ' + Date.now());
 
           let clickEvent: any = document.createEvent('MouseEvents');
           clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
@@ -93,7 +93,7 @@ export class TapClick {
 
   mouseDown(ev: any) {
     if (this.isDisabledNativeClick()) {
-      //console.debug('mouseDown prevent ' + ev.target.tagName + ' ' + Date.now());
+      console.debug('mouseDown prevent ' + ev.target.tagName + ' ' + Date.now());
       // does not prevent default on purpose
       // so native blur events from inputs can happen
       ev.stopPropagation();
@@ -105,7 +105,7 @@ export class TapClick {
 
   mouseUp(ev: any) {
     if (this.isDisabledNativeClick()) {
-      //console.debug('mouseUp prevent ' + ev.target.tagName + ' ' + Date.now());
+      console.debug('mouseUp prevent ' + ev.target.tagName + ' ' + Date.now());
       ev.preventDefault();
       ev.stopPropagation();
     }
@@ -146,7 +146,7 @@ export class TapClick {
   }
 
   pointerCancel(ev: UIEvent) {
-    //console.debug('pointerCancel from ' + ev.type + ' ' + Date.now());
+    console.debug('pointerCancel from ' + ev.type + ' ' + Date.now());
     this.activator && this.activator.clearState();
     this.moveListeners(false);
   }
@@ -170,7 +170,7 @@ export class TapClick {
     }
 
     if (preventReason !== null) {
-      //console.debug('click prevent ' + preventReason + ' ' + Date.now());
+      console.debug('click prevent ' + preventReason + ' ' + Date.now());
       ev.preventDefault();
       ev.stopPropagation();
     }

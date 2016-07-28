@@ -25,12 +25,12 @@ import { TapClick } from '../components/tap-click/tap-click';
 import { ToastController } from '../components/toast/toast';
 import { Translate } from '../translation/translate';
 
-import { PanGestureRecognizerProvider } from '../gestures/hammer-providers/pan-gesture-recognizer';
-import { PinchGestureRecognizerProvider } from '../gestures/hammer-providers/pinch-gesture-recognizer';
-import { PressGestureRecognizerProvider } from '../gestures/hammer-providers/press-gesture-recognizer';
-import { RotateGestureRecognizerProvider } from '../gestures/hammer-providers/rotate-gesture-recognizer';
-import { SwipeGestureRecognizerProvider } from '../gestures/hammer-providers/swipe-gesture-recognizer';
-import { TapGestureRecognizerProvider } from '../gestures/hammer-providers/tap-gesture-recognizer';
+import { PanGestureController } from '../gestures/hammer/pan-gesture';
+import { PinchGestureController } from '../gestures/hammer/pinch-gesture';
+import { PressGestureController } from '../gestures/hammer/press-gesture';
+import { RotateGestureController } from '../gestures/hammer/rotate-gesture';
+import { SwipeGestureController } from '../gestures/hammer/swipe-gesture';
+import { TapGestureController } from '../gestures/hammer/tap-gesture';
 
 /**
  * @private
@@ -87,12 +87,12 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     Translate,
 
 
-    PanGestureRecognizerProvider,
-    PinchGestureRecognizerProvider,
-    PressGestureRecognizerProvider,
-    RotateGestureRecognizerProvider,
-    SwipeGestureRecognizerProvider,
-    TapGestureRecognizerProvider
+    PanGestureController,
+    PinchGestureController,
+    PressGestureController,
+    RotateGestureController,
+    SwipeGestureController,
+    TapGestureController
   ];
 
   if (isPresent(customProviders)) {

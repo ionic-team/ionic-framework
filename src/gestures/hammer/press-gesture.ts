@@ -1,40 +1,40 @@
 import {ElementRef, EventEmitter, Injectable} from '@angular/core';
-import * as hammer from 'hammerjs';
 
 import {DisableScroll, GestureController, GestureDelegate, GesturePriority} from '../gesture-controller';
 import {GestureDirection} from './gesture-direction';
-import {CaptureError, GestureRecognizer} from './gesture-recognizer';
+import {CaptureError, BaseHammerGesture} from './base-gesture';
+import {HammerFactory} from './hammer-factory';
 
-export class PressGestureRecognizer extends GestureRecognizer {
+export class PressGesture extends BaseHammerGesture {
 
-  public onPress = new EventEmitter<HammerInput>();
-  public onPressUp = new EventEmitter<HammerInput>();
+  private onPressHandler: (event: HammerInput) => any;
+  private onPressUpHandler: (event: HammerInput) => any;
 
-  private _onPressHandler = (event: HammerInput) => {
-    this.onPressHandler(event);
+  private _onPressHandlerInternal = (event: HammerInput) => {
+    this.onPressHandlerInternal(event);
   }
 
-  private _onPressUpHandler = (event: HammerInput) => {
-    this.onPressUpHandler(event);
+  private _onPressUpHandlerInternal = (event: HammerInput) => {
+    this.onPressUpHandlerInternal(event);
   }
 
-  constructor(delegate: GestureDelegate, elementRef: ElementRef, options: PressGestureRecognizerOptions) {
-    super(delegate, hammer.Press, options, elementRef);
+  constructor(delegate: GestureDelegate, hammerFactory: HammerFactory, elementRef: ElementRef, options: PressGestureOptions) {
+    super(delegate, hammerFactory, hammerFactory.createPressGestureRecognizer, options, elementRef);
   }
 
   listen() {
     super.listen();
-    this.hammerManager.on('press', this._onPressHandler);
-    this.hammerManager.on('pressup', this._onPressUpHandler);
+    this.hammerManager.on('press', this._onPressHandlerInternal);
+    this.hammerManager.on('pressup', this._onPressUpHandlerInternal);
   }
 
   unlisten() {
-    this.hammerManager.off('press', this._onPressHandler);
-    this.hammerManager.off('pressup', this._onPressUpHandler);
+    this.hammerManager.off('press', this._onPressHandlerInternal);
+    this.hammerManager.off('pressup', this._onPressUpHandlerInternal);
     super.unlisten();
   }
 
-  onPressHandler(event:HammerInput): void {
+  onPressHandlerInternal(event: HammerInput) {
     try {
       if ( this.started ) {
         throw new Error('Already started');
@@ -57,9 +57,11 @@ export class PressGestureRecognizer extends GestureRecognizer {
 
       this.captured = this.delegate.capture();
 
-      this.onPress.emit(event);
+      if ( this.onPressHandler ) {
+        this.onPressHandler(event);
+      }
     }
-    catch(ex) {
+    catch (ex) {
       console.debug(`onPressHandler: Error occured - ${ex.message}`);
       if ( ex instanceof CaptureError ) {
         this.notCaptured(event);
@@ -67,7 +69,7 @@ export class PressGestureRecognizer extends GestureRecognizer {
     }
   }
 
-  onPressUpHandler(event: HammerInput) {
+  onPressUpHandlerInternal(event: HammerInput) {
     try {
       if ( ! this.started ) {
         throw new Error('Not started');
@@ -81,9 +83,11 @@ export class PressGestureRecognizer extends GestureRecognizer {
         throw new Error('Missing delegate');
       }
 
-      this.onPressUp.emit(event);
+      if ( this.onPressUpHandler ) {
+        this.onPressUpHandler(event);
+      }
     }
-    catch(ex) {
+    catch (ex) {
       console.debug(`onPressUpHandler: Error occured - ${ex.message}`);
     }
     finally {
@@ -92,22 +96,30 @@ export class PressGestureRecognizer extends GestureRecognizer {
       this.captured = false;
     }
   }
+
+  onPress(handler: (event: HammerInput) => any) {
+    this.onPressHandler = handler;
+  }
+
+  onPressUp(handler: (event: HammerInput) => any) {
+    this.onPressUpHandler = handler;
+  }
 }
 
-export interface PressGestureRecognizerOptions {
-  pointers?: number,
-  threshold?: number,
-  time?: number,
-  priority?: GesturePriority,
-  disableScroll? : DisableScroll
+export interface PressGestureOptions {
+  pointers?: number;
+  threshold?: number;
+  time?: number;
+  priority?: GesturePriority;
+  disableScroll?: DisableScroll;
 }
 
 @Injectable()
-export class PressGestureRecognizerProvider{
-  constructor(private gestureController: GestureController) {
+export class PressGestureController {
+  constructor(private gestureController: GestureController, private hammerFactory: HammerFactory) {
   }
 
-  create(elementRef:ElementRef, options:PressGestureRecognizerOptions) {
+  create(elementRef: ElementRef, options: PressGestureOptions) {
     options.pointers = !!options.pointers ? options.pointers : DEFAULT_NUM_POINTERS;
     options.threshold = !!options.threshold ? options.threshold : DEFAULT_THRESHOLD;
     options.time = !!options.time ? options.time : DEFAULT_TIME;
@@ -118,12 +130,12 @@ export class PressGestureRecognizerProvider{
       disableScroll: options.disableScroll
     });
 
-    return new PressGestureRecognizer(delegate, elementRef, options);
+    return new PressGesture(delegate, this.hammerFactory, elementRef, options);
   }
 }
 
 let count = 0;
 
 const DEFAULT_NUM_POINTERS: number = 1;
-const DEFAULT_TIME : number = 251;
-const DEFAULT_THRESHOLD : number = 9;
+const DEFAULT_TIME: number = 251;
+const DEFAULT_THRESHOLD: number = 9;

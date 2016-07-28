@@ -14,14 +14,13 @@ export * from './gestures/slide-edge-gesture';
 export * from './gestures/slide-gesture';
 export * from './gestures/gesture-controller';
 
-export * from './gestures/hammer-providers/gesture-direction';
-export * from './gestures/hammer-providers/gesture-recognizer';
-export * from './gestures/hammer-providers/pan-gesture-recognizer';
-export * from './gestures/hammer-providers/pinch-gesture-recognizer';
-export * from './gestures/hammer-providers/press-gesture-recognizer';
-export * from './gestures/hammer-providers/rotate-gesture-recognizer';
-export * from './gestures/hammer-providers/swipe-gesture-recognizer';
-export * from './gestures/hammer-providers/tap-gesture-recognizer';
+export * from './gestures/hammer/gesture-direction';
+export * from './gestures/hammer/pan-gesture';
+export * from './gestures/hammer/pinch-gesture';
+export * from './gestures/hammer/press-gesture';
+export * from './gestures/hammer/rotate-gesture';
+export * from './gestures/hammer/swipe-gesture';
+export * from './gestures/hammer/tap-gesture';
 
 export * from './platform/platform';
 export * from './platform/storage';

@@ -3,31 +3,32 @@ import * as hammer from 'hammerjs';
 
 import {DisableScroll, GestureController, GestureDelegate, GesturePriority} from '../gesture-controller';
 import {GestureDirection} from './gesture-direction';
-import {CaptureError, GestureRecognizer} from './gesture-recognizer';
+import {CaptureError, BaseHammerGesture} from './base-gesture';
+import {HammerFactory} from './hammer-factory';
 
-export class TapGestureRecognizer extends GestureRecognizer {
+export class TapGesture extends BaseHammerGesture {
 
-  public onTap = new EventEmitter<HammerInput>();
+  private onTapHandler: (event: HammerInput) => any;
 
-  private _onTapHandler = (event: HammerInput) => {
-    this.onTapHandler(event);
+  private _onTapHandlerInternal = (event: HammerInput) => {
+    this.onTapHandlerInternal(event);
   }
 
-  constructor(delegate: GestureDelegate, elementRef: ElementRef, options: TapGestureRecognizerOptions) {
-    super(delegate, hammer.Tap, options, elementRef);
+  constructor(delegate: GestureDelegate, hammerFactory: HammerFactory, elementRef: ElementRef, options: TapGestureOptions) {
+    super(delegate, hammerFactory, hammerFactory.createTapGestureRecognizer, options, elementRef);
   }
 
   listen() {
     super.listen();
-    this.hammerManager.on('tap', this._onTapHandler);
+    this.hammerManager.on('tap', this._onTapHandlerInternal);
   }
 
   unlisten() {
-    this.hammerManager.off('tap', this._onTapHandler);
+    this.hammerManager.off('tap', this._onTapHandlerInternal);
     super.unlisten();
   }
 
-  onTapHandler(event:HammerInput): void {
+  onTapHandlerInternal(event: HammerInput) {
     try {
       if ( this.started ) {
         throw new Error('Already started');
@@ -51,18 +52,20 @@ export class TapGestureRecognizer extends GestureRecognizer {
       this.captured = this.delegate.capture();
 
       if ( ! this.captured ) {
-        throw new CaptureError("Failed to capture");
+        throw new CaptureError('Failed to capture');
       }
-      this.onTap.emit(event);
-
+      
+      if ( this.onTapHandler ) {
+        this.onTapHandler(event);
+      }
     }
-    catch(ex) {
+    catch (ex) {
       console.debug(`onTapHandler: Error occured - ${ex.message}`);
       if ( ex instanceof CaptureError ) {
         this.notCaptured(event);
       }
     }
-    finally{
+    finally {
       this.delegate.release();
       this.started = false;
       this.captured = false;
@@ -80,33 +83,37 @@ export class TapGestureRecognizer extends GestureRecognizer {
       }
       this.recognizerEnabled = true;
     }
-    catch(ex) {
-        console.log(`TapGestureRecognizer: Error occured during pointerdown - ${ex.message}`);
+    catch (ex) {
+        console.debug(`TapGestureRecognizer: Error occured during pointerdown - ${ex.message}`);
     }
   }
 
   pointerUp(event: HammerInput) {
     // taps utilize pointer down and pointer up, and there can be multiple taps, so don't use this
   }
+
+  onTap(handler: (event: HammerInput) => any) {
+    this.onTapHandler = handler;
+  }
 }
 
-export interface TapGestureRecognizerOptions {
-  pointers?: number,
-  taps?: number,
-  interval?: number,
-  time?: number,
-  threshold?: number,
-  posThreshold?: number,
-  priority?: GesturePriority,
-  disableScroll? : DisableScroll
+export interface TapGestureOptions {
+  pointers?: number;
+  taps?: number;
+  interval?: number;
+  time?: number;
+  threshold?: number;
+  posThreshold?: number;
+  priority?: GesturePriority;
+  disableScroll?: DisableScroll;
 }
 
 @Injectable()
-export class TapGestureRecognizerProvider{
-  constructor(private gestureController: GestureController) {
+export class TapGestureController {
+  constructor(private gestureController: GestureController, private hammerFactory: HammerFactory) {
   }
 
-  create(elementRef:ElementRef, options:TapGestureRecognizerOptions) {
+  create(elementRef: ElementRef, options: TapGestureOptions) {
     options.pointers = !!options.pointers ? options.pointers : DEFAULT_NUM_POINTERS;
     options.taps = !!options.taps ? options.taps : DEFAULT_NUM_TAPS;
     options.interval = !!options.interval ? options.interval : DEFAULT_INTERVAL;
@@ -120,15 +127,15 @@ export class TapGestureRecognizerProvider{
       disableScroll: options.disableScroll
     });
 
-    return new TapGestureRecognizer(delegate, elementRef, options);
+    return new TapGesture(delegate, this.hammerFactory, elementRef, options);
   }
 }
 
 let count = 0;
 
-const DEFAULT_NUM_POINTERS: number = 1;
-const DEFAULT_NUM_TAPS : number = 1;
-const DEFAULT_INTERVAL : number = 300;
-const DEFAULT_TIME : number = 250;
-const DEFAULT_THRESHOLD : number = 2;
-const DEFAULT_POSITION_THRESHOLD : number = 10;
+const DEFAULT_NUM_POINTERS = 1;
+const DEFAULT_NUM_TAPS = 1;
+const DEFAULT_INTERVAL = 300;
+const DEFAULT_TIME = 250;
+const DEFAULT_THRESHOLD = 2;
+const DEFAULT_POSITION_THRESHOLD = 10;

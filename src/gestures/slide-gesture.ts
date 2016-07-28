@@ -1,11 +1,11 @@
-import { PanGesture } from './drag-gesture';
+import { DragGesture } from './drag-gesture';
 import { clamp } from '../util';
 import { pointerCoord } from '../util/dom';
 
 /**
  * @private
  */
-export class SlideGesture extends PanGesture {
+export class SlideGesture extends DragGesture {
   public slide: SlideData = null;
 
   constructor(element: HTMLElement, opts = {}) {

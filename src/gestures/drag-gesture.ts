@@ -18,7 +18,7 @@ export interface PanGestureConfig {
 /**
  * @private
  */
-export class PanGesture {
+export class DragGesture {
   private dragging: boolean;
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;

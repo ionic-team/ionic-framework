@@ -3,31 +3,32 @@ import * as hammer from 'hammerjs';
 
 import {DisableScroll, GestureController, GestureDelegate, GesturePriority} from '../gesture-controller';
 import {GestureDirection} from './gesture-direction';
-import {CaptureError, GestureRecognizer} from './gesture-recognizer';
+import {CaptureError, BaseHammerGesture} from './base-gesture';
+import {HammerFactory} from './hammer-factory';
 
-export class SwipeGestureRecognizer extends GestureRecognizer {
+export class SwipeGesture extends BaseHammerGesture {
 
-  public onSwipe = new EventEmitter<HammerInput>();
+  private onSwipeHandler: (event: HammerInput) => any;
 
-  private _onSwipeHandler = (event: HammerInput) => {
-    this.onSwipeHandler(event);
+  private _onSwipeHandlerInternal = (event: HammerInput) => {
+    this.onSwipeHandlerInternal(event);
   }
 
-  constructor(delegate: GestureDelegate, elementRef: ElementRef, options: SwipeGestureRecognizerOptions) {
-    super(delegate, hammer.Swipe, options, elementRef);
+  constructor(delegate: GestureDelegate, hammerFactory: HammerFactory, elementRef: ElementRef, options: SwipeGestureOptions) {
+    super(delegate, hammerFactory, hammerFactory.createSwipeGestureRecognizer, options, elementRef);
   }
 
   listen() {
     super.listen();
-    this.hammerManager.on('swipe', this._onSwipeHandler);
+    this.hammerManager.on('swipe', this._onSwipeHandlerInternal);
   }
 
   unlisten() {
     super.unlisten();
-    this.hammerManager.off('swipe', this._onSwipeHandler);
+    this.hammerManager.off('swipe', this._onSwipeHandlerInternal);
   }
 
-  onSwipeHandler(event: HammerInput) {
+  onSwipeHandlerInternal(event: HammerInput) {
     try {
 
       if ( ! this.delegate ) {
@@ -55,11 +56,13 @@ export class SwipeGestureRecognizer extends GestureRecognizer {
         throw new CaptureError('Failed to capture');
       }
 
-      this.onSwipe.emit(event);
+      if ( this.onSwipeHandler ) {
+        this.onSwipeHandler(event);
+      }
 
     }
     catch (ex) {
-      console.log(`onSwipeHandler: Error occured - ${ex.message}`);
+      console.debug(`onSwipeHandler: Error occured - ${ex.message}`);
       if ( ex instanceof CaptureError ) {
         this.notCaptured(event);
       }
@@ -70,26 +73,30 @@ export class SwipeGestureRecognizer extends GestureRecognizer {
     }
   }
 
-  pointerDown(event: HammerInput){
+  pointerDown(event: HammerInput) {
     super.pointerDown(event);
     this.started = true;
   }
+
+  onSwipe(handler: (event: HammerInput) => any) {
+    this.onSwipeHandler = handler;
+  }
 }
 
-export interface SwipeGestureRecognizerOptions {
-  threshold?: number,
-  pointers?: number,
-  direction?: GestureDirection,
-  priority?: GesturePriority,
-  disableScroll? : DisableScroll
+export interface SwipeGestureOptions {
+  threshold?: number;
+  pointers?: number;
+  direction?: GestureDirection;
+  priority?: GesturePriority;
+  disableScroll?: DisableScroll;
 }
 
 @Injectable()
-export class SwipeGestureRecognizerProvider {
-  constructor(private gestureController: GestureController) {
+export class SwipeGestureController {
+  constructor(private gestureController: GestureController, private hammerFactory: HammerFactory) {
   }
 
-  create(elementRef:ElementRef, options: SwipeGestureRecognizerOptions) {
+  create(elementRef: ElementRef, options: SwipeGestureOptions) {
     // assign reasonable defaults
     options.direction = !!options.direction ? options.direction : GestureDirection.ALL;
     options.threshold = !!options.threshold ? options.threshold : DEFAULT_THRESHOLD;
@@ -101,11 +108,11 @@ export class SwipeGestureRecognizerProvider {
       disableScroll: options.disableScroll
     });
 
-    return new SwipeGestureRecognizer(delegate, elementRef, options);
+    return new SwipeGesture(delegate, this.hammerFactory, elementRef, options);
   }
 }
 
 let count = 0;
 
-const DEFAULT_NUM_POINTERS: number = 1;
-const DEFAULT_THRESHOLD: number = 10;
+const DEFAULT_NUM_POINTERS = 1;
+const DEFAULT_THRESHOLD = 10;

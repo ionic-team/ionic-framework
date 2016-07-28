@@ -1,13 +1,16 @@
-import * as hammer from 'hammerjs';
+import * as Hammer from 'hammerjs';
 import {ElementRef} from '@angular/core';
 import {GestureController, GestureDelegate, GesturePriority} from '../gesture-controller';
+import {HammerFactory} from './hammer-factory';
 
 import {merge} from '../../util/util';
 
 const POINTER_DOWN_EVENT_TYPE = 1;
 const POINTER_UP_EVENT_TYPE = 4;
 
-export class GestureRecognizer {
+const HAMMER_INPUT_EVENT = 'hammer.input';
+
+export abstract class BaseHammerGesture {
 
     /* gesture logic helpers */
     protected recognizerEnabled: boolean;
@@ -24,14 +27,15 @@ export class GestureRecognizer {
       this.inputEventHandler(event);
     };
 
-    constructor(protected delegate: GestureDelegate, recognizer: RecognizerStatic, opts: any, protected element: ElementRef) {
-      this.recognizer = new recognizer(this.getMergedOptions(opts));
+    constructor(protected delegate: GestureDelegate, protected hammerFactory: HammerFactory, recognizerFactory: Function, options: any, protected element: ElementRef) {
+      this.recognizer = recognizerFactory(this.getMergedOptions(options));
+      this.listen();
     }
 
-    getMergedOptions(opts: any = {}): any{
+    getMergedOptions(opts: any = {}): any {
       let additionalOptions = {
         enable: () => {
-          return this.recognizerEnabled
+          return this.recognizerEnabled;
         }
       };
       return merge(additionalOptions, opts);
@@ -40,20 +44,22 @@ export class GestureRecognizer {
     listen() {
       this.recognizerEnabled = false;
       if (! this.listening ) {
-        this.hammerManager = new hammer.Manager(this.element.nativeElement);
-        this.hammerManager.on('hammer.input', this._inputEventHandler);
+        this.hammerManager = this.hammerFactory.createHammerManager(this.element.nativeElement);
+        this.hammerManager.on(HAMMER_INPUT_EVENT, this._inputEventHandler);
         this.hammerManager.add(this.recognizer);
       }
       this.listening = true;
     }
 
     unlisten() {
+      this.recognizerEnabled = false;
       this.delegate && this.delegate.release();
-      this.hammerManager.off('hammer.input', this._inputEventHandler);
+      this.hammerManager.off(HAMMER_INPUT_EVENT, this._inputEventHandler);
       this.listening = false;
     }
 
     destroy() {
+      this.unlisten();
       this.delegate && this.delegate.destroy();
       this.hammerManager.remove(this.recognizer);
       this.recognizer = null;
@@ -66,9 +72,9 @@ export class GestureRecognizer {
         // hack to make up for buggy definition file
         let eventType = <number> <any> event.eventType;
         // we only care about start AND (end or cancel) events
-        if ( eventType === hammer.INPUT_START ) {
+        if ( eventType === Hammer.INPUT_START ) {
           this.pointerDown(event);
-        } else if ( eventType === hammer.INPUT_END || eventType === hammer.INPUT_CANCEL ) {
+        } else if ( eventType === Hammer.INPUT_END || eventType === Hammer.INPUT_CANCEL ) {
           // okay, bear with me here for a second
           // Some gestures require touch up before being recognized - for example Swipe!
           // so, our pointerUp logic needs to execute *after* the gesture had a chance to recognized
@@ -112,12 +118,12 @@ export class GestureRecognizer {
     pointerUp(event: HammerInput) {
       try {
         if ( ! this.delegate ) {
-          throw new Error("Missing delegate");
+          throw new Error('Missing delegate');
         }
 
         this.delegate.release();
 
-        if ( ! this.captured ){
+        if ( ! this.captured ) {
           this.notCaptured(event);
         }
 
@@ -130,19 +136,19 @@ export class GestureRecognizer {
       }
     }
 
-    requireFailure(gestureRecognizer: GestureRecognizer ) {
+    requireFailure(gestureRecognizer: BaseHammerGesture ) {
       this.recognizer.requireFailure(gestureRecognizer.getRecognizer());
     }
 
-    dropRequireFailure(gestureRecognizer: GestureRecognizer ) {
+    dropRequireFailure(gestureRecognizer: BaseHammerGesture ) {
       this.recognizer.dropRequireFailure(gestureRecognizer.getRecognizer());
     }
 
-    recognizeWith(gestureRecognizer: GestureRecognizer ) {
+    recognizeWith(gestureRecognizer: BaseHammerGesture ) {
       this.recognizer.requireFailure(gestureRecognizer.getRecognizer());
     }
 
-    dropRecognizeWith(gestureRecognizer: GestureRecognizer ) {
+    dropRecognizeWith(gestureRecognizer: BaseHammerGesture ) {
       this.recognizer.dropRequireFailure(gestureRecognizer.getRecognizer());
     }
 
@@ -157,7 +163,7 @@ export class GestureRecognizer {
 }
 
 export class CaptureError extends Error {
-  constructor(msg: string ){
+  constructor(msg: string ) {
     super(msg);
   }
 }
