@@ -120,7 +120,7 @@ class IOSTransition extends PageTransition {
     }
 
     // setup leaving view
-    if (leavingView) {
+    if (leavingView && leavingView.pageElementRef()) {
       // leaving content
       let leavingPageEle: Element = leavingView.pageElementRef().nativeElement;
 
