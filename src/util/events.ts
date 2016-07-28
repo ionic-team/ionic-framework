@@ -1,3 +1,7 @@
+import { closest, nativeTimeout } from '../util/dom';
+import { Platform } from '../platform/platform';
+import { ScrollView } from '../util/scroll-view';
+
 /**
  * @name Events
  * @description
@@ -100,4 +104,52 @@ export class Events {
     });
     return responses;
   }
+}
+
+export function setupEvents(platform: Platform): Events {
+  const events = new Events();
+
+  // start listening for resizes XXms after the app starts
+  nativeTimeout(() => {
+    window.addEventListener('online', (ev) => {
+      events.publish('app:online', ev);
+    }, false);
+
+    window.addEventListener('offline', (ev) => {
+      events.publish('app:offline', ev);
+    }, false);
+
+    window.addEventListener('orientationchange', (ev) => {
+      events.publish('app:rotated', ev);
+    });
+
+    // When that status taps, we respond
+    window.addEventListener('statusTap', (ev) => {
+      // TODO: Make this more better
+      let el = <HTMLElement>document.elementFromPoint(platform.width() / 2, platform.height() / 2);
+      if (!el) { return; }
+
+      let content = closest(el, 'scroll-content');
+      if (content) {
+        var scroll = new ScrollView(content);
+        scroll.scrollTo(0, 0, 300);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      platform.windowResize();
+    });
+  }, 2000);
+
+  return events;
+}
+
+export function provideEvents(): any {
+  return {
+    provide: Events,
+    useFactory: setupEvents,
+    deps: [
+      Platform
+    ]
+  };
 }

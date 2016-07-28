@@ -1,58 +1,95 @@
 
 export class FeatureDetect {
-  private _results: {[featureName: string]: boolean} = {};
+  private _r: {[featureName: string]: boolean} = {};
 
-  run(window: Window, document: Document) {
+  write(window: Window, document: Document) {
     for (let name in featureDetects) {
-      this._results[name] = featureDetects[name](window, document, document.body);
+      featureDetects[name].write(window, document);
     }
   }
 
-  has(featureName: string): boolean {
-    return !!this._results[featureName];
+  read(window: Window, document: Document) {
+    for (let name in featureDetects) {
+      featureDetects[name].read && featureDetects[name].read(window, document);
+    }
   }
 
-  static add(name: string, fn: any) {
-    featureDetects[name] = fn;
+  results(window: Window, document: Document) {
+    for (let name in featureDetects) {
+      this._r[name] = featureDetects[name].result(window, document);
+    }
+    featureDetects = null;
+  }
+
+  has(featureName: string): boolean {
+    return !!this._r[featureName];
+  }
+
+  static add(name: string, test: any) {
+    featureDetects[name] = new test();
   }
 
 }
 
-let featureDetects: {[featureName: string]: Function} = {};
+let featureDetects: {[featureName: string]: any} = {};
 
+/**
+* Hairline Feature Test
+* Add the "hairline" CSS class name to the body tag
+* if the browser supports subpixels.
+*/
+export class Hairlines {
+  canDo: boolean;
+  ele: HTMLElement;
 
-FeatureDetect.add('hairlines', function(window: Window, document: Document, body: HTMLBodyElement): boolean {
-  /**
-  * Hairline Shim
-  * Add the "hairline" CSS class name to the body tag
-  * if the browser supports subpixels.
-  */
-  let canDo = false;
-  if (window.devicePixelRatio >= 2) {
-    var hairlineEle = document.createElement('div');
-    hairlineEle.style.border = '.5px solid transparent';
-    body.appendChild(hairlineEle);
-
-    if (hairlineEle.offsetHeight === 1) {
-      body.classList.add('hairlines');
-      canDo = true;
+  write(window: Window, document: Document) {
+    if (window.devicePixelRatio >= 2) {
+      this.ele = document.createElement('div');
+      this.ele.style.border = '.5px solid transparent';
+      this.ele.style.position = 'absolute';
+      document.body.appendChild(this.ele);
     }
-    body.removeChild(hairlineEle);
   }
-  return canDo;
-});
 
-FeatureDetect.add('backdrop-filter', function(window: Window, document: Document, body: HTMLBodyElement): boolean {
-  /**
-  * backdrop-filter Shim
-  * Checks if css backdrop-filter is implemented by the browser.
-  */
-  let styles = <any>body.style;
-  let backdrop = styles['backdrop-filter'] !== undefined ||
-    styles['-webkit-backdrop-filter'] !== undefined;
-  if (backdrop) {
-    body.classList.add('backdrop-filter');
+  read(window: Window, document: Document) {
+    this.canDo = !!(this.ele && this.ele.offsetHeight === 1);
   }
-  return backdrop;
-});
+
+  result(window: Window, document: Document) {
+    this.ele && document.body.removeChild(this.ele);
+    this.ele = null;
+
+    if (this.canDo) {
+      document.body.classList.add('hairlines');
+    }
+
+    return this.canDo;
+  }
+}
+FeatureDetect.add('hairlines', Hairlines);
+
+
+/**
+* backdrop-filter Test
+* Checks if css backdrop-filter is implemented by the browser.
+*/
+export class BackdropFilter {
+  yup: boolean;
+
+  write(window: Window, document: Document) {
+    this.yup = false;
+    const styles = <any>document.documentElement.style;
+    const backdrop = styles['backdrop-filter'] !== undefined || styles['-webkit-backdrop-filter'] !== undefined;
+    if (backdrop) {
+      document.body.classList.add('backdrop-filter');
+      this.yup = true;
+    }
+  }
+
+  result() {
+    return this.yup;
+  }
+}
+
+FeatureDetect.add('backdrop-filter', BackdropFilter);
 

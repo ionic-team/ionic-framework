@@ -1,11 +1,10 @@
-import { ANALYZE_FOR_ENTRY_COMPONENTS, ApplicationRef, NgModule, Optional } from '@angular/core';
-import { ModuleWithProviders, OpaqueToken, SkipSelf } from '@angular/core';
+import { ApplicationRef, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
-import { AppRoot, userComponent } from './components/app/app'
-import { IONIC_COMPONENTS, IONIC_DIRECTIVES } from './directives'
-import { ionicProviders } from './config/providers'
+import { AppRoot } from './components/app/app-root'
+import { IONIC_DIRECTIVES } from './directives'
+import { ionicProviders } from './providers'
 
 
 @NgModule({
@@ -25,21 +24,10 @@ export class IonicModule {
     }
   }
 
-  static forRoot(userRoot: any, config?: any): ModuleWithProviders {
+  static forRoot(userRoot: any, userConfig?: any, deepLinks?: any[]): ModuleWithProviders {
     return {
       ngModule: IonicModule,
-      providers: [
-        ionicProviders(config),
-        {
-          provide: ANALYZE_FOR_ENTRY_COMPONENTS,
-          useValue: userRoot,
-          multi: true
-        },
-        {
-          provide: userComponent,
-          useValue: userRoot
-        },
-      ]
+      providers: ionicProviders(userRoot, userConfig, deepLinks)
     };
   }
 

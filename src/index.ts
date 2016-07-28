@@ -2,7 +2,7 @@
 export { Config } from './config/config';
 export { IonicModule } from './ionic-module';
 export { IONIC_DIRECTIVES } from './directives';
-export { ionicProviders } from './config/providers';
+export { ionicProviders } from './providers';
 
 export * from './decorators/page';
 

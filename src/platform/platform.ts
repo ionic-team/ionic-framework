@@ -1,6 +1,7 @@
-import { EventEmitter, NgZone } from '@angular/core';
+import { EventEmitter, Injectable, NgZone, OpaqueToken } from '@angular/core';
+import { Location } from '@angular/common';
 
-import { getQuerystring } from '../util/util';
+import { QueryParams } from './query-params';
 import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
 
 /**
@@ -28,13 +29,12 @@ import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
  * @demo /docs/v2/demos/platform/
  */
 export class Platform {
-  private _platforms: Array<string>;
+  private _platforms: Array<string> = [];
   private _versions: {[name: string]: PlatformVersion} = {};
   private _dir: string;
   private _lang: string;
-  private _url: string;
-  private _qs: any;
   private _ua: string;
+  private _qp: QueryParams;
   private _bPlt: string;
   private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
@@ -44,8 +44,7 @@ export class Platform {
 
   zone: NgZone;
 
-  constructor(platforms: string[] = []) {
-    this._platforms = platforms;
+  constructor() {
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
 
     this.backButton.subscribe(() => {
@@ -394,30 +393,15 @@ export class Platform {
   /**
    * @private
    */
-  setUrl(url: string) {
-    this._url = url;
-    this._qs = getQuerystring(url);
-  }
-
-  /**
-   * @private
-   */
-  url(): string {
-    return this._url;
-  }
-
-  /**
-   * @private
-   */
-  query(key: string): string {
-    return (this._qs || {})[key];
-  }
-
-  /**
-   * @private
-   */
   setUserAgent(userAgent: string) {
     this._ua = userAgent;
+  }
+
+  /**
+   * @private
+   */
+  setQueryParams(queryParams: QueryParams) {
+    this._qp = queryParams;
   }
 
   /**
@@ -575,7 +559,7 @@ export class Platform {
    * @private
    */
   isPlatformMatch(queryStringName: string, userAgentAtLeastHas?: string[], userAgentMustNotHave: string[] = []): boolean {
-    let queryValue = this.query('ionicplatform');
+    let queryValue = this._qp.get('ionicplatform');
     if (queryValue) {
       return this.testQuery(queryValue, queryStringName);
     }
@@ -840,4 +824,28 @@ export interface PlatformVersion {
 interface BackButtonAction {
   fn: Function;
   priority: number;
+}
+
+export function setupPlatform(queryParams: QueryParams, userAgent: string, zone: NgZone): Platform {
+  const p = new Platform();
+  p.setUserAgent(userAgent);
+  p.setQueryParams(queryParams);
+  p.setZone(zone);
+  p.load();
+  return p;
+}
+
+export const UserAgent = new OpaqueToken('USERAGENT');
+
+
+export function providePlatform(): any {
+  return {
+    provide: Platform,
+    useFactory: setupPlatform,
+    deps: [
+      QueryParams,
+      UserAgent,
+      NgZone
+    ]
+  };
 }

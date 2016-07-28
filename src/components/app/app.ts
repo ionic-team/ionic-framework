@@ -1,7 +1,7 @@
-import { Component, ComponentFactoryResolver, EventEmitter, HostBinding, Inject, Injectable, OpaqueToken, ReflectiveInjector, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { IonicModule } from '../../ionic-module';
+import { AppRoot } from './app-root';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
 import { NavController } from '../nav/nav-controller';
@@ -12,7 +12,7 @@ import { Platform } from '../../platform/platform';
 
 
 /**
- * Ionic App utility service.
+ * Ionic App
  */
 @Injectable()
 export class App {
@@ -281,42 +281,5 @@ export class App {
   }
 }
 
-
-export const userComponent = new OpaqueToken('USER_COMPONENT');
-/**
- * @private
- */
-@Component({
-  selector: 'ion-app',
-  template: `
-    <div #anchor nav-portal></div>
-    <click-block></click-block>
-  `,
-  directives: [NavPortal, ClickBlock]
-})
-export class AppRoot {
-
-  @ViewChild('anchor', {read: ViewContainerRef}) private _viewport: ViewContainerRef;
-
-
-  constructor(
-    @Inject(userComponent) private _userCmp: any,
-    private _cfr: ComponentFactoryResolver,
-    private _renderer: Renderer,
-    app: App
-  ) {
-    app.appRoot = this;
-  }
-
-  ngAfterViewInit() {
-    // load the user app's root component
-    const factory = this._cfr.resolveComponentFactory(this._userCmp);
-    const componentRef = this._viewport.createComponent(factory);
-    componentRef.changeDetectorRef.detectChanges();
-  }
-
-  @HostBinding('class.disable-scroll') disableScroll: boolean = false;
-
-}
 
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;
