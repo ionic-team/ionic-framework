@@ -1,13 +1,15 @@
-import {Config, Platform, ionicProviders} from '../../../src';
+import { Config, Platform, ionicProviders } from '../../../src';
 
 export function run() {
+
+describe('Config', () => {
 
   it('should set activator setting to none for old Android Browser on a linux device', () => {
     let config = new Config();
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('linux');
-    platform.load(null);
+    platform.load();
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('none');
@@ -18,7 +20,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('MacIntel');
-    platform.load(null);
+    platform.load();
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('ripple');
@@ -29,7 +31,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1650.59 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
-    platform.load(null);
+    platform.load();
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('none');
@@ -40,7 +42,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1650.59 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
-    platform.load(null);
+    platform.load();
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('ripple');
@@ -51,7 +53,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Android 5.0; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
-    platform.load(null);
+    platform.load();
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('ripple');
@@ -62,7 +64,7 @@ export function run() {
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
-    platform.load(null);
+    platform.load();
     config.setPlatform(platform);
 
     expect(config.get('activator')).toEqual('none');
@@ -79,7 +81,7 @@ export function run() {
   it('should used passed in Config instance in ionicProviders', () => {
     let userConfig =  new Config({
       mode: 'configInstance'
-    })
+    });
     let providers = ionicProviders(null, userConfig);
 
     let config = providers.find(provider => provider.useValue instanceof Config).useValue;
@@ -105,7 +107,7 @@ export function run() {
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
-    expect(config.get('tabsPlacement')).toEqual('top');
+    expect(config.get('iconMode')).toEqual('md');
   });
 
   it('should override mode settings from platforms setting', () => {
@@ -120,19 +122,19 @@ export function run() {
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
-    expect(config.get('tabsPlacement')).toEqual('top');
+    expect(config.get('iconMode')).toEqual('md');
   });
 
   it('should get boolean value from querystring', () => {
     let config = new Config();
     let platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicanimate=true')
+    platform.setUrl('http://biff.com/?ionicanimate=true');
     config.setPlatform(platform);
     expect(config.get('animate')).toEqual(true);
 
     config = new Config();
     platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicanimate=false')
+    platform.setUrl('http://biff.com/?ionicanimate=false');
     config.setPlatform(platform);
     expect(config.get('animate')).toEqual(false);
   });
@@ -142,7 +144,7 @@ export function run() {
       mode: 'a'
     });
     let platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicConfigKey=b')
+    platform.setUrl('http://biff.com/?ionicConfigKey=b');
     config.setPlatform(platform);
 
     expect(config.get('configKey')).toEqual('b');
@@ -153,7 +155,7 @@ export function run() {
       mode: 'modeA'
     });
     let platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicmode=modeB')
+    platform.setUrl('http://biff.com/?ionicmode=modeB');
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('modeB');
@@ -259,7 +261,7 @@ export function run() {
     let platform = new Platform(['android']);
     config.setPlatform(platform);
 
-    expect(config.get('tabsPlacement')).toEqual('top');
+    expect(config.get('iconMode')).toEqual('md');
   });
 
   it('should get setting from ios mode', () => {
@@ -540,7 +542,7 @@ export function run() {
     config = new Config();
     expect(config.settings()).toEqual({});
 
-    config = new Config([1,2,3]);
+    config = new Config([1, 2, 3]);
     expect(config.settings()).toEqual({});
 
     config = new Config('im bad, you know it');
@@ -561,5 +563,7 @@ export function run() {
     config = new Config(function(){});
     expect(config.settings()).toEqual({});
   });
+
+});
 
 }

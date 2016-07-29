@@ -1,14 +1,14 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, NavController} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap, NavController } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class IntroPage {
-  continueText: string = "Skip";
+  continueText: string = 'Skip';
   startingIndex: number = 1;
-  mySlideOptions;
+  mySlideOptions: any;
   showSlide: boolean = true;
 
   constructor(private nav: NavController) {
@@ -20,17 +20,17 @@ class IntroPage {
     };
   }
 
-  onSlideChanged(slider) {
-    console.log("Slide changed", slider);
+  onSlideChanged(slider: any) {
+    console.log('Slide changed', slider);
   }
 
-  onSlideChangeStart(slider) {
-    console.log("Slide change start", slider);
-    slider.isEnd ? this.continueText = "Continue" : this.continueText = "Skip";
+  onSlideChangeStart(slider: any) {
+    console.log('Slide change start', slider);
+    slider.isEnd ? this.continueText = 'Continue' : this.continueText = 'Skip';
   }
 
-  onSlideMove(slider) {
-    console.log("Slide move", slider);
+  onSlideMove(slider: any) {
+    console.log('Slide move', slider);
   }
 
   toggleLastSlide() {

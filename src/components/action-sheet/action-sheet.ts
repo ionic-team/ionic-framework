@@ -4,7 +4,7 @@ import { ActionSheetCmp } from './action-sheet-component';
 import { ActionSheetOptions } from './action-sheet-options';
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-options';
+import { NavOptions } from '../nav/nav-interfaces';
 import { ViewController } from '../nav/view-controller';
 
 /**
@@ -108,7 +108,7 @@ export class ActionSheet extends ViewController {
  *
  * @usage
  * ```ts
- * import {ActionSheetController} from 'ionic-angular'
+ * import { ActionSheetController } from 'ionic-angular'
  *
  * export class MyClass{
  *

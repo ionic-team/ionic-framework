@@ -1,7 +1,7 @@
-import {Animation} from '../animations/animation';
-import {PageTransition} from './page-transition';
-import {TransitionOptions} from './transition';
-import {ViewController} from '../components/nav/view-controller';
+import { Animation } from '../animations/animation';
+import { PageTransition } from './page-transition';
+import { TransitionOptions } from './transition';
+import { ViewController } from '../components/nav/view-controller';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';

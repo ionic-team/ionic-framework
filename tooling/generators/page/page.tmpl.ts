@@ -12,7 +12,7 @@ import { NavController } from 'ionic-angular';
 })
 export class <%= jsClassName %> {
 
-  constructor(private nav: NavController) {
+  constructor(private navCtrl: NavController) {
 
   }
 

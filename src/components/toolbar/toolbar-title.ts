@@ -1,8 +1,8 @@
-import {Component, ElementRef, Optional, forwardRef, Inject, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import { Component, ElementRef, Optional, forwardRef, Inject, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
-import {Ion} from '../ion';
-import {Navbar} from '../navbar/navbar';
-import {Toolbar} from './toolbar';
+import { Ion } from '../ion';
+import { Navbar } from '../navbar/navbar';
+import { Toolbar } from './toolbar';
 
 
 /**

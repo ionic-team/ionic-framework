@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, Slides} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, Slides } from '../../../../../src';
 
 
 @Component({
@@ -15,11 +15,11 @@ class MyPage {
   onSlideChanged() {
     let previousIndex = this.slider.getPreviousIndex();
     let currentIndex = this.slider.getActiveIndex();
-    console.log("Previous index is", previousIndex, "Current index is", currentIndex);
+    console.log('Previous index is', previousIndex, 'Current index is', currentIndex);
   }
 
-  onSlideMove(ev) {
-    console.log("Slide moving", ev);
+  onSlideMove(ev: any) {
+    console.log('Slide moving', ev);
   }
 
   goToPrevSlide() {
@@ -30,18 +30,18 @@ class MyPage {
     this.slider.slideNext();
   }
 
-  goToSlide(index) {
+  goToSlide(index: number) {
     this.slider.slideTo(index);
   }
 
   getIndex() {
     let index = this.slider.getActiveIndex();
-    console.log("Current Index is", index);
+    console.log('Current Index is', index);
   }
 
   getLength() {
     let length = this.slider.length();
-    console.log("Current Length is", length);
+    console.log('Current Length is', length);
   }
 }
 

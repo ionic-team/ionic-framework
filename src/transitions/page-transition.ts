@@ -1,9 +1,9 @@
-import {Animation} from '../animations/animation';
-import {closest} from '../util/dom';
-import {Content} from '../components/content/content';
-import {Tabs} from '../components/tabs/tabs';
-import {Transition, TransitionOptions} from './transition';
-import {ViewController} from '../components/nav/view-controller';
+import { Animation } from '../animations/animation';
+import { closest } from '../util/dom';
+import { Content } from '../components/content/content';
+import { Tabs } from '../components/tabs/tabs';
+import { Transition, TransitionOptions } from './transition';
+import { ViewController } from '../components/nav/view-controller';
 
 
 /**

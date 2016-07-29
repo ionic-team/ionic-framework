@@ -1,4 +1,4 @@
-import {CSS, pointerCoord, nativeRaf, cancelRaf} from '../util/dom';
+import { CSS, pointerCoord, nativeRaf, cancelRaf } from '../util/dom';
 
 
 export class ScrollView {

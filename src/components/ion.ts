@@ -1,5 +1,5 @@
-import {ElementRef} from '@angular/core';
-import {getDimensions, clearDimensions} from '../util/dom';
+import { ElementRef } from '@angular/core';
+import { getDimensions, clearDimensions } from '../util/dom';
 
 let ids: number = 0;
 

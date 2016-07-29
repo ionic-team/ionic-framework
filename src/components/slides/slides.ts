@@ -6,7 +6,7 @@ import { CSS } from '../../util/dom';
 import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
 import { dom } from '../../util';
 import { Ion } from '../ion';
-import { Swiper} from './swiper-widget';
+import { Swiper } from './swiper-widget';
 
 
 /**
@@ -83,8 +83,8 @@ import { Swiper} from './swiper-widget';
  * To add [options](#configuring), we will define them in `mySlideOptions` in our class `MyPage`:
  *
  * ```ts
- * import {Component} from '@angular/core';
- * import {Slides} from 'ionic-angular';
+ * import { Component } from '@angular/core';
+ * import { Slides } from 'ionic-angular';
  *
  * @Component({
  *   templateUrl: 'my-page.html'
@@ -118,7 +118,7 @@ import { Swiper} from './swiper-widget';
  * Next, we can use `ViewChild` to assign the Slides instance to `slider`:
  *
  * ```ts
- * import {ViewChild} from '@angular/core';
+ * import { ViewChild } from '@angular/core';
  *
  * class MyPage {
  *   @ViewChild('mySlider') slider: Slides;
@@ -127,7 +127,7 @@ import { Swiper} from './swiper-widget';
  * }
  * ```
  *
- * Now we can call any of the `Slider` [methods]((#instance-members)),
+ * Now we can call any of the `Slider` [methods](#instance-members),
  * for example we can use the Slider's `slideTo()` method in order to
  * navigate to a specific slide on a button click. Below we call the
  * `goToSlide()` method and it navigates to the 3rd slide:
@@ -743,8 +743,8 @@ export class Slides extends Ion {
    * Transition to the specified slide.
    *
    * @param {number} index  The index number of the slide.
-   * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
+   * @param {number} [speed]  Transition duration (in ms).
+   * @param {boolean} [runCallbacks] Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
    */
   slideTo(index: number, speed?: number, runCallbacks?: boolean) {
     this.slider.slideTo(index, speed, runCallbacks);
@@ -753,8 +753,8 @@ export class Slides extends Ion {
   /**
    * Transition to the next slide.
    *
-   * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
+   * @param {number} [speed]  Transition duration (in ms).
+   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
    */
   slideNext(speed?: number, runCallbacks?: boolean) {
     this.slider.slideNext(runCallbacks, speed);
@@ -763,8 +763,8 @@ export class Slides extends Ion {
   /**
    * Transition to the previous slide.
    *
-   * @param {number} speed  Transition duration (in ms). Optional.
-   * @param {boolean} runCallbacks  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Optional. Default true.
+   * @param {number} [speed]  Transition duration (in ms).
+   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
    */
   slidePrev(speed?: number, runCallbacks?: boolean) {
     this.slider.slidePrev(runCallbacks, speed);

@@ -6,8 +6,8 @@
 * Config allows you to set the modes of your components
 */
 
-import {Platform} from '../platform/platform';
-import {isObject, isDefined, isFunction, isArray} from '../util/util';
+import { Platform } from '../platform/platform';
+import { isObject, isDefined, isFunction, isArray } from '../util/util';
 
 /**
  * @name Config
@@ -17,7 +17,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * You can set the tab placement, icon mode, animations, and more here.
  *
  * ```ts
- * import {ionicBootstrap} from 'ionic-angular';
+ * import { ionicBootstrap } from 'ionic-angular';
  *
  * ionicBootstrap(AppRoot, customProviders, {
  *   backButtonText: 'Go Back',
@@ -34,7 +34,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * Below is an example where an app can override any setting we want based on a platform.
  *
  * ```ts
- * import {ionicBootstrap} from 'ionic-angular';
+ * import { ionicBootstrap } from 'ionic-angular';
  *
  * ionicBootstrap(AppRoot, customProviders, {
  *   tabsPlacement: 'bottom',

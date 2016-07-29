@@ -1,19 +1,21 @@
-import { Directive, Optional } from '@angular/core';
-
+import { Directive, HostListener, Input, Optional } from '@angular/core';
 import { NavController } from './nav-controller';
+import { noop } from '../../util/util';
 
 /**
  * @name NavPop
  * @description
- * Directive for declaratively pop the current page off from the navigation stack.
+ * Directive to declaratively pop the current page off from the
+ * navigation stack.
  *
  * @usage
  * ```html
  * <ion-content>
- *  <div block button nav-pop>go back</div>
+ *
+ *  <button navPop>Go Back</button>
+ *
  * </ion-content>
  * ```
- * This will go back one page in the navigation stack
  *
  * Similar to {@link /docs/v2/api/components/nav/NavPush/ `NavPush` }
  * @demo /docs/v2/demos/navigation/
@@ -21,11 +23,7 @@ import { NavController } from './nav-controller';
  * @see {@link ../NavPush NavPush API Docs}
  */
 @Directive({
-  selector: '[nav-pop]',
-  host: {
-    '(click)': 'onClick()',
-    'role': 'link'
-  }
+  selector: '[navPop]'
 })
 export class NavPop {
 
@@ -34,10 +32,16 @@ export class NavPop {
       console.error('nav-pop must be within a NavController');
     }
   }
-  /**
-   * @private
-   */
-  onClick() {
-    this._nav && this._nav.pop();
+
+  @HostListener('click')
+  onClick(): boolean {
+    // If no target, or if target is _self, prevent default browser behavior
+    if (this._nav) {
+      this._nav.pop(null, noop);
+      return false;
+    }
+
+    return true;
   }
+
 }

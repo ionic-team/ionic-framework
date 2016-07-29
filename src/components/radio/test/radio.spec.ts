@@ -1,4 +1,4 @@
-import {RadioGroup, RadioButton, Form} from '../../../../src';
+import { RadioGroup, RadioButton, Form } from '../../../../src';
 
 export function run() {
   describe('RadioGroup', () => {
@@ -111,19 +111,19 @@ export function run() {
   let form: Form;
 
   function createRadioButton(shouldIncludeGroup = true) {
-    return new RadioButton(form, null, shouldIncludeGroup? rg : null);
+    return new RadioButton(form, null, shouldIncludeGroup ? rg : null);
   }
 
   function mockRenderer(): any {
     return {
       setElementAttribute: function(){}
-    }
+    };
   }
 
   function mockElementRef(): any {
     return {
       nativeElement: document.createElement('div')
-    }
+    };
   }
 
   beforeEach(() => {

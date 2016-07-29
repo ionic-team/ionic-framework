@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, Nav} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, Nav } from '../../../../../src';
 
 
 @Component({templateUrl: 'page1.html'})

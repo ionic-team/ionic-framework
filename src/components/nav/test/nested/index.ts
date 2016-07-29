@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, NavController, MenuController} from '../../../../../src';
-import {Config, Nav, App} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, NavController, MenuController } from '../../../../../src';
+import { Config, Nav, App } from '../../../../../src';
 
 
 @Component({

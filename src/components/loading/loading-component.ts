@@ -8,7 +8,7 @@ import { isDefined, isPresent, isUndefined } from '../../util/util';
 import { NavParams } from '../nav/nav-params';
 import { Spinner } from '../spinner/spinner';
 import { Transition, TransitionOptions } from '../../transitions/transition';
-import { ViewController} from '../nav/view-controller';
+import { ViewController } from '../nav/view-controller';
 
 
 /**

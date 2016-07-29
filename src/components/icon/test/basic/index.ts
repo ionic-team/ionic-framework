@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 @Component({
   templateUrl: 'main.html'
@@ -16,7 +16,7 @@ class E2EPage {
     'md-alert',
     'logo-apple'
   ];
-  btnIcon;
+  btnIcon: string;
 
   constructor() {
     this.btnIcon = this.icons[0];

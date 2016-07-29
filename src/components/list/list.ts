@@ -4,6 +4,7 @@ import { Content } from '../content/content';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { ItemSlidingGesture } from '../item/item-sliding-gesture';
+import { GestureController } from '../../gestures/gesture-controller';
 
 /**
  * The List is a widely used interface element in almost any mobile app,
@@ -29,7 +30,10 @@ export class List extends Ion {
   private _containsSlidingItems: boolean = false;
   private _slidingGesture: ItemSlidingGesture;
 
-  constructor(elementRef: ElementRef, private _rendered: Renderer) {
+  constructor(
+    elementRef: ElementRef,
+    private _rendered: Renderer,
+    public gestureCtrl: GestureController) {
     super(elementRef);
   }
 
@@ -44,8 +48,8 @@ export class List extends Ion {
    * Enable the sliding items.
    *
    * ```ts
-   * import {Component, ViewChild} from '@angular/core';
-   * import {List} from 'ionic-angular';
+   * import { Component, ViewChild } from '@angular/core';
+   * import { List } from 'ionic-angular';
    *
    * @Component({...})
    * export class MyClass {
@@ -78,16 +82,17 @@ export class List extends Ion {
     this._updateSlidingState();
   }
 
-  
+
   private _updateSlidingState() {
     let shouldSlide = this._enableSliding && this._containsSlidingItems;
     if (!shouldSlide) {
-      this._slidingGesture && this._slidingGesture.unlisten();
+      this._slidingGesture && this._slidingGesture.destroy();
       this._slidingGesture = null;
 
     } else if (!this._slidingGesture) {
       console.debug('enableSlidingItems');
       this._slidingGesture = new ItemSlidingGesture(this);
+      this._slidingGesture.listen();
     }
   }
 
@@ -96,8 +101,8 @@ export class List extends Ion {
    * Close the open sliding item.
    *
    * ```ts
-   * import {Component, ViewChild} from '@angular/core';
-   * import {List} from 'ionic-angular';
+   * import { Component, ViewChild } from '@angular/core';
+   * import { List } from 'ionic-angular';
    *
    * @Component({...})
    * export class MyClass {

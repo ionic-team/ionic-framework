@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-options';
+import { NavOptions } from '../nav/nav-interfaces';
 import { ToastOptions } from './toast-options';
 import { ToastCmp } from './toast-component';
 import { ViewController } from '../nav/view-controller';

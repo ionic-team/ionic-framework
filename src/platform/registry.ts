@@ -1,5 +1,5 @@
-import {Platform} from './platform';
-import {windowLoad} from '../util/dom';
+import { Platform } from './platform';
+import { windowLoad } from '../util/dom';
 
 const win: any = window;
 const doc: any = document;
@@ -104,7 +104,8 @@ Platform.register({
     swipeBackEnabled: isIOSDevice,
     swipeBackThreshold: 40,
     tapPolyfill: isIOSDevice,
-    virtualScrollEventAssist: !(win.indexedDB)
+    virtualScrollEventAssist: !(win.indexedDB),
+    canDisableScroll: !!(win.indexedDB),
   },
   isMatch(p: Platform): boolean {
     return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);

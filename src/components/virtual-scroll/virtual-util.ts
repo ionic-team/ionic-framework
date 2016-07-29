@@ -1,6 +1,6 @@
-import {Directive, Input, ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
+import { Directive, Input, ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
 
-import {CSS} from '../../util/dom';
+import { CSS } from '../../util/dom';
 
 
 /**

@@ -5,6 +5,7 @@ export interface NavOptions {
   direction?: string;
   duration?: number;
   easing?: string;
+  id?: string;
   keyboardClose?: boolean;
   preload?: boolean;
   transitionDelay?: number;
@@ -12,3 +13,6 @@ export interface NavOptions {
   climbNav?: boolean;
   ev?: any;
 }
+
+export const DIRECTION_BACK = 'back';
+export const DIRECTION_FORWARD = 'forward';

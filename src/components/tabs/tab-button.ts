@@ -11,7 +11,7 @@ import { Tab } from './tab';
   selector: '.tab-button',
   host: {
     '[attr.id]': 'tab._btnId',
-    '[attr.aria-controls]': 'tab._panelId',
+    '[attr.aria-controls]': 'tab._tabId',
     '[attr.aria-selected]': 'tab.isSelected',
     '[class.has-title]': 'hasTitle',
     '[class.has-icon]': 'hasIcon',

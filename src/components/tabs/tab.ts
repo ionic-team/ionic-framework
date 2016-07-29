@@ -1,15 +1,15 @@
-import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { isTrueProperty} from '../../util/util';
-import { Keyboard} from '../../util/keyboard';
-import { MenuController } from '../menu/menu-controller';
-import { NavController} from '../nav/nav-controller';
-import { NavOptions} from '../nav/nav-options';
-import { TabButton} from './tab-button';
-import { Tabs} from './tabs';
-import { ViewController} from '../nav/view-controller';
+import { GestureController } from '../../gestures/gesture-controller';
+import { isTrueProperty } from '../../util/util';
+import { Keyboard } from '../../util/keyboard';
+import { NavControllerBase } from '../nav/nav-controller-base';
+import { NavOptions } from '../nav/nav-interfaces';
+import { TabButton } from './tab-button';
+import { Tabs } from './tabs';
+import { ViewController } from '../nav/view-controller';
 
 
 /**
@@ -39,7 +39,7 @@ import { ViewController} from '../nav/view-controller';
  * Then, in your class you can set `chatRoot` to an imported class:
  *
  * ```ts
- * import {ChatPage} from '../chat/chat';
+ * import { ChatPage } from '../chat/chat';
  *
  * export class Tabs {
  *   // here we'll set the property of chatRoot to
@@ -122,18 +122,18 @@ import { ViewController} from '../nav/view-controller';
   selector: 'ion-tab',
   host: {
     '[class.show-tab]': 'isSelected',
-    '[attr.id]': '_panelId',
+    '[attr.id]': '_tabId',
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
   template: '<div #viewport></div><div class="nav-decor"></div>',
   encapsulation: ViewEncapsulation.None,
 })
-export class Tab extends NavController {
+export class Tab extends NavControllerBase {
   private _isInitial: boolean;
   private _isEnabled: boolean = true;
   private _isShown: boolean = true;
-  private _panelId: string;
+  private _tabId: string;
   private _btnId: string;
   private _loaded: boolean;
   private _loadTmr: any;
@@ -230,18 +230,14 @@ export class Tab extends NavController {
     renderer: Renderer,
     compiler: ComponentResolver,
     private _cd: ChangeDetectorRef,
-    menuCtrl: MenuController
+    gestureCtrl: GestureController
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, menuCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
 
     parent.add(this);
 
-    if (parent.rootNav) {
-      this._sbEnabled = parent.rootNav.isSwipeBackEnabled();
-    }
-
-    this._panelId = 'tabpanel-' + this.id;
+    this._tabId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
   }
 
@@ -265,7 +261,7 @@ export class Tab extends NavController {
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
-      this.push(this.root, this.rootParams, opts).then(() => {
+      this.push(this.root, this.rootParams, opts, () => {
         done(true);
       });
       this._loaded = true;

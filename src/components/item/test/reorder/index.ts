@@ -1,5 +1,5 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
-import {ionicBootstrap, reorderArray} from '../../../../../src';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { ionicBootstrap, reorderArray } from '../../../../../src';
 
 
 @Component({

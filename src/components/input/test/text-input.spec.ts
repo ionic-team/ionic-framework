@@ -1,4 +1,4 @@
-import {TextInput} from '../../../../src';
+import { TextInput } from '../../../../src';
 
 export function run() {
 

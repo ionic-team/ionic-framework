@@ -1,14 +1,14 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, Optional, ViewEncapsulation} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, Optional, ViewEncapsulation } from '@angular/core';
 
-import {App} from '../app/app';
-import {Ion} from '../ion';
-import {Config} from '../../config/config';
-import {Keyboard} from '../../util/keyboard';
-import {nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
-import {ScrollView} from '../../util/scroll-view';
-import {Tabs} from '../tabs/tabs';
-import {ViewController} from '../nav/view-controller';
-import {isTrueProperty} from '../../util/util';
+import { App } from '../app/app';
+import { Ion } from '../ion';
+import { Config } from '../../config/config';
+import { Keyboard } from '../../util/keyboard';
+import { nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
+import { ScrollView } from '../../util/scroll-view';
+import { Tabs } from '../tabs/tabs';
+import { ViewController } from '../nav/view-controller';
+import { isTrueProperty } from '../../util/util';
 
 
 /**
@@ -31,8 +31,8 @@ import {isTrueProperty} from '../../util/util';
  * you can use Angular's `@ViewChild` annotation:
  *
  * ```ts
- * import {Component, ViewChild} from '@angular/core';
- * import {Content} from 'ionic-angular';
+ * import { Component, ViewChild } from '@angular/core';
+ * import { Content } from 'ionic-angular';
  *
  * @Component({...})
  * export class MyPage{
@@ -245,8 +245,8 @@ export class Content extends Ion {
    * Scroll to the specified position.
    *
    * ```ts
-   * import {Component, ViewChild} from '@angular/core';
-   * import {Content} from 'ionic-angular';
+   * import { Component, ViewChild } from '@angular/core';
+   * import { Content } from 'ionic-angular';
    *
    * @Component({
    *   template: `<ion-content>
@@ -276,8 +276,8 @@ export class Content extends Ion {
    * Scroll to the top of the content component.
    *
    * ```ts
-   * import {Component, ViewChild} from '@angular/core';
-   * import {Content} from 'ionic-angular';
+   * import { Component, ViewChild } from '@angular/core';
+   * import { Content } from 'ionic-angular';
    *
    * @Component({
    *   template: `<ion-content>
