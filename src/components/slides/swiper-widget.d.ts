@@ -1,4 +1,4 @@
-export class SwiperOptions {
+export interface SwiperOptions {
   initialSlide?: number; // 0 \\ Index number of initial slide.
   direction?: string; // 'horizontal' \\ Could be 'horizontal' or 'vertical' (for vertical slider).
   speed?: number; // 300 \\ Duration of transition between slides (in ms)
