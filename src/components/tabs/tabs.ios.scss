@@ -100,7 +100,7 @@ ion-tabs[tabsPlacement=top] ion-tabbar {
 
 [tabsLayout=icon-hide] .tab-button,
 .tab-button.has-title-only {
-  min-height: $tabs-ios-height - 8;
+  min-height: $tabs-ios-tab-min-height - 8;
 
   .tab-button-text {
     margin: 2px 0;
@@ -112,7 +112,7 @@ ion-tabs[tabsPlacement=top] ion-tabbar {
 
 [tabsLayout=title-hide] .tab-button,
 .tab-button.icon-only {
-  min-height: $tabs-ios-height - 8;
+  min-height: $tabs-ios-tab-min-height - 8;
 }
 
 &.hairlines ion-tabs {
