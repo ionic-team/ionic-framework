@@ -1,20 +1,19 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "target": "es5",
     "module": "es2015",
+    "lib": ["dom", "es2015"],
     "moduleResolution": "node",
     "declaration": true,
     "noImplicitAny": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "outDir": "dist"
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true
   },
   "files": [
-    "./src/index.ts",
-    "./typings/browser.d.ts",
-    "./src/components/nav/test/basic/component.ts"
+    "./src/index.ts"
   ]
 }

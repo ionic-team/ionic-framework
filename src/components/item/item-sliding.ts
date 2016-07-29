@@ -81,7 +81,7 @@ export class ItemOptions {
 
 }
 
-const enum SlidingState {
+export const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
   Right = 1 << 3,
