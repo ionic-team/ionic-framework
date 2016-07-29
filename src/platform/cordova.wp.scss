@@ -11,7 +11,8 @@ ion-nav > ion-page,
 ion-nav > ion-page > ion-header,
 ion-tab > ion-page > ion-header,
 ion-tabs > ion-page.tab-subpage > ion-header,
-ion-menu {
+ion-menu > .menu-inner,
+ion-menu > .menu-inner > ion-header {
   @include toolbar-statusbar-padding($toolbar-wp-height, $content-wp-padding);
 }
 
