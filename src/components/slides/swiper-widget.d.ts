@@ -301,7 +301,7 @@ export declare class Swiper {
     // index - number - index number of slide
     // speed - number - transition duration (in ms). Optional
     // runCallbacks - boolean - Set it to false (by default it is true) and transition will not produce onSlideChange callback functions. Optional
-  update(updateTranslate: boolean): boolean; //
+  update(updateTranslate: boolean): any; //
     // This method includes updateContainerSize, updateSlidesSize, updateProgress, updatePagination and updateClasses methods
     //
     // You should call it after you add/remove slides manually, or after you hide/show it, or do any custom DOM modifications with Swiper
