@@ -3,6 +3,11 @@
 // Tabs
 // --------------------------------------------------
 
+.tabbar-container {
+  position: relative;
+
+  display: flex;
+}
 
 .tab-button {
   @include user-select-none();
