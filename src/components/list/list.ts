@@ -20,6 +20,25 @@ import { GestureController } from '../../gestures/gesture-controller';
  *
  * @demo /docs/v2/demos/list/
  * @see {@link /docs/v2/components#lists List Component Docs}
+ * @advanced
+ *
+ * Enable the sliding items.
+ *
+ * ```ts
+ * import { Component, ViewChild } from '@angular/core';
+ * import { List } from 'ionic-angular';
+ *
+ * @Component({...})
+ * export class MyClass {
+ *   @ViewChild(List) list: List;
+ *
+ *   constructor() { }
+ *
+ *   stopSliding() {
+ *     this.list.enableSlidingItems(false);
+ *   }
+ * }
+ * ```
  *
  */
 @Directive({
@@ -33,7 +52,7 @@ export class List extends Ion {
   constructor(
     elementRef: ElementRef,
     private _rendered: Renderer,
-    public gestureCtrl: GestureController) {
+    public _gestureCtrl: GestureController) {
     super(elementRef);
   }
 
@@ -45,24 +64,7 @@ export class List extends Ion {
   }
 
   /**
-   * Enable the sliding items.
-   *
-   * ```ts
-   * import { Component, ViewChild } from '@angular/core';
-   * import { List } from 'ionic-angular';
-   *
-   * @Component({...})
-   * export class MyClass {
-   *   @ViewChild(List) list: List;
-   *
-   *   constructor() { }
-   *
-   *   stopSliding() {
-   *     this.list.enableSlidingItems(false);
-   *   }
-   * }
-   * ```
-   * @param {boolean} shouldEnable whether the item-sliding should be enabled or not
+   * @input {boolean} shouldEnable whether the item-sliding should be enabled or not
    */
   @Input()
   get sliding(): boolean {
@@ -98,23 +100,7 @@ export class List extends Ion {
 
 
   /**
-   * Close the open sliding item.
-   *
-   * ```ts
-   * import { Component, ViewChild } from '@angular/core';
-   * import { List } from 'ionic-angular';
-   *
-   * @Component({...})
-   * export class MyClass {
-   *   @ViewChild(List) list: List;
-   *
-   *   constructor() { }
-   *
-   *   closeItems() {
-   *     this.list.closeSlidingItems();
-   *   }
-   * }
-   * ```
+   * Close any sliding items that are open.
    */
   closeSlidingItems() {
     this._slidingGesture && this._slidingGesture.closeOpened();
