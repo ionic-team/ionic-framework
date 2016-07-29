@@ -288,6 +288,7 @@ export abstract class NavController {
   abstract popToRoot(opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
+   * @private
    * Pop to a specific view in the history stack.
    *
    * @param {ViewController} view  to pop to
