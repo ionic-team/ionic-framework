@@ -160,7 +160,6 @@ export class Tabs extends Ion {
   private _tabs: Tab[] = [];
   private _onReady: any = null;
   private _sbPadding: boolean;
-  private _useHighlight: boolean;
   private _top: number;
   private _bottom: number;
 
@@ -210,6 +209,11 @@ export class Tabs extends Ion {
   @Input() tabsPlacement: string;
 
   /**
+   * @input {boolean} Whether to show the tab highlight bar under the selected tab. Default: `false`.
+   */
+  @Input() tabsHighlight: boolean;
+
+  /**
    * @input {any} Expression to evaluate when the tab changes.
    */
   @Output() ionChange: EventEmitter<Tab> = new EventEmitter<Tab>();
@@ -249,7 +253,7 @@ export class Tabs extends Ion {
     this.id = 't' + (++tabIds);
     this._sbPadding = _config.getBoolean('statusbarPadding');
     this.subPages = _config.getBoolean('tabsHideOnSubPages');
-    this._useHighlight = _config.getBoolean('tabsHighlight');
+    this.tabsHighlight = _config.getBoolean('tabsHighlight');
 
     // TODO deprecated 07-07-2016 beta.11
     if (_config.get('tabSubPages') !== null) {
@@ -260,7 +264,7 @@ export class Tabs extends Ion {
     // TODO deprecated 07-07-2016 beta.11
     if (_config.get('tabbarHighlight') !== null) {
       console.warn('Config option "tabbarHighlight" has been deprecated. Please use "tabsHighlight" instead.');
-      this._useHighlight = _config.getBoolean('tabbarHighlight');
+      this.tabsHighlight = _config.getBoolean('tabbarHighlight');
     }
 
     if (this.parent) {
@@ -291,6 +295,7 @@ export class Tabs extends Ion {
   ngAfterViewInit() {
     this._setConfig('tabsPlacement', 'bottom');
     this._setConfig('tabsLayout', 'icon-top');
+    this._setConfig('tabsHighlight', this.tabsHighlight);
 
     // TODO deprecated 07-07-2016 beta.11
     this._setConfig('tabbarPlacement', 'bottom');
@@ -322,7 +327,7 @@ export class Tabs extends Ion {
       this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this._config.get('tabsLayout'));
     }
 
-    if (this._useHighlight) {
+    if (this.tabsHighlight) {
       this._platform.onResize(() => {
         this._highlight.select(this.getSelected());
       });
@@ -428,7 +433,7 @@ export class Tabs extends Ion {
           tab.setSelected(tab === selectedTab);
         });
 
-        if (this._useHighlight) {
+        if (this.tabsHighlight) {
           this._highlight.select(selectedTab);
         }
       }

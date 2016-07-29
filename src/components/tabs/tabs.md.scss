@@ -5,44 +5,45 @@
 // --------------------------------------------------
 
 $tabbar-md-background:               $toolbar-md-background !default;
-$tabbar-md-item-padding:             12px 10px 5px 10px !default;
+$tabbar-md-item-padding:             8px 0 10px 0 !default;
 $tabbar-md-item-font-size:           1.4rem !default;
-$tabbar-md-item-font-weight:         500 !default;
+$tabbar-md-item-font-weight:         normal !default;
 $tabbar-md-item-icon-size:           2.4rem !default;
-$tabbar-md-item-height:              4.8rem !default;
+$tabbar-md-item-height:              5.6rem !default;
 
 $tab-button-md-active-color:         $toolbar-md-active-color !default;
+$tab-button-md-active-font-size:     1.5rem !default;
+$tab-button-md-active-padding-top:   6px !default;
 $tab-button-md-inactive-opacity:     .7 !default;
 $tab-button-md-inactive-color:       rgba($toolbar-md-inactive-color, $tab-button-md-inactive-opacity) !default;
+$tab-button-md-text-transform:       none !default;
+$tab-button-md-text-margin:          6px 0 !default;
 
 
 ion-tabbar {
   background: $tabbar-md-background;
 }
 
-
 .tab-button {
   padding: $tabbar-md-item-padding;
 
   min-height: $tabbar-md-item-height;
 
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
   font-size: $tabbar-md-item-font-size;
   font-weight: $tabbar-md-item-font-weight;
   color: $tab-button-md-inactive-color;
-  box-shadow: none;
 
   &[aria-selected=true] {
     color: $tab-button-md-active-color;
+    font-size: $tab-button-md-active-font-size;
+    padding-top: $tab-button-md-active-padding-top;
   }
 }
 
 .tab-button-text {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: $tab-button-md-text-margin;
 
-  text-transform: uppercase;
+  text-transform: $tab-button-md-text-transform;
 }
 
 .tab-button-icon {
@@ -51,9 +52,21 @@ ion-tabbar {
   font-size: $tabbar-md-item-icon-size;
 }
 
-[tabsLayout=icon-bottom] .tab-button {
-  padding-top: 8px;
-  padding-bottom: 8px;
+[tabsLayout=icon-top] {
+  .has-icon .tab-button-text {
+    margin-bottom: 0;
+  }
+}
+
+[tabsLayout=icon-bottom] {
+  .tab-button {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .tab-button-text {
+    margin-top: 0;
+  }
 }
 
 [tabsLayout=icon-right] .tab-button,
@@ -72,30 +85,37 @@ ion-tabbar {
   padding: 6px 10px;
 }
 
-tab-highlight {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: block;
+// Material Design Tab Highlight
+// --------------------------------------------------
 
-  width: 1px;
-  height: 2px;
+[tabsHighlight=true] {
 
-  background: $tab-button-md-active-color;
-  transform: translateZ(0);
-  transform-origin: 0 0;
+  tab-highlight {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
 
-  &.animate {
-    transition-duration: 300ms;
+    width: 1px;
+    height: 2px;
+
+    background: $tab-button-md-active-color;
+    transform: translateZ(0);
+    transform-origin: 0 0;
+
+    &.animate {
+      transition-duration: 300ms;
+    }
   }
+
+  &[tabsPlacement=bottom] tab-highlight {
+    top: 0;
+  }
+
 }
 
-[tabsPlacement=bottom] tab-highlight {
-  top: 0;
-}
 
-
-// Material Design  Tabbar Color Mixin
+// Material Design Tabs Color Mixin
 // --------------------------------------------------
 
 @mixin tabbar-md($color-name, $color-base, $color-contrast) {

@@ -81,9 +81,9 @@ Config.setModeConfig('md', {
 
   spinner: 'crescent',
 
-  tabsHighlight: true,
-  tabsPlacement: 'top',
-  tabsHideOnSubPages: true,
+  tabsHighlight: false,
+  tabsPlacement: 'bottom',
+  tabsHideOnSubPages: false,
 
   toastEnter: 'toast-md-slide-in',
   toastLeave: 'toast-md-slide-out',
