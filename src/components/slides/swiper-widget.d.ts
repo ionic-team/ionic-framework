@@ -291,17 +291,17 @@ export declare class Swiper {
   clickedSlide: HTMLElement; // Link to last clicked slide (HTMLElement)
 
   // Methods
-  slideNext(runCallbacks: boolean, speed: number); // Run transition to next slide
+  slideNext(runCallbacks: boolean, speed: number): boolean; // Run transition to next slide
     // runCallbacks - boolean - Set it to false (by default it is true) and transition will not produce onSlideChange callback functions. Optional
     // speed - number - transition duration (in ms). Optional
-  slidePrev(runCallbacks: boolean, speed: number); // Run transition to previous slide
+  slidePrev(runCallbacks: boolean, speed: number): boolean; // Run transition to previous slide
     // runCallbacks - boolean - Set it to false (by default it is true) and transition will not produce onSlideChange callback functions. Optional
     // speed - number - transition duration (in ms). Optional
-  slideTo(index: number, speed: number, runCallbacks: boolean); // Run transition to the slide with index number equal to 'index' parameter for the duration equal to 'speed' parameter.
+  slideTo(index: number, speed: number, runCallbacks: boolean): boolean; // Run transition to the slide with index number equal to 'index' parameter for the duration equal to 'speed' parameter.
     // index - number - index number of slide
     // speed - number - transition duration (in ms). Optional
     // runCallbacks - boolean - Set it to false (by default it is true) and transition will not produce onSlideChange callback functions. Optional
-  update(updateTranslate: boolean); //
+  update(updateTranslate: boolean): boolean; //
     // This method includes updateContainerSize, updateSlidesSize, updateProgress, updatePagination and updateClasses methods
     //
     // You should call it after you add/remove slides manually, or after you hide/show it, or do any custom DOM modifications with Swiper
