@@ -4,61 +4,78 @@
 // iOS Tabs
 // --------------------------------------------------
 
-$tabbar-ios-background:               $toolbar-ios-background !default;
-$tabbar-ios-item-padding:             0 2px !default;
-$tabbar-ios-item-font-size:           10px !default;
-$tabbar-ios-item-icon-size:           30px !default;
-$tabbar-ios-height:                   49px !default;
+// Border on the tabbar (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
+$tabs-ios-border:                   1px solid $toolbar-ios-border-color !default;
 
-$tab-button-ios-max-width:            240px !default;
-$tab-button-ios-active-color:         $toolbar-ios-active-color !default;
-$tab-button-ios-inactive-color:       $toolbar-ios-inactive-color !default;
+// Background color of the tabbar
+$tabs-ios-background:               $toolbar-ios-background !default;
+
+// Padding on the tab button
+$tabs-ios-tab-padding:              0 2px !default;
+
+// Max width of the tab button
+$tabs-ios-tab-max-width:            240px !default;
+
+// Min height of the tab button
+$tabs-ios-tab-min-height:           49px !default;
+
+// Text color of the inactive tab button
+$tabs-ios-tab-color:                $toolbar-ios-inactive-color !default;
+
+// Text color of the active tab button
+$tabs-ios-tab-color-active:         $toolbar-ios-active-color !default;
+
+// Font size of the tab button text
+$tabs-ios-tab-font-size:            10px !default;
+
+// Size of the tab button icon
+$tabs-ios-tab-icon-size:            30px !default;
 
 
 ion-tabbar {
   justify-content: center;
 
-  border-top: 1px solid $toolbar-ios-border-color;
-  background: $tabbar-ios-background;
+  border-top: $tabs-ios-border;
+  background: $tabs-ios-background;
 }
 
 ion-tabs[tabsPlacement=top] ion-tabbar {
   border-top: 0;
-  border-bottom: 1px solid $toolbar-ios-border-color;
+  border-bottom: $tabs-ios-border;
 }
 
 .tab-button {
-  padding: $tabbar-ios-item-padding;
+  padding: $tabs-ios-tab-padding;
 
-  max-width: $tab-button-ios-max-width;
-  min-height: $tabbar-ios-height;
+  max-width: $tabs-ios-tab-max-width;
+  min-height: $tabs-ios-tab-min-height;
 
-  color: $tab-button-ios-inactive-color;
+  color: $tabs-ios-tab-color;
 }
 
 .tab-button:hover:not(.disable-hover),
 .tab-button[aria-selected=true] {
-  color: $tab-button-ios-active-color;
+  color: $tabs-ios-tab-color-active;
 }
 
 .tab-button-text {
   margin-top: 0;
   margin-bottom: 0;
 
-  min-height: $tabbar-ios-item-font-size + 1;
+  min-height: $tabs-ios-tab-font-size + 1;
 
-  font-size: $tabbar-ios-item-font-size;
+  font-size: $tabs-ios-tab-font-size;
 }
 
 .has-title-only .tab-button-text {
-  font-size: $tabbar-ios-item-font-size + 2;
+  font-size: $tabs-ios-tab-font-size + 2;
 }
 
 .tab-button-icon {
-  min-width: $tabbar-ios-item-icon-size + 5;
-  height: $tabbar-ios-item-icon-size;
+  min-width: $tabs-ios-tab-icon-size + 5;
+  height: $tabs-ios-tab-icon-size;
 
-  font-size: $tabbar-ios-item-icon-size;
+  font-size: $tabs-ios-tab-icon-size;
 
   &::before {
     vertical-align: top;
@@ -83,7 +100,7 @@ ion-tabs[tabsPlacement=top] ion-tabbar {
 
 [tabsLayout=icon-hide] .tab-button,
 .tab-button.has-title-only {
-  min-height: $tabbar-ios-height - 8;
+  min-height: $tabs-ios-height - 8;
 
   .tab-button-text {
     margin: 2px 0;
@@ -95,7 +112,7 @@ ion-tabs[tabsPlacement=top] ion-tabbar {
 
 [tabsLayout=title-hide] .tab-button,
 .tab-button.icon-only {
-  min-height: $tabbar-ios-height - 8;
+  min-height: $tabs-ios-height - 8;
 }
 
 &.hairlines ion-tabs {
@@ -137,6 +154,5 @@ ion-tabs[tabsPlacement=top] ion-tabbar {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-
   @include tabbar-ios($color-name, $color-base, $color-contrast);
 }

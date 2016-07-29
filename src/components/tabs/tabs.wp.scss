@@ -4,43 +4,66 @@
 // Windows Tabs
 // --------------------------------------------------
 
-$tabbar-wp-background:               $toolbar-wp-background !default;
-$tabbar-wp-item-padding:             12px 10px 5px 10px !default;
-$tabbar-wp-item-font-size:           1.2rem !default;
-$tabbar-wp-item-font-weight:         normal !default;
-$tabbar-wp-item-icon-size:           2.4rem !default;
-$tabbar-wp-item-height:              4.8rem !default;
+// Background color of the tabbar
+$tabs-wp-background:                    $toolbar-wp-background !default;
 
-$tab-button-wp-active-color:         $toolbar-wp-active-color !default;
-$tab-button-wp-inactive-opacity:     .7 !default;
-$tab-button-wp-inactive-color:       rgba($toolbar-wp-inactive-color, $tab-button-wp-inactive-opacity) !default;
+// Padding on the tab button
+$tabs-wp-tab-padding:                   12px 10px 5px 10px !default;
 
-$tab-button-wp-background-activated: rgba(0, 0, 0, .1) !default;
+// Min height of the tab button
+$tabs-wp-tab-min-height:                4.8rem !default;
+
+// Border on the inactive tab button (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
+$tabs-wp-tab-border:                    2px solid transparent !default;
+
+// Border color on the active tab button (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
+$tabs-wp-tab-border-color-active:       $tabs-wp-tab-color-active !default;
+
+// Font size of the tab button text
+$tabs-wp-tab-font-size:                 1.2rem !default;
+
+// Font weight of the tab button text
+$tabs-wp-tab-font-weight:               normal !default;
+
+// Opacity of the inactive tab button
+$tabs-wp-tab-opacity:                   .7 !default;
+
+// Text color of the inactive tab button
+$tabs-wp-tab-color:                     rgba($toolbar-wp-color, $tabs-wp-tab-opacity) !default;
+
+// Text color of the active tab button
+$tabs-wp-tab-color-active:              $toolbar-wp-active-color !default;
+
+// Background of the tab button when pressed
+$tabs-wp-tab-background-activated:      rgba(0, 0, 0, .1) !default;
+
+// Size of the tab button icon
+$tabs-wp-tab-icon-size:                 2.4rem !default;
+
 
 ion-tabbar {
-  background: $tabbar-wp-background;
+  background: $tabs-wp-background;
 }
 
-
 .tab-button {
-  padding: $tabbar-wp-item-padding;
+  padding: $tabs-wp-tab-padding;
 
-  min-height: $tabbar-wp-item-height;
+  min-height: $tabs-wp-tab-min-height;
 
-  border-bottom: 2px solid transparent;
+  border-bottom: $tabs-wp-tab-border;
   border-radius: 0;
-  font-size: $tabbar-wp-item-font-size;
-  font-weight: $tabbar-wp-item-font-weight;
-  color: $tab-button-wp-inactive-color;
+  font-size: $tabs-wp-tab-font-size;
+  font-weight: $tabs-wp-tab-font-weight;
+  color: $tabs-wp-tab-color;
   box-shadow: none;
 
   &[aria-selected=true] {
-    border-bottom-color: $tab-button-wp-active-color;
-    color: $tab-button-wp-active-color;
+    border-bottom-color: $tabs-wp-tab-border-color-active;
+    color: $tabs-wp-tab-color-active;
   }
 
   &.activated {
-    background: $tab-button-wp-background-activated;
+    background: $tabs-wp-tab-background-activated;
   }
 }
 
@@ -50,9 +73,9 @@ ion-tabbar {
 }
 
 .tab-button-icon {
-  min-width: $tabbar-wp-item-icon-size;
+  min-width: $tabs-wp-tab-icon-size;
 
-  font-size: $tabbar-wp-item-icon-size;
+  font-size: $tabs-wp-tab-icon-size;
 }
 
 [tabsLayout=icon-bottom] .tab-button {
@@ -77,11 +100,11 @@ ion-tabbar {
 }
 
 [tabsPlacement=bottom] .tab-button {
-  border-top: 2px solid transparent;
+  border-top: $tabs-wp-tab-border;
   border-bottom-width: 0;
 
   &[aria-selected=true] {
-    border-top-color: $tab-button-wp-active-color;
+    border-top-color: $tabs-wp-tab-border-color-active;
   }
 }
 
@@ -97,7 +120,7 @@ ion-tabbar {
     background-color: $color-base;
 
     .tab-button {
-      color: rgba($color-contrast, $tab-button-wp-inactive-opacity);
+      color: rgba($color-contrast, $tabs-wp-tab-opacity);
     }
 
     .tab-button:hover:not(.disable-hover),

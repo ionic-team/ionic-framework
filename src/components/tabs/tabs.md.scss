@@ -4,52 +4,77 @@
 // Material Design Tabs
 // --------------------------------------------------
 
-$tabbar-md-background:               $toolbar-md-background !default;
-$tabbar-md-item-padding:             8px 0 10px 0 !default;
-$tabbar-md-item-font-size:           1.4rem !default;
-$tabbar-md-item-font-weight:         normal !default;
-$tabbar-md-item-icon-size:           2.4rem !default;
-$tabbar-md-item-height:              5.6rem !default;
+// Background color of the tabbar
+$tabs-md-background:               $toolbar-md-background !default;
 
-$tab-button-md-active-color:         $toolbar-md-active-color !default;
-$tab-button-md-active-font-size:     1.5rem !default;
-$tab-button-md-active-padding-top:   6px !default;
-$tab-button-md-inactive-opacity:     .7 !default;
-$tab-button-md-inactive-color:       rgba($toolbar-md-inactive-color, $tab-button-md-inactive-opacity) !default;
-$tab-button-md-text-transform:       none !default;
-$tab-button-md-text-margin:          6px 0 !default;
+// Padding on the tab button
+$tabs-md-tab-padding:              8px 0 10px 0 !default;
+
+// Min height of the tab button
+$tabs-md-tab-min-height:           5.6rem !default;
+
+// Font size of the inactive tab button text
+$tabs-md-tab-font-size:            1.4rem !default;
+
+// Font weight of the tab button text
+$tabs-md-tab-font-weight:          normal !default;
+
+// Opacity of the inactive tab button
+$tabs-md-tab-opacity:              .7 !default;
+
+// Text color of the inactive tab button
+$tabs-md-tab-color:                rgba($toolbar-md-inactive-color, $tabs-md-tab-opacity) !default;
+
+// Padding of the active tab button
+$tabs-md-tab-padding-active:       6px 0 10px 0 !default;
+
+// Font size of the active tab button text
+$tabs-md-tab-font-size-active:     1.5rem !default;
+
+// Text color of the active tab button
+$tabs-md-tab-color-active:         $toolbar-md-active-color !default;
+
+// Margin on the tab button text
+$tabs-md-tab-text-margin:          6px 0 !default;
+
+// Text transformation for the tab button text
+$tabs-md-tab-text-transform:       none !default;
+
+// Size of the tab button icon
+$tabs-md-tab-icon-size:            2.4rem !default;
 
 
 ion-tabbar {
-  background: $tabbar-md-background;
+  background: $tabs-md-background;
 }
 
 .tab-button {
-  padding: $tabbar-md-item-padding;
+  padding: $tabs-md-tab-padding;
 
-  min-height: $tabbar-md-item-height;
+  min-height: $tabs-md-tab-min-height;
 
-  font-size: $tabbar-md-item-font-size;
-  font-weight: $tabbar-md-item-font-weight;
-  color: $tab-button-md-inactive-color;
+  font-size: $tabs-md-tab-font-size;
+  font-weight: $tabs-md-tab-font-weight;
+  color: $tabs-md-tab-color;
 
   &[aria-selected=true] {
-    color: $tab-button-md-active-color;
-    font-size: $tab-button-md-active-font-size;
-    padding-top: $tab-button-md-active-padding-top;
+    padding: $tabs-md-tab-padding-active;
+
+    font-size: $tabs-md-tab-font-size-active;
+    color: $tabs-md-tab-color-active;
   }
 }
 
 .tab-button-text {
-  margin: $tab-button-md-text-margin;
+  margin: $tabs-md-tab-text-margin;
 
-  text-transform: $tab-button-md-text-transform;
+  text-transform: $tabs-md-tab-text-transform;
 }
 
 .tab-button-icon {
-  min-width: $tabbar-md-item-icon-size + 5;
+  min-width: $tabs-md-tab-icon-size + 5;
 
-  font-size: $tabbar-md-item-icon-size;
+  font-size: $tabs-md-tab-icon-size;
 }
 
 [tabsLayout=icon-top] {
@@ -99,7 +124,7 @@ ion-tabbar {
     width: 1px;
     height: 2px;
 
-    background: $tab-button-md-active-color;
+    background: $tabs-md-tab-color-active;
     transform: translateZ(0);
     transform-origin: 0 0;
 
@@ -124,7 +149,7 @@ ion-tabbar {
     background-color: $color-base;
 
     .tab-button {
-      color: rgba($color-contrast, $tab-button-md-inactive-opacity);
+      color: rgba($color-contrast, $tabs-md-tab-opacity);
     }
 
     .tab-button:hover:not(.disable-hover),
