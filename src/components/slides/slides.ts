@@ -127,7 +127,7 @@ import { Swiper } from './swiper-widget';
  * }
  * ```
  *
- * Now we can call any of the `Slider` [methods]((#instance-members)),
+ * Now we can call any of the `Slider` [methods](#instance-members),
  * for example we can use the Slider's `slideTo()` method in order to
  * navigate to a specific slide on a button click. Below we call the
  * `goToSlide()` method and it navigates to the 3rd slide:
