@@ -242,7 +242,9 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       }
 
       return $timeout(function() {
-        $ionicBody.removeClass(self.viewType + '-open');
+        if (!modalStack.length) {
+          $ionicBody.removeClass(self.viewType + '-open');
+        }
         self.el.classList.add('hide');
       }, self.hideDelay || 320);
     },
