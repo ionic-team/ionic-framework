@@ -91,6 +91,7 @@ ion-tabbar {
 
 .tab-button[aria-selected=true] .tab-button-text {
   margin: $tabs-md-tab-text-margin-active;
+
   transform: $tabs-md-tab-text-transform-active;
 }
 
