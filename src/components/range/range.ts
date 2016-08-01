@@ -9,7 +9,6 @@ import { Form } from '../../util/form';
 import { Item } from '../item/item';
 import { UIEventManager } from '../../util/ui-event-manager';
 
-
 export const RANGE_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Range), multi: true});
 
@@ -206,6 +205,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   private _pressed: boolean;
   private _labelId: string;
   private _fn: Function;
+  private _justDraggable: boolean = false;
 
   private _active: RangeKnob;
   private _start: Coordinates = null;
@@ -247,6 +247,17 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
     if (!isNaN(val)) {
       this._min = val;
     }
+  }
+
+  /**
+   * @input {boolean} If true, range is only draggable by holding knob
+   */
+  @Input()
+  get justDraggable(): boolean {
+    return this._justDraggable;
+  }
+  set justDraggable(val: boolean) {
+    this._justDraggable = isTrueProperty(val);
   }
 
   /**
@@ -394,6 +405,24 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
     // get the full dimensions of the slider element
     let rect: ClientRect = this._rect = this._slider.nativeElement.getBoundingClientRect();
+
+    //if _justDraggable is "true", check if pointer coordination is near to the knob current position
+    if(this._justDraggable) {
+
+        //current knob value
+        let knobValue = this._knobs.first.value;
+
+        //ratio and value of pointer coordination
+        let pointerRatio = (this._start.x - rect.left) / (rect.width);
+        let pointerValue = this.ratioToValue(pointerRatio);
+
+        //check if pointer is close to the knob
+        var dif_factor = (this._max - this._min) * 0.06;
+        var dif = Math.abs(pointerValue - knobValue);
+        if (dif > dif_factor) {
+            return false;
+        }
+    }
 
     // figure out the offset
     // the start of the pointer could actually
