@@ -20,7 +20,7 @@ export const UserRoot = new OpaqueToken('USERROOT');
 })
 export class AppRoot implements AfterViewInit {
 
-  @ViewChild('anchor', {read: ViewContainerRef}) private _viewport: ViewContainerRef;
+  @ViewChild('anchor', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
   constructor(
     @Inject(UserRoot) private _userCmp: any,

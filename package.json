@@ -3,7 +3,17 @@
   "name": "ionic2",
   "version": "2.0.0-beta.10",
   "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular 2",
-  "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp", "cordova", "progressive web app", "pwa"],
+  "keywords": [
+    "ionic",
+    "framework",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "cordova",
+    "progressive web app",
+    "pwa"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -14,7 +24,6 @@
     "test:generators": "jasmine-node ./tooling/spec",
     "link": "npm install && gulp src && npm link",
     "ngc": "ngc -p ngcConfig.json && cp src/components/slides/swiper-widget.es2015.js dist/components/slides/swiper-widget.js"
-
   },
   "dependencies": {
     "@angular/common": "github:angular/common-builds",
@@ -100,7 +109,8 @@
     "tslint-ionic-rules": "0.0.2",
     "typescript": "^2.0.0",
     "vinyl": "^0.4.6",
-    "webpack": "^1.12.2",
+    "webpack": "^2.1.0-beta.20",
+    "webpack-dev-server": "^1.14.1",
     "yargs": "^3.6.0"
   },
   "config": {

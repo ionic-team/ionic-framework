@@ -115,12 +115,12 @@ import { Config } from '../../config/config';
   encapsulation: ViewEncapsulation.None,
 })
 export class Spinner {
-  private _c: any[];
-  private _l: any[];
+  _c: any[];
+  _l: any[];
   private _name: string;
   private _dur: number = null;
   private _init: boolean;
-  private _applied: string;
+  _applied: string;
 
   /**
    * @input {string} SVG spinner name.

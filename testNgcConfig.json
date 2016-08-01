@@ -13,6 +13,7 @@
     "skipMetadataEmit" : true
   },
   "files": [
-    "./src/components/nav/test/basic/AppModule.ts"
+    "./test/AppModule.ts",
+    "./test/index.ts"
   ]
 }
