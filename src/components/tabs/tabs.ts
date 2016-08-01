@@ -24,18 +24,21 @@ import { ViewController } from '../nav/view-controller';
  * @description
  * Tabs make it easy to navigate between different pages or functional
  * aspects of an app. The Tabs component, written as `<ion-tabs>`, is
- * a container of individual [Tab](../Tab/) components.
+ * a container of individual [Tab](../Tab/) components. Each individual `ion-tab`
+ * is a declarative component for a [NavController](../NavController/)
+
+ * For more information on using nav controllers like Tab or [Nav](../../nav/Nav/),
+ * take a look at the [NavController API Docs](../NavController/).
  *
  * ### Placement
  *
  * The position of the tabs relative to the content varies based on
- * the mode. By default, the tabs are placed at the bottom of the screen
- * for `ios` mode, and at the top for the `md` and `wp` modes. You can
- * configure the position using the `tabsPlacement` property on the
- * `<ion-tabs>` element, or in your app's [config](../../config/Config/).
+ * the mode. The tabs are placed at the bottom of the screen
+ * for iOS and Android, and at the top for Windows by default. The position can be configured using the `tabsPlacement` attribute
+ * on the `<ion-tabs>` component, or in an app's [config](../../config/Config/).
  * See the [Input Properties](#input-properties) below for the available
  * values of `tabsPlacement`.
- *
+
  * ### Layout
  *
  * The layout for all of the tabs can be defined using the `tabsLayout`
