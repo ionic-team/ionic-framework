@@ -23,18 +23,31 @@ import { TapClick, provideTapClick } from './components/tap-click/tap-click';
 import { ToastController } from './components/toast/toast';
 import { Translate } from './translation/translate';
 
+export { setupProvideEvents } from './util/events';
 
+
+export function getWindowUserAgent() {
+  return window.navigator.userAgent;
+}
+
+export function getWindowPlatform() {
+  return window.navigator.platform;
+}
+
+export function getWindowLocation() {
+  return window.location.href;
+}
 /**
  * @private
  */
 export function ionicProviders(userRoot: any, userConfig?: any, deepLinks?: any[]): any[] {
   return [
     { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: userRoot, multi: true },
-    { provide: UserAgent, useValue: window.navigator.userAgent },
+    { provide: UserAgent, useFactory: getWindowUserAgent },
     { provide: UserConfig, useValue: userConfig },
-    { provide: UserNavigatorPlatform, useValue: window.navigator.platform },
+    { provide: UserNavigatorPlatform, useFactory: getWindowPlatform },
     { provide: UserRoot, useValue: userRoot },
-    { provide: UserUrl, useValue: window.location.href },
+    { provide: UserUrl, useFactory: getWindowLocation },
 
     provideConfig(),
     provideEvents(),

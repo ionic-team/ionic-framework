@@ -147,11 +147,16 @@ export function setupEvents(platform: Platform): Events {
   return events;
 }
 
+export function setupProvideEvents(platform: Platform) {
+  return function() {
+    return setupEvents(platform);
+  };
+}
 
 export function provideEvents() {
   return {
     provide: APP_INITIALIZER,
-    useFactory: (platform: Platform) => () => setupEvents(platform),
+    useFactory: setupProvideEvents,
     deps: [
       Platform
     ],
