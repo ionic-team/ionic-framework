@@ -27,10 +27,10 @@ var compiler = webpack({
 
   resolve: {
     extensions: ['', '.js', '.json'],
-    mainFields: ['main', 'browser'],
-    'ionic-angular': './dist'
+    mainFields: ['main', 'browser']
   }
 });
+
 
 var server = new WebpackDevServer(compiler, {
 	historyApiFallback: true,
@@ -47,5 +47,6 @@ var server = new WebpackDevServer(compiler, {
 
 	clearConsole();
 	console.log('Starting the development server...');
-	console.log();
+  console.log();
+  console.log(require.resolve('./dist'));
 });

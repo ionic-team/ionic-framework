@@ -28,8 +28,8 @@ export class IonicModule {
   static forRoot(userRoot: any, userConfig?: any, deepLinks?: any[]): ModuleWithProviders {
     return {
       ngModule: IonicModule,
-      providers: []
-//      providers: ionicProviders(userRoot, userConfig, deepLinks)
+      //providers: []
+      providers: ionicProviders(userRoot, userConfig, deepLinks)
     };
   }
 }
