@@ -6,8 +6,6 @@ import { AppRoot } from './components/app/app-root'
 import { IONIC_DIRECTIVES } from './directives'
 import { ionicProviders } from './providers'
 
-export {BrowserModule} from '@angular/platform-browser';
-
 @NgModule({
   imports: [BrowserModule, FormsModule],
   exports: [BrowserModule, FormsModule, IONIC_DIRECTIVES],
