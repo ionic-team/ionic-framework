@@ -2044,7 +2044,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
             // Deactivate pull-to-refresh when decelerating
             if (!self.__refreshActive) {
               self.__startDeceleration(timeStamp);
+            } else {
+              self.__scrollingComplete();
             }
+          } else {
+            self.__scrollingComplete();
           }
         } else {
           self.__scrollingComplete();
