@@ -1,183 +1,382 @@
 export interface SwiperOptions {
-  /** Index number of initial slide. */
-  initialSlide?: number = 0;
-  /** Could be 'horizontal' or 'vertical' (for vertical slider). */
-  direction?: string = 'horizontal';
-  /** Duration of transition between slides (in ms) */
-  speed?: number = 300;
-  /** Enabled this option and plugin will set width/height on swiper wrapper equal to total size of all slides. Mostly should be used as compatibility fallback option for browser that don't support flexbox layout well */
-  setWrapperSize?: boolean = false;
-  /** Enabled this option and swiper will be operated as usual except it will not move, real translate values on wrapper will not be set. Useful when you may need to create custom slide transition */
-  virtualTranslate?: boolean = false;
-  /** Swiper width (in px). Parameter allows to force Swiper width. Useful only if you initialize Swiper when it is hidden. */
-  width?: number = undefined;
+  /**
+   * Index number of initial slide.
+   * @default 0
+   */
+  initialSlide?: number;
+  /**
+   * Could be 'horizontal' or 'vertical' (for vertical slider).
+   * @default 'horizontal'
+   */
+  direction?: string;
+  /**
+   * Duration of transition between slides (in ms)
+   * @default 300
+   */
+  speed?: number;
+  /**
+   * Enabled this option and plugin will set width/height on swiper wrapper equal to total size of all slides. Mostly should be used as compatibility fallback option for browser that don't support flexbox layout well
+   * @default false
+   */
+  setWrapperSize?: boolean;
+  /**
+   * Enabled this option and swiper will be operated as usual except it will not move, real translate values on wrapper will not be set. Useful when you may need to create custom slide transition
+   * @default false
+   */
+  virtualTranslate?: boolean;
+  /**
+   * Swiper width (in px). Parameter allows to force Swiper width. Useful only if you initialize Swiper when it is hidden.
+   * @default undefined
+   */
+  width?: number;
     // Setting this parameter will make Swiper not responsive
-  /** Swiper height (in px). Parameter allows to force Swiper height. Useful only if you initialize Swiper when it is hidden. */
-  height?: number = undefined;
+  /**
+   * Swiper height (in px). Parameter allows to force Swiper height. Useful only if you initialize Swiper when it is hidden.
+   * @default undefined
+   */
+  height?: number;
     // Setting this parameter will make Swiper not responsive
-  /** Set to true and slider wrapper will adopt its height to the height of the currently active slide */
-  autoHeight?: boolean = false;
-  /** Set to true to round values of slides width and height to prevent blurry texts on usual resolution screens (if you have such) */
-  roundLengths?: boolean = false;
-  /** Set to true on nested Swiper for correct touch events interception. Use only on nested swipers that use same direction as the parent one */
-  nested?: boolean = false;
+  /**
+   * Set to true and slider wrapper will adopt its height to the height of the currently active slide
+   * @default false
+   */
+  autoHeight?: boolean;
+  /**
+   * Set to true to round values of slides width and height to prevent blurry texts on usual resolution screens (if you have such)
+   * @default false
+   */
+  roundLengths?: boolean;
+  /**
+   * Set to true on nested Swiper for correct touch events interception. Use only on nested swipers that use same direction as the parent one
+   * @default false
+   */
+  nested?: boolean;
 
   // Autoplay
 
-  /** delay between transitions (in ms). If this parameter is not specified, auto play will be disabled */
-  autoplay?: number = undefined;
-  /** Enable this parameter and autoplay will be stopped when it reaches last slide (has no effect in loop mode) */
-  autoplayStopOnLast?: boolean = false;
-  /** Set to false and autoplay will not be disabled after user interactions (swipes), it will be restarted every time after interaction */
-  autoplayDisableOnInteraction?: boolean = true;
+  /**
+   * delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
+   * @default undefined
+   */
+  autoplay?: number;
+  /**
+   * Enable this parameter and autoplay will be stopped when it reaches last slide (has no effect in loop mode)
+   * @default false
+   */
+  autoplayStopOnLast?: boolean;
+  /**
+   * Set to false and autoplay will not be disabled after user interactions (swipes), it will be restarted every time after interaction
+   * @default true
+   */
+  autoplayDisableOnInteraction?: boolean;
 
   // Progress
 
-  /** Enable this feature to calculate each slides progress */
-  watchSlidesProgress?: boolean = false;
-  /** watchSlidesProgress should be enabled. Enable this option and slides that are in viewport will have additional visible class */
-  watchSlidesVisibility?: boolean = false;
+  /**
+   * Enable this feature to calculate each slides progress
+   * @default false
+   */
+  watchSlidesProgress?: boolean;
+  /**
+   * watchSlidesProgress should be enabled. Enable this option and slides that are in viewport will have additional visible class
+   * @default false
+   */
+  watchSlidesVisibility?: boolean;
 
   // Freemode
 
-  /** If true then slides will not have fixed positions */
-  freeMode?: boolean = false;
-  /** If true, then slide will keep moving for a while after you release it */
-  freeModeMomentum?: boolean = true;
-  /** Higher value produces larger momentum distance after you release slider */
-  freeModeMomentumRatio?: number = 1;
-  /** Set to false if you want to disable momentum bounce in free mode */
-  freeModeMomentumBounce?: boolean = true;
-  /** Higher value produces larger momentum bounce effect */
-  freeModeMomentumBounceRatio?: number = 1;
-  /** Minimum touchmove-velocity required to trigger free mode momentum */
-  freeModeMinimumVelocity?: number = 0.02;
-  /** Set to true to enable snap to slides positions in free mode */
-  freeModeSticky?: boolean = false;
+  /**
+   * If true then slides will not have fixed positions
+   * @default false
+   */
+  freeMode?: boolean;
+  /**
+   * If true, then slide will keep moving for a while after you release it
+   * @default true
+   */
+  freeModeMomentum?: boolean;
+  /**
+   * Higher value produces larger momentum distance after you release slider
+   * @default 1
+   */
+  freeModeMomentumRatio?: number;
+  /**
+   * Set to false if you want to disable momentum bounce in free mode
+   * @default true
+   */
+  freeModeMomentumBounce?: boolean;
+  /**
+   * Higher value produces larger momentum bounce effect
+   * @default 1
+   */
+  freeModeMomentumBounceRatio?: number;
+  /**
+   * Minimum touchmove-velocity required to trigger free mode momentum
+   * @default 0.02
+   */
+  freeModeMinimumVelocity?: number;
+  /**
+   * Set to true to enable snap to slides positions in free mode
+   * @default false
+   */
+  freeModeSticky?: boolean;
 
   // Effects
 
-  /** Could be "slide", "fade", "cube", "coverflow" or "flip" */
-  effect?: string = 'slide';
-  /** Fade effect parameters */
-  fade?: {crossFade: boolean} = {crossFade: false};
-  /** Cube effect parameters. For better performance you may disable shadows */
-  cube?: {slideShadows: boolean; shadow: boolean; shadowOffset: number; shadowScale: number} = {slideShadows: true, shadow: true, shadowOffset: 20, shadowScale: 0.94};
-  /** Coverflow effect parameters. For better performance you may disable shadows */
-  coverflow?: {rotate: number; stretch: number; depth: number; modifier: number; slideShadows: boolean} = {rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: true};
-  /** Flip effect parameters. limitRotation (when enabled) limits slides rotation angle to 180deg maximum. It allows to quickly "flip" between different slides. If you use "slow" transitions then it is better to disable it. */
-  flip?: {slideShadows: boolean; limitRotation: boolean} = {slideShadows: true, limitRotation: true};
+  /**
+   * Could be "slide", "fade", "cube", "coverflow" or "flip"
+   * @default 'slide'
+   */
+  effect?: string;
+  /**
+   * Fade effect parameters
+   * @default {crossFade: false}
+   */
+  fade?: {crossFade: boolean};
+  /**
+   * Cube effect parameters. For better performance you may disable shadows
+   * @default {slideShadows: true, shadow: true, shadowOffset: 20, shadowScale: 0.94}
+   */
+  cube?: {slideShadows: boolean; shadow: boolean; shadowOffset: number; shadowScale: number};
+  /**
+   * Coverflow effect parameters. For better performance you may disable shadows
+   * @default {rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: true}
+   */
+  coverflow?: {rotate: number; stretch: number; depth: number; modifier: number; slideShadows: boolean};
+  /**
+   * Flip effect parameters. limitRotation (when enabled) limits slides rotation angle to 180deg maximum. It allows to quickly "flip" between different slides. If you use "slow" transitions then it is better to disable it.
+   * @default {slideShadows: true, limitRotation: true}
+   */
+  flip?: {slideShadows: boolean; limitRotation: boolean};
 
   // Parallax
 
-  /** Enable, if you want to use "parallaxed" elements inside of slider */
-  parallax?: boolean = false;
+  /**
+   * Enable, if you want to use "parallaxed" elements inside of slider
+   * @default false
+   */
+  parallax?: boolean;
 
   // Slides grid
 
-  /** Distance between slides in px. */
-  spaceBetween?: number = 0;
+  /**
+   * Distance between slides in px.
+   * @default 0
+   */
+  spaceBetween?: number;
   /**
    * Number or 'auto' Number of slides per view (slides visible at the same time on slider's container).
    * If you use it with "auto" value and along with loop: true then you need to specify loopedSlides parameter with amount of slides to loop (duplicate)
    * slidesPerView: 'auto' is currently not compatible with multirow mode, when slidesPerColumn > 1
+   * @default 1
    */
-  slidesPerView?: number | string = 1;
-  /** Number of slides per column, for multirow layout */
-  slidesPerColumn?: number = 1;
-  /** Could be 'column' or 'row'. Defines how slides should fill rows, by column or by row */
-  slidesPerColumnFill?: string = 'column';
-  /** Set numbers of slides to define and enable group sliding. Useful to use with slidesPerView > 1 */
-  slidesPerGroup?: number = 1;
-  /** If true, then active slide will be centered, not always on the left side. */
-  centeredSlides?: boolean = false;
-  /** Add (in px) additional slide offset in the beginning of the container (before all slides) */
-  slidesOffsetBefore?: number = 0;
-  /** Add (in px) additional slide offset in the end of the container (after all slides) */
-  slidesOffsetAfter?: number = 0;
+  slidesPerView?: number | string;
+  /**
+   * Number of slides per column, for multirow layout
+   * @default 1
+   */
+  slidesPerColumn?: number;
+  /**
+   * Could be 'column' or 'row'. Defines how slides should fill rows, by column or by row
+   * @default 'column'
+   */
+  slidesPerColumnFill?: string;
+  /**
+   * Set numbers of slides to define and enable group sliding. Useful to use with slidesPerView > 1
+   * @default 1
+   */
+  slidesPerGroup?: number;
+  /**
+   * If true, then active slide will be centered, not always on the left side.
+   * @default false
+   */
+  centeredSlides?: boolean;
+  /**
+   * Add (in px) additional slide offset in the beginning of the container (before all slides)
+   * @default 0
+   */
+  slidesOffsetBefore?: number;
+  /**
+   * Add (in px) additional slide offset in the end of the container (after all slides)
+   * @default 0
+   */
+  slidesOffsetAfter?: number;
 
   // Grab Cursor
 
-  /** This option may a little improve desktop usability. If true, user will see the "grab" cursor when hover on Swiper */
-  grabCursor?: boolean = false;
+  /**
+   * This option may a little improve desktop usability. If true, user will see the "grab" cursor when hover on Swiper
+   * @default false
+   */
+  grabCursor?: boolean;
 
   // Touches
 
-  /** Target element to listen touch events on. Can be 'container' (to listen for touch events on swiper-container) or 'wrapper' (to listen for touch events on swiper-wrapper) */
-  touchEventsTarget?: string = 'container';
-  /** Touch ration */
-  touchRatio?: number = 1;
-  /** Allowable angle (in degrees) to trigger touch move */
-  touchAngle?: number = 45;
-  /** If true, Swiper will accept mouse events like touch events (click and drag to change slides) */
-  simulateTouch?: boolean = true;
-  /** Set to false if you want to disable short swipes */
-  shortSwipes?: boolean = true;
-  /** Set to false if you want to disable long swipes */
-  longSwipes?: boolean = true;
-  /** Ratio to trigger swipe to next/previous slide during long swipes */
-  longSwipesRatio?: number = 0.5;
-  /** Minimal duration (in ms) to trigger swipe to next/previous slide during long swipes */
-  longSwipesMs?: number = 300;
-  /** If disabled, then slider will be animated only when you release it, it will not move while you hold your finger on it */
-  followFinger?: boolean = true;
-  /** If true, then the only way to switch the slide is use of external API functions like slidePrev or slideNext */
-  onlyExternal?: boolean = false;
-  /** Threshold value in px. If "touch distance" will be lower than this value then swiper will not move */
-  threshold?: number = 0;
-  /** If enabled, then propagation of "touchmove" will be stopped */
-  touchMoveStopPropagation?: boolean = true;
-  /** Enable to release Swiper events for swipe-to-go-back work in iOS UIWebView */
-  iOSEdgeSwipeDetection?: boolean = false;
-  /** Area (in px) from left edge of the screen to release touch events for swipe-to-go-back in iOS UIWebView */
-  iOSEdgeSwipeThreshold?: number = 20;
+  /**
+   * Target element to listen touch events on. Can be 'container' (to listen for touch events on swiper-container) or 'wrapper' (to listen for touch events on swiper-wrapper)
+   * @default 'container'
+   */
+  touchEventsTarget?: string;
+  /**
+   * Touch ration
+   * @default 1
+   */
+  touchRatio?: number;
+  /**
+   * Allowable angle (in degrees) to trigger touch move
+   * @default 45
+   */
+  touchAngle?: number;
+  /**
+   * If true, Swiper will accept mouse events like touch events (click and drag to change slides)
+   * @default true
+   */
+  simulateTouch?: boolean;
+  /**
+   * Set to false if you want to disable short swipes
+   * @default true
+   */
+  shortSwipes?: boolean;
+  /**
+   * Set to false if you want to disable long swipes
+   * @default true
+   */
+  longSwipes?: boolean;
+  /**
+   * Ratio to trigger swipe to next/previous slide during long swipes
+   * @default 0.5
+   */
+  longSwipesRatio?: number;
+  /**
+   * Minimal duration (in ms) to trigger swipe to next/previous slide during long swipes
+   * @default 300
+   */
+  longSwipesMs?: number;
+  /**
+   * If disabled, then slider will be animated only when you release it, it will not move while you hold your finger on it
+   * @default true
+   */
+  followFinger?: boolean;
+  /**
+   * If true, then the only way to switch the slide is use of external API functions like slidePrev or slideNext
+   * @default false
+   */
+  onlyExternal?: boolean;
+  /**
+   * Threshold value in px. If "touch distance" will be lower than this value then swiper will not move
+   * @default 0
+   */
+  threshold?: number;
+  /**
+   * If enabled, then propagation of "touchmove" will be stopped
+   * @default true
+   */
+  touchMoveStopPropagation?: boolean;
+  /**
+   * Enable to release Swiper events for swipe-to-go-back work in iOS UIWebView
+   * @default false
+   */
+  iOSEdgeSwipeDetection?: boolean;
+  /**
+   * Area (in px) from left edge of the screen to release touch events for swipe-to-go-back in iOS UIWebView
+   * @default 20
+   */
+  iOSEdgeSwipeThreshold?: number;
 
   // Touch Resistance
 
-  /** Set to false if you want to disable resistant bounds */
-  resistance?: boolean = true;
-  /** This option allows you to control resistance ratio */
-  resistanceRatio?: number = 0.85;
+  /**
+   * Set to false if you want to disable resistant bounds
+   * @default true
+   */
+  resistance?: boolean;
+  /**
+   * This option allows you to control resistance ratio
+   * @default 0.85
+   */
+  resistanceRatio?: number;
 
   // Clicks
 
-  /** Set to true to prevent accidental unwanted clicks on links during swiping */
-  preventClicks?: boolean = true;
-  /** Set to true to stop clicks event propagation on links during swiping */
-  preventClicksPropagation?: boolean = true;
-  /** Set to true and click on any slide will produce transition to this slide */
-  slideToClickedSlide?: boolean = false;
+  /**
+   * Set to true to prevent accidental unwanted clicks on links during swiping
+   * @default true
+   */
+  preventClicks?: boolean;
+  /**
+   * Set to true to stop clicks event propagation on links during swiping
+   * @default true
+   */
+  preventClicksPropagation?: boolean;
+  /**
+   * Set to true and click on any slide will produce transition to this slide
+   * @default false
+   */
+  slideToClickedSlide?: boolean;
 
   // Swiping / No swiping
 
-  /** Set to false to disable swiping to previous slide direction (to left or top) */
-  allowSwipeToPrev?: boolean = true;
-  /** Set to false to disable swiping to next slide direction (to right or bottom) */
-  allowSwipeToNext?: boolean = true;
-  /** Set to false to disable swiping to next slide direction (to right or bottom) */
-  noSwiping?: boolean = true;
-  /** If true, then you can add noSwipingClass class to swiper's slide to prevent/disable swiping on this element */
-  noSwipingClass?: string = 'swiper-no-swiping';
-  /** String with CSS selector or HTML element of the container with pagination that will work as only available handler for swiping */
-  swipeHandler?: string | HTMLElement = undefined;
+  /**
+   * Set to false to disable swiping to previous slide direction (to left or top)
+   * @default true
+   */
+  allowSwipeToPrev?: boolean;
+  /**
+   * Set to false to disable swiping to next slide direction (to right or bottom)
+   * @default true
+   */
+  allowSwipeToNext?: boolean;
+  /**
+   * Set to false to disable swiping to next slide direction (to right or bottom)
+   * @default true
+   */
+  noSwiping?: boolean;
+  /**
+   * If true, then you can add noSwipingClass class to swiper's slide to prevent/disable swiping on this element
+   * @default 'swiper-no-swiping'
+   */
+  noSwipingClass?: string;
+  /**
+   * String with CSS selector or HTML element of the container with pagination that will work as only available handler for swiping
+   * @default undefined
+   */
+  swipeHandler?: string | HTMLElement;
 
   // Navigation Controls
 
-  /** If enabled (by default) and navigation elements' parameters passed as a string (like ".pagination") then Swiper will look for such elements through child elements first. Applies for pagination, prev/next buttons and scrollbar elements */
-  uniqueNavElements?: boolean = true;
+  /**
+   * If enabled (by default) and navigation elements' parameters passed as a string (like ".pagination") then Swiper will look for such elements through child elements first. Applies for pagination, prev/next buttons and scrollbar elements
+   * @default true
+   */
+  uniqueNavElements?: boolean;
 
   // Pagination
 
-  /** String with CSS selector or HTML element of the container with pagination */
-  pagination?: string | HTMLElement = undefined;
-  /** String with type of pagination. Can be "bullets", "fraction", "progress" or "custom" */
-  paginationType?: string = 'bullets';
-  /** Toggle (hide/true) pagination container visibility when click on Slider's container */
-  paginationHide?: boolean = true;
-  /** If true then clicking on pagination button will cause transition to appropriate slide. Only for bullets pagination type */
-  paginationClickable?: boolean = false;
-  /** Defines which HTML tag will be use to represent single pagination bullet. . Only for bullets pagination type */
-  paginationElement?: string = 'span';
+  /**
+   * String with CSS selector or HTML element of the container with pagination
+   * @default undefined
+   */
+  pagination?: string | HTMLElement;
+  /**
+   * String with type of pagination. Can be "bullets", "fraction", "progress" or "custom"
+   * @default 'bullets'
+   */
+  paginationType?: string;
+  /**
+   * Toggle (hide/true) pagination container visibility when click on Slider's container
+   * @default true
+   */
+  paginationHide?: boolean;
+  /**
+   * If true then clicking on pagination button will cause transition to appropriate slide. Only for bullets pagination type
+   * @default false
+   */
+  paginationClickable?: boolean;
+  /**
+   * Defines which HTML tag will be use to represent single pagination bullet. . Only for bullets pagination type
+   * @default 'span'
+   */
+  paginationElement?: string;
   /**
    * This parameter allows totally customize pagination bullets, you need to pass here a function that accepts index number of pagination bullet and required element class name (className). Only for bullets pagination type
    * @example
@@ -228,99 +427,196 @@ export interface SwiperOptions {
 
   // Navigation Buttons
 
-  /** String with CSS selector or HTML element of the element that will work like "next" button after click on it */
-  nextButton?: string | HTMLElement = undefined;
-  /** String with CSS selector or HTML element of the element that will work like "prev" button after click on it */
-  prevButton?: string | HTMLElement = undefined;
+  /**
+   * String with CSS selector or HTML element of the element that will work like "next" button after click on it
+   * @default undefined
+   */
+  nextButton?: string | HTMLElement;
+  /**
+   * String with CSS selector or HTML element of the element that will work like "prev" button after click on it
+   * @default undefined
+   */
+  prevButton?: string | HTMLElement;
 
   // Scrollbar
 
-  /** String with CSS selector or HTML element of the container with scrollbar. */
-  scrollbar?: string | HTMLElement = undefined;
-  /** Hide scrollbar automatically after user interaction */
-  scrollbarHide?: boolean = true;
-  /** Set to true to enable make scrollbar draggable that allows you to control slider position */
-  scrollbarDraggable?: boolean = false;
-  /** Set to true to snap slider position to slides when you release scrollbar */
-  scrollbarSnapOnRelease?: boolean = false;
+  /**
+   * String with CSS selector or HTML element of the container with scrollbar.
+   * @default undefined
+   */
+  scrollbar?: string | HTMLElement;
+  /**
+   * Hide scrollbar automatically after user interaction
+   * @default true
+   */
+  scrollbarHide?: boolean;
+  /**
+   * Set to true to enable make scrollbar draggable that allows you to control slider position
+   * @default false
+   */
+  scrollbarDraggable?: boolean;
+  /**
+   * Set to true to snap slider position to slides when you release scrollbar
+   * @default false
+   */
+  scrollbarSnapOnRelease?: boolean;
 
   // Accessibility
 
-  /** Option to enable keyboard accessibility to provide foucsable navigation buttons and basic ARIA for screen readers */
-  a11y?: boolean = false;
-  /** Message for screen readers for previous button */
-  prevSlideMessage?: string = 'Previous slide';
-  /** Message for screen readers for next button */
-  nextSlideMessage?: string = 'Next slide';
-  /** Message for screen readers for previous button when swiper is on first slide */
-  firstSlideMessage?: string = 'This is the first slide';
-  /** Message for screen readers for previous button when swiper is on last slide */
-  lastSlideMessage?: string = 'This is the last slide';
-  /** Message for screen readers for single pagination bullet */
-  paginationBulletMessage?: string = 'Go to slide {{index}}';
+  /**
+   * Option to enable keyboard accessibility to provide foucsable navigation buttons and basic ARIA for screen readers
+   * @default false
+   */
+  a11y?: boolean;
+  /**
+   * Message for screen readers for previous button
+   * @default 'Previous slide'
+   */
+  prevSlideMessage?: string;
+  /**
+   * Message for screen readers for next button
+   * @default 'Next slide'
+   */
+  nextSlideMessage?: string;
+  /**
+   * Message for screen readers for previous button when swiper is on first slide
+   * @default 'This is the first slide'
+   */
+  firstSlideMessage?: string;
+  /**
+   * Message for screen readers for previous button when swiper is on last slide
+   * @default 'This is the last slide'
+   */
+  lastSlideMessage?: string;
+  /**
+   * Message for screen readers for single pagination bullet
+   * @default 'Go to slide {{index}}'
+   */
+  paginationBulletMessage?: string;
 
   // Keyboard / Mousewheel
 
-  /** Set to true to enable navigation through slides using keyboard right and left (for horizontal mode), top and borrom (for vertical mode) keyboard arrows */
-  keyboardControl?: boolean = false;
-  /** Set to true to enable navigation through slides using mouse wheel */
-  mousewheelControl?: boolean = false;
-  /** Set to true to force mousewheel swipes to axis. So in horizontal mode mousewheel will work only with horizontal mousewheel scrolling, and only with vertical scrolling in vertical mode. */
-  mousewheelForceToAxis?: boolean = false;
-  /** Set to true and swiper will release mousewheel event and allow page scrolling when swiper is on edge positions (in the beginning or in the end) */
-  mousewheelReleaseOnEdges?: boolean = false;
-  /** Set to true to invert sliding direction */
-  mousewheelInvert?: boolean = false;
-  /** Multiplier of mousewheel data, allows to tweak mouse wheel sensitivity */
-  mousewheelSensitivity?: number = 1;
+  /**
+   * Set to true to enable navigation through slides using keyboard right and left (for horizontal mode), top and borrom (for vertical mode) keyboard arrows
+   * @default false
+   */
+  keyboardControl?: boolean;
+  /**
+   * Set to true to enable navigation through slides using mouse wheel
+   * @default false
+   */
+  mousewheelControl?: boolean;
+  /**
+   * Set to true to force mousewheel swipes to axis. So in horizontal mode mousewheel will work only with horizontal mousewheel scrolling, and only with vertical scrolling in vertical mode.
+   * @default false
+   */
+  mousewheelForceToAxis?: boolean;
+  /**
+   * Set to true and swiper will release mousewheel event and allow page scrolling when swiper is on edge positions (in the beginning or in the end)
+   * @default false
+   */
+  mousewheelReleaseOnEdges?: boolean;
+  /**
+   * Set to true to invert sliding direction
+   * @default false
+   */
+  mousewheelInvert?: boolean;
+  /**
+   * Multiplier of mousewheel data, allows to tweak mouse wheel sensitivity
+   * @default 1
+   */
+  mousewheelSensitivity?: number;
 
   // Hash Navigation
 
-  /** Set to true to enable hash url navigation to for slides */
-  hashnav?: boolean = false;
+  /**
+   * Set to true to enable hash url navigation to for slides
+   * @default false
+   */
+  hashnav?: boolean;
 
   // Images
 
-  /** When enabled Swiper will force to load all images */
-  preloadImages?: boolean = true;
-  /** When enabled Swiper will be reinitialized after all inner images (<img> tags) are loaded. Required preloadImages: true */
-  updateOnImagesReady?: boolean = true;
-  /** Set to "true" to enable images lazy loading. Note that preloadImages should be disabled */
-  lazyLoading?: boolean = false;
-  /** Set to "true" to enable lazy loading for the closest slides images (for previous and next slide images) */
-  lazyLoadingInPrevNext?: boolean = false;
-  /** Amount of next/prev slides to preload lazy images in. Can't be less than slidesPerView */
-  lazyLoadingInPrevNextAmount?: number = 1;
-  /** By default, Swiper will load lazy images after transition to this slide, so you may enable this parameter if you need it to start loading of new image in the beginning of transition */
-  lazyLoadingOnTransitionStart?: boolean = false;
+  /**
+   * When enabled Swiper will force to load all images
+   * @default true
+   */
+  preloadImages?: boolean;
+  /**
+   * When enabled Swiper will be reinitialized after all inner images (<img> tags) are loaded. Required preloadImages: true
+   * @default true
+   */
+  updateOnImagesReady?: boolean;
+  /**
+   * Set to "true" to enable images lazy loading. Note that preloadImages should be disabled
+   * @default false
+   */
+  lazyLoading?: boolean;
+  /**
+   * Set to "true" to enable lazy loading for the closest slides images (for previous and next slide images)
+   * @default false
+   */
+  lazyLoadingInPrevNext?: boolean;
+  /**
+   * Amount of next/prev slides to preload lazy images in. Can't be less than slidesPerView
+   * @default 1
+   */
+  lazyLoadingInPrevNextAmount?: number;
+  /**
+   * By default, Swiper will load lazy images after transition to this slide, so you may enable this parameter if you need it to start loading of new image in the beginning of transition
+   * @default false
+   */
+  lazyLoadingOnTransitionStart?: boolean;
 
   // Loop
 
   /**
    * Set to true to enable continuous loop mode
    * If you use it along with slidesPerView: 'auto' then you need to specify loopedSlides parameter with amount of slides to loop (duplicate)
+   * @default false
    */
-  loop?: boolean = false;
-  /** Addition number of slides that will be cloned after creating of loop */
-  loopAdditionalSlides?: number = 0;
-  /** If you use slidesPerView:'auto' with loop mode you should tell to Swiper how many slides it should loop (duplicate) using this parameter */
-  loopedSlides?: number = undefined;
+  loop?: boolean;
+  /**
+   * Addition number of slides that will be cloned after creating of loop
+   * @default 0
+   */
+  loopAdditionalSlides?: number;
+  /**
+   * If you use slidesPerView:'auto' with loop mode you should tell to Swiper how many slides it should loop (duplicate) using this parameter
+   * @default undefined
+   */
+  loopedSlides?: number;
 
   // Controller
 
-  /** Pass here another Swiper instance or array with Swiper instances that should be controlled by this Swiper */
-  control?: Swiper = undefined;
-  /** Set to true and controlling will be in inverse direction */
-  controlInverse?: boolean = false;
-  /** Can be 'slide' or 'container'. Defines a way how to control another slider: slide by slide (with respect to other slider's grid) or depending on all slides/container (depending on total slider percentage) */
-  controlBy?: string = 'slide';
+  /**
+   * Pass here another Swiper instance or array with Swiper instances that should be controlled by this Swiper
+   * @default undefined
+   */
+  control?: Swiper;
+  /**
+   * Set to true and controlling will be in inverse direction
+   * @default false
+   */
+  controlInverse?: boolean;
+  /**
+   * Can be 'slide' or 'container'. Defines a way how to control another slider: slide by slide (with respect to other slider's grid) or depending on all slides/container (depending on total slider percentage)
+   * @default 'slide'
+   */
+  controlBy?: string;
 
   // Observer
 
-  /** Set to true to enable Mutation Observer on Swiper and its elements. In this case Swiper will be updated (reinitialized) each time if you change its style (like hide/show) or modify its child elements (like adding/removing slides) */
-  observer?: boolean = false;
-  /** Set to true if you also need to watch Mutations for Swiper parent elements */
-  observeParents?: boolean = false;
+  /**
+   * Set to true to enable Mutation Observer on Swiper and its elements. In this case Swiper will be updated (reinitialized) each time if you change its style (like hide/show) or modify its child elements (like adding/removing slides)
+   * @default false
+   */
+  observer?: boolean;
+  /**
+   * Set to true if you also need to watch Mutations for Swiper parent elements
+   * @default false
+   */
+  observeParents?: boolean;
 
   // Breakpoints
 
@@ -355,99 +651,144 @@ export interface SwiperOptions {
 
   // Callbacks
 
-  /** Run on[Transition/SlideChange][Start/End] callbacks on swiper initialization. Such callbacks will be fired on initialization in case of your initialSlide is not 0, or you use loop mode */
-  runCallbacksOnInit?: boolean = true;
+  /**
+   * Run on[Transition/SlideChange][Start/End] callbacks on swiper initialization. Such callbacks will be fired on initialization in case of your initialSlide is not 0, or you use loop mode
+   * @default true
+   */
+  runCallbacksOnInit?: boolean;
   /** Callback function, will be executed right after Swiper initialization */
-  onInit?: (swiper) => any;
+  onInit?: (swiper: Swiper) => any;
   /** Callback function, will be executed in the beginning of animation to other slide (next or previous). Receives swiper instance as an argument. */
-  onSlideChangeStart?: (swiper) => any;
+  onSlideChangeStart?: (swiper: Swiper) => any;
   /** Callback function, will be executed after animation to other slide (next or previous). Receives slider instance as an argument. */
-  onSlideChangeEnd?: (swiper) => any;
+  onSlideChangeEnd?: (swiper: Swiper) => any;
   /** Same as "onSlideChangeStart" but for "forward" direction only */
-  onSlideNextStart?: (swiper) => any;
+  onSlideNextStart?: (swiper: Swiper) => any;
   /** Same as "onSlideChangeEnd" but for "forward" direction only */
-  onSlideNextEnd?: (swiper) => any;
+  onSlideNextEnd?: (swiper: Swiper) => any;
   /** Same as "onSlideChangeStart" but for "backward" direction only */
-  onSlidePrevStart?: (swiper) => any;
+  onSlidePrevStart?: (swiper: Swiper) => any;
   /** Same as "onSlideChangeEnd" but for "backward" direction only */
-  onSlidePrevEnd?: (swiper) => any;
+  onSlidePrevEnd?: (swiper: Swiper) => any;
   /** Callback function, will be executed in the beginning of transition. Receives swiper instance as an argument. */
-  onTransitionStart?: (swiper) => any;
+  onTransitionStart?: (swiper: Swiper) => any;
   /** Callback function, will be executed after transition. Receives slider instance as an argument. */
-  onTransitionEnd?: (swiper) => any;
+  onTransitionEnd?: (swiper: Swiper) => any;
   /** Callback function, will be executed when user touch Swiper. Receives swiper instance and 'touchstart' event as an arguments. */
-  onTouchStart?: (swiper, event) => any;
+  onTouchStart?: (swiper: Swiper, event: any) => any;
   /** Callback function, will be executed when user touch and move finger over Swiper. Receives swiper instance and 'touchmove' event as an arguments. */
-  onTouchMove?: (swiper, event) => any;
+  onTouchMove?: (swiper: Swiper, event: any) => any;
   /** Callback function, will be executed when user touch and move finger over Swiper in direction opposite to direction parameter. Receives swiper instance and 'touchmove' event as an arguments. */
-  onTouchMoveOpposite?: (swiper, event) => any;
+  onTouchMoveOpposite?: (swiper: Swiper, event: any) => any;
   /** Callback function, will be executed when user touch and move finger over Swiper and move it. Receives swiper instance and 'touchmove' event as an arguments. */
-  onSliderMove?: (swiper, event) => any;
+  onSliderMove?: (swiper: Swiper, event: any) => any;
   /** Callback function, will be executed when user release Swiper. Receives swiper instance and 'touchend' event as an arguments. */
-  onTouchEnd?: (swiper, event) => any;
+  onTouchEnd?: (swiper: Swiper, event: any) => any;
   /** Callback function, will be executed when user click/tap on Swiper after 300ms delay. Receives swiper instance and 'touchend' event as an arguments. */
-  onClick?: (swiper, event) => any;
+  onClick?: (swiper: Swiper, event: any) => any;
   /** Callback function, will be executed when user click/tap on Swiper. Receives swiper instance and 'touchend' event as an arguments. */
-  onTap?: (swiper, event) => any;
+  onTap?: (swiper: Swiper, event: any) => any;
   /** Callback function, will be executed when user double tap on Swiper's container. Receives swiper instance and 'touchend' event as an arguments */
-  onDoubleTap?: (swiper, event) => any;
+  onDoubleTap?: (swiper: Swiper, event: any) => any;
   /** Callback function, will be executed right after all inner images are loaded. updateOnImagesReady should be also enabled */
-  onImagesReady?: (swiper) => any;
+  onImagesReady?: (swiper: Swiper) => any;
   /** Callback function, will be executed when Swiper progress is changed, as second arguments it receives progress that is always from 0 to 1 */
-  onProgress?: (swiper, progress) => any;
+  onProgress?: (swiper: Swiper, progress: number) => any;
   /** Callback function, will be executed when Swiper reach its beginning (initial position) */
-  onReachBeginning?: (swiper) => any;
+  onReachBeginning?: (swiper: Swiper) => any;
   /** Callback function, will be executed when Swiper reach last slide */
-  onReachEnd?: (swiper) => any;
+  onReachEnd?: (swiper: Swiper) => any;
   /** Callback function, will be executed when you destroy Swiper */
-  onDestroy?: (swiper) => any;
+  onDestroy?: (swiper: Swiper) => any;
   /** Callback function, will be executed when swiper's wrapper change its position. Receives swiper instance and current translate value as an arguments */
-  onSetTranslate?: (swiper, translate) => any;
+  onSetTranslate?: (swiper: Swiper, translate: number) => any;
   /** Callback function, will be executed everytime when swiper starts animation. Receives swiper instance and current transition duration (in ms) as an arguments */
-  onSetTransition?: (swiper, transition) => any;
+  onSetTransition?: (swiper: Swiper, transition: number) => any;
   /** Same as onSlideChangeStart but caused by autoplay */
-  onAutoplay?: (swiper) => any;
+  onAutoplay?: (swiper: Swiper) => any;
   /** Callback function, will be executed when when autoplay started */
-  onAutoplayStart?: (swiper) => any;
+  onAutoplayStart?: (swiper: Swiper) => any;
   /** Callback function, will be executed when when autoplay stopped */
-  onAutoplayStop?: (swiper) => any;
+  onAutoplayStop?: (swiper: Swiper) => any;
   /** Callback function, will be executed in the beginning of lazy loading of image */
-  onLazyImageLoad?: (swiper, slide, image) => any;
+  onLazyImageLoad?: (swiper: Swiper, slide: any, image: any) => any;
   /** Callback function, will be executed when lazy loading image will be loaded */
-  onLazyImageReady?: (swiper, slide, image) => any;
+  onLazyImageReady?: (swiper: Swiper, slide: any, image: any) => any;
   /** Callback function, will be executed after pagination elements generated and added to DOM */
-  onPaginationRendered?: (swiper, paginationContainer) => any;
+  onPaginationRendered?: (swiper: Swiper, paginationContainer: any) => any;
 
   // Namespace
 
-  /** CSS class name of slide */
-  slideClass?: string = 'swiper-slide';
-  /** CSS class name of currently active slide */
-  slideActiveClass?: string = 'swiper-slide-active';
-  /** CSS class name of currently visible slide */
-  slideVisibleClass?: string = 'swiper-slide-visible';
-  /** CSS class name of slide duplicated by loop mode */
-  slideDuplicateClass?: string = 'swiper-slide-duplicate';
-  /** CSS class name of slide which is right after currently active slide */
-  slideNextClass?: string = 'swiper-slide-next';
-  /** CSS class name of slide which is right before currently active slide */
-  slidePrevClass?: string = 'swiper-slide-prev';
-  /** CSS class name of slides' wrapper */
-  wrapperClass?: string = 'swiper-wrapper';
-  /** CSS class name of single pagination bullet */
-  bulletClass?: string = 'swiper-pagination-bullet';
-  /** CSS class name of currently active pagination bullet */
-  bulletActiveClass?: string = 'swiper-pagination-bullet-active';
-  /** CSS class name of pagination when it becomes inactive */
-  paginationHiddenClass?: string = 'swiper-pagination-hidden';
-  /** CSS class name of the element with currently active index in "fraction" pagination */
-  paginationCurrentClass?: string = 'swiper-pagination-current';
-  /** CSS class name of the element with total number of "snaps" in "fraction" pagination */
-  paginationTotalClass?: string = 'swiper-pagination-total';
-  /** CSS class name of pagination progressbar */
-  paginationProgressbarClass?: string = 'swiper-pagination-progressbar';
-  /** CSS class name of next/prev button when it becomes disabled */
-  buttonDisabledClass?: string = 'swiper-button-disabled';
+  /**
+   * CSS class name of slide
+   * @default 'swiper-slide'
+   */
+  slideClass?: string;
+  /**
+   * CSS class name of currently active slide
+   * @default 'swiper-slide-active'
+   */
+  slideActiveClass?: string;
+  /**
+   * CSS class name of currently visible slide
+   * @default 'swiper-slide-visible'
+   */
+  slideVisibleClass?: string;
+  /**
+   * CSS class name of slide duplicated by loop mode
+   * @default 'swiper-slide-duplicate'
+   */
+  slideDuplicateClass?: string;
+  /**
+   * CSS class name of slide which is right after currently active slide
+   * @default 'swiper-slide-next'
+   */
+  slideNextClass?: string;
+  /**
+   * CSS class name of slide which is right before currently active slide
+   * @default 'swiper-slide-prev'
+   */
+  slidePrevClass?: string;
+  /**
+   * CSS class name of slides' wrapper
+   * @default 'swiper-wrapper'
+   */
+  wrapperClass?: string;
+  /**
+   * CSS class name of single pagination bullet
+   * @default 'swiper-pagination-bullet'
+   */
+  bulletClass?: string;
+  /**
+   * CSS class name of currently active pagination bullet
+   * @default 'swiper-pagination-bullet-active'
+   */
+  bulletActiveClass?: string;
+  /**
+   * CSS class name of pagination when it becomes inactive
+   * @default 'swiper-pagination-hidden'
+   */
+  paginationHiddenClass?: string;
+  /**
+   * CSS class name of the element with currently active index in "fraction" pagination
+   * @default 'swiper-pagination-current'
+   */
+  paginationCurrentClass?: string;
+  /**
+   * CSS class name of the element with total number of "snaps" in "fraction" pagination
+   * @default 'swiper-pagination-total'
+   */
+  paginationTotalClass?: string;
+  /**
+   * CSS class name of pagination progressbar
+   * @default 'swiper-pagination-progressbar'
+   */
+  paginationProgressbarClass?: string;
+  /**
+   * CSS class name of next/prev button when it becomes disabled
+   * @default 'swiper-button-disabled'
+   */
+  buttonDisabledClass?: string;
 }
 
 export declare class Swiper {
@@ -528,95 +869,95 @@ export declare class Swiper {
   /**
    * This method includes subcalls to updateContainerSize, updateSlidesSize, updateProgress, updatePagination and updateClasses methods
    * You should call it after you add/remove slides manually, or after you hide/show it, or do any custom DOM modifications with Swiper
-   * @param {boolean} updateTranslate - Set it to true (by default it is false) to hard set/reset/update Swiper wrapper translate. It is useful if you use not default effect or scrollbar.
+   * @param {boolean} [updateTranslate=false] - Set it to true (by default it is false) to hard set/reset/update Swiper wrapper translate. It is useful if you use not default effect or scrollbar.
    */
-  update(updateTranslate: boolean = false);
+  update(updateTranslate: boolean): void;
 
   /**
    * Recalculate size of swiper container
    */
-  updateContainerSize();
+  updateContainerSize(): void;
 
   /**
    * Recalculate number of slides and their offsets. Useful after you add/remove slides with JavaScript
    */
-  updateSlidesSize();
+  updateSlidesSize(): void;
 
   /**
    * Recalculate swiper progress
    */
-  updateProgress();
+  updateProgress(): void;
 
   /**
    * Updates pagination layout and re-render bullets
    */
-  updatePagination();
+  updatePagination(): void;
 
   /**
    * Update active/prev/next classes on slides and bullets
    */
-  updateClasses();
+  updateClasses(): void;
 
   /**
    * Swiper executes this method when you resize browser. It is almost the same as .update() but a bit softer, without hard setting translate
    */
-  onResize();
+  onResize(): void;
 
   /**
    * Detach all events listeners
    */
-  detachEvents();
+  detachEvents(): void;
 
   /**
    * Atach all events listeners again
    */
-  attachEvents();
+  attachEvents(): void;
 
   /**
    * Start auto play. It may be useful for custom "Play" and "Pause" buttons
    */
-  startAutoplay();
+  startAutoplay(): void;
 
   /**
    * Stop auto play. It may be useful for custom "Play" and "Pause" buttons
    */
-  stopAutoplay();
+  stopAutoplay(): void;
 
   /**
    * Destroy slider instance and detach all events listeners, where
-   * @param {boolean} deleteInstance - Set it to false (by default it is true) to not to delete Swiper instance
-   * @param {boolean} cleanupStyles - Set it to true (by default it is false) and all custom styles will be removed from slides, wrapper and container. Useful if you need to destroy Swiper and to init again with new options or in different direction
+   * @param {boolean} [deleteInstance=true] - Set it to false (by default it is true) to not to delete Swiper instance
+   * @param {boolean} [cleanupStyles=false] - Set it to true (by default it is false) and all custom styles will be removed from slides, wrapper and container. Useful if you need to destroy Swiper and to init again with new options or in different direction
    */
-  destroy(deleteInstance: boolean = true, cleanupStyles: boolean = false);
+  destroy(deleteInstance: boolean, cleanupStyles: boolean): void;
 
   /**
    * Add new slides to the end.
-   * @param {HTMLElement | HTMLElement[] | string | string[]} slides - Slide or slides you wish to add to the Swiper
+   * @param {(HTMLElement | HTMLElement[] | string | string[])} slides - Slide or slides you wish to add to the Swiper
    */
-  appendSlide(slides: HTMLElement | HTMLElement[] | string | string[]);
+  appendSlide(slides: HTMLElement | HTMLElement[] | string | string[]): void;
 
   /**
    * Add new slides to the beginning.
-   * @param {HTMLElement | HTMLElement[] | string | string[]} slides - Slide or slides you wish to add to the Swiper
+   * @param {(HTMLElement | HTMLElement[] | string | string[])} slides - Slide or slides you wish to add to the Swiper
    */
-  prependSlide(slides: HTMLElement | HTMLElement[] | string | string[]);
+  prependSlide(slides: HTMLElement | HTMLElement[] | string | string[]): void;
 
   /**
    * Remove selected slides.
-   * @param {number | number[]} slideIndex - Index or indices of slides to remove from the Swiper
+   * @param {(number | number[])} slideIndex - Index or indices of slides to remove from the Swiper
    */
-  removeSlide(slideIndex: number | number[]);
+  removeSlide(slideIndex: number | number[]): void;
 
   /**
    * Remove all slides
    */
-  removeAllSlides();
+  removeAllSlides(): void;
 
   /**
    * Set custom css3 transform's translate value for swiper wrapper
    * @param {number} translate - value to translate the swiper wrapper by
    */
-  setWrapperTranslate(translate: number);
+  setWrapperTranslate(translate: number): void;
 
   /**
    * Get current value of swiper wrapper css3 transform translate
@@ -627,18 +968,18 @@ export declare class Swiper {
   /**
    * Add callback/event handler
    * @param {string} callback - The event type to listen for.
-   * @param {(...args: any) => any} handler - The method to be called when an event occurs.
+   * @param {(...args: any[]) => any} handler - The method to be called when an event occurs.
    * @return {Swiper}
    */
-  on(callback: string, handler: (...args: any) => any): Swiper;
+  on(callback: string, handler: (...args: any[]) => any): Swiper;
 
   /**
    * Add event/callback that will be executed only once
    * @param {string} callback - The event type to listen for.
-   * @param {(...args: any) => any} handler - The method to be called when an event occurs.
+   * @param {(...args: any[]) => any} handler - The method to be called when an event occurs.
    * @return {Swiper}
    */
-  once(callback: string, handler: (...args: any) => any): Swiper;
+  once(callback: string, handler: (...args: any[]) => any): Swiper;
 
   /**
    * Remove all handlers for specified callback/event
@@ -650,50 +991,50 @@ export declare class Swiper {
   /**
    * Disable (lock) ability to slide to the next slides
    */
-  lockSwipeToNext();
+  lockSwipeToNext(): void;
 
   /**
    * Enable (unlock) ability to slide to the next slides
    */
-  unlockSwipeToNext();
+  unlockSwipeToNext(): void;
 
   /**
    * Disable (lock) ability to slide to the previous slides
    */
-  lockSwipeToPrev();
+  lockSwipeToPrev(): void;
 
   /**
    * Enable (unlock) ability to slide to the previous slides
    */
-  unlockSwipeToPrev();
+  unlockSwipeToPrev(): void;
 
   /**
    * Disable (lock) ability to change slides
    */
-  lockSwipes();
+  lockSwipes(): void;
 
   /**
    * Enable (unlock) ability to change slides
    */
-  unlockSwipes();
+  unlockSwipes(): void;
 
   /**
    * Disable mousewheel control
    */
-  disableMousewheelControl();
+  disableMousewheelControl(): void;
 
   /**
    * Enable mousewheel control
    */
-  enableMousewheelControl();
+  enableMousewheelControl(): void;
 
   /**
    * Enable keyboard control
    */
-  enableKeyboardControl();
+  enableKeyboardControl(): void;
 
   /**
    * Disable keyboard control
    */
-  disableKeyboardControl();
+  disableKeyboardControl(): void;
 }
