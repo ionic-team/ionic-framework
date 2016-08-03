@@ -249,7 +249,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        overlay.dismiss().then(() => {
+        overlay.onDidDismiss(() => {
           this.ionCancel.emit(null);
         });
       }
@@ -279,7 +279,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
           text: input.text,
           handler: () => {
             this.onChange(input.value);
-            overlay.dismiss().then(() => {
+            overlay.onDidDismiss(() => {
               this.ionChange.emit(input.value);
             });
           }
@@ -326,7 +326,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
         text: this.okText,
         handler: (selectedValues: any) => {
           this.onChange(selectedValues);
-          overlay.dismiss().then(() => {
+          overlay.onDidDismiss(() => {
             this.ionChange.emit(selectedValues);
           });
         }
