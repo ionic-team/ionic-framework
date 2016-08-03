@@ -95,6 +95,15 @@
     </ion-select>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Currency</ion-label>
+    <ion-select [(ngModel)]="currency" [selectedText]="selectedText()">
+      <ion-option *ngFor="let cur of currencies" [value]="cur">
+        {{cur.symbol}} ({{cur.code}}) {{cur.name}}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+
   <button (click)="resetGender()">Reset Gender</button>
 
   <p aria-hidden="true" padding>
@@ -107,6 +116,8 @@
     <code>music: {{music}}</code>
     <br>
     <code>date: {{month}}/{{year}}</code>
+    <br>
+    <code>currency: {{currency | json}}</code>
     <br>
   </p>
 

@@ -1,38 +1,57 @@
 import {Component} from '@angular/core';
 import {ionicBootstrap} from '../../../../../src';
 
+export interface Currency {
+  symbol: string;
+  code: string;
+  name: string;
+}
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  musicAlertOpts: any;
+  musicAlertOpts: any = {
+    title: '1994 Music',
+    subTitle: 'Select your favorite',
+    cssClass: 'music-select'
+  };
   gender: string;
-  gaming: string;
-  os: string;
-  music: string;
-  month: string;
-  year: string;
-  years: Array<number>;
-  notification: string;
-  status: string;
+  gaming: string = '';
+  os: string = 'win3.1';
+  years: Array<number> = [1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999];
+  music: string = null;
+  month: string = '12';
+  year: string = '1994';
+  notification: string = 'enable';
+  status: string = "checked";
+
+  currencies: Currency[] = [
+    {
+      symbol: '$',
+      code: 'USD',
+      name: 'US Dollar'
+    },
+    {
+      symbol: '€',
+      code: 'EUR',
+      name: 'Euro'
+    },
+    {
+      symbol: '£',
+      code: 'FKP',
+      name: 'Falkland Islands Pound'
+    },
+    {
+      symbol: '¢',
+      code: 'GHS',
+      name: 'Ghana Cedi'
+    }
+  ];
+  currency: Currency;
 
   constructor() {
-    this.gaming = '';
-    this.os = 'win3.1';
-    this.music = null;
-    this.month = '12';
-    this.year = '1994';
-    this.notification = 'enable';
-    this.status = "checked";
-
-    this.years = [1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999];
-
-    this.musicAlertOpts = {
-      title: '1994 Music',
-      subTitle: 'Select your favorite',
-      cssClass: 'music-select'
-    };
+    this.currency = this.currencies[0];
   }
 
   gamingCancel() {
@@ -49,6 +68,10 @@ class E2EPage {
 
   resetGender() {
     this.gender = null;
+  }
+
+  selectedText() {
+    return this.currency.symbol;
   }
 }
 

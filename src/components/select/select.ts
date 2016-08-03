@@ -184,9 +184,9 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
    * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
    */
   @Input() interface: string = '';
-  
+
   /**
-   * @input {string} The selected text should be showen.
+   * @input {string} The text to display instead of the selected option's value.
    */
   @Input() selectedText: string = '';
 
