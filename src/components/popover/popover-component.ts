@@ -1,4 +1,4 @@
-import { Component, ComponentResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { Animation } from '../../animations/animation';
 import { Backdrop } from '../backdrop/backdrop';
@@ -39,7 +39,7 @@ export class PopoverCmp {
   private showSpinner: boolean;
 
   constructor(
-    private _compiler: ComponentResolver,
+    private _cfr: ComponentFactoryResolver,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
     private _config: Config,
@@ -55,25 +55,30 @@ export class PopoverCmp {
     this.id = (++popoverIds);
   }
 
-  ionViewWillEnter() {
-    //addSelector(this._navParams.data.componentType, 'ion-popover-inner');
-
-    this._compiler.resolveComponent(this._navParams.data.componentType).then((componentFactory) => {
-      let componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector);
-
-      this._viewCtrl.setInstance(componentRef.instance);
-
-      // manually fire ionViewWillEnter() since PopoverCmp's ionViewWillEnter already happened
-      this._viewCtrl.fireWillEnter();
-    });
-  }
-
   ngAfterViewInit() {
     let activeElement: any = document.activeElement;
     if (document.activeElement) {
       activeElement.blur();
     }
-    this.enabled = true;
+    this.loadComponent(this._navParams.data.componentType);
+  }
+
+  loadComponent(componentType: any) {
+    if (componentType) {
+      const componentFactory = this._cfr.resolveComponentFactory(componentType);
+
+      // ******** DOM WRITE ****************
+      const componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector, []);
+      this.setCssClass(componentRef, 'ion-page');
+      this.setCssClass(componentRef, 'show-page');
+      this.setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
+      this._viewCtrl.setInstance(componentRef.instance);
+      this.enabled = true;
+    }
+  }
+
+  setCssClass(componentRef: any, className: string) {
+    this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
 
   dismiss(role: any): Promise<any> {
