@@ -48,7 +48,7 @@ export const SELECT_VALUE_ACCESSOR = new Provider(
  * <ion-item>
  *   <ion-label>Gender</ion-label>
  *   <ion-select [(ngModel)]="gender">
- *     <ion-option value="f" checked="true">Female</ion-option>
+ *     <ion-option value="f" selected="true">Female</ion-option>
  *     <ion-option value="m">Male</ion-option>
  *   </ion-select>
  * </ion-item>
@@ -176,11 +176,6 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   @Input() alertOptions: any = {};
 
   /**
-   * @private
-   */
-  @Input() checked: any = false;
-
-  /**
    * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
    */
   @Input() interface: string = '';
@@ -273,7 +268,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
     if (this.interface === 'action-sheet') {
       alertOptions.buttons = alertOptions.buttons.concat(options.map(input => {
         return {
-          role: (input.checked ? 'selected' : ''),
+          role: (input.selected ? 'selected' : ''),
           text: input.text,
           handler: () => {
             this.onChange(input.value);
@@ -296,7 +291,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
           type: (this._multi ? 'checkbox' : 'radio'),
           label: input.text,
           value: input.value,
-          checked: input.checked,
+          checked: input.selected,
           disabled: input.disabled
         };
       });
@@ -366,8 +361,8 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
 
     if (!this._values.length) {
       // there are no values set at this point
-      // so check to see who should be checked
-      this._values = val.filter(o => o.checked).map(o => o.value);
+      // so check to see who should be selected
+      this._values = val.filter(o => o.selected).map(o => o.value);
     }
 
     this._updOpts();
@@ -382,11 +377,11 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
-        option.checked = this._values.some(selectValue => {
+        option.selected = this._values.some(selectValue => {
           return isCheckedProperty(selectValue, option.value);
         });
 
-        if (option.checked) {
+        if (option.selected) {
           this._texts.push(option.text);
         }
       });
