@@ -12,7 +12,7 @@
   <ion-item>
     <ion-label>Gender</ion-label>
     <ion-select [(ngModel)]="gender" class="e2eSelectGender">
-      <ion-option value="f" checked="true">Female</ion-option>
+      <ion-option value="f">Female</ion-option>
       <ion-option value="m">Male</ion-option>
     </ion-select>
   </ion-item>
@@ -44,7 +44,7 @@
 
   <ion-item>
     <ion-label>Notifications</ion-label>
-    <ion-select [(ngModel)]="notification" interface="action-sheet" cancelText="Cancel!">
+    <ion-select [(ngModel)]="notifications" interface="action-sheet" cancelText="Cancel!">
       <ion-option value="enable">Enable</ion-option>
       <ion-option value="mute">Mute</ion-option>
       <ion-option value="mute_week">Mute for a week</ion-option>
@@ -88,8 +88,8 @@
 
   <ion-item>
     <ion-label>Statuses</ion-label>
-    <ion-select [(ngModel)]="status">
-      <ion-option value="checked" checked="true">Checked</ion-option>
+    <ion-select (ionChange)="statusChange($event)">
+      <ion-option value="selected" selected>Selected</ion-option>
       <ion-option value="default">Default</ion-option>
       <ion-option value="disabled" disabled="true">Disabled</ion-option>
     </ion-select>
@@ -104,9 +104,13 @@
     <br>
     <code>os: {{os}}</code>
     <br>
+    <code>notifications: {{notifications}}</code>
+    <br>
     <code>music: {{music}}</code>
     <br>
     <code>date: {{month}}/{{year}}</code>
+    <br>
+    <code>status: {{status}}</code>
     <br>
   </p>
 

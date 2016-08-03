@@ -14,7 +14,7 @@ class E2EPage {
   month: string;
   year: string;
   years: Array<number>;
-  notification: string;
+  notifications: string;
   status: string;
 
   constructor() {
@@ -23,8 +23,8 @@ class E2EPage {
     this.music = null;
     this.month = '12';
     this.year = '1994';
-    this.notification = 'enable';
-    this.status = 'checked';
+    this.notifications = 'enable';
+    this.gender = 'f';
 
     this.years = [1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999];
 
@@ -45,6 +45,10 @@ class E2EPage {
 
   stpSelect() {
     console.log('STP selected');
+  }
+
+  statusChange(ev: string) {
+    this.status = ev;
   }
 
   resetGender() {
