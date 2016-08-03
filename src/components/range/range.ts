@@ -210,7 +210,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   private _active: RangeKnob;
   private _start: Coordinates = null;
   private _rect: ClientRect;
-  private _ticks: any[];
+  private _ticks: any[] = [];
   private _barL: string;
   private _barR: string;
 
