@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap, Toast, NavController} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap, Toast, ToastController, NavController } from '../../../../../src';
 
 
 @Component({
@@ -22,18 +22,18 @@ class AnotherPage {}
 })
 class E2EPage {
 
-  constructor(private nav: NavController) { }
+  constructor(private toastCtrl: ToastController, private nav: NavController) { }
 
   showToast() {
-    const toast = Toast.create({
+    const toast = this.toastCtrl.create({
       message: 'User was created successfully'
     });
 
-    toast.onDismiss(() => {
+    toast.onDidDismiss(() => {
       console.log('Dismissed toast');
     });
 
-    this.nav.present(toast);
+    toast.present();
 
     setTimeout(() => {
       this.nav.push(AnotherPage);
@@ -45,38 +45,37 @@ class E2EPage {
   }
 
   showLongToast() {
-    const toast = Toast.create({
+    const toast = this.toastCtrl.create({
       message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.',
       duration: 5000
     });
 
-    toast.onDismiss(this.dismissHandler);
-    this.nav.present(toast);
+    toast.onDidDismiss(this.dismissHandler);
+    toast.present();
   }
 
   showDismissDurationToast() {
-    const toast = Toast.create({
+    const toast = this.toastCtrl.create({
       message: 'I am dismissed after 1.5 seconds',
       duration: 1500
     });
-    toast.onDismiss(this.dismissHandler);
-    this.nav.present(toast);
+    toast.onDidDismiss(this.dismissHandler);
+    toast.present();
   }
 
-  showToastWithCloseButton(positionString:string) {
-    const toast = Toast.create({
+  showToastWithCloseButton(positionString: string) {
+    const toast = this.toastCtrl.create({
       message: 'Your internet connection appears to be offline. Data integrity is not gauranteed.',
       showCloseButton: true,
       closeButtonText: 'Ok',
       position: positionString
     });
-    toast.onDismiss(this.dismissHandler);
-    this.nav.present(toast);
+    toast.onDidDismiss(this.dismissHandler);
+    toast.present();
   }
 
   private dismissHandler(toast: Toast) {
-    console.info('Toast onDismiss()');
-
+    console.info('Toast onDidDismiss()');
   }
 
 }

@@ -1,7 +1,7 @@
-import {Animation} from '../animations/animation';
-import {PageTransition} from './page-transition';
-import {TransitionOptions} from './transition';
-import {ViewController} from '../components/nav/view-controller';
+import { Animation } from '../animations/animation';
+import { PageTransition } from './page-transition';
+import { TransitionOptions } from './transition';
+import { ViewController } from '../components/nav/view-controller';
 
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 const SCALE_SMALL = .95;

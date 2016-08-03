@@ -1,9 +1,9 @@
-import {Injectable, NgZone} from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
-import {Config} from '../config/config';
-import {Form} from './form';
-import {hasFocusedTextInput, nativeRaf, rafFrames, nativeTimeout} from './dom';
-import {Key} from './key';
+import { Config } from '../config/config';
+import { Form } from './form';
+import { hasFocusedTextInput, nativeRaf, rafFrames, nativeTimeout } from './dom';
+import { Key } from './key';
 
 /**
  * @name Keyboard

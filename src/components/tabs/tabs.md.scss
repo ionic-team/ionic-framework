@@ -4,61 +4,120 @@
 // Material Design Tabs
 // --------------------------------------------------
 
-$tabbar-md-background:               $toolbar-md-background !default;
-$tabbar-md-item-padding:             12px 10px 5px 10px !default;
-$tabbar-md-item-font-size:           1.4rem !default;
-$tabbar-md-item-font-weight:         500 !default;
-$tabbar-md-item-icon-size:           2.4rem !default;
-$tabbar-md-item-height:              4.8rem !default;
+/// @prop - Background color of the tabbar
+$tabs-md-background:                   $toolbar-md-background !default;
 
-$tab-button-md-active-color:         $toolbar-md-active-color !default;
-$tab-button-md-inactive-color:       $toolbar-md-inactive-color !default;
+/// @prop - Padding on the tab button
+$tabs-md-tab-padding:                  8px 0 10px 0 !default;
+
+/// @prop - Min height of the tab button
+$tabs-md-tab-min-height:               5.6rem !default;
+
+/// @prop - Font size of the inactive tab button text
+$tabs-md-tab-font-size:                1.2rem !default;
+
+/// @prop - Font weight of the tab button text
+$tabs-md-tab-font-weight:              normal !default;
+
+/// @prop - Opacity of the inactive tab button
+$tabs-md-tab-opacity:                  .7 !default;
+
+/// @prop - Text color of the inactive tab button
+$tabs-md-tab-color:                    rgba($toolbar-md-inactive-color, $tabs-md-tab-opacity) !default;
+
+/// @prop - Padding of the active tab button
+$tabs-md-tab-padding-active:           6px 0 10px 0 !default;
+
+/// @prop - Font size of the active tab button text
+$tabs-md-tab-font-size-active:         1.4rem !default;
+
+/// @prop - Text color of the active tab button
+$tabs-md-tab-color-active:             $toolbar-md-active-color !default;
+
+/// @prop - Margin on the tab button text
+$tabs-md-tab-text-margin:              6px 0 !default;
+
+/// @prop - Capitalization of the tab button text
+$tabs-md-tab-text-capitalization:      none !default;
+
+/// @prop - Transform for the tab button text
+$tabs-md-tab-text-transform:           scale(.85) !default;
+
+/// @prop - Transform origin for the tab button text
+$tabs-md-tab-text-transform-origin:    bottom center !default;
+
+/// @prop - Margin on the active tab button text
+$tabs-md-tab-text-margin-active:       7px 0 !default;
+
+/// @prop - Transform for the active tab button text
+$tabs-md-tab-text-transform-active:    scale(1) !default;
+
+/// @prop - Text transition for the tab button text
+$tabs-md-tab-text-transition:          transform 200ms ease-in-out !default;
+
+/// @prop - Size of the tab button icon
+$tabs-md-tab-icon-size:                2.4rem !default;
 
 
 ion-tabbar {
-  background: $tabbar-md-background;
+  background: $tabs-md-background;
 }
 
-
 .tab-button {
-  padding: $tabbar-md-item-padding;
+  padding: $tabs-md-tab-padding;
 
-  min-height: $tabbar-md-item-height;
+  min-height: $tabs-md-tab-min-height;
 
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
-  font-size: $tabbar-md-item-font-size;
-  font-weight: $tabbar-md-item-font-weight;
-  color: $tab-button-md-inactive-color;
-  box-shadow: none;
-  opacity: .7;
+  font-weight: $tabs-md-tab-font-weight;
+  color: $tabs-md-tab-color;
 
   &[aria-selected=true] {
-    color: $tab-button-md-active-color;
-    opacity: 1;
+    padding: $tabs-md-tab-padding-active;
+
+    font-size: $tabs-md-tab-font-size-active;
+    color: $tabs-md-tab-color-active;
   }
 }
 
 .tab-button-text {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: $tabs-md-tab-text-margin;
 
-  text-transform: uppercase;
+  text-transform: $tabs-md-tab-text-capitalization;
+  transform: $tabs-md-tab-text-transform;
+  transform-origin: $tabs-md-tab-text-transform-origin;
+
+  transition: $tabs-md-tab-text-transition;
+}
+
+.tab-button[aria-selected=true] .tab-button-text {
+  margin: $tabs-md-tab-text-margin-active;
+
+  transform: $tabs-md-tab-text-transform-active;
 }
 
 .tab-button-icon {
-  min-width: $tabbar-md-item-icon-size + 5;
+  min-width: $tabs-md-tab-icon-size + 5;
 
-  font-size: $tabbar-md-item-icon-size;
+  font-size: $tabs-md-tab-icon-size;
 }
 
-[tabbarLayout=icon-bottom] .tab-button {
-  padding-top: 8px;
-  padding-bottom: 8px;
+[tabsLayout=icon-top] .has-icon .tab-button-text {
+  margin-bottom: 0;
 }
 
-[tabbarLayout=icon-right] .tab-button,
-[tabbarLayout=icon-left] .tab-button {
+[tabsLayout=icon-bottom] {
+  .tab-button {
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    .tab-button-text {
+      margin-top: 0;
+    }
+  }
+}
+
+[tabsLayout=icon-right] .tab-button,
+[tabsLayout=icon-left] .tab-button {
   padding-bottom: 10px;
 
   ion-icon {
@@ -66,37 +125,44 @@ ion-tabbar {
   }
 }
 
-[tabbarLayout=icon-hide] .tab-button,
-[tabbarLayout=title-hide] .tab-button,
+[tabsLayout=icon-hide] .tab-button,
+[tabsLayout=title-hide] .tab-button,
 .tab-button.icon-only,
 .tab-button.has-title-only {
   padding: 6px 10px;
 }
 
-tab-highlight {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: block;
+// Material Design Tab Highlight
+// --------------------------------------------------
 
-  width: 1px;
-  height: 2px;
+[tabsHighlight=true] {
 
-  background: $tab-button-md-active-color;
-  transform: translateZ(0);
-  transform-origin: 0 0;
+  tab-highlight {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
 
-  &.animate {
-    transition-duration: 300ms;
+    width: 1px;
+    height: 2px;
+
+    background: $tabs-md-tab-color-active;
+    transform: translateZ(0);
+    transform-origin: 0 0;
+
+    &.animate {
+      transition-duration: 300ms;
+    }
   }
+
+  &[tabsPlacement=bottom] tab-highlight {
+    top: 0;
+  }
+
 }
 
-[tabbarPlacement=bottom] tab-highlight {
-  top: 0;
-}
 
-
-// Material Design  Tabbar Color Mixin
+// Material Design Tabs Color Mixin
 // --------------------------------------------------
 
 @mixin tabbar-md($color-name, $color-base, $color-contrast) {
@@ -105,7 +171,7 @@ tab-highlight {
     background-color: $color-base;
 
     .tab-button {
-      color: $color-contrast;
+      color: rgba($color-contrast, $tabs-md-tab-opacity);
     }
 
     .tab-button:hover:not(.disable-hover),

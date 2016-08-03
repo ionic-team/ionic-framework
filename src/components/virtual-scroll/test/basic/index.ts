@@ -1,5 +1,5 @@
-import {Component, ViewChild, ElementRef} from '@angular/core';
-import {ionicBootstrap, Platform} from '../../../../../src';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { ionicBootstrap, Platform } from '../../../../../src';
 
 
 @Component({

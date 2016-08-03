@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -7,7 +7,7 @@ import {ionicBootstrap} from '../../../../../src';
 })
 class E2EPage {
 
-  submit(ev) {
+  submit(ev: any) {
     console.debug('submit', ev);
   }
 }

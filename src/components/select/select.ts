@@ -1,15 +1,17 @@
-import { Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, Optional, Output, Provider, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/common';
+import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Provider, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
+import { App } from '../app/app';
 import { Form } from '../../util/form';
 import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../nav/nav-controller';
 import { Option } from '../option/option';
 
-const SELECT_VALUE_ACCESSOR = new Provider(
+export const SELECT_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Select), multi: true});
 
 
@@ -46,7 +48,7 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  * <ion-item>
  *   <ion-label>Gender</ion-label>
  *   <ion-select [(ngModel)]="gender">
- *     <ion-option value="f" checked="true">Female</ion-option>
+ *     <ion-option value="f" selected="true">Female</ion-option>
  *     <ion-option value="m">Male</ion-option>
  *   </ion-select>
  * </ion-item>
@@ -115,26 +117,28 @@ const SELECT_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: 'ion-select',
-  template:
-    '<div *ngIf="!_text" class="select-placeholder select-text">{{placeholder}}</div>' +
-    '<div *ngIf="_text" class="select-text">{{_text}}</div>' +
-    '<div class="select-icon">' +
-      '<div class="select-icon-inner"></div>' +
-    '</div>' +
-    '<button aria-haspopup="true" ' +
-            '[id]="id" ' +
-            'category="item-cover" ' +
-            '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
-    '</button>',
+  template: `
+    <div *ngIf="!_text" class="select-placeholder select-text">{{placeholder}}</div>
+    <div *ngIf="_text" class="select-text">{{selectedText || _text}}</div>
+    <div class="select-icon">
+      <div class="select-icon-inner"></div>
+    </div>
+    <button aria-haspopup="true"
+            [id]="id"
+            category="item-cover"
+            [attr.aria-labelledby]="_labelId"
+            [attr.aria-disabled]="_disabled"
+            class="item-cover">
+    </button>
+  `,
+  directives: [NgIf],
   host: {
     '[class.select-disabled]': '_disabled'
   },
   providers: [SELECT_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select {
+export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy {
   private _disabled: any = false;
   private _labelId: string;
   private _multi: boolean = false;
@@ -172,14 +176,14 @@ export class Select {
   @Input() alertOptions: any = {};
 
   /**
-   * @private
-   */
-  @Input() checked: any = false;
-
-  /**
    * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
    */
   @Input() interface: string = '';
+
+  /**
+   * @input {string} The text to display instead of the selected option's value.
+   */
+  @Input() selectedText: string = '';
 
   /**
    * @output {any} Any expression you want to evaluate when the selection has changed.
@@ -192,6 +196,7 @@ export class Select {
   @Output() ionCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
+    private _app: App,
     private _form: Form,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
@@ -205,10 +210,6 @@ export class Select {
       this._labelId = 'lbl-' + _item.id;
       this._item.setCssClass('item-select', true);
     }
-
-    if (!_nav) {
-      console.error('parent <ion-nav> required for <ion-select>');
-    }
   }
 
   @HostListener('click', ['$event'])
@@ -219,17 +220,20 @@ export class Select {
     }
     ev.preventDefault();
     ev.stopPropagation();
-    this._open();
+    this.open();
   }
 
   @HostListener('keyup.space')
   private _keyup() {
     if (!this._isOpen) {
-      this._open();
+      this.open();
     }
   }
 
-  private _open() {
+  /**
+   * Open the select interface.
+   */
+  open() {
     if (this._disabled) {
       return;
     }
@@ -269,7 +273,7 @@ export class Select {
     if (this.interface === 'action-sheet') {
       alertOptions.buttons = alertOptions.buttons.concat(options.map(input => {
         return {
-          role: (input.checked ? 'selected' : ''),
+          role: (input.selected ? 'selected' : ''),
           text: input.text,
           handler: () => {
             this.onChange(input.value);
@@ -279,7 +283,7 @@ export class Select {
       }));
       alertOptions.cssClass = 'select-action-sheet';
 
-      overlay = ActionSheet.create(alertOptions);
+      overlay = new ActionSheet(this._app, alertOptions);
 
     } else {
       // default to use the alert interface
@@ -292,21 +296,27 @@ export class Select {
           type: (this._multi ? 'checkbox' : 'radio'),
           label: input.text,
           value: input.value,
-          checked: input.checked
+          checked: input.selected,
+          disabled: input.disabled
         };
       });
 
+      var selectCssClass = 'select-alert';
+
       // create the alert instance from our built up alertOptions
-      overlay = Alert.create(alertOptions);
+      overlay = new Alert(this._app, alertOptions);
 
       if (this._multi) {
         // use checkboxes
-        overlay.setCssClass('select-alert multiple-select-alert');
-
+        selectCssClass += ' multiple-select-alert';
       } else {
         // use radio buttons
-        overlay.setCssClass('select-alert single-select-alert');
+        selectCssClass += ' single-select-alert';
       }
+
+      // If the user passed a cssClass for the select, add it
+      selectCssClass += alertOptions.cssClass ? ' ' + alertOptions.cssClass : '';
+      overlay.setCssClass(selectCssClass);
 
       overlay.addButton({
         text: this.okText,
@@ -318,10 +328,10 @@ export class Select {
 
     }
 
-    this._nav.present(overlay, alertOptions);
+    overlay.present(alertOptions);
 
     this._isOpen = true;
-    overlay.onDismiss(() => {
+    overlay.onDidDismiss(() => {
       this._isOpen = false;
     });
   }
@@ -356,8 +366,8 @@ export class Select {
 
     if (!this._values.length) {
       // there are no values set at this point
-      // so check to see who should be checked
-      this._values = val.filter(o => o.checked).map(o => o.value);
+      // so check to see who should be selected
+      this._values = val.filter(o => o.selected).map(o => o.value);
     }
 
     this._updOpts();
@@ -372,11 +382,11 @@ export class Select {
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
-        option.checked = this._values.some(selectValue => {
+        option.selected = this._values.some(selectValue => {
           return isCheckedProperty(selectValue, option.value);
         });
 
-        if (option.checked) {
+        if (option.selected) {
           this._texts.push(option.text);
         }
       });
@@ -437,8 +447,8 @@ export class Select {
    * @private
    */
   onChange(val: any) {
-    // onChange used when there is not an ngControl
-    console.debug('select, onChange w/out ngControl', val);
+    // onChange used when there is not an formControlName
+    console.debug('select, onChange w/out formControlName', val);
     this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
     this._updOpts();
     this.onTouched();

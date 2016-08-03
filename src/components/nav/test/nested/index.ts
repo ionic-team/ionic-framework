@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
-import {ionicBootstrap, NavController, MenuController} from '../../../../../src';
-import {Config, Nav, App} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { ionicBootstrap, NavController, MenuController } from '../../../../../src';
+import { Config, Nav, App } from '../../../../../src';
 
 
 @Component({
@@ -32,9 +32,11 @@ export class Login {
 @Component({
   template: `
     <ion-menu [content]="content">
-     <ion-toolbar secondary>
-       <ion-title>Account Menu</ion-title>
-     </ion-toolbar>
+     <ion-header>
+      <ion-toolbar secondary>
+        <ion-title>Account Menu</ion-title>
+      </ion-toolbar>
+     </ion-header>
      <ion-content>
        <ion-list>
          <button ion-item (click)="goToProfile()">

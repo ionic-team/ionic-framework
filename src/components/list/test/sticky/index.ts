@@ -1,18 +1,18 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  groups = [];
+  groups: any[] = [];
 
   constructor() {
-    var letters = "abcdefghijklmnopqrstuvwxyz".split('');
+    var letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
     for (var i = 0; i < letters.length; i++) {
-      var group = [];
+      var group: any[] = [];
 
       for (var j = 0; j < 10; j++) {
         group.push({

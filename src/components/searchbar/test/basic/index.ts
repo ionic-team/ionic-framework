@@ -1,6 +1,5 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
-import {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
-import {ionicBootstrap} from '../../../../../src';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -20,33 +19,33 @@ class E2EPage {
   }
 
   onClearSearchbar(ev: any) {
-    console.log("ionClear", ev.target.value);
+    console.log('ionClear', ev.target.value);
   }
 
   onCancelSearchbar(ev: any) {
-    console.log("ionCancel", ev.target.value);
+    console.log('ionCancel', ev.target.value);
   }
 
   triggerInput(ev: any) {
-    console.log("ionInput", ev.target.value);
+    console.log('ionInput', ev.target.value);
   }
 
   inputBlurred(ev: any) {
-    console.log("ionBlur", ev.target.value);
+    console.log('ionBlur', ev.target.value);
   }
 
   inputFocused(ev: any) {
-    console.log("ionFocus", ev.target.value);
+    console.log('ionFocus', ev.target.value);
   }
 
   ngAfterViewInit() {
     this.customPlaceholder = 33;
-    this.defaultCancel = "after view";
+    this.defaultCancel = 'after view';
     this.changeDetectorRef.detectChanges();
   }
 
   changeValue() {
-    this.defaultSearch = "changed";
+    this.defaultSearch = 'changed';
   }
 }
 

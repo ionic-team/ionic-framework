@@ -35,8 +35,3 @@ ion-scroll {
   }
 
 }
-
-body.disable-scroll scroll-content {
-  overflow-y: hidden;
-  overflow-x: hidden;
-}

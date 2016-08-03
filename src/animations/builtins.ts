@@ -1,5 +1,5 @@
 
-import {Animation} from './animation';
+import { Animation } from './animation';
 
 
 class SlideIn extends Animation {

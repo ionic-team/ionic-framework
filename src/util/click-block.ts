@@ -1,55 +1,46 @@
-import {nativeTimeout} from './dom';
+import { Directive, ElementRef, forwardRef, Inject, Renderer } from '@angular/core';
 
+import { App } from '../components/app/app';
+import { clearNativeTimeout, nativeTimeout } from './dom';
+import { Config } from '../config/config';
 
-const CSS_CLICK_BLOCK = 'click-block-active';
 const DEFAULT_EXPIRE = 330;
-let cbEle: HTMLElement;
-let fallbackTimerId: number;
-let isShowing = false;
+
 
 /**
  * @private
  */
+@Directive({
+  selector: 'click-block'
+})
 export class ClickBlock {
-  private _enabled: boolean = false;
+  private _tmrId: number;
+  private _showing: boolean = false;
+  isEnabled: boolean;
 
-  enable() {
-    cbEle = document.createElement('click-block');
-    document.body.appendChild(cbEle);
-    cbEle.addEventListener('touchmove', function(ev: UIEvent) {
-      ev.preventDefault();
-      ev.stopPropagation();
-    });
-    this._enabled = true;
+  constructor(
+    @Inject(forwardRef(() => App)) app: App,
+    config: Config,
+    private elementRef: ElementRef,
+    private renderer: Renderer
+  ) {
+    app.clickBlock = this;
+    this.isEnabled = config.getBoolean('clickBlock', true);
   }
 
-  show(shouldShow: boolean, expire: number) {
-    if (this._enabled) {
-      if (shouldShow) {
-        show(expire);
+  activate(shouldShow: boolean, expire: number) {
+    if (this.isEnabled) {
+      clearNativeTimeout(this._tmrId);
 
-      } else {
-        hide();
+      if (shouldShow) {
+        this._tmrId = nativeTimeout(this.activate.bind(this, false), expire || DEFAULT_EXPIRE);
+      }
+
+      if (this._showing !== shouldShow) {
+        this.renderer.setElementClass(this.elementRef.nativeElement, 'click-block-active', shouldShow);
+        this._showing = shouldShow;
       }
     }
   }
 
-}
-
-function show(expire: number) {
-  clearTimeout(fallbackTimerId);
-  fallbackTimerId = nativeTimeout(hide, expire || DEFAULT_EXPIRE);
-
-  if (!isShowing) {
-    cbEle.classList.add(CSS_CLICK_BLOCK);
-      isShowing = true;
-  }
-}
-
-function hide() {
-  clearTimeout(fallbackTimerId);
-  if (isShowing) {
-    cbEle.classList.remove(CSS_CLICK_BLOCK);
-    isShowing = false;
-  }
 }

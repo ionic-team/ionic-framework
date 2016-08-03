@@ -1,10 +1,10 @@
-import {isActivatable} from '../../../../src';
+import { isActivatable } from '../../../../src';
 
 export function run() {
 
-  describe("TapClick", () => {
+  describe('TapClick', () => {
 
-    describe("isActivatable", () => {
+    describe('isActivatable', () => {
 
       it('should be activatable on <a> element', () => {
         let ele = document.createElement('a');

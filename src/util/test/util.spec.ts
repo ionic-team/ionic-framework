@@ -2,6 +2,39 @@ import * as util from '../../../src/util';
 
 export function run() {
 
+  describe('isPrimitive', () => {
+
+    it('should be false for array/object values', () => {
+      expect(util.isPrimitive({})).toEqual(false);
+      expect(util.isPrimitive(new Date())).toEqual(false);
+      expect(util.isPrimitive([])).toEqual(false);
+    });
+
+    it('should be false for blank values', () => {
+      expect(util.isPrimitive(NaN)).toEqual(false);
+      expect(util.isPrimitive(null)).toEqual(false);
+      expect(util.isPrimitive(undefined)).toEqual(false);
+    });
+
+    it('should be true for number', () => {
+      expect(util.isPrimitive(-1)).toEqual(true);
+      expect(util.isPrimitive(0)).toEqual(true);
+      expect(util.isPrimitive(1)).toEqual(true);
+    });
+
+    it('should be true for boolean', () => {
+      expect(util.isPrimitive(true)).toEqual(true);
+      expect(util.isPrimitive(false)).toEqual(true);
+    });
+
+    it('should be true for string', () => {
+      expect(util.isPrimitive('')).toEqual(true);
+      expect(util.isPrimitive('   ')).toEqual(true);
+      expect(util.isPrimitive('hi')).toEqual(true);
+    });
+
+  });
+
   describe('isCheckedProperty', () => {
 
     it('should test a=undefined', () => {

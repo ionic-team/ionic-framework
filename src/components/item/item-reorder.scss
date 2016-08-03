@@ -12,7 +12,8 @@ ion-reorder {
   max-width: 40px;
   height: 100%;
 
-  font-size: 1.6em;
+  font-size: 1.45em;
+  opacity: .5;
 
   pointer-events: all;
   touch-action: manipulation;
@@ -36,7 +37,7 @@ ion-reorder {
   }
 }
 
-.reorder-active {
+.reorder-list-active {
   .item-inner {
     pointer-events: none;
   }
@@ -44,10 +45,11 @@ ion-reorder {
 
 
 .item-wrapper.reorder-active,
-.item.reorder-active {
+.item.reorder-active,
+.reorder-active {
   z-index: 4;
 
-  box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .4);
   opacity: .8;
   transition: none;
 

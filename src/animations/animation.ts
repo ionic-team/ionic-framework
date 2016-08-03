@@ -1,5 +1,5 @@
-import {CSS, rafFrames, transitionEnd, nativeTimeout} from '../util/dom';
-import {assign, isDefined} from '../util/util';
+import { CSS, rafFrames, transitionEnd, nativeTimeout } from '../util/dom';
+import { assign, isDefined } from '../util/util';
 
 
 /**
@@ -23,8 +23,8 @@ export class Animation {
   private _el: HTMLElement[] = [];
   private _opts: AnimationOptions;
   private _fx: {[key: string]: EffectProperty} = {};
-  private _dur: number;
-  private _easing: string;
+  private _dur: number = null;
+  private _easing: string = null;
   private _bfSty: { [property: string]: any; } = {};
   private _bfAdd: string[] = [];
   private _bfRmv: string[] = [];
@@ -68,13 +68,13 @@ export class Animation {
     var i: number;
 
     if (ele) {
-      if (ele.length) {
+      if (typeof ele === 'string') {
+        ele = document.querySelectorAll(ele);
         for (i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
 
-      } else if (typeof ele === 'string') {
-        ele = document.querySelectorAll(ele);
+      } else if (ele.length) {
         for (i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
@@ -289,11 +289,12 @@ export class Animation {
     var self = this;
     var i: number;
 
+    let dur = this._dur;
     if (isDefined(opts.duration)) {
-      self._dur = opts.duration;
+      dur = opts.duration;
     }
 
-    console.debug('Animation, play, duration', self._dur, 'easing', self._easing);
+    console.debug('Animation, play, duration', dur, 'easing', this._easing);
 
     // always default that an animation does not tween
     // a tween requires that an Animation class has an element
@@ -313,7 +314,7 @@ export class Animation {
     // ensure all past transition end events have been cleared
     self._clearAsync();
 
-    if (self._dur > 30) {
+    if (dur > 30) {
       // this animation has a duration, so it should animate
       // place all the elements with their FROM properties
 
@@ -328,7 +329,7 @@ export class Animation {
       // set the async TRANSITION END event
       // and run onFinishes when the transition ends
       // ******** DOM WRITE ****************
-      self._asyncEnd(self._dur, true);
+      self._asyncEnd(dur, true);
 
       // begin each animation when everything is rendered in their place
       // and the transition duration/easing is ready to go
@@ -618,16 +619,21 @@ export class Animation {
     }
 
     if (Object.keys(this._fx).length) {
+      easing = (forcedLinearEasing ? 'linear' : this.getEasing());
       for (i = 0; i < this._el.length; i++) {
-        // all parent/child animations should have the same duration
-        // ******** DOM WRITE ****************
-        this._el[i].style[CSS.transitionDuration] = duration + 'ms';
-
-        // each animation can have a different easing
-        easing = (forcedLinearEasing ? 'linear' : this.getEasing());
-        if (easing) {
+        if (duration > 0) {
+          // all parent/child animations should have the same duration
           // ******** DOM WRITE ****************
-          this._el[i].style[CSS.transitionTimingFn] = easing;
+          this._el[i].style[CSS.transition] = '';
+          this._el[i].style[CSS.transitionDuration] = duration + 'ms';
+
+          // each animation can have a different easing
+          if (easing) {
+            // ******** DOM WRITE ****************
+            this._el[i].style[CSS.transitionTimingFn] = easing;
+          }
+        } else {
+          this._el[i].style[CSS.transition] = 'none';
         }
       }
     }
@@ -823,6 +829,9 @@ export class Animation {
       // ******** DOM WRITE ****************
       this._c[i].progressStart();
     }
+
+    // ******** DOM WRITE ****************
+    this._willChg(true);
 
     // ******** DOM WRITE ****************
     this._before();

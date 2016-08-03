@@ -190,8 +190,10 @@ export function pointerCoord(ev: any): Coordinates {
 }
 
 export function hasPointerMoved(threshold: number, startCoord: Coordinates, endCoord: Coordinates) {
-  return startCoord && endCoord &&
-         (Math.abs(startCoord.x - endCoord.x) > threshold || Math.abs(startCoord.y - endCoord.y) > threshold);
+  let deltaX = (startCoord.x - endCoord.x);
+  let deltaY = (startCoord.y - endCoord.y);
+  let distance = deltaX * deltaX + deltaY * deltaY;
+  return distance > (threshold * threshold);
 }
 
 export function isActive(ele: HTMLElement) {

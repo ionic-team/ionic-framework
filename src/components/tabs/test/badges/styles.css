@@ -8,4 +8,5 @@ ion-tabs ion-tabbar {
   top: auto;
   height: auto;
   visibility: visible;
+  opacity: 1;
 }

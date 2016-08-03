@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -7,9 +7,9 @@ import {ionicBootstrap} from '../../../../../src';
 })
 class E2EPage {
   people = [
-    {"name": "Burt", "components": [ "all the things"]},
-    {"name": "Mary", "components": [ "checkbox", "content", "form"]},
-    {"name": "Albert", "components": [ "tabs"]}
+    {'name': 'Burt', 'components': [ 'all the things']},
+    {'name': 'Mary', 'components': [ 'checkbox', 'content', 'form']},
+    {'name': 'Albert', 'components': [ 'tabs']}
   ];
 }
 

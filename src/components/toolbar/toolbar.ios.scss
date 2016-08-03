@@ -69,6 +69,11 @@ ion-footer .toolbar:last-child .toolbar-background,
   border-bottom-width: 0;
 }
 
+.toolbar[no-border] .toolbar-background {
+  border-top-width: 0;
+  border-bottom-width: 0;
+}
+
 
 // iOS Toolbar Content
 // --------------------------------------------------

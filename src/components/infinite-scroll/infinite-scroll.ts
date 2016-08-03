@@ -1,6 +1,6 @@
 import { Directive, ElementRef, EventEmitter, Host, Input, NgZone, Output } from '@angular/core';
 
-import {Content} from '../content/content';
+import { Content } from '../content/content';
 
 
 /**

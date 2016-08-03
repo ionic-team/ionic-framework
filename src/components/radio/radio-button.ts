@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 
 import { Form } from '../../util/form';
 import { isBlank, isCheckedProperty, isPresent, isTrueProperty } from '../../util/util';
@@ -43,25 +43,26 @@ import { RadioGroup } from './radio-group';
  */
 @Component({
   selector: 'ion-radio',
-  template:
-    '<div class="radio-icon" [class.radio-checked]="_checked">' +
-      '<div class="radio-inner"></div>' +
-    '</div>' +
-    '<button role="radio" ' +
-            'type="button" ' +
-            'category="item-cover" ' +
-            '[id]="id" ' +
-            '[attr.aria-checked]="_checked" ' +
-            '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
-    '</button>',
+  template: `
+    <div class="radio-icon" [class.radio-checked]="_checked">
+      <div class="radio-inner"></div>
+    </div>
+    <button role="radio"
+            type="button"
+            category="item-cover"
+            [id]="id"
+            [attr.aria-checked]="_checked"
+            [attr.aria-labelledby]="_labelId"
+            [attr.aria-disabled]="_disabled"
+            class="item-cover">
+    </button>
+  `,
   host: {
     '[class.radio-disabled]': '_disabled'
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class RadioButton {
+export class RadioButton implements OnDestroy, OnInit {
   private _checked: boolean = false;
   private _disabled: boolean = false;
   private _labelId: string;

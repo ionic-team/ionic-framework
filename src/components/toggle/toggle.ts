@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, Optional, Output, Provider, Renderer, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/common';
+import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Provider, Renderer, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Form } from '../../util/form';
 import { isTrueProperty } from '../../util/util';
@@ -8,7 +8,7 @@ import { pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../util/ui-event-manager';
 
 
-const TOGGLE_VALUE_ACCESSOR = new Provider(
+export const TOGGLE_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Toggle), multi: true});
 
 
@@ -51,26 +51,27 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: 'ion-toggle',
-  template:
-    '<div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">' +
-      '<div class="toggle-inner"></div>' +
-    '</div>' +
-    '<button role="checkbox" ' +
-            'type="button" ' +
-            'category="item-cover" ' +
-            '[id]="id" ' +
-            '[attr.aria-checked]="_checked" ' +
-            '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
-    '</button>',
+  template: `
+    <div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">
+      <div class="toggle-inner"></div>
+    </div>
+    <button role="checkbox"
+            type="button"
+            category="item-cover"
+            [id]="id"
+            [attr.aria-checked]="_checked"
+            [attr.aria-labelledby]="_labelId"
+            [attr.aria-disabled]="_disabled"
+            class="item-cover">
+    </button>
+  `,
   host: {
     '[class.toggle-disabled]': '_disabled'
   },
   providers: [TOGGLE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Toggle implements ControlValueAccessor  {
+export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy  {
   private _checked: boolean = false;
   private _init: boolean;
   private _disabled: boolean = false;
@@ -225,7 +226,7 @@ export class Toggle implements ControlValueAccessor  {
    * @private
    */
   onChange(isChecked: boolean) {
-    // used when this input does not have an ngModel or ngControl
+    // used when this input does not have an ngModel or formControlName
     console.debug('toggle, onChange (no ngModel)', isChecked);
     this._setChecked(isChecked);
     this.onTouched();
@@ -241,11 +242,12 @@ export class Toggle implements ControlValueAccessor  {
    */
   ngAfterContentInit() {
     this._init = true;
-    this._events.pointerEventsRef(this._elementRef,
-      (ev: any) => this.pointerDown(ev),
-      (ev: any) => this.pointerMove(ev),
-      (ev: any) => this.pointerUp(ev)
-    );
+    this._events.pointerEvents({
+      elementRef: this._elementRef,
+      pointerDown: this.pointerDown.bind(this),
+      pointerMove: this.pointerMove.bind(this),
+      pointerUp: this.pointerUp.bind(this)
+    });
   }
 
   /**

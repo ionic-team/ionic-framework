@@ -1,11 +1,11 @@
-import { Component, EventEmitter, forwardRef, HostListener, Input, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/common';
+import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Form } from '../../util/form';
 import { Item } from '../item/item';
 import { isTrueProperty } from '../../util/util';
 
-const CHECKBOX_VALUE_ACCESSOR = new Provider(
+export const CHECKBOX_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Checkbox), multi: true});
 
 
@@ -49,26 +49,27 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: 'ion-checkbox',
-  template:
-    '<div class="checkbox-icon" [class.checkbox-checked]="_checked">' +
-      '<div class="checkbox-inner"></div>' +
-    '</div>' +
-    '<button role="checkbox" ' +
-            'type="button" ' +
-            'category="item-cover" ' +
-            '[id]="id" ' +
-            '[attr.aria-checked]="_checked" ' +
-            '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
-    '</button>',
+  template: `
+    <div class="checkbox-icon" [class.checkbox-checked]="_checked">
+      <div class="checkbox-inner"></div>
+    </div>
+    <button role="checkbox"
+            type="button"
+            category="item-cover"
+            [id]="id"
+            [attr.aria-checked]="_checked"
+            [attr.aria-labelledby]="_labelId"
+            [attr.aria-disabled]="_disabled"
+            class="item-cover">
+    </button>
+  `,
   host: {
     '[class.checkbox-disabled]': '_disabled'
   },
   providers: [CHECKBOX_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Checkbox {
+export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestroy {
   private _checked: boolean = false;
   private _init: boolean;
   private _disabled: boolean = false;
@@ -177,7 +178,7 @@ export class Checkbox {
    * @private
    */
   onChange(isChecked: boolean) {
-    // used when this input does not have an ngModel or ngControl
+    // used when this input does not have an ngModel or formControlName
     console.debug('checkbox, onChange (no ngModel)', isChecked);
     this._setChecked(isChecked);
     this.onTouched();

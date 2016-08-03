@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, Inject, Optional, QueryList, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Optional, QueryList, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
@@ -6,7 +6,31 @@ import { ViewController } from '../nav/view-controller';
 
 
 /**
- * @private
+ * @name Header
+ * @description
+ * Header is a parent compnent that holds the navbar and toolbar component.
+ * It's important to note that `ion-header` needs to be the one of the three root elements of a page
+ *
+ * @usage
+ *
+ * ```ts
+ * @Component({
+ *   template: `
+ *      <ion-header>
+ *        <ion-navbar>
+ *          <ion-title>Page1</ion-title>
+ *        </ion-navbar>
+ *
+ *        <ion-toolbar>
+ *          <ion-title>Subheader</ion-title>
+ *        </ion-toolbar>
+ *      </ion-header>
+ *
+ *      <ion-content></ion-content>
+ *   `
+ * })
+ * ```
+ *
  */
 @Directive({
   selector: 'ion-header'
@@ -21,7 +45,26 @@ export class Header {
 
 
 /**
- * @private
+ * @name Footer
+ * @description
+ * Footer is a root component of a page that sits at the bottom of the page.
+ * Footer can be a wrapper for `ion-toolbar` to make sure the content area is sized correctly.
+ *
+ * @usage
+ *
+ * ```ts
+ * @Component({
+ *   template: `
+ *      <ion-content></ion-content>
+ *      <ion-footer>
+ *        <ion-toolbar>
+ *          <ion-title>Footer</ion-title>
+ *        </ion-toolbar>
+ *      </ion-footer>
+ *   `
+ * })
+ * ```
+ *
  */
 @Directive({
   selector: 'ion-footer'
@@ -114,22 +157,56 @@ export class ToolbarBase extends Ion {
  * | `right`     | Positions element to the right of all other elements.                                                           |
  *
  *
- * ### Multiple Toolbars
+ * ### Header / Footer Box Shadow
+ * In `md` mode, the `ion-header` will receive a box-shadow on the bottom, and the
+ * `ion-footer` will receive a box-shadow on the top. This can be removed by adding
+ * the `no-shadow` attribute to the element.
+ *
+ * ```html
+ * <ion-header no-shadow>
+ *   <ion-toolbar>
+ *     <ion-title>Header</ion-title>
+ *   </ion-toolbar>
+ * </ion-header>
+ *
+ * <ion-content>
+ * </ion-content>
+ *
+ * <ion-footer no-shadow>
+ *   <ion-toolbar>
+ *     <ion-title>Footer</ion-title>
+ *   </ion-toolbar>
+ * </ion-footer>
+ * ```
+ *
+ * ### Toolbar Borders
  * Toolbars can be stacked up vertically in `<ion-header>`, `<ion-content>`, and
- * `<ion-footer>` elements. However, toolbars also come with borders on both
- * the top and bottom of the toolbar. To give developers full control of the
- * design, Ionic also includes the `no-border-bottom` and `no-border-top` attributes.
- * For example, sometimes two vertically stacked toolbars may have different
- * background colors, in this case it might be best to leave a border between them.
- * However, if they have the same background color, the app may look best without
- * a border between them. The main point here is, it's entirely up to the app's design
- * to decide when and when not to show borders between toolbars, and to do so then
- * each toolbar can individually set `no-border-bottom` and `no-border-top` attributes.
+ * `<ion-footer>` elements. In `ios` mode, toolbars have borders on the top and
+ * bottom. To hide both borders, the `no-border` attribute should be used on the
+ * `ion-toolbar`. To hide the top or bottom border, the `no-border-top` and
+ * `no-border-bottom` attribute should be used.
+ *
+ * ```html
+ * <ion-header no-shadow>
+ *   <ion-toolbar no-border-bottom>
+ *     <ion-title>Header</ion-title>
+ *   </ion-toolbar>
+ *   <ion-toolbar no-border>
+ *     <ion-title>Subheader</ion-title>
+ *   </ion-toolbar>
+ *   <ion-toolbar no-border-top>
+ *     <ion-title>Another Header</ion-title>
+ *   </ion-toolbar>
+ * </ion-header>
+ *
+ * <ion-content>
+ * </ion-content>
+ * ```
  *
  *
  * @usage
  * ```html
- * <ion-header>
+ * <ion-header no-shadow>
  *
  *   <ion-toolbar no-border-bottom>
  *     <ion-buttons start>
@@ -161,7 +238,7 @@ export class ToolbarBase extends Ion {
  *
  * <ion-footer>
  *
- *   <ion-toolbar no-border-bottom>
+ *   <ion-toolbar no-border>
  *     <ion-title>I'm a subfooter</ion-title>
  *     <ion-buttons right>
  *       <button>
@@ -190,14 +267,15 @@ export class ToolbarBase extends Ion {
  */
 @Component({
   selector: 'ion-toolbar',
-  template:
-    '<div class="toolbar-background"></div>' +
-    '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
-    '<ng-content select="ion-buttons[start]"></ng-content>' +
-    '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
-    '<div class="toolbar-content">' +
-      '<ng-content></ng-content>' +
-    '</div>',
+  template: `
+    <div class="toolbar-background"></div>
+    <ng-content select="[menuToggle],ion-buttons[left]"></ng-content>
+    <ng-content select="ion-buttons[start]"></ng-content>
+    <ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>
+    <div class="toolbar-content">
+      <ng-content></ng-content>
+    </div>
+  `,
   host: {
     'class': 'toolbar',
     '[class.statusbar-padding]': '_sbPadding'

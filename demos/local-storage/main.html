@@ -45,7 +45,7 @@
     <ion-item>
       <ion-label>Key</ion-label>
       <ion-select [(ngModel)]="delKey">
-        <ion-option checked>Select a Key</ion-option>
+        <ion-option selected>Select a Key</ion-option>
         <ion-option *ngFor="let key of addedKeys" [value]="key">
           {{ key }}
         </ion-option>

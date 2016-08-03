@@ -1,5 +1,5 @@
 /* tslint:disable */
-import {assign} from '../util/util';
+import { assign } from '../util/util';
 
 const win: any = window;
 const doc: any = document;

@@ -1,7 +1,8 @@
-import {Directive, ViewEncapsulation, HostListener, ElementRef, Input} from '@angular/core';
-import {isTrueProperty} from '../../util/util';
+import { Directive, ElementRef, Input } from '@angular/core';
 
-const DISABLE_SCROLL = 'disable-scroll';
+import { DisableScroll, GestureController, GestureDelegate } from '../../gestures/gesture-controller';
+import { isTrueProperty } from '../../util/util';
+
 
 /**
  * @private
@@ -15,47 +16,26 @@ const DISABLE_SCROLL = 'disable-scroll';
   },
 })
 export class Backdrop {
-  private static nuBackDrops: number = 0;
-
-  private static push() {
-    if (this.nuBackDrops === 0) {
-      console.debug('adding .disable-scroll to body');
-      document.body.classList.add(DISABLE_SCROLL);
-    } else {
-      console.warn('several backdrops on screen? probably a bug');
-    }
-    this.nuBackDrops++;
-  }
-
-  private static pop() {
-    if (this.nuBackDrops === 0) {
-      console.error('pop requires a push');
-      return;
-    }
-    this.nuBackDrops--;
-    if (this.nuBackDrops === 0) {
-      console.debug('removing .disable-scroll from body');
-      document.body.classList.remove(DISABLE_SCROLL);
-    }
-  }
-
-  private pushed: boolean = false;
+  private _gestureID: number = null;
   @Input() disableScroll = true;
 
-  constructor(public elementRef: ElementRef) {}
+  constructor(private _gestureCtrl: GestureController, private _elementRef: ElementRef) {}
 
   ngOnInit() {
     if (isTrueProperty(this.disableScroll)) {
-      Backdrop.push();
-      this.pushed = true;
+      this._gestureID = this._gestureCtrl.newID();
+      this._gestureCtrl.disableScroll(this._gestureID);
     }
   }
 
   ngOnDestroy() {
-    if (this.pushed) {
-      Backdrop.pop();
-      this.pushed = false;
+    if (this._gestureID) {
+      this._gestureCtrl.enableScroll(this._gestureID);
     }
+  }
+
+  getNativeElement(): HTMLElement {
+    return this._elementRef.nativeElement;
   }
 
 }

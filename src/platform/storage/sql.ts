@@ -1,6 +1,6 @@
-import {StorageEngine} from './storage';
+import { StorageEngine } from './storage';
 
-import {defaults, assign} from '../../util/util';
+import { defaults, assign } from '../../util/util';
 
 const DB_NAME: string = '__ionicstorage';
 const win: any = window;

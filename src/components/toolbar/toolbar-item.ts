@@ -1,8 +1,8 @@
-import {Directive, ElementRef, Optional, forwardRef, Inject, ContentChildren} from '@angular/core';
+import { Directive, ElementRef, Optional, forwardRef, Inject, ContentChildren } from '@angular/core';
 
-import {Button} from '../button/button';
-import {Navbar} from '../navbar/navbar';
-import {Toolbar} from './toolbar';
+import { Button } from '../button/button';
+import { Navbar } from '../navbar/navbar';
+import { Toolbar } from './toolbar';
 
 
 /**
@@ -27,7 +27,9 @@ export class ToolbarItem {
   @ContentChildren(Button)
   set _buttons(buttons: any) {
     if (this.inToolbar) {
-      Button.setRoles(buttons, 'bar-button');
+      buttons.forEach((button: Button) => {
+        button.setRole('bar-button');
+      });
     }
   }
 }

@@ -1,4 +1,4 @@
-import {StorageEngine} from './storage';
+import { StorageEngine } from './storage';
 
 
 /**
@@ -15,8 +15,8 @@ import {StorageEngine} from './storage';
  *
  * @usage
  * ```ts
- * import {Component} from '@angular/core';
- * import {Storage, LocalStorage} from 'ionic-angular';
+ * import { Component } from '@angular/core';
+ * import { Storage, LocalStorage } from 'ionic-angular';
  * @Component({
  *   template: `<ion-content></ion-content>`
  * });

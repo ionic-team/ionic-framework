@@ -1,12 +1,17 @@
 import { Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 
 import { App } from '../app/app';
+import { Badge } from '../badge/badge';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
+import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
-import { isBlank, isTrueProperty } from '../../util/util';
+import { isBlank, isPresent, isTrueProperty } from '../../util/util';
 import { nativeRaf } from '../../util/dom';
 import { NavController } from '../nav/nav-controller';
+import { NavControllerBase } from '../nav/nav-controller-base';
+import { NavOptions, DIRECTION_FORWARD } from '../nav/nav-interfaces';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabButton } from './tab-button';
@@ -19,28 +24,31 @@ import { ViewController } from '../nav/view-controller';
  * @description
  * Tabs make it easy to navigate between different pages or functional
  * aspects of an app. The Tabs component, written as `<ion-tabs>`, is
- * a container of individual [Tab](../Tab/) components.
+ * a container of individual [Tab](../Tab/) components. Each individual `ion-tab`
+ * is a declarative component for a [NavController](../NavController/)
+
+ * For more information on using nav controllers like Tab or [Nav](../../nav/Nav/),
+ * take a look at the [NavController API Docs](../NavController/).
  *
  * ### Placement
  *
  * The position of the tabs relative to the content varies based on
- * the mode. By default, the tabs are placed at the bottom of the screen
- * for `ios` mode, and at the top for the `md` and `wp` modes. You can
- * configure the position using the `tabbarPlacement` property on the
- * `<ion-tabs>` element, or in your app's [config](../../config/Config/).
+ * the mode. The tabs are placed at the bottom of the screen
+ * for iOS and Android, and at the top for Windows by default. The position can be configured using the `tabsPlacement` attribute
+ * on the `<ion-tabs>` component, or in an app's [config](../../config/Config/).
  * See the [Input Properties](#input-properties) below for the available
- * values of `tabbarPlacement`.
- *
+ * values of `tabsPlacement`.
+
  * ### Layout
  *
- * The layout for all of the tabs can be defined using the `tabbarLayout`
+ * The layout for all of the tabs can be defined using the `tabsLayout`
  * property. If the individual tab has a title and icon, the icons will
  * show on top of the title by default. All tabs can be changed by setting
- * the value of `tabbarLayout` on the `<ion-tabs>` element, or in your
+ * the value of `tabsLayout` on the `<ion-tabs>` element, or in your
  * app's [config](../../config/Config/). For example, this is useful if
  * you want to show tabs with a title only on Android, but show icons
  * and a title for iOS. See the [Input Properties](#input-properties)
- * below for the available values of `tabbarLayout`.
+ * below for the available values of `tabsLayout`.
  *
  * ### Selecting a Tab
  *
@@ -134,22 +142,20 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-tabs',
-  template:
-    '<ion-tabbar role="tablist" #tabbar>' +
-      '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">' +
-        '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
-        '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
-        '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
-        '<ion-button-effect></ion-button-effect>' +
-      '</a>' +
-      '<tab-highlight></tab-highlight>' +
-    '</ion-tabbar>' +
-    '<ng-content></ng-content>' +
-    '<div #portal tab-portal></div>',
-  directives: [
-    TabButton,
-    TabHighlight
-  ],
+  template: `
+    <ion-tabbar role="tablist" #tabbar>
+      <a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">
+        <ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>
+        <span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>
+        <ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>
+        <ion-button-effect></ion-button-effect>
+      </a>
+      <tab-highlight></tab-highlight>
+    </ion-tabbar>
+    <ng-content></ng-content>
+    <div #portal tab-portal></div>
+  `,
+  directives: [Badge, Icon, NgClass, NgFor, NgIf, TabButton, TabHighlight],
   encapsulation: ViewEncapsulation.None,
 })
 export class Tabs extends Ion {
@@ -157,14 +163,13 @@ export class Tabs extends Ion {
   private _tabs: Tab[] = [];
   private _onReady: any = null;
   private _sbPadding: boolean;
-  private _useHighlight: boolean;
   private _top: number;
   private _bottom: number;
 
   /**
    * @private
    */
-  id: number;
+  id: string;
 
   /**
    * @private
@@ -187,14 +192,29 @@ export class Tabs extends Ion {
   @Input() preloadTabs: any;
 
   /**
+   * @private DEPRECATED. Please use `tabsLayout` instead.
+   */
+  @Input() private tabbarLayout: string;
+
+  /**
    * @input {string} Set the tabbar layout: `icon-top`, `icon-left`, `icon-right`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
-  @Input() tabbarLayout: string;
+  @Input() tabsLayout: string;
+
+  /**
+   * @private DEPRECATED. Please use `tabsPlacement` instead.
+   */
+  @Input() private tabbarPlacement: string;
 
   /**
    * @input {string} Set position of the tabbar: `top`, `bottom`.
    */
-  @Input() tabbarPlacement: string;
+  @Input() tabsPlacement: string;
+
+  /**
+   * @input {boolean} Whether to show the tab highlight bar under the selected tab. Default: `false`.
+   */
+  @Input() tabsHighlight: boolean;
 
   /**
    * @input {any} Expression to evaluate when the tab changes.
@@ -219,11 +239,11 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  parent: NavController;
+  parent: NavControllerBase;
 
   constructor(
     @Optional() parent: NavController,
-    @Optional() viewCtrl: ViewController,
+    @Optional() public viewCtrl: ViewController,
     private _app: App,
     private _config: Config,
     private _elementRef: ElementRef,
@@ -232,15 +252,27 @@ export class Tabs extends Ion {
   ) {
     super(_elementRef);
 
-    this.parent = parent;
-    this.id = ++tabIds;
-    this.subPages = _config.getBoolean('tabSubPages');
-    this._useHighlight = _config.getBoolean('tabbarHighlight');
+    this.parent = <NavControllerBase>parent;
+    this.id = 't' + (++tabIds);
     this._sbPadding = _config.getBoolean('statusbarPadding');
+    this.subPages = _config.getBoolean('tabsHideOnSubPages');
+    this.tabsHighlight = _config.getBoolean('tabsHighlight');
 
-    if (parent) {
+    // TODO deprecated 07-07-2016 beta.11
+    if (_config.get('tabSubPages') !== null) {
+      console.warn('Config option "tabSubPages" has been deprecated. Please use "tabsHideOnSubPages" instead.');
+      this.subPages = _config.getBoolean('tabSubPages');
+    }
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (_config.get('tabbarHighlight') !== null) {
+      console.warn('Config option "tabbarHighlight" has been deprecated. Please use "tabsHighlight" instead.');
+      this.tabsHighlight = _config.getBoolean('tabbarHighlight');
+    }
+
+    if (this.parent) {
       // this Tabs has a parent Nav
-      parent.registerChildNav(this);
+      this.parent.registerChildNav(this);
 
     } else if (this._app) {
       // this is the root navcontroller for the entire app
@@ -264,49 +296,79 @@ export class Tabs extends Ion {
    * @private
    */
   ngAfterViewInit() {
+    this._setConfig('tabsPlacement', 'bottom');
+    this._setConfig('tabsLayout', 'icon-top');
+    this._setConfig('tabsHighlight', this.tabsHighlight);
+
+    // TODO deprecated 07-07-2016 beta.11
     this._setConfig('tabbarPlacement', 'bottom');
     this._setConfig('tabbarLayout', 'icon-top');
 
-    if (this._useHighlight) {
+    // TODO deprecated 07-07-2016 beta.11
+    if (this.tabbarPlacement !== undefined) {
+      console.warn('Input "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this.tabbarPlacement);
+      this.tabsPlacement = this.tabbarPlacement;
+    }
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (this._config.get('tabbarPlacement') !== null) {
+      console.warn('Config option "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this._config.get('tabbarPlacement'));
+    }
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (this.tabbarLayout !== undefined) {
+      console.warn('Input "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this.tabbarLayout);
+      this.tabsLayout = this.tabbarLayout;
+    }
+
+    // TODO deprecated 07-07-2016 beta.11
+    if (this._config.get('tabbarLayout') !== null) {
+      console.warn('Config option "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this._config.get('tabsLayout'));
+    }
+
+    if (this.tabsHighlight) {
       this._platform.onResize(() => {
         this._highlight.select(this.getSelected());
       });
     }
 
-    let preloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
+    this.initTabs();
+  }
 
-    // get the selected index
-    let selectedIndex = this.selectedIndex ? parseInt(this.selectedIndex, 10) : 0;
+  /**
+   * @private
+   */
+  initTabs() {
+    // get the selected index from the input
+    // otherwise default it to use the first index
+    let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(this.selectedIndex, 10));
 
-    // ensure the selectedIndex isn't a hidden or disabled tab
-    // also find the first available index incase we need it later
-    let availableIndex = -1;
-    this._tabs.forEach((tab, index) => {
-      if (tab.enabled && tab.show && availableIndex < 0) {
-        // we know this tab index is safe to show
-        availableIndex = index;
-      }
-
-      if (index === selectedIndex && (!tab.enabled || !tab.show)) {
-        // the selectedIndex is not safe to show
-        selectedIndex = -1;
-      }
-    });
-
-    if (selectedIndex < 0) {
-      // the selected index wasn't safe to show
-      // instead use an available index found to be safe to show
-      selectedIndex = availableIndex;
+    // get the selectedIndex and ensure it isn't hidden or disabled
+    let selectedTab = this._tabs.find((t, i) => i === selectedIndex && t.enabled && t.show);
+    if (!selectedTab) {
+      // wasn't able to select the tab they wanted
+      // try to find the first tab that's available
+      selectedTab = this._tabs.find(t => t.enabled && t.show);
     }
 
-    this._tabs.forEach((tab, index) => {
-      if (index === selectedIndex) {
-        this.select(tab);
+    if (selectedTab) {
+      // we found a tab to select
+      this.select(selectedTab);
+    }
 
-      } else if (preloadTabs) {
-        tab.preload(1000 * index);
-      }
-    });
+    // check if preloadTab is set as an input @Input
+    // otherwise check the preloadTabs config
+    let shouldPreloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
+    if (shouldPreloadTabs) {
+      // preload all the tabs which isn't the selected tab
+      this._tabs.filter((t) => t !== selectedTab).forEach((tab, index) => {
+        tab.preload(this._config.getNumber('tabsPreloadDelay', 1000) * index);
+      });
+    }
   }
 
   /**
@@ -331,24 +393,24 @@ export class Tabs extends Ion {
   /**
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
-  select(tabOrIndex: number | Tab) {
+  select(tabOrIndex: number | Tab, opts: NavOptions = {}, done?: Function): Promise<any> {
+    let promise: Promise<any>;
+    if (!done) {
+      promise = new Promise(res => { done = res; });
+    }
+
     let selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (isBlank(selectedTab)) {
-      return;
+      return Promise.resolve();
     }
 
     let deselectedTab = this.getSelected();
-
     if (selectedTab === deselectedTab) {
       // no change
-      return this._touchActive(selectedTab);
+      this._touchActive(selectedTab);
+      return Promise.resolve();
     }
-
-    console.debug('Tabs, select', selectedTab.id);
-
-    let opts = {
-      animate: false
-    };
+    console.debug(`Tabs, select: ${selectedTab.id}`);
 
     let deselectedPage: ViewController;
     if (deselectedTab) {
@@ -356,11 +418,12 @@ export class Tabs extends Ion {
       deselectedPage && deselectedPage.fireWillLeave();
     }
 
+    opts.animate = false;
+
     let selectedPage = selectedTab.getActive();
     selectedPage && selectedPage.fireWillEnter();
 
     selectedTab.load(opts, (initialLoad: boolean) => {
-
       selectedTab.ionSelect.emit(selectedTab);
       this.ionChange.emit(selectedTab);
 
@@ -373,7 +436,7 @@ export class Tabs extends Ion {
           tab.setSelected(tab === selectedTab);
         });
 
-        if (this._useHighlight) {
+        if (this.tabsHighlight) {
           this._highlight.select(selectedTab);
         }
       }
@@ -404,7 +467,11 @@ export class Tabs extends Ion {
           });
         }
       }
+
+      done();
     });
+
+    return promise;
   }
 
   /**
@@ -468,6 +535,13 @@ export class Tabs extends Ion {
 
   /**
    * @private
+   */
+  length(): number {
+    return this._tabs.length;
+  }
+
+  /**
+   * @private
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
@@ -499,20 +573,6 @@ export class Tabs extends Ion {
 
     // And failing all of that, we do something safe and secure
     return Promise.resolve();
-  }
-
-  /**
-   * @private
-   * Returns the root NavController. Returns `null` if Tabs is not
-   * within a NavController.
-   * @returns {NavController}
-   */
-  get rootNav(): NavController {
-    let nav = this.parent;
-    while (nav && nav.parent) {
-      nav = nav.parent;
-    }
-    return nav;
   }
 
   /**

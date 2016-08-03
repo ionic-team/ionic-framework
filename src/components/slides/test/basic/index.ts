@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
-import {Http} from '@angular/http';
-import {ionicBootstrap, Slides} from '../../../../../src';
+import { Component, ViewChild } from '@angular/core';
+import { Http } from '@angular/http';
+import { ionicBootstrap, Slides } from '../../../../../src';
 
 
 @Component({
@@ -18,7 +18,7 @@ class E2EApp {
   }
 
   ngAfterViewInit() {
-    let tags = "amsterdam";
+    let tags = 'amsterdam';
     let FLICKR_API_KEY = '504fd7414f6275eb5b657ddbfba80a2c';
 
     let baseUrl = 'https://api.flickr.com/services/rest/';
@@ -37,7 +37,7 @@ class E2EApp {
     });
   }
 
-  getImageUrl(item) {
+  getImageUrl(item: any) {
     return `http://farm${item.farm}.static.flickr.com/${item.server}/${item.id}_${item.secret}_z.jpg`;
   }
 

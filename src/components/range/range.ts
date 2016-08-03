@@ -1,5 +1,6 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, Inject, Optional, Output, Provider, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Inject, OnDestroy, OnInit, Optional, Output, Provider, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
 import { Coordinates, pointerCoord, raf } from '../../util/dom';
@@ -9,7 +10,7 @@ import { Item } from '../item/item';
 import { UIEventManager } from '../../util/ui-event-manager';
 
 
-const RANGE_VALUE_ACCESSOR = new Provider(
+export const RANGE_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Range), multi: true});
 
 /**
@@ -17,9 +18,11 @@ const RANGE_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: '.range-knob-handle',
-  template:
-    '<div class="range-pin" *ngIf="range.pin">{{_val}}</div>' +
-    '<div class="range-knob"></div>',
+  template: `
+    <div class="range-pin" *ngIf="range.pin">{{_val}}</div>
+    <div class="range-knob"></div>
+  `,
+  directives: [NgIf],
   host: {
     '[class.range-knob-pressed]': 'pressed',
     '[class.range-knob-min]': '_val===range.min',
@@ -34,7 +37,7 @@ const RANGE_VALUE_ACCESSOR = new Provider(
     'tabindex': '0'
   }
 })
-export class RangeKnob {
+export class RangeKnob implements OnInit {
   private _ratio: number;
   private _val: number;
   private _x: string;
@@ -176,26 +179,27 @@ export class RangeKnob {
  */
 @Component({
   selector: 'ion-range',
-  template:
-    '<ng-content select="[range-left]"></ng-content>' +
-    '<div class="range-slider" #slider>' +
-      '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>' +
-      '<div class="range-bar"></div>' +
-      '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>' +
-      '<div class="range-knob-handle"></div>' +
-      '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
-    '</div>' +
-    '<ng-content select="[range-right]"></ng-content>',
+  template: `
+    <ng-content select="[range-left]"></ng-content>
+    <div class="range-slider" #slider>
+      <div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>
+      <div class="range-bar"></div>
+      <div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>
+      <div class="range-knob-handle"></div>
+      <div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>
+    </div>
+    <ng-content select="[range-right]"></ng-content>
+  `,
+  directives: [NgFor, NgIf, RangeKnob],
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',
     '[class.range-has-pin]': '_pin'
   },
-  directives: [RangeKnob],
   providers: [RANGE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Range {
+export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   private _dual: boolean = false;
   private _pin: boolean;
   private _disabled: boolean = false;
@@ -206,7 +210,7 @@ export class Range {
   private _active: RangeKnob;
   private _start: Coordinates = null;
   private _rect: ClientRect;
-  private _ticks: any[];
+  private _ticks: any[] = [];
   private _barL: string;
   private _barR: string;
 
@@ -296,7 +300,8 @@ export class Range {
   }
 
   /**
-   * @input {number} If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
+   * @input {number} How long, in milliseconds, to wait to trigger the `ionChange`
+   * event after each change in the range value. Default `0`.
    */
   @Input()
   get debounce(): number {
@@ -359,11 +364,12 @@ export class Range {
     this._renderer.setElementStyle(this._bar.nativeElement, 'right', barR);
 
     // add touchstart/mousedown listeners
-    this._events.pointerEventsRef(this._slider,
-      this.pointerDown.bind(this),
-      this.pointerMove.bind(this),
-      this.pointerUp.bind(this));
-
+    this._events.pointerEvents({
+      elementRef: this._slider,
+      pointerDown: this.pointerDown.bind(this),
+      pointerMove: this.pointerMove.bind(this),
+      pointerUp: this.pointerUp.bind(this)
+    });
     this.createTicks();
   }
 
@@ -425,18 +431,12 @@ export class Range {
     ev.preventDefault();
     ev.stopPropagation();
 
-    if (this._start !== null && this._active !== null) {
-      // only use pointer move if it's a valid pointer
-      // and we already have start coordinates
+    // update the ratio for the active knob
+    this.updateKnob(pointerCoord(ev), this._rect);
 
-      // update the ratio for the active knob
-      this.updateKnob(pointerCoord(ev), this._rect);
-
-      // update the active knob's position
-      this._active.position();
-      this._pressed = this._active.pressed = true;
-
-    }
+    // update the active knob's position
+    this._active.position();
+    this._pressed = this._active.pressed = true;
   }
 
   /**
@@ -661,7 +661,7 @@ export class Range {
    * @private
    */
   onChange(val: any) {
-    // used when this input does not have an ngModel or ngControl
+    // used when this input does not have an ngModel or formControlName
     this.onTouched();
   }
 

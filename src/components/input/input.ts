@@ -1,5 +1,6 @@
 import { Component, Optional, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgControl } from '@angular/common';
+import { NgIf } from '@angular/common';
+import { NgControl, NgModel } from '@angular/forms';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -74,15 +75,13 @@ import { Platform } from '../../platform/platform';
  */
 @Component({
   selector: 'ion-input',
-  template:
-    '<input [type]="type" [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input">' +
-    '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
-    '<button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
-    '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
-  directives: [
-    NextInput,
-    NativeInput,
-  ],
+  template: `
+    <input [type]="type" [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input">
+    <input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">
+    <button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>
+    <div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>
+  `,
+  directives: [NativeInput, NextInput, NgIf, NgModel],
   encapsulation: ViewEncapsulation.None,
 })
 export class TextInput extends InputBase {
@@ -160,6 +159,11 @@ export class TextInput extends InputBase {
  *    <ion-label floating>Description</ion-label>
  *    <ion-textarea></ion-textarea>
  *  </ion-item>
+ * 
+ * <ion-item>
+ *    <ion-label>Long Description</ion-label>
+ *    <ion-textarea rows="6" placeholder="enter long description here..."></ion-textarea>
+ *  </ion-item>
  * ```
  *
  * @demo /docs/v2/demos/textarea/
@@ -170,10 +174,7 @@ export class TextInput extends InputBase {
     '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input"></textarea>' +
     '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
-  directives: [
-    NextInput,
-    NativeInput
-  ],
+  directives: [NativeInput, NextInput, NgIf],
   encapsulation: ViewEncapsulation.None,
 })
 export class TextArea extends InputBase {

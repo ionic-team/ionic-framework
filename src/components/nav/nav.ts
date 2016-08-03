@@ -3,132 +3,72 @@ import { AfterViewInit, Component, ComponentResolver, ElementRef, Input, Optiona
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Keyboard } from '../../util/keyboard';
+import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { NavController } from './nav-controller';
-import { NavPortal } from './nav-portal';
+import { NavControllerBase } from './nav-controller-base';
 import { ViewController } from './view-controller';
 
 /**
  * @name Nav
  * @description
- * _For a quick walkthrough of navigation in Ionic, check out the
- * [Navigation section](../../../../components/#navigation) of the Component
- * docs._
  *
- * Nav is a basic navigation controller component.  As a subclass of NavController
- * you use it to navigate to pages in your app and manipulate the navigation stack.
- * Nav automatically animates transitions between pages for you.
+ * `ion-nav` is the declarative component for a [NavController](../NavController/).
  *
- * For more information on using navigation controllers like Nav or [Tab](../../Tabs/Tab/),
+ * For more information on using nav controllers like Nav or [Tab](../../Tabs/Tab/),
  * take a look at the [NavController API Docs](../NavController/).
  *
- * You must set a root page (where page is any [@Page](../../config/Page/)
- * component) to be loaded initially by any Nav you create, using
- * the 'root' property:
  *
  * @usage
+ * You must set a root page to be loaded initially by any Nav you create, using
+ * the 'root' property:
+ *
  * ```ts
- * import {Component} from '@angular/core';
- * import {ionicBootstrap} from 'ionic-angular';
- * import {GettingStartedPage} from './getting-started';
+ * import { Component } from '@angular/core';
+ * import { ionicBootstrap } from 'ionic-angular';
+ * import { GettingStartedPage } from './getting-started';
  *
  * @Component({
  *   template: `<ion-nav [root]="root"></ion-nav>`
  * })
  * class MyApp {
- *   root = GettingStartedPage;
+ *   private root: any = GettingStartedPage;
+ *
+ *   constructor(){
+ *   }
  * }
  *
  * ionicBootstrap(MyApp);
  * ```
  *
- * ### Back Navigation
- *
- * If a [page](../NavController/#creating_pages) you navigate to has a [NavBar](../NavBar/),
- * Nav will automatically add a back button to it if there is a page
- * before the one you are navigating to in the navigation stack.
- *
- * Additionally, specifying the `swipeBackEnabled` property will allow you to
- * swipe to go back:
- * ```html
- * <ion-nav swipeBackEnabled="false" [root]="rootPage"></ion-nav>
- * ```
- *
- * Here is a diagram of how Nav animates smoothly between pages:
- *
- * <div class="highlight less-margin">
- *   <pre>
- *                           +-------+
- *                           |  App  |
- *                           +---+---+
- *                           &lt;ion-app&gt;
- *                               |
- *                  +------------+-------------+
- *                  |   Ionic Nav Controller   |
- *                  +------------+-------------+
- *                           &lt;ion-nav&gt;
- *                               |
- *                               |
- *             Page 3  +--------------------+                     LoginPage
- *           Page 2  +--------------------+ |
- *         Page 1  +--------------------+ | |              +--------------------+
- *                 | | Header           |&lt;-----------------|       Login        |
- *                 +--------------------+ | |              +--------------------+
- *                 | | |                | | |              | Username:          |
- *                 | | |                | | |              | Password:          |
- *                 | | |  Page 3 is     | | |              |                    |
- *                 | | |  only content  | | |              |                    |
- *                 | | |                |&lt;-----------------|                    |
- *                 | | |                | | |              |                    |
- *                 | | |                | | |              |                    |
- *                 | +------------------|-+ |              |                    |
- *                 | | Footer           |-|-+              |                    |
- *                 | +------------------|-+                |                    |
- *                 +--------------------+                  +--------------------+
- *
- *           +--------------------+    +--------------------+    +--------------------+
- *           | Header             |    | Content            |    | Content            |
- *           +--------------------+    |                    |    |                    |
- *           | Content            |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    +--------------------+    |                    |
- *           |                    |    | Footer             |    |                    |
- *           +--------------------+    +--------------------+    +--------------------+
- *
- *   </pre>
- * </div>
  *
  * @demo /docs/v2/demos/navigation/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
 @Component({
   selector: 'ion-nav',
-  template: '<div #viewport nav-viewport></div><div class="nav-decor"></div><div nav-portal></div>',
-  directives: [NavPortal],
+  template: `
+    <div #viewport nav-viewport></div>
+    <div class="nav-decor"></div>
+  `,
   encapsulation: ViewEncapsulation.None,
 })
-export class Nav extends NavController implements AfterViewInit {
+export class Nav extends NavControllerBase implements AfterViewInit {
   private _root: any;
   private _hasInit: boolean = false;
 
   constructor(
     @Optional() viewCtrl: ViewController,
-    @Optional() parent: NavController,
+    @Optional() parent: NavControllerBase,
     app: App,
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
-    compiler: ComponentResolver
+    compiler: ComponentResolver,
+    gestureCtrl: GestureController
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
@@ -162,9 +102,6 @@ export class Nav extends NavController implements AfterViewInit {
     this._hasInit = true;
 
     if (this._root) {
-      if (typeof this._root !== 'function') {
-        throw 'The [root] property in <ion-nav> must be given a reference to a component class from within the constructor.';
-      }
       this.push(this._root);
     }
   }
@@ -195,8 +132,4 @@ export class Nav extends NavController implements AfterViewInit {
     this._sbEnabled = isTrueProperty(val);
   }
 
-  @ViewChild(NavPortal)
-  private set _np(val: NavPortal) {
-    this.setPortal(val);
-  }
 }

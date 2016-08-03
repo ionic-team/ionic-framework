@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
-import {FormBuilder, Validators} from '@angular/common';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/common';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
@@ -24,18 +24,18 @@ class E2EPage {
 
   constructor(fb: FormBuilder) {
     this.loginForm = fb.group({
-      email: ["", Validators.compose([
+      email: ['', Validators.compose([
         Validators.required,
         this.emailValidator
       ])],
-      username: [""],
-      password: ["", Validators.required],
-      comments: ["", Validators.required],
-      gender: ["", Validators.required]
+      username: [''],
+      password: ['', Validators.required],
+      comments: ['', Validators.required],
+      gender: ['', Validators.required]
     });
   }
 
-  emailValidator(control) {
+  emailValidator(control: any) {
     var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
     if (!EMAIL_REGEXP.test(control.value)) {
@@ -43,8 +43,8 @@ class E2EPage {
     }
   }
 
-  submit(ev, value) {
-    console.log("Submitted", value);
+  submit(ev: UIEvent, value: any) {
+    console.log('Submitted', value);
     this.submitted = true;
   }
 

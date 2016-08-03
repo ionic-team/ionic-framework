@@ -38,24 +38,17 @@ module.exports = new Package('angular-v2-docs', [jsdocPackage, nunjucksPackage, 
   // Configure file reading
   readFilesProcessor.basePath = path.resolve(__dirname, '../..');
   readTypeScriptModules.sourceFiles = [
-    'angular2/angular2.ts',
-    'angular2/router.ts'
+    'angular2/angular2.ts'
   ];
   readTypeScriptModules.basePath = path.resolve(path.resolve(__dirname, '../../modules'));
-  
+
   createTypeDefinitionFile.typeDefinitions = [
       {
         id: 'angular2/angular2',
         modules: {
           'angular2/angular2': 'angular2/angular2',
         }
-      },
-      {
-        id: 'angular2/router',
-        modules: {
-          'angular2/router': 'angular2/router'
-        }
-      }    
+      }
   ];
 })
 

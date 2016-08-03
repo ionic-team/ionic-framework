@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {App, ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { App, ionicBootstrap } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
-  btnColor;
+  btnColor: string;
   testingColors = ['primary', 'secondary', 'danger', 'dark'];
   testingColorIndex = 0;
 

@@ -804,7 +804,7 @@ gulp.task('git-pull-latest', function() {
   }
 
   //Pull latest
-  var gitPullResult = spawnSync('git', ['pull', 'origin', '2.0']);
+  var gitPullResult = spawnSync('git', ['pull', 'origin', 'master']);
   if (gitPullResult.status !== 0) {
     fail('There was an error running \'git pull\':\n' + gitPullResult.stderr.toString());
   }
@@ -814,7 +814,6 @@ gulp.task('git-pull-latest', function() {
  * Copies npm package and tooling files to dist.
  */
 gulp.task('package', function(done){
-  var _ = require('lodash');
   var fs = require('fs');
   var distDir = 'dist';
 
@@ -825,12 +824,24 @@ gulp.task('package', function(done){
     ])
     .pipe(gulp.dest(distDir));
 
-  var templateVars = {};
-  var packageJSON = require('./package.json');
-  templateVars.ionicVersion = packageJSON.version;
-  templateVars.angularVersion = packageJSON.dependencies['@angular/core'];
-  var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
-  fs.writeFileSync(distDir + '/package.json', packageTemplate(templateVars));
+  var templatePackageJSON = require('./scripts/npm/package.json');
+  var sourcePackageJSON = require('./package.json');
+  var sourceDependencies = sourcePackageJSON.dependencies;
+
+  // copy source package.json data to template
+  templatePackageJSON.version = sourcePackageJSON.version
+  templatePackageJSON.description = sourcePackageJSON.description
+  templatePackageJSON.keywords = sourcePackageJSON.keywords
+
+  // copy source dependencies versions to the template's peerDependencies
+  // only copy dependencies that show up as peerDependencies in the template
+  for (var dependency in sourceDependencies) {
+    if (dependency in templatePackageJSON.peerDependencies) {
+      templatePackageJSON.peerDependencies[dependency] = sourceDependencies[dependency];
+    }
+  }
+
+  fs.writeFileSync(distDir + '/package.json', JSON.stringify(templatePackageJSON, null, 2));
   done();
 });
 
@@ -858,7 +869,7 @@ gulp.task('publish.github', function(done){
     github.releases.createRelease({
       owner: 'driftyco',
       repo: 'ionic',
-      target_commitish: '2.0',
+      target_commitish: 'master',
       tag_name: 'v' + packageJSON.version,
       name: packageJSON.version,
       body: file.toString(),
@@ -903,7 +914,6 @@ gulp.task('nightly', ['package'], function(done) {
   var fs = require('fs');
   var spawn = require('child_process').spawn;
   var packageJSON = require('./dist/package.json');
-  var hashLength = 8;
 
   // Generate a unique id formatted from current timestamp
   function createTimestamp() {

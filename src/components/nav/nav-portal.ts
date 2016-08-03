@@ -1,10 +1,10 @@
-import {Directive, ElementRef, Optional, NgZone, Renderer, ComponentResolver, ViewContainerRef} from '@angular/core';
+import { ComponentResolver, Directive, ElementRef, forwardRef, Inject, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
 
-import {App} from '../app/app';
-import {Config} from '../../config/config';
-import {Keyboard} from '../../util/keyboard';
-import {NavController} from './nav-controller';
-import {ViewController} from './view-controller';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { GestureController } from '../../gestures/gesture-controller';
+import { Keyboard } from '../../util/keyboard';
+import { NavControllerBase } from '../nav/nav-controller-base';
 
 /**
  * @private
@@ -12,21 +12,26 @@ import {ViewController} from './view-controller';
 @Directive({
   selector: '[nav-portal]'
 })
-export class NavPortal extends NavController {
+export class NavPortal extends NavControllerBase {
   constructor(
-    @Optional() viewCtrl: ViewController,
-    @Optional() parent: NavController,
-    app: App,
+    @Inject(forwardRef(() => App)) app: App,
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
     compiler: ComponentResolver,
+    gestureCtrl: GestureController,
     viewPort: ViewContainerRef
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler);
-    this.isPortal = true;
+    super(null, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
+    this._isPortal = true;
     this.setViewport(viewPort);
+    app.setPortal(this);
+
+    // on every page change make sure the portal has
+    // dismissed any views that should be auto dismissed on page change
+    app.viewDidLeave.subscribe(this.dismissPageChangeViews.bind(this));
   }
+
 }

@@ -1,5 +1,5 @@
-import {Component, Injectable} from '@angular/core';
-import {ionicBootstrap, InfiniteScroll} from 'ionic-angular';
+import { Component, Injectable } from '@angular/core';
+import { ionicBootstrap, InfiniteScroll } from 'ionic-angular';
 
 
 /**

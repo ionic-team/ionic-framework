@@ -5,7 +5,7 @@ import { Item } from './item';
 import { isPresent } from '../../util/util';
 import { List } from '../list/list';
 
-const SWIPE_MARGIN = 20;
+const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
 export const enum ItemSideFlags {
@@ -178,9 +178,10 @@ const enum SlidingState {
  */
 @Component({
   selector: 'ion-item-sliding',
-  template:
-    '<ng-content select="ion-item,[ion-item]"></ng-content>' +
-    '<ng-content select="ion-item-options"></ng-content>',
+  template: `
+    <ng-content select="ion-item,[ion-item]"></ng-content>
+    <ng-content select="ion-item-options"></ng-content>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
@@ -196,6 +197,9 @@ export class ItemSliding {
   private _optsDirty: boolean = true;
   private _state: SlidingState = SlidingState.Disabled;
 
+  /**
+   * @private
+   */
   @ContentChild(Item) private item: Item;
 
   /**
@@ -252,7 +256,7 @@ export class ItemSliding {
 
   /**
    * @private
-   */  
+   */
   getSlidingPercent(): number {
     let openAmount = this._openAmount;
     if (openAmount > 0) {
@@ -332,6 +336,9 @@ export class ItemSliding {
     return restingPoint;
   }
 
+  /**
+   * @private
+   */
   private fireSwipeEvent() {
     if (this._state & SlidingState.SwipeRight) {
       this._rightOptions.ionSwipe.emit(this);
@@ -340,6 +347,9 @@ export class ItemSliding {
     }
   }
 
+  /**
+   * @private
+   */
   private calculateOptsWidth() {
     nativeRaf(() => {
       if (!this._optsDirty) {
@@ -364,7 +374,7 @@ export class ItemSliding {
       this._timer = null;
     }
     this._openAmount = openAmount;
-    
+
     if (isFinal) {
       this.item.setCssStyle(CSS.transition, '');
 
@@ -380,7 +390,7 @@ export class ItemSliding {
         let state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
           ? SlidingState.Left | SlidingState.SwipeLeft
           : SlidingState.Left;
-      
+
         this._setState(state);
       }
     }
@@ -392,7 +402,7 @@ export class ItemSliding {
       this.item.setCssStyle(CSS.transform, '');
       return;
     }
- 
+
     this.item.setCssStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
     this.ionDrag.emit(this);
   }
@@ -431,8 +441,8 @@ export class ItemSliding {
    * ```
    *
    * ```ts
-   * import {Component} from '@angular/core';
-   * import {ItemSliding} from 'ionic-angular';
+   * import { Component } from '@angular/core';
+   * import { ItemSliding } from 'ionic-angular';
    *
    * @Component({...})
    * export class MyClass {
@@ -481,4 +491,3 @@ function shouldClose(isCloseDirection: boolean, isMovingFast: boolean, isOnClose
   let shouldClose = (!isMovingFast && isOnCloseZone) || (isCloseDirection && isMovingFast);
   return shouldClose;
 }
-

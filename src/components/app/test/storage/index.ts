@@ -1,6 +1,5 @@
-import {Component} from '@angular/core';
-import {Control, ControlGroup} from '@angular/common';
-import {ionicBootstrap, Storage, LocalStorage, SqlStorage} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap, Storage, LocalStorage, SqlStorage } from '../../../../../src';
 
 
 @Component({

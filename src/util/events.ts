@@ -6,7 +6,7 @@
  *
  * @usage
  * ```ts
- * import {Events} from 'ionic-angular';
+ * import { Events } from 'ionic-angular';
  *
  * constructor(public events: Events) {}
  *

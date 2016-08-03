@@ -1,4 +1,6 @@
 
+export function noop() {}
+
 /**
  * Given a min and max, restrict the given number
  * to the range.
@@ -111,6 +113,10 @@ export const isBlank = (val: any) => val === undefined || val === null;
 export const isObject = (val: any) => typeof val === 'object';
 export const isArray = Array.isArray;
 
+export const isPrimitive = function(val: any) {
+  return isString(val) || isBoolean(val) || (isNumber(val) && !isNaN(val));
+};
+
 export const isTrueProperty = function(val: any): boolean {
   if (typeof val === 'string') {
     val = val.toLowerCase().trim();
@@ -177,6 +183,9 @@ export function getQuerystring(url: string): any {
 }
 
 
+/**
+ * @private
+ */
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
   let element = array[indexes.from];
   array.splice(indexes.from, 1);

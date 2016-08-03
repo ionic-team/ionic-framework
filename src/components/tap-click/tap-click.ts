@@ -122,7 +122,7 @@ export class TapClick {
       this.startCoord = pointerCoord(ev);
 
       let now = Date.now();
-      if (this.lastActivated + 150 < now) {
+      if (this.lastActivated + 150 < now && !this.app.isScrolling()) {
         this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
         this.lastActivated = now;
       }

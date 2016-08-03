@@ -94,13 +94,13 @@ export class ApiDemoPage {
       this.config = {
         'backButtonIcon': 'ios-arrow-back',
         'iconMode': 'ios',
-        'tabbarPlacement': 'bottom'
+        'tabsPlacement': 'bottom'
       };
     } else {
       this.config = {
         'backButtonIcon': 'md-arrow-back',
         'iconMode': 'md',
-        'tabbarPlacement': 'top'
+        'tabsPlacement': 'top'
       };
     }
 

@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import {ionicBootstrap, NavController, NavParams, Modal, ViewController, Tabs, Tab} from '../../../../../src';
+import { App, ionicBootstrap, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../src';
 
 
 @Component({
@@ -42,7 +42,7 @@ class TabsPage {
   tab3Root = Tab3Page1;
   @ViewChild(Tabs) tabs: Tabs;
 
-  constructor(private nav: NavController, private params: NavParams) {}
+  constructor(private modalCtrl: ModalController, private params: NavParams) {}
 
   ngAfterViewInit() {
     this.tabs.ionChange.subscribe((tab: Tab) => {
@@ -58,8 +58,7 @@ class TabsPage {
 
   chat() {
     console.log('Chat clicked!');
-    let modal = Modal.create(ChatPage);
-    this.nav.present(modal);
+    this.modalCtrl.create(ChatPage).present();
   }
 
   ionViewWillEnter() {
@@ -93,7 +92,7 @@ class TabsPage {
 class Tab1Page1 {
   userId: string;
 
-  constructor(private nav: NavController, private tabs: Tabs, private params: NavParams) {
+  constructor(private nav: NavController, private app: App, private tabs: Tabs, private params: NavParams) {
     this.userId = params.get('userId');
   }
 
@@ -103,9 +102,9 @@ class Tab1Page1 {
 
   goBack() {
     console.log('go back begin');
-    this.nav.pop().then((val) => {
+    this.nav.pop().then((val: any) => {
       console.log('go back completed', val);
-    });;
+    });
   }
 
   favoritesTab() {
@@ -113,7 +112,7 @@ class Tab1Page1 {
   }
 
   logout() {
-    this.nav.rootNav.setRoot(SignIn, null, { animate: true, direction: 'back' });
+    this.app.getRootNav().setRoot(SignIn, null, { animate: true, direction: 'back' });
   }
 
   ionViewWillEnter() {
@@ -327,7 +326,7 @@ class Tab3Page1 {
   template: '<ion-nav [root]="root" swipeBackEnabled="false"></ion-nav>'
 })
 class E2EApp {
-  root = SignIn;
+  root = TabsPage;
 }
 
 ionicBootstrap(E2EApp);

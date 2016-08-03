@@ -15,11 +15,15 @@ export class MenuType {
   ani: Animation = new Animation();
   isOpening: boolean;
 
-  setOpen(shouldOpen: boolean, done: Function) {
-    this.ani
-        .onFinish(done, true)
-        .reverse(!shouldOpen)
-        .play();
+  setOpen(shouldOpen: boolean, animated: boolean, done: Function) {
+    let ani = this.ani
+      .onFinish(done, true)
+      .reverse(!shouldOpen);
+    if (animated) {
+      ani.play();
+    } else {
+      ani.play({ duration: 0 });
+    }
   }
 
   setProgressStart(isOpen: boolean) {

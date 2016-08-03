@@ -55,7 +55,8 @@ body {
 ion-app,
 ion-nav,
 ion-tab,
-ion-tabs {
+ion-tabs,
+.app-root {
   position: absolute;
   top: 0;
   left: 0;
@@ -71,8 +72,12 @@ ion-tab scroll-cotent {
   display: none;
 }
 
+ion-tab {
+  transform: translateY(-200%);
+}
+
 ion-tab.show-tab {
-  z-index: $z-index-selected-tab;
+  transform: translateY(0);
 }
 
 ion-tab.show-tab scroll-cotent {
@@ -171,7 +176,7 @@ ion-tabbar.show-tabbar {
   opacity: 1;
 }
 
-[tabbarPlacement=top] > ion-tabbar {
+[tabsPlacement=top] > ion-tabbar {
   top: 0;
   bottom: auto;
 }
@@ -204,6 +209,11 @@ ion-content.js-scroll > scroll-content {
   overflow-y: initial;
   -webkit-overflow-scrolling: auto;
   will-change: initial;
+}
+
+.disable-scroll ion-page scroll-content {
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 

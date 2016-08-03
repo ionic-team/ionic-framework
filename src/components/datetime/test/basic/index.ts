@@ -1,13 +1,14 @@
-import {Component} from '@angular/core';
-import {ionicBootstrap} from '../../../../../src';
+import { Component } from '@angular/core';
+import { ionicBootstrap } from '../../../../../src';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 class E2EPage {
+  myDate: any;
   wwwInvented = '1989';
-  time = '13:47';
+  time = '13:47:00';
   netscapeReleased = '1994-12-15T13:47:20.789';
   operaReleased = '1995-04-15';
   firefoxReleased = '2002-09-23T15:03:46.789';
@@ -29,20 +30,20 @@ class E2EPage {
   ];
 
   onChange(ev: any) {
-    console.log("Changed", ev);
+    console.log('Changed', ev);
   }
 
   onCancel(ev: any) {
-    console.log("Canceled", ev);
+    console.log('Canceled', ev);
   }
 
   clearLeapYear() {
     this.leapYearsSummerMonths = null;
   }
 
-	convertDate() {
-	  this.convertedDate = new Date(this.myDate).toISOString();
-	}
+  convertDate() {
+    this.convertedDate = new Date(this.myDate).toISOString();
+  }
 
 }
 

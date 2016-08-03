@@ -15,6 +15,6 @@ test:
     - echo "Automatically marking tests as passing for now"
 deployment:
  tasks:
-   branch: "2.0"
+   branch: "master"
    commands:
      - ./scripts/ci/deploy.sh

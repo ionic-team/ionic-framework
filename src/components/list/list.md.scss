@@ -63,6 +63,10 @@ ion-list {
     left: 0;
   }
 
+  ion-item-options {
+    border-bottom: 1px solid $list-md-border-color;
+  }
+
   ion-item-options button,
   ion-item-options [button] {
     display: inline-flex;
@@ -143,6 +147,7 @@ ion-list[inset] {
 
 ion-list[no-lines] {
   .item,
+  ion-item-options,
   .item .item-inner {
     border-width: 0;
   }
