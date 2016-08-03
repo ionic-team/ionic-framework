@@ -161,7 +161,6 @@ import { ViewController } from '../nav/view-controller';
 export class Tabs extends Ion {
   private _ids: number = -1;
   private _tabs: Tab[] = [];
-  private _onReady: any = null;
   private _sbPadding: boolean;
   private _top: number;
   private _bottom: number;
@@ -400,14 +399,14 @@ export class Tabs extends Ion {
 
     let selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (isBlank(selectedTab)) {
-      return Promise.resolve();
+      done();
+      return promise;
     }
 
     let deselectedTab = this.getSelected();
     if (selectedTab === deselectedTab) {
       // no change
-      this._touchActive(selectedTab);
-      return Promise.resolve();
+      return this._touchActive(selectedTab);
     }
     console.debug(`Tabs, select: ${selectedTab.id}`);
 
@@ -422,7 +421,7 @@ export class Tabs extends Ion {
     let selectedPage = selectedTab.getActive();
     selectedPage && selectedPage.fireWillEnter();
 
-    selectedTab.load(opts, (initialLoad: boolean) => {
+    selectedTab.load(opts, (alreadyLoaded: boolean) => {
       selectedTab.ionSelect.emit(selectedTab);
       this.ionChange.emit(selectedTab);
 
@@ -443,11 +442,6 @@ export class Tabs extends Ion {
       selectedPage && selectedPage.fireDidEnter();
       deselectedPage && deselectedPage.fireDidLeave();
 
-      if (this._onReady) {
-        this._onReady();
-        this._onReady = null;
-      }
-
       // track the order of which tabs have been selected, by their index
       // do not track if the tab index is the same as the previous
       if (this.selectHistory[this.selectHistory.length - 1] !== selectedTab.id) {
@@ -457,7 +451,7 @@ export class Tabs extends Ion {
       // if this is not the Tab's initial load then we need
       // to refresh the tabbar and content dimensions to be sure
       // they're lined up correctly
-      if (!initialLoad && selectedPage) {
+      if (alreadyLoaded && selectedPage) {
         var content = <Content>selectedPage.getContent();
         if (content && content instanceof Content) {
           nativeRaf(() => {
@@ -545,29 +539,27 @@ export class Tabs extends Ion {
    * or optionally letting the tab handle the event
    */
   private _touchActive(tab: Tab) {
-    let active = tab.getActive();
+    const active = tab.getActive();
 
-    if (!active) {
-      return Promise.resolve();
-    }
+    if (active) {
+      const instance = active.instance;
 
-    let instance = active.instance;
+      // If they have a custom tab selected handler, call it
+      if (instance.ionSelected) {
+        return instance.ionSelected();
+      }
 
-    // If they have a custom tab selected handler, call it
-    if (instance.ionSelected) {
-      return instance.ionSelected();
-    }
+      // If we're a few pages deep, pop to root
+      if (tab.length() > 1) {
+        // Pop to the root view
+        return tab.popToRoot();
+      }
 
-    // If we're a few pages deep, pop to root
-    if (tab.length() > 1) {
-      // Pop to the root view
-      return tab.popToRoot();
-    }
-
-    // Otherwise, if the page we're on is not our real root, reset it to our
-    // default root type
-    if (tab.root !== active.componentType) {
-      return tab.setRoot(tab.root);
+      // Otherwise, if the page we're on is not our real root, reset it to our
+      // default root type
+      if (tab.root !== active.componentType) {
+        return tab.setRoot(tab.root);
+      }
     }
 
     // And failing all of that, we do something safe and secure

@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, NgModule, ViewChild } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { App, ionicBootstrap, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../src';
+import { IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../src';
 
 
 @Component({
@@ -323,10 +324,43 @@ class Tab3Page1 {
 
 
 @Component({
-  template: '<ion-nav [root]="root" swipeBackEnabled="false"></ion-nav>'
+  template: '<ion-nav [root]="rootPage" swipeBackEnabled="false"></ion-nav>'
 })
 class E2EApp {
-  root = TabsPage;
+  rootPage = SignIn;
 }
 
-ionicBootstrap(E2EApp);
+
+@NgModule({
+  declarations: [
+    E2EApp,
+    SignIn,
+    ChatPage,
+    TabsPage,
+    Tab1Page1,
+    Tab1Page2,
+    Tab1Page3,
+    Tab2Page1,
+    Tab2Page2,
+    Tab2Page3,
+    Tab3Page1
+  ],
+  imports: [
+    IonicModule.forRoot(E2EApp)
+  ],
+  entryComponents: [
+    SignIn,
+    ChatPage,
+    TabsPage,
+    Tab1Page1,
+    Tab1Page2,
+    Tab1Page3,
+    Tab2Page1,
+    Tab2Page2,
+    Tab2Page3,
+    Tab3Page1
+  ]
+})
+export class AppModule {}
+
+platformBrowserDynamic().bootstrapModule(AppModule);

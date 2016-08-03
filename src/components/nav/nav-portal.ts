@@ -5,6 +5,7 @@ import { Config } from '../../config/config';
 import { GestureController } from '../../gestures/gesture-controller';
 import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../nav/nav-controller-base';
+import { TransitionController } from '../../transitions/transition-controller';
 
 /**
  * @private
@@ -22,9 +23,10 @@ export class NavPortal extends NavControllerBase {
     renderer: Renderer,
     cfr: ComponentFactoryResolver,
     gestureCtrl: GestureController,
+    transCtrl: TransitionController,
     viewPort: ViewContainerRef
   ) {
-    super(null, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl);
+    super(null, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl);
     this._isPortal = true;
     this.setViewport(viewPort);
     app.setPortal(this);

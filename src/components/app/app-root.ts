@@ -91,6 +91,7 @@ export class AppRoot implements AfterViewInit {
 
     // DOM WRITE
     const componentRef = this._viewport.createComponent(factory);
+    this._renderer.setElementClass(componentRef.location.nativeElement, 'app-root', true);
 
     // DOM WRITE
     componentRef.changeDetectorRef.detectChanges();

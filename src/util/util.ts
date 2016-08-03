@@ -154,11 +154,6 @@ export function pascalCaseToDashCase(val: string = ''): string {
   });
 }
 
-let uid = 0;
-export function nextUid(): number {
-  return ++uid;
-}
-
 
 /**
  * @private

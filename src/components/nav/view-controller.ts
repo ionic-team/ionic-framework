@@ -32,7 +32,8 @@ export class ViewController {
   private _hdrDir: Header;
   private _ftrDir: Footer;
   private _destroyFn: Function;
-  private _hdAttr: string = null;
+  private _hidden: string = null;
+  private _ariaHidden: string = null;
   private _leavingOpts: NavOptions = null;
   private _loaded: boolean = false;
   private _nb: Navbar;
@@ -278,19 +279,29 @@ export class ViewController {
 
   /**
    * @private
+   * DOM WRITE
    */
-  domShow(shouldShow: boolean, renderer: Renderer) {
+  domShow(shouldShow: boolean, shouldRender: boolean, renderer: Renderer) {
     // using hidden element attribute to display:none and not render views
     // renderAttr of '' means the hidden attribute will be added
     // renderAttr of null means the hidden attribute will be removed
     // doing checks to make sure we only make an update to the element when needed
-    if (this._pgRef &&
-        (shouldShow && this._hdAttr === '' ||
-        !shouldShow && this._hdAttr !== '')) {
-
-      this._hdAttr = (shouldShow ? null : '');
-
-      renderer.setElementAttribute(this._pgRef.nativeElement, 'hidden', this._hdAttr);
+    // note that we use both the "hidden" and "aria-hidden=true" attributes
+    // since the leaving page is still rendered, but should be hidden from screen readers
+    // if there are 3 pages, page 1 is display: none, page 2 is aria hidden, and page 3 is active
+    if (this._pgRef) {
+      // if it should show, then the aria-hidden attribute should not be true
+      if (shouldShow && this._ariaHidden === 'true' || !shouldShow && this._ariaHidden !== 'true') {
+        this._ariaHidden = (shouldShow ? null : 'true');
+        // ******** DOM WRITE ****************
+        renderer.setElementAttribute(this._pgRef.nativeElement, 'aria-hidden', this._ariaHidden);
+      }
+      // if it should render, then the hidden attribute should not be on the element
+      if (shouldRender && this._hidden === '' || !shouldRender && this._hidden !== '') {
+        this._hidden = (shouldRender ? null : '');
+        // ******** DOM WRITE ****************
+        renderer.setElementAttribute(this._pgRef.nativeElement, 'hidden', this._hidden);
+      }
     }
   }
 

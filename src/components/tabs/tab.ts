@@ -9,6 +9,7 @@ import { NavControllerBase } from '../nav/nav-controller-base';
 import { NavOptions } from '../nav/nav-interfaces';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
+import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../nav/view-controller';
 
 
@@ -230,10 +231,11 @@ export class Tab extends NavControllerBase {
     renderer: Renderer,
     cfr: ComponentFactoryResolver,
     private _cd: ChangeDetectorRef,
-    gestureCtrl: GestureController
+    gestureCtrl: GestureController,
+    transCtrl: TransitionController
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl);
 
     parent.add(this);
 
@@ -261,13 +263,11 @@ export class Tab extends NavControllerBase {
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
-      this.push(this.root, this.rootParams, opts, () => {
-        done(true);
-      });
+      this.push(this.root, this.rootParams, opts, done);
       this._loaded = true;
 
     } else {
-      done(false);
+      done(true);
     }
   }
 
@@ -290,23 +290,22 @@ export class Tab extends NavControllerBase {
   /**
    * @private
    */
-  loadPage(viewCtrl: ViewController, viewport: ViewContainerRef, opts: NavOptions, done: Function) {
+  _createPage(viewCtrl: ViewController, viewport: ViewContainerRef) {
     let isTabSubPage = (this.parent.subPages && viewCtrl.index > 0);
 
     if (isTabSubPage) {
       viewport = this.parent.portal;
     }
 
-    super.loadPage(viewCtrl, viewport, opts, () => {
-      if (isTabSubPage) {
-        // add the .tab-subpage css class to tabs pages that should act like subpages
-        let pageEleRef = viewCtrl.pageRef();
-        if (pageEleRef) {
-          this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
-        }
+    super._createPage(viewCtrl, viewport);
+
+    if (isTabSubPage) {
+      // add the .tab-subpage css class to tabs pages that should act like subpages
+      let pageEleRef = viewCtrl.pageElementRef();
+      if (pageEleRef) {
+        this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
       }
-      done();
-    });
+    }
   }
 
   /**

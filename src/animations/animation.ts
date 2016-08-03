@@ -1,4 +1,4 @@
-import { CSS, rafFrames, transitionEnd, nativeTimeout } from '../util/dom';
+import { CSS, rafFrames, nativeRaf, transitionEnd, nativeTimeout } from '../util/dom';
 import { assign, isDefined } from '../util/util';
 
 
@@ -200,7 +200,7 @@ export class Animation {
     }
 
     // add from/to EffectState to the EffectProperty
-    var fxState: EffectState = fxProp[state] = {
+    var fxState: EffectState = (<any>fxProp)[state] = {
       val: val,
       num: null,
       unit: '',
@@ -289,10 +289,7 @@ export class Animation {
     var self = this;
     var i: number;
 
-    let dur = this._dur;
-    if (isDefined(opts.duration)) {
-      dur = opts.duration;
-    }
+    const dur = isDefined(opts.duration) ? opts.duration : this._dur;
 
     console.debug('Animation, play, duration', dur, 'easing', this._easing);
 
@@ -374,7 +371,7 @@ export class Animation {
       // this animation does not have a duration
       // but we still need to apply the styles and wait
       // a frame so we can accurately read the dimensions
-      rafFrames(self._opts.renderDelay / 16, function() {
+      nativeRaf(function() {
 
         // fire off all the "before" function that have DOM READS in them
         // elements will be in the DOM, however visibily hidden
@@ -579,7 +576,7 @@ export class Animation {
             } else {
               for (i = 0; i < this._el.length; i++) {
                 // ******** DOM WRITE ****************
-                this._el[i].style[prop] = val;
+                (<any>this._el[i].style)[prop] = val;
               }
             }
           }
@@ -597,7 +594,7 @@ export class Animation {
 
         for (i = 0; i < this._el.length; i++) {
           // ******** DOM WRITE ****************
-          this._el[i].style[CSS.transform] = transforms.join(' ');
+          (<any>this._el[i].style)[CSS.transform] = transforms.join(' ');
         }
       }
 
@@ -624,16 +621,16 @@ export class Animation {
         if (duration > 0) {
           // all parent/child animations should have the same duration
           // ******** DOM WRITE ****************
-          this._el[i].style[CSS.transition] = '';
-          this._el[i].style[CSS.transitionDuration] = duration + 'ms';
+          (<any>this._el[i].style)[CSS.transition] = '';
+          (<any>this._el[i].style)[CSS.transitionDuration] = duration + 'ms';
 
           // each animation can have a different easing
           if (easing) {
             // ******** DOM WRITE ****************
-            this._el[i].style[CSS.transitionTimingFn] = easing;
+            (<any>this._el[i].style)[CSS.transitionTimingFn] = easing;
           }
         } else {
-          this._el[i].style[CSS.transition] = 'none';
+          (<any>this._el[i].style)[CSS.transition] = 'none';
         }
       }
     }
@@ -670,7 +667,7 @@ export class Animation {
 
       for (i = 0; i < this._el.length; i++) {
         // ******** DOM WRITE ****************
-        this._el[i].style['willChange'] = wc.join(',');
+        (<any>this._el[i]).style['willChange'] = wc.join(',');
       }
     }
   }
@@ -711,7 +708,7 @@ export class Animation {
         // inline styles to add before the animation
         for (prop in this._bfSty) {
           // ******** DOM WRITE ****************
-          ele.style[prop] = this._bfSty[prop];
+          (<any>ele).style[prop] = this._bfSty[prop];
         }
       }
     }
@@ -745,7 +742,7 @@ export class Animation {
       this._c[i]._beforeWriteFn();
     }
 
-    for (i = 0; i < this._bfReadFns.length; i++) {
+    for (i = 0; i < this._bfWriteFns.length; i++) {
       // ******** DOM WRITE ****************
       this._bfWriteFns[i]();
     }
@@ -771,9 +768,9 @@ export class Animation {
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
-      ele.style[CSS.transitionDuration] = '';
+      (<any>ele).style[CSS.transitionDuration] = '';
       // ******** DOM WRITE ****************
-      ele.style[CSS.transitionTimingFn] = '';
+      (<any>ele).style[CSS.transitionTimingFn] = '';
 
       if (this._rv) {
         // finished in reverse direction
@@ -793,7 +790,7 @@ export class Animation {
         // inline styles that were added before the animation should be removed
         for (prop in this._bfSty) {
           // ******** DOM WRITE ****************
-          ele.style[prop] = '';
+          (<any>ele).style[prop] = '';
         }
 
       } else {
@@ -814,7 +811,7 @@ export class Animation {
         // inline styles to add after the animation
         for (prop in this._afSty) {
           // ******** DOM WRITE ****************
-          ele.style[prop] = this._afSty[prop];
+          (<any>ele).style[prop] = this._afSty[prop];
         }
       }
     }
@@ -1047,6 +1044,6 @@ const TRANSFORMS: any = {
 };
 
 const CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
-const SUPPORTS_WILL_CHANGE = (typeof document.documentElement.style['willChange'] !== 'undefined');
+const SUPPORTS_WILL_CHANGE = (typeof (<any>document.documentElement.style).willChange !== 'undefined');
 
 let AnimationRegistry: any = {};

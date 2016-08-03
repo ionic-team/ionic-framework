@@ -4,7 +4,8 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Keyboard } from '../../util/keyboard';
 import { GestureController } from '../../gestures/gesture-controller';
-import { isTrueProperty } from '../../util/util';
+import { TransitionController } from '../../transitions/transition-controller';
+import { isTrueProperty, noop } from '../../util/util';
 import { NavControllerBase } from './nav-controller-base';
 import { ViewController } from './view-controller';
 
@@ -66,9 +67,10 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     zone: NgZone,
     renderer: Renderer,
     cfr: ComponentFactoryResolver,
-    gestureCtrl: GestureController
+    gestureCtrl: GestureController,
+    transCtrl: TransitionController
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
@@ -98,7 +100,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     this._hasInit = true;
 
     if (this._root) {
-      this.push(this._root);
+      this.push(this._root, null, null, noop);
     }
   }
 
