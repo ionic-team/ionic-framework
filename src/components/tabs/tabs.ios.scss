@@ -4,31 +4,31 @@
 // iOS Tabs
 // --------------------------------------------------
 
-/// @prop Border on the tabbar (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
+/// @prop - Border on the tabbar (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
 $tabs-ios-border:                   1px solid $toolbar-ios-border-color !default;
 
-/// @prop Background color of the tabbar
+/// @prop - Background color of the tabbar
 $tabs-ios-background:               $toolbar-ios-background !default;
 
-/// @prop Padding on the tab button
+/// @prop - Padding on the tab button
 $tabs-ios-tab-padding:              0 2px !default;
 
-/// @prop Max width of the tab button
+/// @prop - Max width of the tab button
 $tabs-ios-tab-max-width:            240px !default;
 
-/// @prop Min height of the tab button
+/// @prop - Min height of the tab button
 $tabs-ios-tab-min-height:           49px !default;
 
-/// @prop Text color of the inactive tab button
+/// @prop - Text color of the inactive tab button
 $tabs-ios-tab-color:                $toolbar-ios-inactive-color !default;
 
-/// @prop Text color of the active tab button
+/// @prop - Text color of the active tab button
 $tabs-ios-tab-color-active:         $toolbar-ios-active-color !default;
 
-/// @prop Font size of the tab button text
+/// @prop - Font size of the tab button text
 $tabs-ios-tab-font-size:            10px !default;
 
-/// @prop Size of the tab button icon
+/// @prop - Size of the tab button icon
 $tabs-ios-tab-icon-size:            30px !default;
 
 
