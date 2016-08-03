@@ -22,6 +22,7 @@ import { QueryParams, provideQueryParams, UserUrl } from './platform/query-param
 import { TapClick, provideTapClick } from './components/tap-click/tap-click';
 import { ToastController } from './components/toast/toast';
 import { Translate } from './translation/translate';
+import { TransitionController } from './transitions/transition-controller';
 
 export { setupProvideEvents } from './util/events';
 
@@ -73,5 +74,6 @@ export function ionicProviders(userRoot: any, userConfig?: any, deepLinks?: any[
     TapClick,
     ToastController,
     Translate,
+    TransitionController
   ];
 }
