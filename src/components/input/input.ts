@@ -1,5 +1,4 @@
 import { Component, Optional, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { NgControl, NgModel } from '@angular/forms';
 
 import { App } from '../app/app';
@@ -81,7 +80,7 @@ import { Platform } from '../../platform/platform';
     <button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>
     <div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>
   `,
-  directives: [NativeInput, NextInput, NgIf, NgModel],
+  directives: [NativeInput, NextInput, NgModel],
   encapsulation: ViewEncapsulation.None,
 })
 export class TextInput extends InputBase {
@@ -159,7 +158,7 @@ export class TextInput extends InputBase {
  *    <ion-label floating>Description</ion-label>
  *    <ion-textarea></ion-textarea>
  *  </ion-item>
- * 
+ *
  * <ion-item>
  *    <ion-label>Long Description</ion-label>
  *    <ion-textarea rows="6" placeholder="enter long description here..."></ion-textarea>
@@ -174,7 +173,7 @@ export class TextInput extends InputBase {
     '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input"></textarea>' +
     '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
-  directives: [NativeInput, NextInput, NgIf],
+  directives: [NativeInput, NextInput],
   encapsulation: ViewEncapsulation.None,
 })
 export class TextArea extends InputBase {

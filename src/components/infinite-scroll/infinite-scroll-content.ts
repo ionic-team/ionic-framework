@@ -3,7 +3,6 @@ import { NgIf } from '@angular/common';
 
 import { Config } from '../../config/config';
 import { InfiniteScroll } from './infinite-scroll';
-import { Spinner } from '../spinner/spinner';
 
 
 /**
@@ -18,7 +17,6 @@ import { Spinner } from '../spinner/spinner';
       '</div>' +
       '<div class="infinite-loading-text" [innerHTML]="loadingText" *ngIf="loadingText"></div>' +
     '</div>',
-  directives: [Spinner],
   host: {
     '[attr.state]': 'inf.state'
   },
@@ -36,7 +34,7 @@ export class InfiniteScrollContent {
    */
   @Input() loadingText: string;
 
-  constructor(private inf: InfiniteScroll, private _config: Config) {}
+  constructor(public inf: InfiniteScroll, private _config: Config) {}
 
   /**
    * @private

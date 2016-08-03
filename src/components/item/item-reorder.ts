@@ -131,10 +131,25 @@ export interface ReorderIndexes {
   }
 })
 export class ItemReorder {
-  private _enableReorder: boolean = false;
-  private _reorderGesture: ItemReorderGesture;
-  private _lastToIndex: number = -1;
-  private _element: HTMLElement;
+  /**
+   * @internal
+   */
+  _enableReorder: boolean = false;
+
+  /**
+   * @internal
+   */
+  _reorderGesture: ItemReorderGesture;
+
+  /**
+   * @internal
+   */
+  _lastToIndex: number = -1;
+
+  /**
+   * @internal
+   */
+  _element: HTMLElement;
 
   /**
    * @output {object} The expression to evaluate when the item is reordered. Emits an object
@@ -182,10 +197,9 @@ export class ItemReorder {
    * @private
    */
   reorderPrepare() {
-    let children = this._element.children;
-    let len = children.length;
-    for (let i = 0; i < len; i++) {
-      children[i]['$ionIndex'] = i;
+    let children: any = this._element.children;
+    for (let i = 0, ilen = children.length; i < ilen; i++) {
+      children[i].$ionIndex = i;
     }
   }
 

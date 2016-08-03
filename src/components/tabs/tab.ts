@@ -232,7 +232,7 @@ export class Tab extends NavControllerBase {
     zone: NgZone,
     renderer: Renderer,
     cfr: ComponentFactoryResolver,
-    _cd: ChangeDetectorRef,
+    private _cd: ChangeDetectorRef,
     gestureCtrl: GestureController,
     transCtrl: TransitionController
   ) {

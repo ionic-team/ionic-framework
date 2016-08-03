@@ -108,7 +108,7 @@ export class InputBase {
     this.setItemInputControlCss();
   }
 
-  private setItemInputControlCss() {
+  setItemInputControlCss() {
     let item = this._item;
     let nativeInput = this._native;
     let inputControl = this.inputControl;
@@ -124,7 +124,7 @@ export class InputBase {
     }
   }
 
-  private setControlCss(element: any, control: any) {
+  setControlCss(element: any, control: any) {
     element.setCssClass('ng-untouched', control.untouched);
     element.setCssClass('ng-touched', control.touched);
     element.setCssClass('ng-pristine', control.pristine);
@@ -179,7 +179,7 @@ export class InputBase {
    * @private
    */
   @ViewChild(NativeInput)
-  private set _nativeInput(nativeInput: NativeInput) {
+  set _nativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
 
     if (this._item && this._item.labelId !== null) {
@@ -246,7 +246,7 @@ export class InputBase {
    * @private
    */
   @ViewChild(NextInput)
-  private set _nextInput(nextInput: NextInput) {
+  set _nextInput(nextInput: NextInput) {
     if (nextInput) {
       nextInput.focused.subscribe(() => {
         this._form.tabFocus(this);
@@ -306,7 +306,7 @@ export class InputBase {
     }
   }
 
-  private pointerStart(ev: any) {
+  pointerStart(ev: any) {
     // input cover touchstart
     console.debug('scroll assist pointerStart', ev.type);
 
@@ -320,7 +320,7 @@ export class InputBase {
     }
   }
 
-  private pointerEnd(ev: any) {
+  pointerEnd(ev: any) {
     // input cover touchend/mouseup
     console.debug('scroll assist pointerEnd', ev.type);
 
@@ -419,7 +419,7 @@ export class InputBase {
   /**
    * @private
    */
-  private setFocus() {
+  setFocus() {
     // immediately set focus
     this._form.setAsFocused(this);
 
@@ -450,7 +450,7 @@ export class InputBase {
   /**
    * @private
    */
-  private regScrollMove() {
+  regScrollMove() {
     // register scroll move listener
     if (this._useAssist && this._scrollView) {
       setTimeout(() => {
@@ -463,7 +463,7 @@ export class InputBase {
   /**
    * @private
    */
-  private deregScrollMove() {
+  deregScrollMove() {
     // deregister the scroll move listener
     this._deregScroll && this._deregScroll();
   }

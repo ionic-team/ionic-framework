@@ -70,14 +70,14 @@ export const CHECKBOX_VALUE_ACCESSOR = new Provider(
   encapsulation: ViewEncapsulation.None,
 })
 export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  private _checked: boolean = false;
-  private _init: boolean;
-  private _disabled: boolean = false;
-  private _labelId: string;
-  private _fn: Function;
+  _checked: boolean = false;
+  _init: boolean;
+  _disabled: boolean = false;
+  _labelId: string;
+  _fn: Function;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
@@ -100,10 +100,10 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  _click(ev: UIEvent) {
     console.debug('checkbox, checked');
     ev.preventDefault();
     ev.stopPropagation();
@@ -126,7 +126,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   /**
    * @private
    */
-  private _setChecked(isChecked: boolean) {
+  _setChecked(isChecked: boolean) {
     if (isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {

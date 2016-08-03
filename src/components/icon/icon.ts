@@ -41,11 +41,11 @@ import { Config } from '../../config/config';
   }
 })
 export class Icon {
-  private _isActive: any;
-  private _name: string = '';
-  private _ios: string = '';
-  private _md: string = '';
-  private _css: string = '';
+  _isActive: any;
+  _name: string = '';
+  _ios: string = '';
+  _md: string = '';
+  _css: string = '';
 
   /**
    * @private

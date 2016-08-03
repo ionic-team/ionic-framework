@@ -111,7 +111,7 @@ export class NativeInput {
           // move the native input to a location safe to receive focus
           // according to the browser, the native input receives focus in an
           // area which doesn't require the browser to scroll the input into place
-          focusedInputEle.style[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+          (<any>focusedInputEle.style)[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
           focusedInputEle.style.opacity = '0';
         }
 
@@ -129,7 +129,7 @@ export class NativeInput {
         if (this._clone) {
           // should remove the cloned node
           focusedInputEle.classList.remove('cloned-active');
-          focusedInputEle.style[CSS.transform] = '';
+          (<any>focusedInputEle.style)[CSS.transform] = '';
           focusedInputEle.style.opacity = '';
           removeClone(focusedInputEle, 'cloned-focus');
         }

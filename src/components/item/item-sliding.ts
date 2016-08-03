@@ -198,9 +198,9 @@ export class ItemSliding {
   private _state: SlidingState = SlidingState.Disabled;
 
   /**
-   * @private
+   * @internal
    */
-  @ContentChild(Item) private item: Item;
+  @ContentChild(Item) item: Item;
 
   /**
    * @output {event} Expression to evaluate when the sliding position changes.

@@ -265,15 +265,15 @@ export const DATETIME_VALUE_ACCESSOR = new Provider(
   encapsulation: ViewEncapsulation.None,
 })
 export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  private _disabled: any = false;
-  private _labelId: string;
-  private _text: string = '';
-  private _fn: Function;
-  private _isOpen: boolean = false;
-  private _min: DateTimeData;
-  private _max: DateTimeData;
-  private _value: DateTimeData = {};
-  private _locale: LocaleData = {};
+  _disabled: any = false;
+  _labelId: string;
+  _text: string = '';
+  _fn: Function;
+  _isOpen: boolean = false;
+  _min: DateTimeData;
+  _max: DateTimeData;
+  _value: DateTimeData = {};
+  _locale: LocaleData = {};
 
   /**
    * @private
@@ -430,7 +430,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  _click(ev: UIEvent) {
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -441,7 +441,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   @HostListener('keyup.space')
-  private _keyup() {
+  _keyup() {
     if (!this._isOpen) {
       this.open();
     }

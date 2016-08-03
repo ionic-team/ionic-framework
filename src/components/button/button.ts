@@ -41,18 +41,18 @@ import { isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class Button {
-  private _role: string = 'button'; // bar-button/item-button
-  private _size: string = null; // large/small/default
-  private _style: string = 'default'; // outline/clear/solid
-  private _shape: string = null; // round/fab
-  private _display: string = null; // block/full
-  private _colors: Array<string> = []; // primary/secondary
-  private _icon: string = null; // left/right/only
-  private _disabled: boolean = false; // disabled
-  private _init: boolean;
+  _role: string = 'button'; // bar-button/item-button
+  _size: string = null; // large/small/default
+  _style: string = 'default'; // outline/clear/solid
+  _shape: string = null; // round/fab
+  _display: string = null; // block/full
+  _colors: Array<string> = []; // primary/secondary
+  _icon: string = null; // left/right/only
+  _disabled: boolean = false; // disabled
+  _init: boolean;
 
   /**
-   * @private
+   * @internal
    */
   isItem: boolean;
 
@@ -189,7 +189,7 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     // If the button has a role applied to it
@@ -199,7 +199,7 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentInit() {
     this._init = true;
@@ -208,7 +208,7 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentChecked() {
     this._readIcon(this._elementRef.nativeElement);
@@ -216,14 +216,14 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   addClass(className: string) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 
   /**
-   * @private
+   * @internal
    */
   setRole(val: string) {
     this._assignCss(false);
@@ -233,9 +233,9 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _readIcon(element: HTMLElement) {
+  _readIcon(element: HTMLElement) {
     // figure out if and where the icon lives in the button
     let childNodes = element.childNodes;
     if (childNodes.length > 0) {
@@ -281,9 +281,9 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _readAttrs(element: HTMLElement) {
+  _readAttrs(element: HTMLElement) {
     let elementAttrs = element.attributes;
     let attrName: string;
     for (let i = 0, l = elementAttrs.length; i < l; i++) {
@@ -310,9 +310,9 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _assignCss(assignCssClass: boolean) {
+  _assignCss(assignCssClass: boolean) {
     let role = this._role;
     if (role) {
       this._renderer.setElementClass(this._elementRef.nativeElement, role, assignCssClass); // button
@@ -327,18 +327,18 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _setClass(type: string, assignCssClass: boolean) {
+  _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
       this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type.toLowerCase(), assignCssClass);
     }
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _setColor(type: string|string[], assignCssClass: boolean) {
+  _setColor(type: string|string[], assignCssClass: boolean) {
     if (type && this._init) {
       // Support array to allow removal of many styles at once.
       let styles = (type instanceof Array ? type : [type]);
