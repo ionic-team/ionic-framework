@@ -1,14 +1,12 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../src';
+import { IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../dist';
 
 
 @Component({
   templateUrl: './signIn.html'
 })
-class SignIn {
-  constructor(private nav: NavController) {}
+export class SignIn {
+  constructor(public nav: NavController) {}
 
   push() {
     this.nav.push(TabsPage, {
@@ -21,8 +19,8 @@ class SignIn {
 @Component({
   templateUrl: './modalChat.html'
 })
-class ChatPage {
-  constructor(private viewCtrl: ViewController) {}
+export class ChatPage {
+  constructor(public viewCtrl: ViewController) {}
 
   ionViewLoaded() {
     console.log('ChatPage, ionViewLoaded');
@@ -37,13 +35,13 @@ class ChatPage {
 @Component({
   templateUrl: './tabs.html'
 })
-class TabsPage {
+export class TabsPage {
   tab1Root = Tab1Page1;
   tab2Root = Tab2Page1;
   tab3Root = Tab3Page1;
   @ViewChild(Tabs) tabs: Tabs;
 
-  constructor(private modalCtrl: ModalController, private params: NavParams) {}
+  constructor(public modalCtrl: ModalController, public params: NavParams) {}
 
   ngAfterViewInit() {
     this.tabs.ionChange.subscribe((tab: Tab) => {
@@ -90,10 +88,10 @@ class TabsPage {
 @Component({
   templateUrl: './tab1page1.html'
 })
-class Tab1Page1 {
+export class Tab1Page1 {
   userId: string;
 
-  constructor(private nav: NavController, private app: App, private tabs: Tabs, private params: NavParams) {
+  constructor(public nav: NavController, public app: App, public tabs: Tabs, public params: NavParams) {
     this.userId = params.get('userId');
   }
 
@@ -141,8 +139,8 @@ class Tab1Page1 {
 @Component({
   templateUrl: './tab1page2.html'
 })
-class Tab1Page2 {
-  constructor(private nav: NavController) {}
+export class Tab1Page2 {
+  constructor(public nav: NavController) {}
 
   push() {
     this.nav.push(Tab1Page3);
@@ -173,8 +171,8 @@ class Tab1Page2 {
 @Component({
   templateUrl: './tab1page3.html'
 })
-class Tab1Page3 {
-  constructor(private nav: NavController) {}
+export class Tab1Page3 {
+  constructor(public nav: NavController) {}
 
   ionViewWillEnter() {
     console.log('Tab1Page3, ionViewWillEnter');
@@ -204,8 +202,8 @@ class Tab1Page3 {
 @Component({
   templateUrl: './tab2page1.html'
 })
-class Tab2Page1 {
-  constructor(private nav: NavController) {}
+export class Tab2Page1 {
+  constructor(public nav: NavController) {}
 
   push() {
     this.nav.push(Tab2Page2);
@@ -236,8 +234,8 @@ class Tab2Page1 {
 @Component({
   templateUrl: './tab2page2.html'
 })
-class Tab2Page2 {
-  constructor(private nav: NavController) {}
+export class Tab2Page2 {
+  constructor(public nav: NavController) {}
 
   push() {
     this.nav.push(Tab2Page3);
@@ -268,8 +266,8 @@ class Tab2Page2 {
 @Component({
   templateUrl: './tab2page3.html'
 })
-class Tab2Page3 {
-  constructor(private nav: NavController) {}
+export class Tab2Page3 {
+  constructor(public nav: NavController) {}
 
   ionViewWillEnter() {
     console.log('Tab2Page3, ionViewWillEnter');
@@ -299,7 +297,7 @@ class Tab2Page3 {
 @Component({
   templateUrl: './tab3page1.html'
 })
-class Tab3Page1 {
+export class Tab3Page1 {
 
   ionViewWillEnter() {
     console.log('Tab3Page1, ionViewWillEnter');
@@ -326,7 +324,7 @@ class Tab3Page1 {
 @Component({
   template: '<ion-nav [root]="rootPage" swipeBackEnabled="false"></ion-nav>'
 })
-class E2EApp {
+export class E2EApp {
   rootPage = SignIn;
 }
 
@@ -362,5 +360,3 @@ class E2EApp {
   ]
 })
 export class AppModule {}
-
-platformBrowserDynamic().bootstrapModule(AppModule);
