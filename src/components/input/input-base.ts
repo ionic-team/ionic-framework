@@ -15,20 +15,20 @@ import { Platform } from '../../platform/platform';
 
 
 export class InputBase {
-  protected _coord: Coordinates;
-  protected _deregScroll: Function;
-  protected _disabled: boolean = false;
-  protected _keyboardHeight: number;
-  protected _scrollMove: EventListener;
-  protected _type: string = 'text';
-  protected _useAssist: boolean;
-  protected _usePadding: boolean;
-  protected _value: any = '';
-  protected _isTouch: boolean;
-  protected _autoFocusAssist: string;
-  protected _autoComplete: string;
-  protected _autoCorrect: string;
-  protected _nav: NavControllerBase;
+  _coord: Coordinates;
+  _deregScroll: Function;
+  _disabled: boolean = false;
+  _keyboardHeight: number;
+  _scrollMove: EventListener;
+  _type: string = 'text';
+  _useAssist: boolean;
+  _usePadding: boolean;
+  _value: any = '';
+  _isTouch: boolean;
+  _autoFocusAssist: string;
+  _autoComplete: string;
+  _autoCorrect: string;
+  _nav: NavControllerBase;
 
   inputControl: NgControl;
 

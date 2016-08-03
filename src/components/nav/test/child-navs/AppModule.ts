@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { ionicBootstrap, NavController } from '../../../../../src';
 
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`,
 })
-class E2EApp {
+export class E2EApp {
   root = LandingPage;
 }
 
@@ -119,3 +119,28 @@ class FourthPage {
     this.items = items;
   }
 }
+
+
+
+@NgModule({
+  declarations: [
+    E2EApp,
+    FirstPage,
+    AnotherPage,
+    MyCmpTest,
+    FullPage,
+    PrimaryHeaderPage
+  ],
+  imports: [
+    IonicModule.forRoot(E2EApp)
+  ],
+  entryComponents: [
+    E2EApp,
+    FirstPage,
+    AnotherPage,
+    MyCmpTest,
+    FullPage,
+    PrimaryHeaderPage
+  ]
+})
+export class AppModule {}

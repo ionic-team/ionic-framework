@@ -60,22 +60,22 @@ import { isTrueProperty } from '../../util/util';
   }
 })
 export class Content extends Ion {
-  private _paddingTop: number;
-  private _paddingRight: number;
-  private _paddingBottom: number;
-  private _paddingLeft: number;
-  private _scrollPadding: number;
-  private _headerHeight: number;
-  private _footerHeight: number;
-  private _tabbarHeight: number;
-  private _tabsPlacement: string;
-  private _inputPolling: boolean = false;
-  private _scroll: ScrollView;
-  private _scLsn: Function;
-  private _sbPadding: boolean;
-  private _fullscreen: boolean;
-  private _scrollEle: HTMLElement;
-  private _footerEle: HTMLElement;
+  _paddingTop: number;
+  _paddingRight: number;
+  _paddingBottom: number;
+  _paddingLeft: number;
+  _scrollPadding: number;
+  _headerHeight: number;
+  _footerHeight: number;
+  _tabbarHeight: number;
+  _tabsPlacement: string;
+  _inputPolling: boolean = false;
+  _scroll: ScrollView;
+  _scLsn: Function;
+  _sbPadding: boolean;
+  _fullscreen: boolean;
+  _scrollEle: HTMLElement;
+  _footerEle: HTMLElement;
 
   /**
    * A number representing how many pixels the top of the content has been
@@ -90,13 +90,13 @@ export class Content extends Ion {
   contentBottom: number;
 
   constructor(
-    private _elementRef: ElementRef,
+    public _elementRef: ElementRef,
     config: Config,
-    private _app: App,
-    private _keyboard: Keyboard,
-    private _zone: NgZone,
+    public _app: App,
+    public _keyboard: Keyboard,
+    public _zone: NgZone,
     @Optional() viewCtrl: ViewController,
-    @Optional() private _tabs: Tabs
+    @Optional() public _tabs: Tabs
   ) {
     super(_elementRef);
     this._sbPadding = config.getBoolean('statusbarPadding', false);
@@ -176,7 +176,7 @@ export class Content extends Ion {
     return this._addListener('mousemove', handler);
   }
 
-  private _addListener(type: string, handler: any): Function {
+  _addListener(type: string, handler: any): Function {
     if (!this._scrollEle) { return; }
 
     // ensure we're not creating duplicates

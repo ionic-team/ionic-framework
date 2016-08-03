@@ -292,10 +292,10 @@ import { Label } from '../label/label';
   encapsulation: ViewEncapsulation.None,
 })
 export class Item {
-  private _ids: number = -1;
-  private _inputs: Array<string> = [];
-  private _label: Label;
-  private _viewLabel: boolean = true;
+  _ids: number = -1;
+  _inputs: Array<string> = [];
+  _label: Label;
+  _viewLabel: boolean = true;
 
   /**
    * @private
@@ -307,7 +307,7 @@ export class Item {
    */
   labelId: string = null;
 
-  constructor(form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
+  constructor(form: Form, public _renderer: Renderer, public _elementRef: ElementRef) {
     this.id = form.nextId().toString();
   }
 
@@ -344,7 +344,7 @@ export class Item {
    * @private
    */
   @ContentChild(Label)
-  private set contentLabel(label: Label) {
+  set contentLabel(label: Label) {
     if (label) {
       this._label = label;
       this.labelId = label.id = ('lbl-' + this.id);
@@ -359,7 +359,7 @@ export class Item {
    * @private
    */
   @ViewChild(Label)
-  private set viewLabel(label: Label) {
+  set viewLabel(label: Label) {
     if (!this._label) {
       this._label = label;
     }
@@ -369,7 +369,7 @@ export class Item {
    * @private
    */
   @ContentChildren(Button)
-  private set _buttons(buttons: any) {
+  set _buttons(buttons: any) {
     buttons.toArray().forEach((button: any) => {
       // Don't add the item-button class if the user specifies
       // a different size button
@@ -383,7 +383,7 @@ export class Item {
    * @private
    */
   @ContentChildren(Icon)
-  private set _icons(icons: any) {
+  set _icons(icons: any) {
     icons.toArray().forEach((icon: any) => {
       icon.addClass('item-icon');
     });

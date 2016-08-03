@@ -12,17 +12,17 @@ import { CSS, hasFocus }  from '../../util/dom';
   selector: '.text-input'
 })
 export class NativeInput {
-  private _relocated: boolean;
-  private _clone: boolean;
-  private _blurring: boolean;
-  private _unrefBlur: Function;
+  _relocated: boolean;
+  _clone: boolean;
+  _blurring: boolean;
+  _unrefBlur: Function;
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    public _elementRef: ElementRef,
+    public _renderer: Renderer,
     config: Config,
     public ngControl: NgControl
   ) {
@@ -31,12 +31,12 @@ export class NativeInput {
   }
 
   @HostListener('input', ['$event'])
-  private _change(ev: any) {
+  _change(ev: any) {
     this.valueChange.emit(ev.target.value);
   }
 
   @HostListener('focus')
-  private _focus() {
+  _focus() {
     var self = this;
 
     self.focusChange.emit(true);
@@ -65,7 +65,7 @@ export class NativeInput {
   }
 
   @HostListener('blur')
-  private _blur() {
+  _blur() {
     this.focusChange.emit(false);
     this.hideFocus(false);
 

@@ -259,7 +259,7 @@ export class ToolbarBase extends Ion {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toolbar extends ToolbarBase {
-  private _sbPadding: boolean;
+  _sbPadding: boolean;
 
   constructor(
     @Optional() viewCtrl: ViewController,

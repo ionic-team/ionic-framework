@@ -71,11 +71,11 @@ import { ViewController } from '../nav/view-controller';
   }
 })
 export class Navbar extends ToolbarBase {
-  private _bbIcon: string;
-  private _bbText: string;
-  private _hidden: boolean = false;
-  private _hideBb: boolean = false;
-  private _sbPadding: boolean;
+  _bbIcon: string;
+  _bbText: string;
+  _hidden: boolean = false;
+  _hideBb: boolean = false;
+  _sbPadding: boolean;
 
   /**
    * @input {boolean} whether the back button should be shown or not
@@ -89,7 +89,7 @@ export class Navbar extends ToolbarBase {
   }
 
   constructor(
-    private _app: App,
+    public _app: App,
     @Optional() viewCtrl: ViewController,
     @Optional() private navCtrl: NavController,
     elementRef: ElementRef,
