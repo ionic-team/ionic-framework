@@ -20,7 +20,7 @@ export class ItemSlidingGesture extends PanGesture {
     super(list.getNativeElement(), {
       maxAngle: MAX_ATTACK_ANGLE,
       threshold: DRAG_THRESHOLD,
-      gesture: list.gestureCtrl.create('item-sliding', {
+      gesture: list._gestureCtrl.create('item-sliding', {
         priority: GesturePriority.SlidingItem,
       })
     });
