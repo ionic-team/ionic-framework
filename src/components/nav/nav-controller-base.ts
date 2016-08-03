@@ -398,9 +398,6 @@ export class NavControllerBase extends Ion implements NavController {
     return promise;
   }
 
-  /**
-   * @private
-   */
   _remove(startIndex: number, removeCount: number): ViewController {
     // when this is done, there should only be at most
     // 1 STATE_INIT_ENTER and 1 STATE_INIT_LEAVE
@@ -631,23 +628,6 @@ export class NavControllerBase extends Ion implements NavController {
         this._domShow(enteringView, leavingView);
       }
 
-      // call each view's lifecycle events
-      if (leavingView.fireOtherLifecycles) {
-        // only fire entering lifecycle if the leaving
-        // view hasn't explicitly set not to
-        enteringView.fireWillEnter();
-        this.viewWillEnter.emit(enteringView);
-        this._app.viewWillEnter.emit(enteringView);
-      }
-
-      if (enteringView.fireOtherLifecycles) {
-        // only fire leaving lifecycle if the entering
-        // view hasn't explicitly set not to
-        leavingView.fireWillLeave();
-        this.viewWillLeave.emit(leavingView);
-        this._app.viewWillLeave.emit(leavingView);
-      }
-
     } else {
       // a nav can be preloaded, but when it is preloaded then
       // all of the code above does not need to be called so
@@ -714,6 +694,27 @@ export class NavControllerBase extends Ion implements NavController {
     enteringView.state = STATE_TRANS_ENTER;
     leavingView.state = STATE_TRANS_LEAVE;
 
+    if (!opts.preload) {
+      trans.before.addDomReadFn(() => {
+        // call each view's lifecycle events
+        if (leavingView.fireOtherLifecycles) {
+          // only fire entering lifecycle if the leaving
+          // view hasn't explicitly set not to
+          enteringView.fireWillEnter();
+          this.viewWillEnter.emit(enteringView);
+          this._app.viewWillEnter.emit(enteringView);
+        }
+
+        if (enteringView.fireOtherLifecycles) {
+          // only fire leaving lifecycle if the entering
+          // view hasn't explicitly set not to
+          leavingView.fireWillLeave();
+          this.viewWillLeave.emit(leavingView);
+          this._app.viewWillLeave.emit(leavingView);
+        }
+      });
+    }
+
     // create a callback for when the animation is done
     trans.onFinish((t: Transition) => {
       // transition animation has ended
@@ -746,9 +747,6 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  /**
-   * @private
-   */
   _afterTrans(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, hasCompleted: boolean, done: Function) {
     // transition has completed, update each view's state
     // place back into the zone, run didEnter/didLeave
@@ -962,9 +960,6 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  /**
-   * @private
-   */
   swipeBackStart() {
     // default the direction to "back"
     const opts: NavOptions = {
@@ -989,9 +984,6 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  /**
-   * @private
-   */
   swipeBackProgress(stepValue: number) {
     if (this._trans && this._sbGesture) {
       // continue to disable the app while actively dragging
@@ -1003,9 +995,6 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  /**
-   * @private
-   */
   swipeBackEnd(shouldComplete: boolean, currentStepValue: number) {
     if (this._trans && this._sbGesture) {
       // the swipe back gesture has ended
@@ -1013,9 +1002,6 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  /**
-   * @private
-   */
   _sbCheck() {
     if (this._sbEnabled) {
       // this nav controller can have swipe to go back
@@ -1136,10 +1122,6 @@ export class NavControllerBase extends Ion implements NavController {
     return this._app.getRootNav();
   }
 
-  /**
-   * @private
-   * Dismiss all pages which have set the `dismissOnPageChange` property.
-   */
   dismissPageChangeViews() {
     this._views.forEach(view => {
       if (view.data && view.data.dismissOnPageChange) {
@@ -1148,9 +1130,6 @@ export class NavControllerBase extends Ion implements NavController {
     });
   }
 
-  /**
-   * @private
-   */
   _setZIndex(enteringView: ViewController, leavingView: ViewController, direction: string) {
     if (enteringView) {
       // get the leaving view, which could be in various states
