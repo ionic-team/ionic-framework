@@ -1,4 +1,4 @@
-import { Component, ComponentResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { Animation } from '../../animations/animation';
 import { Backdrop } from '../backdrop/backdrop';
@@ -31,29 +31,30 @@ export class ModalCmp {
   private d: any;
   private enabled: boolean;
 
-  constructor(private _compiler: ComponentResolver, private _renderer: Renderer, private _navParams: NavParams, private _viewCtrl: ViewController) {
+  constructor(private _cfr: ComponentFactoryResolver, private _renderer: Renderer, private _navParams: NavParams, private _viewCtrl: ViewController) {
     this.d = _navParams.data.opts;
   }
 
-  loadComponent(done: Function) {
-    let componentType = this._navParams.data.componentType;
-    // addSelector(componentType, 'ion-page');
-
-    this._compiler.resolveComponent(componentType).then((componentFactory) => {
-      let componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector);
-      this._renderer.setElementClass(componentRef.location.nativeElement, 'show-page', true);
-
-      // auto-add page css className created from component JS class name
-      let cssClassName = pascalCaseToDashCase(componentType.name);
-      this._renderer.setElementClass(componentRef.location.nativeElement, cssClassName, true);
-      this._viewCtrl.setInstance(componentRef.instance);
-      this.enabled = true;
-      done();
-    });
+  ngAfterViewInit() {
+    this.loadComponent(this._navParams.data.componentType);
   }
 
-  ngAfterViewInit() {
-    // intentionally kept empty
+  loadComponent(componentType: any) {
+    if (componentType) {
+      const componentFactory = this._cfr.resolveComponentFactory(componentType);
+
+      // ******** DOM WRITE ****************
+      const componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector, []);
+      this.setCssClass(componentRef, 'ion-page');
+      this.setCssClass(componentRef, 'show-page');
+      this.setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
+      this._viewCtrl.setInstance(componentRef.instance);
+      this.enabled = true;
+    }
+  }
+
+  setCssClass(componentRef: any, className: string) {
+    this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
 
   dismiss(role: any): Promise<any> {
