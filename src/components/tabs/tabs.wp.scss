@@ -4,40 +4,40 @@
 // Windows Tabs
 // --------------------------------------------------
 
-// Background color of the tabbar
+/// @prop Background color of the tabbar
 $tabs-wp-background:                    $toolbar-wp-background !default;
 
-// Padding on the tab button
+/// @prop Padding on the tab button
 $tabs-wp-tab-padding:                   12px 10px 5px 10px !default;
 
-// Min height of the tab button
+/// @prop Min height of the tab button
 $tabs-wp-tab-min-height:                4.8rem !default;
 
-// Font size of the tab button text
+/// @prop Font size of the tab button text
 $tabs-wp-tab-font-size:                 1.2rem !default;
 
-// Font weight of the tab button text
+/// @prop Font weight of the tab button text
 $tabs-wp-tab-font-weight:               normal !default;
 
-// Opacity of the inactive tab button
+/// @prop Opacity of the inactive tab button
 $tabs-wp-tab-opacity:                   .7 !default;
 
-// Text color of the inactive tab button
+/// @prop Text color of the inactive tab button
 $tabs-wp-tab-color:                     rgba($toolbar-wp-inactive-color, $tabs-wp-tab-opacity) !default;
 
-// Text color of the active tab button
+/// @prop Text color of the active tab button
 $tabs-wp-tab-color-active:              $toolbar-wp-active-color !default;
 
-// Border on the inactive tab button (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
+/// @prop Border on the inactive tab button (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
 $tabs-wp-tab-border:                    2px solid transparent !default;
 
-// Border color on the active tab button (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
+/// @prop Border color on the active tab button (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
 $tabs-wp-tab-border-color-active:       $tabs-wp-tab-color-active !default;
 
-// Background of the tab button when pressed
+/// @prop Background of the tab button when pressed
 $tabs-wp-tab-background-activated:      rgba(0, 0, 0, .1) !default;
 
-// Size of the tab button icon
+/// @prop Size of the tab button icon
 $tabs-wp-tab-icon-size:                 2.4rem !default;
 
 

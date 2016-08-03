@@ -4,58 +4,58 @@
 // Material Design Tabs
 // --------------------------------------------------
 
-// Background color of the tabbar
+/// @prop Background color of the tabbar
 $tabs-md-background:                   $toolbar-md-background !default;
 
-// Padding on the tab button
+/// @prop Padding on the tab button
 $tabs-md-tab-padding:                  8px 0 10px 0 !default;
 
-// Min height of the tab button
+/// @prop Min height of the tab button
 $tabs-md-tab-min-height:               5.6rem !default;
 
-// Font size of the inactive tab button text
+/// @prop Font size of the inactive tab button text
 $tabs-md-tab-font-size:                1.2rem !default;
 
-// Font weight of the tab button text
+/// @prop Font weight of the tab button text
 $tabs-md-tab-font-weight:              normal !default;
 
-// Opacity of the inactive tab button
+/// @prop Opacity of the inactive tab button
 $tabs-md-tab-opacity:                  .7 !default;
 
-// Text color of the inactive tab button
+/// @prop Text color of the inactive tab button
 $tabs-md-tab-color:                    rgba($toolbar-md-inactive-color, $tabs-md-tab-opacity) !default;
 
-// Padding of the active tab button
+/// @prop Padding of the active tab button
 $tabs-md-tab-padding-active:           6px 0 10px 0 !default;
 
-// Font size of the active tab button text
+/// @prop Font size of the active tab button text
 $tabs-md-tab-font-size-active:         1.4rem !default;
 
-// Text color of the active tab button
+/// @prop Text color of the active tab button
 $tabs-md-tab-color-active:             $toolbar-md-active-color !default;
 
-// Margin on the tab button text
+/// @prop Margin on the tab button text
 $tabs-md-tab-text-margin:              6px 0 !default;
 
-// Capitalization of the tab button text
+/// @prop Capitalization of the tab button text
 $tabs-md-tab-text-capitalization:      none !default;
 
-// Transform for the tab button text
+/// @prop Transform for the tab button text
 $tabs-md-tab-text-transform:           scale(.85) !default;
 
-// Transform origin for the tab button text
+/// @prop Transform origin for the tab button text
 $tabs-md-tab-text-transform-origin:    bottom center !default;
 
-// Margin on the active tab button text
+/// @prop Margin on the active tab button text
 $tabs-md-tab-text-margin-active:       7px 0 !default;
 
-// Transform for the active tab button text
+/// @prop Transform for the active tab button text
 $tabs-md-tab-text-transform-active:    scale(1) !default;
 
-// Text transition for the tab button text
+/// @prop Text transition for the tab button text
 $tabs-md-tab-text-transition:          transform 200ms ease-in-out !default;
 
-// Size of the tab button icon
+/// @prop Size of the tab button icon
 $tabs-md-tab-icon-size:                2.4rem !default;
 
 
