@@ -35,17 +35,17 @@ import { ViewController } from '../nav/view-controller';
   },
 })
 export class ToastCmp implements AfterViewInit {
-  private d: any;
-  private descId: string;
-  private dismissTimeout: number = undefined;
-  private enabled: boolean;
-  private hdrId: string;
-  private id: number;
+  d: any;
+  descId: string;
+  dismissTimeout: number = undefined;
+  enabled: boolean;
+  hdrId: string;
+  id: number;
 
   constructor(
-    private _viewCtrl: ViewController,
-    private _config: Config,
-    private _elementRef: ElementRef,
+    public _viewCtrl: ViewController,
+    public _config: Config,
+    public _elementRef: ElementRef,
     params: NavParams,
     renderer: Renderer
  ) {

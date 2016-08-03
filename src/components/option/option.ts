@@ -13,9 +13,9 @@ import { isPresent, isTrueProperty } from '../../util/util';
   selector: 'ion-option'
 })
 export class Option {
-  private _selected: any = false;
-  private _disabled: any = false;
-  private _value: any;
+  _selected: any = false;
+  _disabled: any = false;
+  _value: any;
 
   /**
    * @input {any} Event to evaluate when option is selected

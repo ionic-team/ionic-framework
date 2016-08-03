@@ -32,11 +32,10 @@ import { ViewController } from '../nav/view-controller';
 })
 export class PopoverCmp {
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
-
-  private d: any;
-  private enabled: boolean;
-  private id: number;
-  private showSpinner: boolean;
+  d: any;
+  enabled: boolean;
+  id: number;
+  showSpinner: boolean;
 
   constructor(
     private _cfr: ComponentFactoryResolver,
@@ -97,7 +96,7 @@ export class PopoverCmp {
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  _keyUp(ev: KeyboardEvent) {
     if (this.enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
       this.bdClick();
     }
@@ -256,7 +255,7 @@ class PopoverTransition extends PageTransition {
 }
 
 class PopoverPopIn extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, private opts: TransitionOptions) {
+  constructor(enteringView: ViewController, leavingView: ViewController, public opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
@@ -285,7 +284,7 @@ PageTransition.register('popover-pop-in', PopoverPopIn);
 
 
 class PopoverPopOut extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, private opts: TransitionOptions) {
+  constructor(enteringView: ViewController, leavingView: ViewController, public opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
@@ -306,7 +305,7 @@ PageTransition.register('popover-pop-out', PopoverPopOut);
 
 
 class PopoverMdPopIn extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, private opts: TransitionOptions) {
+  constructor(enteringView: ViewController, leavingView: ViewController, public opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
@@ -335,7 +334,7 @@ PageTransition.register('popover-md-pop-in', PopoverMdPopIn);
 
 
 class PopoverMdPopOut extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, private opts: TransitionOptions) {
+  constructor(enteringView: ViewController, leavingView: ViewController, public opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;

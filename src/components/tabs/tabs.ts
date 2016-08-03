@@ -159,11 +159,11 @@ import { ViewController } from '../nav/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class Tabs extends Ion {
-  private _ids: number = -1;
-  private _tabs: Tab[] = [];
-  private _sbPadding: boolean;
-  private _top: number;
-  private _bottom: number;
+  _ids: number = -1;
+  _tabs: Tab[] = [];
+  _sbPadding: boolean;
+  _top: number;
+  _bottom: number;
 
   /**
    * @private
@@ -223,12 +223,12 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  @ViewChild(TabHighlight) private _highlight: TabHighlight;
+  @ViewChild(TabHighlight) _highlight: TabHighlight;
 
   /**
    * @private
    */
-  @ViewChild('tabbar') private _tabbar: ElementRef;
+  @ViewChild('tabbar') _tabbar: ElementRef;
 
   /**
    * @private
@@ -243,11 +243,11 @@ export class Tabs extends Ion {
   constructor(
     @Optional() parent: NavController,
     @Optional() public viewCtrl: ViewController,
-    private _app: App,
-    private _config: Config,
-    private _elementRef: ElementRef,
-    private _platform: Platform,
-    private _renderer: Renderer
+    public _app: App,
+    public _config: Config,
+    public _elementRef: ElementRef,
+    public _platform: Platform,
+    public _renderer: Renderer
   ) {
     super(_elementRef);
 
@@ -368,7 +368,7 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  private _setConfig(attrKey: string, fallback: any) {
+  _setConfig(attrKey: string, fallback: any) {
     var val = (<any>this)[attrKey];
     if (isBlank(val)) {
       val = this._config.get(attrKey, fallback);
@@ -534,7 +534,7 @@ export class Tabs extends Ion {
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
-  private _touchActive(tab: Tab) {
+  _touchActive(tab: Tab) {
     const active = tab.getActive();
 
     if (active) {

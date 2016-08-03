@@ -44,7 +44,7 @@ export class MenuClose {
   */
   @HostListener('click')
   close() {
-    let menu = this._menu.get(this.menuClose);
+    const menu = this._menu.get(this.menuClose);
     menu && menu.close();
   }
 

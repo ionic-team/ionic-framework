@@ -48,11 +48,11 @@ import { Debouncer } from '../../util/debouncer';
   encapsulation: ViewEncapsulation.None
 })
 export class Searchbar {
-  private _value: string|number = '';
-  private _shouldBlur: boolean = true;
-  private _isActive: boolean = false;
-  private _searchbarInput: ElementRef;
-  private _debouncer: Debouncer = new Debouncer(250);
+  _value: string|number = '';
+  _shouldBlur: boolean = true;
+  _isActive: boolean = false;
+  _searchbarInput: ElementRef;
+  _debouncer: Debouncer = new Debouncer(250);
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
@@ -145,7 +145,7 @@ export class Searchbar {
    * @private
    */
   @ViewChild('searchbarInput')
-  private set searchbarInput(searchbarInput: ElementRef) {
+  set searchbarInput(searchbarInput: ElementRef) {
     this._searchbarInput = searchbarInput;
 
     let inputEle = searchbarInput.nativeElement;

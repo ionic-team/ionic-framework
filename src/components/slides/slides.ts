@@ -202,72 +202,72 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  private id: number;
+  id: number;
 
   /**
    * @private
    */
-  private slideId: string;
+  slideId: string;
 
   /**
    * @private
    */
-  private showPager: boolean;
+  showPager: boolean;
 
   /**
    * @private
    */
-  private slider: Swiper;
+  slider: Swiper;
 
   /**
    * @private
    */
-  private maxScale: number;
+  maxScale: number;
 
   /**
    * @private
    */
-  private zoomElement: HTMLElement;
+  zoomElement: HTMLElement;
 
   /**
    * @private
    */
-  private zoomGesture: Gesture;
+  zoomGesture: Gesture;
 
   /**
    * @private
    */
-  private scale: number;
+  scale: number;
 
   /**
    * @private
    */
-  private zoomLastPosX: number;
+  zoomLastPosX: number;
 
   /**
    * @private
    */
-  private zoomLastPosY: number;
+  zoomLastPosY: number;
 
   /**
    * @private
    */
-  private viewportWidth: number;
+  viewportWidth: number;
 
   /**
    * @private
    */
-  private viewportHeight: number;
+  viewportHeight: number;
 
   /**
    * @private
    */
-  private enableZoom: boolean;
+  enableZoom: boolean;
 
   /**
    * @private
    */
-  private touch: {
+  touch: {
     x: number,
     y: number,
     startX: number,
@@ -852,7 +852,7 @@ export class Slide {
   /**
    * @private
    */
-  private ele: HTMLElement;
+  ele: HTMLElement;
 
 
   /**
@@ -862,7 +862,7 @@ export class Slide {
 
   constructor(
     elementRef: ElementRef,
-    @Host() private slides: Slides
+    @Host() public slides: Slides
   ) {
     this.ele = elementRef.nativeElement;
     this.ele.classList.add('swiper-slide');

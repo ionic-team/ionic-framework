@@ -22,13 +22,13 @@ import { Tab } from './tab';
   }
 })
 export class TabButton extends Ion {
-  private disHover: boolean;
-  private hasTitle: boolean;
-  private hasIcon: boolean;
-  private hasTitleOnly: boolean;
-  private hasIconOnly: boolean;
-  private hasBadge: boolean;
-  private layout: string;
+  disHover: boolean;
+  hasTitle: boolean;
+  hasIcon: boolean;
+  hasTitleOnly: boolean;
+  hasIconOnly: boolean;
+  hasBadge: boolean;
+  layout: string;
 
   @Input() tab: Tab;
 
@@ -57,7 +57,7 @@ export class TabButton extends Ion {
   }
 
   @HostListener('click', ['$event'])
-  private onClick(ev: UIEvent) {
+  onClick(ev: UIEvent) {
     this.ionSelect.emit(this.tab);
     ev.preventDefault();
   }

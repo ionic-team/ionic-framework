@@ -54,7 +54,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class SegmentButton {
-  private _disabled: boolean = false;
+  _disabled: boolean = false;
 
   /**
    * @input {string} the value of the segment button. Required.
@@ -93,7 +93,7 @@ export class SegmentButton {
    * On click of a SegmentButton
    */
   @HostListener('click')
-  private onClick() {
+  onClick() {
     console.debug('SegmentButton, select', this.value);
     this.ionSelect.emit(this);
   }
@@ -178,7 +178,7 @@ export class SegmentButton {
   selector: 'ion-segment'
 })
 export class Segment {
-  private _disabled: boolean = false;
+  _disabled: boolean = false;
 
   /**
    * @private

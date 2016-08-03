@@ -139,15 +139,15 @@ export const SELECT_VALUE_ACCESSOR = new Provider(
   encapsulation: ViewEncapsulation.None,
 })
 export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  private _disabled: any = false;
-  private _labelId: string;
-  private _multi: boolean = false;
-  private _options: QueryList<Option>;
-  private _values: string[] = [];
-  private _texts: string[] = [];
-  private _text: string = '';
-  private _fn: Function;
-  private _isOpen: boolean = false;
+  _disabled: any = false;
+  _labelId: string;
+  _multi: boolean = false;
+  _options: QueryList<Option>;
+  _values: string[] = [];
+  _texts: string[] = [];
+  _text: string = '';
+  _fn: Function;
+  _isOpen: boolean = false;
 
   /**
    * @private
@@ -200,7 +200,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
     private _form: Form,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
-    @Optional() private _item: Item,
+    @Optional() public _item: Item,
     @Optional() private _nav: NavController
   ) {
     this._form.register(this);
@@ -213,7 +213,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  _click(ev: UIEvent) {
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -224,7 +224,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   @HostListener('keyup.space')
-  private _keyup() {
+  _keyup() {
     if (!this._isOpen) {
       this.open();
     }
@@ -361,7 +361,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
    * @private
    */
   @ContentChildren(Option)
-  private set options(val: QueryList<Option>) {
+  set options(val: QueryList<Option>) {
     this._options = val;
 
     if (!this._values.length) {
@@ -376,7 +376,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   /**
    * @private
    */
-  private _updOpts() {
+  _updOpts() {
     this._texts = [];
 
     if (this._options) {

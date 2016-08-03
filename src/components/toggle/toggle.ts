@@ -72,15 +72,15 @@ export const TOGGLE_VALUE_ACCESSOR = new Provider(
   encapsulation: ViewEncapsulation.None,
 })
 export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy  {
-  private _checked: boolean = false;
-  private _init: boolean;
-  private _disabled: boolean = false;
-  private _labelId: string;
-  private _activated: boolean = false;
-  private _startX: number;
-  private _msPrv: number = 0;
-  private _fn: Function;
-  private _events: UIEventManager = new UIEventManager();
+  _checked: boolean = false;
+  _init: boolean;
+  _disabled: boolean = false;
+  _labelId: string;
+  _activated: boolean = false;
+  _startX: number;
+  _msPrv: number = 0;
+  _fn: Function;
+  _events: UIEventManager = new UIEventManager();
 
   /**
    * @private
@@ -93,10 +93,10 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   @Output() ionChange: EventEmitter<Toggle> = new EventEmitter<Toggle>();
 
   constructor(
-    private _form: Form,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
-    @Optional() private _item: Item
+    public _form: Form,
+    public _elementRef: ElementRef,
+    public _renderer: Renderer,
+    @Optional() public _item: Item
   ) {
     this._form.register(this);
 
@@ -110,7 +110,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   /**
    * @private
    */
-  private pointerDown(ev: UIEvent): boolean {
+  pointerDown(ev: UIEvent): boolean {
     this._startX = pointerCoord(ev).x;
     this._activated = true;
     return true;
@@ -119,7 +119,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   /**
    * @private
    */
-  private pointerMove(ev: UIEvent) {
+  pointerMove(ev: UIEvent) {
     if (this._startX) {
       let currentX = pointerCoord(ev).x;
       console.debug('toggle, pointerMove', ev.type, currentX);
@@ -142,7 +142,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   /**
    * @private
    */
-  private pointerUp(ev: UIEvent) {
+  pointerUp(ev: UIEvent) {
     if (this._startX) {
       let endX = pointerCoord(ev).x;
 
@@ -174,7 +174,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
 
-  private _setChecked(isChecked: boolean) {
+  _setChecked(isChecked: boolean) {
     if (isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {

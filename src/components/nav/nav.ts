@@ -32,7 +32,7 @@ import { ViewController } from './view-controller';
  *   template: `<ion-nav [root]="root"></ion-nav>`
  * })
  * class MyApp {
- *   private root: any = GettingStartedPage;
+ *   root = GettingStartedPage;
  *
  *   constructor(){
  *   }

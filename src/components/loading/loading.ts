@@ -100,7 +100,7 @@ export class Loading extends ViewController {
  *
  * @usage
  * ```ts
- * constructor(private loadingCtrl: LoadingController) {
+ * constructor(public loadingCtrl: LoadingController) {
  *
  * }
  *

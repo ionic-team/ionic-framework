@@ -63,10 +63,10 @@ import { RadioGroup } from './radio-group';
   encapsulation: ViewEncapsulation.None,
 })
 export class RadioButton implements OnDestroy, OnInit {
-  private _checked: boolean = false;
-  private _disabled: boolean = false;
-  private _labelId: string;
-  private _value: any = null;
+  _checked: boolean = false;
+  _disabled: boolean = false;
+  _labelId: string;
+  _value: any = null;
 
   /**
    * @private
@@ -145,7 +145,7 @@ export class RadioButton implements OnDestroy, OnInit {
    * @private
    */
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  _click(ev: UIEvent) {
     console.debug('radio, select', this.id);
     ev.preventDefault();
     ev.stopPropagation();

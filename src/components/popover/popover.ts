@@ -111,7 +111,7 @@ export class Popover extends ViewController {
  * ```ts
  * @Component({})
  * class MyPage {
- *   constructor(private popoverCtrl: PopoverController) {}
+ *   constructor(public popoverCtrl: PopoverController) {}
  *
  *   presentPopover(myEvent) {
  *     let popover = this.popoverCtrl.create(PopoverPage);
@@ -139,7 +139,7 @@ export class Popover extends ViewController {
  *   `
  * })
  * class PopoverPage {
- *   constructor(private viewCtrl: ViewController) {}
+ *   constructor(public viewCtrl: ViewController) {}
  *
  *   close() {
  *     this.viewCtrl.dismiss();

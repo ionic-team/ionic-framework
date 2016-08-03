@@ -25,11 +25,9 @@ import { windowDimensions } from '../../util/dom';
   directives: [Backdrop]
 })
 export class ModalCmp {
-
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
-
-  private d: any;
-  private enabled: boolean;
+  d: any;
+  enabled: boolean;
 
   constructor(private _cfr: ComponentFactoryResolver, private _renderer: Renderer, private _navParams: NavParams, private _viewCtrl: ViewController) {
     this.d = _navParams.data.opts;

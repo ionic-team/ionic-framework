@@ -85,7 +85,7 @@ export class Modal extends ViewController {
  * @Component(...)
  * class HomePage {
  *
- *  constructor(private modalCtrl: ModalController) {
+ *  constructor(public modalCtrl: ModalController) {
  *
  *  }
  *
@@ -125,7 +125,7 @@ export class Modal extends ViewController {
  * @Component(...)
  * class HomePage {
  *
- *  constructor(private modalCtrl: ModalController) {
+ *  constructor(public modalCtrl: ModalController) {
  *
  *  }
  *
@@ -147,7 +147,7 @@ export class Modal extends ViewController {
  * @Component(...)
  * class Profile {
  *
- *  constructor(private viewCtrl: ViewController) {
+ *  constructor(public viewCtrl: ViewController) {
  *
  *  }
  *

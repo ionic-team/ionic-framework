@@ -32,10 +32,10 @@ import { ViewController } from '../nav/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class LoadingCmp {
-  private d: any;
-  private id: number;
-  private showSpinner: boolean;
-  private durationTimeout: number;
+  d: any;
+  id: number;
+  showSpinner: boolean;
+  durationTimeout: number;
 
   constructor(
     private _viewCtrl: ViewController,

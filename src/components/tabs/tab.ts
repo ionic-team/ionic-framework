@@ -101,7 +101,7 @@ import { ViewController } from '../nav/view-controller';
  *
  * ```ts
  * export class Tabs {
- *   constructor(private modalCtrl: ModalController) {
+ *   constructor(public modalCtrl: ModalController) {
  *
  *   }
  *
@@ -132,14 +132,14 @@ import { ViewController } from '../nav/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class Tab extends NavControllerBase {
-  private _isInitial: boolean;
-  private _isEnabled: boolean = true;
-  private _isShown: boolean = true;
-  private _tabId: string;
-  private _btnId: string;
-  private _loaded: boolean;
-  private _loadTmr: any;
-  private _ariaHidden: string = 'true';
+  _isInitial: boolean;
+  _isEnabled: boolean = true;
+  _isShown: boolean = true;
+  _tabId: string;
+  _btnId: string;
+  _loaded: boolean;
+  _loadTmr: any;
+  _ariaHidden: string = 'true';
 
   /**
    * @private
@@ -232,7 +232,7 @@ export class Tab extends NavControllerBase {
     zone: NgZone,
     renderer: Renderer,
     cfr: ComponentFactoryResolver,
-    private _cd: ChangeDetectorRef,
+    _cd: ChangeDetectorRef,
     gestureCtrl: GestureController,
     transCtrl: TransitionController
   ) {

@@ -55,7 +55,7 @@ export class RefresherContent {
   @Input() refreshingText: string;
 
 
-  constructor(private r: Refresher, private _config: Config) {}
+  constructor(public r: Refresher, private _config: Config) {}
 
   /**
    * @private

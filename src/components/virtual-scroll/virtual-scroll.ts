@@ -150,24 +150,24 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
   selector: '[virtualScroll]'
 })
 export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
-  private _trackBy: TrackByFn;
-  private _differ: IterableDiffer;
-  private _unreg: Function;
-  private _init: boolean;
-  private _rafId: number;
-  private _tmId: number;
-  private _hdrFn: Function;
-  private _ftrFn: Function;
-  private _records: any[] = [];
-  private _cells: VirtualCell[] = [];
-  private _nodes: VirtualNode[] = [];
-  private _vHeight: number = 0;
-  private _lastCheck: number = 0;
-  private _data: VirtualData = {
+  _trackBy: TrackByFn;
+  _differ: IterableDiffer;
+  _unreg: Function;
+  _init: boolean;
+  _rafId: number;
+  _tmId: number;
+  _hdrFn: Function;
+  _ftrFn: Function;
+  _records: any[] = [];
+  _cells: VirtualCell[] = [];
+  _nodes: VirtualNode[] = [];
+  _vHeight: number = 0;
+  _lastCheck: number = 0;
+  _data: VirtualData = {
     scrollTop: 0,
   };
-  private _eventAssist: boolean;
-  private _queue: number = null;
+  _eventAssist: boolean;
+  _queue: number = null;
 
   @ContentChild(VirtualItem) private _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) private _hdrTmp: VirtualHeader;

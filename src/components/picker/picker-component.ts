@@ -374,11 +374,11 @@ export class PickerColumnCmp {
   encapsulation: ViewEncapsulation.None,
 })
 export class PickerCmp {
-  @ViewChildren(PickerColumnCmp) private _cols: QueryList<PickerColumnCmp>;
-  private d: PickerOptions;
-  private enabled: boolean;
-  private lastClick: number;
-  private id: number;
+  @ViewChildren(PickerColumnCmp) _cols: QueryList<PickerColumnCmp>;
+  d: PickerOptions;
+  enabled: boolean;
+  lastClick: number;
+  id: number;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -452,14 +452,14 @@ export class PickerCmp {
     });
   }
 
-  private _colChange(selectedOption: PickerColumnOption) {
+  _colChange(selectedOption: PickerColumnOption) {
     // one of the columns has changed its selected index
     var picker = <Picker>this._viewCtrl;
     picker.ionChange.emit(this.getSelected());
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  _keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
       if (ev.keyCode === Key.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {

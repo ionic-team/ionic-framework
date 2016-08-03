@@ -428,7 +428,7 @@ export function writeToNodes(nodes: VirtualNode[], cells: VirtualCell[], totalRe
 
         if (element) {
           // ******** DOM WRITE ****************
-          element.style[CSS.transform] = node.lastTransform = transform;
+          (<any>element.style)[CSS.transform] = node.lastTransform = transform;
 
           // ******** DOM WRITE ****************
           element.classList.add('virtual-position');

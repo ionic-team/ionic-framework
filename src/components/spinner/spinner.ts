@@ -117,9 +117,9 @@ import { Config } from '../../config/config';
 export class Spinner {
   _c: any[];
   _l: any[];
-  private _name: string;
-  private _dur: number = null;
-  private _init: boolean;
+  _name: string;
+  _dur: number = null;
+  _init: boolean;
   _applied: string;
 
   /**

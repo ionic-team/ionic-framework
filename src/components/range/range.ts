@@ -38,9 +38,9 @@ export const RANGE_VALUE_ACCESSOR = new Provider(
   }
 })
 export class RangeKnob implements OnInit {
-  private _ratio: number;
-  private _val: number;
-  private _x: string;
+  _ratio: number;
+  _val: number;
+  _x: string;
   pressed: boolean;
 
   @Input() upper: boolean;
@@ -200,35 +200,35 @@ export class RangeKnob implements OnInit {
   encapsulation: ViewEncapsulation.None,
 })
 export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
-  private _dual: boolean = false;
-  private _pin: boolean;
-  private _disabled: boolean = false;
-  private _pressed: boolean;
-  private _labelId: string;
-  private _fn: Function;
+  _dual: boolean = false;
+  _pin: boolean;
+  _disabled: boolean = false;
+  _pressed: boolean;
+  _labelId: string;
+  _fn: Function;
 
-  private _active: RangeKnob;
-  private _start: Coordinates = null;
-  private _rect: ClientRect;
-  private _ticks: any[];
-  private _barL: string;
-  private _barR: string;
+  _active: RangeKnob;
+  _start: Coordinates = null;
+  _rect: ClientRect;
+  _ticks: any[];
+  _barL: string;
+  _barR: string;
 
-  private _min: number = 0;
-  private _max: number = 100;
-  private _step: number = 1;
-  private _snaps: boolean = false;
+  _min: number = 0;
+  _max: number = 100;
+  _step: number = 1;
+  _snaps: boolean = false;
 
-  private _debouncer: Debouncer = new Debouncer(0);
-  private _events: UIEventManager = new UIEventManager();
+  _debouncer: Debouncer = new Debouncer(0);
+  _events: UIEventManager = new UIEventManager();
   /**
    * @private
    */
   value: any;
 
-  @ViewChild('bar') private _bar: ElementRef;
-  @ViewChild('slider') private _slider: ElementRef;
-  @ViewChildren(RangeKnob) private _knobs: QueryList<RangeKnob>;
+  @ViewChild('bar') public _bar: ElementRef;
+  @ViewChild('slider') public _slider: ElementRef;
+  @ViewChildren(RangeKnob) public _knobs: QueryList<RangeKnob>;
 
   /**
    * @private

@@ -68,10 +68,10 @@ export const RADIO_VALUE_ACCESSOR = new Provider(
   providers: [RADIO_VALUE_ACCESSOR]
 })
 export class RadioGroup implements AfterContentInit, ControlValueAccessor {
-  private _btns: Array<RadioButton> = [];
-  private _fn: Function;
-  private _ids: number = -1;
-  private _init: boolean = false;
+  _btns: Array<RadioButton> = [];
+  _fn: Function;
+  _ids: number = -1;
+  _init: boolean = false;
 
   /**
    * @private
@@ -145,7 +145,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   /**
    * @private
    */
-  private _update() {
+  _update() {
     // loop through each of the radiobuttons
     let hasChecked = false;
     this._btns.forEach(radioButton => {
@@ -163,7 +163,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
     });
   }
 
-  private _setActive(radioButton: RadioButton) {
+  _setActive(radioButton: RadioButton) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', radioButton.id);
   }
 
@@ -199,7 +199,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
    * @private
    */
   @ContentChild(ListHeader)
-  private set _header(header: any) {
+  set _header(header: any) {
     if (header) {
       if (!header.id) {
         header.id = 'rg-hdr-' + this.id;
