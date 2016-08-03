@@ -25,7 +25,7 @@ class E2EPage {
       { text: 'Honey Badger', value: 'honeybadger' },
       { text: 'Pig', value: 'pig' },
     ];
-    this.status = 'checked';
+    this.status = 'selected';
 
     this.authForm = new FormGroup({
       name: new FormControl(''),
