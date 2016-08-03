@@ -119,7 +119,7 @@ export const SELECT_VALUE_ACCESSOR = new Provider(
   selector: 'ion-select',
   template: `
     <div *ngIf="!_text" class="select-placeholder select-text">{{placeholder}}</div>
-    <div *ngIf="_text" class="select-text">{{_text}}</div>
+    <div *ngIf="_text" class="select-text">{{selectedText || _text}}</div>
     <div class="select-icon">
       <div class="select-icon-inner"></div>
     </div>
@@ -179,6 +179,11 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
    * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
    */
   @Input() interface: string = '';
+
+  /**
+   * @input {string} The text to display instead of the selected option's value.
+   */
+  @Input() selectedText: string = '';
 
   /**
    * @output {any} Any expression you want to evaluate when the selection has changed.
