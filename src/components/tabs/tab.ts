@@ -125,6 +125,7 @@ import { ViewController } from '../nav/view-controller';
     '[class.show-tab]': 'isSelected',
     '[attr.id]': '_tabId',
     '[attr.aria-labelledby]': '_btnId',
+    '[attr.aria-hidden]': '_ariaHidden',
     'role': 'tabpanel'
   },
   template: '<div #viewport></div><div class="nav-decor"></div>',
@@ -138,6 +139,7 @@ export class Tab extends NavControllerBase {
   private _btnId: string;
   private _loaded: boolean;
   private _loadTmr: any;
+  private _ariaHidden: string = 'true';
 
   /**
    * @private
@@ -317,10 +319,12 @@ export class Tab extends NavControllerBase {
     if (isSelected) {
       // this is the selected tab, detect changes
       this._cd.reattach();
+      this._ariaHidden = 'false';
 
     } else {
       // this tab is not selected, do not detect changes
       this._cd.detach();
+      this._ariaHidden = 'true';
     }
   }
 

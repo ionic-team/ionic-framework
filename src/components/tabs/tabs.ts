@@ -283,10 +283,6 @@ export class Tabs extends Ion {
     // then skip this and don't treat it as it's own ViewController
     if (viewCtrl) {
       viewCtrl.setContent(this);
-
-      // viewCtrl.loaded = (done) => {
-      //   this._onReady = done;
-      // };
     }
   }
 
