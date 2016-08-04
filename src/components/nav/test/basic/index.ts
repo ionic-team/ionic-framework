@@ -139,7 +139,7 @@ class FirstPage {
       <p><button class="e2eFrom2To3" (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
       <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
       <p><button (click)="pushFirstPage()">Push to FirstPage</button></p>
-      <p><button class="e2eFrom2To1" nav-pop>Pop with NavPop (Go back to 1st)</button></p>
+      <p><button class="e2eFrom2To1" navPop>Pop with NavPop (Go back to 1st)</button></p>
       <p><button (click)="setPages()">setPages() (Go to PrimaryHeaderPage, FirstPage 1st in history)</button></p>
       <p><button (click)="presentAlert()">Present Alert</button></p>
     </ion-content>
