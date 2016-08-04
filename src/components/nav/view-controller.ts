@@ -80,44 +80,44 @@ export class ViewController {
   didUnload: EventEmitter<any>;
 
   /**
-   * @private
+   * @internal
    */
   data: any;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
   /**
-   * @private
+   * @internal
    */
   instance: any = {};
 
   /**
-   * @private
+   * @internal
    */
   state: number = 0;
 
   /**
-   * @private
+   * @internal
    * If this is currently the active view, then set to false
    * if it does not want the other views to fire their own lifecycles.
    */
   fireOtherLifecycles: boolean = true;
 
   /**
-   * @private
+   * @internal
    */
   isOverlay: boolean = false;
 
   /**
-   * @private
+   * @internal
    */
   zIndex: number;
 
   /**
-   * @private
+   * @internal
    */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
@@ -134,21 +134,21 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   subscribe(generatorOrNext?: any): any {
     return this._emitter.subscribe(generatorOrNext);
   }
 
   /**
-   * @private
+   * @internal
    */
   emit(data?: any) {
     this._emitter.emit(data);
   }
 
   /**
-   * @private
+   * @internal
    * onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead
    */
   private onDismiss(callback: Function) {
@@ -158,21 +158,21 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * onDidDismiss
    */
   onDidDismiss(callback: Function) {
     this._onDidDismiss = callback;
   }
 
   /**
-   * @private
+   * onWillDismiss
    */
   onWillDismiss(callback: Function) {
     this._onWillDismiss = callback;
   }
 
   /**
-   * @private
+   * dismiss
    */
   dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
     let options = merge({}, this._leavingOpts, navOptions);
@@ -184,35 +184,35 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   setNav(navCtrl: NavController) {
     this._nav = navCtrl;
   }
 
   /**
-   * @private
+   * @internal
    */
   getNav() {
     return this._nav;
   }
 
   /**
-   * @private
+   * @internal
    */
   getTransitionName(direction: string): string {
     return this._nav && this._nav.config.get('pageTransition');
   }
 
   /**
-   * @private
+   * @internal
    */
   getNavParams(): NavParams {
     return new NavParams(this.data);
   }
 
   /**
-   * @private
+   * @internal
    */
   setLeavingOpts(opts: NavOptions) {
     this._leavingOpts = opts;
@@ -235,21 +235,21 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   setChangeDetector(cd: ChangeDetectorRef) {
     this._cd = cd;
   }
 
   /**
-   * @private
+   * @internal
    */
   setInstance(instance: any) {
     this.instance = instance;
   }
 
   /**
-   * @private
+   * @internal
    */
   get name(): string {
     return this.componentType ? this.componentType['name'] : '';
@@ -278,7 +278,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   domShow(shouldShow: boolean, shouldRender: boolean, renderer: Renderer) {
@@ -306,7 +306,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   setZIndex(zIndex: number, renderer: Renderer) {
     if (this._pgRef && zIndex !== this.zIndex) {
@@ -316,14 +316,13 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   setPageElementRef(elementRef: ElementRef) {
     this._pgRef = elementRef;
   }
 
   /**
-   * @private
    * @returns {elementRef} Returns the Page's ElementRef
    */
   pageElementRef(): ElementRef {
@@ -331,56 +330,27 @@ export class ViewController {
   }
 
   /**
-   * @private
-   */
-  setContent(directive: any) {
-    this._cntDir = directive;
-  }
-
-  /**
-   * @private
+   * @internal
    */
   setToolbarRef(elementRef: ElementRef) {
     this._tbRefs.push(elementRef);
   }
 
   /**
-   * @private
+   * @internal
    */
   toolbarRefs(): ElementRef[] {
     return this._tbRefs;
   }
 
   /**
-   * @private
+   * @internal
    */
-  setHeader(directive: Header) {
-    this._hdrDir = directive;
+  setContent(directive: any) {
+    this._cntDir = directive;
   }
 
   /**
-   * @private
-   */
-  getHeader() {
-    return this._hdrDir;
-  }
-
-  /**
-   * @private
-   */
-  setFooter(directive: Footer) {
-    this._ftrDir = directive;
-  }
-
-  /**
-   * @private
-   */
-  getFooter() {
-    return this._ftrDir;
-  }
-
-  /**
-   * @private
    * @returns {component} Returns the Page's Content component reference.
    */
   getContent() {
@@ -388,21 +358,48 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
+   */
+  setHeader(directive: Header) {
+    this._hdrDir = directive;
+  }
+
+  /**
+   * @internal
+   */
+  getHeader() {
+    return this._hdrDir;
+  }
+
+  /**
+   * @internal
+   */
+  setFooter(directive: Footer) {
+    this._ftrDir = directive;
+  }
+
+  /**
+   * @internal
+   */
+  getFooter() {
+    return this._ftrDir;
+  }
+
+  /**
+   * @internal
    */
   setNavbar(directive: Navbar) {
     this._nb = directive;
   }
 
   /**
-   * @private
+   * @internal
    */
   getNavbar(): Navbar {
     return this._nb;
   }
 
   /**
-   *
    * Find out if the current component has a NavBar or not. Be sure
    * to wrap this in an `ionViewWillEnter` method in order to make sure
    * the view has rendered fully.
@@ -433,14 +430,14 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   isLoaded(): boolean {
     return this._loaded;
   }
 
   /**
-   * @private
+   * @internal
    * The view has loaded. This event only happens once per view being
    * created. If a view leaves but is cached, then this will not
    * fire again on a subsequent viewing. This method is a good place
@@ -453,7 +450,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * The view is about to enter and become the active view.
    */
   fireWillEnter() {
@@ -469,7 +466,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
@@ -480,7 +477,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * The view has is about to leave and no longer be the active view.
    */
   fireWillLeave() {
@@ -489,7 +486,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
@@ -503,7 +500,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * The view is about to be destroyed and have its elements removed.
    */
   fireWillUnload() {
@@ -512,28 +509,25 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   onDestroy(destroyFn: Function) {
     this._destroyFn = destroyFn;
   }
 
   /**
-   * @private
+   * @internal
    */
   destroy() {
     this.didUnload.emit(null);
     ctrlFn(this, 'DidUnload');
 
     this._destroyFn && this._destroyFn();
-    this._destroyFn = null;
+    this._destroyFn = this._onDidDismiss = this._onWillDismiss = null;
   }
 
 }
 
-export interface LifeCycleEvent {
-  componentType?: any;
-}
 
 function ctrlFn(viewCtrl: ViewController, fnName: string) {
   if (viewCtrl.instance) {

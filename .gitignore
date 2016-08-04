@@ -16,18 +16,11 @@ dist/
 node_modules/
 tmp/
 temp/
+test/
 $RECYCLE.BIN/
 
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-
-scripts/resources/web-animations-js/test/
-scripts/resources/web-animations-js/inter-*
-scripts/resources/web-animations-js/**/*.map
-scripts/resources/web-animations-js/**/*.md
-scripts/resources/web-animations-js/**/*.sh
-scripts/resources/web-animations-js/**/*.yml
-scripts/resources/web-animations-js/**/*.gz
 
 .package.tmp.json

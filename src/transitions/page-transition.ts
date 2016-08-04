@@ -1,4 +1,4 @@
-import { Animation } from '../animations/animation';
+import { Animation, PlayOptions } from '../animations/animation';
 import { closest } from '../util/dom';
 import { Content } from '../components/content/content';
 import { Tabs } from '../components/tabs/tabs';
@@ -15,12 +15,17 @@ export class PageTransition extends Transition {
   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
     super(enteringView, leavingView, opts);
 
-    this.enteringPage = new Animation(this.enteringView.pageElementRef());
+    this.enteringPage = new Animation();
     this.enteringPage.before.addClass('show-page');
     this.add(this.enteringPage);
 
     this.before.addDomReadFn(this.readDimensions.bind(this));
     this.before.addDomWriteFn(this.writeDimensions.bind(this));
+  }
+
+  play(opts?: PlayOptions) {
+    this.enteringPage.element(this.enteringView.pageElementRef());
+    super.play(opts);
   }
 
   /**
