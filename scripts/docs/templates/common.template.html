@@ -174,7 +174,7 @@ angular_controller: APIDemoCtrl <@ endif @>
     <tbody>
       <@ for prop in file.props @>
       <tr>
-        <td><$ prop.name $></td>
+        <td>$<$ prop.name $></td>
         <@ if prop.default @>
           <td><$ prop.default | code $></td>
         <@ else @>
