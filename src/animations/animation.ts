@@ -53,6 +53,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * NO DOM
    */
   _reset() {
@@ -88,6 +89,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * NO DOM
    */
   private _addEle(ele: any) {
@@ -178,6 +180,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * NO DOM
    */
   private _addProp(state: string, prop: string, val: any): EffectProperty {
@@ -448,6 +451,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * DOM WRITE
    */
   _asyncEnd(duration: number, shouldComplete: boolean) {
@@ -509,6 +513,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * NO DOM
    */
   _clearAsync() {
@@ -520,6 +525,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * DOM WRITE
    */
   _progress(stepValue: number) {
@@ -603,6 +609,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * DOM WRITE
    */
   _setTrans(duration: number, forcedLinearEasing: boolean) {
@@ -637,6 +644,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * DOM WRITE
    */
   _willChg(addWillChange: boolean) {
@@ -673,6 +681,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * DOM WRITE
    */
   _before() {
@@ -715,6 +724,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * DOM READ
    */
   _beforeReadFn() {
@@ -732,6 +742,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * DOM WRITE
    */
   _beforeWriteFn() {
@@ -749,6 +760,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * DOM WRITE
    */
   _after() {
@@ -924,6 +936,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * POSSIBLE DOM READ/WRITE
    */
   _didFinish(hasCompleted: boolean) {
@@ -976,6 +989,7 @@ export class Animation {
   }
 
   /**
+   * @internal
    * NO DOM
    */
   _transEl(): HTMLElement {
@@ -1023,14 +1037,14 @@ export interface PlayOptions {
   stepValue?: number;
 }
 
-interface EffectProperty {
+export interface EffectProperty {
   trans: boolean;
   wc: string;
   to?: EffectState;
   from?: EffectState;
 }
 
-interface EffectState {
+export interface EffectState {
   val: any;
   num: number;
   unit: string;
