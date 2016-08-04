@@ -215,10 +215,26 @@ class ModalPassData {
     <ion-header>
       <ion-toolbar primary>
         <ion-title>Toolbar 1</ion-title>
+        <ion-buttons start>
+          <button>start</button>
+        </ion-buttons>
+        <ion-buttons end>
+          <button>end</button>
+        </ion-buttons>
       </ion-toolbar>
 
       <ion-toolbar no-border-top>
         <ion-title>Toolbar 2</ion-title>
+        <ion-buttons start>
+          <button>
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-buttons end>
+          <button>
+            <ion-icon name="send"></ion-icon>
+          </button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
