@@ -275,11 +275,11 @@ export class ToolbarModal {
       <form #addForm="ngForm" (submit)="save($event)" novalidate>
         <ion-list>
           <ion-item>
-            <ion-label floating>Title <span [hidden]="title.valid">(Required)</span></ion-label>
+            <ion-label floating>Title <span [hidden]="data.title.valid">(Required)</span></ion-label>
             <ion-input formControlName="title" type="text" [(ngModel)]="data.title" required autofocus></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Note <span [hidden]="note.valid">(Required)</span></ion-label>
+            <ion-label floating>Note <span [hidden]="data.note.valid">(Required)</span></ion-label>
             <ion-input formControlName="note" type="text" [(ngModel)]="data.note" required></ion-input>
           </ion-item>
           <ion-item>
@@ -378,8 +378,8 @@ export class ContactUs {
 })
 export class ModalFirstPage {
 
-  private items: any[];
-  constructor(private nav: NavController, private app: App, private actionSheetCtrl: ActionSheetController) {
+ items: any[];
+  constructor(public nav: NavController, private app: App, private actionSheetCtrl: ActionSheetController) {
     this.items = [];
     for ( let i = 0; i < 50; i++ ) {
       this.items.push({
@@ -476,7 +476,7 @@ export class ModalFirstPage {
   `
 })
 export class ModalSecondPage {
-  constructor(private nav: NavController, params: NavParams) {
+  constructor(public nav: NavController, params: NavParams) {
     console.log('Second page params:', params);
   }
 
