@@ -53,7 +53,9 @@ ion-alert {
 }
 
 .alert-message {
-  overflow: auto;
+  overflow-y: scroll;
+
+  -webkit-overflow-scrolling: touch;
 }
 
 .alert-input {
