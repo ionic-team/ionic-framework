@@ -396,7 +396,7 @@ export abstract class NavController {
    * and animate in to become the active view.
    *
    * @param {number} insertIndex  The index where you want to insert the page.
-   * @param {array<{page: Page, params=: any}>} insertPages  An array of objects, each with a `page` and optionally `params` property.
+   * @param {Array<{page: Page, params?: any}>} insertPages  An array of objects, each with a `page` and optionally `params` property.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */

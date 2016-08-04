@@ -1,5 +1,6 @@
 module.exports = [
   {'name': 'advanced'},
   {'name': 'demo'},
-  {'name': 'usage'}
+  {'name': 'usage'},
+  {'name': 'internal'}
 ];

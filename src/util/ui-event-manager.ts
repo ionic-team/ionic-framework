@@ -70,10 +70,10 @@ export class PointerEvents {
       return;
     }
     if (!this.rmMouseMove) {
-      this.rmMouseMove = listenEvent(window, 'mousemove', this.zone, this.option, this.pointerMove);
+      this.rmMouseMove = listenEvent(document, 'mousemove', this.zone, this.option, this.pointerMove);
     }
     if (!this.rmMouseUp) {
-      this.rmMouseUp = listenEvent(window, 'mouseup', this.zone, this.option, this.bindMouseUp);
+      this.rmMouseUp = listenEvent(document, 'mouseup', this.zone, this.option, this.bindMouseUp);
     }
   }
 
