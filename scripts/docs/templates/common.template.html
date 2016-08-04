@@ -145,6 +145,52 @@ angular_controller: APIDemoCtrl <@ endif @>
   <$ typeList(fn.typeList) $> <$ fn.description | marked  $>
 <@- endmacro -@>
 
+<@- macro sassTable(files) -@>
+<div id="sass-variables" ng-controller="SassToggleCtrl">
+  <div class="sass-platform-toggle">
+    <@ if files.length > 1 @>
+      <@ for file in files @>
+      <@ if loop.first @>
+      <a ng-init="setSassPlatform('<$ file.platform $>')" ng-class="{ active: active === '<$ file.platform $>' }" ng-click="setSassPlatform('<$ file.platform $>')" ><$ file.platform | platform $></a>
+      <@ else @>
+      <a ng-class="{ active: active === '<$ file.platform $>' }" ng-click="setSassPlatform('<$ file.platform $>')"><$ file.platform | platform $></a>
+      <@ endif @>
+      <@ endfor @>
+    <@ else @>
+    <h3 ng-init="setSassPlatform('<$ files[0].platform $>')"><$ files[0].platform | platform $></h3>
+    <@ endif @>
+  </div>
+
+
+  <@ for file in files @>
+  <table ng-show="active === '<$ file.platform $>'" id="sass-<$file.platform $>" class="table param-table" style="margin:0;">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <@ for prop in file.props @>
+      <tr>
+        <td><$ prop.name $></td>
+        <@ if prop.default @>
+          <td><$ prop.default | code $></td>
+        <@ else @>
+          <td>
+
+          </td>
+        <@ endif @>
+        <td><$ prop.description | marked $></td>
+      </tr>
+      <@ endfor @>
+    </tbody>
+  </table>
+  <@  endfor @>
+</div>
+<@- endmacro -@>
+
 <@ block body @>
 
 
@@ -192,7 +238,6 @@ Improve this doc
 <@ block description @>
 <$ doc.description | marked $>
 <@ endblock @>
-
 
 
 <!-- @usage tag -->
@@ -338,6 +383,11 @@ Improve this doc
 <$ doc.advanced | marked $>
 <@- endif -@>
 <@ endblock @>
+
+<@ if doc.sassVariables @>
+  <h2 id="sass-variable-header"><a class="anchor" name="sass-variables" href="#sass-variables"></a>Sass Variables</h2>
+  <$ sassTable(doc.sassVariables) $>
+<@ endif @>
 
 
 <!-- related link -->

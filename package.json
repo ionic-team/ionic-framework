@@ -85,6 +85,7 @@
     "node-libs-browser": "^0.5.2",
     "request": "2.53.0",
     "run-sequence": "^1.1.0",
+    "sassdoc": "^2.1.20",
     "semver": "^5.0.1",
     "serve-static": "^1.9.2",
     "source-map-support": "^0.2.10",
