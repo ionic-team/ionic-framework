@@ -43,8 +43,9 @@
 
       <ion-item-options side="left" (ionSwipe)="archive(item)">
         <button primary expandable (click)="archive(item)">
-          <ion-icon name="archive"></ion-icon>
-          Archive
+          <ion-icon name="archive" class="expand-hide"></ion-icon>
+          <div class="expand-hide">Archive</div>
+          <ion-spinner id="archive-spinner"></ion-spinner>
         </button>
       </ion-item-options>
     </ion-item-sliding>
@@ -72,8 +73,8 @@
           Mute
         </button>
         <button light expandable (click)="download(item)">
-          <ion-icon name="download" class="download-hide"></ion-icon>
-          <div class="download-hide">Download</div>
+          <ion-icon name="download" class="expand-hide"></ion-icon>
+          <div class="expand-hide">Download</div>
           <ion-spinner id="download-spinner"></ion-spinner>
         </button>
       </ion-item-options>
@@ -84,25 +85,36 @@
 </ion-content>
 
 <style>
-  #download-spinner {
+  /* TODO: spinner is dropping classes so we have to use ids: https://github.com/driftyco/ionic/issues/7087 */
+  #archive-spinner,
+  #download-spinner,
+  .archiving .expand-hide,
+  .downloading .expand-hide {
     display: none;
   }
 
-  svg circle {
-    stroke: white;
+  /* TODO: spinner doesn't have a good way to do this yet: https://github.com/driftyco/ionic/issues/7087 */
+  #archive-spinner.spinner-ios line,
+  #archive-spinner.spinner-crescent circle {
+    stroke: #fff;
   }
 
+  #archive-spinner.spinner-circles circle {
+    fill: #fff;
+  }
+
+  .archiving #archive-spinner,
   .downloading #download-spinner {
     display: block;
-  }
-
-  .downloading .download-hide {
-    display: none;
   }
 
   .chat-sliding-demo ion-note {
     font-size: 13px;
     margin-top: -8px;
+  }
+
+  .chat-sliding-demo img {
+    pointer-events: none;
   }
 
   .login-sliding-demo .ion-logo-twitter {

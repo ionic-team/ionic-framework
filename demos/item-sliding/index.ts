@@ -66,21 +66,24 @@ class ApiDemoPage {
   }
 
   archive(item: ItemSliding) {
-    console.log('Archive');
-    item.close();
+    this.expandAction(item, 'archiving', 'Chat was archived.');
   }
 
   download(item: ItemSliding) {
-    item.setCssClass('downloading', true);
+    this.expandAction(item, 'downloading', 'Login was downloaded.');
+  }
+
+  expandAction(item: ItemSliding, action: string, text: string) {
+    item.setCssClass(action, true);
+
     setTimeout(() => {
       const toast = this.toastCtrl.create({
-        message: 'Item was downloaded!'
+        message: text
       });
       toast.present();
-      item.setCssClass('downloading', false);
+      item.setCssClass(action, false);
       item.close();
 
-      // Wait 2s to close toast
       setTimeout(() => toast.dismiss(), 2000);
     }, 1500);
   }
