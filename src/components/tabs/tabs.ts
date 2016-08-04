@@ -274,6 +274,11 @@ export class Tabs extends Ion {
       // this Tabs has a parent Nav
       this.parent.registerChildNav(this);
 
+    } else if (viewCtrl && viewCtrl.getNav()) {
+      // this Nav was opened from a modal
+      this.parent = <any>viewCtrl.getNav();
+      this.parent.registerChildNav(this);
+
     } else if (this._app) {
       // this is the root navcontroller for the entire app
       this._app.setRootNav(this);
@@ -375,7 +380,7 @@ export class Tabs extends Ion {
    * @private
    */
   private _setConfig(attrKey: string, fallback: any) {
-    var val = this[attrKey];
+    var val = (<any>this)[attrKey];
     if (isBlank(val)) {
       val = this._config.get(attrKey, fallback);
     }

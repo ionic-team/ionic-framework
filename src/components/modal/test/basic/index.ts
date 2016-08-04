@@ -5,7 +5,7 @@ import { ActionSheetController, App, Config, ionicBootstrap, ModalController, Na
 
 @Injectable()
 class SomeComponentProvider {
-  constructor(private config: Config) {
+  constructor(public config: Config) {
     console.log('SomeComponentProvider constructor');
   }
 
@@ -16,7 +16,7 @@ class SomeComponentProvider {
 
 @Injectable()
 class SomeAppProvider {
-  constructor(private config: Config) {
+  constructor(public config: Config) {
     console.log('SomeAppProvider constructor');
   }
 
@@ -32,7 +32,7 @@ class SomeAppProvider {
 class E2EPage {
   platforms: string[];
 
-  constructor(private nav: NavController, private modalCtrl: ModalController, config: Config, platform: Platform) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, config: Config, platform: Platform) {
     console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
@@ -117,11 +117,10 @@ class E2EPage {
   `
 })
 class NavigableModal {
-  constructor(private nav: NavController) {
-  }
+  constructor(public navCtrl: NavController) {}
 
   submit() {
-    this.nav.push(NavigableModal2);
+    this.navCtrl.push(NavigableModal2);
   }
 }
 
@@ -139,7 +138,7 @@ class NavigableModal {
   `
 })
 class NavigableModal2 {
-  constructor(private navController: NavController) {
+  constructor(public navController: NavController) {
   }
 
   submit() {
@@ -175,7 +174,7 @@ class NavigableModal2 {
 class ModalPassData {
   data: any;
 
-  constructor(params: NavParams, private viewCtrl: ViewController, someComponentProvider: SomeComponentProvider, someAppProvider: SomeAppProvider) {
+  constructor(params: NavParams, public viewCtrl: ViewController, someComponentProvider: SomeComponentProvider, someAppProvider: SomeAppProvider) {
     this.data = {
       userId: params.get('userId'),
       name: someComponentProvider.getName()
@@ -245,7 +244,7 @@ class ModalPassData {
 })
 class ToolbarModal {
 
-  constructor(private viewCtrl: ViewController) {}
+  constructor(public viewCtrl: ViewController) {}
 
   dismiss() {
     this.viewCtrl.emit({
@@ -294,7 +293,7 @@ class ToolbarModal {
 class ModalWithInputs {
   data: any;
 
-  constructor(private viewCtrl: ViewController) {
+  constructor(public viewCtrl: ViewController) {
     this.data = {
       title: 'Title',
       note: 'Note',
@@ -374,11 +373,10 @@ class ContactUs {
   `
 })
 class ModalFirstPage {
+  items: any[] = [];
 
-  private items: any[];
-  constructor(private nav: NavController, private app: App, private actionSheetCtrl: ActionSheetController) {
-    this.items = [];
-    for ( let i = 0; i < 50; i++ ) {
+  constructor(public navCtrl: NavController, public app: App, public actionSheetCtrl: ActionSheetController) {
+    for (let i = 0; i < 50; i++) {
       this.items.push({
         value: (i + 1)
       });
@@ -389,11 +387,11 @@ class ModalFirstPage {
     let page = ModalSecondPage;
     let params = { id: 8675309, myData: [1, 2, 3, 4] };
 
-    this.nav.push(page, params);
+    this.navCtrl.push(page, params);
   }
 
   dismiss() {
-    this.app.getRootNav().pop();
+    this.navCtrl.parent.pop();
   }
 
   ionViewLoaded() {
@@ -465,7 +463,7 @@ class ModalFirstPage {
     </ion-header>
     <ion-content padding>
       <p>
-        <button (click)="nav.pop()">Pop (Go back to 1st)</button>
+        <button (click)="navCtrl.pop()">Pop (Go back to 1st)</button>
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
@@ -473,7 +471,7 @@ class ModalFirstPage {
   `
 })
 class ModalSecondPage {
-  constructor(private nav: NavController, params: NavParams) {
+  constructor(public navCtrl: NavController, params: NavParams) {
     console.log('Second page params:', params);
   }
 

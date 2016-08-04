@@ -81,9 +81,15 @@ export class Nav extends NavControllerBase implements AfterViewInit {
       // this Nav has a parent Nav
       parent.registerChildNav(this);
 
-    } else if (app) {
+    } else if (viewCtrl && viewCtrl.getNav()) {
+      // this Nav was opened from a modal
+      this.parent = viewCtrl.getNav();
+      this.parent.registerChildNav(this);
+
+    } else if (app && !app.getRootNav()) {
+      // a root nav has not been registered yet with the app
       // this is the root navcontroller for the entire app
-      this._app.setRootNav(this);
+      app.setRootNav(this);
     }
   }
 
