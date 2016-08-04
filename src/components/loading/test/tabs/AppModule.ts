@@ -58,9 +58,9 @@ export class Page2 {}
   `
 })
 export class TabsPage {
-  private root1 = E2EPage;
-  private root2 = Page2;
-  private root3 = E2EPage;
+ root1 = E2EPage;
+ root2 = Page2;
+ root3 = E2EPage;
 }
 
 @Component({

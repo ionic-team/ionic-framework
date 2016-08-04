@@ -1,7 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { IonicModule, AlertController, LoadingController, NavController } from '../../../dist';
-import { FormBuilder, ControlGroup, Validators } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -62,7 +61,7 @@ export class E2EPage {
   `
 })
 export class AnotherPage {
-  form: ControlGroup;
+  form: FormGroup;
 
   constructor(private nav: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private builder: FormBuilder) {
     this.form = builder.group({
@@ -172,8 +171,7 @@ export class E2EApp {
     AnotherPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp),
-    FormsModule
+    IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [E2EApp],
   entryComponents: [

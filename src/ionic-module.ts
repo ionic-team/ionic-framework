@@ -1,14 +1,14 @@
 import { ApplicationRef, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoot } from './components/app/app-root';
 import { IONIC_DIRECTIVES } from './directives';
 import { ionicProviders } from './providers';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule],
-  exports: [BrowserModule, FormsModule, IONIC_DIRECTIVES],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
+  exports: [BrowserModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES],
   declarations: [IONIC_DIRECTIVES, AppRoot],
   entryComponents: [AppRoot]
 })
