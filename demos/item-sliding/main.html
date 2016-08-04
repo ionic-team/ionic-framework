@@ -2,22 +2,17 @@
 
   <ion-navbar>
     <ion-title>Item Sliding</ion-title>
-    <ion-buttons end>
-      <button (click)="toggleEdit()">{{editButton}}</button>
-    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content class="outer-content" fullscreen>
+<ion-content class="outer-content">
 
-  <ion-list class="chat-sliding-demo" [sliding]="!editing">
+  <ion-list class="chat-sliding-demo">
     <ion-list-header>
       Chats
     </ion-list-header>
-
-    <ion-item-group [reorder]="editing">
 
     <ion-item-sliding *ngFor="let chat of chats" #item>
       <ion-item>
@@ -53,7 +48,6 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-    </ion-item-group>
   </ion-list>
 
   <ion-list class="login-sliding-demo">
@@ -94,34 +88,21 @@
     display: none;
   }
 
-  div.toolbar-background {
-    background-color: rgba(255, 255, 255, 0.65);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
-  }
-
   svg circle {
     stroke: white;
   }
+
   .downloading #download-spinner {
     display: block;
   }
+
   .downloading .download-hide {
     display: none;
   }
+
   .chat-sliding-demo ion-note {
     font-size: 13px;
     margin-top: -8px;
-  }
-
-  .chat-sliding-demo ion-item-options .button-inner {
-    font-size: 14px;
-    flex-direction: column;
-  }
-
-  .chat-sliding-demo ion-item-options ion-icon {
-    padding-right: 0;
-    padding-bottom: 0.3em;
   }
 
   .login-sliding-demo .ion-logo-twitter {
@@ -135,5 +116,4 @@
   .login-sliding-demo .ion-logo-instagram {
     color: #235D8D;
   }
-
 </style>
