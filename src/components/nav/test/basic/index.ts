@@ -46,7 +46,7 @@ class MyCmpTest {}
         <button ion-item [navPush]="FirstPage" [navParams]="{id: 23}">Push w/ [navPush] and [navParams]</button>
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
-        <button ion-item (click)="nav.pop()">Pop</button>
+        <button ion-item (click)="navCtrl.pop()">Pop</button>
         <button ion-item (click)="viewDismiss()">View Dismiss</button>
         <button ion-item (click)="quickPush()">New push during transition</button>
         <button ion-item (click)="quickPop()">New pop during transition</button>
@@ -66,8 +66,8 @@ class FirstPage {
   @ViewChild(Content) content: Content;
 
   constructor(
-    private nav: NavController,
-    private view: ViewController
+    public navCtrl: NavController,
+    public view: ViewController
   ) {
     for (var i = 1; i <= 50; i++) {
       this.pages.push(i);
@@ -79,36 +79,36 @@ class FirstPage {
       { page: PrimaryHeaderPage }
     ];
 
-    this.nav.setPages(items);
+    this.navCtrl.setPages(items);
   }
 
   setRoot() {
-    this.nav.setRoot(PrimaryHeaderPage);
+    this.navCtrl.setRoot(PrimaryHeaderPage);
   }
 
   pushPrimaryHeaderPage() {
-    this.nav.push(PrimaryHeaderPage);
+    this.navCtrl.push(PrimaryHeaderPage);
   }
 
   pushFullPage() {
-    this.nav.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] });
+    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] });
   }
 
   pushAnother() {
-    this.nav.push(AnotherPage);
+    this.navCtrl.push(AnotherPage);
   }
 
   quickPush() {
-    this.nav.push(AnotherPage);
+    this.navCtrl.push(AnotherPage);
     setTimeout(() => {
-      this.nav.push(PrimaryHeaderPage);
+      this.navCtrl.push(PrimaryHeaderPage);
     }, 150);
   }
 
   quickPop() {
-    this.nav.push(AnotherPage);
+    this.navCtrl.push(AnotherPage);
     setTimeout(() => {
-      this.nav.remove(1, 1);
+      this.navCtrl.remove(1, 1);
     }, 250);
   }
 
@@ -135,7 +135,7 @@ class FirstPage {
     <ion-content padding>
       <h1>Full page</h1>
       <p>This page does not have a nav bar!</p>
-      <p><button (click)="nav.pop()">Pop</button></p>
+      <p><button (click)="navCtrl.pop()">Pop</button></p>
       <p><button class="e2eFrom2To3" (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
       <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
       <p><button (click)="pushFirstPage()">Push to FirstPage</button></p>
@@ -147,10 +147,10 @@ class FirstPage {
 })
 class FullPage {
   constructor(
-    private nav: NavController,
-    private app: App,
-    private alertCtrl: AlertController,
-    private params: NavParams
+    public navCtrl: NavController,
+    public app: App,
+    public alertCtrl: AlertController,
+    public params: NavParams
   ) {}
 
   setPages() {
@@ -159,19 +159,19 @@ class FullPage {
       { page: PrimaryHeaderPage }
     ];
 
-    this.nav.setPages(items);
+    this.navCtrl.setPages(items);
   }
 
   pushPrimaryHeaderPage() {
-    this.nav.push(PrimaryHeaderPage);
+    this.navCtrl.push(PrimaryHeaderPage);
   }
 
   pushAnother() {
-    this.nav.push(AnotherPage);
+    this.navCtrl.push(AnotherPage);
   }
 
   pushFirstPage() {
-    this.nav.push(FirstPage);
+    this.navCtrl.push(FirstPage);
   }
 
   presentAlert() {
@@ -182,11 +182,12 @@ class FullPage {
       text: 'Dismiss',
       role: 'cancel',
       handler: () => {
-        // overlays are added and removed from the root navigation
-        // ensure you using the root navigation, and pop this alert
-        // when the alert is done animating out, then pop off the active page
-        this.app.getRootNav().pop().then(() => {
-          this.app.getRootNav().pop();
+        // overlays are added and removed from the app root's portal
+        // in the example below, alert.dismiss() dismisses the alert
+        // from the app root portal, and once it's done transitioning out,
+        // this the active page is popped from the nav
+        alert.dismiss().then(() => {
+          this.navCtrl.pop();
         });
 
         // by default an alert will dismiss itself
@@ -217,11 +218,11 @@ class FullPage {
     </ion-header>
 
     <ion-content padding fullscreen>
-      <p><button class="e2eFrom3To2" (click)="nav.pop()">Pop</button></p>
+      <p><button class="e2eFrom3To2" (click)="navCtrl.pop()">Pop</button></p>
       <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
       <p><button (click)="pushFullPage()">Push to FullPage</button></p>
       <p><button (click)="setRoot()">setRoot(AnotherPage)</button></p>
-      <p><button (click)="nav.popToRoot()">Pop to root</button></p>
+      <p><button (click)="navCtrl.popToRoot()">Pop to root</button></p>
       <p><button id="insert" (click)="insert()">Insert first page into history before this</button></p>
       <p><button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
@@ -243,9 +244,9 @@ class FullPage {
 })
 class PrimaryHeaderPage {
   constructor(
-    private nav: NavController,
-    private alertCtrl: AlertController,
-    private viewCtrl: ViewController
+    public navCtrl: NavController,
+    public alertCtrl: AlertController,
+    public viewCtrl: ViewController
   ) {}
 
   ionViewWillEnter() {
@@ -253,23 +254,23 @@ class PrimaryHeaderPage {
   }
 
   pushAnother() {
-    this.nav.push(AnotherPage);
+    this.navCtrl.push(AnotherPage);
   }
 
   pushFullPage() {
-    this.nav.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] });
+    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] });
   }
 
   insert() {
-    this.nav.insert(2, FirstPage);
+    this.navCtrl.insert(2, FirstPage);
   }
 
   removeSecond() {
-    this.nav.remove(1);
+    this.navCtrl.remove(1);
   }
 
   setRoot() {
-    this.nav.setRoot(AnotherPage);
+    this.navCtrl.setRoot(AnotherPage);
   }
 
   presentAlert() {
@@ -303,7 +304,7 @@ class PrimaryHeaderPage {
         </ion-item>
 
         <ion-item>Back button hidden w/ <code>ion-navbar hideBackButton</code></ion-item>
-        <button ion-item (click)="nav.pop()">Pop</button>
+        <button ion-item (click)="navCtrl.pop()">Pop</button>
         <button ion-item (click)="pushFullPage()">Push to FullPage</button>
         <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
         <button ion-item (click)="pushFirstPage()">Push to FirstPage</button>
@@ -335,26 +336,26 @@ class AnotherPage {
   bbCount = 0;
 
   constructor(
-    private nav: NavController,
-    private viewCtrl: ViewController
+    public navCtrl: NavController,
+    public viewCtrl: ViewController
   ) {
     console.log('Page, AnotherPage, constructor', this.viewCtrl.id);
   }
 
   pushFullPage() {
-    this.nav.push(FullPage);
+    this.navCtrl.push(FullPage);
   }
 
   pushPrimaryHeaderPage() {
-    this.nav.push(PrimaryHeaderPage);
+    this.navCtrl.push(PrimaryHeaderPage);
   }
 
   pushFirstPage() {
-    this.nav.push(FirstPage);
+    this.navCtrl.push(FirstPage);
   }
 
   setRoot() {
-    this.nav.setRoot(FirstPage);
+    this.navCtrl.setRoot(FirstPage);
   }
 
   toggleBackButton() {
