@@ -1,5 +1,5 @@
 import { NgModule, Component } from '@angular/core';
-import { ionicBootstrap, NavController } from '../../../../../src';
+import { IonicModule, NavController } from '../dist';
 
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`,
@@ -7,8 +7,6 @@ import { ionicBootstrap, NavController } from '../../../../../src';
 export class E2EApp {
   root = LandingPage;
 }
-
-ionicBootstrap(E2EApp);
 
 @Component({
   template: `
@@ -27,7 +25,7 @@ ionicBootstrap(E2EApp);
   </ion-content>
   `
 })
-class LandingPage {
+export class LandingPage {
 
   constructor(private nav: NavController) {
   }
@@ -53,7 +51,7 @@ class LandingPage {
   </ion-content>
   `
 })
-class FirstPage {
+export class FirstPage {
   root = SecondPage;
 }
 
@@ -73,7 +71,7 @@ class FirstPage {
   </ion-content>
   `
 })
-class SecondPage {
+export class SecondPage {
   root = ThirdPage;
 }
 
@@ -93,7 +91,7 @@ class SecondPage {
   </ion-content>
   `
 })
-class ThirdPage {
+export class ThirdPage {
   root = FourthPage;
 }
 
@@ -108,7 +106,7 @@ class ThirdPage {
   </ion-content>
   `
 })
-class FourthPage {
+export class FourthPage {
   private items: string[];
 
   ionViewWillEnter() {
@@ -120,27 +118,25 @@ class FourthPage {
   }
 }
 
-
-
 @NgModule({
   declarations: [
     E2EApp,
+    LandingPage,
     FirstPage,
-    AnotherPage,
-    MyCmpTest,
-    FullPage,
-    PrimaryHeaderPage
+    SecondPage,
+    ThirdPage,
+    FourthPage
   ],
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
   entryComponents: [
     E2EApp,
+    LandingPage,
     FirstPage,
-    AnotherPage,
-    MyCmpTest,
-    FullPage,
-    PrimaryHeaderPage
+    SecondPage,
+    ThirdPage,
+    FourthPage
   ]
 })
 export class AppModule {}

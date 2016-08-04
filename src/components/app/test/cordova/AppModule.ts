@@ -1,0 +1,174 @@
+import { Component, NgModule } from '@angular/core';
+import { IonicModule, NavController, ModalController, ViewController } from '../dist';
+import { Injectable } from '@angular/core';
+
+
+@Injectable()
+export class SomeData {
+  constructor() {}
+
+  getData() {
+    return 'SomeData';
+  }
+}
+
+@Injectable()
+export class OtherData {
+  constructor() {}
+
+  getData() {
+    return 'OtherData';
+  }
+}
+
+@Component({
+  template: `
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>This is a modal</ion-title>
+      <ion-buttons left>
+        <button (click)="dismissModal()" class="e2eCordovaCloseModal">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-buttons end>
+        <button>
+          <ion-icon name="funnel"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content padding>
+    <p>The modal toolbar should have status bar padding.</p>
+    <button block (click)="dismissModal()">Close modal</button>
+  </ion-content>
+  `
+})
+export class MyModal {
+  constructor(private viewCtrl: ViewController) {}
+
+  dismissModal() {
+    this.viewCtrl.dismiss();
+  }
+}
+
+
+@Component({
+  templateUrl: 'page1.html'
+})
+export class Page1 {
+  page2 = Page2;
+  sort: string = 'all';
+
+  constructor(private nav: NavController, private someData: SomeData, private otherData: OtherData) {
+    console.log('Got some data from', someData.getData());
+    console.log('Got some data from', otherData.getData());
+  }
+
+  goToTabs() {
+    this.nav.push(TabsPage);
+  }
+}
+
+
+@Component({
+  templateUrl: 'page2.html'
+})
+export class Page2 {
+  page1 = Page1;
+  page3 = Page3;
+
+  constructor(private modalCtrl: ModalController) {}
+
+  openModal() {
+    this.modalCtrl.create(MyModal).present();
+  }
+}
+
+
+@Component({
+  templateUrl: 'page3.html'
+})
+export class Page3 {
+  constructor(private nav: NavController) {}
+
+  goBack() {
+    this.nav.pop();
+  }
+}
+
+
+@Component({
+  template: `
+  <ion-header>
+    <ion-navbar>
+      <ion-title>This is a tab page</ion-title>
+      <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-buttons end>
+        <button>
+          <ion-icon name="funnel"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding>
+    <p>The toolbar should have status bar padding.</p>
+  </ion-content>
+  `
+})
+export class TabPage1 {
+  constructor(private nav: NavController) {}
+}
+
+
+@Component({
+  templateUrl: 'tabs.html'
+})
+export class TabsPage {
+  tab1Root = TabPage1;
+  tab2Root = Page2;
+  tab3Root = Page3;
+
+  constructor(private nav: NavController) {}
+
+  goBack() {
+    this.nav.pop();
+  }
+}
+
+
+@Component({
+  templateUrl: `./app.html`
+})
+export class E2EApp {
+  root = Page1;
+}
+
+
+@NgModule({
+  declarations: [
+    E2EApp,
+    TabsPage,
+    TabPage1,
+    Page1,
+    Page2,
+    Page3
+  ],
+  imports: [
+    IonicModule.forRoot(E2EApp, {
+      statusbarPadding: true
+    })
+  ],
+  providers: [SomeData, OtherData],
+  entryComponents: [
+    E2EApp,
+    TabsPage,
+    TabPage1,
+    Page1,
+    Page2,
+    Page3
+  ]
+})
+export class AppModule {}

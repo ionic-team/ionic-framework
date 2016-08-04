@@ -1,0 +1,88 @@
+import { Component, NgModule } from '@angular/core';
+import { IonicModule, NavController } from '../dist';
+
+
+@Component({
+  template: `
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Root</ion-title>
+      </ion-navbar>
+    </ion-header>
+
+    <ion-content padding>
+      <button block (click)="pushPage()">Push Page</button>
+    </ion-content>`,
+})
+export class FirstPage {
+  constructor(public nav: NavController) {}
+
+  pushPage() {
+    this.nav.push(SecondPage);
+  }
+}
+
+
+@Component({
+  template: `
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Root</ion-title>
+      </ion-navbar>
+    </ion-header>
+
+    <ion-content padding>
+      <h1>Second page</h1>
+      <button block (click)="insertPage()">Insert Page</button>
+    </ion-content>
+  `
+})
+export class SecondPage {
+  constructor(public nav: NavController) {}
+
+  insertPage() {
+    this.nav.insert(1, InsertPage);
+  }
+}
+
+
+@Component({
+  template: `
+    <ion-header>
+      <ion-navbar>
+        <ion-title>Inserted Paged</ion-title>
+      </ion-navbar>
+    </ion-header>
+    <ion-content padding>
+      Inserted Page
+    </ion-content>
+  `
+})
+export class InsertPage {}
+
+
+@Component({
+  template: `<ion-nav [root]="root"></ion-nav>`
+})
+export class E2EApp {
+  root = FirstPage;
+}
+
+@NgModule({
+  declarations: [
+    E2EApp,
+    FirstPage,
+    SecondPage,
+    InsertPage
+  ],
+  imports: [
+    IonicModule.forRoot(E2EApp)
+  ],
+  entryComponents: [
+    E2EApp,
+    FirstPage,
+    SecondPage,
+    InsertPage
+  ]
+})
+export class AppModule {}
