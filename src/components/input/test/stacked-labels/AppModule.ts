@@ -5,7 +5,9 @@ import { IonicModule } from '../../../dist';
 @Component({
   templateUrl: 'main.html'
 })
-export class PageOne {}
+export class PageOne {
+  gender = '';
+}
 
 
 @Component({

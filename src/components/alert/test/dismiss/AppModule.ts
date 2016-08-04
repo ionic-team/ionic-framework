@@ -45,7 +45,7 @@ export class E2EPage {
         <ion-list>
           <ion-item [class.error]="!form.controls.name.valid && form.controls.name.touched">
             <ion-label>Name</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input name="name" type="text"></ion-input>
           </ion-item>
         </ion-list>
         <div padding style="padding-top: 0 !important;">

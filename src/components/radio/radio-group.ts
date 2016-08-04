@@ -62,7 +62,8 @@ export const RADIO_VALUE_ACCESSOR = new Provider(
 @Directive({
   selector: '[radio-group]',
   host: {
-    '[attr.aria-activedescendant]': 'activeId',
+// TODO: ADAM
+//    '[attr.aria-activedescendant]': 'activeId',
     'role': 'radiogroup'
   },
   providers: [RADIO_VALUE_ACCESSOR]

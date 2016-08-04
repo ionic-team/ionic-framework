@@ -11,7 +11,10 @@ export class E2EPage {
 
   login = {
     email: 'help@ionic.io',
-    username: 'admin'
+    username: 'admin',
+    password: '',
+    gender: '',
+    comments: ''
   };
 
   user = {
