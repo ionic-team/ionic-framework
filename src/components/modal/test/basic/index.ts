@@ -101,6 +101,26 @@ class E2EPage {
   presentNavigableModal() {
     this.modalCtrl.create(NavigableModal).present();
   }
+
+  ionViewLoaded() {
+    console.log('E2EPage ionViewLoaded fired');
+  }
+
+  ionViewWillEnter() {
+    console.log('E2EPage ionViewWillEnter fired');
+  }
+
+  ionViewDidEnter() {
+    console.log('E2EPage ionViewDidEnter fired');
+  }
+
+  ionViewWillLeave() {
+    console.log('E2EPage ionViewWillLeave fired');
+  }
+
+  ionViewDidLeave() {
+    console.log('E2EPage ionViewDidLeave fired');
+  }
 }
 
 @Component({

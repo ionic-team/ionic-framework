@@ -22,7 +22,7 @@ class AnotherPage {}
 })
 class E2EPage {
 
-  constructor(private toastCtrl: ToastController, private nav: NavController) { }
+  constructor(public toastCtrl: ToastController, public navCtrl: NavController) { }
 
   showToast() {
     const toast = this.toastCtrl.create({
@@ -36,7 +36,7 @@ class E2EPage {
     toast.present();
 
     setTimeout(() => {
-      this.nav.push(AnotherPage);
+      this.navCtrl.push(AnotherPage);
     }, 1000);
 
     setTimeout(() => {

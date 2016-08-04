@@ -6,7 +6,7 @@ import { ionicBootstrap, MenuController, NavController, AlertController, Nav } f
   templateUrl: 'page1.html'
 })
 class Page1 {
-  constructor(private nav: NavController, private alertCtrl: AlertController) {}
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {}
 
   presentAlert() {
     let alert = this.alertCtrl.create({
@@ -19,7 +19,7 @@ class Page1 {
   }
 
   goToPage2() {
-    this.nav.push(Page2);
+    this.navCtrl.push(Page2);
   }
 }
 
@@ -30,10 +30,10 @@ class Page3 {}
 
 @Component({templateUrl: 'page2.html'})
 class Page2 {
-  constructor(private nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   page3() {
-    this.nav.push(Page3);
+    this.navCtrl.push(Page3);
   }
 }
 
@@ -47,7 +47,7 @@ class E2EPage {
   pages: Array<{title: string, component: any}>;
   @ViewChild(Nav) nav: Nav;
 
-  constructor(private menu: MenuController) {
+  constructor(public menuCtrl: MenuController) {
     this.rootPage = Page1;
 
     this.pages = [
@@ -63,16 +63,16 @@ class E2EPage {
     this.nav.setRoot(page.component).then(() => {
       // wait for the root page to be completely loaded
       // then close the menu
-      this.menu.close();
+      this.menuCtrl.close();
     });
   }
 
   openRightMenu() {
-    this.menu.open('right');
+    this.menuCtrl.open('right');
   }
 
   openLeftMenu() {
-    this.menu.open('left');
+    this.menuCtrl.open('left');
   }
 
   onDrag(ev: any) {

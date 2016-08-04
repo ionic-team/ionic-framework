@@ -6,7 +6,7 @@ import { ionicBootstrap, LoadingController, NavController } from '../../../../..
   templateUrl: 'main.html'
 })
 class E2EPage {
-  constructor(private loadingCtrl: LoadingController, private nav: NavController) {}
+  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController) {}
 
   presentLoading() {
     let loading = this.loadingCtrl.create({
@@ -26,7 +26,7 @@ class E2EPage {
     loading.present();
 
     setTimeout(() => {
-      this.nav.push(Page2);
+      this.navCtrl.push(Page2);
 
       setTimeout(() => {
         loading.dismiss();

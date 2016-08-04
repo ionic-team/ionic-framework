@@ -17,10 +17,10 @@ import { Config, Nav, App } from '../../../../../src';
   `
 })
 export class Login {
-  constructor(private nav: NavController, private app: App) {}
+  constructor(public navCtrl: NavController, public app: App) {}
 
   goToAccount() {
-    this.nav.push(Account);
+    this.navCtrl.push(Account);
   }
 
   goBack() {
@@ -63,23 +63,23 @@ export class Account {
 
   root = Dashboard;
 
-  constructor(private menu: MenuController, private app: App) {}
+  constructor(public menuCtrl: MenuController, public app: App) {}
 
   goToProfile() {
     this.accountNav.setRoot(Profile).then(() => {
-      this.menu.close();
+      this.menuCtrl.close();
     });
   }
 
   goToDashboard() {
     this.accountNav.setRoot(Dashboard).then(() => {
-      this.menu.close();
+      this.menuCtrl.close();
     });
   }
 
   logOut() {
     this.accountNav.setRoot(Login, null, { animate: true }).then(() => {
-      this.menu.close();
+      this.menuCtrl.close();
     });
   }
 
@@ -107,14 +107,14 @@ export class Account {
   `
 })
 export class Dashboard {
-  constructor(private nav: NavController, private app: App) {}
+  constructor(public navCtrl: NavController, public app: App) {}
 
   goToProfile() {
-    this.nav.push(Profile);
+    this.navCtrl.push(Profile);
   }
 
   logOut() {
-    this.nav.parent.setRoot(Login, null, {
+    this.navCtrl.parent.setRoot(Login, null, {
       animate: true,
       direction: 'back'
     });
@@ -144,14 +144,14 @@ export class Dashboard {
   `
 })
 export class Profile {
-  constructor(private nav: NavController, private app: App) {}
+  constructor(public navCtrl: NavController, public app: App) {}
 
   goToDashboard() {
-    this.nav.push(Dashboard);
+    this.navCtrl.push(Dashboard);
   }
 
   logOut() {
-    this.nav.parent.setRoot(Login, null, {
+    this.navCtrl.parent.setRoot(Login, null, {
       animate: true,
       direction: 'back'
     });

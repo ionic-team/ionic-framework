@@ -11,7 +11,7 @@ class IntroPage {
   mySlideOptions: any;
   showSlide: boolean = true;
 
-  constructor(private nav: NavController) {
+  constructor(public navCtrl: NavController) {
     this.mySlideOptions = {
       paginationClickable: true,
       lazyLoading: true,
@@ -38,7 +38,7 @@ class IntroPage {
   }
 
   skip() {
-    this.nav.push(MainPage);
+    this.navCtrl.push(MainPage);
   }
 }
 

@@ -29,11 +29,11 @@ ionicBootstrap(E2EApp);
 })
 class LandingPage {
 
-  constructor(private nav: NavController) {
+  constructor(public navCtrl: NavController) {
   }
 
   goToPage() {
-    this.nav.push(FirstPage);
+    this.navCtrl.push(FirstPage);
   }
 }
 

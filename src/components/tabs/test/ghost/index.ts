@@ -17,9 +17,7 @@ import { ionicBootstrap, NavController, Tab } from '../../../../../src';
     </ion-content>
     `
 })
-class Tab1 {
-  constructor(public nav: NavController) {}
-}
+class Tab1 {}
 
 //
 // Tab 2
@@ -36,9 +34,7 @@ class Tab1 {
     </ion-content>
     `
 })
-class Tab2 {
-  constructor(public nav: NavController) {}
-}
+class Tab2 {}
 
 //
 // Tab 3
@@ -58,9 +54,7 @@ class Tab2 {
     </ion-content>
     `
 })
-class Tab3 {
-  constructor(public nav: NavController) {}
-}
+class Tab3 {}
 
 //
 // Tab 3
@@ -80,9 +74,7 @@ class Tab3 {
     </ion-content>
     `
 })
-class QuesaritoPage {
-  constructor(public nav: NavController) {}
-}
+class QuesaritoPage {}
 
 @Component({
   template: `

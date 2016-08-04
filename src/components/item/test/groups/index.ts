@@ -11,14 +11,14 @@ import { ionicBootstrap, NavController, NavParams } from '../../../../../src';
     </ion-header>
     <ion-content padding>
       <p>{{session.description}}</p>
-      <p><button (click)="nav.pop()">Go Back</button></p>
+      <p><button (click)="navCtrl.pop()">Go Back</button></p>
     </ion-content>
   `
 })
 class SessionDetail {
   session: any;
 
-  constructor(params: NavParams, public nav: NavController) {
+  constructor(params: NavParams, public navCtrl: NavController) {
     this.session = params.data;
   }
 }
@@ -30,14 +30,14 @@ class SessionDetail {
 class SessionList {
   data = data;
 
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   addFavorite(timeSlot: any, session: any, slidingItem: any) {
     console.error('addFavorite', timeSlot, session, slidingItem);
   }
 
   openSession(session: any) {
-    this.nav.push(SessionDetail, session);
+    this.navCtrl.push(SessionDetail, session);
   }
 
   reload() {

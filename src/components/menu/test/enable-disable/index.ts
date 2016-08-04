@@ -26,29 +26,29 @@ class E2EApp {
   page2 = Page2;
   rootPage = Page1;
 
-  constructor(private app: App, private menu: MenuController) {
+  constructor(public app: App, public menuCtrl: MenuController) {
     this.menu1Active();
   }
 
-  openPage(p) {
+  openPage(p: any) {
     // Get the <ion-nav> by id
     this.nav.setRoot(p);
   }
 
   menu1Active() {
-    this.menu.enable(true, 'menu1');
-    this.menu.enable(false, 'menu2');
-    this.menu.enable(false, 'menu3');
+    this.menuCtrl.enable(true, 'menu1');
+    this.menuCtrl.enable(false, 'menu2');
+    this.menuCtrl.enable(false, 'menu3');
   }
   menu2Active() {
-    this.menu.enable(false, 'menu1');
-    this.menu.enable(true, 'menu2');
-    this.menu.enable(false, 'menu3');
+    this.menuCtrl.enable(false, 'menu1');
+    this.menuCtrl.enable(true, 'menu2');
+    this.menuCtrl.enable(false, 'menu3');
   }
   menu3Active() {
-    this.menu.enable(false, 'menu1');
-    this.menu.enable(false, 'menu2');
-    this.menu.enable(true, 'menu3');
+    this.menuCtrl.enable(false, 'menu1');
+    this.menuCtrl.enable(false, 'menu2');
+    this.menuCtrl.enable(true, 'menu3');
   }
 }
 

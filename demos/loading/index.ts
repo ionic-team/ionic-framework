@@ -7,7 +7,7 @@ import { ionicBootstrap, LoadingController, NavController } from 'ionic-angular'
   templateUrl: 'main.html'
 })
 class Page1 {
-  constructor(private loadingCtrl: LoadingController, private nav: NavController) {}
+  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController) {}
 
   presentLoadingIos() {
     let loading = this.loadingCtrl.create({
@@ -100,7 +100,7 @@ class Page1 {
     loading.present();
 
     setTimeout(() => {
-      this.nav.push(Page2);
+      this.navCtrl.push(Page2);
     }, 1000);
 
     setTimeout(() => {

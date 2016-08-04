@@ -156,10 +156,10 @@ import { GestureController } from '../../gestures/gesture-controller';
  *
  * @Component({...})
  * export class MyPage {
- *  constructor(private menu: MenuController) {}
+ *  constructor(public menuCtrl: MenuController) {}
  *
  *  openMenu() {
- *    this.menu.open();
+ *    this.menuCtrl.open();
  *  }
  * }
  * ```

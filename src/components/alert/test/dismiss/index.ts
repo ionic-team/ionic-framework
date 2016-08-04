@@ -8,7 +8,7 @@ import { FormBuilder, ControlGroup, Validators } from '@angular/common';
 })
 export class E2EPage {
 
-  constructor(private alertCtrl: AlertController, private nav: NavController) {}
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController) {}
 
   submit() {
     var alert = this.alertCtrl.create({
@@ -26,7 +26,7 @@ export class E2EPage {
 
     alert.onDidDismiss(() => {
       console.log('dismiss');
-      this.nav.push(AnotherPage);
+      this.navCtrl.push(AnotherPage);
     });
 
     alert.present();
@@ -63,7 +63,7 @@ export class E2EPage {
 class AnotherPage {
   form: ControlGroup;
 
-  constructor(private nav: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private builder: FormBuilder) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public builder: FormBuilder) {
     this.form = builder.group({
       name: builder.control('', Validators.compose([
         Validators.required,
@@ -98,7 +98,7 @@ class AnotherPage {
           role: 'cancel',
           handler: () => {
             alert.dismiss().then(() => {
-              this.nav.pop();
+              this.navCtrl.pop();
             });
             return false;
           }
@@ -137,7 +137,7 @@ class AnotherPage {
             alert.dismiss().then(() => {
               // after the alert has been dismissed
               // then you can do another nav transition
-              this.nav.pop();
+              this.navCtrl.pop();
             });
           }, 100);
 

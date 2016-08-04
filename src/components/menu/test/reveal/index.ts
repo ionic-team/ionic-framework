@@ -14,7 +14,7 @@ class E2EApp {
 
   rootView = Page1;
 
-  openPage(menu, page) {
+  openPage(menu: any, page: any) {
     // close the menu when clicking a link from the menu
     menu.close();
 

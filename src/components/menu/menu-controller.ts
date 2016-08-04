@@ -40,20 +40,20 @@ import { Platform } from '../../platform/platform';
  * @Component({...})
  * export class MyPage {
  *
- *  constructor(private menu: MenuController) {
+ *  constructor(public menuCtrl: MenuController) {
  *
  *  }
  *
  *  openMenu() {
- *    this.menu.open();
+ *    this.menuCtrl.open();
  *  }
  *
  *  closeMenu() {
- *    this.menu.close();
+ *    this.menuCtrl.close();
  *  }
  *
  *  toggleMenu() {
- *    this.menu.toggle();
+ *    this.menuCtrl.toggle();
  *  }
  *
  * }

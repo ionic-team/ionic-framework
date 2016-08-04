@@ -9,10 +9,10 @@ var PAGE_NUM = 2;
   templateUrl: 'main.html'
 })
 export class ApiDemoPage {
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   push() {
-    this.nav.push(PushPage);
+    this.navCtrl.push(PushPage);
   }
 }
 
@@ -22,18 +22,18 @@ export class ApiDemoPage {
 export class PushPage {
   pageNum = PAGE_NUM;
 
-  constructor(private nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   push() {
     PAGE_NUM++;
-    this.nav.push(PushPage);
+    this.navCtrl.push(PushPage);
   }
 
   pop() {
     if (PAGE_NUM > 2) {
       PAGE_NUM--;
     }
-    this.nav.pop();
+    this.navCtrl.pop();
   }
 }
 

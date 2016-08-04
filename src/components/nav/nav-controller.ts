@@ -71,7 +71,7 @@ import { ViewController } from './view-controller';
  *  import { NavController } from 'ionic-angular';
  *
  *  class MyComponent {
- *    constructor(private nav: NavController) {
+ *    constructor(public navCtrl: NavController) {
  *
  *    }
  *  }
@@ -148,14 +148,14 @@ import { ViewController } from './view-controller';
  *    `
  * })
  * export class StartPage {
- *   constructor(private nav: NavController) {
+ *   constructor(public navCtrl: NavController) {
  *   }
  *
  *   pushPage(){
  *     // push another page on to the navigation stack
  *     // causing the nav controller to transition to the new page
  *     // optional data can also be passed to the pushed page.
- *     this.nav.push(OtherPage, {
+ *     this.navCtrl.push(OtherPage, {
  *       id: "123",
  *       name: "Carl"
  *     });
