@@ -63,13 +63,29 @@ import { RadioGroup } from './radio-group';
   encapsulation: ViewEncapsulation.None,
 })
 export class RadioButton implements OnDestroy, OnInit {
+
+  /**
+   * @internal
+   */
   _checked: boolean = false;
+
+  /**
+   * @internal
+   */
   _disabled: boolean = false;
+
+  /**
+   * @internal
+   */
   _labelId: string;
+
+  /**
+   * @internal
+   */
   _value: any = null;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
@@ -107,7 +123,6 @@ export class RadioButton implements OnDestroy, OnInit {
     // if the value is not defined then use it's unique id
     return isBlank(this._value) ? this.id : this._value;
   }
-
   set value(val: any) {
     this._value = val;
   }
@@ -135,14 +150,13 @@ export class RadioButton implements OnDestroy, OnInit {
   get disabled(): boolean {
     return this._disabled;
   }
-
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-radio-disabled', this._disabled);
   }
 
   /**
-   * @private
+   * @internal
    */
   @HostListener('click', ['$event'])
   _click(ev: UIEvent) {
@@ -155,7 +169,7 @@ export class RadioButton implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     if (this._group && isPresent(this._group.value)) {
@@ -164,7 +178,7 @@ export class RadioButton implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._form.deregister(this);
