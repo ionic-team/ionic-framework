@@ -34,7 +34,6 @@
     "@angular/http": "github:angular/http-builds",
     "@angular/platform-browser": "github:angular/platform-browser-builds",
     "@angular/platform-browser-dynamic": "github:angular/platform-browser-dynamic-builds",
-    "@angular/router": "github:angular/router-builds",
     "@angular/tsc-wrapped": "github:angular/tsc-wrapped-builds",
     "colors": "^1.1.2",
     "es6-shim": "^0.35.0",
