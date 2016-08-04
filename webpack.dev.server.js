@@ -1,6 +1,8 @@
 var WebpackDevServer = require("webpack-dev-server");
 var webpack = require("webpack");
 var path = require("path");
+var express = require("express");
+//var app = express();
 
 function clearConsole() {
   process.stdout.write('\x1bc');
@@ -12,8 +14,7 @@ var compiler = webpack({
     vendor: './scripts/e2e/vendor',
     polyfills: './scripts/e2e/polyfills',
     navBasic: [
-      './test/index',
-      require.resolve('webpack-dev-server/client') + '?/'
+      './test/index'
     ]
   },
 
@@ -31,8 +32,8 @@ var compiler = webpack({
   }
 });
 
-
-var server = new WebpackDevServer(compiler, {
+//app.use(webpackDevMiddleware(compiler, {
+var app = new WebpackDevServer(compiler, {
 	historyApiFallback: true,
 	hot: true, // Note: only CSS is currently hot reloaded
 	publicPath: '/',
@@ -40,7 +41,9 @@ var server = new WebpackDevServer(compiler, {
 	watchOptions: {
 		ignored: /node_modules/
 	}
-}).listen(8080, function(err, result) {
+});
+
+app.listen(8080, function(err, result) {
 	if (err) {
 		return console.log(err);
 	}
