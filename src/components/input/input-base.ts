@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
@@ -29,14 +29,9 @@ export class InputBase {
   _autoComplete: string;
   _autoCorrect: string;
   _nav: NavControllerBase;
+  _native: NativeInput;
 
   inputControl: NgControl;
-
-  @Input() clearInput: any;
-  @Input() placeholder: string = '';
-  @ViewChild(NativeInput) protected _native: NativeInput;
-  @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
-  @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 
   constructor(
     config: Config,
@@ -70,11 +65,6 @@ export class InputBase {
     if (this._item) {
       this._item.setCssClass('item-input', true);
       this._item.registerInput(this._type);
-    }
-
-    let clearInput = this.clearInput;
-    if (typeof clearInput === 'string') {
-      this.clearInput = (clearInput === '' || clearInput === 'true');
     }
   }
 
@@ -137,22 +127,12 @@ export class InputBase {
     this._form.deregister(this);
   }
 
-  @Input()
-  get value() {
-    return this._value;
-  }
-
-  set value(val: any) {
+  setValue(val: any) {
     this._value = val;
     this.checkHasValue(val);
   }
 
-  @Input()
-  get type() {
-    return this._type;
-  }
-
-  set type(val) {
+  setType(val: string) {
     this._type = 'text';
 
     if (val) {
@@ -164,12 +144,7 @@ export class InputBase {
     }
   }
 
-  @Input()
-  get disabled() {
-    return this._disabled;
-  }
-
-  set disabled(val) {
+  setDisabled(val: boolean) {
     this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-input-disabled', this._disabled);
     this._native && this._native.isDisabled(this._disabled);
@@ -178,8 +153,7 @@ export class InputBase {
   /**
    * @private
    */
-  @ViewChild(NativeInput)
-  set _nativeInput(nativeInput: NativeInput) {
+  setNativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
 
     if (this._item && this._item.labelId !== null) {
@@ -200,7 +174,7 @@ export class InputBase {
     });
 
     this.checkHasValue(nativeInput.getValue());
-    this.disabled = this._disabled;
+    this.setDisabled(this._disabled);
 
     var ionInputEle: HTMLElement = this._elementRef.nativeElement;
     let nativeInputEle: HTMLElement = nativeInput.element();
@@ -245,8 +219,7 @@ export class InputBase {
   /**
    * @private
    */
-  @ViewChild(NextInput)
-  set _nextInput(nextInput: NextInput) {
+  setNextInput(nextInput: NextInput) {
     if (nextInput) {
       nextInput.focused.subscribe(() => {
         this._form.tabFocus(this);

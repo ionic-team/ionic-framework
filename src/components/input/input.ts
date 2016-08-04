@@ -1,4 +1,4 @@
-import { Component, Optional, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Optional, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgControl, NgModel } from '@angular/forms';
 
 import { App } from '../app/app';
@@ -6,6 +6,7 @@ import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { Form } from '../../util/form';
 import { InputBase } from './input-base';
+import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { Label } from '../label/label';
 import { NativeInput, NextInput } from './native-input';
@@ -84,6 +85,7 @@ import { Platform } from '../../platform/platform';
   encapsulation: ViewEncapsulation.None,
 })
 export class TextInput extends InputBase {
+
   constructor(
     config: Config,
     form: Form,
@@ -99,21 +101,101 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @private
+   * @internal
+   */
+  _clearInput: boolean = false;
+
+  /**
+   * @internal
+   */
+  @Input() placeholder: string = '';
+
+  /**
+   * @internal
+   */
+  @Input()
+  get clearInput() {
+    return this._clearInput;
+  }
+  set clearInput(val: any) {
+    this._clearInput = isTrueProperty(val);
+  }
+
+  /**
+   * @internal
+   */
+  @Input()
+  get value() {
+    return this._value
+  }
+  set value(val: any) {
+    super.setValue(val);
+  }
+
+  /**
+   * @internal
+   */
+  @Input()
+  get type() {
+    return this._type;
+  }
+  set type(val: any) {
+    super.setType(val);
+  }
+
+  /**
+   * @internal
+   */
+  @Input()
+  get disabled() {
+    return this._disabled;
+  }
+  set disabled(val: any) {
+    super.setDisabled(val);
+  }
+
+  /**
+   * @internal
+   */
+  @ViewChild(NativeInput)
+  set _nativeInput(nativeInput: NativeInput) {
+    super.setNativeInput(nativeInput);
+  }
+
+  /**
+   * @internal
+   */
+  @ViewChild(NextInput)
+  set _nextInput(nextInput: NextInput) {
+    super.setNextInput(nextInput);
+  }
+
+  /**
+   * @internal
+   */
+  @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
+   * @internal
+   */
+  @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
+   * @internal
    */
   inputBlurred(ev: UIEvent) {
     this.blur.emit(ev);
   }
 
   /**
-   * @private
+   * @internal
    */
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);
   }
 
   /**
-   * @private
+   * @internal
    */
   clearTextInput() {
     console.debug('Should clear input');
@@ -192,7 +274,71 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
+   * @internal
+   */
+  @Input() placeholder: string = '';
+
+  /**
+   * @internal
+   */
+  @Input()
+  get value() {
+    return this._value
+  }
+  set value(val: any) {
+    super.setValue(val);
+  }
+
+  /**
+   * @internal
+   */
+  @Input()
+  get type() {
+    return this._type;
+  }
+  set type(val: any) {
+    super.setType(val);
+  }
+
+  /**
+   * @internal
+   */
+  @Input()
+  get disabled() {
+    return this._disabled;
+  }
+  set disabled(val: any) {
+    super.setDisabled(val);
+  }
+
+  /**
+   * @internal
+   */
+  @ViewChild(NativeInput)
+  set _nativeInput(nativeInput: NativeInput) {
+    super.setNativeInput(nativeInput);
+  }
+
+  /**
+   * @internal
+   */
+  @ViewChild(NextInput)
+  set _nextInput(nextInput: NextInput) {
+    super.setNextInput(nextInput);
+  }
+
+  /**
+   * @internal
+   */
+  @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
+   * @internal
+   */
+  @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
+   * @internal
    */
   ngOnInit() {
     super.ngOnInit();
@@ -202,14 +348,14 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   inputBlurred(ev: UIEvent) {
     this.blur.emit(ev);
   }
 
   /**
-   * @private
+   * @internal
    */
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);
