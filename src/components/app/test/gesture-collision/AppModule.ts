@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicModule, MenuController, NavController, AlertController, Nav, Refresher } from '../dist';
+import { IonicModule, MenuController, NavController, AlertController, Nav, Refresher } from '../../../dist';
 
 
 @Component({
@@ -71,14 +71,16 @@ export class E2EApp {
 @NgModule({
   declarations: [
     E2EApp,
-    E2EPage
+    E2EPage,
+    Page1
   ],
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
   entryComponents: [
     E2EApp,
-    E2EPage
+    E2EPage,
+    Page1
   ]
 })
 export class AppModule {}

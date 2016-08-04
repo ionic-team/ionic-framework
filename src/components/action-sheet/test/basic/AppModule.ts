@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicModule, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../dist';
+import { IonicModule, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../../../dist';
 
 
 @Component({
@@ -193,8 +193,8 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
+  bootstrap: [E2EApp],
   entryComponents: [
-    E2EApp,
     E2EPage,
     ModalPage
   ]

@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IonicModule, Checkbox } from '../dist';
+import { IonicModule, Checkbox } from '../../../dist';
 
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { IonicModule, PickerController } from '../dist';
+import { IonicModule, PickerController } from '../../../dist';
 
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicModule, Range } from '../dist';
+import { IonicModule, Range } from '../../../dist';
 
 
 @Component({

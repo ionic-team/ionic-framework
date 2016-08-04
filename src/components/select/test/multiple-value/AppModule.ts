@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IonicModule } from '../dist';
+import { IonicModule } from '../../../dist';
 
 
 @Component({

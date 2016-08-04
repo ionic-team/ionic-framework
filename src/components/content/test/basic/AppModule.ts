@@ -1,5 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { Content, IonicModule } from '../dist';
+import { Content, IonicModule } from '../../../dist';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -71,6 +71,7 @@ export class E2EApp {
   declarations: [
     E2EApp,
     E2EPage,
+    TabsPage,
     Page1,
     Page2,
     Page3,
@@ -82,6 +83,7 @@ export class E2EApp {
   entryComponents: [
     E2EApp,
     E2EPage,
+    TabsPage,
     Page1,
     Page2,
     Page3,

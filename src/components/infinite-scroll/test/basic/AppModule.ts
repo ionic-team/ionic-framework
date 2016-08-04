@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicModule, InfiniteScroll, NavController } from '../dist';
+import { IonicModule, InfiniteScroll, NavController } from '../../../dist';
 
 
 @Component({

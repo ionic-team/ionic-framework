@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicModule, NavController, MenuController, Config, Nav, App } from '../dist';
+import { IonicModule, NavController, MenuController, Config, Nav, App } from '../../../dist';
 
 
 @Component({
@@ -165,7 +165,7 @@ export class Profile {
 @Component({
   template: `<ion-nav [root]="rootPage" swipeBackEnabled="false"></ion-nav>`
 })
-class E2EApp {
+export class E2EApp {
   rootPage = Login;
 }
 
@@ -180,8 +180,8 @@ class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
+  bootstrap: [E2EApp],
   entryComponents: [
-    E2EApp,
     Login,
     Account,
     Dashboard,

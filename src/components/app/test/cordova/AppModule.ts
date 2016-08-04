@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicModule, NavController, ModalController, ViewController } from '../dist';
+import { IonicModule, NavController, ModalController, ViewController } from '../../../dist';
 import { Injectable } from '@angular/core';
 
 
@@ -154,7 +154,8 @@ export class E2EApp {
     TabPage1,
     Page1,
     Page2,
-    Page3
+    Page3,
+    MyModal
   ],
   imports: [
     IonicModule.forRoot(E2EApp, {
@@ -168,7 +169,8 @@ export class E2EApp {
     TabPage1,
     Page1,
     Page2,
-    Page3
+    Page3,
+    MyModal
   ]
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { IonicModule, SegmentButton } from '../dist';
+import { IonicModule, SegmentButton } from '../../../dist';
 
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, NgModule } from '@angular/core';
-import { IonicModule } from '../dist';
+import { IonicModule } from '../../../dist';
 
 
 @Component({

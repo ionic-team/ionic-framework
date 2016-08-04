@@ -22,8 +22,7 @@
   "scripts": {
     "test": "gulp karma",
     "test:generators": "jasmine-node ./tooling/spec",
-    "link": "npm install && gulp src && npm link",
-    "ngc": "ngc -p ngcConfig.json && cp src/components/slides/swiper-widget.es2015.js dist/components/slides/swiper-widget.js"
+    "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
     "@angular/common": "github:angular/common-builds",

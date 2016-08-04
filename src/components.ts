@@ -60,4 +60,5 @@ export { Toast, ToastController } from './components/toast/toast';
 export { ToastOptions } from './components/toast/toast-options';
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar, ToolbarBase, Header, Footer } from './components/toolbar/toolbar';
+export { ToolbarTitle } from'./components/toolbar/toolbar-title';
 export { VirtualScroll } from './components/virtual-scroll/virtual-scroll';

@@ -1,16 +1,16 @@
 import { Component, NgModule } from '@angular/core';
-import { ionicBootstrap, IonicModule } from '../dist';
+import { ionicBootstrap, IonicModule } from '../../../dist';
 
 
 @Component({
   templateUrl: 'main.html'
 })
-class E2EPage {}
+export class E2EPage {}
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
-class E2EApp {
+export class E2EApp {
   rootPage = E2EPage;
 }
 

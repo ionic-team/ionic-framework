@@ -1,0 +1,20 @@
+{
+  "devtool": "eval",
+  "entry": {
+    "vendor.bundle": "./scripts/e2e/vendor",
+    "polyfills.bundle": "./scripts/e2e/polyfills"
+  },
+
+  "output": {
+    "path": "/",
+    "filename": "[name].js",
+    "sourceMapFilename": "[name].map",
+    "chunkFilename": "[id].chunk.js",
+    "publicPath": "/"
+  },
+
+  "resolve": {
+    "extensions": ["", ".js", ".json"],
+    "mainFields": ["main", "browser"]
+  }
+}

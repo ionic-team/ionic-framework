@@ -1,11 +1,11 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicModule, App } from '../dist';
+import { IonicModule, App } from '../../../dist';
 
 
 @Component({
   templateUrl: 'main.html'
 })
-class E2EApp {
+export class E2EApp {
   constructor(app: App) {
     app.setTitle('Basic Buttons');
   }

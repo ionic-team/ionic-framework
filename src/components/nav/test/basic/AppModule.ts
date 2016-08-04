@@ -1,8 +1,8 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { NavController, AlertController, Content } from '../dist';
-import { App, IonicModule } from '../dist';
-import { NavParams, ViewController } from '../dist';
+import { NavController, AlertController, Content,
+  App, IonicModule,
+  NavParams, ViewController } from '../../../dist';
 
 @Component({
   selector: 'my-cmp',

@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { IonicModule } from '../dist';
+import { IonicModule } from '../../../dist';
 
 @Component({template: 'hi'})
 export class E2EPage {}

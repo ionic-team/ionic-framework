@@ -3,7 +3,7 @@ import { Component, Injectable, NgModule } from '@angular/core';
 import { ActionSheetController, App, Config,
   IonicModule, ModalController, NavController,
   NavParams, PageTransition, Platform,
-  TransitionOptions, ViewController } from '../dist';
+  TransitionOptions, ViewController } from '../../../dist';
 
 
 @Injectable()
@@ -510,7 +510,9 @@ export class E2EApp {
     ModalWithInputs,
     ContactUs,
     NavigableModal,
-    NavigableModal2
+    NavigableModal2,
+    ModalPassData,
+    ToolbarModal
   ],
   imports: [
     IonicModule.forRoot(E2EApp)
@@ -524,7 +526,9 @@ export class E2EApp {
     ModalWithInputs,
     ContactUs,
     NavigableModal,
-    NavigableModal2
+    NavigableModal2,
+    ModalPassData,
+    ToolbarModal
   ]
 })
 export class AppModule {}
