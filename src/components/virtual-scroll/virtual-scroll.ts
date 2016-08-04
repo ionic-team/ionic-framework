@@ -172,10 +172,10 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _eventAssist: boolean;
   _queue: number = null;
 
-  @ContentChild(VirtualItem) private _itmTmp: VirtualItem;
-  @ContentChild(VirtualHeader) private _hdrTmp: VirtualHeader;
-  @ContentChild(VirtualFooter) private _ftrTmp: VirtualFooter;
-  @ContentChildren(Img) private _imgs: QueryList<Img>;
+  @ContentChild(VirtualItem) _itmTmp: VirtualItem;
+  @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
+  @ContentChild(VirtualFooter) _ftrTmp: VirtualFooter;
+  @ContentChildren(Img) _imgs: QueryList<Img>;
 
   /**
    * @input {array} The data that builds the templates within the virtual scroll.

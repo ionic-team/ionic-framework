@@ -1,6 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { IonicModule, AlertController, LoadingController, NavController } from '../../../dist';
 import { FormBuilder, ControlGroup, Validators } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class E2EPage {
         <ion-list>
           <ion-item [class.error]="!form.controls.name.valid && form.controls.name.touched">
             <ion-label>Name</ion-label>
-            <ion-input type="text" [(formControl)]="form.controls.name"></ion-input>
+            <ion-input type="text"></ion-input>
           </ion-item>
         </ion-list>
         <div padding style="padding-top: 0 !important;">
@@ -171,7 +172,8 @@ export class E2EApp {
     AnotherPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp),
+    FormsModule
   ],
   bootstrap: [E2EApp],
   entryComponents: [

@@ -45,7 +45,7 @@ export class RangeKnob implements OnInit {
 
   @Input() upper: boolean;
 
-  constructor(@Inject(forwardRef(() => Range)) private range: Range) {}
+  constructor(@Inject(forwardRef(() => Range)) public range: Range) {}
 
   get ratio(): number {
     return this._ratio;

@@ -107,7 +107,7 @@ export class ThirdPage {
   `
 })
 export class FourthPage {
-  private items: string[];
+  items: string[];
 
   ionViewWillEnter() {
     let items: string[] = [];

@@ -232,7 +232,7 @@ export class ItemSliding {
   }
 
   @ContentChildren(ItemOptions)
-  private set _itemOptions(itemOptions: QueryList<ItemOptions>) {
+  set _itemOptions(itemOptions: QueryList<ItemOptions>) {
     let sides = 0;
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();

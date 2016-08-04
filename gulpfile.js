@@ -1,6 +1,7 @@
 var buildConfig = require('./scripts/build/config');
 var gulp = require('gulp');
 var glob = require('glob');
+var fs = require('fs');
 var path = require('path');
 var argv = require('yargs').argv;
 var del = require('del');
@@ -247,11 +248,14 @@ gulp.task('e2e.pre-transpile', function(done) {
     });
 
     testNgcConfig.files = directories.reduce(function(endArray, dir) {
-      return endArray.concat([
-        path.join(dir, 'index.ts'),
-        path.join(dir, 'AppModule.ts')
-      ]);
-    }, testNgcConfig.files || []);
+        return endArray.concat([
+          path.join(dir, 'index.ts'),
+          path.join(dir, 'AppModule.ts')
+        ]);
+      }, testNgcConfig.files || [])
+      .filter(function(item, pos, self) {
+        return self.indexOf(item) === pos;
+      })
 
     webpackServerConfig.entry = directories.reduce(function(endObj, dir) {
       var indexFile = path.join(dir, 'index');

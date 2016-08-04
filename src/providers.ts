@@ -1,5 +1,4 @@
 import { ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
-import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { HTTP_PROVIDERS } from '@angular/http';
 
 import { ActionSheetController } from './components/action-sheet/action-sheet';
@@ -52,11 +51,9 @@ export function ionicProviders(userRoot: any, userConfig?: any, deepLinks?: any[
 
     provideConfig(),
     provideEvents(),
-    provideForms(),
     providePlatform(),
     provideQueryParams(),
     provideTapClick(),
-    disableDeprecatedForms(),
 
     ActionSheetController,
     AlertController,
