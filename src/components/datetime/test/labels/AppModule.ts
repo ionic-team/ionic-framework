@@ -7,9 +7,13 @@ import { IonicModule } from '../../../dist';
   templateUrl: 'main.html'
 })
 export class E2EPage {
+  stacked1 = '1994-12-15T13:47:20.789';
   stacked2 = '1994-12-15T13:47:20.789';
+  floating1 = '1995-04-15';
   floating2 = '1995-04-15';
+  fixed1 = '2002-09-23T15:03:46.789';
   fixed2 = '2002-09-23T15:03:46.789';
+  inline1 = '2005-06-17T11:06Z';
   inline2 = '2005-06-17T11:06Z';
 }
 

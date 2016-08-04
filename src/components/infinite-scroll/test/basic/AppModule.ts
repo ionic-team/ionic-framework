@@ -10,7 +10,7 @@ export class E2EPage1 {
   items: number[] = [];
   enabled: boolean = true;
 
-  constructor(nav: NavController) {
+  constructor(public nav: NavController) {
     for (var i = 0; i < 30; i++) {
       this.items.push( this.items.length );
     }
@@ -49,7 +49,7 @@ export class E2EPage1 {
   template: '<ion-content><button (click)="nav.pop()">Pop</button></ion-content>'
 })
 export class E2EPage2 {
-  constructor(nav: NavController) {}
+  constructor(public nav: NavController) {}
 }
 
 

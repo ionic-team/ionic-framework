@@ -24,6 +24,7 @@ export class E2EPage {
   month: string = '12';
   year: string = '1994';
   notification: string = 'enable';
+  notifications: string = '1';
   status: string = "checked";
 
   currencies: Currency[] = [

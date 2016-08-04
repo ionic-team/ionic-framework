@@ -5,7 +5,9 @@ import { IonicModule } from '../../../dist';
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EPage {}
+export class E2EPage {
+  toggle = true;
+}
 
 
 @Component({

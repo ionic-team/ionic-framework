@@ -9,12 +9,13 @@ import { IonicModule, RadioButton, RadioGroup } from '../../../dist';
 export class E2EPage {
   fruits: FormControl;
   fruitsForm: FormGroup;
-  currenciesControl: FormControl;
+  currenciesControl: FormControl; 
   currencyForm: FormGroup;
   currencies: Array<string>;
   items: Array<{description: string, value: any}>;
   relationship: string;
   selectedTime: number = 60;
+  someValue: string;
 
   constructor() {
     this.fruits = new FormControl('apple');

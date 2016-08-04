@@ -12,6 +12,9 @@ export class E2EPage {
   login = {
     email: 'help@ionic.io',
     username: 'admin',
+    password: '',
+    comments: '',
+    inset: ''
   };
 
   submitted: boolean = false;
