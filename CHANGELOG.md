@@ -1,3 +1,275 @@
+<a name="2.0.0-beta.11"></a>
+# [2.0.0-beta.11](https://github.com/driftyco/ionic/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2016-08-05)
+
+### BREAKING CHANGES
+
+- Angular2 has been updated to [RC4](https://github.com/angular/angular/blob/master/CHANGELOG.md#200-rc4-2016-06-30).
+- ViewController’s `onDismiss` has been renamed to `onDidDismiss`
+- Forms have been upgraded to `@angular/forms` - [Angular2 Forms Changes](https://docs.google.com/document/u/1/d/1RIezQqE4aEhBRmArIAS1mRIZtWFf6JxN_7B4meyWK0Y/pub).
+- [Overlay components](#overlays) should now be created with their injected provider.
+- The [Select Options](#select--option-7334) `checked` attribute has been renamed to `selected`.
+- [Tab’s input and config variables](#tab-inputconfig-7143) have been renamed.
+- [Material Design tabs](#material-design-tabs-7455) have been updated to resemble Material Design’s bottom navigation spec: https://material.google.com/components/bottom-navigation.html
+- [Input highlight](#input-highlight-6449) was added as an option for `ios` and `wp` mode, but defaults to false.
+- Please review the [Steps to Upgrade](#steps-to-upgrade-to-beta-11) below.
+
+#### Overlays
+
+- Overlay components, such as Alert or Modals, should now be created using its injected provider.
+- Overlays now have the `present()` method on the overlay’s instance, rather than using `nav.present(overlayInstance)`.
+- All overlays now present on top of all app content, to include menus.
+- Below is an example of the change to `Alert`, but the pattern is the same for all overlays: ActionSheet, Loading, Modal, Picker, Popover, Toast
+
+  WAS:
+
+  ```
+  import { NavController, Alert } from ‘ionic-angular’;
+
+  constructor(public nav: NavController) {
+  }
+
+  doAlert() {
+    let alert = Alert.create({
+       title: 'Alert',
+    });
+    this.nav.present(alert);
+  }
+  ```
+
+  NOW:
+
+  ```
+  import { AlertController } from ‘ionic-angular’;
+
+  constructor(public alertCtrl: AlertController) {
+  }
+
+  doAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Alert'
+    });
+    alert.present();
+  }
+  ```
+
+
+#### Select / Option [#7334](https://github.com/driftyco/ionic/issues/7334)
+
+The Option component’s `checked` attribute has been renamed to `selected` in order to make an option selected. This follows the MDN spec for a select option: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option
+
+If a `ngModel` is added to the Select component the value of the `ngModel` will take precedence over the `selected` attribute.
+
+See the [Select](http://ionicframework.com/docs/v2/api/components/select/Select/) and [Option](http://ionicframework.com/docs/v2/api/components/option/Option/) documentation for usage examples.
+
+#### Tab Input/Config [#7143](https://github.com/driftyco/ionic/issues/7143)
+
+Tab input/config options have been renamed. The following options were
+renamed:
+
+- `tabbarHighlight` -> `tabsHighlight`
+- `tabbarLayout` -> `tabsLayout`
+- `tabSubPages` -> `tabsHideOnSubPages`
+- `tabbarPlacement` -> `tabsPlacement`
+
+The previous names have been deprecated. They will still work in the
+current release but will be removed in the future so please update to
+the new names.
+
+#### Material Design Tabs [#7455](https://github.com/driftyco/ionic/issues/7455)
+
+Material Design mode defaults have changed to the following:
+
+```
+tabsHighlight: false,
+tabsPlacement: 'bottom',
+tabsHideOnSubPages: false
+```
+
+`tabsHighlight` can now be passed as an attribute on the `ion-tabs` element, this allows for tabs to be added in multiple places inside of an app and enable the highlight on some of them.
+
+Styling of the Material Design tabs reflects the spec for bottom navigation: https://material.google.com/components/bottom-navigation.html
+
+To get the old style of tabs, override the config in your bootstrap, for example:
+
+```
+ionicBootstrap(ConferenceApp, [ConferenceData, UserData], {
+  platforms: {
+    android: {
+      tabsPlacement: 'top',
+      tabsHideOnSubPages: true,
+      tabsHighlight: true
+    }
+  }
+});
+```
+
+And optionally override any of the Sass variables for `md` mode in `theme/app.md.scss`:
+
+```
+$tabs-md-tab-text-capitalization: uppercase;
+$tabs-md-tab-font-weight: 500;
+$tabs-md-tab-text-transform: scale(1);
+```
+
+For a searchable list of all of the Sass variables, see the theming documentation: http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+
+#### Input Highlight [#6449](https://github.com/driftyco/ionic/issues/6449)
+
+Fixed typos in the input highlight variables:
+- `$text-input-md-hightlight-color-valid` -> `$text-input-md-highlight-color-valid`
+- `$text-input-wp-hightlight-color-valid` -> `$text-input-wp-highlight-color-valid`
+
+Modified variables to turn on/off the highlight:
+
+ios (defaults to false for all):
+
+```
+$text-input-ios-show-focus-highlight: false !default;
+$text-input-ios-show-valid-highlight: $text-input-ios-show-focus-highlight !default;
+$text-input-ios-show-invalid-highlight: $text-input-ios-show-focus-highlight !default;
+```
+
+md (defaults to true for all):
+
+```
+$text-input-md-show-focus-highlight: true !default;
+$text-input-md-show-valid-highlight: $text-input-md-show-focus-highlight !default;
+$text-input-md-show-invalid-highlight: $text-input-md-show-focus-highlight !default;
+```
+
+wp (defaults to true for all):
+
+```
+$text-input-wp-show-focus-highlight: true !default;
+$text-input-wp-show-valid-highlight: $text-input-wp-show-focus-highlight !default;
+$text-input-wp-show-invalid-highlight: $text-input-wp-show-focus-highlight !default;
+```
+
+#### Steps to Upgrade to Beta 11
+
+1. Run the following command in a terminal to update the npm dependencies:
+
+  ```
+  npm install --save ionic-angular @angular/{common,compiler,core,http,forms,platform-browser,platform-browser-dynamic} rxjs@5.0.0-beta.6 zone.js@0.6.12
+  ```
+
+2. Update all Overlay components to be presented by their controller instead of `NavController`. For example, to update the popover component, the following code:
+
+  ```
+  constructor(private nav: NavController) {}
+
+  presentPopover(event) {
+    let popover = Popover.create(PopoverPage);
+    this.nav.present(popover, { ev: event });
+  }
+  ```
+
+  becomes:
+
+  ```
+  constructor(private popoverCtrl: PopoverController) {}
+
+  presentPopover(event) {
+    let popover = this.popoverCtrl.create(PopoverPage);
+    popover.present({ ev: event });
+  }
+  ```
+
+3. Update any uses of `ViewController.onDismiss` to `ViewController.onDidDismiss`. The following code on dismiss of a modal:
+
+  ```
+  modal.onDismiss(() => {
+
+  });
+  ```
+
+  becomes:
+
+  ```
+  modal.onDidDismiss(() => {
+
+  });
+  ```
+
+4. Update any uses of `checked` on an `<ion-option>` to use `selected`.
+
+5. If you are using any of the tab config variables, update them to reflect the new names [above](#tab-inputconfig-7143).
+
+6. If you are using any of the Sass Variables to override [tabs](#material-design-tabs-7455) or [input highlights](#input-highlight-6449), update them to reflect the new names above.
+
+7. Please see the [Ionic Conference App](https://github.com/driftyco/ionic-conference-app) for an example of upgrading to Beta 11.
+
+
+### Bug Fixes
+
+* **activator:** do not activate elements while scrolling ([845a516](https://github.com/driftyco/ionic/commit/845a516)), closes [#7141](https://github.com/driftyco/ionic/issues/7141)
+* **animation:** ele as string selector ([9fa31a1](https://github.com/driftyco/ionic/commit/9fa31a1))
+* **animation:** fix easing timing function ([0cb093e](https://github.com/driftyco/ionic/commit/0cb093e)), closes [#7130](https://github.com/driftyco/ionic/issues/7130)
+* **app:** add status bar padding when tab subpages are hidden ([d01ee4b](https://github.com/driftyco/ionic/commit/d01ee4b)), closes [#7203](https://github.com/driftyco/ionic/issues/7203)
+* **backdrop:** flicker in UIWebView ([44ab527](https://github.com/driftyco/ionic/commit/44ab527))
+* **backdrop:** use raf when adding/removing disable-scroll css ([941cb1d](https://github.com/driftyco/ionic/commit/941cb1d))
+* **bootstrap:** return promise and resolve ionicBootstrap ([aebdf2f](https://github.com/driftyco/ionic/commit/aebdf2f)), closes [#7145](https://github.com/driftyco/ionic/issues/7145)
+* **bootstrap:** tapclick is injected, probably ([7358072](https://github.com/driftyco/ionic/commit/7358072))
+* **button:** apply css for buttons w/ ngIf ([816a648](https://github.com/driftyco/ionic/commit/816a648)), closes [#5927](https://github.com/driftyco/ionic/issues/5927)
+* **button:** outline buttons do not have hairline borders in iOS ([4e88f89](https://github.com/driftyco/ionic/commit/4e88f89))
+* **datetime:** format seconds token ([4fff262](https://github.com/driftyco/ionic/commit/4fff262)), closes [#6951](https://github.com/driftyco/ionic/issues/6951)
+* **datetime-util:** fix convertDataToISO to handle negative timezone offsets ([ba53a23](https://github.com/driftyco/ionic/commit/ba53a23))
+* **generator:** change nav to navCtrl ([b19547c](https://github.com/driftyco/ionic/commit/b19547c))
+* **gestures:** detecting swipe angle correctly + sliding item logic fix ([d230cb4](https://github.com/driftyco/ionic/commit/d230cb4))
+* **input:** add input highlight for ios, fix the highlight size ([11a24b9](https://github.com/driftyco/ionic/commit/11a24b9)), closes [#6449](https://github.com/driftyco/ionic/issues/6449)
+* **item:** sliding item is closed when tapped ([7aa559a](https://github.com/driftyco/ionic/commit/7aa559a)), closes [#7094](https://github.com/driftyco/ionic/issues/7094)
+* **loading:** clear timeout if dismissed before timeout fires ([5bbe31a](https://github.com/driftyco/ionic/commit/5bbe31a))
+* **loading:** fix loading overlay during app init ([b615c60](https://github.com/driftyco/ionic/commit/b615c60)), closes [#6209](https://github.com/driftyco/ionic/issues/6209)
+* **menu:** add statusbarPadding to the header and content in a menu ([a468fde](https://github.com/driftyco/ionic/commit/a468fde)), closes [#7385](https://github.com/driftyco/ionic/issues/7385)
+* **menu:** fix content going under header ([3cd31c3](https://github.com/driftyco/ionic/commit/3cd31c3)), closes [#7084](https://github.com/driftyco/ionic/issues/7084)
+* **menu:** getBackdropElement ([cac1d4f](https://github.com/driftyco/ionic/commit/cac1d4f))
+* **menu:** only one menu can be opened at a time ([cac378f](https://github.com/driftyco/ionic/commit/cac378f)), closes [#6826](https://github.com/driftyco/ionic/issues/6826)
+* **menu:** swipe menu is triggered when the swipe |angle| < 40º ([32a70a6](https://github.com/driftyco/ionic/commit/32a70a6))
+* **nav:** fire lifecycle events from app root portal ([a4e393b](https://github.com/driftyco/ionic/commit/a4e393b))
+* **nav:** fix menuCtrl reference in swipe back ([55a5e83](https://github.com/driftyco/ionic/commit/55a5e83))
+* **nav:** register child nav when created from modal ([61a8625](https://github.com/driftyco/ionic/commit/61a8625))
+* **picker:** fix iOS 8 picker display ([86fd8a4](https://github.com/driftyco/ionic/commit/86fd8a4)), closes [#7319](https://github.com/driftyco/ionic/issues/7319)
+* **popover:** remove min-height from ios, add sass variables ([55bc32d](https://github.com/driftyco/ionic/commit/55bc32d)), closes [#7215](https://github.com/driftyco/ionic/issues/7215)
+* **range:** add mouse listeners to document ([267ced6](https://github.com/driftyco/ionic/commit/267ced6))
+* **range:** align the label in an item range to the center ([d675d39](https://github.com/driftyco/ionic/commit/d675d39)), closes [#7046](https://github.com/driftyco/ionic/issues/7046)
+* **range:** ion-label stacked with ion-range ([5a8fe82](https://github.com/driftyco/ionic/commit/5a8fe82)), closes [#7046](https://github.com/driftyco/ionic/issues/7046)
+* **range:** set ticks to an empty array to prevent errors ([7a2ad99](https://github.com/driftyco/ionic/commit/7a2ad99))
+* **reorder:** better style ([f289ac6](https://github.com/driftyco/ionic/commit/f289ac6))
+* **reorder:** canceled reorder is animated smoothly back ([8483a43](https://github.com/driftyco/ionic/commit/8483a43))
+* **reorder:** non ion-item elements can be reordered ([ea9dd02](https://github.com/driftyco/ionic/commit/ea9dd02)), closes [#7339](https://github.com/driftyco/ionic/issues/7339)
+* **reorder:** reorder can be used with any element ([d993a1b](https://github.com/driftyco/ionic/commit/d993a1b))
+* **scroll:** fix scrolling after switching tabs ([e4bbcc6](https://github.com/driftyco/ionic/commit/e4bbcc6)), closes [#7154](https://github.com/driftyco/ionic/issues/7154)
+* **select:** add the cssClass passed by the user to the alert for a select ([81ddd7f](https://github.com/driftyco/ionic/commit/81ddd7f)), closes [#6835](https://github.com/driftyco/ionic/issues/6835)
+* **slides:** delay loading slides until view ready ([580b8d5](https://github.com/driftyco/ionic/commit/580b8d5)), closes [#7089](https://github.com/driftyco/ionic/issues/7089)
+* **sliding:** much better UX + performance ([d6f62bc](https://github.com/driftyco/ionic/commit/d6f62bc)), closes [#6913](https://github.com/driftyco/ionic/issues/6913) [#6958](https://github.com/driftyco/ionic/issues/6958)
+* **tabs:** add sass variable for inactive opacity and pass it to the colors loop ([99efa36](https://github.com/driftyco/ionic/commit/99efa36))
+* **tabs:** center tabbar content ([997d54e](https://github.com/driftyco/ionic/commit/997d54e))
+* **tabs:** fix preloadTabs null element reference ([2d19308](https://github.com/driftyco/ionic/commit/2d19308)), closes [#7109](https://github.com/driftyco/ionic/issues/7109)
+* **tabs:** make the text color opaque instead of the entire button ([dd969a2](https://github.com/driftyco/ionic/commit/dd969a2)), closes [#6638](https://github.com/driftyco/ionic/issues/6638)
+* **util:** UIEventManager should handle touchcancel event ([b805602](https://github.com/driftyco/ionic/commit/b805602))
+
+### Features
+
+* **alert:** allow smooth overflow scrolling ([5542a93](https://github.com/driftyco/ionic/commit/5542a93))
+* **content:** add a resize function to recalculate the content size ([1fe1c1e](https://github.com/driftyco/ionic/commit/1fe1c1e))
+* **footer:** apply shadow on MD footer and tabbar bottom ([686c262](https://github.com/driftyco/ionic/commit/686c262))
+* **gesture:** Introducing new gesture controller ([9f19023](https://github.com/driftyco/ionic/commit/9f19023))
+* **gesture-controller:** disable/enable scrolling ([72c24bc](https://github.com/driftyco/ionic/commit/72c24bc))
+* **header:** apply shadow on MD headers ([6fa2faf](https://github.com/driftyco/ionic/commit/6fa2faf))
+* **ion-content:** iOS only scroll bounce ([5c80445](https://github.com/driftyco/ionic/commit/5c80445))
+* **select:** add disabled status in select options ([76619cf](https://github.com/driftyco/ionic/commit/76619cf))
+* **tabs:** apply shadow on MD tabbar top ([1f4b3e2](https://github.com/driftyco/ionic/commit/1f4b3e2))
+* **tabs:** add the transition for material design tabs ([eea7e6b](https://github.com/driftyco/ionic/commit/eea7e6b))
+* **toolbar:** add attributes to hide all borders and box shadows ([88b637b](https://github.com/driftyco/ionic/commit/88b637b)), closes [#7237](https://github.com/driftyco/ionic/issues/7237)
+* **viewcontroller:** add onWillDismiss callback ([ec99bfd](https://github.com/driftyco/ionic/commit/ec99bfd)), closes [#6702](https://github.com/driftyco/ionic/issues/6702)
+
+### Performance Improvements
+
+* **animation:** using will-change when using progressStep() ([267aa32](https://github.com/driftyco/ionic/commit/267aa32))
+* **menu:** several improvements ([86c5aaf](https://github.com/driftyco/ionic/commit/86c5aaf))
+
+
 <a name="2.0.0-beta.10"></a>
 # [2.0.0-beta.10](https://github.com/driftyco/ionic/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2016-06-27)
 
