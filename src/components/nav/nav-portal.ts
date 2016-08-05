@@ -26,6 +26,7 @@ export class NavPortal extends NavControllerBase {
   ) {
     super(null, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
     this._isPortal = true;
+    this._init = true;
     this.setViewport(viewPort);
     app.setPortal(this);
 

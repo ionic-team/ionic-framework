@@ -193,6 +193,13 @@ export class NavControllerBase extends Ion implements NavController {
 
           // get the leaving view which the _insert() already set
           let leavingView = this.getByState(STATE_INIT_LEAVE);
+          if (!leavingView && this._isPortal) {
+            // if we didn't find an active view, and this is a portal
+            let activeNav = this._app.getActiveNav();
+            if (activeNav) {
+              leavingView = activeNav.getByState(STATE_INIT_LEAVE);
+            }
+          }
 
           // start the transition, fire resolve when done...
           this._transition(enteringView, leavingView, opts, done);
@@ -224,6 +231,14 @@ export class NavControllerBase extends Ion implements NavController {
 
     // first see if there's an active view
     let view = this.getActive();
+    if (!view && this._isPortal) {
+      // if we didn't find an active view, and this is a portal
+      let activeNav = this._app.getActiveNav();
+      if (activeNav) {
+        view = activeNav.getActive();
+      }
+    }
+
     if (view) {
       // there's an active view, set that it's initialized to leave
       view.state = STATE_INIT_LEAVE;
@@ -343,6 +358,16 @@ export class NavControllerBase extends Ion implements NavController {
       // get the view thats ready to enter
       let enteringView = this.getByState(STATE_INIT_ENTER);
 
+      if (!enteringView && this._isPortal) {
+        // if we didn't find an active view, and this is a portal
+        let activeNav = this._app.getActiveNav();
+        if (activeNav) {
+          enteringView = activeNav.last();
+          if (enteringView) {
+            enteringView.state = STATE_INIT_ENTER;
+          }
+        }
+      }
       if (!enteringView && !this._isPortal) {
         // oh nos! no entering view to go to!
         // if there is no previous view that would enter in this nav stack

@@ -137,6 +137,7 @@ class E2EPage {
   `
 })
 class NavigableModal {
+
   constructor(public navCtrl: NavController) {}
 
   submit() {
@@ -158,11 +159,11 @@ class NavigableModal {
   `
 })
 class NavigableModal2 {
-  constructor(public navController: NavController) {
-  }
+
+  constructor(public navCtrl: NavController) {}
 
   submit() {
-    this.navController.pop();
+    this.navCtrl.pop();
   }
 }
 
