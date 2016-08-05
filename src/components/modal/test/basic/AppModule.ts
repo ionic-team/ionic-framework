@@ -2,8 +2,7 @@ import { Component, Injectable, NgModule } from '@angular/core';
 
 import { ActionSheetController, App, Config,
   IonicModule, ModalController, NavController,
-  NavParams, PageTransition, Platform,
-  TransitionOptions, ViewController } from '../../../dist';
+  NavParams, PageTransition, Platform, ViewController } from '../../../dist';
 
 
 @Injectable()
@@ -92,13 +91,6 @@ export class E2EPage {
       console.log('Modal with inputs data:', data);
     });
     modal.present();
-  }
-
-  presentModalCustomAnimation() {
-    let modal = this.modalCtrl.create(ContactUs);
-    modal.present({
-      animation: 'my-fade-in'
-    });
   }
 
   presentNavigableModal() {
@@ -550,30 +542,3 @@ export class E2EApp {
 })
 export class AppModule {}
 
-
-export class FadeIn extends PageTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-    this
-      .element(enteringView.pageElementRef())
-      .easing('ease')
-      .duration(1000)
-      .fromTo('translateY', '0%', '0%')
-      .fromTo('opacity', 0, 1, true)
-      .before.addClass('show-page');
-  }
-}
-PageTransition.register('my-fade-in', FadeIn);
-
-export class FadeOut extends PageTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-    this
-      .element(leavingView.pageElementRef())
-      .easing('ease')
-      .duration(500)
-      .fromTo('opacity', 1, 0)
-      .before.addClass('show-page');
-  }
-}
-PageTransition.register('my-fade-out', FadeOut);

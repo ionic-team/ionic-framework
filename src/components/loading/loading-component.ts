@@ -1,13 +1,13 @@
 import { Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
 import { NgIf } from '@angular/common';
 
-import { Animation } from '../../animations/animation';
+import { Animation, AnimationOptions } from '../../animations/animation';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { isDefined, isPresent, isUndefined } from '../../util/util';
 import { NavParams } from '../nav/nav-params';
 import { Spinner } from '../spinner/spinner';
-import { Transition, TransitionOptions } from '../../transitions/transition';
+import { Transition } from '../../transitions/transition';
 import { ViewController } from '../nav/view-controller';
 
 
@@ -87,8 +87,8 @@ export class LoadingCmp {
  * Animations for loading
  */
  class LoadingPopIn extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
      let ele = enteringView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -108,8 +108,8 @@ export class LoadingCmp {
 
 
  class LoadingPopOut extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
      let ele = leavingView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -129,8 +129,8 @@ export class LoadingCmp {
 
 
  class LoadingMdPopIn extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
      let ele = enteringView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -150,8 +150,8 @@ export class LoadingCmp {
 
 
  class LoadingMdPopOut extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
      let ele = leavingView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -171,8 +171,8 @@ export class LoadingCmp {
 
 
  class LoadingWpPopIn extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
      let ele = enteringView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -192,8 +192,8 @@ export class LoadingCmp {
 
 
  class LoadingWpPopOut extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
      let ele = leavingView.pageElementRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));

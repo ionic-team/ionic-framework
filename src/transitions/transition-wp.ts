@@ -1,6 +1,5 @@
-import { Animation } from '../animations/animation';
+import { Animation, AnimationOptions } from '../animations/animation';
 import { PageTransition } from './page-transition';
-import { TransitionOptions } from './transition';
 import { ViewController } from '../components/nav/view-controller';
 
 const SHOW_BACK_BTN_CSS = 'show-back-button';
@@ -9,8 +8,8 @@ const SCALE_SMALL = .95;
 
 class WPTransition extends PageTransition {
 
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');
@@ -35,7 +34,6 @@ class WPTransition extends PageTransition {
       let enteringNavbarEle: Element = enteringPageEle.querySelector('ion-navbar');
 
       let enteringNavBar = new Animation(enteringNavbarEle);
-      enteringNavBar.before.addClass('show-navbar');
       this.add(enteringNavBar);
 
       let enteringBackButton = new Animation(enteringNavbarEle.querySelector('.back-button'));

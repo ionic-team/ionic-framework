@@ -1,5 +1,6 @@
 import { ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
 
+import { AnimationOptions } from '../../animations/animation';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { GestureController } from '../../gestures/gesture-controller';
@@ -10,7 +11,7 @@ import { NavController } from './nav-controller';
 import { NavOptions, DIRECTION_BACK, DIRECTION_FORWARD } from './nav-interfaces';
 import { NavParams } from './nav-params';
 import { SwipeBackGesture } from './swipe-back';
-import { Transition, TransitionOptions } from '../../transitions/transition';
+import { Transition } from '../../transitions/transition';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from './view-controller';
 
@@ -535,20 +536,9 @@ export class NavControllerBase extends Ion implements NavController {
       transId = this.rootTransId = this._transCtrl.nextId();
     }
 
-    // create the transition options
-    const transitionOpts: TransitionOptions = {
-      animation: opts.animation,
-      direction: opts.direction,
-      duration: opts.duration,
-      easing: opts.easing,
-      renderDelay: opts.transitionDelay || this._trnsDelay,
-      isRTL: this.config.platform.isRTL(),
-      ev: opts.ev,
-    };
-
     // create the transition animation from the TransitionController
     // this will either create the root transition, or add it as a child transition
-    const trans = this._trans = this._transCtrl.get(transId, enteringView, leavingView, transitionOpts);
+    const trans = this._trans = this._transCtrl.get(transId, opts.animation);
 
     // render the entering view, and all child navs and views
     // ******** DOM WRITE ****************
@@ -558,15 +548,6 @@ export class NavControllerBase extends Ion implements NavController {
     // all child navs and views have been rendered, so we can
     // safely reset this back to false for the next transition
     this.rootTransId = null;
-
-    if ((!this._init && this._views.length === 1 && !this._isPortal) || this.config.get('animate') === false) {
-      // the initial load shouldn't animate, unless it's a portal
-      opts.animate = false;
-    }
-    if (opts.animate === false) {
-      // force it to not animate and just apply the "to" styles
-      trans.duration(0);
-    }
 
     // ******** DOM WRITE ****************
     this._beforeTrans(trans, isRootTransition, enteringView, leavingView, opts, (hasCompleted: boolean) => {
@@ -693,6 +674,27 @@ export class NavControllerBase extends Ion implements NavController {
     // when the transition ends call wait for it to end
     enteringView.state = STATE_TRANS_ENTER;
     leavingView.state = STATE_TRANS_LEAVE;
+
+    // create the transition options
+    const animationOpts: AnimationOptions = {
+      animation: opts.animation,
+      direction: opts.direction,
+      duration: (opts.animate === false ? 0 : opts.duration),
+      easing: opts.easing,
+      renderDelay: opts.transitionDelay || this._trnsDelay,
+      isRTL: this.config.platform.isRTL(),
+      ev: opts.ev,
+    };
+
+    trans.init(enteringView, leavingView, animationOpts);
+
+    if ((!this._init && this._views.length === 1 && !this._isPortal) || this.config.get('animate') === false) {
+      // the initial load shouldn't animate, unless it's a portal
+      opts.animate = false;
+    }
+    if (opts.animate === false) {
+      trans.duration(0);
+    }
 
     if (!opts.preload) {
       trans.before.addDomReadFn(() => {

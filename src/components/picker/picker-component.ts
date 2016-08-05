@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, HostListener, Output, Query
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { DomSanitizationService } from '@angular/platform-browser';
 
-import { Animation } from '../../animations/animation';
+import { Animation, AnimationOptions } from '../../animations/animation';
 import { Backdrop } from '../backdrop/backdrop';
 import { cancelRaf, pointerCoord, raf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString } from '../../util/util';
@@ -11,7 +11,7 @@ import { Key } from '../../util/key';
 import { NavParams } from '../nav/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
-import { Transition, TransitionOptions } from '../../transitions/transition';
+import { Transition } from '../../transitions/transition';
 import { UIEventManager } from '../../util/ui-event-manager';
 import { ViewController } from '../nav/view-controller';
 
@@ -547,8 +547,8 @@ export class PickerCmp {
  * Animations for pickers
  */
 class PickerSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -564,8 +564,8 @@ Transition.register('picker-slide-in', PickerSlideIn);
 
 
 class PickerSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));

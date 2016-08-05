@@ -1,12 +1,11 @@
 import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
-import { Animation } from '../../animations/animation';
+import { Animation, AnimationOptions } from '../../animations/animation';
 import { Backdrop } from '../backdrop/backdrop';
 import { Key } from '../../util/key';
 import { NavParams } from '../nav/nav-params';
 import { pascalCaseToDashCase } from '../../util/util';
 import { PageTransition } from '../../transitions/page-transition';
-import { TransitionOptions } from '../../transitions/transition';
 import { ViewController } from '../nav/view-controller';
 import { windowDimensions } from '../../util/dom';
 
@@ -77,8 +76,8 @@ export class ModalCmp {
  * Animations for modals
  */
  class ModalSlideIn extends PageTransition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
      let ele = enteringView.pageElementRef().nativeElement;
      let backdropEle = ele.querySelector('ion-backdrop');
@@ -108,8 +107,8 @@ export class ModalCmp {
 
 
 class ModalSlideOut extends PageTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -135,8 +134,8 @@ PageTransition.register('modal-slide-out', ModalSlideOut);
 
 
 class ModalMDSlideIn extends PageTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -164,8 +163,8 @@ PageTransition.register('modal-md-slide-in', ModalMDSlideIn);
 
 
 class ModalMDSlideOut extends PageTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+     super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));

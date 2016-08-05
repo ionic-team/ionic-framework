@@ -1,14 +1,14 @@
 import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 
-import { Animation } from '../../animations/animation';
+import { Animation, AnimationOptions } from '../../animations/animation';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
 import { Key } from '../../util/key';
 import { NavParams } from '../nav/nav-params';
-import { Transition, TransitionOptions } from '../../transitions/transition';
+import { Transition } from '../../transitions/transition';
 import { ViewController } from '../nav/view-controller';
 
 
@@ -164,8 +164,8 @@ export class ActionSheetCmp {
 
 
 class ActionSheetSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -181,8 +181,8 @@ Transition.register('action-sheet-slide-in', ActionSheetSlideIn);
 
 
 class ActionSheetSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -198,8 +198,8 @@ Transition.register('action-sheet-slide-out', ActionSheetSlideOut);
 
 
 class ActionSheetMdSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -215,8 +215,8 @@ Transition.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
 
 
 class ActionSheetMdSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -231,8 +231,8 @@ class ActionSheetMdSlideOut extends Transition {
 Transition.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);
 
 class ActionSheetWpSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -248,8 +248,8 @@ Transition.register('action-sheet-wp-slide-in', ActionSheetWpSlideIn);
 
 
 class ActionSheetWpSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));

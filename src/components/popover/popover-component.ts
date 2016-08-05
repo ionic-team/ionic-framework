@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
-import { Animation } from '../../animations/animation';
+import { Animation, AnimationOptions } from '../../animations/animation';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { CSS, nativeRaf } from '../../util/dom';
@@ -8,7 +8,6 @@ import { isPresent, pascalCaseToDashCase } from '../../util/util';
 import { Key } from '../../util/key';
 import { NavParams } from '../nav/nav-params';
 import { PageTransition } from '../../transitions/page-transition';
-import { TransitionOptions } from '../../transitions/transition';
 import { ViewController } from '../nav/view-controller';
 
 
@@ -108,9 +107,6 @@ export class PopoverCmp {
  * Animations for popover
  */
 class PopoverTransition extends PageTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-  }
 
   mdPositionView(nativeEle: HTMLElement, ev: any) {
     let originY = 'top';
@@ -255,8 +251,8 @@ class PopoverTransition extends PageTransition {
 }
 
 class PopoverPopIn extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, public opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
 
@@ -284,8 +280,8 @@ PageTransition.register('popover-pop-in', PopoverPopIn);
 
 
 class PopoverPopOut extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, public opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
@@ -305,8 +301,8 @@ PageTransition.register('popover-pop-out', PopoverPopOut);
 
 
 class PopoverMdPopIn extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, public opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
 
@@ -334,8 +330,8 @@ PageTransition.register('popover-md-pop-in', PopoverMdPopIn);
 
 
 class PopoverMdPopOut extends PopoverTransition {
-  constructor(enteringView: ViewController, leavingView: ViewController, public opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));

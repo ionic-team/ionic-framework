@@ -21,7 +21,6 @@ export class Animation {
   private _parent: Animation;
   private _c: Animation[] = [];
   private _el: HTMLElement[] = [];
-  private _opts: AnimationOptions;
   private _fx: {[key: string]: EffectProperty} = {};
   private _dur: number = null;
   private _easing: string = null;
@@ -40,16 +39,14 @@ export class Animation {
   private _tmr: number;
   private _lastUpd: number = 0;
 
-  public isPlaying: boolean = false;
-  public hasTween: boolean = false;
-  public hasCompleted: boolean = false;
+  opts: AnimationOptions;
+  isPlaying: boolean = false;
+  hasTween: boolean = false;
+  hasCompleted: boolean = false;
 
-  constructor(ele?: any, opts: AnimationOptions = {}) {
+  constructor(ele?: any, opts?: AnimationOptions) {
     this.element(ele);
-
-    this._opts = assign({
-      renderDelay: 24
-    }, opts);
+    this.opts = opts;
   }
 
   /**
@@ -62,7 +59,7 @@ export class Animation {
     this._afSty = {};
 
     this._el.length = this._c.length = this._bfAdd.length = this._bfRmv.length = this._afAdd.length = this._afRmv.length = this._fFns.length = this._bfReadFns.length = this._bfWriteFns.length = this._fOnceFns.length = 0;
-    this._easing = this._dur = null;
+    this._easing = this._dur = this.opts = null;
   }
 
   element(ele: any): Animation {
@@ -333,7 +330,8 @@ export class Animation {
 
       // begin each animation when everything is rendered in their place
       // and the transition duration/easing is ready to go
-      rafFrames(self._opts.renderDelay / 16, function() {
+      const renderDelay = (self.opts && self.opts.renderDelay || 24) / 16;
+      rafFrames(renderDelay, function() {
         // there's been a moment and the elements are in place
 
         // fire off all the "before" function that have DOM READS in them
@@ -1029,7 +1027,12 @@ export class Animation {
 
 export interface AnimationOptions {
   animation?: string;
+  duration?: number;
+  easing?: string;
+  direction?: string;
   renderDelay?: number;
+  isRTL?: boolean;
+  ev?: any;
 }
 
 export interface PlayOptions {

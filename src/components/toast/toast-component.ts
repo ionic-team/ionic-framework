@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
 import { NgIf } from '@angular/common';
 
-import { Animation } from '../../animations/animation';
+import { Animation, AnimationOptions } from '../../animations/animation';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavParams } from '../nav/nav-params';
-import { Transition, TransitionOptions } from '../../transitions/transition';
+import { Transition } from '../../transitions/transition';
 import { ViewController } from '../nav/view-controller';
 
 
@@ -102,8 +102,8 @@ export class ToastCmp implements AfterViewInit {
 
 
 class ToastSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     // DOM READS
     let ele = enteringView.pageElementRef().nativeElement;
@@ -136,8 +136,8 @@ class ToastSlideIn extends Transition {
 }
 
 class ToastSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
@@ -164,8 +164,8 @@ class ToastSlideOut extends Transition {
 }
 
 class ToastMdSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     // DOM reads
     let ele = enteringView.pageElementRef().nativeElement;
@@ -198,8 +198,8 @@ class ToastMdSlideIn extends Transition {
 }
 
 class ToastMdSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = leavingView.pageElementRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
@@ -226,8 +226,8 @@ class ToastMdSlideOut extends Transition {
 }
 
 class ToastWpPopIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     let ele = enteringView.pageElementRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
@@ -259,8 +259,8 @@ class ToastWpPopIn extends Transition {
 }
 
 class ToastWpPopOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
     // DOM reads
     let ele = leavingView.pageElementRef().nativeElement;

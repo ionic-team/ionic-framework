@@ -525,9 +525,9 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
         let values: any[];
 
         // first see if they have exact values to use for this input
-        if (isPresent(this[key + 'Values'])) {
+        if (isPresent((<any>this)[key + 'Values'])) {
           // user provide exact values for this date part
-          values = convertToArrayOfNumbers(this[key + 'Values'], key);
+          values = convertToArrayOfNumbers((<any>this)[key + 'Values'], key);
 
         } else {
           // use the default date part values

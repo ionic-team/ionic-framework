@@ -1,8 +1,8 @@
-import { Animation, PlayOptions } from '../animations/animation';
+import { Animation, AnimationOptions } from '../animations/animation';
 import { closest } from '../util/dom';
 import { Content } from '../components/content/content';
 import { Tabs } from '../components/tabs/tabs';
-import { Transition, TransitionOptions } from './transition';
+import { Transition } from './transition';
 import { ViewController } from '../components/nav/view-controller';
 
 
@@ -12,27 +12,21 @@ import { ViewController } from '../components/nav/view-controller';
 export class PageTransition extends Transition {
   enteringPage: Animation;
 
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    super.init(enteringView, leavingView, opts);
 
-    this.enteringPage = new Animation();
-    this.enteringPage.before.addClass('show-page');
-    this.add(this.enteringPage);
+    this.enteringPage = new Animation(enteringView.pageElementRef());
+    this.add(this.enteringPage.before.addClass('show-page'));
 
     this.before.addDomReadFn(this.readDimensions.bind(this));
     this.before.addDomWriteFn(this.writeDimensions.bind(this));
-  }
-
-  play(opts?: PlayOptions) {
-    this.enteringPage.element(this.enteringView.pageElementRef());
-    super.play(opts);
   }
 
   /**
    * DOM READ
    */
   readDimensions() {
-    let content = <Content>this.enteringView.getContent();
+    const content = <Content>this.enteringView.getContent();
     if (content && content instanceof Content) {
       content.readDimensions();
     }
@@ -42,15 +36,10 @@ export class PageTransition extends Transition {
    * DOM WRITE
    */
   writeDimensions() {
-    let content = <Content>this.enteringView.getContent();
+    const content = <Content>this.enteringView.getContent();
     if (content && content instanceof Content) {
       content.writeDimensions();
     }
-  }
-
-  destroy() {
-    super.destroy();
-    this.enteringView = this.enteringPage = null;
   }
 
 }

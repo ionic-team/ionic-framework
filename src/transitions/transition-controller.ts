@@ -1,6 +1,6 @@
 import { isPresent } from '../util/util';
 import { NavControllerBase } from '../components/nav/nav-controller-base';
-import { Transition, TransitionOptions } from './transition';
+import { Transition } from './transition';
 import { ViewController } from '../components/nav/view-controller';
 
 
@@ -23,12 +23,12 @@ export class TransitionController {
     return this.ids++;
   }
 
-  create(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    return Transition.createTransition(enteringView, leavingView, opts);
+  create(transitionName: string) {
+    return Transition.createTransition(transitionName);
   }
 
-  get(transId: number, enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    const trans = this.create(enteringView, leavingView, opts);
+  get(transId: number, transitionName: string) {
+    const trans = this.create(transitionName);
 
     if (!this.trans[transId]) {
       // we haven't created the root transition yet

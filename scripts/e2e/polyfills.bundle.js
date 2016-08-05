@@ -3234,7 +3234,7 @@ eval("'use strict';\n\nvar utils = exports;\nvar BN = __webpack_require__(464);\
 /* 1290 */
 /***/ function(module, exports) {
 
-eval("throw new Error(\"Module parse failed: /Users/joshthomas/Workspace/ionic/node_modules/elliptic/package.json Unexpected token (2:9)\\nYou may need an appropriate loader to handle this file type.\\n| {\\n|   \\\"_args\\\": [\\n|     [\\n|       \\\"elliptic@^6.0.0\\\",\");\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/elliptic/package.json\n// module id = 1290\n// module chunks = 240\n\n//# sourceURL=webpack:///./~/elliptic/package.json?");
+eval("throw new Error(\"Module parse failed: /Users/adam/git/ionic2/node_modules/elliptic/package.json Unexpected token (2:9)\\nYou may need an appropriate loader to handle this file type.\\n| {\\n|   \\\"_args\\\": [\\n|     [\\n|       \\\"elliptic@^6.0.0\\\",\");\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/elliptic/package.json\n// module id = 1290\n// module chunks = 240\n\n//# sourceURL=webpack:///./~/elliptic/package.json?");
 
 /***/ },
 /* 1291 */
@@ -3300,7 +3300,7 @@ eval("module.exports = assert;\n\nfunction assert(val, msg) {\n  if (!val)\n    
 /* 1301 */
 /***/ function(module, exports) {
 
-eval("throw new Error(\"Module parse failed: /Users/joshthomas/Workspace/ionic/node_modules/parse-asn1/aesid.json Unexpected token (1:25)\\nYou may need an appropriate loader to handle this file type.\\n| {\\\"2.16.840.1.101.3.4.1.1\\\": \\\"aes-128-ecb\\\",\\n| \\\"2.16.840.1.101.3.4.1.2\\\": \\\"aes-128-cbc\\\",\\n| \\\"2.16.840.1.101.3.4.1.3\\\": \\\"aes-128-ofb\\\",\");\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/parse-asn1/aesid.json\n// module id = 1301\n// module chunks = 240\n\n//# sourceURL=webpack:///./~/parse-asn1/aesid.json?");
+eval("throw new Error(\"Module parse failed: /Users/adam/git/ionic2/node_modules/parse-asn1/aesid.json Unexpected token (1:25)\\nYou may need an appropriate loader to handle this file type.\\n| {\\\"2.16.840.1.101.3.4.1.1\\\": \\\"aes-128-ecb\\\",\\n| \\\"2.16.840.1.101.3.4.1.2\\\": \\\"aes-128-cbc\\\",\\n| \\\"2.16.840.1.101.3.4.1.3\\\": \\\"aes-128-ofb\\\",\");\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/parse-asn1/aesid.json\n// module id = 1301\n// module chunks = 240\n\n//# sourceURL=webpack:///./~/parse-asn1/aesid.json?");
 
 /***/ },
 /* 1302 */

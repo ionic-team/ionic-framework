@@ -1,6 +1,5 @@
-import { Animation } from '../animations/animation';
+import { Animation, AnimationOptions } from '../animations/animation';
 import { PageTransition } from './page-transition';
-import { TransitionOptions } from './transition';
 import { ViewController } from '../components/nav/view-controller';
 
 const DURATION = 500;
@@ -16,9 +15,7 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 class IOSTransition extends PageTransition {
 
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
+  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     this.duration(opts.duration || DURATION);
     this.easing(opts.easing || EASING);
 
@@ -52,10 +49,9 @@ class IOSTransition extends PageTransition {
 
     if (enteringHasNavbar) {
       // entering page has a navbar
-      let enteringNavbarEle: Element = enteringPageEle.querySelector('ion-navbar');
+      let enteringNavbarEle = enteringPageEle.querySelector('ion-navbar');
 
       let enteringNavBar = new Animation(enteringNavbarEle);
-      enteringNavBar.before.addClass('show-navbar');
       this.add(enteringNavBar);
 
       let enteringTitle = new Animation(enteringNavbarEle.querySelector('ion-title'));
