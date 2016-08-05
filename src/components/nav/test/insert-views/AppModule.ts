@@ -15,10 +15,10 @@ import { IonicModule, NavController } from '../../../dist';
     </ion-content>`,
 })
 export class FirstPage {
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   pushPage() {
-    this.nav.push(SecondPage);
+    this.navCtrl.push(SecondPage);
   }
 }
 
@@ -38,10 +38,10 @@ export class FirstPage {
   `
 })
 export class SecondPage {
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   insertPage() {
-    this.nav.insert(1, InsertPage);
+    this.navCtrl.insert(1, InsertPage);
   }
 }
 

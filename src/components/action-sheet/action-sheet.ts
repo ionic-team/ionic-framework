@@ -112,7 +112,7 @@ export class ActionSheet extends ViewController {
  *
  * export class MyClass{
  *
- *  constructor(private actionSheetCtrl: ActionSheetController) {}
+ *  constructor(public actionSheetCtrl: ActionSheetController) {}
  *
  *  presentActionSheet() {
  *    let actionSheet = this.actionSheetCtrl.create({

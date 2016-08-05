@@ -85,7 +85,7 @@ export class ApiDemoPage {
   config: any;
   initialConfig: any;
 
-  constructor(public platform: Platform, public nav: NavController) {
+  constructor(public platform: Platform, public navCtrl: NavController) {
 
     if (window.localStorage.getItem('configDemo') !== null) {
       this.config = JSON.parse(window.localStorage.getItem('configDemo'));
@@ -113,7 +113,7 @@ export class ApiDemoPage {
   }
 
   push() {
-    this.nav.push(PushPage);
+    this.navCtrl.push(PushPage);
   }
 }
 
@@ -121,10 +121,10 @@ export class ApiDemoPage {
   templateUrl: 'page.html'
 })
 export class PushPage {
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   pop() {
-    this.nav.pop();
+    this.navCtrl.pop();
   }
 }
 

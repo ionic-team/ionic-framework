@@ -8,6 +8,7 @@ import { IonicModule } from '../../../dist';
 })
 export class E2EPage {
   loginForm: any;
+  userForm: any;
 
   login = {
     email: 'help@ionic.io',
@@ -35,6 +36,11 @@ export class E2EPage {
       password: ['', Validators.required],
       comments: ['', Validators.required],
       gender: ['', Validators.required]
+    });
+
+    this.userForm = fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 

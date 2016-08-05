@@ -11,7 +11,7 @@ class ApiDemoPage {
   editButton: string = 'Edit';
   editing: boolean = false;
 
-  constructor(private nav: NavController) {
+  constructor(public navCtrl: NavController) {
     this.songs = [
     {
       title: 'Everything Beta',

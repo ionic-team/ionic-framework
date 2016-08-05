@@ -17,9 +17,7 @@ import { IonicModule, NavController, Tab } from '../../../dist';
     </ion-content>
     `
 })
-export class Tab1 {
-  constructor(public nav: NavController) {}
-}
+export class Tab1 {}
 
 //
 // Tab 2
@@ -36,9 +34,7 @@ export class Tab1 {
     </ion-content>
     `
 })
-export class Tab2 {
-  constructor(public nav: NavController) {}
-}
+export class Tab2 {}
 
 //
 // Tab 3
@@ -58,9 +54,7 @@ export class Tab2 {
     </ion-content>
     `
 })
-export class Tab3 {
-  constructor(public nav: NavController) {}
-}
+export class Tab3 {}
 
 //
 // Tab 3
@@ -80,9 +74,7 @@ export class Tab3 {
     </ion-content>
     `
 })
-export class QuesaritoPage {
-  constructor(public nav: NavController) {}
-}
+export class QuesaritoPage {}
 
 @Component({
   template: `

@@ -6,7 +6,7 @@ import { IonicModule, MenuController, NavController, AlertController, Nav, Refre
   templateUrl: 'page1.html'
 })
 export class Page1 {
-  constructor(private nav: NavController, private alertCtrl: AlertController) {}
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {}
 
   presentAlert() {
     let alert = this.alertCtrl.create({
@@ -19,7 +19,7 @@ export class Page1 {
   }
 
   goToPage1() {
-    this.nav.push(Page1);
+    this.navCtrl.push(Page1);
   }
 
   doRefresh(refresher: Refresher) {

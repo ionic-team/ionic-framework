@@ -10,7 +10,7 @@ export class E2EPage1 {
   items: number[] = [];
   enabled: boolean = true;
 
-  constructor(public nav: NavController) {
+  constructor(public navCtrl: NavController) {
     for (var i = 0; i < 30; i++) {
       this.items.push( this.items.length );
     }
@@ -35,7 +35,7 @@ export class E2EPage1 {
   }
 
   goToPage2() {
-    this.nav.push(E2EPage2);
+    this.navCtrl.push(E2EPage2);
   }
 
   toggleInfiniteScroll() {
@@ -46,10 +46,10 @@ export class E2EPage1 {
 
 
 @Component({
-  template: '<ion-content><button (click)="nav.pop()">Pop</button></ion-content>'
+  template: '<ion-content><button (click)="navCtrl.pop()">Pop</button></ion-content>'
 })
 export class E2EPage2 {
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 }
 
 

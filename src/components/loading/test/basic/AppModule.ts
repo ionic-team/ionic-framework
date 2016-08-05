@@ -6,7 +6,7 @@ import { IonicModule, LoadingController, NavController } from '../../../dist';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  constructor(private loadingCtrl: LoadingController, private nav: NavController) {}
+  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController) {}
 
   presentLoadingIos() {
     let loading = this.loadingCtrl.create({
@@ -99,7 +99,7 @@ export class E2EPage {
     loading.present();
 
     setTimeout(() => {
-      this.nav.push(Page2);
+      this.navCtrl.push(Page2);
     }, 1000);
 
     setTimeout(() => {
@@ -108,7 +108,7 @@ export class E2EPage {
   }
 
   goToPage2() {
-    this.nav.push(Page2);
+    this.navCtrl.push(Page2);
   }
 
   presentLoadingMultiple() {
@@ -180,7 +180,7 @@ export class E2EPage {
       loading3.present();
 
       setTimeout(() => {
-        this.nav.push(Page2);
+        this.navCtrl.push(Page2);
       }, 1000);
     }, 1000);
   }
@@ -207,16 +207,16 @@ export class E2EPage {
   `
 })
 export class Page2 {
-  constructor(private nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   ionViewLoaded() {
     setTimeout(() => {
-      this.nav.push(Page3);
+      this.navCtrl.push(Page3);
     }, 1000);
   }
 
   goToPage3() {
-    this.nav.push(Page3);
+    this.navCtrl.push(Page3);
   }
 }
 

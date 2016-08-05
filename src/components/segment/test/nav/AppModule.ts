@@ -8,12 +8,12 @@ import { IonicModule, NavController } from '../../../dist';
 export class SegmentPage {
   signInType: string;
 
-  constructor(public nav: NavController) {
+  constructor(public navCtrl: NavController) {
     this.signInType = 'new';
   }
 
   goToPage2() {
-    this.nav.push(SegmentPage2);
+    this.navCtrl.push(SegmentPage2);
   }
 }
 

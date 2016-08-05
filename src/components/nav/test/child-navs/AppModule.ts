@@ -27,11 +27,11 @@ export class E2EApp {
 })
 export class LandingPage {
 
-  constructor(private nav: NavController) {
+  constructor(public navCtrl: NavController) {
   }
 
   goToPage() {
-    this.nav.push(FirstPage);
+    this.navCtrl.push(FirstPage);
   }
 }
 

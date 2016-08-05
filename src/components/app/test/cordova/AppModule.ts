@@ -45,7 +45,7 @@ export class OtherData {
   `
 })
 export class MyModal {
-  constructor(private viewCtrl: ViewController) {}
+  constructor(public viewCtrl: ViewController) {}
 
   dismissModal() {
     this.viewCtrl.dismiss();
@@ -60,13 +60,13 @@ export class Page1 {
   page2 = Page2;
   sort: string = 'all';
 
-  constructor(private nav: NavController, private someData: SomeData, private otherData: OtherData) {
+  constructor(public navCtrl: NavController, public someData: SomeData, public otherData: OtherData) {
     console.log('Got some data from', someData.getData());
     console.log('Got some data from', otherData.getData());
   }
 
   goToTabs() {
-    this.nav.push(TabsPage);
+    this.navCtrl.push(TabsPage);
   }
 }
 
@@ -78,7 +78,7 @@ export class Page2 {
   page1 = Page1;
   page3 = Page3;
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(public modalCtrl: ModalController) {}
 
   openModal() {
     this.modalCtrl.create(MyModal).present();
@@ -90,10 +90,10 @@ export class Page2 {
   templateUrl: 'page3.html'
 })
 export class Page3 {
-  constructor(private nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   goBack() {
-    this.nav.pop();
+    this.navCtrl.pop();
   }
 }
 
@@ -118,10 +118,7 @@ export class Page3 {
   </ion-content>
   `
 })
-export class TabPage1 {
-  constructor(private nav: NavController) {}
-}
-
+export class TabPage1 {}
 
 @Component({
   templateUrl: 'tabs.html'
@@ -131,10 +128,10 @@ export class TabsPage {
   tab2Root = Page2;
   tab3Root = Page3;
 
-  constructor(private nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   goBack() {
-    this.nav.pop();
+    this.navCtrl.pop();
   }
 }
 

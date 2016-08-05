@@ -6,10 +6,10 @@ import { IonicModule, App, NavController, NavParams, ModalController, ViewContro
   templateUrl: './signIn.html'
 })
 export class SignIn {
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   push() {
-    this.nav.push(TabsPage, {
+    this.navCtrl.push(TabsPage, {
       userId: 8675309
     });
   }
@@ -20,6 +20,7 @@ export class SignIn {
   templateUrl: './modalChat.html'
 })
 export class ChatPage {
+
   constructor(public viewCtrl: ViewController) {}
 
   ionViewLoaded() {
@@ -91,17 +92,17 @@ export class TabsPage {
 export class Tab1Page1 {
   userId: string;
 
-  constructor(public nav: NavController, public app: App, public tabs: Tabs, public params: NavParams) {
+  constructor(public navCtrl: NavController, public app: App, public tabs: Tabs, public params: NavParams) {
     this.userId = params.get('userId');
   }
 
   push() {
-    this.nav.push(Tab1Page2);
+    this.navCtrl.push(Tab1Page2);
   }
 
   goBack() {
     console.log('go back begin');
-    this.nav.pop().then((val: any) => {
+    this.navCtrl.pop().then((val: any) => {
       console.log('go back completed', val);
     });
   }
@@ -140,10 +141,11 @@ export class Tab1Page1 {
   templateUrl: './tab1page2.html'
 })
 export class Tab1Page2 {
-  constructor(public nav: NavController) {}
+
+  constructor(public navCtrl: NavController) {}
 
   push() {
-    this.nav.push(Tab1Page3);
+    this.navCtrl.push(Tab1Page3);
   }
 
   ionViewWillEnter() {
@@ -172,7 +174,8 @@ export class Tab1Page2 {
   templateUrl: './tab1page3.html'
 })
 export class Tab1Page3 {
-  constructor(public nav: NavController) {}
+
+  constructor(public navCtrl: NavController) {}
 
   ionViewWillEnter() {
     console.log('Tab1Page3, ionViewWillEnter');
@@ -203,10 +206,11 @@ export class Tab1Page3 {
   templateUrl: './tab2page1.html'
 })
 export class Tab2Page1 {
-  constructor(public nav: NavController) {}
+
+  constructor(public navCtrl: NavController) {}
 
   push() {
-    this.nav.push(Tab2Page2);
+    this.navCtrl.push(Tab2Page2);
   }
 
   ionViewWillEnter() {
@@ -235,10 +239,11 @@ export class Tab2Page1 {
   templateUrl: './tab2page2.html'
 })
 export class Tab2Page2 {
-  constructor(public nav: NavController) {}
+
+  constructor(public navCtrl: NavController) {}
 
   push() {
-    this.nav.push(Tab2Page3);
+    this.navCtrl.push(Tab2Page3);
   }
 
   ionViewWillEnter() {
@@ -267,7 +272,8 @@ export class Tab2Page2 {
   templateUrl: './tab2page3.html'
 })
 export class Tab2Page3 {
-  constructor(public nav: NavController) {}
+
+  constructor(public navCtrl: NavController) {}
 
   ionViewWillEnter() {
     console.log('Tab2Page3, ionViewWillEnter');

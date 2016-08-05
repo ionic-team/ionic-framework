@@ -14,7 +14,7 @@ To try Ionic 2 today, visit the [Ionic 2 Docs](http://ionicframework.com/docs/v2
 
 ### Contributing to Ionic 2
 
-See [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/2.0/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md)
 
 ### Ionic 2 Examples
 

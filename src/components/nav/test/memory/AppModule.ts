@@ -52,14 +52,14 @@ export class Page1 {
 export class Page2 {
   tmr: number;
 
-  constructor(private nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   play() {
     this.tmr = setTimeout(() => {
       count++;
       console.log('pop', count);
 
-      this.nav.pop({
+      this.navCtrl.pop({
         animate: animate
       });
     }, delay);
