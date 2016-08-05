@@ -271,7 +271,7 @@ gulp.task('e2e.pre-transpile', function(done) {
 
 gulp.task('e2e.transpile', function(done){
   var exec = require('child_process').exec;
-  var shellCommand = './node_modules/.bin/ngc -p testNgcConfig.json';
+  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p testNgcConfig.json';
 
   exec(shellCommand, function(err, stdout, stderr) {
     console.log(stdout);
@@ -291,7 +291,7 @@ gulp.task('run.e2e', function(done){
     'transpile.es2015',
     ['e2e.setup', 'sass', 'fonts'],
     'e2e.pre-transpile',
-    'e2e.transpile',
+    //'e2e.transpile',
     done
   );
 });

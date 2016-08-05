@@ -43,9 +43,9 @@ export class E2EPage {
     <ion-content padding>
       <form [formGroup]="form" (ngSubmit)="submit(form.value)">
         <ion-list>
-          <ion-item [class.error]="!form.controls.name.valid && form.controls.name.touched">
+          <ion-item>
             <ion-label>Name</ion-label>
-            <ion-input name="name" type="text"></ion-input>
+            <ion-input name="firstName" type="text"></ion-input>
           </ion-item>
         </ion-list>
         <div padding style="padding-top: 0 !important;">
@@ -65,7 +65,7 @@ export class AnotherPage {
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public builder: FormBuilder) {
     this.form = builder.group({
-      name: builder.control('', Validators.compose([
+      firstName: builder.control('', Validators.compose([
         Validators.required,
         Validators.minLength(5)
       ]))

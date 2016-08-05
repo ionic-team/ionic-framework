@@ -7,29 +7,24 @@ import { IonicModule, RadioButton, RadioGroup } from '../../../dist';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  fruits: FormControl;
-  fruitsForm: FormGroup;
-  currenciesControl: FormControl; 
-  currencyForm: FormGroup;
   currencies: Array<string>;
   items: Array<{description: string, value: any}>;
   relationship: string;
   selectedTime: number = 60;
   someValue: string;
 
+  fruitsCtrl = new FormControl('apple');
+  fruitsForm = new FormGroup({
+    'fruitsCtrl': this.fruitsCtrl
+  });
+
+  currenciesControl = new FormControl('EUR');
+  currencyForm = new FormGroup({
+    'currenciesControl': this.currenciesControl
+  });
+
   constructor() {
-    this.fruits = new FormControl('apple');
-
-    this.fruitsForm = new FormGroup({
-      'fruits': this.fruits
-    });
-
     this.currencies = ['USD', 'EUR'];
-    this.currenciesControl = new FormControl('EUR');
-    this.currencyForm = new FormGroup({
-      'currenciesControl': this.currenciesControl
-    });
-
     this.relationship = 'enemies';
 
     this.items = [
@@ -41,15 +36,15 @@ export class E2EPage {
   }
 
   setApple() {
-    this.fruits.updateValue('apple');
+    this.fruitsCtrl.updateValue('apple');
   }
 
   setBanana() {
-    this.fruits.updateValue('banana');
+    this.fruitsCtrl.updateValue('banana');
   }
 
   setCherry() {
-    this.fruits.updateValue('cherry');
+    this.fruitsCtrl.updateValue('cherry');
   }
 
   doSubmit(ev: UIEvent) {

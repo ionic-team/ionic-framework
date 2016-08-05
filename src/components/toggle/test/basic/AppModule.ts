@@ -7,21 +7,25 @@ import { IonicModule, Toggle } from '../../../dist';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  fruitsForm: FormGroup;
   grapeDisabled: boolean;
   grapeChecked: boolean;
   kiwiValue: boolean;
   strawberryValue: boolean;
   formResults: string;
 
-  constructor() {
-    this.fruitsForm = new FormGroup({
-      'appleCtrl': new FormControl(false),
-      'bananaCtrl': new FormControl(true),
-      'cherryCtrl': new FormControl(false),
-      'grapeCtrl': new FormControl(true)
-    });
+  appleCtrl = new FormControl(false);
+  bananaCtrl = new FormControl(true);
+  cherryCtrl = new FormControl(false);
+  grapeCtrl = new FormControl(true);
 
+  fruitsForm = new FormGroup({
+    'apple': this.appleCtrl,
+    'banana': this.bananaCtrl,
+    'cherry': this.cherryCtrl,
+    'grape': this.grapeCtrl
+  });
+
+  constructor() {
     this.grapeChecked = true;
     this.grapeDisabled = true;
   }

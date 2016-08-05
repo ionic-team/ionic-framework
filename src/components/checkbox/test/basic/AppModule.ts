@@ -7,7 +7,6 @@ import { IonicModule, Checkbox } from '../../../dist';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  fruitsForm: FormGroup;
   grapeDisabled: boolean;
   grapeChecked: boolean;
   kiwiValue: boolean;
@@ -15,14 +14,19 @@ export class E2EPage {
   standAloneChecked: boolean;
   formResults: string;
 
-  constructor() {
-    this.fruitsForm = new FormGroup({
-      'appleCtrl': new FormControl(true),
-      'bananaCtrl': new FormControl(true),
-      'cherryCtrl': new FormControl(false),
-      'grapeCtrl': new FormControl(true)
-    });
+  appleCtrl = new FormControl(true);
+  bananaCtrl = new FormControl(true);
+  cherryCtrl = new FormControl(false);
+  grapeCtrl = new FormControl(true);
 
+  fruitsForm = new FormGroup({
+    'apple': this.appleCtrl,
+    'banana': this.bananaCtrl,
+    'cherry': this.cherryCtrl,
+    'grape': this.grapeCtrl
+  });
+
+  constructor() {
     this.grapeDisabled = true;
     this.grapeChecked = true;
     this.standAloneChecked = true;
