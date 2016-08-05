@@ -160,8 +160,8 @@ export class E2EApp {
     })
   ],
   providers: [SomeData, OtherData],
+  bootstrap: [E2EApp],
   entryComponents: [
-    E2EApp,
     TabsPage,
     TabPage1,
     Page1,

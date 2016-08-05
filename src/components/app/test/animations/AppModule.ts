@@ -71,8 +71,8 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
+  bootstrap: [E2EApp],
   entryComponents: [
-    E2EApp,
     E2EPage
   ]
 })

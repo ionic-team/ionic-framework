@@ -13,10 +13,9 @@ var app = new WebpackDevServer(compiler, {
 	historyApiFallback: true,
 	hot: true, // Note: only CSS is currently hot reloaded
 	publicPath: '/',
-	quiet: true,
-	watchOptions: {
-		ignored: /node_modules/
-	}
+  quiet: true,
+  lazy: true,
+  filename: webpackServerConfig.output.filename
 });
 
 app.listen(8080, function(err, result) {

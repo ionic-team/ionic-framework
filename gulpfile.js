@@ -291,7 +291,7 @@ gulp.task('run.e2e', function(done){
     'transpile.es2015',
     ['e2e.setup', 'sass', 'fonts'],
     'e2e.pre-transpile',
-    //'e2e.transpile',
+    'e2e.transpile',
     done
   );
 });
