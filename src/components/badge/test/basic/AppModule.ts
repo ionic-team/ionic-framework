@@ -24,7 +24,6 @@ export class E2EApp {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
     E2EPage
   ]
 })
