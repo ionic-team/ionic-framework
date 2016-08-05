@@ -280,8 +280,15 @@ gulp.task('e2e.transpile', function(done){
   });
 });
 
-gulp.task('webpack.dev.server', function() {
+gulp.task('e2e.webpack', function() {
+  var exec = require('child_process').exec;
+  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/webpack';
 
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
+  });
 });
 
 gulp.task('run.e2e', function(done){
@@ -292,6 +299,7 @@ gulp.task('run.e2e', function(done){
     ['e2e.setup', 'sass', 'fonts'],
     'e2e.pre-transpile',
     'e2e.transpile',
+    'e2e.webpack',
     done
   );
 });
