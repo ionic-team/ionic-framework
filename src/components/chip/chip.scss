@@ -12,6 +12,7 @@ $chip-margin:                2px 0 !default;
 
 $chip-label-color:           rgba(0, 0, 0, .87) !default;
 $chip-icon-color:            rgba(0, 0, 0, .87) !default;
+$chip-remove-color:          rgba(137, 137, 137, .54) !default;
 
 ion-chip {
   display: inline-flex;
@@ -82,6 +83,10 @@ ion-chip {
   }
 
   ion-icon[name="close-circle"] {
-    font-size: 1.2em;
+    margin: 0 -8px 2px -4px;
+
+    font-size: 1.4em;
+
+    color: $chip-remove-color;
   }
 }
