@@ -195,7 +195,7 @@ export class NavControllerBase extends Ion implements NavController {
           let leavingView = this.getByState(STATE_INIT_LEAVE);
           if (!leavingView && this._isPortal) {
             // if we didn't find an active view, and this is a portal
-            let activeNav = this._app.getActiveNav();
+            let activeNav = <NavControllerBase>this._app.getActiveNav();
             if (activeNav) {
               leavingView = activeNav.getByState(STATE_INIT_LEAVE);
             }
