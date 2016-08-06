@@ -5,6 +5,9 @@ import { isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
 
 
+/**
+ * @private
+ */
 @Component({
   selector: 'ion-img',
   template:

@@ -37,12 +37,39 @@ export class App {
    */
   appRoot: AppRoot;
 
+  /**
+   * @private
+   */
   viewDidLoad: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewWillEnter: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewDidEnter: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewWillLeave: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewDidLeave: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewWillUnload: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewDidUnload: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -150,7 +177,7 @@ export class App {
   }
 
   /**
-   * @private
+   * retuns the root NavController
    */
   getRootNav(): NavController {
     return this._rootNav;
