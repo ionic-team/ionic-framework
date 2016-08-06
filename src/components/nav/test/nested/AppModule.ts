@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicModule, NavController, MenuController, Config, Nav, App } from '../../../dist';
+import { IonicApp, IonicModule, NavController, MenuController, Config, Nav, App } from '../../../dist';
 
 
 @Component({
@@ -180,7 +180,7 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
-  bootstrap: [E2EApp],
+  bootstrap: [IonicApp],
   entryComponents: [
     Login,
     Account,

@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicModule, NavController, ModalController, ViewController } from '../../../dist';
+import { IonicApp, IonicModule, NavController, ModalController, ViewController } from '../../../dist';
 import { Injectable } from '@angular/core';
 
 
@@ -160,7 +160,7 @@ export class E2EApp {
     })
   ],
   providers: [SomeData, OtherData],
-  bootstrap: [E2EApp],
+  bootstrap: [IonicApp],
   entryComponents: [
     TabsPage,
     TabPage1,

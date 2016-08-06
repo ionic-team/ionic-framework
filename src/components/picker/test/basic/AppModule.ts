@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { IonicModule, PickerController } from '../../../dist';
+import { IonicApp, IonicModule, PickerController } from '../../../dist';
 
 
 @Component({
@@ -225,6 +225,7 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
+  bootstrap: [IonicApp],
   entryComponents: [
     E2EApp,
     E2EPage

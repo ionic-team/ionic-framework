@@ -9,15 +9,16 @@ import { ionicProviders } from './providers';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule],
-  exports: [BrowserModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES, IonicApp],
-  declarations: [IONIC_DIRECTIVES, IonicApp]
+  exports: [BrowserModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES],
+  declarations: [IONIC_DIRECTIVES],
+  entryComponents: [IonicApp]
 })
 export class IonicModule {
 
-  static forRoot(NOTNEEDED?: any, userConfig?: any, deepLinks?: any[]): ModuleWithProviders {
+  static forRoot(userRoot?: any, userConfig?: any, deepLinks?: any[]): ModuleWithProviders {
     return {
       ngModule: IonicModule,
-      providers: ionicProviders(userConfig, deepLinks)
+      providers: ionicProviders(userRoot, userConfig, deepLinks)
     };
   }
 

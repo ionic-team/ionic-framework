@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicModule, Nav, AlertController } from '../../../dist';
+import { IonicApp, IonicModule, Nav, AlertController } from '../../../dist';
 
 
 @Component({templateUrl: 'page1.html'})
@@ -42,6 +42,7 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
+  bootstrap: [IonicApp],
   entryComponents: [
     E2EApp,
     Page1

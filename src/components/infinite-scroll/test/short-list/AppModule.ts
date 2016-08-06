@@ -1,5 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { IonicModule, InfiniteScroll } from '../../../dist';
+import { IonicApp, IonicModule, InfiniteScroll } from '../../../dist';
 
 
 @Component({
@@ -48,6 +48,7 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
+  bootstrap: [IonicApp],
   entryComponents: [
     E2EPage
   ]

@@ -27,6 +27,7 @@ import { Slides, Slide, SlideLazy } from './components/slides/slides';
 import { Tabs } from './components/tabs/tabs';
 import { Tab } from './components/tabs/tab';
 import { List, ListHeader } from './components/list/list';
+import { IonicApp } from './components/app/app-root';
 import { Item, ItemContent } from './components/item/item';
 import { ItemReorder } from './components/item/item-reorder';
 import { ItemSliding, ItemOptions } from './components/item/item-sliding';
@@ -191,6 +192,7 @@ export const IONIC_DIRECTIVES: any[] = [
   HideWhen,
   Icon,
   InfiniteScroll,
+  IonicApp,
   ItemContent,
   ItemOptions,
   ItemReorder,

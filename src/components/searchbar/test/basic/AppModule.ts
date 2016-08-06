@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, NgModule } from '@angular/core';
-import { IonicModule } from '../../../dist';
+import { IonicApp, IonicModule } from '../../../dist';
 
 
 @Component({
@@ -64,6 +64,7 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
+  bootstrap: [IonicApp],
   entryComponents: [
     E2EApp,
     E2EPage

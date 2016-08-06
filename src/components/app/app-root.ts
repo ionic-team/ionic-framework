@@ -1,10 +1,11 @@
-import { Component, ElementRef, HostBinding, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, HostBinding, Inject, OnInit, OpaqueToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { App } from './app';
 import { Config } from '../../config/config';
 import { FeatureDetect } from '../../util/feature-detect';
 import { Platform } from '../../platform/platform';
 
+export const UserRoot = new OpaqueToken('USERROOT');
 
 /**
  * @private
@@ -12,11 +13,9 @@ import { Platform } from '../../platform/platform';
 @Component({
   selector: 'ion-app',
   template:
-    '<ng-content></ng-content>' +
-    '<div #anchor nav-portal></div>' +
-    '<click-block></click-block>'
+    '<div #anchor nav-portal></div><click-block></click-block>'
 })
-export class IonicApp {
+export class IonicApp implements OnInit {
 
   /**
    * @internal
@@ -24,22 +23,34 @@ export class IonicApp {
   @ViewChild('anchor', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
   constructor(
+    @Inject(UserRoot) private _userCmp: any,
+    private _cfr: ComponentFactoryResolver,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
-    app: App,
-    config: Config,
-    platform: Platform,
-    featureDetect: FeatureDetect
+    private _config: Config,
+    private _platform: Platform,
+    private _featureDetect: FeatureDetect,
+    app: App
   ) {
     // register with App that this is Ionic's appRoot component
     app.appRoot = this;
+  }
+
+  ngOnInit() {
+    // load the user root component
+    // into Ionic's root component
+    const factory = this._cfr.resolveComponentFactory(this._userCmp);
+    const componentRef = this._viewport.createComponent(factory);
+    this._renderer.setElementClass(componentRef.location.nativeElement, 'app-root', true);
+    componentRef.changeDetectorRef.detectChanges();
+
 
     // set the mode class name
     // ios/md/wp
-    this._addClass(config.get('mode'));
+    this._addClass(this._config.get('mode'));
 
-    const versions = platform.versions();
-    platform.platforms().forEach(platformName => {
+    const versions = this._platform.versions();
+    this._platform.platforms().forEach(platformName => {
       // platform-ios
       let platformClass = 'platform-' + platformName;
       this._addClass(platformClass);
@@ -57,11 +68,11 @@ export class IonicApp {
 
     // touch devices should not use :hover CSS pseudo
     // enable :hover CSS when the "hoverCSS" setting is not false
-    if (config.getBoolean('hoverCSS', true)) {
+    if (this._config.getBoolean('hoverCSS', true)) {
       this._addClass('enable-hover');
     }
 
-    featureDetect.test(this);
+    this._featureDetect.test(this);
   }
 
   /**

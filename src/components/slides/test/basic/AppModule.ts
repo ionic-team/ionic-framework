@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
 import { Http } from '@angular/http';
-import { IonicModule, Slides } from '../../../dist';
+import { IonicApp, IonicModule, Slides } from '../../../dist';
 
 
 @Component({
@@ -50,6 +50,7 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
+  bootstrap: [IonicApp],
   entryComponents: [
     E2EApp
   ]

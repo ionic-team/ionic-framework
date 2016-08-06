@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicModule, AlertController, LoadingController, NavController } from '../../../dist';
+import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../dist';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 
@@ -173,7 +173,7 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
-  bootstrap: [E2EApp],
+  bootstrap: [IonicApp],
   entryComponents: [
     E2EPage,
     AnotherPage

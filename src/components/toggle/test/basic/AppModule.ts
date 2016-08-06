@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IonicModule, Toggle } from '../../../dist';
+import { IonicApp, IonicModule, Toggle } from '../../../dist';
 
 
 @Component({
@@ -78,6 +78,7 @@ export class E2EApp {
   imports: [
     IonicModule.forRoot(E2EApp)
   ],
+  bootstrap: [IonicApp],
   entryComponents: [
     E2EApp,
     E2EPage

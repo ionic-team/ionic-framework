@@ -1,8 +1,10 @@
+import { ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 
 import { ActionSheetController } from './components/action-sheet/action-sheet';
 import { AlertController } from './components/alert/alert';
 import { App } from './components/app/app';
+import { UserRoot } from './components/app/app-root';
 import { Config, provideConfig, UserConfig } from './config/config';
 import { Events, provideEvents } from './util/events';
 import { FeatureDetect } from './util/feature-detect';
@@ -45,13 +47,15 @@ export function getDocumentLang() {
 /**
  * @private
  */
-export function ionicProviders(userConfig?: any, deepLinks?: any[]): any[] {
+export function ionicProviders(userRoot?: any, userConfig?: any, deepLinks?: any[]): any[] {
   return [
+    { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: userRoot, multi: true },
     { provide: UserAgent, useFactory: getWindowUserAgent },
     { provide: UserConfig, useValue: userConfig },
     { provide: UserDir, useFactory: getDocumentDir },
     { provide: UserLang, useFactory: getDocumentLang },
     { provide: UserNavigatorPlatform, useFactory: getWindowPlatform },
+    { provide: UserRoot, useValue: userRoot },
     { provide: UserUrl, useFactory: getWindowLocation },
 
     provideConfig(),

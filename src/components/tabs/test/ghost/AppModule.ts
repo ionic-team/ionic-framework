@@ -1,5 +1,5 @@
 import { Component, ContentChild, QueryList, ViewChildren, NgModule } from '@angular/core';
-import { IonicModule, NavController, Tab } from '../../../dist';
+import { IonicApp, IonicModule, NavController, Tab } from '../../../dist';
 
 
 //
@@ -133,6 +133,7 @@ export class TabsPage {
   imports: [
     IonicModule.forRoot(TabsPage)
   ],
+  bootstrap: [IonicApp],
   entryComponents: [
     Tab1,
     Tab2,

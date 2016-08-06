@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../../../../../src';
+import { IonicApp, IonicModule, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../../../dist';
 
 
 @Component({
@@ -178,7 +178,6 @@ export class ModalPage {
 
 
 @Component({
-  selector: 'my-app',
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 export class E2EApp {
@@ -193,7 +192,7 @@ export class E2EApp {
     ModalPage
   ],
   imports: [
-    IonicModule
+    IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
