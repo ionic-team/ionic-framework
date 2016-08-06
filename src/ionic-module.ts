@@ -2,31 +2,23 @@ import { ApplicationRef, ModuleWithProviders, NgModule, Optional, SkipSelf } fro
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AppRoot } from './components/app/app-root';
+import { IonicApp } from './components/app/app-root';
 import { IONIC_DIRECTIVES } from './directives';
 import { ionicProviders } from './providers';
 
+
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule],
-  exports: [BrowserModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES],
-  declarations: [IONIC_DIRECTIVES, AppRoot],
-  entryComponents: [AppRoot]
+  exports: [BrowserModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES, IonicApp],
+  declarations: [IONIC_DIRECTIVES, IonicApp]
 })
 export class IonicModule {
 
-  constructor(
-    @Optional() @SkipSelf() ionicModule: IonicModule,
-    ngAppRef: ApplicationRef
-  ) {
-    if (!ionicModule) {
-      ngAppRef.bootstrap(AppRoot);
-    }
-  }
-
-  static forRoot(userRoot: any, userConfig?: any, deepLinks?: any[]): ModuleWithProviders {
+  static forRoot(NOTNEEDED?: any, userConfig?: any, deepLinks?: any[]): ModuleWithProviders {
     return {
       ngModule: IonicModule,
-      providers: ionicProviders(userRoot, userConfig, deepLinks)
+      providers: ionicProviders(userConfig, deepLinks)
     };
   }
+
 }

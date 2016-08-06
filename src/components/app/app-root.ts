@@ -1,11 +1,9 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, HostBinding, Inject, OpaqueToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, HostBinding, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { App } from './app';
 import { Config } from '../../config/config';
 import { FeatureDetect } from '../../util/feature-detect';
 import { Platform } from '../../platform/platform';
-
-export const UserRoot = new OpaqueToken('USERROOT');
 
 
 /**
@@ -13,90 +11,71 @@ export const UserRoot = new OpaqueToken('USERROOT');
  */
 @Component({
   selector: 'ion-app',
-  template: `
-    <div #anchor nav-portal></div>
-    <click-block></click-block>
-  `
+  template:
+    '<ng-content></ng-content>' +
+    '<div #anchor nav-portal></div>' +
+    '<click-block></click-block>'
 })
-export class AppRoot implements AfterViewInit {
+export class IonicApp {
 
+  /**
+   * @internal
+   */
   @ViewChild('anchor', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
   constructor(
-    @Inject(UserRoot) private _userCmp: any,
-    private _cfr: ComponentFactoryResolver,
+    private _elementRef: ElementRef,
     private _renderer: Renderer,
     app: App,
     config: Config,
     platform: Platform,
     featureDetect: FeatureDetect
   ) {
+    // register with App that this is Ionic's appRoot component
     app.appRoot = this;
-
-    const doc = <Document>document;
-    const body = <HTMLBodyElement>doc.body;
-    const mode = config.get('mode');
-
-    // touch devices should not use :hover CSS pseudo
-    // enable :hover CSS when the "hoverCSS" setting is not false
-    if (config.getBoolean('hoverCSS', true)) {
-      // DOM WRITE
-      body.classList.add('enable-hover');
-    }
 
     // set the mode class name
     // ios/md/wp
-    // DOM WRITE
-    body.classList.add(mode);
-
-    // language and direction
-    // DOM WRITE
-    platform.setDir(doc.documentElement.dir, false);
-    // DOM WRITE
-    platform.setLang(doc.documentElement.lang, false);
+    this._addClass(config.get('mode'));
 
     const versions = platform.versions();
     platform.platforms().forEach(platformName => {
       // platform-ios
       let platformClass = 'platform-' + platformName;
-      // DOM WRITE
-      body.classList.add(platformClass);
+      this._addClass(platformClass);
 
       let platformVersion = versions[platformName];
       if (platformVersion) {
         // platform-ios9
         platformClass += platformVersion.major;
-        // DOM WRITE
-        body.classList.add(platformClass);
+        this._addClass(platformClass);
 
         // platform-ios9_3
-        // DOM WRITE
-        body.classList.add(platformClass + '_' + platformVersion.minor);
+        this._addClass(platformClass + '_' + platformVersion.minor);
       }
     });
 
-    // DOM WRITE
-    featureDetect.write(window, doc);
+    // touch devices should not use :hover CSS pseudo
+    // enable :hover CSS when the "hoverCSS" setting is not false
+    if (config.getBoolean('hoverCSS', true)) {
+      this._addClass('enable-hover');
+    }
 
-    // DOM READ
-    featureDetect.read(window, document);
-
-    // DOM WRITE
-    featureDetect.results(window, document);
+    featureDetect.test(this);
   }
 
-  ngAfterViewInit() {
-    // load the user app's root component
-    const factory = this._cfr.resolveComponentFactory(this._userCmp);
-
-    // DOM WRITE
-    const componentRef = this._viewport.createComponent(factory);
-    this._renderer.setElementClass(componentRef.location.nativeElement, 'app-root', true);
-
-    // DOM WRITE
-    componentRef.changeDetectorRef.detectChanges();
+  /**
+   * @internal
+   */
+  _addClass(className: string) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 
-  @HostBinding('class.disable-scroll') disableScroll: boolean = false;
+  /**
+   * @internal
+   */
+  _disableScroll(shouldDisableScroll: boolean) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, 'disable-scroll', shouldDisableScroll);
+  }
 
 }

@@ -825,11 +825,13 @@ interface BackButtonAction {
   priority: number;
 }
 
-export function setupPlatform(queryParams: QueryParams, userAgent: string, navigatorPlatform: string, zone: NgZone): Platform {
+export function setupPlatform(queryParams: QueryParams, userAgent: string, navigatorPlatform: string, dir: string, lang: string, zone: NgZone): Platform {
   const p = new Platform();
   p.setUserAgent(userAgent);
   p.setQueryParams(queryParams);
   p.setNavigatorPlatform(navigatorPlatform);
+  p.setDir(dir, false);
+  p.setLang(lang, false);
   p.setZone(zone);
   p.load();
   return p;
@@ -837,6 +839,8 @@ export function setupPlatform(queryParams: QueryParams, userAgent: string, navig
 
 export const UserAgent = new OpaqueToken('USERAGENT');
 export const UserNavigatorPlatform = new OpaqueToken('USERNAVPLT');
+export const UserDir = new OpaqueToken('USERDIR');
+export const UserLang = new OpaqueToken('USERLANG');
 
 
 export function providePlatform(): any {
@@ -847,6 +851,8 @@ export function providePlatform(): any {
       QueryParams,
       UserAgent,
       UserNavigatorPlatform,
+      UserDir,
+      UserLang,
       NgZone
     ]
   };

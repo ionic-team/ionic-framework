@@ -1,10 +1,8 @@
-import { ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 
 import { ActionSheetController } from './components/action-sheet/action-sheet';
 import { AlertController } from './components/alert/alert';
 import { App } from './components/app/app';
-import { AppRoot, UserRoot } from './components/app/app-root';
 import { Config, provideConfig, UserConfig } from './config/config';
 import { Events, provideEvents } from './util/events';
 import { FeatureDetect } from './util/feature-detect';
@@ -15,7 +13,7 @@ import { LoadingController } from './components/loading/loading';
 import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal';
 import { PickerController } from './components/picker/picker';
-import { Platform, providePlatform, UserAgent, UserNavigatorPlatform } from './platform/platform';
+import { Platform, providePlatform, UserAgent, UserNavigatorPlatform, UserDir, UserLang } from './platform/platform';
 import { PopoverController } from './components/popover/popover';
 import { QueryParams, provideQueryParams, UserUrl } from './platform/query-params';
 import { TapClick, provideTapClick } from './components/tap-click/tap-click';
@@ -23,30 +21,37 @@ import { ToastController } from './components/toast/toast';
 import { Translate } from './translation/translate';
 import { TransitionController } from './transitions/transition-controller';
 
-export { setupProvideEvents } from './util/events';
-
 
 export function getWindowUserAgent() {
-  return window.navigator.userAgent;
+  return window && window.navigator.userAgent;
 }
 
 export function getWindowPlatform() {
-  return window.navigator.platform;
+  return window && window.navigator.platform;
 }
 
 export function getWindowLocation() {
-  return window.location.href;
+  return window && window.location.href;
 }
+
+export function getDocumentDir() {
+  return document && document.documentElement.dir;
+}
+
+export function getDocumentLang() {
+  return document && document.documentElement.lang;
+}
+
 /**
  * @private
  */
-export function ionicProviders(userRoot: any, userConfig?: any, deepLinks?: any[]): any[] {
+export function ionicProviders(userConfig?: any, deepLinks?: any[]): any[] {
   return [
-    { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: userRoot, multi: true },
     { provide: UserAgent, useFactory: getWindowUserAgent },
     { provide: UserConfig, useValue: userConfig },
+    { provide: UserDir, useFactory: getDocumentDir },
+    { provide: UserLang, useFactory: getDocumentLang },
     { provide: UserNavigatorPlatform, useFactory: getWindowPlatform },
-    { provide: UserRoot, useValue: userRoot },
     { provide: UserUrl, useFactory: getWindowLocation },
 
     provideConfig(),

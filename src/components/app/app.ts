@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { AppRoot } from './app-root';
+import { IonicApp } from './app-root';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
 import { NavController } from '../nav/nav-controller';
@@ -24,14 +24,14 @@ export class App {
   private _portal: NavPortal;
 
   /**
-   * @private
+   * @internal
    */
   clickBlock: ClickBlock;
 
   /**
-   * @private
+   * @internal
    */
-  appRoot: AppRoot;
+  appRoot: IonicApp;
 
   viewDidLoad: EventEmitter<any> = new EventEmitter();
   viewWillEnter: EventEmitter<any> = new EventEmitter();
@@ -92,15 +92,9 @@ export class App {
    * @private
    */
   setScrollDisabled(disableScroll: boolean) {
-    let enabled = this._config.get('canDisableScroll', true);
-    if (!enabled) {
-      return;
+    if (this._config.get('canDisableScroll', true)) {
+      this.appRoot._disableScroll(disableScroll);
     }
-    if (!this.appRoot) {
-      console.error('appRoot is missing, scrolling can not be enabled/disabled');
-      return;
-    }
-    this.appRoot.disableScroll = disableScroll;
   }
 
   /**

@@ -14,6 +14,7 @@ export { Img } from './components/img/img';
 export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 export { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
 export { TextArea, TextInput } from './components/input/input';
+export { IonicApp } from './components/app/app-root';
 export { Item } from './components/item/item';
 export { ItemReorder } from './components/item/item-reorder';
 export { ItemSliding, ItemOptions, ItemSideFlags } from './components/item/item-sliding';

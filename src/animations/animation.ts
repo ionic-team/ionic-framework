@@ -59,21 +59,19 @@ export class Animation {
     this._afSty = {};
 
     this._el.length = this._c.length = this._bfAdd.length = this._bfRmv.length = this._afAdd.length = this._afRmv.length = this._fFns.length = this._bfReadFns.length = this._bfWriteFns.length = this._fOnceFns.length = 0;
-    this._easing = this._dur = this.opts = null;
+    this._easing = this._dur = this.opts = this._unregTrans = null;
   }
 
   element(ele: any): Animation {
-    var i: number;
-
     if (ele) {
       if (typeof ele === 'string') {
         ele = document.querySelectorAll(ele);
-        for (i = 0; i < ele.length; i++) {
+        for (var i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
 
       } else if (ele.length) {
-        for (i = 0; i < ele.length; i++) {
+        for (var i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
 
@@ -287,7 +285,6 @@ export class Animation {
    */
   play(opts: PlayOptions = {}) {
     var self = this;
-    var i: number;
 
     const dur = isDefined(opts.duration) ? opts.duration : this._dur;
 
@@ -528,31 +525,26 @@ export class Animation {
    */
   _progress(stepValue: number) {
     // bread 'n butter
-    var i: number;
-    var prop: string;
-    var fx: EffectProperty;
     var val: any;
-    var transforms: string[];
-    var tweenEffect: boolean;
 
-    for (i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._c.length; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._progress(stepValue);
     }
 
-    if (this._el.length) {
+    if (this._fx && this._el.length) {
       // flip the number if we're going in reverse
       if (this._rv) {
         stepValue = ((stepValue * -1) + 1);
       }
-      transforms = [];
+      var transforms: string[] = [];
 
-      for (prop in this._fx) {
-        fx = this._fx[prop];
+      for (var prop in this._fx) {
+        var fx = this._fx[prop];
 
         if (fx.from && fx.to) {
 
-          tweenEffect = (fx.from.num !== fx.to.num);
+          var tweenEffect = (fx.from.num !== fx.to.num);
           if (tweenEffect) {
             this.hasTween = true;
           }
@@ -578,7 +570,7 @@ export class Animation {
               transforms.push(prop + '(' + val + ')');
 
             } else {
-              for (i = 0; i < this._el.length; i++) {
+              for (var i = 0; i < this._el.length; i++) {
                 // ******** DOM WRITE ****************
                 (<any>this._el[i].style)[prop] = val;
               }
@@ -596,7 +588,7 @@ export class Animation {
           transforms.push('translateZ(0px)');
         }
 
-        for (i = 0; i < this._el.length; i++) {
+        for (var i = 0; i < this._el.length; i++) {
           // ******** DOM WRITE ****************
           (<any>this._el[i].style)[CSS.transform] = transforms.join(' ');
         }
@@ -611,18 +603,15 @@ export class Animation {
    * DOM WRITE
    */
   _setTrans(duration: number, forcedLinearEasing: boolean) {
-    var i: number;
-    var easing: string;
-
     // set the TRANSITION properties inline on the element
-    for (i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._c.length; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._setTrans(duration, forcedLinearEasing);
     }
 
     if (Object.keys(this._fx).length) {
-      easing = (forcedLinearEasing ? 'linear' : this.getEasing());
-      for (i = 0; i < this._el.length; i++) {
+      var easing = (forcedLinearEasing ? 'linear' : this.getEasing());
+      for (var i = 0; i < this._el.length; i++) {
         if (duration > 0) {
           // all parent/child animations should have the same duration
           // ******** DOM WRITE ****************
@@ -646,20 +635,16 @@ export class Animation {
    * DOM WRITE
    */
   _willChg(addWillChange: boolean) {
-    var i: number;
-    var wc: string[];
-    var prop: string;
-
-    for (i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._c.length; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._willChg(addWillChange);
     }
 
     if (SUPPORTS_WILL_CHANGE) {
-      wc = [];
+      let wc: string[] = [];
 
       if (addWillChange) {
-        for (prop in this._fx) {
+        for (var prop in this._fx) {
           if (this._fx[prop].wc !== '') {
             if (this._fx[prop].wc === 'webkitTransform') {
               wc.push('transform', '-webkit-transform');
@@ -671,7 +656,7 @@ export class Animation {
         }
       }
 
-      for (i = 0; i < this._el.length; i++) {
+      for (var i = 0; i < this._el.length; i++) {
         // ******** DOM WRITE ****************
         (<any>this._el[i]).style['willChange'] = wc.join(',');
       }
@@ -685,23 +670,20 @@ export class Animation {
   _before() {
     // before the RENDER_DELAY
     // before the animations have started
-    var i: number;
-    var j: number;
-    var prop: string;
     var ele: HTMLElement;
 
     // stage all of the child animations
-    for (i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._c.length; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._before();
     }
 
     if (!this._rv) {
-      for (i = 0; i < this._el.length; i++) {
+      for (var i = 0; i < this._el.length; i++) {
         ele = this._el[i];
 
         // css classes to add before the animation
-        for (j = 0; j < this._bfAdd.length; j++) {
+        for (var j = 0; j < this._bfAdd.length; j++) {
           // ******** DOM WRITE ****************
           ele.classList.add(this._bfAdd[j]);
         }
@@ -713,7 +695,7 @@ export class Animation {
         }
 
         // inline styles to add before the animation
-        for (prop in this._bfSty) {
+        for (var prop in this._bfSty) {
           // ******** DOM WRITE ****************
           (<any>ele).style[prop] = this._bfSty[prop];
         }
@@ -726,14 +708,12 @@ export class Animation {
    * DOM READ
    */
   _beforeReadFn() {
-    var i: number;
-
-    for (i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._c.length; i++) {
       // ******** DOM READ ****************
       this._c[i]._beforeReadFn();
     }
 
-    for (i = 0; i < this._bfReadFns.length; i++) {
+    for (var i = 0; i < this._bfReadFns.length; i++) {
       // ******** DOM READ ****************
       this._bfReadFns[i]();
     }
@@ -744,14 +724,12 @@ export class Animation {
    * DOM WRITE
    */
   _beforeWriteFn() {
-    var i: number;
-
-    for (i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._c.length; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._beforeWriteFn();
     }
 
-    for (i = 0; i < this._bfWriteFns.length; i++) {
+    for (var i = 0; i < this._bfWriteFns.length; i++) {
       // ******** DOM WRITE ****************
       this._bfWriteFns[i]();
     }
@@ -763,17 +741,14 @@ export class Animation {
    */
   _after() {
     // after the animations have finished
-    var i: number;
-    var j: number;
-    var prop: string;
     var ele: HTMLElement;
 
-    for (i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._c.length; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._after();
     }
 
-    for (i = 0; i < this._el.length; i++) {
+    for (var i = 0; i < this._el.length; i++) {
       ele = this._el[i];
 
       // remove the transition duration/easing
@@ -786,19 +761,19 @@ export class Animation {
         // finished in reverse direction
 
         // css classes that were added before the animation should be removed
-        for (j = 0; j < this._bfAdd.length; j++) {
+        for (var j = 0; j < this._bfAdd.length; j++) {
           // ******** DOM WRITE ****************
           ele.classList.remove(this._bfAdd[j]);
         }
 
         // css classes that were removed before the animation should be added
-        for (j = 0; j < this._bfRmv.length; j++) {
+        for (var j = 0; j < this._bfRmv.length; j++) {
           // ******** DOM WRITE ****************
           ele.classList.add(this._bfRmv[j]);
         }
 
         // inline styles that were added before the animation should be removed
-        for (prop in this._bfSty) {
+        for (var prop in this._bfSty) {
           // ******** DOM WRITE ****************
           (<any>ele).style[prop] = '';
         }
@@ -807,19 +782,19 @@ export class Animation {
         // finished in forward direction
 
         // css classes to add after the animation
-        for (j = 0; j < this._afAdd.length; j++) {
+        for (var j = 0; j < this._afAdd.length; j++) {
           // ******** DOM WRITE ****************
           ele.classList.add(this._afAdd[j]);
         }
 
         // css classes to remove after the animation
-        for (j = 0; j < this._afRmv.length; j++) {
+        for (var j = 0; j < this._afRmv.length; j++) {
           // ******** DOM WRITE ****************
           ele.classList.remove(this._afRmv[j]);
         }
 
         // inline styles to add after the animation
-        for (prop in this._afSty) {
+        for (var prop in this._afSty) {
           // ******** DOM WRITE ****************
           (<any>ele).style[prop] = this._afSty[prop];
         }
@@ -921,8 +896,7 @@ export class Animation {
    */
   onFinish(callback: Function, onceTimeCallback: boolean = false, clearOnFinishCallacks: boolean = false): Animation {
     if (clearOnFinishCallacks) {
-      this._fFns = [];
-      this._fOnceFns = [];
+      this._fFns.length = this._fOnceFns.length = 0;
     }
     if (onceTimeCallback) {
       this._fOnceFns.push(callback);
@@ -940,15 +914,14 @@ export class Animation {
   _didFinish(hasCompleted: boolean) {
     this.isPlaying = false;
     this.hasCompleted = hasCompleted;
-    var i: number;
 
-    for (i = 0; i < this._fFns.length; i++) {
+    for (var i = 0; i < this._fFns.length; i++) {
       this._fFns[i](this);
     }
-    for (i = 0; i < this._fOnceFns.length; i++) {
+    for (var i = 0; i < this._fOnceFns.length; i++) {
       this._fOnceFns[i](this);
     }
-    this._fOnceFns = [];
+    this._fOnceFns.length = 0;
   }
 
   /**
@@ -966,16 +939,15 @@ export class Animation {
    * DOM WRITE
    */
   destroy(removeElement?: boolean) {
-    var i: number;
     var ele: HTMLElement;
 
-    for (i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._c.length; i++) {
       // ******** DOM WRITE ****************
       this._c[i].destroy(removeElement);
     }
 
     if (removeElement) {
-      for (i = 0; i < this._el.length; i++) {
+      for (var i = 0; i < this._el.length; i++) {
         ele = this._el[i];
         // ******** DOM WRITE ****************
         ele.parentNode && ele.parentNode.removeChild(ele);
@@ -992,10 +964,9 @@ export class Animation {
    */
   _transEl(): HTMLElement {
     // get the lowest level element that has an Animation
-    var i: number;
     var targetEl: HTMLElement;
 
-    for (i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._c.length; i++) {
       targetEl = this._c[i]._transEl();
       if (targetEl) {
         return targetEl;

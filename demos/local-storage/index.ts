@@ -1,6 +1,6 @@
 import { Component, Injectable, Pipe, PipeTransform } from '@angular/core';
 
-import { Config, IonicApp, ionicBootstrap, LocalStorage, Platform, Storage } from 'ionic-angular';
+import { Config, ionicBootstrap, LocalStorage, Platform, Storage } from 'ionic-angular';
 
 
 @Pipe({

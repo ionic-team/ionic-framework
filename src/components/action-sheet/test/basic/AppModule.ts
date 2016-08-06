@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicModule, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../../../dist';
+import { IonicApp, IonicModule, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../../../../../src';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { IonicModule, ActionSheetController, AlertController, ModalController, V
 export class E2EPage {
   result: string = '';
 
-  constructor(private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController, private modalCtrl: ModalController, private platform: Platform) {}
+  constructor(public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public modalCtrl: ModalController, public platform: Platform) {}
 
   presentActionSheet1() {
     this.result = '';
@@ -168,7 +168,8 @@ export class E2EPage {
   `
 })
 export class ModalPage {
-  constructor(private viewCtrl: ViewController) {}
+
+  constructor(public viewCtrl: ViewController) {}
 
   dismiss() {
     this.viewCtrl.dismiss();
@@ -177,6 +178,7 @@ export class ModalPage {
 
 
 @Component({
+  selector: 'my-app',
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 export class E2EApp {
@@ -191,9 +193,9 @@ export class E2EApp {
     ModalPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule
   ],
-  bootstrap: [E2EApp],
+  bootstrap: [IonicApp],
   entryComponents: [
     E2EPage,
     ModalPage
