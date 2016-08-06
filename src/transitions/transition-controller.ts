@@ -5,7 +5,7 @@ import { ViewController } from '../components/nav/view-controller';
 
 
 export class TransitionController {
-  ids: number = -1;
+  ids: number = 0;
   trans: {[key: string]: Transition} = {};
 
   getRootTransId(nav: NavControllerBase): number {
