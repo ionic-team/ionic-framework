@@ -28,6 +28,9 @@ export interface GestureOptions {
   priority?: number;
 }
 
+/**
+* @priavte
+*/
 @Injectable()
 export class GestureController {
   private id: number = 1;
@@ -148,6 +151,9 @@ export class GestureController {
 
 }
 
+/**
+* @priavte
+*/
 export class GestureDelegate {
   private disable: string[];
   private disableScroll: DisableScroll;
