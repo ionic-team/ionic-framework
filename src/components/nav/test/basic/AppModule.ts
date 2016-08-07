@@ -1,7 +1,7 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NavController, AlertController, Content,
-  App, IonicModule,
+  App, IonicApp, IonicModule,
   NavParams, ViewController } from '../../../dist';
 
 @Component({

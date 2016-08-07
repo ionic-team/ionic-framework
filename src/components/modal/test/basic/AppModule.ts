@@ -1,7 +1,7 @@
 import { Component, Injectable, NgModule } from '@angular/core';
 
 import { ActionSheetController, App, Config,
-  IonicModule, ModalController, NavController,
+  IonicApp, IonicModule, ModalController, NavController,
   NavParams, PageTransition, Platform, ViewController } from '../../../dist';
 
 

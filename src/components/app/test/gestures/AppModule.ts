@@ -7,7 +7,7 @@ import { IonicApp, IonicModule } from '../../../dist';
 })
 export class E2EPage {
 
-  onTap(ev) {
+  onTap(ev: any) {
     console.log('onTap', ev);
   }
 }

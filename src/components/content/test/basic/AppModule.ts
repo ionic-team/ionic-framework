@@ -1,5 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { Content, IonicModule } from '../../../dist';
+import { IonicApp, IonicModule, Content } from '../../../dist';
 
 @Component({
   templateUrl: 'tabs.html'
