@@ -1,6 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../dist';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormBuilder, ControlGroup, Validators } from '@angular/common';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -9,6 +10,15 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 export class E2EPage {
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController) {}
+
+  ionViewDidEnter() {
+    let alert = this.alertCtrl.create({
+      title: 'Alert!',
+      message: 'I was opened in ionViewDidEnter',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
 
   submit() {
     var alert = this.alertCtrl.create({
@@ -61,7 +71,7 @@ export class E2EPage {
   `
 })
 export class AnotherPage {
-  form: FormGroup;
+  form: any;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public builder: FormBuilder) {
     this.form = builder.group({
