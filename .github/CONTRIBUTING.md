@@ -5,7 +5,7 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
 
 ## Contributing Etiquette
 
-Please see our [Contributor Code of Conduct](./CODE_OF_CONDUCT.md) for information on our rules of conduct.
+Please see our [Contributor Code of Conduct](https://github.com/driftyco/ionic/blob/master/CODE_OF_CONDUCT.md) for information on our rules of conduct.
 
 
 ## Creating an Issue
