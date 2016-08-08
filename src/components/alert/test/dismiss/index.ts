@@ -10,6 +10,15 @@ export class E2EPage {
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController) {}
 
+  /*ionViewDidEnter() {
+    let alert = this.alertCtrl.create({
+      title: 'Alert!',
+      message: 'I was opened in ionViewDidEnter',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }*/
+
   submit() {
     var alert = this.alertCtrl.create({
       title: 'Not logged in',
