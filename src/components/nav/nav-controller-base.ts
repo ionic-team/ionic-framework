@@ -83,13 +83,20 @@ export class NavControllerBase extends Ion implements NavController {
     this._viewport = val;
   }
 
-  setRoot(page: any, params?: any, opts?: NavOptions): Promise<any> {
-    return this.setPages([{page, params}], opts);
+  setRoot(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
+    return this.setPages([{page, params}], opts, done);
   }
 
-  setPages(pages: Array<{page: any, params?: any}>, opts?: NavOptions): Promise<any> {
+  setPages(pages: Array<{page: any, params?: any}>, opts?: NavOptions, done?: Function): Promise<any> {
+    let promise: Promise<any>;
+
+    if (!done) {
+      promise = new Promise(resolve => { done = resolve; });
+    }
+
     if (!pages || !pages.length) {
-      return Promise.resolve(false);
+      done();
+      return promise;
     }
 
     if (isBlank(opts)) {
@@ -97,11 +104,11 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     // remove existing views
-    let leavingView = this._remove(0, this._views.length);
+    const leavingView = this._remove(0, this._views.length);
 
     // create view controllers out of the pages and insert the new views
-    let views = pages.map(p => new ViewController(p.page, p.params));
-    let enteringView = this._insert(0, views);
+    const views = pages.map(p => new ViewController(p.page, p.params));
+    const enteringView = this._insert(0, views);
 
     // if animation wasn't set to true then default it to NOT animate
     if (opts.animate !== true) {
@@ -111,14 +118,12 @@ export class NavControllerBase extends Ion implements NavController {
     // set the nav direction to "back" if it wasn't set
     opts.direction = opts.direction || DIRECTION_BACK;
 
-    let resolve: any;
-    let promise = new Promise(res => { resolve = res; });
+    if (!opts.animation) {
+      opts.animation = leavingView.getTransitionName(opts.direction);
+    }
 
     // start the transition, fire resolve when done...
-    this._transition(enteringView, leavingView, opts, (hasCompleted: boolean) => {
-      // transition has completed!!
-      resolve(hasCompleted);
-    });
+    this._transition(enteringView, leavingView, opts, done);
 
     return promise;
   }
@@ -142,7 +147,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   insertPages(insertIndex: number, insertPages: Array<{page: any, params?: any}>, opts?: NavOptions, done?: Function): Promise<any> {
-    let views = insertPages.map(p => new ViewController(p.page, p.params));
+    const views = insertPages.map(p => new ViewController(p.page, p.params));
     return this.insertViews(insertIndex, views, opts, done);
   }
 
@@ -164,7 +169,7 @@ export class NavControllerBase extends Ion implements NavController {
 
     // insert the new page into the stack
     // returns the newly created entering view
-    let enteringView = this._insert(insertIndex, insertViews);
+    const enteringView = this._insert(insertIndex, insertViews);
 
     // manually set the new view's id if an id was passed in the options
     if (isPresent(opts.id)) {
@@ -194,10 +199,10 @@ export class NavControllerBase extends Ion implements NavController {
           // return a promise and resolve when the transition has completed
 
           // get the leaving view which the _insert() already set
-          let leavingView = this.getByState(STATE_INIT_LEAVE);
+          var leavingView = this.getByState(STATE_INIT_LEAVE);
           if (!leavingView && this._isPortal) {
             // if we didn't find an active view, and this is a portal
-            let activeNav = <NavControllerBase>this._app.getActiveNav();
+            var activeNav = <NavControllerBase>this._app.getActiveNav();
             if (activeNav) {
               leavingView = activeNav.getByState(STATE_INIT_LEAVE);
             }
@@ -279,7 +284,7 @@ export class NavControllerBase extends Ion implements NavController {
   pop(opts?: NavOptions, done?: Function): Promise<any> {
     // get the index of the active view
     // which will become the view to be leaving
-    let activeView = this.getByState(STATE_TRANS_ENTER) ||
+    const activeView = this.getByState(STATE_TRANS_ENTER) ||
                      this.getByState(STATE_INIT_ENTER) ||
                      this.getActive();
 
@@ -291,15 +296,12 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   popTo(view: ViewController, opts?: NavOptions, done?: Function): Promise<any> {
-    let startIndex = this.indexOf(view);
-    if (startIndex < 0) {
-      return Promise.reject('View not found to pop to');
-    }
+    const startIndex = this.indexOf(view);
 
-    let activeView = this.getByState(STATE_TRANS_ENTER) ||
-                     this.getByState(STATE_INIT_ENTER) ||
-                     this.getActive();
-    let removeCount = this.indexOf(activeView) - startIndex;
+    const activeView = this.getByState(STATE_TRANS_ENTER) ||
+                       this.getByState(STATE_INIT_ENTER) ||
+                       this.getActive();
+    const removeCount = this.indexOf(activeView) - startIndex;
 
     return this.remove(startIndex + 1, removeCount, opts, done);
   }
@@ -334,10 +336,10 @@ export class NavControllerBase extends Ion implements NavController {
     opts.direction = opts.direction || DIRECTION_BACK;
 
     // figure out the states of each view in the stack
-    let leavingView = this._remove(startIndex, removeCount);
+    const leavingView = this._remove(startIndex, removeCount);
 
     if (!leavingView) {
-      let forcedActive = this.getByState(STATE_FORCE_ACTIVE);
+      const forcedActive = this.getByState(STATE_FORCE_ACTIVE);
       if (forcedActive) {
         // this scenario happens when a remove is going on
         // during a transition
@@ -377,7 +379,7 @@ export class NavControllerBase extends Ion implements NavController {
         // and the option is set to climb up the nav parent looking
         // for the next nav we could transition to instead
         if (opts.climbNav) {
-          let parentNav: NavController = this.parent;
+          let parentNav = this.parent;
           while (parentNav) {
             if (!isTabs(parentNav)) {
               // Tabs can be a parent, but it is not a collection of views
@@ -428,11 +430,9 @@ export class NavControllerBase extends Ion implements NavController {
     // when this is done, there should only be at most
     // 1 STATE_INIT_ENTER and 1 STATE_INIT_LEAVE
     // there should not be any that are STATE_ACTIVE after this is done
-    let view: ViewController = null;
-
     // loop through each view that is set to be removed
     for (var i = startIndex, ii = removeCount + startIndex; i < ii; i++) {
-      view = this.getByIndex(i);
+      var view = this.getByIndex(i);
       if (!view) break;
 
       if (view.state === STATE_TRANS_ENTER || view.state === STATE_TRANS_LEAVE) {
@@ -459,7 +459,7 @@ export class NavControllerBase extends Ion implements NavController {
       // looks like there's already an active leaving view
 
       // reassign previous entering view to just be inactive
-      let enteringView = this.getByState(STATE_INIT_ENTER);
+      const enteringView = this.getByState(STATE_INIT_ENTER);
       if (enteringView) {
         enteringView.state = STATE_INACTIVE;
       }
@@ -922,8 +922,8 @@ export class NavControllerBase extends Ion implements NavController {
   _cleanup() {
     // ok, cleanup time!! Destroy all of the views that are
     // INACTIVE and come after the active view
-    let activeViewIndex = this.indexOf(this.getActive());
-    let destroys = this._views.filter(v => v.state === STATE_REMOVE_AFTER_TRANS);
+    const activeViewIndex = this.indexOf(this.getActive());
+    const destroys = this._views.filter(v => v.state === STATE_REMOVE_AFTER_TRANS);
 
     for (var i = activeViewIndex + 1; i < this._views.length; i++) {
       if (this._views[i].state === STATE_INACTIVE) {
@@ -941,7 +941,7 @@ export class NavControllerBase extends Ion implements NavController {
     });
 
     // if any z-index goes under 0, then reset them all
-    let shouldResetZIndex = this._views.some(v => v.zIndex < 0);
+    const shouldResetZIndex = this._views.some(v => v.zIndex < 0);
     if (shouldResetZIndex) {
       this._views.forEach(view => {
         // ******** DOM WRITE ****************
@@ -955,7 +955,7 @@ export class NavControllerBase extends Ion implements NavController {
    */
   _domShow(enteringView: ViewController, leavingView: ViewController) {
     let view: ViewController;
-    for (let i = 0; i < this._views.length; i++) {
+    for (var i = 0; i < this._views.length; i++) {
       view = this._views[i];
       var shouldShow = this._isPortal || (view === enteringView);
       var shouldRender = shouldShow || (view === leavingView);
@@ -980,7 +980,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   ngOnDestroy() {
-    for (let i = this._views.length - 1; i >= 0; i--) {
+    for (var i = this._views.length - 1; i >= 0; i--) {
       this._views[i].destroy();
     }
     this._views.length = 0;
@@ -1038,7 +1038,7 @@ export class NavControllerBase extends Ion implements NavController {
 
       if (!this._sbGesture) {
         // create the swipe back gesture if we haven't already
-        let opts = {
+        const opts = {
           edge: 'left',
           threshold: this._sbThreshold
         };
@@ -1094,7 +1094,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   getByState(state: number): ViewController {
-    for (let i = this._views.length - 1; i >= 0; i--) {
+    for (var i = this._views.length - 1; i >= 0; i--) {
       if (this._views[i].state === state) {
         return this._views[i];
       }
