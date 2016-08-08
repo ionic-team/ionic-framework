@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ionicBootstrap, AlertController, LoadingController, NavController } from '../../../../index';
+import { ionicBootstrap, AlertController, LoadingController, NavController } from '../../../../../src';
 import { FormBuilder, ControlGroup, Validators } from '@angular/common';
 
 
@@ -9,6 +9,15 @@ import { FormBuilder, ControlGroup, Validators } from '@angular/common';
 export class E2EPage {
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController) {}
+
+  ionViewDidEnter() {
+    let alert = this.alertCtrl.create({
+      title: 'Alert!',
+      message: 'I was opened in ionViewDidEnter',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
 
   submit() {
     var alert = this.alertCtrl.create({
