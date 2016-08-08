@@ -20,7 +20,7 @@ class WPTransition extends PageTransition {
 
     if (backDirection) {
       this.duration(opts.duration || 120).easing('cubic-bezier(0.47,0,0.745,0.715)');
-      this.enteringPage.before.clearStyles(['scale']);
+      this.enteringPage.beforeClearStyles(['scale']);
 
     } else {
       this.duration(opts.duration || 280).easing('cubic-bezier(0,0 0.05,1)');
@@ -39,9 +39,9 @@ class WPTransition extends PageTransition {
       let enteringBackButton = new Animation(enteringNavbarEle.querySelector('.back-button'));
       this.add(enteringBackButton);
       if (enteringView.enableBack()) {
-        enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
+        enteringBackButton.beforeAddClass(SHOW_BACK_BTN_CSS);
       } else {
-        enteringBackButton.before.removeClass(SHOW_BACK_BTN_CSS);
+        enteringBackButton.beforeRemoveClass(SHOW_BACK_BTN_CSS);
       }
     }
 

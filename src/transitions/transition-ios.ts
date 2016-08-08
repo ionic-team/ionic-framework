@@ -43,7 +43,7 @@ class IOSTransition extends PageTransition {
     } else {
       // entering content, forward direction
       enteringContent
-        .before.clearStyles([OPACITY])
+        .beforeClearStyles([OPACITY])
         .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
     }
 
@@ -75,7 +75,7 @@ class IOSTransition extends PageTransition {
         if (enteringView.enableBack()) {
           // back direction, entering page has a back button
           enteringBackButton
-            .before.addClass(SHOW_BACK_BTN_CSS)
+            .beforeAddClass(SHOW_BACK_BTN_CSS)
             .fromTo(OPACITY, 0.01, 1, true);
         }
 
@@ -87,14 +87,14 @@ class IOSTransition extends PageTransition {
           // entering navbar, forward direction, and there's a leaving navbar
           // should just fade in, no sliding
           enteringNavbarBg
-            .before.clearStyles([TRANSLATEX])
+            .beforeClearStyles([TRANSLATEX])
             .fromTo(OPACITY, 0.01, 1, true);
 
         } else {
           // entering navbar, forward direction, and there's no leaving navbar
           // should just slide in, no fading in
           enteringNavbarBg
-            .before.clearStyles([OPACITY])
+            .beforeClearStyles([OPACITY])
             .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
         }
 
@@ -102,7 +102,7 @@ class IOSTransition extends PageTransition {
         if (enteringView.enableBack()) {
           // forward direction, entering page has a back button
           enteringBackButton
-            .before.addClass(SHOW_BACK_BTN_CSS)
+            .beforeAddClass(SHOW_BACK_BTN_CSS)
             .fromTo(OPACITY, 0.01, 1, true);
 
           let enteringBackBtnText = new Animation(enteringNavbarEle.querySelector('.back-button-text'));
@@ -110,7 +110,7 @@ class IOSTransition extends PageTransition {
           enteringNavBar.add(enteringBackBtnText);
 
         } else {
-          enteringBackButton.before.removeClass(SHOW_BACK_BTN_CSS);
+          enteringBackButton.beforeRemoveClass(SHOW_BACK_BTN_CSS);
         }
       }
     }
@@ -127,7 +127,7 @@ class IOSTransition extends PageTransition {
       if (backDirection) {
         // leaving content, back direction
         leavingContent
-          .before.clearStyles([OPACITY])
+          .beforeClearStyles([OPACITY])
           .fromTo(TRANSLATEX, CENTER, '100%');
 
       } else {
@@ -167,14 +167,14 @@ class IOSTransition extends PageTransition {
             // leaving navbar, back direction, and there's an entering navbar
             // should just fade out, no sliding
             leavingNavbarBg
-              .before.clearStyles([TRANSLATEX])
+              .beforeClearStyles([TRANSLATEX])
               .fromTo('opacity', 0.99, 0);
 
           } else {
             // leaving navbar, back direction, and there's no entering navbar
             // should just slide out, no fading out
             leavingNavbarBg
-              .before.clearStyles([OPACITY])
+              .beforeClearStyles([OPACITY])
               .fromTo(TRANSLATEX, CENTER, '100%');
           }
 

@@ -22,7 +22,7 @@ class MDTransition extends PageTransition {
 
     if (backDirection) {
       this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-      this.enteringPage.before.clearStyles([TRANSLATEY]);
+      this.enteringPage.beforeClearStyles([TRANSLATEY]);
 
     } else {
       this.duration(opts.duration || 280).easing('cubic-bezier(0.36,0.66,0.04,1)');
@@ -41,9 +41,9 @@ class MDTransition extends PageTransition {
       let enteringBackButton = new Animation(enteringNavbarEle.querySelector('.back-button'));
       this.add(enteringBackButton);
       if (enteringView.enableBack()) {
-        enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
+        enteringBackButton.beforeAddClass(SHOW_BACK_BTN_CSS);
       } else {
-        enteringBackButton.before.removeClass(SHOW_BACK_BTN_CSS);
+        enteringBackButton.beforeRemoveClass(SHOW_BACK_BTN_CSS);
       }
     }
 

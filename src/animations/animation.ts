@@ -1,67 +1,43 @@
 import { CSS, rafFrames, nativeRaf, transitionEnd, nativeTimeout } from '../util/dom';
-import { assign, isDefined } from '../util/util';
+import { isDefined } from '../util/util';
 
 
 /**
  * @private
- *
- * - play
- * - Add before classes - DOM WRITE
- * - Remove before classes - DOM WRITE
- * - Add before inline styles - DOM WRITE
- * - set inline FROM styles - DOM WRITE
- * - RAF
- * - run before functions that have dom reads - DOM READ
- * - run before functions that have dom writes - DOM WRITE
- * - set css transition duration/easing - DOM WRITE
- * - RAF
- * - set inline TO styles - DOM WRITE
  */
 export class Animation {
-  private _parent: Animation;
-  private _c: Animation[] = [];
-  private _el: HTMLElement[] = [];
-  private _fx: {[key: string]: EffectProperty} = {};
+  private _p: Animation;
+  private _c: Animation[];
+  private _cL: number;
+  private _e: HTMLElement[];
+  private _eL: number;
+  private _fx: {[key: string]: EffectProperty};
   private _dur: number = null;
-  private _easing: string = null;
-  private _bfSty: { [property: string]: any; } = {};
-  private _bfAdd: string[] = [];
-  private _bfRmv: string[] = [];
-  private _afSty: { [property: string]: any; } = {};
-  private _afAdd: string[] = [];
-  private _afRmv: string[] = [];
-  private _bfReadFns: Function[] = [];
-  private _bfWriteFns: Function[] = [];
-  private _fFns: Function[] = [];
-  private _fOnceFns: Function[] = [];
-  private _rv: boolean = false;
-  private _unregTrans: Function;
-  private _tmr: number;
-  private _lastUpd: number;
+  private _es: string = null;
+  private _bfSty: { [property: string]: any; };
+  private _bfAdd: string[];
+  private _bfRm: string[];
+  private _afSty: { [property: string]: any; };
+  private _afAdd: string[];
+  private _afRm: string[];
+  private _rdFn: Function[];
+  private _wrFn: Function[];
+  private _fFn: Function[];
+  private _fOneFn: Function[];
+  private _rv: boolean;
+  private _unrgTrns: Function;
+  private _tm: number;
+  private _upd: number;
   private _hasDur: boolean;
   private _isAsync: boolean;
+  private _twn: boolean;
 
   opts: AnimationOptions;
   isPlaying: boolean = false;
-  hasTween: boolean = false;
   hasCompleted: boolean = false;
 
   constructor(ele?: any, opts?: AnimationOptions) {
-    this.element(ele);
-    this.opts = opts;
-  }
-
-  /**
-   * @internal
-   * NO DOM
-   */
-  _reset() {
-    this._fx = {};
-    this._bfSty = {};
-    this._afSty = {};
-
-    this._el.length = this._c.length = this._bfAdd.length = this._bfRmv.length = this._afAdd.length = this._afRmv.length = this._fFns.length = this._bfReadFns.length = this._bfWriteFns.length = this._fOnceFns.length = 0;
-    this._easing = this._dur = this.opts = this._unregTrans = null;
+    this.element(ele).opts = opts;
   }
 
   element(ele: any): Animation {
@@ -86,7 +62,6 @@ export class Animation {
   }
 
   /**
-   * @internal
    * NO DOM
    */
   private _addEle(ele: any) {
@@ -94,37 +69,38 @@ export class Animation {
       ele = ele.nativeElement;
     }
 
-    if (ele.nodeType === 1) {
-      this._el.push(ele);
+    if ((<HTMLElement>ele).nodeType === 1) {
+      this._eL = (this._e = this._e || []).push(ele);
     }
   }
 
   /**
-   * NO DOM
+   * @internal
    */
   parent(parentAnimation: Animation): Animation {
-    this._parent = parentAnimation;
+    this._p = parentAnimation;
     return this;
   }
 
   /**
-   * NO DOM
+   * Add a child animation to this animation.
    */
   add(childAnimation: Animation): Animation {
     childAnimation.parent(this);
-    this._c.push(childAnimation);
+    this._cL = (this._c = this._c || []).push(childAnimation);
     return this;
   }
 
   /**
-   * NO DOM
+   * Get the duration of this animation. If this animation does
+   * not have a duration, then it'll get the duration from its parent.
    */
   getDuration(opts?: PlayOptions): number {
-    return (opts && isDefined(opts.duration) ? opts.duration : this._dur !== null ? this._dur : (this._parent && this._parent.getDuration()) || 0);
+    return (opts && isDefined(opts.duration) ? opts.duration : this._dur !== null ? this._dur : (this._p && this._p.getDuration()) || 0);
   }
 
   /**
-   * NO DOM
+   * Set the duration for this animation.
    */
   duration(milliseconds: number): Animation {
     this._dur = milliseconds;
@@ -132,22 +108,23 @@ export class Animation {
   }
 
   /**
-   * NO DOM
+   * Get the easing of this animation. If this animation does
+   * not have an easing, then it'll get the easing from its parent.
    */
   getEasing(): string {
-    return this._easing !== null ? this._easing : (this._parent && this._parent.getEasing()) || null;
+    return this._es !== null ? this._es : (this._p && this._p.getEasing()) || null;
   }
 
   /**
-   * NO DOM
+   * Set the easing for this animation.
    */
   easing(name: string): Animation {
-    this._easing = name;
+    this._es = name;
     return this;
   }
 
   /**
-   * NO DOM
+   * Add the "from" value for a specific property.
    */
   from(prop: string, val: any): Animation {
     this._addProp('from', prop, val);
@@ -155,7 +132,7 @@ export class Animation {
   }
 
   /**
-   * NO DOM
+   * Add the "to" value for a specific property.
    */
   to(prop: string, val: any, clearProperyAfterTransition?: boolean): Animation {
     const fx: EffectProperty = this._addProp('to', prop, val);
@@ -163,14 +140,14 @@ export class Animation {
     if (clearProperyAfterTransition) {
       // if this effect is a transform then clear the transform effect
       // otherwise just clear the actual property
-      this.after.clearStyles([ fx.trans ? CSS.transform : prop]);
+      this.afterClearStyles([ fx.trans ? CSS.transform : prop]);
     }
 
     return this;
   }
 
   /**
-   * NO DOM
+   * Shortcut to add both the "from" and "to" for the same property.
    */
   fromTo(prop: string, fromVal: any, toVal: any, clearProperyAfterTransition?: boolean): Animation {
     return this.from(prop, fromVal).to(prop, toVal, clearProperyAfterTransition);
@@ -181,6 +158,7 @@ export class Animation {
    * NO DOM
    */
   private _addProp(state: string, prop: string, val: any): EffectProperty {
+    this._fx = this._fx || {};
     var fxProp: EffectProperty = this._fx[prop];
 
     if (!fxProp) {
@@ -214,74 +192,108 @@ export class Animation {
   }
 
   /**
-   * NO DOM
+   * Add CSS class to this animation's elements
+   * before the animation begins.
    */
-  get before() {
-    return {
-      addClass: (className: string): Animation => {
-        this._bfAdd.push(className);
-        return this;
-      },
-      removeClass: (className: string): Animation => {
-        this._bfRmv.push(className);
-        return this;
-      },
-      setStyles: (styles: { [property: string]: any; }): Animation => {
-        this._bfSty = styles;
-        return this;
-      },
-      clearStyles: (propertyNames: string[]): Animation => {
-        for (var i = 0; i < propertyNames.length; i++) {
-          this._bfSty[propertyNames[i]] = '';
-        }
-        return this;
-      },
-      addDomReadFn: (domReadFn: Function): Animation => {
-        this._bfReadFns.push(domReadFn);
-        return this;
-      },
-      addDomWriteFn: (domWriteFn: Function): Animation => {
-        this._bfWriteFns.push(domWriteFn);
-        return this;
-      }
-    };
+  beforeAddClass(className: string): Animation {
+    (this._bfAdd = this._bfAdd || []).push(className);
+    return this;
   }
 
   /**
-   * NO DOM
+   * Remove CSS class from this animation's elements
+   * before the animation begins.
    */
-  get after() {
-    return {
-      addClass: (className: string): Animation => {
-        this._afAdd.push(className);
-        return this;
-      },
-      removeClass: (className: string): Animation => {
-        this._afRmv.push(className);
-        return this;
-      },
-      setStyles: (styles: { [property: string]: any; }): Animation => {
-        this._afSty = styles;
-        return this;
-      },
-      clearStyles: (propertyNames: string[]): Animation => {
-        for (var i = 0; i < propertyNames.length; i++) {
-          this._afSty[propertyNames[i]] = '';
-        }
-        return this;
-      }
-    };
+  beforeRemoveClass(className: string): Animation {
+    (this._bfRm = this._bfRm || []).push(className);
+    return this;
   }
 
   /**
-   * DOM WRITE
-   * NO RECURSION
-   * ROOT ANIMATION
+   * Set CSS inline styles to this animation's elements
+   * before the animation begins.
+   */
+  beforeStyles(styles: { [property: string]: any; }): Animation {
+    this._bfSty = styles;
+    return this;
+  }
+
+  /**
+   * Clear CSS inline styles from this animation's elements
+   * before the animation begins.
+   */
+  beforeClearStyles(propertyNames: string[]): Animation {
+    this._bfSty = this._bfSty || {};
+    for (var i = 0; i < propertyNames.length; i++) {
+      this._bfSty[propertyNames[i]] = '';
+    }
+    return this;
+  }
+
+  /**
+   * Add a function which contains DOM reads, which will run
+   * before the animation begins.
+   */
+  beforeAddRead(domReadFn: Function): Animation {
+    (this._rdFn = this._rdFn || []).push(domReadFn);
+    return this;
+  }
+
+  /**
+   * Add a function which contains DOM writes, which will run
+   * before the animation begins.
+   */
+  beforeAddWrite(domWriteFn: Function): Animation {
+    (this._wrFn = this._wrFn || []).push(domWriteFn);
+    return this;
+  }
+
+  /**
+   * Add CSS class to this animation's elements
+   * after the animation finishes.
+   */
+  afterAddClass(className: string): Animation {
+    (this._afAdd = this._afAdd || []).push(className);
+    return this;
+  }
+
+  /**
+   * Remove CSS class from this animation's elements
+   * after the animation finishes.
+   */
+  afterRemoveClass(className: string): Animation {
+    (this._afRm = this._afRm || []).push(className);
+    return this;
+  }
+
+  /**
+   * Set CSS inline styles to this animation's elements
+   * after the animation finishes.
+   */
+  afterStyles(styles: { [property: string]: any; }): Animation {
+    this._afSty = styles;
+    return this;
+  }
+
+  /**
+   * Clear CSS inline styles from this animation's elements
+   * after the animation finishes.
+   */
+  afterClearStyles(propertyNames: string[]): Animation {
+    this._afSty = this._afSty || {};
+    for (var i = 0; i < propertyNames.length; i++) {
+      this._afSty[propertyNames[i]] = '';
+    }
+    return this;
+  }
+
+  /**
+   * Play the animation.
    */
   play(opts?: PlayOptions) {
     const dur = this.getDuration(opts);
 
-    console.debug('Animation, play, duration', dur, 'easing', this._easing);
+    console.debug('Animation, play, duration', dur, 'easing', this._es);
 
     // this is the top level animation and is in full control
     // of when the async play() should actually kick off
@@ -306,6 +318,7 @@ export class Animation {
     }
 
     // wait a frame for the DOM to get updated from all initial animation writes
+    // both animations with a duration and without need to chill a frame
     nativeRaf(this._playDomInspect.bind(this, opts));
   }
 
@@ -322,12 +335,12 @@ export class Animation {
     // a tween requires that an Animation class has an element
     // and that it has at least one FROM/TO effect
     // and that the FROM/TO effect can tween numeric values
-    this.hasTween = false;
+    this._twn = false;
     this.isPlaying = true;
     this.hasCompleted = false;
     this._hasDur = (this.getDuration(opts) > ANIMATION_DURATION_MIN);
 
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       this._c[i]._playInit(opts);
     }
 
@@ -344,8 +357,6 @@ export class Animation {
    * ROOT ANIMATION
    */
   _playDomInspect(opts: PlayOptions) {
-    // after _playInit and RAF
-
     // fire off all the "before" function that have DOM READS in them
     // elements will be in the DOM, however visibily hidden
     // so we can read their dimensions if need be
@@ -365,22 +376,16 @@ export class Animation {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
       nativeRaf(this._playAnimate.bind(this, opts));
-
-    } else {
-      // no animation, so kick off all the finish callbacks
-      this._didFinish(true);
     }
   }
 
   /**
+   * @internal
    * DOM WRITE
    * RECURSION
    */
   _playProgress(opts: PlayOptions) {
-    // after _playDomInspect
-    // before _playAnimate
-
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._playProgress(opts);
     }
@@ -403,6 +408,10 @@ export class Animation {
       // since there was no animation, immediately run the after
       // ******** DOM WRITE ****************
       this._after();
+
+      // this animation has no duration, so it has finished
+      // other animations could still be running
+      this._didFinish(true);
     }
   }
 
@@ -412,9 +421,7 @@ export class Animation {
    * RECURSION
    */
   _playAnimate() {
-    // after _playProgress
-
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._playAnimate();
     }
@@ -422,8 +429,7 @@ export class Animation {
     if (this._hasDur) {
       // browser had some time to render everything in place
       // and the transition duration/easing is set
-      // now set the TO properties
-      // which will trigger the transition to begin
+      // now set the TO properties which will trigger the transition to begin
       // ******** DOM WRITE ****************
       this._progress(1);
     }
@@ -433,6 +439,7 @@ export class Animation {
    * @internal
    * DOM WRITE
    * NO RECURSION
+   * ROOT ANIMATION
    */
   _asyncEnd(dur: number, shouldComplete: boolean) {
     var self = this;
@@ -448,7 +455,7 @@ export class Animation {
       self._playEnd(false);
 
       // transition finished
-      self._didFinish(shouldComplete);
+      self._didFinishAll(shouldComplete, true, false);
     }
 
     function onTransitionFallback() {
@@ -458,7 +465,7 @@ export class Animation {
       // if all goes well this fallback should never fire
 
       // clear the other async end events from firing
-      self._tmr = 0;
+      self._tm = 0;
       self._clearAsync();
 
       // set the after styles
@@ -466,15 +473,15 @@ export class Animation {
       self._playEnd(true);
 
       // transition finished
-      self._didFinish(shouldComplete);
+      self._didFinishAll(shouldComplete, true, false);
     }
 
     // set the TRANSITION END event on one of the transition elements
-    self._unregTrans = transitionEnd(self._transEl(), onTransitionEnd);
+    self._unrgTrns = transitionEnd(self._transEl(), onTransitionEnd);
 
     // set a fallback timeout if the transition end event never fires, or is too slow
     // transition end fallback: (animation duration + XXms)
-    self._tmr = nativeTimeout(onTransitionFallback, (dur + TRANSITION_END_FALLBACK_PADDING_MS));
+    self._tm = nativeTimeout(onTransitionFallback, (dur + TRANSITION_END_FALLBACK_PADDING_MS));
   }
 
   /**
@@ -483,7 +490,7 @@ export class Animation {
    * RECURSION
    */
   _playEnd(progressEnd: boolean) {
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._playEnd(progressEnd);
     }
@@ -507,6 +514,7 @@ export class Animation {
 
   /**
    * @internal
+   * NO DOM
    * RECURSION
    */
   _hasDuration(opts: PlayOptions) {
@@ -514,7 +522,7 @@ export class Animation {
       return true;
     }
 
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       if (this._c[i]._hasDuration(opts)) {
         return true;
       }
@@ -524,8 +532,7 @@ export class Animation {
   }
 
   /**
-   * DOM WRITE
-   * NO RECURSION
+   * Immediately stop at the end of the animation.
    */
   stop() {
     // ensure all past transition end events have been cleared
@@ -540,11 +547,9 @@ export class Animation {
    * NO RECURSION
    */
   _clearAsync() {
-    this._unregTrans && this._unregTrans();
-    if (this._tmr) {
-      clearTimeout(this._tmr);
-      this._tmr = 0;
-    }
+    this._unrgTrns && this._unrgTrns();
+    this._tm && clearTimeout(this._tm);
+    this._tm = this._unrgTrns = undefined;
   }
 
   /**
@@ -556,7 +561,7 @@ export class Animation {
     // bread 'n butter
     var val: any;
 
-    if (this._fx && this._el.length) {
+    if (this._fx && this._eL) {
       // flip the number if we're going in reverse
       if (this._rv) {
         stepValue = ((stepValue * -1) + 1);
@@ -570,7 +575,7 @@ export class Animation {
 
           var tweenEffect = (fx.from.num !== fx.to.num);
           if (tweenEffect) {
-            this.hasTween = true;
+            this._twn = true;
           }
 
           if (stepValue === 0) {
@@ -594,9 +599,9 @@ export class Animation {
               transforms.push(prop + '(' + val + ')');
 
             } else {
-              for (var i = 0; i < this._el.length; i++) {
+              for (var i = 0; i < this._eL; i++) {
                 // ******** DOM WRITE ****************
-                (<any>this._el[i].style)[prop] = val;
+                (<any>this._e[i].style)[prop] = val;
               }
             }
           }
@@ -607,9 +612,9 @@ export class Animation {
       if (transforms.length) {
         transforms.push('translateZ(0px)');
 
-        for (var i = 0; i < this._el.length; i++) {
+        for (var i = 0; i < this._eL; i++) {
           // ******** DOM WRITE ****************
-          (<any>this._el[i].style)[CSS.transform] = transforms.join(' ');
+          (<any>this._e[i].style)[CSS.transform] = transforms.join(' ');
         }
       }
     }
@@ -623,21 +628,21 @@ export class Animation {
    */
   _setTrans(dur: number, forcedLinearEasing: boolean) {
     // set the TRANSITION properties inline on the element
-    if (Object.keys(this._fx).length) {
+    if (this._fx) {
       var easing = (forcedLinearEasing ? 'linear' : this.getEasing());
-      for (var i = 0; i < this._el.length; i++) {
+      for (var i = 0; i < this._eL; i++) {
         if (dur > 0) {
           // ******** DOM WRITE ****************
-          (<any>this._el[i].style)[CSS.transition] = '';
-          (<any>this._el[i].style)[CSS.transitionDuration] = dur + 'ms';
+          (<any>this._e[i].style)[CSS.transition] = '';
+          (<any>this._e[i].style)[CSS.transitionDuration] = dur + 'ms';
 
           // each animation can have a different easing
           if (easing) {
             // ******** DOM WRITE ****************
-            (<any>this._el[i].style)[CSS.transitionTimingFn] = easing;
+            (<any>this._e[i].style)[CSS.transitionTimingFn] = easing;
           }
         } else {
-          (<any>this._el[i].style)[CSS.transition] = 'none';
+          (<any>this._e[i].style)[CSS.transition] = 'none';
         }
       }
     }
@@ -652,25 +657,31 @@ export class Animation {
     // before the animations have started
     if (!this._rv) {
       let ele: HTMLElement;
-      for (var i = 0; i < this._el.length; i++) {
-        ele = this._el[i];
+      for (var i = 0; i < this._eL; i++) {
+        ele = this._e[i];
 
         // css classes to add before the animation
-        for (var j = 0; j < this._bfAdd.length; j++) {
-          // ******** DOM WRITE ****************
-          ele.classList.add(this._bfAdd[j]);
+        if (this._bfAdd) {
+          for (var j = 0; j < this._bfAdd.length; j++) {
+            // ******** DOM WRITE ****************
+            ele.classList.add(this._bfAdd[j]);
+          }
         }
 
         // css classes to remove before the animation
-        for (var j = 0; j < this._bfRmv.length; j++) {
-          // ******** DOM WRITE ****************
-          ele.classList.remove(this._bfRmv[j]);
+        if (this._bfRm) {
+          for (var j = 0; j < this._bfRm.length; j++) {
+            // ******** DOM WRITE ****************
+            ele.classList.remove(this._bfRm[j]);
+          }
         }
 
         // inline styles to add before the animation
-        for (var prop in this._bfSty) {
-          // ******** DOM WRITE ****************
-          (<any>ele).style[prop] = this._bfSty[prop];
+        if (this._bfSty) {
+          for (var prop in this._bfSty) {
+            // ******** DOM WRITE ****************
+            (<any>ele).style[prop] = this._bfSty[prop];
+          }
         }
       }
     }
@@ -682,14 +693,16 @@ export class Animation {
    * RECURSION
    */
   _beforeReadFn() {
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       // ******** DOM READ ****************
       this._c[i]._beforeReadFn();
     }
 
-    for (var i = 0; i < this._bfReadFns.length; i++) {
-      // ******** DOM READ ****************
-      this._bfReadFns[i]();
+    if (this._rdFn) {
+      for (var i = 0; i < this._rdFn.length; i++) {
+        // ******** DOM READ ****************
+        this._rdFn[i]();
+      }
     }
   }
 
@@ -699,14 +712,16 @@ export class Animation {
    * RECURSION
    */
   _beforeWriteFn() {
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       this._c[i]._beforeWriteFn();
     }
 
-    for (var i = 0; i < this._bfWriteFns.length; i++) {
-      // ******** DOM WRITE ****************
-      this._bfWriteFns[i]();
+    if (this._wrFn) {
+      for (var i = 0; i < this._wrFn.length; i++) {
+        // ******** DOM WRITE ****************
+        this._wrFn[i]();
+      }
     }
   }
 
@@ -717,8 +732,8 @@ export class Animation {
    */
   _after() {
     let ele: HTMLElement;
-    for (var i = 0; i < this._el.length; i++) {
-      ele = this._el[i];
+    for (var i = 0; i < this._eL; i++) {
+      ele = this._e[i];
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
@@ -728,42 +743,54 @@ export class Animation {
         // finished in reverse direction
 
         // css classes that were added before the animation should be removed
-        for (var j = 0; j < this._bfAdd.length; j++) {
-          // ******** DOM WRITE ****************
-          ele.classList.remove(this._bfAdd[j]);
+        if (this._bfAdd) {
+          for (var j = 0; j < this._bfAdd.length; j++) {
+            // ******** DOM WRITE ****************
+            ele.classList.remove(this._bfAdd[j]);
+          }
         }
 
         // css classes that were removed before the animation should be added
-        for (var j = 0; j < this._bfRmv.length; j++) {
-          // ******** DOM WRITE ****************
-          ele.classList.add(this._bfRmv[j]);
+        if (this._bfRm) {
+          for (var j = 0; j < this._bfRm.length; j++) {
+            // ******** DOM WRITE ****************
+            ele.classList.add(this._bfRm[j]);
+          }
         }
 
         // inline styles that were added before the animation should be removed
-        for (var prop in this._bfSty) {
-          // ******** DOM WRITE ****************
-          (<any>ele).style[prop] = '';
+        if (this._bfSty) {
+          for (var prop in this._bfSty) {
+            // ******** DOM WRITE ****************
+            (<any>ele).style[prop] = '';
+          }
         }
 
       } else {
         // finished in forward direction
 
         // css classes to add after the animation
-        for (var j = 0; j < this._afAdd.length; j++) {
-          // ******** DOM WRITE ****************
-          ele.classList.add(this._afAdd[j]);
+        if (this._afAdd) {
+          for (var j = 0; j < this._afAdd.length; j++) {
+            // ******** DOM WRITE ****************
+            ele.classList.add(this._afAdd[j]);
+          }
         }
 
         // css classes to remove after the animation
-        for (var j = 0; j < this._afRmv.length; j++) {
-          // ******** DOM WRITE ****************
-          ele.classList.remove(this._afRmv[j]);
+        if (this._afRm) {
+          for (var j = 0; j < this._afRm.length; j++) {
+            // ******** DOM WRITE ****************
+            ele.classList.remove(this._afRm[j]);
+          }
         }
 
         // inline styles to add after the animation
-        for (var prop in this._afSty) {
-          // ******** DOM WRITE ****************
-          (<any>ele).style[prop] = this._afSty[prop];
+        if (this._afSty) {
+          for (var prop in this._afSty) {
+            // ******** DOM WRITE ****************
+            (<any>ele).style[prop] = this._afSty[prop];
+          }
         }
       }
     }
@@ -771,11 +798,10 @@ export class Animation {
   }
 
   /**
-   * DOM WRITE
-   * RECURSION
+   * Start the animation with a user controlled progress.
    */
   progressStart() {
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       this._c[i].progressStart();
     }
@@ -789,19 +815,18 @@ export class Animation {
   }
 
   /**
-   * DOM WRITE
-   * RECURSION
+   * Set the progress step for this animation.
    */
   progressStep(stepValue: number) {
     let now = Date.now();
 
     // only update if the last update was more than 16ms ago
-    if (now - 16 > this._lastUpd) {
-      this._lastUpd = now;
+    if (now - 16 > this._upd) {
+      this._upd = now;
 
       stepValue = Math.min(1, Math.max(0, stepValue));
 
-      for (var i = 0; i < this._c.length; i++) {
+      for (var i = 0; i < this._cL; i++) {
         // ******** DOM WRITE ****************
         this._c[i].progressStep(stepValue);
       }
@@ -818,13 +843,12 @@ export class Animation {
   }
 
   /**
-   * DOM WRITE
-   * RECURSION
+   * End the progress animation.
    */
   progressEnd(shouldComplete: boolean, currentStepValue: number) {
     console.debug('Animation, progressEnd, shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       this._c[i].progressEnd(shouldComplete, currentStepValue);
     }
@@ -841,7 +865,7 @@ export class Animation {
       // ******** DOM WRITE ****************
       this._after();
 
-      this._didFinish(shouldComplete);
+      this._didFinishAll(shouldComplete, true, true);
 
     } else {
       // the stepValue was left off at a point when it needs to finish transition still
@@ -856,48 +880,67 @@ export class Animation {
   }
 
   /**
-   * POSSIBLE DOM READ/WRITE
+   * Add a callback to fire when the animation has finished.
    */
   onFinish(callback: Function, onceTimeCallback: boolean = false, clearOnFinishCallacks: boolean = false): Animation {
     if (clearOnFinishCallacks) {
-      this._fFns.length = this._fOnceFns.length = 0;
+      this._fFn = this._fOneFn = undefined;
     }
     if (onceTimeCallback) {
-      this._fOnceFns.push(callback);
+      this._fOneFn = this._fOneFn || [];
+      this._fOneFn.push(callback);
 
     } else {
-      this._fFns.push(callback);
+      this._fFn = this._fFn || [];
+      this._fFn.push(callback);
     }
     return this;
   }
 
   /**
    * @internal
+   * NO DOM
    * RECURSION
+   */
+  _didFinishAll(hasCompleted: boolean, finishAsyncAnimations: boolean, finishNoDurationAnimations: boolean) {
+    for (var i = 0; i < this._cL; i++) {
+      this._c[i]._didFinishAll(hasCompleted, finishAsyncAnimations, finishNoDurationAnimations);
+    }
+
+    if (finishAsyncAnimations && this._isAsync || finishNoDurationAnimations && !this._isAsync) {
+      this._didFinish(hasCompleted);
+    }
+  }
+
+  /**
+   * @internal
+   * NO RECURSION
    */
   _didFinish(hasCompleted: boolean) {
     this.isPlaying = false;
     this.hasCompleted = hasCompleted;
 
-    for (var i = 0; i < this._c.length; i++) {
-      this._c[i]._didFinish(hasCompleted);
+    if (this._fFn) {
+      // run all finish callbacks
+      for (var i = 0; i < this._fFn.length; i++) {
+        this._fFn[i](this);
+      }
     }
 
-    for (var i = 0; i < this._fFns.length; i++) {
-      this._fFns[i](this);
+    if (this._fOneFn) {
+      // run all "onetime" finish callbacks
+      for (var i = 0; i < this._fOneFn.length; i++) {
+        this._fOneFn[i](this);
+      }
+      this._fOneFn.length = 0;
     }
-    for (var i = 0; i < this._fOnceFns.length; i++) {
-      this._fOnceFns[i](this);
-    }
-    this._fOnceFns.length = 0;
   }
 
   /**
-   * NO DOM
-   * RECURSION
+   * Reverse the animation.
    */
   reverse(shouldReverse: boolean = true): Animation {
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       this._c[i].reverse(shouldReverse);
     }
     this._rv = shouldReverse;
@@ -905,17 +948,26 @@ export class Animation {
   }
 
   /**
-   * DOM WRITE
-   * RECURSION
+   * Recursively destroy this animation and all child animations.
    */
   destroy() {
-    for (var i = 0; i < this._c.length; i++) {
-      // ******** DOM WRITE ****************
+    for (var i = 0; i < this._cL; i++) {
       this._c[i].destroy();
     }
 
     this._clearAsync();
-    this._reset();
+
+    this._p = this._e = this._rdFn = this._wrFn = null;
+
+    if (this._c) {
+      this._c.length = this._cL = 0;
+    }
+    if (this._fFn) {
+      this._fFn.length = 0;
+    }
+    if (this._fOneFn) {
+      this._fOneFn.length = 0;
+    }
   }
 
   /**
@@ -926,14 +978,14 @@ export class Animation {
     // get the lowest level element that has an Animation
     var targetEl: HTMLElement;
 
-    for (var i = 0; i < this._c.length; i++) {
+    for (var i = 0; i < this._cL; i++) {
       targetEl = this._c[i]._transEl();
       if (targetEl) {
         return targetEl;
       }
     }
 
-    return (this.hasTween && this._hasDur && this._el.length ? this._el[0] : null);
+    return (this._twn && this._hasDur && this._eL ? this._e[0] : null);
   }
 
 
@@ -968,7 +1020,6 @@ export interface AnimationOptions {
 
 export interface PlayOptions {
   duration?: number;
-  stepValue?: number;
 }
 
 export interface EffectProperty {
@@ -983,7 +1034,7 @@ export interface EffectState {
   unit: string;
 }
 
-const TRANSFORMS: any = {
+const TRANSFORMS: {[key: string]: number} = {
   'translateX': 1, 'translateY': 1, 'translateZ': 1, 'scale': 1, 'scaleX': 1, 'scaleY': 1, 'scaleZ': 1, 'rotate': 1, 'rotateX': 1, 'rotateY': 1, 'rotateZ': 1, 'skewX': 1, 'skewY': 1, 'perspective': 1
 };
 

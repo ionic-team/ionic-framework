@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Eve
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { GestureController } from '../../gestures/gesture-controller';
-import { isTrueProperty } from '../../util/util';
+import { isTrueProperty, noop } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../nav/nav-controller-base';
 import { NavOptions } from '../nav/nav-interfaces';
@@ -122,24 +122,42 @@ import { ViewController } from '../nav/view-controller';
 @Component({
   selector: 'ion-tab',
   host: {
-    '[class.show-tab]': 'isSelected',
     '[attr.id]': '_tabId',
     '[attr.aria-labelledby]': '_btnId',
-    '[attr.aria-hidden]': '_ariaHidden',
     'role': 'tabpanel'
   },
   template: '<div #viewport></div><div class="nav-decor"></div>',
   encapsulation: ViewEncapsulation.None,
 })
 export class Tab extends NavControllerBase {
+  /**
+   * @internal
+   */
   _isInitial: boolean;
+  /**
+   * @internal
+   */
   _isEnabled: boolean = true;
+  /**
+   * @internal
+   */
   _isShown: boolean = true;
+  /**
+   * @internal
+   */
   _tabId: string;
+  /**
+   * @internal
+   */
   _btnId: string;
+  /**
+   * @internal
+   */
   _loaded: boolean;
+  /**
+   * @internal
+   */
   _loadTmr: any;
-  _ariaHidden: string = 'true';
 
   /**
    * @private
@@ -228,7 +246,7 @@ export class Tab extends NavControllerBase {
     app: App,
     config: Config,
     keyboard: Keyboard,
-    elementRef: ElementRef,
+    private _elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
     cfr: ComponentFactoryResolver,
@@ -237,7 +255,7 @@ export class Tab extends NavControllerBase {
     transCtrl: TransitionController
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl);
+    super(parent, app, config, keyboard, _elementRef, zone, renderer, cfr, gestureCtrl, transCtrl);
 
     parent.add(this);
 
@@ -246,7 +264,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild('viewport', {read: ViewContainerRef})
   set _vp(val: ViewContainerRef) {
@@ -254,14 +272,14 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     this.tabBadgeStyle = this.tabBadgeStyle ? this.tabBadgeStyle : 'default';
   }
 
   /**
-   * @private
+   * @internal
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
@@ -273,9 +291,8 @@ export class Tab extends NavControllerBase {
     }
   }
 
-
   /**
-   * @private
+   * @internal
    */
   preload(wait: number) {
     this._loadTmr = setTimeout(() => {
@@ -284,16 +301,16 @@ export class Tab extends NavControllerBase {
         this.load({
           animate: false,
           preload: true
-        }, function(){});
+        }, noop);
       }
     }, wait);
   }
 
   /**
-   * @private
+   * @internal
    */
   _createPage(viewCtrl: ViewController, viewport: ViewContainerRef) {
-    let isTabSubPage = (this.parent.subPages && viewCtrl.index > 0);
+    const isTabSubPage = (this.parent._subPages && viewCtrl.index > 0);
 
     if (isTabSubPage) {
       viewport = this.parent.portal;
@@ -303,7 +320,7 @@ export class Tab extends NavControllerBase {
 
     if (isTabSubPage) {
       // add the .tab-subpage css class to tabs pages that should act like subpages
-      let pageEleRef = viewCtrl.pageElementRef();
+      const pageEleRef = viewCtrl.pageElementRef();
       if (pageEleRef) {
         this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
       }
@@ -311,20 +328,21 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
 
+    this._renderer.setElementClass(this._elementRef.nativeElement, 'show-tab', isSelected);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-hidden', (!isSelected).toString());
+
     if (isSelected) {
       // this is the selected tab, detect changes
       this._cd.reattach();
-      this._ariaHidden = 'false';
 
     } else {
       // this tab is not selected, do not detect changes
       this._cd.detach();
-      this._ariaHidden = 'true';
     }
   }
 
@@ -336,7 +354,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     clearTimeout(this._loadTmr);

@@ -99,13 +99,13 @@ describe('Tabs', () => {
       tabs.select(tab1);
       tabs.select(tab2);
 
-      expect(tabs.selectHistory).toEqual([tab0.id, tab1.id, tab2.id]);
+      expect(tabs._selectHistory).toEqual([tab0.id, tab1.id, tab2.id]);
 
       expect(tabs.previousTab(true)).toEqual(tab1);
-      expect(tabs.selectHistory).toEqual([tab0.id, tab1.id]);
+      expect(tabs._selectHistory).toEqual([tab0.id, tab1.id]);
 
       expect(tabs.previousTab(true)).toEqual(tab0);
-      expect(tabs.selectHistory).toEqual([tab0.id]);
+      expect(tabs._selectHistory).toEqual([tab0.id]);
     });
 
     it('should not find a previous tab when there has only been one selection', () => {
@@ -122,7 +122,7 @@ describe('Tabs', () => {
 
     it('should not find a previous tab when theres no history', () => {
       var tabs = mockTabs();
-      expect(tabs.selectHistory.length).toEqual(0);
+      expect(tabs._selectHistory.length).toEqual(0);
       expect(tabs.previousTab(true)).toEqual(null);
     });
 
@@ -133,22 +133,22 @@ describe('Tabs', () => {
       tab0.root = SomePage;
       tab1.root = SomePage;
 
-      expect(tabs.selectHistory.length).toEqual(0);
+      expect(tabs._selectHistory.length).toEqual(0);
 
       tabs.select(tab0);
-      expect(tabs.selectHistory[0]).toEqual(tab0.id);
-      expect(tabs.selectHistory.length).toEqual(1);
+      expect(tabs._selectHistory[0]).toEqual(tab0.id);
+      expect(tabs._selectHistory.length).toEqual(1);
 
       tabs.select(tab1);
-      expect(tabs.selectHistory[0]).toEqual(tab0.id);
-      expect(tabs.selectHistory[1]).toEqual(tab1.id);
-      expect(tabs.selectHistory.length).toEqual(2);
+      expect(tabs._selectHistory[0]).toEqual(tab0.id);
+      expect(tabs._selectHistory[1]).toEqual(tab1.id);
+      expect(tabs._selectHistory.length).toEqual(2);
 
       tabs.select(tab0);
-      expect(tabs.selectHistory[0]).toEqual(tab0.id);
-      expect(tabs.selectHistory[1]).toEqual(tab1.id);
-      expect(tabs.selectHistory[2]).toEqual(tab0.id);
-      expect(tabs.selectHistory.length).toEqual(3);
+      expect(tabs._selectHistory[0]).toEqual(tab0.id);
+      expect(tabs._selectHistory[1]).toEqual(tab1.id);
+      expect(tabs._selectHistory[2]).toEqual(tab0.id);
+      expect(tabs._selectHistory.length).toEqual(3);
     });
 
   });

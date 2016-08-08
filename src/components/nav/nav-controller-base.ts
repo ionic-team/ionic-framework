@@ -31,7 +31,7 @@ export class NavControllerBase extends Ion implements NavController {
   _ids: number = -1;
   _trnsDelay: any;
   _views: ViewController[] = [];
-  rootTransId: number = null;
+  rootTransId: string = null;
 
   viewDidLoad: EventEmitter<any>;
   viewWillEnter: EventEmitter<any>;
@@ -558,7 +558,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (isRootTransition) {
       // this is the root transition, meaning all child navs and their views
       // should be added as a child transition to this one
-      transId = this.rootTransId = this._transCtrl.nextId();
+      transId = this.rootTransId = Date.now().toString();
     }
 
     // create the transition animation from the TransitionController
@@ -576,9 +576,11 @@ export class NavControllerBase extends Ion implements NavController {
 
     // ******** DOM WRITE ****************
     this._beforeTrans(trans, isRootTransition, enteringView, leavingView, opts, (hasCompleted: boolean) => {
-      // ******** DOM WRITE ****************
-      this._transFinish(transId, isRootTransition, enteringView, leavingView, opts.direction, hasCompleted);
-      done(hasCompleted);
+      this._zone.run(() => {
+        // ******** DOM WRITE ****************
+        this._transFinish(transId, isRootTransition, enteringView, leavingView, opts.direction, hasCompleted);
+        done(hasCompleted);
+      });
     });
   }
 
@@ -589,9 +591,6 @@ export class NavControllerBase extends Ion implements NavController {
     // set the state of these views that they are initialized to enter/leave
     enteringView.state = STATE_INIT_ENTER;
     leavingView.state = STATE_INIT_LEAVE;
-
-    // remember if there is already an active transitioning nav/view
-    const isAlreadyTransitioning = this.isTransitioning();
 
     if (!enteringView.isLoaded()) {
       // entering view has not been loaded yet
@@ -617,7 +616,7 @@ export class NavControllerBase extends Ion implements NavController {
       this._setZIndex(enteringView, lastestLeavingView, opts.direction);
 
       // make sure the entering and leaving views are showing
-      if (isAlreadyTransitioning) {
+      if (this._transCtrl.multipleActiveTrans()) {
         // the previous transition was still going when this one started
         // so to be safe, only update showing the entering/leaving
         // don't hide the others when they could still be transitioning
@@ -722,7 +721,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     if (!opts.preload) {
-      trans.before.addDomReadFn(() => {
+      trans.beforeAddRead(() => {
         // call each view's lifecycle events
         if (leavingView.fireOtherLifecycles) {
           // only fire entering lifecycle if the leaving
@@ -823,7 +822,7 @@ export class NavControllerBase extends Ion implements NavController {
   /**
    * DOM WRITE
    */
-  _transFinish(transId: number, isRootTransition: boolean, enteringView: ViewController, leavingView: ViewController, direction: string, hasCompleted: boolean) {
+  _transFinish(transId: string, isRootTransition: boolean, enteringView: ViewController, leavingView: ViewController, direction: string, hasCompleted: boolean) {
     // a transition has completed, but not sure if it's the last one or not
     // check if this transition is the most recent one or not
 
@@ -910,7 +909,11 @@ export class NavControllerBase extends Ion implements NavController {
       }
     }
 
-    this._transCtrl.destroy(transId);
+    if (isRootTransition) {
+      // only destroy the root transition, which will end up
+      // destroying all child transitions too
+      this._transCtrl.destroy(transId);
+    }
   }
 
   /**

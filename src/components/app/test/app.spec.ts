@@ -22,7 +22,7 @@ describe('App', () => {
       tabs.select(tab1);
       tabs.select(tab2);
 
-      expect(tabs.selectHistory).toEqual([tab1.id, tab2.id]);
+      expect(tabs._selectHistory).toEqual([tab1.id, tab2.id]);
 
       spyOn(platform, 'exitApp');
       spyOn(tabs, 'select');

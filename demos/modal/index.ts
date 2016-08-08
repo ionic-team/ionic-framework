@@ -65,7 +65,7 @@ class FadeIn extends Animation {
       .duration(1000)
       .fromTo('translateY', '0%', '0%')
       .fromTo('opacity', 0, 1)
-      .before.addClass('show-page');
+      .beforeAddClass('show-page');
   }
 }
 Animation.register('my-fade-in', FadeIn);
@@ -77,7 +77,7 @@ class FadeOut extends Animation {
       .easing('ease')
       .duration(500)
       .fromTo('opacity', 1, 0)
-      .before.addClass('show-page');
+      .beforeAddClass('show-page');
   }
 }
 Animation.register('my-fade-out', FadeOut);

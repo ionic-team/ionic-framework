@@ -98,7 +98,7 @@ export class ModalCmp {
      if (enteringView.hasNavbar()) {
        // entering page has a navbar
        let enteringNavBar = new Animation(ele.querySelector('ion-navbar'));
-       enteringNavBar.before.addClass('show-navbar');
+       enteringNavBar.beforeAddClass('show-navbar');
        this.add(enteringNavBar);
      }
    }
@@ -154,7 +154,7 @@ class ModalMDSlideIn extends PageTransition {
     if (enteringView.hasNavbar()) {
       // entering page has a navbar
       let enteringNavBar = new Animation(ele.querySelector('ion-navbar'));
-      enteringNavBar.before.addClass('show-navbar');
+      enteringNavBar.beforeAddClass('show-navbar');
       this.add(enteringNavBar);
     }
   }

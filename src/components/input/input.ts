@@ -126,7 +126,7 @@ export class TextInput extends InputBase {
    */
   @Input()
   get value() {
-    return this._value
+    return this._value;
   }
   set value(val: any) {
     super.setValue(val);
@@ -283,7 +283,7 @@ export class TextArea extends InputBase {
    */
   @Input()
   get value() {
-    return this._value
+    return this._value;
   }
   set value(val: any) {
     super.setValue(val);

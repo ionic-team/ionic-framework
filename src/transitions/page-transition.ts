@@ -1,7 +1,5 @@
 import { Animation, AnimationOptions } from '../animations/animation';
-import { closest } from '../util/dom';
 import { Content } from '../components/content/content';
-import { Tabs } from '../components/tabs/tabs';
 import { Transition } from './transition';
 import { ViewController } from '../components/nav/view-controller';
 
@@ -16,10 +14,10 @@ export class PageTransition extends Transition {
     super.init(enteringView, leavingView, opts);
 
     this.enteringPage = new Animation(enteringView.pageElementRef());
-    this.add(this.enteringPage.before.addClass('show-page'));
+    this.add(this.enteringPage.beforeAddClass('show-page'));
 
-    this.before.addDomReadFn(this.readDimensions.bind(this));
-    this.before.addDomWriteFn(this.writeDimensions.bind(this));
+    this.beforeAddRead(this.readDimensions.bind(this));
+    this.beforeAddWrite(this.writeDimensions.bind(this));
   }
 
   /**
@@ -42,8 +40,9 @@ export class PageTransition extends Transition {
     }
   }
 
-}
+  destroy() {
+    super.destroy();
+    this.enteringPage = null;
+  }
 
-function parsePxUnit(val: string): number {
-  return (val.indexOf('px') > 0) ? parseInt(val, 10) : 0;
 }
