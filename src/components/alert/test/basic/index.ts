@@ -289,6 +289,13 @@ class E2EPage {
 
   ionViewDidEnter() {
     console.log('E2EPage, ionViewDidEnter');
+
+    let alert = this.alertCtrl.create({
+      title: 'Alert!',
+      message: 'I was opened in ionViewDidEnter.',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }
 
