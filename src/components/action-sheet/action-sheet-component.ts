@@ -47,7 +47,14 @@ import { ViewController } from '../nav/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class ActionSheetCmp {
-  private d: any;
+  private d: {
+    title?: string;
+    subTitle?: string;
+    cssClass?: string;
+    buttons?: Array<any>;
+    enableBackdropDismiss?: boolean;
+    cancelButton: any;
+  };
   private descId: string;
   private enabled: boolean;
   private hdrId: string;
@@ -64,7 +71,10 @@ export class ActionSheetCmp {
     this.d = params.data;
 
     if (this.d.cssClass) {
-      renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
+      this.d.cssClass.split(' ').forEach(cssClass => {
+        // Make sure the class isn't whitespace, otherwise it throws exceptions
+        if (cssClass.trim() !== '') renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+      });
     }
 
     this.id = (++actionSheetIds);

@@ -96,7 +96,8 @@ class E2EPage {
             this.result = 'Destructive';
           }
         }
-      ]
+      ],
+      cssClass: 'my-action-sheet another-action-sheet-class'
     });
 
     actionSheet.present(actionSheet);
