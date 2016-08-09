@@ -1,9 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
 import { DomSanitizationService } from '@angular/platform-browser';
 
 import { Animation, AnimationOptions } from '../../animations/animation';
-import { Backdrop } from '../backdrop/backdrop';
 import { cancelRaf, pointerCoord, raf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString } from '../../util/util';
 import { Config } from '../../config/config';
@@ -21,16 +19,21 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: '.picker-col',
-  template: `
-    <div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>
-    <div class="picker-opts" #colEle [style.width]="col.optionsWidth">
-      <button *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" [style.transitionDuration]="o._dur" [style.webkitTransform]="o._trans" [style.webkitTransitionDuration]="o._dur" [class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" (click)="optClick($event, i)" type="button" category="picker-opt">
-        {{o.text}}
-      </button>
-    </div>
-    <div *ngIf="col.suffix" class="picker-suffix" [style.width]="col.suffixWidth">{{col.suffix}}</div>
-  `,
-  directives: [NgFor, NgIf],
+  template:
+    '<div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>' +
+    '<div class="picker-opts" #colEle [style.width]="col.optionsWidth">' +
+      '<button *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" ' +
+              '[style.transitionDuration]="o._dur" ' +
+              '[style.webkitTransform]="o._trans" ' +
+              '[style.webkitTransitionDuration]="o._dur" ' +
+              '[class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" ' +
+              '(click)="optClick($event, i)" ' +
+              'type="button" ' +
+              'category="picker-opt">' +
+        '{{o.text}}' +
+      '</button>' +
+    '</div>' +
+    '<div *ngIf="col.suffix" class="picker-suffix" [style.width]="col.suffixWidth">{{col.suffix}}</div>',
   host: {
     '[style.min-width]': 'col.columnWidth',
     '[class.picker-opts-left]': 'col.align=="left"',
@@ -367,7 +370,7 @@ export class PickerColumnCmp {
       </div>
     </div>
   `,
-  directives: [Backdrop, NgClass, NgFor, PickerColumnCmp],
+  directives: [PickerColumnCmp],
   host: {
     'role': 'dialog'
   },

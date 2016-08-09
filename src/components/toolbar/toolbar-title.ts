@@ -42,11 +42,10 @@ import { Toolbar } from './toolbar';
  */
 @Component({
   selector: 'ion-title',
-  template: `
-    <div class="toolbar-title">
-      <ng-content></ng-content>
-    </div>
-  `,
+  template:
+    '<div class="toolbar-title">' +
+      '<ng-content></ng-content>' +
+    '</div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })

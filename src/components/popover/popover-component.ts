@@ -1,7 +1,6 @@
 import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { Animation, AnimationOptions } from '../../animations/animation';
-import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { CSS, nativeRaf } from '../../util/dom';
 import { isPresent, pascalCaseToDashCase } from '../../util/util';
@@ -16,18 +15,16 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-popover',
-  template: `
-    <ion-backdrop (click)="bdClick($event)" [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>
-    <div class="popover-wrapper">
-      <div class="popover-arrow"></div>
-      <div class="popover-content">
-        <div class="popover-viewport">
-          <div #viewport nav-viewport></div>
-        </div>
-      </div>
-    </div>
-  `,
-  directives: [Backdrop]
+  template:
+    '<ion-backdrop (click)="bdClick($event)" [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
+    '<div class="popover-wrapper">' +
+      '<div class="popover-arrow"></div>' +
+      '<div class="popover-content">' +
+        '<div class="popover-viewport">' +
+          '<div #viewport nav-viewport></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>'
 })
 export class PopoverCmp {
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;

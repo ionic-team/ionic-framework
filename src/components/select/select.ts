@@ -1,5 +1,4 @@
 import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Provider, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
@@ -117,21 +116,19 @@ export const SELECT_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: 'ion-select',
-  template: `
-    <div *ngIf="!_text" class="select-placeholder select-text">{{placeholder}}</div>
-    <div *ngIf="_text" class="select-text">{{selectedText || _text}}</div>
-    <div class="select-icon">
-      <div class="select-icon-inner"></div>
-    </div>
-    <button aria-haspopup="true"
-            [id]="id"
-            category="item-cover"
-            [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled"
-            class="item-cover">
-    </button>
-  `,
-  directives: [NgIf],
+  template:
+    '<div *ngIf="!_text" class="select-placeholder select-text">{{placeholder}}</div>' +
+    '<div *ngIf="_text" class="select-text">{{selectedText || _text}}</div>' +
+    '<div class="select-icon">' +
+      '<div class="select-icon-inner"></div>' +
+    '</div>' +
+    '<button aria-haspopup="true" ' +
+            '[id]="id" ' +
+            'category="item-cover" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover">' +
+    '</button>',
   host: {
     '[class.select-disabled]': '_disabled'
   },

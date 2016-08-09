@@ -1,8 +1,7 @@
 import { Component, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgControl, NgModel }  from '@angular/forms';
+import { NgControl }  from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Icon } from '../icon/icon';
 import { isPresent } from '../../util/util';
 import { Debouncer } from '../../util/debouncer';
 
@@ -38,7 +37,6 @@ import { Debouncer } from '../../util/debouncer';
       '<button clear class="searchbar-clear-icon" (click)="clearInput($event)" (mousedown)="clearInput($event)"></button>' +
     '</div>' +
     '<button #cancelButton [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
-  directives: [Icon, NgModel],
   host: {
     '[class.searchbar-has-value]': '_value',
     '[class.searchbar-active]': '_isActive',

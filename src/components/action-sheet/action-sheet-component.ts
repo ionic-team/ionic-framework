@@ -1,11 +1,8 @@
 import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
 
 import { Animation, AnimationOptions } from '../../animations/animation';
-import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
-import { Icon } from '../icon/icon';
 import { Key } from '../../util/key';
 import { NavParams } from '../nav/nav-params';
 import { Transition } from '../../transitions/transition';
@@ -17,28 +14,26 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-action-sheet',
-  template: `
-    <ion-backdrop (click)="bdClick()"></ion-backdrop>
-    <div class="action-sheet-wrapper">
-      <div class="action-sheet-container">
-        <div class="action-sheet-group">
-          <div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>
-          <div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>
-          <button category="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">
-            <ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon>
-            {{b.text}}
-          </button>
-        </div>
-        <div class="action-sheet-group" *ngIf="d.cancelButton">
-          <button category="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">
-            <ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon>
-            {{d.cancelButton.text}}
-          </button>
-        </div>
-      </div>
-    </div>
-    `,
-  directives: [Backdrop, Icon, NgClass, NgFor, NgIf],
+  template:
+    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
+    '<div class="action-sheet-wrapper">' +
+      '<div class="action-sheet-container">' +
+        '<div class="action-sheet-group">' +
+          '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
+          '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
+          '<button category="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">' +
+            '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon>' +
+            '{{b.text}}' +
+          '</button>' +
+        '</div>' +
+        '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
+          '<button category="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
+            '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
+            '{{d.cancelButton.text}}' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>',
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',

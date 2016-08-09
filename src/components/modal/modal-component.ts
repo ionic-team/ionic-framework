@@ -1,7 +1,6 @@
 import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { Animation, AnimationOptions } from '../../animations/animation';
-import { Backdrop } from '../backdrop/backdrop';
 import { Key } from '../../util/key';
 import { NavParams } from '../nav/nav-params';
 import { pascalCaseToDashCase } from '../../util/util';
@@ -15,13 +14,11 @@ import { windowDimensions } from '../../util/dom';
  */
 @Component({
   selector: 'ion-modal',
-  template: `
-    <ion-backdrop disableScroll="false" (click)="bdClick($event)"></ion-backdrop>
-    <div class="modal-wrapper">
-      <div #viewport nav-viewport></div>
-    </div>
-  `,
-  directives: [Backdrop]
+  template:
+    '<ion-backdrop disableScroll="false" (click)="bdClick($event)"></ion-backdrop>' +
+    '<div class="modal-wrapper">' +
+      '<div #viewport nav-viewport></div>' +
+    '</div>'
 })
 export class ModalCmp {
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;

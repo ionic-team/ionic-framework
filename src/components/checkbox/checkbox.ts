@@ -49,20 +49,19 @@ export const CHECKBOX_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: 'ion-checkbox',
-  template: `
-    <div class="checkbox-icon" [class.checkbox-checked]="_checked">
-      <div class="checkbox-inner"></div>
-    </div>
-    <button role="checkbox"
-            type="button"
-            category="item-cover"
-            [id]="id"
-            [attr.aria-checked]="_checked"
-            [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled"
-            class="item-cover">
-    </button>
-  `,
+  template:
+    '<div class="checkbox-icon" [class.checkbox-checked]="_checked">' +
+      '<div class="checkbox-inner"></div>' +
+    '</div>' +
+    '<button role="checkbox" ' +
+            'type="button" ' +
+            'category="item-cover" ' +
+            '[id]="id" ' +
+            '[attr.aria-checked]="_checked" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover"> ' +
+    '</button>',
   host: {
     '[class.checkbox-disabled]': '_disabled'
   },

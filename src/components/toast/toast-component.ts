@@ -14,19 +14,18 @@ import { ViewController } from '../nav/view-controller';
 */
 @Component({
   selector: 'ion-toast',
-  template: `
-    <div class="toast-wrapper"
-      [class.toast-bottom]="d.position === 'bottom'"
-      [class.toast-middle]="d.position === 'middle'"
-      [class.toast-top]="d.position === 'top'">
-      <div class="toast-container">
-        <div class="toast-message" id="{{hdrId}}" *ngIf="d.message">{{d.message}}</div>
-        <button clear class="toast-button" *ngIf="d.showCloseButton" (click)="cbClick()">
-          {{ d.closeButtonText || 'Close' }}
-         </button>
-      </div>
-    </div>
-  `,
+  template:
+    '<div class="toast-wrapper" ' +
+      '[class.toast-bottom]="d.position === \'bottom\'" ' +
+      '[class.toast-middle]="d.position === \'middle\'" ' +
+      '[class.toast-top]="d.position === \'top\'"> ' +
+      '<div class="toast-container"> ' +
+        '<div class="toast-message" id="{{hdrId}}" *ngIf="d.message">{{d.message}}</div> ' +
+        '<button clear class="toast-button" *ngIf="d.showCloseButton" (click)="cbClick()"> ' +
+          '{{ d.closeButtonText || \'Close\' }} ' +
+         '</button> ' +
+      '</div> ' +
+    '</div>',
   directives: [NgIf],
   host: {
     'role': 'dialog',

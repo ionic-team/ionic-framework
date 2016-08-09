@@ -177,14 +177,12 @@ import { GestureController } from '../../gestures/gesture-controller';
  */
 @Component({
   selector: 'ion-menu',
+  template:
+    '<div class="menu-inner"><ng-content></ng-content></div>' +
+    '<ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>',
   host: {
     'role': 'navigation'
   },
-  template: `
-    <div class="menu-inner"><ng-content></ng-content></div>
-    <ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>
-  `,
-  directives: [Backdrop],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -205,12 +203,12 @@ export class Menu {
   isOpen: boolean = false;
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild(Backdrop) backdrop: Backdrop;
 
   /**
-   * @private
+   * @internal
    */
   onContentClick: EventListener;
 
@@ -496,7 +494,7 @@ export class Menu {
 
       this.isOpen = isOpen;
 
-      this._cntEle.classList[isOpen ? 'add' : 'remove']('menu-content-open');
+      (<any>this._cntEle.classList)[isOpen ? 'add' : 'remove']('menu-content-open');
 
       this._cntEle.removeEventListener('click', this.onContentClick);
 

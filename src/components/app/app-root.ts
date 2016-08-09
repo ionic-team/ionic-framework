@@ -13,7 +13,8 @@ export const UserRoot = new OpaqueToken('USERROOT');
 @Component({
   selector: 'ion-app',
   template:
-    '<div #anchor nav-portal></div><click-block></click-block>'
+    '<div #anchor nav-portal></div>' +
+    '<click-block></click-block>'
 })
 export class IonicApp implements OnInit {
 

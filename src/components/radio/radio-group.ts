@@ -1,7 +1,7 @@
-import { AfterContentInit, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, Provider, Renderer } from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Output, Provider, Renderer } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ListHeader } from '../list/list';
+import { ListHeader } from '../list/list-header';
 import { isCheckedProperty } from '../../util/util';
 import { RadioButton } from './radio-button';
 

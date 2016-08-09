@@ -108,11 +108,11 @@ import { isTrueProperty } from '../../util/util';
     '</scroll-content>' +
     '<ng-content select="ion-fixed"></ng-content>' +
     '<ng-content select="ion-refresher"></ng-content>',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   host: {
     '[class.statusbar-padding]': '_sbPadding'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class Content extends Ion {
   _paddingTop: number;

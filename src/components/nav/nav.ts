@@ -47,10 +47,9 @@ import { ViewController } from './view-controller';
  */
 @Component({
   selector: 'ion-nav',
-  template: `
-    <div #viewport nav-viewport></div>
-    <div class="nav-decor"></div>
-  `,
+  template:
+    '<div #viewport nav-viewport></div>' +
+    '<div class="nav-decor"></div>',
   encapsulation: ViewEncapsulation.None,
 })
 export class Nav extends NavControllerBase implements AfterViewInit {

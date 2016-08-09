@@ -121,12 +121,13 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-tab',
+  template:
+    '<div #viewport></div><div class="nav-decor"></div>',
   host: {
     '[attr.id]': '_tabId',
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
-  template: '<div #viewport></div><div class="nav-decor"></div>',
   encapsulation: ViewEncapsulation.None,
 })
 export class Tab extends NavControllerBase {
