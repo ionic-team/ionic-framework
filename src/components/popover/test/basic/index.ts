@@ -189,7 +189,9 @@ class E2EPage {
   }
 
   presentLongListPopover(ev: UIEvent) {
-    let popover = this.popoverCtrl.create(PopoverLongListPage);
+    let popover = this.popoverCtrl.create(PopoverLongListPage, {}, {
+      cssClass: 'my-popover popover-class'
+    });
     popover.present({
       ev: ev
     });
