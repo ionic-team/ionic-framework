@@ -550,7 +550,7 @@ class PickerSlideIn extends Transition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = enteringView.pageElementRef().nativeElement;
+    let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
 
@@ -567,7 +567,7 @@ class PickerSlideOut extends Transition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageElementRef().nativeElement;
+    let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
 

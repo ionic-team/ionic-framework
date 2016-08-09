@@ -320,7 +320,7 @@ export class Tab extends NavControllerBase {
 
     if (isTabSubPage) {
       // add the .tab-subpage css class to tabs pages that should act like subpages
-      const pageEleRef = viewCtrl.pageElementRef();
+      const pageEleRef = viewCtrl.pageRef();
       if (pageEleRef) {
         this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
       }

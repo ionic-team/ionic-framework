@@ -75,7 +75,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
       // this would happen when an ion-nav nests a child ion-nav.
-      viewCtrl.setContent(this);
+      viewCtrl._setContent(this);
     }
 
     if (parent) {

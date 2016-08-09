@@ -299,7 +299,8 @@ export class Tabs extends Ion implements AfterContentInit {
     // if Tabs is static and not navigated to within a NavController
     // then skip this and don't treat it as it's own ViewController
     if (viewCtrl) {
-      viewCtrl.setContent(this);
+      viewCtrl._setContent(this);
+      viewCtrl._setContentRef(_elementRef);
     }
   }
 
@@ -420,13 +421,13 @@ export class Tabs extends Ion implements AfterContentInit {
     let deselectedPage: ViewController;
     if (deselectedTab) {
       deselectedPage = deselectedTab.getActive();
-      deselectedPage && deselectedPage.fireWillLeave();
+      deselectedPage && deselectedPage._fireWillLeave();
     }
 
     opts.animate = false;
 
     const selectedPage = selectedTab.getActive();
-    selectedPage && selectedPage.fireWillEnter();
+    selectedPage && selectedPage._fireWillEnter();
 
     selectedTab.load(opts, (alreadyLoaded: boolean) => {
       selectedTab.ionSelect.emit(selectedTab);
@@ -446,8 +447,8 @@ export class Tabs extends Ion implements AfterContentInit {
         }
       }
 
-      selectedPage && selectedPage.fireDidEnter();
-      deselectedPage && deselectedPage.fireDidLeave();
+      selectedPage && selectedPage._fireDidEnter();
+      deselectedPage && deselectedPage._fireDidLeave();
 
       // track the order of which tabs have been selected, by their index
       // do not track if the tab index is the same as the previous

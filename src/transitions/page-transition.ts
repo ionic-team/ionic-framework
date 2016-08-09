@@ -13,7 +13,7 @@ export class PageTransition extends Transition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    this.enteringPage = new Animation(enteringView.pageElementRef());
+    this.enteringPage = new Animation(enteringView.pageRef());
     this.add(this.enteringPage.beforeAddClass('show-page'));
 
     this.beforeAddRead(this.readDimensions.bind(this));

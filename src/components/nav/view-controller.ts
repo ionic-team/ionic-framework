@@ -41,6 +41,7 @@ export class ViewController {
   private _onWillDismiss: Function = null;
   private _pgRef: ElementRef;
   private _cd: ChangeDetectorRef;
+  private _detached: boolean = false;
   protected _nav: NavController;
 
   /**
@@ -186,12 +187,12 @@ export class ViewController {
   /**
    * @internal
    */
-  setNav(navCtrl: NavController) {
+  _setNav(navCtrl: NavController) {
     this._nav = navCtrl;
   }
 
   /**
-   * @internal
+   * @private
    */
   getNav() {
     return this._nav;
@@ -237,14 +238,15 @@ export class ViewController {
   /**
    * @internal
    */
-  setChangeDetector(cd: ChangeDetectorRef) {
+  _setChangeDetector(cd: ChangeDetectorRef) {
     this._cd = cd;
+    this._detached = false;
   }
 
   /**
    * @internal
    */
-  setInstance(instance: any) {
+  _setInstance(instance: any) {
     this.instance = instance;
   }
 
@@ -281,7 +283,7 @@ export class ViewController {
    * @internal
    * DOM WRITE
    */
-  domShow(shouldShow: boolean, shouldRender: boolean, renderer: Renderer) {
+  _domShow(shouldShow: boolean, shouldRender: boolean, renderer: Renderer) {
     // using hidden element attribute to display:none and not render views
     // renderAttr of '' means the hidden attribute will be added
     // renderAttr of null means the hidden attribute will be removed
@@ -308,7 +310,7 @@ export class ViewController {
   /**
    * @internal
    */
-  setZIndex(zIndex: number, renderer: Renderer) {
+  _setZIndex(zIndex: number, renderer: Renderer) {
     if (this._pgRef && zIndex !== this.zIndex) {
       this.zIndex = zIndex;
       renderer.setElementStyle(this._pgRef.nativeElement, 'z-index', zIndex.toString());
@@ -318,35 +320,21 @@ export class ViewController {
   /**
    * @internal
    */
-  setPageElementRef(elementRef: ElementRef) {
+  _setPageElementRef(elementRef: ElementRef) {
     this._pgRef = elementRef;
   }
 
   /**
-   * @returns {elementRef} Returns the Page's ElementRef
+   * @returns {ElementRef} Returns the Page's ElementRef.
    */
-  pageElementRef(): ElementRef {
+  pageRef(): ElementRef {
     return this._pgRef;
   }
 
   /**
    * @internal
    */
-  setToolbarRef(elementRef: ElementRef) {
-    this._tbRefs.push(elementRef);
-  }
-
-  /**
-   * @internal
-   */
-  toolbarRefs(): ElementRef[] {
-    return this._tbRefs;
-  }
-
-  /**
-   * @internal
-   */
-  setContent(directive: any) {
+  _setContent(directive: any) {
     this._cntDir = directive;
   }
 
@@ -360,12 +348,26 @@ export class ViewController {
   /**
    * @internal
    */
-  setHeader(directive: Header) {
-    this._hdrDir = directive;
+  _setContentRef(elementRef: ElementRef) {
+    this._cntRef = elementRef;
+  }
+
+  /**
+   * @returns {ElementRef} Returns the Content's ElementRef.
+   */
+  contentRef(): ElementRef {
+    return this._cntRef;
   }
 
   /**
    * @internal
+   */
+  _setHeader(directive: Header) {
+    this._hdrDir = directive;
+  }
+
+  /**
+   * @private
    */
   getHeader() {
     return this._hdrDir;
@@ -374,12 +376,12 @@ export class ViewController {
   /**
    * @internal
    */
-  setFooter(directive: Footer) {
+  _setFooter(directive: Footer) {
     this._ftrDir = directive;
   }
 
   /**
-   * @internal
+   * @private
    */
   getFooter() {
     return this._ftrDir;
@@ -388,12 +390,12 @@ export class ViewController {
   /**
    * @internal
    */
-  setNavbar(directive: Navbar) {
+  _setNavbar(directive: Navbar) {
     this._nb = directive;
   }
 
   /**
-   * @internal
+   * @private
    */
   getNavbar(): Navbar {
     return this._nb;
@@ -432,7 +434,7 @@ export class ViewController {
   /**
    * @internal
    */
-  isLoaded(): boolean {
+  _isLoaded(): boolean {
     return this._loaded;
   }
 
@@ -444,7 +446,7 @@ export class ViewController {
    * to put your setup code for the view; however, it is not the
    * recommended method to use when a view becomes active.
    */
-  fireLoaded() {
+  _fireLoaded() {
     this._loaded = true;
     ctrlFn(this, 'Loaded');
   }
@@ -453,15 +455,14 @@ export class ViewController {
    * @internal
    * The view is about to enter and become the active view.
    */
-  fireWillEnter() {
-    if (this._cd) {
+  _fireWillEnter() {
+    if (this._detached && this._cd) {
       // ensure this has been re-attached to the change detector
       this._cd.reattach();
-
-      // detect changes before we run any user code
-      this._cd.detectChanges();
+      this._detached = false;
     }
-    this.willEnter.emit(null);
+
+    this.willEnter.emit();
     ctrlFn(this, 'WillEnter');
   }
 
@@ -470,9 +471,9 @@ export class ViewController {
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
-  fireDidEnter() {
+  _fireDidEnter() {
     this._nb && this._nb.didEnter();
-    this.didEnter.emit(null);
+    this.didEnter.emit();
     ctrlFn(this, 'DidEnter');
   }
 
@@ -480,8 +481,8 @@ export class ViewController {
    * @internal
    * The view has is about to leave and no longer be the active view.
    */
-  fireWillLeave() {
-    this.willLeave.emit(null);
+  _fireWillLeave() {
+    this.willLeave.emit();
     ctrlFn(this, 'WillLeave');
   }
 
@@ -490,36 +491,39 @@ export class ViewController {
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
-  fireDidLeave() {
-    this.didLeave.emit(null);
+  _fireDidLeave() {
+    this.didLeave.emit();
     ctrlFn(this, 'DidLeave');
 
     // when this is not the active page
     // we no longer need to detect changes
-    this._cd && this._cd.detach();
+    if (!this._detached && this._cd) {
+      this._cd.detach();
+      this._detached = true;
+    }
   }
 
   /**
    * @internal
    * The view is about to be destroyed and have its elements removed.
    */
-  fireWillUnload() {
-    this.willUnload.emit(null);
+  _fireWillUnload() {
+    this.willUnload.emit();
     ctrlFn(this, 'WillUnload');
   }
 
   /**
    * @internal
    */
-  onDestroy(destroyFn: Function) {
+  _onDestroy(destroyFn: Function) {
     this._destroyFn = destroyFn;
   }
 
   /**
    * @internal
    */
-  destroy() {
-    this.didUnload.emit(null);
+  _destroy() {
+    this.didUnload.emit();
     ctrlFn(this, 'DidUnload');
 
     this._destroyFn && this._destroyFn();

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer, Input } from '@angular/core';
+import { Directive, ElementRef, HostBinding, Input, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
 
@@ -41,23 +41,37 @@ import { Config } from '../../config/config';
   }
 })
 export class Icon {
+  /**
+   * @internal
+   */
   _isActive: any;
+  /**
+   * @internal
+   */
   _name: string = '';
+  /**
+   * @internal
+   */
   _ios: string = '';
+  /**
+   * @internal
+   */
   _md: string = '';
+  /**
+   * @internal
+   */
   _css: string = '';
-
   /**
    * @private
    */
-  mode: string;
+  _mode: string;
 
   constructor(
     config: Config,
     private _elementRef: ElementRef,
     private _renderer: Renderer
   ) {
-    this.mode = config.get('iconMode');
+    this._mode = config.get('iconMode');
   }
 
   /**
@@ -65,7 +79,7 @@ export class Icon {
    */
   ngOnDestroy() {
     if (this._css) {
-      this._renderer.setElementClass(this._elementRef.nativeElement, this._css, false);
+      this.setClass(this._css, false);
     }
   }
 
@@ -81,7 +95,7 @@ export class Icon {
     if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
-      val = this.mode + '-' + val;
+      val = this._mode + '-' + val;
     }
     this._name = val;
     this.update();
@@ -130,29 +144,36 @@ export class Icon {
   /**
    * @private
    */
+  @HostBinding('class.hide') _hidden: boolean = false;
+
+  /**
+   * @private
+   */
   update() {
     let css = 'ion-';
 
-    if (this._ios && this.mode === 'ios') {
+    this._hidden = (this._name === null);
+
+    if (this._ios && this._mode === 'ios') {
       css += this._ios;
 
-    } else if (this._md && this.mode === 'md') {
+    } else if (this._md && this._mode === 'md') {
       css += this._md;
 
     } else {
       css += this._name;
     }
 
-    if (this.mode === 'ios' && !this.isActive && css.indexOf('logo') < 0) {
+    if (this._mode === 'ios' && !this.isActive && css.indexOf('logo') < 0) {
       css += '-outline';
     }
 
     if (this._css !== css) {
       if (this._css) {
-        this._renderer.setElementClass(this._elementRef.nativeElement, this._css, false);
+        this.setClass(this._css, false);
       }
       this._css = css;
-      this._renderer.setElementClass(this._elementRef.nativeElement, css, true);
+      this.setClass(css, true);
 
       this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-label',
           css.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
@@ -160,10 +181,10 @@ export class Icon {
   }
 
   /**
-   * @private
-   * @param {string} add class name
+   * @internal
+   * @param {string} Add or remov css class name.
    */
-  addClass(className: string) {
+  setClass(className: string, isAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 

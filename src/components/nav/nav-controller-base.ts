@@ -264,7 +264,7 @@ export class NavControllerBase extends Ion implements NavController {
       insertView = view;
 
       // create the new entering view
-      view.setNav(this);
+      view._setNav(this);
       view.state = STATE_INACTIVE;
 
       // give this inserted view an ID
@@ -384,12 +384,12 @@ export class NavControllerBase extends Ion implements NavController {
             if (!isTabs(parentNav)) {
               // Tabs can be a parent, but it is not a collection of views
               // only we're looking for an actual NavController w/ stack of views
-              leavingView.fireWillLeave();
+              leavingView._fireWillLeave();
               this.viewWillLeave.emit(leavingView);
               this._app.viewWillLeave.emit(leavingView);
 
               return parentNav.pop(opts).then((rtnVal: boolean) => {
-                leavingView.fireDidLeave();
+                leavingView._fireDidLeave();
                 this.viewDidLeave.emit(leavingView);
                 this._app.viewDidLeave.emit(leavingView);
                 return rtnVal;
@@ -484,7 +484,7 @@ export class NavControllerBase extends Ion implements NavController {
       // set that it is the init leaving view
       // the first view to be removed, it should init leave
       view.state = STATE_INIT_LEAVE;
-      view.fireWillUnload();
+      view._fireWillUnload();
       this.viewWillUnload.emit(view);
       this._app.viewWillUnload.emit(view);
 
@@ -519,10 +519,10 @@ export class NavControllerBase extends Ion implements NavController {
     // remove views that have been set to be removed, but not
     // apart of any transitions that will eventually happen
     this._views.filter(v => v.state === STATE_REMOVE).forEach(view => {
-      view.fireWillLeave();
-      view.fireDidLeave();
+      view._fireWillLeave();
+      view._fireDidLeave();
       this._views.splice(this.indexOf(view), 1);
-      view.destroy();
+      view._destroy();
     });
 
     return this.getByState(STATE_INIT_LEAVE);
@@ -548,7 +548,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (!enteringView) {
       // if no entering view then create a bogus one
       enteringView = new ViewController();
-      enteringView.fireLoaded();
+      enteringView._fireLoaded();
     }
 
     // figure out if this transition is the root one or a
@@ -592,7 +592,7 @@ export class NavControllerBase extends Ion implements NavController {
     enteringView.state = STATE_INIT_ENTER;
     leavingView.state = STATE_INIT_LEAVE;
 
-    if (!enteringView.isLoaded()) {
+    if (!enteringView._isLoaded()) {
       // entering view has not been loaded yet
       // continue once the view has finished loading
       // ******** DOM WRITE ****************
@@ -600,7 +600,7 @@ export class NavControllerBase extends Ion implements NavController {
 
       // successfully finished loading the entering view
       // fire off the "loaded" lifecycle events
-      enteringView.fireLoaded();
+      enteringView._fireLoaded();
       this.viewDidLoad.emit(enteringView);
       this._app.viewDidLoad.emit(enteringView);
     }
@@ -621,8 +621,8 @@ export class NavControllerBase extends Ion implements NavController {
         // so to be safe, only update showing the entering/leaving
         // don't hide the others when they could still be transitioning
         // ******** DOM WRITE ****************
-        enteringView.domShow(true, true, this._renderer);
-        leavingView.domShow(true, true, this._renderer);
+        enteringView._domShow(true, true, this._renderer);
+        leavingView._domShow(true, true, this._renderer);
 
       } else {
         // there are no other transitions happening but this one
@@ -665,20 +665,20 @@ export class NavControllerBase extends Ion implements NavController {
     this._renderer.setElementClass(pageElementRef.nativeElement, 'ion-page', true);
 
     // remember the ElementRef to the ion-page elementRef that was just created
-    view.setPageElementRef(pageElementRef);
+    view._setPageElementRef(pageElementRef);
 
     // set the ComponentRef's instance to its ViewController
-    view.setInstance(componentRef.instance);
+    view._setInstance(componentRef.instance);
 
     // remember the ChangeDetectorRef for this ViewController
-    view.setChangeDetector(componentRef.changeDetectorRef);
+    view._setChangeDetector(componentRef.changeDetectorRef);
 
     // auto-add page css className created from component JS class name
     // ******** DOM WRITE ****************
     const cssClassName = pascalCaseToDashCase(view.componentType.name);
     this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
 
-    view.onDestroy(() => {
+    view._onDestroy(() => {
       // ensure the element is cleaned up for when the view pool reuses this element
       // ******** DOM WRITE ****************
       this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
@@ -726,7 +726,7 @@ export class NavControllerBase extends Ion implements NavController {
         if (leavingView.fireOtherLifecycles) {
           // only fire entering lifecycle if the leaving
           // view hasn't explicitly set not to
-          enteringView.fireWillEnter();
+          enteringView._fireWillEnter();
           this.viewWillEnter.emit(enteringView);
           this._app.viewWillEnter.emit(enteringView);
         }
@@ -734,7 +734,7 @@ export class NavControllerBase extends Ion implements NavController {
         if (enteringView.fireOtherLifecycles) {
           // only fire leaving lifecycle if the entering
           // view hasn't explicitly set not to
-          leavingView.fireWillLeave();
+          leavingView._fireWillLeave();
           this.viewWillLeave.emit(leavingView);
           this._app.viewWillLeave.emit(leavingView);
         }
@@ -783,7 +783,7 @@ export class NavControllerBase extends Ion implements NavController {
       if (leavingView.fireOtherLifecycles) {
         // only fire entering lifecycle if the leaving
         // view hasn't explicitly set not to
-        enteringView.fireDidEnter();
+        enteringView._fireDidEnter();
         this.viewDidEnter.emit(enteringView);
         this._app.viewDidEnter.emit(enteringView);
       }
@@ -792,7 +792,7 @@ export class NavControllerBase extends Ion implements NavController {
         // only fire leaving lifecycle if the entering
         // view hasn't explicitly set not to
         // and after the nav has initialized
-        leavingView.fireDidLeave();
+        leavingView._fireDidLeave();
         this.viewDidLeave.emit(leavingView);
         this._app.viewDidLeave.emit(leavingView);
       }
@@ -846,26 +846,28 @@ export class NavControllerBase extends Ion implements NavController {
           leavingView.state = STATE_INACTIVE;
         }
 
-        // only need to do all this clean up if the transition
-        // completed, otherwise nothing actually changed
-        // destroy all of the views that come after the active view
-        // ******** DOM WRITE ****************
-        this._cleanup();
-
-        // make sure only this entering view and PREVIOUS view are the
-        // only two views that are not display:none
-        // do not make any changes to the stack's current visibility
-        // if there is an overlay somewhere in the stack
-        leavingView = this.getPrevious(enteringView);
-        if (this._isPortal) {
-          // ensure the entering view is showing
+        if (isRootTransition) {
+          // only need to do all this clean up if the transition
+          // completed, otherwise nothing actually changed
+          // destroy all of the views that come after the active view
           // ******** DOM WRITE ****************
-          enteringView.domShow(true, true, this._renderer);
+          this._cleanup();
 
-        } else {
-          // only possibly hide a view if there are no overlays in the stack
-          // ******** DOM WRITE ****************
-          this._domShow(enteringView, leavingView);
+          // make sure only this entering view and PREVIOUS view are the
+          // only two views that are not display:none
+          // do not make any changes to the stack's current visibility
+          // if there is an overlay somewhere in the stack
+          leavingView = this.getPrevious(enteringView);
+          if (this._isPortal) {
+            // ensure the entering view is showing
+            // ******** DOM WRITE ****************
+            enteringView._domShow(true, true, this._renderer);
+
+          } else {
+            // only possibly hide a view if there are no overlays in the stack
+            // ******** DOM WRITE ****************
+            this._domShow(enteringView, leavingView);
+          }
         }
 
         // this check only needs to happen once, which will add the css
@@ -935,7 +937,7 @@ export class NavControllerBase extends Ion implements NavController {
     // pages and completely removed from the dom
     destroys.forEach(view => {
       this._views.splice(this.indexOf(view), 1);
-      view.destroy();
+      view._destroy();
       this.viewDidUnload.emit(view);
       this._app.viewDidUnload.emit(view);
     });
@@ -945,7 +947,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (shouldResetZIndex) {
       this._views.forEach(view => {
         // ******** DOM WRITE ****************
-        view.setZIndex(view.zIndex + INIT_ZINDEX + 1, this._renderer);
+        view._setZIndex(view.zIndex + INIT_ZINDEX + 1, this._renderer);
       });
     }
   }
@@ -960,7 +962,7 @@ export class NavControllerBase extends Ion implements NavController {
       var shouldShow = this._isPortal || (view === enteringView);
       var shouldRender = shouldShow || (view === leavingView);
       // ******** DOM WRITE ****************
-      view.domShow(shouldShow, shouldRender, this._renderer);
+      view._domShow(shouldShow, shouldRender, this._renderer);
     }
   }
 
@@ -981,7 +983,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   ngOnDestroy() {
     for (var i = this._views.length - 1; i >= 0; i--) {
-      this._views[i].destroy();
+      this._views[i]._destroy();
     }
     this._views.length = 0;
 
@@ -1163,28 +1165,28 @@ export class NavControllerBase extends Ion implements NavController {
   _setZIndex(enteringView: ViewController, leavingView: ViewController, direction: string) {
     if (enteringView) {
       // get the leaving view, which could be in various states
-      if (!leavingView || !leavingView.isLoaded()) {
+      if (!leavingView || !leavingView._isLoaded()) {
         // the leavingView is a mocked view, either we're
         // actively transitioning or it's the initial load
 
         var previousView = this.getPrevious(enteringView);
-        if (previousView && previousView.isLoaded()) {
+        if (previousView && previousView._isLoaded()) {
           // we found a better previous view to reference
           // use this one instead
-          enteringView.setZIndex(previousView.zIndex + 1, this._renderer);
+          enteringView._setZIndex(previousView.zIndex + 1, this._renderer);
 
         } else {
           // this is the initial view
-          enteringView.setZIndex(this._isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, this._renderer);
+          enteringView._setZIndex(this._isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, this._renderer);
         }
 
       } else if (direction === DIRECTION_BACK) {
         // moving back
-        enteringView.setZIndex(leavingView.zIndex - 1, this._renderer);
+        enteringView._setZIndex(leavingView.zIndex - 1, this._renderer);
 
       } else {
         // moving forward
-        enteringView.setZIndex(leavingView.zIndex + 1, this._renderer);
+        enteringView._setZIndex(leavingView.zIndex + 1, this._renderer);
       }
     }
   }

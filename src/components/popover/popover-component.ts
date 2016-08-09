@@ -70,7 +70,7 @@ export class PopoverCmp {
       this.setCssClass(componentRef, 'ion-page');
       this.setCssClass(componentRef, 'show-page');
       this.setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
-      this._viewCtrl.setInstance(componentRef.instance);
+      this._viewCtrl._setInstance(componentRef.instance);
       this.enabled = true;
     }
   }
@@ -254,7 +254,7 @@ class PopoverPopIn extends PopoverTransition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = enteringView.pageElementRef().nativeElement;
+    let ele = enteringView.pageRef().nativeElement;
 
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
@@ -271,7 +271,7 @@ class PopoverPopIn extends PopoverTransition {
 
   play() {
     nativeRaf(() => {
-      this.iosPositionView(this.enteringView.pageElementRef().nativeElement, this.opts.ev);
+      this.iosPositionView(this.enteringView.pageRef().nativeElement, this.opts.ev);
       super.play();
     });
   }
@@ -283,7 +283,7 @@ class PopoverPopOut extends PopoverTransition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageElementRef().nativeElement;
+    let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
@@ -304,7 +304,7 @@ class PopoverMdPopIn extends PopoverTransition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = enteringView.pageElementRef().nativeElement;
+    let ele = enteringView.pageRef().nativeElement;
 
     let content = new Animation(ele.querySelector('.popover-content'));
     let viewport = new Animation(ele.querySelector('.popover-viewport'));
@@ -321,7 +321,7 @@ class PopoverMdPopIn extends PopoverTransition {
 
   play() {
     nativeRaf(() => {
-      this.mdPositionView(this.enteringView.pageElementRef().nativeElement, this.opts.ev);
+      this.mdPositionView(this.enteringView.pageRef().nativeElement, this.opts.ev);
       super.play();
     });
   }
@@ -333,7 +333,7 @@ class PopoverMdPopOut extends PopoverTransition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageElementRef().nativeElement;
+    let ele = leavingView.pageRef().nativeElement;
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', 0.99, 0);

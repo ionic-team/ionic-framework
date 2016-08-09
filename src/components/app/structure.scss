@@ -62,14 +62,15 @@ ion-tabs,
   left: 0;
   z-index: $z-index-page-container;
   display: block;
-  overflow: hidden;
 
   width: 100%;
   height: 100%;
 }
 
-ion-tab scroll-cotent {
-  display: none;
+ion-nav,
+ion-tab,
+ion-tabs {
+  overflow: hidden;
 }
 
 ion-tab {
@@ -78,10 +79,6 @@ ion-tab {
 
 ion-tab.show-tab {
   transform: translateY(0);
-}
-
-ion-tab.show-tab scroll-cotent {
-  display: block;
 }
 
 
@@ -115,19 +112,9 @@ ion-content {
   position: absolute;
 }
 
-.ion-page scroll-content {
-  // do not render the scroll-content at all until ready
-  display: none;
-}
-
 .ion-page.show-page {
   // show the page now that it's ready
   opacity: 1;
-}
-
-.ion-page.show-page scroll-content {
-  // render the content when ready
-  display: block;
 }
 
 

@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef, forwardRef, Inject, Input, Optional } from '@angular/core';
+import { Component, Directive, ElementRef, forwardRef, Inject, Input, Optional, Renderer, ViewChild } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -47,23 +47,20 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-navbar',
-  template: `
-    <div class="toolbar-background"></div>
-    <button (click)="backButtonClick($event)" category="bar-button" class="back-button" [hidden]="_hideBb">
-      <span class="button-inner">
-        <ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>
-        <span class="back-button-text">
-          <span class="back-default">{{_bbText}}</span>
-        </span>
-      </span>
-    </button>
-    <ng-content select="[menuToggle],ion-buttons[left]"></ng-content>
-    <ng-content select="ion-buttons[start]"></ng-content>
-    <ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>
-    <div class="toolbar-content">
-      <ng-content></ng-content>
-    </div>
-  `,
+  template:
+    '<div class="toolbar-background"></div>' +
+    '<button (click)="backButtonClick($event)" category="bar-button" class="back-button" [hidden]="_hideBb">' +
+      '<span class="button-inner">' +
+        '<ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>' +
+        '<span class="back-button-text" #bbTxt></span>' +
+      '</span>' +
+    '</button>' +
+    '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
+    '<ng-content select="ion-buttons[start]"></ng-content>' +
+    '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
+    '<div class="toolbar-content">' +
+      '<ng-content></ng-content>' +
+    '</div>',
   host: {
     '[hidden]': '_hidden',
     'class': 'toolbar',
@@ -71,10 +68,25 @@ import { ViewController } from '../nav/view-controller';
   }
 })
 export class Navbar extends ToolbarBase {
+  /**
+   * @internal
+   */
+  @ViewChild('bbTxt') _bbTxt: ElementRef;
+  /**
+   * @internal
+   */
   _bbIcon: string;
-  _bbText: string;
+  /**
+   * @internal
+   */
   _hidden: boolean = false;
+  /**
+   * @internal
+   */
   _hideBb: boolean = false;
+  /**
+   * @internal
+   */
   _sbPadding: boolean;
 
   /**
@@ -93,15 +105,19 @@ export class Navbar extends ToolbarBase {
     @Optional() viewCtrl: ViewController,
     @Optional() private navCtrl: NavController,
     elementRef: ElementRef,
-    config: Config
+    private _config: Config,
+    private _renderer: Renderer
   ) {
     super(elementRef);
 
-    viewCtrl && viewCtrl.setNavbar(this);
+    viewCtrl && viewCtrl._setNavbar(this);
 
-    this._bbIcon = config.get('backButtonIcon');
-    this._bbText = config.get('backButtonText');
-    this._sbPadding = config.getBoolean('statusbarPadding');
+    this._bbIcon = _config.get('backButtonIcon');
+    this._sbPadding = _config.getBoolean('statusbarPadding');
+  }
+
+  ngAfterViewInit() {
+    this.setBackButtonText(this._config.get('backButtonText', 'Back'));
   }
 
   backButtonClick(ev: UIEvent) {
@@ -112,10 +128,10 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @private
+   * Set the text of the Back Button in the Nav Bar. Defaults to "Back".
    */
   setBackButtonText(text: string) {
-    this._bbText = text;
+    this._renderer.setText(this._bbTxt.nativeElement, text);
   }
 
   /**

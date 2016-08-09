@@ -299,21 +299,21 @@ describe('NavController', () => {
       expect(view3.state).toBe(STATE_REMOVE);
       expect(view4.state).toBe(STATE_INIT_LEAVE);
 
-      expect(view1.fireWillLeave).not.toHaveBeenCalled();
-      expect(view1.fireDidLeave).not.toHaveBeenCalled();
-      expect(view1.destroy).not.toHaveBeenCalled();
+      expect(view1._fireWillLeave).not.toHaveBeenCalled();
+      expect(view1._fireDidLeave).not.toHaveBeenCalled();
+      expect(view1._destroy).not.toHaveBeenCalled();
 
-      expect(view2.fireWillLeave).toHaveBeenCalled();
-      expect(view2.fireDidLeave).toHaveBeenCalled();
-      expect(view2.destroy).toHaveBeenCalled();
+      expect(view2._fireWillLeave).toHaveBeenCalled();
+      expect(view2._fireDidLeave).toHaveBeenCalled();
+      expect(view2._destroy).toHaveBeenCalled();
 
-      expect(view3.fireWillLeave).toHaveBeenCalled();
-      expect(view3.fireDidLeave).toHaveBeenCalled();
-      expect(view3.destroy).toHaveBeenCalled();
+      expect(view3._fireWillLeave).toHaveBeenCalled();
+      expect(view3._fireDidLeave).toHaveBeenCalled();
+      expect(view3._destroy).toHaveBeenCalled();
 
-      expect(view4.fireWillLeave).not.toHaveBeenCalled();
-      expect(view4.fireDidLeave).not.toHaveBeenCalled();
-      expect(view4.destroy).not.toHaveBeenCalled();
+      expect(view4._fireWillLeave).not.toHaveBeenCalled();
+      expect(view4._fireDidLeave).not.toHaveBeenCalled();
+      expect(view4._destroy).not.toHaveBeenCalled();
     });
   });
 
@@ -367,24 +367,24 @@ describe('NavController', () => {
       nav._cleanup();
 
       expect(nav.length()).toBe(1);
-      expect(view1.destroy).not.toHaveBeenCalled();
-      expect(view2.destroy).toHaveBeenCalled();
-      expect(view3.destroy).toHaveBeenCalled();
+      expect(view1._destroy).not.toHaveBeenCalled();
+      expect(view2._destroy).toHaveBeenCalled();
+      expect(view3._destroy).toHaveBeenCalled();
     });
 
     it('should reset zIndexes if their is a negative zindex', () => {
       let view1 = new ViewController(Page1);
-      view1.setPageElementRef( mockElementRef() );
+      view1._setPageElementRef( mockElementRef() );
       view1.state = STATE_INACTIVE;
       view1.zIndex = -1;
 
       let view2 = new ViewController(Page2);
-      view2.setPageElementRef( mockElementRef() );
+      view2._setPageElementRef( mockElementRef() );
       view2.state = STATE_INACTIVE;
       view2.zIndex = 0;
 
       let view3 = new ViewController(Page3);
-      view3.setPageElementRef( mockElementRef() );
+      view3._setPageElementRef( mockElementRef() );
       view3.state = STATE_ACTIVE;
       view3.zIndex = 1;
 
@@ -423,7 +423,7 @@ describe('NavController', () => {
 
       nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-      expect(enteringView.fireWillEnter).toHaveBeenCalled();
+      expect(enteringView._fireWillEnter).toHaveBeenCalled();
     });
 
     it('should not call willEnter on entering view when it is being preloaded', () => {
@@ -439,7 +439,7 @@ describe('NavController', () => {
 
       nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-      expect(enteringView.fireWillEnter).not.toHaveBeenCalled();
+      expect(enteringView._fireWillEnter).not.toHaveBeenCalled();
     });
 
     it('should call willLeave on leaving view', () => {
@@ -453,7 +453,7 @@ describe('NavController', () => {
 
       nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-      expect(leavingView.fireWillLeave).toHaveBeenCalled();
+      expect(leavingView._fireWillLeave).toHaveBeenCalled();
     });
 
     it('should not call willEnter when the leaving view has fireOtherLifecycles not true', () => {
@@ -470,8 +470,8 @@ describe('NavController', () => {
 
       nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-      expect(enteringView.fireWillEnter).not.toHaveBeenCalled();
-      expect(leavingView.fireWillLeave).toHaveBeenCalled();
+      expect(enteringView._fireWillEnter).not.toHaveBeenCalled();
+      expect(leavingView._fireWillLeave).toHaveBeenCalled();
     });
 
     it('should not call willLeave when the entering view has fireOtherLifecycles not true', () => {
@@ -488,8 +488,8 @@ describe('NavController', () => {
 
       nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-      expect(enteringView.fireWillEnter).toHaveBeenCalled();
-      expect(leavingView.fireWillLeave).not.toHaveBeenCalled();
+      expect(enteringView._fireWillEnter).toHaveBeenCalled();
+      expect(leavingView._fireWillLeave).not.toHaveBeenCalled();
     });
 
     it('should not call willLeave on leaving view when it is being preloaded', () => {
@@ -505,7 +505,7 @@ describe('NavController', () => {
 
       nav._postRender(1, enteringView, leavingView, false, navOptions, done);
 
-      expect(leavingView.fireWillLeave).not.toHaveBeenCalled();
+      expect(leavingView._fireWillLeave).not.toHaveBeenCalled();
     });
 
     it('should set animate false when preloading', () => {
@@ -536,8 +536,8 @@ describe('NavController', () => {
 
       nav._postRender(1, enteringView, leavingView, isAlreadyTransitioning, navOptions, done);
 
-      expect(enteringView.domShow).toHaveBeenCalledWith(true, nav._renderer);
-      expect(leavingView.domShow).toHaveBeenCalledWith(true, nav._renderer);
+      expect(enteringView._domShow).toHaveBeenCalledWith(true, nav._renderer);
+      expect(leavingView._domShow).toHaveBeenCalledWith(true, nav._renderer);
     });
 
     it('should set domShow true when isAlreadyTransitioning false for the entering/leaving views', () => {
@@ -557,9 +557,9 @@ describe('NavController', () => {
 
       nav._postRender(1, view3, view2, isAlreadyTransitioning, navOptions, done);
 
-      expect(view1.domShow).toHaveBeenCalledWith(false, nav._renderer);
-      expect(view2.domShow).toHaveBeenCalledWith(true, nav._renderer);
-      expect(view3.domShow).toHaveBeenCalledWith(true, nav._renderer);
+      expect(view1._domShow).toHaveBeenCalledWith(false, nav._renderer);
+      expect(view2._domShow).toHaveBeenCalledWith(true, nav._renderer);
+      expect(view3._domShow).toHaveBeenCalledWith(true, nav._renderer);
     });
 
     it('should set domShow true when isAlreadyTransitioning false for views when nav is a portal', () => {
@@ -583,10 +583,10 @@ describe('NavController', () => {
 
       nav._postRender(1, view4, view3, isAlreadyTransitioning, navOptions, done);
 
-      expect(view1.domShow).toHaveBeenCalledWith(true, nav._renderer);
-      expect(view2.domShow).toHaveBeenCalledWith(true, nav._renderer);
-      expect(view3.domShow).toHaveBeenCalledWith(true, nav._renderer);
-      expect(view4.domShow).toHaveBeenCalledWith(true, nav._renderer);
+      expect(view1._domShow).toHaveBeenCalledWith(true, nav._renderer);
+      expect(view2._domShow).toHaveBeenCalledWith(true, nav._renderer);
+      expect(view3._domShow).toHaveBeenCalledWith(true, nav._renderer);
+      expect(view4._domShow).toHaveBeenCalledWith(true, nav._renderer);
     });
 
   });
@@ -596,9 +596,9 @@ describe('NavController', () => {
     it('should set zIndex off of the previous view to the entering view is loaded and the leavingView is not loaded', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 100;
-      leavingView.fireLoaded();
+      leavingView._fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageElementRef(mockElementRef());
+      enteringView._setPageElementRef(mockElementRef());
 
       nav._views = [leavingView, enteringView];
 
@@ -609,7 +609,7 @@ describe('NavController', () => {
     it('should set zIndex 100 when leaving view is not loaded', () => {
       let leavingView = new ViewController();
       let enteringView = new ViewController();
-      enteringView.setPageElementRef(mockElementRef());
+      enteringView._setPageElementRef(mockElementRef());
 
       nav._views = [leavingView, enteringView];
 
@@ -619,7 +619,7 @@ describe('NavController', () => {
 
     it('should set zIndex 100 on first entering view', () => {
       let enteringView = new ViewController();
-      enteringView.setPageElementRef(mockElementRef());
+      enteringView._setPageElementRef(mockElementRef());
       nav._setZIndex(enteringView, null, 'forward');
       expect(enteringView.zIndex).toEqual(100);
     });
@@ -627,9 +627,9 @@ describe('NavController', () => {
     it('should set zIndex 1 on second entering view', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 0;
-      leavingView.fireLoaded();
+      leavingView._fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageElementRef(mockElementRef());
+      enteringView._setPageElementRef(mockElementRef());
       nav._setZIndex(enteringView, leavingView, 'forward');
       expect(enteringView.zIndex).toEqual(1);
     });
@@ -637,16 +637,16 @@ describe('NavController', () => {
     it('should set zIndex 0 on entering view going back', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 1;
-      leavingView.fireLoaded();
+      leavingView._fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageElementRef(mockElementRef());
+      enteringView._setPageElementRef(mockElementRef());
       nav._setZIndex(enteringView, leavingView, 'back');
       expect(enteringView.zIndex).toEqual(0);
     });
 
     it('should set zIndex 9999 on first entering portal view', () => {
       let enteringView = new ViewController();
-      enteringView.setPageElementRef(mockElementRef());
+      enteringView._setPageElementRef(mockElementRef());
       nav._isPortal = true;
       nav._setZIndex(enteringView, null, 'forward');
       expect(enteringView.zIndex).toEqual(9999);
@@ -655,9 +655,9 @@ describe('NavController', () => {
     it('should set zIndex 10000 on second entering portal view', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 9999;
-      leavingView.fireLoaded();
+      leavingView._fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageElementRef(mockElementRef());
+      enteringView._setPageElementRef(mockElementRef());
       nav._isPortal = true;
       nav._setZIndex(enteringView, leavingView, 'forward');
       expect(enteringView.zIndex).toEqual(10000);
@@ -666,9 +666,9 @@ describe('NavController', () => {
     it('should set zIndex 9999 on entering portal view going back', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 10000;
-      leavingView.fireLoaded();
+      leavingView._fireLoaded();
       let enteringView = new ViewController();
-      enteringView.setPageElementRef(mockElementRef());
+      enteringView._setPageElementRef(mockElementRef());
       nav._isPortal = true;
       nav._setZIndex(enteringView, leavingView, 'back');
       expect(enteringView.zIndex).toEqual(9999);
@@ -737,8 +737,8 @@ describe('NavController', () => {
       nav._init = true;
       nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-      expect(enteringView.fireDidEnter).toHaveBeenCalled();
-      expect(leavingView.fireDidLeave).toHaveBeenCalled();
+      expect(enteringView._fireDidEnter).toHaveBeenCalled();
+      expect(leavingView._fireDidLeave).toHaveBeenCalled();
       expect(doneCalled).toBe(true);
     });
 
@@ -758,8 +758,8 @@ describe('NavController', () => {
       nav._init = true;
       nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-      expect(enteringView.fireDidEnter).not.toHaveBeenCalled();
-      expect(leavingView.fireDidLeave).not.toHaveBeenCalled();
+      expect(enteringView._fireDidEnter).not.toHaveBeenCalled();
+      expect(leavingView._fireDidLeave).not.toHaveBeenCalled();
       expect(doneCalled).toBe(true);
     });
 
@@ -778,8 +778,8 @@ describe('NavController', () => {
 
       nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-      expect(enteringView.fireDidEnter).toHaveBeenCalled();
-      expect(leavingView.fireDidLeave).not.toHaveBeenCalled();
+      expect(enteringView._fireDidEnter).toHaveBeenCalled();
+      expect(leavingView._fireDidLeave).not.toHaveBeenCalled();
       expect(doneCalled).toBe(true);
     });
 
@@ -799,8 +799,8 @@ describe('NavController', () => {
       nav._init = true;
       nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-      expect(enteringView.fireDidEnter).not.toHaveBeenCalled();
-      expect(leavingView.fireDidLeave).toHaveBeenCalled();
+      expect(enteringView._fireDidEnter).not.toHaveBeenCalled();
+      expect(leavingView._fireDidLeave).toHaveBeenCalled();
       expect(doneCalled).toBe(true);
     });
 
@@ -817,8 +817,8 @@ describe('NavController', () => {
 
       nav._afterTrans(enteringView, leavingView, navOpts, hasCompleted, done);
 
-      expect(enteringView.fireDidEnter).not.toHaveBeenCalled();
-      expect(leavingView.fireDidLeave).not.toHaveBeenCalled();
+      expect(enteringView._fireDidEnter).not.toHaveBeenCalled();
+      expect(leavingView._fireDidLeave).not.toHaveBeenCalled();
       expect(doneCalled).toBe(true);
     });
 
@@ -1293,9 +1293,9 @@ describe('NavController', () => {
     it('should get first()', () => {
       expect(nav.first()).toBe(null);
       let view1 = new ViewController(Page1);
-      view1.setNav(nav);
+      view1._setNav(nav);
       let view2 = new ViewController(Page2);
-      view2.setNav(nav);
+      view2._setNav(nav);
       nav._views = [view1];
 
       expect(nav.first()).toBe(view1);
@@ -1312,9 +1312,9 @@ describe('NavController', () => {
     it('should get last()', () => {
       expect(nav.last()).toBe(null);
       let view1 = new ViewController(Page1);
-      view1.setNav(nav);
+      view1._setNav(nav);
       let view2 = new ViewController(Page2);
-      view2.setNav(nav);
+      view2._setNav(nav);
       nav._views = [view1];
 
       expect(nav.last()).toBe(view1);

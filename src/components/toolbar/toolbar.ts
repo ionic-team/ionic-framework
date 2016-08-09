@@ -38,7 +38,7 @@ import { ViewController } from '../nav/view-controller';
 export class Header {
 
   constructor(@Optional() viewCtrl: ViewController) {
-    viewCtrl && viewCtrl.setHeader(this);
+    viewCtrl && viewCtrl._setHeader(this);
   }
 
 }
@@ -72,7 +72,7 @@ export class Header {
 export class Footer {
 
   constructor(@Optional() viewCtrl: ViewController) {
-    viewCtrl && viewCtrl.setFooter(this);
+    viewCtrl && viewCtrl._setFooter(this);
   }
 
 }
@@ -263,19 +263,10 @@ export class Toolbar extends ToolbarBase {
 
   constructor(
     @Optional() viewCtrl: ViewController,
-    @Optional() header: Header,
-    @Optional() footer: Footer,
     config: Config,
     elementRef: ElementRef
   ) {
     super(elementRef);
-
-    if (viewCtrl && (header || footer)) {
-      // only toolbars within headers and footer are view toolbars
-      // toolbars within the content are not view toolbars, since they
-      // are apart of the content, and could be anywhere within the content
-      viewCtrl.setToolbarRef(elementRef);
-    }
 
     this._sbPadding = config.getBoolean('statusbarPadding');
   }

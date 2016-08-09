@@ -167,7 +167,7 @@ class ActionSheetSlideIn extends Transition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = enteringView.pageElementRef().nativeElement;
+    let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
@@ -184,7 +184,7 @@ class ActionSheetSlideOut extends Transition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageElementRef().nativeElement;
+    let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
@@ -201,7 +201,7 @@ class ActionSheetMdSlideIn extends Transition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = enteringView.pageElementRef().nativeElement;
+    let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
@@ -218,7 +218,7 @@ class ActionSheetMdSlideOut extends Transition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageElementRef().nativeElement;
+    let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
@@ -234,7 +234,7 @@ class ActionSheetWpSlideIn extends Transition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = enteringView.pageElementRef().nativeElement;
+    let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
@@ -251,7 +251,7 @@ class ActionSheetWpSlideOut extends Transition {
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
     super.init(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageElementRef().nativeElement;
+    let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 

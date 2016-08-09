@@ -317,9 +317,11 @@ export class Animation {
       this._asyncEnd(dur, true);
     }
 
-    // wait a frame for the DOM to get updated from all initial animation writes
+    // wait two frames for the DOM to get updated from all initial animation writes
     // both animations with a duration and without need to chill a frame
-    nativeRaf(this._playDomInspect.bind(this, opts));
+    nativeRaf(() => {
+      nativeRaf(this._playDomInspect.bind(this, opts));
+    });
   }
 
   /**

@@ -17,7 +17,7 @@ ion-content {
   background: $content-ios-outer-background;
 }
 
-ion-page.show-page ~ .nav-decor {
+.ion-page.show-page ~ .nav-decor {
   // when ios pages transition, the leaving page grays out
   // this is the black square behind all pages so they gray out
   position: absolute;

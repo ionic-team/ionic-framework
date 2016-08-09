@@ -45,7 +45,7 @@ export class ModalCmp {
       this.setCssClass(componentRef, 'ion-page');
       this.setCssClass(componentRef, 'show-page');
       this.setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
-      this._viewCtrl.setInstance(componentRef.instance);
+      this._viewCtrl._setInstance(componentRef.instance);
       this.enabled = true;
     }
   }
@@ -79,7 +79,7 @@ export class ModalCmp {
    init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
      super.init(enteringView, leavingView, opts);
 
-     let ele = enteringView.pageElementRef().nativeElement;
+     let ele = enteringView.pageRef().nativeElement;
      let backdropEle = ele.querySelector('ion-backdrop');
      let backdrop = new Animation(backdropEle);
      let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
@@ -89,7 +89,7 @@ export class ModalCmp {
 
 
      this
-       .element(enteringView.pageElementRef())
+       .element(enteringView.pageRef())
        .easing('cubic-bezier(0.36,0.66,0.04,1)')
        .duration(400)
        .add(backdrop)
@@ -110,7 +110,7 @@ class ModalSlideOut extends PageTransition {
    init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
      super.init(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageElementRef().nativeElement;
+    let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapperEle = <HTMLElement> ele.querySelector('.modal-wrapper');
     let wrapperEleRect = wrapperEle.getBoundingClientRect();
@@ -123,7 +123,7 @@ class ModalSlideOut extends PageTransition {
     backdrop.fromTo('opacity', 0.4, 0.0);
 
     this
-      .element(leavingView.pageElementRef())
+      .element(leavingView.pageRef())
       .easing('ease-out')
       .duration(250)
       .add(backdrop)
@@ -137,7 +137,7 @@ class ModalMDSlideIn extends PageTransition {
    init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
      super.init(enteringView, leavingView, opts);
 
-    let ele = enteringView.pageElementRef().nativeElement;
+    let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
 
@@ -147,7 +147,7 @@ class ModalMDSlideIn extends PageTransition {
 
     const DURATION = 280;
     const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
-    this.element(enteringView.pageElementRef()).easing(EASING).duration(DURATION)
+    this.element(enteringView.pageRef()).easing(EASING).duration(DURATION)
       .add(backdrop)
       .add(wrapper);
 
@@ -166,7 +166,7 @@ class ModalMDSlideOut extends PageTransition {
    init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
      super.init(enteringView, leavingView, opts);
 
-    let ele = leavingView.pageElementRef().nativeElement;
+    let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
 
@@ -175,7 +175,7 @@ class ModalMDSlideOut extends PageTransition {
     wrapper.fromTo('opacity', 0.99, 0);
 
     this
-      .element(leavingView.pageElementRef())
+      .element(leavingView.pageRef())
       .duration(200)
       .easing('cubic-bezier(0.47,0,0.745,0.715)')
       .add(wrapper)

@@ -1,4 +1,5 @@
 import { Animation, AnimationOptions } from '../animations/animation';
+import { isPresent } from '../util/util';
 import { PageTransition } from './page-transition';
 import { ViewController } from '../components/nav/view-controller';
 
@@ -16,11 +17,13 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 class IOSTransition extends PageTransition {
 
   init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    this.duration(opts.duration || DURATION);
-    this.easing(opts.easing || EASING);
+    super.init(enteringView, leavingView, opts);
+
+    this.duration(isPresent(opts.duration) ? opts.duration : DURATION);
+    this.easing(isPresent(opts.easing) ? opts.easing : EASING);
 
     // get the native element for the entering page
-    let enteringPageEle: Element = enteringView.pageElementRef().nativeElement;
+    let enteringPageEle: Element = enteringView.pageRef().nativeElement;
 
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');
@@ -30,8 +33,8 @@ class IOSTransition extends PageTransition {
     let leavingHasNavbar = (leavingView && leavingView.hasNavbar());
 
     // entering content
-    let enteringContent = new Animation(enteringPageEle.querySelector('ion-content'));
-    enteringContent.element(enteringView.toolbarRefs());
+    let enteringContent = new Animation(enteringView.contentRef());
+    enteringContent.element(enteringPageEle.querySelector('ion-header > *:not(ion-navbar),ion-footer > *'));
     this.add(enteringContent);
 
     if (backDirection) {
@@ -116,12 +119,12 @@ class IOSTransition extends PageTransition {
     }
 
     // setup leaving view
-    if (leavingView && leavingView.pageElementRef()) {
+    if (leavingView && leavingView.pageRef()) {
       // leaving content
-      let leavingPageEle: Element = leavingView.pageElementRef().nativeElement;
+      let leavingPageEle: Element = leavingView.pageRef().nativeElement;
 
-      let leavingContent = new Animation(leavingPageEle.querySelector('ion-content'));
-      leavingContent.element(leavingView.toolbarRefs());
+      let leavingContent = new Animation(leavingView.contentRef());
+      leavingContent.element(leavingPageEle.querySelector('ion-header > *:not(ion-navbar),ion-footer > *'));
       this.add(leavingContent);
 
       if (backDirection) {
@@ -144,7 +147,7 @@ class IOSTransition extends PageTransition {
         let leavingNavBar = new Animation(leavingNavbarEle);
         let leavingTitle = new Animation(leavingNavbarEle.querySelector('ion-title'));
         let leavingNavbarItems = new Animation(leavingNavbarEle.querySelectorAll('ion-buttons,[menuToggle]'));
-        let leavingNavbarBg = new Animation(leavingNavbarEle.querySelector('.back-button'));
+        let leavingNavbarBg = new Animation(leavingNavbarEle.querySelector('.toolbar-background'));
         let leavingBackButton = new Animation(leavingNavbarEle.querySelector('.back-button'));
 
         leavingNavBar

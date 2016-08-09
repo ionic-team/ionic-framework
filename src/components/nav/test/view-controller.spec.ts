@@ -22,7 +22,7 @@ export function run() {
         });
 
         // act
-        viewController.fireWillEnter();
+        viewController._fireWillEnter();
       }, 10000);
     });
 
@@ -39,7 +39,7 @@ export function run() {
         });
 
         // act
-        viewController.fireDidEnter();
+        viewController._fireDidEnter();
       }, 10000);
     });
 
@@ -56,7 +56,7 @@ export function run() {
         });
 
         // act
-        viewController.fireWillLeave();
+        viewController._fireWillLeave();
       }, 10000);
     });
 
@@ -73,7 +73,7 @@ export function run() {
         });
 
         // act
-        viewController.fireDidLeave();
+        viewController._fireDidLeave();
       }, 10000);
     });
 
@@ -89,7 +89,7 @@ export function run() {
         });
 
         // act
-        viewController.fireWillUnload();
+        viewController._fireWillUnload();
       }, 10000);
     });
 
@@ -106,7 +106,7 @@ export function run() {
         });
 
         // act
-        viewController.destroy();
+        viewController._destroy();
       }, 10000);
     });
   });
