@@ -32,7 +32,15 @@ import { ViewController } from '../nav/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class LoadingCmp {
-  private d: any;
+  private d: {
+    spinner?: string;
+    content?: string;
+    cssClass?: string;
+    showBackdrop?: boolean;
+    dismissOnPageChange?: boolean;
+    delay?: number;
+    duration?: number;
+  };
   private id: number;
   private showSpinner: boolean;
   private durationTimeout: number;
@@ -47,7 +55,10 @@ export class LoadingCmp {
     this.d = params.data;
 
     if (this.d.cssClass) {
-      renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
+      this.d.cssClass.split(' ').forEach(cssClass => {
+        // Make sure the class isn't whitespace, otherwise it throws exceptions
+        if (cssClass.trim() !== '') renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+      });
     }
 
     this.id = (++loadingIds);

@@ -67,7 +67,7 @@ class E2EPage {
   presentLoadingDefault() {
     let loading = this.loadingCtrl.create({
       content: 'Please wait...',
-      cssClass: 'fixed-spinner'
+      cssClass: 'fixed-spinner spinner-class'
     });
 
     loading.present();
