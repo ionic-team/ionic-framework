@@ -8,6 +8,16 @@ function clearConsole() {
   process.stdout.write('\x1bc');
 }
 
+webpackServerConfig.plugins = [
+  new webpack.optimize.CommonsChunkPlugin({
+    name: [
+      './test/action-sheet/basic/index',
+      './test/polyfills.bundle',
+      './test/vendor.bundle'
+    ], minChunks: Infinity
+  })
+]
+
 var compiler = webpack(webpackServerConfig);
 var app = new WebpackDevServer(compiler, {
 	historyApiFallback: true,
