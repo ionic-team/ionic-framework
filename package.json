@@ -25,15 +25,13 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "@angular/common": "github:angular/common-builds",
-    "@angular/compiler": "github:angular/compiler-builds",
-    "@angular/compiler-cli": "github:angular/compiler-cli-builds",
-    "@angular/core": "github:angular/core-builds",
-    "@angular/forms": "github:angular/forms-builds",
-    "@angular/http": "github:angular/http-builds",
-    "@angular/platform-browser": "github:angular/platform-browser-builds",
-    "@angular/platform-browser-dynamic": "github:angular/platform-browser-dynamic-builds",
-    "@angular/tsc-wrapped": "github:angular/tsc-wrapped-builds",
+    "@angular/common": "2.0.0-rc.5",
+    "@angular/compiler": "2.0.0-rc.5",
+    "@angular/core": "2.0.0-rc.5",
+    "@angular/forms": "0.3.0",
+    "@angular/http": "2.0.0-rc.5",
+    "@angular/platform-browser": "2.0.0-rc.5",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.5",
     "colors": "^1.1.2",
     "es6-shim": "^0.35.0",
     "inquirer": "0.11.0",
@@ -46,6 +44,7 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
+    "@angular/compiler-cli": "0.5.0",
     "babel-plugin-transform-es2015-modules-systemjs": "6.9.0",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-es2015-native-modules": "6.9.0",
