@@ -576,11 +576,9 @@ export class NavControllerBase extends Ion implements NavController {
 
     // ******** DOM WRITE ****************
     this._beforeTrans(trans, isRootTransition, enteringView, leavingView, opts, (hasCompleted: boolean) => {
-      this._zone.run(() => {
-        // ******** DOM WRITE ****************
-        this._transFinish(transId, isRootTransition, enteringView, leavingView, opts.direction, hasCompleted);
-        done(hasCompleted);
-      });
+      // ******** DOM WRITE ****************
+      this._transFinish(transId, isRootTransition, enteringView, leavingView, opts.direction, hasCompleted);
+      done(hasCompleted);
     });
   }
 
@@ -722,22 +720,24 @@ export class NavControllerBase extends Ion implements NavController {
 
     if (!opts.preload) {
       trans.beforeAddRead(() => {
-        // call each view's lifecycle events
-        if (leavingView.fireOtherLifecycles) {
-          // only fire entering lifecycle if the leaving
-          // view hasn't explicitly set not to
-          enteringView._fireWillEnter();
-          this.viewWillEnter.emit(enteringView);
-          this._app.viewWillEnter.emit(enteringView);
-        }
+        this._zone.run(() => {
+          // call each view's lifecycle events
+          if (leavingView.fireOtherLifecycles) {
+            // only fire entering lifecycle if the leaving
+            // view hasn't explicitly set not to
+            enteringView._fireWillEnter();
+            this.viewWillEnter.emit(enteringView);
+            this._app.viewWillEnter.emit(enteringView);
+          }
 
-        if (enteringView.fireOtherLifecycles) {
-          // only fire leaving lifecycle if the entering
-          // view hasn't explicitly set not to
-          leavingView._fireWillLeave();
-          this.viewWillLeave.emit(leavingView);
-          this._app.viewWillLeave.emit(leavingView);
-        }
+          if (enteringView.fireOtherLifecycles) {
+            // only fire leaving lifecycle if the entering
+            // view hasn't explicitly set not to
+            leavingView._fireWillLeave();
+            this.viewWillLeave.emit(leavingView);
+            this._app.viewWillLeave.emit(leavingView);
+          }
+        });
       });
     }
 
@@ -745,7 +745,9 @@ export class NavControllerBase extends Ion implements NavController {
     trans.onFinish((t: Transition) => {
       // transition animation has ended
       // hasCompleted means if like the progress when from 0 to 1
-      this._afterTrans(enteringView, leavingView, opts, t.hasCompleted, done);
+      this._zone.run(() => {
+        this._afterTrans(enteringView, leavingView, opts, t.hasCompleted, done);
+      });
     });
 
     if (isRootTransition) {

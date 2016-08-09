@@ -34,7 +34,7 @@ class IOSTransition extends PageTransition {
 
     // entering content
     let enteringContent = new Animation(enteringView.contentRef());
-    enteringContent.element(enteringPageEle.querySelector('ion-header > *:not(ion-navbar),ion-footer > *'));
+    enteringContent.element(enteringPageEle.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *'));
     this.add(enteringContent);
 
     if (backDirection) {
@@ -124,7 +124,7 @@ class IOSTransition extends PageTransition {
       let leavingPageEle: Element = leavingView.pageRef().nativeElement;
 
       let leavingContent = new Animation(leavingView.contentRef());
-      leavingContent.element(leavingPageEle.querySelector('ion-header > *:not(ion-navbar),ion-footer > *'));
+      leavingContent.element(leavingPageEle.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *'));
       this.add(leavingContent);
 
       if (backDirection) {

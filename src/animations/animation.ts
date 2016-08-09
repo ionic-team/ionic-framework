@@ -159,17 +159,20 @@ export class Animation {
    */
   private _addProp(state: string, prop: string, val: any): EffectProperty {
     this._fx = this._fx || {};
-    var fxProp: EffectProperty = this._fx[prop];
+    let fxProp = this._fx[prop];
 
     if (!fxProp) {
       // first time we've see this EffectProperty
       fxProp = this._fx[prop] = {
         trans: (TRANSFORMS[prop] === 1)
       };
+
+      // add the will-change property for transforms or opacity
+      fxProp.wc = (fxProp.trans ? CSS.transform : prop);
     }
 
     // add from/to EffectState to the EffectProperty
-    var fxState: EffectState = (<any>fxProp)[state] = {
+    let fxState: EffectState = (<any>fxProp)[state] = {
       val: val,
       num: null,
       unit: '',
@@ -317,8 +320,10 @@ export class Animation {
       this._asyncEnd(dur, true);
     }
 
-    // wait two frames for the DOM to get updated from all initial animation writes
-    // both animations with a duration and without need to chill a frame
+    // doubling up RAFs since this animation was probably triggered
+    // from an input event, and just having one RAF would have this code
+    // run within the same frame as the triggering input event, and the
+    // input event probably already did way too much work for one frame
     nativeRaf(() => {
       nativeRaf(this._playDomInspect.bind(this, opts));
     });
@@ -330,9 +335,6 @@ export class Animation {
    * RECURSION
    */
   _playInit(opts: PlayOptions) {
-    // init play
-    // before _playDomInspect
-
     // always default that an animation does not tween
     // a tween requires that an Animation class has an element
     // and that it has at least one FROM/TO effect
@@ -343,18 +345,24 @@ export class Animation {
     this._hasDur = (this.getDuration(opts) > ANIMATION_DURATION_MIN);
 
     for (var i = 0; i < this._cL; i++) {
+      // ******** DOM WRITE ****************
       this._c[i]._playInit(opts);
     }
 
     if (this._hasDur) {
       // if there is a duration then we want to start at step 0
+      // ******** DOM WRITE ****************
       this._progress(0);
+
+      // add the will-change properties
+      // ******** DOM WRITE ****************
+      this._willChg(true);
     }
   }
 
   /**
    * @internal
-   * DOM READ / WRITE
+   * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
    */
@@ -511,6 +519,10 @@ export class Animation {
       // set the after styles
       // ******** DOM WRITE ****************
       this._after();
+
+      // remove the will-change properties
+      // ******** DOM WRITE ****************
+      this._willChg(false);
     }
   }
 
@@ -526,6 +538,25 @@ export class Animation {
 
     for (var i = 0; i < this._cL; i++) {
       if (this._c[i]._hasDuration(opts)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * @internal
+   * NO DOM
+   * RECURSION
+   */
+  _hasDomReads() {
+    if (this._rdFn && this._rdFn.length) {
+      return true;
+    }
+
+    for (var i = 0; i < this._cL; i++) {
+      if (this._c[i]._hasDomReads()) {
         return true;
       }
     }
@@ -612,7 +643,9 @@ export class Animation {
 
       // place all transforms on the same property
       if (transforms.length) {
-        transforms.push('translateZ(0px)');
+        if (!this._rv && stepValue !== 1 || this._rv && stepValue !== 0) {
+          transforms.push('translateZ(0px)');
+        }
 
         for (var i = 0; i < this._eL; i++) {
           // ******** DOM WRITE ****************
@@ -797,6 +830,32 @@ export class Animation {
       }
     }
 
+  }
+
+  /**
+   * @internal
+   * DOM WRITE
+   * NO RECURSION
+   */
+  _willChg(addWillChange: boolean) {
+    let wc: string[];
+
+    if (addWillChange) {
+      wc = [];
+      for (var prop in this._fx) {
+        if (this._fx[prop].wc === 'webkitTransform') {
+          wc.push('transform', '-webkit-transform');
+
+        } else {
+          wc.push(this._fx[prop].wc);
+        }
+      }
+    }
+
+    for (var i = 0; i < this._eL; i++) {
+      // ******** DOM WRITE ****************
+      (<any>this._e[i]).style.willChange = addWillChange ? wc.join(',') : '';
+    }
   }
 
   /**
@@ -1026,6 +1085,7 @@ export interface PlayOptions {
 
 export interface EffectProperty {
   trans: boolean;
+  wc?: string;
   to?: EffectState;
   from?: EffectState;
 }

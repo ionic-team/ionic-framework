@@ -208,7 +208,7 @@ export class FullPage {
         </ion-buttons>
       </ion-navbar>
       <ion-toolbar no-border-top>
-        <ion-title>I'm a sub header!</ion-title>
+        <ion-title>{{subheader}}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding fullscreen>
@@ -236,6 +236,8 @@ export class FullPage {
   `
 })
 export class PrimaryHeaderPage {
+  subheader: string;
+
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
@@ -244,6 +246,7 @@ export class PrimaryHeaderPage {
 
   ionViewWillEnter() {
     this.viewCtrl.setBackButtonText('Previous');
+    this.subheader = 'I\'m a sub header!';
   }
 
   pushAnother() {

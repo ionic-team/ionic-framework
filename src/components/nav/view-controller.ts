@@ -492,15 +492,15 @@ export class ViewController {
    * will fire, whether it is cached or unloaded.
    */
   _fireDidLeave() {
-    this.didLeave.emit();
-    ctrlFn(this, 'DidLeave');
-
     // when this is not the active page
     // we no longer need to detect changes
     if (!this._detached && this._cd) {
       this._cd.detach();
       this._detached = true;
     }
+
+    this.didLeave.emit();
+    ctrlFn(this, 'DidLeave');
   }
 
   /**
