@@ -35,7 +35,15 @@ import { ViewController } from '../nav/view-controller';
   },
 })
 export class ToastCmp implements AfterViewInit {
-  private d: any;
+  private d: {
+    message?: string;
+    cssClass?: string;
+    duration?: number;
+    showCloseButton?: boolean;
+    closeButtonText?: string;
+    dismissOnPageChange?: boolean;
+    position?: string;
+  };
   private descId: string;
   private dismissTimeout: number = undefined;
   private enabled: boolean;
@@ -53,7 +61,10 @@ export class ToastCmp implements AfterViewInit {
     this.d = params.data;
 
     if (this.d.cssClass) {
-      renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
+      this.d.cssClass.split(' ').forEach(cssClass => {
+        // Make sure the class isn't whitespace, otherwise it throws exceptions
+        if (cssClass.trim() !== '') renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+      });
     }
 
     this.id = (++toastIds);
