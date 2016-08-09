@@ -41,7 +41,7 @@ module.exports = function parseSass () {
         appendStyles(folders, docsByComponent);
         returnPromise.resolve(docs);
       }).catch( function (error) {
-        console.log('Sass Error: ' + error);
+        console.log('SASS ERROR: ' + error);
         returnPromise.resolve(docs);
       });
 
@@ -65,11 +65,15 @@ function appendStyles(folders, docsByComponent) {
 
 function formatStyles (folder) {
 
-  return folder.styles.filter( function (style) {
-      return style.data && style.data.length;
-  }).map( function (style) {
+  // container for holding styles by platform
+  var concatenatedStyles = {};
 
-    var props = style.data.filter( function (item) {
+  // extract styles
+  folder.styles.filter( function (file) {
+      return file.data && file.data.length;
+  }).forEach( function (file) {
+
+    var props = file.data.filter( function (item) {
       return item.property && item.property.length;
     }).map( function (item) {
 
@@ -82,33 +86,56 @@ function formatStyles (folder) {
       };
     });
 
-    return { platform: style.platform, props: props };
+    if( concatenatedStyles[file.platform] ) {
+      concatenatedStyles[file.platform] = concatenatedStyles[file.platform].concat(props);
+    } else {
+      concatenatedStyles[file.platform] = props;
+    }
   });
+
+  // place in Array
+  var formattedStyles = [];
+
+  ['base', 'ios', 'md', 'wp'].forEach( function (platform) {
+    if ( concatenatedStyles[platform] ) {
+      formattedStyles.push({
+        platform: platform,
+        props: concatenatedStyles[platform]
+      });
+    }
+  });
+
+  return formattedStyles;
 }
 
 function getStyles (folder, docIndex) {
 
   var returnPromise = Q.defer();
 
-  // get component name
-  var component = folder.split('/').pop();
-
   // generate file names to check
   var extension = 'scss';
-  var files = [];
 
-  files.push({
-    platform: 'base',
-    path: path.join(folder, [component, extension].join('.'))
-  });
+  var allFiles = fs.readdirSync(folder);
 
-  ['ios', 'md', 'wp'].forEach( function (platform) {
-    var fileName = [component, platform, extension].join('.');
-    files.push({
+  var removeNonSass = function (filename) {
+    return filename.split('.').pop() === extension;
+  };
+
+  var toFileObject = function (filename) {
+    // determine platform
+    var platform = filename.split('.')[1];
+
+    if ( ['ios', 'md', 'wp'].indexOf(platform) === -1 ) {
+      platform = 'base';
+    }
+
+    return {
       platform: platform,
-      path: path.join(folder, fileName)
-    });
-  });
+      path: path.join(folder, filename)
+    };
+  };
+
+  var files = allFiles.filter(removeNonSass).map(toFileObject);
 
   // for each file, fetch styles
   var promises = files.map( function (file) {
