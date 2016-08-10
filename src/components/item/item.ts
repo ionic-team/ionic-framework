@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Button } from '../button/button';
 import { Form } from '../../util/form';
@@ -367,8 +367,8 @@ export class Item {
    * @private
    */
   @ContentChildren(Button)
-  set _buttons(buttons: any) {
-    buttons.toArray().forEach((button: any) => {
+  set _buttons(buttons: QueryList<Button>) {
+    buttons.forEach(button => {
       // Don't add the item-button class if the user specifies
       // a different size button
       if (!button.isItem && !button._size) {
@@ -381,9 +381,9 @@ export class Item {
    * @private
    */
   @ContentChildren(Icon)
-  set _icons(icons: any) {
-    icons.toArray().forEach((icon: any) => {
-      icon.addClass('item-icon');
+  set _icons(icons: QueryList<Icon>) {
+    icons.forEach(icon => {
+      icon.setCssClass('item-icon', true);
     });
   }
 

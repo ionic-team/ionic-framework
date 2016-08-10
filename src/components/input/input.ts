@@ -192,6 +192,29 @@ export class TextInput extends InputBase {
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);
   }
+  /**
+   * @internal
+   */
+  ngOnInit() {
+    if (this._item) {
+      this._item.setCssClass('item-input', true);
+      this._item.registerInput(this._type);
+    }
+  }
+
+  /**
+   * @internal
+   */
+  ngAfterContentChecked() {
+    this.setItemInputControlCss();
+  }
+
+  /**
+   * @internal
+   */
+  ngOnDestroy() {
+    this._form.deregister(this);
+  }
 
   /**
    * @internal
@@ -340,10 +363,25 @@ export class TextArea extends InputBase {
    * @internal
    */
   ngOnInit() {
-    super.ngOnInit();
     if (this._item) {
       this._item.setCssClass('item-textarea', true);
+      this._item.setCssClass('item-input', true);
+      this._item.registerInput(this._type);
     }
+  }
+
+  /**
+   * @internal
+   */
+  ngAfterContentChecked() {
+    this.setItemInputControlCss();
+  }
+
+  /**
+   * @internal
+   */
+  ngOnDestroy() {
+    this._form.deregister(this);
   }
 
   /**

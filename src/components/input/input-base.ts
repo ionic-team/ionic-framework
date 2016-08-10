@@ -61,42 +61,25 @@ export class InputBase {
     _form.register(this);
   }
 
-  ngOnInit() {
-    if (this._item) {
-      this._item.setCssClass('item-input', true);
-      this._item.registerInput(this._type);
-    }
-  }
+  scrollMove(ev: UIEvent) {
+    // scroll move event listener this instance can reuse
+    if (!(this._nav && this._nav.isTransitioning())) {
+      this.deregScrollMove();
 
-  ngAfterContentInit() {
-    let self = this;
+      if (this.hasFocus()) {
+        this._native.hideFocus(true);
 
-    self._scrollMove = function(ev: UIEvent) {
-      // scroll move event listener this instance can reuse
-      if (!(self._nav && self._nav.isTransitioning())) {
-        self.deregScrollMove();
+        this._scrollView.onScrollEnd(() => {
+          this._native.hideFocus(false);
 
-        if (self.hasFocus()) {
-          self._native.hideFocus(true);
-
-          self._scrollView.onScrollEnd(function() {
-            self._native.hideFocus(false);
-
-            if (self.hasFocus()) {
-              // if it still has focus then keep listening
-              self.regScrollMove();
-            }
-          });
-        }
+          if (this.hasFocus()) {
+            // if it still has focus then keep listening
+            this.regScrollMove();
+          }
+        });
       }
-    };
-
-    this.setItemInputControlCss();
-  }
-
-  ngAfterContentChecked() {
-    this.setItemInputControlCss();
-  }
+    }
+  };
 
   setItemInputControlCss() {
     let item = this._item;
@@ -121,10 +104,6 @@ export class InputBase {
     element.setCssClass('ng-dirty', control.dirty);
     element.setCssClass('ng-valid', control.valid);
     element.setCssClass('ng-invalid', !control.valid);
-  }
-
-  ngOnDestroy() {
-    this._form.deregister(this);
   }
 
   setValue(val: any) {
@@ -428,7 +407,7 @@ export class InputBase {
     if (this._useAssist && this._scrollView) {
       setTimeout(() => {
         this.deregScrollMove();
-        this._deregScroll = this._scrollView.addScrollListener(this._scrollMove);
+        this._deregScroll = this._scrollView.addScrollListener(this.scrollMove.bind(this));
       }, 80);
     }
   }
