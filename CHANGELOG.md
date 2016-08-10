@@ -151,7 +151,7 @@ $text-input-wp-show-invalid-highlight: $text-input-wp-show-focus-highlight !defa
 1. Run the following command in a terminal to update the npm dependencies:
 
   ```
-  npm install --save ionic-angular @angular/{common,compiler,core,http,platform-browser,platform-browser-dynamic}@2.0.0-rc.4 @angular/forms rxjs@5.0.0-beta.6 zone.js@0.6.12
+  npm install --save --save-exact ionic-angular @angular/common@2.0.0-rc.4 @angular/compiler@2.0.0-rc.4 @angular/core@2.0.0-rc.4 @angular/http@2.0.0-rc.4 @angular/platform-browser@2.0.0-rc.4 @angular/platform-browser-dynamic@2.0.0-rc.4 @angular/forms rxjs@5.0.0-beta.6 zone.js@0.6.12
   ```
 
 2. Update all Overlay components to be presented by their controller instead of `NavController`. For example, to update the popover component, the following code:
