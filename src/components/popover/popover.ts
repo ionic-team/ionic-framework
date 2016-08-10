@@ -151,7 +151,7 @@ export class Popover extends ViewController {
  *
  * | Option                | Type       | Description                                                                                                      |
  * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
- * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
+ * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.                                                       |
  * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
  * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
  *
