@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
-import { Footer, Header } from '../toolbar/toolbar';
-import { isPresent, merge } from '../../util/util';
-import { Navbar } from '../navbar/navbar';
+import { Footer, Header } from '../components/toolbar/toolbar';
+import { isPresent, merge } from '../util/util';
+import { Navbar } from '../components/navbar/navbar';
 import { NavController } from './nav-controller';
 import { NavOptions } from './nav-util';
 import { NavParams } from './nav-params';
@@ -254,7 +254,7 @@ export class ViewController {
    * @internal
    */
   get name(): string {
-    return this.componentType ? this.componentType['name'] : '';
+    return this.componentType ? this.componentType.name : '';
   }
 
   /**
@@ -309,11 +309,12 @@ export class ViewController {
 
   /**
    * @internal
+   * DOM WRITE
    */
   _setZIndex(zIndex: number, renderer: Renderer) {
     if (this._pgRef && zIndex !== this.zIndex) {
       this.zIndex = zIndex;
-      renderer.setElementStyle(this._pgRef.nativeElement, 'z-index', zIndex.toString());
+      renderer.setElementStyle(this._pgRef.nativeElement, 'z-index', (<any>zIndex));
     }
   }
 

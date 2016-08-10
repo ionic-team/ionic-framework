@@ -1,12 +1,9 @@
 
 export { Config } from './config/config';
-export { IonicModule } from './ionic-module';
-export { IONIC_DIRECTIVES } from './directives';
-export { ionicProviders } from './providers';
+export { IonicModule } from './module';
 
-export * from './decorators/page';
-
-export * from './components';
+export * from './directives';
+export * from './providers';
 
 export * from './gestures/drag-gesture';
 export * from './gestures/gesture';
@@ -15,7 +12,9 @@ export * from './gestures/slide-gesture';
 export * from './gestures/gesture-controller';
 
 export * from './platform/platform';
-export * from './platform/storage';
+export * from './storage/storage';
+export * from './storage/sql';
+export * from './storage/local-storage';
 
 export * from './util/click-block';
 export * from './util/events';

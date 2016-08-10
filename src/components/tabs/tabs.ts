@@ -3,18 +3,18 @@ import { AfterContentInit, Component, ElementRef, EventEmitter, Input, Output, O
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
-import { DeepLinker } from '../nav/nav-deep-linker';
+import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
 import { isBlank, isTrueProperty, noop } from '../../util/util';
 import { nativeRaf } from '../../util/dom';
-import { NavController } from '../nav/nav-controller';
-import { NavControllerBase } from '../nav/nav-controller-base';
-import { NavOptions, DIRECTION_PUSH } from '../nav/nav-util';
+import { NavController } from '../../navigation/nav-controller';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { NavOptions, DIRECTION_FORWARD } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabButton } from './tab-button';
 import { TabHighlight } from './tab-highlight';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -476,7 +476,7 @@ export class Tabs extends Ion implements AfterContentInit {
         }
 
         if (opts.updateUrl !== false && this._linker) {
-          this._linker.navChange(<NavController>selectedTab, this.viewCtrl, DIRECTION_PUSH, selectedTab.isTransitioning(), false);
+          this._linker.navChange(<NavController>selectedTab, this.viewCtrl, DIRECTION_FORWARD, selectedTab.isTransitioning(), false);
         }
       }
 

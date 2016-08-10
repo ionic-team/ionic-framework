@@ -7,7 +7,7 @@ import { Content } from '../content/content';
 import { Img } from '../img/img';
 import { isBlank, isFunction, isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 import { VirtualCell, VirtualData, VirtualNode } from './virtual-util';
 import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
 
@@ -115,7 +115,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * makes a HTTP request for the image file. HTTP requests, image
  * decoding, and image rendering can cause issues while scrolling. For virtual
  * scrolling, the natural effects of the `<img>` are not desirable features.
- * 
+ *
  * Note: `<ion-img>` should only be used with Virtual Scroll. If you are using
  * an image outside of Virtual Scroll you should use the standard `<img>` tag.
  *

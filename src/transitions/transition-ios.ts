@@ -1,7 +1,7 @@
 import { Animation, AnimationOptions } from '../animations/animation';
 import { isPresent } from '../util/util';
 import { PageTransition } from './page-transition';
-import { ViewController } from '../components/nav/view-controller';
+import { ViewController } from '../navigation/view-controller';
 
 const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
@@ -26,7 +26,7 @@ class IOSTransition extends PageTransition {
     let enteringPageEle: Element = enteringView.pageRef().nativeElement;
 
     // what direction is the transition going
-    let backDirection = (opts.direction === 'pop');
+    let backDirection = (opts.direction === 'back');
 
     // do they have navbars?
     let enteringHasNavbar = enteringView.hasNavbar();

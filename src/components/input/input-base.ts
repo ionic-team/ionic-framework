@@ -9,8 +9,8 @@ import { Form } from '../../util/form';
 import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { NativeInput, NextInput } from './native-input';
-import { NavController } from '../nav/nav-controller';
-import { NavControllerBase } from '../nav/nav-controller-base';
+import { NavController } from '../../navigation/nav-controller';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 
 

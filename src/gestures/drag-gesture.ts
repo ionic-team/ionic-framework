@@ -1,5 +1,4 @@
-
-import { defaults } from '../util';
+import { defaults } from '../util/util';
 import { GestureDelegate } from '../gestures/gesture-controller';
 import { PointerEvents, UIEventManager } from '../util/ui-event-manager';
 import { PanRecognizer } from './recognizers';

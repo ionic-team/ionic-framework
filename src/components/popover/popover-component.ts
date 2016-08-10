@@ -5,9 +5,9 @@ import { Config } from '../../config/config';
 import { CSS, nativeRaf } from '../../util/dom';
 import { isPresent, pascalCaseToDashCase } from '../../util/util';
 import { Key } from '../../util/key';
-import { NavParams } from '../nav/nav-params';
+import { NavParams } from '../../navigation/nav-params';
 import { PageTransition } from '../../transitions/page-transition';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**

@@ -1,6 +1,9 @@
-import { Directive, HostListener, Input, Optional } from '@angular/core';
-import { NavController } from './nav-controller';
+import { AfterViewInit, Directive, Host, HostBinding, HostListener, Input, OnChanges, Optional } from '@angular/core';
+
+import { DeepLinker } from '../../navigation/deep-linker';
+import { NavController } from '../../navigation/nav-controller';
 import { noop } from '../../util/util';
+
 
 /**
  * @name NavPop
@@ -27,9 +30,9 @@ import { noop } from '../../util/util';
 })
 export class NavPop {
 
-  constructor(@Optional() private _nav: NavController) {
+  constructor(@Optional() public _nav: NavController) {
     if (!_nav) {
-      console.error('nav-pop must be within a NavController');
+      console.error('navPop must be within a NavController');
     }
   }
 
@@ -42,6 +45,36 @@ export class NavPop {
     }
 
     return true;
+  }
+
+}
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'a[navPop]'
+})
+export class NavPushAnchor implements OnChanges, AfterViewInit {
+
+  constructor(
+    @Host() public host: NavPop,
+    @Optional() public linker: DeepLinker) {}
+
+  @HostBinding() href: string = '';
+
+  updateHref() {
+    if (this.host && this.linker) {
+      //this.href = this.linker.createUrl(this.host._nav, this.host.navPush, this.host.navParams);
+    }
+  }
+
+  ngOnChanges() {
+    this.updateHref();
+  }
+
+  ngAfterViewInit() {
+    this.updateHref();
   }
 
 }

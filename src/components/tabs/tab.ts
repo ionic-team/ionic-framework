@@ -2,16 +2,16 @@ import { ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Eve
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { DeepLinker } from '../nav/nav-deep-linker';
+import { DeepLinker } from '../../navigation/deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty, noop } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
-import { NavControllerBase } from '../nav/nav-controller-base';
-import { NavOptions } from '../nav/nav-util';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { NavOptions } from '../../navigation/nav-util';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
 import { TransitionController } from '../../transitions/transition-controller';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**

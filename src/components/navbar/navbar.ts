@@ -4,9 +4,9 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isTrueProperty, noop } from '../../util/util';
-import { NavController } from '../nav/nav-controller';
+import { NavController } from '../../navigation/nav-controller';
 import { ToolbarBase } from '../toolbar/toolbar';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -153,23 +153,4 @@ export class Navbar extends ToolbarBase {
     this._hidden = isHidden;
   }
 
-}
-
-
-/**
- * @private
-*/
-@Directive({
-  selector: 'template[navbar]'
-})
-export class NavbarTemplate {
-  constructor() {
-    // deprecated warning: added 2016-06-14, beta.10
-    console.warn('ion-navbar no longer requires *navbar attribute. Please restructure header to:\n' +
-                 '<ion-header>\n' +
-                 '  <ion-navbar>\n' +
-                 '    ...\n' +
-                 '  </ion-navbar>\n' +
-                 '</ion-header>');
-  }
 }

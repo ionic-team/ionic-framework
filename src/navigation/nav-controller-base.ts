@@ -1,24 +1,25 @@
 import { ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
 
-import { AnimationOptions } from '../../animations/animation';
-import { App } from '../app/app';
-import { Config } from '../../config/config';
-import { convertToViews, isTabs, setZIndex } from './nav-util';
-import { DeepLinker } from './nav-deep-linker';
-import { GestureController } from '../../gestures/gesture-controller';
-import { Ion } from '../ion';
-import { isBlank, isPresent, isString, pascalCaseToDashCase } from '../../util/util';
-import { Keyboard } from '../../util/keyboard';
+import { AnimationOptions } from '../animations/animation';
+import { App } from '../components/app/app';
+import { Config } from '../config/config';
+import { isTabs, setZIndex } from './nav-util';
+import { DeepLinker } from './deep-linker';
+import { GestureController } from '../gestures/gesture-controller';
+import { isBlank, isPresent, isString, pascalCaseToDashCase } from '../util/util';
+import { Ion } from '../components/ion';
+import { Keyboard } from '../util/keyboard';
 import { NavController } from './nav-controller';
-import { NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, STATE_ACTIVE, STATE_INACTIVE, STATE_INIT_ENTER, STATE_INIT_LEAVE, STATE_TRANS_ENTER, STATE_TRANS_LEAVE, STATE_REMOVE, STATE_REMOVE_AFTER_TRANS, STATE_CANCEL_ENTER, STATE_FORCE_ACTIVE, INIT_ZINDEX } from './nav-util';
+import { NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, STATE_ACTIVE, STATE_INACTIVE, STATE_INIT_ENTER, STATE_INIT_LEAVE, STATE_TRANS_ENTER, STATE_TRANS_LEAVE, STATE_REMOVE, STATE_REMOVE_AFTER_TRANS, STATE_CANCEL_ENTER, STATE_FORCE_ACTIVE, INIT_ZINDEX, PORTAL_ZINDEX } from './nav-util';
 import { NavParams } from './nav-params';
 import { SwipeBackGesture } from './swipe-back';
-import { Transition } from '../../transitions/transition';
-import { TransitionController } from '../../transitions/transition-controller';
+import { Transition } from '../transitions/transition';
+import { TransitionController } from '../transitions/transition-controller';
 import { ViewController } from './view-controller';
 
 
 /**
+ * @private
  * This class is for internal use only. It is not exported publicly.
  */
 export class NavControllerBase extends Ion implements NavController {
@@ -1001,7 +1002,7 @@ export class NavControllerBase extends Ion implements NavController {
   swipeBackStart() {
     // default the direction to "back"
     const opts: NavOptions = {
-      direction: DIRECTION_POP,
+      direction: DIRECTION_BACK,
       progressAnimation: true
     };
 
@@ -1153,15 +1154,6 @@ export class NavControllerBase extends Ion implements NavController {
     return this._sbEnabled;
   }
 
-  /**
-   * DEPRECATED: Please use app.getRootNav() instead
-   */
-  private get rootNav(): NavController {
-    // deprecated 07-14-2016 beta.11
-    console.warn('nav.rootNav() has been deprecated, please use app.getRootNav() instead');
-    return this._app.getRootNav();
-  }
-
   dismissPageChangeViews() {
     this._views.forEach(view => {
       if (view.data && view.data.dismissOnPageChange) {
@@ -1170,37 +1162,9 @@ export class NavControllerBase extends Ion implements NavController {
     });
   }
 
-  _setZIndex(enteringView: ViewController, leavingView: ViewController, direction: string) {
-    if (enteringView) {
-      // get the leaving view, which could be in various states
-      if (!leavingView || !leavingView._isLoaded()) {
-        // the leavingView is a mocked view, either we're
-        // actively transitioning or it's the initial load
-
-        var previousView = this.getPrevious(enteringView);
-        if (previousView && previousView._isLoaded()) {
-          // we found a better previous view to reference
-          // use this one instead
-          enteringView._setZIndex(previousView.zIndex + 1, this._renderer);
-
-        } else {
-          // this is the initial view
-          enteringView._setZIndex(this._isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, this._renderer);
-        }
-
-      } else if (direction === DIRECTION_BACK) {
-        // moving back
-        enteringView._setZIndex(leavingView.zIndex - 1, this._renderer);
-
-      } else {
-        // moving forward
-        enteringView._setZIndex(leavingView.zIndex + 1, this._renderer);
-      }
-    }
-  }
-
 
   /**
+   * @private
    * DEPRECATED: Please use app.getRootNav() instead
    */
   private get rootNav(): NavController {
@@ -1210,6 +1174,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
+   * @private
    * DEPRECATED: Please use inject the overlays controller and use the present method on the instance instead.
    */
   private present(enteringView: ViewController, opts?: NavOptions): Promise<any> {

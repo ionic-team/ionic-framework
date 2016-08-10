@@ -2,15 +2,15 @@ import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, Input, 
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { DIRECTION_POP } from './nav-util';
-import { DeepLinker } from './nav-deep-linker';
+import { DIRECTION_BACK } from '../../navigation/nav-util';
+import { DeepLinker } from '../../navigation/deep-linker';
 import { Keyboard } from '../../util/keyboard';
 import { GestureController } from '../../gestures/gesture-controller';
 import { TransitionController } from '../../transitions/transition-controller';
 import { isTrueProperty, noop } from '../../util/util';
-import { NavControllerBase } from './nav-controller-base';
-import { NavOptions } from './nav-util';
-import { ViewController } from './view-controller';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @name Nav
@@ -124,9 +124,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
   }
 
   goToRoot(opts: NavOptions) {
-    if (this._root) {
-      this.popTo(this._root, this.rootParams, opts, noop);
-    }
+    this.setRoot(this._root, this.rootParams, opts, noop);
   }
 
   /**

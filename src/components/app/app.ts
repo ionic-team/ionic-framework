@@ -4,9 +4,9 @@ import { Title } from '@angular/platform-browser';
 import { IonicApp } from './app-root';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
-import { NavController } from '../nav/nav-controller';
-import { isTabs, isNav, NavOptions, DIRECTION_PUSH, DIRECTION_POP } from '../nav/nav-util';
-import { NavPortal } from '../nav/nav-portal';
+import { isNav, isTabs, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { NavController } from '../../navigation/nav-controller';
+import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
 
 
@@ -20,7 +20,7 @@ export class App {
   private _title: string = '';
   private _titleSrv: Title = new Title();
   private _rootNav: NavController = null;
-  private _portal: NavPortal;
+  private _portal: OverlayPortal;
 
   /**
    * @internal
@@ -182,7 +182,7 @@ export class App {
   /**
    * @private
    */
-  setPortal(portal: NavPortal) {
+  setPortal(portal: OverlayPortal) {
     this._portal = portal;
   }
 
@@ -193,16 +193,16 @@ export class App {
     enteringView.setNav(this._portal);
 
     opts.keyboardClose = false;
-    opts.direction = DIRECTION_PUSH;
+    opts.direction = DIRECTION_FORWARD;
 
     if (!opts.animation) {
-      opts.animation = enteringView.getTransitionName(DIRECTION_PUSH);
+      opts.animation = enteringView.getTransitionName(DIRECTION_FORWARD);
     }
 
     enteringView.setLeavingOpts({
       keyboardClose: false,
-      direction: DIRECTION_POP,
-      animation: enteringView.getTransitionName(DIRECTION_POP),
+      direction: DIRECTION_BACK,
+      animation: enteringView.getTransitionName(DIRECTION_BACK),
       ev: opts.ev
     });
 

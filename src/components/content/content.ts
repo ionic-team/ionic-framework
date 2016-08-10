@@ -7,7 +7,7 @@ import { Keyboard } from '../../util/keyboard';
 import { nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
 import { ScrollView } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 import { isTrueProperty } from '../../util/util';
 
 

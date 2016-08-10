@@ -17,7 +17,7 @@ describe('DeepLinker', () => {
 
     it('should update the browserUrl to / when the passed in url matches indexAliasUrl', () => {
       linker.indexAliasUrl = '/my-special/url';
-      linker.updateLocation('/my-special/url', 'push');
+      linker.updateLocation('/my-special/url', 'forward');
       expect(linker.history[0]).toEqual('/');
     });
 
@@ -26,7 +26,7 @@ describe('DeepLinker', () => {
       spyOn(linker.location, 'go');
       spyOn(linker, 'historyPop');
       linker.history = ['first-page', 'some-page', 'current-page'];
-      linker.updateLocation('some-page', 'pop');
+      linker.updateLocation('some-page', 'back');
       expect(linker.location.back).toHaveBeenCalled();
       expect(linker.location.go).not.toHaveBeenCalled();
       expect(linker.historyPop).toHaveBeenCalled();
@@ -36,7 +36,7 @@ describe('DeepLinker', () => {
       spyOn(linker.location, 'back');
       spyOn(linker.location, 'go');
       linker.history = ['current-page'];
-      linker.updateLocation('current-page', 'push');
+      linker.updateLocation('current-page', 'forward');
       expect(linker.location.back).not.toHaveBeenCalled();
       expect(linker.location.go).not.toHaveBeenCalled();
     });
@@ -46,7 +46,7 @@ describe('DeepLinker', () => {
       spyOn(linker.location, 'go');
       spyOn(linker, 'historyPush');
       linker.history = ['first-page', 'some-other-page'];
-      linker.updateLocation('some-page', 'push');
+      linker.updateLocation('some-page', 'forward');
       expect(linker.location.back).not.toHaveBeenCalled();
       expect(linker.location.go).toHaveBeenCalledWith('some-page');
       expect(linker.historyPush).toHaveBeenCalledWith('some-page');
@@ -56,7 +56,7 @@ describe('DeepLinker', () => {
       spyOn(linker.location, 'back');
       spyOn(linker.location, 'go');
       spyOn(linker, 'historyPush');
-      linker.updateLocation('new-url', 'push');
+      linker.updateLocation('new-url', 'forward');
       expect(linker.location.back).not.toHaveBeenCalled();
       expect(linker.location.go).toHaveBeenCalledWith('new-url');
       expect(linker.historyPush).toHaveBeenCalledWith('new-url');
@@ -74,7 +74,7 @@ describe('DeepLinker', () => {
 
       spyOn(linker, 'updateLocation');
       linker.queuedPath = null;
-      linker.navChange(nav,view, 'push', isTransitioning, isNavRoot);
+      linker.navChange(nav,view, 'forward', isTransitioning, isNavRoot);
       expect(linker.queuedPath).toEqual(null);
       expect(linker.path).not.toEqual(null);
       expect(linker.updateLocation).toHaveBeenCalled();
@@ -88,7 +88,7 @@ describe('DeepLinker', () => {
 
       spyOn(linker, 'updateLocation');
       linker.queuedPath = [];
-      linker.navChange(nav,view, 'push', isTransitioning, isNavRoot);
+      linker.navChange(nav,view, 'forward', isTransitioning, isNavRoot);
       expect(linker.queuedPath).toEqual(null);
       expect(linker.path).not.toEqual(null);
       expect(linker.updateLocation).toHaveBeenCalled();
@@ -102,7 +102,7 @@ describe('DeepLinker', () => {
 
       spyOn(linker, 'updateLocation');
       expect(linker.queuedPath).toEqual(null);
-      linker.navChange(nav,view, 'push', isTransitioning, isNavRoot);
+      linker.navChange(nav,view, 'forward', isTransitioning, isNavRoot);
       expect(linker.queuedPath).not.toEqual(null);
       expect(linker.updateLocation).not.toHaveBeenCalled();
     });

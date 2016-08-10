@@ -1037,7 +1037,7 @@ describe('NavController', () => {
       leavingView.state = 234234;
       nav._transIds = 1;
 
-      let direction = 'push';
+      let direction = 'forward';
       let updateUrl = false;
       let isNavRoot = false;
       let hasCompleted = true;
@@ -1061,7 +1061,7 @@ describe('NavController', () => {
       leavingView.state = 235234;
       nav._transIds = 1;
 
-      let direction = 'push';
+      let direction = 'forward';
       let updateUrl = false;
       let isNavRoot = false;
       let hasCompleted = true;

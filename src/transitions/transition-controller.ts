@@ -1,5 +1,5 @@
 import { isPresent } from '../util/util';
-import { NavControllerBase } from '../components/nav/nav-controller-base';
+import { NavControllerBase } from '../navigation/nav-controller-base';
 import { Transition } from './transition';
 
 /**

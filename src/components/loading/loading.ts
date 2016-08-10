@@ -5,8 +5,8 @@ import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';
-import { NavOptions } from '../nav/nav-util';
-import { ViewController } from '../nav/view-controller';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @private
@@ -32,7 +32,7 @@ export class Loading extends ViewController {
    * @private
    */
   getTransitionName(direction: string) {
-    let key = (direction === 'pop' ? 'loadingLeave' : 'loadingEnter');
+    let key = (direction === 'back' ? 'loadingLeave' : 'loadingEnter');
     return this._nav && this._nav.config.get(key);
   }
 

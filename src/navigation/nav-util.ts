@@ -1,27 +1,9 @@
 import { Renderer } from '@angular/core';
 
-import { DeepLinker } from './nav-deep-linker';
-import { isPresent } from '../../util/util';
+import { DeepLinker } from './deep-linker';
+import { isPresent } from '../util/util';
 import { NavControllerBase } from './nav-controller-base';
 import { ViewController } from './view-controller';
-
-
-export function convertToViews(linker: DeepLinker, pages: Array<{page: any, params?: any}>): ViewController[] {
-  let views: ViewController[] = [];
-  if (pages) {
-    for (let i = 0; i < pages.length; i++) {
-      var componentType: any = linker.getComponent(pages[i].page) || pages[i].page;
-
-      if (typeof componentType !== 'function') {
-        console.error(`invalid component for nav: ${componentType}`);
-
-      } else {
-        views.push(new ViewController(componentType, pages[i].params));
-      }
-    }
-  }
-  return views;
-}
 
 
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
@@ -31,24 +13,24 @@ export function setZIndex(nav: NavControllerBase, enteringView: ViewController, 
       // the leavingView is a mocked view, either we're
       // actively transitioning or it's the initial load
 
-      var previousView = nav.getPrevious(enteringView);
+      const previousView = nav.getPrevious(enteringView);
       if (previousView && previousView._isLoaded()) {
         // we found a better previous view to reference
         // use this one instead
-        enteringView.setZIndex(previousView.zIndex + 1, renderer);
+        enteringView._setZIndex(previousView.zIndex + 1, renderer);
 
       } else {
         // this is the initial view
-        enteringView.setZIndex(nav._isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, renderer);
+        enteringView._setZIndex(nav._isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, renderer);
       }
 
     } else if (direction === DIRECTION_BACK) {
       // moving back
-      enteringView.setZIndex(leavingView.zIndex - 1, renderer);
+      enteringView._setZIndex(leavingView.zIndex - 1, renderer);
 
     } else {
       // moving forward
-      enteringView.setZIndex(leavingView.zIndex + 1, renderer);
+      enteringView._setZIndex(leavingView.zIndex + 1, renderer);
     }
   }
 }
@@ -68,6 +50,17 @@ export function isNav(nav: any) {
   return !!nav && !!nav.push;
 }
 
+// simple public link interface
+export interface DeepLink {
+  component: any;
+  name?: string;
+  path?: string;
+}
+
+export interface DeepLinkConfig {
+  links: DeepLink[]
+}
+
 // internal link interface, not exposed publicly
 export interface NavLink {
   component: any;
@@ -76,17 +69,6 @@ export interface NavLink {
   parts?: string[];
   staticParts?: number;
   dataParts?: number;
-}
-
-// simple public link interface
-export interface DeepLink {
-  name: string;
-  path?: string;
-  component: any;
-}
-
-export class NavLinkConfig {
-  constructor(public links: DeepLink[]) {}
 }
 
 export interface NavSegment {

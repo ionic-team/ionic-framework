@@ -2,10 +2,10 @@ import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild,
 
 import { Animation, AnimationOptions } from '../../animations/animation';
 import { Key } from '../../util/key';
-import { NavParams } from '../nav/nav-params';
+import { NavParams } from '../../navigation/nav-params';
 import { pascalCaseToDashCase } from '../../util/util';
 import { PageTransition } from '../../transitions/page-transition';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 import { windowDimensions } from '../../util/dom';
 
 

@@ -1,6 +1,6 @@
 import { StorageEngine } from './storage';
 
-import { defaults, assign } from '../../util/util';
+import { defaults, assign } from '../util/util';
 
 const DB_NAME: string = '__ionicstorage';
 const win: any = window;
@@ -98,15 +98,15 @@ export class SqlStorage extends StorageEngine {
    * @param {array} params the additional params to use for query placeholders
    * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
    */
-  query(query: string, params = []): Promise<any> {
+  query(query: string, params: any[] = []): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
-        this._db.transaction((tx) => {
+        this._db.transaction((tx: any) => {
           tx.executeSql(query, params,
-            (tx, res) => resolve({ tx: tx, res: res }),
-            (tx, err) => reject({ tx: tx, err: err }));
+            (tx: any, res: any) => resolve({ tx: tx, res: res }),
+            (tx: any, err: any) => reject({ tx: tx, err: err }));
         },
-          (err) => reject({ err: err }));
+          (err: any) => reject({ err: err }));
       } catch (err) {
         reject({ err: err });
       }

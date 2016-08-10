@@ -115,7 +115,7 @@ export class Dashboard {
   logOut() {
     this.navCtrl.parent.setRoot(Login, null, {
       animate: true,
-      direction: 'pop'
+      direction: 'back'
     });
   }
 
@@ -152,7 +152,7 @@ export class Profile {
   logOut() {
     this.navCtrl.parent.setRoot(Login, null, {
       animate: true,
-      direction: 'pop'
+      direction: 'back'
     });
   }
 

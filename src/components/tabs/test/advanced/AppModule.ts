@@ -1,5 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../dist';
+import { DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../dist';
 
 
 @Component({
@@ -104,7 +104,7 @@ export class Tab1Page1 {
   }
 
   logout() {
-    this.app.getRootNav().setRoot(SignIn, null, { animate: true, direction: 'pop' });
+    this.app.getRootNav().setRoot(SignIn, null, { animate: true, direction: 'back' });
   }
 
   ionViewWillEnter() {
@@ -309,17 +309,19 @@ export class E2EApp {
 }
 
 
-let links: NavLink[] = [
-  { component: SignIn },
-  { component: TabsPage },
-  { component: Tab1Page1 },
-  { component: Tab1Page2 },
-  { component: Tab1Page3 },
-  { component: Tab2Page1 },
-  { component: Tab2Page2 },
-  { component: Tab2Page3 },
-  { component: Tab3Page1 },
-];
+export const deepLinkConfig: DeepLinkConfig = {
+  links: [
+    { component: SignIn },
+    { component: TabsPage },
+    { component: Tab1Page1 },
+    { component: Tab1Page2 },
+    { component: Tab1Page3 },
+    { component: Tab2Page1 },
+    { component: Tab2Page2 },
+    { component: Tab2Page3 },
+    { component: Tab3Page1 },
+  ]
+};
 
 @NgModule({
   declarations: [
@@ -336,7 +338,7 @@ let links: NavLink[] = [
     Tab3Page1
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp, deepLinkConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

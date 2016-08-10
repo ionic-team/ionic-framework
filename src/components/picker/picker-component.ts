@@ -6,12 +6,12 @@ import { cancelRaf, pointerCoord, raf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString } from '../../util/util';
 import { Config } from '../../config/config';
 import { Key } from '../../util/key';
-import { NavParams } from '../nav/nav-params';
+import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
 import { Transition } from '../../transitions/transition';
 import { UIEventManager } from '../../util/ui-event-manager';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**

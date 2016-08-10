@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Dire
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**

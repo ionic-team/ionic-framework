@@ -4,8 +4,8 @@ import { ActionSheetCmp } from './action-sheet-component';
 import { ActionSheetOptions } from './action-sheet-options';
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-util';
-import { ViewController } from '../nav/view-controller';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @private
@@ -31,7 +31,7 @@ export class ActionSheet extends ViewController {
    * @private
    */
   getTransitionName(direction: string) {
-    let key = 'actionSheet' + (direction === 'pop' ? 'Leave' : 'Enter');
+    let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
     return this._nav && this._nav.config.get(key);
   }
 

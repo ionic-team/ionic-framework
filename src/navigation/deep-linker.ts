@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OpaqueToken } from '@angular/core';
 import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
-import { App } from '../app/app';
-import { DeepLink, isNav, isTab, isTabs, NavLinkConfig, NavPath, NavSegment, DIRECTION_BACK, DIRECTION_FORWARD } from './nav-util';
-import { isBlank, isPresent } from '../../util/util';
-import { Nav } from './nav';
+import { App } from '../components/app/app';
+import { isNav, isTab, isTabs, NavPath, NavSegment, DIRECTION_BACK, DIRECTION_FORWARD } from './nav-util';
+import { isBlank, isPresent } from '../util/util';
+import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
-import { Tab } from '../tabs/tab';
-import { Tabs } from '../tabs/tabs';
+import { Tab } from '../components/tabs/tab';
+import { Tabs } from '../components/tabs/tabs';
 import { UrlSerializer } from './url-serializer';
 import { ViewController } from './view-controller';
 
@@ -41,7 +41,7 @@ export class DeepLinker {
 
   init() {
     // scenario 1: Initial load of all navs from the initial browser URL
-    let browserUrl = normalizeUrl(this.location.path());
+    const browserUrl = normalizeUrl(this.location.path());
     console.debug(`DeepLinker, init load: ${browserUrl}`);
 
     // update the Path from the browser URL
@@ -79,7 +79,7 @@ export class DeepLinker {
       }
 
       // get the app's root nav
-      let appRootNav = <Nav>this.app.getRootNav();
+      const appRootNav = <Nav>this.app.getRootNav();
       if (appRootNav) {
         if (browserUrl === '/') {
           // a url change to the index url
@@ -137,11 +137,11 @@ export class DeepLinker {
     }
 
     // build a string URL out of the Path
-    let browserUrl = this.serializer.serialize(this.path);
+    const browserUrl = this.serializer.serialize(this.path);
 
     // this is not the same as the deep linkers's known current URL
     // so it's safe to make a browser location changed
-    let lastPath = this.path[this.path.length - 1];
+    const lastPath = this.path[this.path.length - 1];
     if (lastPath && viewCtrl.componentType === lastPath.component) {
       // ensure the view's id matches the segment's id
       viewCtrl.id = lastPath.id;
@@ -185,7 +185,7 @@ export class DeepLinker {
       return nameOrComponent;
     }
     if (typeof nameOrComponent === 'string') {
-      let segment = this.serializer.createSegmentFromName(nameOrComponent);
+      const segment = this.serializer.createSegmentFromName(nameOrComponent);
       if (segment && segment.component) {
         return segment.component;
       }
@@ -195,12 +195,12 @@ export class DeepLinker {
 
   createUrl(nav: any, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
     // create a segment out of just the passed in name
-    let segment = this.serializer.createSegmentFromName(nameOrComponent);
+    const segment = this.serializer.createSegmentFromName(nameOrComponent);
     if (segment) {
-      let path = this.pathFromNavs(nav, segment.component, data);
+      const path = this.pathFromNavs(nav, segment.component, data);
       // serialize the segments into a browser URL
       // and prepare the URL with the location and return
-      let url = this.serializer.serialize(path);
+      const url = this.serializer.serialize(path);
       return prepareExternalUrl ? this.location.prepareExternalUrl(url) : url;
     }
     return '';
@@ -212,7 +212,7 @@ export class DeepLinker {
    * NavControllers state.
    */
   pathFromNavs(nav: NavController, component?: any, data?: any): NavPath {
-    let path: NavPath = [];
+    const path: NavPath = [];
     let view: ViewController;
     let segment: NavSegment;
     let tabSelector: string;
@@ -248,7 +248,7 @@ export class DeepLinker {
       if (isTab(nav)) {
         // this nav is a Tab, which is a child of Tabs
         // add a segment to represent which Tab is the selected one
-        tabSelector = this.getTabSelector(<Tab>nav);
+        tabSelector = this.getTabSelector(<any>nav);
         path.push({
           id: tabSelector,
           name: tabSelector,
@@ -283,7 +283,7 @@ export class DeepLinker {
 
   getSelectedTabIndex(tabsNav: Tabs, pathName: string): number {
     // we found a segment which probably represents which tab to select
-    let indexMatch = pathName.match(/tab-(\d+)/);
+    const indexMatch = pathName.match(/tab-(\d+)/);
     if (indexMatch) {
       // awesome, the segment name was something "tab-0", and
       // the numbe represents which tab to select
@@ -291,7 +291,7 @@ export class DeepLinker {
     }
 
     // wasn't in the "tab-0" format so maybe it's using a word
-    let tab = tabsNav.tabs.find(t => {
+    const tab = tabsNav.tabs.find(t => {
       return (isPresent(t.tabUrlPath) && t.tabUrlPath === pathName) ||
              (isPresent(t.tabTitle) && this.serializer.formatUrlPart(t.tabTitle) === pathName);
     });
@@ -305,7 +305,7 @@ export class DeepLinker {
    * where it lives in the path and load up the correct component.
    */
   initNav(nav: any): NavSegment {
-    let path = this.path;
+    const path = this.path;
 
     if (nav && path.length) {
       if (!nav.parent) {
@@ -314,7 +314,7 @@ export class DeepLinker {
         return path[0];
       }
 
-      for (let i = 1; i < path.length; i++) {
+      for (var i = 1; i < path.length; i++) {
         if (path[i - 1].navId === nav.parent.id) {
           // this nav's parent segment is the one before this segment's index
           path[i].navId = nav.id;
@@ -368,8 +368,8 @@ export class DeepLinker {
     // walk backwards to see if the exact view we want to show here
     // is already in the stack that we can just pop back to
     let view: ViewController;
-    let count = nav.length() - 1;
-    for (let i = count; i >= 0; i--) {
+    const count = nav.length() - 1;
+    for (var i = count; i >= 0; i--) {
       view = nav.getByIndex(i);
 
       if (view && view.id === segment.id) {
@@ -426,20 +426,21 @@ export class DeepLinker {
 }
 
 
-function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location) {
-  let deepLinker = new DeepLinker(app, serializer, location);
+export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location) {
+  const deepLinker = new DeepLinker(app, serializer, location);
   deepLinker.init();
   return deepLinker;
 }
 
 
-export function provideDeepLinker(links: DeepLink[]): any[] {
-  let linkConfig = new NavLinkConfig(links);
+export const UserDeepLinkConfig = new OpaqueToken('USERLINKS');
 
+
+export function provideDeepLinker(userDeepLinkConfig: any): any[] {
   return [
-    { provide: NavLinkConfig, useValue: linkConfig },
     UrlSerializer,
     Location,
+    { provide: UserDeepLinkConfig, useValue: userDeepLinkConfig },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: DeepLinker,

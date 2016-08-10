@@ -2,19 +2,19 @@ import { ComponentFactoryResolver, Directive, ElementRef, forwardRef, Inject, Ng
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { DeepLinker } from './nav-deep-linker';
+import { DeepLinker } from '../../navigation/deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { Keyboard } from '../../util/keyboard';
-import { NavControllerBase } from '../nav/nav-controller-base';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { TransitionController } from '../../transitions/transition-controller';
 
 /**
  * @private
  */
 @Directive({
-  selector: '[nav-portal]'
+  selector: '[overlay-portal]'
 })
-export class NavPortal extends NavControllerBase {
+export class OverlayPortal extends NavControllerBase {
   constructor(
     @Inject(forwardRef(() => App)) app: App,
     config: Config,

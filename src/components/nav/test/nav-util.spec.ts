@@ -1,5 +1,5 @@
 import { ViewController } from '../../../../src';
-import { setZIndex, DIRECTION_POP, DIRECTION_PUSH } from '../../../../src/components/nav/nav-util';
+import { setZIndex, DIRECTION_BACK, DIRECTION_FORWARD } from '../../../../src/components/nav/nav-util';
 import { mockNavController, mockElementRef, mockRenderer } from '../../../../src/util/mock-providers';
 
 export function run() {
@@ -18,7 +18,7 @@ describe('NavUtils', () => {
       let nav = mockNavController();
       nav._views = [leavingView, enteringView];
 
-      setZIndex(nav, enteringView, leavingView, DIRECTION_PUSH, mockRenderer());
+      setZIndex(nav, enteringView, leavingView, DIRECTION_FORWARD, mockRenderer());
       expect(enteringView.zIndex).toEqual(101);
     });
 
@@ -30,7 +30,7 @@ describe('NavUtils', () => {
       let nav = mockNavController();
       nav._views = [leavingView, enteringView];
 
-      setZIndex(nav, enteringView, leavingView, DIRECTION_PUSH, mockRenderer());
+      setZIndex(nav, enteringView, leavingView, DIRECTION_FORWARD, mockRenderer());
       expect(enteringView.zIndex).toEqual(100);
     });
 
@@ -38,7 +38,7 @@ describe('NavUtils', () => {
       let enteringView = new ViewController();
       enteringView.setPageRef(mockElementRef());
       let nav = mockNavController();
-      setZIndex(nav, enteringView, null, DIRECTION_PUSH, mockRenderer());
+      setZIndex(nav, enteringView, null, DIRECTION_FORWARD, mockRenderer());
       expect(enteringView.zIndex).toEqual(100);
     });
 
@@ -49,7 +49,7 @@ describe('NavUtils', () => {
       let enteringView = new ViewController();
       enteringView.setPageRef(mockElementRef());
       let nav = mockNavController();
-      setZIndex(nav, enteringView, leavingView, DIRECTION_PUSH, mockRenderer());
+      setZIndex(nav, enteringView, leavingView, DIRECTION_FORWARD, mockRenderer());
       expect(enteringView.zIndex).toEqual(1);
     });
 
@@ -60,7 +60,7 @@ describe('NavUtils', () => {
       let enteringView = new ViewController();
       enteringView.setPageRef(mockElementRef());
       let nav = mockNavController();
-      setZIndex(nav, enteringView, leavingView, DIRECTION_POP, mockRenderer());
+      setZIndex(nav, enteringView, leavingView, DIRECTION_BACK, mockRenderer());
       expect(enteringView.zIndex).toEqual(0);
     });
 
@@ -69,7 +69,7 @@ describe('NavUtils', () => {
       enteringView.setPageRef(mockElementRef());
       let nav = mockNavController();
       nav._isPortal = true;
-      setZIndex(nav, enteringView, null, DIRECTION_PUSH, mockRenderer());
+      setZIndex(nav, enteringView, null, DIRECTION_FORWARD, mockRenderer());
       expect(enteringView.zIndex).toEqual(9999);
     });
 
@@ -81,7 +81,7 @@ describe('NavUtils', () => {
       enteringView.setPageRef(mockElementRef());
       let nav = mockNavController();
       nav._isPortal = true;
-      setZIndex(nav, enteringView, leavingView, DIRECTION_PUSH, mockRenderer());
+      setZIndex(nav, enteringView, leavingView, DIRECTION_FORWARD, mockRenderer());
       expect(enteringView.zIndex).toEqual(10000);
     });
 
@@ -93,7 +93,7 @@ describe('NavUtils', () => {
       enteringView.setPageRef(mockElementRef());
       let nav = mockNavController();
       nav._isPortal = true;
-      setZIndex(nav, enteringView, leavingView, DIRECTION_POP, mockRenderer());
+      setZIndex(nav, enteringView, leavingView, DIRECTION_BACK, mockRenderer());
       expect(enteringView.zIndex).toEqual(9999);
     });
 

@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-util';
+import { NavOptions } from '../../navigation/nav-util';
 import { ToastOptions } from './toast-options';
 import { ToastCmp } from './toast-component';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @private
@@ -36,7 +36,7 @@ export class Toast extends ViewController {
   * @private
   */
   getTransitionName(direction: string) {
-    let key = 'toast' + (direction === 'pop' ? 'Leave' : 'Enter');
+    let key = 'toast' + (direction === 'back' ? 'Leave' : 'Enter');
     return this._nav && this._nav.config.get(key);
   }
 

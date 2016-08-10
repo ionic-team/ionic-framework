@@ -7,7 +7,7 @@ import { App } from '../app/app';
 import { Form } from '../../util/form';
 import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/util';
 import { Item } from '../item/item';
-import { NavController } from '../nav/nav-controller';
+import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
 
 export const SELECT_VALUE_ACCESSOR = new Provider(

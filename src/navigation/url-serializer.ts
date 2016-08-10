@@ -1,15 +1,21 @@
 import { Injectable, Inject, forwardRef } from '@angular/core';
 
-import { assign, isBlank, isNumber, isPresent, isPrimitive, isString, pascalCaseToDashCase } from '../../util/util';
-import { DeepLink, NavLink, NavLinkConfig, NavPath, NavSegment } from './nav-util';
+import { isArray, isBlank, isPresent, pascalCaseToDashCase } from '../util/util';
+import { DeepLink,DeepLinkConfig,  NavLink, NavPath, NavSegment } from './nav-util';
+import { UserDeepLinkConfig } from './deep-linker';
 
 
 @Injectable()
 export class UrlSerializer {
   links: NavLink[];
 
-  constructor(@Inject(forwardRef(() => NavLinkConfig)) config: NavLinkConfig) {
-    this.links = this.normalizeLinks(config.links);
+  constructor(@Inject(UserDeepLinkConfig) config: DeepLinkConfig) {
+    if (config && isArray(config.links)) {
+      this.links = normalizeLinks(config.links);
+
+    } else {
+      this.links = [];
+    }
   }
 
   /**
@@ -28,7 +34,7 @@ export class UrlSerializer {
   }
 
   createSegmentFromName(nameOrComponent: any): NavSegment {
-    let configLink = this.links.find((link: NavLink) => {
+    const configLink = this.links.find((link: NavLink) => {
       return (link.component === nameOrComponent) ||
              (link.name === nameOrComponent) ||
              (link.component.name === nameOrComponent);
@@ -55,7 +61,7 @@ export class UrlSerializer {
    */
   serializeComponent(component: any, data: any): NavSegment {
     if (component) {
-      let link = this.links.find(l => component === l.component || component.name === l.name);
+      const link = this.links.find(l => component === l.component || component.name === l.name);
       if (link) {
         return this.createSegment(link, data);
       }
@@ -71,16 +77,16 @@ export class UrlSerializer {
       urlParts = urlParts.slice();
 
       // loop through all the data and convert it to a string
-      let keys = Object.keys(data);
-      let keysLength = keys.length;
+      const keys = Object.keys(data);
+      const keysLength = keys.length;
 
       if (keysLength) {
-        for (var u = 0; u < urlParts.length; u++) {
-          if (urlParts[u].charAt(0) === ':') {
-            for (var k = 0; k < keysLength; k++) {
-              if (urlParts[u] === `:${keys[k]}`) {
+        for (var i = 0; i < urlParts.length; i++) {
+          if (urlParts[i].charAt(0) === ':') {
+            for (var j = 0; j < keysLength; j++) {
+              if (urlParts[i] === `:${keys[j]}`) {
                 // this data goes into the URL part (between slashes)
-                urlParts[u] = encodeURIComponent(data[keys[k]]);
+                urlParts[i] = encodeURIComponent(data[keys[j]]);
                 break;
               }
             }
@@ -111,50 +117,11 @@ export class UrlSerializer {
     return encodeURIComponent(name);
   }
 
-  normalizeLinks(links: NavLink[]): NavLink[] {
-    if (isBlank(links)) {
-      return [];
-    }
-
-    let link: NavLink;
-    let stillCountinStatic: boolean;
-
-    for (let i = 0, ilen = links.length; i < ilen; i++) {
-      link = links[i];
-
-      if (isBlank(link.path)) {
-        link.path = link.name;
-      }
-
-      link.parts = link.path.split('/');
-
-      // used for sorting
-      link.staticParts = link.dataParts = 0;
-      stillCountinStatic = true;
-
-      for (var j = 0; j < link.parts.length; j++) {
-        if (link.parts[j].charAt(0) === ':') {
-          link.dataParts++;
-          stillCountinStatic = false;
-
-        } else if (stillCountinStatic) {
-          link.staticParts++;
-        }
-      }
-    }
-
-    // sort by the number of parts, with the links
-    // with the most parts first
-    links.sort(sortConfigLinks);
-
-    return links;
-  }
-
 }
 
 export const parseUrlParts = (urlParts: string[], configLinks: NavLink[]): NavPath => {
-  let configLinkLength = configLinks.length;
-  let path: NavPath = [];
+  const configLinkLength = configLinks.length;
+  const path: NavPath = [];
   let segment: NavSegment;
 
   for (var j = 0; j < configLinkLength; j++) {
@@ -186,7 +153,7 @@ export const parseUrlParts = (urlParts: string[], configLinks: NavLink[]): NavPa
 };
 
 export const matchUrlParts = (partStartIndex: number, urlParts: string[], link: NavLink): NavSegment => {
-  for (let i = 0; i < link.parts.length; i++) {
+  for (var i = 0; i < link.parts.length; i++) {
     if (!isPartMatch(urlParts[partStartIndex + i], link.parts[i])) {
       // these parts do not match, so this link config will not work
       return null;
@@ -195,7 +162,7 @@ export const matchUrlParts = (partStartIndex: number, urlParts: string[], link: 
 
   // all parts matched so far
   // make sure the lengths are correct
-  let matchedUrlParts = urlParts.slice(partStartIndex, partStartIndex + link.parts.length);
+  const matchedUrlParts = urlParts.slice(partStartIndex, partStartIndex + link.parts.length);
   return createSegmentFromPart(matchedUrlParts, link);
 };
 
@@ -211,7 +178,7 @@ export const isPartMatch = (urlPart: string, configLinkPart: string) => {
 
 export const createSegmentFromPart = (matchedUrlParts: string[], link: NavLink): NavSegment => {
   if (matchedUrlParts.length === link.parts.length) {
-    let segment: NavSegment = {
+    const segment: NavSegment = {
       id: matchedUrlParts.join('/'),
       name: link.name,
       component: link.component,
@@ -264,6 +231,36 @@ function sortConfigLinks(a: NavLink, b: NavLink) {
   }
 
   return 0;
+}
+
+export const normalizeLinks = (links: NavLink[]): NavLink[] => {
+  for (var i = 0, ilen = links.length; i < ilen; i++) {
+    var link = links[i];
+
+    if (isBlank(link.path)) {
+      link.path = link.name;
+    }
+
+    link.parts = link.path.split('/');
+
+    // used for sorting
+    link.staticParts = link.dataParts = 0;
+    var stillCountingStatic = true;
+
+    for (var j = 0; j < link.parts.length; j++) {
+      if (link.parts[j].charAt(0) === ':') {
+        link.dataParts++;
+        stillCountingStatic = false;
+
+      } else if (stillCountingStatic) {
+        link.staticParts++;
+      }
+    }
+  }
+
+  // sort by the number of parts, with the links
+  // with the most parts first
+  return links.sort(sortConfigLinks);
 }
 
 const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|>|<|;|:|@|&|=/g;
