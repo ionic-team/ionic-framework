@@ -27,7 +27,7 @@ export class Animation {
   private _rv: boolean;
   private _unrgTrns: Function;
   private _tm: number;
-  private _upd: number;
+  private _upd: number = 0;
   private _hasDur: boolean;
   private _isAsync: boolean;
   private _twn: boolean;
@@ -879,10 +879,10 @@ export class Animation {
    * Set the progress step for this animation.
    */
   progressStep(stepValue: number) {
-    let now = Date.now();
+    const now = Date.now();
 
     // only update if the last update was more than 16ms ago
-    if (now - 16 > this._upd) {
+    if (now - 15 > this._upd) {
       this._upd = now;
 
       stepValue = Math.min(1, Math.max(0, stepValue));
