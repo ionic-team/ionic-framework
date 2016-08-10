@@ -150,24 +150,23 @@ export class ActionSheet extends ViewController {
  *
  * ActionSheet create options
  *
- * | Option                | Type       | Description                                                     |
- * |-----------------------|------------|-----------------------------------------------------------------|
- * | title                 |`string`    | The title for the actionsheet                                   |
- * | subTitle              |`string`    | The sub-title for the actionsheet                               |
- * | cssClass              |`string`    | An additional class for custom styles                           |
- * | enableBackdropDismiss |`boolean`   | If the actionsheet should close when the user taps the backdrop |
- * | buttons               |`array<any>`| An array of buttons to display                                  |
+ * | Option                | Type       | Description                                                        |
+ * |-----------------------|------------|--------------------------------------------------------------------|
+ * | title                 |`string`    | The title for the Action Sheet.                                    |
+ * | subTitle              |`string`    | The sub-title for the Action Sheet.                                |
+ * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.         |
+ * | enableBackdropDismiss |`boolean`   | If the Action Sheet should close when the user taps the backdrop.  |
+ * | buttons               |`array<any>`| An array of buttons to display.                                    |
  *
  * ActionSheet button options
  *
  * | Option   | Type     | Description                                                                                                                                      |
  * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
- * | text     | `string` | The buttons text                                                                                                                                 |
- * | icon     | `icon`   | The buttons icons                                                                                                                                |
- * | handler  | `any`    | An express the button should evaluate                                                                                                            |
- * | cssClass | `string` | An additional class for custom styles                                                                                                            |
- * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles |
- *
+ * | text     | `string` | The buttons text.                                                                                                                                |
+ * | icon     | `icon`   | The buttons icons.                                                                                                                               |
+ * | handler  | `any`    | An express the button should evaluate.                                                                                                           |
+ * | cssClass | `string` | Additional classes for custom styles, separated by spaces.                                                                                       |
+ * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles.|
  *
  *
  * ### Dismissing And Async Navigation

@@ -235,35 +235,36 @@ export class Alert extends ViewController {
  *
  *  | Property              | Type      | Description                                                               |
  *  |-----------------------|-----------|---------------------------------------------------------------------------|
- *  | title                 | `string`  | The string for the alert (optional)                                       |
- *  | subTitle              | `string`  | The subtitle for the alert (optional)                                     |
- *  | message               | `string`  | The message for the alert (optional)                                      |
- *  | cssClass              | `string`  | Any additional class for the alert (optional)                             |
- *  | inputs                | `array`   | An array of inputs for the alert. See input options. (optional)           |
- *  | buttons               | `array`   | An array of buttons for the alert. See buttons options. (optional)        |
- *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop (optional)  |
+ *  | title                 | `string`  | The title for the alert.                                                  |
+ *  | subTitle              | `string`  | The subtitle for the alert.                                               |
+ *  | message               | `string`  | The message for the alert.                                                |
+ *  | cssClass              | `string`  | Additional classes for custom styles, separated by spaces.                |
+ *  | inputs                | `array`   | An array of inputs for the alert. See input options.                      |
+ *  | buttons               | `array`   | An array of buttons for the alert. See buttons options.                   |
+ *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop.            |
  *
  *
  *  Input options
  *
  *  | Property    | Type      | Description                                                     |
  *  |-------------|-----------|-----------------------------------------------------------------|
- *  | type        | `string`  | The type the input should be, text, tel, number, etc (optional) |
- *  | name        | `string`  | The name for the input (optional)                               |
- *  | placeholder | `string`  | The input's placeholder (optional, for textual/numeric inputs)  |
- *  | value       | `string`  | The input's value (optional)                                    |
- *  | label       | `string`  | The input's label (optional, only for radio/checkbox inputs)    |
- *  | checked     | `boolean` | Whether or not the input is checked or not (optional)           |
- *  | id          | `string`  | The input's id (optional)                                       |
+ *  | type        | `string`  | The type the input should be: text, tel, number, etc.           |
+ *  | name        | `string`  | The name for the input.                                         |
+ *  | placeholder | `string`  | The input's placeholder (for textual/numeric inputs)            |
+ *  | value       | `string`  | The input's value.                                              |
+ *  | label       | `string`  | The input's label (only for radio/checkbox inputs)              |
+ *  | checked     | `boolean` | Whether or not the input is checked.                            |
+ *  | id          | `string`  | The input's id.                                                 |
  *
  *  Button options
  *
- *  | Property | Type     | Description                                                    |
- *  |----------|----------|----------------------------------------------------------------|
- *  | text     | `string` | The buttons displayed text                                     |
- *  | handler  | `any`    | Expression that should be evaluated when the button is pressed |
- *  | cssClass | `string` | An additional CSS class for the button                         |
- *  | role     | `string` | The buttons role, null or `cancel`                             |
+ *  | Property | Type     | Description                                                     |
+ *  |----------|----------|-----------------------------------------------------------------|
+ *  | text     | `string` | The buttons displayed text.                                     |
+ *  | handler  | `any`    | Expression that should be evaluated when the button is pressed. |
+ *  | cssClass | `string` | An additional CSS class for the button.                         |
+ *  | role     | `string` | The buttons role, null or `cancel`.                             |
+ *
  * ### Dismissing And Async Navigation
  *
  * After an alert has been dismissed, the app may need to also transition

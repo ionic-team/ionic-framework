@@ -1,4 +1,5 @@
 import { ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 
 /**
@@ -12,6 +13,7 @@ import { Events, provideEvents } from './util/events';
 import { FeatureDetect } from './util/feature-detect';
 import { Form } from './util/form';
 import { GestureController } from './gestures/gesture-controller';
+import { IonicGestureConfig } from './gestures/gesture-config';
 import { Keyboard } from './util/keyboard';
 import { LoadingController } from './components/loading/loading';
 import { MenuController } from './components/menu/menu-controller';
@@ -45,6 +47,7 @@ export { ViewController } from './navigation/view-controller';
 export function ionicProviders(userRoot?: any, userConfig?: any, userDeepLinkConfig?: any): any[] {
   return [
     { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: userRoot, multi: true },
+    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     { provide: UserAgent, useFactory: getWindowUserAgent },
     { provide: UserDir, useFactory: getDocumentDir },
     { provide: UserLang, useFactory: getDocumentLang },
