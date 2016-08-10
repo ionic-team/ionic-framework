@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, ElementRef, NgZone, Renderer } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { App, Config, Form, GestureController, Keyboard, MenuController, NavOptions, Platform, Tab, Tabs, Transition, ViewController } from '../../src';
+import { App, Config, DeepLinker, Form, GestureController, Keyboard, MenuController, NavLinkConfig, NavOptions, Platform, Tab, Tabs, Transition, UrlSerializer, ViewController } from '../../src';
 import { NavControllerBase } from '../../src/components/nav/nav-controller-base';
+import { TabButton } from '../../src/components/tabs/tab-button';
 
 
 export const mockConfig = function(config?: any) {
@@ -99,7 +100,13 @@ export const mockNavController = function(): NavControllerBase {
 
   let gestureCtrl = new GestureController(app);
 
+  let navLikConfig = new NavLinkConfig([]);
+
+  let serializer = new UrlSerializer(navLikConfig);
+
   let location = mockLocation();
+
+  let deepLinker = new DeepLinker(app, serializer, location);
 
   return new NavControllerBase(
     null,
@@ -110,7 +117,8 @@ export const mockNavController = function(): NavControllerBase {
     zone,
     renderer,
     compiler,
-    gestureCtrl
+    gestureCtrl,
+    deepLinker
   );
 };
 
@@ -138,7 +146,13 @@ export const mockTab = function(parentTabs: Tabs): Tab {
 
   let gestureCtrl = new GestureController(app);
 
+  let navLikConfig = new NavLinkConfig([]);
+
+  let serializer = new UrlSerializer(navLikConfig);
+
   let location = mockLocation();
+
+  let linker = new DeepLinker(app, serializer, location);
 
   let tab = new Tab(
     parentTabs,
@@ -150,7 +164,8 @@ export const mockTab = function(parentTabs: Tabs): Tab {
     renderer,
     compiler,
     changeDetectorRef,
-    gestureCtrl
+    gestureCtrl,
+    linker
   );
 
   tab.load = (opts: any, cb: Function) => {
@@ -166,6 +181,7 @@ export const mockTabs = function(app?: App): Tabs {
   app = app || mockApp(config, platform);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
+  let linker: DeepLinker = null;
 
-  return new Tabs(null, null, app, config, elementRef, platform, renderer);
+  return new Tabs(null, null, app, config, elementRef, platform, renderer, linker);
 };

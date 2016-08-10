@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-interfaces';
+import { NavOptions } from '../nav/nav-util';
 import { PopoverCmp } from './popover-component';
 import { PopoverOptions } from './popover-options';
 import { ViewController } from '../nav/view-controller';
@@ -34,7 +34,7 @@ export class Popover extends ViewController {
    * @private
    */
   getTransitionName(direction: string) {
-    let key = (direction === 'back' ? 'popoverLeave' : 'popoverEnter');
+    let key = (direction === 'pop' ? 'popoverLeave' : 'popoverEnter');
     return this._nav && this._nav.config.get(key);
   }
 

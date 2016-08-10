@@ -2,11 +2,14 @@ import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, Input, 
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { DIRECTION_POP } from './nav-util';
+import { DeepLinker } from './nav-deep-linker';
 import { Keyboard } from '../../util/keyboard';
 import { GestureController } from '../../gestures/gesture-controller';
 import { TransitionController } from '../../transitions/transition-controller';
 import { isTrueProperty, noop } from '../../util/util';
 import { NavControllerBase } from './nav-controller-base';
+import { NavOptions } from './nav-util';
 import { ViewController } from './view-controller';
 
 /**
@@ -67,9 +70,10 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     renderer: Renderer,
     cfr: ComponentFactoryResolver,
     gestureCtrl: GestureController,
-    transCtrl: TransitionController
+    transCtrl: TransitionController,
+    @Optional() linker: DeepLinker
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
@@ -104,8 +108,24 @@ export class Nav extends NavControllerBase implements AfterViewInit {
   ngAfterViewInit() {
     this._hasInit = true;
 
+    let navSegment = this._linker.initNav(this);
+    if (navSegment && navSegment.component) {
+      // there is a segment match in the linker
+      this.push(navSegment.component, navSegment.data, {
+        id: navSegment.id
+      }, noop);
+
+    } else if (this._root) {
+      // no segment match, so use the root property
+      this.push(this._root, this.rootParams, {
+        isNavRoot: (<any>this._app.getRootNav() === this)
+      }, noop);
+    }
+  }
+
+  goToRoot(opts: NavOptions) {
     if (this._root) {
-      this.push(this._root, null, null, noop);
+      this.popTo(this._root, this.rootParams, opts, noop);
     }
   }
 
@@ -123,6 +143,11 @@ export class Nav extends NavControllerBase implements AfterViewInit {
       this.setRoot(page);
     }
   }
+
+  /**
+   * @input {object} Any nav-params to pass to the root page of this nav.
+   */
+  @Input() rootParams: any;
 
   /**
    * @input {boolean} Whether it's possible to swipe-to-go-back on this nav controller or not.

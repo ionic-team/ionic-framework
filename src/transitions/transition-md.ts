@@ -15,7 +15,7 @@ class MDTransition extends PageTransition {
     super.init(enteringView, leavingView, opts);
 
     // what direction is the transition going
-    let backDirection = (opts.direction === 'back');
+    let backDirection = (opts.direction === 'pop');
 
     // do they have navbars?
     let enteringHasNavbar = enteringView.hasNavbar();

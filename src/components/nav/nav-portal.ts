@@ -2,6 +2,7 @@ import { ComponentFactoryResolver, Directive, ElementRef, forwardRef, Inject, Ng
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { DeepLinker } from './nav-deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../nav/nav-controller-base';
@@ -24,9 +25,10 @@ export class NavPortal extends NavControllerBase {
     cfr: ComponentFactoryResolver,
     gestureCtrl: GestureController,
     transCtrl: TransitionController,
+    @Optional() linker: DeepLinker,
     viewPort: ViewContainerRef
   ) {
-    super(null, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl);
+    super(null, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
     this._isPortal = true;
     this._init = true;
     this.setViewport(viewPort);

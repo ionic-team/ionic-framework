@@ -4,7 +4,7 @@ import { Footer, Header } from '../toolbar/toolbar';
 import { isPresent, merge } from '../../util/util';
 import { Navbar } from '../navbar/navbar';
 import { NavController } from './nav-controller';
-import { NavOptions } from './nav-interfaces';
+import { NavOptions } from './nav-util';
 import { NavParams } from './nav-params';
 
 

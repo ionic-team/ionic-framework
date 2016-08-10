@@ -2,11 +2,12 @@ import { ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Eve
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { DeepLinker } from '../nav/nav-deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty, noop } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../nav/nav-controller-base';
-import { NavOptions } from '../nav/nav-interfaces';
+import { NavOptions } from '../nav/nav-util';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
 import { TransitionController } from '../../transitions/transition-controller';
@@ -181,6 +182,11 @@ export class Tab extends NavControllerBase {
   @Input() rootParams: any;
 
   /**
+   * @input {string} The URL path name to represent this tab within the URL.
+   */
+  @Input() tabUrlPath: string;
+
+  /**
    * @input {string} The title of the tab button.
    */
   @Input() tabTitle: string;
@@ -253,10 +259,11 @@ export class Tab extends NavControllerBase {
     cfr: ComponentFactoryResolver,
     private _cd: ChangeDetectorRef,
     gestureCtrl: GestureController,
-    transCtrl: TransitionController
+    transCtrl: TransitionController,
+    @Optional() private linker: DeepLinker
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, _elementRef, zone, renderer, cfr, gestureCtrl, transCtrl);
+    super(parent, app, config, keyboard, _elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
 
     parent.add(this);
 
@@ -356,6 +363,16 @@ export class Tab extends NavControllerBase {
 
   /**
    * @internal
+   */
+  updateHref(component: any, data: any) {
+    if (this.btn && this.linker) {
+      let href = this.linker.createUrl(this, component, data) || '#';
+      this.btn.updateHref(href);
+    }
+  }
+
+  /**
+   * @private
    */
   ngOnDestroy() {
     clearTimeout(this._loadTmr);

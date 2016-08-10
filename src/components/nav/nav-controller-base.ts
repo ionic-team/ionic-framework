@@ -3,12 +3,14 @@ import { ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveI
 import { AnimationOptions } from '../../animations/animation';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { convertToViews, isTabs, setZIndex } from './nav-util';
+import { DeepLinker } from './nav-deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { Ion } from '../ion';
-import { isBlank, isPresent, pascalCaseToDashCase } from '../../util/util';
+import { isBlank, isPresent, isString, pascalCaseToDashCase } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { NavController } from './nav-controller';
-import { NavOptions, DIRECTION_BACK, DIRECTION_FORWARD } from './nav-interfaces';
+import { NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, STATE_ACTIVE, STATE_INACTIVE, STATE_INIT_ENTER, STATE_INIT_LEAVE, STATE_TRANS_ENTER, STATE_TRANS_LEAVE, STATE_REMOVE, STATE_REMOVE_AFTER_TRANS, STATE_CANCEL_ENTER, STATE_FORCE_ACTIVE, INIT_ZINDEX } from './nav-util';
 import { NavParams } from './nav-params';
 import { SwipeBackGesture } from './swipe-back';
 import { Transition } from '../../transitions/transition';
@@ -56,7 +58,8 @@ export class NavControllerBase extends Ion implements NavController {
     public _renderer: Renderer,
     public _cfr: ComponentFactoryResolver,
     public _gestureCtrl: GestureController,
-    public _transCtrl: TransitionController
+    public _transCtrl: TransitionController,
+    public _linker: DeepLinker
   ) {
     super(elementRef);
 
@@ -99,8 +102,8 @@ export class NavControllerBase extends Ion implements NavController {
       return promise;
     }
 
-    if (isBlank(opts)) {
-      opts = {};
+    if (!done) {
+      promise = new Promise(resolve => { done = resolve; });
     }
 
     // remove existing views
@@ -109,6 +112,10 @@ export class NavControllerBase extends Ion implements NavController {
     // create view controllers out of the pages and insert the new views
     const views = pages.map(p => new ViewController(p.page, p.params));
     const enteringView = this._insert(0, views);
+
+    if (isBlank(opts)) {
+      opts = {};
+    }
 
     // if animation wasn't set to true then default it to NOT animate
     if (opts.animate !== true) {
@@ -132,16 +139,6 @@ export class NavControllerBase extends Ion implements NavController {
     return this.insertPages(-1, [{page: page, params: params}], opts, done);
   }
 
-  /**
-   * DEPRECATED: Please use inject the overlays controller and use the present method on the instance instead.
-   */
-  private present(enteringView: ViewController, opts?: NavOptions): Promise<any> {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('nav.present() has been deprecated.\n' +
-                 'Please inject the overlay\'s controller and use the present method on the instance instead.');
-    return Promise.resolve();
-  }
-
   insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
     return this.insertPages(insertIndex, [{page: page, params: params}], opts, done);
   }
@@ -157,6 +154,8 @@ export class NavControllerBase extends Ion implements NavController {
       // only create a promise if a done callback wasn't provided
       promise = new Promise(res => { done = res; });
     }
+
+    insertViews = insertViews.filter(v => v !== null);
 
     if (!insertViews || !insertViews.length) {
       done(false);
@@ -177,7 +176,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     // set the nav direction to "forward" if it wasn't set
-    opts.direction = opts.direction || 'forward';
+    opts.direction = opts.direction || DIRECTION_FORWARD;
 
     // set which animation it should use if it wasn't set yet
     if (!opts.animation) {
@@ -577,7 +576,7 @@ export class NavControllerBase extends Ion implements NavController {
     // ******** DOM WRITE ****************
     this._beforeTrans(trans, isRootTransition, enteringView, leavingView, opts, (hasCompleted: boolean) => {
       // ******** DOM WRITE ****************
-      this._transFinish(transId, isRootTransition, enteringView, leavingView, opts.direction, hasCompleted);
+      this._transFinish(transId, isRootTransition, enteringView, leavingView, opts.direction, true, hasCompleted);
       done(hasCompleted);
     });
   }
@@ -609,9 +608,9 @@ export class NavControllerBase extends Ion implements NavController {
       // set the correct zIndex for the entering and leaving views
       // if there's already another transition happening then
       // the zIndex for the entering view should go off of that one
-      // ******** DOM WRITE ****************
-      const lastestLeavingView = this.getByState(STATE_TRANS_ENTER) || leavingView;
-      this._setZIndex(enteringView, lastestLeavingView, opts.direction);
+      // DOM WRITE
+      let lastestLeavingView = this.getByState(STATE_TRANS_ENTER) || leavingView;
+      setZIndex(this, enteringView, lastestLeavingView, opts.direction, this._renderer);
 
       // make sure the entering and leaving views are showing
       if (this._transCtrl.multipleActiveTrans()) {
@@ -824,7 +823,7 @@ export class NavControllerBase extends Ion implements NavController {
   /**
    * DOM WRITE
    */
-  _transFinish(transId: string, isRootTransition: boolean, enteringView: ViewController, leavingView: ViewController, direction: string, hasCompleted: boolean) {
+  _transFinish(transId: string, isRootTransition: boolean, enteringView: ViewController, leavingView: ViewController, direction: string, updateUrl: boolean, hasCompleted: boolean) {
     // a transition has completed, but not sure if it's the last one or not
     // check if this transition is the most recent one or not
 
@@ -893,6 +892,11 @@ export class NavControllerBase extends Ion implements NavController {
 
         // update that this nav is not longer actively transitioning
         this.setTransitioning(false);
+      }
+
+      if (direction !== null && hasCompleted && updateUrl !== false && !this._isPortal && this._linker) {
+        // notify deep linker of the state change if a direction was provided
+        this._linker.navChange(this, enteringView, direction, this.isTransitioning(), isRootTransition);
       }
 
       // see if we should add the swipe back gesture listeners or not
@@ -997,7 +1001,7 @@ export class NavControllerBase extends Ion implements NavController {
   swipeBackStart() {
     // default the direction to "back"
     const opts: NavOptions = {
-      direction: DIRECTION_BACK,
+      direction: DIRECTION_POP,
       progressAnimation: true
     };
 
@@ -1074,10 +1078,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   canGoBack(): boolean {
     const activeView = this.getActive();
-    if (activeView) {
-      return activeView.enableBack();
-    }
-    return false;
+    return (activeView && activeView.enableBack()) || false;
   }
 
   isTransitioning(): boolean {
@@ -1110,7 +1111,12 @@ export class NavControllerBase extends Ion implements NavController {
     return (index < this._views.length && index > -1 ? this._views[index] : null);
   }
 
-  getActive(): ViewController {
+  getActive(includeEntering?: boolean): ViewController {
+    if (includeEntering) {
+      return this.getByState(STATE_TRANS_ENTER) ||
+             this.getByState(STATE_INIT_ENTER) ||
+             this.getByState(STATE_ACTIVE);
+    }
     return this.getByState(STATE_ACTIVE);
   }
 
@@ -1193,36 +1199,26 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
+
+  /**
+   * DEPRECATED: Please use app.getRootNav() instead
+   */
+  private get rootNav(): NavController {
+    // deprecated 07-14-2016 beta.11
+    console.warn('nav.rootNav() has been deprecated, please use app.getRootNav() instead');
+    return this._app.getRootNav();
+  }
+
+  /**
+   * DEPRECATED: Please use inject the overlays controller and use the present method on the instance instead.
+   */
+  private present(enteringView: ViewController, opts?: NavOptions): Promise<any> {
+    // deprecated warning: added beta.11 2016-06-27
+    console.warn('nav.present() has been deprecated.\n' +
+                 'Please inject the overlay\'s controller and use the present method on the instance instead.');
+    return Promise.resolve();
+  }
+
 }
-
-export const isTabs = (nav: any) => {
-  // Tabs (ion-tabs)
-  return !!nav.getSelected;
-};
-
-export const isTab = (nav: any) => {
-  // Tab (ion-tab)
-  return isPresent(nav._tabId);
-};
-
-export const isNav = function(nav: any) {
-  // Nav (ion-nav), Tab (ion-tab), Portal (ion-portal)
-  return isPresent(nav.push);
-};
-
-
-export const STATE_ACTIVE = 1;
-export const STATE_INACTIVE = 2;
-export const STATE_INIT_ENTER = 3;
-export const STATE_INIT_LEAVE = 4;
-export const STATE_TRANS_ENTER = 5;
-export const STATE_TRANS_LEAVE = 6;
-export const STATE_REMOVE = 7;
-export const STATE_REMOVE_AFTER_TRANS = 8;
-export const STATE_CANCEL_ENTER = 9;
-export const STATE_FORCE_ACTIVE = 10;
-
-const INIT_ZINDEX = 100;
-const PORTAL_ZINDEX = 9999;
 
 let ctrlIds = -1;

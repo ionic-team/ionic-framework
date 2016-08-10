@@ -1,7 +1,7 @@
 import { Renderer } from '@angular/core';
-import { App, Config, Form, Keyboard, MenuController, NavOptions, Platform, Tabs, ViewController } from '../../../../src';
+import { App, Config, DeepLinker, Form, Keyboard, MenuController, NavLinkConfig, NavOptions, Platform, Tabs, UrlSerializer, ViewController } from '../../../../src';
 import { NavControllerBase } from '../../../../src/components/nav/nav-controller-base';
-import { STATE_ACTIVE, STATE_INACTIVE, STATE_INIT_ENTER, STATE_INIT_LEAVE, STATE_TRANS_ENTER, STATE_TRANS_LEAVE, STATE_REMOVE, STATE_REMOVE_AFTER_TRANS, STATE_CANCEL_ENTER, STATE_FORCE_ACTIVE } from '../../../../src/components/nav/nav-controller-base';
+import { STATE_ACTIVE, STATE_INACTIVE, STATE_INIT_ENTER, STATE_INIT_LEAVE, STATE_TRANS_ENTER, STATE_TRANS_LEAVE, STATE_REMOVE, STATE_REMOVE_AFTER_TRANS, STATE_CANCEL_ENTER, STATE_FORCE_ACTIVE } from '../../../../src/components/nav/nav-util';
 import { mockNavController, mockElementRef, mockTransition } from '../../../../src/util/mock-providers';
 
 export function run() {
@@ -832,11 +832,12 @@ describe('NavController', () => {
       enteringView.state = STATE_CANCEL_ENTER;
       let direction = 'foward';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       spyOn(nav, 'remove');
 
-      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(nav.remove).toHaveBeenCalled();
       expect(enteringView.state).toBe(STATE_CANCEL_ENTER);
@@ -849,11 +850,12 @@ describe('NavController', () => {
       leavingView.state = 234234;
       let direction = 'foward';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       nav._transIds = 2;
 
-      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(enteringView.state).toBe(234234);
       expect(leavingView.state).toBe(234234);
@@ -866,11 +868,12 @@ describe('NavController', () => {
       leavingView.state = STATE_TRANS_LEAVE;
       let direction = 'foward';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       nav._transIds = 2;
 
-      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(enteringView.state).toBe(STATE_INACTIVE);
       expect(leavingView.state).toBe(STATE_INACTIVE);
@@ -883,11 +886,12 @@ describe('NavController', () => {
       leavingView.state = STATE_TRANS_LEAVE;
       let direction = 'foward';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       nav._transIds = 1;
 
-      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(enteringView.state).toBe(STATE_ACTIVE);
       expect(leavingView.state).toBe(STATE_INACTIVE);
@@ -898,13 +902,14 @@ describe('NavController', () => {
       enteringView.state = STATE_TRANS_ENTER;
       let leavingView = new ViewController(Page2);
       leavingView.state = STATE_TRANS_LEAVE;
-      let direction = 'back';
+      let direction = 'pop';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = false;
 
       nav._transIds = 1;
 
-      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(enteringView.state).toBe(STATE_INACTIVE);
       expect(leavingView.state).toBe(STATE_ACTIVE);
@@ -915,15 +920,16 @@ describe('NavController', () => {
       enteringView.state = STATE_TRANS_ENTER;
       let leavingView = new ViewController(Page2);
       leavingView.state = STATE_TRANS_LEAVE;
-      let direction = 'back';
+      let direction = 'pop';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       spyOn(nav, '_cleanup');
 
       nav._transIds = 1;
 
-      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(nav._cleanup).toHaveBeenCalled();
     });
@@ -933,15 +939,16 @@ describe('NavController', () => {
       enteringView.state = STATE_TRANS_ENTER;
       let leavingView = new ViewController(Page2);
       leavingView.state = STATE_TRANS_LEAVE;
-      let direction = 'back';
+      let direction = 'pop';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       spyOn(nav, '_cleanup');
 
       nav._transIds = 1;
 
-      nav._transFinish(2, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(2, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(nav._cleanup).not.toHaveBeenCalled();
     });
@@ -951,17 +958,37 @@ describe('NavController', () => {
       enteringView.state = STATE_TRANS_ENTER;
       let leavingView = new ViewController(Page2);
       leavingView.state = STATE_TRANS_LEAVE;
-      let direction = 'back';
+      let direction = 'pop';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = false;
 
       spyOn(nav, '_cleanup');
 
       nav._transIds = 1;
 
-      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(nav._cleanup).not.toHaveBeenCalled();
+    });
+
+    it('should run deepLinker navChange', () => {
+      let enteringView = new ViewController(Page1);
+      enteringView.state = STATE_TRANS_ENTER;
+      let leavingView = new ViewController(Page2);
+      leavingView.state = STATE_TRANS_LEAVE;
+      let direction = 'foward';
+      let updateUrl = true;
+      let isNavRoot = false;
+      let hasCompleted = true;
+
+      spyOn(nav._linker, 'navChange');
+
+      nav._transIds = 1;
+
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
+
+      expect(nav._linker.navChange).toHaveBeenCalled();
     });
 
     it('should set transitioning is over when most recent transition finishes', () => {
@@ -969,15 +996,16 @@ describe('NavController', () => {
       enteringView.state = STATE_TRANS_ENTER;
       let leavingView = new ViewController(Page2);
       leavingView.state = STATE_TRANS_LEAVE;
-      let direction = 'back';
+      let direction = 'pop';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       spyOn(nav, 'setTransitioning');
 
       nav._transIds = 1;
 
-      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(nav.setTransitioning).toHaveBeenCalledWith(false);
     });
@@ -987,15 +1015,16 @@ describe('NavController', () => {
       enteringView.state = STATE_TRANS_ENTER;
       let leavingView = new ViewController(Page2);
       leavingView.state = STATE_TRANS_LEAVE;
-      let direction = 'back';
+      let direction = 'pop';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       spyOn(nav, 'setTransitioning');
 
       nav._transIds = 2;
 
-      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(1, enteringView, leavingView, direction, updateUrl, isNavRoot, hasCompleted);
 
       expect(nav.setTransitioning).not.toHaveBeenCalled();
     });
@@ -1008,15 +1037,16 @@ describe('NavController', () => {
       leavingView.state = 234234;
       nav._transIds = 1;
 
-      let direction = 'forward';
+      let direction = 'push';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       spyOn(nav._app, 'setEnabled');
       spyOn(nav, 'setTransitioning');
 
       // act
-      nav._transFinish(nav._transIds, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(nav._transIds, enteringView, leavingView, direction, isNavRoot, updateUrl, hasCompleted);
 
       // assert
       expect(nav._app.setEnabled).toHaveBeenCalledWith(true);
@@ -1031,8 +1061,9 @@ describe('NavController', () => {
       leavingView.state = 235234;
       nav._transIds = 1;
 
-      let direction = 'forward';
+      let direction = 'push';
       let updateUrl = false;
+      let isNavRoot = false;
       let hasCompleted = true;
 
       spyOn(nav._app, 'setEnabled');
@@ -1041,7 +1072,7 @@ describe('NavController', () => {
       nav.getLongestTrans = () => { return 50; };
 
       // act
-      nav._transFinish(nav._transIds, enteringView, leavingView, direction, updateUrl, hasCompleted);
+      nav._transFinish(nav._transIds, enteringView, leavingView, direction, isNavRoot, updateUrl, hasCompleted);
 
       // assert
       expect(nav._app.setEnabled).not.toHaveBeenCalled();

@@ -5,7 +5,7 @@ import { GestureController } from '../../gestures/gesture-controller';
 import { Ion } from '../ion';
 import { isBlank, pascalCaseToDashCase } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
-import { NavOptions } from './nav-interfaces';
+import { NavOptions } from './nav-util';
 import { ViewController } from './view-controller';
 
 
@@ -421,13 +421,20 @@ export abstract class NavController {
 
   /**
    * @private
-   * Pop to a specific view in the history stack.
+   * Pop to a specific view in the history stack. If an already created
+   * instance of the page is not found in the stack, then it'll `setRoot`
+   * to the nav stack by removing all current pages and pushing on a
+   * new instance of the given page. Note that any params passed to
+   * this method are not used when an existing page instance has already
+   * been found in the stack. Nav params are only used by this method
+   * when a new instance needs to be created.
    *
-   * @param {ViewController} view  to pop to
+   * @param {any} page A page can be a ViewController instance or string.
+   * @param {object} [params={}] Any nav-params to be used when a new view instance is created at the root.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract popTo(view: ViewController, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract popTo(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * Removes a page from the nav stack at the specified index.
@@ -448,7 +455,7 @@ export abstract class NavController {
   /**
    * @returns {ViewController} Returns the active page's view controller.
    */
-  abstract getActive(): ViewController;
+  abstract getActive(includeEntering?: boolean): ViewController;
 
   /**
    * Returns if the given view is the active view or not.

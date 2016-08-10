@@ -5,8 +5,7 @@ import { IonicApp } from './app-root';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
 import { NavController } from '../nav/nav-controller';
-import { isTabs, isNav } from '../nav/nav-controller-base';
-import { NavOptions } from '../nav/nav-interfaces';
+import { isTabs, isNav, NavOptions, DIRECTION_PUSH, DIRECTION_POP } from '../nav/nav-util';
 import { NavPortal } from '../nav/nav-portal';
 import { Platform } from '../../platform/platform';
 
@@ -194,16 +193,16 @@ export class App {
     enteringView.setNav(this._portal);
 
     opts.keyboardClose = false;
-    opts.direction = 'forward';
+    opts.direction = DIRECTION_PUSH;
 
     if (!opts.animation) {
-      opts.animation = enteringView.getTransitionName('forward');
+      opts.animation = enteringView.getTransitionName(DIRECTION_PUSH);
     }
 
     enteringView.setLeavingOpts({
       keyboardClose: false,
-      direction: 'back',
-      animation: enteringView.getTransitionName('back'),
+      direction: DIRECTION_POP,
+      animation: enteringView.getTransitionName(DIRECTION_POP),
       ev: opts.ev
     });
 

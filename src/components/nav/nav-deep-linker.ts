@@ -1,0 +1,468 @@
+import { Injectable } from '@angular/core';
+import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
+
+import { App } from '../app/app';
+import { DeepLink, isNav, isTab, isTabs, NavLinkConfig, NavPath, NavSegment, DIRECTION_BACK, DIRECTION_FORWARD } from './nav-util';
+import { isBlank, isPresent } from '../../util/util';
+import { Nav } from './nav';
+import { NavController } from './nav-controller';
+import { Tab } from '../tabs/tab';
+import { Tabs } from '../tabs/tabs';
+import { UrlSerializer } from './url-serializer';
+import { ViewController } from './view-controller';
+
+
+/**
+ * Deep Linking Scenarios:
+ * 1) Initialize all NavControllers using the initial browser URL
+ * 2) User clicks browser back button
+ * 3) User clicks browser forward button
+ * 4) User changes browser URL
+ * 5) User clicks link href
+ * 6) App uses NavController push/pop/setRoot/insert/remove
+ *
+ * Terms:
+ * - URL: The string value found in the browser's URL bar
+ * - Segment: Deep linker's data about each section between / in the URL
+ * - Path: Deep linker's array of segments
+ * - History: Deep linker's string array of internal URL history
+ * - Location: Angular's Location provider, which abstracts Hash/Path Location Strategies
+ */
+
+
+@Injectable()
+export class DeepLinker {
+  path: NavPath = [];
+  queuedPath: NavPath = null;
+  history: string[] = [];
+  indexAliasUrl: string;
+
+  constructor(public app: App, public serializer: UrlSerializer, public location: Location) { }
+
+  init() {
+    // scenario 1: Initial load of all navs from the initial browser URL
+    let browserUrl = normalizeUrl(this.location.path());
+    console.debug(`DeepLinker, init load: ${browserUrl}`);
+
+    // update the Path from the browser URL
+    this.path = this.serializer.parse(browserUrl);
+
+    // remember this URL in our internal history stack
+    this.historyPush(browserUrl);
+
+    // listen for browser URL changes
+    this.location.subscribe((locationChg: { url: string }) => {
+      this.urlChange(normalizeUrl(locationChg.url));
+    });
+  }
+
+  /**
+   * The browser's location has been updated somehow.
+   */
+  urlChange(browserUrl: string) {
+    // do nothing if this url is the same as the current one
+    if (!this.isCurrentUrl(browserUrl)) {
+
+      if (this.isBackUrl(browserUrl)) {
+        // scenario 2: user clicked the browser back button
+        // scenario 4: user changed the browser URL to what was the back url was
+        // scenario 5: user clicked a link href that was the back url
+        console.debug(`DeepLinker, browser urlChange, back to: ${browserUrl}`);
+        this.historyPop();
+
+      } else {
+        // scenario 3: user click forward button
+        // scenario 4: user changed browser URL that wasn't the back url
+        // scenario 5: user clicked a link href that wasn't the back url
+        console.debug(`DeepLinker, browser urlChange, forward to: ${browserUrl}`);
+        this.historyPush(browserUrl);
+      }
+
+      // get the app's root nav
+      let appRootNav = <Nav>this.app.getRootNav();
+      if (appRootNav) {
+        if (browserUrl === '/') {
+          // a url change to the index url
+          if (isPresent(this.indexAliasUrl)) {
+            // we already know the indexAliasUrl
+            // update the url to use the know alias
+            browserUrl = this.indexAliasUrl;
+
+          } else {
+            // the url change is to the root but we don't
+            // already know the url used. So let's just
+            // reset the root nav to its root page
+            appRootNav.goToRoot({
+              updateUrl: false,
+              isNavRoot: true
+            });
+            return;
+          }
+        }
+
+        // normal url
+        this.path = this.serializer.parse(browserUrl);
+        this.loadNavFromPath(appRootNav);
+      }
+    }
+  }
+
+  /**
+   * Update the deep linker using the NavController's current active view.
+   */
+  navChange(nav: NavController, viewCtrl: ViewController, direction: string, isTransitioning: boolean, isNavRoot: boolean) {
+    // scenario 6: From the end of a NavController's push/pop/setRoot/insert/remove transition
+    // app has used a NavController method to update it's state and the transition has finished
+
+    console.debug(`DeepLinker, navChange, view: ${viewCtrl.name}, direction: ${direction}, isTransitioning: ${isTransitioning}`);
+
+    if (isTransitioning) {
+      // one of the parent transitions hasn't completed yet
+      // this happens when an page, in a tab, in tabs has loaded
+      // but the page containing the tabs hasn't finished yet
+      this.queuedPath = this.pathFromNavs(nav);
+      return;
+    }
+
+    if (!isTransitioning && this.queuedPath) {
+      // all transitions have completed, and a path has
+      // already been queued up to use
+      this.path = this.queuedPath;
+      this.queuedPath = null;
+
+    } else {
+      // all transitions completed, and there isn't already
+      // a queued up path
+      this.path = this.pathFromNavs(nav);
+    }
+
+    // build a string URL out of the Path
+    let browserUrl = this.serializer.serialize(this.path);
+
+    // this is not the same as the deep linkers's known current URL
+    // so it's safe to make a browser location changed
+    let lastPath = this.path[this.path.length - 1];
+    if (lastPath && viewCtrl.componentType === lastPath.component) {
+      // ensure the view's id matches the segment's id
+      viewCtrl.id = lastPath.id;
+    }
+
+    if (isNavRoot && this.location.path() === '') {
+      // this was called from the app's root nav
+      // using the app's initial root page in the root nav
+      // to load and it's the index url
+      this.indexAliasUrl = browserUrl;
+
+    } else {
+      // update the browser's location
+      this.updateLocation(browserUrl, direction);
+    }
+
+  }
+
+  updateLocation(browserUrl: string, direction: string) {
+    if (this.indexAliasUrl === browserUrl) {
+      browserUrl = '/';
+    }
+
+    if (direction === DIRECTION_BACK && this.isBackUrl(browserUrl)) {
+      // this URL is exactly the same as the back URL
+      // it's safe to use the browser's location.back()
+      console.debug(`DeepLinker, location.back(), url: '${browserUrl}'`);
+      this.historyPop();
+      this.location.back();
+
+    } else if (!this.isCurrentUrl(browserUrl)) {
+      // probably navigating forward
+      console.debug(`DeepLinker, location.go('${browserUrl}')`);
+      this.historyPush(browserUrl);
+      this.location.go(browserUrl);
+    }
+  }
+
+  getComponent(nameOrComponent: any): any {
+    if (typeof nameOrComponent === 'function') {
+      return nameOrComponent;
+    }
+    if (typeof nameOrComponent === 'string') {
+      let segment = this.serializer.createSegmentFromName(nameOrComponent);
+      if (segment && segment.component) {
+        return segment.component;
+      }
+    }
+    return null;
+  }
+
+  createUrl(nav: any, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
+    // create a segment out of just the passed in name
+    let segment = this.serializer.createSegmentFromName(nameOrComponent);
+    if (segment) {
+      let path = this.pathFromNavs(nav, segment.component, data);
+      // serialize the segments into a browser URL
+      // and prepare the URL with the location and return
+      let url = this.serializer.serialize(path);
+      return prepareExternalUrl ? this.location.prepareExternalUrl(url) : url;
+    }
+    return '';
+  }
+
+  /**
+   * Build a browser URL out of this NavController. Climbs up the tree
+   * of NavController's to create a string representation of all the
+   * NavControllers state.
+   */
+  pathFromNavs(nav: NavController, component?: any, data?: any): NavPath {
+    let path: NavPath = [];
+    let view: ViewController;
+    let segment: NavSegment;
+    let tabSelector: string;
+
+    // recursivly climb up the nav ancestors
+    // and set each segment's data
+    while (nav) {
+      // this could be an ion-nav, ion-tab or ion-portal
+      // if a component and data was already passed in then use it
+      // otherwise get this nav's active view controller
+      if (!component) {
+        view = nav.getActive(true);
+        if (view) {
+          component = view.componentType;
+          data = view.data;
+        }
+      }
+
+      // the ion-nav or ion-portal has an active view
+      // serialize the component and its data to a NavSegment
+      segment = this.serializer.serializeComponent(component, data);
+
+      // reset the component/data
+      component = data = null;
+
+      if (!segment) {
+        break;
+      }
+
+      // add the segment to the path
+      path.push(segment);
+
+      if (isTab(nav)) {
+        // this nav is a Tab, which is a child of Tabs
+        // add a segment to represent which Tab is the selected one
+        tabSelector = this.getTabSelector(<Tab>nav);
+        path.push({
+          id: tabSelector,
+          name: tabSelector,
+          component: null,
+          data: null
+        });
+
+        // a parent to Tab is a Tabs
+        // we should skip over any Tabs and go to the next parent
+        nav = nav.parent && nav.parent.parent;
+
+      } else {
+        // this is an ion-nav
+        // climb up to the next parent
+        nav = nav.parent;
+      }
+    }
+
+    // segments added from bottom to top, so Ti esrever dna ti pilf
+    return path.reverse();
+  }
+
+  getTabSelector(tab: Tab): string {
+    if (isPresent(tab.tabUrlPath)) {
+      return tab.tabUrlPath;
+    }
+    if (isPresent(tab.tabTitle)) {
+      return this.serializer.formatUrlPart(tab.tabTitle);
+    }
+    return `tab-${tab.index}`;
+  }
+
+  getSelectedTabIndex(tabsNav: Tabs, pathName: string): number {
+    // we found a segment which probably represents which tab to select
+    let indexMatch = pathName.match(/tab-(\d+)/);
+    if (indexMatch) {
+      // awesome, the segment name was something "tab-0", and
+      // the numbe represents which tab to select
+      return parseInt(indexMatch[1], 10);
+    }
+
+    // wasn't in the "tab-0" format so maybe it's using a word
+    let tab = tabsNav.tabs.find(t => {
+      return (isPresent(t.tabUrlPath) && t.tabUrlPath === pathName) ||
+             (isPresent(t.tabTitle) && this.serializer.formatUrlPart(t.tabTitle) === pathName);
+    });
+
+    return isPresent(tab) ? tab.index : 0;
+  }
+
+  /**
+   * Each NavController will call this method when it initializes for
+   * the first time. This allows each NavController to figure out
+   * where it lives in the path and load up the correct component.
+   */
+  initNav(nav: any): NavSegment {
+    let path = this.path;
+
+    if (nav && path.length) {
+      if (!nav.parent) {
+        // a nav without a parent is always the first nav segment
+        path[0].navId = nav.id;
+        return path[0];
+      }
+
+      for (let i = 1; i < path.length; i++) {
+        if (path[i - 1].navId === nav.parent.id) {
+          // this nav's parent segment is the one before this segment's index
+          path[i].navId = nav.id;
+          return path[i];
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Using the known Path of Segments, walk down all descendents
+   * from the root NavController and load each NavController according
+   * to each Segment. This is usually called after a browser URL and
+   * Path changes and needs to update all NavControllers to match
+   * the new browser URL. Because the URL is already known, it will
+   * not update the browser's URL when transitions have completed.
+   */
+  loadNavFromPath(nav: NavController, done?: Function): Promise<any> {
+    if (!nav) {
+      done && done();
+      return;
+    }
+    this.loadViewFromSegment(nav, () => {
+      this.loadNavFromPath(nav.getActiveChildNav(), done);
+    });
+  }
+
+  loadViewFromSegment(navInstance: any, done: Function) {
+    // load up which nav ids belong to its nav segment
+    let segment = this.initNav(navInstance);
+    if (!segment) {
+      done();
+      return;
+    }
+
+    if (isTabs(navInstance)) {
+      (<Tabs>navInstance).select(
+        this.getSelectedTabIndex((<Tabs>navInstance), segment.name),
+        {
+          updateUrl: false,
+          animate: false
+        }
+      );
+      done();
+      return;
+    }
+
+    let nav = <NavController>navInstance;
+
+    // walk backwards to see if the exact view we want to show here
+    // is already in the stack that we can just pop back to
+    let view: ViewController;
+    let count = nav.length() - 1;
+    for (let i = count; i >= 0; i--) {
+      view = nav.getByIndex(i);
+
+      if (view && view.id === segment.id) {
+        // hooray! we've already got a view loaded in the stack
+        // matching the view they wanted to show
+        if (i === count) {
+          // this is the last view in the stack and it's the same
+          // as the segment so there's no change needed
+          done();
+
+        } else {
+          // it's not the exact view as the end
+          // let's have this nav go back to this exact view
+          nav.popTo(view, {
+            animate: false,
+            updateUrl: false,
+          }, done);
+        }
+        return;
+      }
+    }
+
+    // ok, so they must be pushing a new view to the stack
+    // since we didn't find this same component already in the stack
+    nav.push(segment.component, segment.data, {
+      id: segment.id, animate: false, updateUrl: false
+    }, done);
+  }
+
+  isBackUrl(browserUrl: string) {
+    return (browserUrl === this.history[this.history.length - 2]);
+  }
+
+  isCurrentUrl(browserUrl: string) {
+    return (browserUrl === this.history[this.history.length - 1]);
+  }
+
+  historyPush(browserUrl: string) {
+    if (!this.isCurrentUrl(browserUrl)) {
+      this.history.push(browserUrl);
+      if (this.history.length > 30) {
+        this.history.shift();
+      }
+    }
+  }
+
+  historyPop() {
+    this.history.pop();
+    if (!this.history.length) {
+      this.historyPush(this.location.path());
+    }
+  }
+
+}
+
+
+function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location) {
+  let deepLinker = new DeepLinker(app, serializer, location);
+  deepLinker.init();
+  return deepLinker;
+}
+
+
+export function provideDeepLinker(links: DeepLink[]): any[] {
+  let linkConfig = new NavLinkConfig(links);
+
+  return [
+    { provide: NavLinkConfig, useValue: linkConfig },
+    UrlSerializer,
+    Location,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    {
+      provide: DeepLinker,
+      useFactory: setupDeepLinker,
+      deps: [
+        App,
+        UrlSerializer,
+        Location
+      ]
+    },
+  ];
+}
+
+
+export function normalizeUrl(browserUrl: string): string {
+  browserUrl = browserUrl.trim();
+  if (browserUrl.charAt(0) !== '/') {
+    // ensure first char is a /
+    browserUrl = '/' + browserUrl;
+  }
+  if (browserUrl.length > 1 && browserUrl.charAt(browserUrl.length - 1) === '/') {
+    // ensure last char is not a /
+    browserUrl = browserUrl.substr(0, browserUrl.length - 1);
+  }
+  return browserUrl;
+}

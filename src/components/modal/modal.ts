@@ -4,7 +4,7 @@ import { App } from '../app/app';
 import { isPresent } from '../../util/util';
 import { ModalCmp } from './modal-component';
 import { ModalOptions } from './modal-options';
-import { NavOptions } from '../nav/nav-interfaces';
+import { NavOptions } from '../nav/nav-util';
 import { ViewController } from '../nav/view-controller';
 
 
@@ -29,7 +29,7 @@ export class Modal extends ViewController {
    * @private
    */
   getTransitionName(direction: string) {
-    let key = (direction === 'back' ? 'modalLeave' : 'modalEnter');
+    let key = (direction === 'pop' ? 'modalLeave' : 'modalEnter');
     return this._nav && this._nav.config.get(key);
   }
 

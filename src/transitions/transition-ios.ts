@@ -26,7 +26,7 @@ class IOSTransition extends PageTransition {
     let enteringPageEle: Element = enteringView.pageRef().nativeElement;
 
     // what direction is the transition going
-    let backDirection = (opts.direction === 'back');
+    let backDirection = (opts.direction === 'pop');
 
     // do they have navbars?
     let enteringHasNavbar = enteringView.hasNavbar();

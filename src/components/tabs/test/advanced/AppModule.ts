@@ -9,9 +9,7 @@ export class SignIn {
   constructor(public navCtrl: NavController) {}
 
   push() {
-    this.navCtrl.push(TabsPage, {
-      userId: 8675309
-    });
+    this.navCtrl.push(TabsPage);
   }
 }
 
@@ -37,9 +35,7 @@ export class ChatPage {
   templateUrl: './tabs.html'
 })
 export class TabsPage {
-  tab1Root = Tab1Page1;
-  tab2Root = Tab2Page1;
-  tab3Root = Tab3Page1;
+
   @ViewChild(Tabs) tabs: Tabs;
 
   constructor(public modalCtrl: ModalController, public params: NavParams) {}
@@ -96,10 +92,6 @@ export class Tab1Page1 {
     this.userId = params.get('userId');
   }
 
-  push() {
-    this.navCtrl.push(Tab1Page2);
-  }
-
   goBack() {
     console.log('go back begin');
     this.navCtrl.pop().then((val: any) => {
@@ -112,7 +104,7 @@ export class Tab1Page1 {
   }
 
   logout() {
-    this.app.getRootNav().setRoot(SignIn, null, { animate: true, direction: 'back' });
+    this.app.getRootNav().setRoot(SignIn, null, { animate: true, direction: 'pop' });
   }
 
   ionViewWillEnter() {
@@ -141,12 +133,6 @@ export class Tab1Page1 {
   templateUrl: './tab1page2.html'
 })
 export class Tab1Page2 {
-
-  constructor(public navCtrl: NavController) {}
-
-  push() {
-    this.navCtrl.push(Tab1Page3);
-  }
 
   ionViewWillEnter() {
     console.log('Tab1Page2, ionViewWillEnter');
@@ -207,12 +193,6 @@ export class Tab1Page3 {
 })
 export class Tab2Page1 {
 
-  constructor(public navCtrl: NavController) {}
-
-  push() {
-    this.navCtrl.push(Tab2Page2);
-  }
-
   ionViewWillEnter() {
     console.log('Tab2Page1, ionViewWillEnter');
   }
@@ -239,12 +219,6 @@ export class Tab2Page1 {
   templateUrl: './tab2page2.html'
 })
 export class Tab2Page2 {
-
-  constructor(public navCtrl: NavController) {}
-
-  push() {
-    this.navCtrl.push(Tab2Page3);
-  }
 
   ionViewWillEnter() {
     console.log('Tab2Page2, ionViewWillEnter');
@@ -334,6 +308,18 @@ export class E2EApp {
   rootPage = SignIn;
 }
 
+
+let links: NavLink[] = [
+  { component: SignIn },
+  { component: TabsPage },
+  { component: Tab1Page1 },
+  { component: Tab1Page2 },
+  { component: Tab1Page3 },
+  { component: Tab2Page1 },
+  { component: Tab2Page2 },
+  { component: Tab2Page3 },
+  { component: Tab3Page1 },
+];
 
 @NgModule({
   declarations: [

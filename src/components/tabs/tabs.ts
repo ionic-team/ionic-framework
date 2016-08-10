@@ -3,12 +3,13 @@ import { AfterContentInit, Component, ElementRef, EventEmitter, Input, Output, O
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
+import { DeepLinker } from '../nav/nav-deep-linker';
 import { Ion } from '../ion';
 import { isBlank, isTrueProperty, noop } from '../../util/util';
 import { nativeRaf } from '../../util/dom';
 import { NavController } from '../nav/nav-controller';
 import { NavControllerBase } from '../nav/nav-controller-base';
-import { NavOptions, DIRECTION_FORWARD } from '../nav/nav-interfaces';
+import { NavOptions, DIRECTION_PUSH } from '../nav/nav-util';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabButton } from './tab-button';
@@ -179,6 +180,11 @@ export class Tabs extends Ion implements AfterContentInit {
   /**
    * @internal
    */
+  tabs: Tab[] = [];
+
+  /**
+   * @private
+   */
   id: string;
 
   /**
@@ -254,11 +260,12 @@ export class Tabs extends Ion implements AfterContentInit {
   constructor(
     @Optional() parent: NavController,
     @Optional() public viewCtrl: ViewController,
-    public _app: App,
-    public _config: Config,
-    public _elementRef: ElementRef,
-    public _platform: Platform,
-    public _renderer: Renderer
+    private _app: App,
+    private _config: Config,
+    private _elementRef: ElementRef,
+    private _platform: Platform,
+    private _renderer: Renderer,
+    @Optional() private _linker: DeepLinker
   ) {
     super(_elementRef);
 
@@ -356,19 +363,38 @@ export class Tabs extends Ion implements AfterContentInit {
   initTabs() {
     // get the selected index from the input
     // otherwise default it to use the first index
-    const selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(this.selectedIndex, 10));
+    let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(this.selectedIndex, 10));
+
+    // now see if the deep linker can find a tab index
+    let tabsSegment = this._linker && this._linker.initNav(this);
+    if (tabsSegment && isBlank(tabsSegment.component)) {
+      // we found a segment which probably represents which tab to select
+      selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.name);
+    }
 
     // get the selectedIndex and ensure it isn't hidden or disabled
-    let selectedTab = this._tabs.find((t, i) => i === selectedIndex && t.enabled && t.show);
+    let selectedTab = this.tabs.find((t, i) => i === selectedIndex && t.enabled && t.show);
     if (!selectedTab) {
       // wasn't able to select the tab they wanted
       // try to find the first tab that's available
-      selectedTab = this._tabs.find(t => t.enabled && t.show);
+      selectedTab = this.tabs.find(t => t.enabled && t.show);
     }
 
     if (selectedTab) {
       // we found a tab to select
-      this.select(selectedTab);
+      // get the segment the deep linker says this tab should load with
+      let pageId: string = null;
+      if (tabsSegment) {
+        let selectedTabSegment = this._linker.initNav(selectedTab);
+        if (selectedTabSegment && selectedTabSegment.component) {
+          selectedTab.root = selectedTabSegment.component;
+          selectedTab.rootParams = selectedTabSegment.data;
+          pageId = selectedTabSegment.id;
+        }
+      }
+      this.select(selectedTab, {
+        id: pageId
+      });
     }
 
     // check if preloadTab is set as an input @Input
@@ -376,10 +402,15 @@ export class Tabs extends Ion implements AfterContentInit {
     const shouldPreloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
     if (shouldPreloadTabs) {
       // preload all the tabs which isn't the selected tab
-      this._tabs.filter((t) => t !== selectedTab).forEach((tab, index) => {
+      this.tabs.filter((t) => t !== selectedTab).forEach((tab, index) => {
         tab.preload(this._config.getNumber('tabsPreloadDelay', 1000) * index);
       });
     }
+
+    // set the initial href attribute values for each tab
+    this.tabs.forEach(t => {
+      t.updateHref(t.root, t.rootParams);
+    });
   }
 
   /**
@@ -398,7 +429,7 @@ export class Tabs extends Ion implements AfterContentInit {
    */
   add(tab: Tab) {
     tab.id = this.id + '-' + (++this._ids);
-    this._tabs.push(tab);
+    this.tabs.push(tab);
   }
 
   /**
@@ -415,7 +446,6 @@ export class Tabs extends Ion implements AfterContentInit {
       // no change
       return this._touchActive(selectedTab);
     }
-    console.debug(`Tabs, select: ${selectedTab.id}`);
 
     let deselectedPage: ViewController;
     if (deselectedTab) {
@@ -437,12 +467,16 @@ export class Tabs extends Ion implements AfterContentInit {
         // it's possible the tab is only for opening modal's or signing out
         // and doesn't actually have content. In the case there's no content
         // for a tab then do nothing and leave the current view as is
-        this._tabs.forEach(tab => {
+        this.tabs.forEach(tab => {
           tab.setSelected(tab === selectedTab);
         });
 
         if (this.tabsHighlight) {
           this._highlight.select(selectedTab);
+        }
+
+        if (opts.updateUrl !== false && this._linker) {
+          this._linker.navChange(<NavController>selectedTab, this.viewCtrl, DIRECTION_PUSH, selectedTab.isTransitioning(), false);
         }
       }
 
@@ -497,8 +531,8 @@ export class Tabs extends Ion implements AfterContentInit {
    * @returns {Tab} Returns the tab who's index matches the one passed
    */
   getByIndex(index: number): Tab {
-    if (index < this._tabs.length && index > -1) {
-      return this._tabs[index];
+    if (index < this.tabs.length && index > -1) {
+      return this.tabs[index];
     }
     return null;
   }
@@ -507,9 +541,9 @@ export class Tabs extends Ion implements AfterContentInit {
    * @return {Tab} Returns the currently selected tab
    */
   getSelected(): Tab {
-    for (var i = 0; i < this._tabs.length; i++) {
-      if (this._tabs[i].isSelected) {
-        return this._tabs[i];
+    for (let i = 0; i < this.tabs.length; i++) {
+      if (this.tabs[i].isSelected) {
+        return this.tabs[i];
       }
     }
     return null;
@@ -526,14 +560,14 @@ export class Tabs extends Ion implements AfterContentInit {
    * @internal
    */
   getIndex(tab: Tab): number {
-    return this._tabs.indexOf(tab);
+    return this.tabs.indexOf(tab);
   }
 
   /**
    * @internal
    */
   length(): number {
-    return this._tabs.length;
+    return this.tabs.length;
   }
 
   /**

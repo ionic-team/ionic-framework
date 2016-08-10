@@ -1,6 +1,7 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Optional, Output, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { DeepLinker } from '../nav/nav-deep-linker';
 import { Ion } from '../ion';
 import { Tab } from './tab';
 
@@ -21,7 +22,7 @@ import { Tab } from './tab';
     '[class.disable-hover]': 'disHover'
   }
 })
-export class TabButton extends Ion {
+export class TabButton extends Ion implements OnInit {
   disHover: boolean;
   hasTitle: boolean;
   hasIcon: boolean;
@@ -34,7 +35,10 @@ export class TabButton extends Ion {
 
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
-  constructor(config: Config, elementRef: ElementRef) {
+  constructor(
+    config: Config,
+    elementRef: ElementRef,
+    private renderer: Renderer) {
     super(elementRef);
     this.disHover = (config.get('hoverCSS') === false);
     this.layout = config.get('tabsLayout');
@@ -54,11 +58,18 @@ export class TabButton extends Ion {
     this.hasTitleOnly = (this.hasTitle && !this.hasIcon);
     this.hasIconOnly = (this.hasIcon && !this.hasTitle);
     this.hasBadge = !!this.tab.tabBadge;
+
+
   }
 
-  @HostListener('click', ['$event'])
-  onClick(ev: UIEvent) {
+  @HostListener('click')
+  onClick(): boolean {
     this.ionSelect.emit(this.tab);
-    ev.preventDefault();
+    return false;
   }
+
+  updateHref(href: string) {
+    this.renderer.setElementAttribute(this.elementRef.nativeElement, 'href', href);
+  }
+
 }

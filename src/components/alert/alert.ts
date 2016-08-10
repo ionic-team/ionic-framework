@@ -4,7 +4,7 @@ import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
 import { AlertOptions, AlertInputOptions } from './alert-options';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-interfaces';
+import { NavOptions } from '../nav/nav-util';
 import { ViewController } from '../nav/view-controller';
 
 
@@ -33,7 +33,7 @@ export class Alert extends ViewController {
   * @private
   */
   getTransitionName(direction: string) {
-    let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
+    let key = (direction === 'pop' ? 'alertLeave' : 'alertEnter');
     return this._nav && this._nav.config.get(key);
   }
 
