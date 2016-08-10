@@ -93,12 +93,11 @@ export class App {
   }
 
   /**
-   * @private
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
    * while views transition, a modal slides up, an action-sheet
    * slides up, etc. After the transition completes it is set back to `true`.
-   * @param {boolean} isEnabled
+   * @param {boolean} isEnabled `true` for enabled, `false` for disabled
    * @param {number} duration  When `isEnabled` is set to `false`, this argument
    * is used to set the maximum number of milliseconds that app will wait until
    * it will automatically enable the app again. It's basically a fallback incase
@@ -120,7 +119,9 @@ export class App {
   }
 
   /**
-   * @private
+   * Toggles whether an application can be scrolled
+   * @param {boolean} disableScroll when set to `false`, the application's
+   * scrolling is enabled. When set to `true`, scrolling is disabled.
    */
   setScrollDisabled(disableScroll: boolean) {
     let enabled = this._config.get('canDisableScroll', true);
