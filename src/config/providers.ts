@@ -1,6 +1,7 @@
 import { enableProdMode, PLATFORM_DIRECTIVES, provide } from '@angular/core';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { HTTP_PROVIDERS } from '@angular/http';
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { ActionSheetController } from '../components/action-sheet/action-sheet';
 import { AlertController } from '../components/alert/alert';
@@ -10,6 +11,7 @@ import { closest, nativeTimeout } from '../util/dom';
 import { Events } from '../util/events';
 import { FeatureDetect } from '../util/feature-detect';
 import { Form } from '../util/form';
+import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
 import { GestureController } from '../gestures/gesture-controller';
 import { IONIC_DIRECTIVES } from './directives';
 import { isPresent } from '../util/util';
@@ -80,6 +82,8 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     ToastController,
     Translate,
   ];
+
+  providers.push( {provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig} );
 
   if (isPresent(customProviders)) {
     providers.push(customProviders);
