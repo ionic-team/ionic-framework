@@ -65,4 +65,17 @@ class ApiDemoApp {
   root = ApiDemoPage;
 }
 
-ionicBootstrap(ApiDemoApp);
+@NgModule({
+  declarations: [
+    ApiDemoApp,
+    ApiDemoPage
+  ],
+  imports: [
+    IonicModule.forRoot(ApiDemoApp)
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    ApiDemoPage
+  ]
+})
+export class AppModule {}

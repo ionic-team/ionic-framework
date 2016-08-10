@@ -8,11 +8,11 @@
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "dist/esm",
-    "allowJs": true
+    "outDir": "dist/esm"
   },
   "angularCompilerOptions": {
-    "genDir": "dist/esm"
+    "genDir": "dist/esm",
+    "skipTemplateCodegen": true
   },
   "files": [
     "./src/index.ts"

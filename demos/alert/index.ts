@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-
-import { AlertController, ionicBootstrap } from 'ionic-angular';
+import { Component, NgModule } from '@angular/core';
+import { IonicModule } from 'ionic-angular';
 
 
 @Component({
@@ -218,4 +217,18 @@ class ApiDemoApp {
   root = ApiDemoPage;
 }
 
-ionicBootstrap(ApiDemoApp);
+
+@NgModule({
+  declarations: [
+    ApiDemoApp,
+    ApiDemoPage
+  ],
+  imports: [
+    IonicModule.forRoot(ApiDemoApp)
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    ApiDemoPage
+  ]
+})
+export class AppModule {}
