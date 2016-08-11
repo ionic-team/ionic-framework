@@ -243,8 +243,8 @@ gulp.task('e2e.transpile', function(done) {
     // If an e2efolder parameter was passed then only transpile that directory
     if (e2eFolder) {
       e2eNgc.include = [
-        "test/" + e2eFolder + "/**/entry.ts",
-        "test/" + e2eFolder + "/**/AppModule.ts"
+        "test/" + e2eFolder + "/entry.ts",
+        "test/" + e2eFolder + "/AppModule.ts"
       ]
     } else {
       e2eNgc.include = [
