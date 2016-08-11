@@ -1,20 +1,22 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
-    "lib": ["dom", "es2015"],
+    "module": "es2015",
+    "lib": [
+      "dom",
+      "es2015"
+    ],
     "moduleResolution": "node",
     "declaration": true,
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "outDir": "dist"
+    "experimentalDecorators": true
   },
   "angularCompilerOptions": {
-    "genDir": "dist",
-    "skipTemplateCodegen": true
+    "skipMetadataEmit": true
   },
-  "files": [
-    "./src/index.ts"
+  "include": [
+    "test/**/entry.ts",
+    "test/**/AppModule.ts"
   ]
 }

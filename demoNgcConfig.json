@@ -2,19 +2,21 @@
   "compilerOptions": {
     "target": "es5",
     "module": "es2015",
-    "lib": ["dom", "es2015"],
+    "lib": [
+      "dom",
+      "es2015"
+    ],
     "moduleResolution": "node",
     "declaration": true,
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "outDir": "dist/esm"
+    "experimentalDecorators": true
   },
   "angularCompilerOptions": {
-    "genDir": "dist/esm",
-    "skipTemplateCodegen": true
+    "skipMetadataEmit": true
   },
-  "files": [
-    "./src/index.ts"
+  "include": [
+    "dist/demos/**/entry.ts",
+    "dist/demos/**/AppModule.ts"
   ]
 }

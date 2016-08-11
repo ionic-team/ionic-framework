@@ -27,45 +27,6 @@ var flags = minimist(process.argv.slice(2), flagConfig);
 var DEBUG = flags.debug;
 var TYPECHECK = flags.typecheck;
 
-function getTscOptions(name) {
-  var opts = {
-    emitDecoratorMetadata: true,
-    experimentalDecorators: true,
-    target: "es5",
-    module: "commonjs",
-    isolatedModules: true,
-    typescript: require('typescript')
-  }
-
-  if (name === "typecheck") {
-    opts.declaration = true;
-    delete opts.isolatedModules;
-  } else if (name === "es6") {
-    opts.target = "es6";
-    delete opts.module;
-  }
-  return opts;
-}
-
-var tscReporter = {
-  error: function (error) {
-    // TODO
-    // suppress type errors until we convert everything to TS
-    // console.error(error.message);
-  }
-};
-
-// We use Babel to easily create named System.register modules
-// See: https://github.com/Microsoft/TypeScript/issues/4801
-// and https://github.com/ivogabe/gulp-typescript/issues/211
-var babelOptions = {
-  presets: ['es2015'],
-  plugins: ['transform-es2015-modules-systemjs'],
-  moduleIds: true,
-  getModuleId: function(name) {
-    return 'ionic-angular/' + name;
-  }
-}
 
 /**
  * Builds Ionic sources to dist. When the '--typecheck' flag is specified,
@@ -73,30 +34,30 @@ var babelOptions = {
  */
 gulp.task('build', function(done){
   runSequence(
-    'copy.libs',
     ['bundle', 'sass', 'fonts', 'copy.scss'],
     done
   );
 });
 
-/**
- * Builds sources to dist and watches for changes.  Runs 'transpile' for .ts
- * changes and 'sass' for .scss changes.
- */
-gulp.task('watch', ['build'], function() {
-  watchTask('transpile');
-});
+function getFolders(dir) {
+  return fs.readdirSync(dir)
+    .filter(function(file) {
+      return fs.statSync(path.join(dir, file)).isDirectory();
+    });
+}
+
 
 function watchTask(task){
   watch([
       'src/**/*.ts',
-      '!src/components/*/test/**/*',
+      'src/components/*/test/**/*',
       '!src/util/test/*'
     ],
     function(file) {
       if (file.event === "unlink") {
         deleteFile(file);
       } else {
+        console.log('start');
         gulp.start(task);
       }
     }
@@ -134,89 +95,8 @@ gulp.task('serve', function() {
   });
 });
 
-gulp.task('clean', function(done) {
+gulp.task('release.clean', function(done) {
   del(['dist/**', '!dist'], done);
-});
-
-
-/**
- * Source build tasks
- */
-
-/**
- * Creates CommonJS and SystemJS bundles from Ionic source files.
- */
-gulp.task('bundle', ['bundle.cjs', 'bundle.system']);
-
-/**
- * Creates CommonJS bundle from Ionic source files.
- */
-gulp.task('bundle.cjs', ['transpile', 'copy.libs'], function(done){
-  var config = require('./scripts/npm/ionic.webpack.config.js');
-  bundle({ config: config, stats: true });
-
-  // build minified bundle
-  var minConfig = require('./scripts/npm/ionic.min.webpack.config.js');
-  bundle({ config: minConfig, cb: finished, stats: true });
-
-  var outputPaths = [
-    config.output.path + path.sep + config.output.filename,
-    minConfig.output.path + path.sep + minConfig.output.filename
-  ];
-
-  function bundle(args) {
-    var webpack = require('webpack');
-    var path = require('path');
-
-    webpack(args.config, function(err, stats){
-      if (args.stats) {
-        var statsOptions = {
-          'colors': true,
-          'modules': false,
-          'chunks': false,
-          'exclude': ['node_module'],
-          'errorDetails': true
-        }
-        console.log(stats.toString(statsOptions));
-      }
-
-      args.cb && args.cb();
-    })
-  }
-
-  function finished(){
-    gulp.src(outputPaths)
-      .pipe(connect.reload())
-      .on('end', done);
-  }
-});
-
-/**
- * Creates SystemJS bundle from Ionic source files.
- */
-gulp.task('bundle.system', function(){
-  var babel = require('gulp-babel');
-  var concat = require('gulp-concat');
-  var gulpif = require('gulp-if');
-  var stripDebug = require('gulp-strip-debug');
-  var merge = require('merge2');
-
-  var tsResult = tsCompile(getTscOptions('es6'), 'system')
-    .pipe(babel(babelOptions));
-
-  var swiper = gulp.src('src/components/slides/swiper-widget.system.js');
-
-  return merge([tsResult, swiper])
-    .pipe(remember('system'))
-    .pipe(gulpif(!DEBUG, stripDebug()))
-    .pipe(concat('ionic.system.js'))
-    .pipe(gulp.dest('dist/bundles'))
-    .pipe(connect.reload())
-});
-
-
-gulp.task('e2e.clean', function(done) {
-  del(['test/**', '!test'], done);
 });
 
 /**
@@ -224,10 +104,28 @@ gulp.task('e2e.clean', function(done) {
  * them to dist. When the '--typecheck' flag is specified, generates .d.ts
  * definitions and does typechecking.
  */
-gulp.task('transpile.es2015', function(done){
+gulp.task('transpile.es2015', function(done) {
   var exec = require('child_process').exec;
   var shellCommand = './node_modules/.bin/ngc -p es2015NgcConfig.json && ' +
-    'cp src/components/slides/swiper-widget.es2015.js dist/components/slides/swiper-widget.js && ' +
+    'cp src/components/slides/swiper-widget.es2015.js dist/esm/components/slides/swiper-widget.js && ' +
+    'cp src/components/slides/swiper-widget.d.ts dist/esm/components/slides/';
+
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
+  });
+});
+
+/**
+ * Transpiles TypeScript sources to ES5 in the CommonJS module format and outputs
+ * them to dist. When the '--typecheck' flag is specified, generates .d.ts
+ * definitions and does typechecking.
+ */
+gulp.task('transpile.cjs', function(done) {
+  var exec = require('child_process').exec;
+  var shellCommand = './node_modules/.bin/ngc -p commonjsNgcConfig.json && ' +
+    'cp src/components/slides/swiper-widget.js dist/components/slides/swiper-widget.js && ' +
     'cp src/components/slides/swiper-widget.d.ts dist/components/slides/';
 
   exec(shellCommand, function(err, stdout, stderr) {
@@ -237,194 +135,21 @@ gulp.task('transpile.es2015', function(done){
   });
 });
 
-gulp.task('e2e.pre-transpile', function(done) {
-  var testNgcConfig = require('./testNgcConfig.json');
-  var webpackServerConfig = require('./webpackServerConfig.json');
-
-  glob('test/*/**/AppModule.ts', {}, function(er, files) {
-
-    var directories = files.map(function(file) {
-      return path.dirname(file);
-    });
-
-    testNgcConfig.files = directories.reduce(function(endArray, dir) {
-        return endArray.concat([
-          path.join(dir, 'index.ts'),
-          path.join(dir, 'AppModule.ts')
-        ]);
-      }, testNgcConfig.files || [])
-      .filter(function(item, pos, self) {
-        return self.indexOf(item) === pos;
-      })
-
-    webpackServerConfig.entry = directories.reduce(function(endObj, dir) {
-      var indexFile = path.join(dir, 'index');
-      endObj[indexFile] = "./" + indexFile;
-      return endObj;
-    }, webpackServerConfig.entry || {});
-
-    fs.writeFileSync('./testNgcConfig.json', JSON.stringify(testNgcConfig, null, 2));
-    fs.writeFileSync('./webpackServerConfig.json', JSON.stringify(webpackServerConfig, null, 2));
-    done();
-  });
-});
-
-gulp.task('e2e.transpile', function(done){
-  var exec = require('child_process').exec;
-  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p testNgcConfig.json';
-
-  exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    done(err);
-  });
-});
-
-gulp.task('e2e.webpack', function() {
-  var exec = require('child_process').exec;
-  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/webpack';
-
-  exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    done(err);
-  });
-});
-
-gulp.task('run.e2e', function(done){
-  runSequence(
-    'clean',
-    'e2e.clean',
-    'transpile.es2015',
-    ['e2e.setup', 'sass', 'fonts'],
-    'e2e.pre-transpile',
-    'e2e.transpile',
-    'e2e.webpack',
-    done
-  );
-});
-
-function tsCompile(options, cacheName){
-  return gulp.src([
-      'typings/main.d.ts',
-      'src/**/*.ts',
-      '!src/**/*.d.ts',
-      '!src/components/*/test/**/*',
-      '!src/util/test/*',
-      '!src/config/test/*',
-      '!src/platform/test/*',
-      '!src/**/*.spec.ts'
-    ])
-    .pipe(cache(cacheName, { optimizeMemory: true }))
-    .pipe(tsc(options, undefined, tscReporter));
-}
-
 /**
- * Compiles Ionic Sass sources to stylesheets and outputs them to dist/bundles.
+ * Creates CommonJS and SystemJS bundles from Ionic source files.
  */
-gulp.task('sass', function() {
-  var sass = require('gulp-sass');
-  var autoprefixer = require('gulp-autoprefixer');
-  var minifyCss = require('gulp-minify-css');
+gulp.task('release.bundle', ['transpile.cjs', 'transpile.es2015',]);
 
-  gulp.src([
-    'src/ionic.ios.scss',
-    'src/ionic.md.scss',
-    'src/ionic.wp.scss',
-    'src/ionic.scss'
-  ])
-  .pipe(sass({
-      includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
-    }).on('error', sass.logError)
-  )
-  .pipe(autoprefixer(buildConfig.autoprefixer))
-  .pipe(gulp.dest('dist/bundles/'))
-  .pipe(minifyCss())
-  .pipe(rename({ extname: '.min.css' }))
-  .pipe(gulp.dest('dist/bundles/'));
+
+gulp.task('e2e.clean', function(done) {
+  del(['test/**', '!test'], done);
 });
-
-/**
- * Creates Ionic themes for testing.
- */
-gulp.task('sass.themes', function() {
-  var sass = require('gulp-sass');
-  var autoprefixer = require('gulp-autoprefixer');
-
-  function buildTheme(mode) {
-    gulp.src([
-      'scripts/e2e/ionic.' + mode + '.dark.scss'
-    ])
-    .pipe(sass({
-        includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
-      }).on('error', sass.logError)
-    )
-    .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest('dist/bundles/'));
-  }
-
-  buildTheme('ios');
-  buildTheme('md');
-  buildTheme('wp');
-});
-
-/**
- * Copies fonts and Ionicons to dist/fonts
- */
-gulp.task('fonts', function() {
-  gulp.src([
-    'src/fonts/*.+(ttf|woff|woff2)',
-    'node_modules/ionicons/dist/fonts/*.+(ttf|woff|woff2)'
-   ])
-    .pipe(gulp.dest('dist/fonts'));
-});
-
-/**
- * Copies Ionic Sass sources to dist
- */
-gulp.task('copy.scss', function() {
-  return gulp.src([
-      'src/**/*.scss',
-      '!src/components/*/test/**/*',
-      '!src/util/test/*'
-    ])
-    .pipe(gulp.dest('dist'));
-});
-
-/**
- * Lint the scss files using a ruby gem
- */
-gulp.task('lint.scss', function() {
-  var scsslint = require('gulp-scss-lint');
-
-  return gulp.src([
-      'src/**/*.scss',
-      '!src/components/*/test/**/*',
-      '!src/util/test/*'
-    ])
-    .pipe(scsslint())
-    .pipe(scsslint.failReporter());
-});
-
-/**
- * Test build tasks
- */
-
- /**
-  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'bundle.system' or
-  * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
-  */
-gulp.task('watch.e2e', ['e2e'], function() {
-  watchTask('bundle.system');
-
-  watch('src/components/*/test/**/*', function(file) {
-    gulp.start('e2e.build');
-  });
-});
-
 
 /**
  * Builds Ionic e2e tests to test.
+ * - Copy all component test files to the test directory
+ * - Create entry.ts and index.html file for each test.
+ * - Create platform tests for each test
  */
 gulp.task('e2e.setup', function() {
   var gulpif = require('gulp-if');
@@ -460,8 +185,8 @@ gulp.task('e2e.setup', function() {
     .pipe(connect.reload());
 
   function createIndexHTML() {
-    var indexTemplate = fs.readFileSync('scripts/e2e/e2e.template.html');
-    var indexTs = fs.readFileSync('scripts/e2e/index.ts');
+    var indexTemplate = fs.readFileSync('scripts/e2e/index.html');
+    var indexTs = fs.readFileSync('scripts/e2e/entry.ts');
 
     return through2.obj(function(file, enc, next) {
       this.push(new VinylFile({
@@ -472,7 +197,7 @@ gulp.task('e2e.setup', function() {
       this.push(new VinylFile({
         base: file.base,
         contents: new Buffer(indexTs),
-        path: path.join(path.dirname(file.path), 'index.ts'),
+        path: path.join(path.dirname(file.path), 'entry.ts'),
       }));
       next(null, file);
     });
@@ -510,52 +235,234 @@ gulp.task('e2e.setup', function() {
   }
 });
 
-/**
- * Builds Ionic unit tests to dist/tests.
- */
-gulp.task('tests', function() {
-  return gulp.src('src/**/test/**/*.spec.ts')
-    .pipe(cache('tests'))
-    .pipe(tsc(getTscOptions(), undefined, tscReporter))
-    .pipe(rename(function(file) {
-      var regex = new RegExp(path.sep + 'test(' + path.sep + '|$)');
-      file.dirname = file.dirname.replace(regex, path.sep);
-    }))
-    .pipe(gulp.dest('dist/tests'))
-});
+gulp.task('e2e.transpile', function(done) {
 
-gulp.task('watch.tests', ['tests'], function(){
-  watch('src/**/test/**/*.spec.ts', function(){
-    gulp.start('tests');
+  function updateE2eNgc(e2eFolder) {
+    var e2eNgc = require('./e2eNgcConfig.json');
+
+    // If an e2efolder parameter was passed then only transpile that directory
+    if (e2eFolder) {
+      e2eNgc.include = [
+        "test/" + e2eFolder + "/entry.ts",
+        "test/" + e2eFolder + "/AppModule.ts"
+      ]
+    } else {
+      e2eNgc.include = [
+        "test/**/entry.ts",
+        "test/**/AppModule.ts"
+      ];
+    }
+    fs.writeFileSync('./e2eNgcConfig.json', JSON.stringify(e2eNgc, null, 2));
+  }
+
+  updateE2eNgc(flags.e2efolder);
+  var exec = require('child_process').exec;
+  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p e2eNgcConfig.json';
+
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
   });
 });
 
+/**
+ * Task: e2e.pre-webpack
+ * Dynamically build webpack entryPoints
+ * Update index.html file that lists all e2e tasks
+ */
+gulp.task('e2e.pre-webpack', function(done) {
+  /**
+   * Find all AppModule.ts files because the act as the entry points
+   * for each e2e test.
+   */
+  glob('test/*/**/AppModule.ts', {}, function(er, files) {
+
+    var directories = files.map(function(file) {
+      return path.dirname(file);
+    });
+
+    var webpackEntryPoints = directories.reduce(function(endObj, dir) {
+      endObj[path.join(dir, 'index')] = "./" + path.join(dir, 'entry');
+      return endObj;
+    }, {});
+
+    indexFileContents = directories.map(function(dir) {
+      var fileName = dir.replace(/test\//, '');
+      return '<p><a href="./' + fileName + '/index.html">' + fileName + '</a></p>'
+    }, []);
+
+    fs.writeFileSync('./scripts/e2e/webpackEntryPoints.json', JSON.stringify(webpackEntryPoints, null, 2));
+    fs.writeFileSync('./test/index.html',
+      '<!DOCTYPE html><html lang="en"><head></head><body style="width: 500px; margin: 100px auto">\n' +
+      indexFileContents.join('\n') +
+      '</center></body></html>'
+    );
+    done();
+  });
+});
+
+gulp.task('e2e.webpack', function(done) {
+  var webpackConfig = './scripts/e2e/webpack.config.js;'
+  var exec = require('child_process').exec;
+  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/webpack --config ' + webpackConfig;
+
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
+  });
+});
+
+gulp.task('e2e.resources', function(done) {
+  runSequence(
+    'e2e.setup',
+    'e2e.transpile',
+    done
+  );
+});
+
+ /**
+  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'bundle.system' or
+  * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
+  */
+gulp.task('watch.e2e', function() {
+  var webpack = require('webpack');
+  var WebpackDevServer = require('webpack-dev-server');
+  var config = require('./scripts/e2e/webpack.config.js');
+  config.output.path = __dirname;
+  config.entry = {
+    "test/vendor": "./scripts/e2e/vendor",
+    "test/polyfills": "./scripts/e2e/polyfills"
+  };
+  config.entry['test/' + flags.demofolder + '/index'] = './test/' + flags.demofolder + '/entry';
+
+  var compiler = webpack(config);
+
+  watchTask('e2e.resources');
+
+  new WebpackDevServer(compiler, {
+    quiet: true
+  }).listen(8080, "localhost", function(err) {
+      if(err) {
+        throw new Error("webpack-dev-server", err);
+      }
+      console.log("[webpack-dev-server]", "http://localhost:8080/test/" + flags.e2efolder);
+  });
+});
+
+gulp.task('build.e2e', function(done) {
+  runSequence(
+    'e2e.clean',
+    ['e2e.resources', 'sass', 'fonts'],
+    'e2e.pre-webpack',
+    'e2e.webpack',
+    done
+  );
+})
+
+
+
+
+
+/**
+ * Compiles Ionic Sass sources to stylesheets and outputs them to dist/bundles.
+ */
+gulp.task('sass', function() {
+  var sass = require('gulp-sass');
+  var autoprefixer = require('gulp-autoprefixer');
+  var minifyCss = require('gulp-minify-css');
+
+  gulp.src([
+    'src/ionic.ios.scss',
+    'src/ionic.md.scss',
+    'src/ionic.wp.scss',
+    'src/ionic.scss'
+  ])
+  .pipe(sass({
+      includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
+    }).on('error', sass.logError)
+  )
+  .pipe(autoprefixer(buildConfig.autoprefixer))
+  .pipe(gulp.dest('dist/bundles/'))
+  .pipe(gulp.dest('test/css/'))
+  .pipe(minifyCss())
+  .pipe(rename({ extname: '.min.css' }))
+  .pipe(gulp.dest('dist/bundles/'))
+  .pipe(gulp.dest('test/css/'));
+});
+
+/**
+ * Creates Ionic themes for testing.
+ */
+gulp.task('sass.themes', function() {
+  var sass = require('gulp-sass');
+  var autoprefixer = require('gulp-autoprefixer');
+
+  function buildTheme(mode) {
+    gulp.src([
+      'scripts/e2e/ionic.' + mode + '.dark.scss'
+    ])
+    .pipe(sass({
+        includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
+      }).on('error', sass.logError)
+    )
+    .pipe(autoprefixer(buildConfig.autoprefixer))
+    .pipe(gulp.dest('dist/bundles/'))
+    .pipe(gulp.dest('test/css/'));
+  }
+
+  buildTheme('ios');
+  buildTheme('md');
+  buildTheme('wp');
+});
+
+/**
+ * Copies fonts and Ionicons to dist/fonts
+ */
+gulp.task('fonts', function() {
+  gulp.src([
+    'src/fonts/*.+(ttf|woff|woff2)',
+    'node_modules/ionicons/dist/fonts/*.+(ttf|woff|woff2)'
+   ])
+    .pipe(gulp.dest('dist/fonts'))
+    .pipe(gulp.dest('./test/fonts/'));
+});
+
+/**
+ * Copies Ionic Sass sources to dist
+ */
+gulp.task('copy.scss', function() {
+  return gulp.src([
+      'src/**/*.scss',
+      '!src/components/*/test/**/*',
+      '!src/util/test/*'
+    ])
+    .pipe(gulp.dest('dist'));
+});
+
+/**
+ * Lint the scss files using a ruby gem
+ */
+gulp.task('lint.scss', function() {
+  var scsslint = require('gulp-scss-lint');
+
+  return gulp.src([
+      'src/**/*.scss',
+      '!src/components/*/test/**/*',
+      '!src/util/test/*'
+    ])
+    .pipe(scsslint())
+    .pipe(scsslint.failReporter());
+});
+
+/**
+ * Test build tasks
+ */
 
 /**
  * Demos
  */
-
- /**
-  * Builds Ionic demos to dist/demos, copies them to ../ionic-site and watches
-  * for changes.
-  */
-//TODO, decide on workflow for site demos (dev and prod), vs local dev (in dist)
-var LOCAL_DEMOS = false;
-gulp.task('watch.demos', function(done) {
-  LOCAL_DEMOS = true;
-  runSequence(
-    ['build.demos', 'transpile', 'copy.libs', 'sass', 'fonts'],
-    function(){
-      watchTask('bundle.system');
-
-      watch('demos/**/*', function(file) {
-        gulp.start('build.demos');
-      });
-
-      done();
-    }
-  );
-});
 
 /**
  * Copies bundled demos from dist/demos to ../ionic-site/docs/v2 (assumes there is a
@@ -580,7 +487,7 @@ gulp.task('demos', ['bundle.demos'], function() {
   * Builds necessary files for each demo then bundles them using webpack. Unlike
   * e2e tests, demos are bundled for performance (but have a slower build).
   */
-gulp.task('bundle.demos', ['build.demos', 'transpile', 'copy.libs', 'sass', 'fonts'], function(done) {
+gulp.task('bundle.demos', ['build.demos.old', 'transpile', 'sass', 'fonts'], function(done) {
   var glob = require('glob');
   var webpack = require('webpack');
   var path = require('path');
@@ -619,7 +526,7 @@ gulp.task('bundle.demos', ['build.demos', 'transpile', 'copy.libs', 'sass', 'fon
 /**
  * Transpiles and copies Ionic demo sources to dist/demos.
  */
-gulp.task('build.demos', function() {
+gulp.task('build.demos.old', function() {
   var gulpif = require('gulp-if');
   var merge = require('merge2');
   var _ = require('lodash');
@@ -725,6 +632,143 @@ function buildDemoSass(isProductionMode) {
   .pipe(rename({ extname: '.min.css' }))
   .pipe(gulp.dest('dist/bundles/'));
 }
+
+
+
+gulp.task('demos.clean', function(done) {
+  del(['dist/demos/**', '!dist/demos'], done);
+});
+gulp.task('demos.setup', function() {
+  var merge = require('merge2');
+  var srcFolder = 'demos/';
+  var destFolder = 'dist/demos/';
+  var folderList = getFolders(srcFolder);
+
+  var tasks = folderList.map(function(folder) {
+    return gulp.src(path.join(srcFolder, folder, '/**/*'))
+      .pipe(gulp.dest(path.join(destFolder, folder)));
+  });
+
+  var other = folderList.map(function(folder) {
+    return gulp.src([
+        'scripts/demos/entry.ts',
+        'scripts/demos/index.html'
+      ])
+      .pipe(gulp.dest(path.join(destFolder, folder)));
+  });
+
+  return merge(other);
+});
+
+gulp.task('demos.transpile', function(done) {
+  var ngcFile = './demoNgcConfig.json';
+
+  function updateDemoNgc(ngcPath, demoFolder) {
+    var demoNgc = require(ngcPath);
+
+    // If an demoFolder parameter was passed then only transpile that directory
+    if (demoFolder) {
+      demoNgc.include = [
+        "dist/demos/" + demoFolder + "/**/entry.ts",
+        "dist/demos/" + demoFolder + "/**/AppModule.ts"
+      ]
+    } else {
+      demoNgc.include = [
+        "dist/demos/**/entry.ts",
+        "dist/demos/**/AppModule.ts"
+      ];
+    }
+    fs.writeFileSync(ngcPath, JSON.stringify(demoNgc, null, 2));
+  }
+
+  updateDemoNgc(ngcFile, flags.demoFolder);
+  var exec = require('child_process').exec;
+  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ' + ngcFile;
+
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
+  });
+});
+
+gulp.task('demos.pre-webpack', function(done) {
+  /**
+   * Find all AppModule.ts files because the act as the entry points
+   * for each e2e test.
+   */
+  glob('dist/demos/*/AppModule.ts', {}, function(er, files) {
+    var directories = files.map(function(file) {
+      return path.dirname(file);
+    });
+
+    var webpackEntryPoints = directories.reduce(function(endObj, dir) {
+      endObj[path.join(dir, 'index')] = "./" + path.join(dir, 'entry');
+      return endObj;
+    }, {});
+
+    fs.writeFileSync('./scripts/demos/webpackEntryPoints.json', JSON.stringify(webpackEntryPoints, null, 2));
+    done();
+  });
+});
+
+gulp.task('demos.webpack', function(done) {
+  var webpackConfig = './scripts/demos/webpack.config.js;'
+  var exec = require('child_process').exec;
+  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/webpack --config ' + webpackConfig;
+
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
+  });
+});
+
+gulp.task('demos.resources', function(done) {
+  runSequence(
+    'demos.setup',
+    'demos.transpile',
+    done
+  );
+});
+
+ /**
+  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'bundle.system' or
+  * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
+  */
+gulp.task('watch.demos', function() {
+  var webpack = require('webpack');
+  var WebpackDevServer = require('webpack-dev-server');
+  var config = require('./scripts/demos/webpack.config.js');
+  config.output.path = __dirname;
+  config.entry = {};
+  config.entry['dist/demos/' + flags.demofolder + '/index'] = './dist/demos/' + flags.demofolder + '/entry';
+
+  var compiler = webpack(config);
+
+  watchTask('demos.resources');
+
+  new WebpackDevServer(compiler, {
+    quiet: true
+  }).listen(8080, "localhost", function(err) {
+      if(err) {
+        throw new Error("webpack-dev-server", err);
+      }
+      console.log("[webpack-dev-server]", "http://localhost:8080/dist/demos/" + flags.demofolder);
+  });
+});
+
+gulp.task('build.demos', function(done) {
+  runSequence(
+    'demos.clean',
+    ['demos.resources', 'sass', 'fonts'],
+    'demos.pre-webpack',
+    'demos.webpack',
+    done
+  );
+})
+
+
 
 
 /**
@@ -974,8 +1018,7 @@ gulp.task('build.release', function(done){
   DEBUG = false;
   TYPECHECK = true;
   runSequence(
-    'clean',
-    'copy.libs',
+    'release.clean',
     ['bundle', 'bundle.es6', 'sass', 'fonts', 'copy.scss'],
     done
   );
