@@ -1126,8 +1126,11 @@ export class NavControllerBase extends Ion implements NavController {
     return !!(view && view.state === STATE_ACTIVE);
   }
 
-  getPrevious(view: ViewController): ViewController {
+  getPrevious(view?: ViewController): ViewController {
     // returns the view controller which is before the given view controller.
+    if (!view) {
+      view = this.getActive(true);
+    }
     return this.getByIndex(this.indexOf(view) - 1);
   }
 

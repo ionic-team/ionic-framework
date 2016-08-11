@@ -1,7 +1,7 @@
-import { Injectable, Inject, forwardRef } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { isArray, isBlank, isPresent, pascalCaseToDashCase } from '../util/util';
-import { DeepLink,DeepLinkConfig,  NavLink, NavPath, NavSegment } from './nav-util';
+import { DeepLink, DeepLinkConfig, NavLink, NavPath, NavSegment } from './nav-util';
 import { UserDeepLinkConfig } from './deep-linker';
 
 
@@ -205,34 +205,6 @@ export const createMatchedData = (matchedUrlParts: string[], link: NavLink): any
   return data;
 };
 
-function sortConfigLinks(a: NavLink, b: NavLink) {
-  // sort by the number of parts
-  if (a.parts.length > b.parts.length) {
-    return -1;
-  }
-  if (a.parts.length < b.parts.length) {
-    return 1;
-  }
-
-  // sort by the number of static parts in a row
-  if (a.staticParts > b.staticParts) {
-    return -1;
-  }
-  if (a.staticParts < b.staticParts) {
-    return 1;
-  }
-
-  // sort by the number of total data parts
-  if (a.dataParts < b.dataParts) {
-    return -1;
-  }
-  if (a.dataParts > b.dataParts) {
-    return 1;
-  }
-
-  return 0;
-}
-
 export const normalizeLinks = (links: NavLink[]): NavLink[] => {
   for (var i = 0, ilen = links.length; i < ilen; i++) {
     var link = links[i];
@@ -261,6 +233,34 @@ export const normalizeLinks = (links: NavLink[]): NavLink[] => {
   // sort by the number of parts, with the links
   // with the most parts first
   return links.sort(sortConfigLinks);
+};
+
+function sortConfigLinks(a: NavLink, b: NavLink) {
+  // sort by the number of parts
+  if (a.parts.length > b.parts.length) {
+    return -1;
+  }
+  if (a.parts.length < b.parts.length) {
+    return 1;
+  }
+
+  // sort by the number of static parts in a row
+  if (a.staticParts > b.staticParts) {
+    return -1;
+  }
+  if (a.staticParts < b.staticParts) {
+    return 1;
+  }
+
+  // sort by the number of total data parts
+  if (a.dataParts < b.dataParts) {
+    return -1;
+  }
+  if (a.dataParts > b.dataParts) {
+    return 1;
+  }
+
+  return 0;
 }
 
 const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|>|<|;|:|@|&|=/g;

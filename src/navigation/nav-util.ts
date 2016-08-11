@@ -53,12 +53,12 @@ export function isNav(nav: any) {
 // simple public link interface
 export interface DeepLink {
   component: any;
-  name?: string;
+  name: string;
   path?: string;
 }
 
 export interface DeepLinkConfig {
-  links: DeepLink[]
+  links: DeepLink[];
 }
 
 // internal link interface, not exposed publicly

@@ -51,8 +51,8 @@ import { RadioGroup } from './components/radio/radio-group';
 import { Range } from './components/range/range';
 import { Searchbar } from './components/searchbar/searchbar';
 import { Nav } from './components/nav/nav';
-import { NavPop } from './components/nav/nav-pop';
-import { NavPush } from './components/nav/nav-push';
+import { NavPop, NavPopAnchor } from './components/nav/nav-pop';
+import { NavPush, NavPushAnchor } from './components/nav/nav-push';
 import { Navbar } from './components/navbar/navbar';
 import { ShowWhen, HideWhen } from './components/show-hide-when/show-hide-when';
 
@@ -93,8 +93,8 @@ export { MenuType } from './components/menu/menu-types';
 export { Modal, ModalController } from './components/modal/modal';
 export { ModalOptions } from './components/modal/modal-options';
 export { Nav } from './components/nav/nav';
-export { NavPop } from './components/nav/nav-pop';
-export { NavPush } from './components/nav/nav-push';
+export { NavPop, NavPopAnchor } from './components/nav/nav-pop';
+export { NavPush, NavPushAnchor } from './components/nav/nav-push';
 export { Navbar } from './components/navbar/navbar';
 export { Option } from './components/option/option';
 export { Picker, PickerController } from './components/picker/picker';
@@ -165,7 +165,9 @@ export const IONIC_DIRECTIVES: any[] = [
   Nav,
   Navbar,
   NavPop,
+  NavPopAnchor,
   NavPush,
+  NavPushAnchor,
   Option,
   PickerCmp,
   PopoverCmp,

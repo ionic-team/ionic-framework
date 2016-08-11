@@ -44,7 +44,7 @@ export { ViewController } from './navigation/view-controller';
  * @private
  * ionicProviders used by IonicModule
  */
-export function ionicProviders(userRoot?: any, userConfig?: any, userDeepLinkConfig?: any): any[] {
+export function ionicProviders(userRoot: any, userConfig?: any, userDeepLinkConfig?: any): any[] {
   return [
     { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: userRoot, multi: true },
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },

@@ -3,6 +3,7 @@ import { AfterViewInit, Directive, Host, HostBinding, HostListener, Input, OnCha
 import { DeepLinker } from '../../navigation/deep-linker';
 import { NavController } from '../../navigation/nav-controller';
 import { noop } from '../../util/util';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -49,23 +50,29 @@ export class NavPop {
 
 }
 
+
 /**
  * @private
  */
 @Directive({
   selector: 'a[navPop]'
 })
-export class NavPushAnchor implements OnChanges, AfterViewInit {
+export class NavPopAnchor implements OnChanges, AfterViewInit {
 
   constructor(
-    @Host() public host: NavPop,
-    @Optional() public linker: DeepLinker) {}
+    @Optional() public host: NavPop,
+    @Optional() public linker: DeepLinker,
+    @Optional() public viewCtrl: ViewController) {}
 
-  @HostBinding() href: string = '';
+  @HostBinding() href: string;
 
   updateHref() {
-    if (this.host && this.linker) {
-      //this.href = this.linker.createUrl(this.host._nav, this.host.navPush, this.host.navParams);
+    if (this.host && this.linker && this.viewCtrl) {
+      const previousView = this.host._nav.getPrevious(this.viewCtrl);
+      this.href = (previousView && this.linker.createUrl(this.host._nav, this.viewCtrl.componentType, this.viewCtrl.data)) || '#';
+
+    } else {
+      this.href = '#';
     }
   }
 

@@ -5,13 +5,7 @@ import { DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, M
 @Component({
   templateUrl: './signIn.html'
 })
-export class SignIn {
-  constructor(public navCtrl: NavController) {}
-
-  push() {
-    this.navCtrl.push(TabsPage);
-  }
-}
+export class SignIn {}
 
 
 @Component({
@@ -311,15 +305,15 @@ export class E2EApp {
 
 export const deepLinkConfig: DeepLinkConfig = {
   links: [
-    { component: SignIn },
-    { component: TabsPage },
-    { component: Tab1Page1 },
-    { component: Tab1Page2 },
-    { component: Tab1Page3 },
-    { component: Tab2Page1 },
-    { component: Tab2Page2 },
-    { component: Tab2Page3 },
-    { component: Tab3Page1 },
+    { component: SignIn, name: 'sign-in' },
+    { component: TabsPage, name: 'tabs' },
+    { component: Tab1Page1, name: 'tab1-page1' },
+    { component: Tab1Page2, name: 'tab1-page2' },
+    { component: Tab1Page3, name: 'tab1-page3' },
+    { component: Tab2Page1, name: 'tab2-page1' },
+    { component: Tab2Page2, name: 'tab2-page2' },
+    { component: Tab2Page3, name: 'tab2-page3' },
+    { component: Tab3Page1, name: 'tab3-page1' },
   ]
 };
 
@@ -338,7 +332,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     Tab3Page1
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, deepLinkConfig)
+    IonicModule.forRoot(E2EApp, null, deepLinkConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

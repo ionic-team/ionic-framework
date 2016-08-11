@@ -462,10 +462,11 @@ export abstract class NavController {
 
   /**
    * Returns the view controller which is before the given view controller.
+   * If no view controller is passed in, then it'll default to the active view.
    * @param {ViewController} view
    * @returns {viewController}
    */
-  abstract getPrevious(view: ViewController): ViewController;
+  abstract getPrevious(view?: ViewController): ViewController;
 
   /**
    * Returns the first view controller in this nav controller's stack.

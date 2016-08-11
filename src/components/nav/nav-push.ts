@@ -90,11 +90,14 @@ export class NavPushAnchor implements OnChanges, AfterViewInit {
     @Host() public host: NavPush,
     @Optional() public linker: DeepLinker) {}
 
-  @HostBinding() href: string = '';
+  @HostBinding() href: string;
 
   updateHref() {
     if (this.host && this.linker) {
-      this.href = this.linker.createUrl(this.host._nav, this.host.navPush, this.host.navParams);
+      this.href = this.linker.createUrl(this.host._nav, this.host.navPush, this.host.navParams) || '#';
+
+    } else {
+      this.href = '#';
     }
   }
 

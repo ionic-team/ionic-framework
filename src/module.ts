@@ -16,7 +16,7 @@ import { ionicProviders } from './providers';
 })
 export class IonicModule {
 
-  static forRoot(userAppRoot?: any, userConfig?: any, userDeepLinkConfig?: any[]): ModuleWithProviders {
+  static forRoot(userAppRoot: any, userConfig?: any, userDeepLinkConfig?: any): ModuleWithProviders {
     return {
       ngModule: IonicModule,
       providers: ionicProviders(userAppRoot, userConfig, userDeepLinkConfig)
