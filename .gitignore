@@ -24,3 +24,8 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 
 .package.tmp.json
+
+commonjsNgcConfig.json
+es2015NgcConfig.json
+demoNgcConfig.json
+e2eNgcConfig.json

@@ -106,7 +106,8 @@ gulp.task('release.clean', function(done) {
  */
 gulp.task('transpile.es2015', function(done) {
   var exec = require('child_process').exec;
-  var shellCommand = './node_modules/.bin/ngc -p es2015NgcConfig.json && ' +
+  var shellCommand = 'cp ./scripts/build/es2015NgcConfig.json ./es2015NgcConfig.json && ' +
+    './node_modules/.bin/ngc -p ./es2015NgcConfig.json && ' +
     'cp src/components/slides/swiper-widget.es2015.js dist/esm/components/slides/swiper-widget.js && ' +
     'cp src/components/slides/swiper-widget.d.ts dist/esm/components/slides/';
 
@@ -124,7 +125,8 @@ gulp.task('transpile.es2015', function(done) {
  */
 gulp.task('transpile.cjs', function(done) {
   var exec = require('child_process').exec;
-  var shellCommand = './node_modules/.bin/ngc -p commonjsNgcConfig.json && ' +
+  var shellCommand = 'cp ./scripts/build/commonjsNgcConfig.json ./commonjsNgcConfig.json && ' +
+    './node_modules/.bin/ngc -p ./commonjsNgcConfig.json && ' +
     'cp src/components/slides/swiper-widget.js dist/components/slides/swiper-widget.js && ' +
     'cp src/components/slides/swiper-widget.d.ts dist/components/slides/';
 
@@ -238,7 +240,7 @@ gulp.task('e2e.setup', function() {
 gulp.task('e2e.transpile', function(done) {
 
   function updateE2eNgc(e2eFolder) {
-    var e2eNgc = require('./e2eNgcConfig.json');
+    var e2eNgc = require('./scripts/e2e/NgcConfig.json');
 
     // If an e2efolder parameter was passed then only transpile that directory
     if (e2eFolder) {
@@ -257,7 +259,7 @@ gulp.task('e2e.transpile', function(done) {
 
   updateE2eNgc(flags.e2efolder);
   var exec = require('child_process').exec;
-  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p e2eNgcConfig.json';
+  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ./e2eNgcConfig.json';
 
   exec(shellCommand, function(err, stdout, stderr) {
     console.log(stdout);
@@ -662,10 +664,8 @@ gulp.task('demos.setup', function() {
 });
 
 gulp.task('demos.transpile', function(done) {
-  var ngcFile = './demoNgcConfig.json';
-
-  function updateDemoNgc(ngcPath, demoFolder) {
-    var demoNgc = require(ngcPath);
+  function updateDemoNgc(demoFolder) {
+    var demoNgc = require('./scripts/demos/ngcConfig.json');
 
     // If an demoFolder parameter was passed then only transpile that directory
     if (demoFolder) {
@@ -679,12 +679,12 @@ gulp.task('demos.transpile', function(done) {
         "dist/demos/**/AppModule.ts"
       ];
     }
-    fs.writeFileSync(ngcPath, JSON.stringify(demoNgc, null, 2));
+    fs.writeFileSync('./demoNgcConfig.json', JSON.stringify(demoNgc, null, 2));
   }
 
-  updateDemoNgc(ngcFile, flags.demoFolder);
+  updateDemoNgc(flags.demoFolder);
   var exec = require('child_process').exec;
-  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ' + ngcFile;
+  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ./demoNgcConfig.json';
 
   exec(shellCommand, function(err, stdout, stderr) {
     console.log(stdout);
