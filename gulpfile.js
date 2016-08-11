@@ -165,15 +165,13 @@ gulp.task('e2e.setup', function() {
       'src/components/*/test/*/**/*.ts',
       '!src/components/*/test/*/**/*.spec.ts'
     ])
-    .pipe(cache('e2e.ts'))
     .pipe(gulpif(/AppModule.ts$/, createIndexHTML()))
     .pipe(gulpif(/e2e.ts$/, createPlatformTests()))
 
   var testFiles = gulp.src([
       'src/components/*/test/*/**/*',
       '!src/components/*/test/*/**/*.ts'
-    ])
-    .pipe(cache('e2e.files'))
+    ]);
 
   return merge([
       tsResult,
