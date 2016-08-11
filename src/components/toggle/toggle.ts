@@ -172,9 +172,11 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
     this.onChange(this._checked);
   }
 
-
+  /**
+   * @internal
+   */
   _setChecked(isChecked: boolean) {
-    if (isChecked !== this._checked) {
+    if (!this._disabled && isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {
         this.ionChange.emit(this);

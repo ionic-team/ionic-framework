@@ -123,10 +123,10 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   _setChecked(isChecked: boolean) {
-    if (isChecked !== this._checked) {
+    if (!this._disabled && isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {
         this.ionChange.emit(this);
