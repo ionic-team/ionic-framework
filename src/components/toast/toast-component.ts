@@ -10,8 +10,8 @@ import { ViewController } from '../../navigation/view-controller';
 
 
 /**
-* @private
-*/
+ * @private
+ */
 @Component({
   selector: 'ion-toast',
   template:

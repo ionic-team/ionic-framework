@@ -15,7 +15,7 @@ import { windowDimensions } from '../../util/dom';
 @Component({
   selector: 'ion-modal',
   template:
-    '<ion-backdrop disableScroll="false" (click)="bdClick($event)"></ion-backdrop>' +
+    '<ion-backdrop disableScroll="false" (click)="bdClick()"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
       '<div #viewport nav-viewport></div>' +
     '</div>'
@@ -25,7 +25,7 @@ export class ModalCmp {
   d: any;
   enabled: boolean;
 
-  constructor(private _cfr: ComponentFactoryResolver, private _renderer: Renderer, private _navParams: NavParams, private _viewCtrl: ViewController) {
+  constructor(public _cfr: ComponentFactoryResolver, public _renderer: Renderer, public _navParams: NavParams, public _viewCtrl: ViewController) {
     this.d = _navParams.data.opts;
   }
 
@@ -62,8 +62,8 @@ export class ModalCmp {
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
-    if (this.enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE ) {
+  keyUp(ev: KeyboardEvent) {
+    if (this.enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE) {
       this.bdClick();
     }
   }

@@ -3,6 +3,7 @@ import { Component, ComponentFactoryResolver, ElementRef, HostBinding, Inject, O
 import { App } from './app';
 import { Config } from '../../config/config';
 import { FeatureDetect } from '../../util/feature-detect';
+import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
 
 export const UserRoot = new OpaqueToken('USERROOT');
@@ -13,8 +14,9 @@ export const UserRoot = new OpaqueToken('USERROOT');
 @Component({
   selector: 'ion-app',
   template:
-    '<div #anchor nav-portal></div>' +
-    '<click-block></click-block>'
+    '<div #anchor overlay-portal></div>' +
+    '<click-block></click-block>',
+  directives: [OverlayPortal]
 })
 export class IonicApp implements OnInit {
 

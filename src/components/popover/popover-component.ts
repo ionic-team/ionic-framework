@@ -16,7 +16,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-popover',
   template:
-    '<ion-backdrop (click)="bdClick($event)" [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
+    '<ion-backdrop (click)="bdClick()" [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
     '<div class="popover-wrapper">' +
       '<div class="popover-arrow"></div>' +
       '<div class="popover-content">' +
@@ -39,12 +39,12 @@ export class PopoverCmp {
   showSpinner: boolean;
 
   constructor(
-    private _cfr: ComponentFactoryResolver,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
-    private _config: Config,
-    private _navParams: NavParams,
-    private _viewCtrl: ViewController
+    public _cfr: ComponentFactoryResolver,
+    public _elementRef: ElementRef,
+    public _renderer: Renderer,
+    public _config: Config,
+    public _navParams: NavParams,
+    public _viewCtrl: ViewController
   ) {
     this.d = _navParams.data.opts;
 
@@ -88,11 +88,6 @@ export class PopoverCmp {
     return this._viewCtrl.dismiss(null, role);
   }
 
-  bdTouch(ev: UIEvent) {
-    ev.preventDefault();
-    ev.stopPropagation();
-  }
-
   bdClick() {
     if (this.enabled && this.d.enableBackdropDismiss) {
       this.dismiss('backdrop');
@@ -100,7 +95,7 @@ export class PopoverCmp {
   }
 
   @HostListener('body:keyup', ['$event'])
-  _keyUp(ev: KeyboardEvent) {
+  keyUp(ev: KeyboardEvent) {
     if (this.enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
       this.bdClick();
     }

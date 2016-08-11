@@ -42,7 +42,7 @@ import { ViewController } from '../../navigation/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class ActionSheetCmp {
-  private d: {
+  d: {
     title?: string;
     subTitle?: string;
     cssClass?: string;
@@ -50,10 +50,10 @@ export class ActionSheetCmp {
     enableBackdropDismiss?: boolean;
     cancelButton: any;
   };
-  private descId: string;
-  private enabled: boolean;
-  private hdrId: string;
-  private id: number;
+  descId: string;
+  enabled: boolean;
+  hdrId: string;
+  id: number;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -120,7 +120,7 @@ export class ActionSheetCmp {
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
       if (ev.keyCode === Key.ESCAPE) {
         console.debug('actionsheet, escape button');

@@ -2,59 +2,52 @@
 /**
  * Import Components
  */
-import { ActionSheetCmp } from './components/action-sheet/action-sheet-component';
-import { AlertCmp } from './components/alert/alert-component';
-import { LoadingCmp } from './components/loading/loading-component';
-import { ModalCmp } from './components/modal/modal-component';
-import { PickerCmp } from './components/picker/picker-component';
-import { PopoverCmp } from './components/popover/popover-component';
-import { ToastCmp } from './components/toast/toast-component';
-import { Menu } from './components/menu/menu';
-import { MenuToggle } from './components/menu/menu-toggle';
-import { MenuClose } from './components/menu/menu-close';
 import { Backdrop } from './components/backdrop/backdrop';
 import { Badge } from './components/badge/badge';
 import { Button } from './components/button/button';
+import { Checkbox } from './components/checkbox/checkbox';
 import { Content } from './components/content/content';
+import { DateTime } from './components/datetime/datetime';
+import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
-import { Scroll } from './components/scroll/scroll';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
-import { Refresher } from './components/refresher/refresher';
-import { RefresherContent } from './components/refresher/refresher-content';
-import { Slides, Slide, SlideLazy } from './components/slides/slides';
-import { Tabs } from './components/tabs/tabs';
-import { Tab } from './components/tabs/tab';
-import { List } from './components/list/list';
-import { ListHeader } from './components/list/list-header';
 import { IonicApp } from './components/app/app-root';
 import { Item, ItemContent } from './components/item/item';
 import { ItemReorder } from './components/item/item-reorder';
 import { ItemSliding, ItemOptions } from './components/item/item-sliding';
-import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
-import { VirtualItem, VirtualHeader, VirtualFooter } from './components/virtual-scroll/virtual-item';
-import { Toolbar, Header, Footer } from './components/toolbar/toolbar';
-import { ToolbarItem } from './components/toolbar/toolbar-item';
-import { ToolbarTitle } from './components/toolbar/toolbar-title';
-import { Icon } from './components/icon/icon';
-import { Spinner } from './components/spinner/spinner';
-import { Checkbox } from './components/checkbox/checkbox';
-import { Select } from './components/select/select';
-import { Option } from './components/option/option';
-import { DateTime } from './components/datetime/datetime';
-import { Toggle } from './components/toggle/toggle';
-import { TextInput, TextArea } from './components/input/input';
 import { Label } from './components/label/label';
-import { Segment, SegmentButton } from './components/segment/segment';
-import { RadioButton } from './components/radio/radio-button';
-import { RadioGroup } from './components/radio/radio-group';
-import { Range } from './components/range/range';
-import { Searchbar } from './components/searchbar/searchbar';
+import { List } from './components/list/list';
+import { ListHeader } from './components/list/list-header';
+import { Menu } from './components/menu/menu';
+import { MenuClose } from './components/menu/menu-close';
+import { MenuToggle } from './components/menu/menu-toggle';
 import { Nav } from './components/nav/nav';
 import { NavPop, NavPopAnchor } from './components/nav/nav-pop';
 import { NavPush, NavPushAnchor } from './components/nav/nav-push';
 import { Navbar } from './components/navbar/navbar';
+import { Option } from './components/option/option';
+import { RadioButton } from './components/radio/radio-button';
+import { RadioGroup } from './components/radio/radio-group';
+import { Range } from './components/range/range';
+import { Refresher } from './components/refresher/refresher';
+import { RefresherContent } from './components/refresher/refresher-content';
+import { Scroll } from './components/scroll/scroll';
+import { Searchbar } from './components/searchbar/searchbar';
+import { Segment, SegmentButton } from './components/segment/segment';
+import { Select } from './components/select/select';
 import { ShowWhen, HideWhen } from './components/show-hide-when/show-hide-when';
+import { Slides, Slide, SlideLazy } from './components/slides/slides';
+import { Spinner } from './components/spinner/spinner';
+import { Tab } from './components/tabs/tab';
+import { Tabs } from './components/tabs/tabs';
+import { TextInput, TextArea } from './components/input/input';
+import { Toggle } from './components/toggle/toggle';
+import { Toolbar, Header, Footer } from './components/toolbar/toolbar';
+import { ToolbarItem } from './components/toolbar/toolbar-item';
+import { ToolbarTitle } from './components/toolbar/toolbar-title';
+import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
+import { VirtualItem, VirtualHeader, VirtualFooter } from './components/virtual-scroll/virtual-item';
 
 
 /**
@@ -124,6 +117,14 @@ export { ToolbarTitle } from'./components/toolbar/toolbar-title';
 export { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
 
 
+export { ActionSheetCmp } from './components/action-sheet/action-sheet-component';
+export { AlertCmp } from './components/alert/alert-component';
+export { LoadingCmp } from './components/loading/loading-component';
+export { ModalCmp } from './components/modal/modal-component';
+export { PickerCmp } from './components/picker/picker-component';
+export { PopoverCmp } from './components/popover/popover-component';
+export { ToastCmp } from './components/toast/toast-component';
+
 /**
  * @private
  * @name IONIC_DIRECTIVES
@@ -133,8 +134,6 @@ export { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
  * need to import `IONIC_DIRECTIVES` as they are part of the app's default directives.
  */
 export const IONIC_DIRECTIVES: any[] = [
-  ActionSheetCmp,
-  AlertCmp,
   Backdrop,
   Badge,
   Button,
@@ -157,11 +156,9 @@ export const IONIC_DIRECTIVES: any[] = [
   Label,
   List,
   ListHeader,
-  LoadingCmp,
   Menu,
   MenuClose,
   MenuToggle,
-  ModalCmp,
   Nav,
   Navbar,
   NavPop,
@@ -169,8 +166,6 @@ export const IONIC_DIRECTIVES: any[] = [
   NavPush,
   NavPushAnchor,
   Option,
-  PickerCmp,
-  PopoverCmp,
   RadioButton,
   RadioGroup,
   Range,
@@ -190,7 +185,6 @@ export const IONIC_DIRECTIVES: any[] = [
   Tabs,
   TextArea,
   TextInput,
-  ToastCmp,
   Toggle,
   Toolbar,
   ToolbarItem,

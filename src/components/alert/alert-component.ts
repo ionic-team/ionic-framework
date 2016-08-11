@@ -69,28 +69,29 @@ import { ViewController } from '../../navigation/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class AlertCmp {
-  private activeId: string;
-  private descId: string;
-  private d: {
+  activeId: string;
+  descId: string;
+  d: {
     cssClass?: string;
     message?: string;
+    title?: string;
     subTitle?: string;
     buttons?: any[];
     inputs?: any[];
     enableBackdropDismiss?: boolean;
   };
-  private enabled: boolean;
-  private hdrId: string;
-  private id: number;
-  private inputType: string;
-  private lastClick: number;
-  private msgId: string;
-  private subHdrId: string;
+  enabled: boolean;
+  hdrId: string;
+  id: number;
+  inputType: string;
+  lastClick: number;
+  msgId: string;
+  subHdrId: string;
 
   constructor(
-    private _viewCtrl: ViewController,
-    private _elementRef: ElementRef,
-    private _config: Config,
+    public _viewCtrl: ViewController,
+    public _elementRef: ElementRef,
+    public _config: Config,
     params: NavParams,
     renderer: Renderer
   ) {
@@ -170,7 +171,7 @@ export class AlertCmp {
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
       if (ev.keyCode === Key.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
@@ -370,7 +371,6 @@ class AlertMdPopOut extends Transition {
   }
 }
 Transition.register('alert-md-pop-out', AlertMdPopOut);
-
 
 
 class AlertWpPopIn extends Transition {

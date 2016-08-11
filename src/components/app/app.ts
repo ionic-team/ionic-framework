@@ -8,6 +8,7 @@ import { isNav, isTabs, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '..
 import { NavController } from '../../navigation/nav-controller';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -190,8 +191,8 @@ export class App {
   /**
    * @private
    */
-  present(enteringView: any, opts: NavOptions = {}): Promise<any> {
-    enteringView.setNav(this._portal);
+  present(enteringView: ViewController, opts: NavOptions = {}): Promise<any> {
+    enteringView._setNav(this._portal);
 
     opts.keyboardClose = false;
     opts.direction = DIRECTION_FORWARD;
