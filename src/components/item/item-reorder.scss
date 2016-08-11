@@ -24,7 +24,12 @@ ion-reorder {
 }
 
 .reorder-enabled {
+  ion-reorder {
+    display: flex;
+  }
+}
 
+.reorder-list-active {
   .item,
   .item-wrapper {
     transition: transform 300ms;
@@ -32,12 +37,6 @@ ion-reorder {
     will-change: transform;
   }
 
-  ion-reorder {
-    display: flex;
-  }
-}
-
-.reorder-list-active {
   .item-inner {
     pointer-events: none;
   }
