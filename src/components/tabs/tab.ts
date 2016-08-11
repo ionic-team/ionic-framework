@@ -265,7 +265,7 @@ export class Tab extends NavControllerBase {
     // A Tab is a NavController for its child pages
     super(parent, app, config, keyboard, _elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
 
-    parent.add(this);
+    this.id = parent.add(this);
 
     this._tabId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;

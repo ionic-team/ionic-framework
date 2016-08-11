@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -155,7 +155,7 @@ import { ViewController } from '../../navigation/view-controller';
   directives: [TabButton, TabHighlight],
   encapsulation: ViewEncapsulation.None,
 })
-export class Tabs extends Ion implements AfterContentInit {
+export class Tabs extends Ion implements AfterViewInit {
   /**
    * @internal
    */
@@ -176,22 +176,14 @@ export class Tabs extends Ion implements AfterContentInit {
    * @internal
    */
   _bottom: number;
-
-  /**
-   * @internal
-   */
-  tabs: Tab[] = [];
-
   /**
    * @private
    */
   id: string;
-
   /**
    * @internal
    */
   _selectHistory: string[] = [];
-
   /**
    * @internal
    */
@@ -313,7 +305,7 @@ export class Tabs extends Ion implements AfterContentInit {
   /**
    * @internal
    */
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     this._setConfig('tabsPlacement', 'bottom');
     this._setConfig('tabsLayout', 'icon-top');
     this._setConfig('tabsHighlight', this.tabsHighlight);
@@ -366,18 +358,18 @@ export class Tabs extends Ion implements AfterContentInit {
     let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(this.selectedIndex, 10));
 
     // now see if the deep linker can find a tab index
-    let tabsSegment = this._linker && this._linker.initNav(this);
+    const tabsSegment = this._linker && this._linker.initNav(this);
     if (tabsSegment && isBlank(tabsSegment.component)) {
       // we found a segment which probably represents which tab to select
       selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.name);
     }
 
     // get the selectedIndex and ensure it isn't hidden or disabled
-    let selectedTab = this.tabs.find((t, i) => i === selectedIndex && t.enabled && t.show);
+    let selectedTab = this._tabs.find((t, i) => i === selectedIndex && t.enabled && t.show);
     if (!selectedTab) {
       // wasn't able to select the tab they wanted
       // try to find the first tab that's available
-      selectedTab = this.tabs.find(t => t.enabled && t.show);
+      selectedTab = this._tabs.find(t => t.enabled && t.show);
     }
 
     if (selectedTab) {
@@ -402,13 +394,13 @@ export class Tabs extends Ion implements AfterContentInit {
     const shouldPreloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
     if (shouldPreloadTabs) {
       // preload all the tabs which isn't the selected tab
-      this.tabs.filter((t) => t !== selectedTab).forEach((tab, index) => {
+      this._tabs.filter((t) => t !== selectedTab).forEach((tab, index) => {
         tab.preload(this._config.getNumber('tabsPreloadDelay', 1000) * index);
       });
     }
 
     // set the initial href attribute values for each tab
-    this.tabs.forEach(t => {
+    this._tabs.forEach(t => {
       t.updateHref(t.root, t.rootParams);
     });
   }
@@ -428,8 +420,8 @@ export class Tabs extends Ion implements AfterContentInit {
    * @internal
    */
   add(tab: Tab) {
-    tab.id = this.id + '-' + (++this._ids);
-    this.tabs.push(tab);
+    this._tabs.push(tab);
+    return this.id + '-' + (++this._ids);
   }
 
   /**
@@ -467,7 +459,7 @@ export class Tabs extends Ion implements AfterContentInit {
         // it's possible the tab is only for opening modal's or signing out
         // and doesn't actually have content. In the case there's no content
         // for a tab then do nothing and leave the current view as is
-        this.tabs.forEach(tab => {
+        this._tabs.forEach(tab => {
           tab.setSelected(tab === selectedTab);
         });
 
@@ -531,19 +523,16 @@ export class Tabs extends Ion implements AfterContentInit {
    * @returns {Tab} Returns the tab who's index matches the one passed
    */
   getByIndex(index: number): Tab {
-    if (index < this.tabs.length && index > -1) {
-      return this.tabs[index];
-    }
-    return null;
+    return this._tabs[index];
   }
 
   /**
    * @return {Tab} Returns the currently selected tab
    */
   getSelected(): Tab {
-    for (let i = 0; i < this.tabs.length; i++) {
-      if (this.tabs[i].isSelected) {
-        return this.tabs[i];
+    for (var i = 0; i < this._tabs.length; i++) {
+      if (this._tabs[i].isSelected) {
+        return this._tabs[i];
       }
     }
     return null;
@@ -560,14 +549,14 @@ export class Tabs extends Ion implements AfterContentInit {
    * @internal
    */
   getIndex(tab: Tab): number {
-    return this.tabs.indexOf(tab);
+    return this._tabs.indexOf(tab);
   }
 
   /**
    * @internal
    */
   length(): number {
-    return this.tabs.length;
+    return this._tabs.length;
   }
 
   /**
@@ -600,7 +589,7 @@ export class Tabs extends Ion implements AfterContentInit {
    */
   setTabbarPosition(top: number, bottom: number) {
     if (this._top !== top || this._bottom !== bottom) {
-      let tabbarEle = <HTMLElement>this._tabbar.nativeElement;
+      const tabbarEle = <HTMLElement>this._tabbar.nativeElement;
       tabbarEle.style.top = (top > -1 ? top + 'px' : '');
       tabbarEle.style.bottom = (bottom > -1 ? bottom + 'px' : '');
       tabbarEle.classList.add('show-tabbar');

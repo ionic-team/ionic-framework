@@ -3,6 +3,7 @@ import { ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveI
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
+import { convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, STATE_ACTIVE, STATE_INACTIVE, STATE_INIT_ENTER, STATE_INIT_LEAVE, STATE_TRANS_ENTER, STATE_TRANS_LEAVE, STATE_REMOVE, STATE_REMOVE_AFTER_TRANS, STATE_CANCEL_ENTER, STATE_FORCE_ACTIVE, INIT_ZINDEX, PORTAL_ZINDEX } from './nav-util';
 import { isTabs, setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { GestureController } from '../gestures/gesture-controller';
@@ -10,7 +11,6 @@ import { isBlank, isPresent, isString, pascalCaseToDashCase } from '../util/util
 import { Ion } from '../components/ion';
 import { Keyboard } from '../util/keyboard';
 import { NavController } from './nav-controller';
-import { NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, STATE_ACTIVE, STATE_INACTIVE, STATE_INIT_ENTER, STATE_INIT_LEAVE, STATE_TRANS_ENTER, STATE_TRANS_LEAVE, STATE_REMOVE, STATE_REMOVE_AFTER_TRANS, STATE_CANCEL_ENTER, STATE_FORCE_ACTIVE, INIT_ZINDEX, PORTAL_ZINDEX } from './nav-util';
 import { NavParams } from './nav-params';
 import { SwipeBackGesture } from './swipe-back';
 import { Transition } from '../transitions/transition';
@@ -98,20 +98,17 @@ export class NavControllerBase extends Ion implements NavController {
       promise = new Promise(resolve => { done = resolve; });
     }
 
-    if (!pages || !pages.length) {
-      done();
-      return promise;
-    }
-
-    if (!done) {
-      promise = new Promise(resolve => { done = resolve; });
-    }
-
     // remove existing views
     const leavingView = this._remove(0, this._views.length);
 
     // create view controllers out of the pages and insert the new views
-    const views = pages.map(p => new ViewController(p.page, p.params));
+    const views = convertToViews(this._linker, pages);
+
+    if (!views.length) {
+      done(false);
+      return promise;
+    }
+
     const enteringView = this._insert(0, views);
 
     if (isBlank(opts)) {
@@ -145,7 +142,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   insertPages(insertIndex: number, insertPages: Array<{page: any, params?: any}>, opts?: NavOptions, done?: Function): Promise<any> {
-    const views = insertPages.map(p => new ViewController(p.page, p.params));
+    const views = convertToViews(this._linker, insertPages);
     return this.insertViews(insertIndex, views, opts, done);
   }
 

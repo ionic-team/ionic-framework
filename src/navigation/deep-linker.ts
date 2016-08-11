@@ -291,7 +291,7 @@ export class DeepLinker {
     }
 
     // wasn't in the "tab-0" format so maybe it's using a word
-    const tab = tabsNav.tabs.find(t => {
+    const tab = tabsNav._tabs.find(t => {
       return (isPresent(t.tabUrlPath) && t.tabUrlPath === pathName) ||
              (isPresent(t.tabTitle) && this.serializer.formatUrlPart(t.tabTitle) === pathName);
     });

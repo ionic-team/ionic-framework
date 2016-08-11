@@ -5,6 +5,22 @@ import { isPresent } from '../util/util';
 import { NavControllerBase } from './nav-controller-base';
 import { ViewController } from './view-controller';
 
+export function convertToViews(linker: DeepLinker, pages: Array<{page: any, params?: any}>): ViewController[] {
+  const views: ViewController[] = [];
+  if (pages) {
+    for (var i = 0; i < pages.length; i++) {
+      var componentType: any = linker.getComponent(pages[i].page) || pages[i].page;
+
+      if (typeof componentType !== 'function') {
+        console.error(`invalid component for nav: ${componentType}`);
+
+      } else {
+        views.push(new ViewController(componentType, pages[i].params));
+      }
+    }
+  }
+  return views;
+}
 
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
   if (enteringView) {
