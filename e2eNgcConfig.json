@@ -16,7 +16,7 @@
     "skipMetadataEmit": true
   },
   "include": [
-    "test/**/entry.ts",
-    "test/**/AppModule.ts"
+    "test/action-sheet/basic/entry.ts",
+    "test/action-sheet/basic/AppModule.ts"
   ]
 }

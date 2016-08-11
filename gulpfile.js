@@ -335,7 +335,7 @@ gulp.task('watch.e2e', function() {
     "test/vendor": "./scripts/e2e/vendor",
     "test/polyfills": "./scripts/e2e/polyfills"
   };
-  config.entry['test/' + flags.demofolder + '/index'] = './test/' + flags.demofolder + '/entry';
+  config.entry['test/' + flags.e2efolder + '/index'] = './test/' + flags.e2efolder + '/entry';
 
   var compiler = webpack(config);
 
