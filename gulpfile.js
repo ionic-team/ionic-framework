@@ -316,6 +316,7 @@ gulp.task('e2e.webpack', function(done) {
 
 gulp.task('e2e.resources', function(done) {
   runSequence(
+    'transpile.cjs',
     'e2e.setup',
     'e2e.transpile',
     done

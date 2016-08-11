@@ -1,5 +1,4 @@
 import { Component, NgModule } from '@angular/core';
-
 import { ActionSheetController, IonicModule, Platform } from 'ionic-angular';
 
 
