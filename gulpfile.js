@@ -350,6 +350,14 @@ gulp.task('watch.e2e', function() {
       gulp.start('e2e.resources');
   });
 
+  watch([
+    'src/**/*.scss'
+  ],
+  function(file) {
+      console.log('start sass - ' + JSON.stringify(file.history, null, 2));
+      gulp.start('sass');
+  });
+
   new WebpackDevServer(compiler, {
     quiet: true
   }).listen(8080, "localhost", function(err) {
