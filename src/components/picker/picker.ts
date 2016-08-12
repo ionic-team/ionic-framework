@@ -25,11 +25,6 @@ export class Picker extends ViewController {
     this.isOverlay = true;
 
     this.ionChange = new EventEmitter<any>();
-
-    // by default, pickers should not fire lifecycle events of other views
-    // for example, when an picker enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**

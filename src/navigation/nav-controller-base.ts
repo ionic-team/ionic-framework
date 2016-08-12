@@ -1,9 +1,11 @@
-import { ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentRef, ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
 
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
-import { convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, STATE_ACTIVE, STATE_INACTIVE, STATE_INIT_ENTER, STATE_INIT_LEAVE, STATE_TRANS_ENTER, STATE_TRANS_LEAVE, STATE_REMOVE, STATE_REMOVE_AFTER_TRANS, STATE_CANCEL_ENTER, STATE_FORCE_ACTIVE, INIT_ZINDEX, PORTAL_ZINDEX } from './nav-util';
+import { lifecycleTest, TransitionResult, convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, STATE_ACTIVE, STATE_INACTIVE,
+         STATE_INIT_ENTER, STATE_INIT_LEAVE, STATE_TRANS_ENTER, STATE_TRANS_LEAVE, STATE_REMOVE, STATE_REMOVE_AFTER_TRANS,
+         STATE_CANCEL_ENTER, STATE_FORCE_ACTIVE, INIT_ZINDEX, PORTAL_ZINDEX, TestResult } from './nav-util';
 import { isTabs, setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { GestureController } from '../gestures/gesture-controller';
@@ -93,9 +95,9 @@ export class NavControllerBase extends Ion implements NavController {
 
   setPages(pages: Array<{page: any, params?: any}>, opts?: NavOptions, done?: Function): Promise<any> {
     let promise: Promise<any>;
-
     if (!done) {
-      promise = new Promise(resolve => { done = resolve; });
+      // only create a promise if a done callback wasn't provided
+      promise = new Promise(res => { done = res; });
     }
 
     // remove existing views
@@ -105,8 +107,10 @@ export class NavControllerBase extends Ion implements NavController {
     const views = convertToViews(this._linker, pages);
 
     if (!views.length) {
-      done(false);
-      return promise;
+      done({
+        hasCompleted: false
+      });
+      return;
     }
 
     const enteringView = this._insert(0, views);
@@ -128,7 +132,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     // start the transition, fire resolve when done...
-    this._transition(enteringView, leavingView, opts, done);
+    this._transition(enteringView, leavingView, opts, <any>done);
 
     return promise;
   }
@@ -156,7 +160,9 @@ export class NavControllerBase extends Ion implements NavController {
     insertViews = insertViews.filter(v => v !== null);
 
     if (!insertViews || !insertViews.length) {
-      done(false);
+      done({
+        hasCompleted: false
+      });
       return promise;
     }
 
@@ -206,7 +212,7 @@ export class NavControllerBase extends Ion implements NavController {
           }
 
           // start the transition, fire resolve when done...
-          this._transition(enteringView, leavingView, opts, done);
+          this._transition(enteringView, leavingView, opts, <any>done);
           return promise;
         }
         break;
@@ -217,7 +223,9 @@ export class NavControllerBase extends Ion implements NavController {
     // but rather inserted somewhere in the middle or beginning
     // Since there are views after this new one, don't transition in
     // auto resolve cuz there was is no need for an animation
-    done(enteringView);
+    done({
+      hasCompleted: true
+    });
 
     return promise;
   }
@@ -315,7 +323,9 @@ export class NavControllerBase extends Ion implements NavController {
 
     } else if (startIndex < 0 || startIndex >= this._views.length) {
       console.error('index out of range removing view from nav');
-      done(false);
+      done({
+        hasCompleted: false
+      });
       return promise;
     }
 
@@ -348,7 +358,9 @@ export class NavControllerBase extends Ion implements NavController {
           this._cleanup();
         }
 
-        done(false);
+        done({
+          hasCompleted: false
+        });
         return promise;
       }
     }
@@ -400,7 +412,9 @@ export class NavControllerBase extends Ion implements NavController {
         // to climb to so this shouldn't actually remove the leaving
         // view because there's nothing that would enter, eww
         leavingView.state = STATE_ACTIVE;
-        done(false);
+        done({
+          hasCompleted: false
+        });
 
         return promise;
       }
@@ -410,14 +424,16 @@ export class NavControllerBase extends Ion implements NavController {
       }
 
       // start the transition, fire resolve when done...
-      this._transition(enteringView, leavingView, opts, done);
+      this._transition(enteringView, leavingView, opts, <any>done);
 
     } else {
       // no need to transition when the active view isn't being removed
       // there's still an active view after _remove() figured out states
       // so this means views that were only removed before the active
       // view, so auto-resolve since no transition needs to happen
-      done(false);
+      done({
+        hasCompleted: false
+      });
     }
 
     return promise;
@@ -525,28 +541,18 @@ export class NavControllerBase extends Ion implements NavController {
     return this.getByState(STATE_INIT_LEAVE);
   }
 
-  _transition(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
+  _transition(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: TransitionDone): void {
     if (enteringView === leavingView || enteringView.state === STATE_INACTIVE || enteringView.state === STATE_CANCEL_ENTER) {
       // if the entering view and leaving view are the same thing don't continue
       // this entering view is already set to inactive or has been canceled
       // so this transition must not begin, so don't continue
-      done(false);
-      return;
+      return done({
+        hasCompleted: false
+      });
     }
 
     // destroy the previous transition if it still existed
     this._trans && this._trans.destroy();
-
-    if (!leavingView) {
-      // if no leaving view then create a bogus one
-      leavingView = new ViewController();
-    }
-
-    if (!enteringView) {
-      // if no entering view then create a bogus one
-      enteringView = new ViewController();
-      enteringView._fireLoaded();
-    }
 
     // figure out if this transition is the root one or a
     // child of a parent nav that has the root transition
@@ -562,96 +568,168 @@ export class NavControllerBase extends Ion implements NavController {
     // this will either create the root transition, or add it as a child transition
     const trans = this._trans = this._transCtrl.get(transId, opts.animation);
 
+    // not using promises on purpose to avoid the async
+    // tick allowing the browser to do an unwanted repaint
+    let enterTest: TestResult = null;
+    let leaveTest: TestResult = null;
+
+    const viewResults: ViewInitDone = (enterTestResult: TestResult, leaveTestResult: TestResult) => {
+      if (enterTestResult !== null) {
+        enterTest = enterTestResult;
+      }
+      if (leaveTestResult !== null) {
+        leaveTest = leaveTestResult;
+      }
+      if (enterTest !== null && leaveTest !== null) {
+        // awesome, we've gotten results for both the entering and leaving views
+        // if this is the root transition, then at this point
+        // all child navs and views have been rendered, so we can
+        // safely reset rootTransId back to null for the next transition
+        this.rootTransId = null;
+
+        // continue and see if both views can be transitioned in
+        this._postViewInit(transId, trans, isRootTransition, enterTest, enteringView, leaveTest, leavingView, opts, done);
+      }
+    }
+
     // render the entering view, and all child navs and views
     // ******** DOM WRITE ****************
-    this._render(enteringView, leavingView, opts);
-
-    // if this is the root transition, then at this point
-    // all child navs and views have been rendered, so we can
-    // safely reset this back to false for the next transition
-    this.rootTransId = null;
-
-    // ******** DOM WRITE ****************
-    this._beforeTrans(trans, isRootTransition, enteringView, leavingView, opts, (hasCompleted: boolean) => {
-      // ******** DOM WRITE ****************
-      this._transFinish(transId, isRootTransition, enteringView, leavingView, opts.direction, true, hasCompleted);
-      done(hasCompleted);
-    });
+    this._render(enteringView, leavingView, opts, viewResults);
   }
 
   /**
    * DOM WRITE
    */
-  _render(enteringView: ViewController, leavingView: ViewController, opts: NavOptions) {
-    // set the state of these views that they are initialized to enter/leave
-    enteringView.state = STATE_INIT_ENTER;
-    leavingView.state = STATE_INIT_LEAVE;
+  _render(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, viewInitDone: ViewInitDone) {
+    // not using promises on purpose to avoid the async
+    // tick allowing the browser to do an unwanted repaint
 
-    if (!enteringView._isLoaded()) {
-      // entering view has not been loaded yet
-      // continue once the view has finished loading
-      // ******** DOM WRITE ****************
-      this._createPage(enteringView, this._viewport);
+    if (enteringView) {
+      // this transition has an entering view
+      // it could already be initialized
+      // or it still needs to be initialized
+      enteringView.state = STATE_INIT_ENTER;
 
-      // successfully finished loading the entering view
-      // fire off the "loaded" lifecycle events
-      enteringView._fireLoaded();
-      this.viewDidLoad.emit(enteringView);
-      this._app.viewDidLoad.emit(enteringView);
+      if (!enteringView._loaded && enteringView.componentType) {
+        // entering view has not been initialized yet
+        // after being initialized, it'll do the can enter test
+        // testing can enter can be async
+
+        // add more providers to just this page
+        const componentProviders = ReflectiveInjector.resolve([
+          { provide: NavController, useValue: this },
+          { provide: ViewController, useValue: enteringView },
+          { provide: NavParams, useValue: enteringView.getNavParams() }
+        ]);
+
+        const componentFactory = this._cfr.resolveComponentFactory(enteringView.componentType);
+        const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
+
+        // create ComponentRef instance
+        // this does not render to the DOM yet
+        const componentRef = componentFactory.create(childInjector, []);
+
+        // set the ComponentRef's instance to its ViewController
+        enteringView._setInstance(componentRef.instance);
+
+        // test if this view can activate
+        // this is done before ionViewLoad
+        // and before the component is rendered in the DOM
+        // canActivate can be sync or async
+        lifecycleTest(enteringView, 'Enter', (enteringTestResult: TestResult) => {
+          enteringTestResult.componentRef = componentRef;
+          viewInitDone(enteringTestResult, null);
+        });
+
+      } else {
+        // entering view is already initialized or there is no componentType
+        // test if it can enter, no need to pass ComponentRef
+        lifecycleTest(enteringView, 'Enter', (enteringTestResult: TestResult) => {
+          viewInitDone(enteringTestResult, null);
+        });
+      }
+
+    } else {
+      // no entering view for this transition
+      viewInitDone({ valid: true }, null);
     }
 
-    if (!opts.preload) {
-      // the enteringView will become the active view, and is not being preloaded
+    if (leavingView) {
+      // this transition has a leaving view
+      // it will already be initialized
+      leavingView.state = STATE_INIT_LEAVE;
+
+      // leaving view is already initialized
+      // test if it can leave
+      lifecycleTest(enteringView, 'Leave', (leavingTestResult: TestResult) => {
+        viewInitDone(null, leavingTestResult);
+      });
+
+    } else {
+      // no leaving view for this transition
+      viewInitDone(null, { valid: true });
+    }
+  }
+
+  _postViewInit(transId: string, trans: Transition, isRootTransition: boolean, enterTest: TestResult, enteringView: ViewController, leaveTest: TestResult, leavingView: ViewController, opts: NavOptions, done: TransitionDone) {
+    if (!enterTest.valid) {
+      // did not pass the enter test
+      enterTest.componentRef && enterTest.componentRef.destroy();
+      trans.destroy();
+      done({
+        hasCompleted: false,
+        resultData: enterTest.rejectReason
+      });
+
+    } else if (!leaveTest.valid) {
+      // did not pass the leave test
+      enterTest.componentRef && enterTest.componentRef.destroy();
+      trans.destroy();
+      done({
+        hasCompleted: false,
+        resultData: leaveTest.rejectReason
+      });
+
+    } else {
+      // passed both the enter and leave tests
+      if (enteringView && enterTest.componentRef) {
+        // render the entering test in the DOM
+        // ******** DOM WRITE ****************
+        this._viewInsert(enteringView, enterTest.componentRef, this._viewport);
+      }
 
       // set the correct zIndex for the entering and leaving views
       // if there's already another transition happening then
       // the zIndex for the entering view should go off of that one
-      // DOM WRITE
-      let lastestLeavingView = this.getByState(STATE_TRANS_ENTER) || leavingView;
+      // ******** DOM WRITE ****************
+      const lastestLeavingView = this.getByState(STATE_TRANS_ENTER) || leavingView;
       setZIndex(this, enteringView, lastestLeavingView, opts.direction, this._renderer);
 
-      // make sure the entering and leaving views are showing
-      if (this._transCtrl.multipleActiveTrans()) {
-        // the previous transition was still going when this one started
-        // so to be safe, only update showing the entering/leaving
-        // don't hide the others when they could still be transitioning
-        // ******** DOM WRITE ****************
-        enteringView._domShow(true, true, this._renderer);
-        leavingView._domShow(true, true, this._renderer);
+      // ******** DOM WRITE ****************
+      this._domShow(enteringView, leavingView, this._transCtrl.multipleActiveTrans());
 
-      } else {
-        // there are no other transitions happening but this one
-        // only entering/leaving should show, all others hidden
-        // also if a view is an overlay or the previous view is an
-        // overlay then always show the overlay and the view before it
+      // ******** DOM WRITE ****************
+      this._beforeTrans(trans, isRootTransition, enteringView, leavingView, opts, (transitionResult: TransitionResult) => {
         // ******** DOM WRITE ****************
-        this._domShow(enteringView, leavingView);
-      }
-
-    } else {
-      // a nav can be preloaded, but when it is preloaded then
-      // all of the code above does not need to be called so
-      // don't call lifecycle events, transition does not need to animate
-      opts.animate = false;
+        this._transFinish(transId, isRootTransition, enteringView, leavingView, opts.direction, true, transitionResult.hasCompleted);
+        done(transitionResult);
+      });
     }
+
+    // for good measure
+    leaveTest.rejectReason = enterTest.rejectReason = null;
   }
 
-  /**
-   * DOM WRITE
-   */
-  _createPage(view: ViewController, viewport: ViewContainerRef) {
-    // add more providers to just this page
-    const componentProviders = ReflectiveInjector.resolve([
-      { provide: NavController, useValue: this },
-      { provide: ViewController, useValue: view },
-      { provide: NavParams, useValue: view.getNavParams() }
-    ]);
+  _viewInsert(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
+    // successfully finished loading the entering view
+    // fire off the "loaded" lifecycle events
+    view._fireLoad();
+    this.viewDidLoad.emit(view);
+    this._app.viewDidLoad.emit(view);
 
-    const componentFactory = this._cfr.resolveComponentFactory(view.componentType);
-    const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
-
+    // render the component ref instance to the DOM
     // ******** DOM WRITE ****************
-    const componentRef = viewport.createComponent(componentFactory, viewport.length, childInjector, []);
+    viewport.insert(componentRef.hostView, viewport.length);
 
     // the ElementRef of the actual ion-page created
     const pageElementRef = componentRef.location;
@@ -661,9 +739,6 @@ export class NavControllerBase extends Ion implements NavController {
 
     // remember the ElementRef to the ion-page elementRef that was just created
     view._setPageElementRef(pageElementRef);
-
-    // set the ComponentRef's instance to its ViewController
-    view._setInstance(componentRef.instance);
 
     // remember the ChangeDetectorRef for this ViewController
     view._setChangeDetector(componentRef.changeDetectorRef);
@@ -687,12 +762,16 @@ export class NavControllerBase extends Ion implements NavController {
   /**
    * DOM WRITE
    */
-  _beforeTrans(trans: Transition, isRootTransition: boolean, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
+  _beforeTrans(trans: Transition, isRootTransition: boolean, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: TransitionDone) {
     // called after one raf from postRender()
     // create the transitions animation, play the animation
     // when the transition ends call wait for it to end
-    enteringView.state = STATE_TRANS_ENTER;
-    leavingView.state = STATE_TRANS_LEAVE;
+    if (enteringView) {
+      enteringView.state = STATE_TRANS_ENTER;
+    }
+    if (leavingView) {
+      leavingView.state = STATE_TRANS_LEAVE;
+    }
 
     // create the transition options
     const animationOpts: AnimationOptions = {
@@ -715,28 +794,22 @@ export class NavControllerBase extends Ion implements NavController {
       trans.duration(0);
     }
 
-    if (!opts.preload) {
-      trans.beforeAddRead(() => {
-        this._zone.run(() => {
-          // call each view's lifecycle events
-          if (leavingView.fireOtherLifecycles) {
-            // only fire entering lifecycle if the leaving
-            // view hasn't explicitly set not to
-            enteringView._fireWillEnter();
-            this.viewWillEnter.emit(enteringView);
-            this._app.viewWillEnter.emit(enteringView);
-          }
+    trans.beforeAddRead(() => {
+      this._zone.run(() => {
+        // call each view's lifecycle events
+        if (enteringView) {
+          enteringView._fireWillEnter();
+          this.viewWillEnter.emit(enteringView);
+          this._app.viewWillEnter.emit(enteringView);
+        }
 
-          if (enteringView.fireOtherLifecycles) {
-            // only fire leaving lifecycle if the entering
-            // view hasn't explicitly set not to
-            leavingView._fireWillLeave();
-            this.viewWillLeave.emit(leavingView);
-            this._app.viewWillLeave.emit(leavingView);
-          }
-        });
+        if (leavingView) {
+          leavingView._fireWillLeave();
+          this.viewWillLeave.emit(leavingView);
+          this._app.viewWillLeave.emit(leavingView);
+        }
       });
-    }
+    });
 
     // create a callback for when the animation is done
     trans.onFinish((t: Transition) => {
@@ -772,49 +845,28 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  _afterTrans(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, hasCompleted: boolean, done: Function) {
+  _afterTrans(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, hasCompleted: boolean, done: TransitionDone) {
     // transition has completed, update each view's state
     // place back into the zone, run didEnter/didLeave
     // call the final callback when done
 
-    // run inside of the zone again
-    if (!opts.preload && hasCompleted) {
-      if (leavingView.fireOtherLifecycles) {
-        // only fire entering lifecycle if the leaving
-        // view hasn't explicitly set not to
-        enteringView._fireDidEnter();
-        this.viewDidEnter.emit(enteringView);
-        this._app.viewDidEnter.emit(enteringView);
-      }
-
-      if (enteringView.fireOtherLifecycles && this._init) {
-        // only fire leaving lifecycle if the entering
-        // view hasn't explicitly set not to
-        // and after the nav has initialized
-        leavingView._fireDidLeave();
-        this.viewDidLeave.emit(leavingView);
-        this._app.viewDidLeave.emit(leavingView);
-      }
-    }
-
-    if (enteringView.state === STATE_INACTIVE) {
-      // this entering view is already set to inactive, so this
-      // transition must be canceled, so don't continue
-      done(hasCompleted);
-
-    } else if (opts.keyboardClose !== false && this._keyboard.isOpen()) {
+    if ((enteringView && enteringView.state !== STATE_INACTIVE) && opts.keyboardClose !== false && this._keyboard.isOpen()) {
       // the keyboard is still open!
       // no problem, let's just close for them
       this._keyboard.close();
       this._keyboard.onClose(() => {
-
         // keyboard has finished closing, transition complete
-        done(hasCompleted);
+        done({
+          hasCompleted: hasCompleted
+        });
+
       }, 32);
 
     } else {
       // all good, transition complete
-      done(hasCompleted);
+      done({
+        hasCompleted: hasCompleted
+      });
     }
   }
 
@@ -825,9 +877,22 @@ export class NavControllerBase extends Ion implements NavController {
     // a transition has completed, but not sure if it's the last one or not
     // check if this transition is the most recent one or not
 
-    if (enteringView.state === STATE_CANCEL_ENTER) {
-      // this view was told to leave before it finished entering
-      this.remove(enteringView.index, 1);
+    if (enteringView) {
+      if (enteringView.state === STATE_CANCEL_ENTER) {
+        // this view was told to leave before it finished entering
+        this.remove(enteringView.index, 1);
+
+      } else {
+        enteringView._fireDidEnter();
+        this.viewDidEnter.emit(enteringView);
+        this._app.viewDidEnter.emit(enteringView);
+      }
+    }
+
+    if (leavingView) {
+      leavingView._fireDidLeave();
+      this.viewDidLeave.emit(leavingView);
+      this._app.viewDidLeave.emit(leavingView);
     }
 
     if (this._transCtrl.isMostRecent(transId)) {
@@ -838,10 +903,10 @@ export class NavControllerBase extends Ion implements NavController {
         // this transition has completed as normal
         // so the entering one is now the active view
         // and the leaving view is now just inactive
-        if (enteringView.state !== STATE_REMOVE_AFTER_TRANS) {
+        if (enteringView && enteringView.state !== STATE_REMOVE_AFTER_TRANS) {
           enteringView.state = STATE_ACTIVE;
         }
-        if (leavingView.state !== STATE_REMOVE_AFTER_TRANS) {
+        if (leavingView && leavingView.state !== STATE_REMOVE_AFTER_TRANS) {
           leavingView.state = STATE_INACTIVE;
         }
 
@@ -856,17 +921,8 @@ export class NavControllerBase extends Ion implements NavController {
           // only two views that are not display:none
           // do not make any changes to the stack's current visibility
           // if there is an overlay somewhere in the stack
-          leavingView = this.getPrevious(enteringView);
-          if (this._isPortal) {
-            // ensure the entering view is showing
-            // ******** DOM WRITE ****************
-            enteringView._domShow(true, true, this._renderer);
-
-          } else {
-            // only possibly hide a view if there are no overlays in the stack
-            // ******** DOM WRITE ****************
-            this._domShow(enteringView, leavingView);
-          }
+          // ******** DOM WRITE ****************
+          this._domShow(enteringView, this.getPrevious(enteringView), false);
         }
 
         // this check only needs to happen once, which will add the css
@@ -879,22 +935,27 @@ export class NavControllerBase extends Ion implements NavController {
         // this would happen when swipe to go back started
         // but the user did not complete the swipe and the
         // what was the active view stayed as the active view
-        leavingView.state = STATE_ACTIVE;
-        enteringView.state = STATE_INACTIVE;
+        if (leavingView) {
+          leavingView.state = STATE_ACTIVE;
+        }
+        if (enteringView) {
+          enteringView.state = STATE_INACTIVE;
+        }
       }
 
       // only the top most transition should handle enabling the app
+      // and setting the URL
       if (isRootTransition) {
         // the transition has completed, safe to enable the app again
         this._app.setEnabled(true);
 
         // update that this nav is not longer actively transitioning
         this.setTransitioning(false);
-      }
 
-      if (direction !== null && hasCompleted && updateUrl !== false && !this._isPortal && this._linker) {
-        // notify deep linker of the state change if a direction was provided
-        this._linker.navChange(this, enteringView, direction, this.isTransitioning(), isRootTransition);
+        if (enteringView && direction !== null && updateUrl !== false && !this._isPortal && this._linker) {
+          // notify deep linker of the state change if a direction was provided
+          this._linker.navChange(this, enteringView, direction, this.isTransitioning(), isRootTransition);
+        }
       }
 
       // see if we should add the swipe back gesture listeners or not
@@ -907,10 +968,10 @@ export class NavControllerBase extends Ion implements NavController {
       // then this entering view isn't actually going to be the active
       // one, so only update the state to active/inactive if the state
       // wasn't already updated somewhere else during its transition
-      if (enteringView.state === STATE_TRANS_ENTER) {
+      if (enteringView && enteringView.state === STATE_TRANS_ENTER) {
         enteringView.state = STATE_INACTIVE;
       }
-      if (leavingView.state === STATE_TRANS_LEAVE) {
+      if (leavingView && leavingView.state === STATE_TRANS_LEAVE) {
         leavingView.state = STATE_INACTIVE;
       }
     }
@@ -959,11 +1020,11 @@ export class NavControllerBase extends Ion implements NavController {
   /**
    * DOM WRITE
    */
-  _domShow(enteringView: ViewController, leavingView: ViewController) {
+  _domShow(enteringView: ViewController, leavingView: ViewController, forceShow: boolean) {
     let view: ViewController;
     for (var i = 0; i < this._views.length; i++) {
       view = this._views[i];
-      var shouldShow = this._isPortal || (view === enteringView);
+      var shouldShow = forceShow || this._isPortal || (view === enteringView);
       var shouldRender = shouldShow || (view === leavingView);
       // ******** DOM WRITE ****************
       view._domShow(shouldShow, shouldRender, this._renderer);
@@ -985,7 +1046,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  ngOnDestroy() {
+  destroy() {
     for (var i = this._views.length - 1; i >= 0; i--) {
       this._views[i]._destroy();
     }
@@ -997,7 +1058,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   swipeBackStart() {
-    // default the direction to "back"
+    // default the direction to "back";;
     const opts: NavOptions = {
       direction: DIRECTION_BACK,
       progressAnimation: true
@@ -1013,9 +1074,9 @@ export class NavControllerBase extends Ion implements NavController {
       const enteringView = this.getByState(STATE_INIT_ENTER);
 
       // start the transition, fire callback when done...
-      this._transition(enteringView, leavingView, opts, (hasCompleted: boolean) => {
+      this._transition(enteringView, leavingView, opts, (transitionResult: TransitionResult) => {
         // swipe back has finished!!
-        console.debug('swipeBack, hasCompleted', hasCompleted);
+        console.debug('swipeBack, hasCompleted', transitionResult.hasCompleted);
       });
     }
   }
@@ -1187,3 +1248,11 @@ export class NavControllerBase extends Ion implements NavController {
 }
 
 let ctrlIds = -1;
+
+export interface ViewInitDone {
+  (enterTest: TestResult, leaveTest: TestResult): void
+}
+
+export interface TransitionDone {
+  (transitionResult: TransitionResult): void
+}

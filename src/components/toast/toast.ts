@@ -24,13 +24,7 @@ export class Toast extends ViewController {
     }
 
     this.isOverlay = true;
-
-    // by default, toasts should not fire lifecycle events of other views
-    // for example, when an toast enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
-
 
   /**
   * @private

@@ -596,7 +596,7 @@ describe('NavController', () => {
     it('should set zIndex off of the previous view to the entering view is loaded and the leavingView is not loaded', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 100;
-      leavingView._fireLoaded();
+      leavingView._fireLoad();
       let enteringView = new ViewController();
       enteringView._setPageElementRef(mockElementRef());
 
@@ -627,7 +627,7 @@ describe('NavController', () => {
     it('should set zIndex 1 on second entering view', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 0;
-      leavingView._fireLoaded();
+      leavingView._fireLoad();
       let enteringView = new ViewController();
       enteringView._setPageElementRef(mockElementRef());
       nav._setZIndex(enteringView, leavingView, 'forward');
@@ -637,7 +637,7 @@ describe('NavController', () => {
     it('should set zIndex 0 on entering view going back', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 1;
-      leavingView._fireLoaded();
+      leavingView._fireLoad();
       let enteringView = new ViewController();
       enteringView._setPageElementRef(mockElementRef());
       nav._setZIndex(enteringView, leavingView, 'back');
@@ -655,7 +655,7 @@ describe('NavController', () => {
     it('should set zIndex 10000 on second entering portal view', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 9999;
-      leavingView._fireLoaded();
+      leavingView._fireLoad();
       let enteringView = new ViewController();
       enteringView._setPageElementRef(mockElementRef());
       nav._isPortal = true;
@@ -666,7 +666,7 @@ describe('NavController', () => {
     it('should set zIndex 9999 on entering portal view going back', () => {
       let leavingView = new ViewController();
       leavingView.zIndex = 10000;
-      leavingView._fireLoaded();
+      leavingView._fireLoad();
       let enteringView = new ViewController();
       enteringView._setPageElementRef(mockElementRef());
       nav._isPortal = true;

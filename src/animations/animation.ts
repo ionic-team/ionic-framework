@@ -75,18 +75,10 @@ export class Animation {
   }
 
   /**
-   * @internal
-   */
-  parent(parentAnimation: Animation): Animation {
-    this._p = parentAnimation;
-    return this;
-  }
-
-  /**
    * Add a child animation to this animation.
    */
   add(childAnimation: Animation): Animation {
-    childAnimation.parent(this);
+    childAnimation._p = this;
     this._cL = (this._c = this._c || []).push(childAnimation);
     return this;
   }

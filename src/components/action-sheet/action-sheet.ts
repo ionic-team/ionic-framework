@@ -20,11 +20,6 @@ export class ActionSheet extends ViewController {
     super(ActionSheetCmp, opts);
     this._app = app;
     this.isOverlay = true;
-
-    // by default, actionsheets should not fire lifecycle events of other views
-    // for example, when an actionsheets enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**

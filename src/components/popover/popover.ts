@@ -23,11 +23,6 @@ export class Popover extends ViewController {
     super(PopoverCmp, data);
     this._app = app;
     this.isOverlay = true;
-
-    // by default, popovers should not fire lifecycle events of other views
-    // for example, when a popover enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**

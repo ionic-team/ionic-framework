@@ -195,11 +195,6 @@ export class Tabs extends Ion implements AfterViewInit {
   @Input() selectedIndex: any;
 
   /**
-   * @input {boolean} Set whether to preload all the tabs: `true`, `false`.
-   */
-  @Input() preloadTabs: any;
-
-  /**
    * @internal DEPRECATED. Please use `tabsLayout` instead.
    */
   @Input() private tabbarLayout: string;
@@ -386,16 +381,6 @@ export class Tabs extends Ion implements AfterViewInit {
       }
       this.select(selectedTab, {
         id: pageId
-      });
-    }
-
-    // check if preloadTab is set as an input @Input
-    // otherwise check the preloadTabs config
-    const shouldPreloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
-    if (shouldPreloadTabs) {
-      // preload all the tabs which isn't the selected tab
-      this._tabs.filter((t) => t !== selectedTab).forEach((tab, index) => {
-        tab.preload(this._config.getNumber('tabsPreloadDelay', 1000) * index);
       });
     }
 

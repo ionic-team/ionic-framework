@@ -158,4 +158,11 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     this._sbEnabled = isTrueProperty(val);
   }
 
+  /**
+   * @private
+   */
+  ngOnDestroy() {
+    this.destroy();
+  }
+
 }

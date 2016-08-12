@@ -92,7 +92,7 @@ import { ViewController } from './view-controller';
  *    template: '<ion-nav #myNav [root]="rootPage"></ion-nav>'
  * })
  * export class MyApp {
- *    @ViewChild('myNav') nav : NavController
+ *    @ViewChild('myNav') nav: NavController
  *    private rootPage = TabsPage;
  *
  *    // Wait for the components in MyApp's template to be initialized
@@ -195,11 +195,11 @@ import { ViewController } from './view-controller';
  *   <ion-content>I'm the other page!</ion-content>`
  * })
  * class OtherPage {
- *    constructor(private navController: NavController ){
+ *    constructor(private navCtrl: NavController ){
  *    }
  *
  *    popView(){
- *      this.navController.pop();
+ *      this.navCtrl.pop();
  *    }
  * }
  * ```
@@ -215,7 +215,7 @@ import { ViewController } from './view-controller';
  *   template: 'Hello World'
  * })
  * class HelloWorld {
- *   ionViewLoaded() {
+ *   ionViewLoad() {
  *     console.log("I'm alive!");
  *   }
  *   ionViewWillLeave() {
@@ -226,7 +226,7 @@ import { ViewController } from './view-controller';
  *
  *  | Page Event          | Description                                                                                                                                                                                                                                                                        |
  *  |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
- *  | `ionViewLoaded`     | Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewLoaded` event is good place to put your setup code for the page. |
+ *  | `ionViewLoad`       | Runs when the page has loaded. This event only happens once per page being created. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewLoad` event is good place to put your setup code for the page. |
  *  | `ionViewWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                   |
  *  | `ionViewDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                             |
  *  | `ionViewWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                             |
@@ -250,14 +250,14 @@ import { ViewController } from './view-controller';
  * operations in order. Navigation actions can be chained together very easily using promises.
  *
  * ```typescript
- * let navTransitionPromise = this.navController.push(Page2);
- * navTransitionPromise.then( () => {
+ * let navTransitionPromise = this.navCtrl.push(Page2);
+ * navTransitionPromise.then(() => {
  *   // the transition has completed, so I can push another page now
- *   return this.navController.push(Page3);
- * }).then( () => {
+ *   return this.navCtrl.push(Page3);
+ * }).then(() => {
  *   // the second transition has completed, so I can push yet another page
-    return this.navController.push(Page4);
- * }).then( () => {
+    return this.navCtrl.push(Page4);
+ * }).then(() => {
  *   console.log('The transitions are complete!');
  * })
  * ```

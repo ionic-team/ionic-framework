@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -95,7 +95,7 @@ import { ViewController } from '../../navigation/view-controller';
  * the tabs.
  *
  * ```html
- * <ion-tabs preloadTabs="false">
+ * <ion-tabs>
  *   <ion-tab (ionSelect)="chat()"></ion-tab>
  * </ion-tabs>
  * ```
@@ -156,10 +156,6 @@ export class Tab extends NavControllerBase {
    * @internal
    */
   _loaded: boolean;
-  /**
-   * @internal
-   */
-  _loadTmr: any;
 
   /**
    * @private
@@ -302,29 +298,14 @@ export class Tab extends NavControllerBase {
   /**
    * @internal
    */
-  preload(wait: number) {
-    this._loadTmr = setTimeout(() => {
-      if (!this._loaded) {
-        console.debug('Tabs, preload', this.id);
-        this.load({
-          animate: false,
-          preload: true
-        }, noop);
-      }
-    }, wait);
-  }
-
-  /**
-   * @internal
-   */
-  _createPage(viewCtrl: ViewController, viewport: ViewContainerRef) {
+  _viewInsert(viewCtrl: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     const isTabSubPage = (this.parent._subPages && viewCtrl.index > 0);
 
     if (isTabSubPage) {
       viewport = this.parent.portal;
     }
 
-    super._createPage(viewCtrl, viewport);
+    super._viewInsert(viewCtrl, componentRef, viewport);
 
     if (isTabSubPage) {
       // add the .tab-subpage css class to tabs pages that should act like subpages
@@ -375,8 +356,7 @@ export class Tab extends NavControllerBase {
    * @private
    */
   ngOnDestroy() {
-    clearTimeout(this._loadTmr);
-    super.ngOnDestroy();
+    this.destroy();
   }
 
 }

@@ -21,11 +21,6 @@ export class Loading extends ViewController {
     super(LoadingCmp, opts);
     this._app = app;
     this.isOverlay = true;
-
-    // by default, loading indicators should not fire lifecycle events of other views
-    // for example, when an loading indicators enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**

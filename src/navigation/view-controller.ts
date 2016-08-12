@@ -35,7 +35,6 @@ export class ViewController {
   private _hidden: string = null;
   private _ariaHidden: string = null;
   private _leavingOpts: NavOptions = null;
-  private _loaded: boolean = false;
   private _nb: Navbar;
   private _onDidDismiss: Function = null;
   private _onWillDismiss: Function = null;
@@ -102,13 +101,6 @@ export class ViewController {
 
   /**
    * @internal
-   * If this is currently the active view, then set to false
-   * if it does not want the other views to fire their own lifecycles.
-   */
-  fireOtherLifecycles: boolean = true;
-
-  /**
-   * @internal
    */
   isOverlay: boolean = false;
 
@@ -116,6 +108,11 @@ export class ViewController {
    * @internal
    */
   zIndex: number;
+
+  /**
+   * @internal
+   */
+  _loaded: boolean = false;
 
   /**
    * @internal
@@ -434,20 +431,13 @@ export class ViewController {
 
   /**
    * @internal
-   */
-  _isLoaded(): boolean {
-    return this._loaded;
-  }
-
-  /**
-   * @internal
    * The view has loaded. This event only happens once per view being
    * created. If a view leaves but is cached, then this will not
    * fire again on a subsequent viewing. This method is a good place
    * to put your setup code for the view; however, it is not the
    * recommended method to use when a view becomes active.
    */
-  _fireLoaded() {
+  _fireLoad() {
     this._loaded = true;
     ctrlFn(this, 'Loaded');
   }
@@ -536,11 +526,11 @@ export class ViewController {
 
 function ctrlFn(viewCtrl: ViewController, fnName: string) {
   if (viewCtrl.instance) {
-    // deprecated warning: added 2016-06-01, beta.8
-    if (viewCtrl.instance['onPage' + fnName]) {
+    // deprecated warning: added 2016-07-11, beta.12
+    if (fnName === 'Loaded' && viewCtrl.instance.ionViewLoaded) {
       try {
-        console.warn('onPage' + fnName + '() has been deprecated. Please rename to ionView' + fnName + '()');
-        viewCtrl.instance['onPage' + fnName]();
+        console.warn('ionViewLoaded() has been deprecated. Please rename to ionViewLoad()');
+        viewCtrl.instance.ionViewLoaded();
       } catch (e) {
         console.error(viewCtrl.name + ' onPage' + fnName + ': ' + e.message);
       }

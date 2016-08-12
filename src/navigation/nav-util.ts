@@ -1,7 +1,7 @@
-import { Renderer } from '@angular/core';
+import { ComponentRef, Renderer } from '@angular/core';
 
 import { DeepLinker } from './deep-linker';
-import { isPresent } from '../util/util';
+import { isBoolean, isPresent } from '../util/util';
 import { NavControllerBase } from './nav-controller-base';
 import { ViewController } from './view-controller';
 
@@ -10,27 +10,69 @@ export function convertToViews(linker: DeepLinker, pages: Array<{page: any, para
   if (pages) {
     for (var i = 0; i < pages.length; i++) {
       var componentType: any = linker.getComponent(pages[i].page) || pages[i].page;
+      if (componentType) {
+        if (typeof componentType !== 'function') {
+          console.error(`invalid component for nav: ${componentType}`);
 
-      if (typeof componentType !== 'function') {
-        console.error(`invalid component for nav: ${componentType}`);
-
-      } else {
-        views.push(new ViewController(componentType, pages[i].params));
+        } else {
+          views.push(new ViewController(componentType, pages[i].params));
+        }
       }
     }
   }
   return views;
 }
 
+
+export function lifecycleTest(view: ViewController, lifecycle: string, testDone: TestDone) {
+  const testResult: TestResult = { valid: true, rejectReason: null };
+
+  if (view.instance && view.instance['ionViewCan' + lifecycle]) {
+    try {
+      const result = view.instance['ionViewCan' + lifecycle];
+      if (result === false) {
+        // synchronous: rejected cuz of boolean false
+        testResult.valid = false;
+
+      } else if (result instanceof Promise) {
+        // async: wait for promise to resolve
+        result.then((userResponse: any) => {
+          // user's promise has resolved
+          if (isPresent(userResponse)) {
+            if (isBoolean(userResponse)) {
+              testResult.valid = userResponse;
+
+            } else {
+              testResult.valid = !!userResponse;
+              testResult.rejectReason = userResponse;
+            }
+          }
+
+          testDone(testResult);
+        });
+        return;
+      }
+
+    } catch (e) {
+      // synchronous
+      console.error(e);
+    }
+  }
+
+  // synchronous: there was no test
+  testDone(testResult);
+}
+
+
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
   if (enteringView) {
     // get the leaving view, which could be in various states
-    if (!leavingView || !leavingView._isLoaded()) {
+    if (!leavingView || !leavingView._loaded) {
       // the leavingView is a mocked view, either we're
       // actively transitioning or it's the initial load
 
       const previousView = nav.getPrevious(enteringView);
-      if (previousView && previousView._isLoaded()) {
+      if (previousView && previousView._loaded) {
         // we found a better previous view to reference
         // use this one instead
         enteringView._setZIndex(previousView.zIndex + 1, renderer);
@@ -105,7 +147,6 @@ export interface NavOptions {
   easing?: string;
   id?: string;
   keyboardClose?: boolean;
-  preload?: boolean;
   transitionDelay?: number;
   progressAnimation?: boolean;
   climbNav?: boolean;
@@ -114,6 +155,22 @@ export interface NavOptions {
   isNavRoot?: boolean;
 }
 
+export interface TransitionResult {
+  hasCompleted: boolean;
+  valid?: boolean;
+  rejectReason?: string;
+  resultData?: any;
+}
+
+export interface TestDone {
+  (testResult: TestResult): void
+}
+
+export interface TestResult {
+  valid: boolean;
+  rejectReason?: any;
+  componentRef?: ComponentRef<any>
+}
 
 export const STATE_ACTIVE = 1;
 export const STATE_INACTIVE = 2;
