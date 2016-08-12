@@ -316,7 +316,6 @@ gulp.task('e2e.webpack', function(done) {
 
 gulp.task('e2e.resources', function(done) {
   runSequence(
-    'transpile.cjs',
     'e2e.setup',
     'e2e.transpile',
     done
@@ -340,16 +339,27 @@ gulp.task('watch.e2e', function() {
 
   var compiler = webpack(config);
 
+  // If any tests change within components then run e2e.resources.
   watch([
-    'src/**/*.ts',
-    'src/components/*/test/**/*',
-    '!src/util/test/*'
+    'src/components/*/test/**/*'
   ],
   function(file) {
       console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
       gulp.start('e2e.resources');
   });
 
+  // If any src files change except for tests then transpile only the source ionic files
+  watch([
+    'src/**/*.ts',
+    '!src/components/*/test/**/*',
+    '!src/util/test/*'
+  ],
+  function(file) {
+      console.log('start transpile.cjs - ' + JSON.stringify(file.history, null, 2));
+      gulp.start('transpile.cjs');
+  });
+
+  // If any scss files change then recompile all sass
   watch([
     'src/**/*.scss'
   ],
@@ -359,7 +369,12 @@ gulp.task('watch.e2e', function() {
   });
 
   new WebpackDevServer(compiler, {
-    quiet: true
+    noInfo: true,
+    quiet: false,
+    watchOptions: {
+      aggregateTimeout: 2000,
+      poll: 1000
+    }
   }).listen(8080, "localhost", function(err) {
       if(err) {
         throw new Error("webpack-dev-server", err);
@@ -371,6 +386,7 @@ gulp.task('watch.e2e', function() {
 gulp.task('build.e2e', function(done) {
   runSequence(
     'e2e.clean',
+    'transpile.cjs',
     ['e2e.resources', 'sass', 'fonts'],
     'e2e.pre-webpack',
     'e2e.webpack',
