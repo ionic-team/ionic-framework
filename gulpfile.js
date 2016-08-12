@@ -340,7 +340,15 @@ gulp.task('watch.e2e', function() {
 
   var compiler = webpack(config);
 
-  watchTask('e2e.resources');
+  watch([
+    'src/**/*.ts',
+    'src/components/*/test/**/*',
+    '!src/util/test/*'
+  ],
+  function(file) {
+      console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
+      gulp.start('e2e.resources');
+  });
 
   new WebpackDevServer(compiler, {
     quiet: true
