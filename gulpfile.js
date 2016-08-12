@@ -326,7 +326,7 @@ gulp.task('e2e.resources', function(done) {
   * Builds e2e tests to dist/e2e and watches for changes.  Runs 'bundle.system' or
   * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
   */
-gulp.task('watch.e2e', function() {
+gulp.task('watch.e2e', ['sass', 'fonts'], function() {
   var webpack = require('webpack');
   var WebpackDevServer = require('webpack-dev-server');
   var config = require('./scripts/e2e/webpack.config.js');
