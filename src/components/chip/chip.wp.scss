@@ -9,11 +9,9 @@
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  ion-chip {
-    ion-icon[#{$color-name}] {
-      color: $color-contrast;
-      background-color: $color-base;
-    }
+  ion-icon[#{$color-name}] {
+    color: $color-contrast;
+    background-color: $color-base;
   }
 
 }
