@@ -37,6 +37,14 @@ export class Loading extends ViewController {
   }
 
   /**
+   * @param {string} content  loading message content
+   */
+  setContent(content: string) {
+    this.data.content = content;
+  }
+
+
+  /**
    * Present the loading instance.
    *
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
