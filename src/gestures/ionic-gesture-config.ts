@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HammerGestureConfig} from '@angular/platform-browser';
+import { Injectable } from '@angular/core';
+import { HammerGestureConfig } from '@angular/platform-browser';
 
 /* this class override the default angular gesture config.
  * The motivation for this is enabling pinch, rotate or
