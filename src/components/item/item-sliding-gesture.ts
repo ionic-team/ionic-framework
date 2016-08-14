@@ -4,12 +4,12 @@ import { List } from '../list/list';
 import { closest, Coordinates, pointerCoord } from '../../util/dom';
 import { PointerEvents, UIEventManager } from '../../util/ui-event-manager';
 import { GestureDelegate, GestureOptions, GesturePriority } from '../../gestures/gesture-controller';
-import { PanGesture } from '../../gestures/drag-gesture';
+import { DragGesture } from '../../gestures/drag-gesture';
 
 const DRAG_THRESHOLD = 10;
 const MAX_ATTACK_ANGLE = 20;
 
-export class ItemSlidingGesture extends PanGesture {
+export class ItemSlidingGesture extends DragGesture {
   private preSelectedContainer: ItemSliding = null;
   private selectedContainer: ItemSliding = null;
   private openContainer: ItemSliding = null;

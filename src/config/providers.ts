@@ -27,6 +27,12 @@ import { TapClick } from '../components/tap-click/tap-click';
 import { ToastController } from '../components/toast/toast';
 import { Translate } from '../translation/translate';
 
+import { PanGestureController } from '../gestures/hammer/pan-gesture';
+import { PinchGestureController } from '../gestures/hammer/pinch-gesture';
+import { PressGestureController } from '../gestures/hammer/press-gesture';
+import { RotateGestureController } from '../gestures/hammer/rotate-gesture';
+import { SwipeGestureController } from '../gestures/hammer/swipe-gesture';
+import { TapGestureController } from '../gestures/hammer/tap-gesture';
 
 /**
  * @private
@@ -81,6 +87,14 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
     TapClick,
     ToastController,
     Translate,
+
+
+    PanGestureController,
+    PinchGestureController,
+    PressGestureController,
+    RotateGestureController,
+    SwipeGestureController,
+    TapGestureController
   ];
 
   providers.push( {provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig} );

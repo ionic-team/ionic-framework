@@ -34,6 +34,7 @@
     "@angular/platform-browser-dynamic": "2.0.0-rc.4",
     "colors": "^1.1.2",
     "es6-shim": "^0.35.0",
+    "hammerjs": "2.0.4",
     "inquirer": "0.11.0",
     "ionicons": "3.0.0",
     "lodash": "3.10.1",

@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/3c513b0a1057622f87ba92d2afa7446d17f4418c/hammerjs/hammerjs.d.ts",
+    "raw": "registry:dt/hammerjs#2.0.4+20160622233604",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/3c513b0a1057622f87ba92d2afa7446d17f4418c/hammerjs/hammerjs.d.ts"
+  }
+}
