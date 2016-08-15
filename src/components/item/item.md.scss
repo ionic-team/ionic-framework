@@ -228,4 +228,5 @@ ion-item-divider {
 
 ion-item-sliding {
   background-color: $item-md-sliding-content-background;
+  contain: paint;
 }
