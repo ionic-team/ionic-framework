@@ -10,33 +10,38 @@
 <ion-content padding style="text-align:center">
 
   <p>
-    <ion-chip>
-      <ion-label>Default</ion-label>
-      <button ion-button icon-only clear dark (click)="deleteClicked()">
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
+    <ion-chip deletable>
+      Default
     </ion-chip>
   </p>
 
   <p>
-    <ion-chip>
+    <ion-chip deletable>
       <ion-icon name="pin" primary></ion-icon>
-      <ion-label>Primary</ion-label>
-      <button ion-button icon-only clear dark (click)="deleteClicked()">
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
+      With Icon
     </ion-chip>
   </p>
 
   <p>
-    <ion-chip>
+    <ion-chip deletable>
       <ion-avatar>
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-avatar>
-      <ion-label>Default</ion-label>
-      <button ion-button icon-only clear dark (click)="deleteClicked()">
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
+      With Avatar
+    </ion-chip>
+  </p>
+
+  <p>
+    <ion-chip deletable>
+      <b>This Should Not Be Seen</b>
+
+      With Junk Elements
+      <ion-icon name="pin" primary></ion-icon>
+      <ion-avatar>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+      <hr>
+      This Should Not Be Seen Either
     </ion-chip>
   </p>
 
