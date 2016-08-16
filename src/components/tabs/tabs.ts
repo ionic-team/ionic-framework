@@ -9,7 +9,7 @@ import { isBlank, isTrueProperty, noop } from '../../util/util';
 import { nativeRaf } from '../../util/dom';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
-import { NavOptions, DIRECTION_FORWARD } from '../../navigation/nav-util';
+import { NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabButton } from './tab-button';
@@ -252,7 +252,7 @@ export class Tabs extends Ion implements AfterViewInit {
     private _elementRef: ElementRef,
     private _platform: Platform,
     private _renderer: Renderer,
-    @Optional() private _linker: DeepLinker
+    private _linker: DeepLinker
   ) {
     super(_elementRef);
 
@@ -353,7 +353,7 @@ export class Tabs extends Ion implements AfterViewInit {
     let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(this.selectedIndex, 10));
 
     // now see if the deep linker can find a tab index
-    const tabsSegment = this._linker && this._linker.initNav(this);
+    const tabsSegment = this._linker.initNav(this);
     if (tabsSegment && isBlank(tabsSegment.component)) {
       // we found a segment which probably represents which tab to select
       selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.name);
@@ -427,13 +427,13 @@ export class Tabs extends Ion implements AfterViewInit {
     let deselectedPage: ViewController;
     if (deselectedTab) {
       deselectedPage = deselectedTab.getActive();
-      deselectedPage && deselectedPage._fireWillLeave();
+      deselectedPage && deselectedPage._willLeave();
     }
 
     opts.animate = false;
 
     const selectedPage = selectedTab.getActive();
-    selectedPage && selectedPage._fireWillEnter();
+    selectedPage && selectedPage._willEnter();
 
     selectedTab.load(opts, (alreadyLoaded: boolean) => {
       selectedTab.ionSelect.emit(selectedTab);
@@ -452,13 +452,13 @@ export class Tabs extends Ion implements AfterViewInit {
           this._highlight.select(selectedTab);
         }
 
-        if (opts.updateUrl !== false && this._linker) {
-          this._linker.navChange(<NavController>selectedTab, this.viewCtrl, DIRECTION_FORWARD, selectedTab.isTransitioning(), false);
+        if (opts.updateUrl !== false) {
+          this._linker.navChange(DIRECTION_SWITCH);
         }
       }
 
-      selectedPage && selectedPage._fireDidEnter();
-      deselectedPage && deselectedPage._fireDidLeave();
+      selectedPage && selectedPage._didEnter();
+      deselectedPage && deselectedPage._didLeave();
 
       // track the order of which tabs have been selected, by their index
       // do not track if the tab index is the same as the previous
@@ -552,9 +552,9 @@ export class Tabs extends Ion implements AfterViewInit {
     const active = tab.getActive();
 
     if (active) {
-      if (active.instance.ionSelected) {
+      if (active._cmp && active._cmp.instance.ionSelected) {
         // if they have a custom tab selected handler, call it
-        active.instance.ionSelected();
+        active._cmp.instance.ionSelected();
 
       } else if (tab.length() > 1) {
         // if we're a few pages deep, pop to root

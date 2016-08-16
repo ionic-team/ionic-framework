@@ -402,7 +402,7 @@ export class PickerCmp {
     this.lastClick = 0;
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     // normalize the data
     let data = this.d;
 

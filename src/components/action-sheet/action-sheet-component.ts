@@ -81,7 +81,7 @@ export class ActionSheetCmp {
     }
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     // normalize the data
     let buttons: any[] = [];
 

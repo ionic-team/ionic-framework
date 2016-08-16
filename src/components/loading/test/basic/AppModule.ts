@@ -209,7 +209,7 @@ export class E2EPage {
 export class Page2 {
   constructor(public navCtrl: NavController) {}
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     setTimeout(() => {
       this.navCtrl.push(Page3);
     }, 1000);

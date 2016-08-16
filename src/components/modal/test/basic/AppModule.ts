@@ -97,8 +97,8 @@ export class E2EPage {
     this.modalCtrl.create(NavigableModal).present();
   }
 
-  ionViewLoaded() {
-    console.log('E2EPage ionViewLoaded fired');
+  ionViewDidLoad() {
+    console.log('E2EPage ionViewDidLoad fired');
   }
 
   ionViewWillEnter() {
@@ -203,8 +203,8 @@ export class ModalPassData {
     this.viewCtrl.dismiss(this.data);
   }
 
-  ionViewLoaded() {
-    console.log('ModalPassData ionViewLoaded fired');
+  ionViewDidLoad() {
+    console.log('ModalPassData ionViewDidLoad fired');
   }
 
   ionViewWillEnter() {
@@ -336,8 +336,8 @@ export class ContactUs {
   constructor() {
     console.log('ContactUs constructor');
   }
-  ionViewLoaded() {
-    console.log('ContactUs ionViewLoaded');
+  ionViewDidLoad() {
+    console.log('ContactUs ionViewDidLoad');
   }
   ionViewWillEnter() {
     console.log('ContactUs ionViewWillEnter');
@@ -354,8 +354,8 @@ export class ContactUs {
   ionViewWillUnload() {
     console.log('ContactUs ionViewWillUnload');
   }
-  ionViewDidUnload() {
-    console.log('ContactUs ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('ContactUs ionViewWillUnload');
   }
 }
 
@@ -410,8 +410,8 @@ export class ModalFirstPage {
     this.navCtrl.parent.pop();
   }
 
-  ionViewLoaded() {
-    console.log('ModalFirstPage ionViewLoaded fired');
+  ionViewDidLoad() {
+    console.log('ModalFirstPage ionViewDidLoad fired');
   }
 
   ionViewWillEnter() {
@@ -491,8 +491,8 @@ export class ModalSecondPage {
     console.log('Second page params:', params);
   }
 
-  ionViewLoaded() {
-    console.log('ModalSecondPage ionViewLoaded');
+  ionViewDidLoad() {
+    console.log('ModalSecondPage ionViewDidLoad');
   }
 
   ionViewWillEnter() {

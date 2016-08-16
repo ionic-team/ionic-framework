@@ -15,12 +15,12 @@ export class ChatPage {
 
   constructor(public viewCtrl: ViewController) {}
 
-  ionViewLoaded() {
-    console.log('ChatPage, ionViewLoaded');
+  ionViewDidLoad() {
+    console.log('ChatPage, ionViewDidLoad');
   }
 
-  ionViewDidUnload() {
-    console.log('ChatPage, ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('ChatPage, ionViewWillUnload');
   }
 }
 
@@ -67,8 +67,8 @@ export class TabsPage {
     console.log('TabsPage, ionViewDidLeave');
   }
 
-  ionViewDidUnload() {
-    console.log('TabsPage, ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('TabsPage, ionViewWillUnload');
   }
 }
 
@@ -117,8 +117,8 @@ export class Tab1Page1 {
     console.log('Tab1Page1, ionViewDidLeave');
   }
 
-  ionViewDidUnload() {
-    console.log('Tab1Page1, ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('Tab1Page1, ionViewWillUnload');
   }
 }
 
@@ -144,8 +144,8 @@ export class Tab1Page2 {
     console.log('Tab1Page2, ionViewDidLeave');
   }
 
-  ionViewDidUnload() {
-    console.log('Tab1Page2, ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('Tab1Page2, ionViewWillUnload');
   }
 }
 
@@ -173,8 +173,8 @@ export class Tab1Page3 {
     console.log('Tab1Page3, ionViewDidLeave');
   }
 
-  ionViewDidUnload() {
-    console.log('Tab1Page3, ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('Tab1Page3, ionViewWillUnload');
   }
 }
 
@@ -203,8 +203,8 @@ export class Tab2Page1 {
     console.log('Tab2Page1, ionViewDidLeave');
   }
 
-  ionViewDidUnload() {
-    console.log('Tab2Page1, ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('Tab2Page1, ionViewWillUnload');
   }
 }
 
@@ -230,8 +230,8 @@ export class Tab2Page2 {
     console.log('Tab2Page2, ionViewDidLeave');
   }
 
-  ionViewDidUnload() {
-    console.log('Tab2Page2, ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('Tab2Page2, ionViewWillUnload');
   }
 }
 
@@ -259,8 +259,8 @@ export class Tab2Page3 {
     console.log('Tab2Page3, ionViewDidLeave');
   }
 
-  ionViewDidUnload() {
-    console.log('Tab2Page3, ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('Tab2Page3, ionViewWillUnload');
   }
 }
 
@@ -289,8 +289,8 @@ export class Tab3Page1 {
     console.log('Tab3Page1, ionViewDidLeave');
   }
 
-  ionViewDidUnload() {
-    console.log('Tab3Page1, ionViewDidUnload');
+  ionViewWillUnload() {
+    console.log('Tab3Page1, ionViewWillUnload');
   }
 }
 

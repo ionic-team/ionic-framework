@@ -6,7 +6,6 @@ import { isDefined } from '../util/util';
  * @private
  */
 export class Animation {
-  private _p: Animation;
   private _c: Animation[];
   private _cL: number;
   private _e: HTMLElement[];
@@ -32,6 +31,7 @@ export class Animation {
   private _isAsync: boolean;
   private _twn: boolean;
 
+  parent: Animation;
   opts: AnimationOptions;
   isPlaying: boolean = false;
   hasCompleted: boolean = false;
@@ -78,7 +78,7 @@ export class Animation {
    * Add a child animation to this animation.
    */
   add(childAnimation: Animation): Animation {
-    childAnimation._p = this;
+    childAnimation.parent = this;
     this._cL = (this._c = this._c || []).push(childAnimation);
     return this;
   }
@@ -88,7 +88,7 @@ export class Animation {
    * not have a duration, then it'll get the duration from its parent.
    */
   getDuration(opts?: PlayOptions): number {
-    return (opts && isDefined(opts.duration) ? opts.duration : this._dur !== null ? this._dur : (this._p && this._p.getDuration()) || 0);
+    return (opts && isDefined(opts.duration) ? opts.duration : this._dur !== null ? this._dur : (this.parent && this.parent.getDuration()) || 0);
   }
 
   /**
@@ -104,7 +104,7 @@ export class Animation {
    * not have an easing, then it'll get the easing from its parent.
    */
   getEasing(): string {
-    return this._es !== null ? this._es : (this._p && this._p.getEasing()) || null;
+    return this._es !== null ? this._es : (this.parent && this.parent.getEasing()) || null;
   }
 
   /**
@@ -288,7 +288,7 @@ export class Animation {
   play(opts?: PlayOptions) {
     const dur = this.getDuration(opts);
 
-    console.debug('Animation, play, duration', dur, 'easing', this._es);
+    // console.debug('Animation, play, duration', dur, 'easing', this._es);
 
     // this is the top level animation and is in full control
     // of when the async play() should actually kick off
@@ -448,13 +448,13 @@ export class Animation {
 
     function onTransitionEnd(ev: any) {
       // congrats! a successful transition completed!
-      console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName);
+      // console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName);
 
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();
 
       // ******** DOM WRITE ****************
-      self._playEnd(false);
+      self._playEnd();
 
       // transition finished
       self._didFinishAll(shouldComplete, true, false);
@@ -472,7 +472,7 @@ export class Animation {
 
       // set the after styles
       // ******** DOM WRITE ****************
-      self._playEnd(true);
+      self._playEnd(1);
 
       // transition finished
       self._didFinishAll(shouldComplete, true, false);
@@ -491,21 +491,21 @@ export class Animation {
    * DOM WRITE
    * RECURSION
    */
-  _playEnd(progressEnd: boolean) {
+  _playEnd(stepValue?: number) {
     for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
-      this._c[i]._playEnd(progressEnd);
+      this._c[i]._playEnd(stepValue);
     }
 
     if (this._hasDur) {
-      if (progressEnd) {
+      if (isDefined(stepValue)) {
         // too late to have a smooth animation, just finish it
         // ******** DOM WRITE ****************
         this._setTrans(0, true);
 
         // ensure the ending progress step gets rendered
         // ******** DOM WRITE ****************
-        this._progress(1);
+        this._progress(stepValue);
       }
 
       // set the after styles
@@ -559,11 +559,11 @@ export class Animation {
   /**
    * Immediately stop at the end of the animation.
    */
-  stop() {
+  stop(stepValue: number = 1) {
     // ensure all past transition end events have been cleared
     this._clearAsync();
     this._hasDur = true;
-    this._playEnd(true);
+    this._playEnd(stepValue);
   }
 
   /**
@@ -656,7 +656,7 @@ export class Animation {
   _setTrans(dur: number, forcedLinearEasing: boolean) {
     // set the TRANSITION properties inline on the element
     if (this._fx) {
-      var easing = (forcedLinearEasing ? 'linear' : this.getEasing());
+      const easing = (forcedLinearEasing ? 'linear' : this.getEasing());
       for (var i = 0; i < this._eL; i++) {
         if (dur > 0) {
           // ******** DOM WRITE ****************
@@ -865,6 +865,8 @@ export class Animation {
     // force no duration, linear easing
     // ******** DOM WRITE ****************
     this._setTrans(0, true);
+
+    this._willChg(true);
   }
 
   /**
@@ -901,35 +903,28 @@ export class Animation {
   progressEnd(shouldComplete: boolean, currentStepValue: number) {
     console.debug('Animation, progressEnd, shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
+    this._progressEnd(shouldComplete);
+  }
+
+  /**
+   * @internal
+   * DOM WRITE
+   * RECURSION
+   */
+  _progressEnd(shouldComplete: boolean) {
     for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
-      this._c[i].progressEnd(shouldComplete, currentStepValue);
+      this._c[i]._progressEnd(shouldComplete);
     }
 
     // set all the animations to their final position
     // ******** DOM WRITE ****************
     this._progress(shouldComplete ? 1 : 0);
 
-    // if it's already at the final position, or close, then it's done
-    // otherwise we need to add a transition end event listener
-    if (currentStepValue < 0.05 || currentStepValue > 0.95) {
-      // the progress was already left off at the point that is finished
-      // for example, the left menu was dragged all the way open already
-      // ******** DOM WRITE ****************
-      this._after();
+    this._willChg(false);
 
-      this._didFinishAll(shouldComplete, true, true);
-
-    } else {
-      // the stepValue was left off at a point when it needs to finish transition still
-      // for example, the left menu was opened 75% and needs to finish opening
-      // ******** DOM WRITE ****************
-      this._asyncEnd(64, shouldComplete);
-
-      // force quick duration, linear easing
-      // ******** DOM WRITE ****************
-      this._setTrans(64, true);
-    }
+    this._after();
+    this._didFinish(shouldComplete);
   }
 
   /**
@@ -1010,7 +1005,7 @@ export class Animation {
 
     this._clearAsync();
 
-    this._p = this._e = this._rdFn = this._wrFn = null;
+    this.parent = this._e = this._rdFn = this._wrFn = null;
 
     if (this._c) {
       this._c.length = this._cL = 0;

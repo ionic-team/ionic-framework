@@ -54,7 +54,7 @@ export class Picker extends ViewController {
   }
 
   refresh() {
-    this.instance.refresh && this.instance.refresh();
+    this._cmp && this._cmp.instance.refresh && this._cmp.instance.refresh();
   }
 
   /**

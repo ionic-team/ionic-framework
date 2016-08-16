@@ -215,7 +215,7 @@ import { ViewController } from './view-controller';
  *   template: 'Hello World'
  * })
  * class HelloWorld {
- *   ionViewLoad() {
+ *   ionViewDidLoad() {
  *     console.log("I'm alive!");
  *   }
  *   ionViewWillLeave() {
@@ -226,13 +226,12 @@ import { ViewController } from './view-controller';
  *
  *  | Page Event          | Description                                                                                                                                                                                                                                                                        |
  *  |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
- *  | `ionViewLoad`       | Runs when the page has loaded. This event only happens once per page being created. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewLoad` event is good place to put your setup code for the page. |
+ *  | `ionViewDidLoad`       | Runs when the page has loaded. This event only happens once per page being created. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewDidLoad` event is good place to put your setup code for the page. |
  *  | `ionViewWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                   |
  *  | `ionViewDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                             |
  *  | `ionViewWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                             |
  *  | `ionViewDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                                          |
- *  | `ionViewWillUnload` | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                                         |
- *  | `ionViewDidUnload`  | Runs after the page has been destroyed and its elements have been removed.
+ *  | `ionViewWillUnload` | Runs when the page is about to be destroyed and have its elements removed.
  *
  *
  * ## Asynchronous Nav Transitions
@@ -317,12 +316,6 @@ export abstract class NavController {
    * @returns {Observable} Returns an observable
    */
   viewWillUnload: EventEmitter<any>;
-
-  /**
-   * Observable to be subscribed to when a component has fully been unloaded and destroyed.
-   * @returns {Observable} Returns an observable
-   */
-  viewDidUnload: EventEmitter<any>;
 
   /**
    * @private

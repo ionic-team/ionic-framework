@@ -40,20 +40,6 @@ export class TransitionController {
     return trans;
   }
 
-  destroy(transId: string) {
-    this._trans[transId] && this._trans[transId].destroy();
-    delete this._trans[transId];
-  }
-
-  isMostRecent(transId: string): boolean {
-    for (var registeredTransId in this._trans) {
-      if (transId < registeredTransId) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   multipleActiveTrans(): boolean {
     return (Object.keys(this._trans).length > 1);
   }

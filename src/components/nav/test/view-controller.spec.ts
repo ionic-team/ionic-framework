@@ -22,7 +22,7 @@ export function run() {
         });
 
         // act
-        viewController._fireWillEnter();
+        viewController._willEnter();
       }, 10000);
     });
 
@@ -39,7 +39,7 @@ export function run() {
         });
 
         // act
-        viewController._fireDidEnter();
+        viewController._didEnter();
       }, 10000);
     });
 
@@ -56,7 +56,7 @@ export function run() {
         });
 
         // act
-        viewController._fireWillLeave();
+        viewController._willLeave();
       }, 10000);
     });
 
@@ -73,7 +73,7 @@ export function run() {
         });
 
         // act
-        viewController._fireDidLeave();
+        viewController._didLeave();
       }, 10000);
     });
 
@@ -89,7 +89,7 @@ export function run() {
         });
 
         // act
-        viewController._fireWillUnload();
+        viewController._willUnload();
       }, 10000);
     });
 
@@ -97,7 +97,7 @@ export function run() {
       it('should emit LifeCycleEvent when called with component data', (done) => {
         // arrange
         let viewController = new ViewController(FakePage);
-        subscription = viewController.didUnload.subscribe((event: LifeCycleEvent) => {
+        subscription = viewController.willUnload.subscribe((event: LifeCycleEvent) => {
           // assert
           expect(event).toEqual(null);
           done();
@@ -106,7 +106,7 @@ export function run() {
         });
 
         // act
-        viewController._destroy();
+        viewController._willUnload();
       }, 10000);
     });
   });

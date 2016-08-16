@@ -24,46 +24,6 @@ export function convertToViews(linker: DeepLinker, pages: Array<{page: any, para
 }
 
 
-export function lifecycleTest(view: ViewController, lifecycle: string, testDone: TestDone) {
-  const testResult: TestResult = { valid: true, rejectReason: null };
-
-  if (view.instance && view.instance['ionViewCan' + lifecycle]) {
-    try {
-      const result = view.instance['ionViewCan' + lifecycle];
-      if (result === false) {
-        // synchronous: rejected cuz of boolean false
-        testResult.valid = false;
-
-      } else if (result instanceof Promise) {
-        // async: wait for promise to resolve
-        result.then((userResponse: any) => {
-          // user's promise has resolved
-          if (isPresent(userResponse)) {
-            if (isBoolean(userResponse)) {
-              testResult.valid = userResponse;
-
-            } else {
-              testResult.valid = !!userResponse;
-              testResult.rejectReason = userResponse;
-            }
-          }
-
-          testDone(testResult);
-        });
-        return;
-      }
-
-    } catch (e) {
-      // synchronous
-      console.error(e);
-    }
-  }
-
-  // synchronous: there was no test
-  testDone(testResult);
-}
-
-
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
   if (enteringView) {
     // get the leaving view, which could be in various states
@@ -75,7 +35,7 @@ export function setZIndex(nav: NavControllerBase, enteringView: ViewController, 
       if (previousView && previousView._loaded) {
         // we found a better previous view to reference
         // use this one instead
-        enteringView._setZIndex(previousView.zIndex + 1, renderer);
+        enteringView._setZIndex(previousView._zIndex + 1, renderer);
 
       } else {
         // this is the initial view
@@ -84,11 +44,11 @@ export function setZIndex(nav: NavControllerBase, enteringView: ViewController, 
 
     } else if (direction === DIRECTION_BACK) {
       // moving back
-      enteringView._setZIndex(leavingView.zIndex - 1, renderer);
+      enteringView._setZIndex(leavingView._zIndex - 1, renderer);
 
     } else {
       // moving forward
-      enteringView._setZIndex(leavingView.zIndex + 1, renderer);
+      enteringView._setZIndex(leavingView._zIndex + 1, renderer);
     }
   }
 }
@@ -157,9 +117,11 @@ export interface NavOptions {
 
 export interface TransitionResult {
   hasCompleted: boolean;
-  valid?: boolean;
-  rejectReason?: string;
-  resultData?: any;
+  rejectReason?: any;
+}
+
+export interface TransitionDone {
+  (transitionResult: TransitionResult): void
 }
 
 export interface TestDone {
@@ -169,22 +131,19 @@ export interface TestDone {
 export interface TestResult {
   valid: boolean;
   rejectReason?: any;
-  componentRef?: ComponentRef<any>
 }
 
-export const STATE_ACTIVE = 1;
-export const STATE_INACTIVE = 2;
-export const STATE_INIT_ENTER = 3;
-export const STATE_INIT_LEAVE = 4;
-export const STATE_TRANS_ENTER = 5;
-export const STATE_TRANS_LEAVE = 6;
-export const STATE_REMOVE = 7;
-export const STATE_REMOVE_AFTER_TRANS = 8;
-export const STATE_CANCEL_ENTER = 9;
-export const STATE_FORCE_ACTIVE = 10;
+export interface NavInstruction {
+  startIndex: number;
+  removeCount: number;
+  opts: NavOptions;
+  insertViews: ViewController[];
+  done: TransitionDone;
+}
 
 export const INIT_ZINDEX = 100;
 export const PORTAL_ZINDEX = 9999;
 
 export const DIRECTION_BACK = 'back';
 export const DIRECTION_FORWARD = 'forward';
+export const DIRECTION_SWITCH = 'switch';

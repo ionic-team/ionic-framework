@@ -63,11 +63,6 @@ export class App {
    */
   viewWillUnload: EventEmitter<any> = new EventEmitter();
 
-  /**
-   * @private
-   */
-  viewDidUnload: EventEmitter<any> = new EventEmitter();
-
   constructor(
     private _config: Config,
     private _platform: Platform
@@ -275,33 +270,6 @@ export class App {
     return Promise.resolve();
   }
 
-  /**
-   * @private
-   */
-  private getRegisteredComponent(cls: any): any {
-    // deprecated warning: added 2016-04-28, beta7
-    console.warn('Using app.getRegisteredComponent() to query components has been deprecated. ' +
-                 'Please use Angular\'s ViewChild annotation instead:\n\nhttp://learnangular2.com/viewChild/');
-  }
-
-  /**
-   * @private
-   */
-  private getComponent(id: string): any {
-    // deprecated warning: added 2016-04-28, beta7
-    console.warn('Using app.getComponent() to query components has been deprecated. ' +
-                 'Please use Angular\'s ViewChild annotation instead:\n\nhttp://learnangular2.com/viewChild/');
-  }
-
-  /**
-   * Get an instance of the global app injector that contains references to all of the instantiated providers
-   * @returns {Injector}
-   */
-  private getAppInjector(): any {
-    // deprecated warning: added 2016-06-27, beta10
-    console.warn('Recent Angular2 versions should no longer require App.getAppInjector()');
-  }
 }
-
 
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;

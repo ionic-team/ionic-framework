@@ -2,7 +2,7 @@ import { NgModule, Component, ViewChild } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NavController, AlertController, Content,
   App, IonicApp, IonicModule,
-  NavParams, ViewController } from '../../../dist';
+  NavParams, ViewController, DeepLinkConfig } from '../../../dist';
 
 @Component({
   selector: 'my-cmp',
@@ -62,11 +62,34 @@ export class FirstPage {
 
   constructor(
     public navCtrl: NavController,
-    public view: ViewController
-  ) {
+    public viewCtrl: ViewController
+  ) {}
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad, FirstPage');
     for (var i = 1; i <= 50; i++) {
       this.pages.push(i);
     }
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter, FirstPage', this.viewCtrl.id);
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter, FirstPage', this.viewCtrl.id);
+  }
+
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave, FirstPage', this.viewCtrl.id);
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave, FirstPage', this.viewCtrl.id);
+  }
+
+  ionViewWillUnload() {
+    console.log('ionViewWillUnload, FirstPage', this.viewCtrl.id);
   }
 
   setPages() {
@@ -108,7 +131,7 @@ export class FirstPage {
   }
 
   viewDismiss() {
-    this.view.dismiss();
+    this.viewCtrl.dismiss();
   }
 
   reload() {
@@ -143,10 +166,35 @@ export class FirstPage {
 export class FullPage {
   constructor(
     public navCtrl: NavController,
+    public viewCtrl: ViewController,
     public app: App,
     public alertCtrl: AlertController,
     public params: NavParams
   ) {}
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad, FullPage', this.viewCtrl.id);
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter, FullPage', this.viewCtrl.id);
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter, FullPage', this.viewCtrl.id);
+  }
+
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave, FullPage', this.viewCtrl.id);
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave, FullPage', this.viewCtrl.id);
+  }
+
+  ionViewWillUnload() {
+    console.log('ionViewWillUnload, FullPage', this.viewCtrl.id);
+  }
 
   setPages() {
     let items = [
@@ -244,9 +292,30 @@ export class PrimaryHeaderPage {
     public viewCtrl: ViewController
   ) {}
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad, PrimaryHeaderPage', this.viewCtrl.id);
+  }
+
   ionViewWillEnter() {
+    console.log('ionViewWillEnter, PrimaryHeaderPage', this.viewCtrl.id);
     this.viewCtrl.setBackButtonText('Previous');
     this.subheader = 'I\'m a sub header!';
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter, PrimaryHeaderPage', this.viewCtrl.id);
+  }
+
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave, PrimaryHeaderPage', this.viewCtrl.id);
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave, PrimaryHeaderPage', this.viewCtrl.id);
+  }
+
+  ionViewWillUnload() {
+    console.log('ionViewWillUnload, PrimaryHeaderPage', this.viewCtrl.id);
   }
 
   pushAnother() {
@@ -325,8 +394,30 @@ export class AnotherPage {
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController
-  ) {
-    console.log('Page, AnotherPage, constructor', this.viewCtrl.id);
+  ) { }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad, AnotherPage', this.viewCtrl.id);
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter, AnotherPage', this.viewCtrl.id);
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter, AnotherPage', this.viewCtrl.id);
+  }
+
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave, AnotherPage', this.viewCtrl.id);
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave, AnotherPage', this.viewCtrl.id);
+  }
+
+  ionViewWillUnload() {
+    console.log('ionViewWillUnload, AnotherPage', this.viewCtrl.id);
   }
 
   pushFullPage() {
@@ -361,50 +452,26 @@ export class AnotherPage {
     ++this.bbCount;
   }
 
-  ionViewWillEnter() {
-    console.log('Page, AnotherPage, ionViewWillEnter', this.viewCtrl.id);
-  }
-
-  ionViewDidEnter() {
-    console.log('Page, AnotherPage, ionViewDidEnter', this.viewCtrl.id);
-  }
-
-  ionViewWillLeave() {
-    console.log('Page, AnotherPage, ionViewWillLeave', this.viewCtrl.id);
-  }
-
-  ionViewDidLeave() {
-    console.log('Page, AnotherPage, ionViewDidLeave', this.viewCtrl.id);
-  }
-
-  ionViewWillUnload() {
-    console.log('Page, AnotherPage, ionViewWillUnload', this.viewCtrl.id);
-  }
-
-  ionViewDidUnload() {
-    console.log('Page, AnotherPage, ionViewDidUnload', this.viewCtrl.id);
-  }
-
-  ngOnDestroy() {
-    console.log('Page, AnotherPage, ngOnDestroy', this.viewCtrl.id);
-  }
 }
 
 
 @Component({
-  template: `<ion-nav [root]="root"></ion-nav>`,
-  host: {
-    '[class.is-change-detecting]': 'isChangeDetecting'
-  }
+  template: `<ion-nav [root]="root"></ion-nav>`
 })
 export class E2EApp {
   root = FirstPage;
-
-  get isChangeDetecting() {
-    console.log('isChangeDetecting');
-    return true;
-  }
 }
+
+
+export const deepLinkConfig: DeepLinkConfig = {
+  links: [
+    { component: FirstPage, name: 'first-page' },
+    { component: AnotherPage, name: 'another-page' },
+    { component: MyCmpTest, name: 'tab1-page1' },
+    { component: FullPage, name: 'full-page' },
+    { component: PrimaryHeaderPage, name: 'primary-header-page' },
+  ]
+};
 
 @NgModule({
   declarations: [
@@ -416,14 +483,13 @@ export class E2EApp {
     PrimaryHeaderPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp, null, deepLinkConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     E2EApp,
     FirstPage,
     AnotherPage,
-    MyCmpTest,
     FullPage,
     PrimaryHeaderPage
   ]

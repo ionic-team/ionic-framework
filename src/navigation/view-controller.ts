@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
+import { ChangeDetectorRef, ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
 import { Footer, Header } from '../components/toolbar/toolbar';
-import { isPresent, merge } from '../util/util';
+import { isBoolean, isPresent, merge, pascalCaseToDashCase } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
 import { NavController } from './nav-controller';
-import { NavOptions } from './nav-util';
+import { NavOptions, TestDone, TestResult } from './nav-util';
 import { NavParams } from './nav-params';
 
 
@@ -31,15 +31,11 @@ export class ViewController {
   private _tbRefs: ElementRef[] = [];
   private _hdrDir: Header;
   private _ftrDir: Footer;
-  private _destroyFn: Function;
   private _hidden: string = null;
-  private _ariaHidden: string = null;
   private _leavingOpts: NavOptions = null;
   private _nb: Navbar;
   private _onDidDismiss: Function = null;
   private _onWillDismiss: Function = null;
-  private _pgRef: ElementRef;
-  private _cd: ChangeDetectorRef;
   private _detached: boolean = false;
   protected _nav: NavController;
 
@@ -68,16 +64,10 @@ export class ViewController {
   didLeave: EventEmitter<any>;
 
   /**
-   * Observable to be subscribed to when the current component will be destroyed
-   * @returns {Observable} Returns an observable
-   */
-  willUnload: EventEmitter<any>;
-
-  /**
    * Observable to be subscribed to when the current component has been destroyed
    * @returns {Observable} Returns an observable
    */
-  didUnload: EventEmitter<any>;
+  willUnload: EventEmitter<any>;
 
   /**
    * @internal
@@ -92,22 +82,17 @@ export class ViewController {
   /**
    * @internal
    */
-  instance: any = {};
-
-  /**
-   * @internal
-   */
-  state: number = 0;
-
-  /**
-   * @internal
-   */
   isOverlay: boolean = false;
 
   /**
    * @internal
    */
-  zIndex: number;
+  _cmp: ComponentRef<any>;
+
+  /**
+   * @internal
+   */
+  _zIndex: number;
 
   /**
    * @internal
@@ -128,7 +113,24 @@ export class ViewController {
     this.willLeave = new EventEmitter();
     this.didLeave = new EventEmitter();
     this.willUnload = new EventEmitter();
-    this.didUnload = new EventEmitter();
+  }
+
+  /**
+   * @internal
+   * DOM WRITE
+   */
+  init(componentRef: ComponentRef<any>) {
+    this._cmp = componentRef;
+    this._detached = false;
+  }
+
+  /**
+   * @internal
+   */
+  _setInstance(instance: any) {
+    if (this._cmp) {
+      this._cmp.instance = instance;
+    }
   }
 
   /**
@@ -235,21 +237,6 @@ export class ViewController {
   /**
    * @internal
    */
-  _setChangeDetector(cd: ChangeDetectorRef) {
-    this._cd = cd;
-    this._detached = false;
-  }
-
-  /**
-   * @internal
-   */
-  _setInstance(instance: any) {
-    this.instance = instance;
-  }
-
-  /**
-   * @internal
-   */
   get name(): string {
     return this.componentType ? this.componentType.name : '';
   }
@@ -280,26 +267,17 @@ export class ViewController {
    * @internal
    * DOM WRITE
    */
-  _domShow(shouldShow: boolean, shouldRender: boolean, renderer: Renderer) {
+  _domShow(shouldShow: boolean, renderer: Renderer) {
     // using hidden element attribute to display:none and not render views
-    // renderAttr of '' means the hidden attribute will be added
-    // renderAttr of null means the hidden attribute will be removed
-    // doing checks to make sure we only make an update to the element when needed
-    // note that we use both the "hidden" and "aria-hidden=true" attributes
-    // since the leaving page is still rendered, but should be hidden from screen readers
-    // if there are 3 pages, page 1 is display: none, page 2 is aria hidden, and page 3 is active
-    if (this._pgRef) {
-      // if it should show, then the aria-hidden attribute should not be true
-      if (shouldShow && this._ariaHidden === 'true' || !shouldShow && this._ariaHidden !== 'true') {
-        this._ariaHidden = (shouldShow ? null : 'true');
-        // ******** DOM WRITE ****************
-        renderer.setElementAttribute(this._pgRef.nativeElement, 'aria-hidden', this._ariaHidden);
-      }
+    // _hidden value of '' means the hidden attribute will be added
+    // _hidden value of null means the hidden attribute will be removed
+    // doing checks to make sure we only update the DOM when actually needed
+    if (this._cmp) {
       // if it should render, then the hidden attribute should not be on the element
-      if (shouldRender && this._hidden === '' || !shouldRender && this._hidden !== '') {
-        this._hidden = (shouldRender ? null : '');
+      if (shouldShow && this._hidden === '' || !shouldShow && this._hidden !== '') {
+        this._hidden = (shouldShow ? null : '');
         // ******** DOM WRITE ****************
-        renderer.setElementAttribute(this._pgRef.nativeElement, 'hidden', this._hidden);
+        renderer.setElementAttribute(this.pageRef().nativeElement, 'hidden', this._hidden);
       }
     }
   }
@@ -309,24 +287,18 @@ export class ViewController {
    * DOM WRITE
    */
   _setZIndex(zIndex: number, renderer: Renderer) {
-    if (this._pgRef && zIndex !== this.zIndex) {
-      this.zIndex = zIndex;
-      renderer.setElementStyle(this._pgRef.nativeElement, 'z-index', (<any>zIndex));
+    if (this._cmp && zIndex !== this._zIndex) {
+      this._zIndex = zIndex;
+      // ******** DOM WRITE ****************
+      renderer.setElementStyle(this.pageRef().nativeElement, 'z-index', (<any>zIndex));
     }
-  }
-
-  /**
-   * @internal
-   */
-  _setPageElementRef(elementRef: ElementRef) {
-    this._pgRef = elementRef;
   }
 
   /**
    * @returns {ElementRef} Returns the Page's ElementRef.
    */
   pageRef(): ElementRef {
-    return this._pgRef;
+    return this._cmp && this._cmp.location;
   }
 
   /**
@@ -437,19 +409,30 @@ export class ViewController {
    * to put your setup code for the view; however, it is not the
    * recommended method to use when a view becomes active.
    */
-  _fireLoad() {
+  _didLoad() {
     this._loaded = true;
-    ctrlFn(this, 'Loaded');
+
+    // deprecated warning: added 2016-08-14, beta.12
+    if (this._cmp && this._cmp.instance.ionViewLoaded) {
+      try {
+        console.warn('ionViewLoaded() has been deprecated. Please rename to ionViewDidLoad()');
+        this._cmp.instance.ionViewLoaded();
+      } catch (e) {
+        console.error(this.name + ' iionViewLoaded: ' + e.message);
+      }
+    }
+
+    ctrlFn(this, 'DidLoad');
   }
 
   /**
    * @internal
    * The view is about to enter and become the active view.
    */
-  _fireWillEnter() {
-    if (this._detached && this._cd) {
+  _willEnter() {
+    if (this._detached && this._cmp) {
       // ensure this has been re-attached to the change detector
-      this._cd.reattach();
+      this._cmp.changeDetectorRef.reattach();
       this._detached = false;
     }
 
@@ -462,7 +445,7 @@ export class ViewController {
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
-  _fireDidEnter() {
+  _didEnter() {
     this._nb && this._nb.didEnter();
     this.didEnter.emit();
     ctrlFn(this, 'DidEnter');
@@ -472,7 +455,7 @@ export class ViewController {
    * @internal
    * The view has is about to leave and no longer be the active view.
    */
-  _fireWillLeave() {
+  _willLeave() {
     this.willLeave.emit();
     ctrlFn(this, 'WillLeave');
   }
@@ -482,11 +465,11 @@ export class ViewController {
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
-  _fireDidLeave() {
+  _didLeave() {
     // when this is not the active page
     // we no longer need to detect changes
-    if (!this._detached && this._cd) {
-      this._cd.detach();
+    if (!this._detached && this._cmp) {
+      this._cmp.changeDetectorRef.detach();
       this._detached = true;
     }
 
@@ -496,50 +479,89 @@ export class ViewController {
 
   /**
    * @internal
-   * The view is about to be destroyed and have its elements removed.
    */
-  _fireWillUnload() {
+  _willUnload(renderer: Renderer) {
     this.willUnload.emit();
+
     ctrlFn(this, 'WillUnload');
+
+    if (this._cmp) {
+
+      // deprecated warning: added 2016-08-14, beta.12
+      if (this._cmp.instance.ionViewDidUnload) {
+        console.warn('ionViewDidUnload() has been deprecated. Please use ionViewWillUnload() instead');
+        try {
+          this._cmp.instance.ionViewDidUnload();
+        } catch (e) {
+          console.error(this.name + ' ionViewDidUnload: ' + e.message);
+        }
+      }
+
+      // ensure the element is cleaned up for when the view pool reuses this element
+      // ******** DOM WRITE ****************
+      renderer.setElementAttribute(this._cmp.location.nativeElement, 'class', null);
+      renderer.setElementAttribute(this._cmp.location.nativeElement, 'style', null);
+
+      // completely destroy this component. boom.
+      this._cmp.destroy();
+    }
+
+    this._nav = this._cmp = this._cntDir = this._onDidDismiss = this._onWillDismiss = null;
   }
 
   /**
    * @internal
    */
-  _onDestroy(destroyFn: Function) {
-    this._destroyFn = destroyFn;
-  }
+  _lifecycleTest(view: ViewController, lifecycle: string, testDone: TestDone) {
+    const testResult: TestResult = { valid: true, rejectReason: null };
 
-  /**
-   * @internal
-   */
-  _destroy() {
-    this.didUnload.emit();
-    ctrlFn(this, 'DidUnload');
+    if (view._cmp && view._cmp.instance && view._cmp.instance['ionViewCan' + lifecycle]) {
+      try {
+        const result = view._cmp.instance['ionViewCan' + lifecycle];
+        if (result === false) {
+          // synchronous: rejected cuz of boolean false
+          testResult.valid = false;
 
-    this._destroyFn && this._destroyFn();
-    this._destroyFn = this._onDidDismiss = this._onWillDismiss = null;
+        } else if (result instanceof Promise) {
+          // async: wait for promise to resolve
+          result.then((userResponse: any) => {
+            // user's promise has resolved
+            if (isPresent(userResponse)) {
+              if (isBoolean(userResponse)) {
+                testResult.valid = userResponse;
+
+              } else {
+                testResult.valid = !!userResponse;
+                testResult.rejectReason = userResponse;
+              }
+            }
+
+            testDone(testResult);
+          });
+          return;
+        }
+
+      } catch (e) {
+        // synchronous
+        console.error(e);
+      }
+    }
+
+    // synchronous: there was no test
+    setTimeout(() => {
+      testDone(testResult);
+    }, Math.random() * 100)
   }
 
 }
 
 
 function ctrlFn(viewCtrl: ViewController, fnName: string) {
-  if (viewCtrl.instance) {
-    // deprecated warning: added 2016-07-11, beta.12
-    if (fnName === 'Loaded' && viewCtrl.instance.ionViewLoaded) {
-      try {
-        console.warn('ionViewLoaded() has been deprecated. Please rename to ionViewLoad()');
-        viewCtrl.instance.ionViewLoaded();
-      } catch (e) {
-        console.error(viewCtrl.name + ' onPage' + fnName + ': ' + e.message);
-      }
-    }
-
+  if (viewCtrl._cmp) {
     // fire off ionView lifecycle instance method
-    if (viewCtrl.instance['ionView' + fnName]) {
+    if (viewCtrl._cmp.instance['ionView' + fnName]) {
       try {
-        viewCtrl.instance['ionView' + fnName]();
+        viewCtrl._cmp.instance['ionView' + fnName]();
       } catch (e) {
         console.error(viewCtrl.name + ' ionView' + fnName + ': ' + e.message);
       }

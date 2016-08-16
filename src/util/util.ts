@@ -91,11 +91,13 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
  * @param the destination to apply defaults to.
  */
 export function defaults(dest: any, ...args: any[]) {
-  for (let i = arguments.length - 1; i >= 1; i--) {
-    let source = arguments[i] || {};
-    for (let key in source) {
-      if (source.hasOwnProperty(key) && !dest.hasOwnProperty(key)) {
-        dest[key] = source[key];
+  for (var i = arguments.length - 1; i >= 1; i--) {
+    var source = arguments[i];
+    if (source) {
+      for (var key in source) {
+        if (source.hasOwnProperty(key) && !dest.hasOwnProperty(key)) {
+          dest[key] = source[key];
+        }
       }
     }
   }

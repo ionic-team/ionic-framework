@@ -124,7 +124,7 @@ export class AlertCmp {
     }
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     // normalize the data
     let data = this.d;
 

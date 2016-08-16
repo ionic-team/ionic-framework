@@ -281,7 +281,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   @Input() set headerFn(val: Function) {
     if (isFunction(val)) {
-      this._hdrFn = val.bind((this._ctrl && this._ctrl.instance) || this);
+      this._hdrFn = val.bind((this._ctrl && this._ctrl._cmp) || this);
     }
   }
 
@@ -294,7 +294,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   @Input() set footerFn(val: Function) {
     if (isFunction(val)) {
-      this._ftrFn = val.bind((this._ctrl && this._ctrl.instance) || this);
+      this._ftrFn = val.bind((this._ctrl && this._ctrl._cmp) || this);
     }
   }
 
