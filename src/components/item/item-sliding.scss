@@ -51,7 +51,7 @@ ion-item-options .button {
   box-sizing: content-box;
 }
 
-ion-item-options:not([icon-left]) .button-icon-left {
+ion-item-options:not([icon-left]) .button {
   .button-inner {
     flex-direction: column;
   }

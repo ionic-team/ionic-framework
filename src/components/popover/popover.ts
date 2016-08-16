@@ -103,7 +103,7 @@ export class Popover extends ViewController {
  * which creates and presents the popover:
  *
  * ```html
- * <button (click)="presentPopover($event)">
+ * <button ion-button (click)="presentPopover($event)">
  *   <ion-icon name="more"></ion-icon>
  * </button>
  * ```

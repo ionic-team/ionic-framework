@@ -47,14 +47,13 @@ import { RadioGroup } from './radio-group';
     <div class="radio-icon" [class.radio-checked]="_checked">
       <div class="radio-inner"></div>
     </div>
-    <button role="radio"
+    <button ion-button="item-cover" 
+            role="radio"
             type="button"
-            category="item-cover"
             [id]="id"
             [attr.aria-checked]="_checked"
             [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled"
-            class="item-cover">
+            [attr.aria-disabled]="_disabled">
     </button>
   `,
   host: {

@@ -197,7 +197,7 @@ class E2EPage {
     <ion-footer>
       <ion-toolbar>
         <ion-buttons end>
-          <button (click)="goToPage3()">
+          <button ion-button (click)="goToPage3()">
             Navigate
             <ion-icon name="arrow-forward"></ion-icon>
           </button>

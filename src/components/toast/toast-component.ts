@@ -21,7 +21,7 @@ import { ViewController } from '../nav/view-controller';
       [class.toast-top]="d.position === 'top'">
       <div class="toast-container">
         <div class="toast-message" id="{{hdrId}}" *ngIf="d.message">{{d.message}}</div>
-        <button clear class="toast-button" *ngIf="d.showCloseButton" (click)="cbClick()">
+        <button ion-button clear class="toast-button" *ngIf="d.showCloseButton" (click)="cbClick()">
           {{ d.closeButtonText || 'Close' }}
          </button>
       </div>

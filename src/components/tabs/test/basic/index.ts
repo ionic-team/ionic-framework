@@ -9,7 +9,7 @@ import { ionicBootstrap, App, AlertController, ModalController, ViewController, 
   <ion-header>
     <ion-toolbar>
       <ion-buttons start>
-        <button (click)="dismiss()">Cancel</button>
+        <button ion-button (click)="dismiss()">Cancel</button>
       </ion-buttons>
 
       <ion-title>
@@ -17,7 +17,7 @@ import { ionicBootstrap, App, AlertController, ModalController, ViewController, 
       </ion-title>
 
       <ion-buttons end>
-        <button (click)="dismiss()">Done</button>
+        <button ion-button (click)="dismiss()">Done</button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -82,10 +82,10 @@ class MyModal {
         <ion-item *ngFor="let i of items">Item {{i}} {{i}} {{i}} {{i}}</ion-item>
       </ion-list>
       <p>
-        <button (click)="selectPrevious()">Select Previous Tab</button>
+        <button ion-button (click)="selectPrevious()">Select Previous Tab</button>
       </p>
       <p>
-        <button (click)="appNavPop()">App Nav Pop</button>
+        <button ion-button (click)="appNavPop()">App Nav Pop</button>
       </p>
     </ion-content>
     `
@@ -127,16 +127,16 @@ export class Tab1 {
             <p>{{session.location}} {{session.location}} {{session.location}}</p>
           </ion-item>
           <ion-item-options>
-            <button primary>Speaker<br>Info</button>
-            <button secondary>Add to<br>Favorites</button>
+            <button ion-button primary>Speaker<br>Info</button>
+            <button ion-button secondary>Add to<br>Favorites</button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
       <p>
-        <button (click)="selectPrevious()">Select Previous Tab</button>
+        <button ion-button (click)="selectPrevious()">Select Previous Tab</button>
       </p>
       <p>
-        <button (click)="appNavPop()">App Nav Pop</button>
+        <button ion-button (click)="appNavPop()">App Nav Pop</button>
       </p>
     </ion-content>
   `
@@ -169,7 +169,7 @@ export class Tab2 {
   template: `
     <ion-header>
       <ion-navbar>
-        <button menuToggle>
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Stopwatch</ion-title>
@@ -179,14 +179,14 @@ export class Tab2 {
     <ion-content padding>
       <h2>Tab 3</h2>
       <p>
-        <button (click)="presentAlert()">Present Alert</button>
-        <button (click)="presentModal()">Present Modal</button>
+        <button ion-button (click)="presentAlert()">Present Alert</button>
+        <button ion-button (click)="presentModal()">Present Modal</button>
       </p>
       <p>
-        <button (click)="selectPrevious()">Select Previous Tab</button>
+        <button ion-button (click)="selectPrevious()">Select Previous Tab</button>
       </p>
       <p>
-        <button (click)="appNavPop()">App Nav Pop</button>
+        <button ion-button (click)="appNavPop()">App Nav Pop</button>
       </p>
     </ion-content>
     `

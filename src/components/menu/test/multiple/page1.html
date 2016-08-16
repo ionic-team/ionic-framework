@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
@@ -17,15 +17,15 @@
   <h4>Active Menu: {{ activeMenu }}</h4>
 
   <p>
-    <button secondary (click)="menu1Active()">Make Menu 1 Active</button>
+    <button ion-button secondary (click)="menu1Active()">Make Menu 1 Active</button>
   </p>
 
   <p>
-    <button danger (click)="menu2Active()">Make Menu 2 Active</button>
+    <button ion-button danger (click)="menu2Active()">Make Menu 2 Active</button>
   </p>
 
   <p>
-    <button [menuToggle]="activeMenu">Toggle Menu</button>
+    <button ion-button [menuToggle]="activeMenu">Toggle Menu</button>
   </p>
 
   <p>This page has two left menus, but only one is active at a time.</p>

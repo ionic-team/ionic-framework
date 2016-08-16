@@ -55,14 +55,13 @@ export const TOGGLE_VALUE_ACCESSOR = new Provider(
     <div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">
       <div class="toggle-inner"></div>
     </div>
-    <button role="checkbox"
+    <button ion-button="item-cover"
+            role="checkbox"
             type="button"
-            category="item-cover"
             [id]="id"
             [attr.aria-checked]="_checked"
             [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled"
-            class="item-cover">
+            [attr.aria-disabled]="_disabled">
     </button>
   `,
   host: {

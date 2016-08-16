@@ -8,24 +8,24 @@ import { ionicBootstrap, PopoverController, NavParams, ViewController } from '..
       <ion-list radio-group [(ngModel)]="fontFamily" (ionChange)="changeFontFamily()">
         <ion-row>
           <ion-col>
-            <button (click)="changeFontSize('smaller')" ion-item detail-none class="text-button text-smaller">A</button>
+            <button ion-button (click)="changeFontSize('smaller')" ion-item detail-none class="text-button text-smaller">A</button>
           </ion-col>
           <ion-col>
-            <button (click)="changeFontSize('larger')" ion-item detail-none class="text-button text-larger">A</button>
+            <button ion-button (click)="changeFontSize('larger')" ion-item detail-none class="text-button text-larger">A</button>
           </ion-col>
         </ion-row>
         <ion-row class="row-dots">
           <ion-col>
-            <button (click)="changeBackground('white')" category="dot" class="dot-white" [class.selected]="background == 'white'"></button>
+            <button ion-button="dot" (click)="changeBackground('white')" class="dot-white" [class.selected]="background == 'white'"></button>
           </ion-col>
           <ion-col>
-            <button (click)="changeBackground('tan')" category="dot" class="dot-tan" [class.selected]="background == 'tan'"></button>
+            <button ion-button="dot" (click)="changeBackground('tan')" class="dot-tan" [class.selected]="background == 'tan'"></button>
           </ion-col>
           <ion-col>
-            <button (click)="changeBackground('grey')" category="dot" class="dot-grey" [class.selected]="background == 'grey'"></button>
+            <button ion-button="dot" (click)="changeBackground('grey')" class="dot-grey" [class.selected]="background == 'grey'"></button>
           </ion-col>
           <ion-col>
-            <button (click)="changeBackground('black')" category="dot" class="dot-black" [class.selected]="background == 'black'"></button>
+            <button ion-button="dot" (click)="changeBackground('black')" class="dot-black" [class.selected]="background == 'black'"></button>
           </ion-col>
         </ion-row>
         <ion-item class="text-athelas">

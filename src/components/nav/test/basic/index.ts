@@ -17,10 +17,10 @@ class MyCmpTest {}
       <ion-navbar>
         <ion-title>{{title}}</ion-title>
         <ion-buttons start>
-          <button><ion-icon name="star"></ion-icon></button>
+          <button ion-button icon-only><ion-icon name="star"></ion-icon></button>
         </ion-buttons>
         <ion-buttons end>
-          <button>S1g</button>
+          <button ion-button>S1g</button>
         </ion-buttons>
       </ion-navbar>
     </ion-header>
@@ -52,7 +52,7 @@ class MyCmpTest {}
         <button ion-item (click)="quickPop()">New pop during transition</button>
         <button ion-item (click)="reload()">Reload</button>
         <button ion-item (click)="scrollToBottom()">Scroll to bottom</button>
-        <button *ngFor="let i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
+        <button ion-item *ngFor="let i of pages" (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
         <button ion-item (click)="content.scrollToTop()">Scroll to top</button>
       </ion-list>
       <my-cmp></my-cmp>
@@ -135,13 +135,13 @@ class FirstPage {
     <ion-content padding>
       <h1>Full page</h1>
       <p>This page does not have a nav bar!</p>
-      <p><button (click)="navCtrl.pop()">Pop</button></p>
-      <p><button class="e2eFrom2To3" (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
-      <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
-      <p><button (click)="pushFirstPage()">Push to FirstPage</button></p>
-      <p><button class="e2eFrom2To1" navPop>Pop with NavPop (Go back to 1st)</button></p>
-      <p><button (click)="setPages()">setPages() (Go to PrimaryHeaderPage, FirstPage 1st in history)</button></p>
-      <p><button (click)="presentAlert()">Present Alert</button></p>
+      <p><button ion-button (click)="navCtrl.pop()">Pop</button></p>
+      <p><button ion-button class="e2eFrom2To3" (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
+      <p><button ion-button (click)="pushAnother()">Push to AnotherPage</button></p>
+      <p><button ion-button (click)="pushFirstPage()">Push to FirstPage</button></p>
+      <p><button ion-button class="e2eFrom2To1" navPop>Pop with NavPop (Go back to 1st)</button></p>
+      <p><button ion-button (click)="setPages()">setPages() (Go to PrimaryHeaderPage, FirstPage 1st in history)</button></p>
+      <p><button ion-button (click)="presentAlert()">Present Alert</button></p>
     </ion-content>
   `
 })
@@ -209,7 +209,7 @@ class FullPage {
       <ion-navbar primary>
         <ion-title>Primary Color Page Header</ion-title>
         <ion-buttons end>
-          <button>S1g</button>
+          <button ion-button>S1g</button>
         </ion-buttons>
       </ion-navbar>
       <ion-toolbar no-border-top>
@@ -218,16 +218,16 @@ class FullPage {
     </ion-header>
 
     <ion-content padding fullscreen>
-      <p><button class="e2eFrom3To2" (click)="navCtrl.pop()">Pop</button></p>
-      <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
-      <p><button (click)="pushFullPage()">Push to FullPage</button></p>
-      <p><button (click)="setRoot()">setRoot(AnotherPage)</button></p>
-      <p><button (click)="navCtrl.popToRoot()">Pop to root</button></p>
-      <p><button id="insert" (click)="insert()">Insert first page into history before this</button></p>
-      <p><button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
+      <p><button ion-button class="e2eFrom3To2" (click)="navCtrl.pop()">Pop</button></p>
+      <p><button ion-button (click)="pushAnother()">Push to AnotherPage</button></p>
+      <p><button ion-button (click)="pushFullPage()">Push to FullPage</button></p>
+      <p><button ion-button (click)="setRoot()">setRoot(AnotherPage)</button></p>
+      <p><button ion-button (click)="navCtrl.popToRoot()">Pop to root</button></p>
+      <p><button ion-button id="insert" (click)="insert()">Insert first page into history before this</button></p>
+      <p><button ion-button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
       <ion-fixed style="bottom:0">
-        <button (click)="presentAlert()">fixed button (alert)</button>
+        <button ion-button (click)="presentAlert()">fixed button (alert)</button>
       </ion-fixed>
       <ion-fixed style="pointer-events: none; top:0; bottom:0; right:0; width:50%; background: rgba(0,0,0,0.5);"></ion-fixed>
     </ion-content>

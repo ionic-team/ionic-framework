@@ -2,19 +2,19 @@
 
   <ion-navbar primary>
     <ion-buttons left>
-      <button (click)="presentRadioPopover($event)">
+      <button ion-button icon-only (click)="presentRadioPopover($event)">
         <ion-icon name="person"></ion-icon>
       </button>
-      <button (click)="presentLongListPopover($event)">
+      <button ion-button icon-only (click)="presentLongListPopover($event)">
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>Popover</ion-title>
     <ion-buttons end>
-      <button (click)="presentListPopover($event)">
+      <button ion-button icon-only (click)="presentListPopover($event)">
         <ion-icon name="options"></ion-icon>
       </button>
-      <button (click)="presentRadioPopover($event)">
+      <button ion-button icon-only (click)="presentRadioPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
@@ -43,13 +43,13 @@
   </ion-grid>
 
   <div padding #popoverText class="text-to-change">
-    <button block secondary (click)="presentLongListPopover($event)">
+    <button ion-button block secondary (click)="presentLongListPopover($event)">
       Present Long List Popover
     </button>
 
     <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel ipsum in purus mollis dictum eget vitae purus. Nulla ultrices est odio, a maximus velit pretium ac. Donec vel elementum mi. Proin elementum pulvinar neque, in lacinia nibh tempus auctor. Nam sapien velit, commodo ac nibh a, maximus ullamcorper nunc. Integer luctus tortor dignissim, dictum neque at, scelerisque purus. Vivamus nec erat vel magna posuere euismod. Sed ac augue eu tellus tincidunt fermentum eget sit amet nunc. Donec sit amet mi libero. Cras nunc arcu, ultrices nec sapien eu, convallis posuere libero. Pellentesque vulputate lacus eros, at lobortis lorem egestas et. Vestibulum tempus quam in efficitur lobortis. Maecenas consectetur consequat sem pharetra aliquet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</div>
 
-    <button block secondary (click)="presentNoEventPopover()">
+    <button ion-button block secondary (click)="presentNoEventPopover()">
       Present No Event Popover
     </button>
 
@@ -70,10 +70,10 @@
   <ion-toolbar>
     <ion-title>Popover</ion-title>
     <ion-buttons start>
-      <button (click)="presentListPopover($event)">
+      <button ion-button icon-only (click)="presentListPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
-      <button (click)="presentLongListPopover($event)">
+      <button ion-button icon-only (click)="presentLongListPopover($event)">
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>

@@ -29,7 +29,7 @@ export const enum ItemSideFlags {
  *     Item 1
  *   </ion-item>
  *   <ion-item-options side="right" (ionSwipe)="saveItem(item)">
- *     <button expandable (click)="saveItem(item)">
+ *     <button ion-button expandable (click)="saveItem(item)">
  *       <ion-icon name="star"></ion-icon>
  *     </button>
  *   </ion-item-options>
@@ -107,12 +107,12 @@ const enum SlidingState {
  *       Item
  *     </ion-item>
  *     <ion-item-options side="left">
- *       <button (click)="favorite(item)">Favorite</button>
- *       <button danger (click)="share(item)">Share</button>
+ *       <button ion-button (click)="favorite(item)">Favorite</button>
+ *       <button ion-button danger (click)="share(item)">Share</button>
  *     </ion-item-options>
 
  *     <ion-item-options side="right">
- *       <button (click)="unread(item)">Unread</button>
+ *       <button ion-button (click)="unread(item)">Unread</button>
  *     </ion-item-options>
  *   </ion-item-sliding>
  * </ion-list>
@@ -127,14 +127,14 @@ const enum SlidingState {
  *
  * ```html
  * <ion-item-options side="right">
- *   <button (click)="archive(item)">
+ *   <button ion-button (click)="archive(item)">
  *     <ion-icon name="archive"></ion-icon>
  *     Archive
  *   </button>
  * </ion-item-options>
 
  * <ion-item-options side="left">
- *   <button (click)="archive(item)">
+ *   <button ion-button (click)="archive(item)">
  *     <ion-icon name="archive"></ion-icon>
  *     Archive
  *   </button>
@@ -149,7 +149,7 @@ const enum SlidingState {
  * <ion-item-sliding (ionDrag)="logDrag($event)">
  *   <ion-item>Item</ion-item>
  *   <ion-item-options>
- *     <button>Favorite</button>
+ *     <button ion-button>Favorite</button>
  *   </ion-item-options>
  * </ion-item-sliding>
  * ```
@@ -162,7 +162,7 @@ const enum SlidingState {
  *
  * ```html
  * <ion-item-options icon-left>
- *    <button (click)="archive(item)">
+ *    <button ion-button (click)="archive(item)">
  *      <ion-icon name="archive"></ion-icon>
  *      Archive
  *    </button>
@@ -434,7 +434,7 @@ export class ItemSliding {
    *       Item
    *     </ion-item>
    *     <ion-item-options>
-   *       <button (click)="share(slidingItem)">Share</button>
+   *       <button ion-button (click)="share(slidingItem)">Share</button>
    *     </ion-item-options>
    *   </ion-item-sliding>
    * </ion-list>

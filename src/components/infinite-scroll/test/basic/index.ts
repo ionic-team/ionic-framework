@@ -46,7 +46,7 @@ class E2EPage1 {
 
 
 @Component({
-  template: '<ion-content><button (click)="navCtrl.pop()">Pop</button></ion-content>'
+  template: '<ion-content><button ion-button (click)="navCtrl.pop()">Pop</button></ion-content>'
 })
 class E2EPage2 {
   constructor(public navCtrl: NavController) {}

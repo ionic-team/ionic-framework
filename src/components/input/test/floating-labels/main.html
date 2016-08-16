@@ -14,7 +14,7 @@
     <ion-item>
       <ion-label floating>Params: {{ myParam }}</ion-label>
       <ion-input [(ngModel)]="myParam" type="text"></ion-input>
-      <button clear item-right>
+      <button ion-button icon-only clear item-right>
         <ion-icon name="settings"></ion-icon>
       </button>
     </ion-item>
@@ -37,7 +37,7 @@
     <ion-item>
       <ion-label floating primary>Floating Label 4: {{ myValues.value2 }}</ion-label>
       <ion-textarea [(ngModel)]='myValues.value2'></ion-textarea>
-      <button outline item-right>
+      <button ion-button outline item-right>
         View
       </button>
     </ion-item>

@@ -16,16 +16,16 @@ import { ionicBootstrap, NavParams, PopoverController } from 'ionic-angular';
       </ion-row>
       <ion-row class="row-dots">
         <ion-col>
-          <button (click)="changeBackground('white')" category="dot" class="dot-white" [class.selected]="background == 'white'"></button>
+          <button (click)="changeBackground('white')" ion-button="dot" class="dot-white" [class.selected]="background == 'white'"></button>
         </ion-col>
         <ion-col>
-          <button (click)="changeBackground('tan')" category="dot" class="dot-tan" [class.selected]="background == 'tan'"></button>
+          <button (click)="changeBackground('tan')" ion-button="dot" class="dot-tan" [class.selected]="background == 'tan'"></button>
         </ion-col>
         <ion-col>
-          <button (click)="changeBackground('grey')" category="dot" class="dot-grey" [class.selected]="background == 'grey'"></button>
+          <button (click)="changeBackground('grey')" ion-button="dot" class="dot-grey" [class.selected]="background == 'grey'"></button>
         </ion-col>
         <ion-col>
-          <button (click)="changeBackground('black')" category="dot" class="dot-black" [class.selected]="background == 'black'"></button>
+          <button (click)="changeBackground('black')" ion-button="dot" class="dot-black" [class.selected]="background == 'black'"></button>
         </ion-col>
       </ion-row>
       <ion-item class="text-athelas">

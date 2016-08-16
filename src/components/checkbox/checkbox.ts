@@ -53,14 +53,13 @@ export const CHECKBOX_VALUE_ACCESSOR = new Provider(
     <div class="checkbox-icon" [class.checkbox-checked]="_checked">
       <div class="checkbox-inner"></div>
     </div>
-    <button role="checkbox"
+    <button ion-button="item-cover"
+            role="checkbox"
             type="button"
-            category="item-cover"
             [id]="id"
             [attr.aria-checked]="_checked"
             [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled"
-            class="item-cover">
+            [attr.aria-disabled]="_disabled">
     </button>
   `,
   host: {

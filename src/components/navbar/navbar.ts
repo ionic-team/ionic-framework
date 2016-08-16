@@ -74,7 +74,7 @@ class ToolbarBackground {
  * <ion-header>
  *
  *   <ion-navbar>
- *     <button menuToggle>
+ *     <button ion-button menuToggle>
  *       <ion-icon name="menu"></ion-icon>
  *     </button>
  *
@@ -83,7 +83,7 @@ class ToolbarBackground {
  *     </ion-title>
  *
  *     <ion-buttons end>
- *       <button (click)="openModal()">
+ *       <button ion-button (click)="openModal()">
  *         <ion-icon name="options"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -99,7 +99,7 @@ class ToolbarBackground {
   selector: 'ion-navbar',
   template: `
     <div class="toolbar-background"></div>
-    <button category="bar-button" class="back-button" [hidden]="_hideBb">
+    <button ion-button="bar-button" class="back-button" [hidden]="_hideBb">
       <span class="button-inner">
         <ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>
         <span class="back-button-text">

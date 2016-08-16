@@ -132,7 +132,7 @@ class E2EPage {
   </ion-header>
 
   <ion-content>
-    <button full (click)="submit()">Submit</button>
+    <button ion-button full (click)="submit()">Submit</button>
   </ion-content>
   `
 })
@@ -154,7 +154,7 @@ class NavigableModal {
   </ion-header>
 
   <ion-content>
-    <button full (click)="submit()">Submit</button>
+    <button ion-button full (click)="submit()">Submit</button>
   </ion-content>
   `
 })
@@ -187,7 +187,7 @@ class NavigableModal2 {
           <ion-input [(ngModel)]="data.name"></ion-input>
         </ion-item>
       </ion-list>
-      <button full (click)="submit()">Submit</button>
+      <button ion-button full (click)="submit()">Submit</button>
     </ion-content>
   `,
   providers: [SomeComponentProvider]
@@ -243,7 +243,7 @@ class ModalPassData {
     </ion-header>
 
     <ion-content padding>
-      <button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
+      <button ion-button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
         Dismission Modal
       </button>
 
@@ -257,7 +257,7 @@ class ModalPassData {
 
       <div>Aenean rhoncus urna at interdum blandit. Donec ac massa nec libero vehicula tincidunt. Sed sit amet hendrerit risus. Aliquam vitae vestibulum ipsum, non feugiat orci. Vivamus eu rutrum elit. Nulla dapibus tortor non dignissim pretium. Nulla in luctus turpis. Etiam non mattis tortor, at aliquet ex. Nunc ut ante varius, auctor dui vel, volutpat elit. Nunc laoreet augue sit amet ultrices porta. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum pellentesque lobortis est, ut tincidunt ligula mollis sit amet. In porta risus arcu, quis pellentesque dolor mattis non. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</div>
 
-      <button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
+      <button ion-button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
         Dismission Modal
       </button>
     </ion-content>
@@ -282,7 +282,7 @@ class ToolbarModal {
     <ion-header>
       <ion-toolbar secondary>
         <ion-buttons start>
-          <button (click)="dismiss()">Close</button>
+          <button ion-button (click)="dismiss()">Close</button>
         </ion-buttons>
         <ion-title>Modal w/ Inputs</ion-title>
       </ion-toolbar>
@@ -305,7 +305,7 @@ class ToolbarModal {
           </ion-item>
         </ion-list>
         <div padding>
-          <button block large type="submit" [disabled]="!addForm.valid">Save</button>
+          <button ion-button block large type="submit" [disabled]="!addForm.valid">Save</button>
         </div>
       </form>
     </ion-content>
@@ -371,17 +371,17 @@ class ContactUs {
       <ion-navbar>
         <ion-title>First Page Header</ion-title>
         <ion-buttons start>
-          <button class="e2eCloseMenu" (click)="dismiss()">Close</button>
+          <button ion-button class="e2eCloseMenu" (click)="dismiss()">Close</button>
         </ion-buttons>
       </ion-navbar>
     </ion-header>
 
     <ion-content padding>
       <p>
-        <button (click)="push()">Push (Go to 2nd)</button>
+        <button ion-button (click)="push()">Push (Go to 2nd)</button>
       </p>
       <p>
-        <button (click)="openActionSheet()">Open Action Sheet</button>
+        <button ion-button (click)="openActionSheet()">Open Action Sheet</button>
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
@@ -484,7 +484,7 @@ class ModalFirstPage {
     </ion-header>
     <ion-content padding>
       <p>
-        <button (click)="navCtrl.pop()">Pop (Go back to 1st)</button>
+        <button ion-button (click)="navCtrl.pop()">Pop (Go back to 1st)</button>
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>

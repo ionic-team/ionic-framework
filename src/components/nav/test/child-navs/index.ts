@@ -21,7 +21,7 @@ ionicBootstrap(E2EApp);
   </ion-header>
 
   <ion-content>
-    <button primary (click)="goToPage()" class="nested-children-test">
+    <button ion-button primary (click)="goToPage()" class="nested-children-test">
       Nested Children Test
     </button>
   </ion-content>

@@ -21,7 +21,7 @@ class SegmentPage {
   template: `
     <ion-header>
       <ion-navbar hideBackButton>
-        <button menuToggle>
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>

@@ -141,7 +141,7 @@ import { ViewController } from './view-controller';
  *    </ion-header>
  *
  *    <ion-content>
- *      <button (click)="pushPage()">
+ *      <button ion-button (click)="pushPage()">
  *        Go to OtherPage
  *      </button>
  *    </ion-content>

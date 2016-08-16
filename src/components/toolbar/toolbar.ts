@@ -210,10 +210,10 @@ export class ToolbarBase extends Ion {
  *
  *   <ion-toolbar no-border-bottom>
  *     <ion-buttons start>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="contact"></ion-icon>
  *       </button>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="search"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -241,7 +241,7 @@ export class ToolbarBase extends Ion {
  *   <ion-toolbar no-border>
  *     <ion-title>I'm a subfooter</ion-title>
  *     <ion-buttons right>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="menu"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -250,10 +250,10 @@ export class ToolbarBase extends Ion {
  *   <ion-toolbar no-border-top>
  *     <ion-title>I'm a footer</ion-title>
  *     <ion-buttons end>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="more"></ion-icon>
  *       </button>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="options"></ion-icon>
  *       </button>
  *     </ion-buttons>
