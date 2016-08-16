@@ -12,15 +12,15 @@
 }
 
 [icon-left] ion-icon {
-  padding-right: .3em;
-
   @include button-icon;
+
+  padding-right: .3em;
 }
 
 [icon-right] ion-icon {
-  padding-left: .4em;
-
   @include button-icon;
+
+  padding-left: .4em;
 }
 
 [icon-only] {
