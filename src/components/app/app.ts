@@ -203,7 +203,7 @@ export class App {
       ev: opts.ev
     });
 
-    return this._portal.insertViews(-1, [enteringView], opts);
+    return this._portal.insertPages(-1, [enteringView], opts);
   }
 
   /**

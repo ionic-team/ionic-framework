@@ -16,8 +16,12 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 class IOSTransition extends PageTransition {
 
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
+  init() {
+    super.init();
+
+    const enteringView = this.enteringView;
+    const leavingView = this.leavingView;
+    const opts = this.opts;
 
     this.duration(isPresent(opts.duration) ? opts.duration : DURATION);
     this.easing(isPresent(opts.easing) ? opts.easing : EASING);

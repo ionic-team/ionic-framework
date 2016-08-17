@@ -251,10 +251,8 @@ class PopoverTransition extends PageTransition {
 }
 
 class PopoverPopIn extends PopoverTransition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
+  init() {
+    let ele = this.enteringView.pageRef().nativeElement;
 
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
@@ -280,10 +278,8 @@ PageTransition.register('popover-pop-in', PopoverPopIn);
 
 
 class PopoverPopOut extends PopoverTransition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
+  init() {
+    let ele = this.leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
@@ -301,11 +297,8 @@ PageTransition.register('popover-pop-out', PopoverPopOut);
 
 
 class PopoverMdPopIn extends PopoverTransition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-
+  init() {
+    let ele = this.enteringView.pageRef().nativeElement;
     let content = new Animation(ele.querySelector('.popover-content'));
     let viewport = new Animation(ele.querySelector('.popover-viewport'));
 
@@ -330,10 +323,8 @@ PageTransition.register('popover-md-pop-in', PopoverMdPopIn);
 
 
 class PopoverMdPopOut extends PopoverTransition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
+  init() {
+    let ele = this.leavingView.pageRef().nativeElement;
     let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', 0.99, 0);

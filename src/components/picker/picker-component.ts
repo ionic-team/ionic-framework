@@ -550,10 +550,8 @@ export class PickerCmp {
  * Animations for pickers
  */
 class PickerSlideIn extends Transition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
+  init() {
+    let ele = this.enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
 
@@ -567,10 +565,8 @@ Transition.register('picker-slide-in', PickerSlideIn);
 
 
 class PickerSlideOut extends Transition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
+  init() {
+    let ele = this.leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
 

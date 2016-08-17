@@ -21,28 +21,39 @@ import { ViewController } from '../navigation/view-controller';
  * - set inline TO styles - DOM WRITE
  */
 export class Transition extends Animation {
-  enteringView: ViewController;
-  leavingView: ViewController;
+  parent: Transition;
+  hasChildTrans: boolean;
+  transId: number;
 
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    this.enteringView = enteringView;
-    this.leavingView = leavingView;
-    this.opts = opts;
+  constructor(public enteringView: ViewController, public leavingView: ViewController, opts: AnimationOptions) {
+    super(null, opts);
+  }
+
+  init() {}
+
+  _transStart: Function;
+  registerStart(transStart: Function) {
+    this._transStart = transStart;
+  }
+
+  start() {
+    this._transStart && this._transStart();
+    this._transStart = null;
   }
 
   destroy() {
     super.destroy();
-    this.enteringView = this.leavingView = null;
+    this.enteringView = this.leavingView = this._transStart = null;
   }
 
-  static createTransition(transitionName: string): Transition {
+  static createTransition(transitionName: string, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
     let TransitionClass: any = TransitionRegistry[transitionName];
     if (!TransitionClass) {
       // didn't find a transition animation, default to ios-transition
       TransitionClass = TransitionRegistry['ios-transition'];
     }
 
-    return new TransitionClass();
+    return new TransitionClass(enteringView, leavingView, opts);
   }
 
   static register(name: string, TransitionClass: any) {

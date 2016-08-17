@@ -290,10 +290,8 @@ export class AlertCmp {
  * Animations for alerts
  */
 class AlertPopIn extends Transition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
+  init() {
+    let ele = this.enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
@@ -311,10 +309,8 @@ Transition.register('alert-pop-in', AlertPopIn);
 
 
 class AlertPopOut extends Transition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
+  init() {
+    let ele = this.leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
@@ -332,10 +328,8 @@ Transition.register('alert-pop-out', AlertPopOut);
 
 
 class AlertMdPopIn extends Transition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
+  init() {
+    let ele = this.enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
@@ -353,10 +347,8 @@ Transition.register('alert-md-pop-in', AlertMdPopIn);
 
 
 class AlertMdPopOut extends Transition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
+  init() {
+    let ele = this.leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
@@ -374,10 +366,8 @@ Transition.register('alert-md-pop-out', AlertMdPopOut);
 
 
 class AlertWpPopIn extends Transition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
+  init() {
+    let ele = this.enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 
@@ -395,10 +385,8 @@ Transition.register('alert-wp-pop-in', AlertWpPopIn);
 
 
 class AlertWpPopOut extends Transition {
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
+  init() {
+    let ele = this.leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
     let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
 

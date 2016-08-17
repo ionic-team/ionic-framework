@@ -11,8 +11,12 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 class MDTransition extends PageTransition {
 
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
+  init() {
+    super.init();
+
+    const enteringView = this.enteringView;
+    const leavingView = this.leavingView;
+    const opts = this.opts;
 
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');

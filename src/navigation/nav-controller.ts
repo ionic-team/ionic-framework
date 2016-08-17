@@ -335,27 +335,6 @@ export abstract class NavController {
   config: Config;
 
   /**
-   * Set the root for the current navigation stack.
-   * @param {Page} page  The name of the component you want to push on the navigation stack.
-   * @param {object} [params={}] Any nav-params you want to pass along to the next view.
-   * @param {object} [opts={}] Any options you want to use pass to transtion.
-   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
-   */
-  abstract setRoot(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
-
-  /**
-   * Set the views of the current navigation stack and navigate to the
-   * last view. By default animations are disabled, but they can be enabled
-   * by passing options to the navigation controller.You can also pass any
-   * navigation params to the individual pages in the array.
-   *
-   * @param {array<Page>} pages  An arry of page components and their params to load in the stack.
-   * @param {object} [opts={}] Nav options to go with this transition.
-   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
-   */
-  abstract setPages(pages: Array<{page: any, params?: any}>, opts?: NavOptions, done?: Function): Promise<any>;
-
-  /**
    * Push a new component onto the current navication stack. Pass any aditional information
    * along as an object. This additional information is acessible through NavParams
    *
@@ -434,6 +413,27 @@ export abstract class NavController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   abstract remove(startIndex: number, removeCount?: number, opts?: NavOptions, done?: Function): Promise<any>;
+
+  /**
+   * Set the root for the current navigation stack.
+   * @param {Page|ViewController} page  The name of the component you want to push on the navigation stack.
+   * @param {object} [params={}] Any nav-params you want to pass along to the next view.
+   * @param {object} [opts={}] Any options you want to use pass to transtion.
+   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
+   */
+  abstract setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+
+  /**
+   * Set the views of the current navigation stack and navigate to the
+   * last view. By default animations are disabled, but they can be enabled
+   * by passing options to the navigation controller.You can also pass any
+   * navigation params to the individual pages in the array.
+   *
+   * @param {array<Page>} pages  An arry of page components and their params to load in the stack.
+   * @param {object} [opts={}] Nav options to go with this transition.
+   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
+   */
+  abstract setPages(pages: Array<{pageOrViewCtrl: any, params?: any}> | Array<ViewController>, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * @param {number} index  The index of the page to get.

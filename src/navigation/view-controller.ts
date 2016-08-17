@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
 import { Footer, Header } from '../components/toolbar/toolbar';
-import { isBoolean, isPresent, merge, pascalCaseToDashCase } from '../util/util';
+import { isPresent, isString, merge } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
-import { NavController } from './nav-controller';
-import { NavOptions, TestDone, TestResult } from './nav-util';
+import { NavControllerBase } from './nav-controller-base';
+import { NavOptions, TestDone, ViewState } from './nav-util';
 import { NavParams } from './nav-params';
 
 
@@ -37,7 +37,6 @@ export class ViewController {
   private _onDidDismiss: Function = null;
   private _onWillDismiss: Function = null;
   private _detached: boolean = false;
-  protected _nav: NavController;
 
   /**
    * Observable to be subscribed to when the current component will become active
@@ -92,12 +91,17 @@ export class ViewController {
   /**
    * @internal
    */
+  _nav: NavControllerBase;
+
+  /**
+   * @internal
+   */
   _zIndex: number;
 
   /**
    * @internal
    */
-  _loaded: boolean = false;
+  _state: ViewState;
 
   /**
    * @internal
@@ -186,7 +190,7 @@ export class ViewController {
   /**
    * @internal
    */
-  _setNav(navCtrl: NavController) {
+  _setNav(navCtrl: NavControllerBase) {
     this._nav = navCtrl;
   }
 
@@ -410,8 +414,6 @@ export class ViewController {
    * recommended method to use when a view becomes active.
    */
   _didLoad() {
-    this._loaded = true;
-
     // deprecated warning: added 2016-08-14, beta.12
     if (this._cmp && this._cmp.instance.ionViewLoaded) {
       try {
@@ -480,23 +482,28 @@ export class ViewController {
   /**
    * @internal
    */
-  _willUnload(renderer: Renderer) {
+  _willUnload() {
     this.willUnload.emit();
 
     ctrlFn(this, 'WillUnload');
 
-    if (this._cmp) {
-
-      // deprecated warning: added 2016-08-14, beta.12
-      if (this._cmp.instance.ionViewDidUnload) {
-        console.warn('ionViewDidUnload() has been deprecated. Please use ionViewWillUnload() instead');
-        try {
-          this._cmp.instance.ionViewDidUnload();
-        } catch (e) {
-          console.error(this.name + ' ionViewDidUnload: ' + e.message);
-        }
+    // deprecated warning: added 2016-08-14, beta.12
+    if (this._cmp && this._cmp.instance.ionViewDidUnload) {
+      console.warn('ionViewDidUnload() has been deprecated. Please use ionViewWillUnload() instead');
+      try {
+        this._cmp.instance.ionViewDidUnload();
+      } catch (e) {
+        console.error(this.name + ' ionViewDidUnload: ' + e.message);
       }
+    }
+  }
 
+  /**
+   * @internal
+   * DOM WRITE
+   */
+  _destroy(renderer: Renderer) {
+    if (this._cmp) {
       // ensure the element is cleaned up for when the view pool reuses this element
       // ******** DOM WRITE ****************
       renderer.setElementAttribute(this._cmp.location.nativeElement, 'class', null);
@@ -506,51 +513,33 @@ export class ViewController {
       this._cmp.destroy();
     }
 
-    this._nav = this._cmp = this._cntDir = this._onDidDismiss = this._onWillDismiss = null;
+    if (this._nav) {
+      // remove it from the nav
+      const index = this._nav.indexOf(this);
+      if (index > -1) {
+        this._nav._views.splice(index, 1);
+      }
+    }
+
+    this._nav = this._cmp = this._cntDir = this._cntRef = this._tbRefs = this._hdrDir = this._ftrDir = this._nb = this._onDidDismiss = this._onWillDismiss = null;
   }
 
   /**
    * @internal
    */
-  _lifecycleTest(view: ViewController, lifecycle: string, testDone: TestDone) {
-    const testResult: TestResult = { valid: true, rejectReason: null };
+  _lifecycleTest(lifecycle: string): boolean | string | Promise<any> {
+    let result: any = true;
 
-    if (view._cmp && view._cmp.instance && view._cmp.instance['ionViewCan' + lifecycle]) {
+    if (this._cmp && this._cmp.instance && this._cmp.instance['ionViewCan' + lifecycle]) {
       try {
-        const result = view._cmp.instance['ionViewCan' + lifecycle];
-        if (result === false) {
-          // synchronous: rejected cuz of boolean false
-          testResult.valid = false;
-
-        } else if (result instanceof Promise) {
-          // async: wait for promise to resolve
-          result.then((userResponse: any) => {
-            // user's promise has resolved
-            if (isPresent(userResponse)) {
-              if (isBoolean(userResponse)) {
-                testResult.valid = userResponse;
-
-              } else {
-                testResult.valid = !!userResponse;
-                testResult.rejectReason = userResponse;
-              }
-            }
-
-            testDone(testResult);
-          });
-          return;
-        }
+        result = this._cmp.instance['ionViewCan' + lifecycle]();
 
       } catch (e) {
-        // synchronous
-        console.error(e);
+        console.error(`${this.name} ionViewCan${lifecycle} error: ${e}`);
+        result = false;
       }
     }
-
-    // synchronous: there was no test
-    setTimeout(() => {
-      testDone(testResult);
-    }, Math.random() * 100)
+    return result;
   }
 
 }

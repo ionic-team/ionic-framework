@@ -1,31 +1,34 @@
+import { AnimationOptions } from '../animations/animation';
 import { isPresent } from '../util/util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
 import { Transition } from './transition';
+import { ViewController } from '../navigation/view-controller';
 
 /**
  * @private
  */
 export class TransitionController {
+  private _ids = 0;
+  private _trans: {[key: number]: Transition} = {};
 
-  private _trans: {[key: string]: Transition} = {};
-
-  getRootTransId(nav: NavControllerBase): string {
+  getRootTransId(nav: NavControllerBase): number {
     let parent = <NavControllerBase>nav.parent;
     while (parent) {
-      if (isPresent(parent.rootTransId)) {
-        return parent.rootTransId;
+      if (isPresent(parent._transId)) {
+        return parent._transId;
       }
       parent = parent.parent;
     }
     return null;
   }
 
-  create(transitionName: string) {
-    return Transition.createTransition(transitionName);
+  nextId() {
+    return this._ids++;
   }
 
-  get(transId: string, transitionName: string) {
-    const trans = this.create(transitionName);
+  get(transId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    const trans = Transition.createTransition(opts.animation, enteringView, leavingView, opts);
+    trans.transId = transId;
 
     if (!this._trans[transId]) {
       // we haven't created the root transition yet
@@ -40,8 +43,11 @@ export class TransitionController {
     return trans;
   }
 
-  multipleActiveTrans(): boolean {
-    return (Object.keys(this._trans).length > 1);
+  destroy(transId: number) {
+    if (this._trans[transId]) {
+      this._trans[transId].destroy();
+      delete this._trans[transId];
+    }
   }
 
 }

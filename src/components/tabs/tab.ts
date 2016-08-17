@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -245,7 +245,7 @@ export class Tab extends NavControllerBase {
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
   constructor(
-    @Inject(forwardRef(() => Tabs)) public parent: Tabs,
+    parent: Tabs,
     app: App,
     config: Config,
     keyboard: Keyboard,

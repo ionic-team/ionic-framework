@@ -10,10 +10,8 @@ import { ViewController } from '../navigation/view-controller';
 export class PageTransition extends Transition {
   enteringPage: Animation;
 
-  init(enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    super.init(enteringView, leavingView, opts);
-
-    this.enteringPage = new Animation(enteringView.pageRef());
+  init() {
+    this.enteringPage = new Animation(this.enteringView.pageRef());
     this.add(this.enteringPage.beforeAddClass('show-page'));
 
     this.beforeAddRead(this.readDimensions.bind(this));

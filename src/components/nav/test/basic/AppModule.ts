@@ -36,12 +36,16 @@ export class MyCmpTest {}
           <ion-label>Text Input</ion-label>
           <ion-textarea></ion-textarea>
         </ion-item>
-        <button ion-item [navPush]="[pushPage, {id: 42}]">Push FullPage w/ [navPush] array</button>
+        <button ion-item navPush="FullPage">Push FullPage w/ navPush="FullPage"</button>
         <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
-        <button ion-item [navPush]="[\'FirstPage\', {id: 22}]">Push w/ [navPush] array and string view name</button>
+        <button ion-item [navPush]="'FirstPage'">Push w/ [navPush] and string view name</button>
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="navCtrl.pop()">Pop</button>
+        <ion-item>
+          <ion-label>Toggle Can Leave</ion-label>
+          <ion-toggle (click)="canLeave = !canLeave"></ion-toggle>
+        </ion-item>
         <button ion-item (click)="viewDismiss()">View Dismiss</button>
         <button ion-item (click)="quickPush()">New push during transition</button>
         <button ion-item (click)="quickPop()">New pop during transition</button>
@@ -59,10 +63,12 @@ export class FirstPage {
   title = 'First Page';
   pages: Array<number> = [];
   @ViewChild(Content) content: Content;
+  canLeave = true;
 
   constructor(
     public navCtrl: NavController,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public alertCtrl: AlertController
   ) {}
 
   ionViewDidLoad() {
@@ -92,6 +98,19 @@ export class FirstPage {
     console.log('ionViewWillUnload, FirstPage', this.viewCtrl.id);
   }
 
+  ionViewCanLeave() {
+    if (this.canLeave) {
+      return true;
+    }
+
+    let alert = this.alertCtrl.create();
+    alert.setMessage('You can check-out any time you like, but you can never leave.');
+    alert.addButton({ text: 'Umm, ok', role: 'cancel', });
+    alert.present();
+
+    return false;
+  }
+
   setPages() {
     let items = [
       { page: PrimaryHeaderPage }
@@ -105,28 +124,30 @@ export class FirstPage {
   }
 
   pushPrimaryHeaderPage() {
-    this.navCtrl.push(PrimaryHeaderPage);
+    this.navCtrl.push(PrimaryHeaderPage).then(() => {}, (rejectReason: string) => {
+      debugger
+    });
   }
 
   pushFullPage() {
-    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] });
+    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] }).catch(()=>{});
   }
 
   pushAnother() {
-    this.navCtrl.push(AnotherPage);
+    this.navCtrl.push(AnotherPage).catch(()=>{});
   }
 
   quickPush() {
-    this.navCtrl.push(AnotherPage);
+    this.navCtrl.push(AnotherPage).catch(()=>{});
     setTimeout(() => {
-      this.navCtrl.push(PrimaryHeaderPage);
+      this.navCtrl.push(PrimaryHeaderPage).catch(()=>{});
     }, 150);
   }
 
   quickPop() {
-    this.navCtrl.push(AnotherPage);
+    this.navCtrl.push(AnotherPage).catch(()=>{});
     setTimeout(() => {
-      this.navCtrl.remove(1, 1);
+      this.navCtrl.remove(1, 1).catch(()=>{});
     }, 250);
   }
 

@@ -3,19 +3,26 @@ import { ComponentRef, Renderer } from '@angular/core';
 import { DeepLinker } from './deep-linker';
 import { isBoolean, isPresent } from '../util/util';
 import { NavControllerBase } from './nav-controller-base';
+import { Transition } from '../transitions/transition';
 import { ViewController } from './view-controller';
 
-export function convertToViews(linker: DeepLinker, pages: Array<{page: any, params?: any}>): ViewController[] {
+
+export function convertToViews(linker: DeepLinker, pages: any[]): ViewController[] {
   const views: ViewController[] = [];
   if (pages) {
     for (var i = 0; i < pages.length; i++) {
-      var componentType: any = linker.getComponent(pages[i].page) || pages[i].page;
-      if (componentType) {
-        if (typeof componentType !== 'function') {
-          console.error(`invalid component for nav: ${componentType}`);
+      if (pages[i] instanceof ViewController) {
+        views.push(pages[i]);
 
-        } else {
-          views.push(new ViewController(componentType, pages[i].params));
+      } else {
+        var componentType: any = linker.getComponent(pages[i].page) || pages[i].page;
+        if (componentType) {
+          if (typeof componentType !== 'function') {
+            console.error(`invalid component for nav: ${componentType}`);
+
+          } else {
+            views.push(new ViewController(componentType, pages[i].params));
+          }
         }
       }
     }
@@ -23,16 +30,12 @@ export function convertToViews(linker: DeepLinker, pages: Array<{page: any, para
   return views;
 }
 
-
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
   if (enteringView) {
     // get the leaving view, which could be in various states
-    if (!leavingView || !leavingView._loaded) {
-      // the leavingView is a mocked view, either we're
-      // actively transitioning or it's the initial load
-
+    if (!leavingView) {
       const previousView = nav.getPrevious(enteringView);
-      if (previousView && previousView._loaded) {
+      if (previousView && previousView._state === ViewState.LOADED) {
         // we found a better previous view to reference
         // use this one instead
         enteringView._setZIndex(previousView._zIndex + 1, renderer);
@@ -109,19 +112,27 @@ export interface NavOptions {
   keyboardClose?: boolean;
   transitionDelay?: number;
   progressAnimation?: boolean;
-  climbNav?: boolean;
   ev?: any;
   updateUrl?: boolean;
   isNavRoot?: boolean;
 }
 
-export interface TransitionResult {
-  hasCompleted: boolean;
-  rejectReason?: any;
+export interface TransitionResolveFn {
+  (hasCompleted: boolean): void
 }
 
-export interface TransitionDone {
-  (transitionResult: TransitionResult): void
+export interface TransitionRejectFn {
+  (rejectReason: any, transition?: Transition): void
+}
+
+export interface TransitionInstruction {
+  opts: NavOptions;
+  insertStart?: number;
+  insertViews?: ViewController[];
+  removeStart?: number;
+  removeCount?: number;
+  resolve?: TransitionResolveFn;
+  reject?: TransitionRejectFn;
 }
 
 export interface TestDone {
@@ -133,12 +144,10 @@ export interface TestResult {
   rejectReason?: any;
 }
 
-export interface NavInstruction {
-  startIndex: number;
-  removeCount: number;
-  opts: NavOptions;
-  insertViews: ViewController[];
-  done: TransitionDone;
+export enum ViewState {
+  INITIALIZED,
+  PRE_RENDERED,
+  LOADED,
 }
 
 export const INIT_ZINDEX = 100;
