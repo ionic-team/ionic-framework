@@ -79,9 +79,9 @@ export class ViewController {
   didUnload: EventEmitter<any>;
 
   /**
-   * @protected
+   * @internal
    */
-  protected data: any;
+  data: any;
 
   /**
    * @private

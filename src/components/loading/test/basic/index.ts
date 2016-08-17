@@ -83,11 +83,16 @@ class E2EPage {
       content: `
         <div class="custom-spinner-container">
           <div class="custom-spinner-box"></div>
-        </div>`,
-      duration: 1000
+        </div>`
     });
 
     loading.present();
+    setTimeout(() => {
+      loading.setContent("Loaded!");
+    }, 1000);
+    setTimeout(() => {
+      loading.dismiss();
+    }, 2000);
   }
 
   presentLoadingText() {
