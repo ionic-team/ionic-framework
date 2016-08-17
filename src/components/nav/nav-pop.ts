@@ -16,7 +16,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```html
  * <ion-content>
  *
- *  <button navPop>Go Back</button>
+ *  <button ion-button navPop>Go Back</button>
  *
  * </ion-content>
  * ```

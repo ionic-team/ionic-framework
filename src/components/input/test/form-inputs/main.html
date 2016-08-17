@@ -41,7 +41,7 @@
       </ion-item>
 
       <div padding-left padding-right>
-        <button block (click)="submit($event, login)">Login</button>
+        <button ion-button block (click)="submit($event, login)">Login</button>
       </div>
       <div padding-left>
         <b>Valid form?:</b> {{ mf.form.valid }}<br>
@@ -65,7 +65,7 @@
         <ion-input type="password" [(ngModel)]="user.password" formControlName="password" required></ion-input>
       </ion-item>
       <div padding-left padding-right>
-        <button block type="submit">Login</button>
+        <button ion-button block type="submit">Login</button>
       </div>
       <div padding-left>
         <b>Valid form?:</b> {{ lf.form.valid }}<br>
@@ -125,6 +125,6 @@
     </ion-item>
   </ion-list>
 
-  <button (click)="disable()">Disable</button>
+  <button ion-button (click)="disable()">Disable</button>
 
 </ion-content>

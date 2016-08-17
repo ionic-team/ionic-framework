@@ -27,22 +27,22 @@
       </ion-item>
 
       <ion-item-options>
-        <button secondary (click)="more(item)">
+        <button ion-button secondary (click)="more(item)">
           <ion-icon name="menu"></ion-icon>
           More
         </button>
-        <button dark (click)="mute(item)">
+        <button ion-button dark (click)="mute(item)">
           <ion-icon name="volume-off"></ion-icon>
           Mute
         </button>
-        <button danger (click)="delete(item)">
+        <button ion-button danger (click)="delete(item)">
           <ion-icon name="trash"></ion-icon>
           Delete
         </button>
       </ion-item-options>
 
       <ion-item-options side="left" (ionSwipe)="archive(item)">
-        <button primary expandable (click)="archive(item)">
+        <button ion-button primary expandable (click)="archive(item)">
           <ion-icon name="archive" class="expand-hide"></ion-icon>
           <div class="expand-hide">Archive</div>
           <ion-spinner id="archive-spinner"></ion-spinner>
@@ -63,16 +63,16 @@
         <p>{{login.username}}</p>
       </ion-item>
       <ion-item-options side="left">
-        <button danger>
+        <button ion-button danger>
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>
-      <ion-item-options (ionSwipe)="download(item)">
-        <button dark (click)="more(item)">
+      <ion-item-options (ionSwipe)="download(item)" icon-left>
+        <button ion-button dark (click)="more(item)">
           <ion-icon name="volume-off"></ion-icon>
           Mute
         </button>
-        <button light expandable (click)="download(item)">
+        <button ion-button light expandable (click)="download(item)">
           <ion-icon name="download" class="expand-hide"></ion-icon>
           <div class="expand-hide">Download</div>
           <ion-spinner id="download-spinner"></ion-spinner>

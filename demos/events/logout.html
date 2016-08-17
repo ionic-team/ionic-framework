@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
 
@@ -17,7 +17,7 @@
   <p margin>Click the logout button to logout. Then, toggle the menu to see the menu items change.</p>
 
   <div padding>
-    <button block (click)="logout()">Logout</button>
-    <button block secondary menuToggle>Toggle Menu</button>
+    <button ion-button block (click)="logout()">Logout</button>
+    <button ion-button block secondary menuToggle>Toggle Menu</button>
   </div>
 </ion-content>

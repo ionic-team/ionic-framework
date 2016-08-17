@@ -25,7 +25,7 @@
     <ion-list-header>{{ appType }}</ion-list-header>
     <ion-item *ngFor="let item of getItems(appType)">
       {{ item.name }}
-      <button outline item-right>{{ item.price }}</button>
+      <button ion-button outline item-right>{{ item.price }}</button>
     </ion-item>
   </ion-list>
 

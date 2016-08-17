@@ -61,7 +61,7 @@ import { isTrueProperty } from '../../util/util';
  *       </ion-toolbar>
  *     </ion-header>
  *     <ion-content>
- *       <button (click)="toggleToolbar()">Toggle Toolbar</button>
+ *       <button ion-button (click)="toggleToolbar()">Toggle Toolbar</button>
  *     </ion-content>
  * `})
  *
@@ -85,7 +85,7 @@ import { isTrueProperty } from '../../util/util';
  *
  * @Component({
  *   template: `<ion-content>
- *                <button (click)="scrollTo()">Down 500px</button>
+ *                <button ion-button (click)="scrollTo()">Down 500px</button>
  *              </ion-content>`
  * )}
  * export class MyPage{

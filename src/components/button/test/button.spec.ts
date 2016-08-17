@@ -163,12 +163,6 @@ export function run() {
       expect(hasClass(b, 'button-small')).toEqual(true);
     });
 
-    it('should not add button css class for ion-item attribute', () => {
-      let b = mockButton(['ion-item']);
-      b._assignCss(true);
-      expect(hasClass(b, 'button')).toEqual(false);
-    });
-
     it('should add button css class', () => {
       let b = mockButton();
       b._assignCss(true);
@@ -193,10 +187,17 @@ export function run() {
       expect(b._display).toEqual(null);
     });
 
+    it('should add alert-button css class', () => {
+      let b = mockButton(null, null, 'alert-button');
+      b._assignCss(true);
+      expect(hasClass(b, 'alert-button')).toEqual(true);
+    });
+
   });
 
-  function mockButton(attrs?, config?) {
+  function mockButton(attrs?, config?, ionButton?) {
     config = config || new Config();
+    ionButton = ionButton || '';
     let elementRef = {
       nativeElement: document.createElement('button')
     };
@@ -210,7 +211,7 @@ export function run() {
         nativeElement.classList[shouldAdd ? 'add' : 'remove'](className);
       }
     };
-    let b = new Button(config, elementRef, renderer, null);
+    let b = new Button(ionButton, config, elementRef, renderer, null);
     b._init = true;
     return b;
   }

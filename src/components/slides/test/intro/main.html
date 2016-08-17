@@ -2,7 +2,7 @@
 
   <ion-navbar>
     <ion-buttons end>
-      <button (click)="skip()">
+      <button ion-button (click)="skip()">
         {{continueText}}
       </button>
     </ion-buttons>
@@ -35,7 +35,7 @@
            <li>There is no step 3</li>
          </ol>
        </div>
-       <button (click)="toggleLastSlide()">Toggle Last Slide</button>
+       <button ion-button (click)="toggleLastSlide()">Toggle Last Slide</button>
     </ion-slide>
     <ion-slide *ngIf="showSlide">
       <h3>Any questions?</h3>

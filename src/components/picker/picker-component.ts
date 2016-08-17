@@ -29,7 +29,7 @@ import { ViewController } from '../../navigation/view-controller';
               '[class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" ' +
               '(click)="optClick($event, i)" ' +
               'type="button" ' +
-              'category="picker-opt">' +
+              'ion-button="picker-opt">' +
         '{{o.text}}' +
       '</button>' +
     '</div>' +
@@ -358,7 +358,7 @@ export class PickerColumnCmp {
     <div class="picker-wrapper">
       <div class="picker-toolbar">
         <div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">
-          <button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>
+          <button ion-button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>
             {{b.text}}
           </button>
         </div>

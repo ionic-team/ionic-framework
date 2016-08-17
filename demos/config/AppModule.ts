@@ -89,18 +89,23 @@ export class ApiDemoPage {
 
     if (window.localStorage.getItem('configDemo') !== null) {
       this.config = JSON.parse(window.localStorage.getItem('configDemo'));
-    }
-    else if (platform.is('ios')) {
+    } else if (platform.is('ios')) {
       this.config = {
         'backButtonIcon': 'ios-arrow-back',
         'iconMode': 'ios',
         'tabsPlacement': 'bottom'
       };
+    } else if(platform.is('windows')) {
+      this.config = {
+        'backButtonIcon': 'ios-arrow-back',
+        'iconMode': 'ios',
+        'tabsPlacement': 'top'
+      };
     } else {
       this.config = {
         'backButtonIcon': 'md-arrow-back',
         'iconMode': 'md',
-        'tabsPlacement': 'top'
+        'tabsPlacement': 'bottom'
       };
     }
 

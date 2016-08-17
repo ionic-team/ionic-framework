@@ -180,9 +180,9 @@ import { Reorder } from '../item/item-reorder';
  *
  *   <!-- List header with buttons on each side -->
  *   <ion-list-header>
- *     <button item-left (click)="buttonClick()">Button</button>
+ *     <button ion-button item-left (click)="buttonClick()">Button</button>
  *     List Header
- *     <button outline item-right (click)="buttonClick()">Outline</button>
+ *     <button ion-button outline item-right (click)="buttonClick()">Outline</button>
  *   </ion-list-header>
  *
  *   <!-- Loops through and creates multiple items -->
@@ -208,25 +208,25 @@ import { Reorder } from '../item/item-reorder';
  *
  *   <!-- Item with left and right buttons -->
  *   <ion-item>
- *     <button item-left (click)="buttonClick()">Button</button>
+ *     <button ion-button item-left (click)="buttonClick()">Button</button>
  *     Item
- *     <button outline item-right (click)="buttonClick()">Outline</button>
+ *     <button ion-button outline item-right (click)="buttonClick()">Outline</button>
  *   </ion-item>
  *
  *   <!-- Item divider with a right button -->
  *   <ion-item-divider>
  *     Item Divider
- *     <button item-right>Button</button>
+ *     <button ion-button item-right>Button</button>
  *   </ion-item-divider>
  *
  *   <!-- Disabled button item with left and right buttons -->
  *   <button ion-item disabled>
- *     <button item-left (click)="buttonClick()">
+ *     <button ion-button item-left (click)="buttonClick()">
  *       <ion-icon name="home"></ion-icon>
  *       Left Icon
  *     </button>
  *     Disabled Button Item
- *     <button outline item-right (click)="buttonClick()">
+ *     <button ion-button outline item-right (click)="buttonClick()">
  *       <ion-icon name="star"></ion-icon>
  *       Left Icon
  *     </button>
@@ -238,7 +238,7 @@ import { Reorder } from '../item/item-reorder';
  *       <img src="img/my-avatar.png">
  *     </ion-avatar>
  *     Avatar Item
- *     <button outline item-right>View</button>
+ *     <button ion-button outline item-right>View</button>
  *   </ion-item>
  *
  *   <!-- Item with a thumbnail on the right -->
@@ -256,7 +256,7 @@ import { Reorder } from '../item/item-reorder';
  *       Item
  *     </ion-item>
  *     <ion-item-options>
- *       <button primary (click)="archive()">Archive</button>
+ *       <button ion-button primary (click)="archive()">Archive</button>
  *     </ion-item-options>
  *   </ion-item-sliding>
  *

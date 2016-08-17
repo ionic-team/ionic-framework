@@ -138,8 +138,8 @@ ion-icon[item-right] {
   font-size: 1.2rem;
 }
 
-.item-button.button-icon-only ion-icon,
-.item-button.button-icon-only {
+.item-button[icon-only] ion-icon,
+.item-button[icon-only] {
   padding: 0 1px;
 }
 

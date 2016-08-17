@@ -11,7 +11,7 @@ import { IonicApp, IonicModule, NavController, NavParams } from '../../../dist';
     </ion-header>
     <ion-content padding>
       <p>{{session.description}}</p>
-      <p><button (click)="navCtrl.pop()">Go Back</button></p>
+      <p><button ion-button (click)="navCtrl.pop()">Go Back</button></p>
     </ion-content>
   `
 })

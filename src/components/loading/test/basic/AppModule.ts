@@ -83,11 +83,16 @@ export class E2EPage {
       content: `
         <div class="custom-spinner-container">
           <div class="custom-spinner-box"></div>
-        </div>`,
-      duration: 1000
+        </div>`
     });
 
     loading.present();
+    setTimeout(() => {
+      loading.setContent("Loaded!");
+    }, 1000);
+    setTimeout(() => {
+      loading.dismiss();
+    }, 2000);
   }
 
   presentLoadingText() {
@@ -197,7 +202,7 @@ export class E2EPage {
     <ion-footer>
       <ion-toolbar>
         <ion-buttons end>
-          <button (click)="goToPage3()">
+          <button ion-button (click)="goToPage3()">
             Navigate
             <ion-icon name="arrow-forward"></ion-icon>
           </button>

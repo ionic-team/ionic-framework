@@ -3,6 +3,7 @@ import { isPresent } from '../util/util';
 import { Content } from '../components/content/content';
 import { Tabs } from '../components/tabs/tabs';
 import { ViewController } from '../navigation/view-controller';
+import { NavController } from '../navigation/nav-controller';
 
 
 /**
@@ -24,6 +25,7 @@ export class Transition extends Animation {
   parent: Transition;
   hasChildTrans: boolean;
   transId: number;
+
 
   constructor(public enteringView: ViewController, public leavingView: ViewController, opts: AnimationOptions) {
     super(null, opts);

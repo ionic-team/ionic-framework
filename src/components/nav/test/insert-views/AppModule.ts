@@ -11,7 +11,7 @@ import { IonicApp, IonicModule, NavController } from '../../../dist';
     </ion-header>
 
     <ion-content padding>
-      <button block (click)="pushPage()">Push Page</button>
+      <button ion-button block (click)="pushPage()">Push Page</button>
     </ion-content>`,
 })
 export class FirstPage {
@@ -33,7 +33,7 @@ export class FirstPage {
 
     <ion-content padding>
       <h1>Second page</h1>
-      <button block (click)="insertPage()">Insert Page</button>
+      <button ion-button block (click)="insertPage()">Insert Page</button>
     </ion-content>
   `
 })

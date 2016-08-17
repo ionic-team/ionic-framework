@@ -1,8 +1,8 @@
-import { Component, ElementRef, Renderer, Attribute, Optional, Input, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { Toolbar } from '../toolbar/toolbar';
 import { isTrueProperty } from '../../util/util';
+import { Toolbar } from '../toolbar/toolbar';
 
 
 /**
@@ -30,11 +30,67 @@ import { isTrueProperty } from '../../util/util';
   * @property [fab-fixed] - Makes a fab button have a fixed position.
   * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
   *
+  * @usage
+  *
+  * ```html
+  *
+  *  <!-- Colors -->
+  *  <button ion-button>Default</button>
+  *
+  *  <button ion-button secondary>Secondary</button>
+  *
+  *  <button ion-button danger>Danger</button>
+  *
+  *  <button ion-button light>Light</button>
+  *
+  *  <button ion-button dark>Dark</button>
+  *
+  *  <!-- Shapes -->
+  *  <button ion-button full>Full Button</button>
+  *
+  *  <button ion-button block>Block Button</button>
+  *
+  *  <button ion-button round>Round Button</button>
+  *
+  *  <button ion-button fab>FAB</button>
+  *
+  *  <!-- Outline -->
+  *  <button ion-button full outline>Outline + Full</button>
+  *
+  *  <button ion-button block outline>Outline + Block</button>
+  *
+  *  <button ion-button round outline>Outline + Round</button>
+  *
+  *  <button ion-button fab outline>FAB</button>
+  *
+  *  <!-- Icons -->
+  *  <button ion-button icon-left>
+  *    <ion-icon name="star"></ion-icon>
+  *    Left Icon
+  *  </button>
+  *
+  *  <button ion-button icon-right>
+  *    Right Icon
+  *    <ion-icon name="star"></ion-icon>
+  *  </button>
+  *
+  *  <button ion-button icon-only>
+  *    <ion-icon name="star"></ion-icon>
+  *  </button>
+  *
+  *  <!-- Sizes -->
+  *  <button ion-button large>Large</button>
+  *
+  *  <button ion-button>Default</button>
+  *
+  *  <button ion-button small>Small</button>
+  * ```
+  *
   * @demo /docs/v2/demos/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
  */
 @Component({
-  selector: 'button:not([ion-item]),[button]',
+  selector: '[ion-button]',
   template:
     '<span class="button-inner">' +
       '<ng-content></ng-content>' +
@@ -44,25 +100,15 @@ import { isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class Button {
-  _role: string = 'button'; // bar-button/item-button
-  _size: string = null; // large/small/default
-  _style: string = 'default'; // outline/clear/solid
-  _shape: string = null; // round/fab
-  _display: string = null; // block/full
-  _colors: Array<string> = []; // primary/secondary
-  _icon: string = null; // left/right/only
-  _disabled: boolean = false; // disabled
-  _init: boolean;
-
-  /**
-   * @internal
-   */
-  isItem: boolean;
-
-  /**
-   * @input {string} The category of the button.
-   */
-  @Input() category: string;
+  private _role: string = 'button'; // bar-button
+  private _size: string = null; // large/small/default
+  private _style: string = 'default'; // outline/clear/solid
+  private _shape: string = null; // round/fab
+  private _display: string = null; // block/full
+  private _colors: Array<string> = []; // primary/secondary
+  private _icon: string = null; // left/right/only
+  private _disabled: boolean = false; // disabled
+  private _init: boolean;
 
   /**
    * @input {string} Large button.
@@ -164,28 +210,23 @@ export class Button {
   }
 
   constructor(
+    @Attribute('ion-button') ionButton: string,
     config: Config,
     private _elementRef: ElementRef,
-    private _renderer: Renderer,
-    @Attribute('ion-item') ionItem: string
+    private _renderer: Renderer
   ) {
-
-    this.isItem = (ionItem === '');
-
     let element = _elementRef.nativeElement;
 
     if (config.get('hoverCSS') === false) {
-      _renderer.setElementClass(_elementRef.nativeElement, 'disable-hover', true);
-    }
-
-    if (element.hasAttribute('ion-item')) {
-      // no need to put on these classes for an ion-item
-      this._role = null;
-      return;
+      _renderer.setElementClass(element, 'disable-hover', true);
     }
 
     if (element.hasAttribute('disabled')) {
       this._disabled = true;
+    }
+
+    if (ionButton.trim().length > 0) {
+      this.setRole(ionButton);
     }
 
     this._readAttrs(element);
@@ -194,19 +235,8 @@ export class Button {
   /**
    * @internal
    */
-  ngOnInit() {
-    // If the button has a role applied to it
-    if (this.category) {
-      this.setRole(this.category);
-    }
-  }
-
-  /**
-   * @internal
-   */
   ngAfterContentInit() {
     this._init = true;
-    this._readIcon(this._elementRef.nativeElement);
     this._assignCss(true);
   }
 
@@ -214,7 +244,6 @@ export class Button {
    * @internal
    */
   ngAfterContentChecked() {
-    this._readIcon(this._elementRef.nativeElement);
     this._assignCss(true);
   }
 
@@ -231,62 +260,13 @@ export class Button {
   setRole(val: string) {
     this._assignCss(false);
     this._role = val;
-    this._readIcon(this._elementRef.nativeElement);
     this._assignCss(true);
   }
 
   /**
    * @internal
    */
-  _readIcon(element: HTMLElement) {
-    // figure out if and where the icon lives in the button
-    let childNodes = element.childNodes;
-    if (childNodes.length > 0) {
-      childNodes = childNodes[0].childNodes;
-    }
-    let childNode: Node;
-    let nodes: number[] = [];
-    for (let i = 0, l = childNodes.length; i < l; i++) {
-      childNode = childNodes[i];
-
-      if (childNode.nodeType === 3) {
-        // text node
-        if (childNode.textContent.trim() !== '') {
-          nodes.push(TEXT);
-        }
-
-      } else if (childNode.nodeType === 1) {
-        if (childNode.nodeName === 'ION-ICON') {
-          // icon element node
-          nodes.push(ICON);
-
-        } else {
-          // element other than an <ion-icon>
-          nodes.push(TEXT);
-        }
-      }
-    }
-
-    // Remove any classes that are set already
-    this._setClass(this._icon, false);
-
-    if (nodes.length > 1) {
-      if (nodes[0] === ICON && nodes[1] === TEXT) {
-        this._icon = 'icon-left';
-
-      } else if (nodes[0] === TEXT && nodes[1] === ICON) {
-        this._icon = 'icon-right';
-      }
-
-    } else if (nodes.length === 1 && nodes[0] === ICON) {
-      this._icon = 'icon-only';
-    }
-  }
-
-  /**
-   * @internal
-   */
-  _readAttrs(element: HTMLElement) {
+  private _readAttrs(element: HTMLElement) {
     let elementAttrs = element.attributes;
     let attrName: string;
     for (let i = 0, l = elementAttrs.length; i < l; i++) {

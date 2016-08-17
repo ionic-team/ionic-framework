@@ -125,7 +125,7 @@ import { GestureController } from '../../gestures/gesture-controller';
  * directive anywhere in the page's template:
  *
  * ```html
- * <button menuToggle>Toggle Menu</button>
+ * <button ion-button menuToggle>Toggle Menu</button>
  * ```
  *
  * To close a menu, add the `menuClose` button. It can be added anywhere
@@ -136,7 +136,7 @@ import { GestureController } from '../../gestures/gesture-controller';
  * <ion-menu [content]="mycontent">
  *   <ion-content>
  *     <ion-list>
- *       <button menuClose ion-item detail-none>Close Menu</button>
+ *       <button ion-button menuClose ion-item detail-none>Close Menu</button>
  *     </ion-list>
  *   </ion-content>
  * </ion-menu>

@@ -24,7 +24,7 @@ import { ViewController } from '../../navigation/view-controller';
  * <ion-header>
  *
  *   <ion-navbar>
- *     <button menuToggle>
+ *     <button ion-button menuToggle>
  *       <ion-icon name="menu"></ion-icon>
  *     </button>
  *
@@ -33,7 +33,7 @@ import { ViewController } from '../../navigation/view-controller';
  *     </ion-title>
  *
  *     <ion-buttons end>
- *       <button (click)="openModal()">
+ *       <button ion-button (click)="openModal()">
  *         <ion-icon name="options"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -49,7 +49,7 @@ import { ViewController } from '../../navigation/view-controller';
   selector: 'ion-navbar',
   template:
     '<div class="toolbar-background"></div>' +
-    '<button (click)="backButtonClick($event)" category="bar-button" class="back-button" [hidden]="_hideBb">' +
+    '<button (click)="backButtonClick($event)" ion-button="bar-button" class="back-button" [hidden]="_hideBb">' +
       '<span class="button-inner">' +
         '<ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>' +
         '<span class="back-button-text" #bbTxt></span>' +
