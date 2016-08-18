@@ -198,6 +198,7 @@ scroll-content {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
+  backface-visibility: hidden;
 }
 
 ion-content.js-scroll > scroll-content {
