@@ -227,7 +227,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * app's CSS, whereas this approximation is used to help calculate
    * initial dimensions.
    */
-  @Input() approxItemHeight: string = '40px';
+  @Input() approxItemHeight: string;
 
   /**
    * @input {string} The approximate width of each header template's cell.
@@ -350,8 +350,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         this.update(false);
       });
 
-      if (this.approxItemHeight == '40px') {
-        console.warn('Provide approxItemHeight to ensure proper virtual scroll rendering')
+      if (!this.approxItemHeight) {
+        this.approxItemHeight = '40px';
+        console.warn('approxItemHeight set to default: Provide approxItemHeight to ensure proper virtual scroll rendering')
       }
     }
   }
