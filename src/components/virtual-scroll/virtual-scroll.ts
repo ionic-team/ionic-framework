@@ -350,6 +350,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         this.update(false);
       });
 
+      if (this.approxItemHeight == '40px') {
+        console.warn('Provide approxItemHeight to ensure proper virtual scroll rendering')
+      }
     }
   }
 
