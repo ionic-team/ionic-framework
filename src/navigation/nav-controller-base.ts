@@ -795,16 +795,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   isTransitioning(): boolean {
-    let transitionEndTime = this._trnsTm;
-    let parent = this.parent;
-    while (parent) {
-      if (parent.trnsTime > transitionEndTime) {
-        transitionEndTime = parent.trnsTime;
-      }
-      parent = parent.parent;
-    }
-
-    return (transitionEndTime > Date.now());
+    return (this._trnsTm > Date.now());
   }
 
   setTransitioning(isTransitioning: boolean, fallback: number = 1000) {

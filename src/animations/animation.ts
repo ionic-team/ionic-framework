@@ -377,7 +377,7 @@ export class Animation {
     if (this._isAsync) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      nativeRaf(this._playAnimate.bind(this, opts));
+      nativeRaf(this._playToStep.bind(this, 1));
     }
   }
 
@@ -422,10 +422,10 @@ export class Animation {
    * DOM WRITE
    * RECURSION
    */
-  _playAnimate() {
+  _playToStep(stepValue: number) {
     for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
-      this._c[i]._playAnimate();
+      this._c[i]._playToStep(stepValue);
     }
 
     if (this._hasDur) {
@@ -433,7 +433,7 @@ export class Animation {
       // and the transition duration/easing is set
       // now set the TO properties which will trigger the transition to begin
       // ******** DOM WRITE ****************
-      this._progress(1);
+      this._progress(stepValue);
     }
   }
 
@@ -903,7 +903,24 @@ export class Animation {
   progressEnd(shouldComplete: boolean, currentStepValue: number) {
     console.debug('Animation, progressEnd, shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
-    this._progressEnd(shouldComplete);
+    this._isAsync = (currentStepValue > 0.05 && currentStepValue < 0.95);
+
+    const dur = 64;
+    const stepValue = shouldComplete ? 1 : 0;
+
+    this._progressEnd(shouldComplete, stepValue, dur, this._isAsync);
+
+    if (this._isAsync) {
+      // for the root animation only
+      // set the async TRANSITION END event
+      // and run onFinishes when the transition ends
+      // ******** DOM WRITE ****************
+      this._asyncEnd(dur, true);
+
+      // this animation has a duration so we need another RAF
+      // for the CSS TRANSITION properties to kick in
+      nativeRaf(this._playToStep.bind(this, stepValue));
+    }
   }
 
   /**
@@ -911,20 +928,30 @@ export class Animation {
    * DOM WRITE
    * RECURSION
    */
-  _progressEnd(shouldComplete: boolean) {
+  _progressEnd(shouldComplete: boolean, stepValue: number, dur: number, isAsync: boolean) {
     for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
-      this._c[i]._progressEnd(shouldComplete);
+      this._c[i]._progressEnd(shouldComplete, stepValue, dur, isAsync);
     }
 
-    // set all the animations to their final position
-    // ******** DOM WRITE ****************
-    this._progress(shouldComplete ? 1 : 0);
+    if (!isAsync) {
+      // stop immediately
+      // set all the animations to their final position
+      // ******** DOM WRITE ****************
+      this._progress(stepValue);
+      this._willChg(false);
+      this._after();
+      this._didFinish(shouldComplete);
 
-    this._willChg(false);
-
-    this._after();
-    this._didFinish(shouldComplete);
+    } else {
+      // animate it back to it's ending position
+      this.isPlaying = true;
+      this.hasCompleted = false;
+      this._hasDur = true;
+      // ******** DOM WRITE ****************
+      this._willChg(true);
+      this._setTrans(dur, false);
+    }
   }
 
   /**
