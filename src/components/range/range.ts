@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
-import { Coordinates, pointerCoord, raf } from '../../util/dom';
+import { PointerCoordinates, pointerCoord, raf } from '../../util/dom';
 import { Debouncer } from '../../util/debouncer';
 import { Form } from '../../util/form';
 import { Item } from '../item/item';
@@ -202,7 +202,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   _fn: Function;
 
   _active: RangeKnob;
-  _start: Coordinates = null;
+  _start: PointerCoordinates = null;
   _rect: ClientRect;
   _ticks: any[];
   _barL: string;
@@ -457,7 +457,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   /**
    * @private
    */
-  setActiveKnob(current: Coordinates, rect: ClientRect) {
+  setActiveKnob(current: PointerCoordinates, rect: ClientRect) {
     // figure out which knob is the closest one to the pointer
     let ratio = (current.x - rect.left) / (rect.width);
 
@@ -472,7 +472,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   /**
    * @private
    */
-  updateKnob(current: Coordinates, rect: ClientRect) {
+  updateKnob(current: PointerCoordinates, rect: ClientRect) {
     // figure out where the pointer is currently at
     // update the knob being interacted with
     if (this._active) {

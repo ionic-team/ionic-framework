@@ -1,6 +1,6 @@
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { Coordinates, nativeTimeout, rafFrames } from '../../util/dom';
+import { PointerCoordinates, nativeTimeout, rafFrames } from '../../util/dom';
 
 
 export class Activator {
@@ -12,7 +12,7 @@ export class Activator {
     this._css = config.get('activatedClass') || 'activated';
   }
 
-  downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: Coordinates) {
+  downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     // the user just pressed down
     let self = this;
     if (self.disableActivated(ev)) {
@@ -35,7 +35,7 @@ export class Activator {
     });
   }
 
-  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: Coordinates) {
+  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     // the user was pressing down, then just let up
     rafFrames(CLEAR_STATE_DEFERS, () => {
       this.clearState();

@@ -1,4 +1,4 @@
-import { Coordinates, CSS, pointerCoord } from '../../util/dom';
+import { PointerCoordinates, CSS, pointerCoord } from '../../util/dom';
 import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
 import { UIEventManager } from '../../util/ui-event-manager';
 
@@ -14,7 +14,7 @@ export class ItemReorderGesture {
   private selectedItemEle: HTMLElement = null;
   private selectedItemHeight: number;
 
-  private offset: Coordinates;
+  private offset: PointerCoordinates;
   private lastToIndex: number;
   private lastYcoord: number;
   private lastScrollPosition: number;
@@ -128,7 +128,7 @@ export class ItemReorderGesture {
     this.reorderList.reorderEmit(fromIndex, toIndex);
   }
 
-  private itemForCoord(coord: Coordinates): HTMLElement {
+  private itemForCoord(coord: PointerCoordinates): HTMLElement {
     return itemForPosition(this.offset.x - 100, coord.y);
   }
 

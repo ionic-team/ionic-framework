@@ -2,7 +2,7 @@ import { ElementRef } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
-import { closest, copyInputAttributes, Coordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
+import { closest, copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { Form } from '../../util/form';
@@ -15,7 +15,7 @@ import { Platform } from '../../platform/platform';
 
 
 export class InputBase {
-  _coord: Coordinates;
+  _coord: PointerCoordinates;
   _deregScroll: Function;
   _disabled: boolean = false;
   _keyboardHeight: number;

@@ -174,7 +174,7 @@ export function windowLoad(callback?: Function) {
   }
 }
 
-export function pointerCoord(ev: any): Coordinates {
+export function pointerCoord(ev: any): PointerCoordinates {
   // get coordinates for either a mouse click
   // or a touch depending on the given event
   let c = { x: 0, y: 0 };
@@ -189,7 +189,7 @@ export function pointerCoord(ev: any): Coordinates {
   return c;
 }
 
-export function hasPointerMoved(threshold: number, startCoord: Coordinates, endCoord: Coordinates) {
+export function hasPointerMoved(threshold: number, startCoord: PointerCoordinates, endCoord: PointerCoordinates) {
   let deltaX = (startCoord.x - endCoord.x);
   let deltaY = (startCoord.y - endCoord.y);
   let distance = deltaX * deltaX + deltaY * deltaY;
@@ -314,7 +314,7 @@ export function flushDimensionCache() {
 let dimensionCache: any = {};
 
 
-export interface Coordinates {
+export interface PointerCoordinates {
   x?: number;
   y?: number;
 }

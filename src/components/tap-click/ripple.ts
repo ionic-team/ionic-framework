@@ -1,6 +1,6 @@
 import { Activator } from './activator';
 import { App } from '../app/app';
-import { Coordinates, CSS, hasPointerMoved, nativeRaf, pointerCoord, rafFrames } from '../../util/dom';
+import { PointerCoordinates, CSS, hasPointerMoved, nativeRaf, pointerCoord, rafFrames } from '../../util/dom';
 import { Config } from '../../config/config';
 
 
@@ -13,7 +13,7 @@ export class RippleActivator extends Activator {
     super(app, config);
   }
 
-  downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: Coordinates) {
+  downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     let self = this;
     if (self.disableActivated(ev)) {
       return;
@@ -56,7 +56,7 @@ export class RippleActivator extends Activator {
     });
   }
 
-  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: Coordinates) {
+  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     if (!hasPointerMoved(6, startCoord, pointerCoord(ev))) {
       let i = activatableEle.childElementCount;
 
