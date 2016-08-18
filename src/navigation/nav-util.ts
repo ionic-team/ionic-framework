@@ -2,16 +2,16 @@ import { Renderer } from '@angular/core';
 
 import { DeepLinker } from './deep-linker';
 import { isPresent } from '../util/util';
+import { isViewController, ViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
-import { ViewController } from './view-controller';
 
 
 export function convertToViews(linker: DeepLinker, pages: any[]): ViewController[] {
   const views: ViewController[] = [];
   if (pages) {
     for (var i = 0; i < pages.length; i++) {
-      if (pages[i] instanceof ViewController) {
+      if (isViewController(pages[i])) {
         views.push(pages[i]);
 
       } else {

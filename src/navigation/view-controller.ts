@@ -557,3 +557,8 @@ function ctrlFn(viewCtrl: ViewController, fnName: string) {
     }
   }
 }
+
+
+export function isViewController(viewCtrl: any) {
+  return !!((<ViewController>viewCtrl)._cmp && (<ViewController>viewCtrl)._nav);
+}

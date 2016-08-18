@@ -9,6 +9,7 @@ import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { GestureController } from '../gestures/gesture-controller';
 import { isBlank, isPresent, pascalCaseToDashCase } from '../util/util';
+import { isViewController, ViewController } from './view-controller';
 import { Ion } from '../components/ion';
 import { Keyboard } from '../util/keyboard';
 import { NavController } from './nav-controller';
@@ -16,7 +17,6 @@ import { NavParams } from './nav-params';
 import { SwipeBackGesture } from './swipe-back';
 import { Transition } from '../transitions/transition';
 import { TransitionController } from '../transitions/transition-controller';
-import { ViewController } from './view-controller';
 
 
 /**
@@ -141,7 +141,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
-    if (pageOrViewCtrl instanceof ViewController) {
+    if (isViewController(pageOrViewCtrl)) {
       (<ViewController>pageOrViewCtrl).data = params;
       return this.setPages([pageOrViewCtrl], opts, done);
     }
@@ -149,7 +149,7 @@ export class NavControllerBase extends Ion implements NavController {
     return this.setPages([{pageOrViewCtrl, params}], opts, done);
   }
 
-  setPages(pages: Array<{pageOrViewCtrl: any, params?: any}> | Array<ViewController>, opts?: NavOptions, done?: Function): Promise<any> {
+  setPages(pages: any[], opts?: NavOptions, done?: Function): Promise<any> {
     // create view controllers out of the pages and insert the new views
     return this._queueTrans({
       insertStart: 0,

@@ -354,9 +354,6 @@ export class ContactUs {
   ionViewWillUnload() {
     console.log('ContactUs ionViewWillUnload');
   }
-  ionViewWillUnload() {
-    console.log('ContactUs ionViewWillUnload');
-  }
 }
 
 

@@ -8,10 +8,10 @@ import { IonicApp, IonicModule, PopoverController, NavParams, ViewController } f
       <ion-list radio-group [(ngModel)]="fontFamily" (ionChange)="changeFontFamily()">
         <ion-row>
           <ion-col>
-            <button ion-button (click)="changeFontSize('smaller')" ion-item detail-none class="text-button text-smaller">A</button>
+            <button (click)="changeFontSize('smaller')" ion-item detail-none class="text-button text-smaller">A</button>
           </ion-col>
           <ion-col>
-            <button ion-button (click)="changeFontSize('larger')" ion-item detail-none class="text-button text-larger">A</button>
+            <button (click)="changeFontSize('larger')" ion-item detail-none class="text-button text-larger">A</button>
           </ion-col>
         </ion-row>
         <ion-row class="row-dots">
