@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Ng
 
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
-import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
@@ -555,10 +554,9 @@ export class Menu {
       // if this menu should be enabled
       // then find all the other menus on this same side
       // and automatically disable other same side menus
-      let sameSideMenus = this._menuCtrl
-                            .getMenus()
-                            .filter(m => m.side === this.side && m !== this)
-                            .map(m => m.enabled = false);
+      this._menuCtrl.getMenus()
+                    .filter(m => m.side === this.side && m !== this)
+                    .map(m => m.enabled = false);
     }
 
     return this;

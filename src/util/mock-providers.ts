@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, ElementRef, NgZone, Renderer } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { App, Config, DeepLinker, Form, GestureController, Keyboard, MenuController, NavLinkConfig, NavOptions, Platform, Tab, Tabs, Transition, UrlSerializer, ViewController } from '../../src';
+import { App, Config, DeepLinker, Form, GestureController, Keyboard, NavLinkConfig, Platform, Tab, Tabs, Transition, UrlSerializer, ViewController } from '../../src';
 import { NavControllerBase } from '../../src/components/nav/nav-controller-base';
-import { TabButton } from '../../src/components/tabs/tab-button';
 
 
 export const mockConfig = function(config?: any) {

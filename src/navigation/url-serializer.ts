@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 
+import { DeepLinkConfig, NavLink, NavPath, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent, pascalCaseToDashCase } from '../util/util';
-import { DeepLink, DeepLinkConfig, NavLink, NavPath, NavSegment } from './nav-util';
 import { UserDeepLinkConfig } from './deep-linker';
 
 

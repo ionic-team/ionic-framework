@@ -1,7 +1,6 @@
-import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Optional, Output, Renderer } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
 import { Tab } from './tab';
 

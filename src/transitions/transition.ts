@@ -1,9 +1,5 @@
 import { Animation, AnimationOptions } from '../animations/animation';
-import { isPresent } from '../util/util';
-import { Content } from '../components/content/content';
-import { Tabs } from '../components/tabs/tabs';
 import { ViewController } from '../navigation/view-controller';
-import { NavController } from '../navigation/nav-controller';
 
 
 /**

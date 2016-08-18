@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
-import { Animation, AnimationOptions } from '../../animations/animation';
+import { Animation } from '../../animations/animation';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
 import { pascalCaseToDashCase } from '../../util/util';

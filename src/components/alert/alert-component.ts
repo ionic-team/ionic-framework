@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { Animation, AnimationOptions } from '../../animations/animation';
+import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { Key } from '../../util/key';

@@ -8,7 +8,6 @@ import { Form } from '../../util/form';
 import { InputBase } from './input-base';
 import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
-import { Label } from '../label/label';
 import { NativeInput, NextInput } from './native-input';
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';

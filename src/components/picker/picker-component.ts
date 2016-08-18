@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { DomSanitizationService } from '@angular/platform-browser';
 
-import { Animation, AnimationOptions } from '../../animations/animation';
+import { Animation } from '../../animations/animation';
 import { cancelRaf, pointerCoord, raf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString } from '../../util/util';
 import { Config } from '../../config/config';

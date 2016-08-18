@@ -47,15 +47,6 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @private
-   */
-  private setBody(message: string) {
-    // deprecated warning
-    console.warn('Alert setBody() has been renamed to setMessage()');
-    this.setMessage(message);
-  }
-
-  /**
    * @param {string} message  Alert message content
    */
   setMessage(message: string) {
@@ -97,7 +88,7 @@ export class Alert extends ViewController {
    * @private
    * DEPRECATED: Please inject AlertController instead
    */
-  private static create(opt: any) {
+  static create(opt: any) {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Alert.create(..) has been deprecated. Please inject AlertController instead');
   }

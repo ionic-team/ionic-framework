@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
+import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
 import { Footer, Header } from '../components/toolbar/toolbar';
-import { isPresent, isString, merge } from '../util/util';
+import { isPresent, merge } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
 import { NavControllerBase } from './nav-controller-base';
-import { NavOptions, TestDone, ViewState } from './nav-util';
+import { NavOptions, ViewState } from './nav-util';
 import { NavParams } from './nav-params';
 
 
@@ -152,10 +152,10 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    * onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead
    */
-  private onDismiss(callback: Function) {
+  onDismiss(callback: Function) {
     // deprecated warning: added beta.11 2016-06-30
     console.warn('onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead');
     this.onDidDismiss(callback);

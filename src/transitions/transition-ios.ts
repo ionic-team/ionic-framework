@@ -1,7 +1,6 @@
-import { Animation, AnimationOptions } from '../animations/animation';
+import { Animation } from '../animations/animation';
 import { isPresent } from '../util/util';
 import { PageTransition } from './page-transition';
-import { ViewController } from '../navigation/view-controller';
 
 const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';

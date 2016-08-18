@@ -78,7 +78,7 @@ export class Picker extends ViewController {
    * @private
    * DEPRECATED: Please inject PickerController instead
    */
-  private static create(opt: any) {
+  static create(opt: any) {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Picker.create(..) has been deprecated. Please inject PickerController instead');
   }

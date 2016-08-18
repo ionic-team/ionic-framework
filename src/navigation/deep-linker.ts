@@ -2,8 +2,8 @@ import { Injectable, OpaqueToken } from '@angular/core';
 import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { isNav, isTab, isTabs, NavPath, NavSegment, DIRECTION_BACK, DIRECTION_FORWARD, NavOptions } from './nav-util';
-import { isBlank, isPresent } from '../util/util';
+import { isTab, isTabs, NavPath, NavSegment, DIRECTION_BACK } from './nav-util';
+import { isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
 import { Tab } from '../components/tabs/tab';

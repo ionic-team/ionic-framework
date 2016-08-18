@@ -4,7 +4,7 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
-import { isTrueProperty, noop } from '../../util/util';
+import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';

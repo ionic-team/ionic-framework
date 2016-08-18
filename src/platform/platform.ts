@@ -1,5 +1,4 @@
-import { EventEmitter, Injectable, NgZone, OpaqueToken } from '@angular/core';
-import { Location } from '@angular/common';
+import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
 
 import { QueryParams } from './query-params';
 import { ready, windowDimensions, flushDimensionCache } from '../util/dom';

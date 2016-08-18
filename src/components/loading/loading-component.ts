@@ -1,8 +1,8 @@
 import { Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { Animation, AnimationOptions } from '../../animations/animation';
+import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
-import { isDefined, isPresent, isUndefined } from '../../util/util';
+import { isDefined, isUndefined } from '../../util/util';
 import { NavParams } from '../../navigation/nav-params';
 import { Transition } from '../../transitions/transition';
 import { ViewController } from '../../navigation/view-controller';

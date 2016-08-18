@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ElementRef, HostBinding, Inject, OnInit, OpaqueToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, OpaqueToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { App } from './app';
 import { Config } from '../../config/config';

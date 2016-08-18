@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, Input, 
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { DIRECTION_BACK } from '../../navigation/nav-util';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Keyboard } from '../../util/keyboard';
 import { GestureController } from '../../gestures/gesture-controller';

@@ -1,7 +1,6 @@
-import { Animation, AnimationOptions } from '../animations/animation';
+import { Animation } from '../animations/animation';
 import { isPresent } from '../util/util';
 import { PageTransition } from './page-transition';
-import { ViewController } from '../navigation/view-controller';
 
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 const SCALE_SMALL = .95;
@@ -21,7 +20,6 @@ class WPTransition extends PageTransition {
 
     // do they have navbars?
     let enteringHasNavbar = enteringView.hasNavbar();
-    let leavingHasNavbar = leavingView && leavingView.hasNavbar();
 
     if (backDirection) {
       this.duration(isPresent(opts.duration) ? opts.duration : 120).easing('cubic-bezier(0.47,0,0.745,0.715)');

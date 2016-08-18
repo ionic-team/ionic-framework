@@ -1,7 +1,7 @@
-import { ComponentRef, Renderer } from '@angular/core';
+import { Renderer } from '@angular/core';
 
 import { DeepLinker } from './deep-linker';
-import { isBoolean, isPresent } from '../util/util';
+import { isPresent } from '../util/util';
 import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
 import { ViewController } from './view-controller';
@@ -118,11 +118,11 @@ export interface NavOptions {
 }
 
 export interface TransitionResolveFn {
-  (hasCompleted: boolean): void
+  (hasCompleted: boolean): void;
 }
 
 export interface TransitionRejectFn {
-  (rejectReason: any, transition?: Transition): void
+  (rejectReason: any, transition?: Transition): void;
 }
 
 export interface TransitionInstruction {
@@ -133,15 +133,6 @@ export interface TransitionInstruction {
   removeCount?: number;
   resolve?: TransitionResolveFn;
   reject?: TransitionRejectFn;
-}
-
-export interface TestDone {
-  (testResult: TestResult): void
-}
-
-export interface TestResult {
-  valid: boolean;
-  rejectReason?: any;
 }
 
 export enum ViewState {

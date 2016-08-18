@@ -1,4 +1,4 @@
-import { Directive, Input, ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
+import { ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
 
 import { CSS } from '../../util/dom';
 
@@ -135,7 +135,6 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
   let node: VirtualNode;
   let availableNode: VirtualNode;
   let cell: VirtualCell;
-  let previousCell: VirtualCell;
   let isAlreadyRendered: boolean;
   let lastRecordIndex = (records.length - 1);
   let viewInsertIndex: number = null;

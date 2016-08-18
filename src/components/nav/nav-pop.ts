@@ -1,8 +1,7 @@
-import { AfterViewInit, Directive, Host, HostBinding, HostListener, Input, OnChanges, Optional } from '@angular/core';
+import { AfterViewInit, Directive, HostBinding, HostListener, OnChanges, Optional } from '@angular/core';
 
 import { DeepLinker } from '../../navigation/deep-linker';
 import { NavController } from '../../navigation/nav-controller';
-import { noop } from '../../util/util';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -41,7 +40,7 @@ export class NavPop {
   onClick(): boolean {
     // If no target, or if target is _self, prevent default browser behavior
     if (this._nav) {
-      this._nav.pop(null, noop);
+      this._nav.pop(null, null);
       return false;
     }
 

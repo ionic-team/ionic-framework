@@ -5,7 +5,7 @@ import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
-import { isBlank, isTrueProperty, noop } from '../../util/util';
+import { isBlank } from '../../util/util';
 import { nativeRaf } from '../../util/dom';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
@@ -558,7 +558,7 @@ export class Tabs extends Ion implements AfterViewInit {
 
       } else if (tab.length() > 1) {
         // if we're a few pages deep, pop to root
-        tab.popToRoot(null, noop);
+        tab.popToRoot(null, null);
 
       } else if (tab.root !== active.componentType) {
         // Otherwise, if the page we're on is not our real root, reset it to our

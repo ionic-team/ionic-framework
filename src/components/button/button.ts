@@ -1,8 +1,7 @@
-import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { isTrueProperty } from '../../util/util';
-import { Toolbar } from '../toolbar/toolbar';
 
 
 /**
@@ -100,15 +99,15 @@ import { Toolbar } from '../toolbar/toolbar';
   encapsulation: ViewEncapsulation.None,
 })
 export class Button {
-  private _role: string = 'button'; // bar-button
-  private _size: string = null; // large/small/default
-  private _style: string = 'default'; // outline/clear/solid
-  private _shape: string = null; // round/fab
-  private _display: string = null; // block/full
-  private _colors: Array<string> = []; // primary/secondary
-  private _icon: string = null; // left/right/only
-  private _disabled: boolean = false; // disabled
-  private _init: boolean;
+  _role: string = 'button'; // bar-button
+  _size: string = null; // large/small/default
+  _style: string = 'default'; // outline/clear/solid
+  _shape: string = null; // round/fab
+  _display: string = null; // block/full
+  _colors: Array<string> = []; // primary/secondary
+  _icon: string = null; // left/right/only
+  _disabled: boolean = false; // disabled
+  _init: boolean;
 
   /**
    * @input {string} Large button.
@@ -343,6 +342,3 @@ const BUTTON_STYLE_ATTRS = ['clear', 'outline', 'solid'];
 const BUTTON_SHAPE_ATTRS = ['round', 'fab'];
 const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
 const IGNORE_ATTRS = /_ng|button|left|right/;
-
-const TEXT = 1;
-const ICON = 2;

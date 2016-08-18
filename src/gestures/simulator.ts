@@ -1,4 +1,4 @@
-import { pointerCoord, Coordinates } from '../util/dom';
+import { Coordinates } from '../util/dom';
 
 interface Point {
   coord: Coordinates;

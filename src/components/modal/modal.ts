@@ -47,7 +47,7 @@ export class Modal extends ViewController {
    * @private
    * DEPRECATED: Please inject ModalController instead
    */
-  private static create(cmp: any, opt: any) {
+  static create(cmp: any, opt: any) {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Modal.create(..) has been deprecated. Please inject ModalController instead');
   }

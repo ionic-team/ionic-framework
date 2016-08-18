@@ -3,12 +3,12 @@ import { ComponentRef, ComponentFactoryResolver, ElementRef, EventEmitter, NgZon
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
-import { convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, INIT_ZINDEX, PORTAL_ZINDEX } from './nav-util';
-import { TransitionResolveFn, TransitionRejectFn, TransitionInstruction, TestResult, ViewState } from './nav-util';
+import { convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, INIT_ZINDEX,
+         TransitionResolveFn, TransitionRejectFn, TransitionInstruction, ViewState } from './nav-util';
 import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { GestureController } from '../gestures/gesture-controller';
-import { isBlank, isPresent, isString, noop, pascalCaseToDashCase } from '../util/util';
+import { isBlank, isPresent, pascalCaseToDashCase } from '../util/util';
 import { Ion } from '../components/ion';
 import { Keyboard } from '../util/keyboard';
 import { NavController } from './nav-controller';
@@ -346,9 +346,20 @@ export class NavControllerBase extends Ion implements NavController {
       this._transId = this._transCtrl.nextId();
     }
 
+    // create the transition options
+    const animationOpts: AnimationOptions = {
+      animation: opts.animation,
+      direction: opts.direction,
+      duration: (opts.animate === false ? 0 : opts.duration),
+      easing: opts.easing,
+      renderDelay: opts.transitionDelay || this._trnsDelay,
+      isRTL: this.config.platform.isRTL(),
+      ev: opts.ev,
+    };
+
     // create the transition animation from the TransitionController
     // this will either create the root transition, or add it as a child transition
-    const trans = this._transCtrl.get(this._transId, enteringView, leavingView, opts);
+    const trans = this._transCtrl.get(this._transId, enteringView, leavingView, animationOpts);
 
     if (trans.parent) {
       // this is important for later to know if there
@@ -512,17 +523,6 @@ export class NavControllerBase extends Ion implements NavController {
       leavingView._domShow(true, this._renderer);
     }
 
-    // create the transition options
-    const animationOpts: AnimationOptions = {
-      animation: opts.animation,
-      direction: opts.direction,
-      duration: (opts.animate === false ? 0 : opts.duration),
-      easing: opts.easing,
-      renderDelay: opts.transitionDelay || this._trnsDelay,
-      isRTL: this.config.platform.isRTL(),
-      ev: opts.ev,
-    };
-
     // initialize the transition
     trans.init();
 
@@ -661,7 +661,7 @@ export class NavControllerBase extends Ion implements NavController {
         view._willUnload();
         this.viewWillUnload.emit(view);
         this._app.viewWillUnload.emit(view);
-        view._destroy(this._renderer)
+        view._destroy(this._renderer);
 
       } else if (i < activeViewIndex) {
         // this view comes before the active view
@@ -870,7 +870,7 @@ export class NavControllerBase extends Ion implements NavController {
    * @private
    * DEPRECATED: Please use app.getRootNav() instead
    */
-  private get rootNav(): NavController {
+  get rootNav(): NavController {
     // deprecated 07-14-2016 beta.11
     console.warn('nav.rootNav() has been deprecated, please use app.getRootNav() instead');
     return this._app.getRootNav();
@@ -880,7 +880,7 @@ export class NavControllerBase extends Ion implements NavController {
    * @private
    * DEPRECATED: Please use inject the overlays controller and use the present method on the instance instead.
    */
-  private present(): Promise<any> {
+  present(): Promise<any> {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('nav.present() has been deprecated.\n' +
                  'Please inject the overlay\'s controller and use the present method on the instance instead.');

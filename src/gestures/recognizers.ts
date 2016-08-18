@@ -1,4 +1,3 @@
-import { pointerCoord, Coordinates } from '../util/dom';
 
 export class PanRecognizer {
   private startCoord: Coordinates;

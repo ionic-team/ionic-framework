@@ -1,5 +1,3 @@
-import { Renderer } from '@angular/core';
-
 import { IonicApp } from '../components/app/app-root';
 
 

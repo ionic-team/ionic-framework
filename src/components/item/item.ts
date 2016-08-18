@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { Button } from '../button/button';
 import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
 import { Label } from '../label/label';
@@ -361,20 +360,6 @@ export class Item {
     if (!this._label) {
       this._label = label;
     }
-  }
-
-  /**
-   * @private
-   */
-  @ContentChildren(Button)
-  set _buttons(buttons: QueryList<Button>) {
-    buttons.forEach(button => {
-      // Don't add the item-button class if the user specifies
-      // a different size button
-      if (!button.isItem && !button._size) {
-        button.addClass('item-button');
-      }
-    });
   }
 
   /**

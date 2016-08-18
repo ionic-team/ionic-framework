@@ -1,7 +1,6 @@
-import { Animation, AnimationOptions } from '../animations/animation';
+import { Animation } from '../animations/animation';
 import { Content } from '../components/content/content';
 import { Transition } from './transition';
-import { ViewController } from '../navigation/view-controller';
 
 
 /**

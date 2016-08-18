@@ -1,4 +1,4 @@
-import { CSS, rafFrames, nativeRaf, transitionEnd, nativeTimeout } from '../util/dom';
+import { CSS, nativeRaf, transitionEnd, nativeTimeout } from '../util/dom';
 import { isDefined } from '../util/util';
 
 

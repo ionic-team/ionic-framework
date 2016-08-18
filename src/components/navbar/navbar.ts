@@ -1,8 +1,7 @@
-import { Component, Directive, ElementRef, forwardRef, Inject, Input, Optional, Renderer, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, Optional, Renderer, ViewChild } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { Ion } from '../ion';
 import { isTrueProperty, noop } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { ToolbarBase } from '../toolbar/toolbar';

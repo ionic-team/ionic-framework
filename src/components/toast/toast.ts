@@ -62,7 +62,7 @@ export class Toast extends ViewController {
    * @private
    * DEPRECATED: Please inject ToastController instead
    */
-  private static create(opt: any) {
+  static create(opt: any) {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Toast.create(..) has been deprecated. Please inject ToastController instead');
   }

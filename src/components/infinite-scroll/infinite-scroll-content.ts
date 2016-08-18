@@ -1,5 +1,4 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 import { Config } from '../../config/config';
 import { InfiniteScroll } from './infinite-scroll';

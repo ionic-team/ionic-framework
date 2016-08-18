@@ -1,9 +1,8 @@
 import { ItemSliding } from './item-sliding';
 import { List } from '../list/list';
 
-import { closest, Coordinates, pointerCoord } from '../../util/dom';
-import { PointerEvents, UIEventManager } from '../../util/ui-event-manager';
-import { GestureDelegate, GestureOptions, GesturePriority } from '../../gestures/gesture-controller';
+import { closest, pointerCoord } from '../../util/dom';
+import { GesturePriority } from '../../gestures/gesture-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
 
 const DRAG_THRESHOLD = 10;
@@ -66,10 +65,6 @@ export class ItemSlidingGesture extends PanGesture {
   onDragEnd(ev: any) {
     ev.preventDefault();
 
-    let coordX = pointerCoord(ev).x;
-    let deltaX = (coordX - this.firstCoordX);
-    let deltaT = (Date.now() - this.firstTimestamp);
-    let openAmount = this.selectedContainer.endSliding(deltaX / deltaT);
     this.selectedContainer = null;
     this.preSelectedContainer = null;
   }

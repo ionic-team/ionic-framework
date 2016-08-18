@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
 import { NgIf } from '@angular/common';
 
-import { Animation, AnimationOptions } from '../../animations/animation';
+import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
-import { isPresent } from '../../util/util';
 import { NavParams } from '../../navigation/nav-params';
 import { Transition } from '../../transitions/transition';
 import { ViewController } from '../../navigation/view-controller';
@@ -302,4 +301,3 @@ Transition.register('toast-wp-slide-in', ToastWpPopIn);
 let toastIds = -1;
 const TOAST_POSITION_TOP = 'top';
 const TOAST_POSITION_MIDDLE = 'middle';
-const TOAST_POSITION_BOTTOM = 'bottom';

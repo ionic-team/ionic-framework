@@ -57,8 +57,6 @@ export class RippleActivator extends Activator {
   }
 
   upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: Coordinates) {
-    let self = this;
-
     if (!hasPointerMoved(6, startCoord, pointerCoord(ev))) {
       let i = activatableEle.childElementCount;
 
