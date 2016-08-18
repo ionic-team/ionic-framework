@@ -32,6 +32,7 @@ export class NavControllerBase extends Ion implements NavController {
   _sbEnabled: boolean;
   _sbGesture: SwipeBackGesture;
   _sbThreshold: number;
+  _sbTrns: Transition;
   _trnsDelay: any;
   _trnsId: number = null;
   _trnsTm: number = 0;
@@ -179,6 +180,7 @@ export class NavControllerBase extends Ion implements NavController {
       this.setTransitioning(false);
       this._trnsId = null;
       resolve && resolve();
+      this._sbCheck();
 
       // let's see if there's another to kick off
       this._nextTrns();
@@ -199,6 +201,7 @@ export class NavControllerBase extends Ion implements NavController {
       }
 
       this._trnsCtrl.destroy(trns.trnsId);
+      this._sbCheck();
 
       reject && reject();
     };
@@ -365,10 +368,19 @@ export class NavControllerBase extends Ion implements NavController {
     // this will either create the root transition, or add it as a child transition
     const trns = this._trnsCtrl.get(this._trnsId, enteringView, leavingView, animationOpts);
 
+    // ensure any swipeback transitions are cleared out
+    this._sbTrns && this._sbTrns.destroy();
+
     if (trns.parent) {
       // this is important for later to know if there
       // are any more child tests to check for
       trns.parent.hasChildTrns = true;
+
+    } else {
+      // this is the root transition
+      if (opts.progressAnimation) {
+        this._sbTrns = trns;
+      }
     }
 
     trns.registerStart(() => {
@@ -706,51 +718,48 @@ export class NavControllerBase extends Ion implements NavController {
     }
     this._views.length = 0;
 
+    this._sbGesture && this._sbGesture.destroy();
+    this._sbTrns && this._sbTrns.destroy();
+    this._sbGesture = this._sbTrns = null;
+
     if (this.parent && this.parent.unregisterChildNav) {
       this.parent.unregisterChildNav(this);
     }
   }
 
   swipeBackStart() {
-    // // default the direction to "back";;
-    // const opts: NavOptions = {
-    //   direction: DIRECTION_BACK,
-    //   progressAnimation: true
-    // };
+    if (this.isTransitioning() || this._queue.length > 0) return;
 
-    // // figure out the states of each view in the stack
-    // const leavingView = this._remove(this._views.length - 1, 1);
+    // default the direction to "back";
+    const opts: NavOptions = {
+      direction: DIRECTION_BACK,
+      progressAnimation: true
+    };
 
-    // if (leavingView) {
-    //   opts.animation = leavingView.getTransitionName(opts.direction);
+    this._queueTrns({
+      removeStart: -1,
+      removeCount: 1,
+      opts: opts,
+    }, null);
 
-    //   // get the view thats ready to enter
-    //   const enteringView = this.getByState(ViewState.INIT_ENTER);
-
-    //   // start the transition, fire callback when done...
-    //   this._transition(enteringView, leavingView, opts, (transitionResult: TransitionResult) => {
-    //     // swipe back has finished!!
-    //     console.debug('swipeBack, hasCompleted', transitionResult.hasCompleted);
-    //   });
-    // }
   }
 
   swipeBackProgress(stepValue: number) {
-    // if (this._trans && this._sbGesture) {
-    //   // continue to disable the app while actively dragging
-    //   this._app.setEnabled(false, 4000);
-    //   this.setTransitioning(true, 4000);
+    if (this._sbTrns && this._sbGesture) {
+      // continue to disable the app while actively dragging
+      this._app.setEnabled(false, ACTIVE_TRANSITION_MAX_TIME);
+      this.setTransitioning(true, ACTIVE_TRANSITION_MAX_TIME);
 
-    //   // set the transition animation's progress
-    //   this._trans.progressStep(stepValue);
-    // }
+      // set the transition animation's progress
+      this._sbTrns.progressStep(stepValue);
+    }
   }
 
   swipeBackEnd(shouldComplete: boolean, currentStepValue: number) {
-    // if (this._trans && this._sbGesture) {
-    //   // the swipe back gesture has ended
-    //   this._trans.progressEnd(shouldComplete, currentStepValue);
-    // }
+    if (this._sbTrns && this._sbGesture) {
+      // the swipe back gesture has ended
+      this._sbTrns.progressEnd(shouldComplete, currentStepValue);
+    }
   }
 
   _sbCheck() {
@@ -786,7 +795,11 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   canSwipeBack(): boolean {
-    return (this._sbEnabled && !this.isTransitioning() && this._app.isEnabled() && this.canGoBack());
+    return (this._sbEnabled &&
+           !this._children.length &&
+           !this.isTransitioning() &&
+            this._app.isEnabled() &&
+            this.canGoBack());
   }
 
   canGoBack(): boolean {
