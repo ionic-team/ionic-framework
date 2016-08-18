@@ -18,9 +18,11 @@ import { ViewController } from '../navigation/view-controller';
  * - set inline TO styles - DOM WRITE
  */
 export class Transition extends Animation {
+  _trnsStart: Function;
+
   parent: Transition;
-  hasChildTrans: boolean;
-  transId: number;
+  hasChildTrns: boolean;
+  trnsId: number;
 
 
   constructor(public enteringView: ViewController, public leavingView: ViewController, opts: AnimationOptions) {
@@ -29,19 +31,18 @@ export class Transition extends Animation {
 
   init() {}
 
-  _transStart: Function;
-  registerStart(transStart: Function) {
-    this._transStart = transStart;
+  registerStart(trnsStart: Function) {
+    this._trnsStart = trnsStart;
   }
 
   start() {
-    this._transStart && this._transStart();
-    this._transStart = null;
+    this._trnsStart && this._trnsStart();
+    this._trnsStart = null;
   }
 
   destroy() {
     super.destroy();
-    this.enteringView = this.leavingView = this._transStart = null;
+    this.enteringView = this.leavingView = this._trnsStart = null;
   }
 
   static createTransition(transitionName: string, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {

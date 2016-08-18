@@ -9,13 +9,13 @@ import { ViewController } from '../navigation/view-controller';
  */
 export class TransitionController {
   private _ids = 0;
-  private _trans: {[key: number]: Transition} = {};
+  private _trns: {[key: number]: Transition} = {};
 
-  getRootTransId(nav: NavControllerBase): number {
+  getRootTrnsId(nav: NavControllerBase): number {
     let parent = <NavControllerBase>nav.parent;
     while (parent) {
-      if (isPresent(parent._transId)) {
-        return parent._transId;
+      if (isPresent(parent._trnsId)) {
+        return parent._trnsId;
       }
       parent = parent.parent;
     }
@@ -26,27 +26,27 @@ export class TransitionController {
     return this._ids++;
   }
 
-  get(transId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
-    const trans = Transition.createTransition(opts.animation, enteringView, leavingView, opts);
-    trans.transId = transId;
+  get(trnsId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+    const trns = Transition.createTransition(opts.animation, enteringView, leavingView, opts);
+    trns.trnsId = trnsId;
 
-    if (!this._trans[transId]) {
+    if (!this._trns[trnsId]) {
       // we haven't created the root transition yet
-      this._trans[transId] = trans;
+      this._trns[trnsId] = trns;
 
     } else {
       // we already have a root transition created
       // add this new transition as a child to the root
-      this._trans[transId].add(trans);
+      this._trns[trnsId].add(trns);
     }
 
-    return trans;
+    return trns;
   }
 
-  destroy(transId: number) {
-    if (this._trans[transId]) {
-      this._trans[transId].destroy();
-      delete this._trans[transId];
+  destroy(trnsId: number) {
+    if (this._trns[trnsId]) {
+      this._trns[trnsId].destroy();
+      delete this._trns[trnsId];
     }
   }
 
