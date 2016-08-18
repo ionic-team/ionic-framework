@@ -135,7 +135,7 @@ export class TextInput extends InputBase {
  * however, with Ionic wrapping the native HTML text area element, Ionic
  * is able to better handle the user experience and interactivity.
  *
- * Not that `<ion-textarea>` must load its value from the `value` or
+ * Note that `<ion-textarea>` must load its value from the `value` or
  * `[(ngModel)]` attribute. Unlike the native `<textarea>` element,
  * `<ion-textarea>` does not support loading its value from the
  * textarea's inner content.

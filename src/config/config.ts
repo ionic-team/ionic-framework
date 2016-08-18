@@ -100,6 +100,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.                                                                                  |
  * | `prodMode`               | `boolean`           | Disable development mode, which turns off assertions and other checks within the framework. One important assertion this disables verifies that a change detection pass does not result in additional changes to any bindings (also known as unidirectional data flow).
  * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
+ * | `swipeBackEnabled`       | `boolean`           | Whether native iOS swipe to go back functionality is enabled.
  * | `tabsHighlight`          | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
  * | `tabsLayout`             | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-left"`, `"icon-right"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.  |
  * | `tabsPlacement`          | `string`            | The position of the tabs relative to the content. Available options: `"top"`, `"bottom"`                                                         |
