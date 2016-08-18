@@ -29,7 +29,7 @@
  * ```js
  * function MyCtrl($scope, $ionicSlidesDelegate) {
  *   $scope.nextSlide = function() {
- *     $ionicSlidesDelegate.next();
+ *     $ionicSlidesDelegate.slideNext();
  *   }
  * }
  * ```
@@ -89,6 +89,6 @@ IonicModule
    * {@link ionic.directive:ionSlides} directives with `delegate-handle` matching
    * the given handle.
    *
-   * Example: `$ionicSlidesDelegate.$getByHandle('my-handle').stop();`
+   * Example: `$ionicSlidesDelegate.$getByHandle('my-handle').slideNext();`
    */
 ]));
