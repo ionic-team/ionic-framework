@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html ng-app="slidesTest">
+
+<head>
+  <meta charset="utf-8">
+  <title>Slide Box</title>
+
+  <!-- Sets initial viewport load and disables zooming  -->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
+  <style>
+    ion-slides{
+      height: 200px;
+    }
+  </style>
+</head>
+
+<body ng-controller="MyCtrl">
+  <ion-pane>
+
+    <ion-header-bar class="bar-assertive">
+      <ion-title>Hello</ion-title>
+    </ion-header-bar>
+    <ion-content class="padding" scroll="false">
+      <ion-slides options="options" slider="data.slider" delegate-handle="color">
+        <ion-slide-page ng-repeat="slide in slides">
+          <h1>{{slide}}</h1>
+        </ion-slide-page>
+      </ion-slides>
+      <button class="button" ng-click="next()">Next</button>
+      <button class="button" ng-click="prev()">prev</button>
+      <button class="button" ng-click="nextWithSpeed()">nextWithSpeed</button>
+      <button class="button" ng-click="prevWithSpeed()">prevWithSpeed</button>
+      <button class="button" ng-click="nextWithSpeedNoEvent()">nextWithSpeedNoEvent</button>
+      <button class="button" ng-click="prevWithSpeedNoEvent()">prevWithSpeedNoEvent</button>
+      <button class="button" ng-click="update()">update</button>
+      <button class="button" ng-click="slideTo()">slideTo</button>
+      <button class="button" ng-click="lockSwipes()">lockSwipes</button>
+      <button class="button" ng-click="unlockSwipes()">unlockSwipes</button>
+
+
+    </ion-content>
+  </ion-pane>
+  <script>
+    angular.module('slidesTest', ['ionic'])
+      .controller('MyCtrl', ['$scope', '$interval', '$timeout', '$ionicSlidesDelegate', function($scope, $interval, $timeout, $ionicSlidesDelegate) {
+        $scope.slides = [1, 2, 3, 4]
+        $scope.options = {
+          loop: true
+        };
+        $scope.next = function() {
+          $ionicSlidesDelegate.$getByHandle('color').slideNext();
+        }
+        $scope.prev = function() {
+          $ionicSlidesDelegate.$getByHandle('color').slidePrev();
+        }
+        $scope.nextWithSpeed = function() {
+          $ionicSlidesDelegate.$getByHandle('color').slideNext(true, 2000);
+        }
+        $scope.prevWithSpeed = function() {
+          $ionicSlidesDelegate.$getByHandle('color').slidePrev(true, 2000)
+        }
+        $scope.nextWithSpeedNoEvent = function() {
+          $ionicSlidesDelegate.$getByHandle('color').slideNext(false, 2000);
+        }
+        $scope.prevWithSpeedNoEvent = function() {
+          $ionicSlidesDelegate.$getByHandle('color').slidePrev(false, 2000)
+        }
+        $scope.update = function() {
+          $scope.slides.push('test')
+          $ionicSlidesDelegate.$getByHandle('color').update()
+        }
+        $scope.slideTo = function() {
+          $ionicSlidesDelegate.$getByHandle('color').slideTo(2)
+        }
+        $scope.lockSwipes = function() {
+          $ionicSlidesDelegate.$getByHandle('color').lockSwipes();
+        }
+        $scope.unlockSwipes = function() {
+          $ionicSlidesDelegate.$getByHandle('color').unlockSwipes();
+        }
+
+
+        $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
+          console.log("Slider initialized: ", data);
+          $scope.slider = data.slider;
+        });
+
+        $scope.$on("$ionicSlides.slideChangeEnd", function(event, data) {
+          console.log("slideChangeEnd event: ", data);
+        });
+
+        $scope.$on("$ionicSlides.slideChangeStart", function(event, data) {
+          console.log("slideChangeStart event: ", data);
+        });
+
+        $scope.doClick = function() {
+          alert("clicked!");
+        }
+      }]);
+  </script>
+</body>
+
+</html>

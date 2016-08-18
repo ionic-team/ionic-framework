@@ -99,7 +99,9 @@ IonicModule
   '$animate',
   '$timeout',
   '$compile',
-function($animate, $timeout, $compile) {
+  '$ionicHistory',
+  '$ionicSlidesDelegate',
+function($animate, $timeout, $compile, $ionicHistory, $ionicSlidesDelegate) {
   return {
     restrict: 'E',
     transclude: true,
@@ -112,7 +114,7 @@ function($animate, $timeout, $compile) {
       '</div>' +
         '<div ng-hide="!showPager" class="swiper-pagination"></div>' +
       '</div>',
-    controller: ['$scope', '$element', function($scope, $element) {
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
 
       this.update = function() {
@@ -162,12 +164,17 @@ function($animate, $timeout, $compile) {
       $timeout(function() {
         var slider = new ionic.views.Swiper($element.children()[0], newOptions, $scope, $compile);
 
+        var deregisterInstance = $ionicSlidesDelegate._registerInstance(slider, $attrs.delegateHandle, function() {
+            return $ionicHistory.isActiveScope($scope);
+        });
+
         $scope.$emit("$ionicSlides.sliderInitialized", { slider: slider });
 
         _this.__slider = slider;
         $scope.slider = _this.__slider;
 
         $scope.$on('$destroy', function() {
+          deregisterInstance();
           slider.destroy();
           _this.__slider = null;
         });
