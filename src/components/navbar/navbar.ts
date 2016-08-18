@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, Optional, Renderer, ViewChild } from '@an
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { isTrueProperty, noop } from '../../util/util';
+import { isTrueProperty } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { ToolbarBase } from '../toolbar/toolbar';
 import { ViewController } from '../../navigation/view-controller';
@@ -123,7 +123,7 @@ export class Navbar extends ToolbarBase {
     ev.preventDefault();
     ev.stopPropagation();
 
-    this.navCtrl && this.navCtrl.pop(null, noop);
+    this.navCtrl && this.navCtrl.pop(null, null);
   }
 
   /**

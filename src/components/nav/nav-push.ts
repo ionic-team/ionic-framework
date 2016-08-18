@@ -2,7 +2,6 @@ import { AfterViewInit, Directive, Host, HostBinding, HostListener, Input, Optio
 
 import { DeepLinker } from '../../navigation/deep-linker';
 import { NavController } from '../../navigation/nav-controller';
-import { noop } from '../../util/util';
 
 /**
  * @name NavPush
@@ -70,7 +69,7 @@ export class NavPush {
   @HostListener('click')
   onClick(): boolean {
     if (this._nav) {
-      this._nav.push(this.navPush, this.navParams, noop);
+      this._nav.push(this.navPush, this.navParams, null);
       return false;
     }
     return true;

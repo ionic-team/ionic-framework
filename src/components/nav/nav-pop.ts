@@ -60,13 +60,13 @@ export class NavPopAnchor implements OnChanges, AfterViewInit {
 
   constructor(
     @Optional() public host: NavPop,
-    @Optional() public linker: DeepLinker,
+    public linker: DeepLinker,
     @Optional() public viewCtrl: ViewController) {}
 
   @HostBinding() href: string;
 
   updateHref() {
-    if (this.host && this.linker && this.viewCtrl) {
+    if (this.host && this.viewCtrl) {
       const previousView = this.host._nav.getPrevious(this.viewCtrl);
       this.href = (previousView && this.linker.createUrl(this.host._nav, this.viewCtrl.componentType, this.viewCtrl.data)) || '#';
 

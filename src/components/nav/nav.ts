@@ -3,12 +3,12 @@ import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, Input, 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
-import { Keyboard } from '../../util/keyboard';
 import { GestureController } from '../../gestures/gesture-controller';
-import { TransitionController } from '../../transitions/transition-controller';
-import { isTrueProperty, noop } from '../../util/util';
+import { isTrueProperty } from '../../util/util';
+import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
+import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
@@ -112,18 +112,18 @@ export class Nav extends NavControllerBase implements AfterViewInit {
       // there is a segment match in the linker
       this.push(navSegment.component, navSegment.data, {
         id: navSegment.id
-      }, noop);
+      }, null);
 
     } else if (this._root) {
       // no segment match, so use the root property
       this.push(this._root, this.rootParams, {
         isNavRoot: (<any>this._app.getRootNav() === this)
-      }, noop);
+      }, null);
     }
   }
 
   goToRoot(opts: NavOptions) {
-    this.setRoot(this._root, this.rootParams, opts, noop);
+    this.setRoot(this._root, this.rootParams, opts, null);
   }
 
   /**
