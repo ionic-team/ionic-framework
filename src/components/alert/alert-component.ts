@@ -55,8 +55,8 @@ import { ViewController } from '../../navigation/view-controller';
         '</template>' +
 
       '</div>' +
-      '<div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">' +
-        '<button ion-button="alert-radio-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
+      '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons.length>2}">' +
+        '<button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
           '{{b.text}}' +
         '</button>' +
       '</div>' +

@@ -24,10 +24,10 @@ ion-alert {
   justify-content: center;
 
   opacity: 1;
+}
 
-  input {
-    width: 100%;
-  }
+ion-alert input {
+  width: 100%;
 }
 
 .alert-wrapper {
@@ -73,11 +73,11 @@ ion-alert {
   display: flex;
 
   flex-direction: row;
+}
 
-  &.vertical {
-    flex-direction: column;
-    flex-wrap: nowrap;
-  }
+.alert-button-group-vertical {
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 .alert-button {

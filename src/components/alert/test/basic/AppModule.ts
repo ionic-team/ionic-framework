@@ -263,7 +263,7 @@ export class E2EPage {
 
     setTimeout(() => {
       alert.dismiss();
-    }, 200);
+    }, 120);
   }
 
   doDisabledBackdropAlert() {

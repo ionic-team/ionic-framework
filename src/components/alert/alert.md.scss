@@ -140,10 +140,10 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   max-height: $alert-md-content-max-height;
 
   font-size: $alert-md-message-font-size;
+}
 
-  &:empty {
-    padding: $alert-md-message-padding-empty;
-  }
+.alert-message:empty {
+  padding: $alert-md-message-padding-empty;
 }
 
 
@@ -155,12 +155,12 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
   color: $alert-md-input-text-color;
+}
 
-  &:focus {
-    margin-bottom: $alert-md-input-margin-bottom - 1;
+.alert-input:focus {
+  margin-bottom: $alert-md-input-margin-bottom - 1;
 
-    border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
-  }
+  border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
 }
 
 
@@ -242,20 +242,16 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Radio Checked
 // ---------------------------------------------------
 
-.alert-radio[aria-checked=true] {
+.alert-radio[aria-checked=true] .alert-radio-label {
+  color: $alert-md-radio-label-text-color-checked;
+}
 
-  .alert-radio-label {
-    color: $alert-md-radio-label-text-color-checked;
-  }
+.alert-radio[aria-checked=true] .alert-radio-icon {
+  border-color: $alert-md-radio-border-color-on;
+}
 
-  .alert-radio-icon {
-    border-color: $alert-md-radio-border-color-on;
-  }
-
-  .alert-radio-inner {
-    transform: $alert-md-radio-icon-transform-on;
-  }
-
+.alert-radio[aria-checked=true] .alert-radio-inner {
+  transform: $alert-md-radio-icon-transform-on;
 }
 
 
@@ -343,12 +339,12 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   text-transform: $alert-md-button-text-transform;
   color: $alert-md-button-text-color;
   background-color: $alert-md-button-background-color;
+}
 
-  &.activated {
-    background-color: $alert-md-button-background-color-activated;
-  }
+.alert-button.activated {
+  background-color: $alert-md-button-background-color-activated;
+}
 
-  .button-inner {
-    justify-content: $alert-md-button-group-justify-content;
-  }
+.alert-button .button-inner {
+  justify-content: $alert-md-button-group-justify-content;
 }

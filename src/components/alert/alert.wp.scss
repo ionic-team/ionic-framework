@@ -99,10 +99,8 @@ $alert-wp-checkbox-icon-border-color:          color-contrast($colors-wp, $alert
 $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
 
-ion-alert {
-  ion-backdrop {
-    background: $alert-wp-backdrop-background;
-  }
+ion-alert ion-backdrop {
+  background: $alert-wp-backdrop-background;
 }
 
 .alert-wrapper {
@@ -147,10 +145,10 @@ ion-alert {
   max-height: $alert-wp-content-max-height;
 
   font-size: $alert-wp-message-font-size;
+}
 
-  &:empty {
-    padding: $alert-wp-message-padding-empty;
-  }
+.alert-message:empty {
+  padding: $alert-wp-message-padding-empty;
 }
 
 
@@ -164,10 +162,10 @@ ion-alert {
   border: $alert-wp-input-border-width $alert-wp-input-border-style $alert-wp-input-border-color;
   line-height: $alert-wp-input-line-height;
   color: $alert-wp-input-text-color;
+}
 
-  &:focus {
-    border-color: $alert-wp-input-border-color-focused;
-  }
+.alert-input:focus {
+  border-color: $alert-wp-input-border-color-focused;
 }
 
 
@@ -246,18 +244,16 @@ ion-alert {
 // Windows Alert Radio Checked
 // ---------------------------------------------------
 
-.alert-radio[aria-checked=true] {
-  .alert-radio-label {
-    color: $alert-wp-radio-label-text-color-checked;
-  }
+.alert-radio[aria-checked=true] .alert-radio-label {
+  color: $alert-wp-radio-label-text-color-checked;
+}
 
-  .alert-radio-icon {
-    border-color: $alert-wp-radio-border-color;
-  }
+.alert-radio[aria-checked=true] .alert-radio-icon {
+  border-color: $alert-wp-radio-border-color;
+}
 
-  .alert-radio-inner {
-    display: block;
-  }
+.alert-radio[aria-checked=true] .alert-radio-inner {
+  display: block;
 }
 
 
@@ -333,16 +329,16 @@ ion-alert {
   justify-content: $alert-wp-button-group-justify-content;
 
   padding: $alert-wp-button-group-padding;
+}
 
-  &.vertical .alert-button {
-    margin-top: $alert-wp-button-group-vertical-margin-top;
+.alert-button-group-vertical .alert-button {
+  margin-top: $alert-wp-button-group-vertical-margin-top;
 
-    width: $alert-wp-button-group-vertical-width;
+  width: $alert-wp-button-group-vertical-width;
+}
 
-    &:first-child:not(:only-child) {
-      margin-top: 0;
-    }
-  }
+.alert-button-group-vertical .alert-button:first-child:not(:only-child) {
+  margin-top: 0;
 }
 
 .alert-button {
@@ -354,12 +350,12 @@ ion-alert {
   font-weight: $alert-wp-button-font-weight;
   color: $alert-wp-button-text-color;
   background: $alert-wp-button-background;
+}
 
-  &:first-child:not(:only-child) {
-    margin-right: $alert-wp-button-margin-right;
-  }
+.alert-button:first-child:not(:only-child) {
+  margin-right: $alert-wp-button-margin-right;
+}
 
-  &.activated {
-    background: $alert-wp-button-background-activated;
-  }
+.alert-button.activated {
+  background: $alert-wp-button-background-activated;
 }
