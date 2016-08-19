@@ -12,7 +12,7 @@ import { ViewController } from '../nav/view-controller';
 
 
 /**
-* @private
+* @internal
 */
 @Component({
   selector: 'ion-loading',

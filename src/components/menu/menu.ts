@@ -200,17 +200,17 @@ export class Menu {
   private _init: boolean = false;
 
   /**
-   * @private
+   * @internal
    */
   isOpen: boolean = false;
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild(Backdrop) backdrop: Backdrop;
 
   /**
-   * @private
+   * @internal
    */
   onContentClick: EventListener;
 
@@ -275,7 +275,7 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   @Input() maxEdgeStart: number;
 
@@ -306,7 +306,7 @@ export class Menu {
   ) { }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     let self = this;
@@ -363,7 +363,7 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   bdClick(ev: Event) {
     console.debug('backdrop clicked');
@@ -373,7 +373,7 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   private _setListeners() {
     let self = this;
@@ -395,7 +395,7 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   private _getType(): MenuType {
     if (!this._type) {
@@ -409,7 +409,7 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
     // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
@@ -429,7 +429,7 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   swipeStart() {
     // user started swiping the menu open/close
@@ -440,7 +440,7 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   swipeProgress(stepValue: number) {
     // user actively dragging the menu
@@ -452,7 +452,7 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number) {
     // user has finished dragging the menu
@@ -523,28 +523,28 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   open() {
     return this.setOpen(true);
   }
 
   /**
-   * @private
+   * @internal
    */
   close() {
     return this.setOpen(false);
   }
 
   /**
-   * @private
+   * @internal
    */
   toggle() {
     return this.setOpen(!this.isOpen);
   }
 
   /**
-   * @private
+   * @internal
    */
   enable(shouldEnable: boolean): Menu {
     this.enabled = shouldEnable;
@@ -567,7 +567,7 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   swipeEnable(shouldEnable: boolean): Menu {
     this.swipeEnabled = shouldEnable;
@@ -579,21 +579,21 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   getMenuElement(): HTMLElement {
     return <HTMLElement>this.getNativeElement().querySelector('.menu-inner');
   }
 
   /**
-   * @private
+   * @internal
    */
   getContentElement(): HTMLElement {
     return this._cntEle;
   }
 
   /**
-   * @private
+   * @internal
    */
   getBackdropElement(): HTMLElement {
     return this.backdrop.getNativeElement();
@@ -604,14 +604,14 @@ export class Menu {
   }
 
   /**
-   * @private
+   * @internal
    */
   getMenuController(): MenuController {
     return this._menuCtrl;
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._menuCtrl.unregister(this);

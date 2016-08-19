@@ -8,7 +8,7 @@ import { ToastCmp } from './toast-component';
 import { ViewController } from '../nav/view-controller';
 
 /**
- * @private
+ * @internal
  */
 export class Toast extends ViewController {
   private _app: App;
@@ -33,7 +33,7 @@ export class Toast extends ViewController {
 
 
   /**
-  * @private
+  * @internal
   */
   getTransitionName(direction: string) {
     let key = 'toast' + (direction === 'back' ? 'Leave' : 'Enter');
@@ -41,7 +41,7 @@ export class Toast extends ViewController {
   }
 
   /**
-  * @private
+  * @internal
   */
   isValidPosition(position: string) {
     return position === TOAST_POSITION_TOP || position === TOAST_POSITION_MIDDLE || position === TOAST_POSITION_BOTTOM;
@@ -65,7 +65,7 @@ export class Toast extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * DEPRECATED: Please inject ToastController instead
    */
   private static create(opt: any) {

@@ -74,12 +74,12 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   private _init: boolean = false;
 
   /**
-   * @private
+   * @internal
    */
   value: any;
 
   /**
-   * @private
+   * @internal
    */
   id: number;
 
@@ -96,7 +96,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentInit() {
     let activeButton = this._btns.find(b => b.checked);
@@ -106,7 +106,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   }
 
   /**
-   * @private
+   * @internal
    */
   writeValue(val: any) {
     console.debug('radio group, writeValue', val);
@@ -122,7 +122,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -138,12 +138,12 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @internal
    */
   private _update() {
     // loop through each of the radiobuttons
@@ -168,7 +168,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   }
 
   /**
-   * @private
+   * @internal
    */
   add(button: RadioButton): string {
     this._btns.push(button);
@@ -183,7 +183,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   }
 
   /**
-   * @private
+   * @internal
    */
   remove(button: RadioButton) {
     let index = this._btns.indexOf(button);
@@ -196,7 +196,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ContentChild(ListHeader)
   private set _header(header: any) {
@@ -209,7 +209,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   }
 
   /**
-   * @private
+   * @internal
    */
   onChange(val: any) {
     // onChange used when there is not an formControlName
@@ -221,7 +221,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouched() {}
 

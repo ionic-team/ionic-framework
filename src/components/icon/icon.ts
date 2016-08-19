@@ -48,7 +48,7 @@ export class Icon {
   private _css: string = '';
 
   /**
-   * @private
+   * @internal
    */
   mode: string;
 
@@ -61,7 +61,7 @@ export class Icon {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     if (this._css) {
@@ -128,7 +128,7 @@ export class Icon {
   }
 
   /**
-   * @private
+   * @internal
    */
   update() {
     let css = 'ion-';
@@ -160,7 +160,7 @@ export class Icon {
   }
 
   /**
-   * @private
+   * @internal
    * @param {string} add class name
    */
   addClass(className: string) {

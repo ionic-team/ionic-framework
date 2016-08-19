@@ -8,7 +8,7 @@ import { RippleActivator } from './ripple';
 
 
 /**
- * @private
+ * @internal
  */
 @Injectable()
 export class TapClick {
@@ -194,7 +194,7 @@ function getActivatableTarget(ele: HTMLElement) {
 }
 
 /**
- * @private
+ * @internal
  */
 export const isActivatable = function(ele: HTMLElement) {
   if (ACTIVATABLE_ELEMENTS.test(ele.tagName)) {

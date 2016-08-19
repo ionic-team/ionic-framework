@@ -4,7 +4,7 @@ import { rafFrames } from '../../util/dom';
 import { Tab } from './tab';
 
 /**
- * @private
+ * @internal
  */
 @Directive({
   selector: 'tab-highlight'

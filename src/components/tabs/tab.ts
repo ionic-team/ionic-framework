@@ -139,12 +139,12 @@ export class Tab extends NavControllerBase {
   private _loadTmr: any;
 
   /**
-   * @private
+   * @internal
    */
   isSelected: boolean;
 
   /**
-   * @private
+   * @internal
    */
   btn: TabButton;
 
@@ -242,7 +242,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild('viewport', {read: ViewContainerRef})
   set _vp(val: ViewContainerRef) {
@@ -250,14 +250,14 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     this.tabBadgeStyle = this.tabBadgeStyle ? this.tabBadgeStyle : 'default';
   }
 
   /**
-   * @private
+   * @internal
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
@@ -273,7 +273,7 @@ export class Tab extends NavControllerBase {
 
 
   /**
-   * @private
+   * @internal
    */
   preload(wait: number) {
     this._loadTmr = setTimeout(() => {
@@ -288,7 +288,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   loadPage(viewCtrl: ViewController, viewport: ViewContainerRef, opts: NavOptions, done: Function) {
     let isTabSubPage = (this.parent.subPages && viewCtrl.index > 0);
@@ -310,7 +310,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
@@ -326,14 +326,14 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   get index(): number {
     return this.parent.getIndex(this);
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     clearTimeout(this._loadTmr);

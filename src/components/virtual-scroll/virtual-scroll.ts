@@ -323,7 +323,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
 
   /**
-   * @private
+   * @internal
    */
   ngDoCheck() {
     if (this._init) {
@@ -332,7 +332,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentInit() {
     if (!this._init) {
@@ -358,7 +358,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    * DOM READ THEN DOM WRITE
    */
   update(checkChanges: boolean) {
@@ -428,7 +428,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   renderVirtual() {
@@ -452,7 +452,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    * DOM READ THEN DOM WRITE
    */
   postRenderVirtual() {
@@ -476,7 +476,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   scrollUpdate() {
     clearNativeTimeout(this._tmId);
@@ -545,7 +545,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   onScrollEnd() {
@@ -569,7 +569,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   setVirtualHeight(newVirtualHeight: number) {
@@ -583,7 +583,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    * NO DOM
    */
   addScrollListener() {
@@ -617,7 +617,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    * NO DOM
    */
   ngOnDestroy() {

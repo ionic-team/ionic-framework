@@ -5,7 +5,7 @@ import { Ion } from '../ion';
 import { Tab } from './tab';
 
 /**
- * @private
+ * @internal
  */
 @Directive({
   selector: '.tab-button',

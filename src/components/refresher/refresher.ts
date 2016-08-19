@@ -485,7 +485,7 @@ export class Refresher {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     // bind event listeners
@@ -494,7 +494,7 @@ export class Refresher {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._gesture.destroy();

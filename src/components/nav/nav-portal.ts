@@ -7,7 +7,7 @@ import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../nav/nav-controller-base';
 
 /**
- * @private
+ * @internal
  */
 @Directive({
   selector: '[nav-portal]'

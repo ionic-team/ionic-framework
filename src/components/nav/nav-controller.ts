@@ -329,7 +329,7 @@ export abstract class NavController {
   viewDidUnload: EventEmitter<any>;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
@@ -341,7 +341,7 @@ export abstract class NavController {
   parent: any;
 
   /**
-   * @private
+   * @internal
    */
   config: Config;
 
@@ -420,7 +420,7 @@ export abstract class NavController {
   abstract popToRoot(opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
-   * @private
+   * @internal
    * Pop to a specific view in the history stack.
    *
    * @param {ViewController} view  to pop to

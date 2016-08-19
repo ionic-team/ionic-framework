@@ -156,7 +156,7 @@ export class Spinner {
   constructor(private _config: Config) {}
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     this._init = true;
@@ -164,7 +164,7 @@ export class Spinner {
   }
 
   /**
-   * @private
+   * @internal
    */
   load() {
     if (this._init) {

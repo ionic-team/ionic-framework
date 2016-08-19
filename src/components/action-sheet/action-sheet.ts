@@ -8,7 +8,7 @@ import { NavOptions } from '../nav/nav-interfaces';
 import { ViewController } from '../nav/view-controller';
 
 /**
- * @private
+ * @internal
  */
 export class ActionSheet extends ViewController {
   private _app: App;
@@ -28,7 +28,7 @@ export class ActionSheet extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   getTransitionName(direction: string) {
     let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
@@ -67,7 +67,7 @@ export class ActionSheet extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * DEPRECATED: Please inject ActionSheetController instead
    */
   private static create(opt: any) {

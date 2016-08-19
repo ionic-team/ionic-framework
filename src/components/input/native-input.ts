@@ -6,7 +6,7 @@ import { CSS, hasFocus }  from '../../util/dom';
 
 
 /**
- * @private
+ * @internal
  */
 @Directive({
   selector: '.text-input'
@@ -201,7 +201,7 @@ function removeClone(focusedInputEle: any, queryCssClass: string) {
 
 
 /**
- * @private
+ * @internal
  */
 @Directive({
   selector: '[next-input]'

@@ -69,7 +69,7 @@ export class SegmentButton {
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
   /**
-   * @private
+   * @internal
    */
   @Input()
   get disabled(): boolean {
@@ -82,14 +82,14 @@ export class SegmentButton {
   }
 
   /**
-   * @private
+   * @internal
    */
   setCssClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
   /**
-   * @private
+   * @internal
    * On click of a SegmentButton
    */
   @HostListener('click')
@@ -99,7 +99,7 @@ export class SegmentButton {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     if (!isPresent(this.value)) {
@@ -108,7 +108,7 @@ export class SegmentButton {
   }
 
   /**
-   * @private
+   * @internal
    */
   set isActive(isActive: any) {
     this._renderer.setElementClass(this._elementRef.nativeElement, 'segment-activated', isActive);
@@ -181,7 +181,7 @@ export class Segment {
   private _disabled: boolean = false;
 
   /**
-   * @private
+   * @internal
    */
   value: string;
 
@@ -193,7 +193,7 @@ export class Segment {
 
 
   /**
-   * @private
+   * @internal
    */
   @ContentChildren(SegmentButton) _buttons: QueryList<SegmentButton>;
 
@@ -204,7 +204,7 @@ export class Segment {
   }
 
   /**
-   * @private
+   * @internal
    */
   @Input()
   get disabled(): boolean {
@@ -223,7 +223,7 @@ export class Segment {
   }
 
   /**
-   * @private
+   * @internal
    * Write a new value to the element.
    */
   writeValue(value: any) {
@@ -237,7 +237,7 @@ export class Segment {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterViewInit() {
    let buttons = this._buttons.toArray();
@@ -260,22 +260,22 @@ export class Segment {
   }
 
   /**
-   * @private
+   * @internal
    */
   onChange = (_: any) => {};
   /**
-   * @private
+   * @internal
    */
   onTouched = (_: any) => {};
 
   /**
-   * @private
+   * @internal
    * Set the function to be called when the control receives a change event.
    */
   registerOnChange(fn: any) { this.onChange = fn; }
 
   /**
-   * @private
+   * @internal
    * Set the function to be called when the control receives a touch event.
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }

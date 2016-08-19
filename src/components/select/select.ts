@@ -149,7 +149,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   private _isOpen: boolean = false;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
@@ -230,6 +230,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
+   * @internal
    * Open the select interface.
    */
   open() {
@@ -350,14 +351,14 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
 
 
   /**
-   * @private
+   * @internal
    */
   get text() {
     return (this._multi ? this._texts : this._texts.join());
   }
 
   /**
-   * @private
+   * @internal
    */
   @ContentChildren(Option)
   private set options(val: QueryList<Option>) {
@@ -373,7 +374,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   private _updOpts() {
     this._texts = [];
@@ -408,7 +409,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   writeValue(val: any) {
     console.debug('select, writeValue', val);
@@ -417,14 +418,14 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentInit() {
     this._updOpts();
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -438,12 +439,12 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @internal
    */
   onChange(val: any) {
     // onChange used when there is not an formControlName
@@ -454,12 +455,12 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouched() { }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._form.deregister(this);

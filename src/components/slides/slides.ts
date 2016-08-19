@@ -195,77 +195,77 @@ import { Swiper } from './swiper-widget';
 export class Slides extends Ion {
 
   /**
-   * @private
+   * @internal
    */
   public rapidUpdate: Function;
 
   /**
-   * @private
+   * @internal
    */
   private id: number;
 
   /**
-   * @private
+   * @internal
    */
   private slideId: string;
 
   /**
-   * @private
+   * @internal
    */
   private showPager: boolean;
 
   /**
-   * @private
+   * @internal
    */
   private slider: Swiper;
 
   /**
-   * @private
+   * @internal
    */
   private maxScale: number;
 
   /**
-   * @private
+   * @internal
    */
   private zoomElement: HTMLElement;
 
   /**
-   * @private
+   * @internal
    */
   private zoomGesture: Gesture;
 
   /**
-   * @private
+   * @internal
    */
   private scale: number;
 
   /**
-   * @private
+   * @internal
    */
   private zoomLastPosX: number;
 
   /**
-   * @private
+   * @internal
    */
   private zoomLastPosY: number;
 
   /**
-   * @private
+   * @internal
    */
   private viewportWidth: number;
 
   /**
-   * @private
+   * @internal
    */
   private viewportHeight: number;
 
   /**
-   * @private
+   * @internal
    */
   private enableZoom: boolean;
 
   /**
-   * @private
+   * @internal
    */
   private touch: {
     x: number,
@@ -288,22 +288,22 @@ export class Slides extends Ion {
   @Input() options: any;
 
   /**
-   * @private Deprecated
+   * @internal Deprecated
    */
   @Input() pager: any;
 
   /**
-   * @private Deprecated
+   * @internal Deprecated
    */
   @Input() zoom: any;
 
   /**
-   * @private Deprecated
+   * @internal Deprecated
    */
   @Input() zoomDuration: any;
 
   /**
-   * @private Deprecated
+   * @internal Deprecated
    */
   @Input() zoomMax: any;
 
@@ -336,7 +336,7 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     if (!this.options) {
@@ -411,28 +411,28 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   onTap(swiper: any, e: any) {
   }
   /**
-   * @private
+   * @internal
    */
   onClick(swiper: any, e: any) {
   }
   /**
-   * @private
+   * @internal
    */
   onDoubleTap(swiper: any, e: any) {
     this.toggleZoom(swiper, e);
   }
   /**
-   * @private
+   * @internal
    */
   onLazyImageLoad(swiper: any, slide: any, img: any) {
   }
   /**
-   * @private
+   * @internal
    */
   onLazyImageReady(swiper: any, slide: any, img: any) {
   }
@@ -447,7 +447,7 @@ export class Slides extends Ion {
   */
 
   /**
-   * @private
+   * @internal
    */
   initZoom() {
     this.zoomDuration = this.zoomDuration || 230;
@@ -512,7 +512,7 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   resetZoom() {
     if (this.zoomElement) {
@@ -526,7 +526,7 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   toggleZoom(swiper: any, e: any) {
     console.debug('Try toggle zoom');
@@ -602,18 +602,18 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   onTransitionStart(swiper: any, e: any) {
   }
   /**
-   * @private
+   * @internal
    */
   onTransitionEnd(swiper: any, e: any) {
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouchStart(e: any) {
     console.debug('Touch start', e);
@@ -642,7 +642,7 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouchMove(e: any) {
     this.touch.deltaX = e.touches[0].clientX - this.touch.startX;
@@ -693,7 +693,7 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouchEnd(e: UIEvent) {
     console.debug('PANEND', e);
@@ -724,7 +724,7 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    * Update the underlying slider implementation. Call this if you've added or removed
    * child slides.
    */
@@ -850,18 +850,21 @@ export class Slides extends Ion {
 export class Slide {
 
   /**
-   * @private
+   * @internal
    */
   private ele: HTMLElement;
 
 
   /**
-   * @private
+   * @internal
    */
   @Input() zoom: any;
 
   constructor(
     elementRef: ElementRef,
+  /**
+   * @internal
+   */
     @Host() private slides: Slides
   ) {
     this.ele = elementRef.nativeElement;
@@ -870,13 +873,16 @@ export class Slide {
     slides.rapidUpdate();
   }
 
+  /**
+   * @internal
+   */
   ngOnDestroy() {
     this.slides.rapidUpdate();
   }
 }
 
  /**
-  * @private
+  * @internal
   */
 @Directive({
   selector: 'slide-lazy',

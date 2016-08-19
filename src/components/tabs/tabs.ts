@@ -167,17 +167,17 @@ export class Tabs extends Ion {
   private _bottom: number;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
   /**
-   * @private
+   * @internal
    */
   selectHistory: string[] = [];
 
   /**
-   * @private
+   * @internal
    */
   subPages: boolean;
 
@@ -192,7 +192,7 @@ export class Tabs extends Ion {
   @Input() preloadTabs: any;
 
   /**
-   * @private DEPRECATED. Please use `tabsLayout` instead.
+   * @internal DEPRECATED. Please use `tabsLayout` instead.
    */
   @Input() private tabbarLayout: string;
 
@@ -202,7 +202,7 @@ export class Tabs extends Ion {
   @Input() tabsLayout: string;
 
   /**
-   * @private DEPRECATED. Please use `tabsPlacement` instead.
+   * @internal DEPRECATED. Please use `tabsPlacement` instead.
    */
   @Input() private tabbarPlacement: string;
 
@@ -222,22 +222,22 @@ export class Tabs extends Ion {
   @Output() ionChange: EventEmitter<Tab> = new EventEmitter<Tab>();
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild(TabHighlight) private _highlight: TabHighlight;
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild('tabbar') private _tabbar: ElementRef;
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild('portal', {read: ViewContainerRef}) portal: ViewContainerRef;
 
   /**
-   * @private
+   * @internal
    */
   parent: NavControllerBase;
 
@@ -298,7 +298,7 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterViewInit() {
     this._setConfig('tabsPlacement', 'bottom');
@@ -345,7 +345,7 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   initTabs() {
     // get the selected index from the input
@@ -377,7 +377,7 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   private _setConfig(attrKey: string, fallback: any) {
     var val = (<any>this)[attrKey];
@@ -388,7 +388,7 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   add(tab: Tab) {
     tab.id = this.id + '-' + (++this._ids);
@@ -525,28 +525,28 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   getActiveChildNav() {
     return this.getSelected();
   }
 
   /**
-   * @private
+   * @internal
    */
   getIndex(tab: Tab): number {
     return this._tabs.indexOf(tab);
   }
 
   /**
-   * @private
+   * @internal
    */
   length(): number {
     return this._tabs.length;
   }
 
   /**
-   * @private
+   * @internal
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
@@ -581,7 +581,7 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   setTabbarPosition(top: number, bottom: number) {

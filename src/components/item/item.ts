@@ -298,12 +298,12 @@ export class Item {
   private _viewLabel: boolean = true;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
   /**
-   * @private
+   * @internal
    */
   labelId: string = null;
 
@@ -312,7 +312,7 @@ export class Item {
   }
 
   /**
-   * @private
+   * @internal
    */
   registerInput(type: string) {
     this._inputs.push(type);
@@ -320,7 +320,7 @@ export class Item {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentInit() {
     if (this._viewLabel && this._inputs.length) {
@@ -334,14 +334,14 @@ export class Item {
   }
 
   /**
-   * @private
+   * @internal
    */
   getLabelText(): string {
     return this._label ? this._label.text : '';
   }
 
   /**
-   * @private
+   * @internal
    */
   @ContentChild(Label)
   private set contentLabel(label: Label) {
@@ -356,7 +356,7 @@ export class Item {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild(Label)
   private set viewLabel(label: Label) {
@@ -366,7 +366,7 @@ export class Item {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ContentChildren(Button)
   private set _buttons(buttons: any) {
@@ -380,7 +380,7 @@ export class Item {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ContentChildren(Icon)
   private set _icons(icons: any) {
@@ -390,21 +390,21 @@ export class Item {
   }
 
   /**
-   * @private
+   * @internal
    */
   setCssClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
   /**
-   * @private
+   * @internal
    */
   setCssStyle(property: string, value: string) {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
   }
 
   /**
-   * @private
+   * @internal
    */
   getNativeElement(): HTMLElement {
     return this._elementRef.nativeElement;
@@ -412,7 +412,7 @@ export class Item {
 }
 
 /**
- * @private
+ * @internal
  */
 @Directive({
   selector: 'ion-item,[ion-item]',

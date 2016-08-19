@@ -57,7 +57,7 @@ export class List extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._slidingGesture && this._slidingGesture.destroy();
@@ -77,7 +77,7 @@ export class List extends Ion {
 
 
   /**
-   * @private
+   * @internal
    */
   containsSlidingItem(contains: boolean) {
     this._containsSlidingItems = contains;
@@ -109,7 +109,7 @@ export class List extends Ion {
 
 
 /**
- * @private
+ * @internal
  */
 @Directive({
   selector: 'ion-list-header'

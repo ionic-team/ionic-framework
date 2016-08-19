@@ -126,7 +126,7 @@ export class Searchbar {
   @Output() ionClear: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
   /**
-   * @private
+   * @internal
    */
   @HostBinding('class.searchbar-has-focus') _sbHasFocus: boolean;
 
@@ -142,7 +142,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild('searchbarInput')
   private set searchbarInput(searchbarInput: ElementRef) {
@@ -183,7 +183,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * On Initialization check for attributes
    */
   ngOnInit() {
@@ -194,7 +194,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * After View Initialization position the elements
    */
   ngAfterViewInit() {
@@ -202,7 +202,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Positions the input search icon, placeholder, and the cancel button
    * based on the input value and if it is focused. (ios only)
    */
@@ -221,7 +221,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Calculates the amount of padding/margin left for the elements
    * in order to center them based on the placeholder width
    */
@@ -250,7 +250,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   positionCancelButton(cancelButtonEle: HTMLElement) {
@@ -264,7 +264,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Align the input placeholder left on focus or if a value exists
    */
   shouldAlignLeft() {
@@ -272,7 +272,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev: any) {
@@ -285,7 +285,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Sets the Searchbar to focused and active on input focus.
    */
   inputFocused(ev: UIEvent) {
@@ -297,7 +297,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
@@ -316,7 +316,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Clears the input field and triggers the control change.
    */
   clearInput(ev: UIEvent) {
@@ -332,7 +332,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Clears the input field and tells the input to blur since
    * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
@@ -346,7 +346,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Write a new value to the element.
    */
   writeValue(val: any) {
@@ -355,17 +355,17 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    */
   onChange = (_: any) => {};
 
   /**
-   * @private
+   * @internal
    */
   onTouched = () => {};
 
   /**
-   * @private
+   * @internal
    * Set the function to be called when the control receives a change event.
    */
   registerOnChange(fn: (_: any) => {}): void {
@@ -373,7 +373,7 @@ export class Searchbar {
   }
 
   /**
-   * @private
+   * @internal
    * Set the function to be called when the control receives a touch event.
    */
   registerOnTouched(fn: () => {}): void {

@@ -82,7 +82,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   private _events: UIEventManager = new UIEventManager();
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
@@ -107,7 +107,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   private pointerDown(ev: UIEvent): boolean {
     this._startX = pointerCoord(ev).x;
@@ -116,7 +116,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   private pointerMove(ev: UIEvent) {
     if (this._startX) {
@@ -139,7 +139,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   private pointerUp(ev: UIEvent) {
     if (this._startX) {
@@ -184,14 +184,14 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   writeValue(val: any) {
     this._setChecked( isTrueProperty(val) );
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -204,7 +204,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
@@ -222,7 +222,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   onChange(isChecked: boolean) {
     // used when this input does not have an ngModel or formControlName
@@ -232,12 +232,12 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouched() {}
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentInit() {
     this._init = true;
@@ -250,7 +250,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._form.deregister(this);

@@ -94,7 +94,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild('viewport', {read: ViewContainerRef})
   set _vp(val: ViewContainerRef) {
@@ -102,7 +102,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterViewInit() {
     this._hasInit = true;

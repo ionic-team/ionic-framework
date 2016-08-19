@@ -8,7 +8,7 @@ import { Spinner } from '../spinner/spinner';
 
 
 /**
- * @private
+ * @internal
  */
 @Component({
   selector: 'ion-refresher-content',
@@ -58,7 +58,7 @@ export class RefresherContent {
   constructor(private r: Refresher, private _config: Config) {}
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     if (!this.pullingIcon) {

@@ -76,7 +76,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   private _fn: Function;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
@@ -99,7 +99,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   @HostListener('click', ['$event'])
   private _click(ev: UIEvent) {
@@ -123,7 +123,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   private _setChecked(isChecked: boolean) {
     if (isChecked !== this._checked) {
@@ -136,14 +136,14 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   writeValue(val: any) {
     this._setChecked( isTrueProperty(val) );
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -156,7 +156,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
@@ -174,7 +174,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   onChange(isChecked: boolean) {
     // used when this input does not have an ngModel or formControlName
@@ -184,19 +184,19 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouched() {}
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentInit() {
     this._init = true;
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._form.deregister(this);

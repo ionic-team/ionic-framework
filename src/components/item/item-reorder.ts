@@ -151,7 +151,7 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._element = null;
@@ -159,7 +159,7 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @internal
    */
   @Input()
   get reorder(): boolean {
@@ -179,7 +179,7 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @internal
    */
   reorderPrepare() {
     let children = this._element.children;
@@ -190,14 +190,14 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @internal
    */
   reorderStart() {
     this.setCssClass('reorder-list-active', true);
   }
 
   /**
-   * @private
+   * @internal
    */
   reorderEmit(fromIndex: number, toIndex: number) {
     this.reorderReset();
@@ -212,7 +212,7 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @internal
    */
   scrollContent(scroll: number) {
     let scrollTop = this._content.getScrollTop() + scroll;
@@ -223,7 +223,7 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @internal
    */
   reorderReset() {
     let children = this._element.children;
@@ -238,7 +238,7 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @internal
    */
   reorderMove(fromIndex: number, toIndex: number, itemHeight: number) {
     if (this._lastToIndex === -1) {
@@ -275,14 +275,14 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @internal
    */
   setCssClass(classname: string, add: boolean) {
     this._rendered.setElementClass(this._element, classname, add);
   }
 
   /**
-   * @private
+   * @internal
    */
   getNativeElement(): HTMLElement {
     return this._element;
@@ -290,7 +290,7 @@ export class ItemReorder {
 }
 
 /**
- * @private
+ * @internal
  */
 @Component({
   selector: 'ion-reorder',
@@ -311,7 +311,7 @@ export class Reorder {
 }
 
 /**
- * @private
+ * @internal
  */
 export function findReorderItem(node: any): HTMLElement {
   let nested = 0;
@@ -326,7 +326,7 @@ export function findReorderItem(node: any): HTMLElement {
 }
 
 /**
- * @private
+ * @internal
  */
 export function indexForItem(element: any): number {
   return element['$ionIndex'];

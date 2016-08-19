@@ -43,15 +43,15 @@ import { Ion } from '../ion';
 })
 export class Scroll extends Ion {
   /**
-   * @private
+   * @internal
    */
   private maxScale: number = 3;
   /**
-   * @private
+   * @internal
    */
   private zoomDuration: number = 250;
   /**
-   * @private
+   * @internal
    */
   private scrollElement: HTMLElement;
 
@@ -60,14 +60,14 @@ export class Scroll extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     this.scrollElement = this.getNativeElement().children[0];
   }
 
   /**
-   * @private
+   * @internal
    * Add a scroll event handler to the scroll element if it exists.
    * @param {Function} handler  The scroll handler to add to the scroll element.
    * @returns {?Function} a function to remove the specified handler, otherwise

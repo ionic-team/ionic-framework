@@ -6,7 +6,7 @@ import { Toolbar } from './toolbar';
 
 
 /**
- * @private
+ * @internal
  */
 @Directive({
   selector: 'ion-buttons,[menuToggle]'
