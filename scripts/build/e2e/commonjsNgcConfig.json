@@ -8,10 +8,10 @@
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "dist"
+    "outDir": "dist-e2e"
   },
   "angularCompilerOptions": {
-    "genDir": "dist",
+    "genDir": "dist-e2e",
     "skipTemplateCodegen": true
   },
   "files": [

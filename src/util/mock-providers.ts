@@ -93,7 +93,7 @@ export const mockNavController = function(): NavControllerBase {
   let platform = mockPlatform();
 
   let config = mockConfig();
-  //config.setPlatform(platform);
+  // config.setPlatform(platform);
 
   let app = mockApp(config, platform);
 
@@ -111,7 +111,7 @@ export const mockNavController = function(): NavControllerBase {
 
   let gestureCtrl = new GestureController(app);
 
-  //let navLikConfig = new NavLinkConfig([]);
+  // let navLikConfig = new NavLinkConfig([]);
 
   let serializer = new UrlSerializer(null);
 
@@ -138,7 +138,7 @@ export const mockTab = function(parentTabs: Tabs): Tab {
   let platform = mockPlatform();
 
   let config = mockConfig();
-  //config.setPlatform(platform);
+  // config.setPlatform(platform);
 
   let app = (<any>parentTabs)._app || mockApp(config, platform);
 
@@ -158,7 +158,7 @@ export const mockTab = function(parentTabs: Tabs): Tab {
 
   let gestureCtrl = new GestureController(app);
 
-  //let navLikConfig = new NavLinkConfig([]);
+  // let navLikConfig = new NavLinkConfig([]);
 
   let serializer = new UrlSerializer(null);
 

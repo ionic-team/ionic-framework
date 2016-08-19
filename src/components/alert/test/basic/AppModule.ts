@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, AlertController, ModalController, ViewController } from '../../../dist';
+import { IonicApp, IonicModule, AlertController, ModalController, ViewController } from '../../../dist-e2e';
 
 
 @Component({

@@ -8,10 +8,10 @@
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "dist/esm"
+    "outDir": "dist-e2e/esm"
   },
   "angularCompilerOptions": {
-    "genDir": "dist/esm",
+    "genDir": "dist-e2e/esm",
     "skipTemplateCodegen": true
   },
   "files": [

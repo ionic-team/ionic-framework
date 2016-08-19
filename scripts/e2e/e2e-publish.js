@@ -4,7 +4,7 @@ module.exports = function(options) {
   var fs = require('fs');
   var path = require('path');
   var request = require('request');
-  var inputDir = path.join(__dirname, '../../dist');
+  var inputDir = path.join(__dirname, '../../dist-e2e');
   var uploadQueue = [];
 
   var ignoreFiles = /(\/test\/|\/ts\/|\/q\/|\/ionic-site\/|\/docs\/|\/examples\/|\/inquirer\/|\/lodash\/|\/tooling\/|\/colors\/|\/bin\/|\.ts$|\.bin|\.map$|\.md$|\.git|\.scss$|\.yml$|\.yaml$|\.dart$|\.txt|\.npm|bower|DS_Store|LICENSE)/i;

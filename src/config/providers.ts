@@ -46,7 +46,7 @@ export function ionicProviders(customProviders?: Array<any>, config?: any): any[
   let platform = new Platform();
 
   // initialize platform
-  //platform.setUrl(window.location.href);
+  // platform.setUrl(window.location.href);
   platform.setUserAgent(window.navigator.userAgent);
   platform.setNavigatorPlatform(window.navigator.platform);
   platform.load();
@@ -137,7 +137,7 @@ function setupDom(window: Window, document: Document, config: Config, platform: 
   }
 
   // run feature detection tests
-  //featureDetect.run(window, document);
+  // featureDetect.run(window, document);
 }
 
 

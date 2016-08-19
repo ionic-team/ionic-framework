@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, MenuController, NavController, AlertController, Nav, Refresher } from '../../../dist';
+import { IonicApp, IonicModule, MenuController, NavController, AlertController, Nav, Refresher } from '../../../dist-e2e';
 
 
 @Component({

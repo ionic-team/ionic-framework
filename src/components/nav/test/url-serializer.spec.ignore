@@ -1,0 +1,674 @@
+import { NavLink, NavLinkConfig, NavPath, NavSegment } from '../../../../src/components/nav/nav-util';
+import { UrlSerializer, isPartMatch, matchUrlParts, parseUrlParts, createMatchedData, createSegmentFromPart } from '../../../../src/components/nav/url-serializer';
+
+
+export function run() {
+
+describe('NavUrlSerializer', () => {
+
+  describe('serializeComponent', () => {
+
+    it('should create segment if component found in links', () => {
+      serializer.createSegment = noop;
+      spyOn(serializer, 'createSegment');
+      serializer.serializeComponent(View1, null);
+      expect(serializer.createSegment).toHaveBeenCalled();
+    });
+
+    it('should return null if component not found in links', () => {
+      serializer.createSegment = noop;
+      spyOn(serializer, 'createSegment');
+      serializer.serializeComponent(NotFound, null);
+      expect(serializer.createSegment).not.toHaveBeenCalled();
+    });
+
+    it('should create tab segment if component found in deep links', () => {
+      serializer.createSegment = noop;
+      spyOn(serializer, 'createSegment');
+      serializer.serializeComponent(View1, null);
+      expect(serializer.createSegment).toHaveBeenCalled();
+    });
+
+  });
+
+  describe('createSegment', () => {
+
+    it('should create segement path data', () => {
+      let link: NavLink = {
+        parts: ['a', ':id', ':name'],
+        component: View1
+      };
+      let data: any = {
+        id: 8675309,
+        name: 'jenny'
+      };
+      let p = serializer.createSegment(link, data);
+      expect(p.id).toEqual('a/8675309/jenny');
+      expect(p.component).toEqual(View1);
+    });
+
+    it('should create segement with encodeURIComponent data', () => {
+      let char = '道';
+      let encoded = encodeURIComponent(char);
+
+      let link: NavLink = {
+        parts: ['a', ':id'],
+        component: View1
+      };
+      let data: any = {
+        id: char
+      };
+      let p = serializer.createSegment(link, data);
+      expect(p.id).toEqual('a/' + encoded);
+      expect(p.component).toEqual(View1);
+      expect(p.data.id).toEqual(char);
+    });
+
+    it('should create segement with no data', () => {
+      let link: NavLink = {
+        parts: ['a'],
+        component: View1
+      };
+      let p = serializer.createSegment(link, null);
+      expect(p.id).toEqual('a');
+      expect(p.component).toEqual(View1);
+      expect(p.data).toEqual(null);
+    });
+
+  });
+
+  describe('parse', () => {
+
+    it('should parse mix match of component paths', () => {
+      serializer = mockSerializer([
+        { path: 'b/c', name: 'viewA', component: View1 },
+        { path: 'a/:id', name: 'viewB', component: View2 }
+      ]);
+      let p = serializer.parse('a/b/c');
+      expect(p.length).toEqual(2);
+      expect(p[0].component).toEqual(null);
+      expect(p[0].data).toEqual(null);
+      expect(p[1].name).toEqual('viewA');
+      expect(p[1].data).toEqual(null);
+    });
+
+    it('should parse by higher priority with data in middle', () => {
+      serializer = mockSerializer([
+        { path: 'view1/:id/view2', name: 'view1', component: View1 },
+        { path: 'view1/view2', name: 'view2', component: View2 },
+        { path: 'view2', name: 'view1', component: View3 }
+      ]);
+      let p = serializer.parse('view1/view2/view2');
+      expect(p.length).toEqual(1);
+      expect(p[0].name).toEqual('view1');
+      expect(p[0].data.id).toEqual('view2');
+    });
+
+    it('should parse by higher priority, two segments', () => {
+      serializer = mockSerializer([
+        { path: 'view1/:id', name: 'view1', component: View1 },
+        { name: 'view2', component: View2 }
+      ]);
+      let p = serializer.parse('view1/view2');
+      expect(p.length).toEqual(1);
+      expect(p[0].name).toEqual('view1');
+      expect(p[0].data.id).toEqual('view2');
+    });
+
+    it('should parse path with one slash and data', () => {
+      serializer = mockSerializer([
+        { path: 'a/:id', name: 'a', component: View1 },
+      ]);
+      let p = serializer.parse('a/b');
+      expect(p.length).toEqual(1);
+      expect(p[0].name).toEqual('a');
+      expect(p[0].data.id).toEqual('b');
+    });
+
+    it('should parse multiple url part path', () => {
+      serializer = mockSerializer([
+        { path: 'c/a/b/d', name: 'five', component: View1 },
+        { path: 'c/a/b', name: 'four', component: View1 },
+        { path: 'a/b/c', name: 'three', component: View1 },
+        { path: 'a/b', name: 'two', component: View1 },
+        { path: 'a', name: 'one', component: View2 }
+      ]);
+      let p = serializer.parse('a/b');
+      expect(p.length).toEqual(1);
+      expect(p[0].name).toEqual('two');
+
+      p = serializer.parse('a');
+      expect(p.length).toEqual(1);
+      expect(p[0].name).toEqual('one');
+    });
+
+    it('should parse multiple segments with data', () => {
+      let p = serializer.parse('view1/view2');
+      expect(p.length).toEqual(2);
+      expect(p[0].name).toEqual('view1');
+      expect(p[1].name).toEqual('view2');
+    });
+
+    it('should parse one segment path', () => {
+      let p = serializer.parse('view1/not-in-config');
+      expect(p.length).toEqual(2);
+      expect(p[0].id).toEqual('view1');
+      expect(p[0].name).toEqual('view1');
+      expect(p[0].data).toEqual(null);
+      expect(p[1].name).toEqual('not-in-config');
+      expect(p[1].component).toEqual(null);
+    });
+
+    it('should parse one segment path', () => {
+      let p = serializer.parse('view1');
+      expect(p.length).toEqual(1);
+      expect(p[0].id).toEqual('view1');
+      expect(p[0].name).toEqual('view1');
+      expect(p[0].data).toEqual(null);
+    });
+
+    describe('serialize', () => {
+
+      it('should bring together two paths that are not the index', () => {
+        let path: NavPath = [
+          { id: 'a', name: 'a', component: View1, data: null },
+          { id: 'b', name: 'b', component: View1, data: null }
+        ];
+        expect(serializer.serialize(path)).toEqual('/a/b');
+      });
+
+      it('should bring together one path, not the index', () => {
+        let path: NavPath = [
+          { id: 'a', name: 'a', component: View1, data: null }
+        ];
+        expect(serializer.serialize(path)).toEqual('/a');
+      });
+
+      it('should bring together one path that is the index', () => {
+        let path: NavPath = [
+          { id: '', name: 'a', component: View1, data: null }
+        ];
+        expect(serializer.serialize(path)).toEqual('/');
+      });
+
+    });
+
+    describe('createMatchedData', () => {
+
+      it('should get data from multiple parts', () => {
+        let matchedUrlParts = ['a', 'ellie', 'blacklab'];
+        let link: NavLink = {
+          parts: ['a', ':name', ':breed'], component: View1
+        };
+        let data = createMatchedData(matchedUrlParts, link);
+        expect(data.name).toEqual('ellie');
+        expect(data.breed).toEqual('blacklab');
+      });
+
+      it('should get data within the config link path', () => {
+        let char = '道';
+
+        let matchedUrlParts = ['a', 'b', encodeURIComponent(char), 'd'];
+        let link: NavLink = {
+          parts: ['a', ':id', ':name', 'd'], component: View1
+        };
+        let data = createMatchedData(matchedUrlParts, link);
+        expect(data.id).toEqual('b');
+        expect(data.name).toEqual(char);
+      });
+
+      it('should get data within the config link path', () => {
+        let matchedUrlParts = ['a', '8675309'];
+        let link: NavLink = {
+          parts: ['a', ':num'], component: View1
+        };
+        let data = createMatchedData(matchedUrlParts, link);
+        expect(data.num).toEqual('8675309');
+      });
+
+      it('should get uri decode data', () => {
+        let char = '道';
+
+        let matchedUrlParts = [`${encodeURIComponent(char)}`];
+        let link: NavLink = {
+          parts: [':name'], component: View1
+        };
+        let data = createMatchedData(matchedUrlParts, link);
+        expect(data.name).toEqual(char);
+      });
+
+      it('should get null data if nothing in the url', () => {
+        let matchedUrlParts = ['a'];
+        let link: NavLink = {
+          parts: ['a'], component: View1
+        };
+        let data = createMatchedData(matchedUrlParts, link);
+        expect(data).toEqual(null);
+      });
+
+    });
+
+    describe('parseUrlParts', () => {
+
+      it('should match with complex path', () => {
+        let urlParts = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+        let configLinks: NavLink[] = [
+          { parts: ['a', 'b', 'c', 'e'], component: View1 },
+          { parts: ['a', ':key', ':val'], component: View1 },
+          { parts: ['a', 'c', 'd'], component: View1 },
+          { parts: ['d', 'e'], component: View1 },
+          { parts: ['d', ':x'], component: View1 },
+          { parts: ['f'], component: View1 },
+          { parts: [':last'], component: View1 },
+        ];
+
+        let path = parseUrlParts(urlParts, configLinks);
+        expect(path.length).toEqual(4);
+        expect(path[0].id).toEqual('a/b/c');
+        expect(path[0].data.key).toEqual('b');
+        expect(path[0].data.val).toEqual('c');
+        expect(path[1].id).toEqual('d/e');
+        expect(path[1].data).toEqual(null);
+        expect(path[2].id).toEqual('f');
+        expect(path[3].data.last).toEqual('g');
+      });
+
+      it('should not get a match on already matched parts', () => {
+        let urlParts = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+        let configLinks: NavLink[] = [
+          { parts: ['a', 'b', 'c'], component: View1 },
+          { parts: ['b', 'c', 'd'], component: View1 }, // no match
+          { parts: ['a', 'b'], component: View1 }, // no match
+          { parts: ['d', 'e'], component: View2 },
+          { parts: ['e', 'f'], component: View1 }, // no match
+          { parts: ['e'], component: View1 }, // no match
+          { parts: ['f'], component: View3 },
+        ];
+
+        let path = parseUrlParts(urlParts, configLinks);
+        expect(path.length).toEqual(4);
+        expect(path[0].id).toEqual('a/b/c');
+        expect(path[0].component).toEqual(View1);
+        expect(path[1].id).toEqual('d/e');
+        expect(path[1].component).toEqual(View2);
+        expect(path[2].id).toEqual('f');
+        expect(path[2].component).toEqual(View3);
+        expect(path[3].id).toEqual('g');
+        expect(path[3].component).toEqual(null);
+      });
+
+      it('should match every other', () => {
+        let urlParts = ['a', 'b', 'c', 'd'];
+        let configLinks: NavLink[] = [
+          { parts: ['b'], component: View1 },
+          { parts: ['d'], component: View2 }
+        ];
+        let path = parseUrlParts(urlParts, configLinks);
+        expect(path[0].id).toEqual('a');
+        expect(path[0].component).toEqual(null);
+        expect(path[1].id).toEqual('b');
+        expect(path[1].component).toEqual(View1);
+        expect(path[2].id).toEqual('c');
+        expect(path[2].component).toEqual(null);
+        expect(path[3].id).toEqual('d');
+        expect(path[3].component).toEqual(View2);
+      });
+
+      it('should get a one part match', () => {
+        let urlParts = ['a', 'b', 'c'];
+        let configLinks: NavLink[] = [
+          { parts: ['a'], component: View1 },
+          { parts: ['b'], component: View2 },
+          { parts: ['c'], component: View3 },
+        ];
+        let path = parseUrlParts(urlParts, configLinks);
+        expect(path.length).toEqual(3);
+        expect(path[0].id).toEqual('a');
+        expect(path[1].id).toEqual('b');
+        expect(path[2].id).toEqual('c');
+      });
+
+      it('should not match', () => {
+        let urlParts = ['z'];
+        let configLinks: NavLink[] = [
+          { parts: ['a'], component: View1 }
+        ];
+        let path = parseUrlParts(urlParts, configLinks);
+        expect(path.length).toEqual(1);
+        expect(path[0].id).toEqual('z');
+        expect(path[0].id).toEqual('z');
+        expect(path[0].component).toEqual(null);
+        expect(path[0].data).toEqual(null);
+      });
+
+    });
+
+    describe('matchUrlParts', () => {
+
+      it('should not match two parts at third index', () => {
+        let partStartIndex = 1;
+        let urlParts = ['a', 'b', 'c', 'd'];
+        let link: NavLink = {
+          parts: ['c', 'd'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment).toEqual(null);
+      });
+
+      it('should match two parts at third index', () => {
+        let partStartIndex = 2;
+        let urlParts = ['a', 'b', 'c', 'd'];
+        let link: NavLink = {
+          parts: ['c', 'd'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment.id).toEqual('c/d');
+      });
+
+      it('should match one part at second index', () => {
+        let partStartIndex = 1;
+        let urlParts = ['a', 'b', 'c', 'd'];
+        let link: NavLink = {
+          parts: ['b'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment.id).toEqual('b');
+      });
+
+      it('should match two parts with path data', () => {
+        let partStartIndex = 0;
+        let urlParts = ['a', 'b', 'c', 'd'];
+        let link: NavLink = {
+          parts: ['a', ':id'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment.id).toEqual('a/b');
+        expect(segment.data.id).toEqual('b');
+      });
+
+      it('should match two parts, more unmatch parts to the right', () => {
+        let partStartIndex = 0;
+        let urlParts = ['a', 'b', 'c', 'd'];
+        let link: NavLink = {
+          parts: ['a', 'b'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment.id).toEqual('a/b');
+      });
+
+      it('should not match two parts not in correct index', () => {
+        let partStartIndex = 0;
+        let urlParts = ['a', 'b', 'c'];
+        let link: NavLink = {
+          parts: ['b', 'c'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment).toEqual(null);
+      });
+
+      it('should match two parts', () => {
+        let partStartIndex = 0;
+        let urlParts = ['a', 'b'];
+        let link: NavLink = {
+          parts: ['a', 'b'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment.id).toEqual('a/b');
+      });
+
+      it('should match single part', () => {
+        let partStartIndex = 0;
+        let urlParts = ['a'];
+        let link: NavLink = {
+          parts: ['a'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment.id).toEqual('a');
+      });
+
+      it('should not match single part', () => {
+        let partStartIndex = 0;
+        let urlParts = ['a'];
+        let link: NavLink = {
+          parts: ['b'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment).toEqual(null);
+      });
+
+    });
+
+    describe('createSegmentFromPart', () => {
+
+      it('should create segment with data', () => {
+        let matchedUrlParts = ['a', 'b', 'c'];
+        let link: NavLink = {
+          parts: ['a', ':val', 'c'], name: 'somelink', component: View1
+        };
+        let segment = createSegmentFromPart(matchedUrlParts, link);
+        expect(segment.id).toEqual('a/b/c');
+        expect(segment.component).toEqual(View1);
+        expect(segment.name).toEqual('somelink');
+        expect(segment.data.val).toEqual('b');
+      });
+
+      it('should create segment with no data', () => {
+        let matchedUrlParts = ['a', 'b', 'c'];
+        let link: NavLink = {
+          parts: ['a', 'b', 'c'], name: 'somelink', component: View1
+        };
+        let segment = createSegmentFromPart(matchedUrlParts, link);
+        expect(segment.id).toEqual('a/b/c');
+        expect(segment.component).toEqual(View1);
+        expect(segment.name).toEqual('somelink');
+        expect(segment.data).toEqual(null);
+      });
+
+      it('should set an id if its empty', () => {
+        let matchedUrlParts = [''];
+        let link: NavLink = {
+          parts: ['a'], name: 'somelink', component: View1
+        };
+        let segment = createSegmentFromPart(matchedUrlParts, link);
+        expect(segment.id).toEqual('somelink');
+      });
+
+      it('should return null when not the same length', () => {
+        let matchedUrlParts = ['a', 'b'];
+        let link: NavLink = {
+          parts: ['a', 'b', 'c'], component: View1
+        };
+        let data = createSegmentFromPart(matchedUrlParts, link);
+        expect(data).toEqual(null);
+      });
+
+    });
+
+    describe('configLinkPartsScan', () => {
+
+      it('should not match single one for one', () => {
+        let partStartIndex = 0;
+        let urlParts = ['a'];
+        let link: NavLink = {
+          parts: ['b'], component: View1
+        };
+        let segment = matchUrlParts(partStartIndex, urlParts, link);
+        expect(segment).toEqual(null);
+      });
+
+    });
+
+    describe('isPartMatch', () => {
+
+      it('should match if parts are equal', () => {
+        expect(isPartMatch('a', 'a')).toEqual(true);
+      });
+
+      it('should not match if parts are not equal', () => {
+        expect(isPartMatch('a', 'b')).toEqual(false);
+      });
+
+      it('should not match if configLinkPart has a : thats not index 0', () => {
+        expect(isPartMatch('urlPart', 'my:id')).toEqual(false);
+      });
+
+      it('should match if configLinkPart starts with :', () => {
+        expect(isPartMatch('urlPart', ':id')).toEqual(true);
+      });
+
+      it('should not match an empty urlPart', () => {
+        expect(isPartMatch(null, 'configLinkPart')).toEqual(false);
+      });
+
+      it('should not match an empty configLinkPart', () => {
+        expect(isPartMatch('urlPart', null)).toEqual(false);
+      });
+
+    });
+
+  });
+
+  describe('formatUrlPart', () => {
+
+    it('should encodeURIComponent', () => {
+      let name = '你好';
+      let encoded = encodeURIComponent(name);
+      expect(serializer.formatUrlPart(name)).toEqual(encoded);
+    });
+
+    it('should not allow restricted characters', () => {
+      expect(serializer.formatUrlPart('!!!Restricted \'?$,.+"*^|/\#%`><;:@&[]=! Characters!!!')).toEqual('restricted-characters');
+    });
+
+    it('should trim and replace spaces with dashes', () => {
+      expect(serializer.formatUrlPart('   This is the name   ')).toEqual('this-is-the-name');
+    });
+
+    it('should not have multiple dashes', () => {
+      expect(serializer.formatUrlPart('Contact Detail Page')).toEqual('contact-detail-page');
+    });
+
+    it('should change to pascal case for multiple words', () => {
+      expect(serializer.formatUrlPart('ContactDetailPage')).toEqual('contact-detail-page');
+    });
+
+    it('should change to pascal case for one work', () => {
+      expect(serializer.formatUrlPart('View1')).toEqual('view1');
+    });
+
+  });
+
+  describe('normalizeLinks', () => {
+
+    it('should sort with four parts, the most number of paths w/out data first', () => {
+      let links: NavLink[] = [
+        { path: 'a/:val/:id/:name', component: View1, name: 'view1' },
+        { path: 'a/:id/:name/d', component: View1, name: 'view1' },
+        { path: 'a/b/c/d', component: View1, name: 'view1' },
+        { path: 'a/b/:id/d', component: View1, name: 'view1' },
+        { path: 'a/b/:id/:name', component: View1, name: 'view1' },
+        { path: 'a/b/c/:id', component: View1, name: 'view1' },
+      ];
+      let sortedLinks = serializer.normalizeLinks(links);
+
+      expect(sortedLinks[0].path).toEqual('a/b/c/d');
+      expect(sortedLinks[1].path).toEqual('a/b/c/:id');
+      expect(sortedLinks[2].path).toEqual('a/b/:id/d');
+      expect(sortedLinks[3].path).toEqual('a/b/:id/:name');
+      expect(sortedLinks[4].path).toEqual('a/:id/:name/d');
+      expect(sortedLinks[5].path).toEqual('a/:val/:id/:name');
+    });
+
+    it('should sort with the most number of paths w/out data first', () => {
+      let links: NavLink[] = [
+        { path: 'a/:id', component: View1, name: 'view1' },
+        { path: 'a/b', component: View1, name: 'view1' },
+        { path: 'a/:id/c', component: View1, name: 'view1' },
+      ];
+      let sortedLinks = serializer.normalizeLinks(links);
+
+      expect(sortedLinks[0].path).toEqual('a/:id/c');
+      expect(sortedLinks[1].path).toEqual('a/b');
+      expect(sortedLinks[2].path).toEqual('a/:id');
+    });
+
+    it('should sort with the most number of paths first', () => {
+      let links: NavLink[] = [
+        { path: 'c', component: View1, name: 'view1' },
+        { path: 'b', component: View1, name: 'view1' },
+        { path: 'a', component: View1, name: 'view1' },
+        { path: 'd/c/b/a', component: View1, name: 'view1' },
+        { path: 'aaaaa/bbbb/ccccc', component: View1, name: 'view1' },
+        { path: 'bbbbbbbbbbbbbbbb/c', component: View1, name: 'view1' },
+        { path: 'a/b', component: View1, name: 'view1' },
+        { path: 'a/b/c', component: View1, name: 'view1' },
+        { path: 'aa/b/c', component: View1, name: 'view1' },
+      ];
+      let sortedLinks = serializer.normalizeLinks(links);
+
+      expect(sortedLinks[0].path).toEqual('d/c/b/a');
+      expect(sortedLinks[1].path).toEqual('aaaaa/bbbb/ccccc');
+      expect(sortedLinks[2].path).toEqual('a/b/c');
+      expect(sortedLinks[3].path).toEqual('aa/b/c');
+      expect(sortedLinks[4].path).toEqual('bbbbbbbbbbbbbbbb/c');
+      expect(sortedLinks[5].path).toEqual('a/b');
+      expect(sortedLinks[6].path).toEqual('c');
+      expect(sortedLinks[7].path).toEqual('b');
+      expect(sortedLinks[8].path).toEqual('a');
+    });
+
+    it('should create a parts from the name', () => {
+      let links: NavLink[] = [
+        { name: 'somename', component: ContactDetailPage },
+      ];
+      expect(serializer.normalizeLinks(links)[0].parts).toEqual(['somename']);
+    });
+
+    it('should create path from name if path missing', () => {
+      let links: NavLink[] = [
+        { component: ContactDetailPage, name: 'contact-detail-page' },
+        { component: View2, name: 'view-two'  },
+      ];
+      expect(serializer.normalizeLinks(links)[0].path).toEqual('contact-detail-page');
+      expect(serializer.normalizeLinks(links)[1].path).toEqual('view-two');
+    });
+
+    it('should create an empty array if blank', () => {
+      expect(serializer.normalizeLinks(null)).toEqual([]);
+    });
+
+  });
+
+  var serializer: UrlSerializer;
+
+  beforeEach(() => {
+    serializer = mockSerializer();
+  });
+
+});
+
+}
+
+class View1 {}
+class View2 {}
+class View3 {}
+class View4 {}
+class ContactDetailPage {}
+class NotFound {}
+
+function mockSerializer(navLinks?: NavLink[]) {
+  let deepLinkConfig = mockDeepLinkConfig(navLinks);
+  return new UrlSerializer(deepLinkConfig);
+}
+
+function mockDeepLinkConfig(navLinks?: any[]) {
+  return new NavLinkConfig(navLinks || [
+    { component: View1, name: 'view1' },
+    { component: View2, name: 'view2' },
+    { component: View3, name: 'view3' },
+    { component: View4, name: 'view4' },
+    { component: ContactDetailPage, name: 'contact-detail-page' }
+  ]);
+}
+
+function noop(): any{ return 'noop' };

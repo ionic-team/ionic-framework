@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Storage, LocalStorage, SqlStorage } from '../../../dist';
+import { IonicApp, IonicModule, Storage, LocalStorage, SqlStorage } from '../../../dist-e2e';
 
 
 @Component({
