@@ -1,4 +1,6 @@
-import { RadioGroup, RadioButton, Form } from '../../../../src';
+import { RadioGroup } from '../../../../src/components/radio/radio-group';
+import { RadioButton } from '../../../../src/components/radio/radio-button';
+import { Form } from '../../../../src/util/form';
 
 export function run() {
   describe('RadioGroup', () => {

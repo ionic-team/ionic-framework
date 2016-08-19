@@ -4,20 +4,14 @@
     "experimentalDecorators": true,
     "target": "es5",
     "module": "commonjs",
-    "lib": ["dom", "es2015"],
     "declaration": true,
-    "outDir": "dist",
-    "noImplicitAny": true
+    "outDir": "dist/ide",
+    "noImplicitAny": false,
+    "lib": ["dom", "es2015"],
+    "types": ["jasmine"]
   },
-  "filesGlob": [
-    "src/**/*.ts",
-    "!node_modules/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "scripts",
-    "typings/main",
-    "typings/main.d.ts"
+  "include": [
+    "./src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,

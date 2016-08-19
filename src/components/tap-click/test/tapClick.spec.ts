@@ -1,4 +1,4 @@
-import { isActivatable } from '../../../../src';
+import { isActivatable } from '../../../../src/components/tap-click/tap-click';
 
 export function run() {
 

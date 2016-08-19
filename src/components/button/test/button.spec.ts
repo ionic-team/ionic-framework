@@ -1,4 +1,5 @@
-import { Button, Config } from '../../../../src';
+import { Button } from '../../../../src/components/button/button';
+import { Config } from '../../../../src/config/config';
 
 export function run() {
 
@@ -170,9 +171,7 @@ export function run() {
     });
 
     it('should add disable-hover css class', () => {
-      let config = new Config({
-        hoverCSS: false
-      });
+      let config = new Config();
       let b = mockButton(null, config);
 
       expect(hasClass(b, 'disable-hover')).toEqual(true);
@@ -211,7 +210,7 @@ export function run() {
         nativeElement.classList[shouldAdd ? 'add' : 'remove'](className);
       }
     };
-    let b = new Button(ionButton, config, elementRef, renderer, null);
+    let b = new Button(ionButton, config, elementRef, renderer);
     b._init = true;
     return b;
   }
