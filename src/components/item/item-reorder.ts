@@ -294,7 +294,7 @@ export class ItemReorder {
  */
 @Component({
   selector: 'ion-reorder',
-  template: `<ion-icon name="menu"></ion-icon>`
+  template: `<ion-icon name="reorder"></ion-icon>`
 })
 export class Reorder {
   constructor(
