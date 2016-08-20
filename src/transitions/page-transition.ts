@@ -47,7 +47,3 @@ export class PageTransition extends Transition {
   }
 
 }
-
-function parsePxUnit(val: string): number {
-  return (val.indexOf('px') > 0) ? parseInt(val, 10) : 0;
-}
