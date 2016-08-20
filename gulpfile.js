@@ -334,8 +334,8 @@ gulp.task('watch.e2e', ['sass', 'fonts'], function() {
     '!src/util/test/*'
   ],
   function(file) {
-      console.log('start e2e.build.metadata - ' + JSON.stringify(file.history, null, 2));
-      gulp.start('e2e.build.metadata');
+      console.log('start build.cjs.ngc - ' + JSON.stringify(file.history, null, 2));
+      gulp.start('build.cjs.ngc');
   });
 
   // If any scss files change then recompile all sass
@@ -364,8 +364,8 @@ gulp.task('watch.e2e', ['sass', 'fonts'], function() {
 
 gulp.task('build.e2e', function(done) {
   runSequence(
-    'e2e.clean',
-    'e2e.build.metadata',
+    'clean',
+    'build.cjs.ngc',
     ['e2e.resources', 'sass', 'fonts'],
     'e2e.pre-webpack',
     'e2e.webpack',
@@ -373,19 +373,17 @@ gulp.task('build.e2e', function(done) {
   );
 })
 
-gulp.task('e2e.build.metadata', function(done) {
+gulp.task('build.cjs.ngc', function(done) {
   buildCommonJsNgc( function() {
     gulp.src(['src/components/slides/swiper-widget.js', 'src/components/slides/swiper-widget.d.ts'])
-      .pipe(gulp.dest('./dist-e2e/components/slides/'))
+      .pipe(gulp.dest('./dist/components/slides/'))
       .on('end', done);
   });
 });
 
 function buildCommonJsNgc(doneCallback) {
   var exec = require('child_process').exec;
-  var shellCommand = 'cp ./scripts/build/e2e/commonjsNgcConfig.json ./commonjsNgcConfig.json';
-
-  var shellCommand = 'cp ./scripts/build/e2e/commonjsNgcConfig.json ./commonjsNgcConfig.json && ' +
+  var shellCommand = 'cp ./scripts/build/commonjsNgcConfig.json ./commonjsNgcConfig.json && ' +
     './node_modules/.bin/ngc -p ./commonjsNgcConfig.json';
 
   exec(shellCommand, function(err, stdout, stderr) {
@@ -1105,14 +1103,14 @@ gulp.task('tooling', function(){
 
 
 function mergeObjects(obj1, obj2) {
-  let obj3 = {};
-  for (let attrname in obj1) { obj3[attrname] = obj1[attrname]; }
-  for (let attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+  var obj3 = {};
+  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
   return obj3;
 }
 
 function getTscOptions() {
-  let tsConfig = require('./tsconfig');
+  var tsConfig = require('./tsconfig');
   // provide our own version of typescript
   tsConfig.compilerOptions.typescript = require('typescript');
 
@@ -1120,13 +1118,13 @@ function getTscOptions() {
 }
 
 function nativeTypescriptBuild(srcGlob, cacheName, overrideOptions) {
-  let tsc = require('gulp-typescript');
+  var tsc = require('gulp-typescript');
 
-  let compilerOptions = getTscOptions();
+  var compilerOptions = getTscOptions();
   if ( ! overrideOptions ) {
     overrideOptions = {};
   }
-  let mergedOptions = mergeObjects(compilerOptions, overrideOptions);
+  var mergedOptions = mergeObjects(compilerOptions, overrideOptions);
 
   return gulp.src(srcGlob)
     .pipe(cache(cacheName, { optimizeMemory: true }))
@@ -1155,7 +1153,7 @@ gulp.task('watch.karma.tests', ['build-karma-tests'], function(){
 });
 
 gulp.task('build-commonjs-testdist', function() {
-  let tsResult = nativeTypescriptBuild(
+  var tsResult = nativeTypescriptBuild(
     ['./src/**/*.ts', '!src/components/*/test/*/*.ts', 'src/**/*.spec.ts'],
     'commonjs',
     null
@@ -1179,7 +1177,7 @@ gulp.task('build-systemjs-bundle', function() {
   var gulpif = require('gulp-if');
   var stripDebug = require('gulp-strip-debug');
   var merge = require('merge2');
-  let gulpStream = nativeTypescriptBuild(
+  var gulpStream = nativeTypescriptBuild(
     ['./src/**/*.ts', '!src/components/*/test/*/*.ts', 'src/**/*.spec.ts'],
     'system',
     {

@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../dist-e2e';
+import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../dist';
 import { FormBuilder, ControlGroup, Validators } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 
