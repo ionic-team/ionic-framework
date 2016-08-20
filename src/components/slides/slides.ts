@@ -4,7 +4,6 @@ import { Animation } from '../../animations/animation';
 import { Gesture } from '../../gestures/gesture';
 import { CSS } from '../../util/dom';
 import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
-import { closest } from '../../util/dom';
 import { Ion } from '../ion';
 import { Swiper } from './swiper-widget';
 
@@ -620,7 +619,7 @@ export class Slides extends Ion {
 
     // TODO: Support mice as well
 
-    let target = ((closest(e.target, '.slide').children[0] as HTMLElement).children[0] as HTMLElement);
+    let target = ((e.target.closest('.slide').children[0] as HTMLElement).children[0] as HTMLElement);
 
     this.touch = {
       x: null,

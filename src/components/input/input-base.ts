@@ -2,7 +2,7 @@ import { ElementRef } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
-import { closest, copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
+import { copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { Form } from '../../util/form';
@@ -314,8 +314,8 @@ export class InputBase {
       // find out if text input should be manually scrolled into view
 
       // get container of this input, probably an ion-item a few nodes up
-      var ele = this._elementRef.nativeElement;
-      ele = closest(ele, 'ion-item,[ion-item]') || ele;
+      var ele: HTMLElement = this._elementRef.nativeElement;
+      ele = <HTMLElement>ele.closest('ion-item,[ion-item]') || ele;
 
       var scrollData = InputBase.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this._keyboardHeight, this._platform.height());
       if (scrollData.scrollAmount > -3 && scrollData.scrollAmount < 3) {

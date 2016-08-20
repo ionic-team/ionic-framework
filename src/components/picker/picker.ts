@@ -20,7 +20,7 @@ export class Picker extends ViewController {
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(PickerCmp, opts);
+    super(PickerCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
 

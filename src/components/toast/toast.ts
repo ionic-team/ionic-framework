@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
+import { AppPortal } from '../app/app-root';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ToastOptions } from './toast-options';
@@ -15,7 +16,7 @@ export class Toast extends ViewController {
 
   constructor(app: App, opts: ToastOptions = {}) {
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
-    super(ToastCmp, opts);
+    super(ToastCmp, opts, null);
     this._app = app;
 
     // set the position to the bottom if not provided
@@ -55,7 +56,14 @@ export class Toast extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
-    return this._app.present(this, navOptions);
+    return this._app.present(this, navOptions, AppPortal.TOAST);
+  }
+
+  /**
+   * Dismiss all toast components which have been presented.
+   */
+  dismissAll() {
+    this._nav && this._nav.popAll();
   }
 
   /**

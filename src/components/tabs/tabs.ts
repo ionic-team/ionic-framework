@@ -285,7 +285,7 @@ export class Tabs extends Ion implements AfterViewInit {
 
     } else if (this._app) {
       // this is the root navcontroller for the entire app
-      this._app.setRootNav(this);
+      this._app._setRootNav(this);
     }
 
     // Tabs may also be an actual ViewController which was navigated to

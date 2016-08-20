@@ -43,25 +43,23 @@ $loading-wp-spinner-dots-color:        $loading-wp-spinner-color !default;
 // Windows Loading Spinner fill colors
 // -----------------------------------------
 
-.loading-spinner {
-  .spinner-ios line,
-  .spinner-ios-small line {
-    stroke: $loading-wp-spinner-ios-color;
-  }
+.loading-spinner .spinner-ios line,
+.loading-spinner .spinner-ios-small line {
+  stroke: $loading-wp-spinner-ios-color;
+}
 
-  .spinner-bubbles circle {
-    fill: $loading-wp-spinner-bubbles-color;
-  }
+.loading-spinner .spinner-bubbles circle {
+  fill: $loading-wp-spinner-bubbles-color;
+}
 
-  .spinner-circles circle {
-    fill: $loading-wp-spinner-circles-color;
-  }
+.loading-spinner .spinner-circles circle {
+  fill: $loading-wp-spinner-circles-color;
+}
 
-  .spinner-crescent circle {
-    stroke: $loading-wp-spinner-crescent-color;
-  }
+.loading-spinner .spinner-crescent circle {
+  stroke: $loading-wp-spinner-crescent-color;
+}
 
-  .spinner-dots circle {
-    fill: $loading-wp-spinner-dots-color;
-  }
+.loading-spinner .spinner-dots circle {
+  fill: $loading-wp-spinner-dots-color;
 }

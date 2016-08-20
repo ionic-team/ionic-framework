@@ -15,56 +15,63 @@ import { windowDimensions } from '../../util/dom';
 @Component({
   selector: 'ion-modal',
   template:
-    '<ion-backdrop disableScroll="false" (click)="bdClick()"></ion-backdrop>' +
+    '<ion-backdrop disableScroll="false" (click)="_bdClick()"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
       '<div #viewport nav-viewport></div>' +
     '</div>'
 })
 export class ModalCmp {
-  @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
-  d: any;
-  enabled: boolean;
+
+  /** @internal */
+  @ViewChild('viewport', { read: ViewContainerRef }) _viewport: ViewContainerRef;
+
+  /** @internal  */
+  _bdDismiss: boolean;
+
+  /** @internal */
+  _enabled: boolean;
 
   constructor(public _cfr: ComponentFactoryResolver, public _renderer: Renderer, public _navParams: NavParams, public _viewCtrl: ViewController) {
-    this.d = _navParams.data.opts;
+    this._bdDismiss = _navParams.data.opts.enableBackdropDismiss;
   }
 
   ngAfterViewInit() {
-    this.loadComponent(this._navParams.data.componentType);
+    this._load(this._navParams.data.componentType);
   }
 
-  loadComponent(componentType: any) {
+  /** @internal */
+  _load(componentType: any) {
     if (componentType) {
       const componentFactory = this._cfr.resolveComponentFactory(componentType);
 
       // ******** DOM WRITE ****************
-      const componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector, []);
-      this.setCssClass(componentRef, 'ion-page');
-      this.setCssClass(componentRef, 'show-page');
-      this.setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
+      const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
       this._viewCtrl._setInstance(componentRef.instance);
-      this.enabled = true;
+
+      this._setCssClass(componentRef, 'ion-page');
+      this._setCssClass(componentRef, 'show-page');
+      this._setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
+      this._enabled = true;
     }
   }
 
-  setCssClass(componentRef: any, className: string) {
+  /** @internal */
+  _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
 
-  dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(null, role);
-  }
-
-  bdClick() {
-    if (this.enabled && this.d.enableBackdropDismiss) {
-      this.dismiss('backdrop');
+  /** @internal */
+  _bdClick() {
+    if (this._enabled && this._bdDismiss) {
+      return this._viewCtrl.dismiss(null, 'backdrop');
     }
   }
 
+  /** @internal */
   @HostListener('body:keyup', ['$event'])
-  keyUp(ev: KeyboardEvent) {
-    if (this.enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE) {
-      this.bdClick();
+  _keyUp(ev: KeyboardEvent) {
+    if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE) {
+      this._bdClick();
     }
   }
 }
@@ -74,14 +81,14 @@ export class ModalCmp {
  */
  class ModalSlideIn extends PageTransition {
    init() {
-     let ele = this.enteringView.pageRef().nativeElement;
-     let backdropEle = ele.querySelector('ion-backdrop');
-     let backdrop = new Animation(backdropEle);
-     let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+     super.init();
+     const ele: HTMLElement = this.enteringView.pageRef().nativeElement;
+     const backdropEle = ele.querySelector('ion-backdrop');
+     const backdrop = new Animation(backdropEle);
+     const wrapper = new Animation(ele.querySelector('.modal-wrapper'));
 
      backdrop.fromTo('opacity', 0.01, 0.4);
      wrapper.fromTo('translateY', '100%', '0%');
-
 
      this
        .element(this.enteringView.pageRef())
@@ -89,13 +96,6 @@ export class ModalCmp {
        .duration(400)
        .add(backdrop)
        .add(wrapper);
-
-     if (this.enteringView.hasNavbar()) {
-       // entering page has a navbar
-       let enteringNavBar = new Animation(ele.querySelector('ion-navbar'));
-       enteringNavBar.beforeAddClass('show-navbar');
-       this.add(enteringNavBar);
-     }
    }
  }
  PageTransition.register('modal-slide-in', ModalSlideIn);
@@ -103,9 +103,10 @@ export class ModalCmp {
 
 class ModalSlideOut extends PageTransition {
   init() {
-    let ele = this.leavingView.pageRef().nativeElement;
+    super.init();
+    const ele: HTMLElement = this.leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapperEle = <HTMLElement> ele.querySelector('.modal-wrapper');
+    let wrapperEle = <HTMLElement>ele.querySelector('.modal-wrapper');
     let wrapperEleRect = wrapperEle.getBoundingClientRect();
     let wrapper = new Animation(wrapperEle);
 
@@ -127,10 +128,11 @@ PageTransition.register('modal-slide-out', ModalSlideOut);
 
 
 class ModalMDSlideIn extends PageTransition {
-   init() {
-    let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+  init() {
+    super.init();
+    const ele: HTMLElement = this.enteringView.pageRef().nativeElement;
+    const backdrop = new Animation(ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(ele.querySelector('.modal-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.4);
     wrapper.fromTo('translateY', '40px', '0px');
@@ -141,13 +143,6 @@ class ModalMDSlideIn extends PageTransition {
     this.element(this.enteringView.pageRef()).easing(EASING).duration(DURATION)
       .add(backdrop)
       .add(wrapper);
-
-    if (this.enteringView.hasNavbar()) {
-      // entering page has a navbar
-      let enteringNavBar = new Animation(ele.querySelector('ion-navbar'));
-      enteringNavBar.beforeAddClass('show-navbar');
-      this.add(enteringNavBar);
-    }
   }
 }
 PageTransition.register('modal-md-slide-in', ModalMDSlideIn);
@@ -155,9 +150,10 @@ PageTransition.register('modal-md-slide-in', ModalMDSlideIn);
 
 class ModalMDSlideOut extends PageTransition {
   init() {
-    let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    super.init();
+    const ele: HTMLElement = this.leavingView.pageRef().nativeElement;
+    const backdrop = new Animation(ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(ele.querySelector('.modal-wrapper'));
 
     backdrop.fromTo('opacity', 0.4, 0.0);
     wrapper.fromTo('translateY', '0px', '40px');

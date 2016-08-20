@@ -139,10 +139,10 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-message {
   max-height: $alert-ios-content-max-height;
+}
 
-  &:empty {
-    padding: $alert-ios-message-padding-empty;
-  }
+.alert-message:empty {
+  padding: $alert-ios-message-padding-empty;
 }
 
 
@@ -331,15 +331,15 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   font-size: $alert-ios-button-font-size;
   color: $alert-ios-button-text-color;
   background-color: $alert-ios-button-background-color;
+}
 
-  &:last-child {
-    border-right: 0;
-    font-weight: $alert-ios-button-main-font-weight;
-  }
+.alert-button:last-child {
+  border-right: 0;
+  font-weight: $alert-ios-button-main-font-weight;
+}
 
-  &.activated {
-    background-color: $alert-ios-button-background-color-activated;
-  }
+.alert-button.activated {
+  background-color: $alert-ios-button-background-color-activated;
 }
 
 &.hairlines {

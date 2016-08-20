@@ -27,7 +27,6 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```ts
  * import { Component } from '@angular/core';
- * import { ionicBootstrap } from 'ionic-angular';
  * import { GettingStartedPage } from './getting-started';
  *
  * @Component({
@@ -39,10 +38,7 @@ import { ViewController } from '../../navigation/view-controller';
  *   constructor(){
  *   }
  * }
- *
- * ionicBootstrap(MyApp);
  * ```
- *
  *
  * @demo /docs/v2/demos/navigation/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
@@ -92,7 +88,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     } else if (app && !app.getRootNav()) {
       // a root nav has not been registered yet with the app
       // this is the root navcontroller for the entire app
-      app.setRootNav(this);
+      app._setRootNav(this);
     }
   }
 

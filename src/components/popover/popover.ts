@@ -20,7 +20,7 @@ export class Popover extends ViewController {
 
     data.componentType = componentType;
     data.opts = opts;
-    super(PopoverCmp, data);
+    super(PopoverCmp, data, null);
     this._app = app;
     this.isOverlay = true;
   }

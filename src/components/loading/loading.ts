@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
+import { AppPortal } from '../app/app-root';
 import { isPresent } from '../../util/util';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';
@@ -17,7 +18,7 @@ export class Loading extends ViewController {
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
 
-    super(LoadingCmp, opts);
+    super(LoadingCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
   }
@@ -37,7 +38,6 @@ export class Loading extends ViewController {
     this.data.content = content;
   }
 
-
   /**
    * Present the loading instance.
    *
@@ -45,7 +45,14 @@ export class Loading extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
-    return this._app.present(this, navOptions);
+    return this._app.present(this, navOptions, AppPortal.LOADING);
+  }
+
+  /**
+   * Dismiss all loading components which have been presented.
+   */
+  dismissAll() {
+    this._nav && this._nav.popAll();
   }
 
   /**

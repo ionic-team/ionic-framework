@@ -14,16 +14,26 @@ export const UserRoot = new OpaqueToken('USERROOT');
 @Component({
   selector: 'ion-app',
   template:
-    '<div #anchor overlay-portal></div>' +
+    '<div #viewport app-viewport></div>' +
+    '<div #overlayPortal overlay-portal></div>' +
+    '<div #loadingPortal class="loading-portal" overlay-portal></div>' +
+    '<div #toastPortal class="toast-portal" overlay-portal></div>' +
     '<click-block></click-block>',
   directives: [OverlayPortal]
 })
 export class IonicApp implements OnInit {
 
-  /**
-   * @internal
-   */
-  @ViewChild('anchor', {read: ViewContainerRef}) _viewport: ViewContainerRef;
+  /** @internal */
+  @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
+
+  /** @internal */
+  @ViewChild('overlayPortal', { read: OverlayPortal }) _overlayPortal: OverlayPortal;
+
+  /** @internal */
+  @ViewChild('loadingPortal', { read: OverlayPortal }) _loadingPortal: OverlayPortal;
+
+  /** @internal */
+  @ViewChild('toastPortal', { read: OverlayPortal }) _toastPortal: OverlayPortal;
 
   constructor(
     @Inject(UserRoot) private _userCmp: any,
@@ -35,8 +45,8 @@ export class IonicApp implements OnInit {
     private _featureDetect: FeatureDetect,
     app: App
   ) {
-    // register with App that this is Ionic's appRoot component
-    app.appRoot = this;
+    // register with App that this is Ionic's appRoot component. tada!
+    app._appRoot = this;
   }
 
   ngOnInit() {
@@ -46,7 +56,6 @@ export class IonicApp implements OnInit {
     const componentRef = this._viewport.createComponent(factory);
     this._renderer.setElementClass(componentRef.location.nativeElement, 'app-root', true);
     componentRef.changeDetectorRef.detectChanges();
-
 
     // set the mode class name
     // ios/md/wp
@@ -81,6 +90,19 @@ export class IonicApp implements OnInit {
   /**
    * @internal
    */
+  _getPortal(portal?: AppPortal): OverlayPortal {
+    if (portal === AppPortal.LOADING) {
+      return this._loadingPortal;
+    }
+    if (portal === AppPortal.TOAST) {
+      return this._toastPortal;
+    }
+    return this._overlayPortal;
+  }
+
+  /**
+   * @internal
+   */
   _addClass(className: string) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
@@ -93,3 +115,9 @@ export class IonicApp implements OnInit {
   }
 
 }
+
+export enum AppPortal {
+  DEFAULT,
+  LOADING,
+  TOAST
+};

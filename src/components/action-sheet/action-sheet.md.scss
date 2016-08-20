@@ -46,10 +46,10 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
   text-align: $action-sheet-md-text-align;
   color: $action-sheet-md-button-text-color;
   background: $action-sheet-md-button-background;
+}
 
-  &.activated {
-    background: $action-sheet-md-button-background-activated;
-  }
+.action-sheet-button.activated {
+  background: $action-sheet-md-button-background-activated;
 }
 
 .action-sheet-icon {
@@ -66,14 +66,14 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
   overflow: hidden;
 
   background: $action-sheet-md-background;
+}
 
-  &:last-child .action-sheet-button {
-    margin-bottom: $action-sheet-md-group-margin-bottom;
-  }
+.action-sheet-group:last-child .action-sheet-button {
+  margin-bottom: $action-sheet-md-group-margin-bottom;
+}
 
-  .button-inner {
-    justify-content: flex-start;
-  }
+.action-sheet-group .button-inner {
+  justify-content: flex-start;
 }
 
 .action-sheet-selected {

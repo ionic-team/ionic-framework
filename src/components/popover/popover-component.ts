@@ -16,7 +16,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-popover',
   template:
-    '<ion-backdrop (click)="bdClick()" [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
+    '<ion-backdrop (click)="_bdClick()" [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
     '<div class="popover-wrapper">' +
       '<div class="popover-arrow"></div>' +
       '<div class="popover-content">' +
@@ -27,16 +27,22 @@ import { ViewController } from '../../navigation/view-controller';
     '</div>'
 })
 export class PopoverCmp {
-  @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
 
+  /** @internal */
+  @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
+
+  /** @internal */
   d: {
     cssClass?: string;
     showBackdrop?: boolean;
     enableBackdropDismiss?: boolean;
   };
-  enabled: boolean;
+
+  /** @internal */
+  _enabled: boolean;
+
+  /** @internal */
   id: number;
-  showSpinner: boolean;
 
   constructor(
     public _cfr: ComponentFactoryResolver,
@@ -63,41 +69,40 @@ export class PopoverCmp {
     if (document.activeElement) {
       activeElement.blur();
     }
-    this.loadComponent(this._navParams.data.componentType);
+    this._load(this._navParams.data.componentType);
   }
 
-  loadComponent(componentType: any) {
+  /** @internal */
+  _load(componentType: any) {
     if (componentType) {
       const componentFactory = this._cfr.resolveComponentFactory(componentType);
 
       // ******** DOM WRITE ****************
-      const componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector, []);
-      this.setCssClass(componentRef, 'ion-page');
-      this.setCssClass(componentRef, 'show-page');
-      this.setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
+      const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
       this._viewCtrl._setInstance(componentRef.instance);
-      this.enabled = true;
+
+      this._setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
+      this._enabled = true;
     }
   }
 
-  setCssClass(componentRef: any, className: string) {
+  /** @internal */
+  _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
 
-  dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(null, role);
-  }
-
-  bdClick() {
-    if (this.enabled && this.d.enableBackdropDismiss) {
-      this.dismiss('backdrop');
+  /** @internal */
+  _bdClick() {
+    if (this._enabled && this.d.enableBackdropDismiss) {
+      return this._viewCtrl.dismiss(null, 'backdrop');
     }
   }
 
+  /** @internal */
   @HostListener('body:keyup', ['$event'])
-  keyUp(ev: KeyboardEvent) {
-    if (this.enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
-      this.bdClick();
+  _keyUp(ev: KeyboardEvent) {
+    if (this._enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
+      this._bdClick();
     }
   }
 }

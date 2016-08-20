@@ -10,11 +10,13 @@ export class PageTransition extends Transition {
   enteringPage: Animation;
 
   init() {
-    this.enteringPage = new Animation(this.enteringView.pageRef());
-    this.add(this.enteringPage.beforeAddClass('show-page'));
+    if (this.enteringView) {
+      this.enteringPage = new Animation(this.enteringView.pageRef());
+      this.add(this.enteringPage.beforeAddClass('show-page'));
 
-    this.beforeAddRead(this.readDimensions.bind(this));
-    this.beforeAddWrite(this.writeDimensions.bind(this));
+      this.beforeAddRead(this.readDimensions.bind(this));
+      this.beforeAddWrite(this.writeDimensions.bind(this));
+    }
   }
 
   /**

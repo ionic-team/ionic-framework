@@ -1264,9 +1264,9 @@ gulp.task('karma-watch', ['watch.karma.tests', 'build-systemjs-bundle'], functio
  */
 gulp.task('validate', function(done) {
   runSequence(
-    //'lint.scss',
+    'lint.scss',
     'tslint',
-    'build.testdist',
+    'build.karma',
     'karma',
     done
   );

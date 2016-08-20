@@ -1,5 +1,4 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NavController, AlertController, Content,
   App, IonicApp, IonicModule,
   NavParams, ViewController, DeepLinkConfig } from '../../../dist';
@@ -125,29 +124,41 @@ export class FirstPage {
 
   pushPrimaryHeaderPage() {
     this.navCtrl.push(PrimaryHeaderPage).then(() => {}, (rejectReason: string) => {
-      debugger
+      debugger;
     });
   }
 
   pushFullPage() {
-    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] }).catch(()=>{});
+    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] }).catch(() => {
+      debugger;
+    });
   }
 
   pushAnother() {
-    this.navCtrl.push(AnotherPage).catch(()=>{});
+    this.navCtrl.push(AnotherPage).catch(() => {
+      debugger;
+    });
   }
 
   quickPush() {
-    this.navCtrl.push(AnotherPage).catch(()=>{});
+    this.navCtrl.push(AnotherPage).catch(() => {
+      debugger;
+    });
     setTimeout(() => {
-      this.navCtrl.push(PrimaryHeaderPage).catch(()=>{});
+      this.navCtrl.push(PrimaryHeaderPage).catch(() => {
+        debugger;
+      });
     }, 150);
   }
 
   quickPop() {
-    this.navCtrl.push(AnotherPage).catch(()=>{});
+    this.navCtrl.push(AnotherPage).catch(() => {
+      debugger;
+    });
     setTimeout(() => {
-      this.navCtrl.remove(1, 1).catch(()=>{});
+      this.navCtrl.remove(1, 1).catch(() => {
+        debugger;
+      });
     }, 250);
   }
 
