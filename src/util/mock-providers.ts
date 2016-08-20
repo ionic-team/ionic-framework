@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, ElementRef, NgZone, Renderer } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { App, Config, Form, GestureController, Keyboard, MenuController, NavOptions, Platform, Tab, Tabs, Transition, ViewController } from '../../src';
+import { App, Config, Form, GestureController, Keyboard, Platform, Tab, Tabs, Transition, ViewController } from '../../src';
 import { NavControllerBase } from '../../src/components/nav/nav-controller-base';
 
 
@@ -99,8 +99,6 @@ export const mockNavController = function(): NavControllerBase {
 
   let gestureCtrl = new GestureController(app);
 
-  let location = mockLocation();
-
   return new NavControllerBase(
     null,
     app,
@@ -137,8 +135,6 @@ export const mockTab = function(parentTabs: Tabs): Tab {
   let compiler: any = null;
 
   let gestureCtrl = new GestureController(app);
-
-  let location = mockLocation();
 
   let tab = new Tab(
     parentTabs,

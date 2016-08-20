@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -130,7 +130,6 @@ import { ViewController } from '../nav/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class Tab extends NavControllerBase {
-  private _isInitial: boolean;
   private _isEnabled: boolean = true;
   private _isShown: boolean = true;
   private _tabId: string;

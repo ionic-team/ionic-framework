@@ -466,7 +466,7 @@ export class Slides extends Ion {
     this.zoomLastPosY = 0;
 
 
-    let lastScale: number, startX: number, startY: number, posX = 0, posY = 0, zoomRect: any;
+    let lastScale: number, zoomRect: any;
 
     this.viewportWidth = this.getNativeElement().offsetWidth;
     this.viewportHeight = this.getNativeElement().offsetHeight;
@@ -563,7 +563,7 @@ export class Slides extends Ion {
       .duration(this.zoomDuration)
       .easing('linear');
 
-    let zw = new Animation(this.touch.target.children[0])
+    new Animation(this.touch.target.children[0])
       .duration(this.zoomDuration)
       .easing('linear');
 

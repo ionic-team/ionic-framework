@@ -159,7 +159,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   private _differ: IterableDiffer;
   private _unreg: Function;
   private _init: boolean;
-  private _rafId: number;
   private _tmId: number;
   private _hdrFn: Function;
   private _ftrFn: Function;
@@ -387,7 +386,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         // good to go, we already have good dimension data
         done();
 
-      } else {        
+      } else {
         // ******** DOM READ ****************
         calcDimensions(self._data, self._elementRef.nativeElement.parentElement,
                       self.approxItemWidth, self.approxItemHeight,

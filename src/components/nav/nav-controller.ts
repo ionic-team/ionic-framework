@@ -1,10 +1,6 @@
 import { EventEmitter } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { GestureController } from '../../gestures/gesture-controller';
-import { Ion } from '../ion';
-import { isBlank, pascalCaseToDashCase } from '../../util/util';
-import { Keyboard } from '../../util/keyboard';
 import { NavOptions } from './nav-interfaces';
 import { ViewController } from './view-controller';
 

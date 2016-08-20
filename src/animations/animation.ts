@@ -287,7 +287,6 @@ export class Animation {
    */
   play(opts: PlayOptions = {}) {
     var self = this;
-    var i: number;
 
     let dur = this._dur;
     if (isDefined(opts.duration)) {

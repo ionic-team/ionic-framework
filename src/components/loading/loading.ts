@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
-import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';

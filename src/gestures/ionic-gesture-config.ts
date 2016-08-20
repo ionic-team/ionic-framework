@@ -11,7 +11,7 @@ import { HammerGestureConfig } from '@angular/platform-browser';
  */
 @Injectable()
 export class IonicGestureConfig extends HammerGestureConfig {
-  
+
   buildHammer(element: HTMLElement) {
     var mc = new (<any> window).Hammer(element);
 

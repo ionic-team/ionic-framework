@@ -96,7 +96,6 @@ import { Content } from '../content/content';
 })
 export class InfiniteScroll {
   private _lastCheck: number = 0;
-  private _highestY: number = 0;
   private _scLsn: Function;
   private _thr: string = '15%';
   private _thrPx: number = 0;

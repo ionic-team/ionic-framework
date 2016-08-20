@@ -8,7 +8,7 @@ import { Ion } from '../ion';
 import { isBlank, isPresent, pascalCaseToDashCase } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { NavController } from './nav-controller';
-import { NavOptions, DIRECTION_BACK, DIRECTION_FORWARD } from './nav-interfaces';
+import { NavOptions, DIRECTION_BACK } from './nav-interfaces';
 import { NavParams } from './nav-params';
 import { SwipeBackGesture } from './swipe-back';
 import { Transition } from '../../transitions/transition';

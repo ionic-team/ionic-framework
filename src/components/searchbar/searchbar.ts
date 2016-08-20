@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgControl, NgModel }  from '@angular/forms';
 
 import { Config } from '../../config/config';

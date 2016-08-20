@@ -5,7 +5,6 @@ import { Animation } from '../../animations/animation';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { CSS, nativeRaf } from '../../util/dom';
-import { isPresent, pascalCaseToDashCase } from '../../util/util';
 import { Key } from '../../util/key';
 import { NavParams } from '../nav/nav-params';
 import { PageTransition } from '../../transitions/page-transition';
@@ -41,7 +40,6 @@ export class PopoverCmp {
   };
   private enabled: boolean;
   private id: number;
-  private showSpinner: boolean;
 
   constructor(
     private _compiler: ComponentResolver,
@@ -138,7 +136,6 @@ class PopoverTransition extends PageTransition {
     let targetTop = (targetDim && 'top' in targetDim) ? targetDim.top : (bodyHeight / 2) - (popoverHeight / 2);
     let targetLeft = (targetDim && 'left' in targetDim) ? targetDim.left : (bodyWidth / 2) - (popoverWidth / 2);
 
-    let targetWidth = targetDim && targetDim.width || 0;
     let targetHeight = targetDim && targetDim.height || 0;
 
     let popoverCSS = {
