@@ -817,19 +817,12 @@ export class NavControllerBase extends Ion implements NavController {
     return (activeView && activeView.enableBack()) || false;
   }
 
-_activeTrans: boolean = false;
   isTransitioning(): boolean {
-    return this._activeTrans;
-
-    // console.debug(`isTransitioning, ${this._trnsTm} > ${Date.now()}: ${(this._trnsTm > Date.now())}`);
-    // return (this._trnsTm > Date.now());
+    return (this._trnsTm > Date.now());
   }
 
   setTransitioning(isTransitioning: boolean, durationPadding: number = 2000) {
-    this._activeTrans = isTransitioning;
-
-    // this._trnsTm = (isTransitioning ? Date.now() + durationPadding : 0);
-    // console.debug(`setTransitioning: ${isTransitioning}, Date.now(): ${Date.now()}, durationPadding: ${durationPadding}, this._trnsTm: ${this._trnsTm}`);
+    this._trnsTm = (isTransitioning ? Date.now() + durationPadding : 0);
   }
 
   getActive() {

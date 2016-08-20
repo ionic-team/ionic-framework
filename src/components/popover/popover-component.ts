@@ -27,13 +27,21 @@ import { ViewController } from '../../navigation/view-controller';
     '</div>'
 })
 export class PopoverCmp {
-  @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
+
+  /** @internal */
+  @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
+
+  /** @internal */
   d: {
     cssClass?: string;
     showBackdrop?: boolean;
     enableBackdropDismiss?: boolean;
   };
-  enabled: boolean;
+
+  /** @internal */
+  _enabled: boolean;
+
+  /** @internal */
   id: number;
 
   constructor(
@@ -70,11 +78,11 @@ export class PopoverCmp {
       const componentFactory = this._cfr.resolveComponentFactory(componentType);
 
       // ******** DOM WRITE ****************
-      const componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector, []);
-      this._setCssClass(componentRef, 'ion-page');
-      this._setCssClass(componentRef, 'show-page');
+      const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
+      this._viewCtrl._setInstance(componentRef.instance);
+
       this._setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
-      this.enabled = true;
+      this._enabled = true;
     }
   }
 
@@ -85,7 +93,7 @@ export class PopoverCmp {
 
   /** @internal */
   _bdClick() {
-    if (this.enabled && this.d.enableBackdropDismiss) {
+    if (this._enabled && this.d.enableBackdropDismiss) {
       return this._viewCtrl.dismiss(null, 'backdrop');
     }
   }
@@ -93,7 +101,7 @@ export class PopoverCmp {
   /** @internal */
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
-    if (this.enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
+    if (this._enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
       this._bdClick();
     }
   }

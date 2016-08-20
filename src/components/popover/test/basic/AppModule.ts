@@ -217,7 +217,6 @@ export class E2EPage {
 
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>',
-  styleUrls: ['style.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class E2EApp {
