@@ -229,3 +229,11 @@ ion-item-divider {
 ion-item-sliding {
   background-color: $item-md-sliding-content-background;
 }
+
+// Item reorder
+// --------------------------------------------------
+
+ion-reorder {
+  font-size: 1.5em;
+  opacity: .3;
+}
