@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 ion-reorder {
-  display: flex;
+  display: none;
 
   flex: 1;
   align-items: center;
@@ -28,10 +28,12 @@ ion-reorder {
   }
 }
 
-.reorder-enabled {
-  ion-reorder {
-    transform: translate3d(0, 0, 0);
-  }
+.reorder-enabled ion-reorder {
+  display: flex;
+}
+
+.reorder-visible ion-reorder {
+  transform: translate3d(0, 0, 0);
 }
 
 .reorder-list-active {

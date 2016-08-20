@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 
 import { Config } from '../config/config';
 import { Form } from './form';
-import { hasFocusedTextInput, nativeRaf, rafFrames, nativeTimeout } from './dom';
+import { hasFocusedTextInput, nativeRaf, zoneRafFrames, nativeTimeout } from './dom';
 import { Key } from './key';
 
 /**
@@ -86,11 +86,9 @@ export class Keyboard {
     function checkKeyboard() {
       console.debug('keyboard isOpen', self.isOpen());
       if (!self.isOpen() || checks > pollingChecksMax) {
-        rafFrames(30, () => {
-          self._zone.run(() => {
-            console.debug('keyboard closed');
-            callback();
-          });
+        zoneRafFrames(30, () => {
+          console.debug('keyboard closed');
+          callback();
         });
 
       } else {
