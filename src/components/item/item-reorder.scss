@@ -3,7 +3,7 @@
 // --------------------------------------------------
 
 ion-reorder {
-  display: none;
+  display: flex;
 
   flex: 1;
   align-items: center;
@@ -14,6 +14,10 @@ ion-reorder {
 
   font-size: 1.45em;
   opacity: .5;
+
+  transform: translate3d(120%, 0, 0);
+
+  transition: transform 125ms ease-in;
 
   pointer-events: all;
   touch-action: manipulation;
@@ -33,7 +37,8 @@ ion-reorder {
   }
 
   ion-reorder {
-    display: flex;
+    transform: translate3d(0, 0, 0);
+
   }
 }
 
