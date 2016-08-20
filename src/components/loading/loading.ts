@@ -57,7 +57,7 @@ export class Loading extends ViewController {
    * @private
    * DEPRECATED: Please inject LoadingController instead
    */
-  private static create(opt: any) {
+  private static create(opt: any) { // tslint:disable-line
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Loading.create(..) has been deprecated. Please inject LoadingController instead');
   }

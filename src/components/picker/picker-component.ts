@@ -452,14 +452,14 @@ export class PickerCmp {
     });
   }
 
-  private _colChange(selectedOption: PickerColumnOption) {
+  private _colChange(selectedOption: PickerColumnOption) { // tslint:disable-line
     // one of the columns has changed its selected index
     var picker = <Picker>this._viewCtrl;
     picker.ionChange.emit(this.getSelected());
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  private _keyUp(ev: KeyboardEvent) { // tslint:disable-line
     if (this.enabled && this._viewCtrl.isLast()) {
       if (ev.keyCode === Key.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {

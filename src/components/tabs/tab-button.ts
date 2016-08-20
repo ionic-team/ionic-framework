@@ -57,7 +57,7 @@ export class TabButton extends Ion {
   }
 
   @HostListener('click', ['$event'])
-  private onClick(ev: UIEvent) {
+  private onClick(ev: UIEvent) { // tslint:disable-line
     this.ionSelect.emit(this.tab);
     ev.preventDefault();
   }

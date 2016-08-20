@@ -31,12 +31,12 @@ export class NativeInput {
   }
 
   @HostListener('input', ['$event'])
-  private _change(ev: any) {
+  private _change(ev: any) { // tslint:disable-line
     this.valueChange.emit(ev.target.value);
   }
 
   @HostListener('focus')
-  private _focus() {
+  private _focus() { // tslint:disable-line
     var self = this;
 
     self.focusChange.emit(true);
@@ -65,7 +65,7 @@ export class NativeInput {
   }
 
   @HostListener('blur')
-  private _blur() {
+  private _blur() { // tslint:disable-line
     this.focusChange.emit(false);
     this.hideFocus(false);
 

@@ -70,7 +70,7 @@ export class ActionSheet extends ViewController {
    * @private
    * DEPRECATED: Please inject ActionSheetController instead
    */
-  private static create(opt: any) {
+  private static create(opt: any) { // tslint:disable-line
     // deprecated warning: added beta.11 2016-06-27
     console.warn('ActionSheet.create(..) has been deprecated. Please inject ActionSheetController instead');
   }

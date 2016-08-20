@@ -43,7 +43,7 @@ export class ToastCmp implements AfterViewInit {
     dismissOnPageChange?: boolean;
     position?: string;
   };
-  private descId: string;
+  private descId: string; // tslint:disable-line
   private dismissTimeout: number = undefined;
   private enabled: boolean;
   private hdrId: string;

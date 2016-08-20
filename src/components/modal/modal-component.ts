@@ -68,7 +68,7 @@ export class ModalCmp {
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  private _keyUp(ev: KeyboardEvent) { // tslint:disable-line
     if (this.enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE ) {
       this.bdClick();
     }

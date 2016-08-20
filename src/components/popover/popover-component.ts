@@ -98,7 +98,7 @@ export class PopoverCmp {
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  private _keyUp(ev: KeyboardEvent) { // tslint:disable-line
     if (this.enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
       this.bdClick();
     }

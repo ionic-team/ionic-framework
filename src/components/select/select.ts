@@ -212,7 +212,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  private _click(ev: UIEvent) { // tslint:disable-line
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -223,7 +223,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   @HostListener('keyup.space')
-  private _keyup() {
+  private _keyup() { // tslint:disable-line
     if (!this._isOpen) {
       this.open();
     }

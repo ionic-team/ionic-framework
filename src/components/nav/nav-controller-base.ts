@@ -128,7 +128,7 @@ export class NavControllerBase extends Ion implements NavController {
   /**
    * DEPRECATED: Please use inject the overlays controller and use the present method on the instance instead.
    */
-  private present(enteringView: ViewController, opts?: NavOptions): Promise<any> {
+  private present(enteringView: ViewController, opts?: NavOptions): Promise<any> { // tslint:disable-line
     // deprecated warning: added beta.11 2016-06-27
     console.warn('nav.present() has been deprecated.\n' +
                  'Please inject the overlay\'s controller and use the present method on the instance instead.');
