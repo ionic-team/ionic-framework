@@ -110,7 +110,6 @@ export interface NavOptions {
   easing?: string;
   id?: string;
   keyboardClose?: boolean;
-  transitionDelay?: number;
   progressAnimation?: boolean;
   ev?: any;
   updateUrl?: boolean;

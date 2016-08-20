@@ -32,7 +32,6 @@ export class OverlayPortal extends NavControllerBase {
     this._isPortal = true;
     this._init = true;
     this.setViewport(viewPort);
-    app.setPortal(this);
 
     // on every page change make sure the portal has
     // dismissed any views that should be auto dismissed on page change

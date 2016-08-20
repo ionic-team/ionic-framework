@@ -48,10 +48,10 @@ ion-action-sheet {
 
   border-radius: $action-sheet-ios-border-radius;
   background: $action-sheet-ios-background;
+}
 
-  &:last-child {
-    margin-bottom: $action-sheet-ios-group-margin-bottom;
-  }
+.action-sheet-group:last-child {
+  margin-bottom: $action-sheet-ios-group-margin-bottom;
 }
 
 .action-sheet-title {
@@ -75,18 +75,18 @@ ion-action-sheet {
   font-size: $action-sheet-ios-button-font-size;
   color: $action-sheet-ios-button-text-color;
   background: $action-sheet-ios-button-background;
+}
 
-  &:last-child {
-    border-bottom: 0;
-  }
+.action-sheet-button:last-child {
+  border-bottom: 0;
+}
 
-  &.activated {
-    margin-top: -$action-sheet-ios-button-border-width;
+.action-sheet-button.activated {
+  margin-top: -$action-sheet-ios-button-border-width;
 
-    border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
-    border-bottom-color: $action-sheet-ios-button-background-activated;
-    background: $action-sheet-ios-button-background-activated;
-  }
+  border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
+  border-bottom-color: $action-sheet-ios-button-background-activated;
+  background: $action-sheet-ios-button-background-activated;
 }
 
 .action-sheet-selected {

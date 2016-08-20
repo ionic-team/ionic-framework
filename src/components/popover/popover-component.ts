@@ -16,7 +16,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-popover',
   template:
-    '<ion-backdrop (click)="bdClick()" [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
+    '<ion-backdrop (click)="_bdClick()" [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
     '<div class="popover-wrapper">' +
       '<div class="popover-arrow"></div>' +
       '<div class="popover-content">' +
@@ -28,7 +28,6 @@ import { ViewController } from '../../navigation/view-controller';
 })
 export class PopoverCmp {
   @ViewChild('viewport', {read: ViewContainerRef}) viewport: ViewContainerRef;
-
   d: {
     cssClass?: string;
     showBackdrop?: boolean;
@@ -36,7 +35,6 @@ export class PopoverCmp {
   };
   enabled: boolean;
   id: number;
-  showSpinner: boolean;
 
   constructor(
     public _cfr: ComponentFactoryResolver,
@@ -63,41 +61,40 @@ export class PopoverCmp {
     if (document.activeElement) {
       activeElement.blur();
     }
-    this.loadComponent(this._navParams.data.componentType);
+    this._load(this._navParams.data.componentType);
   }
 
-  loadComponent(componentType: any) {
+  /** @internal */
+  _load(componentType: any) {
     if (componentType) {
       const componentFactory = this._cfr.resolveComponentFactory(componentType);
 
       // ******** DOM WRITE ****************
       const componentRef = this.viewport.createComponent(componentFactory, this.viewport.length, this.viewport.parentInjector, []);
-      this.setCssClass(componentRef, 'ion-page');
-      this.setCssClass(componentRef, 'show-page');
-      this.setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
-      this._viewCtrl._setInstance(componentRef.instance);
+      this._setCssClass(componentRef, 'ion-page');
+      this._setCssClass(componentRef, 'show-page');
+      this._setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
       this.enabled = true;
     }
   }
 
-  setCssClass(componentRef: any, className: string) {
+  /** @internal */
+  _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
 
-  dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(null, role);
-  }
-
-  bdClick() {
+  /** @internal */
+  _bdClick() {
     if (this.enabled && this.d.enableBackdropDismiss) {
-      this.dismiss('backdrop');
+      return this._viewCtrl.dismiss(null, 'backdrop');
     }
   }
 
+  /** @internal */
   @HostListener('body:keyup', ['$event'])
-  keyUp(ev: KeyboardEvent) {
+  _keyUp(ev: KeyboardEvent) {
     if (this.enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
-      this.bdClick();
+      this._bdClick();
     }
   }
 }

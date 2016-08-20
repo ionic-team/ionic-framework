@@ -88,7 +88,7 @@ export class E2EPage {
 
     loading.present();
     setTimeout(() => {
-      loading.setContent("Loaded!");
+      loading.setContent('Loaded!');
     }, 1000);
     setTimeout(() => {
       loading.dismiss();
@@ -141,53 +141,32 @@ export class E2EPage {
     setTimeout(() => {
       loading3.present();
 
-      setTimeout(() => {
-        loading3.dismiss();
-      }, 1000);
+      loading3.dismiss();
+      loading2.dismiss();
+      loading.dismiss();
 
-      setTimeout(() => {
-        loading2.dismiss();
-      }, 2000);
-
-      setTimeout(() => {
-        loading.dismiss();
-      }, 3000);
     }, 2000);
 
   }
 
   presentLoadingMultipleNav() {
-    let loading = this.loadingCtrl.create({
+    this.loadingCtrl.create({
       spinner: 'hide',
       content: 'Loading 1 Please Wait...',
       dismissOnPageChange: true
-    });
-
-    loading.present();
-
-    let loading2 = this.loadingCtrl.create({
-      spinner: 'hide',
-      content: 'Loading 2 Please Wait...',
-      dismissOnPageChange: true
-    });
+    }).present();
 
     setTimeout(() => {
-      loading2.present();
+
+      this.loadingCtrl.create({
+        spinner: 'hide',
+        content: 'Loading 2 Please Wait...',
+        dismissOnPageChange: true
+      }).present();
+
+      this.navCtrl.push(Page2);
+
     }, 500);
-
-    let loading3 = this.loadingCtrl.create({
-      spinner: 'hide',
-      content: 'Loading 3 Please Wait...',
-      dismissOnPageChange: true
-    });
-
-    setTimeout(() => {
-      loading3.present();
-
-      setTimeout(() => {
-        this.navCtrl.push(Page2);
-      }, 1000);
-    }, 1000);
   }
 }
 
@@ -239,7 +218,6 @@ export class Page3 {}
 
 @Component({
   template: `
-    <link href="styles.css" rel="stylesheet">
     <ion-nav [root]="root"></ion-nav>
   `,
   encapsulation: ViewEncapsulation.None

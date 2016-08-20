@@ -99,7 +99,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * It's also important to know that Ionic's default item sizes have
  * slightly different heights between platforms, which is perfectly fine.
- * 
+ *
  *
  *
  * ### Images Within Virtual Scroll
@@ -352,7 +352,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
       if (!this.approxItemHeight) {
         this.approxItemHeight = '40px';
-        console.warn('approxItemHeight set to default: Provide approxItemHeight to ensure proper virtual scroll rendering');
+        console.warn('Virtual Scroll: Please provide an "approxItemHeight" input to ensure proper virtual scroll rendering');
       }
     }
   }
@@ -387,7 +387,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         // good to go, we already have good dimension data
         done();
 
-      } else {        
+      } else {
         // ******** DOM READ ****************
         calcDimensions(self._data, self._elementRef.nativeElement.parentElement,
                       self.approxItemWidth, self.approxItemHeight,

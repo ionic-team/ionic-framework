@@ -1,6 +1,6 @@
 import { APP_INITIALIZER } from '@angular/core';
 
-import { closest, nativeTimeout } from '../util/dom';
+import { nativeTimeout } from '../util/dom';
 import { Platform } from '../platform/platform';
 import { ScrollView } from '../util/scroll-view';
 
@@ -131,7 +131,7 @@ export function setupEvents(platform: Platform): Events {
       let el = <HTMLElement>document.elementFromPoint(platform.width() / 2, platform.height() / 2);
       if (!el) { return; }
 
-      let content = closest(el, 'scroll-content');
+      let content = <HTMLElement>el.closest('scroll-content');
       if (content) {
         var scroll = new ScrollView(content);
         scroll.scrollTo(0, 0, 300);

@@ -12,7 +12,7 @@ describe('App', () => {
       let nav = mockNavController();
       let portal = mockNavController();
       app.setPortal(portal);
-      app.setRootNav(nav);
+      app._setRootNav(nav);
 
       let tabs = mockTabs();
       let tab1 = mockTab(tabs);
@@ -43,7 +43,7 @@ describe('App', () => {
       let nav = mockNavController();
       let portal = mockNavController();
       app.setPortal(portal);
-      app.setRootNav(nav);
+      app._setRootNav(nav);
 
       let tabs = mockTabs();
       let tab1 = mockTab(tabs);
@@ -73,7 +73,7 @@ describe('App', () => {
       let tab1 = mockTab(tabs);
       let tab2 = mockTab(tabs);
       let tab3 = mockTab(tabs);
-      app.setRootNav(tabs);
+      app._setRootNav(tabs);
 
       tab2.setSelected(true);
 
@@ -97,7 +97,7 @@ describe('App', () => {
       app.setPortal(portal);
       rootNav.registerChildNav(nestedNav);
       nestedNav.parent = rootNav;
-      app.setRootNav(rootNav);
+      app._setRootNav(rootNav);
 
       spyOn(platform, 'exitApp');
       spyOn(rootNav, 'pop');
@@ -124,7 +124,7 @@ describe('App', () => {
       let nestedNav = mockNavController();
       let portal = mockNavController();
       app.setPortal(portal);
-      app.setRootNav(rootNav);
+      app._setRootNav(rootNav);
       rootNav.registerChildNav(nestedNav);
 
       spyOn(platform, 'exitApp');
@@ -152,7 +152,7 @@ describe('App', () => {
       let nav = mockNavController();
       let portal = mockNavController();
       app.setPortal(portal);
-      app.setRootNav(nav);
+      app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
       spyOn(nav, 'pop');
@@ -176,7 +176,7 @@ describe('App', () => {
       let nav = mockNavController();
       let portal = mockNavController();
       app.setPortal(portal);
-      app.setRootNav(nav);
+      app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
       spyOn(nav, 'pop');
@@ -197,7 +197,7 @@ describe('App', () => {
       let nav = mockNavController();
       let portal = mockNavController();
       app.setPortal(portal);
-      app.setRootNav(nav);
+      app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
       spyOn(nav, 'pop');
@@ -220,7 +220,7 @@ describe('App', () => {
       let nav = mockNavController();
       let portal = mockNavController();
       app.setPortal(portal);
-      app.setRootNav(nav);
+      app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
       spyOn(nav, 'pop');
@@ -245,7 +245,7 @@ describe('App', () => {
       let nav = mockNavController();
       let portal = mockNavController();
       app.setPortal(portal);
-      app.setRootNav(nav);
+      app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
       spyOn(nav, 'pop');
@@ -277,7 +277,7 @@ describe('App', () => {
 
     it('should get active NavController when using tabs with nested nav', () => {
       let nav = mockNavController();
-      app.setRootNav(nav);
+      app._setRootNav(nav);
 
       let tabs = mockTabs();
       let tab1 = mockTab(tabs);
@@ -297,7 +297,7 @@ describe('App', () => {
 
     it('should get active NavController when using tabs, nested in a root nav', () => {
       let nav = mockNavController();
-      app.setRootNav(nav);
+      app._setRootNav(nav);
 
       let tabs = mockTabs();
       let tab1 = mockTab(tabs);
@@ -319,7 +319,7 @@ describe('App', () => {
       let tab1 = mockTab(tabs);
       let tab2 = mockTab(tabs);
       let tab3 = mockTab(tabs);
-      app.setRootNav(tabs);
+      app._setRootNav(tabs);
 
       tab2.setSelected(true);
 
@@ -334,7 +334,7 @@ describe('App', () => {
       let nav1 = mockNavController();
       let nav2 = mockNavController();
       let nav3 = mockNavController();
-      app.setRootNav(nav1);
+      app._setRootNav(nav1);
 
       nav1.registerChildNav(nav2);
       nav2.registerChildNav(nav3);
@@ -345,7 +345,7 @@ describe('App', () => {
     it('should get active NavController when nested 2 deep', () => {
       let nav1 = mockNavController();
       let nav2 = mockNavController();
-      app.setRootNav(nav1);
+      app._setRootNav(nav1);
 
       nav1.registerChildNav(nav2);
       expect(app.getActiveNav()).toBe(nav2);
@@ -353,13 +353,13 @@ describe('App', () => {
 
     it('should get active NavController when only one nav controller', () => {
       let nav = mockNavController();
-      app.setRootNav(nav);
+      app._setRootNav(nav);
       expect(app.getActiveNav()).toBe(nav);
     });
 
     it('should set/get the root nav controller', () => {
       let nav = mockNavController();
-      app.setRootNav(nav);
+      app._setRootNav(nav);
       expect(app.getRootNav()).toBe(nav);
     });
 
@@ -378,7 +378,7 @@ describe('App', () => {
 
       spyOn(mockClickBlock, 'activate');
 
-      app.clickBlock = mockClickBlock;
+      app._clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(true);
@@ -395,7 +395,7 @@ describe('App', () => {
 
       spyOn(mockClickBlock, 'activate');
 
-      app.clickBlock = mockClickBlock;
+      app._clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(false, 20);
@@ -412,7 +412,7 @@ describe('App', () => {
 
       spyOn(mockClickBlock, 'activate');
 
-      app.clickBlock = mockClickBlock;
+      app._clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(false, 200);
@@ -429,7 +429,7 @@ describe('App', () => {
 
       spyOn(mockClickBlock, 'activate');
 
-      app.clickBlock = mockClickBlock;
+      app._clickBlock = mockClickBlock;
 
       // act
       app.setEnabled(false);

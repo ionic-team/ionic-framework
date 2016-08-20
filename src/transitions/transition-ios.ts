@@ -25,98 +25,97 @@ class IOSTransition extends PageTransition {
     this.duration(isPresent(opts.duration) ? opts.duration : DURATION);
     this.easing(isPresent(opts.easing) ? opts.easing : EASING);
 
-    // get the native element for the entering page
-    let enteringPageEle: Element = enteringView.pageRef().nativeElement;
+    const backDirection = (opts.direction === 'back');
+    const enteringHasNavbar = (enteringView && enteringView.hasNavbar());
+    const leavingHasNavbar = (leavingView && leavingView.hasNavbar());
 
-    // what direction is the transition going
-    let backDirection = (opts.direction === 'back');
+    if (enteringView) {
+      // get the native element for the entering page
+      const enteringPageEle: Element = enteringView.pageRef().nativeElement;
 
-    // do they have navbars?
-    let enteringHasNavbar = enteringView.hasNavbar();
-    let leavingHasNavbar = (leavingView && leavingView.hasNavbar());
+      // entering content
+      const enteringContent = new Animation(enteringView.contentRef());
+      enteringContent.element(enteringPageEle.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *'));
+      this.add(enteringContent);
 
-    // entering content
-    let enteringContent = new Animation(enteringView.contentRef());
-    enteringContent.element(enteringPageEle.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *'));
-    this.add(enteringContent);
-
-    if (backDirection) {
-      // entering content, back direction
-      enteringContent
-        .fromTo(TRANSLATEX, OFF_LEFT, CENTER, true)
-        .fromTo(OPACITY, OFF_OPACITY, 1, true);
-
-    } else {
-      // entering content, forward direction
-      enteringContent
-        .beforeClearStyles([OPACITY])
-        .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
-    }
-
-    if (enteringHasNavbar) {
-      // entering page has a navbar
-      let enteringNavbarEle = enteringPageEle.querySelector('ion-navbar');
-
-      let enteringNavBar = new Animation(enteringNavbarEle);
-      this.add(enteringNavBar);
-
-      let enteringTitle = new Animation(enteringNavbarEle.querySelector('ion-title'));
-      let enteringNavbarItems = new Animation(enteringNavbarEle.querySelectorAll('ion-buttons,[menuToggle]'));
-      let enteringNavbarBg = new Animation(enteringNavbarEle.querySelector('.toolbar-background'));
-      let enteringBackButton = new Animation(enteringNavbarEle.querySelector('.back-button'));
-      enteringNavBar
-        .add(enteringTitle)
-        .add(enteringNavbarItems)
-        .add(enteringNavbarBg)
-        .add(enteringBackButton);
-
-      enteringTitle.fromTo(OPACITY, 0.01, 1, true);
-      enteringNavbarItems.fromTo(OPACITY, 0.01, 1, true);
-
-      // set properties depending on direction
       if (backDirection) {
-        // entering navbar, back direction
-        enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
-
-        if (enteringView.enableBack()) {
-          // back direction, entering page has a back button
-          enteringBackButton
-            .beforeAddClass(SHOW_BACK_BTN_CSS)
-            .fromTo(OPACITY, 0.01, 1, true);
-        }
+        // entering content, back direction
+        enteringContent
+          .fromTo(TRANSLATEX, OFF_LEFT, CENTER, true)
+          .fromTo(OPACITY, OFF_OPACITY, 1, true);
 
       } else {
-        // entering navbar, forward direction
-        enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+        // entering content, forward direction
+        enteringContent
+          .beforeClearStyles([OPACITY])
+          .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+      }
 
-        if (leavingHasNavbar) {
-          // entering navbar, forward direction, and there's a leaving navbar
-          // should just fade in, no sliding
-          enteringNavbarBg
-            .beforeClearStyles([TRANSLATEX])
-            .fromTo(OPACITY, 0.01, 1, true);
+      if (enteringHasNavbar) {
+        // entering page has a navbar
+        const enteringNavbarEle = enteringPageEle.querySelector('ion-navbar');
+
+        const enteringNavBar = new Animation(enteringNavbarEle);
+        this.add(enteringNavBar);
+
+        const enteringTitle = new Animation(enteringNavbarEle.querySelector('ion-title'));
+        const enteringNavbarItems = new Animation(enteringNavbarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+        const enteringNavbarBg = new Animation(enteringNavbarEle.querySelector('.toolbar-background'));
+        const enteringBackButton = new Animation(enteringNavbarEle.querySelector('.back-button'));
+        enteringNavBar
+          .add(enteringTitle)
+          .add(enteringNavbarItems)
+          .add(enteringNavbarBg)
+          .add(enteringBackButton);
+
+        enteringTitle.fromTo(OPACITY, 0.01, 1, true);
+        enteringNavbarItems.fromTo(OPACITY, 0.01, 1, true);
+
+        // set properties depending on direction
+        if (backDirection) {
+          // entering navbar, back direction
+          enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
+
+          if (enteringView.enableBack()) {
+            // back direction, entering page has a back button
+            enteringBackButton
+              .beforeAddClass(SHOW_BACK_BTN_CSS)
+              .fromTo(OPACITY, 0.01, 1, true);
+          }
 
         } else {
-          // entering navbar, forward direction, and there's no leaving navbar
-          // should just slide in, no fading in
-          enteringNavbarBg
-            .beforeClearStyles([OPACITY])
-            .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
-        }
+          // entering navbar, forward direction
+          enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+
+          if (leavingHasNavbar) {
+            // entering navbar, forward direction, and there's a leaving navbar
+            // should just fade in, no sliding
+            enteringNavbarBg
+              .beforeClearStyles([TRANSLATEX])
+              .fromTo(OPACITY, 0.01, 1, true);
+
+          } else {
+            // entering navbar, forward direction, and there's no leaving navbar
+            // should just slide in, no fading in
+            enteringNavbarBg
+              .beforeClearStyles([OPACITY])
+              .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+          }
 
 
-        if (enteringView.enableBack()) {
-          // forward direction, entering page has a back button
-          enteringBackButton
-            .beforeAddClass(SHOW_BACK_BTN_CSS)
-            .fromTo(OPACITY, 0.01, 1, true);
+          if (enteringView.enableBack()) {
+            // forward direction, entering page has a back button
+            enteringBackButton
+              .beforeAddClass(SHOW_BACK_BTN_CSS)
+              .fromTo(OPACITY, 0.01, 1, true);
 
-          let enteringBackBtnText = new Animation(enteringNavbarEle.querySelector('.back-button-text'));
-          enteringBackBtnText.fromTo(TRANSLATEX, '100px', '0px');
-          enteringNavBar.add(enteringBackBtnText);
+            const enteringBackBtnText = new Animation(enteringNavbarEle.querySelector('.back-button-text'));
+            enteringBackBtnText.fromTo(TRANSLATEX, '100px', '0px');
+            enteringNavBar.add(enteringBackBtnText);
 
-        } else {
-          enteringBackButton.beforeRemoveClass(SHOW_BACK_BTN_CSS);
+          } else {
+            enteringBackButton.beforeRemoveClass(SHOW_BACK_BTN_CSS);
+          }
         }
       }
     }
@@ -124,9 +123,9 @@ class IOSTransition extends PageTransition {
     // setup leaving view
     if (leavingView && leavingView.pageRef()) {
       // leaving content
-      let leavingPageEle: Element = leavingView.pageRef().nativeElement;
+      const leavingPageEle: Element = leavingView.pageRef().nativeElement;
 
-      let leavingContent = new Animation(leavingView.contentRef());
+      const leavingContent = new Animation(leavingView.contentRef());
       leavingContent.element(leavingPageEle.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *'));
       this.add(leavingContent);
 
@@ -145,13 +144,13 @@ class IOSTransition extends PageTransition {
 
       if (leavingHasNavbar) {
         // leaving page has a navbar
-        let leavingNavbarEle: Element = leavingPageEle.querySelector('ion-navbar');
+        const leavingNavbarEle: Element = leavingPageEle.querySelector('ion-navbar');
 
-        let leavingNavBar = new Animation(leavingNavbarEle);
-        let leavingTitle = new Animation(leavingNavbarEle.querySelector('ion-title'));
-        let leavingNavbarItems = new Animation(leavingNavbarEle.querySelectorAll('ion-buttons,[menuToggle]'));
-        let leavingNavbarBg = new Animation(leavingNavbarEle.querySelector('.toolbar-background'));
-        let leavingBackButton = new Animation(leavingNavbarEle.querySelector('.back-button'));
+        const leavingNavBar = new Animation(leavingNavbarEle);
+        const leavingTitle = new Animation(leavingNavbarEle.querySelector('ion-title'));
+        const leavingNavbarItems = new Animation(leavingNavbarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+        const leavingNavbarBg = new Animation(leavingNavbarEle.querySelector('.toolbar-background'));
+        const leavingBackButton = new Animation(leavingNavbarEle.querySelector('.back-button'));
 
         leavingNavBar
           .add(leavingTitle)

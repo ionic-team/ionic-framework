@@ -2,7 +2,7 @@ import { Component, Injectable, NgModule } from '@angular/core';
 
 import { ActionSheetController, App, Config,
   IonicApp, IonicModule, ModalController, NavController,
-  NavParams, PageTransition, Platform, ViewController } from '../../../dist';
+  NavParams, Platform, ViewController } from '../../../dist';
 
 
 @Injectable()
@@ -122,21 +122,31 @@ export class E2EPage {
   template: `
   <ion-header>
     <ion-navbar>
+      <ion-buttons>
+        <button ion-button (click)="dismiss()">Close</button>
+      </ion-buttons>
       <ion-title>Page One</ion-title>
     </ion-navbar>
   </ion-header>
 
   <ion-content>
+    <div padding>
+      NavigableModal
+    </div>
     <button ion-button full (click)="submit()">Submit</button>
   </ion-content>
   `
 })
 export class NavigableModal {
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController) {}
 
   submit() {
     this.navCtrl.push(NavigableModal2);
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
 
@@ -438,11 +448,8 @@ export class ModalFirstPage {
         {
           text: 'Go To Root',
           handler: () => {
-            // overlays are added and removed from the root navigation
-            // find the root navigation, and pop this alert
-            // when the alert is done animating out, then pop off the modal
-            this.app.getRootNav().pop().then(() => {
-              this.app.getRootNav().pop();
+            actionSheet.dismiss().then(() => {
+              this.navCtrl.parent.pop();
             });
 
             // by default an alert will dismiss itself

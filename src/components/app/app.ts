@@ -1,12 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { IonicApp } from './app-root';
+import { AppPortal, IonicApp } from './app-root';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
 import { isNav, isTabs, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
 import { NavController } from '../../navigation/nav-controller';
-import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -21,17 +20,16 @@ export class App {
   private _title: string = '';
   private _titleSrv: Title = new Title();
   private _rootNav: NavController = null;
-  private _portal: OverlayPortal;
 
   /**
    * @internal
    */
-  clickBlock: ClickBlock;
+  _clickBlock: ClickBlock;
 
   /**
    * @internal
    */
-  appRoot: IonicApp;
+  _appRoot: IonicApp;
 
   /**
    * @private
@@ -97,14 +95,14 @@ export class App {
   setEnabled(isEnabled: boolean, duration: number = 700) {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
-    if (this.clickBlock) {
+    if (this._clickBlock) {
       if (isEnabled || duration <= 32) {
         // disable the click block if it's enabled, or the duration is tiny
-        this.clickBlock.activate(false, 0);
+        this._clickBlock.activate(false, 0);
 
       } else {
         // show the click block for duration + some number
-        this.clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
+        this._clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
       }
     }
   }
@@ -116,7 +114,7 @@ export class App {
    */
   setScrollDisabled(disableScroll: boolean) {
     if (this._config.get('canDisableScroll', true)) {
-      this.appRoot._disableScroll(disableScroll);
+      this._appRoot._disableScroll(disableScroll);
     }
   }
 
@@ -170,24 +168,19 @@ export class App {
   }
 
   /**
-   * @private
+   * @internal
    */
-  setRootNav(nav: any) {
+  _setRootNav(nav: any) {
     this._rootNav = nav;
   }
 
   /**
    * @private
    */
-  setPortal(portal: OverlayPortal) {
-    this._portal = portal;
-  }
+  present(enteringView: ViewController, opts: NavOptions, appPortal?: AppPortal): Promise<any> {
+    const portal = this._appRoot._getPortal(appPortal);
 
-  /**
-   * @private
-   */
-  present(enteringView: ViewController, opts: NavOptions = {}): Promise<any> {
-    enteringView._setNav(this._portal);
+    enteringView._setNav(portal);
 
     opts.keyboardClose = false;
     opts.direction = DIRECTION_FORWARD;
@@ -203,7 +196,7 @@ export class App {
       ev: opts.ev
     });
 
-    return this._portal.insertPages(-1, [enteringView], opts);
+    return portal.insertPages(-1, [enteringView], opts);
   }
 
   /**
@@ -242,14 +235,15 @@ export class App {
     // app must be enabled and there must be a
     // root nav controller for go back to work
     if (this._rootNav && this.isEnabled()) {
+      const portal = this._appRoot._getPortal();
 
       // first check if the root navigation has any overlays
       // opened in it's portal, like alert/actionsheet/popup
-      if (this._portal && this._portal.length() > 0) {
+      if (portal.length() > 0) {
         // there is an overlay view in the portal
         // let's pop this one off to go back
         console.debug('app, goBack pop overlay');
-        return this._portal.pop();
+        return portal.pop();
       }
 
       // next get the active nav, check itself and climb up all

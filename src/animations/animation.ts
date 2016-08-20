@@ -1088,7 +1088,6 @@ export interface AnimationOptions {
   duration?: number;
   easing?: string;
   direction?: string;
-  renderDelay?: number;
   isRTL?: boolean;
   ev?: any;
 }

@@ -28,15 +28,14 @@ import { NavParams } from './nav-params';
 export class ViewController {
   private _cntDir: any;
   private _cntRef: ElementRef;
-  private _tbRefs: ElementRef[] = [];
   private _hdrDir: Header;
   private _ftrDir: Footer;
-  private _hidden: string = null;
-  private _leavingOpts: NavOptions = null;
+  private _hidden: string;
+  private _leavingOpts: NavOptions;
   private _nb: Navbar;
-  private _onDidDismiss: Function = null;
-  private _onWillDismiss: Function = null;
-  private _detached: boolean = false;
+  private _onDidDismiss: Function;
+  private _onWillDismiss: Function;
+  private _detached: boolean;
 
   /**
    * Observable to be subscribed to when the current component will become active
@@ -68,49 +67,50 @@ export class ViewController {
    */
   willUnload: EventEmitter<any>;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   data: any;
 
-  /**
-   * @internal
-   */
+  /** @internal */
+  instance: any;
+
+  /** @internal */
   id: string;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   isOverlay: boolean = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   _cmp: ComponentRef<any>;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   _nav: NavControllerBase;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   _zIndex: number;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   _state: ViewState;
 
+  /** @internal */
+  _cssClass: string;
+
+  /** @internal */
+  @Output() private _emitter: EventEmitter<any> = new EventEmitter();
+
+  constructor(public componentType?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
+    // passed in data could be NavParams, but all we care about is its data object
+    this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
+
+    this._cssClass = rootCssClass;
+  }
+
   /**
    * @internal
    */
-  @Output() private _emitter: EventEmitter<any> = new EventEmitter();
-
-  constructor(public componentType?: any, data?: any) {
-    // passed in data could be NavParams, but all we care about is its data object
-    this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
+  init(componentRef: ComponentRef<any>) {
+    this._cmp = componentRef;
+    this.instance = componentRef.instance;
+    this._detached = false;
 
     this.willEnter = new EventEmitter();
     this.didEnter = new EventEmitter();
@@ -121,20 +121,16 @@ export class ViewController {
 
   /**
    * @internal
-   * DOM WRITE
    */
-  init(componentRef: ComponentRef<any>) {
-    this._cmp = componentRef;
-    this._detached = false;
+  _setNav(navCtrl: NavControllerBase) {
+    this._nav = navCtrl;
   }
 
   /**
    * @internal
    */
   _setInstance(instance: any) {
-    if (this._cmp) {
-      this._cmp.instance = instance;
-    }
+    this.instance = instance;
   }
 
   /**
@@ -185,13 +181,6 @@ export class ViewController {
       this._onDidDismiss && this._onDidDismiss(data, role);
       return data;
     });
-  }
-
-  /**
-   * @internal
-   */
-  _setNav(navCtrl: NavControllerBase) {
-    this._nav = navCtrl;
   }
 
   /**
@@ -415,10 +404,10 @@ export class ViewController {
    */
   _didLoad() {
     // deprecated warning: added 2016-08-14, beta.12
-    if (this._cmp && this._cmp.instance.ionViewLoaded) {
+    if (this.instance && this.instance.ionViewLoaded) {
       try {
         console.warn('ionViewLoaded() has been deprecated. Please rename to ionViewDidLoad()');
-        this._cmp.instance.ionViewLoaded();
+        this.instance.ionViewLoaded();
       } catch (e) {
         console.error(this.name + ' iionViewLoaded: ' + e.message);
       }
@@ -488,10 +477,10 @@ export class ViewController {
     ctrlFn(this, 'WillUnload');
 
     // deprecated warning: added 2016-08-14, beta.12
-    if (this._cmp && this._cmp.instance.ionViewDidUnload) {
+    if (this.instance.ionViewDidUnload) {
       console.warn('ionViewDidUnload() has been deprecated. Please use ionViewWillUnload() instead');
       try {
-        this._cmp.instance.ionViewDidUnload();
+        this.instance.ionViewDidUnload();
       } catch (e) {
         console.error(this.name + ' ionViewDidUnload: ' + e.message);
       }
@@ -521,7 +510,7 @@ export class ViewController {
       }
     }
 
-    this._nav = this._cmp = this._cntDir = this._cntRef = this._tbRefs = this._hdrDir = this._ftrDir = this._nb = this._onDidDismiss = this._onWillDismiss = null;
+    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onDidDismiss = this._onWillDismiss = null;
   }
 
   /**
@@ -530,9 +519,9 @@ export class ViewController {
   _lifecycleTest(lifecycle: string): boolean | string | Promise<any> {
     let result: any = true;
 
-    if (this._cmp && this._cmp.instance && this._cmp.instance['ionViewCan' + lifecycle]) {
+    if (this.instance && this.instance['ionViewCan' + lifecycle]) {
       try {
-        result = this._cmp.instance['ionViewCan' + lifecycle]();
+        result = this.instance['ionViewCan' + lifecycle]();
 
       } catch (e) {
         console.error(`${this.name} ionViewCan${lifecycle} error: ${e}`);
@@ -546,11 +535,11 @@ export class ViewController {
 
 
 function ctrlFn(viewCtrl: ViewController, fnName: string) {
-  if (viewCtrl._cmp) {
+  if (viewCtrl.instance) {
     // fire off ionView lifecycle instance method
-    if (viewCtrl._cmp.instance['ionView' + fnName]) {
+    if (viewCtrl.instance['ionView' + fnName]) {
       try {
-        viewCtrl._cmp.instance['ionView' + fnName]();
+        viewCtrl.instance['ionView' + fnName]();
       } catch (e) {
         console.error(viewCtrl.name + ' ionView' + fnName + ': ' + e.message);
       }
@@ -562,3 +551,5 @@ function ctrlFn(viewCtrl: ViewController, fnName: string) {
 export function isViewController(viewCtrl: any) {
   return !!(viewCtrl && (<ViewController>viewCtrl).componentType && (<ViewController>viewCtrl)._nav);
 }
+
+const DEFAULT_CSS_CLASS = 'ion-page';

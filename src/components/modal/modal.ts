@@ -20,7 +20,7 @@ export class Modal extends ViewController {
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
     data.opts = opts;
 
-    super(ModalCmp, data);
+    super(ModalCmp, data, null);
     this._app = app;
     this.isOverlay = true;
   }

@@ -51,10 +51,10 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
   text-align: $action-sheet-wp-button-text-align;
   color: $action-sheet-wp-button-text-color;
   background: $action-sheet-wp-button-background;
+}
 
-  &.activated {
-    background: $action-sheet-wp-button-background-activated;
-  }
+.action-sheet-button.activated {
+  background: $action-sheet-wp-button-background-activated;
 }
 
 .action-sheet-icon {
@@ -69,14 +69,14 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
 
 .action-sheet-group {
   background: $action-sheet-wp-background;
+}
 
-  &:last-child .action-sheet-button {
-    margin-bottom: $action-sheet-wp-group-margin-bottom;
-  }
+.action-sheet-group:last-child .action-sheet-button {
+  margin-bottom: $action-sheet-wp-group-margin-bottom;
+}
 
-  .button-inner {
-    justify-content: flex-start;
-  }
+.action-sheet-group.button-inner {
+  justify-content: flex-start;
 }
 
 .action-sheet-selected {

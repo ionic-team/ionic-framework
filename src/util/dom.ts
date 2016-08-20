@@ -67,7 +67,7 @@ export let CSS: {
                  '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
   for (i = 0; i < keys.length; i++) {
-    if (document.documentElement.style[keys[i]] !== undefined) {
+    if ((<any>document.documentElement.style)[keys[i]] !== undefined) {
       CSS.transform = keys[i];
       break;
     }
@@ -76,7 +76,7 @@ export let CSS: {
   // transition
   keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
   for (i = 0; i < keys.length; i++) {
-    if (document.documentElement.style[keys[i]] !== undefined) {
+    if ((<any>document.documentElement.style)[keys[i]] !== undefined) {
       CSS.transition = keys[i];
       break;
     }
@@ -233,30 +233,30 @@ export function copyInputAttributes(srcElement: HTMLElement, destElement: HTMLEl
   }
 }
 
-let matchesFn: string;
-let matchesMethods = ['matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector'];
-matchesMethods.some((fn: string) => {
-  if (typeof document.documentElement[fn] === 'function') {
-    matchesFn = fn;
-    return true;
-  }
-});
-
-export function closest(ele: HTMLElement, selector: string, checkSelf?: boolean) {
-  if (ele && matchesFn) {
-
-    // traverse parents
-    ele = (checkSelf ? ele : ele.parentElement);
-
-    while (ele !== null) {
-      if (ele[matchesFn](selector)) {
-        return ele;
-      }
-      ele = ele.parentElement;
+// TODO: Add to external polyfill script
+if (typeof Element.prototype.matches !== 'function') {
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector || function matches(selector) {
+    var element = this;
+    var elements = (element.document || element.ownerDocument).querySelectorAll(selector);
+    var index = 0;
+    while (elements[index] && elements[index] !== element) {
+      ++index;
     }
-  }
+    return Boolean(elements[index]);
+  };
+}
 
-  return null;
+if (typeof Element.prototype.closest !== 'function') {
+  Element.prototype.closest = function closest(selector) {
+    var element = this;
+    while (element && element.nodeType === 1) {
+      if (element.matches(selector)) {
+        return element;
+      }
+      element = element.parentNode;
+    }
+    return null;
+  };
 }
 
 

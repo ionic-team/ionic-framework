@@ -24,7 +24,7 @@ export class ClickBlock {
     private elementRef: ElementRef,
     private renderer: Renderer
   ) {
-    app.clickBlock = this;
+    app._clickBlock = this;
     this.isEnabled = config.getBoolean('clickBlock', true);
   }
 
