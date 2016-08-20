@@ -29,7 +29,12 @@ ion-reorder {
 }
 
 .reorder-enabled {
+  ion-reorder {
+    transform: translate3d(0, 0, 0);
+  }
+}
 
+.reorder-list-active {
   .item,
   .item-wrapper {
     transition: transform 300ms;
@@ -37,13 +42,6 @@ ion-reorder {
     will-change: transform;
   }
 
-  ion-reorder {
-    transform: translate3d(0, 0, 0);
-
-  }
-}
-
-.reorder-list-active {
   .item-inner {
     pointer-events: none;
   }
