@@ -423,6 +423,8 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 
 .button-effect {
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 0;
   display: none;
 
@@ -431,6 +433,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   background-color: $button-md-ripple-background-color;
   opacity: .2;
 
+  transform-origin: center center;
   transition-timing-function: ease-in-out;
 
   pointer-events: none;
