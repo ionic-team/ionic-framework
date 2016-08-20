@@ -44,7 +44,7 @@ import { Searchbar } from '../components/searchbar/searchbar';
 import { Nav } from '../components/nav/nav';
 import { NavPop } from '../components/nav/nav-pop';
 import { NavPush, NavPushAnchor } from '../components/nav/nav-push';
-import { NavbarTemplate, Navbar } from '../components/navbar/navbar';
+import { Navbar } from '../components/navbar/navbar';
 import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when';
 
 /**
@@ -189,7 +189,6 @@ export const IONIC_DIRECTIVES: any[] = [
 
   // Nav
   Nav,
-  NavbarTemplate,
   Navbar,
 
   NavPush,

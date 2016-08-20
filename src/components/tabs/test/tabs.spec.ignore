@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { App, Config, Nav, NavOptions, Platform, Tab, Tabs, ViewController } from '../../../../src';
+import { App } from '../../../../src/components/app/app';
+import { Config } from '../../../../src/config/config';
+import { Nav } from '../../../../src/components/nav/nav';
+import { NavOptions } from '../../../../src/navigation/nav-util';
+import { Platform } from '../../../../src/platform/platform';
+import { Tab } from '../../../../src/components/tabs/tab';
+import { Tabs } from '../../../../src/components/tabs/tabs';
+import { ViewController } from '../../../../src/navigation/view-controller';
 import { mockTab, mockTabs } from '../../../../src/util/mock-providers';
 
 export function run() {
@@ -229,6 +236,5 @@ describe('Tabs', () => {
   class SomePage {}
 
 });
-
 
 }

@@ -1,4 +1,4 @@
-import { Platform } from '../../../src';
+import { Platform } from '../../../src/platform/platform';
 
 export function run() {
 

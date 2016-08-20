@@ -81,7 +81,7 @@ function watchTask(task){
     // remember.forget('no-typecheck', file.history[0]);
     //
     // del([filePath, typingPath], function(){
-    //   gulp.start('bundle.system');
+    //   gulp.start('build-systemjs-bundle');
     // });
   }
 }
@@ -93,10 +93,6 @@ gulp.task('serve', function() {
       port: 35700
     }
   });
-});
-
-gulp.task('release.clean', function(done) {
-  del(['dist/**', '!dist'], done);
 });
 
 /**
@@ -118,24 +114,6 @@ gulp.task('transpile.es2015', function(done) {
   });
 });
 
-/**
- * Transpiles TypeScript sources to ES5 in the CommonJS module format and outputs
- * them to dist. When the '--typecheck' flag is specified, generates .d.ts
- * definitions and does typechecking.
- */
-gulp.task('transpile.cjs', function(done) {
-  var exec = require('child_process').exec;
-  var shellCommand = 'cp ./scripts/build/commonjsNgcConfig.json ./commonjsNgcConfig.json && ' +
-    './node_modules/.bin/ngc -p ./commonjsNgcConfig.json && ' +
-    'cp src/components/slides/swiper-widget.js dist/components/slides/swiper-widget.js && ' +
-    'cp src/components/slides/swiper-widget.d.ts dist/components/slides/';
-
-  exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    done(err);
-  });
-});
 
 /**
  * Creates CommonJS and SystemJS bundles from Ionic source files.
@@ -144,7 +122,7 @@ gulp.task('release.bundle', ['transpile.cjs', 'transpile.es2015',]);
 
 
 gulp.task('e2e.clean', function(done) {
-  del(['test/**', '!test'], done);
+  del(['dist-e2e'], done);
 });
 
 /**
@@ -181,7 +159,7 @@ gulp.task('e2e.setup', function() {
       var sep = path.sep;
       file.dirname = file.dirname.replace(sep + 'test' + sep, sep);
     }))
-    .pipe(gulp.dest('test/'))
+    .pipe(gulp.dest('dist-e2e/'))
     .pipe(connect.reload());
 
   function createIndexHTML() {
@@ -215,7 +193,7 @@ gulp.task('e2e.setup', function() {
     return through2.obj(function(file, enc, next) {
       var self = this;
       var relativePath = path.dirname(file.path.replace(/^.*?src(\/|\\)components(\/|\\)/, ''));
-      relativePath = relativePath.replace('/test/', '/');
+      relativePath = relativePath.replace('/dist-e2e/', '/');
       var contents = file.contents.toString();
       platforms.forEach(function(platform) {
         var platformContents = testTemplate({
@@ -243,13 +221,13 @@ gulp.task('e2e.transpile', function(done) {
     // If an e2efolder parameter was passed then only transpile that directory
     if (e2eFolder) {
       e2eNgc.include = [
-        "test/" + e2eFolder + "/entry.ts",
-        "test/" + e2eFolder + "/AppModule.ts"
+        "dist-e2e/" + e2eFolder + "/entry.ts",
+        "dist-e2e/" + e2eFolder + "/AppModule.ts"
       ]
     } else {
       e2eNgc.include = [
-        "test/**/entry.ts",
-        "test/**/AppModule.ts"
+        "dist-e2e/**/entry.ts",
+        "dist-e2e/**/AppModule.ts"
       ];
     }
     fs.writeFileSync('./e2eNgcConfig.json', JSON.stringify(e2eNgc, null, 2));
@@ -260,6 +238,7 @@ gulp.task('e2e.transpile', function(done) {
   var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ./e2eNgcConfig.json';
 
   exec(shellCommand, function(err, stdout, stderr) {
+    del('./e2eNgcConfig.json');
     console.log(stdout);
     console.log(stderr);
     done(err);
@@ -276,7 +255,7 @@ gulp.task('e2e.pre-webpack', function(done) {
    * Find all AppModule.ts files because the act as the entry points
    * for each e2e test.
    */
-  glob('test/*/**/AppModule.ts', {}, function(er, files) {
+  glob('dist-e2e/*/**/AppModule.ts', {}, function(er, files) {
 
     var directories = files.map(function(file) {
       return path.dirname(file);
@@ -293,7 +272,7 @@ gulp.task('e2e.pre-webpack', function(done) {
     }, []);
 
     fs.writeFileSync('./scripts/e2e/webpackEntryPoints.json', JSON.stringify(webpackEntryPoints, null, 2));
-    fs.writeFileSync('./test/index.html',
+    fs.writeFileSync('./dist-e2e/index.html',
       '<!DOCTYPE html><html lang="en"><head></head><body style="width: 500px; margin: 100px auto">\n' +
       indexFileContents.join('\n') +
       '</center></body></html>'
@@ -323,7 +302,7 @@ gulp.task('e2e.resources', function(done) {
 });
 
  /**
-  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'bundle.system' or
+  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'build-systemjs-bundle' or
   * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
   */
 gulp.task('watch.e2e', ['sass', 'fonts'], function() {
@@ -332,10 +311,10 @@ gulp.task('watch.e2e', ['sass', 'fonts'], function() {
   var config = require('./scripts/e2e/webpack.config.js');
   config.output.path = __dirname;
   config.entry = {
-    "test/vendor": "./scripts/e2e/vendor",
-    "test/polyfills": "./scripts/e2e/polyfills"
+    "dist-e2e/vendor": "./scripts/e2e/vendor",
+    "dist-e2e/polyfills": "./scripts/e2e/polyfills"
   };
-  config.entry['test/' + flags.e2efolder + '/index'] = './test/' + flags.e2efolder + '/entry';
+  config.entry['dist-e2e/' + flags.e2efolder + '/index'] = './dist-e2e/' + flags.e2efolder + '/entry';
 
   var compiler = webpack(config);
 
@@ -355,8 +334,8 @@ gulp.task('watch.e2e', ['sass', 'fonts'], function() {
     '!src/util/test/*'
   ],
   function(file) {
-      console.log('start transpile.cjs - ' + JSON.stringify(file.history, null, 2));
-      gulp.start('transpile.cjs');
+      console.log('start build.cjs.ngc - ' + JSON.stringify(file.history, null, 2));
+      gulp.start('build.cjs.ngc');
   });
 
   // If any scss files change then recompile all sass
@@ -379,14 +358,14 @@ gulp.task('watch.e2e', ['sass', 'fonts'], function() {
       if(err) {
         throw new Error("webpack-dev-server", err);
       }
-      console.log("[webpack-dev-server]", "http://localhost:8080/test/" + flags.e2efolder);
+      console.log("[webpack-dev-server]", "http://localhost:8080/dist-e2e/" + flags.e2efolder);
   });
 });
 
 gulp.task('build.e2e', function(done) {
   runSequence(
-    'e2e.clean',
-    'transpile.cjs',
+    'clean',
+    'build.cjs.ngc',
     ['e2e.resources', 'sass', 'fonts'],
     'e2e.pre-webpack',
     'e2e.webpack',
@@ -394,9 +373,26 @@ gulp.task('build.e2e', function(done) {
   );
 })
 
+gulp.task('build.cjs.ngc', function(done) {
+  buildCommonJsNgc( function() {
+    gulp.src(['src/components/slides/swiper-widget.js', 'src/components/slides/swiper-widget.d.ts'])
+      .pipe(gulp.dest('./dist/components/slides/'))
+      .on('end', done);
+  });
+});
 
+function buildCommonJsNgc(doneCallback) {
+  var exec = require('child_process').exec;
+  var shellCommand = 'cp ./scripts/build/commonjsNgcConfig.json ./commonjsNgcConfig.json && ' +
+    './node_modules/.bin/ngc -p ./commonjsNgcConfig.json';
 
-
+  exec(shellCommand, function(err, stdout, stderr) {
+    del('./commonjsNgcConfig.json');
+    console.log(stdout);
+    console.log(stderr);
+    doneCallback(err);
+  });
+}
 
 /**
  * Compiles Ionic Sass sources to stylesheets and outputs them to dist/bundles.
@@ -417,12 +413,14 @@ gulp.task('sass', function() {
     }).on('error', sass.logError)
   )
   .pipe(autoprefixer(buildConfig.autoprefixer))
+  .pipe(gulp.dest('dist-test/bundles/'))
   .pipe(gulp.dest('dist/bundles/'))
-  .pipe(gulp.dest('test/css/'))
+  .pipe(gulp.dest('dist-e2e/css/'))
   .pipe(minifyCss())
   .pipe(rename({ extname: '.min.css' }))
+  .pipe(gulp.dest('dist-test/bundles/'))
   .pipe(gulp.dest('dist/bundles/'))
-  .pipe(gulp.dest('test/css/'));
+  .pipe(gulp.dest('dist-e2e/css/'))
 });
 
 /**
@@ -442,7 +440,8 @@ gulp.task('sass.themes', function() {
     )
     .pipe(autoprefixer(buildConfig.autoprefixer))
     .pipe(gulp.dest('dist/bundles/'))
-    .pipe(gulp.dest('test/css/'));
+    .pipe(gulp.dest('dist-test/css/'))
+    .pipe(gulp.dest('dist-e2e/css/'));
   }
 
   buildTheme('ios');
@@ -458,8 +457,9 @@ gulp.task('fonts', function() {
     'src/fonts/*.+(ttf|woff|woff2)',
     'node_modules/ionicons/dist/fonts/*.+(ttf|woff|woff2)'
    ])
+    .pipe(gulp.dest('dist-test/fonts'))
     .pipe(gulp.dest('dist/fonts'))
-    .pipe(gulp.dest('./test/fonts/'));
+    .pipe(gulp.dest('dist-e2e/fonts/'))
 });
 
 /**
@@ -471,7 +471,9 @@ gulp.task('copy.scss', function() {
       '!src/components/*/test/**/*',
       '!src/util/test/*'
     ])
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist-e2e'))
+    .pipe(gulp.dest('dist-test'));
 });
 
 /**
@@ -764,7 +766,7 @@ gulp.task('demos.resources', function(done) {
 });
 
  /**
-  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'bundle.system' or
+  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'build-systemjs-bundle' or
   * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
   */
 gulp.task('watch.demos', function() {
@@ -807,24 +809,7 @@ gulp.task('build.demos', function(done) {
  */
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
-// requires bundle.system to be run once
-gulp.task('karma', ['tests'], function(done) {
-  var karma = require('karma').server;
-  karma.start({
-    configFile: __dirname + '/scripts/karma/karma.conf.js'
-  }, function(result) {
-    if (result > 0) {
-      return done(new Error('Karma exited with an error'));
-    }
-    done();
-  });
-});
 
-gulp.task('karma-watch', ['watch.tests', 'bundle.system'], function() {
-  watchTask('bundle.system');
-  var karma = require('karma').server;
-  return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js'})
-});
 
 
 /**
@@ -1041,19 +1026,7 @@ gulp.task('nightly', ['package'], function(done) {
   });
 });
 
-/**
- * Build Ionic sources, with typechecking, .d.ts definition generation and debug
- * statements removed.
- */
-gulp.task('build.release', function(done){
-  DEBUG = false;
-  TYPECHECK = true;
-  runSequence(
-    'release.clean',
-    ['bundle', 'bundle.es6', 'sass', 'fonts', 'copy.scss'],
-    done
-  );
-});
+
 
 
 /**
@@ -1074,6 +1047,217 @@ gulp.task('tooling', function(){
   })
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function mergeObjects(obj1, obj2) {
+  var obj3 = {};
+  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+  return obj3;
+}
+
+function getTscOptions() {
+  var tsConfig = require('./tsconfig');
+  // provide our own version of typescript
+  tsConfig.compilerOptions.typescript = require('typescript');
+
+  return tsConfig.compilerOptions;
+}
+
+function nativeTypescriptBuild(srcGlob, cacheName, overrideOptions) {
+  var tsc = require('gulp-typescript');
+
+  var compilerOptions = getTscOptions();
+  if ( ! overrideOptions ) {
+    overrideOptions = {};
+  }
+  var mergedOptions = mergeObjects(compilerOptions, overrideOptions);
+
+  return gulp.src(srcGlob)
+    .pipe(cache(cacheName, { optimizeMemory: true }))
+    .pipe(tsc(mergedOptions));
+}
+
+/**
+ * Builds Ionic unit tests to dist-test/tests.
+ */
+gulp.task('build-karma-tests', function() {
+  return nativeTypescriptBuild(
+      ['src/**/test/**/*.spec.ts'],
+      'karma',
+      { isolatedModules: true }
+    ).pipe(rename(function(file) {
+      var regex = new RegExp(path.sep + 'test(' + path.sep + '|$)');
+      file.dirname = file.dirname.replace(regex, path.sep);
+    }))
+    .pipe(gulp.dest('dist-test/tests'))
+});
+
+gulp.task('watch.karma.tests', ['build-karma-tests'], function(){
+  watch('src/**/test/**/*.spec.ts', function(){
+    gulp.start('build-karma-tests');
+  });
+});
+
+gulp.task('build-commonjs-testdist', function() {
+  var tsResult = nativeTypescriptBuild(
+    ['./src/**/*.ts', '!src/components/*/test/*/*.ts', 'src/**/*.spec.ts'],
+    'commonjs',
+    null
+  )
+  var js = tsResult.js;
+  var dts = tsResult.dts;
+
+  var merge = require('merge2');
+  return merge([js, dts])
+    .pipe(gulp.dest('./dist-test'));
+});
+
+gulp.task('copy-swiper-commonjs-testdist', function() {
+  return gulp.src(['src/components/slides/swiper-widget.*'])
+    .pipe(gulp.dest('./dist-test/components/slides'));
+});
+
+gulp.task('build-systemjs-bundle', function() {
+  var babel = require('gulp-babel');
+  var concat = require('gulp-concat');
+  var gulpif = require('gulp-if');
+  var stripDebug = require('gulp-strip-debug');
+  var merge = require('merge2');
+  var gulpStream = nativeTypescriptBuild(
+    ['./src/**/*.ts', '!src/components/*/test/*/*.ts', 'src/**/*.spec.ts'],
+    'system',
+    {
+      target: 'es6',
+      module: 'es6'
+    }
+  );
+
+  // We use Babel to easily create named System.register modules
+  // See: https://github.com/Microsoft/TypeScript/issues/4801
+  // and https://github.com/ivogabe/gulp-typescript/issues/211
+  var babelOptions = {
+    presets: ['es2015'],
+    plugins: ['transform-es2015-modules-systemjs'],
+    moduleIds: true,
+    getModuleId: function(name) {
+      return 'ionic-angular/' + name;
+    }
+  }
+
+  gulpStream = gulpStream.pipe(babel(babelOptions));
+
+  var swiper = gulp.src('src/components/slides/swiper-widget.system.js');
+  return merge([gulpStream, swiper])
+    .pipe(remember('system'))
+    .pipe(stripDebug())
+    .pipe(concat('ionic.system.js'))
+    .pipe(gulp.dest('dist-test/bundles'))
+    .pipe(connect.reload())
+});
+
+/**
+ * Builds all of the dependencies needed before running karma
+ */
+gulp.task('build.karma', function(done){
+  DEBUG = false;
+  TYPECHECK = true;
+  runSequence(
+    'clean.karma',
+    ['build-commonjs-testdist', 'copy-swiper-commonjs-testdist', 'build-systemjs-bundle', 'sass', 'fonts', 'copy.scss'],
+    done
+  );
+});
+
+gulp.task('clean.karma', function(done) {
+  del(['dist-test'], done);
+});
+
+gulp.task('clean.e2e', function(done) {
+  del(['dist-e2e'], done);
+});
+
+gulp.task('clean.dist', function(done) {
+  del(['dist'], done);
+});
+
+gulp.task('clean', function(done) {
+  del(['dist', 'dist-test', 'dist-e2e'], done);
+});
+
+// requires build-systemjs-bundle to be run once
+gulp.task('karma', ['build-karma-tests'], function(done) {
+  var karma = require('karma').server;
+  karma.start({
+    configFile: __dirname + '/scripts/karma/karma.conf.js'
+  }, function(result) {
+    if (result > 0) {
+      return done(new Error('Karma exited with an error'));
+    }
+    done();
+  });
+});
+
+gulp.task('karma-watch', ['watch.karma.tests', 'build-systemjs-bundle'], function() {
+  watchTask('build-systemjs-bundle');
+  var karma = require('karma').server;
+  return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js'})
+});
+
+
 /**
  * Validate Task
  * - This task
@@ -1082,11 +1266,12 @@ gulp.task('validate', function(done) {
   runSequence(
     'lint.scss',
     'tslint',
-    'build.release',
+    'build.karma',
     'karma',
     done
   );
 });
+
 
 
 /**

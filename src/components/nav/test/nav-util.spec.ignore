@@ -1,6 +1,6 @@
-import { ViewController } from '../../../../src';
-import { setZIndex, DIRECTION_BACK, DIRECTION_FORWARD } from '../../../../src/components/nav/nav-util';
+;import { setZIndex, DIRECTION_BACK, DIRECTION_FORWARD } from '../../../../src/components/nav/nav-util';
 import { mockNavController, mockElementRef, mockRenderer } from '../../../../src/util/mock-providers';
+import { ViewController } from '../../../../src/navigation/view-controller'
 
 export function run() {
 

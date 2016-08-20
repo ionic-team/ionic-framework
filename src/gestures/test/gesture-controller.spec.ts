@@ -1,4 +1,4 @@
-import { GestureController, DisableScroll } from '../../../src';
+import { GestureController, DisableScroll } from '../../../src/gestures/gesture-controller';
 
 export function run() {
 
