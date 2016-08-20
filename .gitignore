@@ -18,6 +18,7 @@ dist-e2e/
 node_modules/
 tmp/
 temp/
+test/
 dist-test/
 $RECYCLE.BIN/
 
