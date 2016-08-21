@@ -1,4 +1,8 @@
-import { Refresher, Content, Config, GestureController, Ion } from '../../../../src';
+import { Refresher } from '../../../../src/components/refresher/refresher';
+import { Config } from '../../../../src/config/config';
+import { Content } from '../../../../src/components/content/content';
+import { GestureController } from '../../../../src/gestures/gesture-controller';
+import { Ion } from '../../../../src/components/ion';
 
 export function run() {
 

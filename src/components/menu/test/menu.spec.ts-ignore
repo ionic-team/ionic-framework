@@ -1,4 +1,5 @@
-import { MenuController, Menu } from '../../../../src';
+import { Menu } from '../../../../src/components/menu/menu';
+import { MenuController } from '../../../../src/components/menu/menu-controller';
 
 export function run() {
   describe('MenuController', () => {

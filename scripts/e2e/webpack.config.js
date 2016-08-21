@@ -1,8 +1,8 @@
 var entryData = require('./webpackEntryPoints.json');
 var path = require('path')
 
-entryData["test/vendor"] = "./scripts/e2e/vendor";
-entryData["test/polyfills"] = "./scripts/e2e/polyfills";
+entryData["dist-e2e/vendor"] = "./scripts/e2e/vendor";
+entryData["dist-e2e/polyfills"] = "./scripts/e2e/polyfills";
 
 module.exports = {
   devtool: "source-map",

@@ -1,4 +1,7 @@
-import { InfiniteScroll, Content, Config } from '../../../../src';
+
+import { Config } from '../../../../src/config/config'; 
+import { Content } from '../../../../src/components/content/content';
+import { InfiniteScroll } from '../../../../src/components/infinite-scroll/infinite-scroll';
 
 export function run() {
 

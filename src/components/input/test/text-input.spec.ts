@@ -1,4 +1,4 @@
-import { TextInput } from '../../../../src';
+import { TextInput } from '../../../../src/components/input/input';
 
 export function run() {
 
