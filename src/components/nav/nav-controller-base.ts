@@ -8,7 +8,7 @@ import { Ion } from '../ion';
 import { isBlank, isPresent, pascalCaseToDashCase } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { NavController } from './nav-controller';
-import { NavOptions, DIRECTION_BACK, DIRECTION_FORWARD } from './nav-interfaces';
+import { NavOptions, DIRECTION_BACK } from './nav-interfaces';
 import { NavParams } from './nav-params';
 import { SwipeBackGesture } from './swipe-back';
 import { Transition } from '../../transitions/transition';
@@ -128,7 +128,7 @@ export class NavControllerBase extends Ion implements NavController {
   /**
    * DEPRECATED: Please use inject the overlays controller and use the present method on the instance instead.
    */
-  private present(enteringView: ViewController, opts?: NavOptions): Promise<any> {
+  private present(enteringView: ViewController, opts?: NavOptions): Promise<any> { // tslint:disable-line
     // deprecated warning: added beta.11 2016-06-27
     console.warn('nav.present() has been deprecated.\n' +
                  'Please inject the overlay\'s controller and use the present method on the instance instead.');

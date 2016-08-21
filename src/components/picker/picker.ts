@@ -83,7 +83,7 @@ export class Picker extends ViewController {
    * @private
    * DEPRECATED: Please inject PickerController instead
    */
-  private static create(opt: any) {
+  private static create(opt: any) { // tslint:disable-line
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Picker.create(..) has been deprecated. Please inject PickerController instead');
   }

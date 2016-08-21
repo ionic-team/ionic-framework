@@ -1,7 +1,5 @@
 import { Animation } from '../animations/animation';
-import { closest } from '../util/dom';
 import { Content } from '../components/content/content';
-import { Tabs } from '../components/tabs/tabs';
 import { Transition, TransitionOptions } from './transition';
 import { ViewController } from '../components/nav/view-controller';
 
@@ -48,8 +46,4 @@ export class PageTransition extends Transition {
     this.enteringView = this.enteringPage = null;
   }
 
-}
-
-function parsePxUnit(val: string): number {
-  return (val.indexOf('px') > 0) ? parseInt(val, 10) : 0;
 }

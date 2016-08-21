@@ -288,7 +288,7 @@ export class App {
   /**
    * @private
    */
-  private getRegisteredComponent(cls: any): any {
+  private getRegisteredComponent(cls: any): any { // tslint:disable-line
     // deprecated warning: added 2016-04-28, beta7
     console.warn('Using app.getRegisteredComponent() to query components has been deprecated. ' +
                  'Please use Angular\'s ViewChild annotation instead:\n\nhttp://learnangular2.com/viewChild/');
@@ -297,7 +297,7 @@ export class App {
   /**
    * @private
    */
-  private getComponent(id: string): any {
+  private getComponent(id: string): any { // tslint:disable-line
     // deprecated warning: added 2016-04-28, beta7
     console.warn('Using app.getComponent() to query components has been deprecated. ' +
                  'Please use Angular\'s ViewChild annotation instead:\n\nhttp://learnangular2.com/viewChild/');
@@ -307,7 +307,7 @@ export class App {
    * Get an instance of the global app injector that contains references to all of the instantiated providers
    * @returns {Injector}
    */
-  private getAppInjector(): any {
+  private getAppInjector(): any { // tslint:disable-line
     // deprecated warning: added 2016-06-27, beta10
     console.warn('Recent Angular2 versions should no longer require App.getAppInjector()');
   }

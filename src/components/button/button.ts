@@ -1,8 +1,7 @@
-import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { isTrueProperty } from '../../util/util';
-import { Toolbar } from '../toolbar/toolbar';
 
 
 /**
@@ -340,6 +339,3 @@ const BUTTON_STYLE_ATTRS = ['clear', 'outline', 'solid'];
 const BUTTON_SHAPE_ATTRS = ['round', 'fab'];
 const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
 const IGNORE_ATTRS = /_ng|button|left|right/;
-
-const TEXT = 1;
-const ICON = 2;

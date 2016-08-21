@@ -77,7 +77,6 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   private _labelId: string;
   private _activated: boolean = false;
   private _startX: number;
-  private _msPrv: number = 0;
   private _fn: Function;
   private _events: UIEventManager = new UIEventManager();
 

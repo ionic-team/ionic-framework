@@ -3,7 +3,6 @@ import { NgIf } from '@angular/common';
 
 import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
-import { isPresent } from '../../util/util';
 import { NavParams } from '../nav/nav-params';
 import { Transition, TransitionOptions } from '../../transitions/transition';
 import { ViewController } from '../nav/view-controller';
@@ -44,7 +43,7 @@ export class ToastCmp implements AfterViewInit {
     dismissOnPageChange?: boolean;
     position?: string;
   };
-  private descId: string;
+  private descId: string; // tslint:disable-line
   private dismissTimeout: number = undefined;
   private enabled: boolean;
   private hdrId: string;
@@ -315,4 +314,3 @@ Transition.register('toast-wp-slide-in', ToastWpPopIn);
 let toastIds = -1;
 const TOAST_POSITION_TOP = 'top';
 const TOAST_POSITION_MIDDLE = 'middle';
-const TOAST_POSITION_BOTTOM = 'bottom';

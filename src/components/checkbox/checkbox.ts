@@ -102,7 +102,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
    * @private
    */
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  private _click(ev: UIEvent) { // tslint:disable-line
     console.debug('checkbox, checked');
     ev.preventDefault();
     ev.stopPropagation();

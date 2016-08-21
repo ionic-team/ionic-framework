@@ -63,7 +63,7 @@ export class Modal extends ViewController {
    * @private
    * DEPRECATED: Please inject ModalController instead
    */
-  private static create(cmp: any, opt: any) {
+  private static create(cmp: any, opt: any) { // tslint:disable-line
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Modal.create(..) has been deprecated. Please inject ModalController instead');
   }

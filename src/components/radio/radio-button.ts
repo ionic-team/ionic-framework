@@ -144,7 +144,7 @@ export class RadioButton implements OnDestroy, OnInit {
    * @private
    */
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  private _click(ev: UIEvent) { // tslint:disable-line
     console.debug('radio, select', this.id);
     ev.preventDefault();
     ev.stopPropagation();

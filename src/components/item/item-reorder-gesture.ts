@@ -1,7 +1,6 @@
-import { Item } from './item';
 import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
 import { UIEventManager } from '../../util/ui-event-manager';
-import { closest, Coordinates, pointerCoord, CSS, nativeRaf } from '../../util/dom';
+import { Coordinates, pointerCoord, CSS } from '../../util/dom';
 
 
 const AUTO_SCROLL_MARGIN = 60;

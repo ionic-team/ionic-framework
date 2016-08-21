@@ -54,7 +54,7 @@ export class Alert extends ViewController {
   /**
    * @private
    */
-  private setBody(message: string) {
+  private setBody(message: string) { // tslint:disable-line
     // deprecated warning
     console.warn('Alert setBody() has been renamed to setMessage()');
     this.setMessage(message);
@@ -102,7 +102,7 @@ export class Alert extends ViewController {
    * @private
    * DEPRECATED: Please inject AlertController instead
    */
-  private static create(opt: any) {
+  private static create(opt: any) { // tslint:disable-line
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Alert.create(..) has been deprecated. Please inject AlertController instead');
   }

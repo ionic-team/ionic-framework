@@ -1,4 +1,4 @@
-import { Component, Optional, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Optional, ElementRef, ViewEncapsulation } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { NgControl, NgModel } from '@angular/forms';
 
@@ -8,7 +8,6 @@ import { Content } from '../content/content';
 import { Form } from '../../util/form';
 import { InputBase } from './input-base';
 import { Item } from '../item/item';
-import { Label } from '../label/label';
 import { NativeInput, NextInput } from './native-input';
 import { NavController } from '../nav/nav-controller';
 import { Platform } from '../../platform/platform';

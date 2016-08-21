@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 
-import { DisableScroll, GestureController, GestureDelegate } from '../../gestures/gesture-controller';
+import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 
 

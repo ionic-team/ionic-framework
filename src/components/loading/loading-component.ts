@@ -4,7 +4,7 @@ import { NgIf } from '@angular/common';
 import { Animation } from '../../animations/animation';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
-import { isDefined, isPresent, isUndefined } from '../../util/util';
+import { isDefined, isUndefined } from '../../util/util';
 import { NavParams } from '../nav/nav-params';
 import { Spinner } from '../spinner/spinner';
 import { Transition, TransitionOptions } from '../../transitions/transition';

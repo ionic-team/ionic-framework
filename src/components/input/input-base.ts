@@ -306,7 +306,7 @@ export class InputBase {
     }
   }
 
-  private pointerStart(ev: any) {
+  private pointerStart(ev: any) { // tslint:disable-line
     // input cover touchstart
     console.debug('scroll assist pointerStart', ev.type);
 
@@ -320,7 +320,7 @@ export class InputBase {
     }
   }
 
-  private pointerEnd(ev: any) {
+  private pointerEnd(ev: any) { // tslint:disable-line
     // input cover touchend/mouseup
     console.debug('scroll assist pointerEnd', ev.type);
 

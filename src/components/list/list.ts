@@ -1,6 +1,5 @@
-import { Attribute, Directive, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer } from '@angular/core';
+import { Attribute, Directive, ElementRef, Input, Renderer } from '@angular/core';
 
-import { Content } from '../content/content';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { ItemSlidingGesture } from '../item/item-sliding-gesture';

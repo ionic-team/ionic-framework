@@ -93,7 +93,7 @@ export class SegmentButton {
    * On click of a SegmentButton
    */
   @HostListener('click')
-  private onClick() {
+  private onClick() { // tslint:disable-line
     console.debug('SegmentButton, select', this.value);
     this.ionSelect.emit(this);
   }

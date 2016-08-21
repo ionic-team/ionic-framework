@@ -19,7 +19,6 @@ class MDTransition extends PageTransition {
 
     // do they have navbars?
     let enteringHasNavbar = enteringView.hasNavbar();
-    let leavingHasNavbar = leavingView && leavingView.hasNavbar();
 
     if (backDirection) {
       this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');

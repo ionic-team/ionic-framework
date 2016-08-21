@@ -45,14 +45,6 @@ export class Scroll extends Ion {
   /**
    * @private
    */
-  private maxScale: number = 3;
-  /**
-   * @private
-   */
-  private zoomDuration: number = 250;
-  /**
-   * @private
-   */
   private scrollElement: HTMLElement;
 
   constructor(elementRef: ElementRef) {

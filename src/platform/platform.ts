@@ -604,7 +604,6 @@ export class Platform {
   load() {
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;
-    let self = this;
 
     // figure out the most specific platform and active engine
     let tmpPlatform: PlatformNode;

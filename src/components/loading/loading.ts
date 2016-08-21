@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
-import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';
@@ -58,7 +57,7 @@ export class Loading extends ViewController {
    * @private
    * DEPRECATED: Please inject LoadingController instead
    */
-  private static create(opt: any) {
+  private static create(opt: any) { // tslint:disable-line
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Loading.create(..) has been deprecated. Please inject LoadingController instead');
   }

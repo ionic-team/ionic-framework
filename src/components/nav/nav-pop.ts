@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input, Optional } from '@angular/core';
+import { Directive, HostListener, Optional } from '@angular/core';
 import { NavController } from './nav-controller';
 import { noop } from '../../util/util';
 
