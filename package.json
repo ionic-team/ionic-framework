@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-systemjs": "^6.9.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-es2015-native-modules": "^6.6.0",
     "canonical-path": "0.0.2",
