@@ -49,6 +49,20 @@ export function rafFrames(framesToWait: number, callback: Function) {
   }
 }
 
+// TODO: DRY rafFrames and zoneRafFrames
+export function zoneRafFrames(framesToWait: number, callback: Function) {
+  framesToWait = Math.ceil(framesToWait);
+
+  if (framesToWait < 2) {
+    raf(callback);
+
+  } else {
+    setTimeout(() => {
+      raf(callback);
+    }, (framesToWait - 1) * 16.6667);
+  }
+}
+
 export let CSS: {
   transform?: string,
   transition?: string,

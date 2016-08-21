@@ -1,7 +1,7 @@
 import { Component, Directive, ElementRef, EventEmitter, forwardRef, Input, NgZone, Renderer, Inject, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
-import { CSS } from '../../util/dom';
+import { CSS, zoneRafFrames } from '../../util/dom';
 import { Item } from './item';
 import { ItemReorderGesture } from '../item/item-reorder-gesture';
 import { isTrueProperty } from '../../util/util';
@@ -128,27 +128,25 @@ export interface ReorderIndexes {
   selector: 'ion-list[reorder],ion-item-group[reorder]',
   host: {
     '[class.reorder-enabled]': '_enableReorder',
+    '[class.reorder-visible]': '_visibleReorder',
+
   }
 })
 export class ItemReorder {
-  /**
-   * @internal
-   */
+
+  /** @internal */
   _enableReorder: boolean = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
+  _visibleReorder: boolean = false;
+
+  /** @internal */
   _reorderGesture: ItemReorderGesture;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   _lastToIndex: number = -1;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   _element: HTMLElement;
 
   /**
@@ -181,15 +179,21 @@ export class ItemReorder {
     return this._enableReorder;
   }
   set reorder(val: boolean) {
-    this._enableReorder = isTrueProperty(val);
+    let enabled = isTrueProperty(val);
 
-    if (!this._enableReorder) {
-      this._reorderGesture && this._reorderGesture.destroy();
+    if (!enabled && this._reorderGesture) {
+      this._reorderGesture.destroy();
       this._reorderGesture = null;
 
-    } else if (!this._reorderGesture) {
+      this._visibleReorder = false;
+      setTimeout(() => this._enableReorder = false, 400);
+
+    } else if (enabled && !this._reorderGesture) {
       console.debug('enableReorderItems');
       this._reorderGesture = new ItemReorderGesture(this);
+
+      this._enableReorder = true;
+      zoneRafFrames(2, () => this._visibleReorder = true);
     }
   }
 
@@ -308,7 +312,7 @@ export class ItemReorder {
  */
 @Component({
   selector: 'ion-reorder',
-  template: `<ion-icon name="menu"></ion-icon>`
+  template: `<ion-icon name="reorder"></ion-icon>`
 })
 export class Reorder {
   constructor(
