@@ -6,7 +6,7 @@ import { Platform } from '../../platform/platform';
 
 
 /**
- * @private
+ * @internal
  */
 @Component({
   selector: 'ion-img',

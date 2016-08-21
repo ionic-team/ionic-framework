@@ -68,7 +68,7 @@ export class RadioButton implements OnDestroy, OnInit {
   private _value: any = null;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
@@ -141,7 +141,7 @@ export class RadioButton implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @internal
    */
   @HostListener('click', ['$event'])
   private _click(ev: UIEvent) {
@@ -154,7 +154,7 @@ export class RadioButton implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     if (this._group && isPresent(this._group.value)) {
@@ -163,7 +163,7 @@ export class RadioButton implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._form.deregister(this);

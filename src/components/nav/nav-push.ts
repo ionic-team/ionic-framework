@@ -66,6 +66,9 @@ export class NavPush {
     }
   }
 
+  /**
+   * @internal
+   */
   @HostListener('click')
   onClick(): boolean {
     // If no target, or if target is _self, prevent default browser behavior

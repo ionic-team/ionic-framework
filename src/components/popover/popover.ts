@@ -9,7 +9,7 @@ import { ViewController } from '../nav/view-controller';
 
 
 /**
- * @private
+ * @internal
  */
 export class Popover extends ViewController {
   private _app: App;
@@ -31,7 +31,7 @@ export class Popover extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'popoverLeave' : 'popoverEnter');
@@ -49,7 +49,7 @@ export class Popover extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * DEPRECATED: Please inject PopoverController instead
    */
   static create(componentType: any, data = {}, opts: PopoverOptions = {}) {

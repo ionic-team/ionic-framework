@@ -5,7 +5,7 @@ import { Config } from '../../config/config';
 
 
 /**
- * @private
+ * @internal
  */
 export class RippleActivator extends Activator {
 

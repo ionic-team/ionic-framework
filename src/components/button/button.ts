@@ -230,7 +230,7 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentInit() {
     this._init = true;
@@ -238,21 +238,21 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentChecked() {
     this._assignCss(true);
   }
 
   /**
-   * @private
+   * @internal
    */
   addClass(className: string) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 
   /**
-   * @private
+   * @internal
    */
   setRole(val: string) {
     this._assignCss(false);
@@ -261,7 +261,7 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   private _readAttrs(element: HTMLElement) {
     let elementAttrs = element.attributes;
@@ -290,7 +290,7 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   private _assignCss(assignCssClass: boolean) {
     let role = this._role;
@@ -307,7 +307,7 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   private _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
@@ -316,7 +316,7 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
   private _setColor(type: string|string[], assignCssClass: boolean) {
     if (type && this._init) {

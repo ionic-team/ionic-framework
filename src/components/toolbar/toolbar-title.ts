@@ -61,7 +61,7 @@ export class ToolbarTitle extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   getTitleText() {
     return this._elementRef.nativeElement.textContent;

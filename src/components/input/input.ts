@@ -100,21 +100,21 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   inputBlurred(ev: UIEvent) {
     this.blur.emit(ev);
   }
 
   /**
-   * @private
+   * @internal
    */
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);
   }
 
   /**
-   * @private
+   * @internal
    */
   clearTextInput() {
     console.debug('Should clear input');
@@ -193,7 +193,7 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     super.ngOnInit();
@@ -203,14 +203,14 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   inputBlurred(ev: UIEvent) {
     this.blur.emit(ev);
   }
 
   /**
-   * @private
+   * @internal
    */
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);

@@ -9,7 +9,7 @@ import { ViewController } from '../nav/view-controller';
 
 
 /**
- * @private
+ * @internal
  */
 export class Alert extends ViewController {
   private _app: App;
@@ -30,7 +30,7 @@ export class Alert extends ViewController {
   }
 
   /**
-  * @private
+  * @internal
   */
   getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
@@ -52,7 +52,7 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   private setBody(message: string) {
     // deprecated warning
@@ -99,7 +99,7 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * DEPRECATED: Please inject AlertController instead
    */
   private static create(opt: any) {

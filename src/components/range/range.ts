@@ -14,7 +14,7 @@ export const RANGE_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Range), multi: true});
 
 /**
- * @private
+ * @internal
  */
 @Component({
   selector: '.range-knob-handle',
@@ -222,7 +222,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   private _debouncer: Debouncer = new Debouncer(0);
   private _events: UIEventManager = new UIEventManager();
   /**
-   * @private
+   * @internal
    */
   value: any;
 
@@ -231,7 +231,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   @ViewChildren(RangeKnob) private _knobs: QueryList<RangeKnob>;
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
@@ -343,7 +343,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterViewInit() {
     let barL = '';
@@ -374,7 +374,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   pointerDown(ev: UIEvent): boolean {
     // TODO: we could stop listening for events instead of checking this._disabled.
@@ -422,7 +422,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   pointerMove(ev: UIEvent) {
     console.debug(`range, ${ev.type}`);
@@ -440,7 +440,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   pointerUp(ev: UIEvent) {
     console.debug(`range, ${ev.type}`);
@@ -461,7 +461,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   setActiveKnob(current: Coordinates, rect: ClientRect) {
     // figure out which knob is the closest one to the pointer
@@ -476,7 +476,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   updateKnob(current: Coordinates, rect: ClientRect) {
     // figure out where the pointer is currently at
@@ -509,7 +509,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   updateBar() {
     let firstRatio = this._knobs.first.ratio;
@@ -528,7 +528,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   createTicks() {
     if (this._snaps) {
@@ -548,7 +548,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   updateTicks() {
     if (this._snaps) {
@@ -569,7 +569,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   ratioToValue(ratio: number) {
     ratio = Math.round(((this._max - this._min) * ratio) + this._min);
@@ -577,7 +577,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   valueToRatio(value: number) {
     value = Math.round(clamp(this._min, value, this._max) / this._step) * this._step;
@@ -585,7 +585,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   writeValue(val: any) {
     if (isPresent(val)) {
@@ -608,7 +608,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -619,7 +619,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
@@ -658,7 +658,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   onChange(val: any) {
     // used when this input does not have an ngModel or formControlName
@@ -666,12 +666,12 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouched() {}
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._form.deregister(this);

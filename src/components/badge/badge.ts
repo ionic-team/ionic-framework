@@ -27,7 +27,7 @@ export class Badge {
   }
 
   /**
-   * @private
+   * @internal
    */
   private _readAttrs(element: HTMLElement) {
     let elementAttrs = element.attributes;
@@ -46,7 +46,7 @@ export class Badge {
   }
 
   /**
-   * @private
+   * @internal
    */
   private _setClass(color: string) {
     this._renderer.setElementClass(this._elementRef.nativeElement, 'badge-' + color, true);

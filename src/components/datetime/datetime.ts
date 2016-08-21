@@ -275,7 +275,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   private _locale: LocaleData = {};
 
   /**
-   * @private
+   * @internal
    */
   id: string;
 
@@ -447,7 +447,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   open() {
     if (this._disabled) {
@@ -494,7 +494,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   generate(picker: Picker) {
     // if a picker format wasn't provided, then fallback
@@ -562,7 +562,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   validate(picker: Picker) {
     let i: number;
@@ -647,7 +647,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   divyColumns(picker: Picker) {
     let pickerColumns = picker.getColumns();
@@ -681,21 +681,21 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   setValue(newData: any) {
     updateDate(this._value, newData);
   }
 
   /**
-   * @private
+   * @internal
    */
   getValue(): DateTimeData {
     return this._value;
   }
 
   /**
-   * @private
+   * @internal
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
@@ -704,7 +704,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   updateText() {
     // create the text of the formatted data
@@ -712,7 +712,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   calcMinMax() {
     let todaysYear = new Date().getFullYear();
@@ -765,7 +765,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   writeValue(val: any) {
     console.debug('datetime, writeValue', val);
@@ -775,7 +775,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterContentInit() {
     // first see if locale names were provided in the inputs
@@ -790,7 +790,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -808,12 +808,12 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @internal
    */
   onChange(val: any) {
     // onChange used when there is not an formControlName
@@ -824,12 +824,12 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouched() { }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._form.deregister(this);
@@ -837,7 +837,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
 }
 
 /**
- * @private
+ * @internal
  * Use to convert a string of comma separated numbers or
  * an array of numbers, and clean up any user input
  */
@@ -868,7 +868,7 @@ function convertToArrayOfNumbers(input: any, type: string): number[] {
 }
 
 /**
- * @private
+ * @internal
  * Use to convert a string of comma separated strings or
  * an array of strings, and clean up any user input
  */

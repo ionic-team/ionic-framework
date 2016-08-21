@@ -79,7 +79,7 @@ export class Footer {
 
 
 /**
- * @private
+ * @internal
  */
 export class ToolbarBase extends Ion {
   itemRefs: ElementRef[] = [];
@@ -91,14 +91,14 @@ export class ToolbarBase extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   setTitleCmp(titleCmp: any) {
     this.titleCmp = titleCmp;
   }
 
   /**
-   * @private
+   * @internal
    * Returns the toolbar title text if it exists or an empty string
    */
   getTitleText() {
@@ -106,14 +106,14 @@ export class ToolbarBase extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   getTitleRef() {
     return this.titleCmp && this.titleCmp.elementRef;
   }
 
   /**
-   * @private
+   * @internal
    * A toolbar items include the left and right side `ion-buttons`,
    * and every `menu-toggle`. It does not include the `ion-title`.
    * @returns {TODO} Array of this toolbar's item ElementRefs.
@@ -123,7 +123,7 @@ export class ToolbarBase extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   addItemRef(itemElementRef: ElementRef) {
     this.itemRefs.push(itemElementRef);

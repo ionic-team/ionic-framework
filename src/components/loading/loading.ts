@@ -9,7 +9,7 @@ import { NavOptions } from '../nav/nav-interfaces';
 import { ViewController } from '../nav/view-controller';
 
 /**
- * @private
+ * @internal
  */
 export class Loading extends ViewController {
   private _app: App;
@@ -29,7 +29,7 @@ export class Loading extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'loadingLeave' : 'loadingEnter');
@@ -55,7 +55,7 @@ export class Loading extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * DEPRECATED: Please inject LoadingController instead
    */
   private static create(opt: any) {

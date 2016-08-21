@@ -13,7 +13,7 @@ import { windowDimensions } from '../../util/dom';
 
 
 /**
- * @private
+ * @internal
  */
 @Component({
   selector: 'ion-modal',

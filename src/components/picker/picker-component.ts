@@ -17,7 +17,7 @@ import { ViewController } from '../nav/view-controller';
 
 
 /**
- * @private
+ * @internal
  */
 @Component({
   selector: '.picker-col',
@@ -346,7 +346,7 @@ export class PickerColumnCmp {
 
 
 /**
- * @private
+ * @internal
  */
 @Component({
   selector: 'ion-picker-cmp',

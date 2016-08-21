@@ -158,56 +158,56 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   setBackButtonText(text: string) {
     this._bbText = text;
   }
 
   /**
-   * @private
+   * @internal
    */
   getBackButtonRef() {
     return this._bbRef;
   }
 
   /**
-   * @private
+   * @internal
    */
   setBackButtonRef(backButtonElementRef: ElementRef) {
     this._bbRef = backButtonElementRef;
   }
 
   /**
-   * @private
+   * @internal
    */
   getBackButtonTextRef() {
     return this._bbtRef;
   }
 
   /**
-   * @private
+   * @internal
    */
   setBackButtonTextRef(backButtonTextElementRef: ElementRef) {
     this._bbtRef = backButtonTextElementRef;
   }
 
   /**
-   * @private
+   * @internal
    */
   setBackgroundRef(backgrouneElementRef: ElementRef) {
     this._bgRef = backgrouneElementRef;
   }
 
   /**
-   * @private
+   * @internal
    */
   getBackgroundRef() {
     return this._bgRef;
   }
 
   /**
-   * @private
+   * @internal
    */
   didEnter() {
     try {
@@ -218,7 +218,7 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   setHidden(isHidden: boolean) {
     // used to display none/block the navbar
@@ -229,7 +229,7 @@ export class Navbar extends ToolbarBase {
 
 
 /**
- * @private
+ * @internal
 */
 @Directive({
   selector: 'template[navbar]'

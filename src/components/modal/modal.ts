@@ -9,7 +9,7 @@ import { ViewController } from '../nav/view-controller';
 
 
 /**
- * @private
+ * @internal
  */
 export class Modal extends ViewController {
   private _app: App;
@@ -26,7 +26,7 @@ export class Modal extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    */
   getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'modalLeave' : 'modalEnter');
@@ -34,7 +34,7 @@ export class Modal extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * Override the load method and load our child component
    */
   loaded(done: Function) {
@@ -60,7 +60,7 @@ export class Modal extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * DEPRECATED: Please inject ModalController instead
    */
   private static create(cmp: any, opt: any) {

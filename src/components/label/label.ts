@@ -58,7 +58,7 @@ export class Label {
   private _id: string;
 
   /**
-   * @private
+   * @internal
    */
   type: string;
 
@@ -74,7 +74,7 @@ export class Label {
   }
 
   /**
-   * @private
+   * @internal
    */
   @Input()
   get id(): string {
@@ -89,14 +89,14 @@ export class Label {
   }
 
   /**
-   * @private
+   * @internal
    */
   get text(): string {
     return this._elementRef.nativeElement.textContent || '';
   }
 
   /**
-   * @private
+   * @internal
    * @param {string} add class name
    */
   addClass(className: string) {

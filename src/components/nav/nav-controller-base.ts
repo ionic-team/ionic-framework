@@ -422,7 +422,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _remove(startIndex: number, removeCount: number): ViewController {
     // when this is done, there should only be at most
@@ -529,7 +529,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _transition(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
     let transId = ++this._transIds;
@@ -574,7 +574,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _setAnimate(opts: NavOptions) {
     if ((this._views.length === 1 && !this._init && !this._isPortal) || this.config.get('animate') === false) {
@@ -583,7 +583,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _render(transId: number, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
     // compile/load the view into the DOM
@@ -621,7 +621,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _postRender(transId: number, enteringView: ViewController, leavingView: ViewController, isAlreadyTransitioning: boolean, opts: NavOptions, done: Function) {
     // called after _render has completed and the view is compiled/loaded
@@ -688,7 +688,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _beforeTrans(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
     // called after one raf from postRender()
@@ -775,7 +775,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _afterTrans(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, hasCompleted: boolean, done: Function) {
     // transition has completed, update each view's state
@@ -828,7 +828,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _transFinish(transId: number, enteringView: ViewController, leavingView: ViewController, direction: string, updateUrl: boolean, hasCompleted: boolean) {
     // a transition has completed, but not sure if it's the last one or not
@@ -920,7 +920,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   *@private
+   *@internal
    * This method is just a wrapper to the Transition function of same name
    * to make it easy/possible to mock the method call by overriding the function.
    * In testing we don't want to actually do the animation, we want to return a stub instead
@@ -964,14 +964,14 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   registerChildNav(nav: any) {
     this._children.push(nav);
   }
 
   /**
-   * @private
+   * @internal
    */
   unregisterChildNav(nav: any) {
     let index = this._children.indexOf(nav);
@@ -981,7 +981,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     for (var i = this._views.length - 1; i >= 0; i--) {
@@ -995,7 +995,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   loadPage(view: ViewController, viewport: ViewContainerRef, opts: NavOptions, done: Function) {
     if (!viewport || !view.componentType) {
@@ -1063,7 +1063,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   swipeBackStart() {
     // default the direction to "back"
@@ -1090,7 +1090,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   swipeBackProgress(stepValue: number) {
     if (this._trans && this._sbGesture) {
@@ -1104,7 +1104,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   swipeBackEnd(shouldComplete: boolean, currentStepValue: number) {
     if (this._trans && this._sbGesture) {
@@ -1114,7 +1114,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _sbCheck() {
     if (this._sbEnabled) {
@@ -1250,7 +1250,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    * Dismiss all pages which have set the `dismissOnPageChange` property.
    */
   dismissPageChangeViews() {
@@ -1262,7 +1262,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   /**
-   * @private
+   * @internal
    */
   _setZIndex(enteringView: ViewController, leavingView: ViewController, direction: string) {
     if (enteringView) {

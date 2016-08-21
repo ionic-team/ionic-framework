@@ -9,7 +9,7 @@ const SCROLL_JUMP = 10;
 const ITEM_REORDER_ACTIVE = 'reorder-active';
 
 /**
- * @private
+ * @internal
  */
 export class ItemReorderGesture {
   private selectedItemEle: HTMLElement = null;
@@ -143,7 +143,7 @@ export class ItemReorderGesture {
   }
 
   /**
-   * @private
+   * @internal
    */
   destroy() {
     this.onDragEnd();

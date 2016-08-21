@@ -282,14 +282,14 @@ export class MenuController {
   }
 
   /**
-   * @private
+   * @internal
    */
   register(menu: Menu) {
     this._menus.push(menu);
   }
 
   /**
-   * @private
+   * @internal
    */
   unregister(menu: Menu) {
     let index = this._menus.indexOf(menu);
@@ -299,14 +299,14 @@ export class MenuController {
   }
 
   /**
-   * @private
+   * @internal
    */
   static registerType(name: string, cls: new(...args: any[]) => MenuType) {
     menuTypes[name] = cls;
   }
 
   /**
-   * @private
+   * @internal
    */
   static create(type: string, menuCmp: Menu, platform: Platform) {
     return new menuTypes[type](menuCmp, platform);

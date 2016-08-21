@@ -163,7 +163,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     this._scrollEle = this._elementRef.nativeElement.children[0];
@@ -175,7 +175,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._scLsn && this._scLsn();
@@ -184,49 +184,49 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   addScrollListener(handler: any) {
     return this._addListener('scroll', handler);
   }
 
   /**
-   * @private
+   * @internal
    */
   addTouchStartListener(handler: any) {
     return this._addListener('touchstart', handler);
   }
 
   /**
-   * @private
+   * @internal
    */
   addTouchMoveListener(handler: any) {
     return this._addListener('touchmove', handler);
   }
 
   /**
-   * @private
+   * @internal
    */
   addTouchEndListener(handler: any) {
     return this._addListener('touchend', handler);
   }
 
   /**
-   * @private
+   * @internal
    */
   addMouseDownListener(handler: any) {
     return this._addListener('mousedown', handler);
   }
 
   /**
-   * @private
+   * @internal
    */
   addMouseUpListener(handler: any) {
     return this._addListener('mouseup', handler);
   }
 
   /**
-   * @private
+   * @internal
    */
   addMouseMoveListener(handler: any) {
     return this._addListener('mousemove', handler);
@@ -247,14 +247,14 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   getScrollElement(): HTMLElement {
     return this._scrollEle;
   }
 
   /**
-   * @private
+   * @internal
    * Call a method when scrolling has stopped
    * @param {Function} callback The method you want perform when scrolling has ended
    */
@@ -290,7 +290,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   onScrollElementTransitionEnd(callback: Function) {
     transitionEnd(this._scrollEle, callback);
@@ -344,14 +344,14 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   jsScroll(onScrollCallback: Function): Function {
     return this._scroll.jsScroll(onScrollCallback);
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   addCssClass(className: string) {
@@ -375,7 +375,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   removeCssClass(className: string) {
@@ -383,7 +383,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
@@ -430,7 +430,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    * Adds padding to the bottom of the scroll element when the keyboard is open
    * so content below the keyboard can be scrolled into view.
@@ -445,7 +445,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   clearScrollPaddingFocusOut() {
@@ -474,7 +474,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    * DOM READ
    */
   readDimensions() {
@@ -533,7 +533,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   writeDimensions() {

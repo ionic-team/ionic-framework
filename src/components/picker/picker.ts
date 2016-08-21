@@ -8,7 +8,7 @@ import { PickerOptions, PickerColumn } from './picker-options';
 import { ViewController } from '../nav/view-controller';
 
 /**
- * @private
+ * @internal
  */
 export class Picker extends ViewController {
   private _app: App;
@@ -33,7 +33,7 @@ export class Picker extends ViewController {
   }
 
   /**
-  * @private
+  * @internal
   */
   getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'pickerLeave' : 'pickerEnter');
@@ -80,7 +80,7 @@ export class Picker extends ViewController {
   }
 
   /**
-   * @private
+   * @internal
    * DEPRECATED: Please inject PickerController instead
    */
   private static create(opt: any) {
@@ -93,7 +93,7 @@ export class Picker extends ViewController {
 
 
 /**
- * @private
+ * @internal
  * @name PickerController
  * @description
  *

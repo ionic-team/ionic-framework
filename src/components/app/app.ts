@@ -10,7 +10,7 @@ import { NavPortal } from '../nav/nav-portal';
 import { Platform } from '../../platform/platform';
 
 /**
- * @private
+ * @internal
  */
 export abstract class UserComponent {}
 
@@ -28,47 +28,47 @@ export class App {
   private _portal: NavPortal;
 
   /**
-   * @private
+   * @internal
    */
   clickBlock: ClickBlock;
 
   /**
-   * @private
+   * @internal
    */
   appRoot: AppRoot;
 
   /**
-   * @private
+   * @internal
    */
   viewDidLoad: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @internal
    */
   viewWillEnter: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @internal
    */
   viewDidEnter: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @internal
    */
   viewWillLeave: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @internal
    */
   viewDidLeave: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @internal
    */
   viewWillUnload: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @internal
    */
   viewDidUnload: EventEmitter<any> = new EventEmitter();
 
@@ -136,7 +136,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @internal
    * Boolean if the app is actively enabled or not.
    * @return {boolean}
    */
@@ -145,7 +145,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @internal
    */
   setScrolling() {
     this._scrollTime = Date.now();
@@ -160,7 +160,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @internal
    */
   getActiveNav(): NavController {
     var nav = this._rootNav || null;
@@ -185,21 +185,21 @@ export class App {
   }
 
   /**
-   * @private
+   * @internal
    */
   setRootNav(nav: any) {
     this._rootNav = nav;
   }
 
   /**
-   * @private
+   * @internal
    */
   setPortal(portal: NavPortal) {
     this._portal = portal;
   }
 
   /**
-   * @private
+   * @internal
    */
   present(enteringView: any, opts: NavOptions = {}): Promise<any> {
     enteringView.setNav(this._portal);
@@ -222,7 +222,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @internal
    */
   navPop(): Promise<any> {
     // function used to climb up all parent nav controllers
@@ -286,7 +286,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @internal
    */
   private getRegisteredComponent(cls: any): any {
     // deprecated warning: added 2016-04-28, beta7
@@ -295,7 +295,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @internal
    */
   private getComponent(id: string): any {
     // deprecated warning: added 2016-04-28, beta7
@@ -315,7 +315,7 @@ export class App {
 
 
 /**
- * @private
+ * @internal
  */
 @Component({
   selector: 'ion-app',

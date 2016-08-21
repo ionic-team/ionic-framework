@@ -5,7 +5,7 @@ import { isTrueProperty } from '../../util/util';
 
 
 /**
- * @private
+ * @internal
  */
 @Directive({
   selector: 'ion-backdrop',

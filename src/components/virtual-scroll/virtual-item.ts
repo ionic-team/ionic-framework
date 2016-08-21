@@ -2,7 +2,7 @@ import { Directive, TemplateRef, ViewContainerRef } from '@angular/core';
 
 
 /**
- * @private
+ * @internal
  */
 @Directive({selector: '[virtualHeader]'})
 export class VirtualHeader {
@@ -11,7 +11,7 @@ export class VirtualHeader {
 
 
 /**
- * @private
+ * @internal
  */
 @Directive({selector: '[virtualFooter]'})
 export class VirtualFooter {
@@ -20,7 +20,7 @@ export class VirtualFooter {
 
 
 /**
- * @private
+ * @internal
  */
 @Directive({selector: '[virtualItem]'})
 export class VirtualItem {

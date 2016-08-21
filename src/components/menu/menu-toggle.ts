@@ -93,12 +93,12 @@ import { ViewController } from '../nav/view-controller';
 export class MenuToggle {
 
   /**
-   * @private
+   * @internal
    */
   @Input() menuToggle: string;
 
   /**
-   * @private
+   * @internal
    */
   private _inNavbar: boolean;
 
@@ -112,7 +112,7 @@ export class MenuToggle {
   }
 
   /**
-  * @private
+  * @internal
   */
   @HostListener('click')
   toggle() {
@@ -121,7 +121,7 @@ export class MenuToggle {
   }
 
   /**
-  * @private
+  * @internal
   */
   get isHidden() {
     if (this._inNavbar && this._viewCtrl) {

@@ -176,7 +176,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild(NativeInput)
   private set _nativeInput(nativeInput: NativeInput) {
@@ -243,7 +243,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild(NextInput)
   private set _nextInput(nextInput: NextInput) {
@@ -255,7 +255,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    * Angular2 Forms API method called by the model (Control) on change to update
    * the checked value.
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
@@ -266,19 +266,19 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   onChange(val: any) {
     this.checkHasValue(val);
   }
 
   /**
-   * @private
+   * @internal
    */
   onTouched(val: any) {}
 
   /**
-   * @private
+   * @internal
    */
   hasFocus(): boolean {
     // check if an input has focus or not
@@ -286,7 +286,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
@@ -295,7 +295,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   focusChange(inputHasFocus: boolean) {
     if (this._item) {
@@ -351,7 +351,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   initFocus() {
     // begin the process of setting focus to the inner input element
@@ -417,7 +417,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   private setFocus() {
     // immediately set focus
@@ -432,7 +432,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    * Angular2 Forms API method called by the view (formControlName) to register the
    * onChange event handler that updates the model (Control).
    * @param {Function} fn  the onChange event handler.
@@ -440,7 +440,7 @@ export class InputBase {
   registerOnChange(fn: any) { this.onChange = fn; }
 
   /**
-   * @private
+   * @internal
    * Angular2 Forms API method called by the view (formControlName) to register
    * the onTouched event handler that marks model (Control) as touched.
    * @param {Function} fn  onTouched event handler.
@@ -448,7 +448,7 @@ export class InputBase {
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @internal
    */
   private regScrollMove() {
     // register scroll move listener
@@ -461,7 +461,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   private deregScrollMove() {
     // deregister the scroll move listener
@@ -473,7 +473,7 @@ export class InputBase {
   }
 
   /**
-   * @private
+   * @internal
    */
   static getScrollData(inputOffsetTop: number, inputOffsetHeight: number, scrollViewDimensions: any, keyboardHeight: number, plaformHeight: number) {
     // compute input's Y values relative to the body

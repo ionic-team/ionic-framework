@@ -4,7 +4,7 @@ import { Platform } from '../../platform/platform';
 
 
 /**
- * @private
+ * @internal
  */
 export class DisplayWhen {
   protected isMatch: boolean = false;

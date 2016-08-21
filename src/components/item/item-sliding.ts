@@ -55,14 +55,14 @@ export class ItemOptions {
   constructor(private _elementRef: ElementRef, private _renderer: Renderer) {}
 
   /**
-   * @private
+   * @internal
    */
   setCssStyle(property: string, value: string) {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
   }
 
   /**
-   * @private
+   * @internal
    */
   getSides(): ItemSideFlags {
     if (isPresent(this.side) && this.side === 'left') {
@@ -73,7 +73,7 @@ export class ItemOptions {
   }
 
   /**
-   * @private
+   * @internal
    */
   width() {
     return this._elementRef.nativeElement.offsetWidth;
@@ -198,7 +198,7 @@ export class ItemSliding {
   private _state: SlidingState = SlidingState.Disabled;
 
   /**
-   * @private
+   * @internal
    */
   @ContentChild(Item) private item: Item;
 
@@ -248,14 +248,14 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @internal
    */
   getOpenAmount(): number {
     return this._openAmount;
   }
 
   /**
-   * @private
+   * @internal
    */
   getSlidingPercent(): number {
     let openAmount = this._openAmount;
@@ -269,7 +269,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @internal
    */
   startSliding(startX: number) {
     if (this._timer) {
@@ -285,7 +285,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @internal
    */
   moveSliding(x: number): number {
     if (this._optsDirty) {
@@ -315,7 +315,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @internal
    */
   endSliding(velocity: number): number {
     let restingPoint = (this._openAmount > 0)
@@ -337,7 +337,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @internal
    */
   private fireSwipeEvent() {
     if (this._state & SlidingState.SwipeRight) {
@@ -348,7 +348,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @internal
    */
   private calculateOptsWidth() {
     nativeRaf(() => {
@@ -459,14 +459,14 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @internal
    */
   setCssClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
   /**
-   * @private
+   * @internal
    */
   setCssStyle(property: string, value: string) {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
