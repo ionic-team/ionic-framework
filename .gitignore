@@ -13,13 +13,9 @@ log.txt
 .versions/
 coverage/
 dist/
-dist-test/
-dist-e2e/
 node_modules/
 tmp/
 temp/
-test/
-dist-test/
 $RECYCLE.BIN/
 
 .DS_Store
