@@ -1,13 +1,11 @@
 
-import { Config } from '../../../../src/config/config';
-import { DateTime } from '../../../../src/components/datetime/datetime';
-import { Form } from '../../../../src/util/form';
-import { Picker, PickerController } from '../../../../src/components/picker/picker';
-import { NavController } from '../../../../src/navigation/nav-controller';
+import { Config } from '../../../config/config';
+import { DateTime } from '../datetime';
+import { Form } from '../../../util/form';
+import { Picker, PickerController } from '../../picker/picker';
+import { NavController } from '../../../navigation/nav-controller';
 
-import * as datetime from '../../../../src/util/datetime-util';
-
-export function run() {
+import * as datetime from '../../../util/datetime-util';
 
 describe('DateTime', () => {
 
@@ -534,5 +532,3 @@ describe('DateTime', () => {
   };
 
 });
-
-}

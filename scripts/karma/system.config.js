@@ -37,8 +37,6 @@ System.config({
 
 var allSpecFiles = Object.keys(window.__karma__.files).filter(isSpecFile).filter(isIonicFile);
 
-allSpecFiles = [allSpecFiles[0]];
-
 // Load and configure the TestComponentBuilder.
 Promise.all([
   System.import('@angular/core/testing'),

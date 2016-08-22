@@ -1,25 +1,22 @@
 import { Component } from '@angular/core';
-import { ModalController } from '../../../../src/components/modal/modal';
-import { ModalCmp } from '../../../../src/components/modal/modal-component';
-import { ViewController } from '../../../../src/navigation/view-controller';
+import { ModalController } from '../modal';
+import { ModalCmp } from '../modal-component';
+import { ViewController } from '../../../navigation/view-controller';
 
-export function run() {
-  describe('Modal', () => {
+describe('Modal', () => {
 
-    describe('create', () => {
+  describe('create', () => {
 
-      it('should have the correct properties on modal view controller instance', () => {
-        let modalCtrl = new ModalController(null);
-        let modalViewController = modalCtrl.create(ComponentToPresent);
-        expect(modalViewController.componentType).toEqual(ModalCmp);
-        expect(modalViewController.isOverlay).toEqual(true);
-        expect(modalViewController instanceof ViewController).toEqual(true);
-      });
+    it('should have the correct properties on modal view controller instance', () => {
+      let modalCtrl = new ModalController(null);
+      let modalViewController = modalCtrl.create(ComponentToPresent);
+      expect(modalViewController.componentType).toEqual(ModalCmp);
+      expect(modalViewController.isOverlay).toEqual(true);
+      expect(modalViewController instanceof ViewController).toEqual(true);
     });
-
   });
 
-}
+});
 
 @Component({
   template: `<div class="myComponent"></div>`

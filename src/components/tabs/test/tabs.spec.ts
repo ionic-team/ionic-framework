@@ -1,22 +1,20 @@
 import { Component } from '@angular/core';
-import { App } from '../../../../src/components/app/app';
-import { Config } from '../../../../src/config/config';
-import { Nav } from '../../../../src/components/nav/nav';
-import { NavOptions } from '../../../../src/navigation/nav-util';
-import { Platform } from '../../../../src/platform/platform';
-import { Tab } from '../../../../src/components/tabs/tab';
-import { Tabs } from '../../../../src/components/tabs/tabs';
-import { ViewController } from '../../../../src/navigation/view-controller';
-import { mockTab, mockTabs } from '../../../../src/util/mock-providers';
-
-export function run() {
+import { App } from '../../app/app';
+import { Config } from '../../../config/config';
+import { Nav } from '../../nav/nav';
+import { NavOptions } from '../../../navigation/nav-util';
+import { Platform } from '../../../platform/platform';
+import { Tab } from '../../tabs/tab';
+import { Tabs } from '../../tabs/tabs';
+import { ViewController } from '../../../navigation/view-controller';
+import { mockTab, mockTabs } from '../../../util/mock-providers';
 
 describe('Tabs', () => {
 
   describe('initTabs', () => {
 
     it('should preload all tabs', () => {
-      var tabs = mockTabs();
+      /*var tabs = mockTabs();
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
       tab0.root = SomePage;
@@ -37,6 +35,8 @@ describe('Tabs', () => {
 
       expect(tab0.preload).not.toHaveBeenCalled();
       expect(tab1.preload).toHaveBeenCalled();
+      */
+      expect(true).toEqual(false);
     });
 
     it('should not select a hidden or disabled tab', () => {
@@ -71,7 +71,7 @@ describe('Tabs', () => {
     });
 
     it('should select the first tab by default', () => {
-      var tabs = mockTabs();
+      /*var tabs = mockTabs();
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
       tab0.root = SomePage;
@@ -87,6 +87,8 @@ describe('Tabs', () => {
 
       expect(tab0.preload).not.toHaveBeenCalled();
       expect(tab1.preload).not.toHaveBeenCalled();
+      */
+      expect(true).toEqual(false);
     });
 
   });
@@ -236,5 +238,3 @@ describe('Tabs', () => {
   class SomePage {}
 
 });
-
-}

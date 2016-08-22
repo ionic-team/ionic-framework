@@ -1,6 +1,4 @@
-import { Platform } from '../../../src/platform/platform';
-
-export function run() {
+import { Platform } from '../platform';
 
 describe('Platform', () => {
 
@@ -81,21 +79,24 @@ describe('Platform', () => {
   });
 
   it('should get case insensitive querystring value', () => {
-    let platform = new Platform();
+    /*let platform = new Platform();
     platform.setUrl('/?KEY=value');
 
-    expect(platform.query('key')).toEqual('value');
+    expect(platform.query('key')).toEqual('value');*/
+    expect(true).toEqual(false);
   });
 
   it('should get querystring value', () => {
-    let platform = new Platform();
+    /*let platform = new Platform();
     platform.setUrl('/?key=value');
 
     expect(platform.query('key')).toEqual('value');
+    */
+    expect(true).toEqual(false);
   });
 
   it('should set windows via querystring', () => {
-    let platform = new Platform();
+    /*let platform = new Platform();
     platform.setUrl('/?ionicplatform=windows');
     platform.load();
 
@@ -104,10 +105,12 @@ describe('Platform', () => {
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('windows')).toEqual(true);
     expect(platform.is('ios')).toEqual(false);
+    */
+    expect(true).toEqual(false);
   });
 
   it('should set ios via querystring', () => {
-    let platform = new Platform();
+    /*let platform = new Platform();
     platform.setUrl('/?ionicplatform=ios');
     platform.load();
 
@@ -116,10 +119,12 @@ describe('Platform', () => {
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('windows')).toEqual(false);
     expect(platform.is('ios')).toEqual(true);
+    */
+    expect(true).toEqual(false);
   });
 
   it('should set windows via querystring, even with android user agent', () => {
-    let platform = new Platform();
+    /*let platform = new Platform();
     platform.setUrl('/?ionicplatform=windows');
     platform.setUserAgent(ANDROID_UA);
     platform.load();
@@ -128,10 +133,12 @@ describe('Platform', () => {
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('windows')).toEqual(true);
     expect(platform.is('ios')).toEqual(false);
+    */
+    expect(true).toEqual(false);
   });
 
   it('should set ios via querystring, even with android user agent', () => {
-    let platform = new Platform();
+    /*let platform = new Platform();
     platform.setUrl('/?ionicplatform=ios');
     platform.setUserAgent(ANDROID_UA);
     platform.load();
@@ -140,10 +147,12 @@ describe('Platform', () => {
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('windows')).toEqual(false);
     expect(platform.is('ios')).toEqual(true);
+    */
+    expect(true).toEqual(false);
   });
 
   it('should set android via querystring', () => {
-    let platform = new Platform();
+    /*let platform = new Platform();
     platform.setUrl('/?ionicplatform=android');
     platform.load();
 
@@ -151,10 +160,12 @@ describe('Platform', () => {
     expect(platform.is('android')).toEqual(true);
     expect(platform.is('windows')).toEqual(false);
     expect(platform.is('ios')).toEqual(false);
+    */
+    expect(true).toEqual(false);
   });
 
   it('should set android via querystring, even with ios user agent', () => {
-    let platform = new Platform();
+    /*let platform = new Platform();
     platform.setUrl('/?ionicplatform=android');
     platform.setUserAgent(IPHONE_UA);
     platform.load();
@@ -163,6 +174,8 @@ describe('Platform', () => {
     expect(platform.is('android')).toEqual(true);
     expect(platform.is('windows')).toEqual(false);
     expect(platform.is('ios')).toEqual(false);
+    */
+    expect(true).toEqual(false);
   });
 
   it('should set windows platform via user agent', () => {
@@ -326,8 +339,6 @@ describe('Platform', () => {
   });
 
 });
-
-}
 
 const OSX_10_FIREFOX_43_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0';
 const OSX_10_SAFARI_9_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/601.4.4 (KHTML, like Gecko) Version/9.0.3 Safari/601.4.4';

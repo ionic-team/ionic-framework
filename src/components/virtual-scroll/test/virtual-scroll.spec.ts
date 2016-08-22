@@ -1,8 +1,6 @@
-import { VirtualScroll } from '../../../../src/components/virtual-scroll/virtual-scroll';
-import { VirtualCell, VirtualData, VirtualNode } from '../../../../src/components/virtual-scroll/virtual-util';
-import { processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered } from '../../../../src/components/virtual-scroll/virtual-util';
-
-export function run() {
+import { VirtualScroll } from '../virtual-scroll';
+import { VirtualCell, VirtualData, VirtualNode } from '../virtual-util';
+import { processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered } from '../virtual-util';
 
 describe('VirtualScroll', () => {
 
@@ -558,8 +556,6 @@ describe('VirtualScroll', () => {
   }
 
 });
-
-}
 
 const TEMPLATE_ITEM = 0;
 const TEMPLATE_HEADER = 1;

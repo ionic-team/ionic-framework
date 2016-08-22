@@ -1,9 +1,8 @@
 
-import { PanRecognizer } from '../../../src/gestures/recognizers';
-import { Simulate } from '../../../src/gestures/simulator';
+import { PanRecognizer } from '../recognizers';
+import { Simulate } from '../simulator';
 
-export function run() {
-
+describe('recognizers', () => {
   it('should not fire if it did not start', () => {
     let p = new PanRecognizer('x', 2, 2);
     expect(p.pan()).toEqual(0);
@@ -203,4 +202,4 @@ export function run() {
 
     expect(p.pan()).toEqual(0);
   });
-}
+});

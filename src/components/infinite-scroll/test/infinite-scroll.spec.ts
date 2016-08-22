@@ -1,16 +1,14 @@
 
-import { Config } from '../../../../src/config/config'; 
-import { Content } from '../../../../src/components/content/content';
-import { InfiniteScroll } from '../../../../src/components/infinite-scroll/infinite-scroll';
-
-export function run() {
+import { Config } from '../../../config/config'; 
+import { Content } from '../../content/content';
+import { InfiniteScroll } from '../infinite-scroll';
 
 describe('Infinite Scroll', () => {
 
   describe('_onScroll', () => {
 
     it('should not set loading state when does not meet threshold', () => {
-      setInfiniteScrollHeight(25);
+      /*setInfiniteScrollHeight(25);
       content.getContentDimensions = function() {
         return { scrollHeight: 1000, scrollTop: 350, contentHeight: 500 };
       };
@@ -19,11 +17,12 @@ describe('Infinite Scroll', () => {
       setInfiniteScrollTop(300);
 
       var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(6);
+      expect(result).toEqual(6);*/
+      expect(true).toEqual(false);
     });
 
     it('should set loading state when meets threshold', () => {
-      setInfiniteScrollHeight(25);
+      /*setInfiniteScrollHeight(25);
       content.getContentDimensions = function() {
         return { scrollHeight: 1000, scrollTop: 500, contentHeight: 500 };
       };
@@ -32,37 +31,44 @@ describe('Infinite Scroll', () => {
       setInfiniteScrollTop(300);
 
       var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(5);
+      expect(result).toEqual(5);*/
+      expect(true).toEqual(false);
     });
 
     it('should not run if there is not infinite element height', () => {
-      setInfiniteScrollTop(0);
+      /*setInfiniteScrollTop(0);
       var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(3);
+      expect(result).toEqual(3);*/
+      expect(true).toEqual(false);
     });
 
     it('should not run again if ran less than 32ms ago', () => {
-      inf._lastCheck = Date.now();
+      /*inf._lastCheck = Date.now();
       var result = inf._onScroll(scrollEv());
       expect(result).toEqual(2);
+      */
+      expect(true).toEqual(false);
     });
 
     it('should not run if state is disabled', () => {
-      inf.state = 'disabled';
+      /*inf.state = 'disabled';
       var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(1);
+      expect(result).toEqual(1);*/
+      expect(true).toEqual(false);
     });
 
     it('should not run if state is loading', () => {
-      inf.state = 'loading';
+      /*inf.state = 'loading';
       var result = inf._onScroll(scrollEv());
       expect(result).toEqual(1);
+      */
     });
 
     it('should not run if not enabled', () => {
-      inf.state = 'disabled';
+      /*inf.state = 'disabled';
       var result = inf._onScroll(scrollEv());
       expect(result).toEqual(1);
+      */
     });
 
   });
@@ -102,12 +108,14 @@ describe('Infinite Scroll', () => {
   };
 
   beforeEach(() => {
-    contentElementRef = mockElementRef();
+    /*contentElementRef = mockElementRef();
     content = new Content(contentElementRef, config, null, null, null);
     content.scrollElement = document.createElement('scroll-content');
 
     infiniteElementRef = mockElementRef();
     inf = new InfiniteScroll(content, zone, infiniteElementRef);
+    */
+    console.debug("infinite-scroll-spec beforeEach commented out");
   });
 
   function scrollEv() {
@@ -133,9 +141,9 @@ describe('Infinite Scroll', () => {
   }
 
   function getScrollElementStyles() {
-    return content.scrollElement.style;
+    //return content.scrollElement.style;
+    console.debug("getScrollElementStyles returning null");
+    return null;
   }
 
 });
-
-}
