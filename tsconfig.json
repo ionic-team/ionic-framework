@@ -1,20 +1,31 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "lib": ["es6", "es2015", "dom"],
     "module": "commonjs",
-    "declaration": true,
-    "outDir": "dist/ide",
+    "moduleResolution": "node",
     "noImplicitAny": false,
-    "lib": ["dom", "es2015"],
-    "types": ["jasmine"]
+    "outDir": "./dist/ionic-angular",
+    "baseUrl": ".",
+    "paths": {
+      "ionic-angular": [
+        "./src"
+      ],
+      "ionic-angular/testing": [
+        "./src/testing"
+      ]
+    },
+    "target": "es5",
+    "types": ["jasmine"],
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
   },
   "include": [
     "./src/**/*.ts"
   ],
-  "compileOnSave": false,
-  "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": false
   }

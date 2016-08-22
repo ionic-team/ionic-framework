@@ -1,48 +1,77 @@
+/*global jasmine, __karma__, window*/
+Error.stackTraceLimit = Infinity;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
+
+__karma__.loaded = function () {};
+
+
+var distPath = '/base/dist/';
+
 System.config({
-  baseURL: '/base',
+  baseURL: distPath,
   map: {
-    'ionic-angular': 'src',
-    '@angular': 'node_modules/@angular',
+      '@angular': 'vendor/@angular',
+      'rxjs': 'vendor/rxjs'
   },
   packages: {
     'ionic-angular': {
+      format: 'cjs',
+      defaultExtension: 'js',
       main: 'index'
     },
-    'rxjs': {
-      defaultExtension: 'js'
+    'ionic-angular/testing': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'index'
     },
-    '@angular/core': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    '@angular/compiler': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    '@angular/common': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    // remove after all tests imports are fixed
-    '@angular/facade': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    '@angular/forms': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    '@angular/http': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    '@angular/platform-browser': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    },
-    '@angular/platform-browser-dynamic': {
-      main: 'index.js',
-      defaultExtension: 'js'
-    }
+    '@angular/core': { main: 'index' },
+    '@angular/common': { main: 'index' },
+    '@angular/compiler': { main: 'index' },
+    '@angular/http': { main: 'index' },
+    '@angular/forms': { main: 'index' },
+    '@angular/platform-browser': { main: 'index' },
+    '@angular/platform-browser-dynamic': { main: 'index' },
+    'rxjs': { main: 'index' }
   }
 });
+
+var allSpecFiles = Object.keys(window.__karma__.files).filter(isSpecFile).filter(isIonicFile);
+
+allSpecFiles = [allSpecFiles[0]];
+
+// Load and configure the TestComponentBuilder.
+Promise.all([
+  System.import('@angular/core/testing'),
+  System.import('@angular/platform-browser-dynamic/testing')
+]).then(function (providers) {
+  var testing = providers[0];
+  var testingBrowser = providers[1];
+
+  testing.TestBed.initTestEnvironment(
+      testingBrowser.BrowserDynamicTestingModule,
+      testingBrowser.platformBrowserDynamicTesting());
+
+}).then(function() {
+  return Promise.all(
+    allSpecFiles.map(function (moduleName) {
+      return System.import(moduleName).then(function(module) {
+        return module;
+      });
+    })
+  );
+}).then(__karma__.start, __karma__.error).catch(__karma__.error);
+
+
+
+
+function isJsFile(path) {
+  return path.slice(-3) == '.js';
+}
+
+function isSpecFile(path) {
+  return path.slice(-8) == '.spec.js';
+}
+
+function isIonicFile(path) {
+  return isJsFile(path) && path.indexOf('vendor') == -1;
+}

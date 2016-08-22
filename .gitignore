@@ -32,3 +32,5 @@ UserInterfaceState.xcuserstate
 /es2015NgcConfig.json
 /demoNgcConfig.json
 /e2eNgcConfig.json
+
+src/tsconfig.json
