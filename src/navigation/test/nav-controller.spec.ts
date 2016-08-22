@@ -6,6 +6,10 @@ import { mockNavController, mockElementRef, mockTransition } from '../../util/mo
 
 describe('NavController', () => {
 
+  it('hello its true', () => {
+    expect(true).toBe(true);
+  });
+
   // describe('pop', () => {
 
   //   it('should do nothing if its the first view in the stack', () => {

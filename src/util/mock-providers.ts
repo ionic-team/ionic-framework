@@ -8,6 +8,7 @@ import { Form } from './form';
 import { GestureController } from '../gestures/gesture-controller';
 import { Keyboard } from './keyboard';
 import { Platform } from '../platform/platform';
+import { QueryParams } from '../platform/query-params';
 import { Tab }  from '../components/tabs/tab';
 import { Tabs }  from '../components/tabs/tabs';
 import { Transition } from '../transitions/transition';
@@ -17,8 +18,16 @@ import { ViewController } from '../navigation/view-controller';
 import { NavControllerBase } from '../navigation/nav-controller-base';
 
 
-export const mockConfig = function(config?: any) {
-  return new Config();
+export const mockConfig = function(config?: any, url: string = '/', platform?: Platform) {
+  const c = new Config();
+  const q = mockQueryParams();
+  const p = platform || mockPlatform();
+  c.init(config, q, p);
+  return c;
+};
+
+export const mockQueryParams = function(url: string = '/') {
+  return new QueryParams(url);
 };
 
 export const mockPlatform = function(platforms?: string[]) {
@@ -26,8 +35,8 @@ export const mockPlatform = function(platforms?: string[]) {
 };
 
 export const mockApp = function(config?: Config, platform?: Platform) {
-  config = config || mockConfig();
   platform = platform || mockPlatform();
+  config = config || mockConfig(null, '/', platform);
   return new App(config, platform);
 };
 
@@ -92,8 +101,7 @@ export const mockTransition = function(playCallback: Function, duration: number)
 export const mockNavController = function(): NavControllerBase {
   let platform = mockPlatform();
 
-  let config = mockConfig();
-  // config.setPlatform(platform);
+  let config = mockConfig(null, '/', platform);
 
   let app = mockApp(config, platform);
 
@@ -137,8 +145,7 @@ export const mockNavController = function(): NavControllerBase {
 export const mockTab = function(parentTabs: Tabs): Tab {
   let platform = mockPlatform();
 
-  let config = mockConfig();
-  // config.setPlatform(platform);
+  let config = mockConfig(null, '/', platform);
 
   let app = (<any>parentTabs)._app || mockApp(config, platform);
 
@@ -189,8 +196,8 @@ export const mockTab = function(parentTabs: Tabs): Tab {
 };
 
 export const mockTabs = function(app?: App): Tabs {
-  let config = mockConfig();
   let platform = mockPlatform();
+  let config = mockConfig(null, '/', platform);
   app = app || mockApp(config, platform);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
