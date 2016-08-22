@@ -30,14 +30,16 @@ export class Animation {
   private _hasDur: boolean;
   private _isAsync: boolean;
   private _twn: boolean;
+  private _raf: Function;
 
   parent: Animation;
   opts: AnimationOptions;
   isPlaying: boolean = false;
   hasCompleted: boolean = false;
 
-  constructor(ele?: any, opts?: AnimationOptions) {
+  constructor(ele?: any, opts?: AnimationOptions, raf?: Function) {
     this.element(ele).opts = opts;
+    this._raf = raf || nativeRaf;
   }
 
   element(ele: any): Animation {
@@ -316,8 +318,8 @@ export class Animation {
     // from an input event, and just having one RAF would have this code
     // run within the same frame as the triggering input event, and the
     // input event probably already did way too much work for one frame
-    nativeRaf(() => {
-      nativeRaf(this._playDomInspect.bind(this, opts));
+    this._raf(() => {
+      this._raf(this._playDomInspect.bind(this, opts));
     });
   }
 
@@ -377,7 +379,7 @@ export class Animation {
     if (this._isAsync) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      nativeRaf(this._playToStep.bind(this, 1));
+      this._raf(this._playToStep.bind(this, 1));
     }
   }
 
@@ -919,7 +921,7 @@ export class Animation {
 
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      nativeRaf(this._playToStep.bind(this, stepValue));
+      this._raf(this._playToStep.bind(this, stepValue));
     }
   }
 
