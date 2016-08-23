@@ -1,60 +1,49 @@
 import { NgZone} from '@angular/core';
 import { Refresher } from '../refresher';
-import { Config } from '../../../config/config';
 import { Content } from '../../content/content';
 import { GestureController } from '../../../gestures/gesture-controller';
 import { Ion } from '../../ion';
+
+import { mockConfig } from '../../../util/mock-providers';
 
 describe('Refresher', () => {
 
   describe('_onEnd', () => {
 
     it('should set to refreshing if state=ready', () => {
-      /*refresher.state = 'ready';
+      refresher.state = 'ready';
       refresher._onEnd();
       expect(refresher.state).toEqual('refreshing');
-      */
-      expect(true).toEqual(false);
     });
 
     it('should set to canelling if state=pulling on release', () => {
-      /*refresher.state = 'pulling';
+      refresher.state = 'pulling';
       refresher._onEnd();
       expect(refresher.state).toEqual('cancelling');
-      */
-      expect(true).toEqual(false);
     });
 
     it('should do nothing if state=cancelling', () => {
-      /*refresher.state = 'cancelling';
+      refresher.state = 'cancelling';
       var results = refresher._onEnd();
       expect(refresher.state).toEqual('cancelling');
-      */
-      expect(true).toEqual(false);
     });
 
     it('should do nothing if state=completing', () => {
-      /*refresher.state = 'completing';
+      refresher.state = 'completing';
       var results = refresher._onEnd();
       expect(refresher.state).toEqual('completing');
-      */
-      expect(true).toEqual(false);
     });
 
     it('should do nothing if state=refreshing', () => {
-      /*refresher.state = 'refreshing';
+      refresher.state = 'refreshing';
       var results = refresher._onEnd();
       expect(refresher.state).toEqual('refreshing');
-      */
-      expect(true).toEqual(false);
     });
 
     it('should do nothing if state=inactive', () => {
-      /*refresher.state = 'inactive';
+      refresher.state = 'inactive';
       refresher._onEnd();
       expect(refresher.state).toEqual('inactive');
-      */
-      expect(true).toEqual(false);
     });
 
   });
@@ -163,14 +152,11 @@ describe('Refresher', () => {
     });
 
     it('should not run when scrolling up, but isnt actively dragging', () => {
-      /*setContentScrollTop(1);
+      setContentScrollTop(1);
       refresher.startY = 100;
-      refresher._isDragging = false
 
       var results = refresher._onMove(<TouchEvent> <any> touchEv(85));
       expect(results).toEqual(6);
-      expect(true).toEqual(false);
-      */
     });
 
     it('should set the deltaY', () => {
@@ -233,7 +219,6 @@ describe('Refresher', () => {
   });
 
 
-  let config = new Config();
   let refresher: Refresher;
   let content: Content;
   let contentElementRef;
@@ -246,7 +231,7 @@ describe('Refresher', () => {
   beforeEach(() => {
     contentElementRef = mockElementRef();
     gestureController = new GestureController(null);
-    content = new Content(contentElementRef, config, null, null, <NgZone> <any> zone, null, null);
+    content = new Content(contentElementRef, mockConfig(), null, null, <NgZone> <any> zone, null, null);
     content._scrollEle = document.createElement('scroll-content');
 
     refresher = new Refresher(content, <NgZone> <any>zone, gestureController);
@@ -272,13 +257,22 @@ describe('Refresher', () => {
   }
 
   function setContentScrollTop(scrollTop) {
-    /*content.getContentDimensions = function() {
+    content.getContentDimensions = function() {
       return {
-        scrollTop: scrollTop
+        scrollTop: scrollTop,
+        scrollHeight: null,
+        contentHeight: null,
+        contentTop: null,
+        contentBottom: null,
+        contentWidth: null,
+        contentLeft: null,
+        contentRight: null,
+        scrollBottom: null,
+        scrollWidth: null,
+        scrollLeft: null,
+        scrollRight: null
       };
     };
-    */
-    console.debug("setContentScrollTop in refresher.spec.ts needs attention");
   }
 
   function getScrollElementStyles() {

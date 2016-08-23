@@ -374,7 +374,7 @@ export class Refresher {
     return 4;
   }
 
-  _onEnd(ev: UIEvent) {
+  _onEnd() {
     // only run in a zone when absolutely necessary
 
     if (this.state === STATE_READY) {

@@ -1,9 +1,9 @@
 import { App } from '../app';
+import { IonicApp } from '../app-root';
 import { Config } from '../../../config/config';
-import { mockNavController, mockTab, mockTabs} from '../../../util/mock-providers';
+import { mockConfig, mockNavController, mockOverlayPortal, mockPlatform, mockTab, mockTabs} from '../../../util/mock-providers';
 import { Platform } from '../../../platform/platform';
 import { ViewController } from '../../../navigation/view-controller';
-
 
 describe('App', () => {
 
@@ -435,11 +435,13 @@ describe('App', () => {
   var app: App;
   var config: Config;
   var platform: Platform;
+  var ionicApp: IonicApp;
 
   beforeEach(() => {
-    config = new Config();
-    platform = new Platform();
+    config = mockConfig();
+    platform = mockPlatform();
     app = new App(config, platform);
+    //ionicApp = mockOverlayPortal();
   });
 
 });

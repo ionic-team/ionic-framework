@@ -45,6 +45,15 @@ export function tsBuildTask(tsConfigPath: string, enteryIndex: string, exclude: 
   };
 }
 
+export function createKarmaCoverageReport(done: Function ){
+  let exec = require('child_process').exec;
+  let command = `node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html`;
+
+  exec(command, function(err: any, stdout: any, stderr: any){
+    done(err);
+  });
+}
+
 
 // import * as child_process from 'child_process';
 // import * as fs from 'fs';

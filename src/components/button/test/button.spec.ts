@@ -1,5 +1,6 @@
 import { Button } from '../button';
 import { Config } from '../../../config/config';
+import { mockConfig } from '../../../util/mock-providers';
 
 describe('button', () => {
 
@@ -193,7 +194,7 @@ describe('button', () => {
 });
 
 function mockButton(attrs?, config?, ionButton?) {
-  config = config || new Config();
+  config = config || mockConfig();
   ionButton = ionButton || '';
   let elementRef = {
     nativeElement: document.createElement('button')

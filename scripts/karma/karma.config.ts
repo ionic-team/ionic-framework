@@ -13,8 +13,10 @@ export function config(config) {
     frameworks: ['jasmine'],
     plugins: [
       require('karma-jasmine'),
+      require('karma-coverage'),
       require('karma-browserstack-launcher'),
       require('karma-sauce-launcher'),
+      require('karma-sourcemap-loader'),
       require('karma-chrome-launcher'),
       require('karma-firefox-launcher'),
     ],
@@ -40,8 +42,13 @@ export function config(config) {
     customLaunchers: customLaunchers,
 
     exclude: [],
-    preprocessors: {},
-    reporters: ['dots'],
+    // Source files that you wanna generate coverage for.
+    // Do not include tests or libraries (these files will be instrumented by Istanbul)
+    preprocessors: {
+        'dist/ionic-angular/**/!(*spec).js': ['coverage'],
+        'dist/ionic-angular/**/*.js': ['sourcemap']
+    },
+    reporters: ['dots', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -72,6 +79,12 @@ export function config(config) {
     browserNoActivityTimeout: 240000,
     captureTimeout: 120000,
     browsers: ['Chrome_1024x768'],
+
+    coverageReporter: {
+        reporters:[
+            {type: 'json', subdir: '.', file: 'coverage-final.json'}
+        ]
+    },
 
     singleRun: false
   });

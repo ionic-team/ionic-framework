@@ -1,74 +1,70 @@
 
-import { Config } from '../../../config/config'; 
+import { NgZone } from '@angular/core';
 import { Content } from '../../content/content';
 import { InfiniteScroll } from '../infinite-scroll';
+
+import { mockConfig } from '../../../util/mock-providers';
 
 describe('Infinite Scroll', () => {
 
   describe('_onScroll', () => {
 
     it('should not set loading state when does not meet threshold', () => {
-      /*setInfiniteScrollHeight(25);
+      setInfiniteScrollHeight(25);
       content.getContentDimensions = function() {
-        return { scrollHeight: 1000, scrollTop: 350, contentHeight: 500 };
+        return mockGetContentDimensions(1000, 350, 500);
       };
+      
+
       inf.threshold = '100px';
 
       setInfiniteScrollTop(300);
 
-      var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(6);*/
-      expect(true).toEqual(false);
+      var result = inf._onScroll();
+      expect(result).toEqual(6);
     });
 
     it('should set loading state when meets threshold', () => {
-      /*setInfiniteScrollHeight(25);
+      setInfiniteScrollHeight(25);
       content.getContentDimensions = function() {
-        return { scrollHeight: 1000, scrollTop: 500, contentHeight: 500 };
+        return mockGetContentDimensions(1000, 500, 500);
       };
       inf.threshold = '100px';
 
       setInfiniteScrollTop(300);
 
-      var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(5);*/
-      expect(true).toEqual(false);
+      var result = inf._onScroll();
+      expect(result).toEqual(5);
     });
 
     it('should not run if there is not infinite element height', () => {
-      /*setInfiniteScrollTop(0);
-      var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(3);*/
-      expect(true).toEqual(false);
+      setInfiniteScrollTop(0);
+      var result = inf._onScroll();
+      expect(result).toEqual(3);
     });
 
     it('should not run again if ran less than 32ms ago', () => {
-      /*inf._lastCheck = Date.now();
-      var result = inf._onScroll(scrollEv());
+      inf._lastCheck = Date.now();
+      var result = inf._onScroll();
       expect(result).toEqual(2);
-      */
       expect(true).toEqual(false);
     });
 
     it('should not run if state is disabled', () => {
-      /*inf.state = 'disabled';
-      var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(1);*/
-      expect(true).toEqual(false);
+      inf.state = 'disabled';
+      var result = inf._onScroll();
+      expect(result).toEqual(1);
     });
 
     it('should not run if state is loading', () => {
-      /*inf.state = 'loading';
-      var result = inf._onScroll(scrollEv());
-      expect(result).toEqual(1);
-      */
+      inf.state = 'loading';
+      var result = inf._onScroll();
     });
 
     it('should not run if not enabled', () => {
-      /*inf.state = 'disabled';
-      var result = inf._onScroll(scrollEv());
+      inf.state = 'disabled';
+      var result = inf._onScroll();
       expect(result).toEqual(1);
-      */
     });
 
   });
@@ -97,7 +93,7 @@ describe('Infinite Scroll', () => {
   });
 
 
-  let config = new Config();
+  let config = mockConfig();
   let inf: InfiniteScroll;
   let content: Content;
   let contentElementRef;
@@ -108,14 +104,12 @@ describe('Infinite Scroll', () => {
   };
 
   beforeEach(() => {
-    /*contentElementRef = mockElementRef();
-    content = new Content(contentElementRef, config, null, null, null);
-    content.scrollElement = document.createElement('scroll-content');
+    contentElementRef = mockElementRef();
+    content = new Content(contentElementRef, config, null, null, null, null, null);
+    content._scrollEle = document.createElement('scroll-content');
 
     infiniteElementRef = mockElementRef();
-    inf = new InfiniteScroll(content, zone, infiniteElementRef);
-    */
-    console.debug("infinite-scroll-spec beforeEach commented out");
+    inf = new InfiniteScroll(content, <NgZone> <any> zone, infiniteElementRef);
   });
 
   function scrollEv() {
@@ -141,9 +135,25 @@ describe('Infinite Scroll', () => {
   }
 
   function getScrollElementStyles() {
-    //return content.scrollElement.style;
-    console.debug("getScrollElementStyles returning null");
-    return null;
+    return content.getScrollElement().style;
+  }
+
+  function mockGetContentDimensions(scrollHeight, scrollTop, contentHeight) {
+    return { 
+          scrollHeight: scrollHeight, 
+          scrollTop: scrollTop, 
+          contentHeight: contentHeight,
+          
+          contentTop: null,
+          contentBottom: null,
+          contentWidth: null,
+          contentLeft: null,
+          contentRight: null,
+          scrollBottom: null,
+          scrollWidth: null,
+          scrollLeft: null,
+          scrollRight: null
+        };
   }
 
 });

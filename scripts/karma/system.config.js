@@ -37,28 +37,16 @@ System.config({
 
 var allSpecFiles = Object.keys(window.__karma__.files).filter(isSpecFile).filter(isIonicFile);
 
+//allSpecFiles = [ allSpecFiles[allSpecFiles.length - 1] ];
+
 // Load and configure the TestComponentBuilder.
-Promise.all([
-  System.import('@angular/core/testing'),
-  System.import('@angular/platform-browser-dynamic/testing')
-]).then(function (providers) {
-  var testing = providers[0];
-  var testingBrowser = providers[1];
-
-  testing.TestBed.initTestEnvironment(
-      testingBrowser.BrowserDynamicTestingModule,
-      testingBrowser.platformBrowserDynamicTesting());
-
-}).then(function() {
-  return Promise.all(
-    allSpecFiles.map(function (moduleName) {
-      return System.import(moduleName).then(function(module) {
-        return module;
-      });
-    })
-  );
-}).then(__karma__.start, __karma__.error).catch(__karma__.error);
-
+Promise.all(
+  allSpecFiles.map(function (moduleName) {
+    return System.import(moduleName).then(function(module) {
+      return module;
+    });
+  })
+).then(__karma__.start, __karma__.error).catch(__karma__.error);
 
 
 

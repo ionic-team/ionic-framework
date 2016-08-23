@@ -1,11 +1,12 @@
 
-import { Config } from '../../../config/config';
 import { DateTime } from '../datetime';
 import { Form } from '../../../util/form';
 import { Picker, PickerController } from '../../picker/picker';
 import { NavController } from '../../../navigation/nav-controller';
 
 import * as datetime from '../../../util/datetime-util';
+
+import { mockApp, mockConfig } from '../../../util/mock-providers';
 
 describe('DateTime', () => {
 
@@ -15,7 +16,7 @@ describe('DateTime', () => {
       datetime.max = '2001-12-15';
       datetime.min = '2000-01-15';
       datetime.pickerFormat = 'MM DD YYYY';
-      var picker = new Picker(null, null);
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
 
       var columns = picker.getColumns();
@@ -45,7 +46,7 @@ describe('DateTime', () => {
       datetime.max = '2010-11-15';
       datetime.min = '2000-02-15';
       datetime.pickerFormat = 'MM DD YYYY';
-      var picker = new Picker(null, null);
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
 
       var columns = picker.getColumns();
@@ -73,7 +74,7 @@ describe('DateTime', () => {
       datetime.min = '2000-01-01';
       datetime.pickerFormat = 'MM DD YYYY';
 
-      var picker = new Picker(null, null);
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
 
       var columns = picker.getColumns();
@@ -116,7 +117,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'MMM YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
-      var picker = new Picker(null, null);
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -132,7 +133,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'MMMM YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
-      var picker = new Picker(null, null);
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -146,7 +147,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'DDDD D M YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
-      var picker = new Picker(null, null);
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -160,7 +161,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'DDDD M YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
-      var picker = new Picker(null, null);
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -175,7 +176,7 @@ describe('DateTime', () => {
       datetime.min = '2000-01-01';
       datetime.pickerFormat = 'MM DD YYYY';
 
-      var picker = new Picker(null, null);
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -198,7 +199,7 @@ describe('DateTime', () => {
       datetime.min = '2000-01-01';
       datetime.pickerFormat = 'YYYY';
 
-      var picker = new Picker(null, null);
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -476,7 +477,7 @@ describe('DateTime', () => {
   var datetime: DateTime;
 
   beforeEach(() => {
-    datetime = new DateTime(new Form(), new Config(), null, <PickerController>{});
+    datetime = new DateTime(new Form(), mockConfig(), null, <PickerController>{});
   });
 
   console.warn = function(){};

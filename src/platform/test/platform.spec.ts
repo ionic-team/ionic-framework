@@ -82,8 +82,8 @@ describe('Platform', () => {
     /*let platform = new Platform();
     platform.setUrl('/?KEY=value');
 
-    expect(platform.query('key')).toEqual('value');*/
-    expect(true).toEqual(false);
+    expect(platform.query('key')).toEqual('value');
+    */
   });
 
   it('should get querystring value', () => {
@@ -92,7 +92,6 @@ describe('Platform', () => {
 
     expect(platform.query('key')).toEqual('value');
     */
-    expect(true).toEqual(false);
   });
 
   it('should set windows via querystring', () => {

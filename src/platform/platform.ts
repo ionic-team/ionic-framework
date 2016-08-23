@@ -581,9 +581,7 @@ export class Platform {
     return false;
   }
 
-  /**
-   * @private
-   */
+  /** @internal */
   load() {
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;

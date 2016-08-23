@@ -1,24 +1,36 @@
-import { DIST_BUILD_ROOT, DIST_VENDOR_ROOT, SRC_ROOT, NPM_VENDOR_FILES, SCRIPTS_ROOT } from '../constants';
+import { DIST_VENDOR_ROOT, NPM_VENDOR_FILES, SCRIPTS_ROOT } from '../constants';
 import path = require('path');
 import { dest, src, task } from 'gulp';
 
+import { createKarmaCoverageReport } from '../util';
 
-task('test', ['test.vendor', 'build'], function(done: () => void) {
+task('test', ['test.vendor', 'build'], (done: () => void) => {
   const karma = require('karma');
-  new karma.Server({
-    configFile: path.join(SCRIPTS_ROOT, 'karma/karma.conf.js')
-  }, done).start();
+  const argv = require('yargs').argv;
+  
+  let karmaConfig = {
+    configFile: path.join(SCRIPTS_ROOT, 'karma/karma.conf.js'),
+  }
+
+  console.log("argv.testGrep: ", argv.testGrep);
+  if ( argv.testGrep ) {
+    (<any>karmaConfig).client = {
+      args: ['--grep', argv.testGrep]
+    };
+  }
+
+  new karma.Server(karmaConfig, () => {
+    createKarmaCoverageReport(done);
+  }).start();
 });
 
 
-task('test.vendor', function() {
-  const files = NPM_VENDOR_FILES.map(function(root) {
+task('test.vendor', () => {
+  const files = NPM_VENDOR_FILES.map((root) => {
     const glob = path.join(root, '**/*.+(js|js.map)');
     return src(path.join('node_modules', glob))
            .pipe(dest(path.join(DIST_VENDOR_ROOT, root)));
   });
-  files.push(src(path.join(SRC_ROOT, 'components', 'slides', 'swiper-widget.js'))
-             .pipe(dest(path.join(DIST_BUILD_ROOT, 'components', 'slides', 'swiper-widget.js'))));
   const gulpMerge = require('merge2');
   return gulpMerge(files);
 });

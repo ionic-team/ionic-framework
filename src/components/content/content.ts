@@ -129,8 +129,14 @@ export class Content extends Ion {
   _scLsn: Function;
   _sbPadding: boolean;
   _fullscreen: boolean;
-  _scrollEle: HTMLElement;
   _footerEle: HTMLElement;
+
+  /*
+   * @internal
+   */
+  _scrollEle: HTMLElement;
+  
+  
 
   /**
    * A number representing how many pixels the top of the content has been
