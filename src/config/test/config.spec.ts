@@ -1,193 +1,161 @@
 import { Config } from '../config';
-import { ionicProviders } from '../../providers';
 import { Platform } from '../../platform/platform';
+import { QueryParams } from '../../platform/query-params';
+import '../../platform/registry';
+import '../modes';
 
 describe('Config', () => {
 
   it('should set activator setting to none for old Android Browser on a linux device', () => {
-    /*let config = new Config();
+    let config = new Config();
+    let qp = new QueryParams('');
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('linux');
+    platform.setQueryParams(qp);
     platform.load();
-    config.setPlatform(platform);
+    config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('none');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set activator setting to ripple for Android dev tools simulation on a mac', () => {
-    /*let config = new Config();
+    let config = new Config();
+    let qp = new QueryParams('');
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('MacIntel');
+    platform.setQueryParams(qp);
     platform.load();
-    config.setPlatform(platform);
+    config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('ripple');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set activator setting to none for Android Chrome versions below v36 on a linux device', () => {
-    /*let config = new Config();
+    let config = new Config();
+    let qp = new QueryParams('');
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1650.59 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
+    platform.setQueryParams(qp);
     platform.load();
-    config.setPlatform(platform);
+    config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('none');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set activator setting to ripple for Android Chrome v36 and above on a linux device', () => {
-    /*let config = new Config();
+    let config = new Config();
+    let qp = new QueryParams('');
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1650.59 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
+    platform.setQueryParams(qp);
     platform.load();
-    config.setPlatform(platform);
+    config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('ripple');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set activator setting to ripple for Android v5.0 and above on a linux device not using Chrome', () => {
-    /*let config = new Config();
+    let config = new Config();
+    let qp = new QueryParams('');
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Android 5.0; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
+    platform.setQueryParams(qp);
     platform.load();
-    config.setPlatform(platform);
+    config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('ripple');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set activator setting to none for Android versions below v5.0 on a linux device not using Chrome', () => {
-    /*let config = new Config();
+    let config = new Config();
+    let qp = new QueryParams('');
     let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
+    platform.setQueryParams(qp);
     platform.load();
-    config.setPlatform(platform);
+    config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('none');
-    */
-    expect(true).toEqual(false);
-  });
-
-  it('should create a new Config instace when no confg passed in ionicProviders', () => {
-    /*let providers = ionicProviders();
-
-    let config = providers.find(provider => provider.useValue instanceof Config).useValue;
-
-    expect(config.get('mode')).toEqual('md');
-    */
-    expect(true).toEqual(false);
-  });
-
-  it('should used passed in Config instance in ionicProviders', () => {
-    /*let userConfig =  new Config({
-      mode: 'configInstance'
-    });
-    let providers = ionicProviders(null, userConfig);
-
-    let config = providers.find(provider => provider.useValue instanceof Config).useValue;
-
-    expect(config.get('mode')).toEqual('configInstance');
-    */
-    expect(true).toEqual(false);
-  });
-
-  it('should create new Config instance from config object in ionicProviders', () => {
-    let providers = ionicProviders(null, {
-      mode: 'configObj'
-    });
-
-    let config = providers.find(provider => provider.useValue instanceof Config).useValue;
-
-    expect(config.get('mode')).toEqual('configObj');
   });
 
   it('should override mode settings', () => {
-    /*let config = new Config({
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init({
       mode: 'md'
-    });
-    let platform = new Platform(['ios']);
-    config.setPlatform(platform);
+    }, qp, platform);
 
     expect(config.get('mode')).toEqual('md');
     expect(config.get('iconMode')).toEqual('md');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should override mode settings from platforms setting', () => {
-    /*let config = new Config({
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init({
       platforms: {
         ios: {
           mode: 'md'
         }
       }
-    });
-    let platform = new Platform(['ios']);
-    config.setPlatform(platform);
+    }, qp, platform);
 
     expect(config.get('mode')).toEqual('md');
     expect(config.get('iconMode')).toEqual('md');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get boolean value from querystring', () => {
-    /*let config = new Config();
+    let config = new Config();
+    let qp = new QueryParams('http://biff.com/?ionicanimate=true');
     let platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicanimate=true');
-    config.setPlatform(platform);
+    config.init(null, qp, platform);
     expect(config.get('animate')).toEqual(true);
 
     config = new Config();
+    qp = new QueryParams('http://biff.com/?ionicanimate=false');
     platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicanimate=false');
-    config.setPlatform(platform);
+    config.init(null, qp, platform);
     expect(config.get('animate')).toEqual(false);
-    expect(true).toEqual(false);
   });
 
   it('should get value from case insensitive querystring key', () => {
-    let config = new Config({
-      mode: 'a'
-    });
+    let config = new Config();
+    let qp = new QueryParams('http://biff.com/?ionicConfigKey=b');
     let platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicConfigKey=b');
-    config.setPlatform(platform);
+    config.init({
+      mode: 'a'
+    }, qp, platform);
 
     expect(config.get('configKey')).toEqual('b');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get value from querystring', () => {
-    /*let config = new Config({
-      mode: 'modeA'
-    });
+    let config = new Config();
+    let qp = new QueryParams('http://biff.com/?ionicmode=modeB');
     let platform = new Platform();
-    platform.setUrl('http://biff.com/?ionicmode=modeB');
-    config.setPlatform(platform);
+    config.init({
+      mode: 'modeA'
+    }, qp, platform);
 
     expect(config.get('mode')).toEqual('modeB');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should override mode platform', () => {
-    /*let config = new Config({
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['mobile'];
+    config.init({
       mode: 'modeA',
       platforms: {
         mobile: {
@@ -197,210 +165,205 @@ describe('Config', () => {
           mode: 'modeC'
         }
       }
-    });
-    let platform = new Platform(['mobile']);
-    config.setPlatform(platform);
+    }, qp, platform);
 
     expect(config.get('mode')).toEqual('modeB');
-    */
   });
 
   it('should override mode', () => {
-    /*let config = new Config({
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['core'];
+    config.init({
       mode: 'modeA'
-    });
-    let platform = new Platform(['core']);
-    config.setPlatform(platform);
+    }, qp, platform);
 
     expect(config.get('mode')).toEqual('modeA');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get user settings after user platform settings', () => {
-    /*let config = new Config({
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init({
       hoverCSS: true
-    });
-    let platform = new Platform(['ios']);
-    config.setPlatform(platform);
+    }, qp, platform);
 
     expect(config.get('hoverCSS')).toEqual(true);
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get md mode for core platform', () => {
-    /*let config = new Config();
-    let platform = new Platform(['core']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['core'];
+    config.init(null, qp, platform);
 
     expect(config.get('mode')).toEqual('md');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get ios mode for ipad platform', () => {
-    /*let config = new Config();
-    let platform = new Platform(['mobile', 'ios', 'ipad', 'tablet']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['mobile', 'ios', 'ipad', 'tablet'];
+    config.init(null, qp, platform);
 
     expect(config.get('mode')).toEqual('ios');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get md mode for windows platform', () => {
-    /*let config = new Config();
-    let platform = new Platform(['mobile', 'windows']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['mobile', 'windows'];
+    config.init(null, qp, platform);
 
     expect(config.get('mode')).toEqual('wp');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get md mode for android platform', () => {
-    /*let config = new Config();
-    let platform = new Platform(['mobile', 'android']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['mobile', 'android'];
+    config.init(null, qp, platform);
 
     expect(config.get('mode')).toEqual('md');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should override ios mode config with user platform setting', () => {
-    /*let config = new Config({
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init({
       tabsPlacement: 'hide',
       platforms: {
         ios: {
           tabsPlacement: 'top'
         }
       }
-    });
-    let platform = new Platform(['ios']);
-    config.setPlatform(platform);
+    }, qp, platform);
 
     expect(config.get('tabsPlacement')).toEqual('top');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should override ios mode config with user setting', () => {
-    /*let config = new Config({
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init({
       tabsPlacement: 'top'
-    });
-    let platform = new Platform(['ios']);
-    config.setPlatform(platform);
+    }, qp, platform);
 
     expect(config.get('tabsPlacement')).toEqual('top');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get setting from md mode', () => {
-    /*let config = new Config();
-    let platform = new Platform(['android']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['android'];
+    config.init(null, qp, platform);
 
     expect(config.get('iconMode')).toEqual('md');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get setting from ios mode', () => {
-    /*let config = new Config();
-    let platform = new Platform(['ios']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init(null, qp, platform);
 
     expect(config.get('tabsPlacement')).toEqual('bottom');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set/get platform setting from set()', () => {
-    /*let config = new Config();
-    let platform = new Platform(['ios']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init(null, qp, platform);
 
     config.set('tabsPlacement', 'bottom');
     config.set('ios', 'tabsPlacement', 'top');
 
     expect(config.get('tabsPlacement')).toEqual('top');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set/get setting from set()', () => {
-    /*let config = new Config();
-    let platform = new Platform(['ios']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init(null, qp, platform);
 
     config.set('tabsPlacement', 'top');
 
     expect(config.get('tabsPlacement')).toEqual('top');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set ios platform settings from settings()', () => {
-    /*let config = new Config();
-    let platform = new Platform(['ios']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init(null, qp, platform);
 
     config.settings('ios', {
       key: 'iosValue'
     });
 
     expect(config.get('key')).toEqual('iosValue');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set/get mobile setting even w/ higher priority ios', () => {
-    /*let config = new Config();
-    let platform = new Platform(['mobile', 'ios']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['mobile', 'ios'];
 
-    config.settings({
+    config.init({
       key: 'defaultValue',
       platforms: {
         mobile: {
           key: 'mobileValue'
         }
       }
-    });
+    }, qp, platform);
 
     expect(config.get('key')).toEqual('mobileValue');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set/get mobile setting even w/ higher priority ios', () => {
-    /*let config = new Config();
-    let platform = new Platform(['mobile', 'ios']);
-    config.setPlatform(platform);
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['mobile', 'ios'];
 
-    config.settings({
+    config.init({
       key: 'defaultValue',
       platforms: {
         mobile: {
           key: 'mobileValue'
         }
       }
-    });
+    }, qp, platform);
 
     expect(config.get('key')).toEqual('mobileValue');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set/get android setting w/ higher priority than mobile', () => {
-    /*let config = new Config();
-    let platform = new Platform(['mobile', 'android']);
-    config.setPlatform(platform);
-
-    config.settings({
+    let config = new Config();
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['mobile', 'android'];
+    config.init({
       key: 'defaultValue',
       platforms: {
         mobile: {
@@ -410,18 +373,18 @@ describe('Config', () => {
           key: 'androidValue'
         }
       }
-    });
+    }, qp, platform);
 
     expect(config.get('key')).toEqual('androidValue');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should set/get ios setting w/ platforms set', () => {
     let config = new Config();
-    /*let platform = new Platform(['ios']);
-    config.setPlatform(platform);
-*/
+    let qp = new QueryParams('');
+    let platform = new Platform();
+    platform._platforms = ['ios'];
+    config.init(null, qp, platform);
+
     config.settings({
       key: 'defaultValue',
       platforms: {
@@ -435,7 +398,6 @@ describe('Config', () => {
     });
 
     expect(config.get('key')).toEqual('iosValue');
-    expect(true).toEqual(false);
   });
 
   it('should set/get default setting w/ platforms set, but no platform match', () => {
@@ -470,7 +432,7 @@ describe('Config', () => {
 
   it('should get null setting', () => {
     let config = new Config();
-
+    config.init(null, null, null);
     expect(config.get('name')).toEqual(null);
     expect(config.get('name')).toEqual(null);
     expect(config.get('occupation')).toEqual(null);
@@ -479,6 +441,7 @@ describe('Config', () => {
 
   it('should set/get single setting', () => {
     let config = new Config();
+    config.init(null, null, null);
     config.set('name', 'Doc Brown');
     config.set('occupation', 'Weather Man');
 
@@ -489,24 +452,22 @@ describe('Config', () => {
   });
 
   it('should init w/ given config settings', () => {
-    /*let config = new Config({
+    let config = new Config();
+    config.init({
       name: 'Doc Brown',
       occupation: 'Weather Man'
-    });
+    }, null, null);
     expect(config.get('name')).toEqual('Doc Brown');
     expect(config.get('occupation')).toEqual('Weather Man');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get a fallback value', () => {
-    /*let config = new Config({
+    let config = new Config();
+    config.init({
       name: 'Doc Brown'
-    });
+    }, null, null);
     expect(config.get('name', 'Marty')).toEqual('Doc Brown');
     expect(config.get('occupation', 'Weather Man')).toEqual('Weather Man');
-    */
-    expect(true).toEqual(false);
   });
 
   it('should get a boolean value with a boolean config value', () => {
@@ -588,7 +549,7 @@ describe('Config', () => {
     expect( config.getNumber('allString', 6)).toEqual(6);
     expect( config.getNumber('imNull', 6)).toEqual(6);
     expect( config.getNumber('imUndefined', 6)).toEqual(6);
-    
+
   });
 
   it('should get settings object', () => {

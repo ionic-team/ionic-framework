@@ -159,7 +159,7 @@ export class Config {
       let configObj: any = null;
 
       if (this.platform) {
-        let queryStringValue = this._qp.get('ionic' + key);
+        const queryStringValue = this._qp.get('ionic' + key);
         if (isDefined(queryStringValue)) {
           return this._c[key] = (queryStringValue === 'true' ? true : queryStringValue === 'false' ? false : queryStringValue);
         }
@@ -169,10 +169,10 @@ export class Config {
 
         // array of active platforms, which also knows the hierarchy,
         // with the last one the most important
-        let activePlatformKeys = this.platform.platforms();
+        const activePlatformKeys = this.platform.platforms();
 
         // loop through all of the active platforms we're on
-        for (let i = 0, ilen = activePlatformKeys.length; i < ilen; i++) {
+        for (var i = 0, ilen = activePlatformKeys.length; i < ilen; i++) {
 
           // get user defined platform values
           if (this._s.platforms) {
@@ -254,7 +254,7 @@ export class Config {
    * value was `null`. Fallback value defaults to `false`.
    */
   getBoolean(key: string, fallbackValue: boolean = false): boolean {
-    let val = this.get(key);
+    const val = this.get(key);
     if (val === null) {
       return fallbackValue;
     }
@@ -278,7 +278,7 @@ export class Config {
    * value turned out to be `NaN`. Fallback value defaults to `NaN`.
    */
   getNumber(key: string, fallbackValue: number = NaN): number {
-    let val = parseFloat( this.get(key) );
+    const val = parseFloat( this.get(key) );
     return isNaN(val) ? fallbackValue : val;
   }
 
