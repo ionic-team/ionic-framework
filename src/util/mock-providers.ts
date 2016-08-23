@@ -9,6 +9,7 @@ import { DeepLinker } from '../navigation/deep-linker';
 import { Form } from './form';
 import { GestureController } from '../gestures/gesture-controller';
 import { Keyboard } from './keyboard';
+import { Menu } from '../components/menu/menu';
 import { NavOptions, ViewState, DeepLinkConfig } from '../navigation/nav-util';
 import { OverlayPortal } from '../components/nav/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
@@ -290,6 +291,10 @@ export const mockTabs = function(app?: App): Tabs {
   let linker: DeepLinker = null;
 
   return new Tabs(null, null, app, config, elementRef, platform, renderer, linker);
+};
+
+export const mockMenu = function(): Menu {
+  return new Menu(null, null, null, null, null, null, null, null);
 };
 
 export const mockIonicApp = function(): IonicApp {

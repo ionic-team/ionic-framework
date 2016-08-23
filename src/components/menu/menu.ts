@@ -291,8 +291,11 @@ export class Menu {
    */
   @Output() ionClose: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  /** @internal */
+  _menuCtrl: MenuController;
+
   constructor(
-    private _menuCtrl: MenuController,
+    _menuCtrl: MenuController,
     private _elementRef: ElementRef,
     private _config: Config,
     private _platform: Platform,
@@ -300,7 +303,9 @@ export class Menu {
     private _keyboard: Keyboard,
     private _zone: NgZone,
     public gestureCtrl: GestureController
-  ) { }
+  ) {
+    this._menuCtrl = _menuCtrl;
+  }
 
   /**
    * @private
