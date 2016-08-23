@@ -38,7 +38,7 @@ export { ViewController } from './components/nav/view-controller';
 export { Navbar, NavbarTemplate } from './components/navbar/navbar';
 export { Option } from './components/option/option';
 export { Picker, PickerController } from './components/picker/picker';
-export { PickerOptions } from './components/picker/picker-options';
+export { PickerOptions, PickerColumn, PickerColumnOption } from './components/picker/picker-options';
 export { Popover, PopoverController } from './components/popover/popover';
 export { PopoverOptions } from './components/popover/popover-options';
 export { RadioButton } from './components/radio/radio-button';
