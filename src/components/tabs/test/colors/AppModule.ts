@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from '../../../dist';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 @Component({template: 'hi'})

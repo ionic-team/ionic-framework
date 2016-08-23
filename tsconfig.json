@@ -8,7 +8,7 @@
     "outDir": "dist/ionic-angular",
     "noImplicitAny": false,
     "lib": ["dom", "es2015"],
-    "types": ["jasmine"]
+    "types": ["jasmine", "protractor"]
   },
   "include": [
     "./src/**/*.ts"

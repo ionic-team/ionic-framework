@@ -74,10 +74,9 @@ export class ToastCmp implements AfterViewInit {
   ngAfterViewInit() {
     // if there's a `duration` set, automatically dismiss.
     if (this.d.duration) {
-      this.dismissTimeout =
-        setTimeout(() => {
+      this.dismissTimeout = (<any>setTimeout(() => {
           this.dismiss('backdrop');
-        }, this.d.duration);
+        }, this.d.duration));
     }
     this.enabled = true;
   }

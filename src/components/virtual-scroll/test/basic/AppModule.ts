@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Platform } from '../../../dist';
+import { IonicApp, IonicModule, Platform } from '../../../..';
 
 
 @Component({

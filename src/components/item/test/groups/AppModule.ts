@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController, NavParams } from '../../../dist';
+import { IonicApp, IonicModule, NavController, NavParams } from '../../../..';
 
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Config, Animation } from '../../../dist';
+import { IonicApp, IonicModule, Config, Animation } from '../../../..';
 
 
 @Component({
@@ -77,3 +77,9 @@ export class E2EApp {
   ]
 })
 export class AppModule {}
+
+import { platformBrowser } from '@angular/platform-browser';
+import { enableProdMode } from '@angular/core';
+
+enableProdMode();
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);

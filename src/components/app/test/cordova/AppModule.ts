@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController, ModalController, ViewController } from '../../../dist';
+import { IonicApp, IonicModule, NavController, ModalController, ViewController } from '../../../..';
 import { Injectable } from '@angular/core';
 
 
@@ -171,3 +171,9 @@ export class E2EApp {
   ]
 })
 export class AppModule {}
+
+import { platformBrowser } from '@angular/platform-browser';
+import { enableProdMode } from '@angular/core';
+
+enableProdMode();
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);

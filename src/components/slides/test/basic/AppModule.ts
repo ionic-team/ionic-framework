@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
 import { Http } from '@angular/http';
-import { IonicApp, IonicModule, Slides } from '../../../dist';
+import { IonicApp, IonicModule, Slides } from '../../../..';
 
 
 @Component({

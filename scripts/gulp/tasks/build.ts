@@ -1,11 +1,15 @@
-import { DIST_BUILD_ROOT, SRC_ROOT } from '../constants';
+import { COMMON_JS_NGC_CONFIG, DIST_BUILD_ROOT, SRC_ROOT } from '../constants';
 import { task } from 'gulp';
-import { tsBuildTask } from '../util';
+import { tsBuildTask, execNodeTask } from '../util';
 
 
 task('build', ['build.ts'], () => [DIST_BUILD_ROOT]);
 
-task('build.ts',
-  tsBuildTask(SRC_ROOT, 'index', ['**/AppModule.ts', '**/e2e.ts'])
-);
+task('build.ts', () => {
+  let srcGlob = [`${SRC_ROOT}/**/*.ts`, `${SRC_ROOT}/**/*.spec.ts`, `!${SRC_ROOT}/components/*/test/*/*.ts`];
+  return tsBuildTask(srcGlob, DIST_BUILD_ROOT)
+});
 
+task('build.ts.ngc', execNodeTask(
+  '@angular/compiler-cli', 'ngc', ['-p', COMMON_JS_NGC_CONFIG]
+));

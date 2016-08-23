@@ -10,10 +10,12 @@
     "declaration": true,
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "outDir": "../../dist/e2e"
   },
   "angularCompilerOptions": {
-    "skipMetadataEmit": true
+    "skipMetadataEmit": true,
+    "outDir": "../../dist/e2e"
   },
   "include": [
     "test/**/entry.ts",

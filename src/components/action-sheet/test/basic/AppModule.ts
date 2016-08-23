@@ -1,6 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../../../dist';
-
+import { IonicApp, IonicModule, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../../../..';
 
 @Component({
   templateUrl: 'main.html'
@@ -202,3 +201,10 @@ export class E2EApp {
   ]
 })
 export class AppModule {}
+
+
+import { platformBrowser } from '@angular/platform-browser';
+import { enableProdMode } from '@angular/core';
+
+enableProdMode();
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);

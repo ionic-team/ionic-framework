@@ -1,50 +1,42 @@
+import * as child_process from 'child_process';
 import { DIST_BUILD_ROOT, NODE_MODULES_ROOT, PROJECT_ROOT, PACKAGE_NAME, SRC_ROOT } from './constants';
 import * as fs from 'fs';
-import * as gulpTs from 'gulp-typescript';
 import * as path from 'path';
-import { dest } from 'gulp';
+import { src, dest } from 'gulp';
 
-
-/** Create a TS Build Task, based on the options. */
-export function tsBuildTask(tsConfigPath: string, enteryIndex: string, exclude: string[]) {
-  const gulpSourcemaps = require('gulp-sourcemaps');
-  const gulpMerge = require('merge2');
-
-  const orgConfigPath = path.join(PROJECT_ROOT, 'tsconfig.json');
-  const newConfigPath = path.join(tsConfigPath, 'tsconfig.json');
-
-  return () => {
-    const tsConfig: any = JSON.parse(fs.readFileSync(orgConfigPath, 'utf-8'));
-
-    tsConfig.compilerOptions.outDir = DIST_BUILD_ROOT;
-    tsConfig.compilerOptions.paths = {};
-    tsConfig.compilerOptions.paths[PACKAGE_NAME] = [path.join(SRC_ROOT, enteryIndex)];
-    tsConfig.compilerOptions.typeRoots = [path.join(NODE_MODULES_ROOT, '@types')];
-    tsConfig.include = [path.join(SRC_ROOT, '**', '*.ts')];
-    tsConfig.exclude = exclude;
-
-    const newConfigData = JSON.stringify(tsConfig, undefined, 2);
-
-    fs.writeFileSync(newConfigPath, newConfigData);
-
-    const tsProject = gulpTs.createProject(newConfigPath, {
-      typescript: require('typescript')
-    });
-
-    let pipe = tsProject.src()
-      .pipe(gulpSourcemaps.init())
-      .pipe(gulpTs(tsProject));
-    let dts = pipe.dts.pipe(dest(DIST_BUILD_ROOT));
-
-    return gulpMerge([
-      dts,
-      pipe
-        .pipe(gulpSourcemaps.write('.'))
-        .pipe(dest(DIST_BUILD_ROOT))
-    ]);
-  };
+export function mergeObjects(obj1: any, obj2: any ) {
+  var obj3 = {};
+  for (var attrname in obj1) {
+    (<any>obj3)[attrname] = obj1[attrname];
+  }
+  for (var attrname in obj2) {
+    (<any>obj3)[attrname] = obj2[attrname];
+  }
+  return obj3;
 }
 
+function getRootTsConfigCompilerOptions(): any{
+  let tsConfig = require('../../tsconfig');
+  // provide our own version of typescript
+  tsConfig.compilerOptions.typescript = require('typescript');
+
+  return tsConfig.compilerOptions;
+}
+
+/** Create a TS Build Task, based on the options. */
+export function tsBuildTask(srcGlob: string[], destDir: string, overrideOptions: any = {}) {
+  let tsc = require('gulp-typescript');
+  let compilerOptions = getRootTsConfigCompilerOptions();
+  if ( ! overrideOptions ) {
+    overrideOptions = {};
+  }
+  var mergedOptions = mergeObjects(compilerOptions, overrideOptions);
+  return src(srcGlob)
+    .pipe(tsc(mergedOptions))
+    .pipe(dest(destDir));
+}
+
+/* creates a karma code coverage report */
 export function createKarmaCoverageReport(done: Function ){
   let exec = require('child_process').exec;
   let command = `node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html`;
@@ -52,6 +44,68 @@ export function createKarmaCoverageReport(done: Function ){
   exec(command, function(err: any, stdout: any, stderr: any){
     done(err);
   });
+}
+
+/** Options that can be passed to execTask or execNodeTask. */
+export interface ExecTaskOptions {
+  // Whether to output to STDERR and STDOUT.
+  silent?: boolean;
+  // If an error happens, this will replace the standard error.
+  errMessage?: string;
+}
+
+/** Create a task that executes a binary as if from the command line. */
+export function execTask(binPath: string, args: string[], options: ExecTaskOptions = {}) {
+  return (done: (err?: string) => void) => {
+    const childProcess = child_process.spawn(binPath, args);
+
+    if (!options.silent) {
+      childProcess.stdout.on('data', (data: string) => {
+        process.stdout.write(data);
+      });
+
+      childProcess.stderr.on('data', (data: string) => {
+        process.stderr.write(data);
+      });
+    }
+
+    childProcess.on('close', (code: number) => {
+      if (code != 0) {
+        if (options.errMessage === undefined) {
+          done('Process failed with code ' + code);
+        } else {
+          done(options.errMessage);
+        }
+      } else {
+        done();
+      }
+    });
+  }
+}
+
+/**
+ * Create a task that executes an NPM Bin, by resolving the binary path then executing it. These are
+ * binaries that are normally in the `./node_modules/.bin` directory, but their name might differ
+ * from the package. Examples are typescript, ngc and gulp itself.
+ */
+export function execNodeTask(packageName: string, executable: string | string[], args?: string[],
+                             options: ExecTaskOptions = {}) {
+  if (!args) {
+    args = <string[]>executable;
+    executable = undefined;
+  }
+
+  return (done: (err: any) => void) => {
+    const resolveBin = require('resolve-bin');
+    resolveBin(packageName, { executable: executable }, (err: any, binPath: string) => {
+      if (err) {
+        done(err);
+      } else {
+        // Forward to execTask.
+        execTask(binPath, args, options)(done);
+      }
+    });
+  }
 }
 
 

@@ -8,13 +8,13 @@
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "dist"
+    "outDir": "../../dist/ionic-angular"
   },
   "angularCompilerOptions": {
-    "genDir": "dist",
+    "outDir": "../../dist/ionic-angular",
     "skipTemplateCodegen": true
   },
   "files": [
-    "./src/index.ts"
+    "../../src/index.ts"
   ]
 }

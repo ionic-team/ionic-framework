@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController } from '../../../dist';
+import { IonicApp, IonicModule, NavController } from '../../../..';
 
 
 let delay = 100;
@@ -21,14 +21,14 @@ export class Page1 {
   constructor(private nav: NavController) {}
 
   play() {
-    this.tmr = setTimeout(() => {
+    this.tmr = (<any>setTimeout(() => {
       count++;
       console.log('push', count);
 
       this.nav.push(Page2, null, {
         animate: animate
       });
-    }, delay);
+    }, delay));
   }
 
   ionViewDidEnter() {
@@ -55,14 +55,14 @@ export class Page2 {
   constructor(public navCtrl: NavController) {}
 
   play() {
-    this.tmr = setTimeout(() => {
+    this.tmr = (<any>setTimeout(() => {
       count++;
       console.log('pop', count);
 
       this.navCtrl.pop({
         animate: animate
       });
-    }, delay);
+    }, delay));
   }
 
   ionViewDidEnter() {

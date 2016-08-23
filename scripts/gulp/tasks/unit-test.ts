@@ -7,12 +7,11 @@ import { createKarmaCoverageReport } from '../util';
 task('test', ['test.vendor', 'build'], (done: () => void) => {
   const karma = require('karma');
   const argv = require('yargs').argv;
-  
+
   let karmaConfig = {
     configFile: path.join(SCRIPTS_ROOT, 'karma/karma.conf.js'),
-  }
+  };
 
-  console.log("argv.testGrep: ", argv.testGrep);
   if ( argv.testGrep ) {
     (<any>karmaConfig).client = {
       args: ['--grep', argv.testGrep]

@@ -77,7 +77,12 @@ export class LoadingCmp {
     }
 
     // If there is a duration, dismiss after that amount of time
-    this.d.duration ? this.durationTimeout = setTimeout(() => this.dismiss('backdrop'), this.d.duration) : null;
+    if ( this.d && this.d.duration ) {
+      this.durationTimeout = (<any> setTimeout( () => {
+        this.dismiss('backdrop');
+      }, this.d.duration));
+    }
+
   }
 
   dismiss(role: any): Promise<any> {

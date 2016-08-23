@@ -8,13 +8,13 @@
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "dist/esm"
+    "outDir": "../../../dist/ionic-angular/esm"
   },
   "angularCompilerOptions": {
-    "genDir": "dist/esm",
+    "genDir": "../../../dist/ionic-angular/esm",
     "skipTemplateCodegen": true
   },
   "files": [
-    "./src/index.ts"
+    "../../../src/index.ts"
   ]
 }

@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Refresher } from '../../../dist';
+import { IonicApp, IonicModule, Refresher } from '../../../..';
 
 
 @Component({
