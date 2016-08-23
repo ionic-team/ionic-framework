@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, ElementRef, NgZone, Renderer } from '@angular/core';
+import { ChangeDetectorRef, ComponentRef, ElementRef, NgZone, Renderer, ViewContainerRef } from '@angular/core';
 import { Location } from '@angular/common';
 
+import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
 import { IonicApp } from '../components/app/app-root';
 import { Config } from '../config/config';
@@ -8,12 +9,15 @@ import { DeepLinker } from '../navigation/deep-linker';
 import { Form } from './form';
 import { GestureController } from '../gestures/gesture-controller';
 import { Keyboard } from './keyboard';
+import { NavOptions, ViewState, DeepLinkConfig } from '../navigation/nav-util';
 import { OverlayPortal } from '../components/nav/overlay-portal';
+import { PageTransition } from '../transitions/page-transition';
 import { Platform } from '../platform/platform';
 import { QueryParams } from '../platform/query-params';
 import { Tab }  from '../components/tabs/tab';
 import { Tabs }  from '../components/tabs/tabs';
 import { Transition } from '../transitions/transition';
+import { TransitionController } from '../transitions/transition-controller';
 import { UrlSerializer } from '../navigation/url-serializer';
 import { ViewController } from '../navigation/view-controller';
 
@@ -31,7 +35,7 @@ export const mockQueryParams = function(url: string = '/') {
   return new QueryParams(url);
 };
 
-export const mockPlatform = function(platforms?: string[]) {
+export const mockPlatform = function() {
   return new Platform();
 };
 
@@ -39,6 +43,18 @@ export const mockApp = function(config?: Config, platform?: Platform) {
   platform = platform || mockPlatform();
   config = config || mockConfig(null, '/', platform);
   return new App(config, platform);
+};
+
+export const mockTrasitionController = function() {
+  let trnsCtrl = new TransitionController();
+  trnsCtrl.get = (trnsId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) => {
+    let trns = new PageTransition(enteringView, leavingView, opts, (callback: Function) => {
+      callback();
+    });
+    trns.trnsId = trnsId;
+    return trns;
+  };
+  return trnsCtrl;
 };
 
 export const mockZone = function(): NgZone {
@@ -56,7 +72,8 @@ export const mockZone = function(): NgZone {
 export const mockChangeDetectorRef = function(): ChangeDetectorRef {
   let cd: any = {
     reattach: () => {},
-    detach: () => {}
+    detach: () => {},
+    detectChanges: () => {}
   };
   return cd;
 };
@@ -86,17 +103,37 @@ export const mockLocation = function(): Location {
   return location;
 };
 
-export const mockTransition = function(playCallback: Function, duration: number) {
-  return function _createTrans(enteringView: ViewController, leavingView: ViewController, transitionOpts: any): Transition {
-    let transition: any = {
-      play: () => {
-        playCallback();
-      },
-      getDuration: () => { return duration; },
-      onFinish: () => {}
-    };
-    return transition;
+export class MockPage {}
+
+export const mockView = function(componentType?: any, data?: any) {
+  if (!componentType) {
+    componentType = MockPage;
+  }
+  let view = new ViewController(componentType, data);
+  view.init(mockComponentRef());
+  return view;
+};
+
+export const mockViews = function(nav: NavControllerBase, views: ViewController[]) {
+  nav._views = views;
+  views.forEach(v => v._setNav(nav));
+};
+
+export const mockComponentRef = function(): ComponentRef<any> {
+  let componentRef: any = {
+    location: mockElementRef(),
+    changeDetectorRef: mockChangeDetectorRef(),
+    destroy: () => {}
   };
+  return componentRef;
+};
+
+export const mockDeepLinker = function(linkConfig: DeepLinkConfig = null, app?: App) {
+  let serializer = new UrlSerializer(linkConfig);
+
+  let location = mockLocation();
+
+  return new DeepLinker(app || mockApp(), serializer, location);
 };
 
 export const mockNavController = function(): NavControllerBase {
@@ -116,19 +153,15 @@ export const mockNavController = function(): NavControllerBase {
 
   let renderer = mockRenderer();
 
-  let compiler: any = null;
+  let componentFactoryResolver: any = null;
 
   let gestureCtrl = new GestureController(app);
 
-  // let navLikConfig = new NavLinkConfig([]);
+  let linker = mockDeepLinker(null, app);
 
-  let serializer = new UrlSerializer(null);
+  let trnsCtrl = mockTrasitionController();
 
-  let location = mockLocation();
-
-  let deepLinker = new DeepLinker(app, serializer, location);
-
-  return new NavControllerBase(
+  let nav = new NavControllerBase(
     null,
     app,
     config,
@@ -136,11 +169,27 @@ export const mockNavController = function(): NavControllerBase {
     elementRef,
     zone,
     renderer,
-    compiler,
+    componentFactoryResolver,
     gestureCtrl,
-    null,
-    deepLinker
+    trnsCtrl,
+    linker
   );
+
+  nav._viewInit = function(trns: Transition, enteringView: ViewController, opts: NavOptions) {
+    enteringView.init(mockComponentRef());
+    enteringView._state = ViewState.INITIALIZED;
+  };
+
+  (<any>nav)._orgViewInsert = nav._viewInsert;
+
+  nav._viewInsert = function(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
+    let mockedViewport: any = {
+      insert: () => { }
+    };
+    (<any>nav)._orgViewInsert(view, componentRef, mockedViewport);
+  };
+
+  return nav;
 };
 
 export const mockOverlayPortal = function(): OverlayPortal {
@@ -164,8 +213,6 @@ export const mockOverlayPortal = function(): OverlayPortal {
 
   let gestureCtrl = new GestureController(app);
 
-  // let navLikConfig = new NavLinkConfig([]);
-
   let serializer = new UrlSerializer(null);
 
   let location = mockLocation();
@@ -185,7 +232,7 @@ export const mockOverlayPortal = function(): OverlayPortal {
     deepLinker,
     null
   );
-}
+};
 
 export const mockTab = function(parentTabs: Tabs): Tab {
   let platform = mockPlatform();
@@ -210,13 +257,7 @@ export const mockTab = function(parentTabs: Tabs): Tab {
 
   let gestureCtrl = new GestureController(app);
 
-  // let navLikConfig = new NavLinkConfig([]);
-
-  let serializer = new UrlSerializer(null);
-
-  let location = mockLocation();
-
-  let linker = new DeepLinker(app, serializer, location);
+  let linker = mockDeepLinker(null, app);
 
   let tab = new Tab(
     parentTabs,
@@ -263,4 +304,4 @@ export const mockIonicApp = function(): IonicApp {
   };
 
   return <IonicApp> mockIonicAppObj;
-}
+};
