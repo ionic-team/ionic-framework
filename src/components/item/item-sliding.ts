@@ -108,7 +108,7 @@ const enum SlidingState {
  *     </ion-item>
  *     <ion-item-options side="left">
  *       <button ion-button (click)="favorite(item)">Favorite</button>
- *       <button ion-button danger (click)="share(item)">Share</button>
+ *       <button ion-button color="danger" (click)="share(item)">Share</button>
  *     </ion-item-options>
 
  *     <ion-item-options side="right">

@@ -1,8 +1,7 @@
-import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { isTrueProperty } from '../../util/util';
-import { Toolbar } from '../toolbar/toolbar';
 
 
 /**
@@ -37,13 +36,13 @@ import { Toolbar } from '../toolbar/toolbar';
   *  <!-- Colors -->
   *  <button ion-button>Default</button>
   *
-  *  <button ion-button secondary>Secondary</button>
+  *  <button ion-button color="secondary">Secondary</button>
   *
-  *  <button ion-button danger>Danger</button>
+  *  <button ion-button color="danger">Danger</button>
   *
-  *  <button ion-button light>Light</button>
+  *  <button ion-button color="light">Light</button>
   *
-  *  <button ion-button dark>Dark</button>
+  *  <button ion-button color="dark">Dark</button>
   *
   *  <!-- Shapes -->
   *  <button ion-button full>Full Button</button>
@@ -98,12 +97,12 @@ import { Toolbar } from '../toolbar/toolbar';
 })
 export class Button {
   private _role: string = 'button'; // bar-button
+  private _mt: boolean = false; // menutoggle
   private _size: string = null; // large/small/default
   private _style: string = 'default'; // outline/clear/solid
   private _shape: string = null; // round/fab
   private _display: string = null; // block/full
-  private _colors: Array<string> = []; // primary/secondary
-  private _icon: string = null; // left/right/only
+  private _color: string = null; // primary/secondary
   private _disabled: boolean = false; // disabled
   private _init: boolean;
 
@@ -164,6 +163,14 @@ export class Button {
   }
 
   /**
+   * @input {string} A floating action button.
+   */
+  @Input()
+  set fab(val: boolean) {
+    this._attr('_shape', 'fab', val);
+  }
+
+  /**
    * @input {string} A button that fills its parent container with a border-radius.
    */
   @Input()
@@ -180,6 +187,9 @@ export class Button {
   }
 
   _attr(type: string, attrName: string, attrValue: boolean) {
+    if (type === '_style') {
+      this._setColor(this._color, isTrueProperty(attrValue));
+    } 
     this._setClass(this[type], false);
     if (isTrueProperty(attrValue)) {
       this[type] = attrName;
@@ -187,9 +197,7 @@ export class Button {
     } else {
       // Special handling for '_style' which defaults to 'default'.
       this[type] = (type === '_style' ? 'default' : null);
-    }
-    if (type === '_style') {
-      this._setColor(attrName, isTrueProperty(attrValue));
+      this._setClass(this[type], true);
     }
   }
 
@@ -197,16 +205,12 @@ export class Button {
    * @input {string} Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
    */
   @Input()
-  set color(val: string|string[]) {
-    // Clear the colors for all styles including the default one.
-    this._setColor(BUTTON_STYLE_ATTRS.concat(['default']), false);
-    // Support array input which is also supported via multiple attributes (e.g. primary, secondary, etc).
-    this._colors = (val instanceof Array ? val : [val]);
-    // Set the colors for the currently effective style.
-    this._setColor(this._style, true);
+  set color(val: string) {
+    this._updateColor(val);
   }
 
   constructor(
+    @Attribute('menuToggle') menuToggle: string,
     @Attribute('ion-button') ionButton: string,
     config: Config,
     private _elementRef: ElementRef,
@@ -226,7 +230,11 @@ export class Button {
       this.setRole(ionButton);
     }
 
-    this._readAttrs(element);
+    // menuToggle can be added with or without a string
+    // but if the attribute isn't added it will be null
+    if (menuToggle !== null) {
+      this._mt = true;
+    }
   }
 
   /**
@@ -238,10 +246,12 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
-  ngAfterContentChecked() {
-    this._assignCss(true);
+  _updateColor(newColor: string) {
+    this._setColor(this._color, false);
+    this._setColor(newColor, true);
+    this._color = newColor;
   }
 
   /**
@@ -263,83 +273,48 @@ export class Button {
   /**
    * @private
    */
-  private _readAttrs(element: HTMLElement) {
-    let elementAttrs = element.attributes;
-    let attrName: string;
-    for (let i = 0, l = elementAttrs.length; i < l; i++) {
-      if (elementAttrs[i].value !== '') continue;
-
-      attrName = elementAttrs[i].name;
-
-      if (BUTTON_STYLE_ATTRS.indexOf(attrName) > -1) {
-        this._style = attrName;
-
-      } else if (BUTTON_DISPLAY_ATTRS.indexOf(attrName) > -1) {
-        this._display = attrName;
-
-      } else if (BUTTON_SHAPE_ATTRS.indexOf(attrName) > -1) {
-        this._shape = attrName;
-
-      } else if (BUTTON_SIZE_ATTRS.indexOf(attrName) > -1) {
-        this._size = attrName;
-
-      } else if (!(IGNORE_ATTRS.test(attrName))) {
-        this._colors.push(attrName);
-      }
-    }
-  }
-
-  /**
-   * @private
-   */
   private _assignCss(assignCssClass: boolean) {
     let role = this._role;
     if (role) {
-      this._renderer.setElementClass(this._elementRef.nativeElement, role, assignCssClass); // button
+      this._renderer.setElementClass(this._elementRef.nativeElement, role, assignCssClass); // button    
+
+      this._setClass('menutoggle', this._mt); // menutoggle
 
       this._setClass(this._style, assignCssClass); // button-clear
       this._setClass(this._shape, assignCssClass); // button-round
       this._setClass(this._display, assignCssClass); // button-full
       this._setClass(this._size, assignCssClass); // button-small
-      this._setClass(this._icon, assignCssClass); // button-icon-left
-      this._setColor(this._style, assignCssClass); // button-secondary, button-clear-secondary
+      this._setColor(this._color, assignCssClass); // button-secondary, bar-button-secondary
     }
   }
-
+ 
   /**
-   * @private
+   * @internal
    */
-  private _setClass(type: string, assignCssClass: boolean) {
+  _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
       this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type.toLowerCase(), assignCssClass);
     }
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _setColor(type: string|string[], assignCssClass: boolean) {
-    if (type && this._init) {
-      // Support array to allow removal of many styles at once.
-      let styles = (type instanceof Array ? type : [type]);
-      styles.forEach(styleName => {
-        // If the role is not a bar-button, don't apply the solid style
-        styleName = (this._role !== 'bar-button' && styleName === 'solid' ? 'default' : styleName);
-        let colorStyle = (styleName !== null && styleName !== 'default' ? styleName.toLowerCase() + '-' : '');
-        this._colors.forEach(colorName => {
-          this._setClass(colorStyle + colorName, assignCssClass); // button-secondary, button-clear-secondary
-        });
-      });
+  _setColor(color: string, isAdd: boolean) {
+    if (color && this._init) {
+      // The class should begin with the button role
+      // button, bar-button
+      let className = this._role;
+
+      // If the role is not a bar-button, don't apply the solid style
+      let style = this._style;
+      style = (this._role !== 'bar-button' && style === 'solid' ? 'default' : style);
+
+      className += (style !== null && style !== '' && style !== 'default' ? '-' + style.toLowerCase() : '');
+
+      if (color !== null && color !== '') {
+        this._renderer.setElementClass(this._elementRef.nativeElement, `${className}-${color}`, isAdd);
+      }
     }
-  }
-
+  }   
 }
-
-const BUTTON_SIZE_ATTRS = ['large', 'small', 'default'];
-const BUTTON_STYLE_ATTRS = ['clear', 'outline', 'solid'];
-const BUTTON_SHAPE_ATTRS = ['round', 'fab'];
-const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
-const IGNORE_ATTRS = /_ng|button|left|right/;
-
-const TEXT = 1;
-const ICON = 2;

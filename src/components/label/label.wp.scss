@@ -66,7 +66,10 @@ ion-label[floating] {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  ion-label[#{$color-name}] {
+  .label-#{$color-name},
+  .item-input .label-#{$color-name},
+  .item-select .label-#{$color-name},
+  .item-datetime .label-#{$color-name} {
     color: $color-base;
   }
 

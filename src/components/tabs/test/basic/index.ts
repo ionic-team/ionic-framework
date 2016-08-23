@@ -28,15 +28,15 @@ import { ionicBootstrap, App, AlertController, ModalController, ViewController, 
 
       <ion-item *ngFor="let i of items">
         <ion-label>Toggle {{i}}</ion-label>
-        <ion-toggle secondary></ion-toggle>
+        <ion-toggle color="secondary"></ion-toggle>
       </ion-item>
     </ion-list>
 
     <ion-list>
-      <button ion-item danger detail-none>
+      <button ion-item color="danger" detail-none>
         Reset All Filters
       </button>
-      <button ion-item danger detail-none (click)="appNavPop()">
+      <button ion-item color="danger" detail-none (click)="appNavPop()">
         App Nav Pop
       </button>
     </ion-list>
@@ -127,8 +127,8 @@ export class Tab1 {
             <p>{{session.location}} {{session.location}} {{session.location}}</p>
           </ion-item>
           <ion-item-options>
-            <button ion-button primary>Speaker<br>Info</button>
-            <button ion-button secondary>Add to<br>Favorites</button>
+            <button ion-button color="primary">Speaker<br>Info</button>
+            <button ion-button color="secondary">Add to<br>Favorites</button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
@@ -220,7 +220,7 @@ export class Tab3 {
   template: `
     <ion-menu [content]="content">
       <ion-header>
-        <ion-toolbar secondary>
+        <ion-toolbar color="secondary">
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>

@@ -45,6 +45,7 @@ import { NavPop } from '../components/nav/nav-pop';
 import { NavPush } from '../components/nav/nav-push';
 import { NavbarTemplate, Navbar } from '../components/navbar/navbar';
 import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when';
+import { Typography } from '../components/typography/typography';
 
 /**
  * @private
@@ -115,6 +116,7 @@ import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when'
  * - IdRef
  * - ShowWhen
  * - HideWhen
+ * - Typography
  */
 export const IONIC_DIRECTIVES: any[] = [
   // Angular
@@ -195,5 +197,6 @@ export const IONIC_DIRECTIVES: any[] = [
   NavPop,
 
   ShowWhen,
-  HideWhen
+  HideWhen,
+  Typography
 ];

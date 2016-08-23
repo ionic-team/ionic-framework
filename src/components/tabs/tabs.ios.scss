@@ -133,7 +133,7 @@ ion-tabs[tabsPlacement=top] ion-tabbar {
 
 @mixin tabbar-ios($color-name, $color-base, $color-contrast) {
 
-  ion-tabs[#{$color-name}] ion-tabbar {
+  .tabs-#{$color-name} ion-tabbar {
     border-color: darken($color-base, 10%);
     background-color: $color-base;
 

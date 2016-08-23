@@ -37,12 +37,12 @@ import { Platform } from '../../platform/platform';
  * ```html
  * <ion-list>
  *   <ion-item>
- *     <ion-label primary>Inline Label</ion-label>
+ *     <ion-label color="primary">Inline Label</ion-label>
  *     <ion-input placeholder="Text Input"></ion-input>
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label primary fixed>Fixed Label</ion-label>
+ *     <ion-label color="primary" fixed>Fixed Label</ion-label>
  *     <ion-input type="tel" placeholder="Tel Input"></ion-input>
  *   </ion-item>
  *
@@ -51,17 +51,17 @@ import { Platform } from '../../platform/platform';
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label primary stacked>Stacked Label</ion-label>
+ *     <ion-label color="primary" stacked>Stacked Label</ion-label>
  *     <ion-input type="email" placeholder="Email Input"></ion-input>
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label primary stacked>Stacked Label</ion-label>
+ *     <ion-label color="primary" stacked>Stacked Label</ion-label>
  *     <ion-input type="password" placeholder="Password Input"></ion-input>
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label primary floating>Floating Label</ion-label>
+ *     <ion-label color="primary" floating>Floating Label</ion-label>
  *     <ion-input></ion-input>
  *   </ion-item>
  *
@@ -159,7 +159,7 @@ export class TextInput extends InputBase {
  *    <ion-label floating>Description</ion-label>
  *    <ion-textarea></ion-textarea>
  *  </ion-item>
- * 
+ *
  * <ion-item>
  *    <ion-label>Long Description</ion-label>
  *    <ion-textarea rows="6" placeholder="enter long description here..."></ion-textarea>

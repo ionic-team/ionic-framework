@@ -68,24 +68,18 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 }
 
 @mixin wp-toolbar-theme($color-name, $color-base, $color-contrast) {
-  .toolbar[#{$color-name}] {
+  .toolbar-#{$color-name} {
     $fg-color: $color-contrast;
 
     .toolbar-background {
       background: $color-base;
     }
 
+    .bar-button-clear,
     .bar-button-default,
     .bar-button-outline,
     .toolbar-title {
       color: $fg-color;
-    }
-
-    .bar-button-default,
-    .bar-button-outline {
-      ion-button-effect {
-        background-color: $fg-color;
-      }
     }
 
     .bar-button-outline {
@@ -158,6 +152,7 @@ ion-buttons[right] {
 
 @mixin wp-bar-button-default($color-name, $color-base, $color-contrast) {
 
+  .bar-button-clear-#{$color-name},
   .bar-button-#{$color-name} {
     color: $color-base;
     background-color: transparent;
@@ -329,6 +324,7 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 @include wp-bar-button-default(default, $toolbar-wp-button-color, color-contrast($colors-wp, $toolbar-wp-button-color, wp));
+@include wp-bar-button-default(clear, $toolbar-wp-button-color, color-contrast($colors-wp, $toolbar-wp-button-color, wp));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
   @include wp-toolbar-theme($color-name, $color-base, $color-contrast);

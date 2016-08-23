@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Optional, QueryList, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, Optional, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
@@ -285,23 +285,57 @@ export class ToolbarBase extends Ion {
 export class Toolbar extends ToolbarBase {
   private _sbPadding: boolean;
 
+  /** @internal */ 
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
+
   constructor(
     @Optional() viewCtrl: ViewController,
     @Optional() header: Header,
     @Optional() footer: Footer,
     config: Config,
-    elementRef: ElementRef
+    private _elementRef: ElementRef,
+    private _renderer: Renderer
   ) {
-    super(elementRef);
+    super(_elementRef);
 
     if (viewCtrl && (header || footer)) {
       // only toolbars within headers and footer are view toolbars
       // toolbars within the content are not view toolbars, since they
       // are apart of the content, and could be anywhere within the content
-      viewCtrl.setToolbarRef(elementRef);
+      viewCtrl.setToolbarRef(_elementRef);
     }
 
     this._sbPadding = config.getBoolean('statusbarPadding');
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `toolbar-${color}`, isAdd);
+    }
   }
 
 }

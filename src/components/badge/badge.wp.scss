@@ -3,8 +3,13 @@
 // Windows Badge
 // --------------------------------------------------
 
+/// @prop - Border radius of the badge
 $badge-wp-border-radius:            0 !default;
+
+/// @prop - Background color of the badge
 $badge-wp-background-color:         color($colors-wp, primary) !default;
+
+/// @prop - Text color of the badge
 $badge-wp-text-color:               color-contrast($colors-wp, $badge-wp-background-color) !default;
 
 

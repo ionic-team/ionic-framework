@@ -211,7 +211,7 @@ export function run() {
         nativeElement.classList[shouldAdd ? 'add' : 'remove'](className);
       }
     };
-    let b = new Button(ionButton, config, elementRef, renderer, null);
+    let b = new Button(null, ionButton, config, elementRef, renderer, null);
     b._init = true;
     return b;
   }

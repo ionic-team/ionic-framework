@@ -25,10 +25,10 @@
   <ion-list>
     <ion-list-header>
       Saturation
-      <ion-badge item-right secondary>{{saturation}}</ion-badge>
+      <ion-badge item-right color="secondary">{{saturation}}</ion-badge>
     </ion-list-header>
     <ion-item>
-      <ion-range min="-200" max="200" pin="true" [(ngModel)]="saturation" secondary>
+      <ion-range min="-200" max="200" pin="true" [(ngModel)]="saturation" color="secondary">
         <ion-label range-left>-200</ion-label>
         <ion-label range-right>200</ion-label>
       </ion-range>
@@ -38,12 +38,12 @@
   <ion-list>
     <ion-list-header>
       Warmth
-      <ion-badge item-right danger>{{warmth}}</ion-badge>
+      <ion-badge item-right color="danger">{{warmth}}</ion-badge>
     </ion-list-header>
     <ion-item>
-      <ion-range min="1000" max="2000" step="100" snaps="true" [(ngModel)]="warmth" danger>
-        <ion-icon range-left small danger name="thermometer"></ion-icon>
-        <ion-icon range-right danger name="thermometer"></ion-icon>
+      <ion-range min="1000" max="2000" step="100" snaps="true" [(ngModel)]="warmth" color="danger">
+        <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
+        <ion-icon range-right color="danger" name="thermometer"></ion-icon>
       </ion-range>
     </ion-item>
   </ion-list>
@@ -51,11 +51,11 @@
   <ion-list>
     <ion-list-header>
       Structure
-      <ion-badge item-right dark>{{structure.lower}}</ion-badge>
-      <ion-badge item-right dark>{{structure.upper}}</ion-badge>
+      <ion-badge item-right color="dark">{{structure.lower}}</ion-badge>
+      <ion-badge item-right color="dark">{{structure.upper}}</ion-badge>
     </ion-list-header>
     <ion-item>
-      <ion-range dualKnobs="true" pin="true" [(ngModel)]="structure" (ionChange)="onChange($event)" dark>
+      <ion-range dualKnobs="true" pin="true" [(ngModel)]="structure" (ionChange)="onChange($event)" color="dark">
         <ion-label range-left>-0</ion-label>
         <ion-label range-right>100</ion-label>
       </ion-range>

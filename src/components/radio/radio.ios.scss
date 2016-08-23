@@ -97,7 +97,13 @@ ion-radio {
 
 @mixin radio-theme-ios($color-name, $color-base) {
 
-  ion-radio[#{$color-name}] .radio-checked {
+  .item-radio-#{$color-name}.item-radio-checked {
+    ion-label {
+      color: $color-base;
+    }
+  }
+
+  .radio-#{$color-name} .radio-checked {
     color: $color-base;
 
     .radio-inner {

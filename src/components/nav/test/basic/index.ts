@@ -206,7 +206,7 @@ class FullPage {
 @Component({
   template: `
     <ion-header>
-      <ion-navbar primary>
+      <ion-navbar color="primary">
         <ion-title>Primary Color Page Header</ion-title>
         <ion-buttons end>
           <button ion-button>S1g</button>
