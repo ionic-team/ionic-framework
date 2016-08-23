@@ -1034,7 +1034,7 @@ export class Animation {
 
     this._clearAsync();
 
-    this.parent = this._e = this._rdFn = this._wrFn = null;
+    this.parent = this._e = this._rdFn = this._wrFn = this._raf = null;
 
     if (this._c) {
       this._c.length = this._cL = 0;

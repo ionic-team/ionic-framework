@@ -109,7 +109,7 @@ export class ViewController {
    */
   init(componentRef: ComponentRef<any>) {
     this._cmp = componentRef;
-    this.instance = componentRef.instance;
+    this.instance = this.instance || componentRef.instance;
     this._detached = false;
 
     this.willEnter = new EventEmitter();
@@ -280,10 +280,13 @@ export class ViewController {
    * DOM WRITE
    */
   _setZIndex(zIndex: number, renderer: Renderer) {
-    if (this._cmp && zIndex !== this._zIndex) {
+    if (zIndex !== this._zIndex) {
       this._zIndex = zIndex;
-      // ******** DOM WRITE ****************
-      renderer.setElementStyle(this.pageRef().nativeElement, 'z-index', (<any>zIndex));
+      const pageRef = this.pageRef();
+      if (pageRef) {
+        // ******** DOM WRITE ****************
+        renderer.setElementStyle(pageRef.nativeElement, 'z-index', (<any>zIndex));
+      }
     }
   }
 
@@ -477,7 +480,7 @@ export class ViewController {
     ctrlFn(this, 'WillUnload');
 
     // deprecated warning: added 2016-08-14, beta.12
-    if (this.instance.ionViewDidUnload) {
+    if (this.instance && this.instance.ionViewDidUnload) {
       console.warn('ionViewDidUnload() has been deprecated. Please use ionViewWillUnload() instead');
       try {
         this.instance.ionViewDidUnload();
@@ -493,10 +496,12 @@ export class ViewController {
    */
   _destroy(renderer: Renderer) {
     if (this._cmp) {
-      // ensure the element is cleaned up for when the view pool reuses this element
-      // ******** DOM WRITE ****************
-      renderer.setElementAttribute(this._cmp.location.nativeElement, 'class', null);
-      renderer.setElementAttribute(this._cmp.location.nativeElement, 'style', null);
+      if (renderer) {
+        // ensure the element is cleaned up for when the view pool reuses this element
+        // ******** DOM WRITE ****************
+        renderer.setElementAttribute(this._cmp.location.nativeElement, 'class', null);
+        renderer.setElementAttribute(this._cmp.location.nativeElement, 'style', null);
+      }
 
       // completely destroy this component. boom.
       this._cmp.destroy();
@@ -549,7 +554,7 @@ function ctrlFn(viewCtrl: ViewController, fnName: string) {
 
 
 export function isViewController(viewCtrl: any) {
-  return !!(viewCtrl && (<ViewController>viewCtrl).componentType && (<ViewController>viewCtrl)._nav);
+  return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
 }
 
 const DEFAULT_CSS_CLASS = 'ion-page';

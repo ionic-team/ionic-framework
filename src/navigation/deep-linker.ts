@@ -198,15 +198,10 @@ export class DeepLinker {
     }
   }
 
-  getComponent(nameOrComponent: any): any {
-    if (typeof nameOrComponent === 'function') {
-      return nameOrComponent;
-    }
-    if (typeof nameOrComponent === 'string') {
-      const segment = this.serializer.createSegmentFromName(nameOrComponent);
-      if (segment && segment.component) {
-        return segment.component;
-      }
+  getComponentFromName(componentName: any): any {
+    const segment = this.serializer.createSegmentFromName(componentName);
+    if (segment && segment.component) {
+      return segment.component;
     }
     return null;
   }
