@@ -1,0 +1,22 @@
+@import "./typography";
+
+// Windows Typography
+// --------------------------------------------------
+
+
+p {
+  color: $paragraph-wp-color;
+}
+
+a {
+  color: $link-wp-color;
+}
+
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .text-#{$color-name} {
+    color: $color-base;
+  }
+
+}

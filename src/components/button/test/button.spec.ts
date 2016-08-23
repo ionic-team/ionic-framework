@@ -27,120 +27,26 @@ describe('button', () => {
     expect(hasClass(b, 'button-primary')).toEqual(false);
   });
 
-  it('should remove button color attributes and add different role', () => {
-    let b = mockButton(['outline', 'small', 'full', 'primary']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-outline')).toEqual(true);
-    expect(hasClass(b, 'button-small')).toEqual(true);
-    expect(hasClass(b, 'button-full')).toEqual(true);
-    expect(hasClass(b, 'button-outline-primary')).toEqual(true);
-
-    b._assignCss(false);
-    expect(hasClass(b, 'button-outline')).toEqual(false);
-    expect(hasClass(b, 'button-small')).toEqual(false);
-    expect(hasClass(b, 'button-full')).toEqual(false);
-    expect(hasClass(b, 'button-outline-primary')).toEqual(false);
-  });
-
-  it('should read button color attributes with styles', () => {
-    let b = mockButton(['outline', 'small', 'full', 'primary']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button')).toEqual(true);
-    expect(hasClass(b, 'button-outline')).toEqual(true);
-    expect(hasClass(b, 'button-small')).toEqual(true);
-    expect(hasClass(b, 'button-full')).toEqual(true);
-    expect(hasClass(b, 'button-outline-primary')).toEqual(true);
-
-    b = mockButton(['clear', 'primary', 'secondary']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button')).toEqual(true);
-    expect(hasClass(b, 'button-clear')).toEqual(true);
-    expect(hasClass(b, 'button-clear-primary')).toEqual(true);
-    expect(hasClass(b, 'button-clear-secondary')).toEqual(true);
-
-    b = mockButton(['solid', 'primary', 'secondary']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button')).toEqual(true);
-    expect(hasClass(b, 'button-solid')).toEqual(true);
-    expect(hasClass(b, 'button-primary')).toEqual(true);
-    expect(hasClass(b, 'button-secondary')).toEqual(true);
-
-    b = mockButton(['solid', 'primary', 'secondary']);
-    b.setRole('bar-button');
-    b._assignCss(true);
-    expect(hasClass(b, 'bar-button-solid')).toEqual(true);
-    expect(hasClass(b, 'bar-button-solid-primary')).toEqual(true);
-    expect(hasClass(b, 'bar-button-solid-secondary')).toEqual(true);
-  });
-
-  it('should auto add the default style', () => {
-    let b = mockButton();
-    b._assignCss(true);
-    expect(hasClass(b, 'button')).toEqual(true);
-    expect(hasClass(b, 'button-default')).toEqual(true);
-
-    b = mockButton(['clear']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button')).toEqual(true);
-    expect(hasClass(b, 'button-default')).toEqual(false);
-    expect(hasClass(b, 'button-clear')).toEqual(true);
-  });
-
-  it('should read button color attributes', () => {
-    let b = mockButton(['primary']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-primary')).toEqual(true);
-
-    b = mockButton(['primary', 'secondary']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-primary')).toEqual(true);
-    expect(hasClass(b, 'button-secondary')).toEqual(true);
-  });
-
-  it('should read button style attributes', () => {
-    let b = mockButton(['clear']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-clear')).toEqual(true);
-
-    b = mockButton(['outline']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-outline')).toEqual(true);
-
-    b = mockButton(['solid']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-solid')).toEqual(true);
-
-    b = mockButton(['clear', 'outline', 'small', 'full']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-clear')).toEqual(false);
-    expect(hasClass(b, 'button-outline')).toEqual(true);
-    expect(hasClass(b, 'button-small')).toEqual(true);
-    expect(hasClass(b, 'button-full')).toEqual(true);
-
-    b = mockButton(['outline']);
-    b.setRole('bar-button');
-    b._assignCss(true);
-    expect(hasClass(b, 'bar-button-outline')).toEqual(true);
-  });
-
-  it('should read button shape attributes', () => {
-    let b = mockButton(['round']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-round')).toEqual(true);
-
-    b = mockButton(['fab']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-fab')).toEqual(true);
-  });
-
-  it('should read button display attributes', () => {
-    let b = mockButton(['block']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-block')).toEqual(true);
-
-    b = mockButton(['full']);
-    b._assignCss(true);
-    expect(hasClass(b, 'button-full')).toEqual(true);
+  function mockButton(attrs?, config?, ionButton?) {
+    config = config || new Config();
+    ionButton = ionButton || '';
+    let elementRef = {
+      nativeElement: document.createElement('button')
+    };
+    if (attrs) {
+      for (let i = 0; i < attrs.length; i++) {
+        elementRef.nativeElement.setAttribute(attrs[i], '');
+      }
+    }
+    let renderer: any = {
+      setElementClass: function(nativeElement, className, shouldAdd) {
+        nativeElement.classList[shouldAdd ? 'add' : 'remove'](className);
+      }
+    };
+    let b = new Button(null, ionButton, config, elementRef, renderer, null);
+    b._init = true;
+    return b;
+  }
 
     b = mockButton(['block', 'full']);
     b._assignCss(true);

@@ -239,7 +239,7 @@ ion-range:not(.range-has-pin) .range-knob-pressed .range-knob {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  ion-range[#{$color-name}] {
+  .range-#{$color-name} {
     @include md-range-min();
 
     .range-bar-active,

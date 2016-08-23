@@ -179,7 +179,7 @@ ion-toggle {
 
 @mixin ios-toggle-theme($color-name, $color-base) {
 
-  ion-toggle[#{$color-name}] .toggle-checked {
+  .toggle-#{$color-name} .toggle-checked {
     background-color: $color-base;
   }
 

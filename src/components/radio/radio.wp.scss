@@ -121,7 +121,7 @@ ion-radio {
 
 @mixin radio-theme-wp($color-name, $color-base) {
 
-  ion-radio[#{$color-name}] {
+  .radio-#{$color-name} {
 
     .radio-checked {
       border-color: $color-base;

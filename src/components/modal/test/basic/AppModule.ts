@@ -238,7 +238,7 @@ export class ModalPassData {
 @Component({
   template: `
     <ion-header>
-      <ion-toolbar primary>
+      <ion-toolbar color="primary">
         <ion-title>Toolbar 1</ion-title>
       </ion-toolbar>
 
@@ -248,7 +248,7 @@ export class ModalPassData {
     </ion-header>
 
     <ion-content padding>
-      <button ion-button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
+      <button ion-button block color="danger" (click)="dismiss()" class="e2eCloseToolbarModal">
         Dismission Modal
       </button>
 
@@ -262,7 +262,7 @@ export class ModalPassData {
 
       <div>Aenean rhoncus urna at interdum blandit. Donec ac massa nec libero vehicula tincidunt. Sed sit amet hendrerit risus. Aliquam vitae vestibulum ipsum, non feugiat orci. Vivamus eu rutrum elit. Nulla dapibus tortor non dignissim pretium. Nulla in luctus turpis. Etiam non mattis tortor, at aliquet ex. Nunc ut ante varius, auctor dui vel, volutpat elit. Nunc laoreet augue sit amet ultrices porta. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum pellentesque lobortis est, ut tincidunt ligula mollis sit amet. In porta risus arcu, quis pellentesque dolor mattis non. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</div>
 
-      <button ion-button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
+      <button ion-button block color="danger" (click)="dismiss()" class="e2eCloseToolbarModal">
         Dismission Modal
       </button>
     </ion-content>
@@ -285,7 +285,7 @@ export class ToolbarModal {
 @Component({
   template: `
     <ion-header>
-      <ion-toolbar secondary>
+      <ion-toolbar color="secondary">
         <ion-buttons start>
           <button ion-button (click)="dismiss()">Close</button>
         </ion-buttons>

@@ -1,0 +1,24 @@
+@import "./spinner";
+
+// Windows Spinner
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .spinner-#{$color-name} {
+
+    &.spinner-ios line,
+    &.spinner-ios-small line,
+    &.spinner-crescent circle {
+      stroke: $color-base;
+    }
+
+    &.spinner-bubbles circle,
+    &.spinner-circles circle,
+    &.spinner-dots circle {
+      fill: $color-base;
+    }
+
+  }
+
+}

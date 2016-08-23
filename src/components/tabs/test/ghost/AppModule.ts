@@ -80,7 +80,7 @@ export class QuesaritoPage {}
   template: `
     <ion-menu [content]="content">
       <ion-header>
-        <ion-toolbar secondary>
+        <ion-toolbar color="secondary">
           <ion-title>Secret Menu</ion-title>
         </ion-toolbar>
       </ion-header>

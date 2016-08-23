@@ -13,6 +13,7 @@ export class E2EPage {
   strawberryValue: boolean;
   standAloneChecked: boolean;
   formResults: string;
+  dangerColor: string = 'danger';
 
   appleCtrl = new FormControl(true);
   bananaCtrl = new FormControl(true);
