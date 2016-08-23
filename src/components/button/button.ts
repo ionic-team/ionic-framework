@@ -96,15 +96,32 @@ import { isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class Button {
-  private _role: string = 'button'; // bar-button
-  private _mt: boolean = false; // menutoggle
-  private _size: string = null; // large/small/default
-  private _style: string = 'default'; // outline/clear/solid
-  private _shape: string = null; // round/fab
-  private _display: string = null; // block/full
-  private _color: string = null; // primary/secondary
-  private _disabled: boolean = false; // disabled
-  private _init: boolean;
+  /** @internal */
+  _role: string = 'button'; // bar-button
+
+  /** @internal */
+  _mt: boolean = false; // menutoggle
+
+  /** @internal */
+  _size: string = null; // large/small/default
+
+  /** @internal */
+  _style: string = 'default'; // outline/clear/solid
+
+  /** @internal */
+  _shape: string = null; // round/fab
+
+  /** @internal */
+  _display: string = null; // block/full
+
+  /** @internal */
+  _color: string = null; // primary/secondary
+
+  /** @internal */
+  _disabled: boolean = false; // disabled
+
+  /** @internal */
+  _init: boolean;
 
   /**
    * @input {string} Large button.
@@ -189,15 +206,16 @@ export class Button {
   _attr(type: string, attrName: string, attrValue: boolean) {
     if (type === '_style') {
       this._setColor(this._color, isTrueProperty(attrValue));
-    } 
-    this._setClass(this[type], false);
+    }
+    this._setClass((<any>this)[type], false);
     if (isTrueProperty(attrValue)) {
-      this[type] = attrName;
+      (<any>this)[type] = attrName;
       this._setClass(attrName, true);
+
     } else {
       // Special handling for '_style' which defaults to 'default'.
-      this[type] = (type === '_style' ? 'default' : null);
-      this._setClass(this[type], true);
+      (<any>this)[type] = (type === '_style' ? 'default' : null);
+      this._setClass((<any>this)[type], true);
     }
   }
 
@@ -271,12 +289,12 @@ export class Button {
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _assignCss(assignCssClass: boolean) {
+  _assignCss(assignCssClass: boolean) {
     let role = this._role;
     if (role) {
-      this._renderer.setElementClass(this._elementRef.nativeElement, role, assignCssClass); // button    
+      this._renderer.setElementClass(this._elementRef.nativeElement, role, assignCssClass); // button
 
       this._setClass('menutoggle', this._mt); // menutoggle
 
@@ -287,7 +305,7 @@ export class Button {
       this._setColor(this._color, assignCssClass); // button-secondary, bar-button-secondary
     }
   }
- 
+
   /**
    * @internal
    */
@@ -316,5 +334,5 @@ export class Button {
         this._renderer.setElementClass(this._elementRef.nativeElement, `${className}-${color}`, isAdd);
       }
     }
-  }   
+  }
 }
