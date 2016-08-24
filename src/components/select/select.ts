@@ -11,7 +11,7 @@ import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/ut
 import { Item } from '../item/item';
 import { NavController } from '../nav/nav-controller';
 import { Option } from '../option/option';
-import { SelectPopover, ISelectPopoverOption } from './select-popover-component';
+import { SelectPopover, SelectPopoverOption } from './select-popover-component';
 
 export const SELECT_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Select), multi: true});
@@ -305,7 +305,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
       overlay = new ActionSheet(this._app, selectOptions);
 
     } else if (this.interface === 'popover') {
-      let popoverOptions: ISelectPopoverOption[] = options.map(input => ({
+      let popoverOptions: SelectPopoverOption[] = options.map(input => ({
         text: input.text,
         checked: input.selected,
         disabled: input.disabled,

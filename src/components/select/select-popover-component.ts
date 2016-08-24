@@ -3,7 +3,7 @@ import { NavParams } from '../nav/nav-params';
 import { ViewController } from '../nav/view-controller';
 
 /** @private */
-export interface ISelectPopoverOption {
+export interface SelectPopoverOption {
   text: string;
   value: string;
   disabled: boolean;
@@ -31,7 +31,7 @@ export class SelectPopover implements OnInit {
     this.viewController.dismiss(value);
   }
 
-  private options: ISelectPopoverOption[];
+  private options: SelectPopoverOption[];
 
   constructor(
     private navParams: NavParams,

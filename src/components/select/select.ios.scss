@@ -12,10 +12,10 @@ $select-ios-padding-left:        $item-ios-padding-left !default;
 $select-ios-icon-color:          #999 !default;
 $select-ios-placeholder-color:   $select-ios-icon-color !default;
 
-$select-popover-ios-margin-top:         -1px !default;
-$select-popover-ios-margin-right:       0 !default;
-$select-popover-ios-margin-bottom:      -1px !default;
-$select-popover-ios-margin-left:        0 !default;
+$select-ios-popover-margin-top:         -1px !default;
+$select-ios-popover-margin-right:       0 !default;
+$select-ios-popover-margin-bottom:      -1px !default;
+$select-ios-popover-margin-left:        0 !default;
 
 
 ion-select {
@@ -53,6 +53,6 @@ ion-select {
 
 .select-popover {
   ion-list {
-    margin: $select-popover-ios-margin-top $select-popover-ios-margin-right $select-popover-ios-margin-bottom $select-popover-ios-margin-left;
+    margin: $select-ios-popover-margin-top $select-ios-popover-margin-right $select-ios-popover-margin-bottom $select-ios-popover-margin-left;
   }
 }
