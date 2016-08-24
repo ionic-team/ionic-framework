@@ -93,12 +93,14 @@ export const SELECT_VALUE_ACCESSOR = new Provider(
  * on any of the options will automatically close the overlay and select
  * that value.
  *
- * ### Alert Options
+ * ### Select Options
  *
- * Since `ion-select` is a wrapper to `Alert`, by default, it can be
- * passed options in the `selectOptions` property. This can be used to
- * pass a custom alert title, subtitle or message. See the {@link ../../alert/Alert Alert API docs}
- * for more properties.
+ * Since `ion-select` uses the `Alert` and `Action Sheet` interfaces, options can be
+ * passed to these components through the `selectOptions` property. This can be used
+ * to pass a custom title, subtitle, css class, and more. See the
+ * {@link ../../alert/AlertController/#create AlertController API docs} and
+ * {@link ../../action-sheet/ActionSheetController/#create ActionSheetController API docs}
+ * for the properties that each interface accepts.
  *
  * ```html
  * <ion-select [selectOptions]="selectOptions">
@@ -170,7 +172,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
 
   /**
    * @input {any} Any additional options that the `alert` or `action-sheet` interface can take.
-   * See the [Alert API docs](../../alert/AlertController/#create) and the
+   * See the [AlertController API docs](../../alert/AlertController/#create) and the
    * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) for the
    * create options for each interface.
    */
