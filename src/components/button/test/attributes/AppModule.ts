@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { App, ionicBootstrap } from '../../../../../src';
+import { NgModule, Component } from '@angular/core';
+import { IonicApp, IonicModule, App } from '../../../dist';
 
 
 @Component({
   templateUrl: 'main.html'
 })
-class E2EPage {
+export class E2EPage {
   isFull: boolean = true;
   isBlock: boolean = true;
   isBarClear: boolean = true;
@@ -19,10 +19,6 @@ class E2EPage {
   isSecondary: string = 'secondary';
   isDanger: string = 'danger';
   isDark: string = 'dark';
-
-  constructor(app: App) {
-
-  }
 
   toggleBlock() {
     this.isFull = !this.isFull;
@@ -50,15 +46,28 @@ class E2EPage {
   removeColors() {
     this.isSecondary = null;
     this.isDanger = null;
-    this.isDark = null;  
+    this.isDark = null;
   }
 }
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
-class E2EApp {
+export class E2EApp {
   rootPage = E2EPage;
 }
 
-ionicBootstrap(E2EApp);
+@NgModule({
+  declarations: [
+    E2EApp,
+    E2EPage
+  ],
+  imports: [
+    IonicModule.forRoot(E2EApp)
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    E2EPage
+  ]
+})
+export class AppModule {}

@@ -6,19 +6,19 @@ import { IonicApp, IonicModule } from '../../../dist';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  dynamicColor: string = 'secondary';
+  paused: boolean = false;
 
-  toggleColor() {
-    this.dynamicColor = (this.dynamicColor === 'secondary' ? 'danger' : 'secondary');
+  toggleState() {
+    this.paused = !this.paused;
   }
 }
 
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 export class E2EApp {
-  rootPage = E2EPage;
+  root = E2EPage;
 }
 
 @NgModule({
@@ -31,6 +31,7 @@ export class E2EApp {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    E2EApp,
     E2EPage
   ]
 })
