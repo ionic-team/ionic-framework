@@ -102,6 +102,12 @@ export class ViewController {
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
     this._cssClass = rootCssClass;
+
+    this.willEnter = new EventEmitter();
+    this.didEnter = new EventEmitter();
+    this.willLeave = new EventEmitter();
+    this.didLeave = new EventEmitter();
+    this.willUnload = new EventEmitter();
   }
 
   /**
@@ -111,12 +117,6 @@ export class ViewController {
     this._cmp = componentRef;
     this.instance = this.instance || componentRef.instance;
     this._detached = false;
-
-    this.willEnter = new EventEmitter();
-    this.didEnter = new EventEmitter();
-    this.willLeave = new EventEmitter();
-    this.didLeave = new EventEmitter();
-    this.willUnload = new EventEmitter();
   }
 
   /**
@@ -430,7 +430,7 @@ export class ViewController {
       this._detached = false;
     }
 
-    this.willEnter.emit();
+    this.willEnter.emit(null);
     ctrlFn(this, 'WillEnter');
   }
 
@@ -441,7 +441,7 @@ export class ViewController {
    */
   _didEnter() {
     this._nb && this._nb.didEnter();
-    this.didEnter.emit();
+    this.didEnter.emit(null);
     ctrlFn(this, 'DidEnter');
   }
 
@@ -450,7 +450,7 @@ export class ViewController {
    * The view has is about to leave and no longer be the active view.
    */
   _willLeave() {
-    this.willLeave.emit();
+    this.willLeave.emit(null);
     ctrlFn(this, 'WillLeave');
   }
 
@@ -460,23 +460,22 @@ export class ViewController {
    * will fire, whether it is cached or unloaded.
    */
   _didLeave() {
+    this.didLeave.emit(null);
+    ctrlFn(this, 'DidLeave');
+
     // when this is not the active page
     // we no longer need to detect changes
     if (!this._detached && this._cmp) {
       this._cmp.changeDetectorRef.detach();
       this._detached = true;
     }
-
-    this.didLeave.emit();
-    ctrlFn(this, 'DidLeave');
   }
 
   /**
    * @internal
    */
   _willUnload() {
-    this.willUnload.emit();
-
+    this.willUnload.emit(null);
     ctrlFn(this, 'WillUnload');
 
     // deprecated warning: added 2016-08-14, beta.12
