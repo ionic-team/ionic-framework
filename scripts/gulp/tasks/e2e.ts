@@ -1,5 +1,5 @@
 import { DIST_E2E_ROOT, SRC_ROOT } from '../constants';
-import {dest, src, task} from 'gulp';
+import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -103,6 +103,11 @@ task('e2e.ngcSource', (done: Function) => {
     del('./scripts/build/generated-ngc-config.json');
     done(err);
   });
+});
+
+task('e2e.resources', ( done: Function) => {
+  let runSequence = require('run-sequnece');
+  runSequence('e2e.setupTests', 'e2e.build.tests', done);
 });
 
 task('e2e.copy.swiper', () => {
@@ -212,6 +217,72 @@ task('e2e.webpack', function(done) {
 
 task('e2e.build', (done: Function) => {
   let runSequence = require('run-sequence');
-  runSequence('e2e.ngcSource', 'e2e.setupTests', 'e2e.copy.swiper', 'e2e.build.tests', 'e2e-sass', 'e2e-fonts', 'e2e.pre-webpack', 'e2e.webpack', done);
+  runSequence('e2e.ngcSource', 'e2e.copy.swiper', 'e2e.resources', 'e2e-sass', 'e2e-fonts', 'e2e.pre-webpack', 'e2e.webpack', done);
 });
 
+task('e2e.watch', ['e2e-sass', 'e2e-fonts'], ( done: Function) => {
+  const argv = require('yargs').argv;
+  const watch = require('gulp-watch');
+  let folder = argv.folder;
+  if ( ! folder ) {
+    done(new Error('Passing in a folder to watch is required for this command'));
+    return;
+  }
+
+  var webpack = require('webpack');
+  var WebpackDevServer = require('webpack-dev-server');
+  var config = require('../../e2e/webpack.config.js');
+
+  config.output.path = path.join(__dirname, '../../../');
+  config.entry = {
+    'dist/e2e/vendor': './scripts/e2e/vendor',
+    'dist-e2e/polyfills': './scripts/e2e/polyfills'
+  };
+  config.entry[`./dist/e2e/tests/${folder}/index`] = `./dist/e2e/tests/${folder}/entry`;
+
+  var compiler = webpack(config);
+
+  // If any tests change within components then run e2e.resources.
+  watch([
+    'src/components/*/test/**/*'
+  ],
+  function(file) {
+      console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
+      start('e2e.resources');
+  });
+
+  // If any src files change except for tests then transpile only the source ionic files
+  watch([
+    'src/**/*.ts',
+    '!src/components/*/test/**/*',
+    '!src/util/test/*'
+  ],
+  function(file) {
+      console.log('start e2e.ngcSource - ' + JSON.stringify(file.history, null, 2));
+      start('e2e.ngcSource');
+  });
+
+  // If any scss files change then recompile all sass
+  watch([
+    'src/**/*.scss'
+  ],
+  function(file) {
+      console.log('start sass - ' + JSON.stringify(file.history, null, 2));
+      start('e2e-sass');
+  });
+
+  new WebpackDevServer(compiler, {
+    noInfo: true,
+    quiet: false,
+    watchOptions: {
+      aggregateTimeout: 2000,
+      poll: 1000
+    }
+  }).listen(8080, 'localhost', function(err) {
+      if ( err ) {
+        throw err;
+      }
+      console.log('[webpack-dev-server]', `http://localhost:8080/dist/e2e/tests/${folder}`);
+  });
+
+});
