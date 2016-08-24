@@ -106,7 +106,7 @@ task('e2e.ngcSource', (done: Function) => {
 });
 
 task('e2e.resources', ( done: Function) => {
-  let runSequence = require('run-sequnece');
+  let runSequence = require('run-sequence');
   runSequence('e2e.setupTests', 'e2e.build.tests', done);
 });
 

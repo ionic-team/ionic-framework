@@ -11,6 +11,7 @@ export interface Currency {
   templateUrl: 'main.html'
 })
 export class E2EPage {
+  notifications: any;
   musicSelectOpts: any = {
     title: '1994 Music',
     subTitle: 'Select your favorite',
