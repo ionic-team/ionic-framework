@@ -29,10 +29,10 @@ export const SELECT_VALUE_ACCESSOR = new Provider(
  *
  * ### Interfaces
  *
- * By default, the `ion-select` uses the {@link ../../alert/Alert Alert API} to
- * open up the overlay of options in an alert. The interface can be changed to use the
- * {@link ../../action-sheet/ActionSheet ActionSheet API} by passing `action-sheet` to
- * the `interface` property. Read the other sections for the limitations of the
+ * By default, the `ion-select` uses the {@link ../../alert/AlertController AlertController API}
+ * to open up the overlay of options in an alert. The interface can be changed to use the
+ * {@link ../../action-sheet/ActionSheetController ActionSheetController API} by passing
+ * `action-sheet` to the `interface` property. Read the other sections for the limitations of the
  * action sheet interface.
  *
  * ### Single Value: Radio Buttons
