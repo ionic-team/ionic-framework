@@ -1,111 +1,132 @@
-import { Component, ElementRef, Renderer, Attribute } from '@angular/core';
-
-import { Config } from '../../config/config';
+import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
 /**
   * @name Chip
   * @module ionic
   * @description
   * Chips represent complex entities in small blocks, such as a contact.
-  * @see {@link /docs/v2/components/#chips Chips Component Docs}
+  *
+  *
+  * @usage
+  *
+  * ```html
+  * <ion-chip>
+  *   <ion-label>Default</ion-label>
+  * </ion-chip>
+  *
+  * <ion-chip>
+  *   <ion-label color="secondary">Secondary Label</ion-label>
+  * </ion-chip>
+  *
+  * <ion-chip color="secondary">
+  *   <ion-label color="dark">Secondary w/ Dark label</ion-label>
+  * </ion-chip>
+  *
+  * <ion-chip color="danger">
+  *   <ion-label>Danger</ion-label>
+  * </ion-chip>
+  *
+  * <ion-chip>
+  *   <ion-icon name="pin"></ion-icon>
+  *   <ion-label>Default</ion-label>
+  * </ion-chip>
+  *
+  * <ion-chip>
+  *   <ion-icon name="heart" color="dark"></ion-icon>
+  *   <ion-label>Default</ion-label>
+  * </ion-chip>
+  *
+  * <ion-chip>
+  *   <ion-avatar>
+  *     <img src="img/my-img.png">
+  *   </ion-avatar>
+  *   <ion-label>Default</ion-label>
+  * </ion-chip>
+  * ```
+  *
+  *
+  * @advanced
+  *
+  * ```html
+  * <ion-chip #chip1>
+  *   <ion-label>Default</ion-label>
+  *   <button ion-button clear color="light" (click)="delete(chip1)">
+  *     <ion-icon name="close-circle"></ion-icon>
+  *   </button>
+  * </ion-chip>
+  *
+  * <ion-chip #chip2>
+  *   <ion-icon name="pin" color="primary"></ion-icon>
+  *   <ion-label>With Icon</ion-label>
+  *   <button ion-button (click)="delete(chip2)">
+  *     <ion-icon name="close"></ion-icon>
+  *   </button>
+  * </ion-chip>
+  *
+  * <ion-chip #chip3>
+  *   <ion-avatar>
+  *     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+  *   </ion-avatar>
+  *   <ion-label>With Avatar</ion-label>
+  *   <button ion-button clear color="dark" (click)="delete(chip3)">
+  *     <ion-icon name="close-circle"></ion-icon>
+  *   </button>
+  * </ion-chip>
+  * ```
+  *
+  * ```ts
+  * @Component({
+  *   templateUrl: 'main.html'
+  * })
+  * class E2EPage {
+  *   delete(chip: Element) {
+  *     chip.remove();
+  *   }
+  * }
+  * ```
+  *
+  * @demo /docs/v2/demos/chip/
  **/
-
-@Component({
-  selector: 'ion-chip',
-  template: '<span class="hide"><ng-content></ng-content></span><ion-label></ion-label><button clear dark (click)="deleteChip()" *ngIf="deletable"><ion-icon name="close-circle"></ion-icon></button>'
+@Directive({
+  selector: 'ion-chip'
 })
-
 export class Chip {
-  private deletable: boolean = false;
+  /** @internal */
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
 
   constructor(
-    config: Config,
     private _elementRef: ElementRef,
     private _renderer: Renderer
-  ) {
-    let element = _elementRef.nativeElement;
+  ) { }
 
-    this._readAttrs(element);
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
   }
 
   /**
-   * @private
+   * @internal
    */
-   ngOnInit() {
-     this._fixContent(this._elementRef.nativeElement);
-   }
-
-  /**
-   * @private
-   */
-  private _readAttrs(element: HTMLElement) {
-
-    let elementAttrs = element.attributes;
-    let attrName: string;
-
-    for (let i = 0, l = elementAttrs.length; i < l; i++) {
-      if (elementAttrs[i].value !== '') continue;
-
-      attrName = elementAttrs[i].name;
-
-      if (attrName === 'deletable') {
-        this._setDeletable();
-      }
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `chip-${color}`, isAdd);
     }
   }
 
-  /**
-   * @private
-   */
-  private deleteChip() {
-      this._elementRef.nativeElement.remove();
-  }
-
-  /**
-   * @private
-   */
-  private _setDeletable() {
-    this.deletable = true;
-  }
-
-
-  /**
-   * @private
-   */
-  private _fixContent(element: HTMLElement) {
-    // Take the first text node and add it to the label.
-    // Take the first icon or avatar and add it to the chip.
-    // Discard everything else.
-
-    let childNodes: NodeList = element.childNodes;
-    let innerNode:  Node     = childNodes[0];
-    let labelNode:  Node     = childNodes[1];
-    let addedNodes: NodeList = innerNode.childNodes;
-    element.removeChild(innerNode);
-
-    let missing = {image: true, text: true};
-    let childNode: Node;
-    let imageNode: Node;
-    let text: string;
-    for (let i = 0, l = addedNodes.length; i < l; i++) {
-      childNode = addedNodes[i];
-      if (childNode.nodeType === 3 && missing.text) {
-        text = childNode.textContent.trim();
-        if (text !== '') {
-          labelNode.textContent = text;
-          missing.text = false;
-        }
-      }
-      if (childNode.nodeType === 1 && missing.image) {
-        name = childNode.nodeName;
-        if (childNode.nodeName === 'ION-ICON' || childNode.nodeName === 'ION-AVATAR') {
-          missing.image = false;
-          imageNode = childNode;
-        }
-      }
-    }
-    if (imageNode) {
-      element.insertBefore(imageNode, element.firstChild);
-    }
-  }
 }

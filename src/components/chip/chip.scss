@@ -3,56 +3,62 @@
 // Chip
 // --------------------------------------------------
 
-$chip-background-color:      rgba(0, 0, 0, .12) !default;
-$chip-font-size:             13px !default;
-$chip-height:                32px !default;
-$chip-border-radius:         16px !default;
-$chip-padding:               0 12px !default;
-$chip-margin:                2px 0 !default;
+/// @prop - Border radius of the button in the chip
+$chip-button-border-radius:     50% !default;
 
-$chip-label-color:           rgba(0, 0, 0, .87) !default;
-$chip-icon-color:            rgba(0, 0, 0, .87) !default;
-$chip-remove-icon-color:          rgba(137, 137, 137, .54) !default;
+/// @prop - Margin of the button in the chip
+$chip-button-margin:            0 !default;
+
+/// @prop - Width and height of the button in the chip
+$chip-button-size:              32px !default;
+
+/// @prop - Border radius of the icon in the chip
+$chip-icon-border-radius:     50% !default;
+
+/// @prop - Width and height of the icon in the chip
+$chip-icon-size:              32px !default;
+
+/// @prop - Font size of the icon in the chip
+$chip-icon-font-size:         18px !default;
+
+/// @prop - Width and height of the avatar in the chip
+$chip-avatar-size:            32px !default;
+
+/// @prop - Border radius of the avatar in the chip
+$chip-avatar-border-radius:   50% !default;
+
 
 ion-chip {
   display: inline-flex;
 
   align-self: center;
-
-  margin: $chip-margin;
-  padding: $chip-padding;
-
-  height: $chip-height;
-
-  border-radius: $chip-border-radius;
-  font-size: $chip-font-size;
   font-weight: normal;
-  line-height: $chip-height;
-  background: $chip-background-color;
-
   vertical-align: middle;
 
   box-sizing: border-box;
 
-  ion-label {
-    margin: 0;
-
-    color: $chip-label-color;
+  .button {
+    border-radius: $chip-button-border-radius;
+    margin: $chip-button-margin;
+    height: $chip-button-size;
+    width: $chip-button-size;
   }
 
-  > ion-icon,
-  > ion-avatar {
-    margin-left: -12px;
+  ion-icon {
+    border-radius: $chip-icon-border-radius;
+    line-height: $chip-icon-size;
 
-    width: 32px;
-    height: 32px;
+    font-size: $chip-icon-font-size;
+    width: $chip-icon-size;
+    height: $chip-icon-size;
+  }
 
-    border-radius: 50%;
-    font-size: 18px;
-    line-height: 32px;
-    text-align: center;
-    color: $chip-icon-color;
-    vertical-align: top;
+  ion-avatar {
+    border-radius: $chip-avatar-border-radius;
+    width: $chip-avatar-size;
+    height: $chip-avatar-size;
+    min-width: $chip-avatar-size;
+    min-height: $chip-avatar-size;
 
     img {
       display: block;
@@ -62,31 +68,7 @@ ion-chip {
       height: 100%;
       max-height: 100%;
 
-      border-radius: 50%;
+      border-radius: $chip-avatar-border-radius;
     }
-
-    + ion-label {
-      margin-left: 8px;
-    }
-  }
-
-  ion-avatar {
-    min-width: 32px;
-    min-height: 32px;
-  }
-
-  .button {
-    margin: 0;
-    margin-right: -4px;
-
-    height: inherit;
-  }
-
-  ion-icon[name="close-circle"] {
-    margin: 0 -8px 2px -4px;
-
-    font-size: 1.4em;
-
-    color: $chip-remove-icon-color;
   }
 }

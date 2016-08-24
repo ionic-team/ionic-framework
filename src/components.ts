@@ -7,6 +7,7 @@ export { Backdrop } from './components/backdrop/backdrop';
 export { Badge } from './components/badge/badge';
 export { Button } from './components/button/button';
 export { Checkbox } from './components/checkbox/checkbox';
+export { Chip } from './components/chip/chip';
 export { Content } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
 export { Icon } from './components/icon/icon';
