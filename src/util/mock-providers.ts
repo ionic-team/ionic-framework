@@ -43,7 +43,20 @@ export const mockPlatform = function() {
 export const mockApp = function(config?: Config, platform?: Platform) {
   platform = platform || mockPlatform();
   config = config || mockConfig(null, '/', platform);
-  return new App(config, platform);
+  let app = new App(config, platform);
+  mockIonicApp(app, config, platform);
+  return app;
+};
+
+export const mockIonicApp = function(app: App, config: Config, platform: Platform): IonicApp {
+  let appRoot = new IonicApp(
+    null, null, mockElementRef(), mockRenderer(), config, platform, null, app);
+
+  appRoot._loadingPortal = mockOverlayPortal(app, config, platform);
+  appRoot._toastPortal = mockOverlayPortal(app, config, platform);
+  appRoot._overlayPortal = mockOverlayPortal(app, config, platform);
+
+  return appRoot;
 };
 
 export const mockTrasitionController = function() {
@@ -193,13 +206,7 @@ export const mockNavController = function(): NavControllerBase {
   return nav;
 };
 
-export const mockOverlayPortal = function(): OverlayPortal {
-  let platform = mockPlatform();
-
-  let config = mockConfig(null, '/', platform);
-
-  let app = mockApp(config, platform);
-
+export const mockOverlayPortal = function(app: App, config: Config, platform: Platform): OverlayPortal {
   let form = new Form();
 
   let zone = mockZone();
@@ -210,7 +217,7 @@ export const mockOverlayPortal = function(): OverlayPortal {
 
   let renderer = mockRenderer();
 
-  let compiler: any = null;
+  let componentFactoryResolver: any = null;
 
   let gestureCtrl = new GestureController(app);
 
@@ -227,7 +234,7 @@ export const mockOverlayPortal = function(): OverlayPortal {
     elementRef,
     zone,
     renderer,
-    compiler,
+    componentFactoryResolver,
     gestureCtrl,
     null,
     deepLinker,
@@ -295,18 +302,4 @@ export const mockTabs = function(app?: App): Tabs {
 
 export const mockMenu = function(): Menu {
   return new Menu(null, null, null, null, null, null, null, null);
-};
-
-export const mockIonicApp = function(): IonicApp {
-  let mockIonicAppObj = <any> { };
-
-  mockIonicAppObj._loadingPortal = mockOverlayPortal();
-  mockIonicAppObj._toastPortal = mockOverlayPortal();
-  mockIonicAppObj._overlayPortal = mockOverlayPortal();
-
-  mockIonicAppObj._renderer = {
-    setElementClass: () => {}
-  };
-
-  return <IonicApp> mockIonicAppObj;
 };
