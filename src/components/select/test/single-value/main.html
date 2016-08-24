@@ -18,6 +18,14 @@
   </ion-item>
 
   <ion-item>
+    <ion-label>Gender</ion-label>
+    <ion-select [(ngModel)]="gender" class="e2eSelectGender" interface="popover">
+      <ion-option value="f">Female</ion-option>
+      <ion-option value="m">Male</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
     <ion-label>Gaming</ion-label>
     <ion-select [(ngModel)]="gaming" (ionCancel)="gamingCancel()" (ionChange)="gamingChange($event)">
       <ion-option value="nes">NES</ion-option>

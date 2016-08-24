@@ -4,12 +4,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
+import { Popover } from '../popover/popover';
 import { App } from '../app/app';
 import { Form } from '../../util/form';
 import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../nav/nav-controller';
 import { Option } from '../option/option';
+import { SelectPopover, ISelectPopoverOption } from './select-popover-component';
 
 export const SELECT_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Select), multi: true});
@@ -175,7 +177,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   @Input() alertOptions: any = {};
 
   /**
-   * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
+   * @input {string} The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
    */
   @Input() interface: string = '';
 
@@ -219,7 +221,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
     }
     ev.preventDefault();
     ev.stopPropagation();
-    this.open();
+    this.open(ev);
   }
 
   @HostListener('keyup.space')
@@ -232,7 +234,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   /**
    * Open the select interface.
    */
-  open() {
+  open(ev?: UIEvent) {
     if (this._disabled) {
       return;
     }
@@ -268,6 +270,16 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
       this.interface = 'alert';
     }
 
+    if (this.interface === 'popover' && this._multi) {
+      console.warn('Interface cannot be "popover" with a multi-value select. Using the "alert" interface.');
+      this.interface = 'alert';
+    }
+
+    if (this.interface === 'popover' && !ev) {
+      console.warn('Interface cannot be "popover" without UIEvent.');
+      this.interface = 'alert';
+    }
+
     let overlay: any;
     if (this.interface === 'action-sheet') {
       alertOptions.buttons = alertOptions.buttons.concat(options.map(input => {
@@ -283,6 +295,25 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
       alertOptions.cssClass = 'select-action-sheet';
 
       overlay = new ActionSheet(this._app, alertOptions);
+
+    } else if (this.interface === 'popover') {
+      let popoverOptions: ISelectPopoverOption[] = options.map(input => ({
+        text: input.text,
+        checked: input.selected,
+        disabled: input.disabled,
+        value: input.value
+      }));
+
+      overlay = new Popover(this._app, SelectPopover, {
+        options: popoverOptions
+      }, {
+        cssClass: 'select-popover'
+      });
+
+      // ev.target is readonly.
+      // place popover regarding to ion-select instead of .button-inner
+      Object.defineProperty(ev, 'target', { value: ev.currentTarget });
+      alertOptions.ev = ev;
 
     } else {
       // default to use the alert interface
@@ -330,8 +361,12 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
     overlay.present(alertOptions);
 
     this._isOpen = true;
-    overlay.onDidDismiss(() => {
+    overlay.onDidDismiss((value: any) => {
       this._isOpen = false;
+      if (this.interface === 'popover' && value) {
+        this.onChange(value);
+        this.ionChange.emit(value);
+      }
     });
   }
 
