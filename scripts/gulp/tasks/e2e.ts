@@ -1,8 +1,9 @@
 import { DIST_E2E_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, task} from 'gulp';
 import * as path from 'path';
+import * as fs from 'fs';
 
-import { execNodeTask } from '../util';
+import { compileSass, copyFonts, execNodeTask } from '../util';
 
 task('e2e.setupTests', (done: Function) => {
 
@@ -19,7 +20,7 @@ task('e2e.setupTests', (done: Function) => {
       'src/components/*/test/*/**/*.ts',
       '!src/components/*/test/*/**/*.spec.ts'
     ])
-    .pipe(gulpif(/app.ts$/, createIndexHTML()))
+    .pipe(gulpif(/app-module.ts$/, createIndexHTML()))
     .pipe(gulpif(/e2e.ts$/, createPlatformTests()));
 
   let testFiles = src([
@@ -118,12 +119,12 @@ task('e2e.build.tests',  (done: Function) => {
     // If an e2efolder parameter was passed then only transpile that directory
     if (e2eFolder) {
       e2eNgc.include = [
-        `${DIST_E2E_ROOT}/tests/${e2eFolder}/app.ts`,
+        `${DIST_E2E_ROOT}/tests/${e2eFolder}/app-module.ts`,
         `${DIST_E2E_ROOT}/tests/${e2eFolder}/entry.ts`
       ];
     } else {
       e2eNgc.include = [
-        `${DIST_E2E_ROOT}/tests/*/test/*/app.ts`,
+        `${DIST_E2E_ROOT}/tests/*/test/*/app-module.ts`,
         `${DIST_E2E_ROOT}/tests/*/test/*/entry.ts`
       ];
     }
@@ -134,24 +135,83 @@ task('e2e.build.tests',  (done: Function) => {
   let folder = argv.folder;
   updateE2eNgc(folder);
 
-  let startTask = execNodeTask('@angular/compiler-cli', 'ngc', ['-p', './.generated-ngc-config.json']);
+  /*let startTask = execNodeTask('@angular/compiler-cli', 'ngc', ['-p', './.generated-ngc-config.json']);
   startTask( (err: any) => {
     del('./.generated-ngc-config.json');
     done(err);
   });
-  //let exec = require('child_process').exec;
-  //var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ./.generated-ngc-config.json';
+  */
+  let exec = require('child_process').exec;
+  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ./.generated-ngc-config.json';
 
-  /*exec(shellCommand, function(err, stdout, stderr) {
+  exec(shellCommand, function(err, stdout, stderr) {
     del('./.generated-ngc-config.json');
     console.log(stdout);
     console.log(stderr);
     done(err);
   });
-  */
+});
+
+task('e2e-sass', () => {
+  return compileSass(`${DIST_E2E_ROOT}/css`);
+});
+
+task('e2e-fonts', () => {
+  return copyFonts(`${DIST_E2E_ROOT}/fonts`);
+});
+
+/**
+ * Task: e2e.pre-webpack
+ * Dynamically build webpack entryPoints
+ * Update index.html file that lists all e2e tasks
+ */
+task('e2e.pre-webpack', function(done) {
+  /**
+   * Find all AppModule.ts files because the act as the entry points
+   * for each e2e test.
+   */
+  let glob = require('glob');
+  glob(`${DIST_E2E_ROOT}/tests/*/test/*/app-module.ts`, {}, function(er, files) {
+
+    var directories = files.map(function(file) {
+      return path.dirname(file);
+    });
+
+    var webpackEntryPoints = directories.reduce(function(endObj, dir) {
+      let relativePath = dir.replace(process.cwd() + '/', './');
+      endObj[relativePath + '/index'] = relativePath + '/entry';
+      return endObj;
+    }, {});
+
+    let indexFileContents = directories.map(function(dir) {
+      var fileName = dir.replace(/test\//, '');
+      return '<p><a href="./' + fileName + '/index.html">' + fileName + '</a></p>';
+    }, []);
+
+    fs.writeFileSync('./scripts/e2e/webpackEntryPoints.json', JSON.stringify(webpackEntryPoints, null, 2));
+    fs.writeFileSync(`${DIST_E2E_ROOT}/index.html`,
+      '<!DOCTYPE html><html lang="en"><head></head><body style="width: 500px; margin: 100px auto">\n' +
+      indexFileContents.join('\n') +
+      '</center></body></html>'
+    );
+    done();
+  });
+});
+
+task('e2e.webpack', function(done) {
+  let webpackConfig = './scripts/e2e/webpack.config.js';
+  let exec = require('child_process').exec;
+  let shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/webpack --config ' + webpackConfig + ' --display-error-details';
+
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
+  });
 });
 
 task('e2e.build', (done: Function) => {
   let runSequence = require('run-sequence');
-  runSequence('e2e.ngcSource', 'e2e.setupTests', 'e2e.copy.swiper', 'e2e.build.tests', done);
+  runSequence('e2e.ngcSource', 'e2e.setupTests', 'e2e.copy.swiper', 'e2e.build.tests', 'e2e-sass', 'e2e-fonts', 'e2e.pre-webpack', 'e2e.webpack', done);
 });
+
