@@ -88,6 +88,21 @@ export class Navbar extends ToolbarBase {
    */
   _sbPadding: boolean;
 
+  /** @internal */
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
+
   /**
    * @input {boolean} whether the back button should be shown or not
    */
@@ -103,11 +118,11 @@ export class Navbar extends ToolbarBase {
     public _app: App,
     @Optional() viewCtrl: ViewController,
     @Optional() private navCtrl: NavController,
-    elementRef: ElementRef,
+    private _elementRef: ElementRef,
     private _config: Config,
     private _renderer: Renderer
   ) {
-    super(elementRef);
+    super(_elementRef);
 
     viewCtrl && viewCtrl._setNavbar(this);
 
@@ -150,6 +165,24 @@ export class Navbar extends ToolbarBase {
   setHidden(isHidden: boolean) {
     // used to display none/block the navbar
     this._hidden = isHidden;
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `toolbar-${color}`, isAdd);
+    }
   }
 
 }

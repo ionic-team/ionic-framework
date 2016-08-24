@@ -1,10 +1,7 @@
 // This file is named differently than its JS bootstrapper to avoid the ts compiler to overwrite it.
 
 import path = require('path');
-import {
-  customLaunchers,
-  platformMap,
-} from './browser-providers.ts';
+import { customLaunchers } from './browser-providers.ts';
 
 
 export function config(config) {
@@ -81,12 +78,12 @@ export function config(config) {
     browsers: ['Chrome_1024x768'],
 
     coverageReporter: {
-        reporters:[
+        reporters: [
             {type: 'json', subdir: '.', file: 'coverage-final.json'}
         ]
     },
 
-    singleRun: false
+    singleRun: true
   });
 
 };

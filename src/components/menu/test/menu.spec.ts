@@ -1,5 +1,6 @@
-import { Menu } from '../menu';
 import { MenuController } from '../menu-controller';
+import { mockMenu } from '../../../util/mock-providers';
+
 
 describe('MenuController', () => {
 
@@ -169,7 +170,7 @@ describe('MenuController', () => {
   describe('enable()', () => {
 
     it('should enable a menu', () => {
-      /*let someMenu = mockMenu();
+      let someMenu = mockMenu();
       someMenu.enabled = true;
       menuCtrl.register(someMenu);
       someMenu._menuCtrl = menuCtrl;
@@ -179,12 +180,10 @@ describe('MenuController', () => {
 
       menu = menuCtrl.enable(false);
       expect(menu.enabled).toEqual(false);
-      */
-      expect(true).toEqual(false);
     });
 
     it('should be only one enabled menu on the same side', () => {
-      /*let someMenu1 = mockMenu();
+      let someMenu1 = mockMenu();
       someMenu1.enabled = true;
       someMenu1.side = 'left';
       someMenu1.id = 'menu1';
@@ -219,8 +218,6 @@ describe('MenuController', () => {
       expect(someMenu1.enabled).toEqual(true);
       expect(someMenu2.enabled).toEqual(false);
       expect(someMenu3.enabled).toEqual(true);
-      */
-      expect(true).toEqual(false);
     });
 
   });
@@ -245,9 +242,5 @@ describe('MenuController', () => {
   beforeEach(() => {
     menuCtrl = new MenuController();
   });
-
-  function mockMenu(): Menu {
-    return new Menu(null, null, null, null, null, null, null, null);
-  }
 
 });

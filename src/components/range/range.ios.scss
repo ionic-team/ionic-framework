@@ -178,7 +178,7 @@ ion-range {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  ion-range[#{$color-name}] {
+  .range-#{$color-name} {
     .range-bar-active,
     .range-tick-active {
       background: $color-base;

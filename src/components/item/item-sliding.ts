@@ -19,7 +19,7 @@ export const enum ItemSideFlags {
  * @name ItemOptions
  * @description
  * The option buttons for an `ion-item-sliding`. These buttons can be placed either on the left or right side.
- * You can combind the `(ionSiwpe)` event plus the `expandable` directive to create a full swipe action for the item.
+ * You can combine the `(ionSwipe)` event plus the `expandable` directive to create a full swipe action for the item.
  *
  * @usage
  *
@@ -108,7 +108,7 @@ export const enum SlidingState {
  *     </ion-item>
  *     <ion-item-options side="left">
  *       <button ion-button (click)="favorite(item)">Favorite</button>
- *       <button ion-button danger (click)="share(item)">Share</button>
+ *       <button ion-button color="danger" (click)="share(item)">Share</button>
  *     </ion-item-options>
 
  *     <ion-item-options side="right">

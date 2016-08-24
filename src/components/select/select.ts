@@ -28,10 +28,10 @@ export const SELECT_VALUE_ACCESSOR = new Provider(
  *
  * ### Interfaces
  *
- * By default, the `ion-select` uses the {@link ../../alert/Alert Alert API} to
- * open up the overlay of options in an alert. The interface can be changed to use the
- * {@link ../../action-sheet/ActionSheet ActionSheet API} by passing `action-sheet` to
- * the `interface` property. Read the other sections for the limitations of the
+ * By default, the `ion-select` uses the {@link ../../alert/AlertController AlertController API}
+ * to open up the overlay of options in an alert. The interface can be changed to use the
+ * {@link ../../action-sheet/ActionSheetController ActionSheetController API} by passing
+ * `action-sheet` to the `interface` property. Read the other sections for the limitations of the
  * action sheet interface.
  *
  * ### Single Value: Radio Buttons
@@ -92,21 +92,23 @@ export const SELECT_VALUE_ACCESSOR = new Provider(
  * on any of the options will automatically close the overlay and select
  * that value.
  *
- * ### Alert Options
+ * ### Select Options
  *
- * Since `ion-select` is a wrapper to `Alert`, by default, it can be
- * passed options in the `alertOptions` property. This can be used to
- * pass a custom alert title, subtitle or message. See the {@link ../../alert/Alert Alert API docs}
- * for more properties.
+ * Since `ion-select` uses the `Alert` and `Action Sheet` interfaces, options can be
+ * passed to these components through the `selectOptions` property. This can be used
+ * to pass a custom title, subtitle, css class, and more. See the
+ * {@link ../../alert/AlertController/#create AlertController API docs} and
+ * {@link ../../action-sheet/ActionSheetController/#create ActionSheetController API docs}
+ * for the properties that each interface accepts.
  *
  * ```html
- * <ion-select [alertOptions]="alertOptions">
+ * <ion-select [selectOptions]="selectOptions">
  *   ...
  * </ion-select>
  * ```
  *
  * ```ts
- * this.alertOptions = {
+ * this.selectOptions = {
  *   title: 'Pizza Toppings',
  *   subTitle: 'Select your toppings'
  * };
@@ -167,10 +169,12 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   @Input() placeholder: string;
 
   /**
-   * @input {any} Any addition options that the alert interface can take.
-   * See the [Alert API docs](../../alert/Alert) for the create options.
+   * @input {any} Any additional options that the `alert` or `action-sheet` interface can take.
+   * See the [AlertController API docs](../../alert/AlertController/#create) and the
+   * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) for the
+   * create options for each interface.
    */
-  @Input() alertOptions: any = {};
+  @Input() selectOptions: any = {};
 
   /**
    * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
@@ -238,11 +242,11 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
     console.debug('select, open alert');
 
     // the user may have assigned some options specifically for the alert
-    let alertOptions = merge({}, this.alertOptions);
+    let selectOptions = merge({}, this.selectOptions);
 
     // make sure their buttons array is removed from the options
     // and we create a new array for the alert's two buttons
-    alertOptions.buttons = [{
+    selectOptions.buttons = [{
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
@@ -250,9 +254,9 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
       }
     }];
 
-    // if the alertOptions didn't provide an title then use the label's text
-    if (!alertOptions.title && this._item) {
-      alertOptions.title = this._item.getLabelText();
+    // if the selectOptions didn't provide a title then use the label's text
+    if (!selectOptions.title && this._item) {
+      selectOptions.title = this._item.getLabelText();
     }
 
     let options = this._options.toArray();
@@ -268,7 +272,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
 
     let overlay: any;
     if (this.interface === 'action-sheet') {
-      alertOptions.buttons = alertOptions.buttons.concat(options.map(input => {
+      selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
         return {
           role: (input.selected ? 'selected' : ''),
           text: input.text,
@@ -278,17 +282,21 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
           }
         };
       }));
-      alertOptions.cssClass = 'select-action-sheet';
+      var selectCssClass = 'select-action-sheet';
 
-      overlay = new ActionSheet(this._app, alertOptions);
+      // If the user passed a cssClass for the select, add it
+      selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
+
+      selectOptions.cssClass = selectCssClass;
+      overlay = new ActionSheet(this._app, selectOptions);
 
     } else {
       // default to use the alert interface
       this.interface = 'alert';
 
-      // user cannot provide inputs from alertOptions
+      // user cannot provide inputs from selectOptions
       // alert inputs must be created by ionic from ion-options
-      alertOptions.inputs = this._options.map(input => {
+      selectOptions.inputs = this._options.map(input => {
         return {
           type: (this._multi ? 'checkbox' : 'radio'),
           label: input.text,
@@ -300,8 +308,8 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
 
       var selectCssClass = 'select-alert';
 
-      // create the alert instance from our built up alertOptions
-      overlay = new Alert(this._app, alertOptions);
+      // create the alert instance from our built up selectOptions
+      overlay = new Alert(this._app, selectOptions);
 
       if (this._multi) {
         // use checkboxes
@@ -312,7 +320,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
       }
 
       // If the user passed a cssClass for the select, add it
-      selectCssClass += alertOptions.cssClass ? ' ' + alertOptions.cssClass : '';
+      selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
       overlay.setCssClass(selectCssClass);
 
       overlay.addButton({
@@ -325,7 +333,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
 
     }
 
-    overlay.present(alertOptions);
+    overlay.present(selectOptions);
 
     this._isOpen = true;
     overlay.onDidDismiss(() => {

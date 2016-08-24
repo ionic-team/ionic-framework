@@ -5,7 +5,14 @@ import { IonicApp, IonicModule } from '../../../..';
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EPage {}
+export class E2EPage {
+  dynamicColor: string = 'secondary';
+
+  toggleColor() {
+    this.dynamicColor = (this.dynamicColor === 'secondary' ? 'danger' : 'secondary');
+  }
+}
+
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'

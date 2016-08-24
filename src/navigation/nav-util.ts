@@ -7,22 +7,41 @@ import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
 
 
+export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any): ViewController {
+  if (nameOrPageOrView) {
+    if (isViewController(nameOrPageOrView)) {
+      // is already a ViewController
+      return nameOrPageOrView;
+    }
+    if (typeof nameOrPageOrView === 'function') {
+      // is a page component, now turn it into a ViewController
+      return new ViewController(nameOrPageOrView, params);
+    }
+    if (typeof nameOrPageOrView === 'string') {
+      // is a string, see if it matches a
+      const component = linker.getComponentFromName(nameOrPageOrView);
+      if (component) {
+        // found a page component in the link config by name
+        return new ViewController(component, params);
+      }
+    }
+  }
+  console.error(`invalid page component: ${nameOrPageOrView}`);
+  return null;
+}
+
+
 export function convertToViews(linker: DeepLinker, pages: any[]): ViewController[] {
   const views: ViewController[] = [];
   if (pages) {
     for (var i = 0; i < pages.length; i++) {
-      if (isViewController(pages[i])) {
-        views.push(pages[i]);
+      var page = pages[i];
+      if (page) {
+        if (isViewController(page)) {
+          views.push(page);
 
-      } else {
-        var componentType: any = linker.getComponent(pages[i].page) || pages[i].page;
-        if (componentType) {
-          if (typeof componentType !== 'function') {
-            console.error(`invalid component for nav: ${componentType}`);
-
-          } else {
-            views.push(new ViewController(componentType, pages[i].params));
-          }
+        } else {
+          views.push(convertToView(linker, page.page, page.params));
         }
       }
     }
@@ -32,26 +51,19 @@ export function convertToViews(linker: DeepLinker, pages: any[]): ViewController
 
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
   if (enteringView) {
-    // get the leaving view, which could be in various states
-    if (!leavingView) {
-      const previousView = nav.getPrevious(enteringView);
-      if (previousView && previousView._state === ViewState.LOADED) {
-        // we found a better previous view to reference
-        // use this one instead
-        enteringView._setZIndex(previousView._zIndex + 1, renderer);
+
+    leavingView = leavingView || nav.getPrevious(enteringView);
+
+    if (leavingView && isPresent(leavingView._zIndex)) {
+      if (direction === DIRECTION_BACK) {
+        enteringView._setZIndex(leavingView._zIndex - 1, renderer);
 
       } else {
-        // this is the initial view
-        enteringView._setZIndex(nav._isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, renderer);
+        enteringView._setZIndex(leavingView._zIndex + 1, renderer);
       }
 
-    } else if (direction === DIRECTION_BACK) {
-      // moving back
-      enteringView._setZIndex(leavingView._zIndex - 1, renderer);
-
     } else {
-      // moving forward
-      enteringView._setZIndex(leavingView._zIndex + 1, renderer);
+      enteringView._setZIndex(nav._isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, renderer);
     }
   }
 }
@@ -117,7 +129,7 @@ export interface NavOptions {
 }
 
 export interface TransitionResolveFn {
-  (hasCompleted: boolean): void;
+  (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string): void;
 }
 
 export interface TransitionRejectFn {

@@ -71,20 +71,44 @@ export const TOGGLE_VALUE_ACCESSOR = new Provider(
   encapsulation: ViewEncapsulation.None,
 })
 export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy  {
+  /** @internal */
   _checked: boolean = false;
+  /** @internal */
   _init: boolean;
+  /** @internal */
   _disabled: boolean = false;
+  /** @internal */
   _labelId: string;
+  /** @internal */
   _activated: boolean = false;
+  /** @internal */
   _startX: number;
+  /** @internal */
   _msPrv: number = 0;
+  /** @internal */
   _fn: Function;
+  /** @internal */
   _events: UIEventManager = new UIEventManager();
 
   /**
    * @private
    */
   id: string;
+
+  /** @internal */
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
 
   /**
    * @output {Toggle} expression to evaluate when the toggle value changes
@@ -221,6 +245,24 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-toggle-disabled', this._disabled);
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `toggle-${color}`, isAdd);
+    }
   }
 
   /**

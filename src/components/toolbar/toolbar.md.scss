@@ -106,19 +106,21 @@ ion-footer[no-shadow]::before,
 }
 
 @mixin md-toolbar-theme($color-name, $color-base, $color-contrast) {
-  .toolbar[#{$color-name}] {
+  .toolbar-#{$color-name} {
     $fg-color: color-contrast($colors-md, $color-base, md);
 
     .toolbar-background {
       background: $color-base;
     }
 
+    .bar-button-clear,
     .bar-button-default,
     .bar-button-outline,
     .toolbar-title {
       color: $fg-color;
     }
 
+    .bar-button-clear,
     .bar-button-default,
     .bar-button-outline {
       ion-button-effect {
@@ -196,6 +198,7 @@ ion-buttons[right] {
 
 @mixin md-bar-button-default($color-name, $color-base, $color-contrast) {
 
+  .bar-button-clear-#{$color-name},
   .bar-button-#{$color-name} {
     color: $color-base;
     background-color: transparent;
@@ -373,6 +376,7 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 @include md-bar-button-default(default, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
+@include md-bar-button-default(clear, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
   @include md-toolbar-theme($color-name, $color-base, $color-contrast);

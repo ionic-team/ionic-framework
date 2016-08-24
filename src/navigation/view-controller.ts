@@ -102,6 +102,12 @@ export class ViewController {
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
     this._cssClass = rootCssClass;
+
+    this.willEnter = new EventEmitter();
+    this.didEnter = new EventEmitter();
+    this.willLeave = new EventEmitter();
+    this.didLeave = new EventEmitter();
+    this.willUnload = new EventEmitter();
   }
 
   /**
@@ -109,14 +115,8 @@ export class ViewController {
    */
   init(componentRef: ComponentRef<any>) {
     this._cmp = componentRef;
-    this.instance = componentRef.instance;
+    this.instance = this.instance || componentRef.instance;
     this._detached = false;
-
-    this.willEnter = new EventEmitter();
-    this.didEnter = new EventEmitter();
-    this.willLeave = new EventEmitter();
-    this.didLeave = new EventEmitter();
-    this.willUnload = new EventEmitter();
   }
 
   /**
@@ -280,10 +280,13 @@ export class ViewController {
    * DOM WRITE
    */
   _setZIndex(zIndex: number, renderer: Renderer) {
-    if (this._cmp && zIndex !== this._zIndex) {
+    if (zIndex !== this._zIndex) {
       this._zIndex = zIndex;
-      // ******** DOM WRITE ****************
-      renderer.setElementStyle(this.pageRef().nativeElement, 'z-index', (<any>zIndex));
+      const pageRef = this.pageRef();
+      if (pageRef) {
+        // ******** DOM WRITE ****************
+        renderer.setElementStyle(pageRef.nativeElement, 'z-index', (<any>zIndex));
+      }
     }
   }
 
@@ -427,7 +430,7 @@ export class ViewController {
       this._detached = false;
     }
 
-    this.willEnter.emit();
+    this.willEnter.emit(null);
     ctrlFn(this, 'WillEnter');
   }
 
@@ -438,7 +441,7 @@ export class ViewController {
    */
   _didEnter() {
     this._nb && this._nb.didEnter();
-    this.didEnter.emit();
+    this.didEnter.emit(null);
     ctrlFn(this, 'DidEnter');
   }
 
@@ -447,7 +450,7 @@ export class ViewController {
    * The view has is about to leave and no longer be the active view.
    */
   _willLeave() {
-    this.willLeave.emit();
+    this.willLeave.emit(null);
     ctrlFn(this, 'WillLeave');
   }
 
@@ -457,27 +460,26 @@ export class ViewController {
    * will fire, whether it is cached or unloaded.
    */
   _didLeave() {
+    this.didLeave.emit(null);
+    ctrlFn(this, 'DidLeave');
+
     // when this is not the active page
     // we no longer need to detect changes
     if (!this._detached && this._cmp) {
       this._cmp.changeDetectorRef.detach();
       this._detached = true;
     }
-
-    this.didLeave.emit();
-    ctrlFn(this, 'DidLeave');
   }
 
   /**
    * @internal
    */
   _willUnload() {
-    this.willUnload.emit();
-
+    this.willUnload.emit(null);
     ctrlFn(this, 'WillUnload');
 
     // deprecated warning: added 2016-08-14, beta.12
-    if (this.instance.ionViewDidUnload) {
+    if (this.instance && this.instance.ionViewDidUnload) {
       console.warn('ionViewDidUnload() has been deprecated. Please use ionViewWillUnload() instead');
       try {
         this.instance.ionViewDidUnload();
@@ -493,10 +495,12 @@ export class ViewController {
    */
   _destroy(renderer: Renderer) {
     if (this._cmp) {
-      // ensure the element is cleaned up for when the view pool reuses this element
-      // ******** DOM WRITE ****************
-      renderer.setElementAttribute(this._cmp.location.nativeElement, 'class', null);
-      renderer.setElementAttribute(this._cmp.location.nativeElement, 'style', null);
+      if (renderer) {
+        // ensure the element is cleaned up for when the view pool reuses this element
+        // ******** DOM WRITE ****************
+        renderer.setElementAttribute(this._cmp.location.nativeElement, 'class', null);
+        renderer.setElementAttribute(this._cmp.location.nativeElement, 'style', null);
+      }
 
       // completely destroy this component. boom.
       this._cmp.destroy();
@@ -549,7 +553,7 @@ function ctrlFn(viewCtrl: ViewController, fnName: string) {
 
 
 export function isViewController(viewCtrl: any) {
-  return !!(viewCtrl && (<ViewController>viewCtrl).componentType && (<ViewController>viewCtrl)._nav);
+  return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
 }
 
 const DEFAULT_CSS_CLASS = 'ion-page';

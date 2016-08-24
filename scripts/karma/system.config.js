@@ -2,6 +2,11 @@
 Error.stackTraceLimit = Infinity;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 
+// disable console debugs/errors/warns from printing out
+console.debug = () => {};
+console.error = () => {};
+console.warn = () => {};
+
 __karma__.loaded = function () {};
 
 
@@ -37,17 +42,13 @@ System.config({
 
 var allSpecFiles = Object.keys(window.__karma__.files).filter(isSpecFile).filter(isIonicFile);
 
-//allSpecFiles = [ allSpecFiles[allSpecFiles.length - 1] ];
-
-// Load and configure the TestComponentBuilder.
 Promise.all(
-  allSpecFiles.map(function (moduleName) {
-    return System.import(moduleName).then(function(module) {
-      return module;
+  allSpecFiles.map((moduleName) => {
+    return System.import(moduleName).then(function(m) {
+      return m;
     });
   })
 ).then(__karma__.start, __karma__.error).catch(__karma__.error);
-
 
 
 function isJsFile(path) {

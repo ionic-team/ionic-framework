@@ -11,10 +11,14 @@ export interface Currency {
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  musicAlertOpts: any = {
+  musicSelectOpts: any = {
     title: '1994 Music',
     subTitle: 'Select your favorite',
     cssClass: 'music-select'
+  };
+  notificationSelectOpts: any = {
+    title: 'Mute notifications',
+    cssClass: 'notification-select'
   };
   gender: string;
   gaming: string = '';
@@ -24,8 +28,7 @@ export class E2EPage {
   month: string = '12';
   year: string = '1994';
   notification: string = 'enable';
-  notifications: string = '1';
-  status: string = "checked";
+  status: string = 'checked';
 
   currencies: Currency[] = [
     {

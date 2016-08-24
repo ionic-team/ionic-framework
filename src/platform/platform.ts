@@ -28,7 +28,6 @@ import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
  * @demo /docs/v2/demos/platform/
  */
 export class Platform {
-  private _platforms: Array<string> = [];
   private _versions: {[name: string]: PlatformVersion} = {};
   private _dir: string;
   private _lang: string;
@@ -41,7 +40,11 @@ export class Platform {
   private _resizeTm: any;
   private _bbActions: BackButtonAction[] = [];
 
+  /** @private */
   zone: NgZone;
+
+  /** @internal */
+  _platforms: string[] = [];
 
   constructor() {
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
@@ -170,7 +173,7 @@ export class Platform {
    * @private
    */
   version(): PlatformVersion {
-    for (let platformName in this._versions) {
+    for (var platformName in this._versions) {
       if (this._versions[platformName]) {
         return this._versions[platformName];
       }
@@ -356,7 +359,7 @@ export class Platform {
    * the its back button action.
    */
   registerBackButtonAction(fn: Function, priority: number = 0): Function {
-    let action: BackButtonAction = {fn, priority};
+    const action: BackButtonAction = {fn, priority};
 
     this._bbActions.push(action);
 
@@ -460,7 +463,7 @@ export class Platform {
    * @private
    */
   windowResize() {
-    let self = this;
+    const self = this;
     clearTimeout(self._resizeTm);
 
     self._resizeTm = setTimeout(() => {
@@ -484,7 +487,7 @@ export class Platform {
     self._onResizes.push(cb);
 
     return function() {
-      let index = self._onResizes.indexOf(cb);
+      const index = self._onResizes.indexOf(cb);
       if (index > -1) {
         self._onResizes.splice(index, 1);
       }
@@ -527,7 +530,7 @@ export class Platform {
    * @private
    */
   testQuery(queryValue: string, queryTestValue: string): boolean {
-    let valueSplit = queryValue.toLowerCase().split(';');
+    const valueSplit = queryValue.toLowerCase().split(';');
     return valueSplit.indexOf(queryTestValue) > -1;
   }
 
@@ -535,7 +538,7 @@ export class Platform {
    * @private
    */
   testNavigatorPlatform(navigatorPlatformExpression: string): boolean {
-    let rgx = new RegExp(navigatorPlatformExpression, 'i');
+    const rgx = new RegExp(navigatorPlatformExpression, 'i');
     return rgx.test(this._bPlt);
   }
 
@@ -544,7 +547,7 @@ export class Platform {
    */
   matchUserAgentVersion(userAgentExpression: RegExp): any {
     if (this._ua && userAgentExpression) {
-      let val = this._ua.match(userAgentExpression);
+      const val = this._ua.match(userAgentExpression);
       if (val) {
         return {
           major: val[1],
@@ -558,14 +561,14 @@ export class Platform {
    * @private
    */
   isPlatformMatch(queryStringName: string, userAgentAtLeastHas?: string[], userAgentMustNotHave: string[] = []): boolean {
-    let queryValue = this._qp.get('ionicplatform');
+    const queryValue = this._qp.get('ionicplatform');
     if (queryValue) {
       return this.testQuery(queryValue, queryStringName);
     }
 
     userAgentAtLeastHas = userAgentAtLeastHas || [queryStringName];
 
-    let userAgent = this._ua.toLowerCase();
+    const userAgent = this._ua.toLowerCase();
 
     for (var i = 0; i < userAgentAtLeastHas.length; i++) {
       if (userAgent.indexOf(userAgentAtLeastHas[i]) > -1) {
@@ -759,17 +762,17 @@ class PlatformNode {
         return this;
       }
 
-      let platform: PlatformNode = null;
-      let rootPlatform: PlatformNode = null;
+      let platformNode: PlatformNode = null;
+      let rootPlatformNode: PlatformNode = null;
 
       for (let i = 0; i < parents.length; i++) {
-        platform = new PlatformNode(parents[i]);
-        platform.child = this;
+        platformNode = new PlatformNode(parents[i]);
+        platformNode.child = this;
 
-        rootPlatform = platform.getRoot(p);
-        if (rootPlatform) {
-          this.parent = platform;
-          return rootPlatform;
+        rootPlatformNode = platformNode.getRoot(p);
+        if (rootPlatformNode) {
+          this.parent = platformNode;
+          return rootPlatformNode;
         }
       }
     }

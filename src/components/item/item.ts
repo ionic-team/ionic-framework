@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, Input, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
@@ -255,7 +255,7 @@ import { Reorder } from '../item/item-reorder';
  *       Item
  *     </ion-item>
  *     <ion-item-options>
- *       <button ion-button primary (click)="archive()">Archive</button>
+ *       <button ion-button color="primary" (click)="archive()">Archive</button>
  *     </ion-item-options>
  *   </ion-item-sliding>
  *
@@ -304,7 +304,22 @@ export class Item {
    */
   labelId: string = null;
 
-  constructor(form: Form, public _renderer: Renderer, public _elementRef: ElementRef) {
+  /** @internal */
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
+
+  constructor(form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
     this.id = form.nextId().toString();
   }
 
@@ -384,6 +399,26 @@ export class Item {
    */
   setCssStyle(property: string, value: string) {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string, colorClass?: string) {
+    this._setElementColor(this._color, false, colorClass);
+    this._setElementColor(newColor, true, colorClass);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean, colorClass?: string) {
+    colorClass = colorClass || 'item'; // item-radio
+
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `${colorClass}-${color}`, isAdd);
+    }
   }
 
   /**

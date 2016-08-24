@@ -1,6 +1,8 @@
 import { RadioGroup } from '../radio-group';
 import { RadioButton } from '../radio-button';
 import { Form } from '../../../util/form';
+import { mockRenderer, mockElementRef } from '../../../util/mock-providers';
+
 
 describe('RadioGroup', () => {
 
@@ -87,6 +89,12 @@ describe('RadioGroup', () => {
     });
 
   });
+
+  beforeEach(() => {
+    rg = new RadioGroup(mockRenderer(), mockElementRef());
+    form = new Form();
+  });
+
 });
 
 describe('RadioButton', () => {
@@ -106,28 +114,16 @@ describe('RadioButton', () => {
 
   });
 
+  beforeEach(() => {
+    rg = new RadioGroup(mockRenderer(), mockElementRef());
+    form = new Form();
+  });
+
 });
 
 let rg: RadioGroup;
 let form: Form;
 
 function createRadioButton(shouldIncludeGroup = true) {
-  return new RadioButton(form, null, shouldIncludeGroup ? rg : null);
+  return new RadioButton(form, mockElementRef(), mockRenderer(), null, shouldIncludeGroup ? rg : null);
 }
-
-function mockRenderer(): any {
-  return {
-    setElementAttribute: function(){}
-  };
-}
-
-function mockElementRef(): any {
-  return {
-    nativeElement: document.createElement('div')
-  };
-}
-
-beforeEach(() => {
-  rg = new RadioGroup(mockRenderer(), mockElementRef());
-  form = new Form();
-});

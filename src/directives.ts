@@ -46,6 +46,7 @@ import { Toggle } from './components/toggle/toggle';
 import { Toolbar, Header, Footer } from './components/toolbar/toolbar';
 import { ToolbarItem } from './components/toolbar/toolbar-item';
 import { ToolbarTitle } from './components/toolbar/toolbar-title';
+import { Typography } from './components/typography/typography';
 import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
 import { VirtualItem, VirtualHeader, VirtualFooter } from './components/virtual-scroll/virtual-item';
 
@@ -91,7 +92,7 @@ export { NavPush, NavPushAnchor } from './components/nav/nav-push';
 export { Navbar } from './components/navbar/navbar';
 export { Option } from './components/option/option';
 export { Picker, PickerController } from './components/picker/picker';
-export { PickerOptions } from './components/picker/picker-options';
+export { PickerOptions, PickerColumn, PickerColumnOption } from './components/picker/picker-options';
 export { Popover, PopoverController } from './components/popover/popover';
 export { PopoverOptions } from './components/popover/popover-options';
 export { RadioButton } from './components/radio/radio-button';
@@ -114,6 +115,7 @@ export { ToastOptions } from './components/toast/toast-options';
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar, ToolbarBase, Header, Footer } from './components/toolbar/toolbar';
 export { ToolbarTitle } from'./components/toolbar/toolbar-title';
+export { Typography } from './components/typography/typography';
 export { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
 
 
@@ -189,6 +191,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Toolbar,
   ToolbarItem,
   ToolbarTitle,
+  Typography,
   VirtualFooter,
   VirtualHeader,
   VirtualItem,

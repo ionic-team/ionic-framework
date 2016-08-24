@@ -225,7 +225,13 @@ ion-item-divider {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  ion-item-divider[#{$color-name}] {
+  // If there is text with a color it should use this color
+  // and override whatever item sets it to
+  .item .text-#{$color-name} {
+    color: $color-base;
+  }
+
+  .item-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

@@ -17,6 +17,7 @@ export class E2EPage {
     'logo-apple'
   ];
   btnIcon: string;
+  dynamicColor: string = 'danger';
 
   constructor() {
     this.btnIcon = this.icons[0];

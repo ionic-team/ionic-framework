@@ -1,9 +1,9 @@
 import { App } from '../app';
-import { IonicApp } from '../app-root';
 import { Config } from '../../../config/config';
-import { mockConfig, mockNavController, mockOverlayPortal, mockPlatform, mockTab, mockTabs} from '../../../util/mock-providers';
+import { mockApp, mockConfig, mockNavController, mockPlatform, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
+import { OverlayPortal } from '../../nav/overlay-portal';
 import { Platform } from '../../../platform/platform';
-import { ViewController } from '../../../navigation/view-controller';
+
 
 describe('App', () => {
 
@@ -11,7 +11,6 @@ describe('App', () => {
 
     it('should select the previous tab', () => {
       let nav = mockNavController();
-      let portal = mockNavController();
       app._setRootNav(nav);
 
       let tabs = mockTabs();
@@ -41,13 +40,12 @@ describe('App', () => {
 
     it('should pop from the active tab, when tabs is nested is the root nav', () => {
       let nav = mockNavController();
-      let portal = mockNavController();
       app._setRootNav(nav);
 
       let tabs = mockTabs();
-      let tab1 = mockTab(tabs);
+      mockTab(tabs);
       let tab2 = mockTab(tabs);
-      let tab3 = mockTab(tabs);
+      mockTab(tabs);
       nav.registerChildNav(tabs);
 
       tab2.setSelected(true);
@@ -56,8 +54,8 @@ describe('App', () => {
       spyOn(tab2, 'pop');
       spyOn(portal, 'pop');
 
-      let view1 = new ViewController();
-      let view2 = new ViewController();
+      let view1 = mockView();
+      let view2 = mockView();
       tab2._views = [view1, view2];
 
       app.navPop();
@@ -69,9 +67,9 @@ describe('App', () => {
 
     it('should pop from the active tab, when tabs is the root', () => {
       let tabs = mockTabs();
-      let tab1 = mockTab(tabs);
+      mockTab(tabs);
       let tab2 = mockTab(tabs);
-      let tab3 = mockTab(tabs);
+      mockTab(tabs);
       app._setRootNav(tabs);
 
       tab2.setSelected(true);
@@ -79,8 +77,8 @@ describe('App', () => {
       spyOn(platform, 'exitApp');
       spyOn(tab2, 'pop');
 
-      let view1 = new ViewController();
-      let view2 = new ViewController();
+      let view1 = mockView();
+      let view2 = mockView();
       tab2._views = [view1, view2];
 
       app.navPop();
@@ -92,7 +90,6 @@ describe('App', () => {
     it('should pop the root nav when nested nav has less than 2 views', () => {
       let rootNav = mockNavController();
       let nestedNav = mockNavController();
-      let portal = mockNavController();
       rootNav.registerChildNav(nestedNav);
       nestedNav.parent = rootNav;
       app._setRootNav(rootNav);
@@ -102,12 +99,12 @@ describe('App', () => {
       spyOn(nestedNav, 'pop');
       spyOn(portal, 'pop');
 
-      let rootView1 = new ViewController();
-      let rootView2 = new ViewController();
-      rootNav._views = [rootView1, rootView2];
+      let rootView1 = mockView();
+      let rootView2 = mockView();
+      mockViews(rootNav, [rootView1, rootView2]);
 
-      let nestedView1 = new ViewController();
-      nestedNav._views = [nestedView1];
+      let nestedView1 = mockView();
+      mockViews(nestedNav, [nestedView1]);
 
       app.navPop();
 
@@ -120,7 +117,6 @@ describe('App', () => {
     it('should pop a view from the nested nav that has more than 1 view', () => {
       let rootNav = mockNavController();
       let nestedNav = mockNavController();
-      let portal = mockNavController();
       app._setRootNav(rootNav);
       rootNav.registerChildNav(nestedNav);
 
@@ -129,13 +125,13 @@ describe('App', () => {
       spyOn(nestedNav, 'pop');
       spyOn(portal, 'pop');
 
-      let rootView1 = new ViewController();
-      let rootView2 = new ViewController();
-      rootNav._views = [rootView1, rootView2];
+      let rootView1 = mockView();
+      let rootView2 = mockView();
+      mockViews(rootNav, [rootView1, rootView2]);
 
-      let nestedView1 = new ViewController();
-      let nestedView2 = new ViewController();
-      nestedNav._views = [nestedView1, nestedView2];
+      let nestedView1 = mockView();
+      let nestedView2 = mockView();
+      mockViews(nestedNav, [nestedView1, nestedView2]);
 
       app.navPop();
 
@@ -147,19 +143,18 @@ describe('App', () => {
 
     it('should pop the overlay in the portal of the root nav', () => {
       let nav = mockNavController();
-      let portal = mockNavController();
       app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
-      let view1 = new ViewController();
-      let view2 = new ViewController();
-      nav._views = [view1, view2];
+      let view1 = mockView();
+      let view2 = mockView();
+      mockViews(nav, [view1, view2]);
 
-      let overlay = new ViewController();
-      portal._views = [overlay];
+      let overlay1 = mockView();
+      mockViews(portal, [overlay1]);
 
       app.navPop();
 
@@ -170,16 +165,15 @@ describe('App', () => {
 
     it('should pop the second view in the root nav', () => {
       let nav = mockNavController();
-      let portal = mockNavController();
       app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
-      let view1 = new ViewController();
-      let view2 = new ViewController();
-      nav._views = [view1, view2];
+      let view1 = mockView();
+      let view2 = mockView();
+      mockViews(nav, [view1, view2]);
 
       app.navPop();
 
@@ -190,15 +184,14 @@ describe('App', () => {
 
     it('should exit app when only one view in the root nav', () => {
       let nav = mockNavController();
-      let portal = mockNavController();
       app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
-      let view1 = new ViewController();
-      nav._views = [view1];
+      let view1 = mockView();
+      mockViews(nav, [view1]);
 
       expect(app.getActiveNav()).toBe(nav);
       expect(nav.first()).toBe(view1);
@@ -212,7 +205,6 @@ describe('App', () => {
 
     it('should not exit app when only one view in the root nav, but navExitApp config set', () => {
       let nav = mockNavController();
-      let portal = mockNavController();
       app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
@@ -221,8 +213,8 @@ describe('App', () => {
 
       config.set('navExitApp', false);
 
-      let view1 = new ViewController();
-      nav._views = [view1];
+      let view1 = mockView();
+      mockViews(nav, [view1]);
 
       expect(app.getActiveNav()).toBe(nav);
       expect(nav.first()).toBe(view1);
@@ -236,15 +228,14 @@ describe('App', () => {
 
     it('should not go back if app is not enabled', () => {
       let nav = mockNavController();
-      let portal = mockNavController();
       app._setRootNav(nav);
 
       spyOn(platform, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
-      let view1 = new ViewController();
-      nav._views = [view1];
+      let view1 = mockView();
+      mockViews(nav, [view1]);
 
       app.setEnabled(false, 10000);
 
@@ -292,7 +283,7 @@ describe('App', () => {
       app._setRootNav(nav);
 
       let tabs = mockTabs();
-      let tab1 = mockTab(tabs);
+      mockTab(tabs);
       let tab2 = mockTab(tabs);
       let tab3 = mockTab(tabs);
       nav.registerChildNav(tabs);
@@ -308,7 +299,7 @@ describe('App', () => {
 
     it('should get active tab NavController when using tabs, and tabs is the root', () => {
       let tabs = mockTabs();
-      let tab1 = mockTab(tabs);
+      mockTab(tabs);
       let tab2 = mockTab(tabs);
       let tab3 = mockTab(tabs);
       app._setRootNav(tabs);
@@ -435,13 +426,13 @@ describe('App', () => {
   var app: App;
   var config: Config;
   var platform: Platform;
-  var ionicApp: IonicApp;
+  var portal: OverlayPortal;
 
   beforeEach(() => {
     config = mockConfig();
     platform = mockPlatform();
-    app = new App(config, platform);
-    //ionicApp = mockOverlayPortal();
+    app = mockApp(config, platform);
+    portal = app._appRoot._getPortal();
   });
 
 });
