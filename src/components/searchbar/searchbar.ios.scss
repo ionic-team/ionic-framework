@@ -218,7 +218,7 @@ ion-searchbar {
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   $fg-color: rgba($color-contrast, .5);
 
-  ion-searchbar[#{$color-name}] {
+  .searchbar-#{$color-name} {
     .searchbar-ios-cancel {
       color: $color-base;
 
@@ -228,7 +228,7 @@ ion-searchbar {
     }
   }
 
-  .toolbar[#{$color-name}] ion-searchbar {
+  .toolbar-#{$color-name} ion-searchbar {
     .searchbar-search-icon {
       @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
     }

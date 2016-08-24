@@ -33,7 +33,7 @@ export class Login {
   template: `
     <ion-menu [content]="content">
      <ion-header>
-      <ion-toolbar secondary>
+      <ion-toolbar color="secondary">
         <ion-title>Account Menu</ion-title>
       </ion-toolbar>
      </ion-header>
@@ -92,7 +92,7 @@ export class Account {
 @Component({
   template: `
     <ion-header>
-      <ion-navbar primary>
+      <ion-navbar color="primary">
         <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
@@ -129,7 +129,7 @@ export class Dashboard {
 @Component({
   template: `
     <ion-header>
-      <ion-navbar danger>
+      <ion-navbar color="danger">
         <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>

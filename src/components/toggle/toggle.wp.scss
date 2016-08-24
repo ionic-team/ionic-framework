@@ -136,7 +136,7 @@ ion-toggle {
 
 @mixin toggle-theme-wp($color-name, $color-base, $color-contrast) {
 
-  ion-toggle[#{$color-name}] {
+  .toggle-#{$color-name} {
 
     .toggle-checked {
       border-color: $color-base;

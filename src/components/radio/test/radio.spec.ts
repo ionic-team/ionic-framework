@@ -111,7 +111,7 @@ export function run() {
   let form: Form;
 
   function createRadioButton(shouldIncludeGroup = true) {
-    return new RadioButton(form, null, shouldIncludeGroup ? rg : null);
+    return new RadioButton(form, null, null, null, shouldIncludeGroup ? rg : null);
   }
 
   function mockRenderer(): any {

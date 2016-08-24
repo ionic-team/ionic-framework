@@ -34,7 +34,7 @@
       {{ safari }}
     </ion-card-header>
     <ion-card-content>
-      <ion-segment [(ngModel)]="safari" dark>
+      <ion-segment [(ngModel)]="safari" color="dark">
         <ion-segment-button value="Bookmarks">
           <ion-icon name="book"></ion-icon>
         </ion-segment-button>
@@ -47,7 +47,7 @@
       </ion-segment>
       <ion-list style="margin: 0" inset>
         <button ion-item *ngFor="let sItem of getSafariItems(safari)">
-          <ion-icon item-left [name]="sItem.icon" primary></ion-icon>
+          <ion-icon item-left [name]="sItem.icon" color="primary"></ion-icon>
           {{ sItem.name }}
         </button>
       </ion-list>
@@ -59,11 +59,11 @@
   <ion-toolbar no-border-bottom>
     <ion-title>
       Weather: {{ weather == 'sunny' ? '96' : '77' }}°
-      <ion-icon [name]="weather" danger></ion-icon>
+      <ion-icon [name]="weather" color="danger"></ion-icon>
     </ion-title>
   </ion-toolbar>
   <ion-toolbar no-border-top no-border-bottom>
-    <ion-segment [(ngModel)]="weather" danger>
+    <ion-segment [(ngModel)]="weather" color="danger">
       <ion-segment-button value="sunny">
         Sunny
       </ion-segment-button>

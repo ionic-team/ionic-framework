@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer, Attribute } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
 
@@ -9,46 +9,47 @@ import { Config } from '../../config/config';
   * @description
   * Badges are simple components in Ionic containing numbers or text. You can display a badge to indicate that there is new information associated with the item it is on.
   * @see {@link /docs/v2/components/#badges Badges Component Docs}
-
  */
 @Directive({
   selector: 'ion-badge'
 })
 export class Badge {
+  /** @internal */ 
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
 
   constructor(
     config: Config,
     private _elementRef: ElementRef,
     private _renderer: Renderer
-  ) {
-    let element = _elementRef.nativeElement;
+  ) { }
 
-    this._readAttrs(element);
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _readAttrs(element: HTMLElement) {
-    let elementAttrs = element.attributes;
-    let attrName: string;
-
-    for (let i = 0, l = elementAttrs.length; i < l; i++) {
-      if (elementAttrs[i].value !== '') continue;
-
-      attrName = elementAttrs[i].name;
-
-      // Ignore attributes item-left, item-right
-      if (attrName.indexOf('item') === -1) {
-        this._setClass(attrName);
-      }
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `badge-${color}`, isAdd);
     }
-  }
-
-  /**
-   * @private
-   */
-  private _setClass(color: string) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, 'badge-' + color, true);
   }
 }

@@ -181,6 +181,21 @@ export class Tabs extends Ion {
    */
   subPages: boolean;
 
+  /** @internal */ 
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }  
+
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
    */
@@ -386,6 +401,24 @@ export class Tabs extends Ion {
     }
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attrKey, val);
   }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `tabs-${color}`, isAdd);
+    }
+  }  
 
   /**
    * @private

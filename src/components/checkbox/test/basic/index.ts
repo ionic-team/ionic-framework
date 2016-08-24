@@ -14,6 +14,7 @@ class E2EPage {
   strawberryValue: boolean;
   standAloneChecked: boolean;
   formResults: string;
+  dangerColor: string = 'danger';
 
   constructor() {
     this.fruitsForm = new FormGroup({

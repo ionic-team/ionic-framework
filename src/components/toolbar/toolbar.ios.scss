@@ -110,7 +110,7 @@ ion-title {
 }
 
 @mixin ios-toolbar-theme($color-name, $color-base, $color-contrast) {
-  .toolbar[#{$color-name}] {
+  .toolbar-#{$color-name} {
 
     .toolbar-background {
       border-color: darken($color-base, 10%);
@@ -118,6 +118,7 @@ ion-title {
     }
 
     .toolbar-title,
+    .bar-button-clear,
     .bar-button-default {
       color: $color-contrast;
     }
@@ -166,7 +167,8 @@ ion-buttons[right] {
 
 @mixin ios-bar-button-default($color-name, $color-base, $color-contrast) {
 
-  .bar-button-#{$color-name} {
+  .bar-button-#{$color-name},
+  .bar-button-clear-#{$color-name} {
     color: $color-base;
     background-color: transparent;
 
@@ -205,7 +207,7 @@ ion-buttons[right] {
 @mixin ios-bar-button-outline($color-name, $color-base, $color-contrast) {
 
   .bar-button-outline-#{$color-name} {
-    $fg-color: color-shade($color-base);
+    $fg-color: $color-base;
     border-color: $fg-color;
     color: $fg-color;
     background-color: transparent;
@@ -350,6 +352,7 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 @include ios-bar-button-default(default, $toolbar-ios-button-color, color-contrast($colors-ios, $toolbar-ios-button-color, ios));
+@include ios-bar-button-default(clear, $toolbar-ios-button-color, color-contrast($colors-ios, $toolbar-ios-button-color, ios));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   @include ios-toolbar-theme($color-name, $color-base, $color-contrast);

@@ -77,7 +77,6 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   private _labelId: string;
   private _activated: boolean = false;
   private _startX: number;
-  private _msPrv: number = 0;
   private _fn: Function;
   private _events: UIEventManager = new UIEventManager();
 
@@ -85,6 +84,21 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
    * @private
    */
   id: string;
+
+  /** @internal */ 
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }  
 
   /**
    * @output {Toggle} expression to evaluate when the toggle value changes
@@ -220,6 +234,24 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
     this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-toggle-disabled', this._disabled);
   }
+ 
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `toggle-${color}`, isAdd);
+    }
+  } 
 
   /**
    * @private

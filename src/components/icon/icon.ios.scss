@@ -1,0 +1,16 @@
+@import "./icon";
+
+// iOS Icon
+// --------------------------------------------------
+
+
+// Generate iOS Icon Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  .icon-#{$color-name} {
+    color: $color-base;
+  }
+
+}

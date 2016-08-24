@@ -20,18 +20,18 @@
 
   <ion-list no-margin>
     <ion-item>
-      <ion-label stacked primary>Name</ion-label>
+      <ion-label stacked color="primary">Name</ion-label>
       <ion-input [(ngModel)]="user.name" disabled></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked primary>Username</ion-label>
+      <ion-label stacked color="primary">Username</ion-label>
       <ion-input [(ngModel)]="user.username" disabled></ion-input>
     </ion-item>
   </ion-list>
 
   <div padding>
     <button ion-button block (click)="login()">Login</button>
-    <button ion-button block secondary menuToggle>Toggle Menu</button>
+    <button ion-button block color="secondary" menuToggle>Toggle Menu</button>
   </div>
 
 </ion-content>
