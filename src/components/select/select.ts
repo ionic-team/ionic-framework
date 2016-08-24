@@ -321,7 +321,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
       // ev.target is readonly.
       // place popover regarding to ion-select instead of .button-inner
       Object.defineProperty(ev, 'target', { value: ev.currentTarget });
-      alertOptions.ev = ev;
+      selectOptions.ev = ev;
 
     } else {
       // default to use the alert interface
