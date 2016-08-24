@@ -288,7 +288,7 @@ export const mockTabs = function(app?: App): Tabs {
   app = app || mockApp(config, platform);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
-  let linker: DeepLinker = null;
+  let linker: DeepLinker = mockDeepLinker();
 
   return new Tabs(null, null, app, config, elementRef, platform, renderer, linker);
 };

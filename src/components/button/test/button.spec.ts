@@ -1,5 +1,6 @@
 import { Button } from '../button';
 import { Config } from '../../../config/config';
+import { mockConfig } from '../../../util/mock-providers';
 
 
 describe('button', () => {
@@ -212,10 +213,9 @@ describe('button', () => {
   });
 
   it('should add disable-hover css class', () => {
-    let config = new Config();
-    config.init({
+    let config = mockConfig({
       hoverCSS: false
-    }, null, null);
+    });
     let b = mockButton(config);
 
     expect(hasClass(b, 'disable-hover')).toEqual(true);
@@ -238,8 +238,8 @@ describe('button', () => {
 
 });
 
-function mockButton(config?, ionButton?) {
-  config = config || new Config();
+function mockButton(config?: Config, ionButton?: string) {
+  config = config || mockConfig();
   ionButton = ionButton || '';
   let elementRef = {
     nativeElement: document.createElement('button')

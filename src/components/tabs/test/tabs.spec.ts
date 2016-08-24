@@ -1,43 +1,10 @@
 import { Component } from '@angular/core';
-import { App } from '../../app/app';
-import { Config } from '../../../config/config';
-import { Nav } from '../../nav/nav';
-import { NavOptions } from '../../../navigation/nav-util';
-import { Platform } from '../../../platform/platform';
-import { Tab } from '../../tabs/tab';
-import { Tabs } from '../../tabs/tabs';
-import { ViewController } from '../../../navigation/view-controller';
 import { mockTab, mockTabs } from '../../../util/mock-providers';
+
 
 describe('Tabs', () => {
 
   describe('initTabs', () => {
-
-    it('should preload all tabs', () => {
-      /*var tabs = mockTabs();
-      var tab0 = mockTab(tabs);
-      var tab1 = mockTab(tabs);
-      tab0.root = SomePage;
-      tab1.root = SomePage;
-
-      tab0.preload = () => {};
-      tab1.preload = () => {};
-
-      spyOn(tab0, 'preload');
-      spyOn(tab1, 'preload');
-
-      tabs.preloadTabs = true;
-
-      tabs.initTabs();
-
-      expect(tab0.isSelected).toEqual(true);
-      expect(tab1.isSelected).toEqual(false);
-
-      expect(tab0.preload).not.toHaveBeenCalled();
-      expect(tab1.preload).toHaveBeenCalled();
-      */
-      expect(true).toEqual(false);
-    });
 
     it('should not select a hidden or disabled tab', () => {
       var tabs = mockTabs();
@@ -71,24 +38,16 @@ describe('Tabs', () => {
     });
 
     it('should select the first tab by default', () => {
-      /*var tabs = mockTabs();
+      var tabs = mockTabs();
       var tab0 = mockTab(tabs);
       var tab1 = mockTab(tabs);
       tab0.root = SomePage;
       tab1.root = SomePage;
 
-      spyOn(tab0, 'preload');
-      spyOn(tab1, 'preload');
-
       tabs.initTabs();
 
       expect(tab0.isSelected).toEqual(true);
       expect(tab1.isSelected).toEqual(false);
-
-      expect(tab0.preload).not.toHaveBeenCalled();
-      expect(tab1.preload).not.toHaveBeenCalled();
-      */
-      expect(true).toEqual(false);
     });
 
   });
@@ -216,7 +175,7 @@ describe('Tabs', () => {
 
     it('should get the selected tab', () => {
       var tabs = mockTabs();
-      var tab0 = mockTab(tabs);
+      mockTab(tabs);
       var tab1 = mockTab(tabs);
 
       tab1.setSelected(true);
@@ -226,8 +185,8 @@ describe('Tabs', () => {
 
     it('should get null if no selected tab', () => {
       var tabs = mockTabs();
-      var tab0 = mockTab(tabs);
-      var tab1 = mockTab(tabs);
+      mockTab(tabs);
+      mockTab(tabs);
 
       expect(tabs.getSelected()).toEqual(null);
     });
