@@ -7,7 +7,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "outDir": "../../dist/gulp",
     "rootDir": ".",
     "sourceMap": true,
