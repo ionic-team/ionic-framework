@@ -56,8 +56,8 @@ import { Attribute, Directive, ElementRef, Renderer, Input } from '@angular/core
 })
 export class Label {
   private _id: string;
-  
-  /** @internal */ 
+
+  /** @internal */
   _color: string;
 
   /**

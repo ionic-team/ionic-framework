@@ -1,4 +1,4 @@
-import { DIST_E2E_ROOT, SRC_ROOT } from '../constants';
+import { DIST_E2E_ROOT, PROJECT_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -53,6 +53,39 @@ task('e2e.setupTests', (done: Function) => {
     });
   }
 
+  /*function createPlatformTests() {
+    let platforms = [
+      'android',
+      'ios',
+      'windows'
+    ];
+
+    let testTemplate = _.template(fs.readFileSync('scripts/e2e/e2e.template.js'));
+
+    return through2.obj(function(file, enc, next) {
+
+      let relativePath = path.dirname(file.path.replace(file.base, ''));
+      let dirToWriteTo = path.join(PROJECT_ROOT, `dist/e2e/tests/${relativePath}`);
+
+      let contents = file.contents.toString();
+
+      platforms.forEach(function(platform) {
+        let platformContents = testTemplate({
+          contents: contents,
+          buildConfig: buildConfig,
+          relativePath: relativePath,
+          platform: platform
+        });
+
+        let fileContent = new Buffer(platformContents);
+        let fileName = `${platform}.e2e.js`;
+        fs.writeFileSync(`${dirToWriteTo}/${fileName}`, fileContent);
+      });
+      next();
+    });
+
+  }*/
+
   function createPlatformTests() {
     let platforms = [
       'android',
@@ -77,7 +110,7 @@ task('e2e.setupTests', (done: Function) => {
         self.push(new VinylFile({
           base: file.base,
           contents: new Buffer(platformContents),
-          path: file.path.replace(/e2e.js$/, platform + '.e2e.js')
+          path: file.path.replace(/e2e.ts$/, platform + '.e2e.js')
         }));
       });
       next();

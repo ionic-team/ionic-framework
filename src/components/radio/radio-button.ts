@@ -88,7 +88,7 @@ export class RadioButton implements OnDestroy, OnInit {
    */
   id: string;
 
-  /** @internal */ 
+  /** @internal */
   _color: string;
 
   /**
@@ -101,7 +101,7 @@ export class RadioButton implements OnDestroy, OnInit {
 
   set color(value: string) {
     this._updateColor(value);
-  }  
+  }
 
   /**
    * @output {any} expression to be evaluated when selected
@@ -221,5 +221,5 @@ export class RadioButton implements OnDestroy, OnInit {
         this._item._updateColor(color, 'item-radio');
       }
     }
-  }  
+  }
 }

@@ -135,8 +135,6 @@ export class Content extends Ion {
    * @internal
    */
   _scrollEle: HTMLElement;
-  
-  
 
   /**
    * A number representing how many pixels the top of the content has been
