@@ -1,9 +1,17 @@
-import { DIST_E2E_ROOT, LOCAL_SERVER_PORT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { DIST_E2E_ROOT, DIST_BUILD_ROOT, LOCAL_SERVER_PORT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
 
 import { compileSass, copyFonts, execNodeTask } from '../util';
+
+
+task('e2e', e2eBuild);
+
+function e2eBuild(done: Function) {
+  let runSequence = require('run-sequence');
+  runSequence('e2e.ngcSource', 'e2e.copy.swiper', 'e2e.resources', 'e2e.sass', 'e2e.fonts', 'e2e.prewebpack', 'e2e.webpack', done);
+}
 
 task('e2e.setupTests', (done: Function) => {
   let gulpif = require('gulp-if');
@@ -51,39 +59,6 @@ task('e2e.setupTests', (done: Function) => {
       next(null, file);
     });
   }
-
-  /*function createPlatformTests() {
-    let platforms = [
-      'android',
-      'ios',
-      'windows'
-    ];
-
-    let testTemplate = _.template(fs.readFileSync('scripts/e2e/e2e.template.js'));
-
-    return through2.obj(function(file, enc, next) {
-
-      let relativePath = path.dirname(file.path.replace(file.base, ''));
-      let dirToWriteTo = path.join(PROJECT_ROOT, `dist/e2e/tests/${relativePath}`);
-
-      let contents = file.contents.toString();
-
-      platforms.forEach(function(platform) {
-        let platformContents = testTemplate({
-          contents: contents,
-          buildConfig: buildConfig,
-          relativePath: relativePath,
-          platform: platform
-        });
-
-        let fileContent = new Buffer(platformContents);
-        let fileName = `${platform}.e2e.js`;
-        fs.writeFileSync(`${dirToWriteTo}/${fileName}`, fileContent);
-      });
-      next();
-    });
-
-  }*/
 
   function createPlatformTests() {
     let platforms = [
@@ -150,14 +125,14 @@ task('e2e.build.tests',  (done: Function) => {
   const fs = require('fs');
   const del = require('del');
 
-  function updateE2eNgc(e2eFolder: string) {
+  function updateE2eNgc(componentName?: string, componentTest?: string) {
     let e2eNgc = require('../../e2e/NgcConfig.json');
 
     // If an e2efolder parameter was passed then only transpile that directory
-    if (e2eFolder) {
+    if (componentName && componentTest) {
       e2eNgc.include = [
-        `${DIST_E2E_ROOT}/tests/${e2eFolder}/app-module.ts`,
-        `${DIST_E2E_ROOT}/tests/${e2eFolder}/entry.ts`
+        `${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/app-module.ts`,
+        `${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/entry.ts`
       ];
     } else {
       e2eNgc.include = [
@@ -168,9 +143,18 @@ task('e2e.build.tests',  (done: Function) => {
     fs.writeFileSync('./.generated-ngc-config.json', JSON.stringify(e2eNgc, null, 2));
   }
 
+  // optionally allow an exact folder to be built instead of all of them
   const argv = require('yargs').argv;
-  let folder = argv.folder;
-  updateE2eNgc(folder);
+  let componentName: string = null;
+  let componentTest: string = null;
+  const folder: string = argv.folder || argv.f;
+  if (folder && folder.length) {
+    const folderSplit = folder.split('/');
+    componentName = folderSplit[0];
+    componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
+  }
+
+  updateE2eNgc(componentName, componentTest);
 
   /*let startTask = execNodeTask('@angular/compiler-cli', 'ngc', ['-p', './.generated-ngc-config.json']);
   startTask( (err: any) => {
@@ -247,11 +231,6 @@ task('e2e.webpack', function(done) {
   });
 });
 
-task('e2e.build', (done: Function) => {
-  let runSequence = require('run-sequence');
-  runSequence('e2e.ngcSource', 'e2e.copy.swiper', 'e2e.resources', 'e2e.sass', 'e2e.fonts', 'e2e.prewebpack', 'e2e.webpack', done);
-});
-
 task('e2e.watch', ['e2e.sass', 'e2e.fonts'], (done: Function) => {
   const argv = require('yargs').argv;
   const folder: string = argv.folder || argv.f;
@@ -273,6 +252,21 @@ task('e2e.watch', ['e2e.sass', 'e2e.fonts'], (done: Function) => {
     return;
   }
 
+  if (buildDirectoryExists()) {
+    // already generated the e2e directory
+    e2eWatch(componentName, componentTest);
+
+  } else {
+    // generate the e2e directory
+    console.log('Generated e2e builds first...');
+    e2eBuild(() => {
+      e2eWatch(componentName, componentTest);
+    });
+  }
+
+});
+
+function e2eWatch(componentName: string, componentTest: string) {
   const watch = require('gulp-watch');
   const webpack = require('webpack');
   const WebpackDevServer = require('webpack-dev-server');
@@ -327,5 +321,13 @@ task('e2e.watch', ['e2e.sass', 'e2e.fonts'], (done: Function) => {
     const server = `http://localhost:${LOCAL_SERVER_PORT}/dist/e2e/tests/${componentName}`;
     console.log(server);
   });
+}
 
-});
+function buildDirectoryExists(): boolean {
+  try {
+    fs.accessSync(DIST_BUILD_ROOT, fs.F_OK);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
