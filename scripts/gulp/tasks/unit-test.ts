@@ -1,8 +1,7 @@
-import { DIST_VENDOR_ROOT, NPM_VENDOR_FILES, SCRIPTS_ROOT } from '../constants';
+import { DIST_VENDOR_ROOT, NPM_VENDOR_FILES, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
 import path = require('path');
 import { dest, src, task } from 'gulp';
 
-import { createKarmaCoverageReport } from '../util';
 
 task('test', ['test.vendor', 'build'], (done: () => void) => {
   const karma = require('karma');
@@ -19,7 +18,11 @@ task('test', ['test.vendor', 'build'], (done: () => void) => {
   }
 
   new karma.Server(karmaConfig, () => {
-    createKarmaCoverageReport(done);
+    if (argv.coverage) {
+      createKarmaCoverageReport(done);
+    } else {
+      done();
+    }
   }).start();
 });
 
@@ -35,31 +38,15 @@ task('test.vendor', () => {
 });
 
 
-// import gulp = require('gulp');
-// const karma = require('karma');
-// import path = require('path');
-// import gulpMerge = require('merge2');
+/* creates a karma code coverage report */
+function createKarmaCoverageReport(done: Function) {
+  console.log('Generating Unit Test Coverage Report...');
 
-// import {PROJECT_ROOT} from '../constants';
+  let exec = require('child_process').exec;
+  let command = `node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html`;
 
-
-// gulp.task(':build:test:vendor', function() {
-//   const npmVendorFiles = [
-//     '@angular', 'core-js/client', 'hammerjs', 'rxjs', 'systemjs/dist', 'zone.js/dist'
-//   ];
-
-//   return gulpMerge(
-//     npmVendorFiles.map(function(root) {
-//       const glob = path.join(root, '**/*.+(js|js.map)');
-//       return gulp.src(path.join('node_modules', glob))
-//         .pipe(gulp.dest(path.join('dist/vendor', root)));
-//     }));
-// });
-
-// gulp.task('test:single-run', [':build:test:vendor', 'build:components'], function(done: () => void) {
-//   new karma.Server({
-//     configFile: path.join(PROJECT_ROOT, 'test/karma.conf.js'),
-//     singleRun: true
-//   }, done).start();
-// });
-
+  exec(command, function(err: any, stdout: any, stderr: any) {
+    console.log(`file://${PROJECT_ROOT}/coverage/index.html`)
+    done(err);
+  });
+}

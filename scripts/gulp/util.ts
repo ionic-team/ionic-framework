@@ -13,7 +13,7 @@ export function mergeObjects(obj1: any, obj2: any ) {
   return obj3;
 }
 
-function getRootTsConfigCompilerOptions(): any{
+function getRootTsConfigCompilerOptions(): any {
   let tsConfig = require('../../tsconfig');
   // provide our own version of typescript
   tsConfig.compilerOptions.typescript = require('typescript');
@@ -32,16 +32,6 @@ export function tsBuildTask(srcGlob: string[], destDir: string, overrideOptions:
   return src(srcGlob)
     .pipe(tsc(mergedOptions))
     .pipe(dest(destDir));
-}
-
-/* creates a karma code coverage report */
-export function createKarmaCoverageReport(done: Function ){
-  let exec = require('child_process').exec;
-  let command = `node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html`;
-
-  exec(command, function(err: any, stdout: any, stderr: any){
-    done(err);
-  });
 }
 
 /** Options that can be passed to execTask or execNodeTask. */
@@ -68,7 +58,7 @@ export function execTask(binPath: string, args: string[], options: ExecTaskOptio
     }
 
     childProcess.on('close', (code: number) => {
-      if (code != 0) {
+      if (code !== 0) {
         if (options.errMessage === undefined) {
           done('Process failed with code ' + code);
         } else {
@@ -78,7 +68,7 @@ export function execTask(binPath: string, args: string[], options: ExecTaskOptio
         done();
       }
     });
-  }
+  };
 }
 
 /**
@@ -103,7 +93,7 @@ export function execNodeTask(packageName: string, executable: string | string[],
         execTask(binPath, args, options)(done);
       }
     });
-  }
+  };
 }
 
 export function copyFonts(destinationPath: string) {
