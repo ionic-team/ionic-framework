@@ -3,7 +3,15 @@ import path = require('path');
 import { dest, src, task } from 'gulp';
 
 
-task('test', ['test.vendor', 'build'], (done: () => void) => {
+task('test', ['test.vendor', 'build'], karmaTest);
+
+task('test.coverage', ['test.vendor', 'build'], (done: Function) => {
+  karmaTest(() => {
+    createKarmaCoverageReport(done);
+  });
+});
+
+function karmaTest(done: Function) {
   const karma = require('karma');
   const argv = require('yargs').argv;
 
@@ -11,20 +19,14 @@ task('test', ['test.vendor', 'build'], (done: () => void) => {
     configFile: path.join(SCRIPTS_ROOT, 'karma/karma.conf.js'),
   };
 
-  if ( argv.testGrep ) {
+  if (argv.testGrep) {
     (<any>karmaConfig).client = {
       args: ['--grep', argv.testGrep]
     };
   }
 
-  new karma.Server(karmaConfig, () => {
-    if (argv.coverage) {
-      createKarmaCoverageReport(done);
-    } else {
-      done();
-    }
-  }).start();
-});
+  new karma.Server(karmaConfig, done).start();
+}
 
 
 task('test.vendor', () => {
