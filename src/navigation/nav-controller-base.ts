@@ -300,7 +300,7 @@ export class NavControllerBase extends Ion implements NavController {
       }
 
       // only requires a transition if it's going at the end
-      enteringRequiresTransition = (ti.insertStart === insertViews.length || viewsLength === 0);
+      enteringRequiresTransition = (ti.insertStart === viewsLength);
 
       // grab the very last view of the views to be inserted
       // and initialize it as the new entering view

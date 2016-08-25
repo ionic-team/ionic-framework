@@ -1,4 +1,5 @@
-import { mockNavController, mockView, mockViews } from '../../util/mock-providers';
+import { mockNavController, mockView, mockViews,
+         MockView1, MockView2, MockView3, MockView4, MockView5 } from '../../util/mock-providers';
 import { NavControllerBase } from '../nav-controller-base';
 import { NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../nav-util';
 import { ViewController } from '../view-controller';
@@ -6,33 +7,121 @@ import { ViewController } from '../view-controller';
 
 describe('NavController', () => {
 
+  describe('push and pop', () => {
+
+    it('should push multiple times and pop multiple times', () => {
+      let push1Done = jasmine.createSpy('PushDone');
+      let push2Done = jasmine.createSpy('PushDone');
+      let push3Done = jasmine.createSpy('PushDone');
+      let push4Done = jasmine.createSpy('PushDone');
+      let pop1Done = jasmine.createSpy('PopDone');
+      let pop2Done = jasmine.createSpy('PopDone');
+      let pop3Done = jasmine.createSpy('PopDone');
+
+      // Push 1
+      nav.push(MockView1, null, { animate: false }, push1Done);
+
+      let hasCompleted = true;
+      let requiresTransition = true;
+      expect(push1Done).toHaveBeenCalledWith(
+        hasCompleted, requiresTransition, 'MockView1', undefined, DIRECTION_FORWARD
+      );
+      expect(nav.length()).toEqual(1);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+
+      // Push 2
+      nav.push(MockView2, null, { animate: false }, push2Done);
+
+      expect(push2Done).toHaveBeenCalledWith(
+        hasCompleted, requiresTransition, 'MockView2', 'MockView1', DIRECTION_FORWARD
+      );
+      expect(nav.length()).toEqual(2);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView2);
+
+      // Push 3
+      nav.push(MockView3, null, { animate: false }, push3Done);
+
+      expect(push3Done).toHaveBeenCalledWith(
+        hasCompleted, requiresTransition, 'MockView3', 'MockView2', DIRECTION_FORWARD
+      );
+      expect(nav.length()).toEqual(3);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView2);
+      expect(nav.getByIndex(2).componentType).toEqual(MockView3);
+
+      // Push 4
+      nav.push(MockView4, null, { animate: false }, push4Done);
+
+      expect(push4Done).toHaveBeenCalledWith(
+        hasCompleted, requiresTransition, 'MockView4', 'MockView3', DIRECTION_FORWARD
+      );
+      expect(nav.length()).toEqual(4);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView2);
+      expect(nav.getByIndex(2).componentType).toEqual(MockView3);
+      expect(nav.getByIndex(3).componentType).toEqual(MockView4);
+
+      // Pop 1
+      nav.pop({ animate: false }, pop1Done);
+
+      expect(pop1Done).toHaveBeenCalledWith(
+        hasCompleted, requiresTransition, 'MockView3', 'MockView4', DIRECTION_BACK
+      );
+      expect(nav.length()).toEqual(3);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView2);
+      expect(nav.getByIndex(2).componentType).toEqual(MockView3);
+
+      // Pop 2
+      nav.pop({ animate: false }, pop2Done);
+
+      expect(pop2Done).toHaveBeenCalledWith(
+        hasCompleted, requiresTransition, 'MockView2', 'MockView3', DIRECTION_BACK
+      );
+      expect(nav.length()).toEqual(2);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView2);
+
+      // Pop 3
+      nav.pop({ animate: false }, pop3Done);
+
+      expect(pop3Done).toHaveBeenCalledWith(
+        hasCompleted, requiresTransition, 'MockView1', 'MockView2', DIRECTION_BACK
+      );
+      expect(nav.length()).toEqual(1);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+    });
+
+  });
+
   describe('push', () => {
 
     it('should push a componentType as the first view', () => {
-      nav.push(Page1, null, null, trnsDone);
+      nav.push(MockView1, null, null, trnsDone);
 
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page1', undefined, DIRECTION_FORWARD
+        hasCompleted, requiresTransition, 'MockView1', undefined, DIRECTION_FORWARD
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
       expect(nav.isTransitioning()).toEqual(false);
     });
 
     it('should push a componentType as the second view at the end', () => {
-      mockViews(nav, [mockView(Page1)]);
-      nav.push(Page2, null, null, trnsDone);
+      mockViews(nav, [mockView(MockView1)]);
+      nav.push(MockView2, null, null, trnsDone);
 
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page2', 'Page1', DIRECTION_FORWARD
+        hasCompleted, requiresTransition, 'MockView2', 'MockView1', DIRECTION_FORWARD
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
-      expect(nav.getByIndex(1).componentType).toEqual(Page2);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView2);
       expect(nav.isTransitioning()).toEqual(false);
     });
 
@@ -77,11 +166,11 @@ describe('NavController', () => {
   describe('insert', () => {
 
     it('should insert at the begining with no async transition', () => {
-      let view4 = mockView(Page4);
+      let view4 = mockView(MockView4);
       let instance4 = spyOnLifecycles(view4);
       let opts: NavOptions = {};
 
-      mockViews(nav, [mockView(Page1), mockView(Page2), mockView(Page3)]);
+      mockViews(nav, [mockView(MockView1), mockView(MockView2), mockView(MockView3)]);
       nav.insert(0, view4, null, opts, trnsDone);
 
       expect(instance4.ionViewDidLoad).not.toHaveBeenCalled();
@@ -99,39 +188,39 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(4);
-      expect(nav.first().componentType).toEqual(Page4);
-      expect(nav.last().componentType).toEqual(Page3);
+      expect(nav.first().componentType).toEqual(MockView4);
+      expect(nav.last().componentType).toEqual(MockView3);
     });
 
     it('should insert at the end when given -1', () => {
       let opts: NavOptions = {};
-      mockViews(nav, [mockView(Page1)]);
-      nav.insert(-1, Page2, null, opts, trnsDone);
+      mockViews(nav, [mockView(MockView1)]);
+      nav.insert(-1, MockView2, null, opts, trnsDone);
 
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page2', 'Page1', DIRECTION_FORWARD
+        hasCompleted, requiresTransition, 'MockView2', 'MockView1', DIRECTION_FORWARD
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.last().componentType).toEqual(Page2);
+      expect(nav.last().componentType).toEqual(MockView2);
     });
 
     it('should insert at the end when given a number greater than actual length', () => {
-      mockViews(nav, [mockView(Page1)]);
-      nav.insert(9999, Page2, null, null, trnsDone);
+      mockViews(nav, [mockView(MockView1)]);
+      nav.insert(9999, MockView2, null, null, trnsDone);
 
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page2', 'Page1', DIRECTION_FORWARD
+        hasCompleted, requiresTransition, 'MockView2', 'MockView1', DIRECTION_FORWARD
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.last().componentType).toEqual(Page2);
+      expect(nav.last().componentType).toEqual(MockView2);
     });
 
     it('should not insert if null view', () => {
-      mockViews(nav, [mockView(Page1)]);
+      mockViews(nav, [mockView(MockView1)]);
       nav.insert(-1, null, null, null, trnsDone);
 
       let hasCompleted = false;
@@ -139,7 +228,7 @@ describe('NavController', () => {
       let rejectReason = 'invalid views to insert';
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
       expect(nav.length()).toEqual(1);
-      expect(nav.last().componentType).toEqual(Page1);
+      expect(nav.last().componentType).toEqual(MockView1);
     });
 
   });
@@ -147,10 +236,10 @@ describe('NavController', () => {
   describe('insertPages', () => {
 
     it('should insert all pages in the middle', () => {
-      let view4 = mockView(Page4);
+      let view4 = mockView(MockView4);
       let instance4 = spyOnLifecycles(view4);
-      mockViews(nav, [mockView(Page1), mockView(Page2), mockView(Page3)]);
-      nav.insertPages(1, [view4, mockView(Page5)], null, trnsDone);
+      mockViews(nav, [mockView(MockView1), mockView(MockView2), mockView(MockView3)]);
+      nav.insertPages(1, [view4, mockView(MockView5)], null, trnsDone);
 
       expect(instance4.ionViewDidLoad).not.toHaveBeenCalled();
       expect(instance4.ionViewCanEnter).not.toHaveBeenCalled();
@@ -167,11 +256,11 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(5);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
-      expect(nav.getByIndex(1).componentType).toEqual(Page4);
-      expect(nav.getByIndex(2).componentType).toEqual(Page5);
-      expect(nav.getByIndex(3).componentType).toEqual(Page2);
-      expect(nav.getByIndex(4).componentType).toEqual(Page3);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView4);
+      expect(nav.getByIndex(2).componentType).toEqual(MockView5);
+      expect(nav.getByIndex(3).componentType).toEqual(MockView2);
+      expect(nav.getByIndex(4).componentType).toEqual(MockView3);
 
       expect(nav.getByIndex(1)._nav).toEqual(nav);
       expect(nav.getByIndex(2)._nav).toEqual(nav);
@@ -182,8 +271,8 @@ describe('NavController', () => {
   describe('pop', () => {
 
     it('should remove the last view and fire lifecycles', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
       mockViews(nav, [view1, view2]);
       let instance1 = spyOnLifecycles(view1);
       let instance2 = spyOnLifecycles(view2);
@@ -211,10 +300,10 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page1', 'Page2', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView1', 'MockView2', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
       expect(nav.isTransitioning()).toEqual(false);
     });
 
@@ -223,9 +312,9 @@ describe('NavController', () => {
   describe('popTo', () => {
 
     it('should pop to a view', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
       mockViews(nav, [view1, view2, view3]);
 
       nav.popTo(view2, null, trnsDone);
@@ -233,18 +322,18 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page2', 'Page3', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView2', 'MockView3', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
-      expect(nav.getByIndex(1).componentType).toEqual(Page2);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView2);
     });
 
     it('should pop to using an index number', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
-      let view4 = mockView(Page4);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
+      let view4 = mockView(MockView4);
       mockViews(nav, [view1, view2, view3, view4]);
 
       nav.popTo(1, null, trnsDone);
@@ -252,18 +341,18 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page2', 'Page4', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView2', 'MockView4', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
-      expect(nav.getByIndex(1).componentType).toEqual(Page2);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView2);
     });
 
     it('should pop to first using an index number', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
-      let view4 = mockView(Page4);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
+      let view4 = mockView(MockView4);
       mockViews(nav, [view1, view2, view3, view4]);
 
       let instance1 = spyOnLifecycles(view1);
@@ -312,10 +401,10 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page1', 'Page4', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView1', 'MockView4', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
     });
 
   });
@@ -323,10 +412,10 @@ describe('NavController', () => {
   describe('popToRoot', () => {
 
     it('should pop to the first view', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
-      let view4 = mockView(Page4);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
+      let view4 = mockView(MockView4);
       mockViews(nav, [view1, view2, view3, view4]);
 
       let instance1 = spyOnLifecycles(view1);
@@ -375,10 +464,10 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page1', 'Page4', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView1', 'MockView4', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
     });
 
   });
@@ -386,10 +475,10 @@ describe('NavController', () => {
   describe('remove', () => {
 
     it('should remove the first three views in the beginning, no last view transition', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
-      let view4 = mockView(Page4);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
+      let view4 = mockView(MockView4);
       mockViews(nav, [view1, view2, view3, view4]);
 
       let instance1 = spyOnLifecycles(view1);
@@ -441,14 +530,14 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).componentType).toEqual(Page4);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView4);
     });
 
     it('should remove two views in the middle', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
-      let view4 = mockView(Page4);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
+      let view4 = mockView(MockView4);
       mockViews(nav, [view1, view2, view3, view4]);
 
       let instance1 = spyOnLifecycles(view1);
@@ -500,15 +589,15 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
-      expect(nav.getByIndex(1).componentType).toEqual(Page4);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView4);
     });
 
     it('should remove the last two views at the end', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
-      let view4 = mockView(Page4);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
+      let view4 = mockView(MockView4);
       mockViews(nav, [view1, view2, view3, view4]);
 
       let instance1 = spyOnLifecycles(view1);
@@ -557,11 +646,11 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page2', 'Page4', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView2', 'MockView4', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
-      expect(nav.getByIndex(1).componentType).toEqual(Page2);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView2);
     });
 
   });
@@ -569,9 +658,9 @@ describe('NavController', () => {
   describe('setRoot', () => {
 
     it('should set a ViewController as the root when its the last view, no transition', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
       mockViews(nav, [view1, view2, view3]);
 
       let instance1 = spyOnLifecycles(view1);
@@ -613,13 +702,13 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).componentType).toEqual(Page3);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView3);
     });
 
     it('should set a ViewController as the root when its the middle view, with transition', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
       mockViews(nav, [view1, view2, view3]);
 
       let instance1 = spyOnLifecycles(view1);
@@ -658,16 +747,16 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page2', 'Page3', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView2', 'MockView3', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).componentType).toEqual(Page2);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView2);
     });
 
     it('should set a ViewController as the root when its the first view, with transition', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
       mockViews(nav, [view1, view2, view3]);
 
       let instance1 = spyOnLifecycles(view1);
@@ -706,23 +795,23 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page1', 'Page3', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView1', 'MockView3', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).componentType).toEqual(Page1);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView1);
     });
 
     it('should set a page component as the root, with transition', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
-      let view3 = mockView(Page3);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
+      let view3 = mockView(MockView3);
       mockViews(nav, [view1, view2, view3]);
 
       let instance1 = spyOnLifecycles(view1);
       let instance2 = spyOnLifecycles(view2);
       let instance3 = spyOnLifecycles(view3);
 
-      nav.setRoot(Page4, null, null, trnsDone);
+      nav.setRoot(MockView4, null, null, trnsDone);
 
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
@@ -731,10 +820,10 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page4', 'Page3', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView4', 'MockView3', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).componentType).toEqual(Page4);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView4);
     });
 
   });
@@ -742,14 +831,14 @@ describe('NavController', () => {
   describe('setPages', () => {
 
     it('should set the pages from an array, starting at the root, with transition', () => {
-      let view1 = mockView(Page1);
-      let view2 = mockView(Page2);
+      let view1 = mockView(MockView1);
+      let view2 = mockView(MockView2);
       mockViews(nav, [view1, view2]);
 
       let instance1 = spyOnLifecycles(view1);
       let instance2 = spyOnLifecycles(view2);
 
-      nav.setPages([{page: Page4}, {page: Page5}], null, trnsDone);
+      nav.setPages([{page: MockView4}, {page: MockView5}], null, trnsDone);
 
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
@@ -757,11 +846,11 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'Page5', 'Page2', DIRECTION_BACK
+        hasCompleted, requiresTransition, 'MockView5', 'MockView2', DIRECTION_BACK
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).componentType).toEqual(Page4);
-      expect(nav.getByIndex(1).componentType).toEqual(Page5);
+      expect(nav.getByIndex(0).componentType).toEqual(MockView4);
+      expect(nav.getByIndex(1).componentType).toEqual(MockView5);
     });
 
   });
@@ -861,12 +950,6 @@ describe('NavController', () => {
 
   let nav: NavControllerBase;
   let trnsDone: jasmine.Spy;
-
-  class Page1 {}
-  class Page2 {}
-  class Page3 {}
-  class Page4 {}
-  class Page5 {}
 
   function spyOnLifecycles(view: ViewController) {
     let instance = view.instance = {
