@@ -15,6 +15,7 @@ export const NODE_MODULES = 'node_modules';
 export const PROJECT_ROOT = join(__dirname, '../..');
 export const DIST_ROOT = join(PROJECT_ROOT, DIST_NAME);
 export const DIST_E2E_ROOT = join(DIST_ROOT, E2E_NAME);
+export const DIST_E2E_COMPONENTS_ROOT = join(DIST_E2E_ROOT, COMPONENTS_NAME);
 export const DIST_BUILD_ROOT = join(DIST_ROOT, PACKAGE_NAME);
 export const DIST_VENDOR_ROOT = join(DIST_ROOT, VENDOR_NAME);
 export const NODE_MODULES_ROOT = join(PROJECT_ROOT, NODE_MODULES);

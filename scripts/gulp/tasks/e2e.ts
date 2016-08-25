@@ -1,4 +1,4 @@
-import { DIST_E2E_ROOT, DIST_BUILD_ROOT, LOCAL_SERVER_PORT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { DIST_E2E_ROOT, DIST_E2E_COMPONENTS_ROOT, LOCAL_SERVER_PORT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -252,7 +252,7 @@ task('e2e.watch', ['e2e.sass', 'e2e.fonts'], (done: Function) => {
     return;
   }
 
-  if (buildDirectoryExists()) {
+  if (e2eComponentsExists()) {
     // already generated the e2e directory
     e2eWatch(componentName, componentTest);
 
@@ -323,9 +323,9 @@ function e2eWatch(componentName: string, componentTest: string) {
   });
 }
 
-function buildDirectoryExists(): boolean {
+function e2eComponentsExists(): boolean {
   try {
-    fs.accessSync(DIST_BUILD_ROOT, fs.F_OK);
+    fs.accessSync(DIST_E2E_COMPONENTS_ROOT, fs.F_OK);
   } catch (e) {
     return false;
   }
