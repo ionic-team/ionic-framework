@@ -47,6 +47,7 @@ import { NavPush, NavPushAnchor } from '../components/nav/nav-push';
 import { Navbar } from '../components/navbar/navbar';
 import { ShowWhen, HideWhen } from '../components/show-hide-when/show-hide-when';
 import { Typography } from '../components/typography/typography';
+import { Chip } from '../components/chip/chip';
 
 /**
  * @private
@@ -68,6 +69,7 @@ import { Typography } from '../components/typography/typography';
  * - MenuClose
  * - Badge
  * - Button
+ * - Chip
  * - Content
  * - Scroll
  * - InfiniteScroll
@@ -132,6 +134,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Backdrop,
   Badge,
   Button,
+  Chip,
   Content,
   Scroll,
   InfiniteScroll,
