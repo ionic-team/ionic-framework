@@ -5,7 +5,11 @@ import { IonicApp, IonicModule } from '../../../..';
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EPage {}
+export class E2EPage {
+  delete(chip: Element) {
+    chip.remove();
+  }
+}
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'

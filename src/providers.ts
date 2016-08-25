@@ -36,7 +36,7 @@ import { UserRoot } from './components/app/app-root';
 export { DeepLinker, provideDeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
 export { NavParams } from './navigation/nav-params';
-export { NavLink, NavPath, NavOptions, DeepLink, DeepLinkConfig } from './navigation/nav-util';
+export { NavLink, NavOptions, DeepLink, DeepLinkConfig } from './navigation/nav-util';
 export { ViewController } from './navigation/view-controller';
 
 

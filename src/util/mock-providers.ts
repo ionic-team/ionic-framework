@@ -117,11 +117,9 @@ export const mockLocation = function(): Location {
   return location;
 };
 
-export class MockPage {}
-
 export const mockView = function(componentType?: any, data?: any) {
   if (!componentType) {
-    componentType = MockPage;
+    componentType = MockView;
   }
   let view = new ViewController(componentType, data);
   view.init(mockComponentRef());
@@ -303,3 +301,24 @@ export const mockTabs = function(app?: App): Tabs {
 export const mockMenu = function(): Menu {
   return new Menu(null, null, null, null, null, null, null, null);
 };
+
+export const mockDeepLinkConfig = function(links?: any[]): DeepLinkConfig {
+  return {
+    links: links || [
+      { component: MockView1, name: 'viewone' },
+      { component: MockView2, name: 'viewtwo' },
+      { component: MockView3, name: 'viewthree' },
+      { component: MockView4, name: 'viewfour' },
+      { component: MockView5, name: 'viewfive' }
+    ]
+  };
+};
+
+export class MockView {}
+export class MockView1 {}
+export class MockView2 {}
+export class MockView3 {}
+export class MockView4 {}
+export class MockView5 {}
+
+export function noop(): any { return 'noop'; };

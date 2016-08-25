@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { DeepLinkConfig, NavLink, NavPath, NavSegment } from './nav-util';
+import { DeepLinkConfig, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent, pascalCaseToDashCase } from '../util/util';
 import { UserDeepLinkConfig } from './deep-linker';
 
@@ -22,7 +22,7 @@ export class UrlSerializer {
    * Parse the URL into a Path, which is made up of multiple NavSegments.
    * Match which components belong to each segment.
    */
-  parse(browserUrl: string): NavPath {
+  parse(browserUrl: string): NavSegment[] {
     if (browserUrl.charAt(0) === '/') {
       browserUrl = browserUrl.substr(1);
     }
@@ -52,7 +52,7 @@ export class UrlSerializer {
    * Serialize a path, which is made up of multiple NavSegments,
    * into a URL string. Turn each segment into a string and concat them to a URL.
    */
-  serialize(path: NavPath): string {
+  serialize(path: NavSegment[]): string {
     return '/' + path.map(segment => segment.id).join('/');
   }
 
@@ -119,51 +119,66 @@ export class UrlSerializer {
 
 }
 
-export const parseUrlParts = (urlParts: string[], configLinks: NavLink[]): NavPath => {
-  const configLinkLength = configLinks.length;
-  const path: NavPath = [];
-  let segment: NavSegment;
+export const parseUrlParts = (urlParts: string[], configLinks: NavLink[]): NavSegment[] => {
+  const configLinkLen = configLinks.length;
+  const urlPartsLen = urlParts.length;
+  const segments: NavSegment[] = new Array(urlPartsLen);
 
-  for (var j = 0; j < configLinkLength; j++) {
+  for (var i = 0; i < configLinkLen; i++) {
     // compare url parts to config link parts to create nav segments
-    segment = null;
+    var configLink = configLinks[i];
+    if (configLink.partsLen <= urlPartsLen) {
+      fillMatchedUrlParts(segments, urlParts, configLink);
+    }
+  }
 
-    for (var i = 0; i < urlParts.length; i++) {
-      // test each link config starting from this url part index
-      segment = matchUrlParts(i, urlParts, configLinks[j]);
-      if (segment) {
-        i += (configLinks[j].parts.length - 1);
+  // remove all the undefined segments
+  for (var i = urlPartsLen - 1; i >= 0; i--) {
+    if (segments[i] === undefined) {
+      if (urlParts[i] === undefined) {
+        // not a used part, so remove it
+        segments.splice(i, 1);
+
+      } else {
+        // create an empty part
+        segments[i] = {
+          id: urlParts[i],
+          name: urlParts[i],
+          component: null,
+          data: null
+        };
+      }
+    }
+  }
+
+  return segments;
+};
+
+export const fillMatchedUrlParts = (segments: NavSegment[], urlParts: string[], configLink: NavLink) => {
+  for (var i = 0; i < urlParts.length; i++) {
+    var urlI = i;
+
+    for (var j = 0; j < configLink.partsLen; j++) {
+      if (isPartMatch(urlParts[urlI], configLink.parts[j])) {
+        urlI++;
+      } else {
         break;
       }
     }
 
-    if (segment === null) {
-      segment = {
-        id: urlParts[i],
-        name: urlParts[i],
-        component: null,
-        data: null
+    if ((urlI - i) === configLink.partsLen) {
+      var matchedUrlParts = urlParts.slice(i, urlI);
+      for (var j = i; j < urlI; j++) {
+        urlParts[j] = undefined;
+      }
+      segments[i] = {
+        id: matchedUrlParts.join('/'),
+        name: configLink.name,
+        component: configLink.component,
+        data: createMatchedData(matchedUrlParts, configLink)
       };
     }
-
-    path.push(segment);
   }
-
-  return path;
-};
-
-export const matchUrlParts = (partStartIndex: number, urlParts: string[], link: NavLink): NavSegment => {
-  for (var i = 0; i < link.parts.length; i++) {
-    if (!isPartMatch(urlParts[partStartIndex + i], link.parts[i])) {
-      // these parts do not match, so this link config will not work
-      return null;
-    }
-  }
-
-  // all parts matched so far
-  // make sure the lengths are correct
-  const matchedUrlParts = urlParts.slice(partStartIndex, partStartIndex + link.parts.length);
-  return createSegmentFromPart(matchedUrlParts, link);
 };
 
 export const isPartMatch = (urlPart: string, configLinkPart: string) => {
@@ -176,26 +191,10 @@ export const isPartMatch = (urlPart: string, configLinkPart: string) => {
   return false;
 };
 
-export const createSegmentFromPart = (matchedUrlParts: string[], link: NavLink): NavSegment => {
-  if (matchedUrlParts.length === link.parts.length) {
-    const segment: NavSegment = {
-      id: matchedUrlParts.join('/'),
-      name: link.name,
-      component: link.component,
-      data: createMatchedData(matchedUrlParts, link)
-    };
-    if (segment.id === '') {
-      segment.id = link.name;
-    }
-    return segment;
-  }
-  return null;
-};
-
 export const createMatchedData = (matchedUrlParts: string[], link: NavLink): any => {
   let data: any = null;
 
-  for (var i = 0; i < link.parts.length; i++) {
+  for (var i = 0; i < link.partsLen; i++) {
     if (link.parts[i].charAt(0) === ':') {
       data = data || {};
       data[link.parts[i].substring(1)] = decodeURIComponent(matchedUrlParts[i]);
@@ -209,23 +208,24 @@ export const normalizeLinks = (links: NavLink[]): NavLink[] => {
   for (var i = 0, ilen = links.length; i < ilen; i++) {
     var link = links[i];
 
-    if (isBlank(link.path)) {
-      link.path = link.name;
+    if (isBlank(link.segment)) {
+      link.segment = link.name;
     }
 
-    link.parts = link.path.split('/');
+    link.parts = link.segment.split('/');
+    link.partsLen = link.parts.length;
 
     // used for sorting
-    link.staticParts = link.dataParts = 0;
+    link.staticLen = link.dataLen = 0;
     var stillCountingStatic = true;
 
-    for (var j = 0; j < link.parts.length; j++) {
+    for (var j = 0; j < link.partsLen; j++) {
       if (link.parts[j].charAt(0) === ':') {
-        link.dataParts++;
+        link.dataLen++;
         stillCountingStatic = false;
 
       } else if (stillCountingStatic) {
-        link.staticParts++;
+        link.staticLen++;
       }
     }
   }
@@ -237,26 +237,26 @@ export const normalizeLinks = (links: NavLink[]): NavLink[] => {
 
 function sortConfigLinks(a: NavLink, b: NavLink) {
   // sort by the number of parts
-  if (a.parts.length > b.parts.length) {
+  if (a.partsLen > b.partsLen) {
     return -1;
   }
-  if (a.parts.length < b.parts.length) {
+  if (a.partsLen < b.partsLen) {
     return 1;
   }
 
   // sort by the number of static parts in a row
-  if (a.staticParts > b.staticParts) {
+  if (a.staticLen > b.staticLen) {
     return -1;
   }
-  if (a.staticParts < b.staticParts) {
+  if (a.staticLen < b.staticLen) {
     return 1;
   }
 
   // sort by the number of total data parts
-  if (a.dataParts < b.dataParts) {
+  if (a.dataLen < b.dataLen) {
     return -1;
   }
-  if (a.dataParts > b.dataParts) {
+  if (a.dataLen > b.dataLen) {
     return 1;
   }
 
