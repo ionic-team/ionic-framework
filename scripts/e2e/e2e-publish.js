@@ -16,17 +16,11 @@ module.exports = function(options) {
         var url = urlPath + '/' + file;
 
 
-        /*if (ignoreFiles.test(url)) {
-          return;
-        }
-        */
-
         fs.stat(dir + '/' + file, function(err, stat) {
           if (stat && stat.isDirectory()) {
             uploadFiles(dir + '/' + file, urlPath + '/' + file);
           } else {
             if ( shouldProcessPath (url) ){
-              //console.log(url);
               uploadFile(url, dir + '/' + file);
             }
           }
@@ -137,7 +131,7 @@ module.exports = function(options) {
       var extension = path.extname(cleanedUpString);
       return tokens && tokens.length > 3 && tokens[1] === 'test' && ( extension === '.html' || extension === '.js' );
     }
-    return true;
+    return false;
   }
 
   console.log('Uploading e2e tests:', options.testId);
