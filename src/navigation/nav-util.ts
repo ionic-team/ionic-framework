@@ -87,7 +87,7 @@ export function isNav(nav: any) {
 export interface DeepLink {
   component: any;
   name: string;
-  path?: string;
+  segment?: string;
 }
 
 export interface DeepLinkConfig {
@@ -98,10 +98,11 @@ export interface DeepLinkConfig {
 export interface NavLink {
   component: any;
   name?: string;
-  path?: string;
+  segment?: string;
   parts?: string[];
-  staticParts?: number;
-  dataParts?: number;
+  partsLen?: number;
+  staticLen?: number;
+  dataLen?: number;
 }
 
 export interface NavSegment {
@@ -111,8 +112,6 @@ export interface NavSegment {
   data: any;
   navId?: string;
 }
-
-export type NavPath = NavSegment[];
 
 export interface NavOptions {
   animate?: boolean;

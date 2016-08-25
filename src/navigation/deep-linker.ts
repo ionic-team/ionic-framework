@@ -2,7 +2,7 @@ import { Injectable, OpaqueToken } from '@angular/core';
 import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { isTab, isTabs, NavPath, NavSegment, DIRECTION_BACK } from './nav-util';
+import { isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
 import { isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
@@ -32,7 +32,7 @@ import { ViewController } from './view-controller';
 
 @Injectable()
 export class DeepLinker {
-  path: NavPath = [];
+  segments: NavSegment[] = [];
   history: string[] = [];
   indexAliasUrl: string;
 
@@ -44,7 +44,7 @@ export class DeepLinker {
     console.debug(`DeepLinker, init load: ${browserUrl}`);
 
     // update the Path from the browser URL
-    this.path = this.serializer.parse(browserUrl);
+    this.segments = this.serializer.parse(browserUrl);
 
     // remember this URL in our internal history stack
     this.historyPush(browserUrl);
@@ -100,7 +100,7 @@ export class DeepLinker {
         }
 
         // normal url
-        this.path = this.serializer.parse(browserUrl);
+        this.segments = this.serializer.parse(browserUrl);
         this.loadNavFromPath(appRootNav);
       }
     }
@@ -117,10 +117,10 @@ export class DeepLinker {
       if (activeNav) {
 
         // build up the segments of all the navs from the lowest level
-        this.path = this.pathFromNavs(activeNav);
+        this.segments = this.pathFromNavs(activeNav);
 
         // build a string URL out of the Path
-        const browserUrl = this.serializer.serialize(this.path);
+        const browserUrl = this.serializer.serialize(this.segments);
 
         // update the browser's location
         this.updateLocation(browserUrl, direction);
@@ -224,8 +224,8 @@ export class DeepLinker {
    * of NavController's to create a string representation of all the
    * NavControllers state.
    */
-  pathFromNavs(nav: NavController, component?: any, data?: any): NavPath {
-    const path: NavPath = [];
+  pathFromNavs(nav: NavController, component?: any, data?: any): NavSegment[] {
+    const segments: NavSegment[] = [];
     let view: ViewController;
     let segment: NavSegment;
     let tabSelector: string;
@@ -256,13 +256,13 @@ export class DeepLinker {
       }
 
       // add the segment to the path
-      path.push(segment);
+      segments.push(segment);
 
       if (isTab(nav)) {
         // this nav is a Tab, which is a child of Tabs
         // add a segment to represent which Tab is the selected one
         tabSelector = this.getTabSelector(<any>nav);
-        path.push({
+        segments.push({
           id: tabSelector,
           name: tabSelector,
           component: null,
@@ -281,7 +281,7 @@ export class DeepLinker {
     }
 
     // segments added from bottom to top, so Ti esrever dna ti pilf
-    return path.reverse();
+    return segments.reverse();
   }
 
   getTabSelector(tab: Tab): string {
@@ -318,7 +318,7 @@ export class DeepLinker {
    * where it lives in the path and load up the correct component.
    */
   initNav(nav: any): NavSegment {
-    const path = this.path;
+    const path = this.segments;
 
     if (nav && path.length) {
       if (!nav.parent) {

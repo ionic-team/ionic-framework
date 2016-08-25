@@ -1,5 +1,4 @@
-import { ViewController } from '../view-controller';
-import { MockPage } from '../../util/mock-providers';
+import { mockView } from '../../util/mock-providers';
 
 
 describe('ViewController', () => {
@@ -7,7 +6,7 @@ describe('ViewController', () => {
   describe('willEnter', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
-      let viewController = new ViewController(MockPage);
+      let viewController = mockView();
       subscription = viewController.willEnter.subscribe((event) => {
         // assert
         expect(event).toEqual(null);
@@ -24,7 +23,7 @@ describe('ViewController', () => {
   describe('didEnter', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
-      let viewController = new ViewController(MockPage);
+      let viewController = mockView();
       subscription = viewController.didEnter.subscribe((event) => {
         // assert
         expect(event).toEqual(null);
@@ -41,7 +40,7 @@ describe('ViewController', () => {
   describe('willLeave', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
-      let viewController = new ViewController(MockPage);
+      let viewController = mockView();
       subscription = viewController.willLeave.subscribe((event) => {
         // assert
         expect(event).toEqual(null);
@@ -58,7 +57,7 @@ describe('ViewController', () => {
   describe('didLeave', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
-      let viewController = new ViewController(MockPage);
+      let viewController = mockView();
       subscription = viewController.didLeave.subscribe((event) => {
         // assert
         expect(event).toEqual(null);
@@ -75,7 +74,7 @@ describe('ViewController', () => {
   describe('willUnload', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
-      let viewController = new ViewController(MockPage);
+      let viewController = mockView();
       subscription = viewController.willUnload.subscribe((event) => {
         expect(event).toEqual(null);
         done();

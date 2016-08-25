@@ -67,7 +67,7 @@ describe('NavController', () => {
       let hasCompleted = true;
       let requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, 'MockPage', 'MockPage', DIRECTION_FORWARD
+        hasCompleted, requiresTransition, 'MockView', 'MockView', DIRECTION_FORWARD
       );
       expect(nav.length()).toEqual(2);
     });
