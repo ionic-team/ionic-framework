@@ -15,7 +15,7 @@ var IonicSnapshot = function(options) {
     self.domain = options.domain || 'ionic-snapshot-go.appspot.com';
     self.groupId = options.groupId || 'test_group';
     self.appId = options.appId || 'test_app';
-    self.sleepBetweenSpecs = options.sleepBetweenSpecs || 750;
+    self.sleepBetweenSpecs = options.sleepBetweenSpecs || 500;
     self.testId = browser.params.test_id || 'test_id';
     self.shouldUpload = browser.params.upload !== 'false';
     self.platformId = browser.params.platform_id;

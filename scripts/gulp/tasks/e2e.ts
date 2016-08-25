@@ -1,4 +1,4 @@
-import { DIST_E2E_ROOT, DIST_E2E_COMPONENTS_ROOT, LOCAL_SERVER_PORT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { DIST_NAME, E2E_NAME, DIST_E2E_ROOT, DIST_E2E_COMPONENTS_ROOT, LOCAL_SERVER_PORT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -318,8 +318,7 @@ function e2eWatch(componentName: string, componentTest: string) {
     if (err) {
       throw err;
     }
-    const server = `http://localhost:${LOCAL_SERVER_PORT}/dist/e2e/tests/${componentName}`;
-    console.log(server);
+    console.log(`http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}/tests/${componentName}/test/${componentTest}/`);
   });
 }
 

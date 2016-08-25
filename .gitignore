@@ -30,3 +30,5 @@ UserInterfaceState.xcuserstate
 /e2eNgcConfig.json
 
 src/tsconfig.json
+
+/scripts/e2e/webpackEntryPoints.json

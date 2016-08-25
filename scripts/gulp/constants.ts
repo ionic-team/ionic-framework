@@ -23,9 +23,6 @@ export const SCRIPTS_ROOT = join(PROJECT_ROOT, SCRIPTS_NAME);
 export const SRC_ROOT = join(PROJECT_ROOT, SRC_NAME);
 export const SRC_COMPONENTS_ROOT = join(SRC_ROOT, COMPONENTS_NAME);
 
-// Server Paths
-
-
 // NPM
 export const NPM_VENDOR_FILES = [
   '@angular', 'core-js/client', 'rxjs', 'systemjs/dist', 'zone.js/dist'
