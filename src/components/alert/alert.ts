@@ -19,7 +19,7 @@ export class Alert extends ViewController {
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(AlertCmp, opts);
+    super(AlertCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
   }
