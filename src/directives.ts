@@ -15,7 +15,7 @@ import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
 import { IonicApp } from './components/app/app-root';
 import { Item, ItemContent } from './components/item/item';
-import { ItemReorder } from './components/item/item-reorder';
+import { ItemReorder, Reorder } from './components/item/item-reorder';
 import { ItemSliding, ItemOptions } from './components/item/item-sliding';
 import { Label } from './components/label/label';
 import { List } from './components/list/list';
@@ -28,9 +28,11 @@ import { NavPop, NavPopAnchor } from './components/nav/nav-pop';
 import { NavPush, NavPushAnchor } from './components/nav/nav-push';
 import { Navbar } from './components/navbar/navbar';
 import { Option } from './components/option/option';
+import { OverlayPortal } from './components/nav/overlay-portal';
+import { PickerColumnCmp } from './components/picker/picker-component';
 import { RadioButton } from './components/radio/radio-button';
 import { RadioGroup } from './components/radio/radio-group';
-import { Range } from './components/range/range';
+import { Range, RangeKnob } from './components/range/range';
 import { Refresher } from './components/refresher/refresher';
 import { RefresherContent } from './components/refresher/refresher-content';
 import { Scroll } from './components/scroll/scroll';
@@ -42,6 +44,7 @@ import { Slides, Slide, SlideLazy } from './components/slides/slides';
 import { Spinner } from './components/spinner/spinner';
 import { Tab } from './components/tabs/tab';
 import { Tabs } from './components/tabs/tabs';
+import { TabButton } from './components/tabs/tab-button';
 import { TextInput, TextArea } from './components/input/input';
 import { Toggle } from './components/toggle/toggle';
 import { Toolbar, Header, Footer } from './components/toolbar/toolbar';
@@ -74,7 +77,7 @@ export { InfiniteScrollContent } from './components/infinite-scroll/infinite-scr
 export { TextArea, TextInput } from './components/input/input';
 export { IonicApp } from './components/app/app-root';
 export { Item } from './components/item/item';
-export { ItemReorder } from './components/item/item-reorder';
+export { ItemReorder, Reorder } from './components/item/item-reorder';
 export { ItemSliding, ItemOptions, ItemSideFlags } from './components/item/item-sliding';
 export { Label } from './components/label/label';
 export { List } from './components/list/list';
@@ -94,8 +97,8 @@ export { NavPush, NavPushAnchor } from './components/nav/nav-push';
 export { Navbar } from './components/navbar/navbar';
 export { NativeInput, NextInput } from './components/input/native-input';
 export { Option } from './components/option/option';
+export { OverlayPortal } from './components/nav/overlay-portal';
 export { Picker, PickerController } from './components/picker/picker';
-export { PickerColumnCmp } from './components/picker/picker-component';
 export { PickerOptions, PickerColumn, PickerColumnOption } from './components/picker/picker-options';
 export { Popover, PopoverController } from './components/popover/popover';
 export { PopoverOptions } from './components/popover/popover-options';
@@ -104,7 +107,6 @@ export { RadioGroup } from './components/radio/radio-group';
 export { Range, RangeKnob, ClientRect } from './components/range/range';
 export { Refresher } from './components/refresher/refresher';
 export { RefresherContent } from './components/refresher/refresher-content';
-export { Reorder } from './components/item/item-reorder';
 export { Scroll } from './components/scroll/scroll';
 export { Searchbar } from './components/searchbar/searchbar';
 export { Segment, SegmentButton } from './components/segment/segment';
@@ -130,7 +132,7 @@ export { ActionSheetCmp } from './components/action-sheet/action-sheet-component
 export { AlertCmp } from './components/alert/alert-component';
 export { LoadingCmp } from './components/loading/loading-component';
 export { ModalCmp } from './components/modal/modal-component';
-export { PickerCmp } from './components/picker/picker-component';
+export { PickerCmp, PickerColumnCmp } from './components/picker/picker-component';
 export { PopoverCmp } from './components/popover/popover-component';
 export { ToastCmp } from './components/toast/toast-component';
 
@@ -176,11 +178,15 @@ export const IONIC_DIRECTIVES: any[] = [
   NavPush,
   NavPushAnchor,
   Option,
+  OverlayPortal,
+  PickerColumnCmp,
   RadioButton,
   RadioGroup,
   Range,
+  RangeKnob,
   Refresher,
   RefresherContent,
+  Reorder,
   Scroll,
   Searchbar,
   Segment,
@@ -193,6 +199,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Spinner,
   Tab,
   Tabs,
+  TabButton,
   TextArea,
   TextInput,
   Toggle,

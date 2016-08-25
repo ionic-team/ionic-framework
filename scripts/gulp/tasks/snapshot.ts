@@ -15,7 +15,7 @@ task('protractor-server', () => {
   console.log(`Serving ${process.cwd()} on http://localhost:${buildConfig.protractorPort}`);
 });
 
-task('snapshot', ['e2e.build', 'protractor-server'], (done: Function) => {
+task('snapshot', ['e2e', 'protractor-server'], (done: Function) => {
   snapshot(done);
 });
 
@@ -23,7 +23,7 @@ task('snapshot.skip.build', ['protractor-server'], (done: Function) => {
   snapshot(done);
 });
 
-task('snapshot.quick', ['e2e.build', 'protractor-server'], (done: Function) => {
+task('snapshot.quick', ['e2e', 'protractor-server'], (done: Function) => {
   snapshot(done, true);
 });
 

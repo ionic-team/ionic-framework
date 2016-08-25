@@ -129,7 +129,6 @@ export interface ReorderIndexes {
   host: {
     '[class.reorder-enabled]': '_enableReorder',
     '[class.reorder-visible]': '_visibleReorder',
-
   }
 })
 export class ItemReorder {
