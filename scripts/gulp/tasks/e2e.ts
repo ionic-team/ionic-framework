@@ -1,4 +1,4 @@
-import { DIST_E2E_ROOT, PROJECT_ROOT, SRC_ROOT } from '../constants';
+import { DIST_E2E_ROOT, LOCAL_SERVER_PORT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -6,7 +6,6 @@ import * as fs from 'fs';
 import { compileSass, copyFonts, execNodeTask } from '../util';
 
 task('e2e.setupTests', (done: Function) => {
-
   let gulpif = require('gulp-if');
   let merge = require('merge2');
   let _ = require('lodash');
@@ -190,20 +189,20 @@ task('e2e.build.tests',  (done: Function) => {
   });
 });
 
-task('e2e-sass', () => {
+task('e2e.sass', () => {
   return compileSass(`${DIST_E2E_ROOT}/css`);
 });
 
-task('e2e-fonts', () => {
+task('e2e.fonts', () => {
   return copyFonts(`${DIST_E2E_ROOT}/fonts`);
 });
 
 /**
- * Task: e2e.pre-webpack
+ * Task: e2e.prewebpack
  * Dynamically build webpack entryPoints
  * Update index.html file that lists all e2e tasks
  */
-task('e2e.pre-webpack', function(done) {
+task('e2e.prewebpack', function(done) {
   /**
    * Find all AppModule.ts files because the act as the entry points
    * for each e2e test.
@@ -250,38 +249,51 @@ task('e2e.webpack', function(done) {
 
 task('e2e.build', (done: Function) => {
   let runSequence = require('run-sequence');
-  runSequence('e2e.ngcSource', 'e2e.copy.swiper', 'e2e.resources', 'e2e-sass', 'e2e-fonts', 'e2e.pre-webpack', 'e2e.webpack', done);
+  runSequence('e2e.ngcSource', 'e2e.copy.swiper', 'e2e.resources', 'e2e.sass', 'e2e.fonts', 'e2e.prewebpack', 'e2e.webpack', done);
 });
 
-task('e2e.watch', ['e2e-sass', 'e2e-fonts'], ( done: Function) => {
+task('e2e.watch', ['e2e.sass', 'e2e.fonts'], (done: Function) => {
   const argv = require('yargs').argv;
-  const watch = require('gulp-watch');
-  let folder = argv.folder;
-  if ( ! folder ) {
-    done(new Error('Passing in a folder to watch is required for this command'));
+  const folder: string = argv.folder || argv.f;
+
+  if (!folder || !folder.length) {
+    done(new Error('Passing in a folder to watch is required for this command. Use the --folder or -f option.'));
     return;
   }
 
-  var webpack = require('webpack');
-  var WebpackDevServer = require('webpack-dev-server');
-  var config = require('../../e2e/webpack.config.js');
+  const folderSplit = folder.split('/');
+  const componentName = folderSplit[0];
+  const componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
+  const e2eTestPath = path.join(SRC_COMPONENTS_ROOT, componentName, 'test', componentTest, 'app-module.ts');
+
+  try {
+    fs.accessSync(e2eTestPath, fs.F_OK);
+  } catch (e) {
+    done(new Error(`Could not find e2e test: ${e2eTestPath}`));
+    return;
+  }
+
+  const watch = require('gulp-watch');
+  const webpack = require('webpack');
+  const WebpackDevServer = require('webpack-dev-server');
+  const config = require('../../e2e/webpack.config.js');
 
   config.output.path = path.join(__dirname, '../../../');
   config.entry = {
     'dist/e2e/vendor': './scripts/e2e/vendor',
     'dist-e2e/polyfills': './scripts/e2e/polyfills'
   };
-  config.entry[`./dist/e2e/tests/${folder}/index`] = `./dist/e2e/tests/${folder}/entry`;
+  config.entry[`./dist/e2e/tests/${componentName}/test/${componentTest}/index`] = `./dist/e2e/tests/${componentName}/test/${componentTest}/entry`;
 
-  var compiler = webpack(config);
+  const compiler = webpack(config);
 
   // If any tests change within components then run e2e.resources.
   watch([
     'src/components/*/test/**/*'
   ],
   function(file) {
-      console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
-      start('e2e.resources');
+    console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
+    start('e2e.resources');
   });
 
   // If any src files change except for tests then transpile only the source ionic files
@@ -291,17 +303,14 @@ task('e2e.watch', ['e2e-sass', 'e2e-fonts'], ( done: Function) => {
     '!src/util/test/*'
   ],
   function(file) {
-      console.log('start e2e.ngcSource - ' + JSON.stringify(file.history, null, 2));
-      start('e2e.ngcSource');
+    console.log('start e2e.ngcSource - ' + JSON.stringify(file.history, null, 2));
+    start('e2e.ngcSource');
   });
 
   // If any scss files change then recompile all sass
-  watch([
-    'src/**/*.scss'
-  ],
-  function(file) {
-      console.log('start sass - ' + JSON.stringify(file.history, null, 2));
-      start('e2e-sass');
+  watch(['src/**/*.scss'], (file) => {
+    console.log('start sass - ' + JSON.stringify(file.history, null, 2));
+    start('e2e.sass');
   });
 
   new WebpackDevServer(compiler, {
@@ -311,11 +320,12 @@ task('e2e.watch', ['e2e-sass', 'e2e-fonts'], ( done: Function) => {
       aggregateTimeout: 2000,
       poll: 1000
     }
-  }).listen(8080, 'localhost', function(err) {
-      if ( err ) {
-        throw err;
-      }
-      console.log('[webpack-dev-server]', `http://localhost:8080/dist/e2e/tests/${folder}`);
+  }).listen(LOCAL_SERVER_PORT, 'localhost', function(err) {
+    if (err) {
+      throw err;
+    }
+    const server = `http://localhost:${LOCAL_SERVER_PORT}/dist/e2e/tests/${componentName}`;
+    console.log(server);
   });
 
 });
