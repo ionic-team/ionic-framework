@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Provider, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
@@ -10,9 +10,11 @@ import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
 
-export const SELECT_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Select), multi: true});
-
+export const SELECT_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => Select),
+  multi: true
+};
 
 /**
  * @name Select

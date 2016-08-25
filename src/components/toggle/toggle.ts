@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Provider, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Form } from '../../util/form';
@@ -7,10 +7,11 @@ import { Item } from '../item/item';
 import { pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../util/ui-event-manager';
 
-
-export const TOGGLE_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Toggle), multi: true});
-
+export const TOGGLE_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => Toggle),
+  multi: true
+};
 
 /**
  * @name Toggle

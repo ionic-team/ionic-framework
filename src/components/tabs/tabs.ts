@@ -153,7 +153,6 @@ import { ViewController } from '../../navigation/view-controller';
     '</ion-tabbar>' +
     '<ng-content></ng-content>' +
     '<div #portal tab-portal></div>',
-  directives: [TabButton, TabHighlight],
   encapsulation: ViewEncapsulation.None,
 })
 export class Tabs extends Ion implements AfterViewInit {

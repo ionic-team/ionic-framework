@@ -370,7 +370,6 @@ export class PickerColumnCmp {
       </div>
     </div>
   `,
-  directives: [PickerColumnCmp],
   host: {
     'role': 'dialog'
   },

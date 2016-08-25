@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Inject, OnDestroy, OnInit, Optional, Output, Provider, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Inject, OnDestroy, OnInit, Optional, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
@@ -8,9 +8,11 @@ import { Form } from '../../util/form';
 import { Item } from '../item/item';
 import { UIEventManager } from '../../util/ui-event-manager';
 
-
-export const RANGE_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Range), multi: true});
+export const RANGE_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => Range),
+  multi: true
+};
 
 /**
  * @private
@@ -184,7 +186,6 @@ export class RangeKnob implements OnInit {
       '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
     '</div>' +
     '<ng-content select="[range-right]"></ng-content>',
-  directives: [RangeKnob],
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',

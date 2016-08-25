@@ -79,7 +79,6 @@ import { Platform } from '../../platform/platform';
     '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
-  directives: [NativeInput, NextInput],
   encapsulation: ViewEncapsulation.None,
 })
 export class TextInput extends InputBase {
@@ -276,7 +275,6 @@ export class TextInput extends InputBase {
     '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input"></textarea>' +
     '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
-  directives: [NativeInput, NextInput],
   encapsulation: ViewEncapsulation.None,
 })
 export class TextArea extends InputBase {

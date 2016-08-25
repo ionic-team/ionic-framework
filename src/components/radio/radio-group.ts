@@ -1,12 +1,15 @@
-import { AfterContentInit, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Output, Provider, Renderer } from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Output, Renderer } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ListHeader } from '../list/list-header';
 import { isCheckedProperty } from '../../util/util';
 import { RadioButton } from './radio-button';
 
-export const RADIO_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => RadioGroup), multi: true});
+export const RADIO_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => RadioGroup),
+  multi: true
+};
 
 /**
  * @name RadioGroup

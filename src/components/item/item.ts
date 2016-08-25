@@ -284,7 +284,6 @@ import { Reorder } from '../item/item-reorder';
       '<ion-reorder></ion-reorder>' +
     '</div>' +
     '<ion-button-effect></ion-button-effect>',
-  directives: [forwardRef(() => Reorder)],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })

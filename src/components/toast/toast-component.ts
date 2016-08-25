@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
@@ -25,7 +24,6 @@ import { ViewController } from '../../navigation/view-controller';
          '</button> ' +
       '</div> ' +
     '</div>',
-  directives: [NgIf],
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
