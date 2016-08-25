@@ -36,15 +36,15 @@ export class E2EPage {
   }
 
   setApple() {
-    this.fruitsCtrl.updateValue('apple');
+    this.fruitsCtrl.updateValueAndValidity('apple');
   }
 
   setBanana() {
-    this.fruitsCtrl.updateValue('banana');
+    this.fruitsCtrl.updateValueAndValidity('banana');
   }
 
   setCherry() {
-    this.fruitsCtrl.updateValue('cherry');
+    this.fruitsCtrl.updateValueAndValidity('cherry');
   }
 
   doSubmit(ev: UIEvent) {

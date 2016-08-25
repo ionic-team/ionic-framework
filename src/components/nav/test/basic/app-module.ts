@@ -1,7 +1,5 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
-import { NavController, AlertController, Content,
-  App, IonicApp, IonicModule,
-  NavParams, ViewController, DeepLinkConfig } from '../../../..';
+import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule, NavController, NavParams, ViewController } from '../../../..';
 
 @Component({
   selector: 'my-cmp',
@@ -54,8 +52,7 @@ export class MyCmpTest {}
         <button ion-item (click)="content.scrollToTop()">Scroll to top</button>
       </ion-list>
       <my-cmp></my-cmp>
-    </ion-content>`,
-  directives: [MyCmpTest]
+    </ion-content>`
 })
 export class FirstPage {
   pushPage = FullPage;
@@ -124,40 +121,33 @@ export class FirstPage {
 
   pushPrimaryHeaderPage() {
     this.navCtrl.push(PrimaryHeaderPage).then(() => {}, (rejectReason: string) => {
-      debugger;
     });
   }
 
   pushFullPage() {
     this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] }).catch(() => {
-      debugger;
     });
   }
 
   pushAnother() {
     this.navCtrl.push(AnotherPage).catch(() => {
-      debugger;
     });
   }
 
   quickPush() {
     this.navCtrl.push(AnotherPage).catch(() => {
-      debugger;
     });
     setTimeout(() => {
       this.navCtrl.push(PrimaryHeaderPage).catch(() => {
-        debugger;
       });
     }, 150);
   }
 
   quickPop() {
     this.navCtrl.push(AnotherPage).catch(() => {
-      debugger;
     });
     setTimeout(() => {
       this.navCtrl.remove(1, 1).catch(() => {
-        debugger;
       });
     }, 250);
   }

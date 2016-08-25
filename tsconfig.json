@@ -1,22 +1,24 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
-    "module": "commonjs",
-    "declaration": true,
-    "outDir": "dist/ionic-angular",
-    "noImplicitAny": false,
     "lib": ["dom", "es2015"],
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "outDir": "dist/ionic-angular",
+    "target": "es5",
     "types": ["jasmine", "protractor"]
   },
   "include": [
-    "./src/**/*.ts",
-    "./dist/**/*.ts"
+    "./src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": false
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true
   }
 }

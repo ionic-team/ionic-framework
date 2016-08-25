@@ -1,18 +1,13 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from '../../../dist';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  paused: boolean = false;
-
-  toggleState() {
-    this.paused = !this.paused;
-  }
+  dynamicColor: string = 'secondary';
 }
-
 
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'

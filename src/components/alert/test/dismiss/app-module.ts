@@ -1,7 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../..';
-import { FormBuilder, ControlGroup, Validators } from '@angular/common';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({

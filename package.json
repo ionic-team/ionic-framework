@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "github:angular/compiler-cli-builds",
+    "@angular/tsc-wrapped": "github:angular/tsc-wrapped-builds",
     "@types/glob": "^5.0.29",
     "@types/gulp": "^3.8.29",
     "@types/hammerjs": "^2.0.30",
