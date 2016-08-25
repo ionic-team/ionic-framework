@@ -38,12 +38,14 @@ export function config(config) {
 
     customLaunchers: customLaunchers,
 
-    exclude: [],
+    exclude: [
+      'dist/e2e/**/*'
+    ],
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-        'dist/ionic-angular/**/!(*spec).js': ['coverage'],
-        'dist/ionic-angular/**/*.js': ['sourcemap']
+      'dist/ionic-angular/**/!(*spec).js': ['coverage'],
+      'dist/ionic-angular/**/*.js': ['sourcemap']
     },
     reporters: ['dots', 'coverage'],
     port: 9876,
@@ -77,10 +79,10 @@ export function config(config) {
     captureTimeout: 120000,
     browsers: ['Chrome_1024x768'],
 
-    coverageReporter: {
-        reporters: [
-            {type: 'json', subdir: '.', file: 'coverage-final.json'}
-        ]
+  coverageReporter: {
+      reporters: [
+        {type: 'json', subdir: '.', file: 'coverage-final.json'}
+      ]
     },
 
     singleRun: true
