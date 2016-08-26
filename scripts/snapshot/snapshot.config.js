@@ -8,9 +8,6 @@ exports.config = {
   domain: 'ionic-snapshot-go.appspot.com',
   //domain: 'localhost:8080',
 
-  specs: 'dist/e2e/tests/**/*e2e.js',
-  // specs: 'dist/e2e/button/**/*e2e.js',
-
   sleepBetweenSpecs: 300,
 
   platformDefaults: {
