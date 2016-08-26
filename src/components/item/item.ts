@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
+import { Button } from '../button/button';
 import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
 import { Label } from '../label/label';
@@ -376,7 +377,17 @@ export class Item {
   }
 
   /**
-   * @private
+   * @internal
+   */
+  @ContentChildren(Button)
+  set _buttons(buttons: QueryList<Button>) {
+    buttons.forEach(button => {
+      button.setCssClass('item-button', true);
+    });
+  }
+
+  /**
+   * @internal
    */
   @ContentChildren(Icon)
   set _icons(icons: QueryList<Icon>) {

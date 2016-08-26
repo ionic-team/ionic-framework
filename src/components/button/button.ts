@@ -278,8 +278,8 @@ export class Button {
   /**
    * @internal
    */
-  addClass(className: string) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
+  setCssClass(className: string, isAdd: boolean) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, isAdd);
   }
 
   /**

@@ -30,14 +30,20 @@ function snapshot(quickMode: boolean, callback: Function) {
   }
 
   let specs = '**';
-  let specArg = argv.specs || argv.s;
+  let specArg: string = argv.specs || argv.s;
   if (specArg && specArg.length) {
-    specs = path.join(specArg, '**');
+    const specArgPaths = specArg.split('/');
+    if (specArgPaths.length > 1) {
+      specs = path.join(specArgPaths[0], '**', specArgPaths[1]);
+    } else {
+      specs = path.join(specArg, '**');
+    }
   }
   specs = path.join(DIST_E2E_ROOT, 'tests', specs, '*e2e.js');
-  console.log(`Specs: ${specs}`);
+  console.log(`[snapshot] Specs: ${specs}`);
 
   const testId = generateTestId();
+  console.log(`[snapshot] TestId: ${testId}`);
 
   snapshotValues.params.test_id = testId;
   snapshotValues.params.upload = !quickMode;
@@ -55,10 +61,10 @@ function snapshot(quickMode: boolean, callback: Function) {
     '--specs=' + specs
   ];
 
-  return protractor(callback, [protractorConfigFile].concat(protractorArgs));
+  return protractor(callback, [protractorConfigFile].concat(protractorArgs), testId);
 }
 
-function protractor(callback, args) {
+function protractor(callback, args, testId: string) {
   const connect = require('connect');
   const http = require('http');
   const serveStatic = require('serve-static');
@@ -91,6 +97,7 @@ function protractor(callback, args) {
   child.on('exit', function() {
     protractorHttpServer.close();
     if (!callbackCalled) {
+      console.log(`[snapshot] TestId: ${testId}`);
       callback();
       callbackCalled = true;
     }
@@ -98,7 +105,7 @@ function protractor(callback, args) {
 }
 
 function generateTestId() {
-  let chars = 'abcdefghijkmnpqrstuvwxyz';
+  let chars = 'abcdefghjkmnpqrstuvwxyz';
   let id = chars.charAt(Math.floor(Math.random() * chars.length));
   chars += '0123456789';
   while (id.length < 3) {
