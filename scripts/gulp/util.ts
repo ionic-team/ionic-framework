@@ -107,7 +107,7 @@ export function copyFonts(destinationPath: string) {
 export function compileSass(destinationPath: string) {
   let sass = require('gulp-sass');
   let autoprefixer = require('gulp-autoprefixer');
-  let minifyCss = require('gulp-minify-css');
+  let cleanCSS = require('gulp-clean-css');
   let rename = require('gulp-rename');
   let buildConfig = require('../build/config');
 
@@ -125,7 +125,7 @@ export function compileSass(destinationPath: string) {
   )
   .pipe(autoprefixer(buildConfig.autoprefixer))
   .pipe(dest(destinationPath))
-  .pipe(minifyCss())
+  .pipe(cleanCSS())
   .pipe(rename({ extname: '.min.css' }))
   .pipe(dest(destinationPath));
 }
