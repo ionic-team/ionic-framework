@@ -12,7 +12,6 @@ import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
-import { TabButton } from './tab-button';
 import { TabHighlight } from './tab-highlight';
 import { ViewController } from '../../navigation/view-controller';
 

@@ -5,7 +5,7 @@ import * as path from 'path';
 
 let protractorHttpServer: any;
 
-task('protractor-server', () => {
+task('snapshot.server', () => {
   const connect = require('connect');
   const http = require('http');
   const serveStatic = require('serve-static');
@@ -15,15 +15,15 @@ task('protractor-server', () => {
   console.log(`Serving ${process.cwd()} on http://localhost:${buildConfig.protractorPort}`);
 });
 
-task('snapshot', ['e2e', 'protractor-server'], (done: Function) => {
+task('snapshot', ['e2e', 'snapshot.server'], (done: Function) => {
   snapshot(done);
 });
 
-task('snapshot.skip.build', ['protractor-server'], (done: Function) => {
+task('snapshot.skip.build', ['snapshot.server'], (done: Function) => {
   snapshot(done);
 });
 
-task('snapshot.quick', ['e2e', 'protractor-server'], (done: Function) => {
+task('snapshot.quick', ['e2e', 'snapshot.server'], (done: Function) => {
   snapshot(done, true);
 });
 

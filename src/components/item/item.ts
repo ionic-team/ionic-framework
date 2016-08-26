@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, Input, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
 import { Label } from '../label/label';
-import { Reorder } from '../item/item-reorder';
 
 
 /**

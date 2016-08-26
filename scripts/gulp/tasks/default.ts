@@ -1,13 +1,17 @@
-import {task} from 'gulp';
 const gulp = require('gulp');
 
 
-task('default', ['help']);
+gulp.task('default', help);
 
-task('help', function() {
+gulp.task('help', help);
+
+function help() {
   const taskList = Object.keys(gulp.tasks)
-    .filter(taskName => taskName !== 'default')
-    .sort();
+    .filter(taskName => taskName !== 'default' && taskName !== 'help')
+    .sort()
+    .map(taskName => taskName = '     ' + taskName);
 
-  console.log(`\nIonic Dev Tasks:\n   `, taskList.join('\n    '));
-});
+  console.log(taskList.join('\n'));
+}
+
+gulp.task('validate', ['lint', 'test']);
