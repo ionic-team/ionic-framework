@@ -68,7 +68,7 @@ ion-tabs,
   height: 100%;
 }
 
-ion-tab scroll-cotent {
+ion-tab scroll-content {
   display: none;
 }
 
@@ -80,7 +80,7 @@ ion-tab.show-tab {
   transform: translateY(0);
 }
 
-ion-tab.show-tab scroll-cotent {
+ion-tab.show-tab scroll-content {
   display: block;
 }
 
