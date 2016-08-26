@@ -1,4 +1,4 @@
-import { DIST_NAME, E2E_NAME, DIST_E2E_ROOT, DIST_E2E_COMPONENTS_ROOT, LOCAL_SERVER_PORT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { DIST_NAME, E2E_NAME, DIST_E2E_ROOT, DIST_E2E_COMPONENTS_ROOT, LOCAL_SERVER_PORT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -9,8 +9,9 @@ import { compileSass, copyFonts, execNodeTask } from '../util';
 task('e2e', e2eBuild);
 
 function e2eBuild(done: Function) {
+  copyExteralE2EFiles();
   let runSequence = require('run-sequence');
-  runSequence('e2e.ngcSource', 'e2e.copy.swiper', 'e2e.resources', 'e2e.sass', 'e2e.fonts', 'e2e.prewebpack', 'e2e.webpack', done);
+  runSequence('e2e.ngcSource', 'e2e.resources', 'e2e.sass', 'e2e.fonts', 'e2e.prewebpack', 'e2e.webpack', done);
 }
 
 task('e2e.setupTests', (done: Function) => {
@@ -117,9 +118,10 @@ task('e2e.resources', ( done: Function) => {
   runSequence('e2e.setupTests', 'e2e.build.tests', done);
 });
 
-task('e2e.copy.swiper', () => {
-  return src([`${SRC_ROOT}/components/slides/swiper-widget.*`]).pipe(dest(`${DIST_E2E_ROOT}/components/slides`));
-});
+function copyExteralE2EFiles() {
+  src([`${SCRIPTS_ROOT}/e2e/*.css`]).pipe(dest(`${DIST_E2E_ROOT}/css`));
+  src([`${SRC_ROOT}/components/slides/swiper-widget.*`]).pipe(dest(`${DIST_E2E_ROOT}/components/slides`));
+}
 
 task('e2e.build.tests',  (done: Function) => {
   const fs = require('fs');
@@ -232,6 +234,7 @@ task('e2e.webpack', function(done) {
 });
 
 task('e2e.watch', ['e2e.sass', 'e2e.fonts'], (done: Function) => {
+  copyExteralE2EFiles();
   const argv = require('yargs').argv;
   const folder: string = argv.folder || argv.f;
 

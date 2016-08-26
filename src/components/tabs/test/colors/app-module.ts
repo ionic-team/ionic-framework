@@ -8,7 +8,6 @@ export class E2EPage {}
 
 @Component({
   templateUrl: 'main.html',
-  styleUrls: ['styles.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class E2EApp {
