@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { DomSanitizationService } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { Animation } from '../../animations/animation';
 import { cancelRaf, pointerCoord, raf } from '../../util/dom';
@@ -60,7 +60,7 @@ export class PickerColumnCmp {
 
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(config: Config, private elementRef: ElementRef, private _sanitizer: DomSanitizationService) {
+  constructor(config: Config, private elementRef: ElementRef, private _sanitizer: DomSanitizer) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
   }
 
