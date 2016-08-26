@@ -198,19 +198,19 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
               background-color $button-md-transition-duration $button-md-transition-timing-function,
               color $button-md-transition-duration $button-md-transition-timing-function;
+}
 
-  &:hover:not(.disable-hover) {
-    background-color: $button-md-background-color-hover;
-  }
+.button:hover:not(.disable-hover) {
+  background-color: $button-md-background-color-hover;
+}
 
-  &.activated {
-    background-color: $button-md-background-color-activated;
-    box-shadow: $button-md-box-shadow-activated;
-  }
+.button.activated {
+  background-color: $button-md-background-color-activated;
+  box-shadow: $button-md-box-shadow-activated;
+}
 
-  ion-button-effect {
-    background-color: $button-md-text-color;
-  }
+.button ion-button-effect {
+  background-color: $button-md-text-color;
 }
 
 
@@ -261,10 +261,10 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   height: $button-md-small-height;
 
   font-size: $button-md-small-font-size;
+}
 
-  &[icon-only] ion-icon {
-    font-size: $button-md-small-icon-font-size;
-  }
+.button-small[icon-only] ion-icon {
+  font-size: $button-md-small-icon-font-size;
 }
 
 // Material Design Block Button
@@ -297,20 +297,20 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   color: $button-md-outline-text-color;
   background-color: $button-md-outline-background-color;
   box-shadow: $button-md-outline-box-shadow;
+}
 
-  &:hover:not(.disable-hover) {
-    background-color: $button-md-outline-background-color-hover;
-  }
+.button-outline:hover:not(.disable-hover) {
+  background-color: $button-md-outline-background-color-hover;
+}
 
-  &.activated {
-    background-color: $button-md-outline-background-color-activated;
-    box-shadow: $button-md-outline-box-shadow-activated;
-    opacity: $button-md-outline-opacity-activated;
-  }
+.button-outline.activated {
+  background-color: $button-md-outline-background-color-activated;
+  box-shadow: $button-md-outline-box-shadow-activated;
+  opacity: $button-md-outline-opacity-activated;
+}
 
-  ion-button-effect {
-    background-color: $button-md-outline-ripple-background-color;
-  }
+.button-outline ion-button-effect {
+  background-color: $button-md-outline-ripple-background-color;
 }
 
 
@@ -350,19 +350,19 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   background-color: $button-md-clear-background-color;
   box-shadow: $button-md-clear-box-shadow;
   opacity: $button-md-clear-opacity;
+}
 
-  &.activated {
-    background-color: $button-md-clear-background-color-activated;
-    box-shadow: $button-md-clear-box-shadow-activated;
-  }
+.button-clear.activated {
+  background-color: $button-md-clear-background-color-activated;
+  box-shadow: $button-md-clear-box-shadow-activated;
+}
 
-  &:hover:not(.disable-hover) {
-    background-color: $button-md-clear-background-color-hover;
-  }
+.button-clear:hover:not(.disable-hover) {
+  background-color: $button-md-clear-background-color-hover;
+}
 
-  ion-button-effect {
-    background-color: $button-md-clear-ripple-background-color;
-  }
+.button-clear ion-button-effect {
+  background-color: $button-md-clear-ripple-background-color;
 }
 
 
@@ -409,10 +409,10 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
               background-color $button-md-transition-duration $button-md-transition-timing-function,
               color $button-md-transition-duration $button-md-transition-timing-function;
+}
 
-  &.activated {
-    box-shadow: $button-md-fab-box-shadow-activated;
-  }
+.button-fab.activated {
+  box-shadow: $button-md-fab-box-shadow-activated;
 }
 
 [icon-only] {
