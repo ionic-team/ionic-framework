@@ -23,6 +23,7 @@ import { ListHeader } from './components/list/list-header';
 import { Menu } from './components/menu/menu';
 import { MenuClose } from './components/menu/menu-close';
 import { MenuToggle } from './components/menu/menu-toggle';
+import { NativeInput, NextInput } from './components/input/native-input';
 import { Nav } from './components/nav/nav';
 import { NavPop, NavPopAnchor } from './components/nav/nav-pop';
 import { NavPush, NavPushAnchor } from './components/nav/nav-push';
@@ -171,12 +172,14 @@ export const IONIC_DIRECTIVES: any[] = [
   Menu,
   MenuClose,
   MenuToggle,
+  NativeInput,
   Nav,
   Navbar,
   NavPop,
   NavPopAnchor,
   NavPush,
   NavPushAnchor,
+  NextInput,
   Option,
   OverlayPortal,
   PickerColumnCmp,
