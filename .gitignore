@@ -33,3 +33,4 @@ src/tsconfig.json
 
 /scripts/e2e/webpackEntryPoints.json
 *.css.ts
+.generated-ngc-config.json

@@ -65,6 +65,12 @@ ion-tab:nth-of-type(3) f,
 /********************
  e2e-loading
 *********************/
+.e2e-loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .e2e-loading .fixed-spinner svg {
   animation: none;
 }
@@ -130,6 +136,12 @@ ion-tab:nth-of-type(3) f,
 /********************
  e2e-loading
 *********************/
+.e2e-popover-basic {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .e2e-popover-basic .text-to-change div {
   margin: 10px auto;
 }
