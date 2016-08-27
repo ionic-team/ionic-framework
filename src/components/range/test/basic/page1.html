@@ -1,13 +1,13 @@
 <ion-header>
 
   <ion-navbar>
-    <button menuToggle="left">
+    <button ion-button menuToggle="left">
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
       Range
     </ion-title>
-    <button menuToggle="right" right>
+    <button ion-button menuToggle="right" right>
       <ion-icon name="menu"></ion-icon>
     </button>
   </ion-navbar>
@@ -19,7 +19,7 @@
 
   <ion-list>
     <ion-item>
-      <ion-range [(ngModel)]="singleValue" danger pin="true" (ionChange)="rangeChange($event)" [debounce]="100"></ion-range>
+      <ion-range [(ngModel)]="singleValue" color="danger" pin="true" (ionChange)="rangeChange($event)" [debounce]="100"></ion-range>
     </ion-item>
 
     <ion-item>
@@ -29,7 +29,7 @@
 
     <ion-item>
       <ion-label stacked>init=150, min=-200, max=200</ion-label>
-      <ion-range min="-200" max="200" [(ngModel)]="singleValue2" secondary>
+      <ion-range min="-200" max="200" [(ngModel)]="singleValue2" color="secondary">
         <ion-label range-left>-200</ion-label>
         <ion-label range-right>200</ion-label>
       </ion-range>
@@ -45,7 +45,7 @@
 
     <ion-item>
       <ion-label>disabled</ion-label>
-      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3" disabled=true>
+      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3" disabled="true">
         <ion-icon small range-left name="sunny"></ion-icon>
         <ion-icon range-right name="sunny"></ion-icon>
       </ion-range>
@@ -53,12 +53,12 @@
 
     <ion-item>
       <ion-label>step=100, snaps, {{singleValue4}}</ion-label>
-      <ion-range min="1000" max="2000" step="100" snaps="true" secondary [(ngModel)]="singleValue4"></ion-range>
+      <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary" [(ngModel)]="singleValue4"></ion-range>
     </ion-item>
 
     <ion-item>
       <ion-label>dual, {{dualValue | json}}</ion-label>
-      <ion-range dualKnobs="true" [(ngModel)]="dualValue" danger></ion-range>
+      <ion-range dualKnobs="true" [(ngModel)]="dualValue" color="danger"></ion-range>
     </ion-item>
 
     <ion-item>
@@ -68,7 +68,7 @@
 
     <ion-item>
       <ion-label>pin, {{singleValue}}</ion-label>
-      <ion-range [(ngModel)]="singleValue" danger pin="true"></ion-range>
+      <ion-range [(ngModel)]="singleValue" color="danger" pin="true"></ion-range>
     </ion-item>
 
     <ion-item>

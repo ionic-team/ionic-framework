@@ -18,7 +18,8 @@ import { ViewController } from '../nav/view-controller';
  * The Tab component, written `<ion-tab>`, is styled based on the mode and should
  * be used in conjunction with the [Tabs](../Tabs/) component.
  *
- * Each tab has a separate navigation controller. For more information on using
+ * Each `ion-tab` is a declarative component for a [NavController](../NavController/).
+ * Basically, each tab is a `NavController`. For more information on using
  * navigation controllers take a look at the [NavController API Docs](../../nav/NavController/).
  *
  * See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.

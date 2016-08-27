@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Optional, QueryList, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, Optional, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
@@ -6,7 +6,31 @@ import { ViewController } from '../nav/view-controller';
 
 
 /**
- * @private
+ * @name Header
+ * @description
+ * Header is a parent component that holds the navbar and toolbar component.
+ * It's important to note that `ion-header` needs to be the one of the three root elements of a page
+ *
+ * @usage
+ *
+ * ```ts
+ * @Component({
+ *   template: `
+ *      <ion-header>
+ *        <ion-navbar>
+ *          <ion-title>Page1</ion-title>
+ *        </ion-navbar>
+ *
+ *        <ion-toolbar>
+ *          <ion-title>Subheader</ion-title>
+ *        </ion-toolbar>
+ *      </ion-header>
+ *
+ *      <ion-content></ion-content>
+ *   `
+ * })
+ * ```
+ *
  */
 @Directive({
   selector: 'ion-header'
@@ -21,7 +45,26 @@ export class Header {
 
 
 /**
- * @private
+ * @name Footer
+ * @description
+ * Footer is a root component of a page that sits at the bottom of the page.
+ * Footer can be a wrapper for `ion-toolbar` to make sure the content area is sized correctly.
+ *
+ * @usage
+ *
+ * ```ts
+ * @Component({
+ *   template: `
+ *      <ion-content></ion-content>
+ *      <ion-footer>
+ *        <ion-toolbar>
+ *          <ion-title>Footer</ion-title>
+ *        </ion-toolbar>
+ *      </ion-footer>
+ *   `
+ * })
+ * ```
+ *
  */
 @Directive({
   selector: 'ion-footer'
@@ -92,7 +135,7 @@ export class ToolbarBase extends Ion {
  * @name Toolbar
  * @description
  * A Toolbar is a generic bar that is positioned above or below content.
- * Unlike a [Navbar](../../nav/Navbar), a toolbar can be used as a subheader.
+ * Unlike a [Navbar](../../navbar/Navbar), a toolbar can be used as a subheader.
  * When toolbars are placed within an `<ion-header>` or `<ion-footer>`,
  * the toolbars stay fixed in their respective location. When placed within
  * `<ion-content>`, toolbars will scroll with the content.
@@ -167,10 +210,10 @@ export class ToolbarBase extends Ion {
  *
  *   <ion-toolbar no-border-bottom>
  *     <ion-buttons start>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="contact"></ion-icon>
  *       </button>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="search"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -198,7 +241,7 @@ export class ToolbarBase extends Ion {
  *   <ion-toolbar no-border>
  *     <ion-title>I'm a subfooter</ion-title>
  *     <ion-buttons right>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="menu"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -207,10 +250,10 @@ export class ToolbarBase extends Ion {
  *   <ion-toolbar no-border-top>
  *     <ion-title>I'm a footer</ion-title>
  *     <ion-buttons end>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="more"></ion-icon>
  *       </button>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="options"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -242,23 +285,57 @@ export class ToolbarBase extends Ion {
 export class Toolbar extends ToolbarBase {
   private _sbPadding: boolean;
 
+  /** @internal */ 
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
+
   constructor(
     @Optional() viewCtrl: ViewController,
     @Optional() header: Header,
     @Optional() footer: Footer,
     config: Config,
-    elementRef: ElementRef
+    private _elementRef: ElementRef,
+    private _renderer: Renderer
   ) {
-    super(elementRef);
+    super(_elementRef);
 
     if (viewCtrl && (header || footer)) {
       // only toolbars within headers and footer are view toolbars
       // toolbars within the content are not view toolbars, since they
       // are apart of the content, and could be anywhere within the content
-      viewCtrl.setToolbarRef(elementRef);
+      viewCtrl.setToolbarRef(_elementRef);
     }
 
     this._sbPadding = config.getBoolean('statusbarPadding');
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `toolbar-${color}`, isAdd);
+    }
   }
 
 }

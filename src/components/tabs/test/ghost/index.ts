@@ -17,9 +17,7 @@ import { ionicBootstrap, NavController, Tab } from '../../../../../src';
     </ion-content>
     `
 })
-class Tab1 {
-  constructor(public nav: NavController) {}
-}
+class Tab1 {}
 
 //
 // Tab 2
@@ -36,9 +34,7 @@ class Tab1 {
     </ion-content>
     `
 })
-class Tab2 {
-  constructor(public nav: NavController) {}
-}
+class Tab2 {}
 
 //
 // Tab 3
@@ -47,7 +43,7 @@ class Tab2 {
   template: `
     <ion-header>
       <ion-navbar>
-        <button menuToggle>
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Stopwatch</ion-title>
@@ -58,9 +54,7 @@ class Tab2 {
     </ion-content>
     `
 })
-class Tab3 {
-  constructor(public nav: NavController) {}
-}
+class Tab3 {}
 
 //
 // Tab 3
@@ -69,7 +63,7 @@ class Tab3 {
   template: `
     <ion-header>
       <ion-navbar>
-        <button menuToggle>
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Quesarito</ion-title>
@@ -80,15 +74,13 @@ class Tab3 {
     </ion-content>
     `
 })
-class QuesaritoPage {
-  constructor(public nav: NavController) {}
-}
+class QuesaritoPage {}
 
 @Component({
   template: `
     <ion-menu [content]="content">
       <ion-header>
-        <ion-toolbar secondary>
+        <ion-toolbar color="secondary">
           <ion-title>Secret Menu</ion-title>
         </ion-toolbar>
       </ion-header>

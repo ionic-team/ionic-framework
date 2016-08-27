@@ -37,6 +37,14 @@ export class Loading extends ViewController {
   }
 
   /**
+   * @param {string} content  loading message content
+   */
+  setContent(content: string) {
+    this.data.content = content;
+  }
+
+
+  /**
    * Present the loading instance.
    *
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
@@ -158,7 +166,7 @@ export class Loading extends ViewController {
  * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
  * | spinner               |`string`    | The name of the SVG spinner for the loading indicator.                                                           |
  * | content               |`string`    | The html content for the loading indicator.                                                                      |
- * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
+ * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.                                                       |
  * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
  * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
  * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `dismiss()` is called. |

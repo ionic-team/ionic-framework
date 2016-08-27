@@ -86,6 +86,11 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * ### Approximate Widths and Heights
  *
+ * If the height of items in the virtual scroll are not close to the
+ * default size of 40px, it is extremely important to provide an value for
+ * approxItemHeight height. An exact pixel-perfect size is not necessary,
+ * but without an estimate the virtual scroll will not render correctly.
+ *
  * The approximate width and height of each template is used to help
  * determine how many cells should be created, and to help calculate
  * the height of the scrollable area. Note that the actual rendered size
@@ -94,10 +99,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * It's also important to know that Ionic's default item sizes have
  * slightly different heights between platforms, which is perfectly fine.
- * An exact pixel-perfect size is not necessary, but a good estimation
- * is important. Basically if each item is roughly 500px tall, rather than
- * the default of 40px tall, it's extremely important to know for virtual
- * scroll to calculate a good height.
+ * 
  *
  *
  * ### Images Within Virtual Scroll
@@ -115,6 +117,9 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * makes a HTTP request for the image file. HTTP requests, image
  * decoding, and image rendering can cause issues while scrolling. For virtual
  * scrolling, the natural effects of the `<img>` are not desirable features.
+ * 
+ * Note: `<ion-img>` should only be used with Virtual Scroll. If you are using
+ * an image outside of Virtual Scroll you should use the standard `<img>` tag.
  *
  * ```html
  * <ion-list [virtualScroll]="items">
@@ -212,15 +217,17 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @Input() approxItemWidth: string = '100%';
 
   /**
-   * @input {string} The approximate height of each item template's cell.
+   * @input {string} Default is `40px`. It is important to provide this
+   * if virtual item height will be significantly larger than the default
+   * The approximate height of each virtual item template's cell.
    * This dimension is used to help determine how many cells should
    * be created when initialized, and to help calculate the height of
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `40px`.
+   * initial dimensions.
    */
-  @Input() approxItemHeight: string = '40px';
+  @Input() approxItemHeight: string;
 
   /**
    * @input {string} The approximate width of each header template's cell.
@@ -342,6 +349,11 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         console.debug('VirtualScroll, onResize');
         this.update(false);
       });
+
+      if (!this.approxItemHeight) {
+        this.approxItemHeight = '40px';
+        console.warn('approxItemHeight set to default: Provide approxItemHeight to ensure proper virtual scroll rendering');
+      }
     }
   }
 
@@ -375,7 +387,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         // good to go, we already have good dimension data
         done();
 
-      } else {
+      } else {        
         // ******** DOM READ ****************
         calcDimensions(self._data, self._elementRef.nativeElement.parentElement,
                       self.approxItemWidth, self.approxItemHeight,

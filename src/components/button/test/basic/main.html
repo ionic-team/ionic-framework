@@ -10,42 +10,43 @@
 <ion-content padding style="text-align:center" no-bounce>
 
   <p>
-    <button><span>Default</span></button>
-    <button class="activated">Default.activated</button>
+    <button ion-button>Default</button>
+    <button ion-button class="activated">Default.activated</button>
   </p>
 
   <p>
-    <button primary>Primary</button>
-    <button primary class="activated">Primary.activated</button>
+    <button ion-button color="primary">Primary</button>
+    <button ion-button color="primary" class="activated">Primary.activated</button>
   </p>
 
   <p>
-    <button secondary>Secondary</button>
-    <button secondary class="activated">Secondary.activated</button>
+    <button ion-button color="secondary">Secondary</button>
+    <button ion-button color="secondary" class="activated">Secondary.activated</button>
   </p>
 
   <p>
-    <button danger>Danger</button>
-    <button danger class="activated">Danger.activated</button>
+    <button ion-button color="danger">Danger</button>
+    <button ion-button color="danger" class="activated">Danger.activated</button>
   </p>
 
   <p>
-    <button light>Light</button>
-    <button light class="activated">Light.activated</button>
+    <button ion-button color="light">Light</button>
+    <button ion-button color="light" class="activated">Light.activated</button>
   </p>
 
   <p>
-    <button dark>Dark</button>
-    <button dark class="activated">Dark.activated</button>
+    <button ion-button color="dark">Dark</button>
+    <button ion-button color="dark" class="activated">Dark.activated</button>
   </p>
 
   <p>
-    <button disabled>Disabled</button>
+    <button ion-button disabled>Button Disabled</button>
+    <a ion-button disabled>A Disabled</a>
   </p>
 
   <p>
-    <button [color]="btnColor" (click)="chgColor()">Change Color</button>
-    <button outline [color]="btnColor" (click)="chgColor()">Change Color</button>
+    <button ion-button [color]="btnColor" (click)="chgColor()">Change Color</button>
+    <button ion-button outline [color]="btnColor" (click)="chgColor()">Change Color</button>
   </p>
 
 </ion-content>

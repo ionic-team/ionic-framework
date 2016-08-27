@@ -181,9 +181,9 @@ import { Label } from '../label/label';
  *
  *   <!-- List header with buttons on each side -->
  *   <ion-list-header>
- *     <button item-left (click)="buttonClick()">Button</button>
+ *     <button ion-button item-left (click)="buttonClick()">Button</button>
  *     List Header
- *     <button outline item-right (click)="buttonClick()">Outline</button>
+ *     <button ion-button outline item-right (click)="buttonClick()">Outline</button>
  *   </ion-list-header>
  *
  *   <!-- Loops through and creates multiple items -->
@@ -209,25 +209,25 @@ import { Label } from '../label/label';
  *
  *   <!-- Item with left and right buttons -->
  *   <ion-item>
- *     <button item-left (click)="buttonClick()">Button</button>
+ *     <button ion-button item-left (click)="buttonClick()">Button</button>
  *     Item
- *     <button outline item-right (click)="buttonClick()">Outline</button>
+ *     <button ion-button outline item-right (click)="buttonClick()">Outline</button>
  *   </ion-item>
  *
  *   <!-- Item divider with a right button -->
  *   <ion-item-divider>
  *     Item Divider
- *     <button item-right>Button</button>
+ *     <button ion-button item-right>Button</button>
  *   </ion-item-divider>
  *
  *   <!-- Disabled button item with left and right buttons -->
  *   <button ion-item disabled>
- *     <button item-left (click)="buttonClick()">
+ *     <button ion-button item-left (click)="buttonClick()">
  *       <ion-icon name="home"></ion-icon>
  *       Left Icon
  *     </button>
  *     Disabled Button Item
- *     <button outline item-right (click)="buttonClick()">
+ *     <button ion-button outline item-right (click)="buttonClick()">
  *       <ion-icon name="star"></ion-icon>
  *       Left Icon
  *     </button>
@@ -239,7 +239,7 @@ import { Label } from '../label/label';
  *       <img src="img/my-avatar.png">
  *     </ion-avatar>
  *     Avatar Item
- *     <button outline item-right>View</button>
+ *     <button ion-button outline item-right>View</button>
  *   </ion-item>
  *
  *   <!-- Item with a thumbnail on the right -->
@@ -257,7 +257,7 @@ import { Label } from '../label/label';
  *       Item
  *     </ion-item>
  *     <ion-item-options>
- *       <button primary (click)="archive()">Archive</button>
+ *       <button ion-button color="primary" (click)="archive()">Archive</button>
  *     </ion-item-options>
  *   </ion-item-sliding>
  *
@@ -306,6 +306,21 @@ export class Item {
    * @private
    */
   labelId: string = null;
+
+  /** @internal */
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
 
   constructor(form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
     this.id = form.nextId().toString();
@@ -401,6 +416,26 @@ export class Item {
    */
   setCssStyle(property: string, value: string) {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string, colorClass?: string) {
+    this._setElementColor(this._color, false, colorClass);
+    this._setElementColor(newColor, true, colorClass);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean, colorClass?: string) {
+    colorClass = colorClass || 'item'; // item-radio
+
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `${colorClass}-${color}`, isAdd);
+    }
   }
 
   /**

@@ -85,22 +85,27 @@ export class ApiDemoPage {
   config: any;
   initialConfig: any;
 
-  constructor(public platform: Platform, public nav: NavController) {
+  constructor(public platform: Platform, public navCtrl: NavController) {
 
     if (window.localStorage.getItem('configDemo') !== null) {
       this.config = JSON.parse(window.localStorage.getItem('configDemo'));
-    }
-    else if (platform.is('ios')) {
+    } else if (platform.is('ios')) {
       this.config = {
         'backButtonIcon': 'ios-arrow-back',
         'iconMode': 'ios',
         'tabsPlacement': 'bottom'
       };
+    } else if(platform.is('windows')) {
+      this.config = {
+        'backButtonIcon': 'ios-arrow-back',
+        'iconMode': 'ios',
+        'tabsPlacement': 'top'
+      };
     } else {
       this.config = {
         'backButtonIcon': 'md-arrow-back',
         'iconMode': 'md',
-        'tabsPlacement': 'top'
+        'tabsPlacement': 'bottom'
       };
     }
 
@@ -113,7 +118,7 @@ export class ApiDemoPage {
   }
 
   push() {
-    this.nav.push(PushPage);
+    this.navCtrl.push(PushPage);
   }
 }
 
@@ -121,10 +126,10 @@ export class ApiDemoPage {
   templateUrl: 'page.html'
 })
 export class PushPage {
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   pop() {
-    this.nav.pop();
+    this.navCtrl.pop();
   }
 }
 

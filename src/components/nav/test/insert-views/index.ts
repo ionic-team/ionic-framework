@@ -11,14 +11,14 @@ import { ionicBootstrap, NavController } from '../../../../../src';
     </ion-header>
 
     <ion-content padding>
-      <button block (click)="pushPage()">Push Page</button>
+      <button ion-button block (click)="pushPage()">Push Page</button>
     </ion-content>`,
 })
 class FirstPage {
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   pushPage() {
-    this.nav.push(SecondPage);
+    this.navCtrl.push(SecondPage);
   }
 }
 
@@ -33,15 +33,15 @@ class FirstPage {
 
     <ion-content padding>
       <h1>Second page</h1>
-      <button block (click)="insertPage()">Insert Page</button>
+      <button ion-button block (click)="insertPage()">Insert Page</button>
     </ion-content>
   `
 })
 class SecondPage {
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   insertPage() {
-    this.nav.insert(1, InsertPage);
+    this.navCtrl.insert(1, InsertPage);
   }
 }
 

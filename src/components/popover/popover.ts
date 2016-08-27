@@ -76,12 +76,11 @@ export class Popover extends ViewController {
  * below for all available options.
  *
  * ### Presenting
- * To present a popover, call the `present` method on the [NavController](../../nav/NavController).
- * The first argument passed to the `present` should be the popover. In order
- * to position the popover relative to the element clicked, the event needs to be
- * passed as the second argument. If the event is not passed, the popover will be
- * positioned in the center of the current view. See the [usage](#usage) section for
- * an example of passing this event.
+ * To present a popover, call the `present` method on a [PopoverController](../../nav/PopoverConroller) instance.
+ * In order to position the popover relative to the element clicked, a click event
+ * needs to be passed into the options of the the `present method. If the event
+ * is not passed, the popover will be positioned in the center of the current
+ * view. See the [usage](#usage) section for an example of passing this event.
  *
  * ### Dismissing
  * To dismiss the popover after creation, call the `dismiss()` method on the
@@ -103,7 +102,7 @@ export class Popover extends ViewController {
  * which creates and presents the popover:
  *
  * ```html
- * <button (click)="presentPopover($event)">
+ * <button ion-button (click)="presentPopover($event)">
  *   <ion-icon name="more"></ion-icon>
  * </button>
  * ```
@@ -151,7 +150,7 @@ export class Popover extends ViewController {
  *
  * | Option                | Type       | Description                                                                                                      |
  * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
- * | cssClass              |`string`    | An additional class for custom styles.                                                                           |
+ * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.                                                       |
  * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
  * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
  *

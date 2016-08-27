@@ -115,7 +115,7 @@ ion-checkbox + .item-inner ion-label {
 
 @mixin checkbox-theme-wp($color-name, $color-base, $color-contrast) {
 
-  ion-checkbox[#{$color-name}] .checkbox-checked {
+  .checkbox-#{$color-name} .checkbox-checked {
     border-color: $color-base;
     background-color: $color-base;
 

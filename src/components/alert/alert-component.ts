@@ -29,7 +29,7 @@ import { ViewController } from '../nav/view-controller';
 
         <template ngSwitchCase="radio">
           <div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">
-            <button category="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">
+            <button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">
               <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
               <div class="alert-radio-label">
                 {{i.label}}
@@ -40,7 +40,7 @@ import { ViewController } from '../nav/view-controller';
 
         <template ngSwitchCase="checkbox">
           <div class="alert-checkbox-group">
-            <button category="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">
+            <button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">
               <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
               <div class="alert-checkbox-label">
                 {{i.label}}
@@ -59,7 +59,7 @@ import { ViewController } from '../nav/view-controller';
 
       </div>
       <div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">
-        <button category="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">
+        <button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">
           {{b.text}}
         </button>
       </div>

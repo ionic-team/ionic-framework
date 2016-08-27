@@ -126,7 +126,7 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
 @mixin ios-segment-button($color-name, $color-base, $color-contrast) {
 
-  ion-segment[#{$color-name}] {
+  .segment-#{$color-name} {
 
     .segment-button {
       border-color: $color-base;
@@ -162,7 +162,7 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
   @include ios-segment-button($color-name, $color-base, $color-contrast);
 
-  .toolbar[#{$color-name}] .segment-button.segment-activated {
+  .toolbar-#{$color-name} .segment-button.segment-activated {
     color: $color-base;
   }
 }

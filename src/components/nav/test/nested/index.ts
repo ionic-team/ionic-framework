@@ -11,16 +11,16 @@ import { Config, Nav, App } from '../../../../../src';
       </ion-navbar>
     </ion-header>
     <ion-content style="text-align:center;" padding>
-      <p><button (click)="goToAccount()">Login</button></p>
-      <p><button (click)="goBack()">App goBack()</button></p>
+      <p><button ion-button (click)="goToAccount()">Login</button></p>
+      <p><button ion-button (click)="goBack()">App goBack()</button></p>
     </ion-content>
   `
 })
 export class Login {
-  constructor(private nav: NavController, private app: App) {}
+  constructor(public navCtrl: NavController, public app: App) {}
 
   goToAccount() {
-    this.nav.push(Account);
+    this.navCtrl.push(Account);
   }
 
   goBack() {
@@ -33,7 +33,7 @@ export class Login {
   template: `
     <ion-menu [content]="content">
      <ion-header>
-      <ion-toolbar secondary>
+      <ion-toolbar color="secondary">
         <ion-title>Account Menu</ion-title>
       </ion-toolbar>
      </ion-header>
@@ -63,23 +63,23 @@ export class Account {
 
   root = Dashboard;
 
-  constructor(private menu: MenuController, private app: App) {}
+  constructor(public menuCtrl: MenuController, public app: App) {}
 
   goToProfile() {
     this.accountNav.setRoot(Profile).then(() => {
-      this.menu.close();
+      this.menuCtrl.close();
     });
   }
 
   goToDashboard() {
     this.accountNav.setRoot(Dashboard).then(() => {
-      this.menu.close();
+      this.menuCtrl.close();
     });
   }
 
   logOut() {
     this.accountNav.setRoot(Login, null, { animate: true }).then(() => {
-      this.menu.close();
+      this.menuCtrl.close();
     });
   }
 
@@ -92,29 +92,29 @@ export class Account {
 @Component({
   template: `
     <ion-header>
-      <ion-navbar primary>
-        <button menuToggle>
+      <ion-navbar color="primary">
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Account Dashboard</ion-title>
       </ion-navbar>
     </ion-header>
     <ion-content padding>
-      <p><button (click)="goToProfile()">Profile</button></p>
-      <p><button (click)="logOut()">Logout</button></p>
-      <p><button (click)="goBack()">App goBack()</button></p>
+      <p><button ion-button (click)="goToProfile()">Profile</button></p>
+      <p><button ion-button (click)="logOut()">Logout</button></p>
+      <p><button ion-button (click)="goBack()">App goBack()</button></p>
     </ion-content>
   `
 })
 export class Dashboard {
-  constructor(private nav: NavController, private app: App) {}
+  constructor(public navCtrl: NavController, public app: App) {}
 
   goToProfile() {
-    this.nav.push(Profile);
+    this.navCtrl.push(Profile);
   }
 
   logOut() {
-    this.nav.parent.setRoot(Login, null, {
+    this.navCtrl.parent.setRoot(Login, null, {
       animate: true,
       direction: 'back'
     });
@@ -129,29 +129,29 @@ export class Dashboard {
 @Component({
   template: `
     <ion-header>
-      <ion-navbar danger>
-        <button menuToggle>
+      <ion-navbar color="danger">
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Account Profile</ion-title>
       </ion-navbar>
     </ion-header>
     <ion-content padding>
-      <p><button (click)="goToDashboard()">Dashboard</button></p>
-      <p><button (click)="logOut()">Logout</button></p>
-      <p><button (click)="goBack()">App goBack()</button></p>
+      <p><button ion-button (click)="goToDashboard()">Dashboard</button></p>
+      <p><button ion-button (click)="logOut()">Logout</button></p>
+      <p><button ion-button (click)="goBack()">App goBack()</button></p>
     </ion-content>
   `
 })
 export class Profile {
-  constructor(private nav: NavController, private app: App) {}
+  constructor(public navCtrl: NavController, public app: App) {}
 
   goToDashboard() {
-    this.nav.push(Dashboard);
+    this.navCtrl.push(Dashboard);
   }
 
   logOut() {
-    this.nav.parent.setRoot(Login, null, {
+    this.navCtrl.parent.setRoot(Login, null, {
       animate: true,
       direction: 'back'
     });

@@ -27,12 +27,12 @@ export class OtherData {
     <ion-toolbar>
       <ion-title>This is a modal</ion-title>
       <ion-buttons left>
-        <button (click)="dismissModal()" class="e2eCordovaCloseModal">
+        <button ion-button icon-only (click)="dismissModal()" class="e2eCordovaCloseModal">
           <ion-icon name="close"></ion-icon>
         </button>
       </ion-buttons>
       <ion-buttons end>
-        <button>
+        <button ion-button icon-only>
           <ion-icon name="funnel"></ion-icon>
         </button>
       </ion-buttons>
@@ -40,12 +40,12 @@ export class OtherData {
   </ion-header>
   <ion-content padding>
     <p>The modal toolbar should have status bar padding.</p>
-    <button block (click)="dismissModal()">Close modal</button>
+    <button ion-button block (click)="dismissModal()">Close modal</button>
   </ion-content>
   `
 })
 class MyModal {
-  constructor(private viewCtrl: ViewController) {}
+  constructor(public viewCtrl: ViewController) {}
 
   dismissModal() {
     this.viewCtrl.dismiss();
@@ -60,13 +60,13 @@ class Page1 {
   page2 = Page2;
   sort: string = 'all';
 
-  constructor(private nav: NavController, private someData: SomeData, private otherData: OtherData) {
+  constructor(public navCtrl: NavController, public someData: SomeData, public otherData: OtherData) {
     console.log('Got some data from', someData.getData());
     console.log('Got some data from', otherData.getData());
   }
 
   goToTabs() {
-    this.nav.push(TabsPage);
+    this.navCtrl.push(TabsPage);
   }
 }
 
@@ -78,7 +78,7 @@ class Page2 {
   page1 = Page1;
   page3 = Page3;
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(public modalCtrl: ModalController) {}
 
   openModal() {
     this.modalCtrl.create(MyModal).present();
@@ -90,10 +90,10 @@ class Page2 {
   templateUrl: 'page3.html'
 })
 class Page3 {
-  constructor(private nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   goBack() {
-    this.nav.pop();
+    this.navCtrl.pop();
   }
 }
 
@@ -103,11 +103,11 @@ class Page3 {
   <ion-header>
     <ion-navbar>
       <ion-title>This is a tab page</ion-title>
-      <button menuToggle>
+      <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
       <ion-buttons end>
-        <button>
+        <button ion-button>
           <ion-icon name="funnel"></ion-icon>
         </button>
       </ion-buttons>
@@ -118,9 +118,7 @@ class Page3 {
   </ion-content>
   `
 })
-class TabPage1 {
-  constructor(private nav: NavController) {}
-}
+class TabPage1 {}
 
 
 @Component({
@@ -131,10 +129,10 @@ class TabsPage {
   tab2Root = Page2;
   tab3Root = Page3;
 
-  constructor(private nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   goBack() {
-    this.nav.pop();
+    this.navCtrl.pop();
   }
 }
 

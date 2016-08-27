@@ -172,7 +172,7 @@ ion-range {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  ion-range[#{$color-name}] {
+  .range-#{$color-name} {
     .range-bar-active,
     .range-tick-active,
     .range-knob,

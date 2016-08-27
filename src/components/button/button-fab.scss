@@ -1,8 +1,9 @@
 @import "../../globals.core";
 
-// FABulous Buttons (Floating Action Button from material)
+// Floating Action Buttons
 // --------------------------------------------------
 
+/// @prop - Width and height of the FAB button
 $button-fab-size:           56px !default;
 
 
@@ -14,19 +15,17 @@ $button-fab-size:           56px !default;
   min-width: 0;
   height: $button-fab-size;
 
-  border-radius: 50%;
   font-size: 14px;
   line-height: $button-fab-size;
   vertical-align: middle;
 
   background-clip: padding-box;
+}
 
-  ion-icon {
-    flex: 1;
+.button-fab ion-icon {
+  flex: 1;
 
-    font-size: 2.8rem;
-  }
-
+  font-size: 2.8rem;
 }
 
 [fab-center] {

@@ -25,6 +25,7 @@ module.exports = function(currentVersion, initialVersionBuild) {
 .processor(require('./processors/collect-inputs-outputs'))
 .processor(require('./processors/parse-returns-object'))
 .processor(require('./processors/parse-optional'))
+.processor(require('./processors/parse-sass'))
 
 // for debugging docs
 // .processor(function test(){
@@ -165,7 +166,8 @@ module.exports = function(currentVersion, initialVersionBuild) {
   templateEngine.filters.push(
     require('./filters/capital'),
     require('./filters/code'),
-    require('./filters/dump')
+    require('./filters/dump'),
+    require('./filters/platform')
   );
 
   templateFinder.templateFolders.unshift(path.resolve(__dirname, 'templates'));

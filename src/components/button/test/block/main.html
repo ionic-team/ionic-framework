@@ -10,37 +10,37 @@
 <ion-content padding style="text-align:center">
 
   <p>
-    <a button block href="#">a[button][block]</a>
-    <button block>button[block]</button>
+    <a ion-button block href="#">a[ion-button][block]</a>
+    <button ion-button block>button[ion-button][block]</button>
   </p>
 
   <p>
-    <a button block href="#"><ion-icon name="help-circle"></ion-icon> a[button][block] icon</a>
-    <button block><ion-icon name="help-circle"></ion-icon> button[block] icon</button>
+    <a ion-button block href="#" icon-left><ion-icon name="help-circle"></ion-icon> a[ion-button][block] icon</a>
+    <button ion-button block icon-left><ion-icon name="help-circle"></ion-icon> button[ion-button][block] icon</button>
   </p>
 
   <p>
-    <a button block outline secondary href="#">a[button][block][outline][secondary]</a>
-    <button block outline secondary>button[block][outline][secondary]</button>
+    <a ion-button block outline color="secondary" href="#">a[ion-button][block][outline][secondary]</a>
+    <button ion-button block outline color="secondary">button[ion-button][block][outline][secondary]</button>
   </p>
 
   <p>
-    <a button block clear dark href="#">a[button][block][clear][dark]</a>
-    <button block clear dark>button[clear][block][dark]</button>
+    <a ion-button block clear color="dark" href="#">a[ion-button][block][clear][dark]</a>
+    <button ion-button block clear color="dark">button[ion-button][clear][block][dark]</button>
   </p>
 
   <p>
-    <a button block round href="#">a[button][block][round]</a>
-    <button block round>button[block][round]</button>
+    <a ion-button block round href="#">a[ion-button][block][round]</a>
+    <button ion-button block round>button[ion-button][block][round]</button>
   </p>
 
   <p>
-    <a button block round outline href="#">a[button][block][round][outline]</a>
-    <button block round outline>button[block][round][outline]</button>
+    <a ion-button block round outline href="#">a[ion-button][block][round][outline]</a>
+    <button ion-button block round outline>button[ion-button][block][round][outline]</button>
   </p>
 
   <p>
-    <button [block]="blockButton" (click)="toggleBlock()">Toggle Block</button>
+    <button ion-button [block]="blockButton" (click)="toggleBlock()">Toggle Block</button>
   </p>
 
 </ion-content>

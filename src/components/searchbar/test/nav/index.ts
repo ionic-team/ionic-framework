@@ -6,10 +6,10 @@ import { ionicBootstrap, NavController, NavParams } from '../../../../../src';
   templateUrl: 'main.html'
 })
 class MainPage {
-  constructor(private _nav: NavController) { }
+  constructor(public navCtrl: NavController) { }
 
   goToSecond() {
-    this._nav.push(SearchPage);
+    this.navCtrl.push(SearchPage);
   }
 }
 
@@ -19,12 +19,12 @@ class MainPage {
 class SearchPage {
   items: string[];
 
-  constructor(private _nav: NavController) {
+  constructor(public navCtrl: NavController) {
     this.initializeItems();
   }
 
   showDetail(item: any) {
-    this._nav.push(DetailPage, {city: item});
+    this.navCtrl.push(DetailPage, {city: item});
   }
 
   initializeItems() {

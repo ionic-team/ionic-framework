@@ -6,8 +6,9 @@ const DB_NAME: string = '__ionicstorage';
 const win: any = window;
 
 /**
- * SqlStorage uses SQLite or WebSQL (development only!) to store data in a
- * persistent SQL store on the filesystem.
+ * SqlStorage is a wrapper that uses SQLite when running natively (if available)
+ * to store data in a persistent SQL store on the filesystem
+ * or uses WebSQL when serving the app to the browser.
  *
  * This is the preferred storage engine, as data will be stored in appropriate
  * app storage, unlike Local Storage which is treated differently by the OS.

@@ -5,7 +5,13 @@ import { ionicBootstrap } from '../../../../../src';
 @Component({
   templateUrl: 'main.html'
 })
-class E2EPage {}
+class E2EPage {
+  dynamicColor: string = 'secondary';
+
+  toggleColor() {
+    this.dynamicColor = (this.dynamicColor == 'secondary' ? 'danger' : 'secondary');
+  }
+}
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'

@@ -11,21 +11,17 @@ import { ViewController } from './view-controller';
 /**
  * @name Nav
  * @description
- * _For a quick walkthrough of navigation in Ionic, check out the
- * [Navigation section](../../../../components/#navigation) of the Component
- * docs._
  *
- * Nav is a basic navigation controller component.  As a subclass of NavController
- * you use it to navigate to pages in your app and manipulate the navigation stack.
- * Nav automatically animates transitions between pages for you.
+ * `ion-nav` is the declarative component for a [NavController](../NavController/).
  *
- * For more information on using navigation controllers like Nav or [Tab](../../Tabs/Tab/),
+ * For more information on using nav controllers like Nav or [Tab](../../Tabs/Tab/),
  * take a look at the [NavController API Docs](../NavController/).
  *
+ *
+ * @usage
  * You must set a root page to be loaded initially by any Nav you create, using
  * the 'root' property:
  *
- * @usage
  * ```ts
  * import { Component } from '@angular/core';
  * import { ionicBootstrap } from 'ionic-angular';
@@ -35,73 +31,15 @@ import { ViewController } from './view-controller';
  *   template: `<ion-nav [root]="root"></ion-nav>`
  * })
  * class MyApp {
- *   root = GettingStartedPage;
+ *   private root: any = GettingStartedPage;
+ *
+ *   constructor(){
+ *   }
  * }
  *
  * ionicBootstrap(MyApp);
  * ```
  *
- * ### Back Navigation
- *
- * If a [page](../NavController/#creating_pages) you navigate to has a [NavBar](../NavBar/),
- * Nav will automatically add a back button to it if there is a page
- * before the one you are navigating to in the navigation stack.
- *
- * Additionally, specifying the `swipeBackEnabled` property will allow you to
- * swipe to go back:
- * ```html
- * <ion-nav swipeBackEnabled="false" [root]="rootPage"></ion-nav>
- * ```
- *
- * Here is a diagram of how Nav animates smoothly between pages:
- *
- * <div class="highlight less-margin">
- *   <pre>
- *                           +-------+
- *                           |  App  |
- *                           +---+---+
- *                           &lt;ion-app&gt;
- *                               |
- *                  +------------+-------------+
- *                  |   Ionic Nav Controller   |
- *                  +------------+-------------+
- *                           &lt;ion-nav&gt;
- *                               |
- *                               |
- *             Page 3  +--------------------+                     LoginPage
- *           Page 2  +--------------------+ |
- *         Page 1  +--------------------+ | |              +--------------------+
- *                 | | Header           |&lt;-----------------|       Login        |
- *                 +--------------------+ | |              +--------------------+
- *                 | | |                | | |              | Username:          |
- *                 | | |                | | |              | Password:          |
- *                 | | |  Page 3 is     | | |              |                    |
- *                 | | |  only content  | | |              |                    |
- *                 | | |                |&lt;-----------------|                    |
- *                 | | |                | | |              |                    |
- *                 | | |                | | |              |                    |
- *                 | +------------------|-+ |              |                    |
- *                 | | Footer           |-|-+              |                    |
- *                 | +------------------|-+                |                    |
- *                 +--------------------+                  +--------------------+
- *
- *           +--------------------+    +--------------------+    +--------------------+
- *           | Header             |    | Content            |    | Content            |
- *           +--------------------+    |                    |    |                    |
- *           | Content            |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    |                    |    |                    |
- *           |                    |    +--------------------+    |                    |
- *           |                    |    | Footer             |    |                    |
- *           +--------------------+    +--------------------+    +--------------------+
- *
- *   </pre>
- * </div>
  *
  * @demo /docs/v2/demos/navigation/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
@@ -143,9 +81,15 @@ export class Nav extends NavControllerBase implements AfterViewInit {
       // this Nav has a parent Nav
       parent.registerChildNav(this);
 
-    } else if (app) {
+    } else if (viewCtrl && viewCtrl.getNav()) {
+      // this Nav was opened from a modal
+      this.parent = viewCtrl.getNav();
+      this.parent.registerChildNav(this);
+
+    } else if (app && !app.getRootNav()) {
+      // a root nav has not been registered yet with the app
       // this is the root navcontroller for the entire app
-      this._app.setRootNav(this);
+      app.setRootNav(this);
     }
   }
 

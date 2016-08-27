@@ -24,13 +24,13 @@ import { ViewController } from '../nav/view-controller';
         <div class="action-sheet-group">
           <div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>
           <div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>
-          <button category="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">
+          <button ion-button="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">
             <ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon>
             {{b.text}}
           </button>
         </div>
         <div class="action-sheet-group" *ngIf="d.cancelButton">
-          <button category="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">
+          <button ion-button="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">
             <ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon>
             {{d.cancelButton.text}}
           </button>
@@ -47,7 +47,14 @@ import { ViewController } from '../nav/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class ActionSheetCmp {
-  private d: any;
+  private d: {
+    title?: string;
+    subTitle?: string;
+    cssClass?: string;
+    buttons?: Array<any>;
+    enableBackdropDismiss?: boolean;
+    cancelButton: any;
+  };
   private descId: string;
   private enabled: boolean;
   private hdrId: string;
@@ -64,7 +71,10 @@ export class ActionSheetCmp {
     this.d = params.data;
 
     if (this.d.cssClass) {
-      renderer.setElementClass(_elementRef.nativeElement, this.d.cssClass, true);
+      this.d.cssClass.split(' ').forEach(cssClass => {
+        // Make sure the class isn't whitespace, otherwise it throws exceptions
+        if (cssClass.trim() !== '') renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+      });
     }
 
     this.id = (++actionSheetIds);

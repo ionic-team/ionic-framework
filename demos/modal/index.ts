@@ -35,7 +35,6 @@ export class ModalContentPage {
   myParam: string;
 
   constructor(
-    public nav: NavController,
     public viewCtrl: ViewController,
     params: NavParams
   ) {

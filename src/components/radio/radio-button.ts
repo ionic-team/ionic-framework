@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Form } from '../../util/form';
 import { isBlank, isCheckedProperty, isPresent, isTrueProperty } from '../../util/util';
@@ -47,14 +47,13 @@ import { RadioGroup } from './radio-group';
     <div class="radio-icon" [class.radio-checked]="_checked">
       <div class="radio-inner"></div>
     </div>
-    <button role="radio"
+    <button ion-button="item-cover" 
+            role="radio"
             type="button"
-            category="item-cover"
             [id]="id"
             [attr.aria-checked]="_checked"
             [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled"
-            class="item-cover">
+            [attr.aria-disabled]="_disabled">
     </button>
   `,
   host: {
@@ -73,6 +72,21 @@ export class RadioButton implements OnDestroy, OnInit {
    */
   id: string;
 
+  /** @internal */ 
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }  
+
   /**
    * @output {any} expression to be evaluated when selected
    */
@@ -80,6 +94,8 @@ export class RadioButton implements OnDestroy, OnInit {
 
   constructor(
     private _form: Form,
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
     @Optional() private _item: Item,
     @Optional() private _group: RadioGroup
   ) {
@@ -170,4 +186,26 @@ export class RadioButton implements OnDestroy, OnInit {
     this._form.deregister(this);
     this._group && this._group.remove(this);
   }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `radio-${color}`, isAdd);
+
+      if (this._item) {
+        this._item._updateColor(color, 'item-radio');
+      }
+    }
+  }  
 }

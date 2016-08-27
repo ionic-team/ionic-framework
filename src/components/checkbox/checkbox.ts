@@ -1,9 +1,9 @@
-import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Provider, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Form } from '../../util/form';
-import { Item } from '../item/item';
 import { isTrueProperty } from '../../util/util';
+import { Item } from '../item/item';
 
 export const CHECKBOX_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Checkbox), multi: true});
@@ -53,14 +53,13 @@ export const CHECKBOX_VALUE_ACCESSOR = new Provider(
     <div class="checkbox-icon" [class.checkbox-checked]="_checked">
       <div class="checkbox-inner"></div>
     </div>
-    <button role="checkbox"
+    <button ion-button="item-cover"
+            role="checkbox"
             type="button"
-            category="item-cover"
             [id]="id"
             [attr.aria-checked]="_checked"
             [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled"
-            class="item-cover">
+            [attr.aria-disabled]="_disabled">
     </button>
   `,
   host: {
@@ -76,10 +75,25 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   private _labelId: string;
   private _fn: Function;
 
+  /** internal */
+  private _color: string;
+
   /**
    * @private
    */
   id: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
 
   /**
    * @output {Checkbox} expression to evaluate when the checkbox value changes
@@ -88,7 +102,9 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
 
   constructor(
     private _form: Form,
-    @Optional() private _item: Item
+    @Optional() private _item: Item,
+    private _elementRef: ElementRef,
+    private _renderer: Renderer
   ) {
     _form.register(this);
 
@@ -96,6 +112,24 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
       this.id = 'chk-' + _item.registerInput('checkbox');
       this._labelId = 'lbl-' + _item.id;
       this._item.setCssClass('item-checkbox', true);
+    }
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `checkbox-${color}`, isAdd);
     }
   }
 

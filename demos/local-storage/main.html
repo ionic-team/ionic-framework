@@ -33,7 +33,7 @@
   </ion-list>
 
   <div padding>
-    <button block secondary (click)="set()">
+    <button ion-button icon-left block color="secondary" (click)="set()">
       <ion-icon name="add"></ion-icon>
       Add
     </button>
@@ -45,7 +45,7 @@
     <ion-item>
       <ion-label>Key</ion-label>
       <ion-select [(ngModel)]="delKey">
-        <ion-option checked>Select a Key</ion-option>
+        <ion-option selected>Select a Key</ion-option>
         <ion-option *ngFor="let key of addedKeys" [value]="key">
           {{ key }}
         </ion-option>
@@ -54,7 +54,7 @@
   </ion-list>
 
   <div padding>
-    <button block danger (click)="remove()">
+    <button ion-button icon-left block color="danger" (click)="remove()">
       <ion-icon name="remove"></ion-icon>
       Delete
     </button>

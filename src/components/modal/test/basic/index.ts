@@ -5,7 +5,7 @@ import { ActionSheetController, App, Config, ionicBootstrap, ModalController, Na
 
 @Injectable()
 class SomeComponentProvider {
-  constructor(private config: Config) {
+  constructor(public config: Config) {
     console.log('SomeComponentProvider constructor');
   }
 
@@ -16,7 +16,7 @@ class SomeComponentProvider {
 
 @Injectable()
 class SomeAppProvider {
-  constructor(private config: Config) {
+  constructor(public config: Config) {
     console.log('SomeAppProvider constructor');
   }
 
@@ -32,7 +32,7 @@ class SomeAppProvider {
 class E2EPage {
   platforms: string[];
 
-  constructor(private nav: NavController, private modalCtrl: ModalController, config: Config, platform: Platform) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, config: Config, platform: Platform) {
     console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
@@ -101,6 +101,26 @@ class E2EPage {
   presentNavigableModal() {
     this.modalCtrl.create(NavigableModal).present();
   }
+
+  ionViewLoaded() {
+    console.log('E2EPage ionViewLoaded fired');
+  }
+
+  ionViewWillEnter() {
+    console.log('E2EPage ionViewWillEnter fired');
+  }
+
+  ionViewDidEnter() {
+    console.log('E2EPage ionViewDidEnter fired');
+  }
+
+  ionViewWillLeave() {
+    console.log('E2EPage ionViewWillLeave fired');
+  }
+
+  ionViewDidLeave() {
+    console.log('E2EPage ionViewDidLeave fired');
+  }
 }
 
 @Component({
@@ -112,16 +132,16 @@ class E2EPage {
   </ion-header>
 
   <ion-content>
-    <button full (click)="submit()">Submit</button>
+    <button ion-button full (click)="submit()">Submit</button>
   </ion-content>
   `
 })
 class NavigableModal {
-  constructor(private nav: NavController) {
-  }
+
+  constructor(public navCtrl: NavController) {}
 
   submit() {
-    this.nav.push(NavigableModal2);
+    this.navCtrl.push(NavigableModal2);
   }
 }
 
@@ -134,16 +154,16 @@ class NavigableModal {
   </ion-header>
 
   <ion-content>
-    <button full (click)="submit()">Submit</button>
+    <button ion-button full (click)="submit()">Submit</button>
   </ion-content>
   `
 })
 class NavigableModal2 {
-  constructor(private navController: NavController) {
-  }
+
+  constructor(public navCtrl: NavController) {}
 
   submit() {
-    this.navController.pop();
+    this.navCtrl.pop();
   }
 }
 
@@ -167,7 +187,7 @@ class NavigableModal2 {
           <ion-input [(ngModel)]="data.name"></ion-input>
         </ion-item>
       </ion-list>
-      <button full (click)="submit()">Submit</button>
+      <button ion-button full (click)="submit()">Submit</button>
     </ion-content>
   `,
   providers: [SomeComponentProvider]
@@ -175,7 +195,7 @@ class NavigableModal2 {
 class ModalPassData {
   data: any;
 
-  constructor(params: NavParams, private viewCtrl: ViewController, someComponentProvider: SomeComponentProvider, someAppProvider: SomeAppProvider) {
+  constructor(params: NavParams, public viewCtrl: ViewController, someComponentProvider: SomeComponentProvider, someAppProvider: SomeAppProvider) {
     this.data = {
       userId: params.get('userId'),
       name: someComponentProvider.getName()
@@ -213,7 +233,7 @@ class ModalPassData {
 @Component({
   template: `
     <ion-header>
-      <ion-toolbar primary>
+      <ion-toolbar color="primary">
         <ion-title>Toolbar 1</ion-title>
       </ion-toolbar>
 
@@ -223,7 +243,7 @@ class ModalPassData {
     </ion-header>
 
     <ion-content padding>
-      <button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
+      <button ion-button block color="danger" (click)="dismiss()" class="e2eCloseToolbarModal">
         Dismission Modal
       </button>
 
@@ -237,7 +257,7 @@ class ModalPassData {
 
       <div>Aenean rhoncus urna at interdum blandit. Donec ac massa nec libero vehicula tincidunt. Sed sit amet hendrerit risus. Aliquam vitae vestibulum ipsum, non feugiat orci. Vivamus eu rutrum elit. Nulla dapibus tortor non dignissim pretium. Nulla in luctus turpis. Etiam non mattis tortor, at aliquet ex. Nunc ut ante varius, auctor dui vel, volutpat elit. Nunc laoreet augue sit amet ultrices porta. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum pellentesque lobortis est, ut tincidunt ligula mollis sit amet. In porta risus arcu, quis pellentesque dolor mattis non. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</div>
 
-      <button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
+      <button ion-button block color="danger" (click)="dismiss()" class="e2eCloseToolbarModal">
         Dismission Modal
       </button>
     </ion-content>
@@ -245,7 +265,7 @@ class ModalPassData {
 })
 class ToolbarModal {
 
-  constructor(private viewCtrl: ViewController) {}
+  constructor(public viewCtrl: ViewController) {}
 
   dismiss() {
     this.viewCtrl.emit({
@@ -260,9 +280,9 @@ class ToolbarModal {
 @Component({
   template: `
     <ion-header>
-      <ion-toolbar secondary>
+      <ion-toolbar color="secondary">
         <ion-buttons start>
-          <button (click)="dismiss()">Close</button>
+          <button ion-button (click)="dismiss()">Close</button>
         </ion-buttons>
         <ion-title>Modal w/ Inputs</ion-title>
       </ion-toolbar>
@@ -285,7 +305,7 @@ class ToolbarModal {
           </ion-item>
         </ion-list>
         <div padding>
-          <button block large type="submit" [disabled]="!addForm.valid">Save</button>
+          <button ion-button block large type="submit" [disabled]="!addForm.valid">Save</button>
         </div>
       </form>
     </ion-content>
@@ -294,7 +314,7 @@ class ToolbarModal {
 class ModalWithInputs {
   data: any;
 
-  constructor(private viewCtrl: ViewController) {
+  constructor(public viewCtrl: ViewController) {
     this.data = {
       title: 'Title',
       note: 'Note',
@@ -351,17 +371,17 @@ class ContactUs {
       <ion-navbar>
         <ion-title>First Page Header</ion-title>
         <ion-buttons start>
-          <button class="e2eCloseMenu" (click)="dismiss()">Close</button>
+          <button ion-button class="e2eCloseMenu" (click)="dismiss()">Close</button>
         </ion-buttons>
       </ion-navbar>
     </ion-header>
 
     <ion-content padding>
       <p>
-        <button (click)="push()">Push (Go to 2nd)</button>
+        <button ion-button (click)="push()">Push (Go to 2nd)</button>
       </p>
       <p>
-        <button (click)="openActionSheet()">Open Action Sheet</button>
+        <button ion-button (click)="openActionSheet()">Open Action Sheet</button>
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
@@ -374,11 +394,10 @@ class ContactUs {
   `
 })
 class ModalFirstPage {
+  items: any[] = [];
 
-  private items: any[];
-  constructor(private nav: NavController, private app: App, private actionSheetCtrl: ActionSheetController) {
-    this.items = [];
-    for ( let i = 0; i < 50; i++ ) {
+  constructor(public navCtrl: NavController, public app: App, public actionSheetCtrl: ActionSheetController) {
+    for (let i = 0; i < 50; i++) {
       this.items.push({
         value: (i + 1)
       });
@@ -389,11 +408,11 @@ class ModalFirstPage {
     let page = ModalSecondPage;
     let params = { id: 8675309, myData: [1, 2, 3, 4] };
 
-    this.nav.push(page, params);
+    this.navCtrl.push(page, params);
   }
 
   dismiss() {
-    this.app.getRootNav().pop();
+    this.navCtrl.parent.pop();
   }
 
   ionViewLoaded() {
@@ -465,7 +484,7 @@ class ModalFirstPage {
     </ion-header>
     <ion-content padding>
       <p>
-        <button (click)="nav.pop()">Pop (Go back to 1st)</button>
+        <button ion-button (click)="navCtrl.pop()">Pop (Go back to 1st)</button>
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
@@ -473,7 +492,7 @@ class ModalFirstPage {
   `
 })
 class ModalSecondPage {
-  constructor(private nav: NavController, params: NavParams) {
+  constructor(public navCtrl: NavController, params: NavParams) {
     console.log('Second page params:', params);
   }
 

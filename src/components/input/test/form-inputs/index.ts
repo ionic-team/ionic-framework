@@ -8,6 +8,7 @@ import { ionicBootstrap } from '../../../../../src';
 })
 class E2EPage {
   loginForm: any;
+  userForm: any;
 
   login = {
     email: 'help@ionic.io',
@@ -32,6 +33,11 @@ class E2EPage {
       password: ['', Validators.required],
       comments: ['', Validators.required],
       gender: ['', Validators.required]
+    });
+
+    this.userForm = fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 

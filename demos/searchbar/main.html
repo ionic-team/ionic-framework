@@ -12,7 +12,7 @@
 
 <ion-content>
 
-  <ion-searchbar placeholder="Filter Items with Cancel" showCancelButton danger (ionInput)="filterItems($event)"></ion-searchbar>
+  <ion-searchbar placeholder="Filter Items with Cancel" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
 
   <p padding-left padding-right>Searchbars can be placed in a toolbar or anywhere in the content.</p>
 
@@ -27,7 +27,7 @@
 
 <ion-footer>
 
-  <ion-toolbar danger>
+  <ion-toolbar color="danger">
     <ion-searchbar placeholder="Search" (ionInput)="filterItems($event)"></ion-searchbar>
   </ion-toolbar>
 

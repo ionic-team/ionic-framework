@@ -21,7 +21,7 @@ ionicBootstrap(E2EApp);
   </ion-header>
 
   <ion-content>
-    <button primary (click)="goToPage()" class="nested-children-test">
+    <button ion-button color="primary" (click)="goToPage()" class="nested-children-test">
       Nested Children Test
     </button>
   </ion-content>
@@ -29,11 +29,11 @@ ionicBootstrap(E2EApp);
 })
 class LandingPage {
 
-  constructor(private nav: NavController) {
+  constructor(public navCtrl: NavController) {
   }
 
   goToPage() {
-    this.nav.push(FirstPage);
+    this.navCtrl.push(FirstPage);
   }
 }
 

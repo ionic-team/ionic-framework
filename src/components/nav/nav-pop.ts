@@ -12,7 +12,7 @@ import { noop } from '../../util/util';
  * ```html
  * <ion-content>
  *
- *  <button navPop>Go Back</button>
+ *  <button ion-button navPop>Go Back</button>
  *
  * </ion-content>
  * ```

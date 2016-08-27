@@ -107,7 +107,7 @@ describe('Config', () => {
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
-    expect(config.get('tabsHighlight')).toEqual(true);
+    expect(config.get('iconMode')).toEqual('md');
   });
 
   it('should override mode settings from platforms setting', () => {
@@ -122,7 +122,7 @@ describe('Config', () => {
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
-    expect(config.get('tabsHighlight')).toEqual(true);
+    expect(config.get('iconMode')).toEqual('md');
   });
 
   it('should get boolean value from querystring', () => {
@@ -261,7 +261,7 @@ describe('Config', () => {
     let platform = new Platform(['android']);
     config.setPlatform(platform);
 
-    expect(config.get('tabsHighlight')).toEqual(true);
+    expect(config.get('iconMode')).toEqual('md');
   });
 
   it('should get setting from ios mode', () => {

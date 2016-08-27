@@ -1,3 +1,4 @@
+@import "../../globals.core";
 
 // Item reorder
 // --------------------------------------------------
@@ -12,8 +13,12 @@ ion-reorder {
   max-width: 40px;
   height: 100%;
 
-  font-size: 1.45em;
-  opacity: .5;
+  font-size: 1.7em;
+  opacity: .25;
+
+  transform: translate3d(120%, 0, 0);
+
+  transition: transform 125ms ease-in;
 
   pointer-events: all;
   touch-action: manipulation;
@@ -23,8 +28,15 @@ ion-reorder {
   }
 }
 
-.reorder-enabled {
+.reorder-enabled ion-reorder {
+  display: flex;
+}
 
+.reorder-visible ion-reorder {
+  transform: translate3d(0, 0, 0);
+}
+
+.reorder-list-active {
   .item,
   .item-wrapper {
     transition: transform 300ms;
@@ -32,12 +44,6 @@ ion-reorder {
     will-change: transform;
   }
 
-  ion-reorder {
-    display: flex;
-  }
-}
-
-.reorder-list-active {
   .item-inner {
     pointer-events: none;
   }

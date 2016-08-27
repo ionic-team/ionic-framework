@@ -24,15 +24,19 @@ import { ViewController } from '../nav/view-controller';
  * @description
  * Tabs make it easy to navigate between different pages or functional
  * aspects of an app. The Tabs component, written as `<ion-tabs>`, is
- * a container of individual [Tab](../Tab/) components.
+ * a container of individual [Tab](../Tab/) components. Each individual `ion-tab`
+ * is a declarative component for a [NavController](../../nav/NavController/)
+ *
+ * For more information on using nav controllers like Tab or [Nav](../../nav/Nav/),
+ * take a look at the [NavController API Docs](../../nav/NavController/).
  *
  * ### Placement
  *
  * The position of the tabs relative to the content varies based on
- * the mode. By default, the tabs are placed at the bottom of the screen
- * for `ios` mode, and at the top for the `md` and `wp` modes. You can
- * configure the position using the `tabsPlacement` property on the
- * `<ion-tabs>` element, or in your app's [config](../../config/Config/).
+ * the mode. The tabs are placed at the bottom of the screen
+ * for iOS and Android, and at the top for Windows by default. The position can
+ * be configured using the `tabsPlacement` attribute on the `<ion-tabs>` component,
+ * or in an app's [config](../../config/Config/).
  * See the [Input Properties](#input-properties) below for the available
  * values of `tabsPlacement`.
  *
@@ -178,6 +182,21 @@ export class Tabs extends Ion {
    */
   subPages: boolean;
 
+  /** @internal */
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
+
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
    */
@@ -269,6 +288,11 @@ export class Tabs extends Ion {
 
     if (this.parent) {
       // this Tabs has a parent Nav
+      this.parent.registerChildNav(this);
+
+    } else if (viewCtrl && viewCtrl.getNav()) {
+      // this Nav was opened from a modal
+      this.parent = <any>viewCtrl.getNav();
       this.parent.registerChildNav(this);
 
     } else if (this._app) {
@@ -372,11 +396,29 @@ export class Tabs extends Ion {
    * @private
    */
   private _setConfig(attrKey: string, fallback: any) {
-    var val = this[attrKey];
+    var val = (<any>this)[attrKey];
     if (isBlank(val)) {
       val = this._config.get(attrKey, fallback);
     }
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attrKey, val);
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `tabs-${color}`, isAdd);
+    }
   }
 
   /**

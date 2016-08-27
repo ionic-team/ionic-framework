@@ -10,8 +10,8 @@ let count = 0;
   template: `
     <ion-content padding text-center>
       <p>Page 1</p>
-      <button (click)="stop()">Stop</button>
-      <button (click)="play()">Play</button>
+      <button ion-button (click)="stop()">Stop</button>
+      <button ion-button (click)="play()">Play</button>
     </ion-content>
   `
 })
@@ -44,22 +44,22 @@ class Page1 {
   template: `
     <ion-content padding text-center>
       <p>Page 2</p>
-      <button (click)="stop()">Stop</button>
-      <button (click)="play()">Play</button>
+      <button ion-button (click)="stop()">Stop</button>
+      <button ion-button (click)="play()">Play</button>
     </ion-content>
   `
 })
 class Page2 {
   tmr: number;
 
-  constructor(private nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   play() {
     this.tmr = setTimeout(() => {
       count++;
       console.log('pop', count);
 
-      this.nav.pop({
+      this.navCtrl.pop({
         animate: animate
       });
     }, delay);

@@ -22,7 +22,7 @@ class AnotherPage {}
 })
 class E2EPage {
 
-  constructor(private toastCtrl: ToastController, private nav: NavController) { }
+  constructor(public toastCtrl: ToastController, public navCtrl: NavController) { }
 
   showToast() {
     const toast = this.toastCtrl.create({
@@ -36,7 +36,7 @@ class E2EPage {
     toast.present();
 
     setTimeout(() => {
-      this.nav.push(AnotherPage);
+      this.navCtrl.push(AnotherPage);
     }, 1000);
 
     setTimeout(() => {
@@ -47,7 +47,8 @@ class E2EPage {
   showLongToast() {
     const toast = this.toastCtrl.create({
       message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.',
-      duration: 5000
+      duration: 5000,
+      cssClass: 'custom-class my-toast'
     });
 
     toast.onDidDismiss(this.dismissHandler);

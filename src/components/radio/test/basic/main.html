@@ -35,7 +35,7 @@
 
       <ion-item>
         <ion-label>Cherry (secondary color)</ion-label>
-        <ion-radio value="cherry" secondary></ion-radio>
+        <ion-radio value="cherry" color="secondary"></ion-radio>
       </ion-item>
 
       <ion-item>
@@ -58,9 +58,9 @@
   </form>
 
   <div aria-hidden="true" text-center>
-    <button (click)="setApple()" outline small>Select Apple</button>
-    <button (click)="setBanana()" outline small>Select Banana</button>
-    <button class="e2eCherry" (click)="setCherry()" outline small>Select Cherry</button>
+    <button ion-button (click)="setApple()" outline small>Select Apple</button>
+    <button ion-button (click)="setBanana()" outline small>Select Banana</button>
+    <button ion-button class="e2eCherry" (click)="setCherry()" outline small>Select Cherry</button>
   </div>
 
   <div padding>

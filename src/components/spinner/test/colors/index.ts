@@ -5,13 +5,20 @@ import { ionicBootstrap } from '../../../../../src';
 @Component({
   templateUrl: 'main.html'
 })
-class E2EPage {}
+class E2EPage {
+  paused: boolean = false;
+
+  toggleState() {
+    this.paused = !this.paused;
+  }
+}
+
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-  rootPage = E2EPage;
+  root = E2EPage;
 }
 
 ionicBootstrap(E2EApp);

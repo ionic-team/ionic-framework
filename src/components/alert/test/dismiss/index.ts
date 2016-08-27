@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ionicBootstrap, AlertController, LoadingController, NavController } from '../../../../index';
+import { ionicBootstrap, AlertController, LoadingController, NavController } from '../../../../../src';
 import { FormBuilder, ControlGroup, Validators } from '@angular/common';
 
 
@@ -8,7 +8,16 @@ import { FormBuilder, ControlGroup, Validators } from '@angular/common';
 })
 export class E2EPage {
 
-  constructor(private alertCtrl: AlertController, private nav: NavController) {}
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController) {}
+
+  ionViewDidEnter() {
+    let alert = this.alertCtrl.create({
+      title: 'Alert!',
+      message: 'I was opened in ionViewDidEnter',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
 
   submit() {
     var alert = this.alertCtrl.create({
@@ -26,7 +35,7 @@ export class E2EPage {
 
     alert.onDidDismiss(() => {
       console.log('dismiss');
-      this.nav.push(AnotherPage);
+      this.navCtrl.push(AnotherPage);
     });
 
     alert.present();
@@ -49,13 +58,13 @@ export class E2EPage {
           </ion-item>
         </ion-list>
         <div padding style="padding-top: 0 !important;">
-          <button list-item primary block>
+          <button ion-button list-item color="primary" block>
             Submit
           </button>
         </div>
       </form>
       <p>
-        <button block (click)="doFastPop()">Fast Loading Dismiss, Nav Pop</button>
+        <button ion-button block (click)="doFastPop()">Fast Loading Dismiss, Nav Pop</button>
       </p>
     </ion-content>
   `
@@ -63,7 +72,7 @@ export class E2EPage {
 class AnotherPage {
   form: ControlGroup;
 
-  constructor(private nav: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private builder: FormBuilder) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public builder: FormBuilder) {
     this.form = builder.group({
       name: builder.control('', Validators.compose([
         Validators.required,
@@ -98,7 +107,7 @@ class AnotherPage {
           role: 'cancel',
           handler: () => {
             alert.dismiss().then(() => {
-              this.nav.pop();
+              this.navCtrl.pop();
             });
             return false;
           }
@@ -137,7 +146,7 @@ class AnotherPage {
             alert.dismiss().then(() => {
               // after the alert has been dismissed
               // then you can do another nav transition
-              this.nav.pop();
+              this.navCtrl.pop();
             });
           }, 100);
 

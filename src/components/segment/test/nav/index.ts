@@ -8,12 +8,12 @@ import { ionicBootstrap, NavController } from '../../../../../src';
 class SegmentPage {
   signInType: string;
 
-  constructor(public nav: NavController) {
+  constructor(public navCtrl: NavController) {
     this.signInType = 'new';
   }
 
   goToPage2() {
-    this.nav.push(SegmentPage2);
+    this.navCtrl.push(SegmentPage2);
   }
 }
 
@@ -21,7 +21,7 @@ class SegmentPage {
   template: `
     <ion-header>
       <ion-navbar hideBackButton>
-        <button menuToggle>
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>

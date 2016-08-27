@@ -35,17 +35,17 @@
 
       <ion-item>
         <ion-label>Kiwi, (ionChange) Secondary color</ion-label>
-        <ion-checkbox secondary (ionChange)="kiwiChange($event)"></ion-checkbox>
+        <ion-checkbox color="secondary" (ionChange)="kiwiChange($event)"></ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>Strawberry, (ionChange) [checked]="true"</ion-label>
-        <ion-checkbox light (ionChange)="strawberryChange($event)" [checked]="true"></ion-checkbox>
+        <ion-checkbox color="light" (ionChange)="strawberryChange($event)" [checked]="true"></ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
-        <ion-checkbox item-right danger checked></ion-checkbox>
+        <ion-checkbox item-right [color]="dangerColor" checked></ion-checkbox>
       </ion-item>
 
       <button ion-item detail-none>
@@ -63,9 +63,9 @@
   </form>
 
   <p aria-hidden="true" text-center>
-    <button (click)="toggleGrapeChecked()" outline small class="e2eGrapeChecked">Grape Checked</button>
-    <button (click)="toggleGrapeDisabled()" outline small class="e2eGrapeDisabled">Grape Disabled</button>
-    <button (click)="doSubmit($event)" outline small class="e2eSubmit">Submit</button>
+    <button ion-button (click)="toggleGrapeChecked()" outline small class="e2eGrapeChecked">Grape Checked</button>
+    <button ion-button (click)="toggleGrapeDisabled()" outline small class="e2eGrapeDisabled">Grape Disabled</button>
+    <button ion-button (click)="doSubmit($event)" outline small class="e2eSubmit">Submit</button>
   </p>
 
   <p>

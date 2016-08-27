@@ -10,43 +10,9 @@ import { ionicBootstrap, ItemSliding, ToastController } from 'ionic-angular';
 class ApiDemoPage {
   chats: any[];
   logins: any[];
-  editButton: string = 'Edit';
-  editing: boolean = false;
 
   constructor(private toastCtrl: ToastController) {
     this.chats = [
-    {
-      img: './avatar-cher.png',
-      name: 'Cher',
-      message: 'Ugh. As if.',
-      time: '9:38 pm'
-    }, {
-      img: './avatar-dionne.png',
-      name: 'Dionne',
-      message: 'Mr. Hall was way harsh.',
-      time: '8:59 pm'
-    }, {
-      img: './avatar-murray.png',
-      name: 'Murray',
-      message: 'Excuse me, "Ms. Dione."',
-      time: 'Wed'
-    },
-    {
-      img: './avatar-cher.png',
-      name: 'Cher',
-      message: 'Ugh. As if.',
-      time: '9:38 pm'
-    }, {
-      img: './avatar-dionne.png',
-      name: 'Dionne',
-      message: 'Mr. Hall was way harsh.',
-      time: '8:59 pm'
-    }, {
-      img: './avatar-murray.png',
-      name: 'Murray',
-      message: 'Excuse me, "Ms. Dione."',
-      time: 'Wed'
-    },
     {
       img: './avatar-cher.png',
       name: 'Cher',
@@ -84,15 +50,6 @@ class ApiDemoPage {
     }];
   }
 
-  toggleEdit() {
-    this.editing = !this.editing;
-    if (this.editing) {
-      this.editButton = 'Done';
-    } else {
-      this.editButton = 'Edit';
-    }
-  }
-
   more(item: ItemSliding) {
     console.log('More');
     item.close();
@@ -109,21 +66,24 @@ class ApiDemoPage {
   }
 
   archive(item: ItemSliding) {
-    console.log('Archive');
-    item.close();
+    this.expandAction(item, 'archiving', 'Chat was archived.');
   }
 
   download(item: ItemSliding) {
-    item.setCssClass('downloading', true);
+    this.expandAction(item, 'downloading', 'Login was downloaded.');
+  }
+
+  expandAction(item: ItemSliding, action: string, text: string) {
+    item.setCssClass(action, true);
+
     setTimeout(() => {
       const toast = this.toastCtrl.create({
-        message: 'Item was downloaded!'
+        message: text
       });
       toast.present();
-      item.setCssClass('downloading', false);
+      item.setCssClass(action, false);
       item.close();
 
-      // Wait 2s to close toast
       setTimeout(() => toast.dismiss(), 2000);
     }, 1500);
   }

@@ -9,10 +9,10 @@ import { ionicBootstrap, NavController, NavParams } from 'ionic-angular';
 export class ApiDemoPage {
   myParam: string = '';
 
-  constructor(public nav: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   pushParams() {
-    this.nav.push(PushPage, { 'myParam': this.myParam });
+    this.navCtrl.push(PushPage, { 'myParam': this.myParam });
   }
 }
 
@@ -23,7 +23,7 @@ export class ApiDemoPage {
 export class PushPage {
   myParam: string;
 
-  constructor(public nav: NavController, params: NavParams) {
+  constructor(params: NavParams) {
     this.myParam = params.get('myParam');
   }
 }

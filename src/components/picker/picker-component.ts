@@ -24,7 +24,7 @@ import { ViewController } from '../nav/view-controller';
   template: `
     <div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>
     <div class="picker-opts" #colEle [style.width]="col.optionsWidth">
-      <button *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" [style.transitionDuration]="o._dur" [style.webkitTransform]="o._trans" [style.webkitTransitionDuration]="o._dur" [class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" (click)="optClick($event, i)" type="button" category="picker-opt">
+      <button ion-button="picker-opt" *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" [style.transitionDuration]="o._dur" [style.webkitTransform]="o._trans" [style.webkitTransitionDuration]="o._dur" [class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" (click)="optClick($event, i)" type="button">
         {{o.text}}
       </button>
     </div>
@@ -355,7 +355,7 @@ export class PickerColumnCmp {
     <div class="picker-wrapper">
       <div class="picker-toolbar">
         <div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">
-          <button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>
+          <button ion-button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>
             {{b.text}}
           </button>
         </div>
