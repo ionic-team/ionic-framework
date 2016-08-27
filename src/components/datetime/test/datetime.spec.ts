@@ -2,11 +2,9 @@
 import { DateTime } from '../datetime';
 import { Form } from '../../../util/form';
 import { Picker, PickerController } from '../../picker/picker';
-import { NavController } from '../../../navigation/nav-controller';
-
 import * as datetime from '../../../util/datetime-util';
+import { mockApp, mockConfig, mockElementRef, mockRenderer } from '../../../util/mock-providers';
 
-import { mockApp, mockConfig } from '../../../util/mock-providers';
 
 describe('DateTime', () => {
 
@@ -477,7 +475,7 @@ describe('DateTime', () => {
   var datetime: DateTime;
 
   beforeEach(() => {
-    datetime = new DateTime(new Form(), mockConfig(), null, <PickerController>{});
+    datetime = new DateTime(new Form(), mockConfig(), mockElementRef(), mockRenderer(), null, <PickerController>{});
   });
 
   console.warn = function(){};

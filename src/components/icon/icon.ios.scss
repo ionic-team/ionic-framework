@@ -9,7 +9,7 @@
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  .icon-#{$color-name} {
+  .ios .icon-#{$color-name} {
     color: $color-base;
   }
 

@@ -56,13 +56,13 @@ export class NavControllerBase extends Ion implements NavController {
     public _keyboard: Keyboard,
     elementRef: ElementRef,
     public _zone: NgZone,
-    public _renderer: Renderer,
+    renderer: Renderer,
     public _cfr: ComponentFactoryResolver,
     public _gestureCtrl: GestureController,
     public _trnsCtrl: TransitionController,
     public _linker: DeepLinker
   ) {
-    super(elementRef);
+    super(config, elementRef, renderer);
 
     this.parent = parent;
     this.config = config;

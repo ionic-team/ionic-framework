@@ -1,6 +1,7 @@
 import { Directive, ElementRef, HostBinding, Input, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { Ion } from '../ion';
 
 
 /**
@@ -40,7 +41,7 @@ import { Config } from '../../config/config';
     'role': 'img'
   }
 })
-export class Icon {
+export class Icon extends Ion {
   /** @internal */
   _isActive: any;
   /** @internal */
@@ -51,8 +52,6 @@ export class Icon {
   _md: string = '';
   /** @internal */
   _css: string = '';
-  /** @internal */
-  _color: string;
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
@@ -61,21 +60,16 @@ export class Icon {
   get color(): string {
     return this._color;
   }
-
   set color(value: string) {
-    this._updateColor(value);
+    this._setColor('icon', value);
   }
-
-  /**
-   * @private
-   */
-  _mode: string;
 
   constructor(
     config: Config,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
+    super(config, elementRef, renderer);
     this._mode = config.get('iconMode');
   }
 
@@ -84,7 +78,7 @@ export class Icon {
    */
   ngOnDestroy() {
     if (this._css) {
-      this.setCssClass(this._css, false);
+      this.setElementClass(this._css, false);
     }
   }
 
@@ -175,39 +169,13 @@ export class Icon {
 
     if (this._css !== css) {
       if (this._css) {
-        this.setCssClass(this._css, false);
+        this.setElementClass(this._css, false);
       }
       this._css = css;
-      this.setCssClass(css, true);
+      this.setElementClass(css, true);
 
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-label',
+      this.setElementAttribute('aria-label',
           css.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
-    }
-  }
-
-  /**
-   * @internal
-   * @param {string} Add or remov css class name.
-   */
-  setCssClass(className: string, isAdd: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
-  }
-
-   /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `icon-${color}`, isAdd);
     }
   }
 

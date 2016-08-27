@@ -1,6 +1,8 @@
 import { Component, ContentChildren, Directive, ElementRef, EventEmitter, HostListener, Input, Output, Optional, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
 import { isPresent, isTrueProperty } from '../../util/util';
 
 
@@ -77,13 +79,13 @@ export class SegmentButton {
 
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this.setCssClass('segment-button-disabled', this._disabled);
+    this._setCssClass('segment-button-disabled', this._disabled);
   }
 
   /**
-   * @private
+   * @internal
    */
-  setCssClass(cssClass: string, shouldAdd: boolean) {
+  _setCssClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
@@ -176,7 +178,7 @@ export class SegmentButton {
 @Directive({
   selector: 'ion-segment'
 })
-export class Segment {
+export class Segment extends Ion {
   _disabled: boolean = false;
 
   /**
@@ -184,19 +186,19 @@ export class Segment {
    */
   value: string;
 
-  /** @internal */
-  _color: string;
-
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('segment', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  set mode(val: string) {
+    this._setMode('segment', val);
   }
 
   /**
@@ -211,10 +213,15 @@ export class Segment {
   @ContentChildren(SegmentButton) _buttons: QueryList<SegmentButton>;
 
   constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
@@ -232,28 +239,9 @@ export class Segment {
     this._disabled = isTrueProperty(val);
 
     if (this._buttons) {
-      let buttons = this._buttons.toArray();
-      for (let button of buttons) {
-        button.setCssClass('segment-button-disabled', this._disabled);
-      }
-    }
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `segment-${color}`, isAdd);
+      this._buttons.forEach(button => {
+        button._setCssClass('segment-button-disabled', this._disabled);
+      });
     }
   }
 
@@ -275,8 +263,7 @@ export class Segment {
    * @private
    */
   ngAfterViewInit() {
-   let buttons = this._buttons.toArray();
-   for (let button of buttons) {
+   this._buttons.forEach(button => {
      button.ionSelect.subscribe((selectedButton: any) => {
        this.writeValue(selectedButton.value);
        this.onChange(selectedButton.value);
@@ -288,10 +275,9 @@ export class Segment {
      }
 
      if (isTrueProperty(this._disabled)) {
-       button.setCssClass('segment-button-disabled', this._disabled);
+       button._setCssClass('segment-button-disabled', this._disabled);
      }
-
-   }
+   });
   }
 
   /**

@@ -1,7 +1,6 @@
 import { Content } from '../../content/content';
 import { InfiniteScroll } from '../infinite-scroll';
-
-import { mockConfig, mockZone } from '../../../util/mock-providers';
+import { mockConfig, mockElementRef, mockRenderer, mockZone } from '../../../util/mock-providers';
 
 
 describe('Infinite Scroll', () => {
@@ -99,22 +98,12 @@ describe('Infinite Scroll', () => {
 
   beforeEach(() => {
     contentElementRef = mockElementRef();
-    content = new Content(contentElementRef, config, null, null, null, null, null);
+    content = new Content(config, contentElementRef, mockRenderer(), null, null, null, null, null);
     content._scrollEle = document.createElement('scroll-content');
 
     infiniteElementRef = mockElementRef();
     inf = new InfiniteScroll(content, mockZone(), infiniteElementRef);
   });
-
-  function mockElementRef() {
-    return {
-      nativeElement: {
-        classList: { add: function(){}, remove: function(){} },
-        scrollTop: 0,
-        hasAttribute: function(){}
-      }
-    };
-  }
 
   function setInfiniteScrollTop(scrollTop) {
     infiniteElementRef.nativeElement.scrollTop = scrollTop;

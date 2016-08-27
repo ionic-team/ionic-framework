@@ -88,19 +88,20 @@ export class Navbar extends ToolbarBase {
    */
   _sbPadding: boolean;
 
-  /** @internal */
-  _color: string;
-
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('toolbar', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('toolbar', val);
   }
 
   /**
@@ -118,16 +119,18 @@ export class Navbar extends ToolbarBase {
     public _app: App,
     @Optional() viewCtrl: ViewController,
     @Optional() private navCtrl: NavController,
-    private _elementRef: ElementRef,
-    private _config: Config,
-    private _renderer: Renderer
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
-    super(_elementRef);
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
 
     viewCtrl && viewCtrl._setNavbar(this);
 
-    this._bbIcon = _config.get('backButtonIcon');
-    this._sbPadding = _config.getBoolean('statusbarPadding');
+    this._bbIcon = config.get('backButtonIcon');
+    this._sbPadding = config.getBoolean('statusbarPadding');
   }
 
   ngAfterViewInit() {
@@ -165,24 +168,6 @@ export class Navbar extends ToolbarBase {
   setHidden(isHidden: boolean) {
     // used to display none/block the navbar
     this._hidden = isHidden;
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `toolbar-${color}`, isAdd);
-    }
   }
 
 }

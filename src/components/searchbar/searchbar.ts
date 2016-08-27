@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, HostBinding, Input, Optional, Outp
 import { NgControl }  from '@angular/forms';
 
 import { Config } from '../../config/config';
+import { Ion } from '../ion';
 import { isPresent } from '../../util/util';
 import { Debouncer } from '../../util/debouncer';
 
@@ -45,26 +46,27 @@ import { Debouncer } from '../../util/debouncer';
   },
   encapsulation: ViewEncapsulation.None
 })
-export class Searchbar {
+export class Searchbar extends Ion {
   _value: string|number = '';
   _shouldBlur: boolean = true;
   _isActive: boolean = false;
   _searchbarInput: ElementRef;
   _debouncer: Debouncer = new Debouncer(250);
 
-  /** @internal */
-  _color: string;
-
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('searchbar', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('searchbar', val);
   }
 
   /**
@@ -144,11 +146,15 @@ export class Searchbar {
   @HostBinding('class.searchbar-has-focus') _sbHasFocus: boolean;
 
   constructor(
-    private _elementRef: ElementRef,
-    private _config: Config,
-    private _renderer: Renderer,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+
     // If the user passed a ngControl we need to set the valueAccessor
     if (ngControl) {
       ngControl.valueAccessor = this;
@@ -357,24 +363,6 @@ export class Searchbar {
     this.clearInput(ev);
     this._shouldBlur = true;
     this._isActive = false;
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `searchbar-${color}`, isAdd);
-    }
   }
 
   /**

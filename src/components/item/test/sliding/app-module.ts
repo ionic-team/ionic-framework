@@ -87,14 +87,14 @@ export class E2EPage {
   }
 
   download(item: ItemSliding) {
-    item.setCssClass('downloading', true);
+    item._setCssClass('downloading', true);
     setTimeout(() => {
       const toast = this.toastCtrl.create({
         message: 'Item was downloaded!'
       });
       toast.present();
 
-      item.setCssClass('downloading', false);
+      item._setCssClass('downloading', false);
       item.close();
       setTimeout(() => {
         toast.dismiss();

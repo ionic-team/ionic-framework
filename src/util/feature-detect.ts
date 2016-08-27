@@ -8,7 +8,7 @@ export class FeatureDetect {
     for (let name in featureDetects) {
       this._r[name] = !!featureDetects[name].test();
       if (this._r[name]) {
-        appRoot._addClass(name);
+        appRoot.setElementClass(name, true);
       }
     }
     featureDetects = null;

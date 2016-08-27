@@ -82,6 +82,13 @@ export class App {
   }
 
   /**
+   * @private
+   */
+  setElementClass(className: string, isAdd: boolean) {
+    this._appRoot.setElementClass(className, isAdd);
+  }
+
+  /**
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
    * while views transition, a modal slides up, an action-sheet

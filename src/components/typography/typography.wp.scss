@@ -4,18 +4,18 @@
 // --------------------------------------------------
 
 
-p {
+.wp p {
   color: $paragraph-wp-color;
 }
 
-a {
+.wp a {
   color: $link-wp-color;
 }
 
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .text-#{$color-name} {
+  .wp .text-#{$color-name} {
     color: $color-base;
   }
 

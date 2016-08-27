@@ -156,7 +156,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
   /**
    * @private
    */
-  ngOnDestroy() {
+  destroy() {
     this.destroy();
   }
 

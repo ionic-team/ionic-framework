@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, Renderer } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
@@ -6,6 +6,7 @@ import { copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord 
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { Form } from '../../util/form';
+import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { NativeInput, NextInput } from './native-input';
@@ -14,7 +15,7 @@ import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 
 
-export class InputBase {
+export class InputBase extends Ion {
   _coord: PointerCoordinates;
   _deregScroll: Function;
   _disabled: boolean = false;
@@ -39,11 +40,14 @@ export class InputBase {
     protected _item: Item,
     protected _app: App,
     protected _platform: Platform,
-    protected _elementRef: ElementRef,
+    elementRef: ElementRef,
+    renderer: Renderer,
     protected _scrollView: Content,
     nav: NavController,
     ngControl: NgControl
   ) {
+    super(config, elementRef, renderer);
+
     this._nav = <NavControllerBase>nav;
     this._useAssist = config.getBoolean('scrollAssist', false);
     this._usePadding = config.getBoolean('scrollPadding', this._useAssist);
@@ -125,7 +129,7 @@ export class InputBase {
 
   setDisabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-input-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-input-disabled', this._disabled);
     this._native && this._native.isDisabled(this._disabled);
   }
 
@@ -242,7 +246,7 @@ export class InputBase {
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
-      this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
+      this._item.setElementClass('input-has-value', !!(inputValue && inputValue !== ''));
     }
   }
 
@@ -251,7 +255,7 @@ export class InputBase {
    */
   focusChange(inputHasFocus: boolean) {
     if (this._item) {
-      this._item.setCssClass('input-has-focus', inputHasFocus);
+      this._item.setElementClass('input-has-focus', inputHasFocus);
     }
     if (!inputHasFocus) {
       this.deregScrollMove();

@@ -38,7 +38,7 @@ $card-wp-header-padding:              16px !default;
 $card-wp-header-color:                #222 !default;
 
 
-ion-card {
+.card-wp {
   margin: $card-wp-margin-top $card-wp-margin-right $card-wp-margin-bottom $card-wp-margin-left;
 
   width: calc(100% - #{($card-wp-margin-right + $card-wp-margin-left)});
@@ -50,44 +50,44 @@ ion-card {
   box-shadow: $card-wp-box-shadow;
 }
 
-ion-card ion-list {
+.card-wp ion-list {
   margin-bottom: 0;
 }
 
-ion-card > .item:last-child,
-ion-card > .item-wrapper:last-child .item {
+.card-wp > .item:last-child,
+.card-wp > .item-wrapper:last-child .item {
   border-bottom: 0;
 }
 
-ion-card .item .item-inner {
+.card-wp .item .item-inner {
   border: 0;
 }
 
-ion-card ion-card-content {
+.card-wp ion-card-content {
   padding: $card-wp-padding-top $card-wp-padding-right $card-wp-padding-bottom $card-wp-padding-left;
 
   font-size: $card-wp-font-size;
   line-height: $card-wp-line-height;
 }
 
-ion-card ion-card-header {
+.card-wp ion-card-header {
   padding: $card-wp-header-padding;
 
   font-size: $card-wp-header-font-size;
   color: $card-wp-header-color;
 }
 
-ion-card ion-card-header + ion-card-content,
-ion-card .item + ion-card-content {
+.card-wp ion-card-header + ion-card-content,
+.card-wp .item + ion-card-content {
   padding-top: 0;
 }
 
-ion-card ion-note[item-left],
-ion-card ion-note[item-right], {
+.card-wp ion-note[item-left],
+.card-wp ion-note[item-right], {
   font-size: 1.3rem;
 }
 
-ion-card ion-card-title {
+.card-wp ion-card-title {
   display: block;
 
   margin: $card-wp-title-margin;
@@ -98,7 +98,7 @@ ion-card ion-card-title {
   color: $card-wp-title-text-color;
 }
 
-ion-card h1 {
+.card-wp h1 {
   margin: 0 0 2px;
 
   font-size: 2.4rem;
@@ -106,7 +106,7 @@ ion-card h1 {
   color: $card-wp-text-color;
 }
 
-ion-card h2 {
+.card-wp h2 {
   margin: 2px 0;
 
   font-size: 1.6rem;
@@ -114,10 +114,10 @@ ion-card h2 {
   color: $card-wp-text-color;
 }
 
-ion-card h3,
-ion-card h4,
-ion-card h5,
-ion-card h6 {
+.card-wp h3,
+.card-wp h4,
+.card-wp h5,
+.card-wp h6 {
   margin: 2px 0;
 
   font-size: 1.4rem;
@@ -125,7 +125,7 @@ ion-card h6 {
   color: $card-wp-text-color;
 }
 
-ion-card p {
+.card-wp p {
   margin: 0 0 2px;
 
   font-size: 1.4rem;
@@ -134,6 +134,6 @@ ion-card p {
   color: $card-wp-text-color;
 }
 
-ion-card + ion-card {
+.card-wp + ion-card {
   margin-top: 0;
 }

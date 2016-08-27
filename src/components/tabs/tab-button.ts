@@ -34,11 +34,9 @@ export class TabButton extends Ion implements OnInit {
 
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
-  constructor(
-    config: Config,
-    elementRef: ElementRef,
-    private renderer: Renderer) {
-    super(elementRef);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
+
     this.disHover = (config.get('hoverCSS') === false);
     this.layout = config.get('tabsLayout');
 
@@ -66,7 +64,7 @@ export class TabButton extends Ion implements OnInit {
   }
 
   updateHref(href: string) {
-    this.renderer.setElementAttribute(this.elementRef.nativeElement, 'href', href);
+    this.setElementAttribute('href', href);
   }
 
 }

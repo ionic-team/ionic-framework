@@ -144,7 +144,7 @@ export class InfiniteScroll {
     private _zone: NgZone,
     private _elementRef: ElementRef
   ) {
-    _content.addCssClass('has-infinite-scroll');
+    _content.setElementClass('has-infinite-scroll', true);
   }
 
   _onScroll() {

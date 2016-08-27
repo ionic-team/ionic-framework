@@ -99,7 +99,7 @@ $alert-md-checkbox-icon-border-style:         solid !default;
 $alert-md-checkbox-icon-border-color:         color-contrast($colors-md, $alert-md-checkbox-border-color-on) !default;
 $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
-.alert-wrapper {
+.alert-md .alert-wrapper {
   max-width: $alert-md-max-width;
 
   border-radius: $alert-md-border-radius;
@@ -111,17 +111,17 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Header
 // --------------------------------------------------
 
-.alert-head {
+.alert-md .alert-head {
   padding: $alert-md-head-padding;
 
   text-align: $alert-md-head-text-align;
 }
 
-.alert-title {
+.alert-md .alert-title {
   font-size: $alert-md-title-font-size;
 }
 
-.alert-sub-title {
+.alert-md .alert-sub-title {
   font-size: $alert-md-sub-title-font-size;
 }
 
@@ -129,20 +129,20 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Message
 // --------------------------------------------------
 
-.alert-message,
-.alert-input-group {
+.alert-md .alert-message,
+.alert-md .alert-input-group {
   padding: $alert-md-message-padding;
 
   color: $alert-md-message-text-color;
 }
 
-.alert-message {
+.alert-md .alert-message {
   max-height: $alert-md-content-max-height;
 
   font-size: $alert-md-message-font-size;
 }
 
-.alert-message:empty {
+.alert-md .alert-message:empty {
   padding: $alert-md-message-padding-empty;
 }
 
@@ -150,14 +150,14 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Input
 // --------------------------------------------------
 
-.alert-input {
+.alert-md .alert-input {
   margin: $alert-md-input-margin-top $alert-md-input-margin-right $alert-md-input-margin-bottom $alert-md-input-margin-left;
 
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
   color: $alert-md-input-text-color;
 }
 
-.alert-input:focus {
+.alert-md .alert-input:focus {
   margin-bottom: $alert-md-input-margin-bottom - 1;
 
   border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
@@ -167,8 +167,8 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Radio/Checkbox Group
 // --------------------------------------------------
 
-.alert-radio-group,
-.alert-checkbox-group {
+.alert-md .alert-radio-group,
+.alert-md .alert-checkbox-group {
   position: relative;
   overflow: auto;
 
@@ -178,7 +178,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   border-bottom: $alert-md-list-border-bottom;
 }
 
-.alert-tappable {
+.alert-md .alert-tappable {
   position: relative;
   display: flex;
 
@@ -192,7 +192,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Radio
 // --------------------------------------------------
 
-.alert-radio-label {
+.alert-md .alert-radio-label {
   overflow: hidden;
 
   flex: 1;
@@ -206,7 +206,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Radio Unchecked Circle
 // ---------------------------------------------------
 
-.alert-radio-icon {
+.alert-md .alert-radio-icon {
   position: relative;
   top: $alert-md-radio-top;
   left: $alert-md-radio-left;
@@ -224,7 +224,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Radio Checked Dot
 // ---------------------------------------------------
 
-.alert-radio-inner {
+.alert-md .alert-radio-inner {
   position: absolute;
   top: $alert-md-radio-icon-top;
   left: $alert-md-radio-icon-left;
@@ -242,15 +242,15 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Radio Checked
 // ---------------------------------------------------
 
-.alert-radio[aria-checked=true] .alert-radio-label {
+.alert-md .alert-radio[aria-checked=true] .alert-radio-label {
   color: $alert-md-radio-label-text-color-checked;
 }
 
-.alert-radio[aria-checked=true] .alert-radio-icon {
+.alert-md .alert-radio[aria-checked=true] .alert-radio-icon {
   border-color: $alert-md-radio-border-color-on;
 }
 
-.alert-radio[aria-checked=true] .alert-radio-inner {
+.alert-md .alert-radio[aria-checked=true] .alert-radio-inner {
   transform: $alert-md-radio-icon-transform-on;
 }
 
@@ -258,7 +258,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Checkbox Label
 // --------------------------------------------------
 
-.alert-checkbox-label {
+.alert-md .alert-checkbox-label {
   overflow: hidden;
 
   flex: 1;
@@ -269,14 +269,14 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   white-space: nowrap;
 }
 
-.alert-checkbox[aria-checked=true] .alert-checkbox-label {
+.alert-md .alert-checkbox[aria-checked=true] .alert-checkbox-label {
   color: $alert-md-checkbox-label-text-color-checked;
 }
 
 // Material Design Alert Checkbox Outline: Unchecked
 // --------------------------------------------------
 
-.alert-checkbox-icon {
+.alert-md .alert-checkbox-icon {
   position: relative;
   top: $alert-md-checkbox-top;
   left: $alert-md-checkbox-left;
@@ -293,12 +293,12 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Checkbox Checkmark: Checked
 // --------------------------------------------------
 
-.alert-checkbox[aria-checked=true] .alert-checkbox-icon {
+.alert-md .alert-checkbox[aria-checked=true] .alert-checkbox-icon {
   border-color: $alert-md-checkbox-border-color-on;
   background-color: $alert-md-checkbox-border-color-on;
 }
 
-.alert-checkbox[aria-checked=true] .alert-checkbox-inner {
+.alert-md .alert-checkbox[aria-checked=true] .alert-checkbox-inner {
   position: absolute;
   top: $alert-md-checkbox-icon-top;
   left: $alert-md-checkbox-icon-left;
@@ -318,14 +318,14 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // Material Design Alert Button
 // --------------------------------------------------
 
-.alert-button-group {
+.alert-md .alert-button-group {
   flex-wrap: $alert-md-button-group-flex-wrap;
   justify-content: $alert-md-button-group-justify-content;
 
   padding: $alert-md-button-group-padding;
 }
 
-.alert-button {
+.alert-md .alert-button {
   // necessary for ripple to work properly
   position: relative;
   overflow: hidden;
@@ -341,10 +341,10 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   background-color: $alert-md-button-background-color;
 }
 
-.alert-button.activated {
+.alert-md .alert-button.activated {
   background-color: $alert-md-button-background-color-activated;
 }
 
-.alert-button .button-inner {
+.alert-md .alert-button .button-inner {
   justify-content: $alert-md-button-group-justify-content;
 }

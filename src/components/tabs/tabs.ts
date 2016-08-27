@@ -155,52 +155,37 @@ import { ViewController } from '../../navigation/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class Tabs extends Ion implements AfterViewInit {
-  /**
-   * @internal
-   */
-  _ids: number = -1;
-  /**
-   * @internal
-   */
-  _tabs: Tab[] = [];
-  /**
-   * @internal
-   */
-  _sbPadding: boolean;
-  /**
-   * @internal
-   */
-  _top: number;
-  /**
-   * @internal
-   */
-  _bottom: number;
-  /**
-   * @private
-   */
-  id: string;
-  /**
-   * @internal
-   */
-  _selectHistory: string[] = [];
-  /**
-   * @internal
-   */
-  _subPages: boolean;
-
   /** @internal */
-  _color: string;
+  _ids: number = -1;
+  /** @internal */
+  _tabs: Tab[] = [];
+  /** @internal */
+  _sbPadding: boolean;
+  /** @internal */
+  _top: number;
+  /** @internal */
+  _bottom: number;
+  /** @internal */
+  id: string;
+  /** @internal */
+  _selectHistory: string[] = [];
+  /** @internal */
+  _subPages: boolean;
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(value: string) {
+    this._setColor('tabs', value);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('tabs', val);
   }
 
   /**
@@ -262,30 +247,31 @@ export class Tabs extends Ion implements AfterViewInit {
     @Optional() parent: NavController,
     @Optional() public viewCtrl: ViewController,
     private _app: App,
-    private _config: Config,
-    private _elementRef: ElementRef,
+    config: Config,
+    elementRef: ElementRef,
     private _platform: Platform,
-    private _renderer: Renderer,
+    renderer: Renderer,
     private _linker: DeepLinker
   ) {
-    super(_elementRef);
+    super(config, elementRef, renderer);
 
+    this.mode = config.get('mode');
     this.parent = <NavControllerBase>parent;
     this.id = 't' + (++tabIds);
-    this._sbPadding = _config.getBoolean('statusbarPadding');
-    this._subPages = _config.getBoolean('tabsHideOnSubPages');
-    this.tabsHighlight = _config.getBoolean('tabsHighlight');
+    this._sbPadding = config.getBoolean('statusbarPadding');
+    this._subPages = config.getBoolean('tabsHideOnSubPages');
+    this.tabsHighlight = config.getBoolean('tabsHighlight');
 
     // TODO deprecated 07-07-2016 beta.11
-    if (_config.get('tabSubPages') !== null) {
+    if (config.get('tabSubPages') !== null) {
       console.warn('Config option "tabSubPages" has been deprecated. Please use "tabsHideOnSubPages" instead.');
-      this._subPages = _config.getBoolean('tabSubPages');
+      this._subPages = config.getBoolean('tabSubPages');
     }
 
     // TODO deprecated 07-07-2016 beta.11
-    if (_config.get('tabbarHighlight') !== null) {
+    if (config.get('tabbarHighlight') !== null) {
       console.warn('Config option "tabbarHighlight" has been deprecated. Please use "tabsHighlight" instead.');
-      this.tabsHighlight = _config.getBoolean('tabbarHighlight');
+      this.tabsHighlight = config.getBoolean('tabbarHighlight');
     }
 
     if (this.parent) {
@@ -307,7 +293,7 @@ export class Tabs extends Ion implements AfterViewInit {
     // then skip this and don't treat it as it's own ViewController
     if (viewCtrl) {
       viewCtrl._setContent(this);
-      viewCtrl._setContentRef(_elementRef);
+      viewCtrl._setContentRef(elementRef);
     }
   }
 
@@ -326,27 +312,27 @@ export class Tabs extends Ion implements AfterViewInit {
     // TODO deprecated 07-07-2016 beta.11
     if (this.tabbarPlacement !== undefined) {
       console.warn('Input "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this.tabbarPlacement);
+      this.setElementAttribute('tabsPlacement', this.tabbarPlacement);
       this.tabsPlacement = this.tabbarPlacement;
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (this._config.get('tabbarPlacement') !== null) {
       console.warn('Config option "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this._config.get('tabbarPlacement'));
+      this.setElementAttribute('tabsPlacement', this._config.get('tabbarPlacement'));
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (this.tabbarLayout !== undefined) {
       console.warn('Input "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this.tabbarLayout);
+      this.setElementAttribute('tabsLayout', this.tabbarLayout);
       this.tabsLayout = this.tabbarLayout;
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (this._config.get('tabbarLayout') !== null) {
       console.warn('Config option "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this._config.get('tabsLayout'));
+      this.setElementAttribute('tabsLayout', this._config.get('tabsLayout'));
     }
 
     if (this.tabsHighlight) {
@@ -412,25 +398,7 @@ export class Tabs extends Ion implements AfterViewInit {
     if (isBlank(val)) {
       val = this._config.get(attrKey, fallback);
     }
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, attrKey, val);
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `tabs-${color}`, isAdd);
-    }
+    this.setElementAttribute(attrKey, val);
   }
 
   /**

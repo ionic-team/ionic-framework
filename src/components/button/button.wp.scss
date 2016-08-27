@@ -128,7 +128,7 @@ $button-wp-fab-border-radius:                             50% !default;
 // Windows Default Button
 // --------------------------------------------------
 
-.button {
+.button-wp {
   margin: $button-wp-margin;
   padding: $button-wp-padding;
 
@@ -143,12 +143,12 @@ $button-wp-fab-border-radius:                             50% !default;
   background-color: $button-wp-background-color;
 }
 
-.button:hover:not(.disable-hover) {
+.button-wp:hover:not(.disable-hover) {
   border-color: $button-wp-background-color-activated;
   background-color: $button-wp-background-color;
 }
 
-.button.activated {
+.button-wp.activated {
   background-color: $button-wp-background-color-activated;
 }
 
@@ -158,7 +158,7 @@ $button-wp-fab-border-radius:                             50% !default;
 
 @mixin wp-button-default($color-name, $color-base, $color-contrast) {
 
-  .button-#{$color-name} {
+  .button-wp.button-#{$color-name} {
     $bg-color: $color-base;
     $bg-color-activated: color-shade($bg-color);
     $fg-color: $color-contrast;
@@ -182,7 +182,7 @@ $button-wp-fab-border-radius:                             50% !default;
 // Windows Button Sizes
 // --------------------------------------------------
 
-.button-large {
+.button-wp.button-large {
   padding: $button-wp-large-padding;
 
   height: $button-wp-large-height;
@@ -190,7 +190,7 @@ $button-wp-fab-border-radius:                             50% !default;
   font-size: $button-wp-large-font-size;
 }
 
-.button-small {
+.button-wp.button-small {
   padding: $button-wp-small-padding;
 
   height: $button-wp-small-height;
@@ -198,14 +198,14 @@ $button-wp-fab-border-radius:                             50% !default;
   font-size: $button-wp-small-font-size;
 }
 
-.button-small[icon-only] ion-icon {
+.button-wp.button-small[icon-only] ion-icon {
   font-size: $button-wp-small-icon-font-size;
 }
 
 // Windows Block Button
 // --------------------------------------------------
 
-.button-block {
+.button-wp.button-block {
   margin-right: 0;
   margin-left: 0;
 }
@@ -213,7 +213,7 @@ $button-wp-fab-border-radius:                             50% !default;
 // Windows Full Button
 // --------------------------------------------------
 
-.button-full {
+.button-wp.button-full {
   margin-right: 0;
   margin-left: 0;
 
@@ -225,7 +225,7 @@ $button-wp-fab-border-radius:                             50% !default;
 // Windows Outline Button
 // --------------------------------------------------
 
-.button-outline {
+.button-wp.button-outline {
   border-width: $button-wp-outline-border-width;
   border-style: $button-wp-outline-border-style;
   border-color: $button-wp-outline-border-color;
@@ -233,11 +233,11 @@ $button-wp-fab-border-radius:                             50% !default;
   background-color: $button-wp-outline-background-color;
 }
 
-.button-outline:hover:not(.disable-hover) {
+.button-wp.button-outline:hover:not(.disable-hover) {
   background-color: $button-wp-clear-background-color-hover;
 }
 
-.button-outline.activated {
+.button-wp.button-outline.activated {
   background-color: rgba($button-wp-outline-background-color-activated, $button-wp-outline-background-color-opacity-activated);
 }
 
@@ -247,7 +247,7 @@ $button-wp-fab-border-radius:                             50% !default;
 
 @mixin wp-button-outline($color-name, $color-base, $color-contrast) {
 
-  .button-outline-#{$color-name} {
+  .button-wp.button-outline-#{$color-name} {
     $fg-color: color-shade($color-base, 5%);
     border-color: $fg-color;
     color: $fg-color;
@@ -269,16 +269,16 @@ $button-wp-fab-border-radius:                             50% !default;
 // Windows Clear Button
 // --------------------------------------------------
 
-.button-clear {
+.button-wp.button-clear {
   color: $button-wp-clear-text-color;
   background-color: $button-wp-clear-background-color;
 }
 
-.button-clear.activated {
+.button-wp.button-clear.activated {
   background-color: $button-wp-clear-background-color-activated;
 }
 
-.button-clear:hover:not(.disable-hover) {
+.button-wp.button-clear:hover:not(.disable-hover) {
   background-color: $button-wp-clear-background-color-hover;
 }
 
@@ -288,7 +288,7 @@ $button-wp-fab-border-radius:                             50% !default;
 
 @mixin wp-button-clear($color-name, $color-base, $color-contrast) {
 
-  .button-clear-#{$color-name} {
+  .button-wp.button-clear-#{$color-name} {
     $fg-color: $color-base;
     color: $fg-color;
     background-color: $button-wp-clear-background-color;
@@ -307,7 +307,7 @@ $button-wp-fab-border-radius:                             50% !default;
 // Windows Round Button
 // --------------------------------------------------
 
-.button-round {
+.button-wp.button-round {
   padding: $button-wp-round-padding;
 
   border-radius: $button-wp-round-border-radius;
@@ -317,15 +317,15 @@ $button-wp-fab-border-radius:                             50% !default;
 // Windows FAB Button
 // --------------------------------------------------
 
-.button-fab {
+.button-wp.button-fab {
   border-radius: $button-wp-fab-border-radius;
 }
 
-[icon-only] {
+.button-wp [icon-only] {
   padding: 0;
 }
 
-ion-button-effect {
+.button-wp ion-button-effect {
   // wp does not use the button effect
   display: none;
 }

@@ -1,4 +1,4 @@
-import { Component, Optional, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Optional, ElementRef, EventEmitter, Input, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
@@ -90,11 +90,14 @@ export class TextInput extends InputBase {
     app: App,
     platform: Platform,
     elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() scrollView: Content,
     @Optional() nav: NavController,
     @Optional() ngControl: NgControl
   ) {
-    super(config, form, item, app, platform, elementRef, scrollView, nav, ngControl);
+    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl);
+
+    this.mode = config.get('mode');
   }
 
   /**
@@ -103,12 +106,12 @@ export class TextInput extends InputBase {
   _clearInput: boolean = false;
 
   /**
-   * @internal
+   * @private
    */
   @Input() placeholder: string = '';
 
   /**
-   * @internal
+   * @private
    */
   @Input()
   get clearInput() {
@@ -130,7 +133,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @Input()
   get type() {
@@ -141,7 +144,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @Input()
   get disabled() {
@@ -149,6 +152,14 @@ export class TextInput extends InputBase {
   }
   set disabled(val: any) {
     super.setDisabled(val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('input', val);
   }
 
   /**
@@ -195,7 +206,7 @@ export class TextInput extends InputBase {
    */
   ngOnInit() {
     if (this._item) {
-      this._item.setCssClass('item-input', true);
+      this._item.setElementClass('item-input', true);
       this._item.registerInput(this._type);
     }
   }
@@ -285,15 +296,18 @@ export class TextArea extends InputBase {
     app: App,
     platform: Platform,
     elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() scrollView: Content,
     @Optional() nav: NavController,
     @Optional() ngControl: NgControl
   ) {
-    super(config, form, item, app, platform, elementRef, scrollView, nav, ngControl);
+    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl);
+
+    this.mode = config.get('mode');
   }
 
   /**
-   * @internal
+   * @private
    */
   @Input() placeholder: string = '';
 
@@ -309,7 +323,7 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @Input()
   get type() {
@@ -320,7 +334,7 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @Input()
   get disabled() {
@@ -328,6 +342,14 @@ export class TextArea extends InputBase {
   }
   set disabled(val: any) {
     super.setDisabled(val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('textarea', val);
   }
 
   /**
@@ -361,8 +383,8 @@ export class TextArea extends InputBase {
    */
   ngOnInit() {
     if (this._item) {
-      this._item.setCssClass('item-textarea', true);
-      this._item.setCssClass('item-input', true);
+      this._item.setElementClass('item-textarea', true);
+      this._item.setElementClass('item-input', true);
       this._item.registerInput(this._type);
     }
   }

@@ -5,6 +5,7 @@
 import { Backdrop } from './components/backdrop/backdrop';
 import { Badge } from './components/badge/badge';
 import { Button } from './components/button/button';
+import { Card } from './components/card/card';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
@@ -67,6 +68,7 @@ export { App } from './components/app/app';
 export { Backdrop } from './components/backdrop/backdrop';
 export { Badge } from './components/badge/badge';
 export { Button } from './components/button/button';
+export { Card } from './components/card/card';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { Content } from './components/content/content';
@@ -149,6 +151,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Backdrop,
   Badge,
   Button,
+  Card,
   Checkbox,
   Chip,
   Content,

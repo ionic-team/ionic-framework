@@ -199,7 +199,7 @@ export class Refresher {
 
 
   constructor(@Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
-    _content.addCssClass('has-refresher');
+    _content.setElementClass('has-refresher', true);
     this._gesture = gestureCtrl.create('refresher', {
       priority: GesturePriority.Refresher,
     });

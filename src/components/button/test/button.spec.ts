@@ -1,6 +1,6 @@
 import { Button } from '../button';
 import { Config } from '../../../config/config';
-import { mockConfig } from '../../../util/mock-providers';
+import { mockConfig, mockElementRef, mockRenderer } from '../../../util/mock-providers';
 
 
 describe('button', () => {
@@ -224,10 +224,10 @@ describe('button', () => {
   it('should set defaults', () => {
     let b = mockButton();
     expect(b._role).toEqual('button');
-    expect(b._size).toEqual(null);
-    expect(b._color).toEqual(null);
+    expect(b._size).toEqual(undefined);
+    expect(b._color).toEqual(undefined);
     expect(b._style).toEqual('default');
-    expect(b._display).toEqual(null);
+    expect(b._display).toEqual(undefined);
   });
 
   it('should add alert-button css class', () => {
@@ -241,15 +241,7 @@ describe('button', () => {
 function mockButton(config?: Config, ionButton?: string) {
   config = config || mockConfig();
   ionButton = ionButton || '';
-  let elementRef = {
-    nativeElement: document.createElement('button')
-  };
-  let renderer: any = {
-    setElementClass: function(nativeElement, className, shouldAdd) {
-      nativeElement.classList[shouldAdd ? 'add' : 'remove'](className);
-    }
-  };
-  let b = new Button(null, ionButton, config, elementRef, renderer);
+  let b = new Button(null, ionButton, config, mockElementRef(), mockRenderer());
   b._init = true;
   return b;
 }

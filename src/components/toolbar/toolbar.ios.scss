@@ -42,18 +42,12 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 // --------------------------------------------------
 
 .toolbar-background {
-  border-top-width: 1px;
-  border-bottom-width: 1px;
+  border-top-width: $hairlines-width;
+  border-bottom-width: $hairlines-width;
   border-style: solid;
   border-color: $toolbar-ios-border-color;
   background: $toolbar-ios-background;
 }
-
-&.hairlines .toolbar-background {
-  border-top-width: $hairlines-width;
-  border-bottom-width: $hairlines-width;
-}
-
 
 // iOS Toolbar Borders
 // --------------------------------------------------

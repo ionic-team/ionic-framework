@@ -1,7 +1,9 @@
 import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { Config } from '../../config/config';
 import { Form } from '../../util/form';
+import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 
@@ -70,15 +72,12 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
   providers: [CHECKBOX_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestroy {
+export class Checkbox extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy {
   _checked: boolean = false;
   _init: boolean;
   _disabled: boolean = false;
   _labelId: string;
   _fn: Function;
-
-  /** internal */
-  private _color: string;
 
   /**
    * @internal
@@ -89,12 +88,16 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('checkbox', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('checkbox', val);
   }
 
   /**
@@ -103,35 +106,22 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   @Output() ionChange: EventEmitter<Checkbox> = new EventEmitter<Checkbox>();
 
   constructor(
+    config: Config,
     private _form: Form,
     @Optional() private _item: Item,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+
     _form.register(this);
 
     if (_item) {
       this.id = 'chk-' + _item.registerInput('checkbox');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-checkbox', true);
-    }
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `checkbox-${color}`, isAdd);
+      this._item.setElementClass('item-checkbox', true);
     }
   }
 
@@ -168,7 +158,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
       if (this._init) {
         this.ionChange.emit(this);
       }
-      this._item && this._item.setCssClass('item-checkbox-checked', isChecked);
+      this._item && this._item.setElementClass('item-checkbox-checked', isChecked);
     }
   }
 
@@ -207,7 +197,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
 
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-checkbox-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-checkbox-disabled', this._disabled);
   }
 
   /**

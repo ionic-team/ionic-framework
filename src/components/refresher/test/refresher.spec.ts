@@ -1,8 +1,7 @@
 import { Refresher } from '../refresher';
 import { Content } from '../../content/content';
 import { GestureController } from '../../../gestures/gesture-controller';
-
-import { mockConfig, mockZone } from '../../../util/mock-providers';
+import { mockConfig, mockElementRef, mockRenderer, mockZone } from '../../../util/mock-providers';
 
 
 describe('Refresher', () => {
@@ -221,7 +220,9 @@ describe('Refresher', () => {
 
   beforeEach(() => {
     let gestureController = new GestureController(null);
-    content = new Content(mockElementRef(), mockConfig(), null, null, mockZone(), null, null);
+    let elementRef = mockElementRef();
+    elementRef.nativeElement.children.push('');
+    content = new Content(mockConfig(), mockElementRef(), mockRenderer(), null, null, mockZone(), null, null);
     content._scrollEle = document.createElement('scroll-content');
 
     refresher = new Refresher(content, mockZone(), gestureController);
@@ -232,17 +233,6 @@ describe('Refresher', () => {
       type: 'mockTouch',
       touches: [{clientY: y}],
       preventDefault: function(){}
-    };
-  }
-
-  function mockElementRef() {
-    return {
-      nativeElement: {
-        classList: { add: function(){}, remove: function(){} },
-        scrollTop: 0,
-        hasAttribute: function(){},
-        children: {length: 1 }
-      }
     };
   }
 

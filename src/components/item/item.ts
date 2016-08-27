@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Button } from '../button/button';
+import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
+import { Ion } from '../ion';
 import { Label } from '../label/label';
 
 
@@ -287,7 +289,7 @@ import { Label } from '../label/label';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class Item {
+export class Item extends Ion {
   _ids: number = -1;
   _inputs: Array<string> = [];
   _label: Label;
@@ -303,22 +305,26 @@ export class Item {
    */
   labelId: string = null;
 
-  /** @internal */
-  _color: string;
-
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._updateColor(val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('item', val);
   }
 
-  constructor(form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
+  constructor(form: Form, config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
     this.id = form.nextId().toString();
   }
 
@@ -340,8 +346,13 @@ export class Item {
     }
 
     if (this._inputs.length > 1) {
-      this.setCssClass('item-multiple-inputs', true);
+      this.setElementClass('item-multiple-inputs', true);
     }
+  }
+
+  _updateColor(newColor: string, colorClass?: string) {
+    colorClass = colorClass || 'item'; // item-radio
+    this._setColor(colorClass, newColor);
   }
 
   /**
@@ -360,7 +371,7 @@ export class Item {
       this._label = label;
       this.labelId = label.id = ('lbl-' + this.id);
       if (label.type) {
-        this.setCssClass('item-label-' + label.type, true);
+        this.setElementClass('item-label-' + label.type, true);
       }
       this._viewLabel = false;
     }
@@ -382,7 +393,7 @@ export class Item {
   @ContentChildren(Button)
   set _buttons(buttons: QueryList<Button>) {
     buttons.forEach(button => {
-      button.setCssClass('item-button', true);
+      button.setElementClass('item-button', true);
     });
   }
 
@@ -392,50 +403,10 @@ export class Item {
   @ContentChildren(Icon)
   set _icons(icons: QueryList<Icon>) {
     icons.forEach(icon => {
-      icon.setCssClass('item-icon', true);
+      icon.setElementClass('item-icon', true);
     });
   }
 
-  /**
-   * @private
-   */
-  setCssClass(cssClass: string, shouldAdd: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
-  }
-
-  /**
-   * @private
-   */
-  setCssStyle(property: string, value: string) {
-    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string, colorClass?: string) {
-    this._setElementColor(this._color, false, colorClass);
-    this._setElementColor(newColor, true, colorClass);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean, colorClass?: string) {
-    colorClass = colorClass || 'item'; // item-radio
-
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `${colorClass}-${color}`, isAdd);
-    }
-  }
-
-  /**
-   * @private
-   */
-  getNativeElement(): HTMLElement {
-    return this._elementRef.nativeElement;
-  }
 }
 
 /**

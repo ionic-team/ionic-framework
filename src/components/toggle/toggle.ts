@@ -1,8 +1,10 @@
 import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { isTrueProperty } from '../../util/util';
+import { Ion } from '../ion';
 import { Item } from '../item/item';
 import { pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../util/ui-event-manager';
@@ -71,7 +73,7 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
   providers: [TOGGLE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy  {
+export class Toggle extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy  {
   /** @internal */
   _checked: boolean = false;
   /** @internal */
@@ -96,19 +98,20 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
    */
   id: string;
 
-  /** @internal */
-  _color: string;
-
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('toggle', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('toggle', val);
   }
 
   /**
@@ -118,16 +121,20 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
 
   constructor(
     public _form: Form,
-    public _elementRef: ElementRef,
-    public _renderer: Renderer,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() public _item: Item
   ) {
-    this._form.register(this);
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+    _form.register(this);
 
     if (_item) {
       this.id = 'tgl-' + _item.registerInput('toggle');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-toggle', true);
+      this._item.setElementClass('item-toggle', true);
     }
   }
 
@@ -206,7 +213,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
       if (this._init) {
         this.ionChange.emit(this);
       }
-      this._item && this._item.setCssClass('item-toggle-checked', isChecked);
+      this._item && this._item.setElementClass('item-toggle-checked', isChecked);
     }
   }
 
@@ -245,25 +252,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
 
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-toggle-disabled', this._disabled);
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `toggle-${color}`, isAdd);
-    }
+    this._item && this._item.setElementClass('item-toggle-disabled', this._disabled);
   }
 
   /**

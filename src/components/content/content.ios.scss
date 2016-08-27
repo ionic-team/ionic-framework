@@ -9,15 +9,15 @@ $content-ios-padding:                   $content-padding !default;
 $content-ios-margin:                    $content-margin !default;
 $content-ios-transition-background:     #000 !default;
 
-ion-content {
+.content-ios {
   background-color: $background-ios-color;
 }
 
-.outer-content {
+.content-ios.outer-content {
   background: $content-ios-outer-background;
 }
 
-.ion-page.show-page ~ .nav-decor {
+.ios .ion-page.show-page ~ .nav-decor {
   // when ios pages transition, the leaving page grays out
   // this is the black square behind all pages so they gray out
   position: absolute;
@@ -50,7 +50,7 @@ ion-content {
 // iOS Content Scroll
 // --------------------------------------------------
 
-ion-content:not([no-bounce]) > scroll-content {
+.content-ios:not([no-bounce]) > scroll-content {
   &::before,
   &::after {
     position: absolute;

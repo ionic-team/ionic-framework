@@ -96,11 +96,9 @@ ion-list {
   }
 }
 
-ion-list + ion-list {
-  ion-list-header {
-    margin-top: -$list-ios-margin-top;
-    padding-top: 0;
-  }
+ion-list + ion-list ion-list-header {
+  margin-top: -$list-ios-margin-top;
+  padding-top: 0;
 }
 
 &.hairlines {

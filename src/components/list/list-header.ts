@@ -1,5 +1,7 @@
 import { Attribute, Directive, ElementRef, Renderer } from '@angular/core';
 
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
 
 /**
  * @private
@@ -7,8 +9,10 @@ import { Attribute, Directive, ElementRef, Renderer } from '@angular/core';
 @Directive({
   selector: 'ion-list-header'
 })
-export class ListHeader {
-  constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') private _id: string) { }
+export class ListHeader extends Ion {
+  constructor(config: Config, renderer: Renderer, elementRef: ElementRef, @Attribute('id') private _id: string) {
+    super(config, elementRef, renderer);
+  }
 
   get id(): string {
     return this._id;
@@ -16,6 +20,6 @@ export class ListHeader {
 
   set id(val: string) {
     this._id = val;
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', val);
+    this.setElementAttribute('id', val);
   }
 }

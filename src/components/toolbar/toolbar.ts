@@ -86,8 +86,8 @@ export class ToolbarBase extends Ion {
   titleRef: any = null;
   titleCmp: any;
 
-  constructor(elementRef: ElementRef) {
-    super(elementRef);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
   }
 
   /**
@@ -258,50 +258,35 @@ export class ToolbarBase extends Ion {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toolbar extends ToolbarBase {
-  _sbPadding: boolean;
-
   /** @internal */
-  _color: string;
+  _sbPadding: boolean;
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('toolbar', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('toolbar', val);
   }
 
   constructor(
     @Optional() viewCtrl: ViewController,
     config: Config,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
-    super(_elementRef);
+    super(config, elementRef, renderer);
 
+    this.mode = config.get('mode');
     this._sbPadding = config.getBoolean('statusbarPadding');
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `toolbar-${color}`, isAdd);
-    }
   }
 
 }

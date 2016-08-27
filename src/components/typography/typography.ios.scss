@@ -3,18 +3,18 @@
 // iOS Typography
 // --------------------------------------------------
 
-p {
+.ios p {
   color: $paragraph-ios-color;
 }
 
-a {
+.ios a {
   color: $link-ios-color;
 }
 
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  .text-#{$color-name} {
+  .ios .text-#{$color-name} {
     color: $color-base;
   }
 
