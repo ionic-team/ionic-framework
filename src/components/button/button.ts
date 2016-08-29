@@ -201,6 +201,16 @@ export class Button extends Ion {
     this._attr('_display', 'full', val);
   }
 
+  /**
+   * @input {string} A button that fills its parent container without a border-radius or borders on the left/right.
+   */
+  @Input()
+  set mode(val: string) {
+    this._assignCss(false);
+    this._mode = val;
+    this._assignCss(true);
+  }
+
   /** @internal */
   _attr(type: string, attrName: string, attrValue: boolean) {
     if (type === '_style') {
@@ -236,6 +246,7 @@ export class Button extends Ion {
     renderer: Renderer
   ) {
     super(config, elementRef, renderer);
+    this._mode = config.get('mode');
 
     if (config.get('hoverCSS') === false) {
       this.setElementClass('disable-hover', true);
@@ -276,9 +287,9 @@ export class Button extends Ion {
     let role = this._role;
     if (role) {
       this.setElementClass(role, assignCssClass); // button
+      this.setElementClass(`${role}-${this._mode}`, assignCssClass); // button
 
       this._setClass('menutoggle', this._mt); // menutoggle
-
       this._setClass(this._style, assignCssClass); // button-clear
       this._setClass(this._shape, assignCssClass); // button-round
       this._setClass(this._display, assignCssClass); // button-full
@@ -292,7 +303,9 @@ export class Button extends Ion {
    */
   _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
-      this.setElementClass(this._role + '-' + type.toLowerCase(), assignCssClass);
+      type = type.toLocaleLowerCase();
+      this.setElementClass(`${this._role}-${type}`, assignCssClass);
+      this.setElementClass(`${this._role}-${type}-${this._mode}`, assignCssClass);
     }
   }
 

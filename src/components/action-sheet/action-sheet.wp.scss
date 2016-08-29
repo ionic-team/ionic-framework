@@ -1,5 +1,4 @@
 @import "../../globals.wp";
-@import "./action-sheet";
 
 // Windows Action Sheet
 // --------------------------------------------------
@@ -30,11 +29,11 @@ $action-sheet-wp-icon-font-size:                  2.4rem !default;
 $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
 
 
-.action-sheet-wp .action-sheet-wrapper {
+.action-sheet-wrapper-wp {
   box-shadow: $action-sheet-wp-box-shadow;
 }
 
-.action-sheet-wp .action-sheet-title {
+.action-sheet-title-wp {
   padding: $action-sheet-wp-title-padding;
 
   font-size: $action-sheet-wp-title-font-size;
@@ -42,7 +41,7 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
   color: $action-sheet-wp-title-color;
 }
 
-.action-sheet-wp .action-sheet-button {
+.action-sheet-button-wp {
   padding: $action-sheet-wp-button-padding;
 
   min-height: $action-sheet-wp-button-height;
@@ -53,11 +52,11 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
   background: $action-sheet-wp-button-background;
 }
 
-.action-sheet-wp .action-sheet-button.activated {
+.action-sheet-button-wp.activated {
   background: $action-sheet-wp-button-background-activated;
 }
 
-.action-sheet-wp .action-sheet-icon {
+.action-sheet-icon-wp {
   margin: $action-sheet-wp-icon-margin;
 
   min-width: $action-sheet-wp-icon-min-width;
@@ -67,15 +66,15 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
   vertical-align: $action-sheet-wp-icon-vertical-align;
 }
 
-.action-sheet-wp .action-sheet-group {
+.action-sheet-group-wp {
   background: $action-sheet-wp-background;
 }
 
-.action-sheet-wp .action-sheet-group:last-child .action-sheet-button {
+.action-sheet-group-wp:last-child .action-sheet-button {
   margin-bottom: $action-sheet-wp-group-margin-bottom;
 }
 
-.action-sheet-wp .action-sheet-group .button-inner {
+.action-sheet-group-wp .button-inner {
   justify-content: flex-start;
 }
 

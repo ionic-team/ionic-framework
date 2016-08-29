@@ -84,7 +84,7 @@ $checkbox-wp-item-right-margin:          11px 10px 10px 0 !default;
 // -----------------------------------------
 
 .checkbox-wp.checkbox-disabled,
-.item-checkbox-disabled .checkbox-wp ion-label {
+.item-wp.item-checkbox-disabled ion-label {
   opacity: $checkbox-wp-disabled-opacity;
 
   pointer-events: none;
@@ -94,15 +94,15 @@ $checkbox-wp-item-right-margin:          11px 10px 10px 0 !default;
 // Windows Checkbox Within An Item
 // -----------------------------------------
 
-.item .checkbox-wp {
+.item.item-wp .checkbox-wp {
   position: static;
   display: block;
 
   margin: $checkbox-wp-item-left-margin;
+}
 
-  &[item-right] {
-    margin: $checkbox-wp-item-right-margin;
-  }
+.item.item-wp .checkbox-wp[item-right] {
+  margin: $checkbox-wp-item-right-margin;
 }
 
 .checkbox-wp + .item-inner ion-label {
@@ -118,10 +118,10 @@ $checkbox-wp-item-right-margin:          11px 10px 10px 0 !default;
   .checkbox-wp.checkbox-#{$color-name} .checkbox-checked {
     border-color: $color-base;
     background-color: $color-base;
+  }
 
-    .checkbox-inner {
-      border-color: $color-contrast;
-    }
+  .checkbox-wp.checkbox-#{$color-name} .checkbox-checked .checkbox-inner {
+    border-color: $color-contrast;
   }
 
 }

@@ -1,13 +1,11 @@
 @import "../../globals.ios";
-@import "./content";
 
 // iOS Content
 // --------------------------------------------------
 
 $content-ios-outer-background:          #efeff4 !default;
-$content-ios-padding:                   $content-padding !default;
-$content-ios-margin:                    $content-margin !default;
 $content-ios-transition-background:     #000 !default;
+
 
 .content-ios {
   background-color: $background-ios-color;
@@ -32,6 +30,12 @@ $content-ios-transition-background:     #000 !default;
   background: $content-ios-transition-background;
 
   pointer-events: none;
+}
+
+.content-ios hr {
+  color: $text-ios-color;
+  background-color: rgba(0, 0, 0, .12);
+  height: $hairlines-width;
 }
 
 

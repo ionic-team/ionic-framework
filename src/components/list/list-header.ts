@@ -12,6 +12,7 @@ import { Ion } from '../ion';
 export class ListHeader extends Ion {
   constructor(config: Config, renderer: Renderer, elementRef: ElementRef, @Attribute('id') private _id: string) {
     super(config, elementRef, renderer);
+    this._setMode('list-header', config.get('mode'));
   }
 
   get id(): string {

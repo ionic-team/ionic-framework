@@ -1,13 +1,8 @@
-@import "./typography";
 
 // iOS Typography
 // --------------------------------------------------
 
-.ios p {
-  color: $paragraph-ios-color;
-}
-
-.ios a {
+.ios a:not(.button):not(.item) {
   color: $link-ios-color;
 }
 

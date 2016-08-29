@@ -75,7 +75,7 @@ import { Platform } from '../../platform/platform';
 @Component({
   selector: 'ion-input',
   template:
-    '<input [type]="type" [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input">' +
+    '<input [type]="type" [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input" [ngClass]="\'text-input-\' + _mode">' +
     '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
@@ -283,7 +283,7 @@ export class TextInput extends InputBase {
 @Component({
   selector: 'ion-textarea',
   template:
-    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input"></textarea>' +
+    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input" [ngClass]="\'text-input-\' + _mode"></textarea>' +
     '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
   encapsulation: ViewEncapsulation.None,
@@ -349,7 +349,7 @@ export class TextArea extends InputBase {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('textarea', val);
+    this._setMode('input', val);
   }
 
   /**

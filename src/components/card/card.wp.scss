@@ -1,5 +1,4 @@
 @import "../../globals.wp";
-@import "./card";
 
 // Windows Card
 // --------------------------------------------------
@@ -55,6 +54,7 @@ $card-wp-header-color:                #222 !default;
 }
 
 .card-wp > .item:last-child,
+.card-wp > .item:last-child .item-inner,
 .card-wp > .item-wrapper:last-child .item {
   border-bottom: 0;
 }
@@ -83,7 +83,7 @@ $card-wp-header-color:                #222 !default;
 }
 
 .card-wp ion-note[item-left],
-.card-wp ion-note[item-right], {
+.card-wp ion-note[item-right] {
   font-size: 1.3rem;
 }
 

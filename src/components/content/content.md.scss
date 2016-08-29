@@ -1,15 +1,15 @@
 @import "../../globals.md";
-@import "./content";
 
 // Material Design Content
 // --------------------------------------------------
 
-$content-md-padding:              $content-padding !default;
-$content-md-margin:               $content-margin !default;
-
-
 .content-md {
+  color: $text-md-color;
   background-color: $background-md-color;
+}
+
+.content-md hr {
+  background-color: rgba(0, 0, 0, .08);
 }
 
 

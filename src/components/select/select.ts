@@ -191,6 +191,14 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   @Input() selectedText: string = '';
 
   /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('select', val);
+  }
+
+  /**
    * @output {any} Any expression you want to evaluate when the selection has changed.
    */
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
@@ -210,6 +218,9 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     @Optional() private _nav: NavController
   ) {
     super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+
     _form.register(this);
 
     if (_item) {

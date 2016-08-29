@@ -47,17 +47,17 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-navbar',
   template:
-    '<div class="toolbar-background"></div>' +
-    '<button (click)="backButtonClick($event)" ion-button="bar-button" class="back-button" [hidden]="_hideBb">' +
+    '<div class="toolbar-background" [ngClass]="\'toolbar-background-\' + _mode"></div>' +
+    '<button (click)="backButtonClick($event)" ion-button="bar-button" class="back-button" [ngClass]="\'back-button-\' + _mode" [hidden]="_hideBb">' +
       '<span class="button-inner">' +
-        '<ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>' +
-        '<span class="back-button-text" #bbTxt></span>' +
+        '<ion-icon class="back-button-icon" [ngClass]="\'back-button-icon-\' + _mode" [name]="_bbIcon"></ion-icon>' +
+        '<span class="back-button-text" [ngClass]="\'back-button-text-\' + _mode" #bbTxt></span>' +
       '</span>' +
     '</button>' +
     '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
     '<ng-content select="ion-buttons[start]"></ng-content>' +
     '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
-    '<div class="toolbar-content">' +
+    '<div class="toolbar-content" [ngClass]="\'toolbar-content-\' + _mode">' +
       '<ng-content></ng-content>' +
     '</div>',
   host: {

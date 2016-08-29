@@ -1,5 +1,4 @@
 @import "../../globals.md";
-@import "./button";
 
 // Material Design Button
 // --------------------------------------------------
@@ -218,36 +217,34 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // --------------------------------------------------
 
 @mixin md-button-default($color-name, $color-base, $color-contrast) {
+  $background-color: $color-base;
+  $background-color-activated: color-shade($background-color);
+  $fg-color: $color-contrast;
 
   .button-md.button-#{$color-name} {
-    $background-color: $color-base;
-    $background-color-activated: color-shade($background-color);
-    $fg-color: $color-contrast;
-
     color: $fg-color;
     background-color: $background-color;
-
-    &:hover:not(.disable-hover) {
-      background-color: $background-color;
-    }
-
-    &.activated {
-      background-color: $background-color-activated;
-      opacity: $button-md-opacity-activated;
-    }
-
-    ion-button-effect {
-      background-color: $fg-color;
-    }
   }
 
+  .button-md.button-#{$color-name}:hover:not(.disable-hover) {
+    background-color: $background-color;
+  }
+
+  .button-md.button-#{$color-name}.activated {
+    background-color: $background-color-activated;
+    opacity: $button-md-opacity-activated;
+  }
+
+  .button-md.button-#{$color-name} ion-button-effect {
+    background-color: $fg-color;
+  }
 }
 
 
 // Material Design Button Sizes
 // --------------------------------------------------
 
-.button-md.button-large {
+.button-large-md {
   padding: $button-md-large-padding;
 
   height: $button-md-large-height;
@@ -255,7 +252,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   font-size: $button-md-large-font-size;
 }
 
-.button-md.button-small {
+.button-small-md {
   padding: $button-md-small-padding;
 
   height: $button-md-small-height;
@@ -263,14 +260,14 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   font-size: $button-md-small-font-size;
 }
 
-.button-md.button-small[icon-only] ion-icon {
+.button-small-md[icon-only] ion-icon {
   font-size: $button-md-small-icon-font-size;
 }
 
 // Material Design Block Button
 // --------------------------------------------------
 
-.button-md.button-block {
+.button-block-md {
   margin-right: 0;
   margin-left: 0;
 }
@@ -278,7 +275,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // Material Design Full Button
 // --------------------------------------------------
 
-.button-md.button-full {
+.button-full-md {
   margin-right: 0;
   margin-left: 0;
 
@@ -290,7 +287,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // Material Design Outline Button
 // --------------------------------------------------
 
-.button-md.button-outline {
+.button-outline-md {
   border-width: $button-md-outline-border-width;
   border-style: $button-md-outline-border-style;
   border-color: $button-md-outline-border-color;
@@ -299,17 +296,17 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   box-shadow: $button-md-outline-box-shadow;
 }
 
-.button-md.button-outline:hover:not(.disable-hover) {
+.button-outline-md:hover:not(.disable-hover) {
   background-color: $button-md-outline-background-color-hover;
 }
 
-.button-md.button-outline.activated {
+.button-outline-md.activated {
   background-color: $button-md-outline-background-color-activated;
   box-shadow: $button-md-outline-box-shadow-activated;
   opacity: $button-md-outline-opacity-activated;
 }
 
-.button-md.button-outline ion-button-effect {
+.button-outline-md ion-button-effect {
   background-color: $button-md-outline-ripple-background-color;
 }
 
@@ -318,33 +315,32 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // --------------------------------------------------
 
 @mixin md-button-outline($color-name, $color-base, $color-contrast) {
+  $fg-color: color-shade($color-base, 5%);
 
   .button-md.button-outline-#{$color-name} {
-    $fg-color: color-shade($color-base, 5%);
     border-color: $fg-color;
     color: $fg-color;
     background-color: $button-md-outline-background-color;
-
-    &:hover:not(.disable-hover) {
-      background-color: $button-md-outline-background-color-hover;
-    }
-
-    &.activated {
-      background-color: $button-md-outline-background-color-activated;
-    }
-
-    ion-button-effect {
-      background-color: $fg-color;
-    }
   }
 
+  .button-md.button-outline-#{$color-name}:hover:not(.disable-hover) {
+    background-color: $button-md-outline-background-color-hover;
+  }
+
+  .button-md.button-outline-#{$color-name}.activated {
+    background-color: $button-md-outline-background-color-activated;
+  }
+
+  .button-md.button-outline-#{$color-name} ion-button-effect {
+    background-color: $fg-color;
+  }
 }
 
 
 // Material Design Clear Button
 // --------------------------------------------------
 
-.button-md.button-clear {
+.button-clear-md {
   border-color: $button-md-clear-border-color;
   color: $button-md-background-color;
   background-color: $button-md-clear-background-color;
@@ -352,16 +348,16 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   opacity: $button-md-clear-opacity;
 }
 
-.button-md.button-clear.activated {
+.button-clear-md.activated {
   background-color: $button-md-clear-background-color-activated;
   box-shadow: $button-md-clear-box-shadow-activated;
 }
 
-.button-md.button-clear:hover:not(.disable-hover) {
+.button-clear-md:hover:not(.disable-hover) {
   background-color: $button-md-clear-background-color-hover;
 }
 
-.button-md.button-clear ion-button-effect {
+.button-clear-md ion-button-effect {
   background-color: $button-md-clear-ripple-background-color;
 }
 
@@ -370,21 +366,21 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // --------------------------------------------------
 
 @mixin md-button-clear($color-name, $color-base, $color-contrast) {
+  $fg-color: $color-base;
 
   .button-md.button-clear-#{$color-name} {
-    $fg-color: $color-base;
     border-color: $button-md-clear-border-color;
     color: $fg-color;
     background-color: $button-md-clear-background-color;
+  }
 
-    &.activated {
-      background-color: $button-md-clear-background-color-activated;
-      box-shadow: $button-md-clear-box-shadow-activated;
-    }
+  .button-md.button-clear-#{$color-name}.activated {
+    background-color: $button-md-clear-background-color-activated;
+    box-shadow: $button-md-clear-box-shadow-activated;
+  }
 
-    &:hover:not(.disable-hover) {
-      color: $fg-color;
-    }
+  .button-md.button-clear-#{$color-name}:hover:not(.disable-hover) {
+    color: $fg-color;
   }
 }
 
@@ -392,7 +388,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // Material Design Round Button
 // --------------------------------------------------
 
-.button-md.button-round {
+.button-round-md {
   padding: $button-md-round-padding;
 
   border-radius: $button-md-round-border-radius;
@@ -402,7 +398,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // Material Design FAB Button
 // --------------------------------------------------
 
-.button-md.button-fab {
+.button-fab-md {
   border-radius: $button-md-fab-border-radius;
   box-shadow: $button-md-fab-box-shadow;
 
@@ -411,7 +407,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
               color $button-md-transition-duration $button-md-transition-timing-function;
 }
 
-.button-md.button-fab.activated {
+.button-fab-md.activated {
   box-shadow: $button-md-fab-box-shadow-activated;
 }
 
@@ -447,10 +443,3 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   @include md-button-outline($color-name, $color-base, $color-contrast);
   @include md-button-clear($color-name, $color-base, $color-contrast);
 }
-
-
-// Core Button Overrides
-// --------------------------------------------------
-
-@import "./button-fab";
-@import "./button-icon";

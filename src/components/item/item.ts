@@ -286,6 +286,9 @@ import { Label } from '../label/label';
       '<ion-reorder></ion-reorder>' +
     '</div>' +
     '<ion-button-effect></ion-button-effect>',
+  host: {
+    'class': 'item'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -393,7 +396,9 @@ export class Item extends Ion {
   @ContentChildren(Button)
   set _buttons(buttons: QueryList<Button>) {
     buttons.forEach(button => {
-      button.setElementClass('item-button', true);
+      if (!button._size) {
+        button.setElementClass('item-button', true);
+      }
     });
   }
 
@@ -415,9 +420,7 @@ export class Item extends Ion {
 @Directive({
   selector: 'ion-item,[ion-item]',
   host: {
-    'class': 'item'
+    'class': 'item-block'
   }
 })
-export class ItemContent {
-
-}
+export class ItemContent {}

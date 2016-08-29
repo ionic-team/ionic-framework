@@ -101,13 +101,13 @@ export class InputBase extends Ion {
     }
   }
 
-  setControlCss(element: any, control: any) {
-    element.setCssClass('ng-untouched', control.untouched);
-    element.setCssClass('ng-touched', control.touched);
-    element.setCssClass('ng-pristine', control.pristine);
-    element.setCssClass('ng-dirty', control.dirty);
-    element.setCssClass('ng-valid', control.valid);
-    element.setCssClass('ng-invalid', !control.valid);
+  setControlCss(element: any, control: NgControl) {
+    element.setElementClass('ng-untouched', control.untouched);
+    element.setElementClass('ng-touched', control.touched);
+    element.setElementClass('ng-pristine', control.pristine);
+    element.setElementClass('ng-dirty', control.dirty);
+    element.setElementClass('ng-valid', control.valid);
+    element.setElementClass('ng-invalid', !control.valid);
   }
 
   setValue(val: any) {

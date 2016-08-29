@@ -1,14 +1,8 @@
-@import "./typography";
 
 // Windows Typography
 // --------------------------------------------------
 
-
-.wp p {
-  color: $paragraph-wp-color;
-}
-
-.wp a {
+.wp a:not(.button):not(.item) {
   color: $link-wp-color;
 }
 

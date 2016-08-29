@@ -52,8 +52,8 @@ export class ToastCmp implements AfterViewInit {
     public _elementRef: ElementRef,
     params: NavParams,
     renderer: Renderer
- ) {
-
+  ) {
+    renderer.setElementClass(_elementRef.nativeElement, `toast-${_config.get('mode')}`, true);
     this.d = params.data;
 
     if (this.d.cssClass) {

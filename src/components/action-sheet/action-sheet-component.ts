@@ -16,19 +16,19 @@ import { ViewController } from '../../navigation/view-controller';
   selector: 'ion-action-sheet',
   template:
     '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
-    '<div class="action-sheet-wrapper">' +
-      '<div class="action-sheet-container">' +
-        '<div class="action-sheet-group">' +
-          '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
-          '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
+    '<div class="action-sheet-wrapper" [ngClass]="\'action-sheet-wrapper-\' + mode">' +
+      '<div class="action-sheet-container" [ngClass]="\'action-sheet-container-\' + mode">' +
+        '<div class="action-sheet-group" [ngClass]="\'action-sheet-group-\' + mode">' +
+          '<div class="action-sheet-title" [ngClass]="\'action-sheet-title-\' + mode" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
+          '<div class="action-sheet-sub-title" [ngClass]="\'action-sheet-sub-title-\' + mode" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
           '<button ion-button="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">' +
-            '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon>' +
+            '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon" [ngClass]="\'action-sheet-icon-\' + mode"></ion-icon>' +
             '{{b.text}}' +
           '</button>' +
         '</div>' +
-        '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
+        '<div class="action-sheet-group" [ngClass]="\'action-sheet-group-\' + mode" *ngIf="d.cancelButton">' +
           '<button ion-button="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
-            '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
+            '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon" [ngClass]="\'action-sheet-icon-\' + mode"></ion-icon>' +
             '{{d.cancelButton.text}}' +
           '</button>' +
         '</div>' +
@@ -54,6 +54,7 @@ export class ActionSheetCmp {
   enabled: boolean;
   hdrId: string;
   id: number;
+  mode: string;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -64,6 +65,8 @@ export class ActionSheetCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
+    this.mode = _config.get('mode');
+    renderer.setElementClass(_elementRef.nativeElement, `action-sheet-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {

@@ -44,7 +44,7 @@ import { Toolbar } from './toolbar';
 @Component({
   selector: 'ion-title',
   template:
-    '<div class="toolbar-title">' +
+    '<div class="toolbar-title" [ngClass]="\'toolbar-title-\' + _mode">' +
       '<ng-content></ng-content>' +
     '</div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,8 +59,10 @@ export class ToolbarTitle extends Ion {
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
     super(config, elementRef, renderer);
-    toolbar && toolbar.setTitleCmp(this);
-    navbar && navbar.setTitleCmp(this);
+    this._setMode('title', this._mode = config.get('mode'));
+
+    toolbar && toolbar._setTitle(this);
+    navbar && navbar._setTitle(this);
   }
 
   /**

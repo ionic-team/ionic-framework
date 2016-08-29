@@ -1,5 +1,4 @@
 @import "../../globals.md";
-@import "./card";
 
 // Material Design Card
 // --------------------------------------------------
@@ -54,6 +53,7 @@ $card-md-header-color:                #222 !default;
 }
 
 .card-md > .item:last-child,
+.card-md > .item:last-child .item-inner,
 .card-md > .item-wrapper:last-child .item {
   border-bottom: 0;
 }
@@ -82,7 +82,7 @@ $card-md-header-color:                #222 !default;
 }
 
 .card-md ion-note[item-left],
-.card-md ion-note[item-right], {
+.card-md ion-note[item-right] {
   font-size: 1.3rem;
 }
 

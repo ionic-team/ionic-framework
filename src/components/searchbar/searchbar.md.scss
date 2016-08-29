@@ -1,5 +1,4 @@
 @import "../../globals.md";
-@import "./searchbar";
 
 // Material Design Searchbar
 // --------------------------------------------------
@@ -27,7 +26,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 // Searchbar
 // -----------------------------------------
 
-ion-searchbar {
+.searchbar-md {
   padding: $searchbar-md-padding;
 
   background: $searchbar-md-background-color;
@@ -37,7 +36,7 @@ ion-searchbar {
 // Searchbar Search Icon
 // -----------------------------------------
 
-.searchbar-search-icon {
+.searchbar-md .searchbar-search-icon {
   @include svg-background-image($searchbar-md-input-search-icon-svg);
 
   top: 11px;
@@ -51,7 +50,7 @@ ion-searchbar {
 // Searchbar Cancel Icon (MD only)
 // -----------------------------------------
 
-.searchbar-md-cancel {
+.searchbar-md .searchbar-md-cancel {
   top: 0;
   left: 10px;
   display: none;
@@ -65,8 +64,8 @@ ion-searchbar {
 // Searchbar Search & Cancel Icon
 // -----------------------------------------
 
-.searchbar-search-icon,
-.searchbar-md-cancel {
+.searchbar-md .searchbar-search-icon,
+.searchbar-md .searchbar-md-cancel {
   position: absolute;
 
   background-repeat: no-repeat;
@@ -81,7 +80,7 @@ ion-searchbar {
 // Searchbar Input Field
 // -----------------------------------------
 
-.searchbar-input {
+.searchbar-md .searchbar-input {
   @include placeholder($searchbar-md-input-placeholder-color);
 
   padding: 6px 55px;
@@ -105,7 +104,7 @@ ion-searchbar {
 // Searchbar Clear Input Icon
 // -----------------------------------------
 
-.searchbar-clear-icon {
+.searchbar-md .searchbar-clear-icon {
   @include svg-background-image($searchbar-md-input-clear-icon-svg);
 
   position: absolute;
@@ -130,7 +129,7 @@ ion-searchbar {
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-has-focus.searchbar-show-cancel {
+.searchbar-md .searchbar-has-focus.searchbar-show-cancel {
   .searchbar-search-icon {
     display: none;
   }
@@ -145,11 +144,11 @@ ion-searchbar {
 // -----------------------------------------
 
 .toolbar {
-  ion-searchbar {
+  .searchbar-md  {
     padding: 3px;
   }
 
-  .searchbar-md-cancel {
+  .searchbar-md .searchbar-md-cancel {
     left: 14px;
   }
 }
@@ -158,6 +157,6 @@ ion-searchbar {
 // Searchbar Cancel Icon (iOS only)
 // -----------------------------------------
 
-.searchbar-ios-cancel {
+.searchbar-md .searchbar-ios-cancel {
   display: none;
 }

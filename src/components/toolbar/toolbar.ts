@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Directive, ElementRef, Input, Optio
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
+import { ToolbarTitle } from './toolbar-title';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -35,9 +36,11 @@ import { ViewController } from '../../navigation/view-controller';
 @Directive({
   selector: 'ion-header'
 })
-export class Header {
+export class Header extends Ion {
 
-  constructor(@Optional() viewCtrl: ViewController) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
+    super(config, elementRef, renderer);
+    this._setMode('header', config.get('mode'));
     viewCtrl && viewCtrl._setHeader(this);
   }
 
@@ -69,9 +72,11 @@ export class Header {
 @Directive({
   selector: 'ion-footer'
 })
-export class Footer {
+export class Footer extends Ion {
 
-  constructor(@Optional() viewCtrl: ViewController) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
+    super(config, elementRef, renderer);
+    this._setMode('footer', config.get('mode'));
     viewCtrl && viewCtrl._setFooter(this);
   }
 
@@ -82,19 +87,17 @@ export class Footer {
  * @private
  */
 export class ToolbarBase extends Ion {
-  itemRefs: ElementRef[] = [];
-  titleRef: any = null;
-  titleCmp: any;
+  private _title: ToolbarTitle;
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
     super(config, elementRef, renderer);
   }
 
   /**
-   * @private
+   * @internal
    */
-  setTitleCmp(titleCmp: any) {
-    this.titleCmp = titleCmp;
+  _setTitle(titleCmp: ToolbarTitle) {
+    this._title = titleCmp;
   }
 
   /**
@@ -102,7 +105,7 @@ export class ToolbarBase extends Ion {
    * Returns the toolbar title text if it exists or an empty string
    */
   getTitleText() {
-    return (this.titleCmp && this.titleCmp.getTitleText()) || '';
+    return (this._title && this._title.getTitleText()) || '';
   }
 
 }
@@ -244,11 +247,11 @@ export class ToolbarBase extends Ion {
 @Component({
   selector: 'ion-toolbar',
   template:
-    '<div class="toolbar-background"></div>' +
+    '<div class="toolbar-background" [ngClass]="\'toolbar-background-\' + _mode"></div>' +
     '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
     '<ng-content select="ion-buttons[start]"></ng-content>' +
     '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
-    '<div class="toolbar-content">' +
+    '<div class="toolbar-content" [ngClass]="\'toolbar-content-\' + _mode">' +
       '<ng-content></ng-content>' +
     '</div>',
   host: {

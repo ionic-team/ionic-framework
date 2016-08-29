@@ -1,14 +1,8 @@
-@import "./typography";
 
 // Material Design Typography
 // --------------------------------------------------
 
-
-.md p {
-  color: $paragraph-md-color;
-}
-
-.md a {
+.md a:not(.button):not(.item) {
   color: $link-md-color;
 }
 

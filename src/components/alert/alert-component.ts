@@ -16,17 +16,17 @@ import { ViewController } from '../../navigation/view-controller';
   selector: 'ion-alert',
   template:
     '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
-    '<div class="alert-wrapper">' +
-      '<div class="alert-head">' +
-        '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
-        '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
+    '<div class="alert-wrapper" [ngClass]="\'alert-wrapper-\' + mode">' +
+      '<div class="alert-head" [ngClass]="\'alert-head-\' + mode">' +
+        '<h2 id="{{hdrId}}" class="alert-title" [ngClass]="\'alert-title-\' + mode" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
+        '<h3 id="{{subHdrId}}" class="alert-sub-title" [ngClass]="\'alert-sub-title-\' + mode" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
       '</div>' +
-      '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
+      '<div id="{{msgId}}" class="alert-message" [ngClass]="\'alert-message-\' + mode" [innerHTML]="d.message"></div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
         '<template ngSwitchCase="radio">' +
-          '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
-            '<button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
+          '<div class="alert-radio-group" [ngClass]="\'alert-radio-group-\' + mode" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
+            '<button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" [ngClass]="\'alert-radio-\' + mode" role="radio">' +
               '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
               '<div class="alert-radio-label">' +
                 '{{i.label}}' +
@@ -36,8 +36,8 @@ import { ViewController } from '../../navigation/view-controller';
         '</template>' +
 
         '<template ngSwitchCase="checkbox">' +
-          '<div class="alert-checkbox-group">' +
-            '<button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
+          '<div class="alert-checkbox-group" [ngClass]="\'alert-checkbox-group-\' + mode">' +
+            '<button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" [ngClass]="\'alert-checkbox-\' + mode" role="checkbox">' +
               '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
               '<div class="alert-checkbox-label">' +
                 '{{i.label}}' +
@@ -47,9 +47,9 @@ import { ViewController } from '../../navigation/view-controller';
         '</template>' +
 
         '<template ngSwitchDefault>' +
-          '<div class="alert-input-group">' +
+          '<div class="alert-input-group" [ngClass]="\'alert-input-group-\' + mode">' +
             '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
-              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
+              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input" [ngClass]="\'alert-input-\' + mode">' +
             '</div>' +
           '</div>' +
         '</template>' +
@@ -87,6 +87,7 @@ export class AlertCmp {
   lastClick: number;
   msgId: string;
   subHdrId: string;
+  mode: string;
 
   constructor(
     public _viewCtrl: ViewController,
@@ -96,6 +97,8 @@ export class AlertCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
+    this.mode = _config.get('mode');
+    renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {

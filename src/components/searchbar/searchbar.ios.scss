@@ -1,5 +1,4 @@
 @import "../../globals.ios";
-@import "./searchbar";
 
 // iOS Searchbar
 // --------------------------------------------------
@@ -30,13 +29,13 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // Searchbar
 // -----------------------------------------
 
-ion-searchbar {
+.searchbar-ios {
   padding: $searchbar-ios-padding-top-bottom $searchbar-ios-padding-left-right;
 
   min-height: $searchbar-ios-min-height;
 
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid $searchbar-ios-border-color;
+  border-top: $hairlines-width solid transparent;
+  border-bottom: $hairlines-width solid $searchbar-ios-border-color;
   background: $searchbar-ios-background-color;
 }
 
@@ -53,7 +52,7 @@ ion-searchbar {
 // Searchbar Search Icon
 // -----------------------------------------
 
-.searchbar-search-icon {
+.searchbar-ios .searchbar-search-icon {
   @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $searchbar-ios-input-search-icon-color);
   @include calc(margin-left, "50% - 60px");
 
@@ -74,7 +73,7 @@ ion-searchbar {
 // Searchbar Input Field
 // -----------------------------------------
 
-.searchbar-input {
+.searchbar-ios .searchbar-input {
   @include placeholder($searchbar-ios-input-placeholder-color);
   @include calc(padding-left, "50% - 28px");
 
@@ -96,7 +95,7 @@ ion-searchbar {
 // Searchbar Clear Input Icon
 // -----------------------------------------
 
-.searchbar-clear-icon {
+.searchbar-ios .searchbar-clear-icon {
   @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $searchbar-ios-input-clear-icon-color);
 
   position: absolute;
@@ -115,7 +114,7 @@ ion-searchbar {
 // Searchbar Cancel (iOS only)
 // -----------------------------------------
 
-.searchbar-ios-cancel {
+.searchbar-ios .searchbar-ios-cancel {
   display: none;
 
   flex-shrink: 0;
@@ -137,14 +136,14 @@ ion-searchbar {
   pointer-events: none;
 }
 
-.searchbar-show-cancel .searchbar-ios-cancel {
+.searchbar-ios .searchbar-show-cancel .searchbar-ios-cancel {
   display: block;
 }
 
 // Searchbar Left Aligned (iOS only)
 // -----------------------------------------
 
-.searchbar-left-aligned {
+.searchbar-ios .searchbar-left-aligned {
   .searchbar-search-icon {
     margin-left: 0;
   }
@@ -158,7 +157,7 @@ ion-searchbar {
 // Searchbar Has Focus
 // -----------------------------------------
 
-.searchbar-has-focus {
+.searchbar-ios .searchbar-has-focus {
   .searchbar-ios-cancel {
     opacity: 1;
 
@@ -172,7 +171,7 @@ ion-searchbar {
 
 .toolbar {
 
-  ion-searchbar {
+  .searchbar-ios {
     border-bottom-width: 0;
     background: transparent;
 
@@ -185,7 +184,7 @@ ion-searchbar {
     }
   }
 
-  .searchbar-has-focus .searchbar-ios-cancel {
+  .searchbar-ios .searchbar-has-focus .searchbar-ios-cancel {
     padding-left: 8px;
   }
 
@@ -195,20 +194,8 @@ ion-searchbar {
 // Searchbar Cancel (MD only)
 // -----------------------------------------
 
-.searchbar-md-cancel {
+.searchbar-ios .searchbar-md-cancel {
   display: none;
-}
-
-
-// Searchbar Hairlines (iOS only)
-// -----------------------------------------
-
-&.hairlines ion-searchbar {
-  border-bottom-width: $hairlines-width;
-}
-
-&.hairlines ion-toolbar ion-searchbar {
-  border-bottom-width: 0;
 }
 
 
@@ -218,7 +205,7 @@ ion-searchbar {
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   $fg-color: rgba($color-contrast, .5);
 
-  .searchbar-#{$color-name} {
+  .searchbar-ios.searchbar-#{$color-name} {
     .searchbar-ios-cancel {
       color: $color-base;
 
@@ -228,7 +215,7 @@ ion-searchbar {
     }
   }
 
-  .toolbar-#{$color-name} ion-searchbar {
+  .toolbar-#{$color-name} .searchbar-ios {
     .searchbar-search-icon {
       @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
     }

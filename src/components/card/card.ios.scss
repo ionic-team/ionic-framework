@@ -1,5 +1,4 @@
 @import "../../globals.ios";
-@import "./card";
 
 // iOS Card
 // --------------------------------------------------
@@ -52,6 +51,7 @@ $card-ios-header-color:                #333 !default;
 }
 
 .card-ios > .item:last-child,
+.card-ios > .item:last-child .item-inner,
 .card-ios > .item-wrapper:last-child .item {
   border-bottom: 0;
 }
@@ -81,7 +81,7 @@ $card-ios-header-color:                #333 !default;
 }
 
 .card-ios ion-note[item-left],
-.card-ios ion-note[item-right], {
+.card-ios ion-note[item-right] {
   font-size: 1.3rem;
 }
 

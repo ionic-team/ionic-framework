@@ -54,6 +54,8 @@ export class PopoverCmp {
   ) {
     this.d = _navParams.data.opts;
 
+    _renderer.setElementClass(_elementRef.nativeElement, `popover-${_config.get('mode')}`, true);
+
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
         // Make sure the class isn't whitespace, otherwise it throws exceptions

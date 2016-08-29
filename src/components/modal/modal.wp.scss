@@ -5,7 +5,7 @@
 
 $modal-wp-background-color:          $background-wp-color !default;
 
-.modal-wrapper {
+.wp .modal-wrapper {
   opacity: .01;
   transform: translate3d(0, 40px, 0);
 }

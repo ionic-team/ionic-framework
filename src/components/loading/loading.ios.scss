@@ -1,5 +1,4 @@
 @import "../../globals.core";
-@import "./loading";
 
 // iOS Loading Indicator
 // --------------------------------------------------
@@ -22,7 +21,7 @@ $loading-ios-spinner-crescent-color:    $loading-ios-spinner-color !default;
 $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 
 
-.loading-wrapper {
+.loading-ios .loading-wrapper {
   padding: $loading-ios-padding;
 
   max-width: $loading-ios-max-width;
@@ -37,11 +36,11 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 // iOS Loading Content
 // -----------------------------------------
 
-.loading-content {
+.loading-ios .loading-content {
   font-weight: $loading-ios-content-font-weight;
 }
 
-.loading-spinner + .loading-content {
+.loading-ios .loading-spinner + .loading-content {
   margin-left: 16px;
 }
 
@@ -49,23 +48,23 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 // iOS Loading Spinner fill colors
 // -----------------------------------------
 
-.loading-spinner .spinner-ios line,
-.loading-spinner .spinner-ios-small line {
+.loading-ios .loading-spinner .spinner-ios line,
+.loading-ios .loading-spinner .spinner-ios-small line {
   stroke: $loading-ios-spinner-ios-color;
 }
 
-.loading-spinner .spinner-bubbles circle {
+.loading-ios .loading-spinner .spinner-bubbles circle {
   fill: $loading-ios-spinner-bubbles-color;
 }
 
-.loading-spinner .spinner-circles circle {
+.loading-ios .loading-spinner .spinner-circles circle {
   fill: $loading-ios-spinner-circles-color;
 }
 
-.loading-spinner .spinner-crescent circle {
+.loading-ios .loading-spinner .spinner-crescent circle {
   stroke: $loading-ios-spinner-crescent-color;
 }
 
-.loading-spinner .spinner-dots circle {
+.loading-ios .loading-spinner .spinner-dots circle {
   fill: $loading-ios-spinner-dots-color;
 }
