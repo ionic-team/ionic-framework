@@ -67,34 +67,34 @@ export class ViewController {
    */
   willUnload: EventEmitter<any>;
 
-  /** @internal */
+  /** @private */
   data: any;
 
-  /** @internal */
+  /** @private */
   instance: any;
 
   /** @private */
   id: string;
 
-  /** @internal */
+  /** @private */
   isOverlay: boolean = false;
 
-  /** @internal */
+  /** @private */
   _cmp: ComponentRef<any>;
 
-  /** @internal */
+  /** @private */
   _nav: NavControllerBase;
 
-  /** @internal */
+  /** @private */
   _zIndex: number;
 
-  /** @internal */
+  /** @private */
   _state: ViewState;
 
-  /** @internal */
+  /** @private */
   _cssClass: string;
 
-  /** @internal */
+  /** @private */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public componentType?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
@@ -111,7 +111,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   init(componentRef: ComponentRef<any>) {
     this._cmp = componentRef;
@@ -120,28 +120,28 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setNav(navCtrl: NavControllerBase) {
     this._nav = navCtrl;
   }
 
   /**
-   * @internal
+   * @private
    */
   _setInstance(instance: any) {
     this.instance = instance;
   }
 
   /**
-   * @internal
+   * @private
    */
   subscribe(generatorOrNext?: any): any {
     return this._emitter.subscribe(generatorOrNext);
   }
 
   /**
-   * @internal
+   * @private
    */
   emit(data?: any) {
     this._emitter.emit(data);
@@ -191,21 +191,21 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   getTransitionName(direction: string): string {
     return this._nav && this._nav.config.get('pageTransition');
   }
 
   /**
-   * @internal
+   * @private
    */
   getNavParams(): NavParams {
     return new NavParams(this.data);
   }
 
   /**
-   * @internal
+   * @private
    */
   setLeavingOpts(opts: NavOptions) {
     this._leavingOpts = opts;
@@ -228,7 +228,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   get name(): string {
     return this.componentType ? this.componentType.name : '';
@@ -257,7 +257,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    */
   _domShow(shouldShow: boolean, renderer: Renderer) {
@@ -276,7 +276,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    */
   _setZIndex(zIndex: number, renderer: Renderer) {
@@ -298,7 +298,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setContent(directive: any) {
     this._cntDir = directive;
@@ -312,7 +312,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setContentRef(elementRef: ElementRef) {
     this._cntRef = elementRef;
@@ -326,7 +326,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setHeader(directive: Header) {
     this._hdrDir = directive;
@@ -340,7 +340,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setFooter(directive: Footer) {
     this._ftrDir = directive;
@@ -354,7 +354,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setNavbar(directive: Navbar) {
     this._nb = directive;
@@ -398,7 +398,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    * The view has loaded. This event only happens once per view being
    * created. If a view leaves but is cached, then this will not
    * fire again on a subsequent viewing. This method is a good place
@@ -420,7 +420,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    * The view is about to enter and become the active view.
    */
   _willEnter() {
@@ -435,7 +435,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
@@ -446,7 +446,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    * The view has is about to leave and no longer be the active view.
    */
   _willLeave() {
@@ -455,7 +455,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
@@ -472,7 +472,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   _willUnload() {
     this.willUnload.emit(null);
@@ -490,7 +490,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    */
   _destroy(renderer: Renderer) {
@@ -518,7 +518,7 @@ export class ViewController {
   }
 
   /**
-   * @internal
+   * @private
    */
   _lifecycleTest(lifecycle: string): boolean | string | Promise<any> {
     let result: any = true;

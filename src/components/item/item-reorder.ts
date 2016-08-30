@@ -133,19 +133,19 @@ export interface ReorderIndexes {
 })
 export class ItemReorder {
 
-  /** @internal */
+  /** @private */
   _enableReorder: boolean = false;
 
-  /** @internal */
+  /** @private */
   _visibleReorder: boolean = false;
 
-  /** @internal */
+  /** @private */
   _reorderGesture: ItemReorderGesture;
 
-  /** @internal */
+  /** @private */
   _lastToIndex: number = -1;
 
-  /** @internal */
+  /** @private */
   _element: HTMLElement;
 
   /**

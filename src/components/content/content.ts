@@ -132,7 +132,7 @@ export class Content extends Ion {
   _footerEle: HTMLElement;
 
   /*
-   * @internal
+   * @private
    */
   _scrollEle: HTMLElement;
 

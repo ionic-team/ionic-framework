@@ -148,7 +148,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * NO DOM
    */
   private _addProp(state: string, prop: string, val: any): EffectProperty {
@@ -324,7 +324,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * RECURSION
    */
@@ -355,7 +355,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
@@ -384,7 +384,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * RECURSION
    */
@@ -420,7 +420,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * RECURSION
    */
@@ -440,7 +440,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
@@ -489,7 +489,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * RECURSION
    */
@@ -521,7 +521,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * NO DOM
    * RECURSION
    */
@@ -540,7 +540,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * NO DOM
    * RECURSION
    */
@@ -569,7 +569,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * NO DOM
    * NO RECURSION
    */
@@ -580,7 +580,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * NO RECURSION
    */
@@ -651,7 +651,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * NO RECURSION
    */
@@ -678,7 +678,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * NO RECURSION
    */
@@ -717,7 +717,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM READ
    * RECURSION
    */
@@ -736,7 +736,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * RECURSION
    */
@@ -755,7 +755,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * NO RECURSION
    */
@@ -827,7 +827,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * NO RECURSION
    */
@@ -926,7 +926,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * DOM WRITE
    * RECURSION
    */
@@ -975,7 +975,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * NO DOM
    * RECURSION
    */
@@ -990,7 +990,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * NO RECURSION
    */
   _didFinish(hasCompleted: boolean) {
@@ -1048,7 +1048,7 @@ export class Animation {
   }
 
   /**
-   * @internal
+   * @private
    * NO DOM
    */
   _transEl(): HTMLElement {

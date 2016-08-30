@@ -43,7 +43,7 @@ export class Platform {
   /** @private */
   zone: NgZone;
 
-  /** @internal */
+  /** @private */
   _platforms: string[] = [];
 
   constructor() {
@@ -584,7 +584,7 @@ export class Platform {
     return false;
   }
 
-  /** @internal */
+  /** @private */
   load() {
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;

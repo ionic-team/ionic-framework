@@ -101,7 +101,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   _clearInput: boolean = false;
 
@@ -122,7 +122,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @Input()
   get value() {
@@ -163,7 +163,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @ViewChild(NativeInput)
   set _nativeInput(nativeInput: NativeInput) {
@@ -171,7 +171,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @ViewChild(NextInput)
   set _nextInput(nextInput: NextInput) {
@@ -179,30 +179,30 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @internal
+   * @private
    */
   @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @internal
+   * @private
    */
   inputBlurred(ev: UIEvent) {
     this.blur.emit(ev);
   }
 
   /**
-   * @internal
+   * @private
    */
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);
   }
   /**
-   * @internal
+   * @private
    */
   ngOnInit() {
     if (this._item) {
@@ -212,21 +212,21 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   ngAfterContentChecked() {
     this.setItemInputControlCss();
   }
 
   /**
-   * @internal
+   * @private
    */
   ngOnDestroy() {
     this._form.deregister(this);
   }
 
   /**
-   * @internal
+   * @private
    */
   clearTextInput() {
     console.debug('Should clear input');
@@ -312,7 +312,7 @@ export class TextArea extends InputBase {
   @Input() placeholder: string = '';
 
   /**
-   * @internal
+   * @private
    */
   @Input()
   get value() {
@@ -353,7 +353,7 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @ViewChild(NativeInput)
   set _nativeInput(nativeInput: NativeInput) {
@@ -361,7 +361,7 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @ViewChild(NextInput)
   set _nextInput(nextInput: NextInput) {
@@ -369,17 +369,17 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @internal
+   * @private
    */
   @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @internal
+   * @private
    */
   ngOnInit() {
     if (this._item) {
@@ -390,28 +390,28 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   ngAfterContentChecked() {
     this.setItemInputControlCss();
   }
 
   /**
-   * @internal
+   * @private
    */
   ngOnDestroy() {
     this._form.deregister(this);
   }
 
   /**
-   * @internal
+   * @private
    */
   inputBlurred(ev: UIEvent) {
     this.blur.emit(ev);
   }
 
   /**
-   * @internal
+   * @private
    */
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);

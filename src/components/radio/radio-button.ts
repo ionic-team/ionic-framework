@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
@@ -63,11 +63,7 @@ import { RadioGroup } from './radio-group';
   },
   encapsulation: ViewEncapsulation.None,
 })
-<<<<<<< HEAD
-export class RadioButton {
-=======
 export class RadioButton extends Ion implements OnDestroy, OnInit {
->>>>>>> 573190cb7bcb0583935fb73d7a67c96f1df06d28
 
   /**
    * @internal
@@ -215,5 +211,4 @@ export class RadioButton extends Ion implements OnDestroy, OnInit {
     this._form.deregister(this);
     this._group && this._group.remove(this);
   }
-
 }

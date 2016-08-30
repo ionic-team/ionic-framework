@@ -154,14 +154,15 @@ export function generateE2EBuildConfig(compilerOptions: any, angularCompilerOpti
   }
   baseConfig.compilerOptions = mergeObjects(baseConfig.compilerOptions, compilerOptions);
 
-  if (!angularCompilerOptions) {
-    angularCompilerOptions = {};
-  }
-  if ( !baseConfig.angularCompilerOptions) {
-    baseConfig.angularCompilerOptions = {};
-  }
+  // only touch angularCompilerOptions if provided
+  // if we provide an empty config, it doesn't work as expected
+  if (angularCompilerOptions) {
+    if ( !baseConfig.angularCompilerOptions) {
+      baseConfig.angularCompilerOptions = {};
+    }
 
-  baseConfig.angularCompilerOptions = mergeObjects(baseConfig.angularCompilerOptions, angularCompilerOptions);
+    baseConfig.angularCompilerOptions = mergeObjects(baseConfig.angularCompilerOptions, angularCompilerOptions);
+  }
 
   if (includeGlob && includeGlob.length > 0) {
     baseConfig.include = includeGlob;
@@ -173,6 +174,6 @@ export function generateE2EBuildConfig(compilerOptions: any, angularCompilerOpti
 }
 
 export function removeGeneratedE2EBuildConfig() {
-  let del = require('del');
-  del.sync(E2E_GENERATED_CONFIG_NGC_CONFIG);
+  //let del = require('del');
+  //del.sync(E2E_GENERATED_CONFIG_NGC_CONFIG);
 }

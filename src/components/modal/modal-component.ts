@@ -24,10 +24,10 @@ export class ModalCmp {
 
   @ViewChild('viewport', { read: ViewContainerRef }) _viewport: ViewContainerRef;
 
-  /** @internal  */
+  /** @private  */
   _bdDismiss: boolean;
 
-  /** @internal */
+  /** @private */
   _enabled: boolean;
 
   constructor(public _cfr: ComponentFactoryResolver, public _renderer: Renderer, public _navParams: NavParams, public _viewCtrl: ViewController) {
@@ -38,7 +38,7 @@ export class ModalCmp {
     this._load(this._navParams.data.componentType);
   }
 
-  /** @internal */
+  /** @private */
   _load(componentType: any) {
     if (componentType) {
       const componentFactory = this._cfr.resolveComponentFactory(componentType);
@@ -54,7 +54,7 @@ export class ModalCmp {
     }
   }
 
-  /** @internal */
+  /** @private */
   _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }

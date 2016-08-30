@@ -94,7 +94,7 @@ export class ToolbarBase extends Ion {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setTitle(titleCmp: ToolbarTitle) {
     this._title = titleCmp;
@@ -261,7 +261,7 @@ export class ToolbarBase extends Ion {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toolbar extends ToolbarBase {
-  /** @internal */
+  /** @private */
   _sbPadding: boolean;
 
   /**

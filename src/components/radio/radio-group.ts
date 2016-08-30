@@ -72,32 +72,32 @@ export const RADIO_VALUE_ACCESSOR: any = {
 export class RadioGroup {
 
   /**
-   * @internal
+   * @private
    */
   _btns: RadioButton[] = [];
 
   /**
-   * @internal
+   * @private
    */
   _fn: Function;
 
   /**
-   * @internal
+   * @private
    */
   _ids: number = -1;
 
   /**
-   * @internal
+   * @private
    */
   _init: boolean = false;
 
   /**
-   * @internal
+   * @private
    */
   value: any;
 
   /**
-   * @internal
+   * @private
    */
   id: number;
 
@@ -114,7 +114,7 @@ export class RadioGroup {
   }
 
   /**
-   * @internal
+   * @private
    */
   ngAfterContentInit() {
     let activeButton = this._btns.find(b => b.checked);
@@ -124,7 +124,7 @@ export class RadioGroup {
   }
 
   /**
-   * @internal
+   * @private
    */
   writeValue(val: any) {
     console.debug('radio group, writeValue', val);
@@ -140,7 +140,7 @@ export class RadioGroup {
   }
 
   /**
-   * @internal
+   * @private
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -156,12 +156,12 @@ export class RadioGroup {
   }
 
   /**
-   * @internal
+   * @private
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @internal
+   * @private
    */
   _update() {
     // loop through each of the radiobuttons
@@ -182,14 +182,14 @@ export class RadioGroup {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setActive(radioButton: RadioButton) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', radioButton.id);
   }
 
   /**
-   * @internal
+   * @private
    */
   add(button: RadioButton): string {
     this._btns.push(button);
@@ -204,7 +204,7 @@ export class RadioGroup {
   }
 
   /**
-   * @internal
+   * @private
    */
   remove(button: RadioButton) {
     let index = this._btns.indexOf(button);
@@ -217,7 +217,7 @@ export class RadioGroup {
   }
 
   /**
-   * @internal
+   * @private
    */
   @ContentChild(ListHeader)
   set _header(header: any) {
@@ -230,7 +230,7 @@ export class RadioGroup {
   }
 
   /**
-   * @internal
+   * @private
    */
   onChange(val: any) {
     // onChange used when there is not an formControlName
@@ -242,7 +242,7 @@ export class RadioGroup {
   }
 
   /**
-   * @internal
+   * @private
    */
   onTouched() {}
 

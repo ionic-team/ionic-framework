@@ -11,19 +11,19 @@ import { getDimensions, clearDimensions } from '../util/dom';
 export class Ion {
   private _ionId: string;
 
-  /** @internal */
+  /** @private */
   _config: Config;
 
-  /** @internal */
+  /** @private */
   _elementRef: ElementRef;
 
-  /** @internal */
+  /** @private */
   _renderer: Renderer;
 
-  /** @internal */
+  /** @private */
   _color: string;
 
-  /** @internal */
+  /** @private */
   _mode: string;
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
@@ -47,7 +47,7 @@ export class Ion {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
   }
 
-  /** @internal */
+  /** @private */
   _setColor(componentName: string, newColor: string) {
     if (this._color) {
       this.setElementClass(`${componentName}-${this._color}`, false);
@@ -58,7 +58,7 @@ export class Ion {
     }
   }
 
-  /** @internal */
+  /** @private */
   _setMode(componentName: string, newMode: string) {
     if (this._mode) {
       this.setElementClass(`${componentName}-${this._mode}`, false);

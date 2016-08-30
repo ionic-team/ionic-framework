@@ -9,7 +9,7 @@ import { Directive, ElementRef, Input, Renderer } from '@angular/core';
   selector: 'h1[color], h2[color], h3[color], h4[color], h5[color], h6[color], a[color], p[color], span[color], b[color], i[color], strong[color], em[color], small[color], sub[color], sup[color]'
 })
 export class Typography {
-  /** @internal */
+  /** @private */
   _color: string;
 
   /**
@@ -29,7 +29,7 @@ export class Typography {
   ) { }
 
   /**
-   * @internal
+   * @private
    */
   _updateColor(newColor: string) {
     this._setElementColor(this._color, false);
@@ -38,7 +38,7 @@ export class Typography {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setElementColor(color: string, isAdd: boolean) {
     if (color !== null && color !== '') {

@@ -103,7 +103,7 @@ task('e2e.setupTests', (done: Function) => {
 });
 
 task('e2e.ngcSource', (done: Function) => {
-  generateE2EBuildConfig({ outDir: '../../dist/e2e' }, {}, [`${SRC_ROOT}/index.ts`]);
+  generateE2EBuildConfig({ outDir: '../../dist/e2e' }, null, [`${SRC_ROOT}/index.ts`]);
 
   let startTask = execNodeTask('@angular/compiler-cli', 'ngc', ['-p', E2E_GENERATED_CONFIG_NGC_CONFIG]);
   startTask( (err: any) => {
