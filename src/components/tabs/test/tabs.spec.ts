@@ -16,7 +16,7 @@ describe('Tabs', () => {
       tab1.enabled = false;
       tab1.show = false;
 
-      tabs.selectedIndex = '1';
+      tabs.selectedIndex = 1;
       tabs.initTabs();
 
       expect(tab0.isSelected).toEqual(true);
@@ -30,7 +30,7 @@ describe('Tabs', () => {
       tab0.root = SomePage;
       tab1.root = SomePage;
 
-      tabs.selectedIndex = '1';
+      tabs.selectedIndex = 1;
       tabs.initTabs();
 
       expect(tab0.isSelected).toEqual(false);

@@ -222,6 +222,10 @@ export class NavControllerBase extends Ion implements NavController {
         ti.reject('invalid views to insert');
         return;
       }
+
+    } else if (isPresent(ti.removeStart) && !this._views.length && !this._isPortal) {
+      ti.reject('no views in the stack to be removed');
+      return;
     }
 
     this._queue.push(ti);
