@@ -15,10 +15,6 @@ $content-ios-transition-background:     #000 !default;
   background: $content-ios-outer-background;
 }
 
-.content-ios a:not(.button):not(.item) {
-  color: $link-ios-color;
-}
-
 .content-ios hr {
   color: $text-ios-color;
   background-color: rgba(0, 0, 0, .12);
