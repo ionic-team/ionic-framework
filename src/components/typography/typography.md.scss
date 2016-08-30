@@ -2,11 +2,6 @@
 // Material Design Typography
 // --------------------------------------------------
 
-.md a:not(.button):not(.item) {
-  color: $link-md-color;
-}
-
-
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
   .md .text-#{$color-name} {

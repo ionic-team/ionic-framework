@@ -95,7 +95,7 @@ import { isTrueProperty } from '../../util/util';
     '<span class="button-inner">' +
       '<ng-content></ng-content>' +
     '</span>' +
-    '<ion-button-effect></ion-button-effect>',
+    '<div class="button-effect"></div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })

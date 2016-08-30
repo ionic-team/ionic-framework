@@ -30,16 +30,12 @@
 
 .tab-disabled {
   pointer-events: none;
-
-  ion-badge,
-  ion-icon,
-  span {
-    opacity: .4;
-  }
 }
 
-.tab-hidden {
-  display: none;
+.tab-disabled ion-badge,
+.tab-disabled ion-icon,
+.tab-disabled span {
+  opacity: .4;
 }
 
 .tab-button-text {
@@ -70,42 +66,32 @@
   white-space: normal;
 }
 
-tab-highlight {
-  display: none;
+[tabsLayout=icon-bottom] .tab-button .tab-button-icon {
+  order: 10;
 }
 
-[tabsLayout=icon-bottom] .tab-button {
-  .tab-button-icon {
-    order: 10;
-  }
-}
-
-[tabsLayout=icon-left] .tab-button {
-  flex-direction: row;
-
-  .tab-button-icon {
-    padding-right: 8px;
-
-    text-align: right;
-  }
-}
-
+[tabsLayout=icon-left] .tab-button,
 [tabsLayout=icon-right] .tab-button {
   flex-direction: row;
-
-  .tab-button-icon {
-    order: 10;
-
-    padding-left: 8px;
-
-    text-align: left;
-  }
 }
 
-[tabsLayout=icon-hide] .tab-button-icon {
-  display: none;
+[tabsLayout=icon-left] .tab-button .tab-button-icon {
+  padding-right: 8px;
+
+  text-align: right;
 }
 
+[tabsLayout=icon-right] .tab-button .tab-button-icon {
+  order: 10;
+
+  padding-left: 8px;
+
+  text-align: left;
+}
+
+.tab-hidden,
+tab-highlight,
+[tabsLayout=icon-hide] .tab-button-icon,
 [tabsLayout=title-hide] .tab-button-text {
   display: none;
 }

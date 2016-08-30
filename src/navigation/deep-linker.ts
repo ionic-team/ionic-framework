@@ -2,7 +2,7 @@ import { Injectable, OpaqueToken } from '@angular/core';
 import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
 import { isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
@@ -236,7 +236,7 @@ export class DeepLinker {
       // this could be an ion-nav, ion-tab or ion-portal
       // if a component and data was already passed in then use it
       // otherwise get this nav's active view controller
-      if (!component) {
+      if (!component && isNav(nav)) {
         view = nav.getActive(true);
         if (view) {
           component = view.componentType;

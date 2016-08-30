@@ -15,6 +15,16 @@ $content-ios-transition-background:     #000 !default;
   background: $content-ios-outer-background;
 }
 
+.content-ios a:not(.button):not(.item) {
+  color: $link-ios-color;
+}
+
+.content-ios hr {
+  color: $text-ios-color;
+  background-color: rgba(0, 0, 0, .12);
+  height: $hairlines-width;
+}
+
 .ios .ion-page.show-page ~ .nav-decor {
   // when ios pages transition, the leaving page grays out
   // this is the black square behind all pages so they gray out
@@ -30,12 +40,6 @@ $content-ios-transition-background:     #000 !default;
   background: $content-ios-transition-background;
 
   pointer-events: none;
-}
-
-.content-ios hr {
-  color: $text-ios-color;
-  background-color: rgba(0, 0, 0, .12);
-  height: $hairlines-width;
 }
 
 

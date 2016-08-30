@@ -2,11 +2,6 @@
 // iOS Typography
 // --------------------------------------------------
 
-.ios a:not(.button):not(.item) {
-  color: $link-ios-color;
-}
-
-
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
   .ios .text-#{$color-name} {

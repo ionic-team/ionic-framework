@@ -146,7 +146,7 @@ import { ViewController } from '../../navigation/view-controller';
         '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
         '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
         '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
-        '<ion-button-effect></ion-button-effect>' +
+        '<div class="button-effect"></div>' +
       '</a>' +
       '<tab-highlight></tab-highlight>' +
     '</ion-tabbar>' +

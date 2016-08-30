@@ -285,7 +285,7 @@ import { Label } from '../label/label';
       '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
       '<ion-reorder></ion-reorder>' +
     '</div>' +
-    '<ion-button-effect></ion-button-effect>',
+    '<div class="button-effect"></div>',
   host: {
     'class': 'item'
   },

@@ -120,7 +120,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
     .bar-button-clear-md,
     .bar-button-default-md,
     .bar-button-outline-md {
-      ion-button-effect {
+      .button-effect {
         background-color: $fg-color;
       }
     }
@@ -226,7 +226,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
     background-color: transparent;
   }
 
-  ion-button-effect {
+  .button-effect {
     background-color: $toolbar-md-button-color;
   }
 }
@@ -243,7 +243,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
       background-color: transparent;
     }
 
-    ion-button-effect {
+    .button-effect {
       background-color: $fg-color;
     }
   }

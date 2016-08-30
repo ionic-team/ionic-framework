@@ -208,7 +208,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   box-shadow: $button-md-box-shadow-activated;
 }
 
-.button-md ion-button-effect {
+.button-md .button-effect {
   background-color: $button-md-text-color;
 }
 
@@ -235,7 +235,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
     opacity: $button-md-opacity-activated;
   }
 
-  .button-md.button-#{$color-name} ion-button-effect {
+  .button-md.button-#{$color-name} .button-effect {
     background-color: $fg-color;
   }
 }
@@ -306,7 +306,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   opacity: $button-md-outline-opacity-activated;
 }
 
-.button-outline-md ion-button-effect {
+.button-outline-md .button-effect {
   background-color: $button-md-outline-ripple-background-color;
 }
 
@@ -331,7 +331,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
     background-color: $button-md-outline-background-color-activated;
   }
 
-  .button-md.button-outline-#{$color-name} ion-button-effect {
+  .button-md.button-outline-#{$color-name} .button-effect {
     background-color: $fg-color;
   }
 }
@@ -357,7 +357,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   background-color: $button-md-clear-background-color-hover;
 }
 
-.button-clear-md ion-button-effect {
+.button-clear-md .button-effect {
   background-color: $button-md-clear-ripple-background-color;
 }
 
@@ -418,11 +418,13 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 
 // Material Design Ripple Effect
 // --------------------------------------------------
+// Only Material uses the button effect, so by default
+// it's display none, and .md sets to display block.
 
-.button-md ion-button-effect {
+.button-effect {
   position: absolute;
   z-index: 0;
-  display: block;
+  display: none;
 
   border-radius: 50%;
 
@@ -432,6 +434,10 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   transition-timing-function: ease-in-out;
 
   pointer-events: none;
+}
+
+.md .button-effect {
+  display: block;
 }
 
 

@@ -16,7 +16,7 @@
   -webkit-transition-duration: 0ms !important;
   transition-duration: 0ms !important;
 }
-.snapshot ion-button-effect {
+.snapshot .button-effect {
   display: none !important;
 }
 

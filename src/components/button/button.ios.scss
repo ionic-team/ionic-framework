@@ -300,6 +300,7 @@ $button-ios-fab-border-radius:                      50% !default;
   }
 }
 
+
 // iOS Round Button
 // --------------------------------------------------
 
@@ -315,11 +316,6 @@ $button-ios-fab-border-radius:                      50% !default;
 
 .button-fab-ios {
   border-radius: $button-ios-fab-border-radius;
-}
-
-// iOS does not use the button effect
-.button-ios ion-button-effect {
-  display: none;
 }
 
 

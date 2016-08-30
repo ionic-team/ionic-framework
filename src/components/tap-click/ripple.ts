@@ -34,7 +34,7 @@ export class RippleActivator extends Activator {
           var j = queuedEle.childElementCount;
           while (j--) {
             var rippleEle: any = queuedEle.children[j];
-            if (rippleEle.tagName === 'ION-BUTTON-EFFECT') {
+            if (rippleEle.classList.contains('button-effect')) {
               // DOM WRITE
               rippleEle.style.left = '-9999px';
               rippleEle.style.opacity = '';
@@ -62,7 +62,7 @@ export class RippleActivator extends Activator {
 
       while (i--) {
         var rippleEle: any = activatableEle.children[i];
-        if (rippleEle.tagName === 'ION-BUTTON-EFFECT') {
+        if (rippleEle.classList.contains('button-effect')) {
           var clientPointerX = (startCoord.x - rippleEle.$left);
           var clientPointerY = (startCoord.y - rippleEle.$top);
 
