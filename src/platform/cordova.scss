@@ -21,8 +21,7 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 
     @include toolbar-statusbar-padding($toolbar-height, $content-padding);
 
-    // If we should style the title components in the toolbar, ** iOS only **
-    // --------------------------------------------------------------------------------
+    // If we should style the title elements in the toolbar
     @if ($style-title) {
       @include toolbar-title-statusbar-padding($toolbar-height, $content-padding);
     }
@@ -32,6 +31,7 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
     .modal-wrapper > .ion-page > ion-header {
       @include toolbar-statusbar-padding($toolbar-height, $content-padding);
 
+      // If we should style the title elements in the toolbar
       @if ($style-title) {
         @include toolbar-title-statusbar-padding($toolbar-height, $content-padding);
       }
@@ -64,7 +64,7 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 }
 
 
-// iOS is the only mode that uses this mixins and it should be removed with #5036
+// iOS is the only mode that uses this mixin and it should be removed with #5036
 // --------------------------------------------------------------------------------
 
 @mixin toolbar-title-statusbar-padding($toolbar-height, $content-padding) {
