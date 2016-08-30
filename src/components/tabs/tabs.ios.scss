@@ -96,12 +96,12 @@ $tabs-ios-tab-icon-size:            30px !default;
 }
 
 .tabs-ios[tabsLayout=icon-hide] .tab-button,
-.tabs-ios.tab-button.has-title-only {
+.tabs-ios .tab-button.has-title-only {
   min-height: $tabs-ios-tab-min-height - 8;
 }
 
 .tabs-ios[tabsLayout=icon-hide] .tab-button .tab-button-text,
-.tabs-ios.tab-button.has-title-only .tab-button-text {
+.tabs-ios .tab-button.has-title-only .tab-button-text {
   margin: 2px 0;
 
   font-size: 1.4rem;
@@ -109,7 +109,7 @@ $tabs-ios-tab-icon-size:            30px !default;
 }
 
 .tabs-ios[tabsLayout=title-hide] .tab-button,
-.tabs-ios.tab-button.icon-only {
+.tabs-ios .tab-button.icon-only {
   min-height: $tabs-ios-tab-min-height - 8;
 }
 

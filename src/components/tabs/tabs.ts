@@ -191,7 +191,7 @@ export class Tabs extends Ion implements AfterViewInit {
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
    */
-  @Input() selectedIndex: any;
+  @Input() selectedIndex: number;
 
   /**
    * @internal DEPRECATED. Please use `tabsLayout` instead.
@@ -350,13 +350,13 @@ export class Tabs extends Ion implements AfterViewInit {
   initTabs() {
     // get the selected index from the input
     // otherwise default it to use the first index
-    let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(this.selectedIndex, 10));
+    let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(<any>this.selectedIndex, 10));
 
     // now see if the deep linker can find a tab index
     const tabsSegment = this._linker.initNav(this);
     if (tabsSegment && isBlank(tabsSegment.component)) {
       // we found a segment which probably represents which tab to select
-      selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.name);
+      selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.name, selectedIndex);
     }
 
     // get the selectedIndex and ensure it isn't hidden or disabled

@@ -294,7 +294,7 @@ export class DeepLinker {
     return `tab-${tab.index}`;
   }
 
-  getSelectedTabIndex(tabsNav: Tabs, pathName: string): number {
+  getSelectedTabIndex(tabsNav: Tabs, pathName: string, fallbackIndex: number = 0): number {
     // we found a segment which probably represents which tab to select
     const indexMatch = pathName.match(/tab-(\d+)/);
     if (indexMatch) {
@@ -309,7 +309,7 @@ export class DeepLinker {
              (isPresent(t.tabTitle) && this.serializer.formatUrlPart(t.tabTitle) === pathName);
     });
 
-    return isPresent(tab) ? tab.index : 0;
+    return isPresent(tab) ? tab.index : fallbackIndex;
   }
 
   /**
