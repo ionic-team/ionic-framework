@@ -164,7 +164,7 @@ export class NativeInput {
     return this.element().value;
   }
 
-  setCssClass(cssClass: string, shouldAdd: boolean) {
+  setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 

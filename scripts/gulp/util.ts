@@ -144,7 +144,7 @@ export function copySwiperToPath(distPath: string) {
   copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.system.js`, `${distPath}/swiper-widget.system.js`);
 }
 
-export function generateE2EBuildConfig(compilerOptions: any, includeGlob: string[]) {
+export function generateE2EBuildConfig(compilerOptions: any, angularCompilerOptions: any, includeGlob: string[]) {
   const fs = require('fs');
 
   let baseConfig = require(E2E_BASE_CONFIG_NGC_CONFIG);
@@ -153,6 +153,16 @@ export function generateE2EBuildConfig(compilerOptions: any, includeGlob: string
     compilerOptions = {};
   }
   baseConfig.compilerOptions = mergeObjects(baseConfig.compilerOptions, compilerOptions);
+
+  if (!angularCompilerOptions) {
+    angularCompilerOptions = {};
+  }
+  if ( !baseConfig.angularCompilerOptions) {
+    baseConfig.angularCompilerOptions = {};
+  }
+
+  baseConfig.angularCompilerOptions = mergeObjects(baseConfig.angularCompilerOptions, angularCompilerOptions);
+
   if (includeGlob && includeGlob.length > 0) {
     baseConfig.include = includeGlob;
   }

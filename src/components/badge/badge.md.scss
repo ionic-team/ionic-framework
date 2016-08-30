@@ -1,4 +1,3 @@
-@import "./badge";
 
 // Material Design Badge
 // --------------------------------------------------
@@ -13,7 +12,7 @@ $badge-md-background-color:         color($colors-md, primary) !default;
 $badge-md-text-color:               color-contrast($colors-md, $badge-md-background-color) !default;
 
 
-ion-badge {
+.badge-md {
   border-radius: $badge-md-border-radius;
   color: $badge-md-text-color;
   background-color: $badge-md-background-color;
@@ -25,7 +24,7 @@ ion-badge {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  .badge-#{$color-name} {
+  .badge-md.badge-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

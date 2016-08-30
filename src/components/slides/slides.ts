@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Directive, ElementRef, EventEmitter, Input, Host, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Animation } from '../../animations/animation';
+import { Config } from '../../config/config';
 import { Gesture } from '../../gestures/gesture';
 import { CSS } from '../../util/dom';
 import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
@@ -322,8 +323,8 @@ export class Slides extends Ion {
   @Output() ionDrag: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(elementRef: ElementRef, renderer: Renderer) {
-    super(elementRef);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
     this.rapidUpdate = debounce(() => {
       this.update();
     }, 10);
@@ -331,7 +332,7 @@ export class Slides extends Ion {
     this.id = ++slidesId;
     this.slideId = 'slides-' + this.id;
 
-    renderer.setElementClass(elementRef.nativeElement, this.slideId, true);
+    this.setElementClass(this.slideId, true);
   }
 
   /**

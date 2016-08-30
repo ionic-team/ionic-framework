@@ -1,5 +1,4 @@
 @import "../../globals.core";
-@import "./loading";
 
 // Material Design Loading Indicator
 // --------------------------------------------------
@@ -22,7 +21,7 @@ $loading-md-spinner-crescent-color:    $loading-md-spinner-color !default;
 $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 
 
-.loading-wrapper {
+.loading-md .loading-wrapper {
   padding: $loading-md-padding;
 
   max-width: $loading-md-max-width;
@@ -39,7 +38,7 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 // Material Design Loading Content
 // -----------------------------------------
 
-.loading-spinner + .loading-content {
+.loading-md .loading-spinner + .loading-content {
   margin-left: 16px;
 }
 
@@ -47,23 +46,23 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 // Material Design Loading Spinner fill colors
 // -----------------------------------------
 
-.loading-spinner .spinner-ios line,
-.loading-spinner .spinner-ios-small line {
+.loading-md .loading-spinner .spinner-ios line,
+.loading-md .loading-spinner .spinner-ios-small line {
   stroke: $loading-md-spinner-ios-color;
 }
 
-.loading-spinner .spinner-bubbles circle {
+.loading-md .loading-spinner .spinner-bubbles circle {
   fill: $loading-md-spinner-bubbles-color;
 }
 
-.loading-spinner .spinner-circles circle {
+.loading-md .loading-spinner .spinner-circles circle {
   fill: $loading-md-spinner-circles-color;
 }
 
-.loading-spinner .spinner-crescent circle {
+.loading-md .loading-spinner .spinner-crescent circle {
   stroke: $loading-md-spinner-crescent-color;
 }
 
-.loading-spinner .spinner-dots circle {
+.loading-md .loading-spinner .spinner-dots circle {
   fill: $loading-md-spinner-dots-color;
 }

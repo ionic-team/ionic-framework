@@ -114,10 +114,10 @@ var IonicSnapshot = function(options) {
             var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
 
             self.testData.spec_index = spec.id;
-            self.testData.description = spec.getFullName();
+            self.testData.description = spec.getFullName().replace('/test/', '/');
             self.testData.highest_mismatch = self.highestMismatch;
             self.testData.png_base64 = pngBase64;
-            self.testData.url = currentUrl.replace('dist/', '/').replace('&ionicanimate=false', '');
+            self.testData.url = currentUrl.replace('dist/e2e/tests/', '/e2e/').replace('/test/', '/').replace('&ionicanimate=false', '');
             pngBase64 = null;
 
             var requestDeferred = q.defer();

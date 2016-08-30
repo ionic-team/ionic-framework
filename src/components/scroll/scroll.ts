@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
 
-import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 
 /**
@@ -39,7 +38,7 @@ import { isTrueProperty } from '../../util/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class Scroll extends Ion {
+export class Scroll {
   _scrollX: boolean = false;
   _scrollY: boolean = false;
   _zoom: boolean = false;
@@ -90,15 +89,13 @@ export class Scroll extends Ion {
    */
   scrollElement: HTMLElement;
 
-  constructor(elementRef: ElementRef) {
-    super(elementRef);
-  }
+  constructor(private _elementRef: ElementRef) {}
 
   /**
    * @private
    */
   ngOnInit() {
-    this.scrollElement = this.getNativeElement().children[0];
+    this.scrollElement = this._elementRef.nativeElement.children[0];
   }
 
   /**

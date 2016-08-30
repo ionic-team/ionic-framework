@@ -87,6 +87,7 @@ export class AlertCmp {
   lastClick: number;
   msgId: string;
   subHdrId: string;
+  mode: string;
 
   constructor(
     public _viewCtrl: ViewController,
@@ -96,6 +97,8 @@ export class AlertCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
+    this.mode = _config.get('mode');
+    renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {

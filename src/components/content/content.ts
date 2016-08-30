@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Ion } from '../ion';
@@ -149,20 +149,25 @@ export class Content extends Ion {
   contentBottom: number;
 
   constructor(
-    public _elementRef: ElementRef,
     config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     public _app: App,
     public _keyboard: Keyboard,
     public _zone: NgZone,
     @Optional() viewCtrl: ViewController,
     @Optional() public _tabs: Tabs
   ) {
-    super(_elementRef);
+    super(config, elementRef, renderer);
+
+    this._mode = config.get('mode');
+    this._setMode('content', this._mode);
+
     this._sbPadding = config.getBoolean('statusbarPadding', false);
 
     if (viewCtrl) {
       viewCtrl._setContent(this);
-      viewCtrl._setContentRef(_elementRef);
+      viewCtrl._setContentRef(elementRef);
     }
   }
 
@@ -355,14 +360,6 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
-   * DOM WRITE
-   */
-  addCssClass(className: string) {
-    this.getNativeElement().classList.add(className);
-  }
-
-  /**
    * @input {boolean} By default, content is positioned between the headers
    * and footers. However, using `fullscreen="true"`, the content will be
    * able to scroll "under" the headers and footers. At first glance the
@@ -376,14 +373,6 @@ export class Content extends Ion {
   }
   set fullscreen(val: boolean) {
     this._fullscreen = isTrueProperty(val);
-  }
-
-  /**
-   * @private
-   * DOM WRITE
-   */
-  removeCssClass(className: string) {
-    this.getNativeElement().classList.remove(className);
   }
 
   /**

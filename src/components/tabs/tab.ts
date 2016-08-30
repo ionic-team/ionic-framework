@@ -249,7 +249,7 @@ export class Tab extends NavControllerBase {
     app: App,
     config: Config,
     keyboard: Keyboard,
-    private _elementRef: ElementRef,
+    elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
     cfr: ComponentFactoryResolver,
@@ -259,7 +259,7 @@ export class Tab extends NavControllerBase {
     @Optional() private linker: DeepLinker
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, _elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
 
     this.id = parent.add(this);
 
@@ -322,8 +322,8 @@ export class Tab extends NavControllerBase {
   setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
 
-    this._renderer.setElementClass(this._elementRef.nativeElement, 'show-tab', isSelected);
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-hidden', (!isSelected).toString());
+    this.setElementClass('show-tab', isSelected);
+    this.setElementAttribute('aria-hidden', (!isSelected).toString());
 
     if (isSelected) {
       // this is the selected tab, detect changes
@@ -355,7 +355,7 @@ export class Tab extends NavControllerBase {
   /**
    * @private
    */
-  ngOnDestroy() {
+  destroy() {
     this.destroy();
   }
 

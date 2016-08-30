@@ -3,10 +3,8 @@
 // Windows App
 // --------------------------------------------------
 
-ion-content {
-  color: $text-wp-color;
-}
-
-hr {
-  background-color: rgba(0, 0, 0, .08);
+ion-app.wp {
+  font-family: $font-family-wp-base;
+  font-size: $font-size-wp-base;
+  background-color: $background-wp-color;
 }

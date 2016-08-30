@@ -1,5 +1,4 @@
 @import "../../globals.md";
-@import "./action-sheet";
 
 // Material Design Action Sheet
 // --------------------------------------------------
@@ -26,7 +25,7 @@ $action-sheet-md-icon-vertical-align:                   middle !default;
 $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
 
 
-.action-sheet-title {
+.action-sheet-md .action-sheet-title {
   padding: $action-sheet-md-title-padding;
 
   font-size: $action-sheet-md-title-font-size;
@@ -34,7 +33,7 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
   color: $action-sheet-md-title-color;
 }
 
-.action-sheet-button {
+.action-sheet-md .action-sheet-button {
   position: relative;
   overflow: hidden;
 
@@ -48,11 +47,11 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
   background: $action-sheet-md-button-background;
 }
 
-.action-sheet-button.activated {
+.action-sheet-md .action-sheet-button.activated {
   background: $action-sheet-md-button-background-activated;
 }
 
-.action-sheet-icon {
+.action-sheet-md .action-sheet-icon {
   margin: $action-sheet-md-icon-margin;
 
   min-width: $action-sheet-md-icon-min-width;
@@ -62,20 +61,20 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
   vertical-align: $action-sheet-md-icon-vertical-align;
 }
 
-.action-sheet-group {
+.action-sheet-md .action-sheet-group {
   overflow: hidden;
 
   background: $action-sheet-md-background;
 }
 
-.action-sheet-group:last-child .action-sheet-button {
+.action-sheet-md .action-sheet-group:last-child .action-sheet-button {
   margin-bottom: $action-sheet-md-group-margin-bottom;
 }
 
-.action-sheet-group .button-inner {
+.action-sheet-md .action-sheet-group .button-inner {
   justify-content: flex-start;
 }
 
-.action-sheet-selected {
+.action-sheet-md .action-sheet-selected {
   font-weight: bold;
 }

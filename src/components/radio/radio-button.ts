@@ -1,6 +1,8 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
+import { Config } from '../../config/config';
 import { Form } from '../../util/form';
+import { Ion } from '../ion';
 import { isBlank, isCheckedProperty, isPresent, isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { RadioGroup } from './radio-group';
@@ -61,7 +63,11 @@ import { RadioGroup } from './radio-group';
   },
   encapsulation: ViewEncapsulation.None,
 })
+<<<<<<< HEAD
 export class RadioButton {
+=======
+export class RadioButton extends Ion implements OnDestroy, OnInit {
+>>>>>>> 573190cb7bcb0583935fb73d7a67c96f1df06d28
 
   /**
    * @internal
@@ -88,19 +94,24 @@ export class RadioButton {
    */
   id: string;
 
-  /** @internal */
-  _color: string;
-
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('radio', val);
+
+    if (this._item) {
+      this._item._updateColor(val, 'item-radio');
+    }
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('radio', val);
   }
 
   /**
@@ -110,11 +121,15 @@ export class RadioButton {
 
   constructor(
     private _form: Form,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() private _item: Item,
     @Optional() private _group: RadioGroup
   ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
     _form.register(this);
 
     if (_group) {
@@ -127,7 +142,7 @@ export class RadioButton {
       // reset to the item's id instead of the radiogroup id
       this.id = 'rb-' + _item.registerInput('radio');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-radio', true);
+      this._item.setElementClass('item-radio', true);
     }
   }
 
@@ -155,7 +170,7 @@ export class RadioButton {
     this._checked = isTrueProperty(isChecked);
 
     if (this._item) {
-      this._item.setCssClass('item-radio-checked', this._checked);
+      this._item.setElementClass('item-radio-checked', this._checked);
     }
   }
 
@@ -168,7 +183,7 @@ export class RadioButton {
   }
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-radio-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-radio-disabled', this._disabled);
   }
 
   /**
@@ -201,25 +216,4 @@ export class RadioButton {
     this._group && this._group.remove(this);
   }
 
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `radio-${color}`, isAdd);
-
-      if (this._item) {
-        this._item._updateColor(color, 'item-radio');
-      }
-    }
-  }
 }

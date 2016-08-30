@@ -2,10 +2,12 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
-import { PointerCoordinates, pointerCoord, raf } from '../../util/dom';
+import { Config } from '../../config/config';
 import { Debouncer } from '../../util/debouncer';
 import { Form } from '../../util/form';
+import { Ion } from '../ion';
 import { Item } from '../item/item';
+import { PointerCoordinates, pointerCoord, raf } from '../../util/dom';
 import { UIEventManager } from '../../util/ui-event-manager';
 
 export const RANGE_VALUE_ACCESSOR: any = {
@@ -194,7 +196,7 @@ export class RangeKnob implements OnInit {
   providers: [RANGE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
+export class Range extends Ion implements AfterViewInit, ControlValueAccessor, OnDestroy {
   _dual: boolean = false;
   _pin: boolean;
   _disabled: boolean = false;
@@ -221,19 +223,20 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
    */
   value: any;
 
-  /** @internal */
-  _color: string;
-
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('range', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('range', val);
   }
 
   @ViewChild('bar') public _bar: ElementRef;
@@ -341,15 +344,19 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   constructor(
     private _form: Form,
     @Optional() private _item: Item,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
     _form.register(this);
 
     if (_item) {
       this.id = 'rng-' + _item.registerInput('range');
       this._labelId = 'lbl-' + _item.id;
-      _item.setCssClass('item-range', true);
+      _item.setElementClass('item-range', true);
     }
   }
 
@@ -562,7 +569,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
    * @private
    */
   updateTicks() {
-    if (this._snaps) {
+    if (this._snaps && this._ticks) {
       let ratio = this.ratio;
       if (this._dual) {
         let upperRatio = this.ratioUpper;
@@ -593,24 +600,6 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   valueToRatio(value: number) {
     value = Math.round(clamp(this._min, value, this._max) / this._step) * this._step;
     return (value - this._min) / (this._max - this._min);
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `range-${color}`, isAdd);
-    }
   }
 
   /**
@@ -661,7 +650,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-range-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-range-disabled', this._disabled);
   }
 
   /**

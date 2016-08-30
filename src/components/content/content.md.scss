@@ -1,15 +1,19 @@
 @import "../../globals.md";
-@import "./content";
 
 // Material Design Content
 // --------------------------------------------------
 
-$content-md-padding:              $content-padding !default;
-$content-md-margin:               $content-margin !default;
-
-
-ion-content {
+.content-md {
+  color: $text-md-color;
   background-color: $background-md-color;
+}
+
+.content-md a:not(.button):not(.item) {
+  color: $link-md-color;
+}
+
+.content-md hr {
+  background-color: rgba(0, 0, 0, .08);
 }
 
 

@@ -8,11 +8,11 @@ task('snapshot', ['e2e'], (done: Function) => {
   snapshot(false, done);
 });
 
-task('snapshot.skip.build', (done: Function) => {
+task('snapshot.skip.build', ['e2e.sass'], (done: Function) => {
   snapshot(false, done);
 });
 
-task('snapshot.quick', (done: Function) => {
+task('snapshot.quick', ['e2e.sass'], (done: Function) => {
   snapshot(true, done);
 });
 
@@ -30,13 +30,13 @@ function snapshot(quickMode: boolean, callback: Function) {
   }
 
   let specs = '**';
-  let specArg: string = argv.specs || argv.s;
-  if (specArg && specArg.length) {
-    const specArgPaths = specArg.split('/');
-    if (specArgPaths.length > 1) {
-      specs = path.join(specArgPaths[0], '**', specArgPaths[1]);
+  let folderArg: string = argv.folder || argv.f;
+  if (folderArg && folderArg.length) {
+    const folderArgPaths = folderArg.split('/');
+    if (folderArgPaths.length > 1) {
+      specs = path.join(folderArgPaths[0], '**', folderArgPaths[1]);
     } else {
-      specs = path.join(specArg, '**');
+      specs = path.join(folderArg, '**');
     }
   }
   specs = path.join(DIST_E2E_ROOT, 'tests', specs, '*e2e.js');

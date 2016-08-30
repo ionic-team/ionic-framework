@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Directive, ElementRef, Input, Optio
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
+import { ToolbarTitle } from './toolbar-title';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -35,9 +36,11 @@ import { ViewController } from '../../navigation/view-controller';
 @Directive({
   selector: 'ion-header'
 })
-export class Header {
+export class Header extends Ion {
 
-  constructor(@Optional() viewCtrl: ViewController) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
+    super(config, elementRef, renderer);
+    this._setMode('header', config.get('mode'));
     viewCtrl && viewCtrl._setHeader(this);
   }
 
@@ -69,9 +72,11 @@ export class Header {
 @Directive({
   selector: 'ion-footer'
 })
-export class Footer {
+export class Footer extends Ion {
 
-  constructor(@Optional() viewCtrl: ViewController) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
+    super(config, elementRef, renderer);
+    this._setMode('footer', config.get('mode'));
     viewCtrl && viewCtrl._setFooter(this);
   }
 
@@ -82,19 +87,17 @@ export class Footer {
  * @private
  */
 export class ToolbarBase extends Ion {
-  itemRefs: ElementRef[] = [];
-  titleRef: any = null;
-  titleCmp: any;
+  private _title: ToolbarTitle;
 
-  constructor(elementRef: ElementRef) {
-    super(elementRef);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
   }
 
   /**
-   * @private
+   * @internal
    */
-  setTitleCmp(titleCmp: any) {
-    this.titleCmp = titleCmp;
+  _setTitle(titleCmp: ToolbarTitle) {
+    this._title = titleCmp;
   }
 
   /**
@@ -102,7 +105,7 @@ export class ToolbarBase extends Ion {
    * Returns the toolbar title text if it exists or an empty string
    */
   getTitleText() {
-    return (this.titleCmp && this.titleCmp.getTitleText()) || '';
+    return (this._title && this._title.getTitleText()) || '';
   }
 
 }
@@ -244,11 +247,11 @@ export class ToolbarBase extends Ion {
 @Component({
   selector: 'ion-toolbar',
   template:
-    '<div class="toolbar-background"></div>' +
+    '<div class="toolbar-background" [ngClass]="\'toolbar-background-\' + _mode"></div>' +
     '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
     '<ng-content select="ion-buttons[start]"></ng-content>' +
     '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
-    '<div class="toolbar-content">' +
+    '<div class="toolbar-content" [ngClass]="\'toolbar-content-\' + _mode">' +
       '<ng-content></ng-content>' +
     '</div>',
   host: {
@@ -258,50 +261,35 @@ export class ToolbarBase extends Ion {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toolbar extends ToolbarBase {
-  _sbPadding: boolean;
-
   /** @internal */
-  _color: string;
+  _sbPadding: boolean;
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('toolbar', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('toolbar', val);
   }
 
   constructor(
     @Optional() viewCtrl: ViewController,
     config: Config,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
-    super(_elementRef);
+    super(config, elementRef, renderer);
 
+    this.mode = config.get('mode');
     this._sbPadding = config.getBoolean('statusbarPadding');
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `toolbar-${color}`, isAdd);
-    }
   }
 
 }

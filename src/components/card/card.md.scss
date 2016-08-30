@@ -1,5 +1,4 @@
 @import "../../globals.md";
-@import "./card";
 
 // Material Design Card
 // --------------------------------------------------
@@ -37,7 +36,7 @@ $card-md-header-padding:              16px !default;
 $card-md-header-color:                #222 !default;
 
 
-ion-card {
+.card-md {
   margin: $card-md-margin-top $card-md-margin-right $card-md-margin-bottom $card-md-margin-left;
 
   width: calc(100% - #{($card-md-margin-right + $card-md-margin-left)});
@@ -49,44 +48,45 @@ ion-card {
   box-shadow: $card-md-box-shadow;
 }
 
-ion-card ion-list {
+.card-md ion-list {
   margin-bottom: 0;
 }
 
-ion-card > .item:last-child,
-ion-card > .item-wrapper:last-child .item {
+.card-md > .item:last-child,
+.card-md > .item:last-child .item-inner,
+.card-md > .item-wrapper:last-child .item {
   border-bottom: 0;
 }
 
-ion-card .item .item-inner {
+.card-md .item.item-md .item-inner {
   border: 0;
 }
 
-ion-card ion-card-content {
+.card-md ion-card-content {
   padding: $card-md-padding-top $card-md-padding-right $card-md-padding-bottom $card-md-padding-left;
 
   font-size: $card-md-font-size;
   line-height: $card-md-line-height;
 }
 
-ion-card ion-card-header {
+.card-md ion-card-header {
   padding: $card-md-header-padding;
 
   font-size: $card-md-header-font-size;
   color: $card-md-header-color;
 }
 
-ion-card ion-card-header + ion-card-content,
-.item + ion-card-content {
+.card-md ion-card-header + ion-card-content,
+.card-md .item + ion-card-content {
   padding-top: 0;
 }
 
-ion-card ion-note[item-left],
-ion-card ion-note[item-right], {
+.card-md ion-note[item-left],
+.card-md ion-note[item-right] {
   font-size: 1.3rem;
 }
 
-ion-card ion-card-title {
+.card-md ion-card-title {
   display: block;
 
   margin: $card-md-title-margin;
@@ -97,7 +97,7 @@ ion-card ion-card-title {
   color: $card-md-title-text-color;
 }
 
-ion-card h1 {
+.card-md h1 {
   margin: 0 0 2px;
 
   font-size: 2.4rem;
@@ -105,7 +105,7 @@ ion-card h1 {
   color: $card-md-text-color;
 }
 
-ion-card h2 {
+.card-md h2 {
   margin: 2px 0;
 
   font-size: 1.6rem;
@@ -113,10 +113,10 @@ ion-card h2 {
   color: $card-md-text-color;
 }
 
-ion-card h3,
-ion-card h4,
-ion-card h5,
-ion-card h6 {
+.card-md h3,
+.card-md h4,
+.card-md h5,
+.card-md h6 {
   margin: 2px 0;
 
   font-size: 1.4rem;
@@ -124,7 +124,7 @@ ion-card h6 {
   color: $card-md-text-color;
 }
 
-ion-card p {
+.card-md p {
   margin: 0 0 2px;
 
   font-size: 1.4rem;
@@ -133,6 +133,6 @@ ion-card p {
   color: $card-md-text-color;
 }
 
-ion-card + ion-card {
+.card-md + ion-card {
   margin-top: 0;
 }

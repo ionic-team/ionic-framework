@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
+import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { ItemSlidingGesture } from '../item/item-sliding-gesture';
@@ -49,17 +50,22 @@ export class List extends Ion {
   private _slidingGesture: ItemSlidingGesture;
 
   constructor(
+    config: Config,
     elementRef: ElementRef,
-    private _rendered: Renderer,
-    public _gestureCtrl: GestureController) {
-    super(elementRef);
+    renderer: Renderer,
+    public _gestureCtrl: GestureController
+  ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
   }
 
   /**
-   * @private
+   * @input {string} The mode to apply to this component.
    */
-  ngOnDestroy() {
-    this._slidingGesture && this._slidingGesture.destroy();
+  @Input()
+  set mode(val: string) {
+    this._setMode('list', val);
   }
 
   /**
@@ -73,7 +79,6 @@ export class List extends Ion {
     this._enableSliding = isTrueProperty(val);
     this._updateSlidingState();
   }
-
 
   /**
    * @private
@@ -97,11 +102,17 @@ export class List extends Ion {
     }
   }
 
-
   /**
    * Close any sliding items that are open.
    */
   closeSlidingItems() {
     this._slidingGesture && this._slidingGesture.closeOpened();
+  }
+
+  /**
+   * @private
+   */
+  destroy() {
+    this._slidingGesture && this._slidingGesture.destroy();
   }
 }

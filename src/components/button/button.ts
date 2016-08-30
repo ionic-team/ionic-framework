@@ -1,6 +1,7 @@
 import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 
 
@@ -94,34 +95,28 @@ import { isTrueProperty } from '../../util/util';
     '<span class="button-inner">' +
       '<ng-content></ng-content>' +
     '</span>' +
-    '<ion-button-effect></ion-button-effect>',
+    '<div class="button-effect"></div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class Button {
+export class Button extends Ion {
   /** @internal */
   _role: string = 'button'; // bar-button
 
   /** @internal */
-  _mt: boolean = false; // menutoggle
+  _mt: boolean; // menutoggle
 
   /** @internal */
-  _size: string = null; // large/small/default
+  _size: string; // large/small/default
 
   /** @internal */
   _style: string = 'default'; // outline/clear/solid
 
   /** @internal */
-  _shape: string = null; // round/fab
+  _shape: string; // round/fab
 
   /** @internal */
-  _display: string = null; // block/full
-
-  /** @internal */
-  _color: string = null; // primary/secondary
-
-  /** @internal */
-  _disabled: boolean = false; // disabled
+  _display: string; // block/full
 
   /** @internal */
   _init: boolean;
@@ -206,9 +201,20 @@ export class Button {
     this._attr('_display', 'full', val);
   }
 
+  /**
+   * @input {string} A button that fills its parent container without a border-radius or borders on the left/right.
+   */
+  @Input()
+  set mode(val: string) {
+    this._assignCss(false);
+    this._mode = val;
+    this._assignCss(true);
+  }
+
+  /** @internal */
   _attr(type: string, attrName: string, attrValue: boolean) {
     if (type === '_style') {
-      this._setColor(this._color, isTrueProperty(attrValue));
+      this._updateColor(this._color, isTrueProperty(attrValue));
     }
     this._setClass((<any>this)[type], false);
     if (isTrueProperty(attrValue)) {
@@ -227,24 +233,23 @@ export class Button {
    */
   @Input()
   set color(val: string) {
-    this._updateColor(val);
+    this._updateColor(this._color, false);
+    this._updateColor(val, true);
+    this._color = val;
   }
 
   constructor(
     @Attribute('menuToggle') menuToggle: string,
     @Attribute('ion-button') ionButton: string,
     config: Config,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
-    let element = _elementRef.nativeElement;
+    super(config, elementRef, renderer);
+    this._mode = config.get('mode');
 
     if (config.get('hoverCSS') === false) {
-      _renderer.setElementClass(element, 'disable-hover', true);
-    }
-
-    if (element.hasAttribute('disabled')) {
-      this._disabled = true;
+      this.setElementClass('disable-hover', true);
     }
 
     if (ionButton.trim().length > 0) {
@@ -266,22 +271,6 @@ export class Button {
   /**
    * @internal
    */
-  _updateColor(newColor: string) {
-    this._setColor(this._color, false);
-    this._setColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  setCssClass(className: string, isAdd: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, isAdd);
-  }
-
-  /**
-   * @internal
-   */
   setRole(val: string) {
     this._assignCss(false);
     this._role = val;
@@ -294,15 +283,15 @@ export class Button {
   _assignCss(assignCssClass: boolean) {
     let role = this._role;
     if (role) {
-      this._renderer.setElementClass(this._elementRef.nativeElement, role, assignCssClass); // button
+      this.setElementClass(role, assignCssClass); // button
+      this.setElementClass(`${role}-${this._mode}`, assignCssClass); // button
 
       this._setClass('menutoggle', this._mt); // menutoggle
-
       this._setClass(this._style, assignCssClass); // button-clear
       this._setClass(this._shape, assignCssClass); // button-round
       this._setClass(this._display, assignCssClass); // button-full
       this._setClass(this._size, assignCssClass); // button-small
-      this._setColor(this._color, assignCssClass); // button-secondary, bar-button-secondary
+      this._updateColor(this._color, assignCssClass); // button-secondary, bar-button-secondary
     }
   }
 
@@ -311,14 +300,16 @@ export class Button {
    */
   _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
-      this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type.toLowerCase(), assignCssClass);
+      type = type.toLocaleLowerCase();
+      this.setElementClass(`${this._role}-${type}`, assignCssClass);
+      this.setElementClass(`${this._role}-${type}-${this._mode}`, assignCssClass);
     }
   }
 
   /**
    * @internal
    */
-  _setColor(color: string, isAdd: boolean) {
+  _updateColor(color: string, isAdd: boolean) {
     if (color && this._init) {
       // The class should begin with the button role
       // button, bar-button
@@ -331,7 +322,7 @@ export class Button {
       className += (style !== null && style !== '' && style !== 'default' ? '-' + style.toLowerCase() : '');
 
       if (color !== null && color !== '') {
-        this._renderer.setElementClass(this._elementRef.nativeElement, `${className}-${color}`, isAdd);
+        this.setElementClass(`${className}-${color}`, isAdd);
       }
     }
   }

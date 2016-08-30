@@ -19,9 +19,8 @@ export class Typography {
   get color(): string {
     return this._color;
   }
-
-  set color(value: string) {
-    this._updateColor(value);
+  set color(val: string) {
+    this._updateColor(val);
   }
 
   constructor(

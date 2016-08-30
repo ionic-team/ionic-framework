@@ -3,6 +3,7 @@ import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Opaque
 import { App } from './app';
 import { Config } from '../../config/config';
 import { FeatureDetect } from '../../util/feature-detect';
+import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
 
@@ -20,7 +21,7 @@ export const UserRoot = new OpaqueToken('USERROOT');
     '<div #toastPortal class="toast-portal" overlay-portal></div>' +
     '<click-block></click-block>'
 })
-export class IonicApp implements OnInit {
+export class IonicApp extends Ion implements OnInit {
 
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
@@ -33,13 +34,14 @@ export class IonicApp implements OnInit {
   constructor(
     @Inject(UserRoot) private _userCmp: any,
     private _cfr: ComponentFactoryResolver,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
-    private _config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    config: Config,
     private _platform: Platform,
     private _featureDetect: FeatureDetect,
     app: App
   ) {
+    super(config, elementRef, renderer);
     // register with App that this is Ionic's appRoot component. tada!
     app._appRoot = this;
   }
@@ -54,29 +56,29 @@ export class IonicApp implements OnInit {
 
     // set the mode class name
     // ios/md/wp
-    this._addClass(this._config.get('mode'));
+    this.setElementClass(this._config.get('mode'), true);
 
     const versions = this._platform.versions();
     this._platform.platforms().forEach(platformName => {
       // platform-ios
       let platformClass = 'platform-' + platformName;
-      this._addClass(platformClass);
+      this.setElementClass(platformClass, true);
 
       let platformVersion = versions[platformName];
       if (platformVersion) {
         // platform-ios9
         platformClass += platformVersion.major;
-        this._addClass(platformClass);
+        this.setElementClass(platformClass, true);
 
         // platform-ios9_3
-        this._addClass(platformClass + '_' + platformVersion.minor);
+        this.setElementClass(platformClass + '_' + platformVersion.minor, true);
       }
     });
 
     // touch devices should not use :hover CSS pseudo
     // enable :hover CSS when the "hoverCSS" setting is not false
     if (this._config.getBoolean('hoverCSS', true)) {
-      this._addClass('enable-hover');
+      this.setElementClass('enable-hover', true);
     }
 
     this._featureDetect.test(this);
@@ -98,15 +100,8 @@ export class IonicApp implements OnInit {
   /**
    * @internal
    */
-  _addClass(className: string) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
-  }
-
-  /**
-   * @internal
-   */
   _disableScroll(shouldDisableScroll: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, 'disable-scroll', shouldDisableScroll);
+    this.setElementClass('disable-scroll', shouldDisableScroll);
   }
 
 }

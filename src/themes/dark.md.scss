@@ -7,7 +7,6 @@ $colors-md: copy-colors($colors) !default;
 
 
 $text-md-color:                       $text-color !default;
-$paragraph-md-color:                  $paragraph-color !default;
 $link-md-color:                       color($colors-md, primary) !default;
 $background-md-color:                 $background-color !default;
 $subdued-text-md-color:               $subdued-text-color !default;
@@ -70,14 +69,4 @@ $toggle-md-handle-background-color-off: color($colors-md, light) !default;
 
 @function ripple-background-color($button-color) {
   @return rgba(red($button-color), green($button-color), blue($button-color), .1);
-}
-
-
-// Material Design Body
-// --------------------------------------------------
-
-@mixin md-body() {
-  font-family: $font-family-md-base;
-  font-size: $font-size-md-base;
-  background-color: $background-md-color;
 }

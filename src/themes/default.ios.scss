@@ -7,7 +7,6 @@ $colors-ios: copy-colors($colors) !default;
 
 
 $text-ios-color:                       $text-color !default;
-$paragraph-ios-color:                  $paragraph-color !default;
 $link-ios-color:                       color($colors-ios, primary) !default;
 $background-ios-color:                 $background-color !default;
 $subdued-text-ios-color:               $subdued-text-color !default;
@@ -15,10 +14,14 @@ $subdued-text-ios-color:               $subdued-text-color !default;
 $font-family-ios-base:                 $font-family-base !default;
 $font-size-ios-base:                   $font-size-base !default;
 
+$content-ios-padding:                  $content-padding !default;
+$content-ios-margin:                   $content-margin !default;
+
 
 // iOS Toolbar
 // --------------------------------------------------
 
+$toolbar-ios-height:                   44px !default;
 $toolbar-ios-background:               $toolbar-background !default;
 $toolbar-ios-border-color:             $toolbar-border-color !default;
 $toolbar-ios-text-color:               $toolbar-text-color !default;
@@ -46,13 +49,3 @@ $item-ios-padding-media-top:          8px !default;
 $item-ios-padding-media-bottom:       8px !default;
 $item-ios-padding-icon-top:           10px !default;
 $item-ios-padding-icon-bottom:        9px !default;
-
-
-// iOS Body
-// --------------------------------------------------
-
-@mixin ios-body() {
-  font-family: $font-family-ios-base;
-  font-size: $font-size-ios-base;
-  background-color: $background-ios-color;
-}

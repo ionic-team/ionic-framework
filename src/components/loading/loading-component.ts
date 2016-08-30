@@ -49,6 +49,8 @@ export class LoadingCmp {
   ) {
     this.d = params.data;
 
+    renderer.setElementClass(_elementRef.nativeElement, `loading-${_config.get('mode')}`, true);
+
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
         // Make sure the class isn't whitespace, otherwise it throws exceptions

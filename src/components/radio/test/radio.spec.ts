@@ -1,7 +1,7 @@
 import { RadioGroup } from '../radio-group';
 import { RadioButton } from '../radio-button';
 import { Form } from '../../../util/form';
-import { mockRenderer, mockElementRef } from '../../../util/mock-providers';
+import { mockConfig, mockRenderer, mockElementRef } from '../../../util/mock-providers';
 
 
 describe('RadioGroup', () => {
@@ -125,5 +125,5 @@ let rg: RadioGroup;
 let form: Form;
 
 function createRadioButton(shouldIncludeGroup = true) {
-  return new RadioButton(form, mockElementRef(), mockRenderer(), null, shouldIncludeGroup ? rg : null);
+  return new RadioButton(form, mockConfig(), mockElementRef(), mockRenderer(), null, shouldIncludeGroup ? rg : null);
 }

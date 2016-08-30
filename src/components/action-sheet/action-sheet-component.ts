@@ -54,6 +54,7 @@ export class ActionSheetCmp {
   enabled: boolean;
   hdrId: string;
   id: number;
+  mode: string;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -64,6 +65,8 @@ export class ActionSheetCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
+    this.mode = _config.get('mode');
+    renderer.setElementClass(_elementRef.nativeElement, `action-sheet-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {

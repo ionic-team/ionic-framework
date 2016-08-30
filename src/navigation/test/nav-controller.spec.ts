@@ -270,6 +270,18 @@ describe('NavController', () => {
 
   describe('pop', () => {
 
+    it('should not pop when no views in the stack', () => {
+      nav.pop(null, trnsDone);
+
+      let hasCompleted = false;
+      let requiresTransition = false;
+      expect(trnsDone).toHaveBeenCalledWith(
+        hasCompleted, requiresTransition, 'no views in the stack to be removed'
+      );
+      expect(nav.length()).toEqual(0);
+      expect(nav.isTransitioning()).toEqual(false);
+    });
+
     it('should remove the last view and fire lifecycles', () => {
       let view1 = mockView(MockView1);
       let view2 = mockView(MockView2);

@@ -4,7 +4,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
 import { App } from '../app/app';
+import { Config } from '../../config/config';
 import { Form } from '../../util/form';
+import { Ion } from '../ion';
 import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
@@ -139,7 +141,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
   providers: [SELECT_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy {
+export class Select extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy {
   _disabled: any = false;
   _labelId: string;
   _multi: boolean = false;
@@ -189,6 +191,14 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   @Input() selectedText: string = '';
 
   /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('select', val);
+  }
+
+  /**
    * @output {any} Any expression you want to evaluate when the selection has changed.
    */
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
@@ -201,17 +211,22 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   constructor(
     private _app: App,
     private _form: Form,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() public _item: Item,
     @Optional() private _nav: NavController
   ) {
-    this._form.register(this);
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+
+    _form.register(this);
 
     if (_item) {
       this.id = 'sel-' + _item.registerInput('select');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-select', true);
+      this._item.setElementClass('item-select', true);
     }
   }
 
@@ -412,7 +427,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
 
   set disabled(val) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-select-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-select-disabled', this._disabled);
   }
 
   /**

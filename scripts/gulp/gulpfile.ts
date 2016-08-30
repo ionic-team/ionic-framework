@@ -7,3 +7,4 @@ import './tasks/release';
 // import './tasks/serve';
 import './tasks/snapshot';
 import './tasks/test';
+import './tasks/theme';

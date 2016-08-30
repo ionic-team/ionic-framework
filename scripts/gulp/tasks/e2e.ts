@@ -1,5 +1,6 @@
 import { DIST_NAME,
       E2E_NAME,
+      DIST_ROOT,
       DIST_E2E_ROOT,
       DIST_E2E_COMPONENTS_ROOT,
       E2E_GENERATED_CONFIG_NGC_CONFIG,
@@ -102,7 +103,7 @@ task('e2e.setupTests', (done: Function) => {
 });
 
 task('e2e.ngcSource', (done: Function) => {
-  generateE2EBuildConfig({ outDir: '../../dist/e2e' }, [`${SRC_ROOT}/index.ts`]);
+  generateE2EBuildConfig({ outDir: '../../dist/e2e' }, {}, [`${SRC_ROOT}/index.ts`]);
 
   let startTask = execNodeTask('@angular/compiler-cli', 'ngc', ['-p', E2E_GENERATED_CONFIG_NGC_CONFIG]);
   startTask( (err: any) => {
@@ -113,7 +114,7 @@ task('e2e.ngcSource', (done: Function) => {
 
 task('e2e.resources', ( done: Function) => {
   let runSequence = require('run-sequence');
-  runSequence('e2e.setupTests', 'e2e.buildTestAppModules', 'e2e.buildTestEntryPoints', done);
+  runSequence('e2e.setupTests', 'e2e.buildTestAppModules', 'e2e.copyTestAppModules', 'e2e.deleteTempTestAppModules', 'e2e.buildTestEntryPoints', done);
 });
 
 task('e2e.copyExternalDeps', (done: Function) => {
@@ -128,15 +129,27 @@ function copyExteralE2EFiles(done: Function) {
   });
  }
 
+task('e2e.copyTestAppModules', function(){
+  // copy files over from tmp directory
+  return src(`${DIST_ROOT}/ngc/dist/e2e/**/*.ngfactory.ts`)
+    .pipe(dest(`${DIST_E2E_ROOT}`));
+});
+
+task('e2e.deleteTempTestAppModules', function(done: Function) {
+  let del = require('del');
+  del(`${DIST_ROOT}/ngc`);
+  done();
+});
+
 task('e2e.buildTestAppModules',  (done: Function) => {
-  runNgcAgainstTests('app-module.ts', done);
+  runNgcAgainstTests('app-module.ts', { genDir: '../../dist/ngc'}, done);
 });
 
 task('e2e.buildTestEntryPoints',  (done: Function) => {
-  runNgcAgainstTests('entry.ts', done);
+  runNgcAgainstTests('entry.ts', {}, done);
 });
 
-function runNgcAgainstTests(fileName: string, done: Function) {
+function runNgcAgainstTests(fileName: string, angularCompilerOptions: any, done: Function) {
   const argv = require('yargs').argv;
   let componentName: string = null;
   let componentTest: string = null;
@@ -157,7 +170,7 @@ function runNgcAgainstTests(fileName: string, done: Function) {
     ];
   }
 
-  generateE2EBuildConfig(null, includeGlob);
+  generateE2EBuildConfig(null, angularCompilerOptions, includeGlob);
 
   let exec = require('child_process').exec;
   var shellCommand = `node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ${E2E_GENERATED_CONFIG_NGC_CONFIG}`;

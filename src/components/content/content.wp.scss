@@ -1,15 +1,19 @@
 @import "../../globals.wp";
-@import "./content";
 
 // Windows Content
 // --------------------------------------------------
 
-$content-wp-padding:              $content-padding !default;
-$content-wp-margin:               $content-margin !default;
-
-
-ion-content {
+.content-wp {
+  color: $text-wp-color;
   background-color: $background-wp-color;
+}
+
+.content-wp a:not(.button):not(.item) {
+  color: $link-wp-color;
+}
+
+.content-wp hr {
+  background-color: rgba(0, 0, 0, .08);
 }
 
 
