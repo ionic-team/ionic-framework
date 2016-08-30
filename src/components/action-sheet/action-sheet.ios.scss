@@ -36,11 +36,11 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   text-align: $action-sheet-ios-text-align;
 }
 
-.action-sheet-container-ios {
+.action-sheet-ios .action-sheet-container {
   padding: $action-sheet-ios-padding;
 }
 
-.action-sheet-group-ios {
+.action-sheet-ios .action-sheet-group {
   overflow: hidden;
 
   margin-bottom: $action-sheet-ios-group-margin-bottom - 2;
@@ -49,11 +49,11 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   background: $action-sheet-ios-background;
 }
 
-.action-sheet-group-ios:last-child {
+.action-sheet-ios .action-sheet-group:last-child {
   margin-bottom: $action-sheet-ios-group-margin-bottom;
 }
 
-.action-sheet-title-ios {
+.action-sheet-ios .action-sheet-title {
   padding: $action-sheet-ios-title-padding;
 
   border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
@@ -64,7 +64,7 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   color: $action-sheet-ios-title-color;
 }
 
-.action-sheet-button-ios {
+.action-sheet-ios .action-sheet-button {
   margin: 0;
   padding: $action-sheet-ios-button-padding;
 
@@ -76,11 +76,11 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   background: $action-sheet-ios-button-background;
 }
 
-.action-sheet-button-ios:last-child {
+.action-sheet-ios .action-sheet-button:last-child {
   border-bottom: 0;
 }
 
-.action-sheet-button-ios.activated {
+.action-sheet-ios .action-sheet-button.activated {
   margin-top: -$action-sheet-ios-button-border-width;
 
   border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;

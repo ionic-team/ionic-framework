@@ -102,7 +102,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   background: $alert-wp-backdrop-background;
 }
 
-.alert-wrapper-wp {
+.alert-wp .alert-wrapper {
   width: $alert-wp-width;
   max-width: $alert-wp-max-width;
 
@@ -114,18 +114,18 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Header
 // --------------------------------------------------
 
-.alert-head-wp {
+.alert-wp .alert-head {
   padding: $alert-wp-head-padding;
 
   text-align: $alert-wp-head-text-align;
 }
 
-.alert-title-wp {
+.alert-wp .alert-title {
   font-size: $alert-wp-title-font-size;
   font-weight: $alert-wp-title-font-weight;
 }
 
-.alert-sub-title-wp {
+.alert-wp .alert-sub-title {
   font-size: $alert-wp-sub-title-font-size;
 }
 
@@ -133,20 +133,20 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Message
 // --------------------------------------------------
 
-.alert-message-wp,
-.alert-input-group-wp {
+.alert-wp .alert-message,
+.alert-wp .alert-input-group {
   padding: $alert-wp-message-padding;
 
   color: $alert-wp-message-text-color;
 }
 
-.alert-message-wp {
+.alert-wp .alert-message {
   max-height: $alert-wp-content-max-height;
 
   font-size: $alert-wp-message-font-size;
 }
 
-.alert-message-wp:empty {
+.alert-wp .alert-message:empty {
   padding: $alert-wp-message-padding-empty;
 }
 
@@ -154,7 +154,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Input
 // --------------------------------------------------
 
-.alert-input-wp {
+.alert-wp .alert-input {
   margin: $alert-wp-input-margin;
   padding: $alert-wp-input-padding;
 
@@ -163,7 +163,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   color: $alert-wp-input-text-color;
 }
 
-.alert-input-wp:focus {
+.alert-wp .alert-input:focus {
   border-color: $alert-wp-input-border-color-focused;
 }
 
@@ -171,8 +171,8 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Radio/Checkbox Group
 // --------------------------------------------------
 
-.alert-radio-group-wp,
-.alert-checkbox-group-wp {
+.alert-wp .alert-radio-group,
+.alert-wp .alert-checkbox-group {
   position: relative;
   overflow: auto;
 
@@ -193,7 +193,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Radio Label
 // --------------------------------------------------
 
-.alert-radio-wp .alert-radio-label {
+.alert-wp .alert-radio-label {
   overflow: hidden;
 
   flex: 1;
@@ -207,7 +207,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Radio Unchecked Circle
 // ---------------------------------------------------
 
-.alert-radio-wp .alert-radio-icon {
+.alert-wp .alert-radio-icon {
   position: relative;
   top: $alert-wp-radio-top;
   left: $alert-wp-radio-left;
@@ -227,7 +227,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Radio Checked Dot
 // ---------------------------------------------------
 
-.alert-radio-wp .alert-radio-inner {
+.alert-wp .alert-radio-inner {
   position: absolute;
   top: $alert-wp-radio-icon-top;
   left: $alert-wp-radio-icon-left;
@@ -243,15 +243,15 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Radio Checked
 // ---------------------------------------------------
 
-.alert-radio-wp[aria-checked=true] .alert-radio-label {
+.alert-wp [aria-checked=true] .alert-radio-label {
   color: $alert-wp-radio-label-text-color-checked;
 }
 
-.alert-radio-wp[aria-checked=true] .alert-radio-icon {
+.alert-wp [aria-checked=true] .alert-radio-icon {
   border-color: $alert-wp-radio-border-color;
 }
 
-.alert-radio-wp[aria-checked=true] .alert-radio-inner {
+.alert-wp [aria-checked=true] .alert-radio-inner {
   display: block;
 }
 
@@ -259,7 +259,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Checkbox Label
 // --------------------------------------------------
 
-.alert-checkbox-wp .alert-checkbox-label {
+.alert-wp .alert-checkbox-label {
   overflow: hidden;
 
   flex: 1;
@@ -270,14 +270,14 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   white-space: nowrap;
 }
 
-.alert-checkbox-wp[aria-checked=true] .alert-checkbox-label {
+.alert-wp [aria-checked=true] .alert-checkbox-label {
   color: $alert-wp-checkbox-label-text-color-checked;
 }
 
 // Windows Alert Checkbox Outline: Unchecked
 // --------------------------------------------------
 
-.alert-checkbox-wp .alert-checkbox-icon {
+.alert-wp .alert-checkbox-icon {
   position: relative;
   top: $alert-wp-checkbox-top;
   left: $alert-wp-checkbox-left;
@@ -295,7 +295,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Checkbox Outline: Checked
 // --------------------------------------------------
 
-.alert-checkbox-wp[aria-checked=true] .alert-checkbox-icon {
+.alert-wp [aria-checked=true] .alert-checkbox-icon {
   border-color: $alert-wp-checkbox-background-on;
   background: $alert-wp-checkbox-background-on;
 }
@@ -303,7 +303,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // Windows Alert Checkbox Checkmark: Checked
 // --------------------------------------------------
 
-.alert-checkbox-wp[aria-checked=true] .alert-checkbox-inner {
+.alert-wp [aria-checked=true] .alert-checkbox-inner {
   position: absolute;
   top: $alert-wp-checkbox-icon-top;
   left: $alert-wp-checkbox-icon-left;
@@ -330,18 +330,18 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   padding: $alert-wp-button-group-padding;
 }
 
-.alert-button-group-vertical .alert-button-wp {
+.alert-wp .alert-button-group-vertical .alert-button {
   margin-top: $alert-wp-button-group-vertical-margin-top;
 
   width: $alert-wp-button-group-vertical-width;
 }
 
-.alert-button-group-vertical .alert-button-wp:first-child:not(:only-child) {
+.alert-wp .alert-button-group-vertical .alert-button:first-child:not(:only-child) {
   margin-top: 0;
   margin-right: 0;
 }
 
-.alert-button-wp {
+.alert-wp .alert-button {
   padding: $alert-wp-button-padding;
 
   width: $alert-wp-button-width;
@@ -352,10 +352,10 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   background: $alert-wp-button-background;
 }
 
-.alert-button-wp:first-child:not(:only-child) {
+.alert-wp .alert-button:first-child:not(:only-child) {
   margin-right: $alert-wp-button-margin-right;
 }
 
-.alert-button-wp.activated {
+.alert-wp .alert-button.activated {
   background: $alert-wp-button-background-activated;
 }

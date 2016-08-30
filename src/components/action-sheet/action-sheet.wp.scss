@@ -29,11 +29,11 @@ $action-sheet-wp-icon-font-size:                  2.4rem !default;
 $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
 
 
-.action-sheet-wrapper-wp {
+.action-sheet-wp .action-sheet-wrapper {
   box-shadow: $action-sheet-wp-box-shadow;
 }
 
-.action-sheet-title-wp {
+.action-sheet-wp .action-sheet-title {
   padding: $action-sheet-wp-title-padding;
 
   font-size: $action-sheet-wp-title-font-size;
@@ -41,7 +41,7 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
   color: $action-sheet-wp-title-color;
 }
 
-.action-sheet-button-wp {
+.action-sheet-wp .action-sheet-button {
   padding: $action-sheet-wp-button-padding;
 
   min-height: $action-sheet-wp-button-height;
@@ -52,11 +52,11 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
   background: $action-sheet-wp-button-background;
 }
 
-.action-sheet-button-wp.activated {
+.action-sheet-wp .action-sheet-button.activated {
   background: $action-sheet-wp-button-background-activated;
 }
 
-.action-sheet-icon-wp {
+.action-sheet-wp .action-sheet-icon {
   margin: $action-sheet-wp-icon-margin;
 
   min-width: $action-sheet-wp-icon-min-width;
@@ -66,15 +66,15 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
   vertical-align: $action-sheet-wp-icon-vertical-align;
 }
 
-.action-sheet-group-wp {
+.action-sheet-wp .action-sheet-group {
   background: $action-sheet-wp-background;
 }
 
-.action-sheet-group-wp:last-child .action-sheet-button {
+.action-sheet-wp .action-sheet-group:last-child .action-sheet-button {
   margin-bottom: $action-sheet-wp-group-margin-bottom;
 }
 
-.action-sheet-group-wp .button-inner {
+.action-sheet-wp .action-sheet-group .button-inner {
   justify-content: flex-start;
 }
 
