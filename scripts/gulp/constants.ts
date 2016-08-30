@@ -17,6 +17,7 @@ export const DIST_ROOT = join(PROJECT_ROOT, DIST_NAME);
 export const DIST_E2E_ROOT = join(DIST_ROOT, E2E_NAME);
 export const DIST_E2E_COMPONENTS_ROOT = join(DIST_E2E_ROOT, COMPONENTS_NAME);
 export const DIST_BUILD_ROOT = join(DIST_ROOT, PACKAGE_NAME);
+export const DIST_BUILD_ESM_ROOT = join(DIST_BUILD_ROOT, 'esm');
 export const DIST_VENDOR_ROOT = join(DIST_ROOT, VENDOR_NAME);
 export const NODE_MODULES_ROOT = join(PROJECT_ROOT, NODE_MODULES);
 export const SCRIPTS_ROOT = join(PROJECT_ROOT, SCRIPTS_NAME);
@@ -29,8 +30,15 @@ export const NPM_VENDOR_FILES = [
 ];
 
 // NGC
-export const COMMON_JS_NGC_FILE_NAME = 'commonjsNgcConfig.json';
-export const COMMON_JS_NGC_CONFIG = `./${SCRIPTS_NAME}/${BUILD_NAME}/${COMMON_JS_NGC_FILE_NAME}`;
+export const COMMON_JS_NGC_FILE_NAME = 'release-tsconfig-commonjs.json';
+export const COMMON_JS_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_NAME}/${BUILD_NAME}/${COMMON_JS_NGC_FILE_NAME}`);
+export const ES_MODULES_NGC_FILE_NAME = 'release-tsconfig-esm.json';
+export const ES_MODULES_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_NAME}/${BUILD_NAME}/${ES_MODULES_NGC_FILE_NAME}`);
+export const E2E_BASE_CONFIG_NGC_FILE_NAME = 'e2e-base-tsconfig.json';
+export const E2E_BASE_CONFIG_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_NAME}/${BUILD_NAME}/${E2E_BASE_CONFIG_NGC_FILE_NAME}`);
+export const E2E_GENERATED_CONFIG_NGC_FILE_NAME = 'e2e-generated-tsconfig.json';
+export const E2E_GENERATED_CONFIG_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_NAME}/${BUILD_NAME}/${E2E_GENERATED_CONFIG_NGC_FILE_NAME}`);
+
 
 // SERVER
 export const LOCAL_SERVER_PORT = 8080;

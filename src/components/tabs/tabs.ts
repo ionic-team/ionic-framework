@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -154,7 +154,7 @@ import { ViewController } from '../../navigation/view-controller';
     '<div #portal tab-portal></div>',
   encapsulation: ViewEncapsulation.None,
 })
-export class Tabs extends Ion implements AfterViewInit {
+export class Tabs extends Ion {
   /**
    * @internal
    */

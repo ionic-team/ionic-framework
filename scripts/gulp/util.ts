@@ -1,6 +1,8 @@
+import { E2E_BASE_CONFIG_NGC_CONFIG, E2E_GENERATED_CONFIG_NGC_CONFIG, SRC_COMPONENTS_ROOT } from './constants';
 import * as child_process from 'child_process';
 import { src, dest } from 'gulp';
 import * as path from 'path';
+import * as fs from 'fs';
 
 export function mergeObjects(obj1: any, obj2: any ) {
   var obj3 = {};
@@ -128,4 +130,39 @@ export function compileSass(destinationPath: string) {
   .pipe(cleanCSS())
   .pipe(rename({ extname: '.min.css' }))
   .pipe(dest(destinationPath));
+}
+
+export function copyFile(srcPath: string, destPath: string) {
+  const sourceData = fs.readFileSync(srcPath);
+  fs.writeFileSync(destPath, sourceData);
+}
+
+export function copySwiperToPath(distPath: string) {
+  copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.js`, `${distPath}/swiper-widget.js`);
+  copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.d.ts`, `${distPath}/swiper-widget.d.ts`);
+  copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.es2015.js`, `${distPath}/swiper-widget.es2015.js`);
+  copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.system.js`, `${distPath}/swiper-widget.system.js`);
+}
+
+export function generateE2EBuildConfig(compilerOptions: any, includeGlob: string[]) {
+  const fs = require('fs');
+
+  let baseConfig = require(E2E_BASE_CONFIG_NGC_CONFIG);
+
+  if (!compilerOptions) {
+    compilerOptions = {};
+  }
+  baseConfig.compilerOptions = mergeObjects(baseConfig.compilerOptions, compilerOptions);
+  if (includeGlob && includeGlob.length > 0) {
+    baseConfig.include = includeGlob;
+  }
+
+  let prettyString = JSON.stringify(baseConfig, null, 2);
+
+  fs.writeFileSync(E2E_GENERATED_CONFIG_NGC_CONFIG, prettyString);
+}
+
+export function removeGeneratedE2EBuildConfig() {
+  let del = require('del');
+  del.sync(E2E_GENERATED_CONFIG_NGC_CONFIG);
 }

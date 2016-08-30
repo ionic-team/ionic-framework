@@ -24,12 +24,6 @@ UserInterfaceState.xcuserstate
 
 .package.tmp.json
 
-/commonjsNgcConfig.json
-/es2015NgcConfig.json
-/demoNgcConfig.json
-/e2eNgcConfig.json
-
-src/tsconfig.json
-
-/scripts/e2e/webpackEntryPoints.json
+scripts/e2e/webpackEntryPoints.json
+scripts/build/e2e-generated-tsconfig.json
 *.css.ts

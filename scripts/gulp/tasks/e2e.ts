@@ -1,9 +1,17 @@
-import { DIST_NAME, E2E_NAME, DIST_E2E_ROOT, DIST_E2E_COMPONENTS_ROOT, LOCAL_SERVER_PORT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { DIST_NAME,
+      E2E_NAME,
+      DIST_E2E_ROOT,
+      DIST_E2E_COMPONENTS_ROOT,
+      E2E_GENERATED_CONFIG_NGC_CONFIG,
+      LOCAL_SERVER_PORT,
+      SRC_COMPONENTS_ROOT,
+      SRC_ROOT
+    } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
 
-import { compileSass, copyFonts, execNodeTask } from '../util';
+import { compileSass, copyFonts, execNodeTask, generateE2EBuildConfig, removeGeneratedE2EBuildConfig } from '../util';
 
 
 task('e2e', e2eBuild);
@@ -93,21 +101,11 @@ task('e2e.setupTests', (done: Function) => {
 });
 
 task('e2e.ngcSource', (done: Function) => {
-  const fs = require('fs');
-  const del = require('del');
+  generateE2EBuildConfig({ outDir: '../../dist/e2e' }, [`${SRC_ROOT}/index.ts`]);
 
-  let ngcConfig = require('../../build/commonjsNgcConfig.json');
-    ngcConfig.compilerOptions.outDir = '../../dist/e2e';
-    ngcConfig.angularCompilerOptions.outDir = '../../dist/e2e';
-    ngcConfig.include = [
-      `${SRC_ROOT}/index.ts`,
-    ];
-
-  fs.writeFileSync('./scripts/build/generated-ngc-config.json', JSON.stringify(ngcConfig, null, 2));
-
-  let startTask = execNodeTask('@angular/compiler-cli', 'ngc', ['-p', './scripts/build/generated-ngc-config.json']);
+  let startTask = execNodeTask('@angular/compiler-cli', 'ngc', ['-p', E2E_GENERATED_CONFIG_NGC_CONFIG]);
   startTask( (err: any) => {
-    del('./scripts/build/generated-ngc-config.json');
+    removeGeneratedE2EBuildConfig();
     done(err);
   });
 });
@@ -122,28 +120,6 @@ task('e2e.copy.swiper', () => {
 });
 
 task('e2e.build.tests',  (done: Function) => {
-  const fs = require('fs');
-  const del = require('del');
-
-  function updateE2eNgc(componentName?: string, componentTest?: string) {
-    let e2eNgc = require('../../e2e/NgcConfig.json');
-
-    // If an e2efolder parameter was passed then only transpile that directory
-    if (componentName && componentTest) {
-      e2eNgc.include = [
-        `${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/app-module.ts`,
-        `${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/entry.ts`
-      ];
-    } else {
-      e2eNgc.include = [
-        `${DIST_E2E_ROOT}/tests/*/test/*/app-module.ts`,
-        `${DIST_E2E_ROOT}/tests/*/test/*/entry.ts`
-      ];
-    }
-    fs.writeFileSync('./.generated-ngc-config.json', JSON.stringify(e2eNgc, null, 2));
-  }
-
-  // optionally allow an exact folder to be built instead of all of them
   const argv = require('yargs').argv;
   let componentName: string = null;
   let componentTest: string = null;
@@ -154,19 +130,25 @@ task('e2e.build.tests',  (done: Function) => {
     componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
   }
 
-  updateE2eNgc(componentName, componentTest);
+  let includeGlob = [
+    `${DIST_E2E_ROOT}/tests/*/test/*/app-module.ts`,
+    //`${DIST_E2E_ROOT}/tests/*/test/*/entry.ts`
+  ];
 
-  /*let startTask = execNodeTask('@angular/compiler-cli', 'ngc', ['-p', './.generated-ngc-config.json']);
-  startTask( (err: any) => {
-    del('./.generated-ngc-config.json');
-    done(err);
-  });
-  */
+  if (componentName && componentTest) {
+    includeGlob = [
+      `${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/app-module.ts`,
+      //`${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/entry.ts`
+    ];
+  }
+
+  generateE2EBuildConfig(null, includeGlob);
+
   let exec = require('child_process').exec;
-  var shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ./.generated-ngc-config.json';
+  var shellCommand = `node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ${E2E_GENERATED_CONFIG_NGC_CONFIG}`;
 
   exec(shellCommand, function(err, stdout, stderr) {
-    del('./.generated-ngc-config.json');
+    //removeGeneratedE2EBuildConfig();
     console.log(stdout);
     console.log(stderr);
     done(err);

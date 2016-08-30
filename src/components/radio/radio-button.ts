@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Form } from '../../util/form';
 import { isBlank, isCheckedProperty, isPresent, isTrueProperty } from '../../util/util';
@@ -61,7 +61,7 @@ import { RadioGroup } from './radio-group';
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class RadioButton implements OnDestroy, OnInit {
+export class RadioButton {
 
   /**
    * @internal

@@ -28,10 +28,8 @@ import { ViewController } from '../../navigation/view-controller';
 })
 export class PopoverCmp {
 
-  /** @internal */
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
-  /** @internal */
   d: {
     cssClass?: string;
     showBackdrop?: boolean;
@@ -91,14 +89,12 @@ export class PopoverCmp {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
 
-  /** @internal */
   _bdClick() {
     if (this._enabled && this.d.enableBackdropDismiss) {
       return this._viewCtrl.dismiss(null, 'backdrop');
     }
   }
 
-  /** @internal */
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
     if (this._enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {

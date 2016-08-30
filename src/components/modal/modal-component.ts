@@ -22,7 +22,6 @@ import { windowDimensions } from '../../util/dom';
 })
 export class ModalCmp {
 
-  /** @internal */
   @ViewChild('viewport', { read: ViewContainerRef }) _viewport: ViewContainerRef;
 
   /** @internal  */
@@ -60,14 +59,12 @@ export class ModalCmp {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
 
-  /** @internal */
   _bdClick() {
     if (this._enabled && this._bdDismiss) {
       return this._viewCtrl.dismiss(null, 'backdrop');
     }
   }
 
-  /** @internal */
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
     if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE) {

@@ -40,6 +40,7 @@
     "mkdirp-no-bin": "0.5.1",
     "q": "1.4.1",
     "rxjs": "5.0.0-beta.11",
+    "swiper": "3.3.1",
     "zone.js": "0.6.15"
   },
   "devDependencies": {
@@ -65,6 +66,7 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^2.3.0",
     "gulp-clean-css": "^2.0.12",
+    "gulp-git": "^1.11.2",
     "gulp-if": "^1.2.5",
     "gulp-remember": "^0.3.0",
     "gulp-rename": "~1.2.0",

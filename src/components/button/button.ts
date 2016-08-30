@@ -258,9 +258,6 @@ export class Button {
     }
   }
 
-  /**
-   * @internal
-   */
   ngAfterContentInit() {
     this._init = true;
     this._assignCss(true);

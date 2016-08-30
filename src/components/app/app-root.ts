@@ -22,16 +22,12 @@ export const UserRoot = new OpaqueToken('USERROOT');
 })
 export class IonicApp implements OnInit {
 
-  /** @internal */
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
-  /** @internal */
   @ViewChild('overlayPortal', { read: OverlayPortal }) _overlayPortal: OverlayPortal;
 
-  /** @internal */
   @ViewChild('loadingPortal', { read: OverlayPortal }) _loadingPortal: OverlayPortal;
 
-  /** @internal */
   @ViewChild('toastPortal', { read: OverlayPortal }) _toastPortal: OverlayPortal;
 
   constructor(

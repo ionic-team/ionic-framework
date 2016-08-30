@@ -1,5 +1,5 @@
-import { AfterContentInit, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Output, Renderer } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Output, Renderer } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ListHeader } from '../list/list-header';
 import { isCheckedProperty } from '../../util/util';
@@ -69,7 +69,7 @@ export const RADIO_VALUE_ACCESSOR: any = {
   },
   providers: [RADIO_VALUE_ACCESSOR]
 })
-export class RadioGroup implements AfterContentInit, ControlValueAccessor {
+export class RadioGroup {
 
   /**
    * @internal
