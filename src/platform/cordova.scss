@@ -10,6 +10,36 @@ $cordova-ios-statusbar-padding:                     20px   !default;
 $cordova-statusbar-padding-modal-max-width:         767px !default;
 
 
+@mixin statusbar-padding($toolbar-height, $content-padding, $modal-max-width, $style-title: false) {
+
+  ion-nav > .ion-page,
+  ion-nav > .ion-page > ion-header,
+  ion-tab > .ion-page > ion-header,
+  ion-tabs > .ion-page.tab-subpage > ion-header,
+  ion-menu > .menu-inner,
+  ion-menu > .menu-inner > ion-header {
+
+    @include toolbar-statusbar-padding($toolbar-height, $content-padding);
+
+    // If we should style the title components in the toolbar, ** iOS only **
+    // --------------------------------------------------------------------------------
+    @if ($style-title) {
+      @include toolbar-title-statusbar-padding($toolbar-height, $content-padding);
+    }
+  }
+
+  @media only screen and (max-width: $modal-max-width) {
+    .modal-wrapper > .ion-page > ion-header {
+      @include toolbar-statusbar-padding($toolbar-height, $content-padding);
+
+      @if ($style-title) {
+        @include toolbar-title-statusbar-padding($toolbar-height, $content-padding);
+      }
+    }
+  }
+
+}
+
 // The first-child should get modified padding-top for the status bar
 // --------------------------------------------------------------------------------
 
