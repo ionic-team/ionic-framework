@@ -140,54 +140,47 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   display: block;
 }
 
+
 // Searchbar Left Aligned (iOS only)
 // -----------------------------------------
 
-.searchbar-ios .searchbar-left-aligned {
-  .searchbar-search-icon {
-    margin-left: 0;
-  }
+.searchbar-ios.searchbar-left-aligned .searchbar-search-icon {
+  margin-left: 0;
+}
 
-  .searchbar-input {
-    padding-left: 30px;
-  }
+.searchbar-ios.searchbar-left-aligned .searchbar-input {
+  padding-left: 30px;
 }
 
 
 // Searchbar Has Focus
 // -----------------------------------------
 
-.searchbar-ios .searchbar-has-focus {
-  .searchbar-ios-cancel {
-    opacity: 1;
+.searchbar-ios .searchbar-has-focus .searchbar-ios-cancel {
+  opacity: 1;
 
-    pointer-events: auto;
-  }
+  pointer-events: auto;
 }
 
 
 // Searchbar in Toolbar
 // -----------------------------------------
 
-.toolbar {
+.toolbar .searchbar-ios {
+  border-bottom-width: 0;
+  background: transparent;
+}
 
-  .searchbar-ios {
-    border-bottom-width: 0;
-    background: transparent;
+.toolbar .searchbar-ios .searchbar-input {
+  background: $searchbar-ios-toolbar-input-background;
+}
 
-    .searchbar-input {
-      background: $searchbar-ios-toolbar-input-background;
-    }
+.toolbar .searchbar-ios .searchbar-ios-cancel {
+  padding: 0;
+}
 
-    .searchbar-ios-cancel {
-      padding: 0;
-    }
-  }
-
-  .searchbar-ios .searchbar-has-focus .searchbar-ios-cancel {
-    padding-left: 8px;
-  }
-
+.toolbar .searchbar-ios .searchbar-has-focus .searchbar-ios-cancel {
+  padding-left: 8px;
 }
 
 
@@ -205,34 +198,30 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   $fg-color: rgba($color-contrast, .5);
 
-  .searchbar-ios.searchbar-#{$color-name} {
-    .searchbar-ios-cancel {
-      color: $color-base;
-
-      &:hover:not(.disable-hover) {
-        color: color-shade($color-base);
-      }
-    }
+  .searchbar-ios.searchbar-#{$color-name} .searchbar-ios-cancel {
+    color: $color-base;
   }
 
-  .toolbar-#{$color-name} .searchbar-ios {
-    .searchbar-search-icon {
-      @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
-    }
+  .searchbar-ios.searchbar-#{$color-name} .searchbar-ios-cancel:hover:not(.disable-hover) {
+    color: color-shade($color-base);
+  }
 
-    .searchbar-input {
-      @include placeholder($fg-color);
-      color: $color-contrast;
-      background: rgba($color-contrast, .08);
-    }
+  .toolbar-#{$color-name} .searchbar-ios .searchbar-search-icon {
+    @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
+  }
 
-    .searchbar-clear-icon {
-      @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $fg-color);
-    }
+  .toolbar-#{$color-name} .searchbar-ios .searchbar-input {
+    @include placeholder($fg-color);
+    color: $color-contrast;
+    background: rgba($color-contrast, .08);
+  }
 
-    .searchbar-ios-cancel {
-      color: color-contrast($colors-ios, $color-base, ios);
-    }
+  .toolbar-#{$color-name} .searchbar-ios .searchbar-clear-icon {
+    @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $fg-color);
+  }
+
+  .toolbar-#{$color-name} .searchbar-ios .searchbar-ios-cancel {
+    color: color-contrast($colors-ios, $color-base, ios);
   }
 
 }

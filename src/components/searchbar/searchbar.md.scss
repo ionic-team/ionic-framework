@@ -70,10 +70,11 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
   background-repeat: no-repeat;
   background-size: $searchbar-md-input-search-icon-size;
+}
 
-  &.activated {
-    background-color: transparent;
-  }
+.searchbar-md .searchbar-search-icon.activated,
+.searchbar-md .searchbar-md-cancel.activated {
+  background-color: transparent;
 }
 
 
@@ -119,38 +120,34 @@ $searchbar-md-input-clear-icon-size:     22px !default;
   background-repeat: no-repeat;
   background-position: center;
   background-size: $searchbar-md-input-clear-icon-size;
+}
 
-  &.activated {
-    background-color: transparent;
-  }
+.searchbar-md .searchbar-clear-icon.activated {
+  background-color: transparent;
 }
 
 
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-md .searchbar-has-focus.searchbar-show-cancel {
-  .searchbar-search-icon {
-    display: none;
-  }
+.searchbar-md .searchbar-has-focus.searchbar-show-cancel .searchbar-search-icon {
+  display: none;
+}
 
-  .searchbar-md-cancel {
-    display: inline-flex;
-  }
+.searchbar-md .searchbar-has-focus.searchbar-show-cancel .searchbar-md-cancel {
+  display: inline-flex;
 }
 
 
 // Searchbar in Toolbar
 // -----------------------------------------
 
-.toolbar {
-  .searchbar-md  {
-    padding: 3px;
-  }
+.toolbar .searchbar-md  {
+  padding: 3px;
+}
 
-  .searchbar-md .searchbar-md-cancel {
-    left: 14px;
-  }
+.toolbar .searchbar-md .searchbar-md-cancel {
+  left: 14px;
 }
 
 

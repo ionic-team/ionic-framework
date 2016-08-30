@@ -57,10 +57,10 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 
   background-repeat: no-repeat;
   background-size: $searchbar-wp-input-search-icon-size;
+}
 
-  &.activated {
-    background-color: transparent;
-  }
+.searchbar-wp .searchbar-search-icon.activated {
+  background-color: transparent;
 }
 
 
@@ -104,17 +104,17 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   background-repeat: no-repeat;
   background-position: center;
   background-size: $searchbar-wp-input-clear-icon-size;
+}
 
-  &.activated {
-    background-color: transparent;
-  }
+.searchbar-wp .searchbar-clear-icon.activated {
+  background-color: transparent;
 }
 
 
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-wp .searchbar-has-focus .searchbar-input-container {
+.searchbar-wp.searchbar-has-focus .searchbar-input-container {
   border-color: $searchbar-wp-border-color-focused;
 }
 
@@ -122,7 +122,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 // Searchbar Left Aligned
 // -----------------------------------------
 
-.searchbar-wp .searchbar-has-value .searchbar-search-icon {
+.searchbar-wp.searchbar-has-value .searchbar-search-icon {
   display: none;
 }
 
@@ -145,10 +145,8 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 // Searchbar in Toolbar
 // -----------------------------------------
 
-.toolbar {
-  .searchbar-wp {
-    padding: 2px;
-  }
+.toolbar .searchbar-wp {
+  padding: 2px;
 }
 
 
