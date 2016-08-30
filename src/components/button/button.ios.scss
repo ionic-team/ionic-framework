@@ -149,15 +149,15 @@ $button-ios-fab-border-radius:                      50% !default;
 
   color: $button-ios-text-color;
   background-color: $button-ios-background-color;
+}
 
-  &.activated {
-    background-color: $button-ios-background-color-activated;
-    opacity: $button-ios-opacity-activated;
-  }
+.button.activated {
+  background-color: $button-ios-background-color-activated;
+  opacity: $button-ios-opacity-activated;
+}
 
-  &:hover:not(.disable-hover) {
-    opacity: $button-ios-opacity-hover;
-  }
+.button:hover:not(.disable-hover) {
+  opacity: $button-ios-opacity-hover;
 }
 
 
@@ -199,10 +199,10 @@ $button-ios-fab-border-radius:                      50% !default;
   height: $button-ios-small-height;
 
   font-size: $button-ios-small-font-size;
+}
 
-  &[icon-only] ion-icon {
-    font-size: $button-ios-small-icon-font-size;
-  }
+.button-small[icon-only] ion-icon {
+  font-size: $button-ios-small-icon-font-size;
 }
 
 // iOS Block Button
@@ -235,12 +235,12 @@ $button-ios-fab-border-radius:                      50% !default;
   border-color: $button-ios-outline-border-color;
   color: $button-ios-outline-text-color;
   background-color: $button-ios-outline-background-color;
+}
 
-  &.activated {
-    color: $button-ios-outline-text-color-activated;
-    background-color: $button-ios-outline-background-color-activated;
-    opacity: $button-ios-outline-opacity-activated;
-  }
+.button-outline.activated {
+  color: $button-ios-outline-text-color-activated;
+  background-color: $button-ios-outline-background-color-activated;
+  opacity: $button-ios-outline-opacity-activated;
 }
 
 // iOS Outline Button Color Mixin
@@ -269,16 +269,16 @@ $button-ios-fab-border-radius:                      50% !default;
   border-color: $button-ios-clear-border-color;
   color: $button-ios-background-color;
   background-color: $button-ios-clear-background-color;
+}
 
-  &.activated {
-    background-color: $button-ios-clear-background-color-activated;
-    opacity: $button-ios-clear-opacity-activated;
-  }
+.button-clear.activated {
+  background-color: $button-ios-clear-background-color-activated;
+  opacity: $button-ios-clear-opacity-activated;
+}
 
-  &:hover:not(.disable-hover) {
-    color: $button-ios-clear-text-color-hover;
-    opacity: $button-ios-clear-opacity-hover;
-  }
+.button-clear:hover:not(.disable-hover) {
+  color: $button-ios-clear-text-color-hover;
+  opacity: $button-ios-clear-opacity-hover;
 }
 
 

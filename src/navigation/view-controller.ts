@@ -73,7 +73,7 @@ export class ViewController {
   /** @internal */
   instance: any;
 
-  /** @internal */
+  /** @private */
   id: string;
 
   /** @internal */

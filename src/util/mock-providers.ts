@@ -92,18 +92,102 @@ export const mockChangeDetectorRef = function(): ChangeDetectorRef {
   return cd;
 };
 
+export class MockElementRef implements ElementRef {
+  nativeElement: any = new MockElement();
+}
+
+export class MockElement {
+  children: any[] = [];
+  classList = new ClassList();
+  attributes: { [name: string]: any } = {};
+  style: {[property: string]: any} = {};
+
+  clientWidth = 0;
+  clientHeight = 0;
+  clientTop = 0;
+  clientLeft = 0;
+  offsetWidth = 0;
+  offsetHeight = 0;
+  offsetTop = 0;
+  offsetLeft = 0;
+  scrollTop = 0;
+  scrollHeight = 0;
+
+  get className() {
+    return this.classList.classes.join(' ');
+  }
+  set className(val: string) {
+    this.classList.classes = val.split(' ');
+  }
+
+  hasAttribute(name: string) {
+    return !!this.attributes[name];
+  }
+
+  getAttribute(name: string) {
+    return this.attributes[name];
+  }
+
+  setAttribute(name: string, val: any) {
+    this.attributes[name] = val;
+  }
+
+  removeAttribute(name: string) {
+    delete this.attributes[name];
+  }
+}
+
+export class ClassList {
+  classes: string[] = [];
+  add(className: string) {
+    if (!this.contains(className)) {
+      this.classes.push(className);
+    }
+  }
+  remove(className: string) {
+    const index = this.classes.indexOf(className);
+    if (index > -1) {
+      this.classes.splice(index, 1);
+    }
+  }
+  toggle(className: string) {
+    if (this.contains(className)) {
+      this.remove(className);
+    } else {
+      this.add(className);
+    }
+  }
+  contains(className: string) {
+    return this.classes.indexOf(className) > -1;
+  }
+}
+
 export const mockElementRef = function(): ElementRef {
-  return {
-    nativeElement: document.createElement('div')
-  };
+  return new MockElementRef();
 };
 
+export class MockRenderer {
+  setElementAttribute(renderElement: MockElement, name: string, val: any) {
+    if (name === null) {
+      renderElement.removeAttribute(name);
+    } else {
+      renderElement.setAttribute(name, val);
+    }
+  }
+  setElementClass(renderElement: MockElement, className: string, isAdd: boolean) {
+    if (isAdd) {
+      renderElement.classList.add(className);
+    } else {
+      renderElement.classList.remove(className);
+    }
+  }
+  setElementStyle(renderElement: MockElement, styleName: string, styleValue: string) {
+    renderElement.style[styleName] = styleValue;
+  }
+}
+
 export const mockRenderer = function(): Renderer {
-  let renderer: any = {
-    setElementAttribute: () => {},
-    setElementClass: () => {},
-    setElementStyle: () => {}
-  };
+  const renderer: any = new MockRenderer();
   return renderer;
 };
 

@@ -12,8 +12,5 @@
     "removeComments": true,
     "sourceMap": true,
     "target": "es5"
-  },
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true
   }
 }

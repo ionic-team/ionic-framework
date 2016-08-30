@@ -4,6 +4,7 @@ import { DIST_NAME,
       DIST_E2E_COMPONENTS_ROOT,
       E2E_GENERATED_CONFIG_NGC_CONFIG,
       LOCAL_SERVER_PORT,
+      SCRIPTS_ROOT,
       SRC_COMPONENTS_ROOT,
       SRC_ROOT
     } from '../constants';
@@ -18,7 +19,7 @@ task('e2e', e2eBuild);
 
 function e2eBuild(done: Function) {
   let runSequence = require('run-sequence');
-  runSequence('e2e.ngcSource', 'e2e.copy.swiper', 'e2e.resources', 'e2e.sass', 'e2e.fonts', 'e2e.prewebpack', 'e2e.webpack', done);
+  runSequence('e2e.ngcSource', 'e2e.copyExternalDeps', 'e2e.resources', 'e2e.sass', 'e2e.fonts', 'e2e.prewebpack', 'e2e.webpack', done);
 }
 
 task('e2e.setupTests', (done: Function) => {
@@ -112,14 +113,30 @@ task('e2e.ngcSource', (done: Function) => {
 
 task('e2e.resources', ( done: Function) => {
   let runSequence = require('run-sequence');
-  runSequence('e2e.setupTests', 'e2e.build.tests', done);
+  runSequence('e2e.setupTests', 'e2e.buildTestAppModules', 'e2e.buildTestEntryPoints', done);
 });
 
-task('e2e.copy.swiper', () => {
-  return src([`${SRC_ROOT}/components/slides/swiper-widget.*`]).pipe(dest(`${DIST_E2E_ROOT}/components/slides`));
+task('e2e.copyExternalDeps', (done: Function) => {
+  copyExteralE2EFiles(done);
 });
 
-task('e2e.build.tests',  (done: Function) => {
+function copyExteralE2EFiles(done: Function) {
+  let streamOne = src([`${SCRIPTS_ROOT}/e2e/*.css`]).pipe(dest(`${DIST_E2E_ROOT}/css`));
+  streamOne.on('end', () => {
+    let streamTwo = src([`${SRC_ROOT}/components/slides/swiper-widget.*`]).pipe(dest(`${DIST_E2E_ROOT}/components/slides`));
+    streamTwo.on('end', done);
+  });
+ }
+
+task('e2e.buildTestAppModules',  (done: Function) => {
+  runNgcAgainstTests('app-module.ts', done);
+});
+
+task('e2e.buildTestEntryPoints',  (done: Function) => {
+  runNgcAgainstTests('entry.ts', done);
+});
+
+function runNgcAgainstTests(fileName: string, done: Function) {
   const argv = require('yargs').argv;
   let componentName: string = null;
   let componentTest: string = null;
@@ -131,14 +148,12 @@ task('e2e.build.tests',  (done: Function) => {
   }
 
   let includeGlob = [
-    `${DIST_E2E_ROOT}/tests/*/test/*/app-module.ts`,
-    //`${DIST_E2E_ROOT}/tests/*/test/*/entry.ts`
+    `${DIST_E2E_ROOT}/tests/*/test/*/${fileName}`,
   ];
 
   if (componentName && componentTest) {
     includeGlob = [
-      `${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/app-module.ts`,
-      //`${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/entry.ts`
+      `${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/${fileName}`,
     ];
   }
 
@@ -153,7 +168,7 @@ task('e2e.build.tests',  (done: Function) => {
     console.log(stderr);
     done(err);
   });
-});
+}
 
 task('e2e.sass', () => {
   return compileSass(`${DIST_E2E_ROOT}/css`);
@@ -213,7 +228,7 @@ task('e2e.webpack', function(done) {
   });
 });
 
-task('e2e.watch', ['e2e.sass', 'e2e.fonts'], (done: Function) => {
+task('e2e.watch', ['e2e.copyExternalDeps', 'e2e.sass', 'e2e.fonts'], (done: Function) => {
   const argv = require('yargs').argv;
   const folder: string = argv.folder || argv.f;
 

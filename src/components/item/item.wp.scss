@@ -166,23 +166,23 @@ ion-thumbnail[item-right] {
 ion-avatar {
   min-width: $item-wp-avatar-size;
   min-height: $item-wp-avatar-size;
+}
 
-  img {
-    max-width: $item-wp-avatar-size;
-    max-height: $item-wp-avatar-size;
+ion-avatar img {
+  max-width: $item-wp-avatar-size;
+  max-height: $item-wp-avatar-size;
 
-    border-radius: $item-wp-avatar-size / 2;
-  }
+  border-radius: $item-wp-avatar-size / 2;
 }
 
 ion-thumbnail {
   min-width: $item-wp-thumbnail-size;
   min-height: $item-wp-thumbnail-size;
+}
 
-  img {
-    max-width: $item-wp-thumbnail-size;
-    max-height: $item-wp-thumbnail-size;
-  }
+ion-thumbnail img {
+  max-width: $item-wp-thumbnail-size;
+  max-height: $item-wp-thumbnail-size;
 }
 
 ion-note {

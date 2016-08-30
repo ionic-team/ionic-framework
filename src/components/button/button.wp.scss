@@ -141,15 +141,15 @@ $button-wp-fab-border-radius:                             50% !default;
 
   color: $button-wp-text-color;
   background-color: $button-wp-background-color;
+}
 
-  &:hover:not(.disable-hover) {
-    border-color: $button-wp-background-color-activated;
-    background-color: $button-wp-background-color;
-  }
+.button:hover:not(.disable-hover) {
+  border-color: $button-wp-background-color-activated;
+  background-color: $button-wp-background-color;
+}
 
-  &.activated {
-    background-color: $button-wp-background-color-activated;
-  }
+.button.activated {
+  background-color: $button-wp-background-color-activated;
 }
 
 
@@ -196,10 +196,10 @@ $button-wp-fab-border-radius:                             50% !default;
   height: $button-wp-small-height;
 
   font-size: $button-wp-small-font-size;
+}
 
-  &[icon-only] ion-icon {
-    font-size: $button-wp-small-icon-font-size;
-  }
+.button-small[icon-only] ion-icon {
+  font-size: $button-wp-small-icon-font-size;
 }
 
 // Windows Block Button
@@ -231,14 +231,14 @@ $button-wp-fab-border-radius:                             50% !default;
   border-color: $button-wp-outline-border-color;
   color: $button-wp-outline-text-color;
   background-color: $button-wp-outline-background-color;
+}
 
-  &:hover:not(.disable-hover) {
-    background-color: $button-wp-clear-background-color-hover;
-  }
+.button-outline:hover:not(.disable-hover) {
+  background-color: $button-wp-clear-background-color-hover;
+}
 
-  &.activated {
-    background-color: rgba($button-wp-outline-background-color-activated, $button-wp-outline-background-color-opacity-activated);
-  }
+.button-outline.activated {
+  background-color: rgba($button-wp-outline-background-color-activated, $button-wp-outline-background-color-opacity-activated);
 }
 
 
@@ -272,14 +272,14 @@ $button-wp-fab-border-radius:                             50% !default;
 .button-clear {
   color: $button-wp-clear-text-color;
   background-color: $button-wp-clear-background-color;
+}
 
-  &.activated {
-    background-color: $button-wp-clear-background-color-activated;
-  }
+.button-clear.activated {
+  background-color: $button-wp-clear-background-color-activated;
+}
 
-  &:hover:not(.disable-hover) {
-    background-color: $button-wp-clear-background-color-hover;
-  }
+.button-clear:hover:not(.disable-hover) {
+  background-color: $button-wp-clear-background-color-hover;
 }
 
 

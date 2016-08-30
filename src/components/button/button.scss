@@ -68,10 +68,10 @@ button[disabled],
   clear: both;
 
   width: 100%;
+}
 
-  &::after {
-    clear: both;
-  }
+.button-block::after {
+  clear: both;
 }
 
 

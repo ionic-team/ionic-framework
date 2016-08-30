@@ -79,10 +79,6 @@ export class E2EPage {
   presentToolbarModal() {
     let modal = this.modalCtrl.create(ToolbarModal);
     modal.present();
-
-    modal.subscribe((data: any) => {
-      console.log('modal data', data);
-    });
   }
 
   presentModalWithInputs() {
@@ -273,9 +269,6 @@ export class ToolbarModal {
   constructor(public viewCtrl: ViewController) {}
 
   dismiss() {
-    this.viewCtrl.emit({
-      toolbar: 'data'
-    });
     this.viewCtrl.dismiss();
   }
 

@@ -146,23 +146,23 @@ ion-thumbnail[item-right] {
 ion-avatar {
   min-width: $item-ios-avatar-size;
   min-height: $item-ios-avatar-size;
+}
 
-  img {
-    max-width: $item-ios-avatar-size;
-    max-height: $item-ios-avatar-size;
+ion-avatar img {
+  max-width: $item-ios-avatar-size;
+  max-height: $item-ios-avatar-size;
 
-    border-radius: $item-ios-avatar-size / 2;
-  }
+  border-radius: $item-ios-avatar-size / 2;
 }
 
 ion-thumbnail {
   min-width: $item-ios-thumbnail-size;
   min-height: $item-ios-thumbnail-size;
+}
 
-  img {
-    max-width: $item-ios-thumbnail-size;
-    max-height: $item-ios-thumbnail-size;
-  }
+ion-thumbnail img {
+  max-width: $item-ios-thumbnail-size;
+  max-height: $item-ios-thumbnail-size;
 }
 
 ion-note {
@@ -243,18 +243,4 @@ ion-item-divider {
 
 ion-item-sliding {
   background-color: $item-ios-sliding-content-background;
-}
-
-// iOS item right-to-left
-// --------------------------------------------------
-@if $include-rtl {
-  @at-root {
-
-    .rtl.ios {
-
-      // todo
-
-    }
-
-  }
 }

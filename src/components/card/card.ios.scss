@@ -45,87 +45,86 @@ ion-card {
 
   background: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
+}
 
-  ion-list {
-    margin-bottom: 0;
-  }
+ion-card ion-list {
+  margin-bottom: 0;
+}
 
-  > .item:last-child,
-  > .item-wrapper:last-child .item {
-    border-bottom: 0;
-  }
+ion-card > .item:last-child,
+ion-card > .item-wrapper:last-child .item {
+  border-bottom: 0;
+}
 
-  .item .item-inner {
-    border: 0;
-  }
+ion-card .item .item-inner {
+  border: 0;
+}
 
-  ion-card-content {
-    padding: $card-ios-padding-top $card-ios-padding-right $card-ios-padding-bottom $card-ios-padding-left;
+ion-card ion-card-content {
+  padding: $card-ios-padding-top $card-ios-padding-right $card-ios-padding-bottom $card-ios-padding-left;
 
-    font-size: $card-ios-font-size;
-    line-height: 1.4;
-  }
+  font-size: $card-ios-font-size;
+  line-height: 1.4;
+}
 
-  ion-card-header {
-    padding: $card-ios-header-padding;
+ion-card ion-card-header {
+  padding: $card-ios-header-padding;
 
-    font-size: $card-ios-header-font-size;
-    font-weight: $card-ios-header-font-weight;
-    color: $card-ios-header-color;
-  }
+  font-size: $card-ios-header-font-size;
+  font-weight: $card-ios-header-font-weight;
+  color: $card-ios-header-color;
+}
 
-  ion-card-header + ion-card-content,
-  .item + ion-card-content {
-    padding-top: 0;
-  }
+ion-card ion-card-header + ion-card-content,
+.item + ion-card-content {
+  padding-top: 0;
+}
 
-  ion-note[item-left],
-  ion-note[item-right], {
-    font-size: 1.3rem;
-  }
+ion-note[item-left],
+ion-note[item-right], {
+  font-size: 1.3rem;
+}
 
-  ion-card-title {
-    display: block;
+ion-card ion-card-title {
+  display: block;
 
-    margin: $card-ios-title-margin;
-    padding: $card-ios-title-padding;
+  margin: $card-ios-title-margin;
+  padding: $card-ios-title-padding;
 
-    font-size: $card-ios-title-font-size;
-    line-height: 1.2;
-    color: $card-ios-title-text-color;
-  }
+  font-size: $card-ios-title-font-size;
+  line-height: 1.2;
+  color: $card-ios-title-text-color;
+}
 
-  h1 {
-    margin: 0 0 2px;
+ion-card h1 {
+  margin: 0 0 2px;
 
-    font-size: 2.4rem;
-    font-weight: normal;
-  }
+  font-size: 2.4rem;
+  font-weight: normal;
+}
 
-  h2 {
-    margin: 2px 0;
+ion-card h2 {
+  margin: 2px 0;
 
-    font-size: 1.6rem;
-    font-weight: normal;
-  }
+  font-size: 1.6rem;
+  font-weight: normal;
+}
 
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 2px 0;
+ion-card h3,
+ion-card h4,
+ion-card h5,
+ion-card h6 {
+  margin: 2px 0;
 
-    font-size: 1.4rem;
-    font-weight: normal;
-  }
+  font-size: 1.4rem;
+  font-weight: normal;
+}
 
-  p {
-    margin: 0 0 2px;
+ion-card p {
+  margin: 0 0 2px;
 
-    font-size: 1.4rem;
-    color: $card-ios-text-color;
-  }
-
+  font-size: 1.4rem;
+  color: $card-ios-text-color;
 }
 
 ion-card + ion-card {

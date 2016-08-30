@@ -160,23 +160,23 @@ ion-thumbnail[item-right] {
 ion-avatar {
   min-width: $item-md-avatar-size;
   min-height: $item-md-avatar-size;
+}
 
-  img {
-    max-width: $item-md-avatar-size;
-    max-height: $item-md-avatar-size;
+ion-avatar img {
+  max-width: $item-md-avatar-size;
+  max-height: $item-md-avatar-size;
 
-    border-radius: $item-md-avatar-size / 2;
-  }
+  border-radius: $item-md-avatar-size / 2;
 }
 
 ion-thumbnail {
   min-width: $item-md-thumbnail-size;
   min-height: $item-md-thumbnail-size;
+}
 
-  img {
-    max-width: $item-md-thumbnail-size;
-    max-height: $item-md-thumbnail-size;
-  }
+ion-thumbnail img {
+  max-width: $item-md-thumbnail-size;
+  max-height: $item-md-thumbnail-size;
 }
 
 ion-note {
