@@ -149,7 +149,7 @@ $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($i
 // iOS Toggle: Disabled
 // -----------------------------------------
 
-.toggle-ios .toggle-disabled,
+.toggle-ios.toggle-disabled,
 .item-ios.item-toggle-disabled ion-label {
   opacity: $toggle-ios-disabled-opacity;
 
