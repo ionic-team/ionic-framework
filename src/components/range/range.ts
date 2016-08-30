@@ -569,7 +569,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    * @private
    */
   updateTicks() {
-    if (this._snaps) {
+    if (this._snaps && this._ticks) {
       let ratio = this.ratio;
       if (this._dual) {
         let upperRatio = this.ratioUpper;

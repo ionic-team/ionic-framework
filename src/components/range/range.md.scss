@@ -41,11 +41,11 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
   padding: $range-md-padding-vertical $range-md-padding-horizontal;
 }
 
-.range-md[range-left] {
+.range-md [range-left] {
   margin: 0 12px 0 0;
 }
 
-.range-md[range-right] {
+.range-md [range-right] {
   margin: 0 0 0 12px;
 }
 
@@ -198,7 +198,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 @mixin md-range-min() {
-  .range-md .range-knob-min {
+  .range-md .range-knob-min.range-knob-min {
     .range-knob {
       border: $range-md-knob-min-border;
       background: $range-md-knob-min-background-color;

@@ -37,11 +37,11 @@ $range-ios-pin-padding:                       8px !default;
   padding: $range-ios-padding-vertical $range-ios-padding-horizontal;
 }
 
-.range-ios[range-left] {
+.range-ios [range-left] {
   margin: 0 20px 0 0;
 }
 
-.range-ios[range-right] {
+.range-ios [range-right] {
   margin: 0 0 0 20px;
 }
 

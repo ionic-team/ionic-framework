@@ -36,11 +36,11 @@ $range-wp-pin-padding:                       8px !default;
   padding: $range-wp-padding-vertical $range-wp-padding-horizontal;
 }
 
-.range-wp[range-left] {
+.range-wp [range-left] {
   margin: 0 12px 0 0;
 }
 
-.range-wp[range-right] {
+.range-wp [range-right] {
   margin: 0 0 0 12px;
 }
 
@@ -157,7 +157,7 @@ $range-wp-pin-padding:                       8px !default;
   transform: translate3d(0, 0, 0) scale(1);
 }
 
-.range-wp .range-disabled {
+.range-wp.range-disabled {
   opacity: .5;
 }
 
