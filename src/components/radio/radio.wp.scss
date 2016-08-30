@@ -86,7 +86,7 @@ $radio-wp-item-right-margin:      11px 10px 10px 0 !default;
 // -----------------------------------------
 
 .radio-wp.radio-disabled,
-.item-radio-disabled .radio-wp ion-label {
+.item-wp.item-radio-disabled ion-label {
   opacity: $radio-wp-disabled-opacity;
 
   pointer-events: none;
