@@ -99,7 +99,8 @@ describe('Infinite Scroll', () => {
   beforeEach(() => {
     contentElementRef = mockElementRef();
     content = new Content(config, contentElementRef, mockRenderer(), null, null, null, null, null);
-    content._scrollEle = document.createElement('scroll-content');
+    content._scrollEle = document.createElement('div');
+    content._scrollEle.className = 'scroll-content';
 
     infiniteElementRef = mockElementRef();
     inf = new InfiniteScroll(content, mockZone(), infiniteElementRef);

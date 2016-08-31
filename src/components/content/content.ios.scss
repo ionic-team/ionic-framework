@@ -54,22 +54,20 @@ $content-ios-transition-background:     #000 !default;
 // iOS Content Scroll
 // --------------------------------------------------
 
-.content-ios:not([no-bounce]) > scroll-content {
-  &::before,
-  &::after {
-    position: absolute;
+.content-ios:not([no-bounce]) > .scroll-content::before,
+.content-ios:not([no-bounce]) > .scroll-content::after {
+  position: absolute;
 
-    width: 1px;
-    height: 1px;
+  width: 1px;
+  height: 1px;
 
-    content: "";
-  }
+  content: "";
+}
 
-  &::before {
-    bottom: -1px;
-  }
+.content-ios:not([no-bounce]) > .scroll-content::before {
+  bottom: -1px;
+}
 
-  &::after {
-    top: -1px;
-  }
+.content-ios:not([no-bounce]) > .scroll-content::after {
+  top: -1px;
 }

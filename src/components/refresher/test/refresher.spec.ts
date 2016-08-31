@@ -223,7 +223,8 @@ describe('Refresher', () => {
     let elementRef = mockElementRef();
     elementRef.nativeElement.children.push('');
     content = new Content(mockConfig(), mockElementRef(), mockRenderer(), null, null, mockZone(), null, null);
-    content._scrollEle = document.createElement('scroll-content');
+    content._scrollEle = document.createElement('div');
+    content._scrollEle.className = 'scroll-content';
 
     refresher = new Refresher(content, mockZone(), gestureController);
   });

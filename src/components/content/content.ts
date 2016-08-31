@@ -103,9 +103,9 @@ import { isTrueProperty } from '../../util/util';
 @Component({
   selector: 'ion-content',
   template:
-    '<scroll-content>' +
+    '<div class="scroll-content">' +
       '<ng-content></ng-content>' +
-    '</scroll-content>' +
+    '</div>' +
     '<ng-content select="ion-fixed"></ng-content>' +
     '<ng-content select="ion-refresher"></ng-content>',
   host: {

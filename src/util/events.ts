@@ -131,7 +131,7 @@ export function setupEvents(platform: Platform): Events {
       let el = <HTMLElement>document.elementFromPoint(platform.width() / 2, platform.height() / 2);
       if (!el) { return; }
 
-      let content = <HTMLElement>el.closest('scroll-content');
+      let content = <HTMLElement>el.closest('.scroll-content');
       if (content) {
         var scroll = new ScrollView(content);
         scroll.scrollTo(0, 0, 300);

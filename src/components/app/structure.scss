@@ -172,7 +172,7 @@ ion-tabbar.show-tabbar {
 // Scrollable Content
 // --------------------------------------------------
 
-scroll-content {
+.scroll-content {
   position: absolute;
   top: 0;
   right: 0;
@@ -187,7 +187,7 @@ scroll-content {
   will-change: scroll-position;
 }
 
-ion-content.js-scroll > scroll-content {
+ion-content.js-scroll > .scroll-content {
   position: relative;
 
   min-height: 100%;
@@ -198,7 +198,7 @@ ion-content.js-scroll > scroll-content {
   will-change: initial;
 }
 
-.disable-scroll .ion-page scroll-content {
+.disable-scroll .ion-page .scroll-content {
   overflow-y: hidden;
   overflow-x: hidden;
 }
