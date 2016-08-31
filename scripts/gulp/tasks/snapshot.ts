@@ -1,18 +1,23 @@
 import { task } from 'gulp';
-import { DIST_E2E_ROOT, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
+import { DIST_E2E_COMPONENTS_ROOT, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
 import { mergeObjects } from '../util';
 import * as path from 'path';
 
+import { E2E_BUILD_TASK, E2E_COMPILE_SASS } from './e2e';
 
-task('snapshot', ['e2e'], (done: Function) => {
+const SNAPSHOT_TASK = 'snapshot';
+const SNAPSHOT_SKIP_BUILD_TASK = 'snapshot.skip.build';
+const SNAPSHOT_QUICK_TASK = 'snapshot.quick';
+
+task(SNAPSHOT_TASK, [E2E_BUILD_TASK], (done: Function) => {
   snapshot(false, done);
 });
 
-task('snapshot.skip.build', ['e2e.sass'], (done: Function) => {
+task(SNAPSHOT_SKIP_BUILD_TASK, [E2E_COMPILE_SASS], (done: Function) => {
   snapshot(false, done);
 });
 
-task('snapshot.quick', ['e2e.sass'], (done: Function) => {
+task(SNAPSHOT_QUICK_TASK, [E2E_COMPILE_SASS], (done: Function) => {
   snapshot(true, done);
 });
 
@@ -39,7 +44,7 @@ function snapshot(quickMode: boolean, callback: Function) {
       specs = path.join(folderArg, '**');
     }
   }
-  specs = path.join(DIST_E2E_ROOT, 'tests', specs, '*e2e.js');
+  specs = path.join(DIST_E2E_COMPONENTS_ROOT, '*', 'test', '*', '*e2e.js');
   console.log(`[snapshot] Specs: ${specs}`);
 
   const testId = generateTestId();

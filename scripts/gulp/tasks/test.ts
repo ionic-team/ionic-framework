@@ -1,11 +1,15 @@
 import { DIST_VENDOR_ROOT, NPM_VENDOR_FILES, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
 import path = require('path');
 import { dest, src, task } from 'gulp';
+import { COMPILE_KARMA_TASK } from './build';
 
+export const ASSEMBLE_VENDOR_JS_TASK = 'test.assembleVendorJs';
+export const RUN_TESTS_TASK = 'test';
+export const RUN_TESTS_WITH_COVERAGE_TASK = 'test.coverage';
 
-task('test', ['test.vendor', 'build'], karmaTest);
+task(RUN_TESTS_TASK, [ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], karmaTest);
 
-task('test.coverage', ['test.vendor', 'build'], (done: Function) => {
+task(RUN_TESTS_WITH_COVERAGE_TASK, [ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], (done: Function) => {
   karmaTest(() => {
     createKarmaCoverageReport(done);
   });
@@ -29,7 +33,7 @@ function karmaTest(done: Function) {
 }
 
 
-task('test.vendor', () => {
+task(ASSEMBLE_VENDOR_JS_TASK, () => {
   const files = NPM_VENDOR_FILES.map((root) => {
     const glob = path.join(root, '**/*.+(js|js.map)');
     return src(path.join('node_modules', glob))
