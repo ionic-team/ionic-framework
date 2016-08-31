@@ -424,3 +424,12 @@ export class Item extends Ion {
   }
 })
 export class ItemContent {}
+
+
+/**
+  * @private
+  */
+@Directive({
+  selector: 'ion-item-group'
+})
+export class ItemGroup {}
