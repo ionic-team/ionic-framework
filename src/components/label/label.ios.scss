@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 $label-ios-text-color:         #7f7f7f !default;
+$label-ios-text-color-focused: color($colors-ios, primary) !default;
 $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0 !default;
 
 
@@ -48,6 +49,11 @@ ion-label[floating] {
   transform: translate3d(0, 27px, 0);
   transform-origin: left top;
   transition: transform 150ms ease-in-out;
+}
+
+.input-has-focus ion-label[stacked],
+.input-has-focus ion-label[floating] {
+  color: $label-ios-text-color-focused;
 }
 
 .input-has-focus ion-label[floating],
