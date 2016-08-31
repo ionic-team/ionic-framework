@@ -6,7 +6,7 @@ import { Ion } from '../ion';
 
 /**
   * @private
- */
+  */
 @Directive({
   selector: 'ion-card'
 })
@@ -35,3 +35,29 @@ export class Card extends Ion {
   }
 
 }
+
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'ion-card-content'
+})
+export class CardContent {}
+
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'ion-card-header'
+})
+export class CardHeader {}
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'ion-card-title'
+})
+export class CardTitle {}

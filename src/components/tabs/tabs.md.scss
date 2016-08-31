@@ -58,7 +58,7 @@ $tabs-md-tab-text-transition:          transform 200ms ease-in-out !default;
 $tabs-md-tab-icon-size:                2.4rem !default;
 
 
-.tabs-md ion-tabbar {
+.tabs-md .tabbar {
   background: $tabs-md-background;
 }
 
@@ -162,20 +162,20 @@ $tabs-md-tab-icon-size:                2.4rem !default;
 
 @mixin tabbar-md($color-name, $color-base, $color-contrast) {
 
-  .tabs-md.tabs-#{$color-name} ion-tabbar {
+  .tabs-md.tabs-#{$color-name} .tabbar {
     background-color: $color-base;
   }
 
-  .tabs-md.tabs-#{$color-name} ion-tabbar .tab-button {
+  .tabs-md.tabs-#{$color-name} .tabbar .tab-button {
     color: rgba($color-contrast, $tabs-md-tab-opacity);
   }
 
-  .tabs-md.tabs-#{$color-name} ion-tabbar .tab-button:hover:not(.disable-hover),
-  .tabs-md.tabs-#{$color-name} ion-tabbar .tab-button[aria-selected=true] {
+  .tabs-md.tabs-#{$color-name} .tabbar .tab-button:hover:not(.disable-hover),
+  .tabs-md.tabs-#{$color-name} .tabbar .tab-button[aria-selected=true] {
     color: $color-contrast;
   }
 
-  .tabs-md.tabs-#{$color-name} ion-tabbar .tab-highlight {
+  .tabs-md.tabs-#{$color-name} .tabbar .tab-highlight {
     background: $color-contrast;
   }
 

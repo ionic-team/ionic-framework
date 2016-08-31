@@ -7,7 +7,7 @@ ion-tabs {
 }
 
 ion-tabs,
-ion-tabs ion-tabbar {
+ion-tabs .tabbar {
   position: relative;
   top: auto;
   height: auto;

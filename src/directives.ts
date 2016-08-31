@@ -2,20 +2,23 @@
 /**
  * Import Components
  */
+import { Avatar } from './components/avatar/avatar';
 import { Backdrop } from './components/backdrop/backdrop';
 import { Badge } from './components/badge/badge';
 import { Button } from './components/button/button';
-import { Card } from './components/card/card';
+import { Card, CardContent, CardHeader, CardTitle } from './components/card/card';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
 import { DateTime } from './components/datetime/datetime';
+import { Fixed } from './components/fixed/fixed';
+import { Grid, Row, Col } from './components/grid/grid';
 import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
 import { IonicApp } from './components/app/app-root';
-import { Item, ItemContent } from './components/item/item';
+import { Item, ItemContent, ItemGroup } from './components/item/item';
 import { ItemReorder, Reorder } from './components/item/item-reorder';
 import { ItemSliding, ItemOptions } from './components/item/item-sliding';
 import { Label } from './components/label/label';
@@ -29,6 +32,7 @@ import { Nav } from './components/nav/nav';
 import { NavPop, NavPopAnchor } from './components/nav/nav-pop';
 import { NavPush, NavPushAnchor } from './components/nav/nav-push';
 import { Navbar } from './components/navbar/navbar';
+import { Note } from './components/note/note';
 import { Option } from './components/option/option';
 import { OverlayPortal } from './components/nav/overlay-portal';
 import { PickerColumnCmp } from './components/picker/picker-component';
@@ -48,6 +52,7 @@ import { Tab } from './components/tabs/tab';
 import { Tabs } from './components/tabs/tabs';
 import { TabButton } from './components/tabs/tab-button';
 import { TextInput, TextArea } from './components/input/input';
+import { Thumbnail } from './components/thumbnail/thumbnail';
 import { Toggle } from './components/toggle/toggle';
 import { Toolbar, Header, Footer } from './components/toolbar/toolbar';
 import { ToolbarItem } from './components/toolbar/toolbar-item';
@@ -65,21 +70,24 @@ export { ActionSheetOptions } from './components/action-sheet/action-sheet-optio
 export { Alert, AlertController } from './components/alert/alert';
 export { AlertOptions, AlertInputOptions } from './components/alert/alert-options';
 export { App } from './components/app/app';
+export { Avatar } from './components/avatar/avatar';
 export { Backdrop } from './components/backdrop/backdrop';
 export { Badge } from './components/badge/badge';
 export { Button } from './components/button/button';
-export { Card } from './components/card/card';
+export { Card, CardContent, CardHeader, CardTitle } from './components/card/card';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { Content } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
+export { Fixed } from './components/fixed/fixed';
+export { Grid, Row, Col } from './components/grid/grid';
 export { Icon } from './components/icon/icon';
 export { Img } from './components/img/img';
 export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 export { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
 export { TextArea, TextInput } from './components/input/input';
 export { IonicApp } from './components/app/app-root';
-export { Item } from './components/item/item';
+export { Item, ItemContent, ItemGroup } from './components/item/item';
 export { ItemReorder, Reorder } from './components/item/item-reorder';
 export { ItemSliding, ItemOptions, ItemSideFlags } from './components/item/item-sliding';
 export { Label } from './components/label/label';
@@ -99,6 +107,7 @@ export { NavPop, NavPopAnchor } from './components/nav/nav-pop';
 export { NavPush, NavPushAnchor } from './components/nav/nav-push';
 export { Navbar } from './components/navbar/navbar';
 export { NativeInput, NextInput } from './components/input/native-input';
+export { Note } from './components/note/note';
 export { Option } from './components/option/option';
 export { OverlayPortal } from './components/nav/overlay-portal';
 export { Picker, PickerController } from './components/picker/picker';
@@ -127,6 +136,7 @@ export { ToastOptions } from './components/toast/toast-options';
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar, ToolbarBase, Header, Footer } from './components/toolbar/toolbar';
 export { ToolbarTitle } from'./components/toolbar/toolbar-title';
+export { Thumbnail } from './components/thumbnail/thumbnail';
 export { Typography } from './components/typography/typography';
 export { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
 
@@ -148,15 +158,22 @@ export { ToastCmp } from './components/toast/toast-component';
  * need to import `IONIC_DIRECTIVES` as they are part of the app's default directives.
  */
 export const IONIC_DIRECTIVES: any[] = [
+  Avatar,
   Backdrop,
   Badge,
   Button,
   Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
   Checkbox,
   Chip,
+  Col,
   Content,
   DateTime,
+  Fixed,
   Footer,
+  Grid,
   Header,
   HideWhen,
   Icon,
@@ -166,6 +183,7 @@ export const IONIC_DIRECTIVES: any[] = [
   IonicApp,
   Item,
   ItemContent,
+  ItemGroup,
   ItemOptions,
   ItemReorder,
   ItemSliding,
@@ -183,6 +201,7 @@ export const IONIC_DIRECTIVES: any[] = [
   NavPush,
   NavPushAnchor,
   NextInput,
+  Note,
   Option,
   OverlayPortal,
   PickerColumnCmp,
@@ -193,6 +212,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Refresher,
   RefresherContent,
   Reorder,
+  Row,
   Scroll,
   Searchbar,
   Segment,
@@ -208,6 +228,7 @@ export const IONIC_DIRECTIVES: any[] = [
   TabButton,
   TextArea,
   TextInput,
+  Thumbnail,
   Toggle,
   Toolbar,
   ToolbarItem,

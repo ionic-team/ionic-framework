@@ -31,14 +31,14 @@ $tabs-ios-tab-font-size:            10px !default;
 $tabs-ios-tab-icon-size:            30px !default;
 
 
-.tabs-ios ion-tabbar {
+.tabs-ios .tabbar {
   justify-content: center;
 
   border-top: $tabs-ios-border;
   background: $tabs-ios-background;
 }
 
-.tabs-ios[tabsPlacement=top] ion-tabbar {
+.tabs-ios[tabsPlacement=top] .tabbar {
   border-top: 0;
   border-bottom: $tabs-ios-border;
 }
@@ -119,14 +119,14 @@ $tabs-ios-tab-icon-size:            30px !default;
 
 @mixin tabbar-ios($color-name, $color-base, $color-contrast) {
 
-  .tabs-ios.tabs-#{$color-name} ion-tabbar {
+  .tabs-ios.tabs-#{$color-name} .tabbar {
     border-color: darken($color-base, 10%);
     background-color: $color-base;
   }
 
-  .tabs-ios.tabs-#{$color-name} ion-tabbar .tab-button,
-  .tabs-ios.tabs-#{$color-name} ion-tabbar .tab-button:hover:not(.disable-hover),
-  .tabs-ios.tabs-#{$color-name} ion-tabbar .tab-button[aria-selected=true] {
+  .tabs-ios.tabs-#{$color-name} .tabbar .tab-button,
+  .tabs-ios.tabs-#{$color-name} .tabbar .tab-button:hover:not(.disable-hover),
+  .tabs-ios.tabs-#{$color-name} .tabbar .tab-button[aria-selected=true] {
     color: $color-contrast;
   }
 
