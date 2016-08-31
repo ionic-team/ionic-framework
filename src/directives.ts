@@ -10,6 +10,7 @@ import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
 import { DateTime } from './components/datetime/datetime';
+import { Fixed } from './components/fixed/fixed';
 import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
@@ -73,6 +74,7 @@ export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { Content } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
+export { Fixed } from './components/fixed/fixed';
 export { Icon } from './components/icon/icon';
 export { Img } from './components/img/img';
 export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
@@ -156,6 +158,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Chip,
   Content,
   DateTime,
+  Fixed,
   Footer,
   Header,
   HideWhen,
