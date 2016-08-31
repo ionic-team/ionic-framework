@@ -146,7 +146,7 @@ ion-footer {
   width: 100%;
 }
 
-ion-tabbar {
+.tabbar {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -159,11 +159,11 @@ ion-tabbar {
   opacity: 0;
 }
 
-ion-tabbar.show-tabbar {
+.tabbar.show-tabbar {
   opacity: 1;
 }
 
-[tabsPlacement=top] > ion-tabbar {
+[tabsPlacement=top] > .tabbar {
   top: 0;
   bottom: auto;
 }

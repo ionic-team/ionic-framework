@@ -53,7 +53,7 @@ ion-tab:nth-of-type(3) f,
 }
 
 .e2e-stacked-tabbars ion-tabs,
-.e2e-stacked-tabbars ion-tabs ion-tabbar {
+.e2e-stacked-tabbars ion-tabs .tabbar {
   position: relative;
   top: auto;
   height: auto;
