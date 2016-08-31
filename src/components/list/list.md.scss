@@ -128,7 +128,7 @@ $list-md-header-color:           #858585 !default;
 // Material Design No Lines List
 // --------------------------------------------------
 
-.list-md[no-lines] .item,
+.list-md[no-lines] .item-block,
 .list-md[no-lines] ion-item-options,
 .list-md[no-lines] .item .item-inner {
   border-width: 0;

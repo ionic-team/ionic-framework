@@ -99,7 +99,8 @@ export class UrlSerializer {
       id: urlParts.join('/'),
       name: configLink.name,
       component: configLink.component,
-      data: data
+      data: data,
+      defaultHistory: configLink.defaultHistory
     };
   }
 

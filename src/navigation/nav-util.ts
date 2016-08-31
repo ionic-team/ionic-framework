@@ -1,4 +1,4 @@
-import { Renderer } from '@angular/core';
+import { Renderer, TypeDecorator } from '@angular/core';
 
 import { DeepLinker } from './deep-linker';
 import { isPresent } from '../util/util';
@@ -83,15 +83,31 @@ export function isNav(nav: any) {
   return !!nav && !!nav.push;
 }
 
-// simple public link interface
-export interface DeepLink {
+// public link interface
+export interface DeepLinkMetadataType {
+  name: string;
+  segment?: string;
+  defaultHistory?: any[];
+}
+
+export declare class DeepLinkMetadata implements DeepLinkMetadataType {
   component: any;
   name: string;
   segment?: string;
+  defaultHistory?: any[];
 }
 
+export interface DeepLinkDecorator extends TypeDecorator {}
+
+export interface DeepLinktMetadataFactory {
+  (obj: DeepLinkMetadataType): DeepLinkDecorator;
+  new (obj: DeepLinkMetadataType): DeepLinkMetadata;
+}
+
+export declare var DeepLink: DeepLinktMetadataFactory;
+
 export interface DeepLinkConfig {
-  links: DeepLink[];
+  links: DeepLinkMetadata[];
 }
 
 // internal link interface, not exposed publicly
@@ -103,6 +119,7 @@ export interface NavLink {
   partsLen?: number;
   staticLen?: number;
   dataLen?: number;
+  defaultHistory?: any[];
 }
 
 export interface NavSegment {
@@ -111,6 +128,7 @@ export interface NavSegment {
   component: any;
   data: any;
   navId?: string;
+  defaultHistory?: NavSegment[];
 }
 
 export interface NavOptions {

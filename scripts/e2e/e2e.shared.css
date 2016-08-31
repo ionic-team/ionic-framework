@@ -2,7 +2,7 @@
   /* crop an exact size */
   max-height: 700px !important;
 }
-.snapshot scroll-content {
+.snapshot .scroll-content {
   /* disable scrollbars */
   overflow: hidden !important;
 }

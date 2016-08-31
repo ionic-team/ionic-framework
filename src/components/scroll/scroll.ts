@@ -26,11 +26,11 @@ import { isTrueProperty } from '../../util/util';
 @Component({
   selector: 'ion-scroll',
   template:
-    '<scroll-content>' +
+    '<div class="scroll-content">' +
       '<div class="scroll-zoom-wrapper">' +
         '<ng-content></ng-content>' +
       '</div>' +
-    '</scroll-content>',
+    '</div>',
   host: {
     '[class.scroll-x]': 'scrollX',
     '[class.scroll-y]': 'scrollY'
