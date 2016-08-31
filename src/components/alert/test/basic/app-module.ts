@@ -304,7 +304,7 @@ export class E2EPage {
     </ion-header>
     <ion-content padding>
       Hi, I'm Bob, and I'm a modal.
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
     </ion-content>
   `
 })

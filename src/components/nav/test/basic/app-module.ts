@@ -289,7 +289,7 @@ export class FullPage {
       <p><button ion-button (click)="navCtrl.popToRoot()">Pop to root</button></p>
       <p><button ion-button id="insert" (click)="insert()">Insert first page into history before this</button></p>
       <p><button ion-button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
-      <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
+      <div class="yellow"><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div></div>
       <ion-fixed style="bottom:0">
         <button ion-button (click)="presentAlert()">fixed button (alert)</button>
       </ion-fixed>
@@ -393,7 +393,7 @@ export class PrimaryHeaderPage {
         <button ion-item (click)="setRoot()">setRoot(FirstPage)</button>
         <button ion-item (click)="toggleBackButton()">Toggle hideBackButton</button>
         <button ion-item (click)="setBackButtonText()">Set Back Button Text</button>
-        <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+        <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       </ion-list>
       <ion-toolbar no-border-bottom>
         I'm a sub footer in the content!

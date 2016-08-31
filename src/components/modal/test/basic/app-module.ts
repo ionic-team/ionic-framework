@@ -385,8 +385,8 @@ export class ContactUs {
       <p>
         <button ion-button (click)="openActionSheet()">Open Action Sheet</button>
       </p>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
+      <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       <ion-list>
         <ion-item *ngFor="let item of items">
           Item Number: {{item.value}}
@@ -485,8 +485,8 @@ export class ModalFirstPage {
       <p>
         <button ion-button (click)="navCtrl.pop()">Pop (Go back to 1st)</button>
       </p>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
+      <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
     </ion-content>
   `
 })
