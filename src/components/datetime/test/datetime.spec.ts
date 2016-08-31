@@ -102,6 +102,15 @@ describe('DateTime', () => {
       expect(columns[1].options[30].disabled).toEqual(true);
     });
 
+    it('should generate correct default date when max year <> today year', () => {
+      datetime.max = '2010-12-31';
+      var picker = new Picker();
+      datetime.generate(picker);
+      datetime.validate(picker);
+      var columns = picker.getColumns();
+      expect(columns[0].options[0].disabled).toEqual(false);
+    });
+
   });
 
   describe('generate', () => {
@@ -203,6 +212,8 @@ describe('DateTime', () => {
       expect(columns[0].options[0].value).toEqual(2010);
       expect(columns[0].options[10].value).toEqual(2000);
     });
+
+    
 
   });
 
