@@ -148,7 +148,7 @@ import { ViewController } from '../../navigation/view-controller';
         '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
         '<div class="button-effect"></div>' +
       '</a>' +
-      '<tab-highlight></tab-highlight>' +
+      '<div class="tab-highlight"></div>' +
     '</ion-tabbar>' +
     '<ng-content></ng-content>' +
     '<div #portal tab-portal></div>',

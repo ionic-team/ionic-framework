@@ -134,7 +134,7 @@ $tabs-md-tab-icon-size:                2.4rem !default;
 // Material Design Tab Highlight
 // --------------------------------------------------
 
-.tabs-md[tabsHighlight=true] tab-highlight {
+.tabs-md[tabsHighlight=true] .tab-highlight {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -148,11 +148,11 @@ $tabs-md-tab-icon-size:                2.4rem !default;
   transform-origin: 0 0;
 }
 
-.tabs-md[tabsHighlight=true] tab-highlight.animate {
+.tabs-md[tabsHighlight=true] .tab-highlight.animate {
   transition-duration: 300ms;
 }
 
-.tabs-md[tabsHighlight=true][tabsPlacement=bottom] tab-highlight {
+.tabs-md[tabsHighlight=true][tabsPlacement=bottom] .tab-highlight {
   top: 0;
 }
 
@@ -175,7 +175,7 @@ $tabs-md-tab-icon-size:                2.4rem !default;
     color: $color-contrast;
   }
 
-  .tabs-md.tabs-#{$color-name} ion-tabbar tab-highlight {
+  .tabs-md.tabs-#{$color-name} ion-tabbar .tab-highlight {
     background: $color-contrast;
   }
 
