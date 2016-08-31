@@ -42,3 +42,7 @@ export const E2E_GENERATED_CONFIG_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_N
 
 // SERVER
 export const LOCAL_SERVER_PORT = 8080;
+
+// VARIOUS
+export const COMMONJS_MODULE = 'commonjs';
+export const ES_MODULE = 'es2015';

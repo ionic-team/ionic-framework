@@ -100,25 +100,25 @@ import { isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class Button extends Ion {
-  /** @internal */
+  /** @private */
   _role: string = 'button'; // bar-button
 
-  /** @internal */
+  /** @private */
   _mt: boolean; // menutoggle
 
-  /** @internal */
+  /** @private */
   _size: string; // large/small/default
 
-  /** @internal */
+  /** @private */
   _style: string = 'default'; // outline/clear/solid
 
-  /** @internal */
+  /** @private */
   _shape: string; // round/fab
 
-  /** @internal */
+  /** @private */
   _display: string; // block/full
 
-  /** @internal */
+  /** @private */
   _init: boolean;
 
   /**
@@ -211,7 +211,7 @@ export class Button extends Ion {
     this._assignCss(true);
   }
 
-  /** @internal */
+  /** @private */
   _attr(type: string, attrName: string, attrValue: boolean) {
     if (type === '_style') {
       this._updateColor(this._color, isTrueProperty(attrValue));
@@ -269,7 +269,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @internal
+   * @private
    */
   setRole(val: string) {
     this._assignCss(false);
@@ -278,7 +278,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @internal
+   * @private
    */
   _assignCss(assignCssClass: boolean) {
     let role = this._role;
@@ -296,7 +296,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
@@ -307,7 +307,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @internal
+   * @private
    */
   _updateColor(color: string, isAdd: boolean) {
     if (color && this._init) {

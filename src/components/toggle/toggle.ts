@@ -74,23 +74,23 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
   encapsulation: ViewEncapsulation.None,
 })
 export class Toggle extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy  {
-  /** @internal */
+  /** @private */
   _checked: boolean = false;
-  /** @internal */
+  /** @private */
   _init: boolean;
-  /** @internal */
+  /** @private */
   _disabled: boolean = false;
-  /** @internal */
+  /** @private */
   _labelId: string;
-  /** @internal */
+  /** @private */
   _activated: boolean = false;
-  /** @internal */
+  /** @private */
   _startX: number;
-  /** @internal */
+  /** @private */
   _msPrv: number = 0;
-  /** @internal */
+  /** @private */
   _fn: Function;
-  /** @internal */
+  /** @private */
   _events: UIEventManager = new UIEventManager();
 
   /**
@@ -205,7 +205,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
   }
 
   /**
-   * @internal
+   * @private
    */
   _setChecked(isChecked: boolean) {
     if (!this._disabled && isChecked !== this._checked) {

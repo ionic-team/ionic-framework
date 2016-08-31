@@ -198,7 +198,7 @@ export class ItemSliding {
   private _state: SlidingState = SlidingState.Disabled;
 
   /**
-   * @internal
+   * @private
    */
   @ContentChild(Item) item: Item;
 
@@ -459,14 +459,14 @@ export class ItemSliding {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setCssClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
   /**
-   * @internal
+   * @private
    */
   _setCssStyle(property: string, value: string) {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);

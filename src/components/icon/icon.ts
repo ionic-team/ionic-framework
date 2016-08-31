@@ -42,15 +42,15 @@ import { Ion } from '../ion';
   }
 })
 export class Icon extends Ion {
-  /** @internal */
+  /** @private */
   _isActive: any;
-  /** @internal */
+  /** @private */
   _name: string = '';
-  /** @internal */
+  /** @private */
   _ios: string = '';
-  /** @internal */
+  /** @private */
   _md: string = '';
-  /** @internal */
+  /** @private */
   _css: string = '';
 
   /**

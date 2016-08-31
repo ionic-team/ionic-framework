@@ -22,12 +22,12 @@ export class App {
   private _rootNav: NavController = null;
 
   /**
-   * @internal
+   * @private
    */
   _clickBlock: ClickBlock;
 
   /**
-   * @internal
+   * @private
    */
   _appRoot: IonicApp;
 
@@ -175,7 +175,7 @@ export class App {
   }
 
   /**
-   * @internal
+   * @private
    */
   _setRootNav(nav: any) {
     this._rootNav = nav;

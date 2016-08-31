@@ -1,10 +1,15 @@
-import { E2E_BASE_CONFIG_NGC_CONFIG, E2E_GENERATED_CONFIG_NGC_CONFIG, SRC_COMPONENTS_ROOT } from './constants';
-import * as child_process from 'child_process';
+import { PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
 
 export function mergeObjects(obj1: any, obj2: any ) {
+  if (! obj1) {
+    obj1 = {};
+  }
+  if (! obj2) {
+    obj2 = {};
+  }
   var obj3 = {};
   for (var attrname in obj1) {
     (<any>obj3)[attrname] = obj1[attrname];
@@ -15,87 +20,46 @@ export function mergeObjects(obj1: any, obj2: any ) {
   return obj3;
 }
 
-function getRootTsConfigCompilerOptions(): any {
-  let tsConfig = require('../../tsconfig');
-  // provide our own version of typescript
-  tsConfig.compilerOptions.typescript = require('typescript');
+function getRootTsConfig(): any {
+  const json = fs.readFileSync(`${PROJECT_ROOT}/tsconfig.json`);
 
-  return tsConfig.compilerOptions;
+  let tsConfig = JSON.parse(json.toString());
+  return tsConfig;
 }
 
-/** Create a TS Build Task, based on the options. */
-export function tsBuildTask(srcGlob: string[], destDir: string, overrideOptions: any = {}) {
-  let tsc = require('gulp-typescript');
-  let compilerOptions = getRootTsConfigCompilerOptions();
-  if ( ! overrideOptions ) {
-    overrideOptions = {};
+export function createTempTsConfig(includeGlob: string[], moduleType: String, pathToWriteFile: string): any {
+  let config = getRootTsConfig();
+  if (!config.compilerOptions) {
+    config.compilerOptions = {};
   }
-  var mergedOptions = mergeObjects(compilerOptions, overrideOptions);
-  return src(srcGlob)
-    .pipe(tsc(mergedOptions))
-    .pipe(dest(destDir));
-}
-
-/** Options that can be passed to execTask or execNodeTask. */
-export interface ExecTaskOptions {
-  // Whether to output to STDERR and STDOUT.
-  silent?: boolean;
-  // If an error happens, this will replace the standard error.
-  errMessage?: string;
-}
-
-/** Create a task that executes a binary as if from the command line. */
-export function execTask(binPath: string, args: string[], options: ExecTaskOptions = {}) {
-  return (done: (err?: string) => void) => {
-    const childProcess = child_process.spawn(binPath, args);
-
-    if (!options.silent) {
-      childProcess.stdout.on('data', (data: string) => {
-        process.stdout.write(data);
-      });
-
-      childProcess.stderr.on('data', (data: string) => {
-        process.stderr.write(data);
-      });
-    }
-
-    childProcess.on('close', (code: number) => {
-      if (code !== 0) {
-        if (options.errMessage === undefined) {
-          done('Process failed with code ' + code);
-        } else {
-          done(options.errMessage);
-        }
-      } else {
-        done();
-      }
-    });
-  };
-}
-
-/**
- * Create a task that executes an NPM Bin, by resolving the binary path then executing it. These are
- * binaries that are normally in the `./node_modules/.bin` directory, but their name might differ
- * from the package. Examples are typescript, ngc and gulp itself.
- */
-export function execNodeTask(packageName: string, executable: string | string[], args?: string[],
-                             options: ExecTaskOptions = {}) {
-  if (!args) {
-    args = <string[]>executable;
-    executable = undefined;
+  // for now, we only compiling to same directory (no outdir)
+  if (config.compilerOptions && config.compilerOptions.outDir) {
+    delete config.compilerOptions.outDir;
   }
+  if (config.compilerOptions) {
+    config.compilerOptions.module = moduleType;
+  }
+  config.include = includeGlob;
+  let json = JSON.stringify(config, null, 2);
+  fs.writeFileSync(pathToWriteFile, json);
+}
 
-  return (done: (err: any) => void) => {
-    const resolveBin = require('resolve-bin');
-    resolveBin(packageName, { executable: executable }, (err: any, binPath: string) => {
-      if (err) {
-        done(err);
-      } else {
-        // Forward to execTask.
-        execTask(binPath, args, options)(done);
-      }
-    });
-  };
+export function copySourceToDest(destinationPath: string, excludeSpecs: boolean = true, excludeE2e: boolean = true) {
+  let glob = [`${SRC_ROOT}/**/*.ts`, `${SRC_ROOT}/**/*.js`];
+  if (excludeSpecs) {
+    glob.push(`!${SRC_ROOT}/**/*.spec.ts`);
+  } else {
+    glob.push(`${SRC_ROOT}/**/*.spec.ts`);
+  }
+  if (excludeE2e) {
+    glob.push(`!${SRC_ROOT}/components/*/test/*/*.ts`);
+  }
+  return src(glob)
+    .pipe(dest(destinationPath));
+}
+
+export function copyGlobToDest(sourceGlob: string[], destPath: string) {
+  return src(sourceGlob).pipe(dest(destPath));
 }
 
 export function copyFonts(destinationPath: string) {
@@ -144,35 +108,41 @@ export function copySwiperToPath(distPath: string) {
   copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.system.js`, `${distPath}/swiper-widget.system.js`);
 }
 
-export function generateE2EBuildConfig(compilerOptions: any, angularCompilerOptions: any, includeGlob: string[]) {
-  const fs = require('fs');
+export function runNgc(pathToConfigFile: string, done: Function) {
+  let exec = require('child_process').exec;
+  var shellCommand = `node --max_old_space_size=8096 ${PROJECT_ROOT}/node_modules/.bin/ngc -p ${pathToConfigFile}`;
 
-  let baseConfig = require(E2E_BASE_CONFIG_NGC_CONFIG);
-
-  if (!compilerOptions) {
-    compilerOptions = {};
-  }
-  baseConfig.compilerOptions = mergeObjects(baseConfig.compilerOptions, compilerOptions);
-
-  if (!angularCompilerOptions) {
-    angularCompilerOptions = {};
-  }
-  if ( !baseConfig.angularCompilerOptions) {
-    baseConfig.angularCompilerOptions = {};
-  }
-
-  baseConfig.angularCompilerOptions = mergeObjects(baseConfig.angularCompilerOptions, angularCompilerOptions);
-
-  if (includeGlob && includeGlob.length > 0) {
-    baseConfig.include = includeGlob;
-  }
-
-  let prettyString = JSON.stringify(baseConfig, null, 2);
-
-  fs.writeFileSync(E2E_GENERATED_CONFIG_NGC_CONFIG, prettyString);
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
+  });
 }
 
-export function removeGeneratedE2EBuildConfig() {
+export function runTsc(pathToConfigFile: string, done: Function) {
+  let exec = require('child_process').exec;
+  var shellCommand = `node --max_old_space_size=8096 ${PROJECT_ROOT}/node_modules/.bin/tsc -p ${pathToConfigFile}`;
+
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
+  });
+}
+
+export function runWebpack(pathToWebpackConfig: string, done: Function) {
+  let exec = require('child_process').exec;
+  let shellCommand = `node --max_old_space_size=8096 ./node_modules/.bin/webpack --config ${pathToWebpackConfig} --display-error-details`;
+
+  exec(shellCommand, function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    done(err);
+  });
+}
+
+export function deleteFiles(glob: string[], done: Function) {
   let del = require('del');
-  del.sync(E2E_GENERATED_CONFIG_NGC_CONFIG);
+  del.sync(glob);
+  done();
 }

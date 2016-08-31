@@ -133,27 +133,27 @@ import { ViewController } from '../../navigation/view-controller';
 })
 export class Tab extends NavControllerBase {
   /**
-   * @internal
+   * @private
    */
   _isInitial: boolean;
   /**
-   * @internal
+   * @private
    */
   _isEnabled: boolean = true;
   /**
-   * @internal
+   * @private
    */
   _isShown: boolean = true;
   /**
-   * @internal
+   * @private
    */
   _tabId: string;
   /**
-   * @internal
+   * @private
    */
   _btnId: string;
   /**
-   * @internal
+   * @private
    */
   _loaded: boolean;
 
@@ -268,7 +268,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   @ViewChild('viewport', {read: ViewContainerRef})
   set _vp(val: ViewContainerRef) {
@@ -276,14 +276,14 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   ngOnInit() {
     this.tabBadgeStyle = this.tabBadgeStyle ? this.tabBadgeStyle : 'default';
   }
 
   /**
-   * @internal
+   * @private
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
@@ -296,7 +296,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   _viewInsert(viewCtrl: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     const isTabSubPage = (this.parent._subPages && viewCtrl.index > 0);
@@ -317,7 +317,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
@@ -343,7 +343,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @internal
+   * @private
    */
   updateHref(component: any, data: any) {
     if (this.btn && this.linker) {

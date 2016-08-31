@@ -85,7 +85,7 @@ export class IonicApp extends Ion implements OnInit {
   }
 
   /**
-   * @internal
+   * @private
    */
   _getPortal(portal?: AppPortal): OverlayPortal {
     if (portal === AppPortal.LOADING) {
@@ -98,7 +98,7 @@ export class IonicApp extends Ion implements OnInit {
   }
 
   /**
-   * @internal
+   * @private
    */
   _disableScroll(shouldDisableScroll: boolean) {
     this.setElementClass('disable-scroll', shouldDisableScroll);

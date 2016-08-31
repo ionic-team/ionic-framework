@@ -73,17 +73,17 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
   encapsulation: ViewEncapsulation.None,
 })
 export class Checkbox extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  /** @internal */
+  /** @private */
   _checked: boolean = false;
-  /** @internal */
+  /** @private */
   _init: boolean;
-  /** @internal */
+  /** @private */
   _disabled: boolean = false;
-  /** @internal */
+  /** @private */
   _labelId: string;
-  /** @internal */
+  /** @private */
   _fn: Function;
-  /** @internal */
+  /** @private */
   id: string;
 
   /**
@@ -152,7 +152,7 @@ export class Checkbox extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @internal
+   * @private
    */
   _setChecked(isChecked: boolean) {
     if (!this._disabled && isChecked !== this._checked) {

@@ -1,59 +1,51 @@
-import { DIST_NAME,
-      E2E_NAME,
-      DIST_ROOT,
-      DIST_E2E_ROOT,
-      DIST_E2E_COMPONENTS_ROOT,
-      E2E_GENERATED_CONFIG_NGC_CONFIG,
-      LOCAL_SERVER_PORT,
-      SCRIPTS_ROOT,
-      SRC_COMPONENTS_ROOT,
-      SRC_ROOT
-    } from '../constants';
+import { COMMONJS_MODULE, DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, LOCAL_SERVER_PORT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
 
-import { compileSass, copyFonts, execNodeTask, generateE2EBuildConfig, removeGeneratedE2EBuildConfig } from '../util';
+import { compileSass, copyFonts, createTempTsConfig, deleteFiles, runNgc, runWebpack } from '../util';
 
+export const E2E_BUILD_TASK = 'e2e';
+export const E2E_COPY_SOURCE_TASK = 'e2e.copySource';
+export const E2E_COMPILE_TESTS = 'e2e.compileTests';
+export const E2E_COPY_EXTERNAL_DEPENDENCIES = 'e2e.copyExternalDependencies';
+export const E2E_COMPILE_SASS = 'e2e.sass';
+export const E2E_COPY_FONTS = 'e2e.fonts';
+export const E2E_BEFORE_WEBPACK = 'e2e.beforeWebpack';
+export const E2E_RUN_WEBPACK = 'e2e.runWebpack';
+export const E2E_WATCH = 'e2e.watch';
 
-task('e2e', e2eBuild);
+const E2E_INTERNAL_COPY_AND_COMPILER = 'e2e.copyAndCompile';
+
+task(E2E_BUILD_TASK, e2eBuild);
 
 function e2eBuild(done: Function) {
-  let runSequence = require('run-sequence');
-  runSequence('e2e.ngcSource', 'e2e.copyExternalDeps', 'e2e.resources', 'e2e.sass', 'e2e.fonts', 'e2e.prewebpack', 'e2e.webpack', done);
+  const runSequence = require('run-sequence');
+  runSequence(E2E_COPY_SOURCE_TASK, E2E_COMPILE_TESTS, E2E_COPY_EXTERNAL_DEPENDENCIES, E2E_COMPILE_SASS, E2E_COPY_FONTS, E2E_BEFORE_WEBPACK, E2E_RUN_WEBPACK, done);
 }
 
-task('e2e.setupTests', (done: Function) => {
-  let gulpif = require('gulp-if');
-  let merge = require('merge2');
-  let _ = require('lodash');
-  let fs = require('fs');
-  let VinylFile = require('vinyl');
+task(E2E_INTERNAL_COPY_AND_COMPILER, (done: Function) => {
+  const runSequence = require('run-sequence');
+  runSequence(E2E_COPY_SOURCE_TASK, E2E_COMPILE_TESTS, E2E_BEFORE_WEBPACK, E2E_RUN_WEBPACK, done);
+});
+
+task(E2E_COPY_SOURCE_TASK, (done: Function) => {
+  const gulpif = require('gulp-if');
+  const _ = require('lodash');
+  const VinylFile = require('vinyl');
   const through2 = require('through2');
   const buildConfig = require('../../build/config');
 
-  // Get each test folder with gulp.src
-  let tsResult = src([
-      'src/components/*/test/*/**/*.ts',
-      '!src/components/*/test/*/**/*.spec.ts'
-    ])
+  const stream = src([`${SRC_ROOT}/**/*`, `!${SRC_ROOT}/**/*.spec.ts`])
     .pipe(gulpif(/app-module.ts$/, createIndexHTML()))
-    .pipe(gulpif(/e2e.ts$/, createPlatformTests()));
+    .pipe(gulpif(/e2e.ts$/, createPlatformTests()))
+    .pipe(dest(DIST_E2E_ROOT));
 
-  let testFiles = src([
-      'src/components/*/test/*/**/*',
-      '!src/components/*/test/*/**/*.ts'
-    ]);
-
-  return merge([
-      tsResult,
-      testFiles
-    ])
-    .pipe(dest('dist/e2e/tests'));
+  stream.on('end', done);
 
   function createIndexHTML() {
-    let indexTemplate = fs.readFileSync('scripts/e2e/index.html');
-    let indexTs = fs.readFileSync('scripts/e2e/entry.ts');
+    const indexTemplate = fs.readFileSync('scripts/e2e/index.html');
+    const indexTs = fs.readFileSync('scripts/e2e/entry.ts');
 
     return through2.obj(function(file, enc, next) {
       this.push(new VinylFile({
@@ -82,7 +74,7 @@ task('e2e.setupTests', (done: Function) => {
     return through2.obj(function(file, enc, next) {
       let self = this;
       let relativePath = path.dirname(file.path.replace(/^.*?src(\/|\\)components(\/|\\)/, ''));
-      relativePath = relativePath.replace('/dist/e2e/test/', '/');
+
       let contents = file.contents.toString();
       platforms.forEach(function(platform) {
         let platformContents = testTemplate({
@@ -102,54 +94,31 @@ task('e2e.setupTests', (done: Function) => {
   }
 });
 
-task('e2e.ngcSource', (done: Function) => {
-  generateE2EBuildConfig({ outDir: '../../dist/e2e' }, {}, [`${SRC_ROOT}/index.ts`]);
+task(E2E_COMPILE_TESTS, (done: Function) => {
+  let folderInfo = getFolderInfo();
+  buildE2ETests(folderInfo, done);
+});
 
-  let startTask = execNodeTask('@angular/compiler-cli', 'ngc', ['-p', E2E_GENERATED_CONFIG_NGC_CONFIG]);
-  startTask( (err: any) => {
-    removeGeneratedE2EBuildConfig();
-    done(err);
+function buildE2ETests(folderInfo: any, done: Function) {
+  let includeGlob = ['./components/*/test/*/app-module.ts', './components/*/test/*/entry.ts'];
+  if (folderInfo.componentName && folderInfo.componentTest) {
+    includeGlob = [
+      `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app-module.ts`,
+      `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/entry.ts`,
+    ];
+  }
+  createTempTsConfig(includeGlob, COMMONJS_MODULE, `${DIST_E2E_ROOT}/tsconfig.json`);
+  runNgc(`${DIST_E2E_ROOT}/tsconfig.json`, (err) => {
+    if (err) {
+      done(err);
+      return;
+    }
+    // clean up any .ts files that remain
+    deleteFiles([`${DIST_E2E_ROOT}/**/*.ts`, `!${DIST_E2E_ROOT}/**/*.ngfactory.ts`, `!${DIST_E2E_ROOT}/**/*.d.ts`], done);
   });
-});
+}
 
-task('e2e.resources', ( done: Function) => {
-  let runSequence = require('run-sequence');
-  runSequence('e2e.setupTests', 'e2e.buildTestAppModules', 'e2e.copyTestAppModules', 'e2e.deleteTempTestAppModules', 'e2e.buildTestEntryPoints', done);
-});
-
-task('e2e.copyExternalDeps', (done: Function) => {
-  copyExteralE2EFiles(done);
-});
-
-function copyExteralE2EFiles(done: Function) {
-  let streamOne = src([`${SCRIPTS_ROOT}/e2e/*.css`]).pipe(dest(`${DIST_E2E_ROOT}/css`));
-  streamOne.on('end', () => {
-    let streamTwo = src([`${SRC_ROOT}/components/slides/swiper-widget.*`]).pipe(dest(`${DIST_E2E_ROOT}/components/slides`));
-    streamTwo.on('end', done);
-  });
- }
-
-task('e2e.copyTestAppModules', function(){
-  // copy files over from tmp directory
-  return src(`${DIST_ROOT}/ngc/dist/e2e/**/*.ngfactory.ts`)
-    .pipe(dest(`${DIST_E2E_ROOT}`));
-});
-
-task('e2e.deleteTempTestAppModules', function(done: Function) {
-  let del = require('del');
-  del(`${DIST_ROOT}/ngc`);
-  done();
-});
-
-task('e2e.buildTestAppModules',  (done: Function) => {
-  runNgcAgainstTests('app-module.ts', { genDir: '../../dist/ngc'}, done);
-});
-
-task('e2e.buildTestEntryPoints',  (done: Function) => {
-  runNgcAgainstTests('entry.ts', {}, done);
-});
-
-function runNgcAgainstTests(fileName: string, angularCompilerOptions: any, done: Function) {
+function getFolderInfo() {
   const argv = require('yargs').argv;
   let componentName: string = null;
   let componentTest: string = null;
@@ -159,51 +128,36 @@ function runNgcAgainstTests(fileName: string, angularCompilerOptions: any, done:
     componentName = folderSplit[0];
     componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
   }
-
-  let includeGlob = [
-    `${DIST_E2E_ROOT}/tests/*/test/*/${fileName}`,
-  ];
-
-  if (componentName && componentTest) {
-    includeGlob = [
-      `${DIST_E2E_ROOT}/tests/${componentName}/test/${componentTest}/${fileName}`,
-    ];
-  }
-
-  generateE2EBuildConfig(null, angularCompilerOptions, includeGlob);
-
-  let exec = require('child_process').exec;
-  var shellCommand = `node --max_old_space_size=8096 ./node_modules/.bin/ngc -p ${E2E_GENERATED_CONFIG_NGC_CONFIG}`;
-
-  exec(shellCommand, function(err, stdout, stderr) {
-    //removeGeneratedE2EBuildConfig();
-    console.log(stdout);
-    console.log(stderr);
-    done(err);
-  });
+  return {
+    componentName: componentName,
+    componentTest: componentTest
+  };
 }
 
-task('e2e.sass', () => {
+task(E2E_COPY_EXTERNAL_DEPENDENCIES, () => {
+  src([`${SCRIPTS_ROOT}/e2e/*.css`]).pipe(dest(`${DIST_E2E_ROOT}/css`));
+});
+
+task(E2E_COMPILE_SASS, () => {
   return compileSass(`${DIST_E2E_ROOT}/css`);
 });
 
-task('e2e.fonts', () => {
+task(E2E_COPY_FONTS, () => {
   return copyFonts(`${DIST_E2E_ROOT}/fonts`);
 });
 
-/**
- * Task: e2e.prewebpack
- * Dynamically build webpack entryPoints
- * Update index.html file that lists all e2e tasks
- */
-task('e2e.prewebpack', function(done) {
+task(E2E_BEFORE_WEBPACK, function(done) {
   /**
    * Find all AppModule.ts files because the act as the entry points
    * for each e2e test.
    */
   let glob = require('glob');
-  glob(`${DIST_E2E_ROOT}/tests/*/test/*/app-module.ts`, {}, function(er, files) {
-
+  let includeGlob = `${DIST_E2E_ROOT}/components/*/test/*/app-module.js`;
+  let folderInfo = getFolderInfo();
+  if (folderInfo.componentName && folderInfo.componentTest) {
+    includeGlob = `${DIST_E2E_ROOT}/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app-module.js`;
+  }
+  glob(includeGlob, {}, function(er, files) {
     var directories = files.map(function(file) {
       return path.dirname(file);
     });
@@ -215,8 +169,7 @@ task('e2e.prewebpack', function(done) {
     }, {});
 
     let indexFileContents = directories.map(function(dir) {
-      var fileName = dir.replace(/test\//, '');
-      return '<p><a href="./' + fileName + '/index.html">' + fileName + '</a></p>';
+      return '<p><a href="./' + dir + '/index.html">' + dir + '</a></p>';
     }, []);
 
     fs.writeFileSync('./scripts/e2e/webpackEntryPoints.json', JSON.stringify(webpackEntryPoints, null, 2));
@@ -229,31 +182,20 @@ task('e2e.prewebpack', function(done) {
   });
 });
 
-task('e2e.webpack', function(done) {
-  let webpackConfig = './scripts/e2e/webpack.config.js';
-  let exec = require('child_process').exec;
-  let shellCommand = 'node --max_old_space_size=8096 ./node_modules/.bin/webpack --config ' + webpackConfig + ' --display-error-details';
-
-  exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    done(err);
-  });
+task(E2E_RUN_WEBPACK, (done: Function) => {
+  const webpackConfigPath = `${SCRIPTS_ROOT}/e2e/webpack.config.js`;
+  runWebpack(webpackConfigPath, done);
 });
 
-task('e2e.watch', ['e2e.copyExternalDeps', 'e2e.sass', 'e2e.fonts'], (done: Function) => {
-  const argv = require('yargs').argv;
-  const folder: string = argv.folder || argv.f;
 
-  if (!folder || !folder.length) {
+task(E2E_WATCH, [E2E_COPY_EXTERNAL_DEPENDENCIES, E2E_COMPILE_SASS, E2E_COPY_FONTS], (done: Function) => {
+  const folderInfo = getFolderInfo();
+  if (! folderInfo.componentName || ! folderInfo.componentTest) {
     done(new Error('Passing in a folder to watch is required for this command. Use the --folder or -f option.'));
     return;
   }
 
-  const folderSplit = folder.split('/');
-  const componentName = folderSplit[0];
-  const componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
-  const e2eTestPath = path.join(SRC_COMPONENTS_ROOT, componentName, 'test', componentTest, 'app-module.ts');
+  const e2eTestPath = path.join(SRC_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'app-module.ts');
 
   try {
     fs.accessSync(e2eTestPath, fs.F_OK);
@@ -264,13 +206,13 @@ task('e2e.watch', ['e2e.copyExternalDeps', 'e2e.sass', 'e2e.fonts'], (done: Func
 
   if (e2eComponentsExists()) {
     // already generated the e2e directory
-    e2eWatch(componentName, componentTest);
+    e2eWatch(folderInfo.componentName, folderInfo.componentTest);
 
   } else {
     // generate the e2e directory
     console.log('Generated e2e builds first...');
     e2eBuild(() => {
-      e2eWatch(componentName, componentTest);
+      e2eWatch(folderInfo.componentName, folderInfo.componentTest);
     });
   }
 
@@ -287,7 +229,7 @@ function e2eWatch(componentName: string, componentTest: string) {
     'dist/e2e/vendor': './scripts/e2e/vendor',
     'dist-e2e/polyfills': './scripts/e2e/polyfills'
   };
-  config.entry[`./dist/e2e/tests/${componentName}/test/${componentTest}/index`] = `./dist/e2e/tests/${componentName}/test/${componentTest}/entry`;
+  config.entry[`./dist/e2e/components/${componentName}/test/${componentTest}/index`] = `./dist/e2e/components/${componentName}/test/${componentTest}/entry`;
 
   const compiler = webpack(config);
 
@@ -297,7 +239,7 @@ function e2eWatch(componentName: string, componentTest: string) {
   ],
   function(file) {
     console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
-    start('e2e.resources');
+    start(E2E_INTERNAL_COPY_AND_COMPILER);
   });
 
   // If any src files change except for tests then transpile only the source ionic files
@@ -308,13 +250,13 @@ function e2eWatch(componentName: string, componentTest: string) {
   ],
   function(file) {
     console.log('start e2e.ngcSource - ' + JSON.stringify(file.history, null, 2));
-    start('e2e.ngcSource');
+    start(E2E_INTERNAL_COPY_AND_COMPILER);
   });
 
   // If any scss files change then recompile all sass
   watch(['src/**/*.scss'], (file) => {
     console.log('start sass - ' + JSON.stringify(file.history, null, 2));
-    start('e2e.sass');
+    start(E2E_COMPILE_SASS);
   });
 
   new WebpackDevServer(compiler, {
@@ -328,7 +270,7 @@ function e2eWatch(componentName: string, componentTest: string) {
     if (err) {
       throw err;
     }
-    console.log(`http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}/tests/${componentName}/test/${componentTest}/`);
+    console.log(`http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}/components/${componentName}/test/${componentTest}/`);
   });
 }
 
@@ -340,3 +282,4 @@ function e2eComponentsExists(): boolean {
   }
   return true;
 }
+

@@ -391,7 +391,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @internal
+   * @private
    */
   @ContentChildren(Button)
   set _buttons(buttons: QueryList<Button>) {
@@ -403,7 +403,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @internal
+   * @private
    */
   @ContentChildren(Icon)
   set _icons(icons: QueryList<Icon>) {

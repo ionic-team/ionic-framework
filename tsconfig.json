@@ -5,8 +5,8 @@
     "experimentalDecorators": true,
     "lib": ["dom", "es2015"],
     "module": "commonjs",
+    "moduleResolution": "node",
     "noImplicitAny": false,
-    "outDir": "dist/ionic-angular",
     "target": "es5",
     "types": ["jasmine", "protractor"]
   },

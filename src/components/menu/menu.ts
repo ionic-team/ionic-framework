@@ -202,12 +202,12 @@ export class Menu {
   isOpen: boolean = false;
 
   /**
-   * @internal
+   * @private
    */
   @ViewChild(Backdrop) backdrop: Backdrop;
 
   /**
-   * @internal
+   * @private
    */
   onContentClick: EventListener;
 
@@ -291,7 +291,7 @@ export class Menu {
    */
   @Output() ionClose: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  /** @internal */
+  /** @private */
   _menuCtrl: MenuController;
 
   constructor(

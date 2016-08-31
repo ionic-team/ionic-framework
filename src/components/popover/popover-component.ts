@@ -36,10 +36,10 @@ export class PopoverCmp {
     enableBackdropDismiss?: boolean;
   };
 
-  /** @internal */
+  /** @private */
   _enabled: boolean;
 
-  /** @internal */
+  /** @private */
   id: number;
 
   constructor(
@@ -72,7 +72,7 @@ export class PopoverCmp {
     this._load(this._navParams.data.componentType);
   }
 
-  /** @internal */
+  /** @private */
   _load(componentType: any) {
     if (componentType) {
       const componentFactory = this._cfr.resolveComponentFactory(componentType);
@@ -86,7 +86,7 @@ export class PopoverCmp {
     }
   }
 
-  /** @internal */
+  /** @private */
   _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
