@@ -3,7 +3,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
 
 import { App } from '../components/app/app';
 import { isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
-import { isPresent } from '../util/util';
+import { isArray, isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
 import { Tab } from '../components/tabs/tab';
@@ -127,56 +127,6 @@ export class DeepLinker {
       }
     }
   }
-
-  // navChange2(nav: NavController, viewCtrl: ViewController, direction: string, isTransitioning: boolean, isNavRoot: boolean) {
-  //   // scenario 6: From the end of a NavController's push/pop/setRoot/insert/remove transition
-  //   // app has used a NavController method to update it's state and the transition has finished
-
-  //   console.debug(`DeepLinker, navChange, view: ${viewCtrl.name}, direction: ${direction}, isTransitioning: ${isTransitioning}`);
-
-  //   if (isTransitioning) {
-  //     // one of the parent transitions hasn't completed yet
-  //     // this happens when an page, in a tab, in tabs has loaded
-  //     // but the page containing the tabs hasn't finished yet
-  //     this.queuedPath = this.pathFromNavs(nav);
-  //     return;
-  //   }
-
-  //   if (!isTransitioning && this.queuedPath) {
-  //     // all transitions have completed, and a path has
-  //     // already been queued up to use
-  //     this.path = this.queuedPath;
-  //     this.queuedPath = null;
-
-  //   } else {
-  //     // all transitions completed, and there isn't already
-  //     // a queued up path
-  //     this.path = this.pathFromNavs(nav);
-  //   }
-
-  //   // build a string URL out of the Path
-  //   const browserUrl = this.serializer.serialize(this.path);
-
-  //   // this is not the same as the deep linkers's known current URL
-  //   // so it's safe to make a browser location changed
-  //   const lastPath = this.path[this.path.length - 1];
-  //   if (lastPath && viewCtrl.componentType === lastPath.component) {
-  //     // ensure the view's id matches the segment's id
-  //     viewCtrl.id = lastPath.id;
-  //   }
-
-  //   if (isNavRoot && this.location.path() === '') {
-  //     // this was called from the app's root nav
-  //     // using the app's initial root page in the root nav
-  //     // to load and it's the index url
-  //     this.indexAliasUrl = browserUrl;
-
-  //   } else {
-  //     // update the browser's location
-  //     this.updateLocation(browserUrl, direction);
-  //   }
-
-  // }
 
   updateLocation(browserUrl: string, direction: string) {
     if (this.indexAliasUrl === browserUrl) {
@@ -336,6 +286,22 @@ export class DeepLinker {
       }
     }
     return null;
+  }
+
+  initViews(segment: NavSegment): ViewController[] {
+    const segments: NavSegment[] = [];
+
+    if (isArray(segment.defaultHistory)) {
+
+    }
+
+    segments.push(segment);
+
+    return segments.map(s => {
+      const view = new ViewController(s.component, s.data);
+      view.id = segment.id;
+      return view;
+    });
   }
 
   /**
