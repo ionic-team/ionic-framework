@@ -11,7 +11,7 @@ $picker-ios-toolbar-height:                    44px !default;
 $picker-ios-toolbar-background-color:          $picker-ios-background-color !default;
 
 $picker-ios-button-height:                     $picker-ios-toolbar-height !default;
-$picker-ios-button-text-color:                 $link-ios-color !default;
+$picker-ios-button-text-color:                 color($colors-ios, primary) !default;
 $picker-ios-button-background-color:           transparent !default;
 
 $picker-ios-column-padding:                    0 4px !default;
