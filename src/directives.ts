@@ -2,6 +2,7 @@
 /**
  * Import Components
  */
+import { Avatar } from './components/avatar/avatar';
 import { Backdrop } from './components/backdrop/backdrop';
 import { Badge } from './components/badge/badge';
 import { Button } from './components/button/button';
@@ -50,6 +51,7 @@ import { Tab } from './components/tabs/tab';
 import { Tabs } from './components/tabs/tabs';
 import { TabButton } from './components/tabs/tab-button';
 import { TextInput, TextArea } from './components/input/input';
+import { Thumbnail } from './components/thumbnail/thumbnail';
 import { Toggle } from './components/toggle/toggle';
 import { Toolbar, Header, Footer } from './components/toolbar/toolbar';
 import { ToolbarItem } from './components/toolbar/toolbar-item';
@@ -67,6 +69,7 @@ export { ActionSheetOptions } from './components/action-sheet/action-sheet-optio
 export { Alert, AlertController } from './components/alert/alert';
 export { AlertOptions, AlertInputOptions } from './components/alert/alert-options';
 export { App } from './components/app/app';
+export { Avatar } from './components/avatar/avatar';
 export { Backdrop } from './components/backdrop/backdrop';
 export { Badge } from './components/badge/badge';
 export { Button } from './components/button/button';
@@ -131,6 +134,7 @@ export { ToastOptions } from './components/toast/toast-options';
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar, ToolbarBase, Header, Footer } from './components/toolbar/toolbar';
 export { ToolbarTitle } from'./components/toolbar/toolbar-title';
+export { Thumbnail } from './components/thumbnail/thumbnail';
 export { Typography } from './components/typography/typography';
 export { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
 
@@ -152,6 +156,7 @@ export { ToastCmp } from './components/toast/toast-component';
  * need to import `IONIC_DIRECTIVES` as they are part of the app's default directives.
  */
 export const IONIC_DIRECTIVES: any[] = [
+  Avatar,
   Backdrop,
   Badge,
   Button,
@@ -216,6 +221,7 @@ export const IONIC_DIRECTIVES: any[] = [
   TabButton,
   TextArea,
   TextInput,
+  Thumbnail,
   Toggle,
   Toolbar,
   ToolbarItem,
