@@ -32,6 +32,7 @@ import { Nav } from './components/nav/nav';
 import { NavPop, NavPopAnchor } from './components/nav/nav-pop';
 import { NavPush, NavPushAnchor } from './components/nav/nav-push';
 import { Navbar } from './components/navbar/navbar';
+import { Note } from './components/note/note';
 import { Option } from './components/option/option';
 import { OverlayPortal } from './components/nav/overlay-portal';
 import { PickerColumnCmp } from './components/picker/picker-component';
@@ -106,6 +107,7 @@ export { NavPop, NavPopAnchor } from './components/nav/nav-pop';
 export { NavPush, NavPushAnchor } from './components/nav/nav-push';
 export { Navbar } from './components/navbar/navbar';
 export { NativeInput, NextInput } from './components/input/native-input';
+export { Note } from './components/note/note';
 export { Option } from './components/option/option';
 export { OverlayPortal } from './components/nav/overlay-portal';
 export { Picker, PickerController } from './components/picker/picker';
@@ -198,6 +200,7 @@ export const IONIC_DIRECTIVES: any[] = [
   NavPush,
   NavPushAnchor,
   NextInput,
+  Note,
   Option,
   OverlayPortal,
   PickerColumnCmp,
