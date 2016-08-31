@@ -19,7 +19,7 @@ export const UserRoot = new OpaqueToken('USERROOT');
     '<div #overlayPortal overlay-portal></div>' +
     '<div #loadingPortal class="loading-portal" overlay-portal></div>' +
     '<div #toastPortal class="toast-portal" overlay-portal></div>' +
-    '<click-block></click-block>'
+    '<div class="click-block"></div>'
 })
 export class IonicApp extends Ion implements OnInit {
 
