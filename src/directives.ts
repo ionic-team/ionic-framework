@@ -11,6 +11,7 @@ import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
 import { DateTime } from './components/datetime/datetime';
 import { Fixed } from './components/fixed/fixed';
+import { Grid, Row, Col } from './components/grid/grid';
 import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
@@ -75,6 +76,7 @@ export { Chip } from './components/chip/chip';
 export { Content } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
 export { Fixed } from './components/fixed/fixed';
+export { Grid, Row, Col } from './components/grid/grid';
 export { Icon } from './components/icon/icon';
 export { Img } from './components/img/img';
 export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
@@ -156,10 +158,12 @@ export const IONIC_DIRECTIVES: any[] = [
   Card,
   Checkbox,
   Chip,
+  Col,
   Content,
   DateTime,
   Fixed,
   Footer,
+  Grid,
   Header,
   HideWhen,
   Icon,
@@ -196,6 +200,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Refresher,
   RefresherContent,
   Reorder,
+  Row,
   Scroll,
   Searchbar,
   Segment,
