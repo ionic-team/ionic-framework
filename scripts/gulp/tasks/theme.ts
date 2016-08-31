@@ -1,10 +1,11 @@
-import { task, src, dest } from 'gulp';
+import { task } from 'gulp';
 import { SRC_ROOT, SRC_COMPONENTS_ROOT } from '../constants';
 import * as path from 'path';
 import * as fs from 'fs';
 
+export const THEME_TASK = 'theme';
 
-task('theme', (done: () => void) => {
+task(THEME_TASK, (done: () => void) => {
   let opts: GenerateThemeOptions = {
     src: path.join(SRC_COMPONENTS_ROOT),
     dest: path.join(SRC_ROOT, 'ionic-generate.scss')
