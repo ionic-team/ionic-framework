@@ -6,30 +6,30 @@ import * as fs from 'fs';
 import { compileSass, copyFonts, createTempTsConfig, deleteFiles, runNgc, runWebpack } from '../util';
 
 export const E2E_BUILD_TASK = 'e2e';
-export const E2E_COPY_SOURCE_TASK = 'e2e.copySource';
-export const E2E_COMPILE_TESTS = 'e2e.compileTests';
-export const E2E_COPY_EXTERNAL_DEPENDENCIES = 'e2e.copyExternalDependencies';
+export const E2E_WATCH_TASK = 'e2e.watch';
 export const E2E_COMPILE_SASS = 'e2e.sass';
-export const E2E_COPY_FONTS = 'e2e.fonts';
-export const E2E_BEFORE_WEBPACK = 'e2e.beforeWebpack';
-export const E2E_RUN_WEBPACK = 'e2e.runWebpack';
-export const E2E_WATCH = 'e2e.watch';
 
-const E2E_INTERNAL_COPY_AND_COMPILER = 'e2e.copyAndCompile';
+const E2E_INTERNAL_COPY_SOURCE_TASK = 'e2e.copySource';
+const E2E_INTERNAL_COMPILE_TESTS = 'e2e.compileTests';
+const E2E_INTERNAL_COPY_EXTERNAL_DEPENDENCIES = 'e2e.copyExternalDependencies';
+const E2E_INTERNAL_COPY_FONTS = 'e2e.fonts';
+const E2E_INTERNAL_BEFORE_WEBPACK = 'e2e.beforeWebpack';
+const E2E_INTERNAL_RUN_WEBPACK = 'e2e.runWebpack';
+const E2E_INTERNAL_COPY_AND_COMPILE = 'e2e.copyAndCompile';
 
 task(E2E_BUILD_TASK, e2eBuild);
 
 function e2eBuild(done: Function) {
   const runSequence = require('run-sequence');
-  runSequence(E2E_COPY_SOURCE_TASK, E2E_COMPILE_TESTS, E2E_COPY_EXTERNAL_DEPENDENCIES, E2E_COMPILE_SASS, E2E_COPY_FONTS, E2E_BEFORE_WEBPACK, E2E_RUN_WEBPACK, done);
+  runSequence(E2E_INTERNAL_COPY_SOURCE_TASK, E2E_INTERNAL_COMPILE_TESTS, E2E_INTERNAL_COPY_EXTERNAL_DEPENDENCIES, E2E_COMPILE_SASS, E2E_INTERNAL_COPY_FONTS, E2E_INTERNAL_BEFORE_WEBPACK, E2E_INTERNAL_RUN_WEBPACK, done);
 }
 
-task(E2E_INTERNAL_COPY_AND_COMPILER, (done: Function) => {
+task(E2E_INTERNAL_COPY_AND_COMPILE, (done: Function) => {
   const runSequence = require('run-sequence');
-  runSequence(E2E_COPY_SOURCE_TASK, E2E_COMPILE_TESTS, E2E_BEFORE_WEBPACK, E2E_RUN_WEBPACK, done);
+  runSequence(E2E_INTERNAL_COPY_SOURCE_TASK, E2E_INTERNAL_COMPILE_TESTS, E2E_INTERNAL_BEFORE_WEBPACK, E2E_INTERNAL_RUN_WEBPACK, done);
 });
 
-task(E2E_COPY_SOURCE_TASK, (done: Function) => {
+task(E2E_INTERNAL_COPY_SOURCE_TASK, (done: Function) => {
   const gulpif = require('gulp-if');
   const _ = require('lodash');
   const VinylFile = require('vinyl');
@@ -94,7 +94,7 @@ task(E2E_COPY_SOURCE_TASK, (done: Function) => {
   }
 });
 
-task(E2E_COMPILE_TESTS, (done: Function) => {
+task(E2E_INTERNAL_COMPILE_TESTS, (done: Function) => {
   let folderInfo = getFolderInfo();
   buildE2ETests(folderInfo, done);
 });
@@ -134,7 +134,7 @@ function getFolderInfo() {
   };
 }
 
-task(E2E_COPY_EXTERNAL_DEPENDENCIES, () => {
+task(E2E_INTERNAL_COPY_EXTERNAL_DEPENDENCIES, () => {
   src([`${SCRIPTS_ROOT}/e2e/*.css`]).pipe(dest(`${DIST_E2E_ROOT}/css`));
 });
 
@@ -142,11 +142,11 @@ task(E2E_COMPILE_SASS, () => {
   return compileSass(`${DIST_E2E_ROOT}/css`);
 });
 
-task(E2E_COPY_FONTS, () => {
+task(E2E_INTERNAL_COPY_FONTS, () => {
   return copyFonts(`${DIST_E2E_ROOT}/fonts`);
 });
 
-task(E2E_BEFORE_WEBPACK, function(done) {
+task(E2E_INTERNAL_BEFORE_WEBPACK, function(done) {
   /**
    * Find all AppModule.ts files because the act as the entry points
    * for each e2e test.
@@ -182,13 +182,13 @@ task(E2E_BEFORE_WEBPACK, function(done) {
   });
 });
 
-task(E2E_RUN_WEBPACK, (done: Function) => {
+task(E2E_INTERNAL_RUN_WEBPACK, (done: Function) => {
   const webpackConfigPath = `${SCRIPTS_ROOT}/e2e/webpack.config.js`;
   runWebpack(webpackConfigPath, done);
 });
 
 
-task(E2E_WATCH, [E2E_COPY_EXTERNAL_DEPENDENCIES, E2E_COMPILE_SASS, E2E_COPY_FONTS], (done: Function) => {
+task(E2E_WATCH_TASK, [E2E_INTERNAL_COPY_EXTERNAL_DEPENDENCIES, E2E_COMPILE_SASS, E2E_INTERNAL_COPY_FONTS], (done: Function) => {
   const folderInfo = getFolderInfo();
   if (! folderInfo.componentName || ! folderInfo.componentTest) {
     done(new Error('Passing in a folder to watch is required for this command. Use the --folder or -f option.'));
@@ -215,7 +215,6 @@ task(E2E_WATCH, [E2E_COPY_EXTERNAL_DEPENDENCIES, E2E_COMPILE_SASS, E2E_COPY_FONT
       e2eWatch(folderInfo.componentName, folderInfo.componentTest);
     });
   }
-
 });
 
 function e2eWatch(componentName: string, componentTest: string) {
@@ -239,7 +238,7 @@ function e2eWatch(componentName: string, componentTest: string) {
   ],
   function(file) {
     console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
-    start(E2E_INTERNAL_COPY_AND_COMPILER);
+    start(E2E_INTERNAL_COPY_AND_COMPILE);
   });
 
   // If any src files change except for tests then transpile only the source ionic files
@@ -250,7 +249,7 @@ function e2eWatch(componentName: string, componentTest: string) {
   ],
   function(file) {
     console.log('start e2e.ngcSource - ' + JSON.stringify(file.history, null, 2));
-    start(E2E_INTERNAL_COPY_AND_COMPILER);
+    start(E2E_INTERNAL_COPY_AND_COMPILE);
   });
 
   // If any scss files change then recompile all sass

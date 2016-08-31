@@ -1,20 +1,22 @@
 import { task, src } from 'gulp';
 
+export const LINT_TASK = 'lint';
+export const TSLINT_TASK = 'lint.ts';
+export const SASS_LINT = 'lint.sass';
 
-task('lint', ['lint.scss', 'lint.ts']);
+task(LINT_TASK, [SASS_LINT, TSLINT_TASK]);
 
 
-task('lint.ts', () => {
+task(TSLINT_TASK, () => {
   const tslint = require('gulp-tslint');
   return src([
-      'src/**/*.ts',
-      '!src/**/test/**/*',
+      'src/**/*.ts'
     ]).pipe(tslint())
       .pipe(tslint.report('verbose'));
 });
 
 
-task('lint.scss', function() {
+task(SASS_LINT, function() {
   const scsslint = require('gulp-scss-lint');
   return src([
       'src/**/*.scss',

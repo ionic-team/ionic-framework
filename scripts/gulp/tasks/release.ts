@@ -2,15 +2,10 @@ import {dest, src, task} from 'gulp';
 import { SRC_ROOT, DIST_BUILD_ROOT, PROJECT_ROOT } from '../constants';
 import { compileSass, copyFonts } from '../util';
 
-/*task('release.prepare', (done: Function) => {
-    const runSequence = require('run-sequence');
-    runSequence('release.pullLatest', 'release.prepareChangelog', 'release.preparePackageJson');
-});
-*/
 
 task('release.prepareNightly', (done: Function) => {
     const runSequence = require('run-sequence');
-    runSequence(/*'release.pullLatest', 'validate',*/ 'clean', 'release.copyTools', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
+    runSequence('release.pullLatest', 'validate', 'release.copyTools', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
 });
 
 task('release.nightlyPackage', (done: Function) => {

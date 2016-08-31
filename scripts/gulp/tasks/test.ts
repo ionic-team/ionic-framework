@@ -3,13 +3,15 @@ import path = require('path');
 import { dest, src, task } from 'gulp';
 import { COMPILE_KARMA_TASK } from './build';
 
-export const ASSEMBLE_VENDOR_JS_TASK = 'test.assembleVendorJs';
 export const RUN_TESTS_TASK = 'test';
 export const RUN_TESTS_WITH_COVERAGE_TASK = 'test.coverage';
 
-task(RUN_TESTS_TASK, [ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], karmaTest);
+const INTERNAL_ASSEMBLE_VENDOR_JS_TASK = 'test.assembleVendorJs';
 
-task(RUN_TESTS_WITH_COVERAGE_TASK, [ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], (done: Function) => {
+
+task(RUN_TESTS_TASK, [INTERNAL_ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], karmaTest);
+
+task(RUN_TESTS_WITH_COVERAGE_TASK, [INTERNAL_ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], (done: Function) => {
   karmaTest(() => {
     createKarmaCoverageReport(done);
   });
@@ -33,7 +35,7 @@ function karmaTest(done: Function) {
 }
 
 
-task(ASSEMBLE_VENDOR_JS_TASK, () => {
+task(INTERNAL_ASSEMBLE_VENDOR_JS_TASK, () => {
   const files = NPM_VENDOR_FILES.map((root) => {
     const glob = path.join(root, '**/*.+(js|js.map)');
     return src(path.join('node_modules', glob))
@@ -52,7 +54,7 @@ function createKarmaCoverageReport(done: Function) {
   let command = `node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html`;
 
   exec(command, function(err: any, stdout: any, stderr: any) {
-    console.log(`file://${PROJECT_ROOT}/coverage/index.html`)
+    console.log(`file://${PROJECT_ROOT}/coverage/index.html`);
     done(err);
   });
 }
