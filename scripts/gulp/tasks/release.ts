@@ -10,7 +10,7 @@ task('release.prepareNightly', (done: Function) => {
 
 task('release.nightlyPackage', (done: Function) => {
     const runSequence = require('run-sequence');
-    runSequence('clean', 'release.prepareNightly', 'compile.release', 'release.compileSass', 'release.fonts', 'release.scss');
+    runSequence('clean', /*'release.prepareNightly',*/ 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss');
 });
 
 task('release.compileSass', () => {
@@ -71,7 +71,7 @@ task('release.preparePackageJsonTemplate', () => {
 
     // copy source dependencies versions to the template's peerDependencies
     // only copy dependencies that show up as peerDependencies in the template
-    for (let dependency of sourceDependencies) {
+    for (let dependency in sourceDependencies) {
         if (dependency in templatePackageJSON.peerDependencies) {
             templatePackageJSON.peerDependencies[dependency] = sourceDependencies[dependency];
         }
@@ -82,7 +82,7 @@ task('release.preparePackageJsonTemplate', () => {
 
 task('release.nightlyPackageJson', () => {
     const fs = require('fs');
-    let packageJson: any = require(`${PROJECT_ROOT}/package.json`);
+    let packageJson: any = require(`${DIST_BUILD_ROOT}/package.json`);
 
     // Generate a unique id formatted from current timestamp
     function createTimestamp() {

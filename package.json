@@ -104,7 +104,7 @@
     "ts-node": "^0.7.3",
     "tslint": "^3.15.1",
     "tslint-ionic-rules": "0.0.5",
-    "typescript": "^2.0.0",
+    "typescript": "2.0.2",
     "vinyl": "^1.2.0",
     "webpack": "^2.1.0-beta.20",
     "webpack-dev-server": "^1.14.1",
