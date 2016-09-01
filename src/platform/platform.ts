@@ -2,6 +2,7 @@ import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
 
 import { QueryParams } from './query-params';
 import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
+import { setupPlatformRegistry } from './registry';
 
 /**
  * @name Platform
@@ -826,6 +827,8 @@ interface BackButtonAction {
 }
 
 export function setupPlatform(queryParams: QueryParams, userAgent: string, navigatorPlatform: string, dir: string, lang: string, zone: NgZone): Platform {
+  setupPlatformRegistry();
+
   const p = new Platform();
   p.setUserAgent(userAgent);
   p.setQueryParams(queryParams);

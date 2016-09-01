@@ -28,11 +28,3 @@ export * from './transitions/transition';
 
 export * from './translation/translate';
 export * from './translation/translate_pipe';
-
-// these modules don't export anything
-import './config/modes';
-import './platform/registry';
-import './animations/builtins';
-import './transitions/transition-ios';
-import './transitions/transition-md';
-import './transitions/transition-wp';

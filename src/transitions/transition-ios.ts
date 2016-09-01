@@ -13,7 +13,7 @@ const OFF_OPACITY = 0.8;
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 
-class IOSTransition extends PageTransition {
+export class IOSTransition extends PageTransition {
 
   init() {
     super.init();
@@ -197,5 +197,3 @@ class IOSTransition extends PageTransition {
   }
 
 }
-
-PageTransition.register('ios-transition', IOSTransition);

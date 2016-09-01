@@ -8,7 +8,7 @@ const CENTER = '0px';
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 
-class MDTransition extends PageTransition {
+export class MDTransition extends PageTransition {
 
   init() {
     super.init();
@@ -60,5 +60,3 @@ class MDTransition extends PageTransition {
   }
 
 }
-
-PageTransition.register('md-transition', MDTransition);

@@ -9,6 +9,7 @@ import { OpaqueToken } from '@angular/core';
 import { Platform } from '../platform/platform';
 import { QueryParams } from '../platform/query-params';
 import { isObject, isDefined, isFunction, isArray } from '../util/util';
+import { setupModeConfig } from './modes';
 
 /**
  * @name Config
@@ -369,6 +370,8 @@ let modeConfigs: any = {};
 export const UserConfig = new OpaqueToken('USERCONFIG');
 
 export function setupConfig(userConfig: any, queryParams: QueryParams, platform: Platform): Config {
+  setupModeConfig();
+
   const config = new Config();
   config.init(userConfig, queryParams, platform);
   return config;

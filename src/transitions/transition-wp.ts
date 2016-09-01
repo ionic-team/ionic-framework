@@ -6,7 +6,7 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 const SCALE_SMALL = .95;
 
 
-class WPTransition extends PageTransition {
+export class WPTransition extends PageTransition {
 
   init() {
     super.init();
@@ -58,5 +58,3 @@ class WPTransition extends PageTransition {
   }
 
 }
-
-PageTransition.register('wp-transition', WPTransition);
