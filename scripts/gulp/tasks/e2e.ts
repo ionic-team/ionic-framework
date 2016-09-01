@@ -1,4 +1,4 @@
-import { COMMONJS_MODULE, DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, LOCAL_SERVER_PORT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { COMMONJS_MODULE, DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -169,7 +169,9 @@ task(E2E_INTERNAL_BEFORE_WEBPACK, function(done) {
     }, {});
 
     let indexFileContents = directories.map(function(dir) {
-      return '<p><a href="./' + dir + '/index.html">' + dir + '</a></p>';
+      let testName = dir.replace(`${DIST_E2E_ROOT}/components/`, '');
+      let fileName = dir.replace(`${PROJECT_ROOT}`, '');
+      return `<p><a href="${fileName}/index.html">${testName}</a></p>`;
     }, []);
 
     fs.writeFileSync('./scripts/e2e/webpackEntryPoints.json', JSON.stringify(webpackEntryPoints, null, 2));
