@@ -2,6 +2,10 @@ import {dest, src, task} from 'gulp';
 import { SRC_ROOT, DIST_BUILD_ROOT, PROJECT_ROOT } from '../constants';
 import { compileSass, copyFonts } from '../util';
 
+task('nightly', (done: Function) => {
+    const runSequence = require('run-sequence');
+    runSequence('release.nightlyPackage', 'release.publishNightly', done);
+});
 
 task('release.prepareNightly', (done: Function) => {
     const runSequence = require('run-sequence');
@@ -11,6 +15,23 @@ task('release.prepareNightly', (done: Function) => {
 task('release.nightlyPackage', (done: Function) => {
     const runSequence = require('run-sequence');
     runSequence('clean', /*'release.prepareNightly',*/ 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss');
+});
+
+task('release.publishNightly', (done: Function) => {
+    var spawn = require('child_process').spawn;
+
+    var npmCmd = spawn('npm', ['publish', '--tag=nightly', DIST_BUILD_ROOT]);
+    npmCmd.stdout.on('data', function (data) {
+        console.log(data.toString());
+    });
+
+    npmCmd.stderr.on('data', function (data) {
+        console.log('npm err: ' + data.toString());
+    });
+
+    npmCmd.on('close', function() {
+        done();
+    });
 });
 
 task('release.compileSass', () => {
