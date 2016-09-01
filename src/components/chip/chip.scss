@@ -32,33 +32,37 @@ ion-chip {
   display: inline-flex;
 
   align-self: center;
+
   font-weight: normal;
   vertical-align: middle;
 
   box-sizing: border-box;
 
   .button {
-    border-radius: $chip-button-border-radius;
     margin: $chip-button-margin;
-    height: $chip-button-size;
+
     width: $chip-button-size;
+    height: $chip-button-size;
+
+    border-radius: $chip-button-border-radius;
   }
 
   ion-icon {
-    border-radius: $chip-icon-border-radius;
-    line-height: $chip-icon-size;
-
-    font-size: $chip-icon-font-size;
     width: $chip-icon-size;
     height: $chip-icon-size;
+
+    border-radius: $chip-icon-border-radius;
+    font-size: $chip-icon-font-size;
+    line-height: $chip-icon-size;
   }
 
   ion-avatar {
-    border-radius: $chip-avatar-border-radius;
     width: $chip-avatar-size;
-    height: $chip-avatar-size;
     min-width: $chip-avatar-size;
+    height: $chip-avatar-size;
     min-height: $chip-avatar-size;
+
+    border-radius: $chip-avatar-border-radius;
 
     img {
       display: block;
