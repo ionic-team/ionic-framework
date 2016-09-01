@@ -25,13 +25,13 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "@angular/common": "github:angular/common-builds",
-    "@angular/compiler": "github:angular/compiler-builds",
-    "@angular/core": "github:angular/core-builds",
-    "@angular/forms": "github:angular/forms-builds",
-    "@angular/http": "github:angular/http-builds",
-    "@angular/platform-browser": "github:angular/platform-browser-builds",
-    "@angular/platform-browser-dynamic": "github:angular/platform-browser-dynamic-builds",
+    "@angular/common": "2.0.0-rc.6",
+    "@angular/compiler": "2.0.0-rc.6",
+    "@angular/core": "2.0.0-rc.6",
+    "@angular/forms": "2.0.0-rc.6",
+    "@angular/http": "2.0.0-rc.6",
+    "@angular/platform-browser": "2.0.0-rc.6",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.6",
     "colors": "1.1.2",
     "core-js": "2.4.1",
     "inquirer": "0.11.0",
@@ -44,8 +44,7 @@
     "zone.js": "0.6.17"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "github:angular/compiler-cli-builds",
-    "@angular/tsc-wrapped": "github:angular/tsc-wrapped-builds",
+    "@angular/compiler-cli": "0.6.0",
     "@types/glob": "^5.0.29",
     "@types/gulp": "^3.8.29",
     "@types/hammerjs": "^2.0.30",
