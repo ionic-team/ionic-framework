@@ -15,8 +15,15 @@ var distPath = '/base/dist/';
 System.config({
   baseURL: distPath,
   map: {
-      '@angular': 'vendor/@angular',
-      'rxjs': 'vendor/rxjs'
+    '@angular': 'vendor/@angular',
+    '@angular/core': 'vendor/@angular/core/bundles/core.umd.js',
+    '@angular/common': 'vendor/@angular/common/bundles/common.umd.js',
+    '@angular/compiler': 'vendor/@angular/compiler/bundles/compiler.umd.js',
+    '@angular/platform-browser': 'vendor/@angular/platform-browser/bundles/platform-browser.umd.js',
+    '@angular/platform-browser-dynamic': 'vendor/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+    '@angular/http': 'vendor/@angular/http/bundles/http.umd.js',
+    '@angular/forms': 'vendor/@angular/forms/bundles/forms.umd.js',
+    'rxjs': 'vendor/rxjs',
   },
   packages: {
     'ionic-angular': {
@@ -24,19 +31,9 @@ System.config({
       defaultExtension: 'js',
       main: 'index'
     },
-    'ionic-angular/testing': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'index'
+    rxjs: {
+      defaultExtension: 'js'
     },
-    '@angular/core': { main: 'index' },
-    '@angular/common': { main: 'index' },
-    '@angular/compiler': { main: 'index' },
-    '@angular/http': { main: 'index' },
-    '@angular/forms': { main: 'index' },
-    '@angular/platform-browser': { main: 'index' },
-    '@angular/platform-browser-dynamic': { main: 'index' },
-    'rxjs': { main: 'index' }
   }
 });
 

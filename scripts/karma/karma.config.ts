@@ -22,6 +22,7 @@ export function config(config) {
       {pattern: 'dist/vendor/systemjs/dist/system-polyfills.js', included: true, watched: false},
       {pattern: 'dist/vendor/systemjs/dist/system.src.js', included: true, watched: false},
       {pattern: 'dist/vendor/zone.js/dist/zone.js', included: true, watched: false},
+      {pattern: 'dist/vendor/zone.js/dist/proxy.js', included: true, watched: false},
       {pattern: 'dist/vendor/zone.js/dist/async-test.js', included: true, watched: false},
       {pattern: 'dist/vendor/zone.js/dist/fake-async-test.js', included: true, watched: false},
 
