@@ -117,7 +117,8 @@ var IonicSnapshot = function(options) {
             self.testData.description = spec.getFullName().replace('/test/', '/');
             self.testData.highest_mismatch = self.highestMismatch;
             self.testData.png_base64 = pngBase64;
-            self.testData.url = currentUrl.replace('dist/e2e/tests/', '/e2e/').replace('/test/', '/').replace('&ionicanimate=false', '');
+            self.testData.description = spec.getFullName().replace('test/', '');
+            self.testData.url = currentUrl.replace('dist', '').replace('components/', '').replace('test/', '').replace('&ionicanimate=false', '');
             pngBase64 = null;
 
             var requestDeferred = q.defer();

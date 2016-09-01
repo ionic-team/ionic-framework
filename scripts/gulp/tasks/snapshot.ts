@@ -6,7 +6,7 @@ import * as path from 'path';
 import { E2E_BUILD_TASK, E2E_COMPILE_SASS } from './e2e';
 
 export const SNAPSHOT_TASK = 'snapshot';
-export const SNAPSHOT_SKIP_BUILD_TASK = 'snapshot.skip.build';
+export const SNAPSHOT_SKIP_BUILD_TASK = 'snapshot.skipBuild';
 export const SNAPSHOT_QUICK_TASK = 'snapshot.quick';
 
 task(SNAPSHOT_TASK, [E2E_BUILD_TASK], (done: Function) => {
