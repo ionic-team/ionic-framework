@@ -14,7 +14,7 @@ task('release.prepareNightly', (done: Function) => {
 
 task('release.nightlyPackage', (done: Function) => {
     const runSequence = require('run-sequence');
-    runSequence('clean', /*'release.prepareNightly',*/ 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss');
+    runSequence('clean', /*'release.prepareNightly',*/ 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', done);
 });
 
 task('release.publishNightly', (done: Function) => {
