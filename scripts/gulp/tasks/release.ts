@@ -8,7 +8,7 @@ task('release.prepareNightly', (done: Function) => {
     runSequence(/*'release.pullLatest', 'validate', */'release.copyTools', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
 });
 
-task('g', (done: Function) => {
+task('release.nightlyPackage', (done: Function) => {
     const runSequence = require('run-sequence');
     runSequence('clean', 'release.prepareNightly', 'compile.release', 'release.compileSass', 'release.fonts', 'release.scss');
 });
