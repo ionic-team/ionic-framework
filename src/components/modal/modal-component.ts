@@ -35,13 +35,13 @@ export class ModalCmp {
   }
 
   ngAfterViewInit() {
-    this._load(this._navParams.data.componentType);
+    this._load(this._navParams.data.component);
   }
 
   /** @private */
-  _load(componentType: any) {
-    if (componentType) {
-      const componentFactory = this._cfr.resolveComponentFactory(componentType);
+  _load(component: any) {
+    if (component) {
+      const componentFactory = this._cfr.resolveComponentFactory(component);
 
       // ******** DOM WRITE ****************
       const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
@@ -49,7 +49,7 @@ export class ModalCmp {
 
       this._setCssClass(componentRef, 'ion-page');
       this._setCssClass(componentRef, 'show-page');
-      this._setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
+      this._setCssClass(componentRef, pascalCaseToDashCase(component.name));
       this._enabled = true;
     }
   }

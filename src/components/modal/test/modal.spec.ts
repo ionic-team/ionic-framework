@@ -10,7 +10,7 @@ describe('Modal', () => {
     it('should have the correct properties on modal view controller instance', () => {
       let modalCtrl = new ModalController(null);
       let modalViewController = modalCtrl.create(ComponentToPresent);
-      expect(modalViewController.componentType).toEqual(ModalCmp);
+      expect(modalViewController.component).toEqual(ModalCmp);
       expect(modalViewController.isOverlay).toEqual(true);
       expect(modalViewController instanceof ViewController).toEqual(true);
     });

@@ -269,6 +269,18 @@ describe('DeepLinker', () => {
 
   });
 
+  describe('initViews', () => {
+
+    it('should create the ViewController for just the segment', () => {
+      // let segment = serializer.parse('/viewone')[0];
+
+      // let views = linker.initViews(segment);
+      // expect(views[0].component).toEqual(segment.component);
+      // expect(views[0].id).toEqual('VIEWID');
+    });
+
+  });
+
   describe('initNav', () => {
 
     it('should load root view that contains tabs, and the selected tabs view', () => {

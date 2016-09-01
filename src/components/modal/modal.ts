@@ -14,8 +14,8 @@ import { ViewController } from '../../navigation/view-controller';
 export class Modal extends ViewController {
   private _app: App;
 
-  constructor(app: App, componentType: any, data: any = {}, opts: ModalOptions = {}) {
-    data.componentType = componentType;
+  constructor(app: App, component: any, data: any = {}, opts: ModalOptions = {}) {
+    data.component = component;
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
     data.opts = opts;
@@ -168,11 +168,11 @@ export class ModalController {
   /**
    * Create a modal to display. See below for options.
    *
-   * @param {object} componentType The Modal view
+   * @param {object} component The Modal view
    * @param {object} data Any data to pass to the Modal view
    * @param {object} opts Modal options
    */
-  create(componentType: any, data: any = {}, opts: ModalOptions = {}) {
-    return new Modal(this._app, componentType, data, opts);
+  create(component: any, data: any = {}, opts: ModalOptions = {}) {
+    return new Modal(this._app, component, data, opts);
   }
 }

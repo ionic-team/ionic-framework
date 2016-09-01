@@ -467,7 +467,7 @@ export class NavControllerBase extends Ion implements NavController {
       { provide: ViewController, useValue: enteringView },
       { provide: NavParams, useValue: enteringView.getNavParams() }
     ]);
-    const componentFactory = this._cfr.resolveComponentFactory(enteringView.componentType);
+    const componentFactory = this._cfr.resolveComponentFactory(enteringView.component);
     const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
 
     // create ComponentRef and set it to the entering view
@@ -570,7 +570,7 @@ export class NavControllerBase extends Ion implements NavController {
 
     // auto-add page css className created from component JS class name
     // ******** DOM WRITE ****************
-    const cssClassName = pascalCaseToDashCase(view.componentType.name);
+    const cssClassName = pascalCaseToDashCase(view.component.name);
     this._renderer.setElementClass(pageElement, cssClassName, true);
 
     componentRef.changeDetectorRef.detectChanges();

@@ -2,7 +2,7 @@ import { Injectable, OpaqueToken } from '@angular/core';
 import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { convertToViews, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
 import { isArray, isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
@@ -189,7 +189,7 @@ export class DeepLinker {
       if (!component && isNav(nav)) {
         view = nav.getActive(true);
         if (view) {
-          component = view.componentType;
+          component = view.component;
           data = view.data;
         }
       }
@@ -289,19 +289,21 @@ export class DeepLinker {
   }
 
   initViews(segment: NavSegment): ViewController[] {
-    const segments: NavSegment[] = [];
+    let views: ViewController[];
 
     if (isArray(segment.defaultHistory)) {
+      views = convertToViews(this, segment.defaultHistory);
 
+    } else {
+      views = [];
     }
 
-    segments.push(segment);
+    const view = new ViewController(segment.component, segment.data);
+    view.id = segment.id;
 
-    return segments.map(s => {
-      const view = new ViewController(s.component, s.data);
-      view.id = segment.id;
-      return view;
-    });
+    views.push(view);
+
+    return views;
   }
 
   /**
@@ -312,14 +314,15 @@ export class DeepLinker {
    * the new browser URL. Because the URL is already known, it will
    * not update the browser's URL when transitions have completed.
    */
-  loadNavFromPath(nav: NavController, done?: Function): Promise<any> {
+  loadNavFromPath(nav: NavController, done?: Function) {
     if (!nav) {
       done && done();
-      return;
+
+    } else {
+      this.loadViewFromSegment(nav, () => {
+        this.loadNavFromPath(nav.getActiveChildNav(), done);
+      });
     }
-    this.loadViewFromSegment(nav, () => {
-      this.loadNavFromPath(nav.getActiveChildNav(), done);
-    });
   }
 
   loadViewFromSegment(navInstance: any, done: Function) {

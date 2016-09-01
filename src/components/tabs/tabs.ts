@@ -560,7 +560,7 @@ export class Tabs extends Ion implements AfterViewInit {
         // if we're a few pages deep, pop to root
         tab.popToRoot(null, null);
 
-      } else if (tab.root !== active.componentType) {
+      } else if (tab.root !== active.component) {
         // Otherwise, if the page we're on is not our real root, reset it to our
         // default root type
         tab.setRoot(tab.root);

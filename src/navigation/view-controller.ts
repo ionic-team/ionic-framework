@@ -97,7 +97,7 @@ export class ViewController {
   /** @private */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public componentType?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
+  constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
@@ -231,7 +231,7 @@ export class ViewController {
    * @private
    */
   get name(): string {
-    return this.componentType ? this.componentType.name : '';
+    return this.component ? this.component.name : '';
   }
 
   /**

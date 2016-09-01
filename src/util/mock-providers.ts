@@ -201,11 +201,11 @@ export const mockLocation = function(): Location {
   return location;
 };
 
-export const mockView = function(componentType?: any, data?: any) {
-  if (!componentType) {
-    componentType = MockView;
+export const mockView = function(component?: any, data?: any) {
+  if (!component) {
+    component = MockView;
   }
-  let view = new ViewController(componentType, data);
+  let view = new ViewController(component, data);
   view.init(mockComponentRef());
   return view;
 };

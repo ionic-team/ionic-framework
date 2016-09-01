@@ -30,7 +30,6 @@ export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params:
   return null;
 }
 
-
 export function convertToViews(linker: DeepLinker, pages: any[]): ViewController[] {
   const views: ViewController[] = [];
   if (pages) {

@@ -69,19 +69,19 @@ export class PopoverCmp {
     if (document.activeElement) {
       activeElement.blur();
     }
-    this._load(this._navParams.data.componentType);
+    this._load(this._navParams.data.component);
   }
 
   /** @private */
-  _load(componentType: any) {
-    if (componentType) {
-      const componentFactory = this._cfr.resolveComponentFactory(componentType);
+  _load(component: any) {
+    if (component) {
+      const componentFactory = this._cfr.resolveComponentFactory(component);
 
       // ******** DOM WRITE ****************
       const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
       this._viewCtrl._setInstance(componentRef.instance);
 
-      this._setCssClass(componentRef, pascalCaseToDashCase(componentType.name));
+      this._setCssClass(componentRef, pascalCaseToDashCase(component.name));
       this._enabled = true;
     }
   }
