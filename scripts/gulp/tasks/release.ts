@@ -5,10 +5,10 @@ import { compileSass, copyFonts } from '../util';
 
 task('release.prepareNightly', (done: Function) => {
     const runSequence = require('run-sequence');
-    runSequence('release.pullLatest', 'validate', 'release.copyTools', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
+    runSequence(/*'release.pullLatest', 'validate', */'release.copyTools', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
 });
 
-task('release.nightlyPackage', (done: Function) => {
+task('g', (done: Function) => {
     const runSequence = require('run-sequence');
     runSequence('clean', 'release.prepareNightly', 'compile.release', 'release.compileSass', 'release.fonts', 'release.scss');
 });
