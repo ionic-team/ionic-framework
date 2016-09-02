@@ -48,23 +48,37 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 // Material Design Highlighted Input
 // --------------------------------------------------
 
+.item-inner:after{
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  height: 2px;
+  width: calc(100% - 16px);
+  transform: scale3d(0,1,0);
+  transition: all 0.25s ease-in-out;
+}
+.item-textarea .item-inner:after{
+  bottom: 1px;
+}
 // Input highlight mixin for focus, valid, and invalid states
 @mixin md-input-highlight($highlight-color) {
-  border-bottom-color: $highlight-color;
+  background-color: $highlight-color;
   box-shadow: inset 0 -1px 0 0 $highlight-color;
+  transform: scale3d(1,1,1);
 }
 
 // Show the focus highlight when the input has focus
 @if ($text-input-md-show-focus-highlight) {
   // In order to get a 2px border we need to add an inset
   // box-shadow 1px (this is to avoid the div resizing)
-  .item-input.input-has-focus .item-inner {
+  .item-input.input-has-focus .item-inner:after {
     @include md-input-highlight($text-input-md-highlight-color);
   }
 
   // The last item in a list has a border on the item, not the
   // inner item, so add it to the item itself
-  ion-list .item-input.input-has-focus:last-child {
+  ion-list .item-input.input-has-focus:last-child:after {
     @include md-input-highlight($text-input-md-highlight-color);
 
     .item-inner {
@@ -75,11 +89,11 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 
 // Show the valid highlight when it has the .ng-valid class and a value
 @if ($text-input-md-show-valid-highlight) {
-  .item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+  .item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner:after {
     @include md-input-highlight($text-input-md-highlight-color-valid);
   }
 
-  ion-list .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
+  ion-list .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child:after {
     @include md-input-highlight($text-input-md-highlight-color-valid);
 
     .item-inner {
@@ -90,11 +104,11 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($text-input-md-show-invalid-highlight) {
-  .item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+  .item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner:after {
     @include md-input-highlight($text-input-md-highlight-color-invalid);
   }
 
-  ion-list .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
+  ion-list .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child:after {
     @include md-input-highlight($text-input-md-highlight-color-invalid);
 
     .item-inner {
