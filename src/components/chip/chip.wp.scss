@@ -62,7 +62,7 @@ $chip-wp-icon-text-color:            color-contrast($colors-wp, $chip-wp-icon-ba
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
   .chip-wp.chip-#{$color-name},
-  .chip-wp .icon-#{$color-name} {
+  .chip-wp .icon-wp.icon-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

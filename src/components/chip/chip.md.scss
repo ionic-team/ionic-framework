@@ -58,7 +58,7 @@ $chip-md-icon-text-color:            color-contrast($colors-md, $chip-md-icon-ba
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
   .chip-md.chip-#{$color-name},
-  .chip-md .icon-#{$color-name} {
+  .chip-md .icon-md.icon-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

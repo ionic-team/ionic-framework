@@ -43,6 +43,8 @@ import { Ion } from '../ion';
 })
 export class Icon extends Ion {
   /** @private */
+  _iconMode: string;
+  /** @private */
   _isActive: any;
   /** @private */
   _name: string = '';
@@ -64,13 +66,23 @@ export class Icon extends Ion {
     this._setColor('icon', value);
   }
 
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('icon', val);
+  }
+
   constructor(
     config: Config,
     elementRef: ElementRef,
     renderer: Renderer
   ) {
     super(config, elementRef, renderer);
-    this._mode = config.get('iconMode');
+
+    this.mode = config.get('mode');
+    this._iconMode = config.get('iconMode');
   }
 
   /**
@@ -94,7 +106,7 @@ export class Icon extends Ion {
     if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
-      val = this._mode + '-' + val;
+      val = this._iconMode + '-' + val;
     }
     this._name = val;
     this.update();
@@ -153,17 +165,17 @@ export class Icon extends Ion {
 
     this._hidden = (this._name === null);
 
-    if (this._ios && this._mode === 'ios') {
+    if (this._ios && this._iconMode === 'ios') {
       css += this._ios;
 
-    } else if (this._md && this._mode === 'md') {
+    } else if (this._md && this._iconMode === 'md') {
       css += this._md;
 
     } else {
       css += this._name;
     }
 
-    if (this._mode === 'ios' && !this.isActive && css.indexOf('logo') < 0) {
+    if (this._iconMode === 'ios' && !this.isActive && css.indexOf('logo') < 0) {
       css += '-outline';
     }
 

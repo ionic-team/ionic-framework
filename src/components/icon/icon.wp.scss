@@ -8,7 +8,7 @@
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .wp .icon-#{$color-name} {
+  .icon-wp.icon-#{$color-name} {
     color: $color-base;
   }
 
