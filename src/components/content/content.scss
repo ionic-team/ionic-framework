@@ -1,11 +1,61 @@
-@import "../../globals.core";
+@import "../../themes/globals.core";
 
 // Content
 // --------------------------------------------------
 
+ion-content {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+.ion-page > ion-content {
+  position: absolute;
+}
+
 a {
   color: $link-color;
 }
+
+
+// Scrollable Content
+// --------------------------------------------------
+
+.scroll-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-scroll-content;
+  display: block;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+}
+
+ion-content.js-scroll > .scroll-content {
+  position: relative;
+
+  min-height: 100%;
+
+  overflow-x: initial;
+  overflow-y: initial;
+  -webkit-overflow-scrolling: auto;
+  will-change: initial;
+}
+
+.disable-scroll .ion-page .scroll-content {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
 
 // Content Padding
 // --------------------------------------------------

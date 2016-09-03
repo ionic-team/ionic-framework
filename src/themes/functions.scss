@@ -203,10 +203,10 @@
   @if (type-of($value) == color) {
     $color-value: color-key($colors, $value);
 
-  // If the value is a string (e.g. primary)
-  // we want to get the value from the map
-  // where it is the key
   } @else {
+    // If the value is a string (e.g. primary)
+    // we want to get the value from the map
+    // where it is the key
     $color-value: map-get($colors, $value);
   }
 
@@ -222,16 +222,16 @@
       $color-value: color-inverse(map-get($color-value, base));
     }
 
-  // If a mode was passed we need to call
-  // the custom inverse function to get the inverse
-  // color based on the mode
-} @elseif ($custom-contrast-mode) {
+  } @elseif ($custom-contrast-mode) {
+    // If a mode was passed we need to call
+    // the custom inverse function to get the inverse
+    // color based on the mode
     $color-value: mode-inverse($color-value, $custom-contrast-mode);
 
-  // Otherwise we were passed a color and can use the
-  // function to get the inverse of that color
-  // (e.g. #f4f4f4)
   } @else {
+    // Otherwise we were passed a color and can use the
+    // function to get the inverse of that color
+    // (e.g. #f4f4f4)
     $color-value: color-inverse($color-value);
   }
 

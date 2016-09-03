@@ -1,4 +1,4 @@
-@import "../../globals.ios";
+@import "../../themes/globals.ios";
 
 // iOS Content
 // --------------------------------------------------
@@ -16,9 +16,10 @@ $content-ios-transition-background:     #000 !default;
 }
 
 .content-ios hr {
+  height: $hairlines-width;
+
   color: $text-ios-color;
   background-color: rgba(0, 0, 0, .12);
-  height: $hairlines-width;
 }
 
 .ios .ion-page.show-page ~ .nav-decor {

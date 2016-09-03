@@ -1,4 +1,4 @@
-@import "../../globals.md";
+@import "../../themes/globals.md";
 
 // Material Design Alerts
 // --------------------------------------------------
@@ -98,7 +98,7 @@ $alert-md-checkbox-icon-border-style:         solid !default;
 $alert-md-checkbox-icon-border-color:         color-contrast($colors-md, $alert-md-checkbox-border-color-on) !default;
 $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
-.alert-md .alert-wrapper  {
+.alert-md .alert-wrapper {
   max-width: $alert-md-max-width;
 
   border-radius: $alert-md-border-radius;

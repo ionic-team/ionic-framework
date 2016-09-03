@@ -1,7 +1,29 @@
-@import "../../globals.core";
+@import "../../themes/globals.core";
 
 // Tabs
 // --------------------------------------------------
+
+.tabbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-toolbar;
+  display: flex;
+
+  width: 100%;
+
+  // default to hidden until ready
+  opacity: 0;
+}
+
+.tabbar.show-tabbar {
+  opacity: 1;
+}
+
+[tabsPlacement=top] > .tabbar {
+  top: 0;
+  bottom: auto;
+}
 
 .tab-button {
   @include user-select-none();

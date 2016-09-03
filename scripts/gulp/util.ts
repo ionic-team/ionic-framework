@@ -80,10 +80,7 @@ export function compileSass(destinationPath: string) {
   let ioniconsPath = path.normalize(`${__dirname}/../../node_modules/ionicons/dist/scss/`);
 
   return src([
-    'src/ionic.ios.scss',
-    'src/ionic.md.scss',
-    'src/ionic.wp.scss',
-    'src/ionic.scss'
+    'src/themes/ionic.scss'
   ])
   .pipe(sass({
       includePaths: [ioniconsPath],

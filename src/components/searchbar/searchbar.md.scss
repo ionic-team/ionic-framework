@@ -1,4 +1,4 @@
-@import "../../globals.md";
+@import "../../themes/globals.md";
 
 // Material Design Searchbar
 // --------------------------------------------------
@@ -142,7 +142,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 // Searchbar in Toolbar
 // -----------------------------------------
 
-.toolbar .searchbar-md  {
+.toolbar .searchbar-md {
   padding: 3px;
 }
 

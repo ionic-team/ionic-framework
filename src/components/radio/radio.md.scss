@@ -1,4 +1,4 @@
-@import "../../globals.md";
+@import "../../themes/globals.md";
 
 // Material Design Radio
 // --------------------------------------------------
@@ -95,7 +95,7 @@ $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-paddi
 // Material Design Radio Within An Item
 // -----------------------------------------
 
-.item-md .radio-md  {
+.item-md .radio-md {
   position: static;
   display: block;
 
