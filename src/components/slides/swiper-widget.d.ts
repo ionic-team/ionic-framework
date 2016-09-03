@@ -1,5 +1,4 @@
-
-/*export declare class Swiper {
+export declare class Swiper {
   constructor(container: HTMLElement, params: any);
   slides: Array<HTMLElement>;
   activeIndex: number;
@@ -10,6 +9,4 @@
   slideNext(runCallbacks: boolean, speed: number): boolean;
   slidePrev(runCallbacks: boolean, speed: number): boolean;
   slideTo(slideIndex: number, speed: number, runCallbacks: boolean): boolean;
-}*/
-
-declare module 'swiper';
+}

@@ -6,8 +6,7 @@ import { Gesture } from '../../gestures/gesture';
 import { CSS } from '../../util/dom';
 import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
 import { Ion } from '../ion';
-
-import { Swiper } from 'swiper';
+import { Swiper } from './swiper-widget';
 
 
 /**
@@ -218,7 +217,7 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  slider: any;
+  slider: Swiper;
 
   /**
    * @private

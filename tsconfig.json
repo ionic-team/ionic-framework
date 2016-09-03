@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowUnreachableCode": false,
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -7,6 +8,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
+    "removeComments": true,
     "target": "es5",
     "types": ["jasmine", "protractor"]
   },
