@@ -98,12 +98,12 @@ export declare class DeepLinkMetadata implements DeepLinkMetadataType {
 
 export interface DeepLinkDecorator extends TypeDecorator {}
 
-export interface DeepLinktMetadataFactory {
+export interface DeepLinkMetadataFactory {
   (obj: DeepLinkMetadataType): DeepLinkDecorator;
   new (obj: DeepLinkMetadataType): DeepLinkMetadata;
 }
 
-export declare var DeepLink: DeepLinktMetadataFactory;
+export declare var DeepLink: DeepLinkMetadataFactory;
 
 export interface DeepLinkConfig {
   links: DeepLinkMetadata[];
