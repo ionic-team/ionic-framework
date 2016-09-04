@@ -34,17 +34,17 @@ function snapshot(quickMode: boolean, callback: Function) {
     return callback(new Error('Missing IONIC_SNAPSHOT_KEY environment variable'));
   }
 
-  let specs = '**';
-  let folderArg: string = argv.folder || argv.f;
+  let component = '*';
+  let e2eSpecs = '*';
+  const folderArg: string = argv.folder || argv.f;
   if (folderArg && folderArg.length) {
     const folderArgPaths = folderArg.split('/');
+    component = folderArgPaths[0];
     if (folderArgPaths.length > 1) {
-      specs = path.join(folderArgPaths[0], '**', folderArgPaths[1]);
-    } else {
-      specs = path.join(folderArg, '**');
+      e2eSpecs = folderArgPaths[1];
     }
   }
-  specs = path.join(DIST_E2E_COMPONENTS_ROOT, '*', 'test', '*', '*e2e.js');
+  const specs = path.join(DIST_E2E_COMPONENTS_ROOT, component, 'test', e2eSpecs, '*e2e.js');
   console.log(`[snapshot] Specs: ${specs}`);
 
   const testId = generateTestId();
