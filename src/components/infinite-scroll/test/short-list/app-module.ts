@@ -1,4 +1,4 @@
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { IonicApp, IonicModule, InfiniteScroll } from '../../../..';
 
 

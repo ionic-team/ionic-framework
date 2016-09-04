@@ -8,19 +8,19 @@ import { IonicApp, IonicModule, Slides, SegmentButton } from '../../../..';
 export class SegmentPage {
   @ViewChild('loopSlider') sliderComponent: Slides;
 
-  selectedSegment = "first";
+  selectedSegment = 'first';
   slides = [
     {
-      id: "first",
-      title: "First Slide"
+      id: 'first',
+      title: 'First Slide'
     },
     {
-      id: "second",
-      title: "Second Slide"
+      id: 'second',
+      title: 'Second Slide'
     },
     {
-      id: "third",
-      title: "Third Slide"
+      id: 'third',
+      title: 'Third Slide'
     }
   ];
 
@@ -29,7 +29,7 @@ export class SegmentPage {
   }
 
   onSegmentChanged(segmentButton: SegmentButton) {
-    console.log("Segment changed to", segmentButton.value);
+    console.log('Segment changed to', segmentButton.value);
 
     const selectedIndex = this.slides.findIndex((slide) => {
       return slide.id === segmentButton.value;

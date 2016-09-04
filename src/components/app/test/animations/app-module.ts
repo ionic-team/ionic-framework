@@ -19,7 +19,7 @@ export class E2EPage {
   playGreen() {
     let a = new Animation('.green');
     a.fromTo('translateX', '0px', '200px');
-    a.duration(parseInt(this.duration));
+    a.duration(parseInt(this.duration, 10));
     a.easing(this.easing);
     a.play();
   }
@@ -39,7 +39,7 @@ export class E2EPage {
 
       let a = new Animation('.green');
       a.fromTo('translateX', '0px', '200px');
-      a.duration(parseInt(self.duration));
+      a.duration(parseInt(self.duration, 10));
       a.easing(self.easing);
       a.onFinish((animation: Animation) => {
         setTimeout(() => {

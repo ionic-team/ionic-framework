@@ -1,5 +1,5 @@
-import { Component, ContentChild, QueryList, ViewChildren, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController, Tab } from '../../../..';
+import { Component, QueryList, ViewChildren, NgModule } from '@angular/core';
+import { IonicApp, IonicModule, Tab } from '../../../..';
 
 
 //
