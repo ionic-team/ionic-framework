@@ -1,4 +1,4 @@
-import { PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
+import { NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -77,19 +77,31 @@ export function compileSass(destinationPath: string) {
   let rename = require('gulp-rename');
   let buildConfig = require('../build/config');
 
-  let ioniconsPath = path.normalize(`${__dirname}/../../node_modules/ionicons/dist/scss/`);
+  let ioniconsPath = path.join(NODE_MODULES_ROOT, 'ionicons/dist/scss/');
 
   return src([
-    'src/themes/ionic.scss'
+    path.join(SRC_ROOT, 'themes/ionic.build.default.scss'),
+    path.join(SRC_ROOT, 'themes/ionic.build.dark.scss')
   ])
   .pipe(sass({
-      includePaths: [ioniconsPath],
+      includePaths: [ioniconsPath]
     }).on('error', sass.logError)
   )
   .pipe(autoprefixer(buildConfig.autoprefixer))
+
+  .pipe(rename(function (path) {
+    path.basename = path.basename.replace('.default', '');
+    path.basename = path.basename.replace('.build', '');
+  }))
+
   .pipe(dest(destinationPath))
+
   .pipe(cleanCSS())
-  .pipe(rename({ extname: '.min.css' }))
+
+  .pipe(rename({
+    extname: '.min.css'
+  }))
+
   .pipe(dest(destinationPath));
 }
 

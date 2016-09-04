@@ -1,8 +1,10 @@
-@import "./globals.core";
+@import "./ionic.globals";
 
 
 // Dark Theme
 // ----------------------------------
+
+$IONIC_THEME: "Dark" !default;
 
 $colors: (
 

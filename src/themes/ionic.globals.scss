@@ -1,10 +1,14 @@
 
+// Ionic Version
+@import "./version";
+
+
 // Global Functions
-@import "./functions";
+@import "./ionic.functions";
 
 
 // Global Mixins
-@import "./mixins";
+@import "./ionic.mixins";
 
 
 // Global include-rtl

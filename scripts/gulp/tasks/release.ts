@@ -104,6 +104,7 @@ task('release.preparePackageJsonTemplate', () => {
 
 task('release.nightlyPackageJson', () => {
   const fs = require('fs');
+  const path = require('path');
   const packageJson: any = require(`${DIST_BUILD_ROOT}/package.json`);
 
   // Generate a unique id formatted from current timestamp
@@ -123,4 +124,5 @@ task('release.nightlyPackageJson', () => {
                                    .join('-');
 
   fs.writeFileSync(`${DIST_BUILD_ROOT}/package.json`, JSON.stringify(packageJson, null, 2));
+  fs.writeFileSync(path.join(SRC_ROOT, 'themes/version.scss'), `$IONIC_VERSION: "${packageJson.version}";`);
 });
