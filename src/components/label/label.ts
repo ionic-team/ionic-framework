@@ -56,6 +56,21 @@ import { Attribute, Directive, ElementRef, Renderer, Input } from '@angular/core
 })
 export class Label {
   private _id: string;
+  
+  /** @internal */ 
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
 
   /**
    * @private
@@ -101,6 +116,24 @@ export class Label {
    */
   addClass(className: string) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `label-${color}`, isAdd);
+    }
   }
 
 }

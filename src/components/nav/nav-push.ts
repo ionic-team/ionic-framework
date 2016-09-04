@@ -11,25 +11,25 @@ import { noop } from '../../util/util';
  *
  * @usage
  * ```html
- * <button [navPush]="pushPage"></button>
+ * <button ion-button [navPush]="pushPage"></button>
  * ```
  *
  * To specify parameters you can use array syntax or the `navParams`
  * property:
  *
  * ```html
- * <button [navPush]="pushPage" [navParams]="params">Go</button>
+ * <button ion-button [navPush]="pushPage" [navParams]="params">Go</button>
  * ```
  *
  * Where `pushPage` and `params` are specified in your component,
  * and `pushPage` contains a reference to a
- * [@Page component](../../../config/Page/):
+ * component you would like to push:
  *
  * ```ts
  * import { LoginPage } from './login';
  *
  * @Component({
- *   template: `<button [navPush]="pushPage" [navParams]="params">Go</button>`
+ *   template: `<button ion-button [navPush]="pushPage" [navParams]="params">Go</button>`
  * })
  * class MyPage {
  *   constructor(){

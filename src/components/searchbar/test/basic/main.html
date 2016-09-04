@@ -21,12 +21,12 @@
   </p>
 
   <h5 padding-left> Search - Custom Cancel Button Danger </h5>
-  <ion-searchbar (ionInput)="triggerInput($event)" showCancelButton (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" danger></ion-searchbar>
+  <ion-searchbar (ionInput)="triggerInput($event)" showCancelButton (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" color="danger"></ion-searchbar>
 
   <h5 padding-left> Search - Value passed </h5>
-  <ion-searchbar value="mysearch" showCancelButton (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" dark></ion-searchbar>
+  <ion-searchbar value="mysearch" showCancelButton (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" color="dark"></ion-searchbar>
 
   <p padding>
-    <button block (click)="changeValue()">Change Value</button>
+    <button ion-button block (click)="changeValue()">Change Value</button>
   </p>
 </ion-content>

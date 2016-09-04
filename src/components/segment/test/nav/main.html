@@ -27,13 +27,13 @@
 
   <ion-row>
     <ion-col>
-      <button block (click)="signInType='new'">New</button>
+      <button ion-button block (click)="signInType='new'">New</button>
     </ion-col>
     <ion-col>
-      <button light block (click)="signInType='existing'">Existing</button>
+      <button ion-button color="light" block (click)="signInType='existing'">Existing</button>
     </ion-col>
     <ion-col>
-      <button dark block (click)="signInType='test'" class="e2eSegmentTestButton">Test</button>
+      <button ion-button color="dark" block (click)="signInType='test'" class="e2eSegmentTestButton">Test</button>
     </ion-col>
   </ion-row>
 
@@ -49,6 +49,6 @@
     </div>
  </div>
 
- <button block (click)="goToPage2()">Next Page</button>
+ <button ion-button block (click)="goToPage2()">Next Page</button>
 
 </ion-content>

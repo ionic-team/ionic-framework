@@ -131,7 +131,7 @@ ion-toggle {
 
 @mixin toggle-theme-md($color-name, $color-base) {
 
-  ion-toggle[#{$color-name}] {
+  .toggle-#{$color-name} {
 
     .toggle-checked {
       background-color: lighten($color-base, 25%);

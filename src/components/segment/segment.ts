@@ -14,7 +14,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
  * ```html
  * <ion-content>
  *   <!-- Segment buttons with icons -->
- *   <ion-segment [(ngModel)]="icons" secondary>
+ *   <ion-segment [(ngModel)]="icons" color="secondary">
  *     <ion-segment-button value="camera">
  *       <ion-icon name="camera"></ion-icon>
  *     </ion-segment-button>
@@ -24,7 +24,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
  *   </ion-segment>
  *
  *   <!-- Segment buttons with text -->
- *   <ion-segment [(ngModel)]="relationship" primary>
+ *   <ion-segment [(ngModel)]="relationship" color="primary">
  *     <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
  *       Friends
  *     </ion-segment-button>
@@ -130,7 +130,7 @@ export class SegmentButton {
  * <!-- Segment in a header -->
  * <ion-header>
  *   <ion-toolbar>
- *     <ion-segment [(ngModel)]="icons" secondary>
+ *     <ion-segment [(ngModel)]="icons" color="secondary">
  *       <ion-segment-button value="camera">
  *         <ion-icon name="camera"></ion-icon>
  *       </ion-segment-button>
@@ -143,7 +143,7 @@ export class SegmentButton {
  *
  * <ion-content>
  *   <!-- Segment in content -->
- *   <ion-segment [(ngModel)]="relationship" primary>
+ *   <ion-segment [(ngModel)]="relationship" color="primary">
  *     <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
  *       Friends
  *     </ion-segment-button>
@@ -154,7 +154,7 @@ export class SegmentButton {
  *
  *   <!-- Segment in a form -->
  *   <form [formGroup]="myForm">
- *     <ion-segment formControlName="mapStyle" danger>
+ *     <ion-segment formControlName="mapStyle" color="danger">
  *       <ion-segment-button value="standard">
  *         Standard
  *       </ion-segment-button>
@@ -185,6 +185,20 @@ export class Segment {
    */
   value: string;
 
+  /** @internal */
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
 
   /**
    * @output {Any}  expression to evaluate when a segment button has been changed
@@ -197,7 +211,11 @@ export class Segment {
    */
   @ContentChildren(SegmentButton) _buttons: QueryList<SegmentButton>;
 
-  constructor(@Optional() ngControl: NgControl) {
+  constructor(
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
+    @Optional() ngControl: NgControl
+  ) {
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
@@ -219,6 +237,24 @@ export class Segment {
       for (let button of buttons) {
         button.setCssClass('segment-button-disabled', this._disabled);
       }
+    }
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `segment-${color}`, isAdd);
     }
   }
 

@@ -27,12 +27,12 @@ export class OtherData {
     <ion-toolbar>
       <ion-title>This is a modal</ion-title>
       <ion-buttons left>
-        <button (click)="dismissModal()" class="e2eCordovaCloseModal">
+        <button ion-button icon-only (click)="dismissModal()" class="e2eCordovaCloseModal">
           <ion-icon name="close"></ion-icon>
         </button>
       </ion-buttons>
       <ion-buttons end>
-        <button>
+        <button ion-button icon-only>
           <ion-icon name="funnel"></ion-icon>
         </button>
       </ion-buttons>
@@ -40,7 +40,7 @@ export class OtherData {
   </ion-header>
   <ion-content padding>
     <p>The modal toolbar should have status bar padding.</p>
-    <button block (click)="dismissModal()">Close modal</button>
+    <button ion-button block (click)="dismissModal()">Close modal</button>
   </ion-content>
   `
 })
@@ -103,11 +103,11 @@ class Page3 {
   <ion-header>
     <ion-navbar>
       <ion-title>This is a tab page</ion-title>
-      <button menuToggle>
+      <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
       <ion-buttons end>
-        <button>
+        <button ion-button>
           <ion-icon name="funnel"></ion-icon>
         </button>
       </ion-buttons>

@@ -5,7 +5,11 @@ import { ionicBootstrap } from '../../../../../src';
 @Component({
   templateUrl: 'main.html'
 })
-class E2EPage {}
+class E2EPage {
+  delete(chip: Element) {
+    chip.remove();
+  }
+}
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'

@@ -79,7 +79,7 @@ export class ViewController {
   didUnload: EventEmitter<any>;
 
   /**
-   * @private
+   * @internal
    */
   data: any;
 

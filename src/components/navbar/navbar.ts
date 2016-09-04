@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef, forwardRef, Inject, Input, Optional } from '@angular/core';
+import { Component, Directive, ElementRef, forwardRef, Inject, Input, Optional, Renderer } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -74,7 +74,7 @@ class ToolbarBackground {
  * <ion-header>
  *
  *   <ion-navbar>
- *     <button menuToggle>
+ *     <button ion-button menuToggle>
  *       <ion-icon name="menu"></ion-icon>
  *     </button>
  *
@@ -83,7 +83,7 @@ class ToolbarBackground {
  *     </ion-title>
  *
  *     <ion-buttons end>
- *       <button (click)="openModal()">
+ *       <button ion-button (click)="openModal()">
  *         <ion-icon name="options"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -99,7 +99,7 @@ class ToolbarBackground {
   selector: 'ion-navbar',
   template: `
     <div class="toolbar-background"></div>
-    <button category="bar-button" class="back-button" [hidden]="_hideBb">
+    <button ion-button="bar-button" class="back-button" [hidden]="_hideBb">
       <span class="button-inner">
         <ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>
         <span class="back-button-text">
@@ -131,6 +131,21 @@ export class Navbar extends ToolbarBase {
   private _bgRef: ElementRef;
   private _sbPadding: boolean;
 
+  /** @internal */ 
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }  
+
   /**
    * @input {boolean} whether the back button should be shown or not
    */
@@ -145,10 +160,11 @@ export class Navbar extends ToolbarBase {
   constructor(
     private _app: App,
     @Optional() viewCtrl: ViewController,
-    elementRef: ElementRef,
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
     config: Config
   ) {
-    super(elementRef);
+    super(_elementRef);
 
     viewCtrl && viewCtrl.setNavbar(this);
 
@@ -223,6 +239,24 @@ export class Navbar extends ToolbarBase {
   setHidden(isHidden: boolean) {
     // used to display none/block the navbar
     this._hidden = isHidden;
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `toolbar-${color}`, isAdd);
+    }
   }
 
 }

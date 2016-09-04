@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEncapsulation } from '@angular/core';
 import { NgFor, NgStyle } from '@angular/common';
 
 import { Config } from '../../config/config';
@@ -108,7 +108,6 @@ import { Config } from '../../config/config';
   `,
   directives: [NgFor, NgStyle],
   host: {
-    '[class]': '_applied',
     '[class.spinner-paused]': 'paused'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -121,6 +120,21 @@ export class Spinner {
   private _dur: number = null;
   private _init: boolean;
   private _applied: string;
+
+  /** @internal */ 
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }  
 
   /**
    * @input {string} SVG spinner name.
@@ -153,7 +167,11 @@ export class Spinner {
    */
   @Input() paused: boolean = false;
 
-  constructor(private _config: Config) {}
+  constructor(
+    private _config: Config, 
+    private _elementRef: ElementRef,
+    private _renderer: Renderer
+  ) {}
 
   /**
    * @private
@@ -188,6 +206,7 @@ export class Spinner {
           }
         }
 
+        this._renderer.setElementClass(this._elementRef.nativeElement, this._applied, true);
       }
     }
   }
@@ -197,6 +216,24 @@ export class Spinner {
     let data = spinner.fn(duration, index, total);
     data.style.animationDuration = duration + 'ms';
     return data;
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `spinner-${color}`, isAdd);
+    }
   }
 
 }

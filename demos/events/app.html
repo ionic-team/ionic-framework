@@ -1,7 +1,7 @@
 <ion-menu #menu [content]="content">
 
   <ion-header>
-    <ion-toolbar secondary>
+    <ion-toolbar color="secondary">
       <ion-title>Left Menu</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -13,7 +13,7 @@
         Logged in as <b>Administrator</b>
       </ion-list-header>
       <button ion-item menuClose *ngFor="let p of loggedInPages" (click)="openPage(menu, p)">
-        <ion-label primary>{{p.title}}</ion-label>
+        <ion-label color="primary">{{p.title}}</ion-label>
       </button>
 
       <button ion-item menuToggle>
@@ -27,7 +27,7 @@
         Please Log In
       </ion-list-header>
       <button ion-item menuClose *ngFor="let p of loggedOutPages" (click)="openPage(menu, p)">
-        <ion-label primary>{{p.title}}</ion-label>
+        <ion-label color="primary">{{p.title}}</ion-label>
       </button>
 
       <button ion-item menuToggle>

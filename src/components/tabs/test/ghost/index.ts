@@ -43,7 +43,7 @@ class Tab2 {}
   template: `
     <ion-header>
       <ion-navbar>
-        <button menuToggle>
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Stopwatch</ion-title>
@@ -63,7 +63,7 @@ class Tab3 {}
   template: `
     <ion-header>
       <ion-navbar>
-        <button menuToggle>
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Quesarito</ion-title>
@@ -80,7 +80,7 @@ class QuesaritoPage {}
   template: `
     <ion-menu [content]="content">
       <ion-header>
-        <ion-toolbar secondary>
+        <ion-toolbar color="secondary">
           <ion-title>Secret Menu</ion-title>
         </ion-toolbar>
       </ion-header>

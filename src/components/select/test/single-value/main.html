@@ -44,7 +44,7 @@
 
   <ion-item>
     <ion-label>Notifications</ion-label>
-    <ion-select [(ngModel)]="notifications" interface="action-sheet" cancelText="Cancel!">
+    <ion-select [(ngModel)]="notifications" [selectOptions]="notificationSelectOpts" interface="action-sheet" cancelText="Cancel!">
       <ion-option value="enable">Enable</ion-option>
       <ion-option value="mute">Mute</ion-option>
       <ion-option value="mute_week">Mute for a week</ion-option>
@@ -54,7 +54,7 @@
 
   <ion-item>
     <ion-label>Music</ion-label>
-    <ion-select [(ngModel)]="music" [alertOptions]="musicAlertOpts" placeholder="Select Music">
+    <ion-select [(ngModel)]="music" [selectOptions]="musicSelectOpts" placeholder="Select Music">
       <ion-option>Alice in Chains</ion-option>
       <ion-option>Green Day</ion-option>
       <ion-option>Nirvana</ion-option>
@@ -104,7 +104,7 @@
     </ion-select>
   </ion-item>
 
-  <button (click)="resetGender()">Reset Gender</button>
+  <button ion-button (click)="resetGender()">Reset Gender</button>
 
   <p aria-hidden="true" padding>
     <code>gender: {{gender}}</code>

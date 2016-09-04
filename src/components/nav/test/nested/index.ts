@@ -11,8 +11,8 @@ import { Config, Nav, App } from '../../../../../src';
       </ion-navbar>
     </ion-header>
     <ion-content style="text-align:center;" padding>
-      <p><button (click)="goToAccount()">Login</button></p>
-      <p><button (click)="goBack()">App goBack()</button></p>
+      <p><button ion-button (click)="goToAccount()">Login</button></p>
+      <p><button ion-button (click)="goBack()">App goBack()</button></p>
     </ion-content>
   `
 })
@@ -33,7 +33,7 @@ export class Login {
   template: `
     <ion-menu [content]="content">
      <ion-header>
-      <ion-toolbar secondary>
+      <ion-toolbar color="secondary">
         <ion-title>Account Menu</ion-title>
       </ion-toolbar>
      </ion-header>
@@ -92,17 +92,17 @@ export class Account {
 @Component({
   template: `
     <ion-header>
-      <ion-navbar primary>
-        <button menuToggle>
+      <ion-navbar color="primary">
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Account Dashboard</ion-title>
       </ion-navbar>
     </ion-header>
     <ion-content padding>
-      <p><button (click)="goToProfile()">Profile</button></p>
-      <p><button (click)="logOut()">Logout</button></p>
-      <p><button (click)="goBack()">App goBack()</button></p>
+      <p><button ion-button (click)="goToProfile()">Profile</button></p>
+      <p><button ion-button (click)="logOut()">Logout</button></p>
+      <p><button ion-button (click)="goBack()">App goBack()</button></p>
     </ion-content>
   `
 })
@@ -129,17 +129,17 @@ export class Dashboard {
 @Component({
   template: `
     <ion-header>
-      <ion-navbar danger>
-        <button menuToggle>
+      <ion-navbar color="danger">
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Account Profile</ion-title>
       </ion-navbar>
     </ion-header>
     <ion-content padding>
-      <p><button (click)="goToDashboard()">Dashboard</button></p>
-      <p><button (click)="logOut()">Logout</button></p>
-      <p><button (click)="goBack()">App goBack()</button></p>
+      <p><button ion-button (click)="goToDashboard()">Dashboard</button></p>
+      <p><button ion-button (click)="logOut()">Logout</button></p>
+      <p><button ion-button (click)="goBack()">App goBack()</button></p>
     </ion-content>
   `
 })

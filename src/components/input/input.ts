@@ -37,12 +37,12 @@ import { Platform } from '../../platform/platform';
  * ```html
  * <ion-list>
  *   <ion-item>
- *     <ion-label primary>Inline Label</ion-label>
+ *     <ion-label color="primary">Inline Label</ion-label>
  *     <ion-input placeholder="Text Input"></ion-input>
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label primary fixed>Fixed Label</ion-label>
+ *     <ion-label color="primary" fixed>Fixed Label</ion-label>
  *     <ion-input type="tel" placeholder="Tel Input"></ion-input>
  *   </ion-item>
  *
@@ -51,17 +51,17 @@ import { Platform } from '../../platform/platform';
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label primary stacked>Stacked Label</ion-label>
+ *     <ion-label color="primary" stacked>Stacked Label</ion-label>
  *     <ion-input type="email" placeholder="Email Input"></ion-input>
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label primary stacked>Stacked Label</ion-label>
+ *     <ion-label color="primary" stacked>Stacked Label</ion-label>
  *     <ion-input type="password" placeholder="Password Input"></ion-input>
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label primary floating>Floating Label</ion-label>
+ *     <ion-label color="primary" floating>Floating Label</ion-label>
  *     <ion-input></ion-input>
  *   </ion-item>
  *
@@ -78,7 +78,7 @@ import { Platform } from '../../platform/platform';
   template: `
     <input [type]="type" [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input">
     <input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">
-    <button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>
+    <button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>
     <div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>
   `,
   directives: [NativeInput, NextInput, NgIf, NgModel],
@@ -135,7 +135,7 @@ export class TextInput extends InputBase {
  * however, with Ionic wrapping the native HTML text area element, Ionic
  * is able to better handle the user experience and interactivity.
  *
- * Not that `<ion-textarea>` must load its value from the `value` or
+ * Note that `<ion-textarea>` must load its value from the `value` or
  * `[(ngModel)]` attribute. Unlike the native `<textarea>` element,
  * `<ion-textarea>` does not support loading its value from the
  * textarea's inner content.
@@ -159,7 +159,7 @@ export class TextInput extends InputBase {
  *    <ion-label floating>Description</ion-label>
  *    <ion-textarea></ion-textarea>
  *  </ion-item>
- * 
+ *
  * <ion-item>
  *    <ion-label>Long Description</ion-label>
  *    <ion-textarea rows="6" placeholder="enter long description here..."></ion-textarea>

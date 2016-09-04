@@ -1,7 +1,6 @@
-import { Component, ElementRef, Renderer, Attribute, Optional, Input, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { Toolbar } from '../toolbar/toolbar';
 import { isTrueProperty } from '../../util/util';
 
 
@@ -30,36 +29,99 @@ import { isTrueProperty } from '../../util/util';
   * @property [fab-fixed] - Makes a fab button have a fixed position.
   * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
   *
+  * @usage
+  *
+  * ```html
+  *
+  *  <!-- Colors -->
+  *  <button ion-button>Default</button>
+  *
+  *  <button ion-button color="secondary">Secondary</button>
+  *
+  *  <button ion-button color="danger">Danger</button>
+  *
+  *  <button ion-button color="light">Light</button>
+  *
+  *  <button ion-button color="dark">Dark</button>
+  *
+  *  <!-- Shapes -->
+  *  <button ion-button full>Full Button</button>
+  *
+  *  <button ion-button block>Block Button</button>
+  *
+  *  <button ion-button round>Round Button</button>
+  *
+  *  <button ion-button fab>FAB</button>
+  *
+  *  <!-- Outline -->
+  *  <button ion-button full outline>Outline + Full</button>
+  *
+  *  <button ion-button block outline>Outline + Block</button>
+  *
+  *  <button ion-button round outline>Outline + Round</button>
+  *
+  *  <button ion-button fab outline>FAB</button>
+  *
+  *  <!-- Icons -->
+  *  <button ion-button icon-left>
+  *    <ion-icon name="star"></ion-icon>
+  *    Left Icon
+  *  </button>
+  *
+  *  <button ion-button icon-right>
+  *    Right Icon
+  *    <ion-icon name="star"></ion-icon>
+  *  </button>
+  *
+  *  <button ion-button icon-only>
+  *    <ion-icon name="star"></ion-icon>
+  *  </button>
+  *
+  *  <!-- Sizes -->
+  *  <button ion-button large>Large</button>
+  *
+  *  <button ion-button>Default</button>
+  *
+  *  <button ion-button small>Small</button>
+  * ```
+  *
   * @demo /docs/v2/demos/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
  */
 @Component({
-  selector: 'button:not([ion-item]),[button]',
+  selector: '[ion-button]',
   // NOTE: template must not contain spaces between elements
   template: '<span class="button-inner"><ng-content></ng-content></span><ion-button-effect></ion-button-effect>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class Button {
-  private _role: string = 'button'; // bar-button/item-button
-  private _size: string = null; // large/small/default
-  private _style: string = 'default'; // outline/clear/solid
-  private _shape: string = null; // round/fab
-  private _display: string = null; // block/full
-  private _colors: Array<string> = []; // primary/secondary
-  private _icon: string = null; // left/right/only
-  private _disabled: boolean = false; // disabled
-  private _init: boolean;
+  /** @internal */
+  _role: string = 'button'; // bar-button
 
-  /**
-   * @private
-   */
-  isItem: boolean;
+  /** @internal */
+  _mt: boolean = false; // menutoggle
 
-  /**
-   * @input {string} The category of the button.
-   */
-  @Input() category: string;
+  /** @internal */
+  _size: string = null; // large/small/default
+
+  /** @internal */
+  _style: string = 'default'; // outline/clear/solid
+
+  /** @internal */
+  _shape: string = null; // round/fab
+
+  /** @internal */
+  _display: string = null; // block/full
+
+  /** @internal */
+  _color: string = null; // primary/secondary
+
+  /** @internal */
+  _disabled: boolean = false; // disabled
+
+  /** @internal */
+  _init: boolean;
 
   /**
    * @input {string} Large button.
@@ -118,6 +180,14 @@ export class Button {
   }
 
   /**
+   * @input {string} A floating action button.
+   */
+  @Input()
+  set fab(val: boolean) {
+    this._attr('_shape', 'fab', val);
+  }
+
+  /**
    * @input {string} A button that fills its parent container with a border-radius.
    */
   @Input()
@@ -134,16 +204,18 @@ export class Button {
   }
 
   _attr(type: string, attrName: string, attrValue: boolean) {
-    this._setClass(this[type], false);
+    if (type === '_style') {
+      this._setColor(this._color, isTrueProperty(attrValue));
+    }
+    this._setClass((<any>this)[type], false);
     if (isTrueProperty(attrValue)) {
-      this[type] = attrName;
+      (<any>this)[type] = attrName;
       this._setClass(attrName, true);
+
     } else {
       // Special handling for '_style' which defaults to 'default'.
-      this[type] = (type === '_style' ? 'default' : null);
-    }
-    if (type === '_style') {
-      this._setColor(attrName, isTrueProperty(attrValue));
+      (<any>this)[type] = (type === '_style' ? 'default' : null);
+      this._setClass((<any>this)[type], true);
     }
   }
 
@@ -151,50 +223,35 @@ export class Button {
    * @input {string} Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
    */
   @Input()
-  set color(val: string|string[]) {
-    // Clear the colors for all styles including the default one.
-    this._setColor(BUTTON_STYLE_ATTRS.concat(['default']), false);
-    // Support array input which is also supported via multiple attributes (e.g. primary, secondary, etc).
-    this._colors = (val instanceof Array ? val : [val]);
-    // Set the colors for the currently effective style.
-    this._setColor(this._style, true);
+  set color(val: string) {
+    this._updateColor(val);
   }
 
   constructor(
+    @Attribute('menuToggle') menuToggle: string,
+    @Attribute('ion-button') ionButton: string,
     config: Config,
     private _elementRef: ElementRef,
-    private _renderer: Renderer,
-    @Attribute('ion-item') ionItem: string
+    private _renderer: Renderer
   ) {
-
-    this.isItem = (ionItem === '');
-
     let element = _elementRef.nativeElement;
 
     if (config.get('hoverCSS') === false) {
-      _renderer.setElementClass(_elementRef.nativeElement, 'disable-hover', true);
-    }
-
-    if (element.hasAttribute('ion-item')) {
-      // no need to put on these classes for an ion-item
-      this._role = null;
-      return;
+      _renderer.setElementClass(element, 'disable-hover', true);
     }
 
     if (element.hasAttribute('disabled')) {
       this._disabled = true;
     }
 
-    this._readAttrs(element);
-  }
+    if (ionButton.trim().length > 0) {
+      this.setRole(ionButton);
+    }
 
-  /**
-   * @private
-   */
-  ngOnInit() {
-    // If the button has a role applied to it
-    if (this.category) {
-      this.setRole(this.category);
+    // menuToggle can be added with or without a string
+    // but if the attribute isn't added it will be null
+    if (menuToggle !== null) {
+      this._mt = true;
     }
   }
 
@@ -203,16 +260,16 @@ export class Button {
    */
   ngAfterContentInit() {
     this._init = true;
-    this._readIcon(this._elementRef.nativeElement);
     this._assignCss(true);
   }
 
   /**
-   * @private
+   * @internal
    */
-  ngAfterContentChecked() {
-    this._readIcon(this._elementRef.nativeElement);
-    this._assignCss(true);
+  _updateColor(newColor: string) {
+    this._setColor(this._color, false);
+    this._setColor(newColor, true);
+    this._color = newColor;
   }
 
   /**
@@ -228,138 +285,54 @@ export class Button {
   setRole(val: string) {
     this._assignCss(false);
     this._role = val;
-    this._readIcon(this._elementRef.nativeElement);
     this._assignCss(true);
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _readIcon(element: HTMLElement) {
-    // figure out if and where the icon lives in the button
-    let childNodes = element.childNodes;
-    if (childNodes.length > 0) {
-      childNodes = childNodes[0].childNodes;
-    }
-    let childNode: Node;
-    let nodes: number[] = [];
-    for (let i = 0, l = childNodes.length; i < l; i++) {
-      childNode = childNodes[i];
-
-      if (childNode.nodeType === 3) {
-        // text node
-        if (childNode.textContent.trim() !== '') {
-          nodes.push(TEXT);
-        }
-
-      } else if (childNode.nodeType === 1) {
-        if (childNode.nodeName === 'ION-ICON') {
-          // icon element node
-          nodes.push(ICON);
-
-        } else {
-          // element other than an <ion-icon>
-          nodes.push(TEXT);
-        }
-      }
-    }
-
-    // Remove any classes that are set already
-    this._setClass(this._icon, false);
-
-    if (nodes.length > 1) {
-      if (nodes[0] === ICON && nodes[1] === TEXT) {
-        this._icon = 'icon-left';
-
-      } else if (nodes[0] === TEXT && nodes[1] === ICON) {
-        this._icon = 'icon-right';
-      }
-
-    } else if (nodes.length === 1 && nodes[0] === ICON) {
-      this._icon = 'icon-only';
-    }
-  }
-
-  /**
-   * @private
-   */
-  private _readAttrs(element: HTMLElement) {
-    let elementAttrs = element.attributes;
-    let attrName: string;
-    for (let i = 0, l = elementAttrs.length; i < l; i++) {
-      if (elementAttrs[i].value !== '') continue;
-
-      attrName = elementAttrs[i].name;
-
-      if (BUTTON_STYLE_ATTRS.indexOf(attrName) > -1) {
-        this._style = attrName;
-
-      } else if (BUTTON_DISPLAY_ATTRS.indexOf(attrName) > -1) {
-        this._display = attrName;
-
-      } else if (BUTTON_SHAPE_ATTRS.indexOf(attrName) > -1) {
-        this._shape = attrName;
-
-      } else if (BUTTON_SIZE_ATTRS.indexOf(attrName) > -1) {
-        this._size = attrName;
-
-      } else if (!(IGNORE_ATTRS.test(attrName))) {
-        this._colors.push(attrName);
-      }
-    }
-  }
-
-  /**
-   * @private
-   */
-  private _assignCss(assignCssClass: boolean) {
+  _assignCss(assignCssClass: boolean) {
     let role = this._role;
     if (role) {
       this._renderer.setElementClass(this._elementRef.nativeElement, role, assignCssClass); // button
+
+      this._setClass('menutoggle', this._mt); // menutoggle
 
       this._setClass(this._style, assignCssClass); // button-clear
       this._setClass(this._shape, assignCssClass); // button-round
       this._setClass(this._display, assignCssClass); // button-full
       this._setClass(this._size, assignCssClass); // button-small
-      this._setClass(this._icon, assignCssClass); // button-icon-left
-      this._setColor(this._style, assignCssClass); // button-secondary, button-clear-secondary
+      this._setColor(this._color, assignCssClass); // button-secondary, bar-button-secondary
     }
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _setClass(type: string, assignCssClass: boolean) {
+  _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
       this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type.toLowerCase(), assignCssClass);
     }
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _setColor(type: string|string[], assignCssClass: boolean) {
-    if (type && this._init) {
-      // Support array to allow removal of many styles at once.
-      let styles = (type instanceof Array ? type : [type]);
-      styles.forEach(styleName => {
-        // If the role is not a bar-button, don't apply the solid style
-        styleName = (this._role !== 'bar-button' && styleName === 'solid' ? 'default' : styleName);
-        let colorStyle = (styleName !== null && styleName !== 'default' ? styleName.toLowerCase() + '-' : '');
-        this._colors.forEach(colorName => {
-          this._setClass(colorStyle + colorName, assignCssClass); // button-secondary, button-clear-secondary
-        });
-      });
+  _setColor(color: string, isAdd: boolean) {
+    if (color && this._init) {
+      // The class should begin with the button role
+      // button, bar-button
+      let className = this._role;
+
+      // If the role is not a bar-button, don't apply the solid style
+      let style = this._style;
+      style = (this._role !== 'bar-button' && style === 'solid' ? 'default' : style);
+
+      className += (style !== null && style !== '' && style !== 'default' ? '-' + style.toLowerCase() : '');
+
+      if (color !== null && color !== '') {
+        this._renderer.setElementClass(this._elementRef.nativeElement, `${className}-${color}`, isAdd);
+      }
     }
   }
-
 }
-
-const BUTTON_SIZE_ATTRS = ['large', 'small', 'default'];
-const BUTTON_STYLE_ATTRS = ['clear', 'outline', 'solid'];
-const BUTTON_SHAPE_ATTRS = ['round', 'fab'];
-const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
-const IGNORE_ATTRS = /_ng|button|left|right/;
-
-const TEXT = 1;
-const ICON = 2;
