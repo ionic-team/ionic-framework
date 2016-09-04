@@ -26,8 +26,6 @@
 }
 
 .tab-button {
-  @include user-select-none();
-
   position: relative;
   z-index: 0;
   display: flex;
@@ -48,6 +46,8 @@
   text-decoration: none;
   background: none;
   cursor: pointer;
+
+  user-select: none;
 }
 
 .tab-disabled {

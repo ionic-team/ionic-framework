@@ -8,15 +8,6 @@
 }
 
 
-// Calc
-// --------------------------------------------------
-
-@mixin calc($property, $expression) {
-  #{$property}: -webkit-calc(#{$expression});
-  #{$property}: calc(#{$expression});
-}
-
-
 // Input Placeholder
 // --------------------------------------------------
 
@@ -43,12 +34,4 @@
 @mixin svg-background-image($svg) {
   $url: url-encode($svg);
   background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
-}
-
-
-// User Select None
-// --------------------------------------------------
-
-@mixin user-select-none() {
-  user-select: none;
 }

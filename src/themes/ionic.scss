@@ -3,11 +3,6 @@
 
 // Components
 // --------------------------------------------------
-@import
-"../components/app/app",
-"../components/app/app.ios",
-"../components/app/app.md",
-"../components/app/app.wp";
 
 @import
 "../components/action-sheet/action-sheet",
@@ -22,6 +17,12 @@
 "../components/alert/alert.wp";
 
 @import
+"../components/app/app",
+"../components/app/app.ios",
+"../components/app/app.md",
+"../components/app/app.wp";
+
+@import
 "../components/backdrop/backdrop";
 
 @import
@@ -32,11 +33,11 @@
 
 @import
 "../components/button/button",
+"../components/button/button-fab",
+"../components/button/button-icon",
 "../components/button/button.ios",
 "../components/button/button.md",
-"../components/button/button.wp",
-"../components/button/button-fab",
-"../components/button/button-icon";
+"../components/button/button.wp";
 
 @import
 "../components/card/card",

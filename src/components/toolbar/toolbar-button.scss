@@ -4,7 +4,6 @@
 // --------------------------------------------------
 
 .bar-button {
-  @include user-select-none();
   @include appearance(none);
 
   position: relative;
@@ -23,6 +22,8 @@
 
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
+
+  user-select: none;
 }
 
 .bar-button::after {

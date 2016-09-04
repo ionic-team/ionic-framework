@@ -54,11 +54,12 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 .searchbar-ios .searchbar-search-icon {
   @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $searchbar-ios-input-search-icon-color);
-  @include calc(margin-left, "50% - 60px");
 
   position: absolute;
   top: 9px;
   left: 9px;
+
+  margin-left: calc(50% - 60px);
 
   width: $searchbar-ios-input-search-icon-size + 1;
   height: $searchbar-ios-input-search-icon-size + 1;
@@ -75,7 +76,6 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 .searchbar-ios .searchbar-input {
   @include placeholder($searchbar-ios-input-placeholder-color);
-  @include calc(padding-left, "50% - 28px");
 
   padding: 0 28px;
 

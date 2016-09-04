@@ -9,6 +9,11 @@
 @import "../themes/normalize";
 
 
+// Util
+// --------------------------------------------------
+@import "../themes/util";
+
+
 // App Structure
 // --------------------------------------------------
 
@@ -27,8 +32,6 @@ html {
 }
 
 body {
-  @include user-select-none();
-
   position: fixed;
   overflow: hidden;
 
@@ -53,6 +56,7 @@ body {
   word-wrap: break-word;
 
   text-size-adjust: none;
+  user-select: none;
 }
 
 

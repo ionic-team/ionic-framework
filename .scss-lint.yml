@@ -5,8 +5,7 @@
 exclude:
   - 'src/components/slides/**'
   - 'src/components/show-hide-when/**'
-  - 'src/components.*.scss'
-  - 'src/util/*.scss'
+  - 'src/themes/util.scss'
   - 'src/platform/cordova.*.scss'
 
 
