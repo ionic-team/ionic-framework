@@ -105,6 +105,10 @@ export function compileSass(destinationPath: string) {
   .pipe(dest(destinationPath));
 }
 
+export function setSassIonicVersion(version: string) {
+  fs.writeFileSync(path.join(SRC_ROOT, 'themes/version.scss'), `$IONIC_VERSION: "${version}";`);
+}
+
 export function copyFile(srcPath: string, destPath: string) {
   const sourceData = fs.readFileSync(srcPath);
   fs.writeFileSync(destPath, sourceData);
@@ -154,4 +158,14 @@ export function deleteFiles(glob: string[], done: Function) {
   let del = require('del');
   del.sync(glob);
   done();
+}
+
+export function createTimestamp() {
+  // YYYYMMDDHHMM
+  var d = new Date();
+  return d.getUTCFullYear() + // YYYY
+          ('0' + (d.getUTCMonth() + 1)).slice(-2) + // MM
+          ('0' + (d.getUTCDate())).slice(-2) + // DD
+          ('0' + (d.getUTCHours())).slice(-2) + // HH
+          ('0' + (d.getUTCMinutes())).slice(-2); // MM
 }

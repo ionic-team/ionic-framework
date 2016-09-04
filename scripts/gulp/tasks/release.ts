@@ -1,6 +1,6 @@
 import { dest, src, task } from 'gulp';
 import { DIST_BUILD_ROOT, SRC_ROOT, PROJECT_ROOT } from '../constants';
-import { compileSass, copyFonts } from '../util';
+import { compileSass, copyFonts, setSassIonicVersion, createTimestamp } from '../util';
 
 
 task('nightly', (done: Function) => {
@@ -104,19 +104,7 @@ task('release.preparePackageJsonTemplate', () => {
 
 task('release.nightlyPackageJson', () => {
   const fs = require('fs');
-  const path = require('path');
   const packageJson: any = require(`${DIST_BUILD_ROOT}/package.json`);
-
-  // Generate a unique id formatted from current timestamp
-  function createTimestamp() {
-    // YYYYMMDDHHMM
-    var d = new Date();
-    return d.getUTCFullYear() + // YYYY
-           ('0' + (d.getUTCMonth() + 1)).slice(-2) + // MM
-           ('0' + (d.getUTCDate())).slice(-2) + // DD
-           ('0' + (d.getUTCHours())).slice(-2) + // HH
-           ('0' + (d.getUTCMinutes())).slice(-2); // MM
-  }
 
   packageJson.version = packageJson.version.split('-')
                                    .slice(0, 2)
@@ -124,5 +112,5 @@ task('release.nightlyPackageJson', () => {
                                    .join('-');
 
   fs.writeFileSync(`${DIST_BUILD_ROOT}/package.json`, JSON.stringify(packageJson, null, 2));
-  fs.writeFileSync(path.join(SRC_ROOT, 'themes/version.scss'), `$IONIC_VERSION: "${packageJson.version}";`);
+  setSassIonicVersion(packageJson.version);
 });

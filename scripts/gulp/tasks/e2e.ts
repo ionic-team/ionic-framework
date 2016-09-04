@@ -3,7 +3,7 @@ import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
 
-import { compileSass, copyFonts, createTempTsConfig, deleteFiles, runNgc, runWebpack } from '../util';
+import { compileSass, copyFonts, createTempTsConfig, deleteFiles, runNgc, runWebpack, setSassIonicVersion, createTimestamp } from '../util';
 
 export const E2E_BUILD_TASK = 'e2e';
 export const E2E_WATCH_TASK = 'e2e.watch';
@@ -139,6 +139,8 @@ task(E2E_INTERNAL_COPY_EXTERNAL_DEPENDENCIES, () => {
 });
 
 task(E2E_COMPILE_SASS, () => {
+  // ensure there is a version.scss file
+  setSassIonicVersion(`E2E-${createTimestamp()}`);
   return compileSass(`${DIST_E2E_ROOT}/css`);
 });
 
