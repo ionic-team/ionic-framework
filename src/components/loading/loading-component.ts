@@ -43,7 +43,6 @@ export class LoadingCmp {
   };
   private id: number;
   private showSpinner: boolean;
-  private durationTimeout: number;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -79,16 +78,10 @@ export class LoadingCmp {
     let activeElement: any = document.activeElement;
     if (document.activeElement) {
       activeElement.blur();
-    }
-
-    // If there is a duration, dismiss after that amount of time
-    this.d.duration ? this.durationTimeout = setTimeout(() => this.dismiss('backdrop'), this.d.duration) : null;
+    }    
   }
 
-  dismiss(role: any): Promise<any> {
-    if (this.durationTimeout) {
-      clearTimeout(this.durationTimeout);
-    }
+  dismiss(role: any): Promise<any> {    
     return this._viewCtrl.dismiss(null, role);
   }
 }
