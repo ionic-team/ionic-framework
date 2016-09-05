@@ -248,8 +248,8 @@ export const DATETIME_VALUE_ACCESSOR = new Provider(
 @Component({
   selector: 'ion-datetime',
   template: `
-  	<input *ngIf="!_text" style="width:100%" placeholder="{{placeholder}}">
-    <div class="datetime-text">{{_text}}</div>
+  	<input *ngIf="!_text" type="text" class="text-input" placeholder="{{placeholder}}">
+    <div *ngIf="_text" class="datetime-text">{{_text}}</div>
     <button aria-haspopup="true"
             type="button"
             [id]="id"
@@ -260,7 +260,7 @@ export const DATETIME_VALUE_ACCESSOR = new Provider(
     </button>
   `,
   host: {
-  	'style':'width:100%',
+  	'style': 'width:100%',
     '[class.datetime-disabled]': '_disabled'
   },
   providers: [DATETIME_VALUE_ACCESSOR],
