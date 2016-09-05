@@ -45,7 +45,6 @@ export class ToastCmp implements AfterViewInit {
     position?: string;
   };
   private descId: string;
-  private dismissTimeout: number = undefined;
   private enabled: boolean;
   private hdrId: string;
   private id: number;
@@ -73,14 +72,7 @@ export class ToastCmp implements AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    // if there's a `duration` set, automatically dismiss.
-    if (this.d.duration) {
-      this.dismissTimeout =
-        setTimeout(() => {
-          this.dismiss('backdrop');
-        }, this.d.duration);
-    }
+  ngAfterViewInit() {    
     this.enabled = true;
   }
 
@@ -104,8 +96,6 @@ export class ToastCmp implements AfterViewInit {
   }
 
   dismiss(role: any): Promise<any> {
-    clearTimeout(this.dismissTimeout);
-    this.dismissTimeout = undefined;
     return this._viewCtrl.dismiss(null, role);
   }
 

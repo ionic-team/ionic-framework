@@ -12,6 +12,8 @@ import { ViewController } from '../nav/view-controller';
  */
 export class Toast extends ViewController {
   private _app: App;
+  private duration: number;
+  private durationTimeout: number;
 
   constructor(app: App, opts: ToastOptions = {}) {
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
@@ -24,6 +26,7 @@ export class Toast extends ViewController {
     }
 
     this.isOverlay = true;
+    this.duration = opts.duration;
 
     // by default, toasts should not fire lifecycle events of other views
     // for example, when an toast enters, the current active view should
@@ -61,7 +64,18 @@ export class Toast extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
-    return this._app.present(this, navOptions);
+    return this._app.present(this, navOptions)
+      .then(() => {
+        // If there is a duration, dismiss after that amount of time
+        this.duration ? this.durationTimeout = setTimeout(() => this.dismiss('backdrop'), this.duration) : null;
+      });
+  }
+
+  dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
+    if (this.durationTimeout) {
+      clearTimeout(this.durationTimeout);
+    }
+    return super.dismiss(data, role, navOptions);
   }
 
   /**
