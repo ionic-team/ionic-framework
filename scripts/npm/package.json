@@ -25,6 +25,5 @@
     "@angular/http": "",
     "@angular/platform-browser": "",
     "@angular/platform-browser-dynamic": "",
-    "swiper": ""
   }
 }
