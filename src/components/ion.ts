@@ -50,10 +50,10 @@ export class Ion {
   /** @private */
   _setColor(componentName: string, newColor: string) {
     if (this._color) {
-      this.setElementClass(`${componentName}-${this._color}`, false);
+      this.setElementClass(`${componentName}-${this._mode}-${this._color}`, false);
     }
     if (newColor) {
-      this.setElementClass(`${componentName}-${newColor}`, true);
+      this.setElementClass(`${componentName}-${this._mode}-${newColor}`, true);
       this._color = newColor;
     }
   }
@@ -65,7 +65,12 @@ export class Ion {
     }
     if (newMode) {
       this.setElementClass(`${componentName}-${newMode}`, true);
+
+      // Remove the color class associated with the previous mode,
+      // change the mode, then add the new color class
+      this._setColor(componentName, null);
       this._mode = newMode;
+      this._setColor(componentName, this._color);
     }
   }
 

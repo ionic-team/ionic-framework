@@ -215,9 +215,9 @@ export class Searchbar extends Ion {
 
   /**
    * @private
-   * After View Initialization position the elements
+   * After View Checked position the elements
    */
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
     this.positionElements();
   }
 

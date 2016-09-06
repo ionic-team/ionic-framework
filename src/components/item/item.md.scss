@@ -209,11 +209,11 @@ ion-item-divider.item-md {
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
   // If there is text with a color it should use this color
   // and override whatever item sets it to
-  .item-md .text-#{$color-name} {
+  .item-md .text-md-#{$color-name} {
     color: $color-base;
   }
 
-  .item-md.item-#{$color-name} {
+  .item-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

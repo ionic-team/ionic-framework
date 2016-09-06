@@ -202,11 +202,11 @@ ion-item-divider.item-wp {
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
   // If there is text with a color it should use this color
   // and override whatever item sets it to
-  .item-wp .text-#{$color-name} {
+  .item-wp .text-wp-#{$color-name} {
     color: $color-base;
   }
 
-  .item-wp.item-#{$color-name} {
+  .item-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

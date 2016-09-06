@@ -66,22 +66,22 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 
 @mixin wp-toolbar-theme($color-name, $color-base, $color-contrast) {
 
-  .toolbar-#{$color-name} .toolbar-background-wp {
+  .toolbar-wp-#{$color-name} .toolbar-background-wp {
     background: $color-base;
   }
 
-  .toolbar-#{$color-name} .bar-button-clear-wp,
-  .toolbar-#{$color-name} .bar-button-default-wp,
-  .toolbar-#{$color-name} .bar-button-outline-wp,
-  .toolbar-#{$color-name} .toolbar-title-wp {
+  .toolbar-wp-#{$color-name} .bar-button-clear-wp,
+  .toolbar-wp-#{$color-name} .bar-button-default-wp,
+  .toolbar-wp-#{$color-name} .bar-button-outline-wp,
+  .toolbar-wp-#{$color-name} .toolbar-title-wp {
     color: $color-contrast;
   }
 
-  .toolbar-#{$color-name} .bar-button-outline-wp {
+  .toolbar-wp-#{$color-name} .bar-button-outline-wp {
     border-color: $color-contrast;
   }
 
-  .toolbar-#{$color-name} {
+  .toolbar-wp-#{$color-name} {
     @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
       @include wp-bar-button-default($color-name, $color-base, $color-contrast);
       @include wp-bar-button-outline($color-name, $color-base, $color-contrast);

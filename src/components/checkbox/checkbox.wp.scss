@@ -115,12 +115,12 @@ $checkbox-wp-item-right-margin:          11px 10px 10px 0 !default;
 
 @mixin checkbox-theme-wp($color-name, $color-base, $color-contrast) {
 
-  .checkbox-wp.checkbox-#{$color-name} .checkbox-checked {
+  .checkbox-wp-#{$color-name} .checkbox-checked {
     border-color: $color-base;
     background-color: $color-base;
   }
 
-  .checkbox-wp.checkbox-#{$color-name} .checkbox-checked .checkbox-inner {
+  .checkbox-wp-#{$color-name} .checkbox-checked .checkbox-inner {
     border-color: $color-contrast;
   }
 

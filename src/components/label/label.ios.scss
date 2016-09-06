@@ -66,10 +66,10 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  .label-ios.label-#{$color-name},
-  .item-input .label-ios.label-#{$color-name},
-  .item-select .label-ios.label-#{$color-name},
-  .item-datetime .label-ios.label-#{$color-name} {
+  .label-ios-#{$color-name},
+  .item-input .label-ios-#{$color-name},
+  .item-select .label-ios-#{$color-name},
+  .item-datetime .label-ios-#{$color-name} {
     color: $color-base;
   }
 

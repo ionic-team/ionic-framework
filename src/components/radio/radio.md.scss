@@ -124,15 +124,15 @@ $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-paddi
 
 @mixin radio-theme-md($color-name, $color-base, $color-contrast) {
 
-  .item-md.item-radio-#{$color-name}.item-radio-checked ion-label {
+  .item-radio-md-#{$color-name}.item-radio-checked ion-label {
     color: $color-base;
   }
 
-  .item-md .radio-#{$color-name} .radio-checked {
+  .radio-md-#{$color-name} .radio-checked {
     border-color: $color-base;
   }
 
-  .item-md .radio-#{$color-name} .radio-inner {
+  .radio-md-#{$color-name} .radio-inner {
     background-color: $color-base;
   }
 

@@ -166,7 +166,7 @@ $range-wp-pin-padding:                       8px !default;
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .range-wp.range-#{$color-name} {
+  .range-wp-#{$color-name} {
     .range-bar-active,
     .range-tick-active,
     .range-knob,

@@ -25,7 +25,7 @@ $badge-md-text-color:               color-contrast($colors-md, $badge-md-backgro
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  .badge-md.badge-#{$color-name} {
+  .badge-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

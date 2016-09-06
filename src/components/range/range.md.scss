@@ -233,7 +233,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  .range-md.range-#{$color-name} {
+  .range-md-#{$color-name} {
     @include md-range-min();
 
     .range-bar-active,

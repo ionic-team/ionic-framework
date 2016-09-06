@@ -175,7 +175,7 @@ $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($i
 
 @mixin ios-toggle-theme($color-name, $color-base) {
 
-  .toggle-ios.toggle-#{$color-name} .toggle-checked {
+  .toggle-ios-#{$color-name} .toggle-checked {
     background-color: $color-base;
   }
 

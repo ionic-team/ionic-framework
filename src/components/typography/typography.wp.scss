@@ -4,7 +4,7 @@
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .wp .text-#{$color-name} {
+  .text-wp-#{$color-name} {
     color: $color-base;
   }
 

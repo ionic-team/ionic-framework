@@ -114,16 +114,16 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 
 @mixin tabbar-wp($color-name, $color-base, $color-contrast) {
 
-  .tabs-wp.tabs-#{$color-name} .tabbar {
+  .tabs-wp-#{$color-name} .tabbar {
     background-color: $color-base;
   }
 
-  .tabs-wp.tabs-#{$color-name} .tabbar .tab-button {
+  .tabs-wp-#{$color-name} .tabbar .tab-button {
     color: rgba($color-contrast, $tabs-wp-tab-opacity);
   }
 
-  .tabs-wp.tabs-#{$color-name} .tabbar .tab-button:hover:not(.disable-hover),
-  .tabs-wp.tabs-#{$color-name} .tabbar .tab-button[aria-selected=true] {
+  .tabs-wp-#{$color-name} .tabbar .tab-button:hover:not(.disable-hover),
+  .tabs-wp-#{$color-name} .tabbar .tab-button[aria-selected=true] {
     border-color: $color-contrast;
     color: $color-contrast;
   }

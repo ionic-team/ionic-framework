@@ -97,15 +97,15 @@ $radio-ios-item-right-margin:      $item-ios-padding-media-top 11px $item-ios-pa
 
 @mixin radio-theme-ios($color-name, $color-base) {
 
-  .item-ios.item-radio-#{$color-name}.item-radio-checked ion-label {
+  .item-radio-ios-#{$color-name}.item-radio-checked ion-label {
     color: $color-base;
   }
 
-  .item-ios .radio-#{$color-name} .radio-checked {
+  .radio-ios-#{$color-name} .radio-checked {
     color: $color-base;
   }
 
-  .item-ios .radio-#{$color-name} .radio-checked  .radio-inner {
+  .radio-ios-#{$color-name} .radio-checked  .radio-inner {
     border-color: $color-base;
   }
 

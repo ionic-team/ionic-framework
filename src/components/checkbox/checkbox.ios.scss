@@ -106,12 +106,12 @@ $checkbox-ios-item-right-margin:          10px 8px 9px 0 !default;
 
 @mixin checkbox-theme-ios($color-name, $color-base, $color-contrast) {
 
-  .checkbox-ios.checkbox-#{$color-name} .checkbox-checked {
+  .checkbox-ios-#{$color-name} .checkbox-checked {
     border-color: $color-base;
     background-color: $color-base;
   }
 
-  .checkbox-ios.checkbox-#{$color-name} .checkbox-checked .checkbox-inner {
+  .checkbox-ios-#{$color-name} .checkbox-checked .checkbox-inner {
     border-color: $color-contrast;
   }
 

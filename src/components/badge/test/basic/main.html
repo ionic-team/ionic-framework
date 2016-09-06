@@ -43,7 +43,11 @@
     </button>
     <button ion-item (click)="toggleMode()">
       Dynamic Badge Mode (Toggle)
-      <ion-badge item-right [mode]="dynamicMode">{{dynamicMode}}</ion-badge>
+      <ion-badge item-right color="secondary" [mode]="dynamicMode">{{dynamicMode}}</ion-badge>
+    </button>
+    <button ion-item (click)="toggleBoth()">
+      Dynamic Badge Both (Toggle)
+      <ion-badge item-right [color]="dynamicColor" [mode]="dynamicMode">{{dynamicMode}}</ion-badge>
     </button>
   </ion-list>
 

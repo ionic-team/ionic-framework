@@ -131,11 +131,11 @@ $toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px 
 
 @mixin toggle-theme-md($color-name, $color-base) {
 
-  .toggle-md.toggle-#{$color-name} .toggle-checked {
+  .toggle-md-#{$color-name} .toggle-checked {
     background-color: lighten($color-base, 25%);
   }
 
-  .toggle-md.toggle-#{$color-name} .toggle-checked .toggle-inner {
+  .toggle-md-#{$color-name} .toggle-checked .toggle-inner {
     background-color: $color-base;
   }
 

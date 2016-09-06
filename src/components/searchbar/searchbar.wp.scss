@@ -155,7 +155,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .searchbar-wp.searchbar-#{$color-name}.searchbar-has-focus .searchbar-input-container {
+  .searchbar-wp-#{$color-name}.searchbar-has-focus .searchbar-input-container {
     border-color: $color-base;
   }
 

@@ -65,10 +65,10 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .label-wp.label-#{$color-name},
-  .item-input .label-wp.label-#{$color-name},
-  .item-select .label-wp.label-#{$color-name},
-  .item-datetime .label-wp.label-#{$color-name} {
+  .label-wp-#{$color-name},
+  .item-input .label-wp-#{$color-name},
+  .item-select .label-wp-#{$color-name},
+  .item-datetime .label-wp-#{$color-name} {
     color: $color-base;
   }
 

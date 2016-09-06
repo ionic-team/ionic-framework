@@ -103,7 +103,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
 }
 
 @mixin md-toolbar-theme($color-name, $color-base, $color-contrast) {
-  .toolbar-#{$color-name} {
+  .toolbar-md-#{$color-name} {
     $fg-color: color-contrast($colors-md, $color-base, md);
 
     .toolbar-background-md {

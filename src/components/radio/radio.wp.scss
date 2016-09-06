@@ -121,7 +121,7 @@ $radio-wp-item-right-margin:      11px 10px 10px 0 !default;
 
 @mixin radio-theme-wp($color-name, $color-base) {
 
-  .radio-wp.radio-#{$color-name} .radio-checked {
+  .radio-wp-#{$color-name} .radio-checked {
     border-color: $color-base;
   }
 

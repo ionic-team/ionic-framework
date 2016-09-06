@@ -136,12 +136,12 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
 
 @mixin toggle-theme-wp($color-name, $color-base, $color-contrast) {
 
-  .toggle-wp.toggle-#{$color-name} .toggle-checked {
+  .toggle-wp-#{$color-name} .toggle-checked {
     border-color: $color-base;
     background-color: $color-base;
   }
 
-  .toggle-wp.toggle-#{$color-name} .toggle-checked .toggle-inner {
+  .toggle-wp-#{$color-name} .toggle-checked .toggle-inner {
     background-color: $color-contrast;
   }
 }

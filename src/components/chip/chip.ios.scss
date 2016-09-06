@@ -57,8 +57,8 @@ $chip-ios-icon-text-color:            color-contrast($colors-ios, $chip-ios-icon
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  .chip-ios.chip-#{$color-name},
-  .chip-ios .icon-ios.icon-#{$color-name} {
+  .chip-ios-#{$color-name},
+  .chip-ios .icon-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

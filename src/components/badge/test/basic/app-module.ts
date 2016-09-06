@@ -32,6 +32,11 @@ export class E2EPage {
       this.dynamicMode = 'ios';
     }
   }
+
+  toggleBoth() {
+    this.toggleColor();
+    this.toggleMode();
+  }
 }
 
 @Component({

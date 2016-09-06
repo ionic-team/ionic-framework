@@ -136,7 +136,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   pointer-events: none;
 }
 
-.searchbar-ios .searchbar-show-cancel .searchbar-ios-cancel {
+.searchbar-ios.searchbar-show-cancel .searchbar-ios-cancel {
   display: block;
 }
 
@@ -156,7 +156,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // Searchbar Has Focus
 // -----------------------------------------
 
-.searchbar-ios .searchbar-has-focus .searchbar-ios-cancel {
+.searchbar-ios.searchbar-has-focus .searchbar-ios-cancel {
   opacity: 1;
 
   pointer-events: auto;
@@ -179,7 +179,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   padding: 0;
 }
 
-.toolbar .searchbar-ios .searchbar-has-focus .searchbar-ios-cancel {
+.toolbar .searchbar-ios.searchbar-has-focus .searchbar-ios-cancel {
   padding-left: 8px;
 }
 
@@ -198,29 +198,29 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   $fg-color: rgba($color-contrast, .5);
 
-  .searchbar-ios.searchbar-#{$color-name} .searchbar-ios-cancel {
+  .searchbar-ios-#{$color-name} .searchbar-ios-cancel {
     color: $color-base;
   }
 
-  .searchbar-ios.searchbar-#{$color-name} .searchbar-ios-cancel:hover:not(.disable-hover) {
+  .searchbar-ios-#{$color-name} .searchbar-ios-cancel:hover:not(.disable-hover) {
     color: color-shade($color-base);
   }
 
-  .toolbar-#{$color-name} .searchbar-ios .searchbar-search-icon {
+  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-search-icon {
     @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
   }
 
-  .toolbar-#{$color-name} .searchbar-ios .searchbar-input {
+  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-input {
     @include placeholder($fg-color);
     color: $color-contrast;
     background: rgba($color-contrast, .08);
   }
 
-  .toolbar-#{$color-name} .searchbar-ios .searchbar-clear-icon {
+  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-clear-icon {
     @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $fg-color);
   }
 
-  .toolbar-#{$color-name} .searchbar-ios .searchbar-ios-cancel {
+  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-ios-cancel {
     color: color-contrast($colors-ios, $color-base, ios);
   }
 

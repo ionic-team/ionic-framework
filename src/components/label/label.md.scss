@@ -71,10 +71,10 @@ $label-md-margin:                     $item-md-padding-top ($item-md-padding-rig
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  .label-md.label-#{$color-name},
-  .item-input .label-md.label-#{$color-name},
-  .item-select .label-md.label-#{$color-name},
-  .item-datetime .label-md.label-#{$color-name} {
+  .label-md-#{$color-name},
+  .item-input .label-md-#{$color-name},
+  .item-select .label-md-#{$color-name},
+  .item-datetime .label-md-#{$color-name} {
     color: $color-base;
   }
 

@@ -101,7 +101,7 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
 }
 
 @mixin ios-toolbar-theme($color-name, $color-base, $color-contrast) {
-  .toolbar-#{$color-name} {
+  .toolbar-ios-#{$color-name} {
 
     .toolbar-background-ios {
       border-color: darken($color-base, 10%);
