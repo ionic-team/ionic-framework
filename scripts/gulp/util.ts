@@ -106,7 +106,7 @@ export function compileSass(destinationPath: string) {
 }
 
 export function setSassIonicVersion(version: string) {
-  fs.writeFileSync(path.join(SRC_ROOT, 'themes/version.scss'), `$IONIC_VERSION: "${version}";`);
+  fs.writeFileSync(path.join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
 }
 
 export function copyFile(srcPath: string, destPath: string) {
