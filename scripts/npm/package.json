@@ -24,6 +24,6 @@
     "@angular/forms": "",
     "@angular/http": "",
     "@angular/platform-browser": "",
-    "@angular/platform-browser-dynamic": "",
+    "@angular/platform-browser-dynamic": ""
   }
 }
