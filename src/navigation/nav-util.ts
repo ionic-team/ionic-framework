@@ -89,7 +89,7 @@ export interface DeepLinkMetadataType {
   defaultHistory?: any[];
 }
 
-export declare class DeepLinkMetadata implements DeepLinkMetadataType {
+export class DeepLinkMetadata implements DeepLinkMetadataType {
   component: any;
   name: string;
   segment?: string;
@@ -103,7 +103,7 @@ export interface DeepLinkMetadataFactory {
   new (obj: DeepLinkMetadataType): DeepLinkMetadata;
 }
 
-export declare var DeepLink: DeepLinkMetadataFactory;
+export var DeepLink: DeepLinkMetadataFactory;
 
 export interface DeepLinkConfig {
   links: DeepLinkMetadata[];
