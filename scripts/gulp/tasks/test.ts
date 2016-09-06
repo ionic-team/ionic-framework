@@ -4,26 +4,37 @@ import { dest, src, task } from 'gulp';
 import { COMPILE_KARMA_TASK } from './build';
 
 export const RUN_TESTS_TASK = 'test';
+export const WATCH_TESTS_TASK = 'test.watch';
 export const RUN_TESTS_WITH_COVERAGE_TASK = 'test.coverage';
 
 const INTERNAL_ASSEMBLE_VENDOR_JS_TASK = 'test.assembleVendorJs';
 
 
-task(RUN_TESTS_TASK, [INTERNAL_ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], karmaTest);
+task(RUN_TESTS_TASK, [INTERNAL_ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], (done: Function) => {
+  karmaTest(false, done);
+});
+
+task(WATCH_TESTS_TASK, [INTERNAL_ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], (done: Function) => {
+  karmaTest(true, done);
+});
 
 task(RUN_TESTS_WITH_COVERAGE_TASK, [INTERNAL_ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], (done: Function) => {
-  karmaTest(() => {
+  karmaTest(false, () => {
     createKarmaCoverageReport(done);
   });
 });
 
-function karmaTest(done: Function) {
+function karmaTest(watch: boolean, done: Function) {
   const karma = require('karma');
   const argv = require('yargs').argv;
 
   let karmaConfig = {
     configFile: path.join(SCRIPTS_ROOT, 'karma/karma.conf.js'),
   };
+
+  if (watch) {
+    (karmaConfig as any).singleRun = false;
+  }
 
   if (argv.testGrep) {
     (<any>karmaConfig).client = {

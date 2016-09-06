@@ -10,6 +10,8 @@ export const BUILD_NAME = 'build';
 export const SRC_NAME = 'src';
 export const VENDOR_NAME = 'vendor';
 export const NODE_MODULES = 'node_modules';
+export const COMMONJS_MODULE = 'commonjs';
+export const ES_MODULE = 'es2015';
 
 // File Paths
 export const PROJECT_ROOT = join(__dirname, '../..');
@@ -17,7 +19,7 @@ export const DIST_ROOT = join(PROJECT_ROOT, DIST_NAME);
 export const DIST_E2E_ROOT = join(DIST_ROOT, E2E_NAME);
 export const DIST_E2E_COMPONENTS_ROOT = join(DIST_E2E_ROOT, COMPONENTS_NAME);
 export const DIST_BUILD_ROOT = join(DIST_ROOT, PACKAGE_NAME);
-export const DIST_BUILD_ESM_ROOT = join(DIST_BUILD_ROOT, 'esm');
+export const DIST_BUILD_COMMONJS_ROOT = join(DIST_BUILD_ROOT, COMMONJS_MODULE);
 export const DIST_VENDOR_ROOT = join(DIST_ROOT, VENDOR_NAME);
 export const NODE_MODULES_ROOT = join(PROJECT_ROOT, NODE_MODULES);
 export const SCRIPTS_ROOT = join(PROJECT_ROOT, SCRIPTS_NAME);
@@ -43,6 +45,3 @@ export const E2E_GENERATED_CONFIG_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_N
 // SERVER
 export const LOCAL_SERVER_PORT = 8080;
 
-// VARIOUS
-export const COMMONJS_MODULE = 'commonjs';
-export const ES_MODULE = 'es2015';
