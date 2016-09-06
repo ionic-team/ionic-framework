@@ -1,8 +1,9 @@
 import { Config } from '../config';
 import { Platform } from '../../platform/platform';
 import { QueryParams } from '../../platform/query-params';
-import '../../platform/registry';
-import '../modes';
+import { setupPlatformRegistry } from '../../platform/registry';
+import { setupModeConfig } from '../modes';
+
 
 describe('Config', () => {
 
@@ -605,6 +606,11 @@ describe('Config', () => {
     config = new Config();
     config.init(null, null, null);
     expect(config.settings()).toEqual({});
+  });
+
+  beforeEach(() => {
+    setupModeConfig();
+    setupPlatformRegistry();
   });
 
 });

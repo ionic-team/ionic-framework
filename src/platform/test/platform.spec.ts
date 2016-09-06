@@ -1,7 +1,7 @@
 import { Platform } from '../platform';
 import { QueryParams } from '../query-params';
-import '../registry';
-import '../../config/modes';
+import { setupPlatformRegistry } from '../registry';
+import { setupModeConfig } from '../../config/modes';
 
 
 describe('Platform', () => {
@@ -342,6 +342,11 @@ describe('Platform', () => {
     expect(platform.is('ios')).toEqual(false);
     expect(platform.is('ipad')).toEqual(false);
     expect(platform.is('tablet')).toEqual(false);
+  });
+
+  beforeEach(() => {
+    setupModeConfig();
+    setupPlatformRegistry();
   });
 
 });
