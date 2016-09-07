@@ -148,8 +148,9 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 
 @mixin wp-bar-button-default($color-name, $color-base, $color-contrast) {
 
-  .bar-button-wp.bar-button-clear-#{$color-name},
-  .bar-button-wp.bar-button-#{$color-name} {
+  .bar-button-#{$color-name}-wp,
+  .bar-button-clear-wp-#{$color-name},
+  .bar-button-wp-#{$color-name} {
     color: $color-base;
     background-color: transparent;
 
@@ -183,7 +184,7 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 
 @mixin wp-bar-button-outline($color-name, $color-base, $color-contrast) {
 
-  .bar-button-wp.bar-button-outline-#{$color-name} {
+  .bar-button-outline-wp-#{$color-name} {
     $fg-color: color-shade($color-base);
     border-color: $fg-color;
     color: $fg-color;
@@ -217,7 +218,7 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 
 @mixin wp-bar-button-solid($color-name, $color-base, $color-contrast) {
 
-  .bar-button-solid-wp.bar-button-solid-#{$color-name} {
+  .bar-button-solid-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 

@@ -195,8 +195,9 @@ $navbar-md-height:                       $toolbar-md-height !default;
 
 @mixin md-bar-button-default($color-name, $color-base, $color-contrast) {
 
-  .bar-button-md.bar-button-clear-#{$color-name},
-  .bar-button-md.bar-button-#{$color-name} {
+  .bar-button-#{$color-name}-md,
+  .bar-button-clear-md-#{$color-name},
+  .bar-button-md-#{$color-name} {
     color: $color-base;
     background-color: transparent;
 
@@ -233,7 +234,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
 
 @mixin md-bar-button-outline($color-name, $color-base, $color-contrast) {
 
-  .bar-button-md.bar-button-outline-#{$color-name} {
+  .bar-button-outline-md-#{$color-name} {
     $fg-color: color-shade($color-base);
     border-color: $fg-color;
     color: $fg-color;
@@ -270,7 +271,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
 
 @mixin md-bar-button-solid($color-name, $color-base, $color-contrast) {
 
-  .bar-button-md.bar-button-solid-#{$color-name} {
+  .bar-button-solid-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 

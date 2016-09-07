@@ -158,8 +158,9 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
 
 @mixin ios-bar-button-default($color-name, $color-base, $color-contrast) {
 
-  .bar-button-ios.bar-button-#{$color-name},
-  .bar-button-ios.bar-button-clear-#{$color-name} {
+  .bar-button-#{$color-name}-ios,
+  .bar-button-default.bar-button-ios-#{$color-name},
+  .bar-button-clear-ios-#{$color-name} {
     color: $color-base;
     background-color: transparent;
 
@@ -197,7 +198,7 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
 
 @mixin ios-bar-button-outline($color-name, $color-base, $color-contrast) {
 
-  .bar-button-ios.bar-button-outline-#{$color-name} {
+  .bar-button-outline-ios-#{$color-name} {
     $fg-color: $color-base;
     border-color: $fg-color;
     color: $fg-color;
@@ -233,7 +234,7 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
 
 @mixin ios-bar-button-solid($color-name, $color-base, $color-contrast) {
 
-  .bar-button-ios.bar-button-solid-#{$color-name} {
+  .bar-button-solid-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 

@@ -322,7 +322,7 @@ export class Button extends Ion {
       className += (style !== null && style !== '' && style !== 'default' ? '-' + style.toLowerCase() : '');
 
       if (color !== null && color !== '') {
-        this.setElementClass(`${className}-${color}`, isAdd);
+        this.setElementClass(`${className}-${this._mode}-${color}`, isAdd);
       }
     }
   }

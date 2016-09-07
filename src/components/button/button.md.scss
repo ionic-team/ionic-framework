@@ -221,21 +221,21 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   $background-color-activated: color-shade($background-color);
   $fg-color: $color-contrast;
 
-  .button-md.button-#{$color-name} {
+  .button-md-#{$color-name} {
     color: $fg-color;
     background-color: $background-color;
   }
 
-  .button-md.button-#{$color-name}:hover:not(.disable-hover) {
+  .button-md-#{$color-name}:hover:not(.disable-hover) {
     background-color: $background-color;
   }
 
-  .button-md.button-#{$color-name}.activated {
+  .button-md-#{$color-name}.activated {
     background-color: $background-color-activated;
     opacity: $button-md-opacity-activated;
   }
 
-  .button-md.button-#{$color-name} .button-effect {
+  .button-md-#{$color-name} .button-effect {
     background-color: $fg-color;
   }
 }
@@ -317,21 +317,21 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 @mixin md-button-outline($color-name, $color-base, $color-contrast) {
   $fg-color: color-shade($color-base, 5%);
 
-  .button-md.button-outline-#{$color-name} {
+  .button-outline-md-#{$color-name} {
     border-color: $fg-color;
     color: $fg-color;
     background-color: $button-md-outline-background-color;
   }
 
-  .button-md.button-outline-#{$color-name}:hover:not(.disable-hover) {
+  .button-outline-md-#{$color-name}:hover:not(.disable-hover) {
     background-color: $button-md-outline-background-color-hover;
   }
 
-  .button-md.button-outline-#{$color-name}.activated {
+  .button-outline-md-#{$color-name}.activated {
     background-color: $button-md-outline-background-color-activated;
   }
 
-  .button-md.button-outline-#{$color-name} .button-effect {
+  .button-outline-md-#{$color-name} .button-effect {
     background-color: $fg-color;
   }
 }
@@ -368,18 +368,18 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 @mixin md-button-clear($color-name, $color-base, $color-contrast) {
   $fg-color: $color-base;
 
-  .button-md.button-clear-#{$color-name} {
+  .button-clear-md-#{$color-name} {
     border-color: $button-md-clear-border-color;
     color: $fg-color;
     background-color: $button-md-clear-background-color;
   }
 
-  .button-md.button-clear-#{$color-name}.activated {
+  .button-clear-md-#{$color-name}.activated {
     background-color: $button-md-clear-background-color-activated;
     box-shadow: $button-md-clear-box-shadow-activated;
   }
 
-  .button-md.button-clear-#{$color-name}:hover:not(.disable-hover) {
+  .button-clear-md-#{$color-name}:hover:not(.disable-hover) {
     color: $fg-color;
   }
 }

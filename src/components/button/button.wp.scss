@@ -160,17 +160,17 @@ $button-wp-fab-border-radius:                             50% !default;
   $bg-color-activated: color-shade($bg-color);
   $fg-color: $color-contrast;
 
-  .button-wp.button-#{$color-name} {
+  .button-wp-#{$color-name} {
     color: $fg-color;
     background-color: $bg-color;
   }
 
-  .button-wp.button-#{$color-name}:hover:not(.disable-hover) {
+  .button-wp-#{$color-name}:hover:not(.disable-hover) {
     border-color: $bg-color-activated;
     background-color: $bg-color;
   }
 
-  .button-wp.button-#{$color-name}.activated {
+  .button-wp-#{$color-name}.activated {
     background-color: $bg-color-activated;
   }
 }
@@ -245,18 +245,18 @@ $button-wp-fab-border-radius:                             50% !default;
 @mixin wp-button-outline($color-name, $color-base, $color-contrast) {
   $fg-color: color-shade($color-base, 5%);
 
-  .button-wp.button-outline-#{$color-name} {
+  .button-outline-wp-#{$color-name} {
     border-color: $fg-color;
     color: $fg-color;
     background-color: $button-wp-outline-background-color;
   }
 
-  .button-wp.button-outline-#{$color-name}:hover:not(.disable-hover) {
+  .button-outline-wp-#{$color-name}:hover:not(.disable-hover) {
     border-color: $fg-color;
     background-color: $button-wp-clear-background-color-hover;
   }
 
-  .button-wp.button-outline-#{$color-name}.activated {
+  .button-outline-wp-#{$color-name}.activated {
     background-color: rgba($fg-color, $button-wp-outline-background-color-opacity-activated);
   }
 }
@@ -285,16 +285,16 @@ $button-wp-fab-border-radius:                             50% !default;
 @mixin wp-button-clear($color-name, $color-base, $color-contrast) {
   $fg-color: $color-base;
 
-  .button-wp.button-clear-#{$color-name} {
+  .button-clear-wp-#{$color-name} {
     color: $fg-color;
     background-color: $button-wp-clear-background-color;
   }
 
-  .button-wp.button-clear-#{$color-name}.activated {
+  .button-clear-wp-#{$color-name}.activated {
     background-color: $button-wp-clear-background-color-activated;
   }
 
-  .button-wp.button-clear-#{$color-name}:hover:not(.disable-hover) {
+  .button-clear-wp-#{$color-name}:hover:not(.disable-hover) {
     color: $fg-color;
   }
 }
