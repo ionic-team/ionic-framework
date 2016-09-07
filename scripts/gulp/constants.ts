@@ -1,5 +1,6 @@
 import { join } from 'path';
 
+
 // Names
 export const COMPONENTS_NAME = 'components';
 export const DIST_NAME = 'dist';
@@ -12,6 +13,7 @@ export const VENDOR_NAME = 'vendor';
 export const NODE_MODULES = 'node_modules';
 export const COMMONJS_MODULE = 'commonjs';
 export const ES_MODULE = 'es2015';
+
 
 // File Paths
 export const PROJECT_ROOT = join(__dirname, '../..');
@@ -26,20 +28,11 @@ export const SCRIPTS_ROOT = join(PROJECT_ROOT, SCRIPTS_NAME);
 export const SRC_ROOT = join(PROJECT_ROOT, SRC_NAME);
 export const SRC_COMPONENTS_ROOT = join(SRC_ROOT, COMPONENTS_NAME);
 
+
 // NPM
 export const NPM_VENDOR_FILES = [
   '@angular', 'core-js/client', 'rxjs', 'systemjs/dist', 'zone.js/dist'
 ];
-
-// NGC
-export const COMMON_JS_NGC_FILE_NAME = 'release-tsconfig-commonjs.json';
-export const COMMON_JS_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_NAME}/${BUILD_NAME}/${COMMON_JS_NGC_FILE_NAME}`);
-export const ES_MODULES_NGC_FILE_NAME = 'release-tsconfig-esm.json';
-export const ES_MODULES_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_NAME}/${BUILD_NAME}/${ES_MODULES_NGC_FILE_NAME}`);
-export const E2E_BASE_CONFIG_NGC_FILE_NAME = 'e2e-base-tsconfig.json';
-export const E2E_BASE_CONFIG_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_NAME}/${BUILD_NAME}/${E2E_BASE_CONFIG_NGC_FILE_NAME}`);
-export const E2E_GENERATED_CONFIG_NGC_FILE_NAME = 'e2e-generated-tsconfig.json';
-export const E2E_GENERATED_CONFIG_NGC_CONFIG = join(PROJECT_ROOT, `./${SCRIPTS_NAME}/${BUILD_NAME}/${E2E_GENERATED_CONFIG_NGC_FILE_NAME}`);
 
 
 // SERVER
