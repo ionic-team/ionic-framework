@@ -1,24 +1,17 @@
 import { DIST_VENDOR_ROOT, NPM_VENDOR_FILES, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
 import path = require('path');
 import { dest, src, task } from 'gulp';
-import { COMPILE_KARMA_TASK } from './build';
-
-export const RUN_TESTS_TASK = 'test';
-export const WATCH_TESTS_TASK = 'test.watch';
-export const RUN_TESTS_WITH_COVERAGE_TASK = 'test.coverage';
-
-const INTERNAL_ASSEMBLE_VENDOR_JS_TASK = 'test.assembleVendorJs';
 
 
-task(RUN_TESTS_TASK, [INTERNAL_ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], (done: Function) => {
+task('test', ['test.assembleVendorJs', 'compile.karma'], (done: Function) => {
   karmaTest(false, done);
 });
 
-task(WATCH_TESTS_TASK, [INTERNAL_ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], (done: Function) => {
+task('test.watch', ['test.assembleVendorJs', 'compile.karma'], (done: Function) => {
   karmaTest(true, done);
 });
 
-task(RUN_TESTS_WITH_COVERAGE_TASK, [INTERNAL_ASSEMBLE_VENDOR_JS_TASK, COMPILE_KARMA_TASK], (done: Function) => {
+task('test.coverage', ['test.assembleVendorJs', 'compile.karma'], (done: Function) => {
   karmaTest(false, () => {
     createKarmaCoverageReport(done);
   });
@@ -46,7 +39,7 @@ function karmaTest(watch: boolean, done: Function) {
 }
 
 
-task(INTERNAL_ASSEMBLE_VENDOR_JS_TASK, () => {
+task('test.assembleVendorJs', () => {
   const files = NPM_VENDOR_FILES.map((root) => {
     const glob = path.join(root, '**/*.+(js|js.map)');
     return src(path.join('node_modules', glob))

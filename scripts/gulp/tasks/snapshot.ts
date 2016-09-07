@@ -3,21 +3,16 @@ import { DIST_E2E_COMPONENTS_ROOT, PROJECT_ROOT, SCRIPTS_ROOT } from '../constan
 import { mergeObjects } from '../util';
 import * as path from 'path';
 
-import { E2E_BUILD_TASK, E2E_COMPILE_SASS } from './e2e';
 
-export const SNAPSHOT_TASK = 'snapshot';
-export const SNAPSHOT_SKIP_BUILD_TASK = 'snapshot.skipBuild';
-export const SNAPSHOT_QUICK_TASK = 'snapshot.quick';
-
-task(SNAPSHOT_TASK, [E2E_BUILD_TASK], (done: Function) => {
+task('snapshot', ['e2e'], (done: Function) => {
   snapshot(false, done);
 });
 
-task(SNAPSHOT_SKIP_BUILD_TASK, [E2E_COMPILE_SASS], (done: Function) => {
+task('snapshot.skipBuild', ['e2e.sass'], (done: Function) => {
   snapshot(false, done);
 });
 
-task(SNAPSHOT_QUICK_TASK, [E2E_COMPILE_SASS], (done: Function) => {
+task('snapshot.quick', ['e2e.sass'], (done: Function) => {
   snapshot(true, done);
 });
 

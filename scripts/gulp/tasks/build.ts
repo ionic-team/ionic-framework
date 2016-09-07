@@ -2,8 +2,6 @@ import { COMMONJS_MODULE, DIST_BUILD_ROOT, DIST_BUILD_COMMONJS_ROOT, ES_MODULE }
 import { task } from 'gulp';
 import { copySourceToDest, copySwiperToPath, createTempTsConfig, deleteFiles, runNgc} from '../util';
 
-export const COMPILE_KARMA_TASK = 'compile.karma';
-export const COMPILE_RELEASE_TASK = 'compile.release';
 
 export function buildIonicAngularCommonJs(excludeSpec: boolean, done: Function) {
   const stream = copySourceToDest(DIST_BUILD_COMMONJS_ROOT, excludeSpec, true);
@@ -41,12 +39,12 @@ export function buildIonicAngularEsm(done: Function) {
 }
 
 /* this task builds out the necessary stuff for karma */
-task(COMPILE_KARMA_TASK, (done: Function) => {
+task('compile.karma', (done: Function) => {
   buildIonicAngularCommonJs(false, done);
 });
 
 /* this task builds out the ionic-angular (commonjs and esm) directories for release */
-task(COMPILE_RELEASE_TASK, (done: Function) => {
+task('compile.release', (done: Function) => {
   buildIonicAngularEsm(() => {
     buildIonicAngularCommonJs(true, done);
   });

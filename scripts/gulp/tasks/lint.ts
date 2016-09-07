@@ -1,13 +1,10 @@
 import { task, src } from 'gulp';
 
-export const LINT_TASK = 'lint';
-export const TSLINT_TASK = 'lint.ts';
-export const SASS_LINT = 'lint.sass';
 
-task(LINT_TASK, [SASS_LINT, TSLINT_TASK]);
+task('lint', ['lint.sass', 'lint.ts']);
 
 
-task(TSLINT_TASK, () => {
+task('lint.ts', () => {
   const tslint = require('gulp-tslint');
   return src([
       'src/**/*.ts'
@@ -16,7 +13,7 @@ task(TSLINT_TASK, () => {
 });
 
 
-task(SASS_LINT, function() {
+task('lint.sass', function() {
   const scsslint = require('gulp-scss-lint');
   return src([
       'src/**/*.scss',
