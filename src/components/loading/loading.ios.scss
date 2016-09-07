@@ -48,23 +48,23 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 // iOS Loading Spinner fill colors
 // -----------------------------------------
 
-.loading-ios .loading-spinner .spinner-ios line,
-.loading-ios .loading-spinner .spinner-ios-small line {
+.loading-ios .spinner-ios line,
+.loading-ios .spinner-ios-small line {
   stroke: $loading-ios-spinner-ios-color;
 }
 
-.loading-ios .loading-spinner .spinner-bubbles circle {
+.loading-ios .spinner-bubbles circle {
   fill: $loading-ios-spinner-bubbles-color;
 }
 
-.loading-ios .loading-spinner .spinner-circles circle {
+.loading-ios .spinner-circles circle {
   fill: $loading-ios-spinner-circles-color;
 }
 
-.loading-ios .loading-spinner .spinner-crescent circle {
+.loading-ios .spinner-crescent circle {
   stroke: $loading-ios-spinner-crescent-color;
 }
 
-.loading-ios .loading-spinner .spinner-dots circle {
+.loading-ios .spinner-dots circle {
   fill: $loading-ios-spinner-dots-color;
 }

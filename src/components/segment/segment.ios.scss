@@ -95,27 +95,28 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   pointer-events: none;
 }
 
-.toolbar {
 
-  .segment-ios {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+// iOS Segment in Toolbar
+// --------------------------------------------------
 
-    .segment-button {
-      max-width: $segment-button-ios-toolbar-button-max-width;
-      height: $segment-button-ios-toolbar-button-height;
+.toolbar-ios .segment-ios {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 
-      font-size: $segment-button-ios-toolbar-font-size;
-      line-height: $segment-button-ios-toolbar-line-height;
+.toolbar-ios .segment-button {
+  max-width: $segment-button-ios-toolbar-button-max-width;
+  height: $segment-button-ios-toolbar-button-height;
 
-      ion-icon {
-        font-size: $segment-button-ios-toolbar-icon-size;
-        line-height: $segment-button-ios-toolbar-icon-line-height;
-      }
-    }
+  font-size: $segment-button-ios-toolbar-font-size;
+  line-height: $segment-button-ios-toolbar-line-height;
+
+  ion-icon {
+    font-size: $segment-button-ios-toolbar-icon-size;
+    line-height: $segment-button-ios-toolbar-icon-line-height;
   }
 }
 
