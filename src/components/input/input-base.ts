@@ -290,7 +290,7 @@ export class InputBase {
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
-      this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
+      this._item.setCssClass('input-has-value', inputValue !== null && inputValue !== undefined && inputValue !== '');
     }
   }
 
