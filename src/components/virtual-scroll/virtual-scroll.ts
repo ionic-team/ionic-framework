@@ -99,7 +99,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * It's also important to know that Ionic's default item sizes have
  * slightly different heights between platforms, which is perfectly fine.
- * 
+ *
  *
  *
  * ### Images Within Virtual Scroll
@@ -117,7 +117,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * makes a HTTP request for the image file. HTTP requests, image
  * decoding, and image rendering can cause issues while scrolling. For virtual
  * scrolling, the natural effects of the `<img>` are not desirable features.
- * 
+ *
  * Note: `<ion-img>` should only be used with Virtual Scroll. If you are using
  * an image outside of Virtual Scroll you should use the standard `<img>` tag.
  *
@@ -168,6 +168,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   private _nodes: VirtualNode[] = [];
   private _vHeight: number = 0;
   private _lastCheck: number = 0;
+  private _scrollTopBeforeUpdate: number = 0;
   private _data: VirtualData = {
     scrollTop: 0,
   };
@@ -378,6 +379,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // reset everything
     self._cells.length = 0;
     self._nodes.length = 0;
+    self._scrollTopBeforeUpdate = self._elementRef.nativeElement.parentElement.scrollTop;
     self._itmTmp.viewContainer.clear();
     self._elementRef.nativeElement.parentElement.scrollTop = 0;
 
@@ -387,7 +389,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         // good to go, we already have good dimension data
         done();
 
-      } else {        
+      } else {
         // ******** DOM READ ****************
         calcDimensions(self._data, self._elementRef.nativeElement.parentElement,
                       self.approxItemWidth, self.approxItemHeight,
@@ -421,6 +423,12 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
       // ******** DOM WRITE ****************
       self.renderVirtual();
+
+      // reset last to scrollposition before update
+      self._lastCheck = 0; // make sure it renders
+      self._elementRef.nativeElement.parentElement.scrollTop = self._scrollTopBeforeUpdate;
+      self._data.scrollTop = self._scrollTopBeforeUpdate;
+      self.scrollUpdate();
 
       // list for scroll events
       self.addScrollListener();
