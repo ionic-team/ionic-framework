@@ -85,7 +85,6 @@ task('release.preparePackageJsonTemplate', () => {
   const fs = require('fs');
   let templatePackageJSON = require(`${PROJECT_ROOT}/scripts/npm/package.json`);
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
-  const sourceDependencies = sourcePackageJSON.dependencies;
   // copy source package.json data to template
   templatePackageJSON.version = sourcePackageJSON.version;
   templatePackageJSON.description = sourcePackageJSON.description;
@@ -93,9 +92,13 @@ task('release.preparePackageJsonTemplate', () => {
 
   // copy source dependencies versions to the template's peerDependencies
   // only copy dependencies that show up as peerDependencies in the template
-  for (let dependency in sourceDependencies) {
-    if (dependency in templatePackageJSON.peerDependencies) {
-      templatePackageJSON.peerDependencies[dependency] = sourceDependencies[dependency];
+  for (let dependency in sourcePackageJSON.dependencies) {
+    // if the dependency is in both, AND the value of the entry is empty, copy it over
+    if (dependency in templatePackageJSON.dependencies && templatePackageJSON.dependencies[dependency] === '') {
+      templatePackageJSON.dependencies[dependency] = sourcePackageJSON.dependencies[dependency];
+    } else if (dependency === 'rxjs') {
+      const value = sourcePackageJSON.dependencies[dependency];
+      templatePackageJSON.dependencies['rxjs-es'] = value;
     }
   }
 
