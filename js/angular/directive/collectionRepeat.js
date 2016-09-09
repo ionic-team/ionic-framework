@@ -522,7 +522,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
       var containerPrevNode = containerNode.previousElementSibling;
       var beforeStyle = containerPrevNode ? $window.getComputedStyle(containerPrevNode) : {};
-      var beforeMargin = parseInt(beforeStyle[isVertical ? 'marginBottom' : 'marginRight'] || 0);
+      var beforeMargin = parseInt(beforeStyle[isVertical ? 'marginBottom' : 'marginRight']) || 0;
 
       // Because we position the collection container with position: relative, it doesn't take
       // into account where to position itself relative to the previous element's marginBottom.
