@@ -28,7 +28,7 @@ import { StorageEngine } from './storage';
  *}
  *```
  * @demo /docs/v2/demos/local-storage/
- * @see {@link /docs/v2/platform/storage/ Storage Platform Docs}
+ * @see {@link /docs/v2/platform/storage/Storage/ Storage Platform Docs}
  */
 export class LocalStorage extends StorageEngine {
   constructor(options = {}) {
