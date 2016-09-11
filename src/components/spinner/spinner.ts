@@ -88,7 +88,7 @@ import { Config } from '../../config/config';
  * of `background-color`.
  *
  * ```css
- * ion-spinner svg {
+ * ion-spinner * {
  *   width: 28px;
  *   height: 28px;
  *   stroke: #444;
