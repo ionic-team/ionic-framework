@@ -14,8 +14,8 @@ import { ViewController } from './view-controller';
  * @description
  *
  * NavController is the base class for navigation controller components like
- * [`Nav`](../Nav/) and [`Tab`](../../Tabs/Tab/). You use navigation controllers
- * to navigate to [pages](#creating_pages) in your app. At a basic level, a
+ * [`Nav`](../Nav/) and [`Tab`](../../tabs/Tab/). You use navigation controllers
+ * to navigate to [pages](#view-creation) in your app. At a basic level, a
  * navigation controller is an array of pages representing a particular history
  * (of a Tab for example). This array can be manipulated to navigate throughout
  * an app by pushing and popping pages or inserting and removing them at
@@ -65,7 +65,7 @@ import { ViewController } from './view-controller';
  *
  * Instead, you can inject NavController and know that it is the correct
  * navigation controller for most situations (for more advanced situations, see
- * [Menu](../../Menu/Menu/) and [Tab](../../Tab/Tab/)).
+ * [Menu](../../menu/Menu/) and [Tab](../../tab/Tab/)).
  *
  * ```ts
  *  import { NavController } from 'ionic-angular';
@@ -121,7 +121,7 @@ import { ViewController } from './view-controller';
  *
  * ## Pushing a View
  * To push a new view on to the navigation stack, use the `push` method.
- * If the page has an [`<ion-navbar>`](../api/components/nav-bar/NavBar/),
+ * If the page has an [`<ion-navbar>`](../../navbar/Navbar/),
  * a back button will automatically be added to the pushed view.
  *
  * Data can also be passed to a view by passing an object to the `push` method.

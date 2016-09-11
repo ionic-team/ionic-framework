@@ -105,7 +105,7 @@ ion-checkbox {
 
 @mixin checkbox-theme-ios($color-name, $color-base, $color-contrast) {
 
-  ion-checkbox[#{$color-name}] .checkbox-checked {
+  .checkbox-#{$color-name} .checkbox-checked {
     border-color: $color-base;
     background-color: $color-base;
 

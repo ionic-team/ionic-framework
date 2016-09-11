@@ -7,43 +7,10 @@ ion-content {
   color: $text-ios-color;
 }
 
-p {
-  color: $paragraph-ios-color;
-}
-
-
-a {
-  color: $link-ios-color;
-}
-
 hr {
   background-color: rgba(0, 0, 0, .12);
 }
 
 &.hairlines hr {
   height: $hairlines-width;
-}
-
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  span,
-  a:not([button]),
-  small,
-  b,
-  i,
-  strong,
-  em,
-  sub,
-  sup,
-  ion-icon {
-    &[#{$color-name}] {
-      color: $color-base;
-    }
-  }
 }

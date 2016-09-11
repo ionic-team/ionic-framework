@@ -81,7 +81,7 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 
 @mixin md-segment-button($color-name, $color-base, $color-contrast) {
 
-  ion-segment[#{$color-name}] .segment-button {
+  .segment-#{$color-name} .segment-button {
     color: $color-base;
 
     &.activated,

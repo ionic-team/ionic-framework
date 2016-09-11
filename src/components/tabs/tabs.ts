@@ -25,20 +25,21 @@ import { ViewController } from '../nav/view-controller';
  * Tabs make it easy to navigate between different pages or functional
  * aspects of an app. The Tabs component, written as `<ion-tabs>`, is
  * a container of individual [Tab](../Tab/) components. Each individual `ion-tab`
- * is a declarative component for a [NavController](../NavController/)
-
+ * is a declarative component for a [NavController](../../nav/NavController/)
+ *
  * For more information on using nav controllers like Tab or [Nav](../../nav/Nav/),
- * take a look at the [NavController API Docs](../NavController/).
+ * take a look at the [NavController API Docs](../../nav/NavController/).
  *
  * ### Placement
  *
  * The position of the tabs relative to the content varies based on
  * the mode. The tabs are placed at the bottom of the screen
- * for iOS and Android, and at the top for Windows by default. The position can be configured using the `tabsPlacement` attribute
- * on the `<ion-tabs>` component, or in an app's [config](../../config/Config/).
+ * for iOS and Android, and at the top for Windows by default. The position can
+ * be configured using the `tabsPlacement` attribute on the `<ion-tabs>` component,
+ * or in an app's [config](../../config/Config/).
  * See the [Input Properties](#input-properties) below for the available
  * values of `tabsPlacement`.
-
+ *
  * ### Layout
  *
  * The layout for all of the tabs can be defined using the `tabsLayout`
@@ -180,6 +181,21 @@ export class Tabs extends Ion {
    * @private
    */
   subPages: boolean;
+
+  /** @internal */
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
 
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
@@ -385,6 +401,24 @@ export class Tabs extends Ion {
       val = this._config.get(attrKey, fallback);
     }
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attrKey, val);
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `tabs-${color}`, isAdd);
+    }
   }
 
   /**

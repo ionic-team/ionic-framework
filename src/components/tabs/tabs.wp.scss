@@ -116,7 +116,7 @@ ion-tabbar {
 
 @mixin tabbar-wp($color-name, $color-base, $color-contrast) {
 
-  ion-tabs[#{$color-name}] ion-tabbar {
+  .tabs-#{$color-name} ion-tabbar {
     background-color: $color-base;
 
     .tab-button {

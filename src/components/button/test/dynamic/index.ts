@@ -32,7 +32,6 @@ class E2EPage {
     this.isClicked = false;
     this.myColor1 = 'primary';
     this.myColor2 = 'primary';
-    this.multiColor = ['primary'];
   }
 
   reset() {
@@ -45,7 +44,6 @@ class E2EPage {
     this.isClicked = false;
     this.myColor1 = 'custom1';
     this.myColor2 = 'custom2';
-    this.multiColor = ['primary', 'secondary'];
   }
 
   toggle() {

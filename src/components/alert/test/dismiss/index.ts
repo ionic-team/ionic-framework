@@ -58,7 +58,7 @@ export class E2EPage {
           </ion-item>
         </ion-list>
         <div padding style="padding-top: 0 !important;">
-          <button ion-button list-item primary block>
+          <button ion-button list-item color="primary" block>
             Submit
           </button>
         </div>

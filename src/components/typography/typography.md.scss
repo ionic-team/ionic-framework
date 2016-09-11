@@ -1,0 +1,22 @@
+@import "./typography";
+
+// Material Design Typography
+// --------------------------------------------------
+
+
+p {
+  color: $paragraph-md-color;
+}
+
+a {
+  color: $link-md-color;
+}
+
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .text-#{$color-name} {
+    color: $color-base;
+  }
+
+}

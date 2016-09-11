@@ -2,7 +2,7 @@
 
   <ion-toolbar>
     <ion-buttons start>
-      <button ion-button danger *ngIf="showIf">ngIf</button>
+      <button ion-button color="danger" *ngIf="showIf">ngIf</button>
       <button ion-button [color]="isDestructive ? 'danger' : 'primary'" [outline]="isOutline">Outline</button>
     </ion-buttons>
     <ion-title>Default Buttons</ion-title>
@@ -21,14 +21,10 @@
   <button ion-button block [color]="isSecondary ? 'secondary' : 'primary'"  [clear]="isClear">Secondary (Clear)</button>
   <button ion-button block [color]="myColor1" [round]="isCustom">Custom #1</button>
   <button ion-button block [color]="myColor2" [outline]="isOutline" [round]="isCustom">Custom #2 (Outline)</button>
-  <button ion-button block primary light [clear]="isClear" [round]="isCustom">Multicolor (Clear)</button>
-  <button ion-button block danger dark [outline]="isOutline" [round]="isCustom">Multicolor (Outline)</button>
-  <button ion-button block [color]="multiColor" [outline]="isClicked" [round]="isCustom" (click)="toggle()">Multicolor Outline (Toggle)</button>
-  <button ion-button block [color]="multiColor" [clear]="isClicked" [round]="isCustom" (click)="toggle()">Multicolor Clear (Toggle)</button>
   <hr/>
-  <button ion-button block outline danger (click)="showIf = !showIf">Toggle Header</button>
+  <button ion-button block outline color="danger" (click)="showIf = !showIf">Toggle Header</button>
   <hr/>
-  <button ion-button block outline danger (click)="unify()" class="e2eButtonDynamicUnify">Unify all buttons</button>
-  <button ion-button block clear danger (click)="reset()">Reset all buttons</button>
+  <button ion-button block outline color="danger" (click)="unify()" class="e2eButtonDynamicUnify">Unify all buttons</button>
+  <button ion-button block clear color="danger" (click)="reset()">Reset all buttons</button>
 
 </ion-content>

@@ -120,6 +120,7 @@ export class MenuController {
 
   /**
    * Progamatically open the Menu.
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu is fully opened
    */
   open(menuId?: string): Promise<boolean> {
@@ -210,6 +211,7 @@ export class MenuController {
   }
 
   /**
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {boolean} Returns true if the menu is currently open, otherwise false.
    */
   isOpen(menuId?: string): boolean {
@@ -218,6 +220,7 @@ export class MenuController {
   }
 
   /**
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {boolean} Returns true if the menu is currently enabled, otherwise false.
    */
   isEnabled(menuId?: string): boolean {

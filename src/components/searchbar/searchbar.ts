@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgControl, NgModel }  from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -30,7 +30,7 @@ import { Debouncer } from '../../util/debouncer';
   selector: 'ion-searchbar',
   template:
     '<div class="searchbar-input-container">' +
-      '<button ion-button (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" clear dark class="searchbar-md-cancel">' +
+      '<button ion-button (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" clear color="dark" class="searchbar-md-cancel">' +
         '<ion-icon name="arrow-back"></ion-icon>' +
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
@@ -53,6 +53,21 @@ export class Searchbar {
   private _isActive: boolean = false;
   private _searchbarInput: ElementRef;
   private _debouncer: Debouncer = new Debouncer(250);
+
+  /** @internal */
+  _color: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  get color(): string {
+    return this._color;
+  }
+
+  set color(value: string) {
+    this._updateColor(value);
+  }
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
@@ -133,6 +148,7 @@ export class Searchbar {
   constructor(
     private _elementRef: ElementRef,
     private _config: Config,
+    private _renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
     // If the user passed a ngControl we need to set the valueAccessor
@@ -343,6 +359,24 @@ export class Searchbar {
     this.clearInput(ev);
     this._shouldBlur = true;
     this._isActive = false;
+  }
+
+  /**
+   * @internal
+   */
+  _updateColor(newColor: string) {
+    this._setElementColor(this._color, false);
+    this._setElementColor(newColor, true);
+    this._color = newColor;
+  }
+
+  /**
+   * @internal
+   */
+  _setElementColor(color: string, isAdd: boolean) {
+    if (color !== null && color !== '') {
+      this._renderer.setElementClass(this._elementRef.nativeElement, `searchbar-${color}`, isAdd);
+    }
   }
 
   /**
