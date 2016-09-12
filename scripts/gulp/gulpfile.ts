@@ -6,4 +6,5 @@ import './tasks/lint';
 import './tasks/release';
 import './tasks/snapshot';
 import './tasks/test';
+import './tasks/polyfills';
 //import './tasks/theme';
