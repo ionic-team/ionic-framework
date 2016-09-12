@@ -7,3 +7,4 @@ import './tasks/lint';
 // import './tasks/serve';
 import './tasks/snapshot';
 import './tasks/test';
+import './tasks/polyfills';
