@@ -11,20 +11,11 @@
   "main": "commonjs/index.js",
   "module": "index.js",
   "dependencies": {
-    "colors": "1.1.2",
-    "inquirer": "0.11.0",
-    "lodash": "3.10.1",
-    "mkdirp-no-bin": "0.5.1",
-    "q": "1.4.1",
-
     "@angular/common": "",
-    "@angular/compiler": "",
     "@angular/core": "",
     "@angular/forms": "",
     "@angular/http": "",
     "@angular/platform-browser": "",
-    "core-js": "",
     "rxjs-es": "",
-    "zone.js": ""
   }
 }

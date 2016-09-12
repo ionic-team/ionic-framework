@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
 
 /*
-  Generated class for the <%= jsClassName %> component.
+  Generated class for the $CLASSNAME component.
 
   See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
   for more info on Angular 2 Components.
 */
 @Component({
-  selector: '<%= fileName %>',
-  templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html'
+  selector: '$FILENAME',
+  templateUrl: '$FILENAME.html'
 })
-export class <%= jsClassName %> {
+export class $CLASSNAME {
+
+  text: string;
+
   constructor() {
     this.text = 'Hello World';
   }
