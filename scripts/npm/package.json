@@ -16,6 +16,6 @@
     "@angular/forms": "",
     "@angular/http": "",
     "@angular/platform-browser": "",
-    "rxjs-es": "",
+    "rxjs-es": ""
   }
 }
