@@ -2,9 +2,9 @@ import { task, src, dest } from 'gulp';
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 
-task('polyfills', ['smaller-polyfills', 'full-polyfills', 'evergreen-polyfills', 'copy-readme']);
+task('polyfills', ['modern', 'all', 'ng', 'copy-readme']);
 
-task('smaller-polyfills', (done) => {
+task('modern', (done) => {
     return src([
         'node_modules/zone.js/dist/zone.min.js',
         'node_modules/zone.js/dist/proxy.min.js',
@@ -26,7 +26,7 @@ task('smaller-polyfills', (done) => {
     .pipe(dest('dist/ionic-angular/polyfills/'), done);
 });
 
-task('full-polyfills', (done) => {
+task('all', (done) => {
     return src([
         'node_modules/zone.js/dist/zone.min.js',
         'node_modules/zone.js/dist/proxy.min.js',
@@ -38,7 +38,7 @@ task('full-polyfills', (done) => {
     .pipe(dest('dist/ionic-angular/polyfills/'), done);
 });
 
-task('evergreen-polyfills', (done) => {
+task('ng', (done) => {
     return src([
         'node_modules/zone.js/dist/zone.min.js',
         'node_modules/zone.js/dist/proxy.min.js',
