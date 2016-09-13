@@ -28,7 +28,7 @@ export class ScrollView {
     this._top = top;
 
     if (this._js) {
-      this._el.style[CSS.transform] = `translate3d(0px,${top * -1}px,0px)`;
+      (<any>this._el.style)[CSS.transform] = `translate3d(0px,${top * -1}px,0px)`;
 
     } else {
       this._el.scrollTop = top;
@@ -51,8 +51,6 @@ export class ScrollView {
     let fromY = self._el.scrollTop;
     let fromX = self._el.scrollLeft;
 
-    let xDistance = Math.abs(x - fromX);
-    let yDistance = Math.abs(y - fromY);
     let maxAttempts = (duration / 16) + 100;
 
     return new Promise(resolve => {
@@ -278,7 +276,6 @@ export class ScrollView {
 
 }
 
-const MAX_VELOCITY = 150;
 const MIN_VELOCITY_START_DECELERATION = 4;
 const MIN_VELOCITY_CONTINUE_DECELERATION = 0.12;
 const DECELERATION_FRICTION = 0.97;
