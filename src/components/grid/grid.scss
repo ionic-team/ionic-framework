@@ -14,7 +14,7 @@ $grid-responsive-sm-break:        567px !default;  // smaller than landscape pho
 $grid-responsive-md-break:        767px !default;  // smaller than portrait tablet
 $grid-responsive-lg-break:        1023px !default; // smaller than landscape tablet
 
-@mixin grid-column($width, $prefix: '') {
+@mixin grid-column($width, $break: '') {
   $width-rounded: round($width);
   $width-percentage: percentage($width) / 100;
 
@@ -22,13 +22,13 @@ $grid-responsive-lg-break:        1023px !default; // smaller than landscape tab
 
     // Column Width
 
-    &[#{$prefix}offset-#{$width-rounded}] {
+    &[offset-#{$break}#{$width-rounded}] {
       margin-left: $width-percentage;
     }
 
     // Column Offset
 
-    &[#{$prefix}width-#{$width-rounded}] {
+    &[width-#{$break}#{$width-rounded}] {
       width: $width-percentage;
     }
 
