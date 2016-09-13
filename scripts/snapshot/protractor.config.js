@@ -1,16 +1,9 @@
 
 var buildConfig = require('../build/config');
 var path = require('canonical-path');
-var projectRoot = path.resolve(__dirname, '../..');
 var snapshotConfig = require('./snapshot.config').config;
 
 exports.config = {
-
-  // Spec patterns are relative to the location of the spec file. They may
-  // include glob patterns.
-  specs: [
-    path.resolve(projectRoot, snapshotConfig.specs)
-  ],
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
