@@ -950,11 +950,11 @@ export class NavControllerBase extends Ion implements NavController {
       this._app.viewDidUnload.emit(view);
     });
 
-    // if any z-index goes under 0, then reset them all
-    let shouldResetZIndex = this._views.some(v => v.zIndex < 0);
+    // if any z-index goes under 1, then reset them all
+    let shouldResetZIndex = this._views.some(v => v.zIndex < 1);
     if (shouldResetZIndex) {
       this._views.forEach(view => {
-        view.setZIndex(view.zIndex + INIT_ZINDEX + 1, this._renderer);
+        view.setZIndex(view.zIndex + INIT_ZINDEX, this._renderer);
       });
     }
   }
