@@ -5,22 +5,21 @@ const win: any = window;
 const doc: any = document;
 
 
-Platform.register({
+const PLATFORM_CORE: any = {
   name: 'core',
   settings: {
     mode: 'md',
     keyboardHeight: 290
   }
-});
-Platform.setDefault('core');
+};
 
 
-Platform.register({
+const PLATFORM_MOBILE: any = {
   name: 'mobile'
-});
+};
 
 
-Platform.register({
+const PLATFORM_PHABLET: any = {
   name: 'phablet',
   isMatch(p: Platform) {
     let smallest = Math.min(p.width(), p.height());
@@ -28,10 +27,10 @@ Platform.register({
     return (smallest > 390 && smallest < 520) &&
            (largest > 620 && largest < 800);
   }
-});
+};
 
 
-Platform.register({
+const PLATFORM_TABLET: any = {
   name: 'tablet',
   isMatch(p: Platform) {
     let smallest = Math.min(p.width(), p.height());
@@ -39,10 +38,10 @@ Platform.register({
     return (smallest > 460 && smallest < 820) &&
            (largest > 780 && largest < 1400);
   }
-});
+};
 
 
-Platform.register({
+const PLATFORM_ANDROID: any = {
   name: 'android',
   superset: 'mobile',
   subsets: [
@@ -81,11 +80,10 @@ Platform.register({
   versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/Android (\d+).(\d+)?/);
   }
-});
+};
 
 
-
-Platform.register({
+const PLATFORM_IOS: any = {
   name: 'ios',
   superset: 'mobile',
   subsets: [
@@ -113,10 +111,10 @@ Platform.register({
   versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/OS (\d+)_(\d+)?/);
   }
-});
+};
 
 
-Platform.register({
+const PLATFORM_IPAD: any = {
   name: 'ipad',
   superset: 'tablet',
   settings: {
@@ -125,10 +123,10 @@ Platform.register({
   isMatch(p: Platform): boolean {
     return p.isPlatformMatch('ipad');
   }
-});
+};
 
 
-Platform.register({
+const PLATFORM_IPHONE: any = {
   name: 'iphone',
   subsets: [
     'phablet'
@@ -136,10 +134,10 @@ Platform.register({
   isMatch(p: Platform): boolean {
     return p.isPlatformMatch('iphone');
   }
-});
+};
 
 
-Platform.register({
+const PLATFORM_WINDOWS: any = {
   name: 'windows',
   superset: 'mobile',
   subsets: [
@@ -157,10 +155,10 @@ Platform.register({
   versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/Windows Phone (\d+).(\d+)?/);
   }
-});
+};
 
 
-Platform.register({
+const PLATFORM_CORDOVA: any = {
   name: 'cordova',
   isEngine: true,
   initialize: function(p: Platform) {
@@ -205,7 +203,7 @@ Platform.register({
   isMatch(): boolean {
     return !!(win.cordova || win.PhoneGap || win.phonegap);
   }
-});
+};
 
 
 function isIOSDevice(p: Platform) {
@@ -214,4 +212,18 @@ function isIOSDevice(p: Platform) {
   // this does not use the user-agent string because it is often spoofed
   // an actual iPad will return true, a chrome dev tools iPad will return false
   return p.testNavigatorPlatform('iphone|ipad|ipod');
+}
+
+export function setupPlatformRegistry() {
+  Platform.register(PLATFORM_CORE);
+  Platform.register(PLATFORM_MOBILE);
+  Platform.register(PLATFORM_PHABLET);
+  Platform.register(PLATFORM_TABLET);
+  Platform.register(PLATFORM_ANDROID);
+  Platform.register(PLATFORM_IOS);
+  Platform.register(PLATFORM_IPAD);
+  Platform.register(PLATFORM_IPHONE);
+  Platform.register(PLATFORM_WINDOWS);
+  Platform.register(PLATFORM_CORDOVA);
+  Platform.setDefault('core');
 }

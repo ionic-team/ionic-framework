@@ -1,7 +1,8 @@
-import { EventEmitter, NgZone } from '@angular/core';
+import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
 
-import { getQuerystring } from '../util/util';
+import { QueryParams } from './query-params';
 import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
+import { setupPlatformRegistry } from './registry';
 
 /**
  * @name Platform
@@ -28,13 +29,11 @@ import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
  * @demo /docs/v2/demos/platform/
  */
 export class Platform {
-  private _platforms: Array<string>;
   private _versions: {[name: string]: PlatformVersion} = {};
   private _dir: string;
   private _lang: string;
-  private _url: string;
-  private _qs: any;
   private _ua: string;
+  private _qp: QueryParams;
   private _bPlt: string;
   private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
@@ -42,10 +41,13 @@ export class Platform {
   private _resizeTm: any;
   private _bbActions: BackButtonAction[] = [];
 
+  /** @private */
   zone: NgZone;
 
-  constructor(platforms: string[] = []) {
-    this._platforms = platforms;
+  /** @private */
+  _platforms: string[] = [];
+
+  constructor() {
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
 
     this.backButton.subscribe(() => {
@@ -172,7 +174,7 @@ export class Platform {
    * @private
    */
   version(): PlatformVersion {
-    for (let platformName in this._versions) {
+    for (var platformName in this._versions) {
       if (this._versions[platformName]) {
         return this._versions[platformName];
       }
@@ -358,7 +360,7 @@ export class Platform {
    * the its back button action.
    */
   registerBackButtonAction(fn: Function, priority: number = 0): Function {
-    let action: BackButtonAction = {fn, priority};
+    const action: BackButtonAction = {fn, priority};
 
     this._bbActions.push(action);
 
@@ -394,30 +396,15 @@ export class Platform {
   /**
    * @private
    */
-  setUrl(url: string) {
-    this._url = url;
-    this._qs = getQuerystring(url);
-  }
-
-  /**
-   * @private
-   */
-  url(): string {
-    return this._url;
-  }
-
-  /**
-   * @private
-   */
-  query(key: string): string {
-    return (this._qs || {})[key];
-  }
-
-  /**
-   * @private
-   */
   setUserAgent(userAgent: string) {
     this._ua = userAgent;
+  }
+
+  /**
+   * @private
+   */
+  setQueryParams(queryParams: QueryParams) {
+    this._qp = queryParams;
   }
 
   /**
@@ -477,7 +464,7 @@ export class Platform {
    * @private
    */
   windowResize() {
-    let self = this;
+    const self = this;
     clearTimeout(self._resizeTm);
 
     self._resizeTm = setTimeout(() => {
@@ -501,7 +488,7 @@ export class Platform {
     self._onResizes.push(cb);
 
     return function() {
-      let index = self._onResizes.indexOf(cb);
+      const index = self._onResizes.indexOf(cb);
       if (index > -1) {
         self._onResizes.splice(index, 1);
       }
@@ -544,7 +531,7 @@ export class Platform {
    * @private
    */
   testQuery(queryValue: string, queryTestValue: string): boolean {
-    let valueSplit = queryValue.toLowerCase().split(';');
+    const valueSplit = queryValue.toLowerCase().split(';');
     return valueSplit.indexOf(queryTestValue) > -1;
   }
 
@@ -552,7 +539,7 @@ export class Platform {
    * @private
    */
   testNavigatorPlatform(navigatorPlatformExpression: string): boolean {
-    let rgx = new RegExp(navigatorPlatformExpression, 'i');
+    const rgx = new RegExp(navigatorPlatformExpression, 'i');
     return rgx.test(this._bPlt);
   }
 
@@ -561,7 +548,7 @@ export class Platform {
    */
   matchUserAgentVersion(userAgentExpression: RegExp): any {
     if (this._ua && userAgentExpression) {
-      let val = this._ua.match(userAgentExpression);
+      const val = this._ua.match(userAgentExpression);
       if (val) {
         return {
           major: val[1],
@@ -575,14 +562,14 @@ export class Platform {
    * @private
    */
   isPlatformMatch(queryStringName: string, userAgentAtLeastHas?: string[], userAgentMustNotHave: string[] = []): boolean {
-    let queryValue = this.query('ionicplatform');
+    const queryValue = this._qp.get('ionicplatform');
     if (queryValue) {
       return this.testQuery(queryValue, queryStringName);
     }
 
     userAgentAtLeastHas = userAgentAtLeastHas || [queryStringName];
 
-    let userAgent = this._ua.toLowerCase();
+    const userAgent = this._ua.toLowerCase();
 
     for (var i = 0; i < userAgentAtLeastHas.length; i++) {
       if (userAgent.indexOf(userAgentAtLeastHas[i]) > -1) {
@@ -598,13 +585,10 @@ export class Platform {
     return false;
   }
 
-  /**
-   * @private
-   */
+  /** @private */
   load() {
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;
-    let self = this;
 
     // figure out the most specific platform and active engine
     let tmpPlatform: PlatformNode;
@@ -779,17 +763,17 @@ class PlatformNode {
         return this;
       }
 
-      let platform: PlatformNode = null;
-      let rootPlatform: PlatformNode = null;
+      let platformNode: PlatformNode = null;
+      let rootPlatformNode: PlatformNode = null;
 
       for (let i = 0; i < parents.length; i++) {
-        platform = new PlatformNode(parents[i]);
-        platform.child = this;
+        platformNode = new PlatformNode(parents[i]);
+        platformNode.child = this;
 
-        rootPlatform = platform.getRoot(p);
-        if (rootPlatform) {
-          this.parent = platform;
-          return rootPlatform;
+        rootPlatformNode = platformNode.getRoot(p);
+        if (rootPlatformNode) {
+          this.parent = platformNode;
+          return rootPlatformNode;
         }
       }
     }
@@ -840,4 +824,39 @@ export interface PlatformVersion {
 interface BackButtonAction {
   fn: Function;
   priority: number;
+}
+
+export function setupPlatform(queryParams: QueryParams, userAgent: string, navigatorPlatform: string, dir: string, lang: string, zone: NgZone): Platform {
+  setupPlatformRegistry();
+
+  const p = new Platform();
+  p.setUserAgent(userAgent);
+  p.setQueryParams(queryParams);
+  p.setNavigatorPlatform(navigatorPlatform);
+  p.setDir(dir, false);
+  p.setLang(lang, false);
+  p.setZone(zone);
+  p.load();
+  return p;
+}
+
+export const UserAgent = new OpaqueToken('USERAGENT');
+export const UserNavigatorPlatform = new OpaqueToken('USERNAVPLT');
+export const UserDir = new OpaqueToken('USERDIR');
+export const UserLang = new OpaqueToken('USERLANG');
+
+
+export function providePlatform(): any {
+  return {
+    provide: Platform,
+    useFactory: setupPlatform,
+    deps: [
+      QueryParams,
+      UserAgent,
+      UserNavigatorPlatform,
+      UserDir,
+      UserLang,
+      NgZone
+    ]
+  };
 }
