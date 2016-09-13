@@ -1,4 +1,28 @@
 
+// Ionic Version
+@import "./version";
+
+
+// Global Functions
+@import "./ionic.functions";
+
+
+// Global Mixins
+@import "./ionic.mixins";
+
+
+// Global include-rtl
+$include-rtl: true !default;
+
+
+// Global font path
+$font-path: "../fonts" !default;
+
+
+// Hairline width
+$hairlines-width: .55px !default;
+
+
 // Z-Index
 // --------------------------------------------------
 // Grouped by elements which would be siblings

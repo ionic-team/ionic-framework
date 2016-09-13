@@ -1,4 +1,4 @@
-@import "./dark";
+@import "./ionic.theme.dark";
 
 // Windows Dark Theme
 // ----------------------------------
@@ -7,8 +7,6 @@ $colors-wp: copy-colors($colors) !default;
 
 
 $text-wp-color:                       $text-color !default;
-$paragraph-wp-color:                  $paragraph-color !default;
-$link-wp-color:                       color($colors-wp, primary) !default;
 $background-wp-color:                 $background-color !default;
 $subdued-text-wp-color:               $subdued-text-color !default;
 
@@ -69,13 +67,3 @@ $toggle-wp-handle-background-color-off: color($colors-wp, light) !default;
 // --------------------------------------------------
 
 $input-wp-border-color:                 rgba(0, 0, 0, .5) !default;
-
-
-// Windows Body
-// --------------------------------------------------
-
-@mixin wp-body() {
-  font-family: $font-family-wp-base;
-  font-size: $font-size-wp-base;
-  background-color: $background-wp-color;
-}

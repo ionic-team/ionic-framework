@@ -1,5 +1,17 @@
-@import "../../globals.core";
-@import "./z-index";
+
+// Globals
+// --------------------------------------------------
+@import "../themes/ionic.globals";
+
+
+// Normalize
+// --------------------------------------------------
+@import "../themes/normalize";
+
+
+// Util
+// --------------------------------------------------
+@import "../themes/util";
 
 
 // App Structure
@@ -20,8 +32,6 @@ html {
 }
 
 body {
-  @include user-select-none();
-
   position: fixed;
   overflow: hidden;
 
@@ -46,6 +56,7 @@ body {
   word-wrap: break-word;
 
   text-size-adjust: none;
+  user-select: none;
 }
 
 
@@ -62,14 +73,15 @@ ion-tabs,
   left: 0;
   z-index: $z-index-page-container;
   display: block;
-  overflow: hidden;
 
   width: 100%;
   height: 100%;
 }
 
-ion-tab scroll-cotent {
-  display: none;
+ion-nav,
+ion-tab,
+ion-tabs {
+  overflow: hidden;
 }
 
 ion-tab {
@@ -80,15 +92,11 @@ ion-tab.show-tab {
   transform: translateY(0);
 }
 
-ion-tab.show-tab scroll-cotent {
-  display: block;
-}
-
 
 // Page Container Structure
 // --------------------------------------------------
 
-ion-page {
+.ion-page {
   position: absolute;
   top: 0;
   left: 0;
@@ -101,33 +109,9 @@ ion-page {
   opacity: 0;
 }
 
-ion-content {
-  position: relative;
-  top: 0;
-  left: 0;
-  display: block;
-
-  width: 100%;
-  height: 100%;
-}
-
-ion-page > ion-content {
-  position: absolute;
-}
-
-ion-page scroll-content {
-  // do not render the scroll-content at all until ready
-  display: none;
-}
-
-ion-page.show-page {
+.ion-page.show-page {
   // show the page now that it's ready
   opacity: 1;
-}
-
-ion-page.show-page scroll-content {
-  // render the content when ready
-  display: block;
 }
 
 
@@ -144,11 +128,6 @@ ion-header {
   width: 100%;
 }
 
-ion-toolbar {
-  position: relative;
-  z-index: $z-index-toolbar;
-}
-
 ion-footer {
   position: absolute;
   bottom: 0;
@@ -159,66 +138,13 @@ ion-footer {
   width: 100%;
 }
 
-ion-tabbar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: $z-index-toolbar;
-  display: flex;
 
-  width: 100%;
-
-  // default to hidden until ready
-  opacity: 0;
-}
-
-ion-tabbar.show-tabbar {
-  opacity: 1;
-}
-
-[tabsPlacement=top] > ion-tabbar {
-  top: 0;
-  bottom: auto;
-}
-
-
-// Scrollable Content
+// Misc
 // --------------------------------------------------
 
-scroll-content {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: $z-index-scroll-content;
-  display: block;
-
-  overflow-x: hidden;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  will-change: scroll-position;
-}
-
-ion-content.js-scroll > scroll-content {
-  position: relative;
-
-  min-height: 100%;
-
-  overflow-x: initial;
-  overflow-y: initial;
-  -webkit-overflow-scrolling: auto;
-  will-change: initial;
-}
-
-.disable-scroll ion-page scroll-content {
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-
-
+[app-viewport],
+[overlay-portal],
 [nav-viewport],
-[nav-portal],
 [tab-portal],
 .nav-decor {
   display: none;

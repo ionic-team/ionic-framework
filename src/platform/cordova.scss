@@ -1,4 +1,4 @@
-@import "../globals.core";
+@import "../themes/ionic.globals";
 
 // Cordova Status Bar Padding iOS Platform
 // --------------------------------------------------------------------------------
@@ -9,6 +9,36 @@ $cordova-ios-statusbar-padding:                     20px   !default;
 // The breakpoint when a modal becomes inset
 $cordova-statusbar-padding-modal-max-width:         767px !default;
 
+
+@mixin statusbar-padding($toolbar-height, $content-padding, $modal-max-width, $style-title: false) {
+
+  ion-nav > .ion-page,
+  ion-nav > .ion-page > ion-header,
+  ion-tab > .ion-page > ion-header,
+  ion-tabs > .ion-page.tab-subpage > ion-header,
+  ion-menu > .menu-inner,
+  ion-menu > .menu-inner > ion-header {
+
+    @include toolbar-statusbar-padding($toolbar-height, $content-padding);
+
+    // If we should style the title elements in the toolbar
+    @if ($style-title) {
+      @include toolbar-title-statusbar-padding($toolbar-height, $content-padding);
+    }
+  }
+
+  @media only screen and (max-width: $modal-max-width) {
+    .modal-wrapper > .ion-page > ion-header {
+      @include toolbar-statusbar-padding($toolbar-height, $content-padding);
+
+      // If we should style the title elements in the toolbar
+      @if ($style-title) {
+        @include toolbar-title-statusbar-padding($toolbar-height, $content-padding);
+      }
+    }
+  }
+
+}
 
 // The first-child should get modified padding-top for the status bar
 // --------------------------------------------------------------------------------
@@ -22,19 +52,19 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
     min-height: calc(#{$toolbar-height} + #{$cordova-ios-statusbar-padding});
   }
 
-  > ion-content.statusbar-padding:first-child scroll-content {
+  > ion-content.statusbar-padding:first-child .scroll-content {
     padding-top: $cordova-ios-statusbar-padding;
   }
 
-  > ion-content.statusbar-padding:first-child[padding] scroll-content,
-  > ion-content.statusbar-padding:first-child[padding-top] scroll-content {
+  > ion-content.statusbar-padding:first-child[padding] .scroll-content,
+  > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
     padding-top: calc(#{$content-padding} + #{$cordova-ios-statusbar-padding});
   }
 
 }
 
 
-// iOS is the only mode that uses this mixins and it should be removed with #5036
+// iOS is the only mode that uses this mixin and it should be removed with #5036
 // --------------------------------------------------------------------------------
 
 @mixin toolbar-title-statusbar-padding($toolbar-height, $content-padding) {
