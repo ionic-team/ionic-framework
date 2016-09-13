@@ -77,11 +77,11 @@ import { Platform } from '../../platform/platform';
  *
  * ```ts
  *  toggleLeftMenu() {
- *    this.menu.toggle();
+ *    this.menuCtrl.toggle();
  *  }
  *
  *  toggleRightMenu() {
- *    this.menu.toggle('right');
+ *    this.menuCtrl.toggle('right');
  *  }
  * ```
  *
@@ -101,8 +101,8 @@ import { Platform } from '../../platform/platform';
  *
  * ```ts
  *  enableAuthenticatedMenu() {
- *    this.menu.enable(true, 'authenticated');
- *    this.menu.enable(false, 'unauthenticated');
+ *    this.menuCtrl.enable(true, 'authenticated');
+ *    this.menuCtrl.enable(false, 'unauthenticated');
  *  }
  * ```
  *

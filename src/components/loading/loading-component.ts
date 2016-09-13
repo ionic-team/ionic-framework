@@ -1,14 +1,11 @@
 import { Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 import { Animation } from '../../animations/animation';
-import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
-import { isDefined, isPresent, isUndefined } from '../../util/util';
-import { NavParams } from '../nav/nav-params';
-import { Spinner } from '../spinner/spinner';
-import { Transition, TransitionOptions } from '../../transitions/transition';
-import { ViewController } from '../nav/view-controller';
+import { isDefined, isUndefined } from '../../util/util';
+import { NavParams } from '../../navigation/nav-params';
+import { Transition } from '../../transitions/transition';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -16,23 +13,21 @@ import { ViewController } from '../nav/view-controller';
 */
 @Component({
   selector: 'ion-loading',
-  template: `
-    <ion-backdrop [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>
-    <div class="loading-wrapper">
-      <div *ngIf="showSpinner" class="loading-spinner">
-        <ion-spinner [name]="d.spinner"></ion-spinner>
-      </div>
-      <div *ngIf="d.content" [innerHTML]="d.content" class="loading-content"></div>
-    </div>
-  `,
-  directives: [Backdrop, NgIf, Spinner],
+  template:
+    '<ion-backdrop [class.hide-backdrop]="!d.showBackdrop"></ion-backdrop>' +
+    '<div class="loading-wrapper">' +
+      '<div *ngIf="showSpinner" class="loading-spinner">' +
+        '<ion-spinner [name]="d.spinner"></ion-spinner>' +
+      '</div>' +
+      '<div *ngIf="d.content" [innerHTML]="d.content" class="loading-content"></div>' +
+    '</div>',
   host: {
     'role': 'dialog'
   },
   encapsulation: ViewEncapsulation.None,
 })
 export class LoadingCmp {
-  private d: {
+  d: {
     spinner?: string;
     content?: string;
     cssClass?: string;
@@ -41,9 +36,9 @@ export class LoadingCmp {
     delay?: number;
     duration?: number;
   };
-  private id: number;
-  private showSpinner: boolean;
-  private durationTimeout: number;
+  id: number;
+  showSpinner: boolean;
+  durationTimeout: number;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -53,6 +48,8 @@ export class LoadingCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
+
+    renderer.setElementClass(_elementRef.nativeElement, `loading-${_config.get('mode')}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
@@ -82,7 +79,12 @@ export class LoadingCmp {
     }
 
     // If there is a duration, dismiss after that amount of time
-    this.d.duration ? this.durationTimeout = setTimeout(() => this.dismiss('backdrop'), this.d.duration) : null;
+    if ( this.d && this.d.duration ) {
+      this.durationTimeout = (<any> setTimeout( () => {
+        this.dismiss('backdrop');
+      }, this.d.duration));
+    }
+
   }
 
   dismiss(role: any): Promise<any> {
@@ -98,10 +100,8 @@ export class LoadingCmp {
  * Animations for loading
  */
  class LoadingPopIn extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = enteringView.pageRef().nativeElement;
+   init() {
+     let ele = this.enteringView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -119,10 +119,8 @@ export class LoadingCmp {
 
 
  class LoadingPopOut extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = leavingView.pageRef().nativeElement;
+   init() {
+     let ele = this.leavingView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -140,10 +138,8 @@ export class LoadingCmp {
 
 
  class LoadingMdPopIn extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = enteringView.pageRef().nativeElement;
+   init() {
+     let ele = this.enteringView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -161,10 +157,8 @@ export class LoadingCmp {
 
 
  class LoadingMdPopOut extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = leavingView.pageRef().nativeElement;
+   init() {
+     let ele = this.leavingView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -182,10 +176,8 @@ export class LoadingCmp {
 
 
  class LoadingWpPopIn extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = enteringView.pageRef().nativeElement;
+   init() {
+     let ele = this.enteringView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 
@@ -203,10 +195,8 @@ export class LoadingCmp {
 
 
  class LoadingWpPopOut extends Transition {
-   constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-     super(enteringView, leavingView, opts);
-
-     let ele = leavingView.pageRef().nativeElement;
+   init() {
+     let ele = this.leavingView.pageRef().nativeElement;
      let backdrop = new Animation(ele.querySelector('ion-backdrop'));
      let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
 

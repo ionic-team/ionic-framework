@@ -81,7 +81,7 @@ export class ItemOptions {
 
 }
 
-const enum SlidingState {
+export const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
   Right = 1 << 3,
@@ -200,7 +200,7 @@ export class ItemSliding {
   /**
    * @private
    */
-  @ContentChild(Item) private item: Item;
+  @ContentChild(Item) item: Item;
 
   /**
    * @output {event} Expression to evaluate when the sliding position changes.
@@ -228,11 +228,11 @@ export class ItemSliding {
   constructor( @Optional() list: List, private _renderer: Renderer, private _elementRef: ElementRef) {
     list && list.containsSlidingItem(true);
     _elementRef.nativeElement.$ionComponent = this;
-    this.setCssClass('item-wrapper', true);
+    this._setCssClass('item-wrapper', true);
   }
 
   @ContentChildren(ItemOptions)
-  private set _itemOptions(itemOptions: QueryList<ItemOptions>) {
+  set _itemOptions(itemOptions: QueryList<ItemOptions>) {
     let sides = 0;
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();
@@ -281,7 +281,7 @@ export class ItemSliding {
       this._setState(SlidingState.Enabled);
     }
     this._startX = startX + this._openAmount;
-    this.item.setCssStyle(CSS.transition, 'none');
+    this.item.setElementStyle(CSS.transition, 'none');
   }
 
   /**
@@ -376,7 +376,7 @@ export class ItemSliding {
     this._openAmount = openAmount;
 
     if (isFinal) {
-      this.item.setCssStyle(CSS.transition, '');
+      this.item.setElementStyle(CSS.transition, '');
 
     } else {
       if (openAmount > 0) {
@@ -399,11 +399,11 @@ export class ItemSliding {
         this._setState(SlidingState.Disabled);
         this._timer = null;
       }, 600);
-      this.item.setCssStyle(CSS.transform, '');
+      this.item.setElementStyle(CSS.transform, '');
       return;
     }
 
-    this.item.setCssStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
+    this.item.setElementStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
     this.ionDrag.emit(this);
   }
 
@@ -411,11 +411,11 @@ export class ItemSliding {
     if (state === this._state) {
       return;
     }
-    this.setCssClass('active-slide', (state !== SlidingState.Disabled));
-    this.setCssClass('active-options-right', !!(state & SlidingState.Right));
-    this.setCssClass('active-options-left', !!(state & SlidingState.Left));
-    this.setCssClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
-    this.setCssClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
+    this._setCssClass('active-slide', (state !== SlidingState.Disabled));
+    this._setCssClass('active-options-right', !!(state & SlidingState.Right));
+    this._setCssClass('active-options-left', !!(state & SlidingState.Left));
+    this._setCssClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
+    this._setCssClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
     this._state = state;
   }
 
@@ -461,14 +461,14 @@ export class ItemSliding {
   /**
    * @private
    */
-  setCssClass(cssClass: string, shouldAdd: boolean) {
+  _setCssClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
   /**
    * @private
    */
-  setCssStyle(property: string, value: string) {
+  _setCssStyle(property: string, value: string) {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
   }
 }

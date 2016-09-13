@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Ng
 
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
-import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
@@ -177,14 +176,12 @@ import { GestureController } from '../../gestures/gesture-controller';
  */
 @Component({
   selector: 'ion-menu',
+  template:
+    '<div class="menu-inner"><ng-content></ng-content></div>' +
+    '<ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>',
   host: {
     'role': 'navigation'
   },
-  template: `
-    <div class="menu-inner"><ng-content></ng-content></div>
-    <ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>
-  `,
-  directives: [Backdrop],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -294,8 +291,11 @@ export class Menu {
    */
   @Output() ionClose: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  /** @private */
+  _menuCtrl: MenuController;
+
   constructor(
-    private _menuCtrl: MenuController,
+    _menuCtrl: MenuController,
     private _elementRef: ElementRef,
     private _config: Config,
     private _platform: Platform,
@@ -303,7 +303,9 @@ export class Menu {
     private _keyboard: Keyboard,
     private _zone: NgZone,
     public gestureCtrl: GestureController
-  ) { }
+  ) {
+    this._menuCtrl = _menuCtrl;
+  }
 
   /**
    * @private
@@ -496,7 +498,7 @@ export class Menu {
 
       this.isOpen = isOpen;
 
-      this._cntEle.classList[isOpen ? 'add' : 'remove']('menu-content-open');
+      (<any>this._cntEle.classList)[isOpen ? 'add' : 'remove']('menu-content-open');
 
       this._cntEle.removeEventListener('click', this.onContentClick);
 
@@ -557,10 +559,9 @@ export class Menu {
       // if this menu should be enabled
       // then find all the other menus on this same side
       // and automatically disable other same side menus
-      let sameSideMenus = this._menuCtrl
-                            .getMenus()
-                            .filter(m => m.side === this.side && m !== this)
-                            .map(m => m.enabled = false);
+      this._menuCtrl.getMenus()
+                    .filter(m => m.side === this.side && m !== this)
+                    .map(m => m.enabled = false);
     }
 
     return this;

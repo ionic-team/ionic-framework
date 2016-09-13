@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
+import { AppPortal } from '../app/app-root';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-interfaces';
+import { NavOptions } from '../../navigation/nav-util';
 import { ToastOptions } from './toast-options';
 import { ToastCmp } from './toast-component';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @private
@@ -15,7 +16,7 @@ export class Toast extends ViewController {
 
   constructor(app: App, opts: ToastOptions = {}) {
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
-    super(ToastCmp, opts);
+    super(ToastCmp, opts, null);
     this._app = app;
 
     // set the position to the bottom if not provided
@@ -24,13 +25,7 @@ export class Toast extends ViewController {
     }
 
     this.isOverlay = true;
-
-    // by default, toasts should not fire lifecycle events of other views
-    // for example, when an toast enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
-
 
   /**
   * @private
@@ -61,14 +56,21 @@ export class Toast extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
-    return this._app.present(this, navOptions);
+    return this._app.present(this, navOptions, AppPortal.TOAST);
+  }
+
+  /**
+   * Dismiss all toast components which have been presented.
+   */
+  dismissAll() {
+    this._nav && this._nav.popAll();
   }
 
   /**
    * @private
    * DEPRECATED: Please inject ToastController instead
    */
-  private static create(opt: any) {
+  static create(opt: any) {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Toast.create(..) has been deprecated. Please inject ToastController instead');
   }

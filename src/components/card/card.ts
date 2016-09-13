@@ -6,19 +6,18 @@ import { Ion } from '../ion';
 
 /**
   * @private
-  * Select all of the HTML text elements with the color attribute to apply the text-color class.
- */
+  */
 @Directive({
-  selector: 'h1[color], h2[color], h3[color], h4[color], h5[color], h6[color], a[color], p[color], span[color], b[color], i[color], strong[color], em[color], small[color], sub[color], sup[color]'
+  selector: 'ion-card'
 })
-export class Typography extends Ion {
+export class Card extends Ion {
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
   set color(val: string) {
-    this._setColor('text', val);
+    this._setColor('card', val);
   }
 
   /**
@@ -26,7 +25,7 @@ export class Typography extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('text', val);
+    this._setMode('card', val);
   }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
@@ -36,3 +35,29 @@ export class Typography extends Ion {
   }
 
 }
+
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'ion-card-content'
+})
+export class CardContent {}
+
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'ion-card-header'
+})
+export class CardHeader {}
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'ion-card-title'
+})
+export class CardTitle {}

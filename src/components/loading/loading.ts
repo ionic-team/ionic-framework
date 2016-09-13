@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
-import { Config } from '../../config/config';
+import { AppPortal } from '../app/app-root';
 import { isPresent } from '../../util/util';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';
-import { NavOptions } from '../nav/nav-interfaces';
-import { ViewController } from '../nav/view-controller';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @private
@@ -18,14 +18,9 @@ export class Loading extends ViewController {
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
 
-    super(LoadingCmp, opts);
+    super(LoadingCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
-
-    // by default, loading indicators should not fire lifecycle events of other views
-    // for example, when an loading indicators enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**
@@ -43,7 +38,6 @@ export class Loading extends ViewController {
     this.data.content = content;
   }
 
-
   /**
    * Present the loading instance.
    *
@@ -51,14 +45,21 @@ export class Loading extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
-    return this._app.present(this, navOptions);
+    return this._app.present(this, navOptions, AppPortal.LOADING);
+  }
+
+  /**
+   * Dismiss all loading components which have been presented.
+   */
+  dismissAll() {
+    this._nav && this._nav.popAll();
   }
 
   /**
    * @private
    * DEPRECATED: Please inject LoadingController instead
    */
-  private static create(opt: any) {
+  static create(opt: any) {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Loading.create(..) has been deprecated. Please inject LoadingController instead');
   }
@@ -108,7 +109,7 @@ export class Loading extends ViewController {
  *
  * @usage
  * ```ts
- * constructor(private loadingCtrl: LoadingController) {
+ * constructor(public loadingCtrl: LoadingController) {
  *
  * }
  *

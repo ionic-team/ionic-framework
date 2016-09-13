@@ -7,11 +7,10 @@ import { Platform } from '../../platform/platform';
  * @private
  */
 export class DisplayWhen {
-  protected isMatch: boolean = false;
-  private platform: Platform;
-  private conditions: string[];
+  isMatch: boolean = false;
+  conditions: string[];
 
-  constructor(conditions: string, platform: Platform, ngZone: NgZone) {
+  constructor(conditions: string, public platform: Platform, public zone: NgZone) {
     this.platform = platform;
 
     if (!conditions) return;
@@ -27,10 +26,10 @@ export class DisplayWhen {
       }
     }
 
-    if ( this.orientation() ) {
+    if (this.orientation()) {
       // add window resize listener
       platform.onResize(() => {
-        ngZone.run(() => {
+        zone.run(() => {
           this.orientation();
         });
       });
@@ -108,9 +107,9 @@ export class ShowWhen extends DisplayWhen {
   constructor(
     @Attribute('showWhen') showWhen: string,
     platform: Platform,
-    ngZone: NgZone
+    zone: NgZone
   ) {
-    super(showWhen, platform, ngZone);
+    super(showWhen, platform, zone);
   }
 
 }
@@ -167,9 +166,9 @@ export class HideWhen extends DisplayWhen {
   constructor(
     @Attribute('hideWhen') hideWhen: string,
     platform: Platform,
-    ngZone: NgZone
+    zone: NgZone
   ) {
-    super(hideWhen, platform, ngZone);
+    super(hideWhen, platform, zone);
   }
 
 }

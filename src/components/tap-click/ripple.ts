@@ -1,6 +1,6 @@
 import { Activator } from './activator';
 import { App } from '../app/app';
-import { Coordinates, CSS, hasPointerMoved, nativeRaf, pointerCoord, rafFrames } from '../../util/dom';
+import { PointerCoordinates, CSS, hasPointerMoved, nativeRaf, pointerCoord, rafFrames } from '../../util/dom';
 import { Config } from '../../config/config';
 
 
@@ -13,7 +13,7 @@ export class RippleActivator extends Activator {
     super(app, config);
   }
 
-  downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: Coordinates) {
+  downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     let self = this;
     if (self.disableActivated(ev)) {
       return;
@@ -34,7 +34,7 @@ export class RippleActivator extends Activator {
           var j = queuedEle.childElementCount;
           while (j--) {
             var rippleEle: any = queuedEle.children[j];
-            if (rippleEle.tagName === 'ION-BUTTON-EFFECT') {
+            if (rippleEle.classList.contains('button-effect')) {
               // DOM WRITE
               rippleEle.style.left = '-9999px';
               rippleEle.style.opacity = '';
@@ -56,15 +56,13 @@ export class RippleActivator extends Activator {
     });
   }
 
-  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: Coordinates) {
-    let self = this;
-
+  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     if (!hasPointerMoved(6, startCoord, pointerCoord(ev))) {
       let i = activatableEle.childElementCount;
 
       while (i--) {
         var rippleEle: any = activatableEle.children[i];
-        if (rippleEle.tagName === 'ION-BUTTON-EFFECT') {
+        if (rippleEle.classList.contains('button-effect')) {
           var clientPointerX = (startCoord.x - rippleEle.$left);
           var clientPointerY = (startCoord.y - rippleEle.$top);
 

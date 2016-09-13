@@ -2,7 +2,7 @@ import { Directive, ElementRef, Input, HostListener, Optional } from '@angular/c
 
 import { MenuController } from './menu-controller';
 import { Navbar } from '../navbar/navbar';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @name MenuToggle
