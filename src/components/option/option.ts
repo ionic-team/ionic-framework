@@ -1,5 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { isPresent, isTrueProperty } from '../../util/util';
 
 /**
@@ -23,6 +22,16 @@ export class Option {
   @Output() ionSelect: EventEmitter<any> = new EventEmitter();
 
   constructor(private _elementRef: ElementRef) {}
+
+  @HostListener('click', ['$event'])
+  private _click(ev: UIEvent) {
+    console.debug('option, select');
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    this.selected = true;
+    this.ionSelect.emit(this.value);
+  }
 
   /**
    * @input {boolean} Whether or not the option is already selected
