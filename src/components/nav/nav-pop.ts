@@ -1,6 +1,9 @@
-import { Directive, HostListener, Input, Optional } from '@angular/core';
-import { NavController } from './nav-controller';
-import { noop } from '../../util/util';
+import { AfterViewInit, Directive, HostBinding, HostListener, OnChanges, Optional } from '@angular/core';
+
+import { DeepLinker } from '../../navigation/deep-linker';
+import { NavController } from '../../navigation/nav-controller';
+import { ViewController } from '../../navigation/view-controller';
+
 
 /**
  * @name NavPop
@@ -27,9 +30,9 @@ import { noop } from '../../util/util';
 })
 export class NavPop {
 
-  constructor(@Optional() private _nav: NavController) {
+  constructor(@Optional() public _nav: NavController) {
     if (!_nav) {
-      console.error('nav-pop must be within a NavController');
+      console.error('navPop must be within a NavController');
     }
   }
 
@@ -37,11 +40,47 @@ export class NavPop {
   onClick(): boolean {
     // If no target, or if target is _self, prevent default browser behavior
     if (this._nav) {
-      this._nav.pop(null, noop);
+      this._nav.pop(null, null);
       return false;
     }
 
     return true;
+  }
+
+}
+
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'a[navPop]'
+})
+export class NavPopAnchor implements OnChanges, AfterViewInit {
+
+  constructor(
+    @Optional() public host: NavPop,
+    public linker: DeepLinker,
+    @Optional() public viewCtrl: ViewController) {}
+
+  @HostBinding() href: string;
+
+  updateHref() {
+    if (this.host && this.viewCtrl) {
+      const previousView = this.host._nav.getPrevious(this.viewCtrl);
+      this.href = (previousView && this.linker.createUrl(this.host._nav, this.viewCtrl.component, this.viewCtrl.data)) || '#';
+
+    } else {
+      this.href = '#';
+    }
+  }
+
+  ngOnChanges() {
+    this.updateHref();
+  }
+
+  ngAfterViewInit() {
+    this.updateHref();
   }
 
 }

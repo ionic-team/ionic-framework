@@ -1,11 +1,7 @@
 import { EventEmitter } from '@angular/core';
 
-import { Config } from '../../config/config';
-import { GestureController } from '../../gestures/gesture-controller';
-import { Ion } from '../ion';
-import { isBlank, pascalCaseToDashCase } from '../../util/util';
-import { Keyboard } from '../../util/keyboard';
-import { NavOptions } from './nav-interfaces';
+import { Config } from '../config/config';
+import { NavOptions } from './nav-util';
 import { ViewController } from './view-controller';
 
 
@@ -96,7 +92,7 @@ import { ViewController } from './view-controller';
  *    template: '<ion-nav #myNav [root]="rootPage"></ion-nav>'
  * })
  * export class MyApp {
- *    @ViewChild('myNav') nav : NavController
+ *    @ViewChild('myNav') nav: NavController
  *    private rootPage = TabsPage;
  *
  *    // Wait for the components in MyApp's template to be initialized
@@ -199,11 +195,11 @@ import { ViewController } from './view-controller';
  *   <ion-content>I'm the other page!</ion-content>`
  * })
  * class OtherPage {
- *    constructor(private navController: NavController ){
+ *    constructor(private navCtrl: NavController ){
  *    }
  *
  *    popView(){
- *      this.navController.pop();
+ *      this.navCtrl.pop();
  *    }
  * }
  * ```
@@ -219,7 +215,7 @@ import { ViewController } from './view-controller';
  *   template: 'Hello World'
  * })
  * class HelloWorld {
- *   ionViewLoaded() {
+ *   ionViewDidLoad() {
  *     console.log("I'm alive!");
  *   }
  *   ionViewWillLeave() {
@@ -230,13 +226,12 @@ import { ViewController } from './view-controller';
  *
  *  | Page Event          | Description                                                                                                                                                                                                                                                                        |
  *  |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
- *  | `ionViewLoaded`     | Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewLoaded` event is good place to put your setup code for the page. |
+ *  | `ionViewDidLoad`       | Runs when the page has loaded. This event only happens once per page being created. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewDidLoad` event is good place to put your setup code for the page. |
  *  | `ionViewWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                   |
  *  | `ionViewDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                             |
  *  | `ionViewWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                             |
  *  | `ionViewDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                                          |
- *  | `ionViewWillUnload` | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                                         |
- *  | `ionViewDidUnload`  | Runs after the page has been destroyed and its elements have been removed.
+ *  | `ionViewWillUnload` | Runs when the page is about to be destroyed and have its elements removed.
  *
  *
  * ## Asynchronous Nav Transitions
@@ -254,14 +249,14 @@ import { ViewController } from './view-controller';
  * operations in order. Navigation actions can be chained together very easily using promises.
  *
  * ```typescript
- * let navTransitionPromise = this.navController.push(Page2);
- * navTransitionPromise.then( () => {
+ * let navTransitionPromise = this.navCtrl.push(Page2);
+ * navTransitionPromise.then(() => {
  *   // the transition has completed, so I can push another page now
- *   return this.navController.push(Page3);
- * }).then( () => {
+ *   return this.navCtrl.push(Page3);
+ * }).then(() => {
  *   // the second transition has completed, so I can push yet another page
-    return this.navController.push(Page4);
- * }).then( () => {
+    return this.navCtrl.push(Page4);
+ * }).then(() => {
  *   console.log('The transitions are complete!');
  * })
  * ```
@@ -323,12 +318,6 @@ export abstract class NavController {
   viewWillUnload: EventEmitter<any>;
 
   /**
-   * Observable to be subscribed to when a component has fully been unloaded and destroyed.
-   * @returns {Observable} Returns an observable
-   */
-  viewDidUnload: EventEmitter<any>;
-
-  /**
    * @private
    */
   id: string;
@@ -344,27 +333,6 @@ export abstract class NavController {
    * @private
    */
   config: Config;
-
-  /**
-   * Set the root for the current navigation stack.
-   * @param {Page} page  The name of the component you want to push on the navigation stack.
-   * @param {object} [params={}] Any nav-params you want to pass along to the next view.
-   * @param {object} [opts={}] Any options you want to use pass to transtion.
-   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
-   */
-  abstract setRoot(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
-
-  /**
-   * Set the views of the current navigation stack and navigate to the
-   * last view. By default animations are disabled, but they can be enabled
-   * by passing options to the navigation controller.You can also pass any
-   * navigation params to the individual pages in the array.
-   *
-   * @param {array<Page>} pages  An arry of page components and their params to load in the stack.
-   * @param {object} [opts={}] Nav options to go with this transition.
-   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
-   */
-  abstract setPages(pages: Array<{page: any, params?: any}>, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * Push a new component onto the current navication stack. Pass any aditional information
@@ -421,13 +389,20 @@ export abstract class NavController {
 
   /**
    * @private
-   * Pop to a specific view in the history stack.
+   * Pop to a specific view in the history stack. If an already created
+   * instance of the page is not found in the stack, then it'll `setRoot`
+   * to the nav stack by removing all current pages and pushing on a
+   * new instance of the given page. Note that any params passed to
+   * this method are not used when an existing page instance has already
+   * been found in the stack. Nav params are only used by this method
+   * when a new instance needs to be created.
    *
-   * @param {ViewController} view  to pop to
+   * @param {any} page A page can be a ViewController instance or string.
+   * @param {object} [params={}] Any nav-params to be used when a new view instance is created at the root.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract popTo(view: ViewController, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract popTo(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * Removes a page from the nav stack at the specified index.
@@ -440,6 +415,27 @@ export abstract class NavController {
   abstract remove(startIndex: number, removeCount?: number, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
+   * Set the root for the current navigation stack.
+   * @param {Page|ViewController} page  The name of the component you want to push on the navigation stack.
+   * @param {object} [params={}] Any nav-params you want to pass along to the next view.
+   * @param {object} [opts={}] Any options you want to use pass to transtion.
+   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
+   */
+  abstract setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+
+  /**
+   * Set the views of the current navigation stack and navigate to the
+   * last view. By default animations are disabled, but they can be enabled
+   * by passing options to the navigation controller.You can also pass any
+   * navigation params to the individual pages in the array.
+   *
+   * @param {array<Page>} pages  An arry of page components and their params to load in the stack.
+   * @param {object} [opts={}] Nav options to go with this transition.
+   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
+   */
+  abstract setPages(pages: any[], opts?: NavOptions, done?: Function): Promise<any>;
+
+  /**
    * @param {number} index  The index of the page to get.
    * @returns {ViewController} Returns the view controller that matches the given index.
    */
@@ -448,7 +444,7 @@ export abstract class NavController {
   /**
    * @returns {ViewController} Returns the active page's view controller.
    */
-  abstract getActive(): ViewController;
+  abstract getActive(includeEntering?: boolean): ViewController;
 
   /**
    * Returns if the given view is the active view or not.
@@ -459,10 +455,11 @@ export abstract class NavController {
 
   /**
    * Returns the view controller which is before the given view controller.
+   * If no view controller is passed in, then it'll default to the active view.
    * @param {ViewController} view
    * @returns {viewController}
    */
-  abstract getPrevious(view: ViewController): ViewController;
+  abstract getPrevious(view?: ViewController): ViewController;
 
   /**
    * Returns the first view controller in this nav controller's stack.

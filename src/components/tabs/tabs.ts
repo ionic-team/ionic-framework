@@ -1,22 +1,19 @@
-import { Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
-import { Badge } from '../badge/badge';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
-import { Icon } from '../icon/icon';
+import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
-import { isBlank, isPresent, isTrueProperty } from '../../util/util';
+import { isBlank } from '../../util/util';
 import { nativeRaf } from '../../util/dom';
-import { NavController } from '../nav/nav-controller';
-import { NavControllerBase } from '../nav/nav-controller-base';
-import { NavOptions, DIRECTION_FORWARD } from '../nav/nav-interfaces';
+import { NavController } from '../../navigation/nav-controller';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
-import { TabButton } from './tab-button';
 import { TabHighlight } from './tab-highlight';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -143,72 +140,61 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-tabs',
-  template: `
-    <ion-tabbar role="tablist" #tabbar>
-      <a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">
-        <ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>
-        <span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>
-        <ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>
-        <ion-button-effect></ion-button-effect>
-      </a>
-      <tab-highlight></tab-highlight>
-    </ion-tabbar>
-    <ng-content></ng-content>
-    <div #portal tab-portal></div>
-  `,
-  directives: [Badge, Icon, NgClass, NgFor, NgIf, TabButton, TabHighlight],
+  template:
+    '<div class="tabbar" role="tablist" #tabbar>' +
+      '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">' +
+        '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
+        '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
+        '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
+        '<div class="button-effect"></div>' +
+      '</a>' +
+      '<div class="tab-highlight"></div>' +
+    '</div>' +
+    '<ng-content></ng-content>' +
+    '<div #portal tab-portal></div>',
   encapsulation: ViewEncapsulation.None,
 })
-export class Tabs extends Ion {
-  private _ids: number = -1;
-  private _tabs: Tab[] = [];
-  private _onReady: any = null;
-  private _sbPadding: boolean;
-  private _top: number;
-  private _bottom: number;
-
-  /**
-   * @private
-   */
-  id: string;
-
-  /**
-   * @private
-   */
-  selectHistory: string[] = [];
-
-  /**
-   * @private
-   */
-  subPages: boolean;
-
+export class Tabs extends Ion implements AfterViewInit {
   /** @internal */
-  _color: string;
+  _ids: number = -1;
+  /** @internal */
+  _tabs: Tab[] = [];
+  /** @internal */
+  _sbPadding: boolean;
+  /** @internal */
+  _top: number;
+  /** @internal */
+  _bottom: number;
+  /** @internal */
+  id: string;
+  /** @internal */
+  _selectHistory: string[] = [];
+  /** @internal */
+  _subPages: boolean;
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(value: string) {
+    this._setColor('tabs', value);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('tabs', val);
   }
 
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
    */
-  @Input() selectedIndex: any;
+  @Input() selectedIndex: number;
 
   /**
-   * @input {boolean} Set whether to preload all the tabs: `true`, `false`.
-   */
-  @Input() preloadTabs: any;
-
-  /**
-   * @private DEPRECATED. Please use `tabsLayout` instead.
+   * @internal DEPRECATED. Please use `tabsLayout` instead.
    */
   @Input() private tabbarLayout: string;
 
@@ -218,7 +204,7 @@ export class Tabs extends Ion {
   @Input() tabsLayout: string;
 
   /**
-   * @private DEPRECATED. Please use `tabsPlacement` instead.
+   * @internal DEPRECATED. Please use `tabsPlacement` instead.
    */
   @Input() private tabbarPlacement: string;
 
@@ -238,17 +224,17 @@ export class Tabs extends Ion {
   @Output() ionChange: EventEmitter<Tab> = new EventEmitter<Tab>();
 
   /**
-   * @private
+   * @internal
    */
-  @ViewChild(TabHighlight) private _highlight: TabHighlight;
+  @ViewChild(TabHighlight) _highlight: TabHighlight;
 
   /**
-   * @private
+   * @internal
    */
-  @ViewChild('tabbar') private _tabbar: ElementRef;
+  @ViewChild('tabbar') _tabbar: ElementRef;
 
   /**
-   * @private
+   * @internal
    */
   @ViewChild('portal', {read: ViewContainerRef}) portal: ViewContainerRef;
 
@@ -261,29 +247,31 @@ export class Tabs extends Ion {
     @Optional() parent: NavController,
     @Optional() public viewCtrl: ViewController,
     private _app: App,
-    private _config: Config,
-    private _elementRef: ElementRef,
+    config: Config,
+    elementRef: ElementRef,
     private _platform: Platform,
-    private _renderer: Renderer
+    renderer: Renderer,
+    private _linker: DeepLinker
   ) {
-    super(_elementRef);
+    super(config, elementRef, renderer);
 
+    this.mode = config.get('mode');
     this.parent = <NavControllerBase>parent;
     this.id = 't' + (++tabIds);
-    this._sbPadding = _config.getBoolean('statusbarPadding');
-    this.subPages = _config.getBoolean('tabsHideOnSubPages');
-    this.tabsHighlight = _config.getBoolean('tabsHighlight');
+    this._sbPadding = config.getBoolean('statusbarPadding');
+    this._subPages = config.getBoolean('tabsHideOnSubPages');
+    this.tabsHighlight = config.getBoolean('tabsHighlight');
 
     // TODO deprecated 07-07-2016 beta.11
-    if (_config.get('tabSubPages') !== null) {
+    if (config.get('tabSubPages') !== null) {
       console.warn('Config option "tabSubPages" has been deprecated. Please use "tabsHideOnSubPages" instead.');
-      this.subPages = _config.getBoolean('tabSubPages');
+      this._subPages = config.getBoolean('tabSubPages');
     }
 
     // TODO deprecated 07-07-2016 beta.11
-    if (_config.get('tabbarHighlight') !== null) {
+    if (config.get('tabbarHighlight') !== null) {
       console.warn('Config option "tabbarHighlight" has been deprecated. Please use "tabsHighlight" instead.');
-      this.tabsHighlight = _config.getBoolean('tabbarHighlight');
+      this.tabsHighlight = config.getBoolean('tabbarHighlight');
     }
 
     if (this.parent) {
@@ -297,24 +285,20 @@ export class Tabs extends Ion {
 
     } else if (this._app) {
       // this is the root navcontroller for the entire app
-      this._app.setRootNav(this);
+      this._app._setRootNav(this);
     }
 
     // Tabs may also be an actual ViewController which was navigated to
     // if Tabs is static and not navigated to within a NavController
     // then skip this and don't treat it as it's own ViewController
     if (viewCtrl) {
-      viewCtrl.setContent(this);
-      viewCtrl.setContentRef(_elementRef);
-
-      viewCtrl.loaded = (done) => {
-        this._onReady = done;
-      };
+      viewCtrl._setContent(this);
+      viewCtrl._setContentRef(elementRef);
     }
   }
 
   /**
-   * @private
+   * @internal
    */
   ngAfterViewInit() {
     this._setConfig('tabsPlacement', 'bottom');
@@ -328,27 +312,27 @@ export class Tabs extends Ion {
     // TODO deprecated 07-07-2016 beta.11
     if (this.tabbarPlacement !== undefined) {
       console.warn('Input "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this.tabbarPlacement);
+      this.setElementAttribute('tabsPlacement', this.tabbarPlacement);
       this.tabsPlacement = this.tabbarPlacement;
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (this._config.get('tabbarPlacement') !== null) {
       console.warn('Config option "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsPlacement', this._config.get('tabbarPlacement'));
+      this.setElementAttribute('tabsPlacement', this._config.get('tabbarPlacement'));
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (this.tabbarLayout !== undefined) {
       console.warn('Input "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this.tabbarLayout);
+      this.setElementAttribute('tabsLayout', this.tabbarLayout);
       this.tabsLayout = this.tabbarLayout;
     }
 
     // TODO deprecated 07-07-2016 beta.11
     if (this._config.get('tabbarLayout') !== null) {
       console.warn('Config option "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'tabsLayout', this._config.get('tabsLayout'));
+      this.setElementAttribute('tabsLayout', this._config.get('tabsLayout'));
     }
 
     if (this.tabsHighlight) {
@@ -361,12 +345,19 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   initTabs() {
     // get the selected index from the input
     // otherwise default it to use the first index
-    let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(this.selectedIndex, 10));
+    let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(<any>this.selectedIndex, 10));
+
+    // now see if the deep linker can find a tab index
+    const tabsSegment = this._linker.initNav(this);
+    if (tabsSegment && isBlank(tabsSegment.component)) {
+      // we found a segment which probably represents which tab to select
+      selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.name, selectedIndex);
+    }
 
     // get the selectedIndex and ensure it isn't hidden or disabled
     let selectedTab = this._tabs.find((t, i) => i === selectedIndex && t.enabled && t.show);
@@ -378,91 +369,73 @@ export class Tabs extends Ion {
 
     if (selectedTab) {
       // we found a tab to select
-      this.select(selectedTab);
-    }
-
-    // check if preloadTab is set as an input @Input
-    // otherwise check the preloadTabs config
-    let shouldPreloadTabs = (isBlank(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
-    if (shouldPreloadTabs) {
-      // preload all the tabs which isn't the selected tab
-      this._tabs.filter((t) => t !== selectedTab).forEach((tab, index) => {
-        tab.preload(this._config.getNumber('tabsPreloadDelay', 1000) * index);
+      // get the segment the deep linker says this tab should load with
+      let pageId: string = null;
+      if (tabsSegment) {
+        let selectedTabSegment = this._linker.initNav(selectedTab);
+        if (selectedTabSegment && selectedTabSegment.component) {
+          selectedTab.root = selectedTabSegment.component;
+          selectedTab.rootParams = selectedTabSegment.data;
+          pageId = selectedTabSegment.id;
+        }
+      }
+      this.select(selectedTab, {
+        id: pageId
       });
     }
+
+    // set the initial href attribute values for each tab
+    this._tabs.forEach(t => {
+      t.updateHref(t.root, t.rootParams);
+    });
   }
 
   /**
-   * @private
+   * @internal
    */
-  private _setConfig(attrKey: string, fallback: any) {
-    var val = (<any>this)[attrKey];
+  _setConfig(attrKey: string, fallback: any) {
+    let val = (<any>this)[attrKey];
     if (isBlank(val)) {
       val = this._config.get(attrKey, fallback);
     }
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, attrKey, val);
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `tabs-${color}`, isAdd);
-    }
+    this.setElementAttribute(attrKey, val);
   }
 
   /**
    * @private
    */
   add(tab: Tab) {
-    tab.id = this.id + '-' + (++this._ids);
     this._tabs.push(tab);
+    return this.id + '-' + (++this._ids);
   }
 
   /**
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
-  select(tabOrIndex: number | Tab, opts: NavOptions = {}, done?: Function): Promise<any> {
-    let promise: Promise<any>;
-    if (!done) {
-      promise = new Promise(res => { done = res; });
-    }
-
-    let selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
+  select(tabOrIndex: number | Tab, opts: NavOptions = {}) {
+    const selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (isBlank(selectedTab)) {
-      return Promise.resolve();
+      return;
     }
 
-    let deselectedTab = this.getSelected();
+    const deselectedTab = this.getSelected();
     if (selectedTab === deselectedTab) {
       // no change
-      this._touchActive(selectedTab);
-      return Promise.resolve();
+      return this._touchActive(selectedTab);
     }
-    console.debug(`Tabs, select: ${selectedTab.id}`);
 
     let deselectedPage: ViewController;
     if (deselectedTab) {
       deselectedPage = deselectedTab.getActive();
-      deselectedPage && deselectedPage.fireWillLeave();
+      deselectedPage && deselectedPage._willLeave();
     }
 
     opts.animate = false;
 
-    let selectedPage = selectedTab.getActive();
-    selectedPage && selectedPage.fireWillEnter();
+    const selectedPage = selectedTab.getActive();
+    selectedPage && selectedPage._willEnter();
 
-    selectedTab.load(opts, (initialLoad: boolean) => {
+    selectedTab.load(opts, (alreadyLoaded: boolean) => {
       selectedTab.ionSelect.emit(selectedTab);
       this.ionChange.emit(selectedTab);
 
@@ -478,27 +451,26 @@ export class Tabs extends Ion {
         if (this.tabsHighlight) {
           this._highlight.select(selectedTab);
         }
+
+        if (opts.updateUrl !== false) {
+          this._linker.navChange(DIRECTION_SWITCH);
+        }
       }
 
-      selectedPage && selectedPage.fireDidEnter();
-      deselectedPage && deselectedPage.fireDidLeave();
-
-      if (this._onReady) {
-        this._onReady();
-        this._onReady = null;
-      }
+      selectedPage && selectedPage._didEnter();
+      deselectedPage && deselectedPage._didLeave();
 
       // track the order of which tabs have been selected, by their index
       // do not track if the tab index is the same as the previous
-      if (this.selectHistory[this.selectHistory.length - 1] !== selectedTab.id) {
-        this.selectHistory.push(selectedTab.id);
+      if (this._selectHistory[this._selectHistory.length - 1] !== selectedTab.id) {
+        this._selectHistory.push(selectedTab.id);
       }
 
       // if this is not the Tab's initial load then we need
       // to refresh the tabbar and content dimensions to be sure
       // they're lined up correctly
-      if (!initialLoad && selectedPage) {
-        var content = <Content>selectedPage.getContent();
+      if (alreadyLoaded && selectedPage) {
+        let content = <Content>selectedPage.getContent();
         if (content && content instanceof Content) {
           nativeRaf(() => {
             content.readDimensions();
@@ -506,11 +478,7 @@ export class Tabs extends Ion {
           });
         }
       }
-
-      done();
     });
-
-    return promise;
   }
 
   /**
@@ -521,12 +489,12 @@ export class Tabs extends Ion {
   previousTab(trimHistory: boolean = true): Tab {
     // walk backwards through the tab selection history
     // and find the first previous tab that is enabled and shown
-    console.debug('run previousTab', this.selectHistory);
-    for (var i = this.selectHistory.length - 2; i >= 0; i--) {
-      var tab = this._tabs.find(t => t.id === this.selectHistory[i]);
+    console.debug('run previousTab', this._selectHistory);
+    for (var i = this._selectHistory.length - 2; i >= 0; i--) {
+      var tab = this._tabs.find(t => t.id === this._selectHistory[i]);
       if (tab && tab.enabled && tab.show) {
         if (trimHistory) {
-          this.selectHistory.splice(i + 1);
+          this._selectHistory.splice(i + 1);
         }
         return tab;
       }
@@ -540,17 +508,14 @@ export class Tabs extends Ion {
    * @returns {Tab} Returns the tab who's index matches the one passed
    */
   getByIndex(index: number): Tab {
-    if (index < this._tabs.length && index > -1) {
-      return this._tabs[index];
-    }
-    return null;
+    return this._tabs[index];
   }
 
   /**
    * @return {Tab} Returns the currently selected tab
    */
   getSelected(): Tab {
-    for (let i = 0; i < this._tabs.length; i++) {
+    for (var i = 0; i < this._tabs.length; i++) {
       if (this._tabs[i].isSelected) {
         return this._tabs[i];
       }
@@ -559,68 +524,57 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @private
+   * @internal
    */
   getActiveChildNav() {
     return this.getSelected();
   }
 
   /**
-   * @private
+   * @internal
    */
   getIndex(tab: Tab): number {
     return this._tabs.indexOf(tab);
   }
 
   /**
-   * @private
+   * @internal
    */
   length(): number {
     return this._tabs.length;
   }
 
   /**
-   * @private
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
   private _touchActive(tab: Tab) {
-    let active = tab.getActive();
+    const active = tab.getActive();
 
-    if (!active) {
-      return Promise.resolve();
+    if (active) {
+      if (active._cmp && active._cmp.instance.ionSelected) {
+        // if they have a custom tab selected handler, call it
+        active._cmp.instance.ionSelected();
+
+      } else if (tab.length() > 1) {
+        // if we're a few pages deep, pop to root
+        tab.popToRoot(null, null);
+
+      } else if (tab.root !== active.component) {
+        // Otherwise, if the page we're on is not our real root, reset it to our
+        // default root type
+        tab.setRoot(tab.root);
+      }
     }
-
-    let instance = active.instance;
-
-    // If they have a custom tab selected handler, call it
-    if (instance.ionSelected) {
-      return instance.ionSelected();
-    }
-
-    // If we're a few pages deep, pop to root
-    if (tab.length() > 1) {
-      // Pop to the root view
-      return tab.popToRoot();
-    }
-
-    // Otherwise, if the page we're on is not our real root, reset it to our
-    // default root type
-    if (tab.root !== active.componentType) {
-      return tab.setRoot(tab.root);
-    }
-
-    // And failing all of that, we do something safe and secure
-    return Promise.resolve();
   }
 
   /**
-   * @private
+   * @internal
    * DOM WRITE
    */
   setTabbarPosition(top: number, bottom: number) {
     if (this._top !== top || this._bottom !== bottom) {
-      let tabbarEle = <HTMLElement>this._tabbar.nativeElement;
+      const tabbarEle = <HTMLElement>this._tabbar.nativeElement;
       tabbarEle.style.top = (top > -1 ? top + 'px' : '');
       tabbarEle.style.bottom = (bottom > -1 ? bottom + 'px' : '');
       tabbarEle.classList.add('show-tabbar');

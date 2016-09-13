@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
+import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
-import { Footer, Header } from '../toolbar/toolbar';
-import { isPresent, merge } from '../../util/util';
-import { Navbar } from '../navbar/navbar';
-import { NavController } from './nav-controller';
-import { NavOptions } from './nav-interfaces';
+import { Footer, Header } from '../components/toolbar/toolbar';
+import { isPresent, merge } from '../util/util';
+import { Navbar } from '../components/navbar/navbar';
+import { NavControllerBase } from './nav-controller-base';
+import { NavOptions, ViewState } from './nav-util';
 import { NavParams } from './nav-params';
 
 
@@ -28,19 +28,14 @@ import { NavParams } from './nav-params';
 export class ViewController {
   private _cntDir: any;
   private _cntRef: ElementRef;
-  private _tbRefs: ElementRef[] = [];
   private _hdrDir: Header;
   private _ftrDir: Footer;
-  private _destroyFn: Function;
-  private _hdAttr: string = null;
-  private _leavingOpts: NavOptions = null;
-  private _loaded: boolean = false;
-  private _nbDir: Navbar;
-  private _onDidDismiss: Function = null;
-  private _onWillDismiss: Function = null;
-  private _pgRef: ElementRef;
-  private _cd: ChangeDetectorRef;
-  protected _nav: NavController;
+  private _hidden: string;
+  private _leavingOpts: NavOptions;
+  private _nb: Navbar;
+  private _onDidDismiss: Function;
+  private _onWillDismiss: Function;
+  private _detached: boolean;
 
   /**
    * Observable to be subscribed to when the current component will become active
@@ -67,69 +62,75 @@ export class ViewController {
   didLeave: EventEmitter<any>;
 
   /**
-   * Observable to be subscribed to when the current component will be destroyed
+   * Observable to be subscribed to when the current component has been destroyed
    * @returns {Observable} Returns an observable
    */
   willUnload: EventEmitter<any>;
 
-  /**
-   * Observable to be subscribed to when the current component has been destroyed
-   * @returns {Observable} Returns an observable
-   */
-  didUnload: EventEmitter<any>;
-
-  /**
-   * @internal
-   */
+  /** @private */
   data: any;
 
-  /**
-   * @private
-   */
+  /** @private */
+  instance: any;
+
+  /** @private */
   id: string;
 
-  /**
-   * @private
-   */
-  instance: any = {};
-
-  /**
-   * @private
-   */
-  state: number = 0;
-
-  /**
-   * @private
-   * If this is currently the active view, then set to false
-   * if it does not want the other views to fire their own lifecycles.
-   */
-  fireOtherLifecycles: boolean = true;
-
-  /**
-   * @private
-   */
+  /** @private */
   isOverlay: boolean = false;
 
-  /**
-   * @private
-   */
-  zIndex: number;
+  /** @private */
+  _cmp: ComponentRef<any>;
 
-  /**
-   * @private
-   */
+  /** @private */
+  _nav: NavControllerBase;
+
+  /** @private */
+  _zIndex: number;
+
+  /** @private */
+  _state: ViewState;
+
+  /** @private */
+  _cssClass: string;
+
+  /** @private */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public componentType?: any, data?: any) {
+  constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
+
+    this._cssClass = rootCssClass;
 
     this.willEnter = new EventEmitter();
     this.didEnter = new EventEmitter();
     this.willLeave = new EventEmitter();
     this.didLeave = new EventEmitter();
     this.willUnload = new EventEmitter();
-    this.didUnload = new EventEmitter();
+  }
+
+  /**
+   * @private
+   */
+  init(componentRef: ComponentRef<any>) {
+    this._cmp = componentRef;
+    this.instance = this.instance || componentRef.instance;
+    this._detached = false;
+  }
+
+  /**
+   * @private
+   */
+  _setNav(navCtrl: NavControllerBase) {
+    this._nav = navCtrl;
+  }
+
+  /**
+   * @private
+   */
+  _setInstance(instance: any) {
+    this.instance = instance;
   }
 
   /**
@@ -150,28 +151,28 @@ export class ViewController {
    * @private
    * onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead
    */
-  private onDismiss(callback: Function) {
+  onDismiss(callback: Function) {
     // deprecated warning: added beta.11 2016-06-30
     console.warn('onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead');
     this.onDidDismiss(callback);
   }
 
   /**
-   * @private
+   * onDidDismiss
    */
   onDidDismiss(callback: Function) {
     this._onDidDismiss = callback;
   }
 
   /**
-   * @private
+   * onWillDismiss
    */
   onWillDismiss(callback: Function) {
     this._onWillDismiss = callback;
   }
 
   /**
-   * @private
+   * dismiss
    */
   dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
     let options = merge({}, this._leavingOpts, navOptions);
@@ -180,13 +181,6 @@ export class ViewController {
       this._onDidDismiss && this._onDidDismiss(data, role);
       return data;
     });
-  }
-
-  /**
-   * @private
-   */
-  setNav(navCtrl: NavController) {
-    this._nav = navCtrl;
   }
 
   /**
@@ -236,22 +230,8 @@ export class ViewController {
   /**
    * @private
    */
-  setChangeDetector(cd: ChangeDetectorRef) {
-    this._cd = cd;
-  }
-
-  /**
-   * @private
-   */
-  setInstance(instance: any) {
-    this.instance = instance;
-  }
-
-  /**
-   * @private
-   */
   get name(): string {
-    return this.componentType ? this.componentType['name'] : '';
+    return this.component ? this.component.name : '';
   }
 
   /**
@@ -278,57 +258,68 @@ export class ViewController {
 
   /**
    * @private
+   * DOM WRITE
    */
-  domShow(shouldShow: boolean, renderer: Renderer) {
+  _domShow(shouldShow: boolean, renderer: Renderer) {
     // using hidden element attribute to display:none and not render views
-    // renderAttr of '' means the hidden attribute will be added
-    // renderAttr of null means the hidden attribute will be removed
-    // doing checks to make sure we only make an update to the element when needed
-    if (this._pgRef &&
-        (shouldShow && this._hdAttr === '' ||
-        !shouldShow && this._hdAttr !== '')) {
-
-      this._hdAttr = (shouldShow ? null : '');
-
-      renderer.setElementAttribute(this._pgRef.nativeElement, 'hidden', this._hdAttr);
+    // _hidden value of '' means the hidden attribute will be added
+    // _hidden value of null means the hidden attribute will be removed
+    // doing checks to make sure we only update the DOM when actually needed
+    if (this._cmp) {
+      // if it should render, then the hidden attribute should not be on the element
+      if (shouldShow && this._hidden === '' || !shouldShow && this._hidden !== '') {
+        this._hidden = (shouldShow ? null : '');
+        // ******** DOM WRITE ****************
+        renderer.setElementAttribute(this.pageRef().nativeElement, 'hidden', this._hidden);
+      }
     }
   }
 
   /**
    * @private
+   * DOM WRITE
    */
-  setZIndex(zIndex: number, renderer: Renderer) {
-    if (this._pgRef && zIndex !== this.zIndex) {
-      this.zIndex = zIndex;
-      renderer.setElementStyle(this._pgRef.nativeElement, 'z-index', zIndex.toString());
+  _setZIndex(zIndex: number, renderer: Renderer) {
+    if (zIndex !== this._zIndex) {
+      this._zIndex = zIndex;
+      const pageRef = this.pageRef();
+      if (pageRef) {
+        // ******** DOM WRITE ****************
+        renderer.setElementStyle(pageRef.nativeElement, 'z-index', (<any>zIndex));
+      }
     }
   }
 
   /**
-   * @private
-   */
-  setPageRef(elementRef: ElementRef) {
-    this._pgRef = elementRef;
-  }
-
-  /**
-   * @private
-   * @returns {elementRef} Returns the Page's ElementRef
+   * @returns {ElementRef} Returns the Page's ElementRef.
    */
   pageRef(): ElementRef {
-    return this._pgRef;
+    return this._cmp && this._cmp.location;
   }
 
   /**
    * @private
    */
-  setContentRef(elementRef: ElementRef) {
+  _setContent(directive: any) {
+    this._cntDir = directive;
+  }
+
+  /**
+   * @returns {component} Returns the Page's Content component reference.
+   */
+  getContent() {
+    return this._cntDir;
+  }
+
+  /**
+   * @private
+   */
+  _setContentRef(elementRef: ElementRef) {
     this._cntRef = elementRef;
   }
 
   /**
-   * @private
-   * @returns {elementRef} Returns the Page's Content ElementRef
+   * @returns {ElementRef} Returns the Content's ElementRef.
    */
   contentRef(): ElementRef {
     return this._cntRef;
@@ -337,28 +328,7 @@ export class ViewController {
   /**
    * @private
    */
-  setContent(directive: any) {
-    this._cntDir = directive;
-  }
-
-  /**
-   * @private
-   */
-  setToolbarRef(elementRef: ElementRef) {
-    this._tbRefs.push(elementRef);
-  }
-
-  /**
-   * @private
-   */
-  toolbarRefs(): ElementRef[] {
-    return this._tbRefs;
-  }
-
-  /**
-   * @private
-   */
-  setHeader(directive: Header) {
+  _setHeader(directive: Header) {
     this._hdrDir = directive;
   }
 
@@ -372,7 +342,7 @@ export class ViewController {
   /**
    * @private
    */
-  setFooter(directive: Footer) {
+  _setFooter(directive: Footer) {
     this._ftrDir = directive;
   }
 
@@ -385,83 +355,26 @@ export class ViewController {
 
   /**
    * @private
-   * @returns {component} Returns the Page's Content component reference.
    */
-  getContent() {
-    return this._cntDir;
+  _setNavbar(directive: Navbar) {
+    this._nb = directive;
   }
 
   /**
    * @private
    */
-  setNavbar(directive: Navbar) {
-    this._nbDir = directive;
+  getNavbar(): Navbar {
+    return this._nb;
   }
 
   /**
-   * @private
-   */
-  getNavbar() {
-    return this._nbDir;
-  }
-
-  /**
-   *
    * Find out if the current component has a NavBar or not. Be sure
    * to wrap this in an `ionViewWillEnter` method in order to make sure
    * the view has rendered fully.
    * @returns {boolean} Returns a boolean if this Page has a navbar or not.
    */
   hasNavbar(): boolean {
-    return !!this.getNavbar();
-  }
-
-  /**
-   * @private
-   */
-  navbarRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getElementRef();
-  }
-
-  /**
-   * @private
-   */
-  titleRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getTitleRef();
-  }
-
-  /**
-   * @private
-   */
-  navbarItemRefs(): Array<ElementRef> {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getItemRefs();
-  }
-
-  /**
-   * @private
-   */
-  backBtnRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getBackButtonRef();
-  }
-
-  /**
-   * @private
-   */
-  backBtnTextRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getBackButtonTextRef();
-  }
-
-  /**
-   * @private
-   */
-  navbarBgRef(): ElementRef {
-    let navbar = this.getNavbar();
-    return navbar && navbar.getBackgroundRef();
+    return !!this._nb;
   }
 
   /**
@@ -470,10 +383,7 @@ export class ViewController {
    * @param {string} backButtonText Set the back button text.
    */
   setBackButtonText(val: string) {
-    let navbar = this.getNavbar();
-    if (navbar) {
-      navbar.setBackButtonText(val);
-    }
+    this._nb && this._nb.setBackButtonText(val);
   }
 
   /**
@@ -482,29 +392,9 @@ export class ViewController {
    * @param {boolean} Set if this Page's back button should show or not.
    */
   showBackButton(shouldShow: boolean) {
-    let navbar = this.getNavbar();
-    if (navbar) {
-      navbar.hideBackButton = !shouldShow;
+    if (this._nb) {
+      this._nb.hideBackButton = !shouldShow;
     }
-  }
-
-  /**
-   * @private
-   */
-  isLoaded(): boolean {
-    return this._loaded;
-  }
-
-  /**
-   * The loaded method is used to load any dynamic content/components
-   * into the dom before proceeding with the transition.  If a component
-   * needs dynamic component loading, extending ViewController and
-   * overriding this method is a good option
-   * @param {function} done is a callback that must be called when async
-   * loading/actions are completed
-   */
-  loaded(done: (() => any)) {
-    done();
   }
 
   /**
@@ -515,23 +405,31 @@ export class ViewController {
    * to put your setup code for the view; however, it is not the
    * recommended method to use when a view becomes active.
    */
-  fireLoaded() {
-    this._loaded = true;
-    ctrlFn(this, 'Loaded');
+  _didLoad() {
+    // deprecated warning: added 2016-08-14, beta.12
+    if (this.instance && this.instance.ionViewLoaded) {
+      try {
+        console.warn('ionViewLoaded() has been deprecated. Please rename to ionViewDidLoad()');
+        this.instance.ionViewLoaded();
+      } catch (e) {
+        console.error(this.name + ' iionViewLoaded: ' + e.message);
+      }
+    }
+
+    ctrlFn(this, 'DidLoad');
   }
 
   /**
    * @private
    * The view is about to enter and become the active view.
    */
-  fireWillEnter() {
-    if (this._cd) {
+  _willEnter() {
+    if (this._detached && this._cmp) {
       // ensure this has been re-attached to the change detector
-      this._cd.reattach();
-
-      // detect changes before we run any user code
-      this._cd.detectChanges();
+      this._cmp.changeDetectorRef.reattach();
+      this._detached = false;
     }
+
     this.willEnter.emit(null);
     ctrlFn(this, 'WillEnter');
   }
@@ -541,9 +439,8 @@ export class ViewController {
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
-  fireDidEnter() {
-    let navbar = this.getNavbar();
-    navbar && navbar.didEnter();
+  _didEnter() {
+    this._nb && this._nb.didEnter();
     this.didEnter.emit(null);
     ctrlFn(this, 'DidEnter');
   }
@@ -552,7 +449,7 @@ export class ViewController {
    * @private
    * The view has is about to leave and no longer be the active view.
    */
-  fireWillLeave() {
+  _willLeave() {
     this.willLeave.emit(null);
     ctrlFn(this, 'WillLeave');
   }
@@ -562,60 +459,87 @@ export class ViewController {
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
-  fireDidLeave() {
+  _didLeave() {
     this.didLeave.emit(null);
     ctrlFn(this, 'DidLeave');
 
     // when this is not the active page
     // we no longer need to detect changes
-    this._cd && this._cd.detach();
+    if (!this._detached && this._cmp) {
+      this._cmp.changeDetectorRef.detach();
+      this._detached = true;
+    }
   }
 
   /**
    * @private
-   * The view is about to be destroyed and have its elements removed.
    */
-  fireWillUnload() {
+  _willUnload() {
     this.willUnload.emit(null);
     ctrlFn(this, 'WillUnload');
-  }
 
-  /**
-   * @private
-   */
-  onDestroy(destroyFn: Function) {
-    this._destroyFn = destroyFn;
-  }
-
-  /**
-   * @private
-   */
-  destroy() {
-    this.didUnload.emit(null);
-    ctrlFn(this, 'DidUnload');
-
-    this._destroyFn && this._destroyFn();
-    this._destroyFn = null;
-  }
-
-}
-
-export interface LifeCycleEvent {
-  componentType?: any;
-}
-
-function ctrlFn(viewCtrl: ViewController, fnName: string) {
-  if (viewCtrl.instance) {
-    // deprecated warning: added 2016-06-01, beta.8
-    if (viewCtrl.instance['onPage' + fnName]) {
+    // deprecated warning: added 2016-08-14, beta.12
+    if (this.instance && this.instance.ionViewDidUnload) {
+      console.warn('ionViewDidUnload() has been deprecated. Please use ionViewWillUnload() instead');
       try {
-        console.warn('onPage' + fnName + '() has been deprecated. Please rename to ionView' + fnName + '()');
-        viewCtrl.instance['onPage' + fnName]();
+        this.instance.ionViewDidUnload();
       } catch (e) {
-        console.error(viewCtrl.name + ' onPage' + fnName + ': ' + e.message);
+        console.error(this.name + ' ionViewDidUnload: ' + e.message);
+      }
+    }
+  }
+
+  /**
+   * @private
+   * DOM WRITE
+   */
+  _destroy(renderer: Renderer) {
+    if (this._cmp) {
+      if (renderer) {
+        // ensure the element is cleaned up for when the view pool reuses this element
+        // ******** DOM WRITE ****************
+        renderer.setElementAttribute(this._cmp.location.nativeElement, 'class', null);
+        renderer.setElementAttribute(this._cmp.location.nativeElement, 'style', null);
+      }
+
+      // completely destroy this component. boom.
+      this._cmp.destroy();
+    }
+
+    if (this._nav) {
+      // remove it from the nav
+      const index = this._nav.indexOf(this);
+      if (index > -1) {
+        this._nav._views.splice(index, 1);
       }
     }
 
+    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onDidDismiss = this._onWillDismiss = null;
+  }
+
+  /**
+   * @private
+   */
+  _lifecycleTest(lifecycle: string): boolean | string | Promise<any> {
+    let result: any = true;
+
+    if (this.instance && this.instance['ionViewCan' + lifecycle]) {
+      try {
+        result = this.instance['ionViewCan' + lifecycle]();
+
+      } catch (e) {
+        console.error(`${this.name} ionViewCan${lifecycle} error: ${e}`);
+        result = false;
+      }
+    }
+    return result;
+  }
+
+}
+
+
+function ctrlFn(viewCtrl: ViewController, fnName: string) {
+  if (viewCtrl.instance) {
     // fire off ionView lifecycle instance method
     if (viewCtrl.instance['ionView' + fnName]) {
       try {
@@ -626,3 +550,10 @@ function ctrlFn(viewCtrl: ViewController, fnName: string) {
     }
   }
 }
+
+
+export function isViewController(viewCtrl: any) {
+  return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
+}
+
+const DEFAULT_CSS_CLASS = 'ion-page';

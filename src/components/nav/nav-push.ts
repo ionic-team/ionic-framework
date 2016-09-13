@@ -1,7 +1,7 @@
-import { Directive, HostListener, Input, Optional } from '@angular/core';
+import { AfterViewInit, Directive, Host, HostBinding, HostListener, Input, Optional, OnChanges } from '@angular/core';
 
-import { NavController } from './nav-controller';
-import { noop } from '../../util/util';
+import { DeepLinker } from '../../navigation/deep-linker';
+import { NavController } from '../../navigation/nav-controller';
 
 /**
  * @name NavPush
@@ -60,7 +60,7 @@ export class NavPush {
   @Input() navParams: {[k: string]: any};
 
 
-  constructor(@Optional() private _nav: NavController) {
+  constructor(@Optional() public _nav: NavController) {
     if (!_nav) {
       console.error('navPush must be within a NavController');
     }
@@ -68,13 +68,44 @@ export class NavPush {
 
   @HostListener('click')
   onClick(): boolean {
-    // If no target, or if target is _self, prevent default browser behavior
     if (this._nav) {
-      this._nav.push(this.navPush, this.navParams, noop);
+      this._nav.push(this.navPush, this.navParams, null);
       return false;
     }
-
     return true;
+  }
+
+}
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'a[navPush]'
+})
+export class NavPushAnchor implements OnChanges, AfterViewInit {
+
+  constructor(
+    @Host() public host: NavPush,
+    @Optional() public linker: DeepLinker) {}
+
+  @HostBinding() href: string;
+
+  updateHref() {
+    if (this.host && this.linker) {
+      this.href = this.linker.createUrl(this.host._nav, this.host.navPush, this.host.navParams) || '#';
+
+    } else {
+      this.href = '#';
+    }
+  }
+
+  ngOnChanges() {
+    this.updateHref();
+  }
+
+  ngAfterViewInit() {
+    this.updateHref();
   }
 
 }

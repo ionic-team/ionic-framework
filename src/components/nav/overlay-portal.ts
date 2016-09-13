@@ -1,18 +1,20 @@
-import { ComponentResolver, Directive, ElementRef, forwardRef, Inject, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, forwardRef, Inject, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { DeepLinker } from '../../navigation/deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { Keyboard } from '../../util/keyboard';
-import { NavControllerBase } from '../nav/nav-controller-base';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { TransitionController } from '../../transitions/transition-controller';
 
 /**
  * @private
  */
 @Directive({
-  selector: '[nav-portal]'
+  selector: '[overlay-portal]'
 })
-export class NavPortal extends NavControllerBase {
+export class OverlayPortal extends NavControllerBase {
   constructor(
     @Inject(forwardRef(() => App)) app: App,
     config: Config,
@@ -20,15 +22,16 @@ export class NavPortal extends NavControllerBase {
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
-    compiler: ComponentResolver,
+    cfr: ComponentFactoryResolver,
     gestureCtrl: GestureController,
+    transCtrl: TransitionController,
+    @Optional() linker: DeepLinker,
     viewPort: ViewContainerRef
   ) {
-    super(null, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
+    super(null, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
     this._isPortal = true;
     this._init = true;
     this.setViewport(viewPort);
-    app.setPortal(this);
 
     // on every page change make sure the portal has
     // dismissed any views that should be auto dismissed on page change
