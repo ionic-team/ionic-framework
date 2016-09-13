@@ -1,5 +1,4 @@
-@import "../../globals.core";
-@import "./popover";
+@import "../../themes/ionic.globals";
 
 // Windows Popover
 // --------------------------------------------------
@@ -17,7 +16,7 @@ $popover-wp-background:                #f2f2f2 !default;
 $popover-wp-item-background:           $popover-wp-background !default;
 
 
-.popover-content {
+.popover-wp .popover-content {
   width: $popover-wp-width;
   min-width: $popover-wp-min-width;
   min-height: $popover-wp-min-height;
@@ -29,17 +28,17 @@ $popover-wp-item-background:           $popover-wp-background !default;
   background: $popover-wp-background;
 
   transform-origin: top left;
-
-  ion-content {
-    background: $popover-wp-background;
-  }
 }
 
-.popover-content .item {
+.popover-wp ion-content {
+  background: $popover-wp-background;
+}
+
+.popover-wp .popover-content .item {
   background-color: $popover-wp-item-background;
 }
 
-.popover-viewport {
+.popover-wp .popover-viewport {
   opacity: 0;
   transition-delay: 100ms;
 }

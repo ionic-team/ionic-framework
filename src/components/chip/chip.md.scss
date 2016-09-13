@@ -1,4 +1,3 @@
-@import "./chip";
 
 // Material Design Chip
 // --------------------------------------------------
@@ -31,7 +30,7 @@ $chip-md-icon-background-color:      color($colors-md, primary) !default;
 $chip-md-icon-text-color:            color-contrast($colors-md, $chip-md-icon-background-color) !default;
 
 
-ion-chip {
+.chip-md {
   margin: $chip-md-margin;
 
   height: $chip-md-height;
@@ -41,24 +40,25 @@ ion-chip {
   line-height: $chip-md-height;
   color: $chip-md-text-color;
   background: $chip-md-background-color;
-
-  > ion-label {
-    margin: $chip-md-label-margin;
-  }
-
-  > ion-icon {
-    color: $chip-md-icon-text-color;
-    background-color: $chip-md-icon-background-color;
-  }
 }
+
+.chip-md > ion-label {
+  margin: $chip-md-label-margin;
+}
+
+.chip-md > ion-icon {
+  color: $chip-md-icon-text-color;
+  background-color: $chip-md-icon-background-color;
+}
+
 
 // Generate Material Design Chip Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  .chip-#{$color-name},
-  ion-chip .icon-#{$color-name} {
+  .chip-md-#{$color-name},
+  .chip-md .icon-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./button";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Button
 // --------------------------------------------------
@@ -138,7 +137,7 @@ $button-ios-fab-border-radius:                      50% !default;
 // iOS Default Button
 // --------------------------------------------------
 
-.button {
+.button-ios {
   margin: $button-ios-margin;
   padding: $button-ios-padding;
 
@@ -149,15 +148,15 @@ $button-ios-fab-border-radius:                      50% !default;
 
   color: $button-ios-text-color;
   background-color: $button-ios-background-color;
+}
 
-  &.activated {
-    background-color: $button-ios-background-color-activated;
-    opacity: $button-ios-opacity-activated;
-  }
+.button-ios.activated {
+  background-color: $button-ios-background-color-activated;
+  opacity: $button-ios-opacity-activated;
+}
 
-  &:hover:not(.disable-hover) {
-    opacity: $button-ios-opacity-hover;
-  }
+.button-ios:hover:not(.disable-hover) {
+  opacity: $button-ios-opacity-hover;
 }
 
 
@@ -165,27 +164,25 @@ $button-ios-fab-border-radius:                      50% !default;
 // --------------------------------------------------
 
 @mixin ios-button-default($color-name, $color-base, $color-contrast) {
+  $background-color: $color-base;
+  $background-color-activated: color-shade($background-color);
+  $fg-color: $color-contrast;
 
-  .button-#{$color-name} {
-    $background-color: $color-base;
-    $background-color-activated: color-shade($background-color);
-    $fg-color: $color-contrast;
-
+  .button-ios-#{$color-name} {
     color: $fg-color;
     background-color: $background-color;
-
-    &.activated {
-      background-color: $background-color-activated;
-    }
   }
 
+  .button-ios-#{$color-name}.activated {
+    background-color: $background-color-activated;
+  }
 }
 
 
 // iOS Button Sizes
 // --------------------------------------------------
 
-.button-large {
+.button-large-ios {
   padding: $button-ios-large-padding;
 
   height: $button-ios-large-height;
@@ -193,22 +190,22 @@ $button-ios-fab-border-radius:                      50% !default;
   font-size: $button-ios-large-font-size;
 }
 
-.button-small {
+.button-small-ios {
   padding: $button-ios-small-padding;
 
   height: $button-ios-small-height;
 
   font-size: $button-ios-small-font-size;
+}
 
-  &[icon-only] ion-icon {
-    font-size: $button-ios-small-icon-font-size;
-  }
+.button-small-ios[icon-only] ion-icon {
+  font-size: $button-ios-small-icon-font-size;
 }
 
 // iOS Block Button
 // --------------------------------------------------
 
-.button-block {
+.button-block-ios {
   margin-right: 0;
   margin-left: 0;
 }
@@ -216,7 +213,7 @@ $button-ios-fab-border-radius:                      50% !default;
 // iOS Full Button
 // --------------------------------------------------
 
-.button-full {
+.button-full-ios {
   margin-right: 0;
   margin-left: 0;
 
@@ -228,19 +225,19 @@ $button-ios-fab-border-radius:                      50% !default;
 // iOS Outline Button
 // --------------------------------------------------
 
-.button-outline {
+.button-outline-ios {
   border-width: $button-ios-outline-border-width;
   border-style: $button-ios-outline-border-style;
   border-radius: $button-ios-outline-border-radius;
   border-color: $button-ios-outline-border-color;
   color: $button-ios-outline-text-color;
   background-color: $button-ios-outline-background-color;
+}
 
-  &.activated {
-    color: $button-ios-outline-text-color-activated;
-    background-color: $button-ios-outline-background-color-activated;
-    opacity: $button-ios-outline-opacity-activated;
-  }
+.button-outline-ios.activated {
+  color: $button-ios-outline-text-color-activated;
+  background-color: $button-ios-outline-background-color-activated;
+  opacity: $button-ios-outline-opacity-activated;
 }
 
 // iOS Outline Button Color Mixin
@@ -248,15 +245,15 @@ $button-ios-fab-border-radius:                      50% !default;
 
 @mixin ios-button-outline($color-name, $color-base, $color-contrast) {
 
-  .button-outline-#{$color-name} {
+  .button-outline-ios-#{$color-name} {
     border-color: $color-base;
     color: $color-base;
     background-color: $button-ios-outline-background-color;
+  }
 
-    &.activated {
-      color: $color-contrast;
-      background-color: $color-base;
-    }
+  .button-outline-ios-#{$color-name}.activated {
+    color: $color-contrast;
+    background-color: $color-base;
   }
 
 }
@@ -265,20 +262,20 @@ $button-ios-fab-border-radius:                      50% !default;
 // iOS Clear Button
 // --------------------------------------------------
 
-.button-clear {
+.button-clear-ios {
   border-color: $button-ios-clear-border-color;
   color: $button-ios-background-color;
   background-color: $button-ios-clear-background-color;
+}
 
-  &.activated {
-    background-color: $button-ios-clear-background-color-activated;
-    opacity: $button-ios-clear-opacity-activated;
-  }
+.button-clear-ios.activated {
+  background-color: $button-ios-clear-background-color-activated;
+  opacity: $button-ios-clear-opacity-activated;
+}
 
-  &:hover:not(.disable-hover) {
-    color: $button-ios-clear-text-color-hover;
-    opacity: $button-ios-clear-opacity-hover;
-  }
+.button-clear-ios:hover:not(.disable-hover) {
+  color: $button-ios-clear-text-color-hover;
+  opacity: $button-ios-clear-opacity-hover;
 }
 
 
@@ -286,28 +283,28 @@ $button-ios-fab-border-radius:                      50% !default;
 // --------------------------------------------------
 
 @mixin ios-button-clear($color-name, $color-base, $color-contrast) {
+  $fg-color: $color-base;
 
-  .button-clear-#{$color-name} {
-    $fg-color: $color-base;
+  .button-clear-ios-#{$color-name} {
     border-color: $button-ios-clear-border-color;
     color: $fg-color;
     background-color: $button-ios-clear-background-color;
-
-    &.activated {
-      opacity: $button-ios-clear-opacity-activated;
-    }
-
-    &:hover:not(.disable-hover) {
-      color: $fg-color;
-    }
   }
 
+  .button-clear-ios-#{$color-name}.activated {
+    opacity: $button-ios-clear-opacity-activated;
+  }
+
+  .button-clear-ios-#{$color-name}:hover:not(.disable-hover) {
+    color: $fg-color;
+  }
 }
+
 
 // iOS Round Button
 // --------------------------------------------------
 
-.button-round {
+.button-round-ios {
   padding: $button-ios-round-padding;
 
   border-radius: $button-ios-round-border-radius;
@@ -317,13 +314,8 @@ $button-ios-fab-border-radius:                      50% !default;
 // iOS FAB Button
 // --------------------------------------------------
 
-.button-fab {
+.button-fab-ios {
   border-radius: $button-ios-fab-border-radius;
-}
-
-// iOS does not use the button effect
-ion-button-effect {
-  display: none;
 }
 
 
@@ -335,10 +327,3 @@ ion-button-effect {
   @include ios-button-outline($color-name, $color-base, $color-contrast);
   @include ios-button-clear($color-name, $color-base, $color-contrast);
 }
-
-
-// Core Button Overrides
-// --------------------------------------------------
-
-@import "./button-fab";
-@import "./button-icon";

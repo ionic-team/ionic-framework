@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./card";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Card
 // --------------------------------------------------
@@ -37,7 +36,7 @@ $card-md-header-padding:              16px !default;
 $card-md-header-color:                #222 !default;
 
 
-ion-card {
+.card-md {
   margin: $card-md-margin-top $card-md-margin-right $card-md-margin-bottom $card-md-margin-left;
 
   width: calc(100% - #{($card-md-margin-right + $card-md-margin-left)});
@@ -47,93 +46,93 @@ ion-card {
 
   background: $card-md-background-color;
   box-shadow: $card-md-box-shadow;
-
-  ion-list {
-    margin-bottom: 0;
-  }
-
-  > .item:last-child,
-  > .item-wrapper:last-child .item {
-    border-bottom: 0;
-  }
-
-  .item .item-inner {
-    border: 0;
-  }
-
-  ion-card-content {
-    padding: $card-md-padding-top $card-md-padding-right $card-md-padding-bottom $card-md-padding-left;
-
-    font-size: $card-md-font-size;
-    line-height: $card-md-line-height;
-  }
-
-  ion-card-header {
-    padding: $card-md-header-padding;
-
-    font-size: $card-md-header-font-size;
-    color: $card-md-header-color;
-  }
-
-  ion-card-header + ion-card-content,
-  .item + ion-card-content {
-    padding-top: 0;
-  }
-
-  ion-note[item-left],
-  ion-note[item-right], {
-    font-size: 1.3rem;
-  }
-
-  ion-card-title {
-    display: block;
-
-    margin: $card-md-title-margin;
-    padding: $card-md-title-padding;
-
-    font-size: $card-md-title-font-size;
-    line-height: 1.2;
-    color: $card-md-title-text-color;
-  }
-
-  h1 {
-    margin: 0 0 2px;
-
-    font-size: 2.4rem;
-    font-weight: normal;
-    color: $card-md-text-color;
-  }
-
-  h2 {
-    margin: 2px 0;
-
-    font-size: 1.6rem;
-    font-weight: normal;
-    color: $card-md-text-color;
-  }
-
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 2px 0;
-
-    font-size: 1.4rem;
-    font-weight: normal;
-    color: $card-md-text-color;
-  }
-
-  p {
-    margin: 0 0 2px;
-
-    font-size: 1.4rem;
-    font-weight: normal;
-    line-height: 1.5;
-    color: $card-md-text-color;
-  }
-
 }
 
-ion-card + ion-card {
+.card-md ion-list {
+  margin-bottom: 0;
+}
+
+.card-md > .item:last-child,
+.card-md > .item:last-child .item-inner,
+.card-md > .item-wrapper:last-child .item {
+  border-bottom: 0;
+}
+
+.card-md .item-md.item-block .item-inner {
+  border: 0;
+}
+
+.card-md ion-card-content {
+  padding: $card-md-padding-top $card-md-padding-right $card-md-padding-bottom $card-md-padding-left;
+
+  font-size: $card-md-font-size;
+  line-height: $card-md-line-height;
+}
+
+.card-md ion-card-header {
+  padding: $card-md-header-padding;
+
+  font-size: $card-md-header-font-size;
+  color: $card-md-header-color;
+}
+
+.card-md ion-card-header + ion-card-content,
+.card-md .item + ion-card-content {
+  padding-top: 0;
+}
+
+.card-md ion-note[item-left],
+.card-md ion-note[item-right] {
+  font-size: 1.3rem;
+}
+
+.card-md ion-card-title {
+  display: block;
+
+  margin: $card-md-title-margin;
+  padding: $card-md-title-padding;
+
+  font-size: $card-md-title-font-size;
+  line-height: 1.2;
+  color: $card-md-title-text-color;
+}
+
+.card-md h1 {
+  margin: 0 0 2px;
+
+  font-size: 2.4rem;
+  font-weight: normal;
+  color: $card-md-text-color;
+}
+
+.card-md h2 {
+  margin: 2px 0;
+
+  font-size: 1.6rem;
+  font-weight: normal;
+  color: $card-md-text-color;
+}
+
+.card-md h3,
+.card-md h4,
+.card-md h5,
+.card-md h6 {
+  margin: 2px 0;
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: $card-md-text-color;
+}
+
+.card-md p {
+  margin: 0 0 2px;
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: 1.5;
+  color: $card-md-text-color;
+}
+
+.card-md + ion-card {
   margin-top: 0;
 }

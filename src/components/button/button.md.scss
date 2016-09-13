@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./button";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Button
 // --------------------------------------------------
@@ -179,7 +178,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // Material Design Default Button
 // --------------------------------------------------
 
-.button {
+.button-md {
   margin: $button-md-margin;
   padding: $button-md-padding;
 
@@ -198,19 +197,19 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
               background-color $button-md-transition-duration $button-md-transition-timing-function,
               color $button-md-transition-duration $button-md-transition-timing-function;
+}
 
-  &:hover:not(.disable-hover) {
-    background-color: $button-md-background-color-hover;
-  }
+.button-md:hover:not(.disable-hover) {
+  background-color: $button-md-background-color-hover;
+}
 
-  &.activated {
-    background-color: $button-md-background-color-activated;
-    box-shadow: $button-md-box-shadow-activated;
-  }
+.button-md.activated {
+  background-color: $button-md-background-color-activated;
+  box-shadow: $button-md-box-shadow-activated;
+}
 
-  ion-button-effect {
-    background-color: $button-md-text-color;
-  }
+.button-md .button-effect {
+  background-color: $button-md-text-color;
 }
 
 
@@ -218,36 +217,34 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // --------------------------------------------------
 
 @mixin md-button-default($color-name, $color-base, $color-contrast) {
+  $background-color: $color-base;
+  $background-color-activated: color-shade($background-color);
+  $fg-color: $color-contrast;
 
-  .button-#{$color-name} {
-    $background-color: $color-base;
-    $background-color-activated: color-shade($background-color);
-    $fg-color: $color-contrast;
-
+  .button-md-#{$color-name} {
     color: $fg-color;
     background-color: $background-color;
-
-    &:hover:not(.disable-hover) {
-      background-color: $background-color;
-    }
-
-    &.activated {
-      background-color: $background-color-activated;
-      opacity: $button-md-opacity-activated;
-    }
-
-    ion-button-effect {
-      background-color: $fg-color;
-    }
   }
 
+  .button-md-#{$color-name}:hover:not(.disable-hover) {
+    background-color: $background-color;
+  }
+
+  .button-md-#{$color-name}.activated {
+    background-color: $background-color-activated;
+    opacity: $button-md-opacity-activated;
+  }
+
+  .button-md-#{$color-name} .button-effect {
+    background-color: $fg-color;
+  }
 }
 
 
 // Material Design Button Sizes
 // --------------------------------------------------
 
-.button-large {
+.button-large-md {
   padding: $button-md-large-padding;
 
   height: $button-md-large-height;
@@ -255,22 +252,22 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   font-size: $button-md-large-font-size;
 }
 
-.button-small {
+.button-small-md {
   padding: $button-md-small-padding;
 
   height: $button-md-small-height;
 
   font-size: $button-md-small-font-size;
+}
 
-  &[icon-only] ion-icon {
-    font-size: $button-md-small-icon-font-size;
-  }
+.button-small-md[icon-only] ion-icon {
+  font-size: $button-md-small-icon-font-size;
 }
 
 // Material Design Block Button
 // --------------------------------------------------
 
-.button-block {
+.button-block-md {
   margin-right: 0;
   margin-left: 0;
 }
@@ -278,7 +275,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // Material Design Full Button
 // --------------------------------------------------
 
-.button-full {
+.button-full-md {
   margin-right: 0;
   margin-left: 0;
 
@@ -290,27 +287,27 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // Material Design Outline Button
 // --------------------------------------------------
 
-.button-outline {
+.button-outline-md {
   border-width: $button-md-outline-border-width;
   border-style: $button-md-outline-border-style;
   border-color: $button-md-outline-border-color;
   color: $button-md-outline-text-color;
   background-color: $button-md-outline-background-color;
   box-shadow: $button-md-outline-box-shadow;
+}
 
-  &:hover:not(.disable-hover) {
-    background-color: $button-md-outline-background-color-hover;
-  }
+.button-outline-md:hover:not(.disable-hover) {
+  background-color: $button-md-outline-background-color-hover;
+}
 
-  &.activated {
-    background-color: $button-md-outline-background-color-activated;
-    box-shadow: $button-md-outline-box-shadow-activated;
-    opacity: $button-md-outline-opacity-activated;
-  }
+.button-outline-md.activated {
+  background-color: $button-md-outline-background-color-activated;
+  box-shadow: $button-md-outline-box-shadow-activated;
+  opacity: $button-md-outline-opacity-activated;
+}
 
-  ion-button-effect {
-    background-color: $button-md-outline-ripple-background-color;
-  }
+.button-outline-md .button-effect {
+  background-color: $button-md-outline-ripple-background-color;
 }
 
 
@@ -318,51 +315,50 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // --------------------------------------------------
 
 @mixin md-button-outline($color-name, $color-base, $color-contrast) {
+  $fg-color: color-shade($color-base, 5%);
 
-  .button-outline-#{$color-name} {
-    $fg-color: color-shade($color-base, 5%);
+  .button-outline-md-#{$color-name} {
     border-color: $fg-color;
     color: $fg-color;
     background-color: $button-md-outline-background-color;
-
-    &:hover:not(.disable-hover) {
-      background-color: $button-md-outline-background-color-hover;
-    }
-
-    &.activated {
-      background-color: $button-md-outline-background-color-activated;
-    }
-
-    ion-button-effect {
-      background-color: $fg-color;
-    }
   }
 
+  .button-outline-md-#{$color-name}:hover:not(.disable-hover) {
+    background-color: $button-md-outline-background-color-hover;
+  }
+
+  .button-outline-md-#{$color-name}.activated {
+    background-color: $button-md-outline-background-color-activated;
+  }
+
+  .button-outline-md-#{$color-name} .button-effect {
+    background-color: $fg-color;
+  }
 }
 
 
 // Material Design Clear Button
 // --------------------------------------------------
 
-.button-clear {
+.button-clear-md {
   border-color: $button-md-clear-border-color;
   color: $button-md-background-color;
   background-color: $button-md-clear-background-color;
   box-shadow: $button-md-clear-box-shadow;
   opacity: $button-md-clear-opacity;
+}
 
-  &.activated {
-    background-color: $button-md-clear-background-color-activated;
-    box-shadow: $button-md-clear-box-shadow-activated;
-  }
+.button-clear-md.activated {
+  background-color: $button-md-clear-background-color-activated;
+  box-shadow: $button-md-clear-box-shadow-activated;
+}
 
-  &:hover:not(.disable-hover) {
-    background-color: $button-md-clear-background-color-hover;
-  }
+.button-clear-md:hover:not(.disable-hover) {
+  background-color: $button-md-clear-background-color-hover;
+}
 
-  ion-button-effect {
-    background-color: $button-md-clear-ripple-background-color;
-  }
+.button-clear-md .button-effect {
+  background-color: $button-md-clear-ripple-background-color;
 }
 
 
@@ -370,21 +366,21 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // --------------------------------------------------
 
 @mixin md-button-clear($color-name, $color-base, $color-contrast) {
+  $fg-color: $color-base;
 
-  .button-clear-#{$color-name} {
-    $fg-color: $color-base;
+  .button-clear-md-#{$color-name} {
     border-color: $button-md-clear-border-color;
     color: $fg-color;
     background-color: $button-md-clear-background-color;
+  }
 
-    &.activated {
-      background-color: $button-md-clear-background-color-activated;
-      box-shadow: $button-md-clear-box-shadow-activated;
-    }
+  .button-clear-md-#{$color-name}.activated {
+    background-color: $button-md-clear-background-color-activated;
+    box-shadow: $button-md-clear-box-shadow-activated;
+  }
 
-    &:hover:not(.disable-hover) {
-      color: $fg-color;
-    }
+  .button-clear-md-#{$color-name}:hover:not(.disable-hover) {
+    color: $fg-color;
   }
 }
 
@@ -392,7 +388,7 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // Material Design Round Button
 // --------------------------------------------------
 
-.button-round {
+.button-round-md {
   padding: $button-md-round-padding;
 
   border-radius: $button-md-round-border-radius;
@@ -402,31 +398,33 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
 // Material Design FAB Button
 // --------------------------------------------------
 
-.button-fab {
+.button-fab-md {
   border-radius: $button-md-fab-border-radius;
   box-shadow: $button-md-fab-box-shadow;
 
   transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
               background-color $button-md-transition-duration $button-md-transition-timing-function,
               color $button-md-transition-duration $button-md-transition-timing-function;
-
-  &.activated {
-    box-shadow: $button-md-fab-box-shadow-activated;
-  }
 }
 
-[icon-only] {
+.button-fab-md.activated {
+  box-shadow: $button-md-fab-box-shadow-activated;
+}
+
+.button-md [icon-only] {
   padding: 0;
 }
 
 
 // Material Design Ripple Effect
 // --------------------------------------------------
+// Only Material uses the button effect, so by default
+// it's display none, and .md sets to display block.
 
-ion-button-effect {
+.button-effect {
   position: absolute;
   z-index: 0;
-  display: block;
+  display: none;
 
   border-radius: 50%;
 
@@ -438,6 +436,10 @@ ion-button-effect {
   pointer-events: none;
 }
 
+.md .button-effect {
+  display: block;
+}
+
 
 // Generate Material Design Button Colors
 // --------------------------------------------------
@@ -447,10 +449,3 @@ ion-button-effect {
   @include md-button-outline($color-name, $color-base, $color-contrast);
   @include md-button-clear($color-name, $color-base, $color-contrast);
 }
-
-
-// Core Button Overrides
-// --------------------------------------------------
-
-@import "./button-fab";
-@import "./button-icon";

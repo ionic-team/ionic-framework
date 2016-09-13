@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Modals
 // --------------------------------------------------
@@ -19,11 +19,11 @@ ion-modal {
 
   width: 100%;
   height: 100%;
+}
 
-  ion-backdrop {
-    @media not all and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
-      visibility: hidden;
-    }
+ion-modal ion-backdrop {
+  @media not all and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+    visibility: hidden;
   }
 }
 
@@ -49,17 +49,4 @@ ion-modal {
     width: $modal-inset-width;
     height: $modal-inset-height-large;
   }
-}
-
-// TODO remove with the structure changes
-ion-modal-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-
-  flex-direction: column;
-
-  width: 100%;
-  height: 100%;
 }

@@ -1,11 +1,10 @@
-@import "./spinner";
 
 // Material Design Spinner
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  .spinner-#{$color-name} {
+  .spinner-md-#{$color-name} {
 
     &.spinner-ios line,
     &.spinner-ios-small line,

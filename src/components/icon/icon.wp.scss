@@ -1,4 +1,3 @@
-@import "./icon";
 
 // Windows Icon
 // --------------------------------------------------
@@ -9,7 +8,7 @@
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .icon-#{$color-name} {
+  .icon-wp-#{$color-name} {
     color: $color-base;
   }
 

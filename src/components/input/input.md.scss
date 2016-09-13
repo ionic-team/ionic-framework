@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./input";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Input
 // --------------------------------------------------
@@ -28,7 +27,7 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 // Material Design Default Input
 // --------------------------------------------------
 
-.text-input {
+.text-input-md {
   margin: $text-input-md-margin-top $text-input-md-margin-right $text-input-md-margin-bottom $text-input-md-margin-left;
   padding: 0;
 
@@ -39,7 +38,7 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 // Material Design Inset Input
 // --------------------------------------------------
 
-.inset-input {
+.input-md .inset-input {
   margin: ($item-md-padding-top / 2) $item-md-padding-right ($item-md-padding-bottom / 2) $item-md-padding-left;
   padding: ($item-md-padding-top / 2) ($item-md-padding-right / 2) ($item-md-padding-bottom / 2) ($item-md-padding-left / 2);
 }
@@ -58,13 +57,13 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 @if ($text-input-md-show-focus-highlight) {
   // In order to get a 2px border we need to add an inset
   // box-shadow 1px (this is to avoid the div resizing)
-  .item-input.input-has-focus .item-inner {
+  .item-md.item-input.input-has-focus .item-inner {
     @include md-input-highlight($text-input-md-highlight-color);
   }
 
   // The last item in a list has a border on the item, not the
   // inner item, so add it to the item itself
-  ion-list .item-input.input-has-focus:last-child {
+  .list-md .item-input.input-has-focus:last-child {
     @include md-input-highlight($text-input-md-highlight-color);
 
     .item-inner {
@@ -75,11 +74,11 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 
 // Show the valid highlight when it has the .ng-valid class and a value
 @if ($text-input-md-show-valid-highlight) {
-  .item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+  .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
     @include md-input-highlight($text-input-md-highlight-color-valid);
   }
 
-  ion-list .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
+  .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
     @include md-input-highlight($text-input-md-highlight-color-valid);
 
     .item-inner {
@@ -90,11 +89,11 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($text-input-md-show-invalid-highlight) {
-  .item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+  .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
     @include md-input-highlight($text-input-md-highlight-color-invalid);
   }
 
-  ion-list .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
+  .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
     @include md-input-highlight($text-input-md-highlight-color-invalid);
 
     .item-inner {
@@ -107,8 +106,8 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 // Material Design Stacked & Floating Inputs
 // --------------------------------------------------
 
-.item-label-stacked .text-input,
-.item-label-floating .text-input {
+.item-label-stacked .text-input-md,
+.item-label-floating .text-input-md {
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 0;
@@ -116,18 +115,18 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
   width: calc(100% - #{$text-input-md-margin-right});
 }
 
-.item-label-stacked ion-select,
-.item-label-floating ion-select {
+.item-label-stacked .select-md,
+.item-label-floating .select-md {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 0;
 }
 
-.item-label-floating .text-input.cloned-input {
+.item-label-floating .text-input-md.cloned-input {
   top: 32px;
 }
 
-.item-label-stacked .text-input.cloned-input {
+.item-label-stacked .text-input-md.cloned-input {
   top: 27px;
 }
 
@@ -135,15 +134,15 @@ $text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
 // Material Design Clear Input Icon
 // --------------------------------------------------
 
-ion-input[clearInput] {
+.input-md[clearInput] {
   position: relative;
-
-  .text-input {
-    padding-right: $text-input-md-input-clear-icon-width;
-  }
 }
 
-.text-input-clear-icon {
+.input-md[clearInput] .text-input {
+  padding-right: $text-input-md-input-clear-icon-width;
+}
+
+.input-md .text-input-clear-icon {
   @include svg-background-image($text-input-md-input-clear-icon-svg);
 
   right: ($item-md-padding-right / 2);

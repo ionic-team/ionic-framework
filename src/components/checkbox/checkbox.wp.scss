@@ -1,4 +1,4 @@
-@import "../../globals.wp";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Checkbox
 // --------------------------------------------------
@@ -28,7 +28,7 @@ $checkbox-wp-item-left-margin:           $item-wp-padding-media-top $item-wp-pad
 $checkbox-wp-item-right-margin:          11px 10px 10px 0 !default;
 
 
-ion-checkbox {
+.checkbox-wp {
   position: relative;
   display: inline-block;
 }
@@ -37,7 +37,7 @@ ion-checkbox {
 // Windows Checkbox Outer Square: Unchecked
 // -----------------------------------------
 
-.checkbox-icon {
+.checkbox-wp .checkbox-icon {
   position: relative;
 
   width: $checkbox-wp-icon-size;
@@ -54,7 +54,7 @@ ion-checkbox {
 // Windows Checkbox Outer Square: Checked
 // -----------------------------------------
 
-.checkbox-checked {
+.checkbox-wp .checkbox-checked {
   border-color: $checkbox-wp-icon-border-color-on;
   background-color: $checkbox-wp-icon-background-color-on;
 }
@@ -63,7 +63,7 @@ ion-checkbox {
 // Windows Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
-.checkbox-checked .checkbox-inner {
+.checkbox-wp .checkbox-checked .checkbox-inner {
   position: absolute;
   top: -2px;
   left: 3px;
@@ -83,8 +83,8 @@ ion-checkbox {
 // Windows Checkbox: Disabled
 // -----------------------------------------
 
-.checkbox-disabled,
-.item-checkbox-disabled ion-label {
+.checkbox-wp.checkbox-disabled,
+.item-wp.item-checkbox-disabled ion-label {
   opacity: $checkbox-wp-disabled-opacity;
 
   pointer-events: none;
@@ -94,18 +94,18 @@ ion-checkbox {
 // Windows Checkbox Within An Item
 // -----------------------------------------
 
-.item ion-checkbox {
+.item.item-wp .checkbox-wp {
   position: static;
   display: block;
 
   margin: $checkbox-wp-item-left-margin;
-
-  &[item-right] {
-    margin: $checkbox-wp-item-right-margin;
-  }
 }
 
-ion-checkbox + .item-inner ion-label {
+.item.item-wp .checkbox-wp[item-right] {
+  margin: $checkbox-wp-item-right-margin;
+}
+
+.checkbox-wp + .item-inner ion-label {
   margin-left: 0;
 }
 
@@ -115,13 +115,13 @@ ion-checkbox + .item-inner ion-label {
 
 @mixin checkbox-theme-wp($color-name, $color-base, $color-contrast) {
 
-  .checkbox-#{$color-name} .checkbox-checked {
+  .checkbox-wp-#{$color-name} .checkbox-checked {
     border-color: $color-base;
     background-color: $color-base;
+  }
 
-    .checkbox-inner {
-      border-color: $color-contrast;
-    }
+  .checkbox-wp-#{$color-name} .checkbox-checked .checkbox-inner {
+    border-color: $color-contrast;
   }
 
 }

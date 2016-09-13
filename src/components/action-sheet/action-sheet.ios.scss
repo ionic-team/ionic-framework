@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./action-sheet";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Action Sheet
 // --------------------------------------------------
@@ -22,7 +21,7 @@ $action-sheet-ios-button-min-height:                    5.6rem !default;
 $action-sheet-ios-button-padding:                       18px !default;
 $action-sheet-ios-button-text-color:                    #007aff !default;
 $action-sheet-ios-button-font-size:                     2rem !default;
-$action-sheet-ios-button-border-width:                  1px !default;
+$action-sheet-ios-button-border-width:                  $hairlines-width !default;
 $action-sheet-ios-button-border-style:                  solid !default;
 $action-sheet-ios-button-border-color:                  #d1d3d6 !default;
 $action-sheet-ios-button-background:                    transparent !default;
@@ -33,28 +32,28 @@ $action-sheet-ios-button-cancel-background:             #fff !default;
 $action-sheet-ios-button-cancel-font-weight:            600 !default;
 
 
-ion-action-sheet {
+.action-sheet-ios {
   text-align: $action-sheet-ios-text-align;
 }
 
-.action-sheet-container {
+.action-sheet-ios .action-sheet-container {
   padding: $action-sheet-ios-padding;
 }
 
-.action-sheet-group {
+.action-sheet-ios .action-sheet-group {
   overflow: hidden;
 
   margin-bottom: $action-sheet-ios-group-margin-bottom - 2;
 
   border-radius: $action-sheet-ios-border-radius;
   background: $action-sheet-ios-background;
-
-  &:last-child {
-    margin-bottom: $action-sheet-ios-group-margin-bottom;
-  }
 }
 
-.action-sheet-title {
+.action-sheet-ios .action-sheet-group:last-child {
+  margin-bottom: $action-sheet-ios-group-margin-bottom;
+}
+
+.action-sheet-ios .action-sheet-title {
   padding: $action-sheet-ios-title-padding;
 
   border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
@@ -65,7 +64,7 @@ ion-action-sheet {
   color: $action-sheet-ios-title-color;
 }
 
-.action-sheet-button {
+.action-sheet-ios .action-sheet-button {
   margin: 0;
   padding: $action-sheet-ios-button-padding;
 
@@ -75,37 +74,30 @@ ion-action-sheet {
   font-size: $action-sheet-ios-button-font-size;
   color: $action-sheet-ios-button-text-color;
   background: $action-sheet-ios-button-background;
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &.activated {
-    margin-top: -$action-sheet-ios-button-border-width;
-
-    border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
-    border-bottom-color: $action-sheet-ios-button-background-activated;
-    background: $action-sheet-ios-button-background-activated;
-  }
 }
 
-.action-sheet-selected {
+.action-sheet-ios .action-sheet-button:last-child {
+  border-bottom: 0;
+}
+
+.action-sheet-ios .action-sheet-button.activated {
+  margin-top: -$action-sheet-ios-button-border-width;
+
+  border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
+  border-bottom-color: $action-sheet-ios-button-background-activated;
+  background: $action-sheet-ios-button-background-activated;
+}
+
+.action-sheet-ios .action-sheet-selected {
   font-weight: bold;
   background: #fff;
 }
 
-.action-sheet-destructive {
+.action-sheet-ios .action-sheet-destructive {
   color: $action-sheet-ios-button-destructive-text-color;
 }
 
-.action-sheet-cancel {
+.action-sheet-ios .action-sheet-cancel {
   font-weight: $action-sheet-ios-button-cancel-font-weight;
   background: $action-sheet-ios-button-cancel-background;
-}
-
-&.hairlines {
-  .action-sheet-title,
-  .action-sheet-button {
-    border-bottom-width: $hairlines-width;
-  }
 }

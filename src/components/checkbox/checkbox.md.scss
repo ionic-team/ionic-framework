@@ -1,4 +1,4 @@
-@import "../../globals.md";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Checkbox
 // --------------------------------------------------
@@ -31,7 +31,7 @@ $checkbox-md-item-left-margin:           $item-md-padding-media-top 36px $item-m
 $checkbox-md-item-right-margin:          11px 10px 10px 0 !default;
 
 
-ion-checkbox {
+.checkbox-md {
   position: relative;
   display: inline-block;
 }
@@ -40,7 +40,7 @@ ion-checkbox {
 // Material Design Checkbox Outer Square: Unchecked
 // -----------------------------------------
 
-.checkbox-icon {
+.checkbox-md .checkbox-icon {
   position: relative;
 
   width: $checkbox-md-icon-size;
@@ -61,7 +61,7 @@ ion-checkbox {
 // Material Design Checkbox Outer Square: Checked
 // -----------------------------------------
 
-.checkbox-checked {
+.checkbox-md .checkbox-checked {
   border-color: $checkbox-md-icon-border-color-on;
   background-color: $checkbox-md-icon-background-color-on;
 }
@@ -70,7 +70,7 @@ ion-checkbox {
 // Material Design Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
-.checkbox-checked .checkbox-inner {
+.checkbox-md .checkbox-checked .checkbox-inner {
   position: absolute;
   top: 0;
   left: 4px;
@@ -90,8 +90,8 @@ ion-checkbox {
 // Material Design Checkbox: Disabled
 // -----------------------------------------
 
-.checkbox-disabled,
-.item-checkbox-disabled ion-label {
+.checkbox-md.checkbox-disabled,
+.item-md.item-checkbox-disabled ion-label {
   opacity: $checkbox-md-disabled-opacity;
 
   pointer-events: none;
@@ -101,18 +101,18 @@ ion-checkbox {
 // Material Design Checkbox Within An Item
 // -----------------------------------------
 
-.item ion-checkbox {
+.item.item-md .checkbox-md {
   position: static;
   display: block;
 
   margin: $checkbox-md-item-left-margin;
-
-  &[item-right] {
-    margin: $checkbox-md-item-right-margin;
-  }
 }
 
-ion-checkbox + .item-inner ion-label {
+.item.item-md .checkbox-md[item-right] {
+  margin: $checkbox-md-item-right-margin;
+}
+
+.checkbox-md + .item-inner ion-label {
   margin-left: 0;
 }
 
@@ -122,13 +122,13 @@ ion-checkbox + .item-inner ion-label {
 
 @mixin checkbox-theme-md($color-name, $color-base, $color-contrast) {
 
-  .checkbox-#{$color-name} .checkbox-checked {
+  .checkbox-md-#{$color-name} .checkbox-checked {
     border-color: $color-base;
     background-color: $color-base;
+  }
 
-    .checkbox-inner {
-      border-color: $color-contrast;
-    }
+  .checkbox-md-#{$color-name} .checkbox-checked .checkbox-inner {
+    border-color: $color-contrast;
   }
 
 }

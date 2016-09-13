@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./select";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Select
 // --------------------------------------------------
@@ -22,7 +21,7 @@ $select-wp-icon-color:          $select-wp-border-color !default;
 $select-wp-placeholder-color:   $select-wp-icon-color !default;
 
 
-ion-select {
+.select-wp {
   flex: 1;
 
   margin: $select-wp-margin-top $select-wp-margin-right $select-wp-margin-bottom $select-wp-margin-left;
@@ -34,15 +33,15 @@ ion-select {
   line-height: 3rem;
 }
 
-.select-placeholder {
+.select-wp .select-placeholder {
   color: $select-wp-placeholder-color;
 }
 
-.item-select ion-label {
+.item-wp.item-select ion-label {
   margin-left: 0;
 }
 
-.select-icon {
+.select-wp .select-icon {
   position: relative;
 
   align-self: center;
@@ -51,7 +50,7 @@ ion-select {
   height: $select-wp-icon-width;
 }
 
-.select-icon .select-icon-inner {
+.select-wp .select-icon .select-icon-inner {
   position: absolute;
   top: 3px;
   left: 5px;
@@ -68,6 +67,6 @@ ion-select {
   pointer-events: none;
 }
 
-.select-text {
+.select-wp .select-text {
   min-height: 3rem;
 }

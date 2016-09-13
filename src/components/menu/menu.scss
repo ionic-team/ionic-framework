@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Menu
 // --------------------------------------------------
@@ -15,10 +15,10 @@ ion-menu {
   left: 0;
 
   display: none;
+}
 
-  &.show-menu {
-    display: block;
-  }
+ion-menu.show-menu {
+  display: block;
 }
 
 
@@ -99,8 +99,8 @@ ion-menu[type=reveal].show-menu .menu-inner {
 
 ion-menu[type=overlay] {
   z-index: $z-index-menu-overlay;
+}
 
-  .show-backdrop {
-    display: block;
-  }
+ion-menu[type=overlay] .show-backdrop {
+  display: block;
 }
