@@ -64,6 +64,7 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^2.3.0",
     "gulp-clean-css": "^2.0.12",
+    "gulp-concat": "^2.6.0",
     "gulp-git": "^1.11.2",
     "gulp-if": "^1.2.5",
     "gulp-remember": "^0.3.0",

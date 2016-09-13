@@ -11,7 +11,7 @@ task('e2e', e2eBuild);
 
 function e2eBuild(done: Function) {
   const runSequence = require('run-sequence');
-  runSequence('e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.beforeWebpack', 'e2e.runWebpack', done);
+  runSequence('polyfills', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.beforeWebpack', 'e2e.runWebpack', done);
 }
 
 task('e2e.copyAndCompile', (done: Function) => {

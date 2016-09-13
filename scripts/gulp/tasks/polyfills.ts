@@ -2,9 +2,9 @@ import { task, src, dest } from 'gulp';
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 
-task('polyfill', ['polyfill.modern', 'polyfill.all', 'polyfill.ng', 'polyfill.copy-readme']);
+task('polyfills', ['polyfills.modern', 'polyfills.all', 'polyfills.ng', 'polyfills.copy-readme']);
 
-task('polyfill.modern', (done) => {
+task('polyfills.modern', (done) => {
     return src([
         'node_modules/zone.js/dist/zone.min.js',
         'node_modules/zone.js/dist/proxy.min.js',
@@ -26,7 +26,7 @@ task('polyfill.modern', (done) => {
     .pipe(dest('dist/ionic-angular/polyfills/'), done);
 });
 
-task('polyfill.all', (done) => {
+task('polyfills.all', (done) => {
     return src([
         'node_modules/zone.js/dist/zone.min.js',
         'node_modules/zone.js/dist/proxy.min.js',
@@ -38,7 +38,7 @@ task('polyfill.all', (done) => {
     .pipe(dest('dist/ionic-angular/polyfills/'), done);
 });
 
-task('polyfill.ng', (done) => {
+task('polyfills.ng', (done) => {
     return src([
         'node_modules/zone.js/dist/zone.min.js',
         'node_modules/zone.js/dist/proxy.min.js',
@@ -49,7 +49,7 @@ task('polyfill.ng', (done) => {
     .pipe(dest('dist/ionic-angular/polyfills/'), done);
 });
 
-task('polyfill.copy-readme', (done) => {
+task('polyfills.copy-readme', (done) => {
     return src('scripts/npm/polyfills.readme.md')
     .pipe(dest('dist/ionic-angular/polyfills/README.md'), done);
 });
