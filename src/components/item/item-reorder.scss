@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Item reorder
 // --------------------------------------------------
@@ -22,10 +22,10 @@ ion-reorder {
 
   pointer-events: all;
   touch-action: manipulation;
+}
 
-  ion-icon {
-    pointer-events: none;
-  }
+ion-reorder ion-icon {
+  pointer-events: none;
 }
 
 .reorder-enabled ion-reorder {
@@ -36,17 +36,15 @@ ion-reorder {
   transform: translate3d(0, 0, 0);
 }
 
-.reorder-list-active {
-  .item,
-  .item-wrapper {
-    transition: transform 300ms;
+.reorder-list-active .item,
+.reorder-list-active .item-wrapper {
+  transition: transform 300ms;
 
-    will-change: transform;
-  }
+  will-change: transform;
+}
 
-  .item-inner {
-    pointer-events: none;
-  }
+.reorder-list-active .item-inner {
+  pointer-events: none;
 }
 
 

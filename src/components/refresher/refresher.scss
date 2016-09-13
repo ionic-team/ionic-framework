@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Refresher
 // --------------------------------------------------
@@ -29,7 +29,7 @@ ion-refresher {
   }
 }
 
-.has-refresher > scroll-content {
+.has-refresher > .scroll-content {
   // when the refresher is let go or has completed
   // this transition is what is used to put the
   // scroll content back into it's original location

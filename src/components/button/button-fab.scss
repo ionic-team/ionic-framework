@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Floating Action Buttons
 // --------------------------------------------------
@@ -11,15 +11,18 @@ $button-fab-size:           56px !default;
   position: absolute;
   overflow: hidden;
 
+  line-height: $button-fab-size;
+  vertical-align: middle;
+
+  background-clip: padding-box;
+}
+
+.button-fab.button {
   width: $button-fab-size;
   min-width: 0;
   height: $button-fab-size;
 
   font-size: 14px;
-  line-height: $button-fab-size;
-  vertical-align: middle;
-
-  background-clip: padding-box;
 }
 
 .button-fab ion-icon {
@@ -28,28 +31,28 @@ $button-fab-size:           56px !default;
   font-size: 2.8rem;
 }
 
-[fab-center] {
+.button-fab[fab-center] {
   left: 50%;
 
   margin-left: -$button-fab-size / 2;
 }
 
-[fab-top] {
+.button-fab[fab-top] {
   top: 16px;
 }
 
-[fab-right] {
+.button-fab[fab-right] {
   right: 16px;
 }
 
-[fab-bottom] {
+.button-fab[fab-bottom] {
   bottom: 16px;
 }
 
-[fab-left] {
+.button-fab[fab-left] {
   left: 16px;
 }
 
-[fab-fixed] {
+.button-fab[fab-fixed] {
   position: fixed;
 }

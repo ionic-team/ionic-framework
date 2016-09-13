@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Badge
 // --------------------------------------------------
@@ -24,8 +24,8 @@ ion-badge {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
+}
 
-  &:empty {
-    display: none;
-  }
+ion-badge:empty {
+  display: none;
 }

@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Item Sliding
 // --------------------------------------------------
@@ -10,10 +10,10 @@ ion-item-sliding {
   overflow: hidden;
 
   width: 100%;
+}
 
-  .item {
-    position: static;
-  }
+ion-item-sliding .item {
+  position: static;
 }
 
 ion-item-options {
