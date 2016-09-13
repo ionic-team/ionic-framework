@@ -1,9 +1,12 @@
 
 import { Config } from './config';
+import { PageTransition } from '../transitions/page-transition';
+import { IOSTransition } from '../transitions/transition-ios';
+import { MDTransition } from '../transitions/transition-md';
+import { WPTransition } from '../transitions/transition-wp';
 
 
-// iOS Mode Settings
-Config.setModeConfig('ios', {
+const MODE_IOS: any = {
   activator: 'highlight',
 
   actionSheetEnter: 'action-sheet-slide-in',
@@ -43,11 +46,10 @@ Config.setModeConfig('ios', {
 
   toastEnter: 'toast-slide-in',
   toastLeave: 'toast-slide-out',
-});
+};
 
 
-// Material Design Mode Settings
-Config.setModeConfig('md', {
+const MODE_MD: any = {
   activator: 'ripple',
 
   actionSheetEnter: 'action-sheet-md-slide-in',
@@ -87,11 +89,10 @@ Config.setModeConfig('md', {
 
   toastEnter: 'toast-md-slide-in',
   toastLeave: 'toast-md-slide-out',
-});
+};
 
 
-// Windows Mode Settings
-Config.setModeConfig('wp', {
+const MODE_WP: any = {
   activator: 'highlight',
 
   actionSheetEnter: 'action-sheet-wp-slide-in',
@@ -131,4 +132,19 @@ Config.setModeConfig('wp', {
 
   toastEnter: 'toast-wp-slide-in',
   toastLeave: 'toast-wp-slide-out',
-});
+};
+
+
+export function setupModeConfig() {
+  // iOS Mode Settings
+  Config.setModeConfig('ios', MODE_IOS);
+  PageTransition.register('ios-transition', IOSTransition);
+
+  // Material Design Mode Settings
+  Config.setModeConfig('md', MODE_MD);
+  PageTransition.register('md-transition', MDTransition);
+
+  // Windows Mode Settings
+  Config.setModeConfig('wp', MODE_WP);
+  PageTransition.register('wp-transition', WPTransition);
+}
