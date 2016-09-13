@@ -101,7 +101,7 @@
     "source-map-support": "^0.2.10",
     "strip-sourcemap-loader": "0.0.1",
     "systemjs": "0.19.6",
-    "through2": "^0.6.3",
+    "through2": "2.0.1",
     "tslint": "^3.10.2",
     "tslint-ionic-rules": "0.0.2",
     "typescript": "1.8.7",
