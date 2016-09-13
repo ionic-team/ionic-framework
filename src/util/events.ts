@@ -1,3 +1,9 @@
+import { APP_INITIALIZER } from '@angular/core';
+
+import { nativeTimeout } from '../util/dom';
+import { Platform } from '../platform/platform';
+import { ScrollView } from '../util/scroll-view';
+
 /**
  * @name Events
  * @description
@@ -100,4 +106,60 @@ export class Events {
     });
     return responses;
   }
+}
+
+export function setupEvents(platform: Platform): Events {
+  const events = new Events();
+
+  // start listening for resizes XXms after the app starts
+  nativeTimeout(() => {
+    window.addEventListener('online', (ev) => {
+      events.publish('app:online', ev);
+    }, false);
+
+    window.addEventListener('offline', (ev) => {
+      events.publish('app:offline', ev);
+    }, false);
+
+    window.addEventListener('orientationchange', (ev) => {
+      events.publish('app:rotated', ev);
+    });
+
+    // When that status taps, we respond
+    window.addEventListener('statusTap', (ev) => {
+      // TODO: Make this more better
+      let el = <HTMLElement>document.elementFromPoint(platform.width() / 2, platform.height() / 2);
+      if (!el) { return; }
+
+      let content = <HTMLElement>el.closest('.scroll-content');
+      if (content) {
+        var scroll = new ScrollView(content);
+        scroll.scrollTo(0, 0, 300);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      platform.windowResize();
+    });
+
+  }, 2000);
+
+  return events;
+}
+
+export function setupProvideEvents(platform: Platform) {
+  return function() {
+    return setupEvents(platform);
+  };
+}
+
+export function provideEvents() {
+  return {
+    provide: APP_INITIALIZER,
+    useFactory: setupProvideEvents,
+    deps: [
+      Platform
+    ],
+    multi: true
+  };
 }

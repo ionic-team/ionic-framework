@@ -1,4 +1,4 @@
-import { isBlank, isPresent, isString, isObject, assign } from './util';
+import { assign, isBlank, isPresent, isString } from './util';
 
 
 export function renderDateTime(template: string, value: DateTimeData, locale: LocaleData) {
@@ -465,8 +465,6 @@ const FORMAT_KEYS = [
   { f: FORMAT_A, k: 'ampm' },
   { f: FORMAT_a, k: 'ampm' },
 ];
-
-const FORMAT_REGEX = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|DD?D?D?|ddd?d?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|.)/g;
 
 const DAY_NAMES = [
   'Sunday',
