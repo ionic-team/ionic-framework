@@ -1,58 +1,51 @@
+import { IonicApp } from '../components/app/app-root';
+
 
 export class FeatureDetect {
-  private _results: {[featureName: string]: boolean} = {};
+  private _r: {[featureName: string]: boolean} = {};
 
-  run(window: Window, document: Document) {
+  test(appRoot: IonicApp) {
     for (let name in featureDetects) {
-      this._results[name] = featureDetects[name](window, document, document.body);
+      this._r[name] = !!featureDetects[name].test();
+      if (this._r[name]) {
+        appRoot.setElementClass(name, true);
+      }
     }
+    featureDetects = null;
   }
 
   has(featureName: string): boolean {
-    return !!this._results[featureName];
+    return !!this._r[featureName];
   }
 
-  static add(name: string, fn: any) {
-    featureDetects[name] = fn;
+  static add(name: string, test: any) {
+    // feature detection tests should only run on client side
+    if ((<any>this).window) {
+      featureDetects[name] = new test();
+    }
   }
 
 }
 
-let featureDetects: {[featureName: string]: Function} = {};
+let featureDetects: {[featureName: string]: FeatureDetectTest} = {};
 
 
-FeatureDetect.add('hairlines', function(window: Window, document: Document, body: HTMLBodyElement): boolean {
-  /**
-  * Hairline Shim
-  * Add the "hairline" CSS class name to the body tag
-  * if the browser supports subpixels.
-  */
-  let canDo = false;
-  if (window.devicePixelRatio >= 2) {
-    var hairlineEle = document.createElement('div');
-    hairlineEle.style.border = '.5px solid transparent';
-    body.appendChild(hairlineEle);
+export abstract class FeatureDetectTest {
+  abstract test(): boolean;
+}
 
-    if (hairlineEle.offsetHeight === 1) {
-      body.classList.add('hairlines');
-      canDo = true;
-    }
-    body.removeChild(hairlineEle);
+
+/**
+* backdrop-filter Test
+* Checks if css backdrop-filter is implemented by the browser.
+*/
+export class BackdropFilterTest implements FeatureDetectTest {
+
+  test() {
+    const styles = <any>document.documentElement.style;
+    return !!(styles['backdrop-filter'] !== undefined || styles['-webkit-backdrop-filter'] !== undefined);
   }
-  return canDo;
-});
 
-FeatureDetect.add('backdrop-filter', function(window: Window, document: Document, body: HTMLBodyElement): boolean {
-  /**
-  * backdrop-filter Shim
-  * Checks if css backdrop-filter is implemented by the browser.
-  */
-  let styles = <any>body.style;
-  let backdrop = styles['backdrop-filter'] !== undefined ||
-    styles['-webkit-backdrop-filter'] !== undefined;
-  if (backdrop) {
-    body.classList.add('backdrop-filter');
-  }
-  return backdrop;
-});
+}
 
+FeatureDetect.add('backdrop-filter', BackdropFilterTest);
