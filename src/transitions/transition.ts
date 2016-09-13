@@ -1,8 +1,5 @@
-import { Animation } from '../animations/animation';
-import { closest } from '../util/dom';
-import { Content } from '../components/content/content';
-import { Tabs } from '../components/tabs/tabs';
-import { ViewController } from '../components/nav/view-controller';
+import { Animation, AnimationOptions } from '../animations/animation';
+import { ViewController } from '../navigation/view-controller';
 
 
 /**
@@ -21,15 +18,35 @@ import { ViewController } from '../components/nav/view-controller';
  * - set inline TO styles - DOM WRITE
  */
 export class Transition extends Animation {
+  _trnsStart: Function;
 
-  constructor(public enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(null, {
-      renderDelay: opts.renderDelay
-    });
+  parent: Transition;
+  hasChildTrns: boolean;
+  trnsId: number;
+
+
+  constructor(public enteringView: ViewController, public leavingView: ViewController, opts: AnimationOptions, raf?: Function) {
+    super(null, opts, raf);
   }
 
-  static createTransition(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions): Transition {
-    let TransitionClass = TransitionRegistry[opts.animation];
+  init() {}
+
+  registerStart(trnsStart: Function) {
+    this._trnsStart = trnsStart;
+  }
+
+  start() {
+    this._trnsStart && this._trnsStart();
+    this._trnsStart = null;
+  }
+
+  destroy() {
+    super.destroy();
+    this.enteringView = this.leavingView = this._trnsStart = null;
+  }
+
+  static createTransition(transitionName: string, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
+    let TransitionClass: any = TransitionRegistry[transitionName];
     if (!TransitionClass) {
       // didn't find a transition animation, default to ios-transition
       TransitionClass = TransitionRegistry['ios-transition'];
@@ -44,14 +61,4 @@ export class Transition extends Animation {
 
 }
 
-export interface TransitionOptions {
-  animation: string;
-  duration: number;
-  easing: string;
-  direction: string;
-  renderDelay?: number;
-  isRTL?: boolean;
-  ev?: any;
-}
-
-let TransitionRegistry: any = {};
+let TransitionRegistry: {[key: string]: Transition} = {};
