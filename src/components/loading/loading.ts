@@ -181,6 +181,7 @@ export class LoadingController {
   /**
    * Create a loading indicator. See below for options.
    * @param {LoadingOptions} opts Loading options
+   * @returns {Loading} Returns a Loading Instance
    */
   create(opts: LoadingOptions = {}) {
     return new Loading(this._app, opts);
