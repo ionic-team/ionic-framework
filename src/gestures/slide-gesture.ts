@@ -1,5 +1,5 @@
 import { PanGesture } from './drag-gesture';
-import { clamp } from '../util';
+import { clamp } from '../util/util';
 import { pointerCoord } from '../util/dom';
 
 /**

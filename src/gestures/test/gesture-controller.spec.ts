@@ -1,7 +1,6 @@
-import { GestureController, DisableScroll } from '../../../src';
+import { GestureController, DisableScroll } from '../gesture-controller';
 
-export function run() {
-
+describe('gesture controller', () => {
   it('should create an instance of GestureController', () => {
     let c = new GestureController(null);
     expect(c.isCaptured()).toEqual(false);
@@ -310,5 +309,4 @@ export function run() {
     g.destroy();
     expect(c.isScrollDisabled()).toEqual(false);
   });
-
-}
+});
