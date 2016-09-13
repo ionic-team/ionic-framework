@@ -38,8 +38,16 @@
       <ion-badge item-right color="dark">99</ion-badge>
     </ion-item>
     <button ion-item (click)="toggleColor()" class="e2eBadgeToggleColor">
-      Dynamic Secondary Badge (Toggle)
-      <ion-badge item-right [color]="dynamicColor">99</ion-badge>
+      Dynamic Badge Color (Toggle)
+      <ion-badge item-right [color]="dynamicColor">{{dynamicColor}}</ion-badge>
+    </button>
+    <button ion-item (click)="toggleMode()">
+      Dynamic Badge Mode (Toggle)
+      <ion-badge item-right color="secondary" [mode]="dynamicMode">{{dynamicMode}}</ion-badge>
+    </button>
+    <button ion-item (click)="toggleBoth()">
+      Dynamic Badge Both (Toggle)
+      <ion-badge item-right [color]="dynamicColor" [mode]="dynamicMode">{{dynamicMode}}</ion-badge>
     </button>
   </ion-list>
 
@@ -72,8 +80,12 @@
       <ion-badge item-left color="dark">99</ion-badge>
     </ion-item>
     <button ion-item (click)="toggleColor()">
-      Dynamic Secondary Badge (Toggle)
-      <ion-badge item-left [color]="dynamicColor">99</ion-badge>
+      Dynamic Badge Color (Toggle)
+      <ion-badge item-left [color]="dynamicColor">{{dynamicColor}}</ion-badge>
+    </button>
+    <button ion-item (click)="toggleMode()">
+      Dynamic Badge Mode (Toggle)
+      <ion-badge item-left [mode]="dynamicMode">{{dynamicMode}}</ion-badge>
     </button>
   </ion-list>
 

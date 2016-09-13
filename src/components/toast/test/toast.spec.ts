@@ -1,6 +1,7 @@
-import { ToastController, App, Platform, Config } from '../../../../src';
-
-export function run() {
+import { App } from '../../app/app';
+import { Config } from '../../../config/config';
+import { Platform } from '../../../platform/platform';
+import { ToastController } from '../../toast/toast';
 
 describe('Toast', () => {
 
@@ -63,5 +64,3 @@ describe('Toast', () => {
   });
 
 });
-
-}

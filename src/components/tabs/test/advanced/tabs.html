@@ -1,7 +1,7 @@
 
 <ion-tabs preloadTabs="false" (ionChange)="onTabChange()">
-  <ion-tab tabTitle="Recents" tabIcon="call" [root]="tab1Root" [rootParams]="params" swipeBackEnabled="true"></ion-tab>
-  <ion-tab tabTitle="Favorites" tabIcon="star" [root]="tab2Root"></ion-tab>
-  <ion-tab tabTitle="Settings" tabIcon="settings" [root]="tab3Root"></ion-tab>
+  <ion-tab tabTitle="Recents" tabIcon="call" root="Tab1Page1" swipeBackEnabled="true"></ion-tab>
+  <ion-tab tabTitle="Favorites" tabIcon="star" root="Tab2Page1"></ion-tab>
+  <ion-tab tabTitle="Settings" tabIcon="settings" root="Tab3Page1"></ion-tab>
   <ion-tab tabTitle="Chat" tabIcon="chatbubbles" (ionSelect)="chat()"></ion-tab>
 </ion-tabs>

@@ -25,22 +25,22 @@
 
       <ion-item>
         <ion-label>Apple, formControlName</ion-label>
-        <ion-toggle formControlName="appleCtrl" (ionChange)="appleChange($event)"></ion-toggle>
+        <ion-toggle formControlName="apple" (ionChange)="appleChange($event)"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>Banana, formControlName</ion-label>
-        <ion-toggle formControlName="bananaCtrl" (ionChange)="bananaChange($event)"></ion-toggle>
+        <ion-toggle formControlName="banana" (ionChange)="bananaChange($event)"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>Cherry, formControlName, disabled</ion-label>
-        <ion-toggle disabled="true" formControlName="cherryCtrl"></ion-toggle>
+        <ion-toggle disabled="true" formControlName="cherry"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>Grape, formControlName, checked, disabled</ion-label>
-        <ion-toggle [checked]="grapeChecked" [disabled]="grapeDisabled" formControlName="grapeCtrl"></ion-toggle>
+        <ion-toggle [checked]="grapeChecked" [disabled]="grapeDisabled" formControlName="grape"></ion-toggle>
       </ion-item>
 
       <ion-item>
@@ -64,14 +64,14 @@
   </p>
 
   <p aria-hidden="true" padding>
-    <code>appleCtrl.dirty: {{fruitsForm.controls.appleCtrl.dirty}}</code><br>
-    <code>appleCtrl.value: {{fruitsForm.controls.appleCtrl.value}}</code><br>
-    <code>bananaCtrl.dirty: {{fruitsForm.controls.bananaCtrl.dirty}}</code><br>
-    <code>bananaCtrl.value: {{fruitsForm.controls.bananaCtrl.value}}</code><br>
-    <code>cherry.dirty: {{fruitsForm.controls.cherryCtrl.dirty}}</code><br>
-    <code>cherry.value: {{fruitsForm.controls.cherryCtrl.value}}</code><br>
-    <code>grape.dirty: {{fruitsForm.controls.grapeCtrl.dirty}}</code><br>
-    <code>grape.value: {{fruitsForm.controls.grapeCtrl.value}}</code><br>
+    <code>appleCtrl.dirty: {{appleCtrl.dirty}}</code><br>
+    <code>appleCtrl.value: {{appleCtrl.value}}</code><br>
+    <code>bananaCtrl.dirty: {{bananaCtrl.dirty}}</code><br>
+    <code>bananaCtrl.value: {{bananaCtrl.value}}</code><br>
+    <code>cherryCtrl.dirty: {{cherryCtrl.dirty}}</code><br>
+    <code>cherryCtrl.value: {{cherryCtrl.value}}</code><br>
+    <code>grapeCtrl.dirty: {{grapeCtrl.dirty}}</code><br>
+    <code>grapeCtrl.value: {{grapeCtrl.value}}</code><br>
     <code>kiwiValue: {{kiwiValue}}</code><br>
     <code>strawberryValue: {{strawberryValue}}</code><br>
   </p>
