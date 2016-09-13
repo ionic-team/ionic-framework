@@ -3,20 +3,15 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
-  Generated class for the <%= jsClassName %> provider.
+  Generated class for the $CLASSNAME provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class <%= jsClassName %> {
-  static get parameters() {
-    return [[Http]]
-  }
+export class $CLASSNAME {
 
-  constructor(http) {
-    this.http = http;
+  constructor(private http: Http) {
   }
 
 }
-
