@@ -1,16 +1,15 @@
-import { Component, Optional, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
-import { NgControl, NgModel } from '@angular/forms';
+import { Component, Optional, ElementRef, EventEmitter, Input, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { Form } from '../../util/form';
 import { InputBase } from './input-base';
+import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
-import { Label } from '../label/label';
 import { NativeInput, NextInput } from './native-input';
-import { NavController } from '../nav/nav-controller';
+import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 
 
@@ -75,16 +74,15 @@ import { Platform } from '../../platform/platform';
  */
 @Component({
   selector: 'ion-input',
-  template: `
-    <input [type]="type" [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input">
-    <input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">
-    <button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>
-    <div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>
-  `,
-  directives: [NativeInput, NextInput, NgIf, NgModel],
+  template:
+    '<input [type]="type" [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input" [ngClass]="\'text-input-\' + _mode">' +
+    '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
+    '<button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
+    '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
   encapsulation: ViewEncapsulation.None,
 })
 export class TextInput extends InputBase {
+
   constructor(
     config: Config,
     form: Form,
@@ -92,12 +90,103 @@ export class TextInput extends InputBase {
     app: App,
     platform: Platform,
     elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() scrollView: Content,
     @Optional() nav: NavController,
     @Optional() ngControl: NgControl
   ) {
-    super(config, form, item, app, platform, elementRef, scrollView, nav, ngControl);
+    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl);
+
+    this.mode = config.get('mode');
   }
+
+  /**
+   * @private
+   */
+  _clearInput: boolean = false;
+
+  /**
+   * @private
+   */
+  @Input() placeholder: string = '';
+
+  /**
+   * @private
+   */
+  @Input()
+  get clearInput() {
+    return this._clearInput;
+  }
+  set clearInput(val: any) {
+    this._clearInput = isTrueProperty(val);
+  }
+
+  /**
+   * @private
+   */
+  @Input()
+  get value() {
+    return this._value;
+  }
+  set value(val: any) {
+    super.setValue(val);
+  }
+
+  /**
+   * @private
+   */
+  @Input()
+  get type() {
+    return this._type;
+  }
+  set type(val: any) {
+    super.setType(val);
+  }
+
+  /**
+   * @private
+   */
+  @Input()
+  get disabled() {
+    return this._disabled;
+  }
+  set disabled(val: any) {
+    super.setDisabled(val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('input', val);
+  }
+
+  /**
+   * @private
+   */
+  @ViewChild(NativeInput)
+  set _nativeInput(nativeInput: NativeInput) {
+    super.setNativeInput(nativeInput);
+  }
+
+  /**
+   * @private
+   */
+  @ViewChild(NextInput)
+  set _nextInput(nextInput: NextInput) {
+    super.setNextInput(nextInput);
+  }
+
+  /**
+   * @private
+   */
+  @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
+   * @private
+   */
+  @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
    * @private
@@ -111,6 +200,29 @@ export class TextInput extends InputBase {
    */
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);
+  }
+  /**
+   * @private
+   */
+  ngOnInit() {
+    if (this._item) {
+      this._item.setElementClass('item-input', true);
+      this._item.registerInput(this._type);
+    }
+  }
+
+  /**
+   * @private
+   */
+  ngAfterContentChecked() {
+    this.setItemInputControlCss();
+  }
+
+  /**
+   * @private
+   */
+  ngOnDestroy() {
+    this._form.deregister(this);
   }
 
   /**
@@ -171,10 +283,9 @@ export class TextInput extends InputBase {
 @Component({
   selector: 'ion-textarea',
   template:
-    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input"></textarea>' +
+    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input" [ngClass]="\'text-input-\' + _mode"></textarea>' +
     '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
-  directives: [NativeInput, NextInput, NgIf],
   encapsulation: ViewEncapsulation.None,
 })
 export class TextArea extends InputBase {
@@ -185,21 +296,111 @@ export class TextArea extends InputBase {
     app: App,
     platform: Platform,
     elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() scrollView: Content,
     @Optional() nav: NavController,
     @Optional() ngControl: NgControl
   ) {
-    super(config, form, item, app, platform, elementRef, scrollView, nav, ngControl);
+    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl);
+
+    this.mode = config.get('mode');
   }
 
   /**
    * @private
    */
+  @Input() placeholder: string = '';
+
+  /**
+   * @private
+   */
+  @Input()
+  get value() {
+    return this._value;
+  }
+  set value(val: any) {
+    super.setValue(val);
+  }
+
+  /**
+   * @private
+   */
+  @Input()
+  get type() {
+    return this._type;
+  }
+  set type(val: any) {
+    super.setType(val);
+  }
+
+  /**
+   * @private
+   */
+  @Input()
+  get disabled() {
+    return this._disabled;
+  }
+  set disabled(val: any) {
+    super.setDisabled(val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('input', val);
+  }
+
+  /**
+   * @private
+   */
+  @ViewChild(NativeInput)
+  set _nativeInput(nativeInput: NativeInput) {
+    super.setNativeInput(nativeInput);
+  }
+
+  /**
+   * @private
+   */
+  @ViewChild(NextInput)
+  set _nextInput(nextInput: NextInput) {
+    super.setNextInput(nextInput);
+  }
+
+  /**
+   * @private
+   */
+  @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
+   * @private
+   */
+  @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
+   * @private
+   */
   ngOnInit() {
-    super.ngOnInit();
     if (this._item) {
-      this._item.setCssClass('item-textarea', true);
+      this._item.setElementClass('item-textarea', true);
+      this._item.setElementClass('item-input', true);
+      this._item.registerInput(this._type);
     }
+  }
+
+  /**
+   * @private
+   */
+  ngAfterContentChecked() {
+    this.setItemInputControlCss();
+  }
+
+  /**
+   * @private
+   */
+  ngOnDestroy() {
+    this._form.deregister(this);
   }
 
   /**

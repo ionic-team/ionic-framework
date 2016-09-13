@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Ion } from '../ion';
@@ -7,7 +7,7 @@ import { Keyboard } from '../../util/keyboard';
 import { nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
 import { ScrollView } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 import { isTrueProperty } from '../../util/util';
 
 
@@ -103,34 +103,38 @@ import { isTrueProperty } from '../../util/util';
 @Component({
   selector: 'ion-content',
   template:
-    '<scroll-content>' +
+    '<div class="scroll-content">' +
       '<ng-content></ng-content>' +
-    '</scroll-content>' +
+    '</div>' +
     '<ng-content select="ion-fixed"></ng-content>' +
     '<ng-content select="ion-refresher"></ng-content>',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   host: {
     '[class.statusbar-padding]': '_sbPadding'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class Content extends Ion {
-  private _paddingTop: number;
-  private _paddingRight: number;
-  private _paddingBottom: number;
-  private _paddingLeft: number;
-  private _scrollPadding: number;
-  private _headerHeight: number;
-  private _footerHeight: number;
-  private _tabbarHeight: number;
-  private _tabsPlacement: string;
-  private _inputPolling: boolean = false;
-  private _scroll: ScrollView;
-  private _scLsn: Function;
-  private _sbPadding: boolean;
-  private _fullscreen: boolean;
-  private _scrollEle: HTMLElement;
-  private _footerEle: HTMLElement;
+  _paddingTop: number;
+  _paddingRight: number;
+  _paddingBottom: number;
+  _paddingLeft: number;
+  _scrollPadding: number;
+  _headerHeight: number;
+  _footerHeight: number;
+  _tabbarHeight: number;
+  _tabsPlacement: string;
+  _inputPolling: boolean = false;
+  _scroll: ScrollView;
+  _scLsn: Function;
+  _sbPadding: boolean;
+  _fullscreen: boolean;
+  _footerEle: HTMLElement;
+
+  /*
+   * @private
+   */
+  _scrollEle: HTMLElement;
 
   /**
    * A number representing how many pixels the top of the content has been
@@ -145,20 +149,25 @@ export class Content extends Ion {
   contentBottom: number;
 
   constructor(
-    private _elementRef: ElementRef,
     config: Config,
-    private _app: App,
-    private _keyboard: Keyboard,
-    private _zone: NgZone,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    public _app: App,
+    public _keyboard: Keyboard,
+    public _zone: NgZone,
     @Optional() viewCtrl: ViewController,
-    @Optional() private _tabs: Tabs
+    @Optional() public _tabs: Tabs
   ) {
-    super(_elementRef);
+    super(config, elementRef, renderer);
+
+    this._mode = config.get('mode');
+    this._setMode('content', this._mode);
+
     this._sbPadding = config.getBoolean('statusbarPadding', false);
 
     if (viewCtrl) {
-      viewCtrl.setContent(this);
-      viewCtrl.setContentRef(_elementRef);
+      viewCtrl._setContent(this);
+      viewCtrl._setContentRef(elementRef);
     }
   }
 
@@ -232,7 +241,7 @@ export class Content extends Ion {
     return this._addListener('mousemove', handler);
   }
 
-  private _addListener(type: string, handler: any): Function {
+  _addListener(type: string, handler: any): Function {
     if (!this._scrollEle) { return; }
 
     // ensure we're not creating duplicates
@@ -351,14 +360,6 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
-   * DOM WRITE
-   */
-  addCssClass(className: string) {
-    this.getNativeElement().classList.add(className);
-  }
-
-  /**
    * @input {boolean} By default, content is positioned between the headers
    * and footers. However, using `fullscreen="true"`, the content will be
    * able to scroll "under" the headers and footers. At first glance the
@@ -378,16 +379,8 @@ export class Content extends Ion {
    * @private
    * DOM WRITE
    */
-  removeCssClass(className: string) {
-    this.getNativeElement().classList.remove(className);
-  }
-
-  /**
-   * @private
-   * DOM WRITE
-   */
   setScrollElementStyle(prop: string, val: any) {
-    this._scrollEle.style[prop] = val;
+    (<any>this._scrollEle.style)[prop] = val;
   }
 
   /**

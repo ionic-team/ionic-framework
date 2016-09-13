@@ -1,16 +1,19 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Provider, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { isTrueProperty } from '../../util/util';
+import { Ion } from '../ion';
 import { Item } from '../item/item';
 import { pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../util/ui-event-manager';
 
-
-export const TOGGLE_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Toggle), multi: true});
-
+export const TOGGLE_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => Toggle),
+  multi: true
+};
 
 /**
  * @name Toggle
@@ -51,54 +54,65 @@ export const TOGGLE_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: 'ion-toggle',
-  template: `
-    <div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">
-      <div class="toggle-inner"></div>
-    </div>
-    <button ion-button="item-cover"
-            role="checkbox"
-            type="button"
-            [id]="id"
-            [attr.aria-checked]="_checked"
-            [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled">
-    </button>
-  `,
+  template:
+    '<div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">' +
+      '<div class="toggle-inner"></div>' +
+    '</div>' +
+    '<button role="checkbox" ' +
+            'type="button" ' +
+            'ion-button="item-cover" ' +
+            '[id]="id" ' +
+            '[attr.aria-checked]="_checked" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover">' +
+    '</button>',
   host: {
     '[class.toggle-disabled]': '_disabled'
   },
   providers: [TOGGLE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy  {
-  private _checked: boolean = false;
-  private _init: boolean;
-  private _disabled: boolean = false;
-  private _labelId: string;
-  private _activated: boolean = false;
-  private _startX: number;
-  private _fn: Function;
-  private _events: UIEventManager = new UIEventManager();
+export class Toggle extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy  {
+  /** @private */
+  _checked: boolean = false;
+  /** @private */
+  _init: boolean;
+  /** @private */
+  _disabled: boolean = false;
+  /** @private */
+  _labelId: string;
+  /** @private */
+  _activated: boolean = false;
+  /** @private */
+  _startX: number;
+  /** @private */
+  _msPrv: number = 0;
+  /** @private */
+  _fn: Function;
+  /** @private */
+  _events: UIEventManager = new UIEventManager();
 
   /**
    * @private
    */
   id: string;
 
-  /** @internal */ 
-  _color: string;
-
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('toggle', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
-  }  
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('toggle', val);
+  }
 
   /**
    * @output {Toggle} expression to evaluate when the toggle value changes
@@ -106,24 +120,28 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   @Output() ionChange: EventEmitter<Toggle> = new EventEmitter<Toggle>();
 
   constructor(
-    private _form: Form,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
-    @Optional() private _item: Item
+    public _form: Form,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    @Optional() public _item: Item
   ) {
-    this._form.register(this);
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+    _form.register(this);
 
     if (_item) {
       this.id = 'tgl-' + _item.registerInput('toggle');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-toggle', true);
+      this._item.setElementClass('item-toggle', true);
     }
   }
 
   /**
    * @private
    */
-  private pointerDown(ev: UIEvent): boolean {
+  pointerDown(ev: UIEvent): boolean {
     this._startX = pointerCoord(ev).x;
     this._activated = true;
     return true;
@@ -132,7 +150,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   /**
    * @private
    */
-  private pointerMove(ev: UIEvent) {
+  pointerMove(ev: UIEvent) {
     if (this._startX) {
       let currentX = pointerCoord(ev).x;
       console.debug('toggle, pointerMove', ev.type, currentX);
@@ -155,7 +173,7 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
   /**
    * @private
    */
-  private pointerUp(ev: UIEvent) {
+  pointerUp(ev: UIEvent) {
     if (this._startX) {
       let endX = pointerCoord(ev).x;
 
@@ -186,14 +204,16 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
     this.onChange(this._checked);
   }
 
-
-  private _setChecked(isChecked: boolean) {
+  /**
+   * @private
+   */
+  _setChecked(isChecked: boolean) {
     if (!this._disabled && isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {
         this.ionChange.emit(this);
       }
-      this._item && this._item.setCssClass('item-toggle-checked', isChecked);
+      this._item && this._item.setElementClass('item-toggle-checked', isChecked);
     }
   }
 
@@ -232,26 +252,8 @@ export class Toggle implements AfterContentInit, ControlValueAccessor, OnDestroy
 
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-toggle-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-toggle-disabled', this._disabled);
   }
- 
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `toggle-${color}`, isAdd);
-    }
-  } 
 
   /**
    * @private

@@ -1,17 +1,20 @@
-import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
 import { Picker, PickerController } from '../picker/picker';
 import { PickerColumn, PickerColumnOption } from '../picker/picker-options';
 import { Form } from '../../util/form';
+import { Ion } from '../ion';
 import { Item } from '../item/item';
 import { merge, isBlank, isPresent, isTrueProperty, isArray, isString } from '../../util/util';
 import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, convertDataToISO, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
 
-export const DATETIME_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => DateTime), multi: true});
-
+export const DATETIME_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => DateTime),
+  multi: true
+};
 
 /**
  * @name DateTime
@@ -247,32 +250,32 @@ export const DATETIME_VALUE_ACCESSOR = new Provider(
  */
 @Component({
   selector: 'ion-datetime',
-  template: `
-    <div class="datetime-text">{{_text}}</div>
-    <button ion-button="item-cover" 
-            aria-haspopup="true"
-            type="button"
-            [id]="id"
-            [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled">
-    </button>
-  `,
+  template:
+    '<div class="datetime-text">{{_text}}</div>' +
+    '<button aria-haspopup="true" ' +
+            'type="button" ' +
+            '[id]="id" ' +
+            'ion-button="item-cover" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover">' +
+    '</button>',
   host: {
     '[class.datetime-disabled]': '_disabled'
   },
   providers: [DATETIME_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  private _disabled: any = false;
-  private _labelId: string;
-  private _text: string = '';
-  private _fn: Function;
-  private _isOpen: boolean = false;
-  private _min: DateTimeData;
-  private _max: DateTimeData;
-  private _value: DateTimeData = {};
-  private _locale: LocaleData = {};
+export class DateTime extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy {
+  _disabled: any = false;
+  _labelId: string;
+  _text: string = '';
+  _fn: Function;
+  _isOpen: boolean = false;
+  _min: DateTimeData;
+  _max: DateTimeData;
+  _value: DateTimeData = {};
+  _locale: LocaleData = {};
 
   /**
    * @private
@@ -405,6 +408,14 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   @Input() pickerOptions: any = {};
 
   /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('datetime', val);
+  }
+
+  /**
    * @output {any} Any expression to evaluate when the datetime selection has changed.
    */
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
@@ -416,20 +427,26 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
 
   constructor(
     private _form: Form,
-    private _config: Config,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() private _item: Item,
     @Optional() private _pickerCtrl: PickerController
   ) {
-    this._form.register(this);
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+    _form.register(this);
+
     if (_item) {
       this.id = 'dt-' + _item.registerInput('datetime');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-datetime', true);
+      this._item.setElementClass('item-datetime', true);
     }
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  _click(ev: UIEvent) {
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -440,7 +457,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   @HostListener('keyup.space')
-  private _keyup() {
+  _keyup() {
     if (!this._isOpen) {
       this.open();
     }
@@ -524,9 +541,9 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
         let values: any[];
 
         // first see if they have exact values to use for this input
-        if (isPresent(this[key + 'Values'])) {
+        if (isPresent((<any>this)[key + 'Values'])) {
           // user provide exact values for this date part
-          values = convertToArrayOfNumbers(this[key + 'Values'], key);
+          values = convertToArrayOfNumbers((<any>this)[key + 'Values'], key);
 
         } else {
           // use the default date part values
@@ -699,7 +716,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
-      this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
+      this._item.setElementClass('input-has-value', !!(inputValue && inputValue !== ''));
     }
   }
 
@@ -761,7 +778,7 @@ export class DateTime implements AfterContentInit, ControlValueAccessor, OnDestr
 
   set disabled(val) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-datetime-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-datetime-disabled', this._disabled);
   }
 
   /**

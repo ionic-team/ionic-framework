@@ -1,33 +1,29 @@
 import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
-import { isPresent } from '../../util/util';
-import { NavParams } from '../nav/nav-params';
-import { Transition, TransitionOptions } from '../../transitions/transition';
-import { ViewController } from '../nav/view-controller';
+import { NavParams } from '../../navigation/nav-params';
+import { Transition } from '../../transitions/transition';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
-* @private
-*/
+ * @private
+ */
 @Component({
   selector: 'ion-toast',
-  template: `
-    <div class="toast-wrapper"
-      [class.toast-bottom]="d.position === 'bottom'"
-      [class.toast-middle]="d.position === 'middle'"
-      [class.toast-top]="d.position === 'top'">
-      <div class="toast-container">
-        <div class="toast-message" id="{{hdrId}}" *ngIf="d.message">{{d.message}}</div>
-        <button ion-button clear class="toast-button" *ngIf="d.showCloseButton" (click)="cbClick()">
-          {{ d.closeButtonText || 'Close' }}
-         </button>
-      </div>
-    </div>
-  `,
-  directives: [NgIf],
+  template:
+    '<div class="toast-wrapper" ' +
+      '[class.toast-bottom]="d.position === \'bottom\'" ' +
+      '[class.toast-middle]="d.position === \'middle\'" ' +
+      '[class.toast-top]="d.position === \'top\'"> ' +
+      '<div class="toast-container"> ' +
+        '<div class="toast-message" id="{{hdrId}}" *ngIf="d.message">{{d.message}}</div> ' +
+        '<button ion-button clear class="toast-button" *ngIf="d.showCloseButton" (click)="cbClick()"> ' +
+          '{{ d.closeButtonText || \'Close\' }} ' +
+         '</button> ' +
+      '</div> ' +
+    '</div>',
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
@@ -35,7 +31,7 @@ import { ViewController } from '../nav/view-controller';
   },
 })
 export class ToastCmp implements AfterViewInit {
-  private d: {
+  d: {
     message?: string;
     cssClass?: string;
     duration?: number;
@@ -44,20 +40,20 @@ export class ToastCmp implements AfterViewInit {
     dismissOnPageChange?: boolean;
     position?: string;
   };
-  private descId: string;
-  private dismissTimeout: number = undefined;
-  private enabled: boolean;
-  private hdrId: string;
-  private id: number;
+  descId: string;
+  dismissTimeout: number = undefined;
+  enabled: boolean;
+  hdrId: string;
+  id: number;
 
   constructor(
-    private _viewCtrl: ViewController,
-    private _config: Config,
-    private _elementRef: ElementRef,
+    public _viewCtrl: ViewController,
+    public _config: Config,
+    public _elementRef: ElementRef,
     params: NavParams,
     renderer: Renderer
- ) {
-
+  ) {
+    renderer.setElementClass(_elementRef.nativeElement, `toast-${_config.get('mode')}`, true);
     this.d = params.data;
 
     if (this.d.cssClass) {
@@ -76,10 +72,9 @@ export class ToastCmp implements AfterViewInit {
   ngAfterViewInit() {
     // if there's a `duration` set, automatically dismiss.
     if (this.d.duration) {
-      this.dismissTimeout =
-        setTimeout(() => {
+      this.dismissTimeout = (<any>setTimeout(() => {
           this.dismiss('backdrop');
-        }, this.d.duration);
+        }, this.d.duration));
     }
     this.enabled = true;
   }
@@ -113,21 +108,19 @@ export class ToastCmp implements AfterViewInit {
 
 
 class ToastSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
+  init() {
     // DOM READS
-    let ele = enteringView.pageRef().nativeElement;
+    let ele = this.enteringView.pageRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if (enteringView.data && enteringView.data.position === TOAST_POSITION_TOP) {
+    if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_TOP) {
       // top
       // by default, it is -100% hidden (above the screen)
       // so move from that to 10px below top: 0px;
       wrapper.fromTo('translateY', '-100%', `${10}px`);
 
-    } else if (enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE) {
+    } else if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
@@ -147,19 +140,17 @@ class ToastSlideIn extends Transition {
 }
 
 class ToastSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
+  init() {
+    let ele = this.leavingView.pageRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if (leavingView.data && leavingView.data.position === TOAST_POSITION_TOP) {
+    if (this.leavingView.data && this.leavingView.data.position === TOAST_POSITION_TOP) {
       // top
       // reverse arguments from enter transition
       wrapper.fromTo('translateY', `${10}px`, '-100%');
 
-    } else if (leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE) {
+    } else if (this.leavingView.data && this.leavingView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just fade it out
       wrapper.fromTo('opacity', 0.99, 0);
@@ -175,21 +166,19 @@ class ToastSlideOut extends Transition {
 }
 
 class ToastMdSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
+  init() {
     // DOM reads
-    let ele = enteringView.pageRef().nativeElement;
+    let ele = this.enteringView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if (enteringView.data && enteringView.data.position === TOAST_POSITION_TOP) {
+    if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_TOP) {
       // top
       // by default, it is -100% hidden (above the screen)
       // so move from that to top: 0px;
       wrapper.fromTo('translateY', '-100%', `0%`);
 
-    } else if (enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE) {
+    } else if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
@@ -209,19 +198,17 @@ class ToastMdSlideIn extends Transition {
 }
 
 class ToastMdSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
+  init() {
+    let ele = this.leavingView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if (leavingView.data && leavingView.data.position === TOAST_POSITION_TOP) {
+    if (this.leavingView.data && this.leavingView.data.position === TOAST_POSITION_TOP) {
       // top
       // reverse arguments from enter transition
       wrapper.fromTo('translateY', `${0}%`, '-100%');
 
-    } else if (leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE) {
+    } else if (this.leavingView.data && this.leavingView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just fade it out
       wrapper.fromTo('opacity', 0.99, 0);
@@ -237,19 +224,17 @@ class ToastMdSlideOut extends Transition {
 }
 
 class ToastWpPopIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
+  init() {
+    let ele = this.enteringView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if (enteringView.data && enteringView.data.position === TOAST_POSITION_TOP) {
+    if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_TOP) {
       // top
       wrapper.fromTo('opacity', 0.01, 1);
       wrapper.fromTo('scale', 1.3, 1);
 
-    } else if (enteringView.data && enteringView.data.position === TOAST_POSITION_MIDDLE) {
+    } else if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
@@ -270,21 +255,19 @@ class ToastWpPopIn extends Transition {
 }
 
 class ToastWpPopOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
+  init() {
     // DOM reads
-    let ele = leavingView.pageRef().nativeElement;
+    let ele = this.leavingView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
 
-    if (leavingView.data && leavingView.data.position === TOAST_POSITION_TOP) {
+    if (this.leavingView.data && this.leavingView.data.position === TOAST_POSITION_TOP) {
       // top
       // reverse arguments from enter transition
       wrapper.fromTo('opacity', 0.99, 0);
       wrapper.fromTo('scale', 1, 1.3);
 
-    } else if (leavingView.data && leavingView.data.position === TOAST_POSITION_MIDDLE) {
+    } else if (this.leavingView.data && this.leavingView.data.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just fade it out
       wrapper.fromTo('opacity', 0.99, 0);
@@ -315,4 +298,3 @@ Transition.register('toast-wp-slide-in', ToastWpPopIn);
 let toastIds = -1;
 const TOAST_POSITION_TOP = 'top';
 const TOAST_POSITION_MIDDLE = 'middle';
-const TOAST_POSITION_BOTTOM = 'bottom';

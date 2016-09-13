@@ -1,35 +1,34 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Inject, OnDestroy, OnInit, Optional, Output, Provider, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Inject, OnDestroy, OnInit, Optional, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
-import { Coordinates, pointerCoord, raf } from '../../util/dom';
+import { Config } from '../../config/config';
 import { Debouncer } from '../../util/debouncer';
 import { Form } from '../../util/form';
+import { Ion } from '../ion';
 import { Item } from '../item/item';
+import { PointerCoordinates, pointerCoord, raf } from '../../util/dom';
 import { UIEventManager } from '../../util/ui-event-manager';
 
-
-export const RANGE_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Range), multi: true});
+export const RANGE_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => Range),
+  multi: true
+};
 
 /**
  * @private
  */
 @Component({
   selector: '.range-knob-handle',
-  template: `
-    <div class="range-pin" *ngIf="range.pin">{{_val}}</div>
-    <div class="range-knob"></div>
-  `,
-  directives: [NgIf],
+  template:
+    '<div class="range-pin" *ngIf="range.pin">{{_val}}</div>' +
+    '<div class="range-knob"></div>',
   host: {
     '[class.range-knob-pressed]': 'pressed',
     '[class.range-knob-min]': '_val===range.min',
     '[class.range-knob-max]': '_val===range.max',
     '[style.left]': '_x',
-    '[style.top]': '_y',
-    '[style.transform]': '_trns',
     '[attr.aria-valuenow]': '_val',
     '[attr.aria-valuemin]': 'range.min',
     '[attr.aria-valuemax]': 'range.max',
@@ -38,14 +37,14 @@ export const RANGE_VALUE_ACCESSOR = new Provider(
   }
 })
 export class RangeKnob implements OnInit {
-  private _ratio: number;
-  private _val: number;
-  private _x: string;
+  _ratio: number;
+  _val: number;
+  _x: string;
   pressed: boolean;
 
   @Input() upper: boolean;
 
-  constructor(@Inject(forwardRef(() => Range)) private range: Range) {}
+  constructor(@Inject(forwardRef(() => Range)) public range: Range) {}
 
   get ratio(): number {
     return this._ratio;
@@ -179,18 +178,16 @@ export class RangeKnob implements OnInit {
  */
 @Component({
   selector: 'ion-range',
-  template: `
-    <ng-content select="[range-left]"></ng-content>
-    <div class="range-slider" #slider>
-      <div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>
-      <div class="range-bar"></div>
-      <div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>
-      <div class="range-knob-handle"></div>
-      <div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>
-    </div>
-    <ng-content select="[range-right]"></ng-content>
-  `,
-  directives: [NgFor, NgIf, RangeKnob],
+  template:
+    '<ng-content select="[range-left]"></ng-content>' +
+    '<div class="range-slider" #slider>' +
+      '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>' +
+      '<div class="range-bar"></div>' +
+      '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>' +
+      '<div class="range-knob-handle"></div>' +
+      '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
+    '</div>' +
+    '<ng-content select="[range-right]"></ng-content>',
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',
@@ -199,52 +196,52 @@ export class RangeKnob implements OnInit {
   providers: [RANGE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
-  private _dual: boolean = false;
-  private _pin: boolean;
-  private _disabled: boolean = false;
-  private _pressed: boolean;
-  private _labelId: string;
-  private _fn: Function;
+export class Range extends Ion implements AfterViewInit, ControlValueAccessor, OnDestroy {
+  _dual: boolean = false;
+  _pin: boolean;
+  _disabled: boolean = false;
+  _pressed: boolean;
+  _labelId: string;
+  _fn: Function;
 
-  private _active: RangeKnob;
-  private _start: Coordinates = null;
-  private _rect: ClientRect;
-  private _ticks: any[] = [];
-  private _barL: string;
-  private _barR: string;
+  _active: RangeKnob;
+  _start: PointerCoordinates = null;
+  _rect: ClientRect;
+  _ticks: any[];
+  _barL: string;
+  _barR: string;
 
-  private _min: number = 0;
-  private _max: number = 100;
-  private _step: number = 1;
-  private _snaps: boolean = false;
+  _min: number = 0;
+  _max: number = 100;
+  _step: number = 1;
+  _snaps: boolean = false;
 
-  private _debouncer: Debouncer = new Debouncer(0);
-  private _events: UIEventManager = new UIEventManager();
+  _debouncer: Debouncer = new Debouncer(0);
+  _events: UIEventManager = new UIEventManager();
   /**
    * @private
    */
   value: any;
 
-
-  /** @internal */
-  _color: string;
-
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('range', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('range', val);
   }
 
-  @ViewChild('bar') private _bar: ElementRef;
-  @ViewChild('slider') private _slider: ElementRef;
-  @ViewChildren(RangeKnob) private _knobs: QueryList<RangeKnob>;
+  @ViewChild('bar') public _bar: ElementRef;
+  @ViewChild('slider') public _slider: ElementRef;
+  @ViewChildren(RangeKnob) public _knobs: QueryList<RangeKnob>;
 
   /**
    * @private
@@ -347,15 +344,19 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   constructor(
     private _form: Form,
     @Optional() private _item: Item,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
     _form.register(this);
 
     if (_item) {
       this.id = 'rng-' + _item.registerInput('range');
       this._labelId = 'lbl-' + _item.id;
-      _item.setCssClass('item-range', true);
+      _item.setElementClass('item-range', true);
     }
   }
 
@@ -480,7 +481,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   /**
    * @private
    */
-  setActiveKnob(current: Coordinates, rect: ClientRect) {
+  setActiveKnob(current: PointerCoordinates, rect: ClientRect) {
     // figure out which knob is the closest one to the pointer
     let ratio = (current.x - rect.left) / (rect.width);
 
@@ -495,7 +496,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   /**
    * @private
    */
-  updateKnob(current: Coordinates, rect: ClientRect) {
+  updateKnob(current: PointerCoordinates, rect: ClientRect) {
     // figure out where the pointer is currently at
     // update the knob being interacted with
     if (this._active) {
@@ -568,7 +569,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
    * @private
    */
   updateTicks() {
-    if (this._snaps) {
+    if (this._snaps && this._ticks) {
       let ratio = this.ratio;
       if (this._dual) {
         let upperRatio = this.ratioUpper;
@@ -599,24 +600,6 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   valueToRatio(value: number) {
     value = Math.round(clamp(this._min, value, this._max) / this._step) * this._step;
     return (value - this._min) / (this._max - this._min);
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `range-${color}`, isAdd);
-    }
   }
 
   /**
@@ -667,7 +650,7 @@ export class Range implements AfterViewInit, ControlValueAccessor, OnDestroy {
   }
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-range-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-range-disabled', this._disabled);
   }
 
   /**

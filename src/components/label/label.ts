@@ -1,5 +1,8 @@
 import { Attribute, Directive, ElementRef, Renderer, Input } from '@angular/core';
 
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
+
 
 /**
  * @name Label
@@ -54,22 +57,23 @@ import { Attribute, Directive, ElementRef, Renderer, Input } from '@angular/core
 @Directive({
   selector: 'ion-label'
 })
-export class Label {
+export class Label extends Ion {
   private _id: string;
-  
-  /** @internal */ 
-  _color: string;
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
+  set color(val: string) {
+    this._setColor('label', val);
   }
 
-  set color(value: string) {
-    this._updateColor(value);
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('label', val);
   }
 
   /**
@@ -78,13 +82,17 @@ export class Label {
   type: string;
 
   constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Attribute('floating') isFloating: string,
     @Attribute('stacked') isStacked: string,
     @Attribute('fixed') isFixed: string,
     @Attribute('inset') isInset: string
   ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
     this.type = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : (isInset === '' ? 'inset' : null))));
   }
 
@@ -99,7 +107,7 @@ export class Label {
   set id(val: string) {
     this._id = val;
     if (val) {
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', val);
+      this.setElementAttribute('id', val);
     }
   }
 
@@ -107,33 +115,7 @@ export class Label {
    * @private
    */
   get text(): string {
-    return this._elementRef.nativeElement.textContent || '';
-  }
-
-  /**
-   * @private
-   * @param {string} add class name
-   */
-  addClass(className: string) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
-  }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `label-${color}`, isAdd);
-    }
+    return this.getNativeElement().textContent || '';
   }
 
 }

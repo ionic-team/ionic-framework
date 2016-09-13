@@ -12,17 +12,17 @@ import { CSS, hasFocus }  from '../../util/dom';
   selector: '.text-input'
 })
 export class NativeInput {
-  private _relocated: boolean;
-  private _clone: boolean;
-  private _blurring: boolean;
-  private _unrefBlur: Function;
+  _relocated: boolean;
+  _clone: boolean;
+  _blurring: boolean;
+  _unrefBlur: Function;
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    public _elementRef: ElementRef,
+    public _renderer: Renderer,
     config: Config,
     public ngControl: NgControl
   ) {
@@ -31,12 +31,12 @@ export class NativeInput {
   }
 
   @HostListener('input', ['$event'])
-  private _change(ev: any) {
+  _change(ev: any) {
     this.valueChange.emit(ev.target.value);
   }
 
   @HostListener('focus')
-  private _focus() {
+  _focus() {
     var self = this;
 
     self.focusChange.emit(true);
@@ -65,7 +65,7 @@ export class NativeInput {
   }
 
   @HostListener('blur')
-  private _blur() {
+  _blur() {
     this.focusChange.emit(false);
     this.hideFocus(false);
 
@@ -111,7 +111,7 @@ export class NativeInput {
           // move the native input to a location safe to receive focus
           // according to the browser, the native input receives focus in an
           // area which doesn't require the browser to scroll the input into place
-          focusedInputEle.style[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+          (<any>focusedInputEle.style)[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
           focusedInputEle.style.opacity = '0';
         }
 
@@ -129,7 +129,7 @@ export class NativeInput {
         if (this._clone) {
           // should remove the cloned node
           focusedInputEle.classList.remove('cloned-active');
-          focusedInputEle.style[CSS.transform] = '';
+          (<any>focusedInputEle.style)[CSS.transform] = '';
           focusedInputEle.style.opacity = '';
           removeClone(focusedInputEle, 'cloned-focus');
         }
@@ -164,7 +164,7 @@ export class NativeInput {
     return this.element().value;
   }
 
-  setCssClass(cssClass: string, shouldAdd: boolean) {
+  setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
