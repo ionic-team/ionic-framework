@@ -17,9 +17,8 @@
   /*===========================
   Swiper
   ===========================*/
-module.exports.Swiper = Swiper;
 
-function Swiper(container, params) {
+export function Swiper(container, params) {
 
 
       if (!(this instanceof Swiper)) return new Swiper(container, params);
