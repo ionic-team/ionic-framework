@@ -18,6 +18,7 @@ const win: any = window;
  *
  * @usage
  ```js
+ * import {SqlStorage} from 'ionic-angular';
  * let storage = new Storage(SqlStorage, options);
  * storage.set('name', 'Max');
  * storage.get('name').then((name) => {
