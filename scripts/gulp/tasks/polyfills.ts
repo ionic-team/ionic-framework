@@ -2,7 +2,7 @@ import { task, src, dest } from 'gulp';
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 
-task('polyfills', ['smaller-polyfills', 'full-polyfills', 'evergreen-polyfills']);
+task('polyfills', ['smaller-polyfills', 'full-polyfills', 'evergreen-polyfills', 'copy-readme']);
 
 task('smaller-polyfills', (done) => {
     return src([
@@ -21,7 +21,7 @@ task('smaller-polyfills', (done) => {
         'node_modules/core-js/es6/string.js',
         'node_modules/core-js/es7/reflect.js'
     ])
-    .pipe(concat('smaller.polyfills.js'))
+    .pipe(concat('polyfills.modern.js'))
     .pipe(uglify())
     .pipe(dest('dist/ionic-angular/polyfills/'), done);
 });
@@ -44,7 +44,12 @@ task('evergreen-polyfills', (done) => {
         'node_modules/zone.js/dist/proxy.min.js',
         'node_modules/core-js/es7/reflect.js'
     ])
-    .pipe(concat('evergreen.polyfills.js'))
+    .pipe(concat('polyfills.ng.js'))
     .pipe(uglify())
+    .pipe(dest('dist/ionic-angular/polyfills/'), done);
+});
+
+task('copy-readme', (done) => {
+    return src('scripts/npm/polyfills.readme.md')
     .pipe(dest('dist/ionic-angular/polyfills/'), done);
 });
