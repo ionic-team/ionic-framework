@@ -1,7 +1,5 @@
 
-export { Config } from './config/config';
-export { IonicModule } from './module';
-
+export * from './module';
 export * from './directives';
 
 export * from './gestures/drag-gesture';
@@ -10,6 +8,7 @@ export * from './gestures/slide-edge-gesture';
 export * from './gestures/slide-gesture';
 export * from './gestures/gesture-controller';
 
+export * from './config/config';
 export * from './platform/platform';
 export * from './storage/storage';
 export * from './storage/sql';

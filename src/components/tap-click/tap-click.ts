@@ -230,16 +230,3 @@ export function setupTapClick(config: Config, app: App, zone: NgZone) {
     return new TapClick(config, app, zone);
   };
 }
-
-export function provideTapClick() {
-  return {
-    provide: APP_INITIALIZER,
-    useFactory: setupTapClick,
-    deps: [
-      Config,
-      App,
-      NgZone
-    ],
-    multi: true
-  };
-}

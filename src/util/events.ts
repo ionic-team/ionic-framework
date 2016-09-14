@@ -1,5 +1,3 @@
-import { APP_INITIALIZER } from '@angular/core';
-
 import { nativeTimeout } from '../util/dom';
 import { Platform } from '../platform/platform';
 import { ScrollView } from '../util/scroll-view';
@@ -150,16 +148,5 @@ export function setupEvents(platform: Platform): Events {
 export function setupProvideEvents(platform: Platform) {
   return function() {
     return setupEvents(platform);
-  };
-}
-
-export function provideEvents() {
-  return {
-    provide: APP_INITIALIZER,
-    useFactory: setupProvideEvents,
-    deps: [
-      Platform
-    ],
-    multi: true
   };
 }

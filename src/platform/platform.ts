@@ -844,19 +844,3 @@ export const UserAgent = new OpaqueToken('USERAGENT');
 export const UserNavigatorPlatform = new OpaqueToken('USERNAVPLT');
 export const UserDir = new OpaqueToken('USERDIR');
 export const UserLang = new OpaqueToken('USERLANG');
-
-
-export function providePlatform(): any {
-  return {
-    provide: Platform,
-    useFactory: setupPlatform,
-    deps: [
-      QueryParams,
-      UserAgent,
-      UserNavigatorPlatform,
-      UserDir,
-      UserLang,
-      NgZone
-    ]
-  };
-}

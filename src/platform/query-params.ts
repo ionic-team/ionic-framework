@@ -32,13 +32,3 @@ export const UserUrl = new OpaqueToken('USERURL');
 export function setupQueryParams(url: string): QueryParams {
   return new QueryParams(url);
 }
-
-export function provideQueryParams(): any {
-  return {
-    provide: QueryParams,
-    useFactory: setupQueryParams,
-    deps: [
-      UserUrl
-    ]
-  };
-}

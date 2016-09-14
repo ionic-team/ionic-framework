@@ -1,5 +1,5 @@
 import { Injectable, OpaqueToken } from '@angular/core';
-import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
 import { convertToViews, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
@@ -416,25 +416,6 @@ export function setupDeepLinker(app: App, serializer: UrlSerializer, location: L
 
 
 export const UserDeepLinkConfig = new OpaqueToken('USERLINKS');
-
-
-export function provideDeepLinker(userDeepLinkConfig: any): any[] {
-  return [
-    UrlSerializer,
-    Location,
-    { provide: UserDeepLinkConfig, useValue: userDeepLinkConfig },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
-    {
-      provide: DeepLinker,
-      useFactory: setupDeepLinker,
-      deps: [
-        App,
-        UrlSerializer,
-        Location
-      ]
-    },
-  ];
-}
 
 
 export function normalizeUrl(browserUrl: string): string {

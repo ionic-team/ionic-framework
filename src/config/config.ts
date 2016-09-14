@@ -376,18 +376,3 @@ export function setupConfig(userConfig: any, queryParams: QueryParams, platform:
   config.init(userConfig, queryParams, platform);
   return config;
 }
-
-export function provideConfig(userConfig: any): any {
-  return [
-    { provide: UserConfig, useValue: userConfig },
-    {
-      provide: Config,
-      useFactory: setupConfig,
-      deps: [
-        UserConfig,
-        QueryParams,
-        Platform
-      ]
-    }
-  ];
-}
