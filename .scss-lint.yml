@@ -11,6 +11,7 @@ exclude:
   - 'src/themes/ionic.mixins.scss'
   - 'src/themes/license.scss'
   - 'src/themes/util.scss'
+  - 'src/themes/version.scss'
   - 'src/platform/cordova.*.scss'
 
 
