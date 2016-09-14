@@ -186,15 +186,16 @@ import { GestureController } from '../../gestures/gesture-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class Menu {
-  private _preventTime: number = 0;
   private _cntEle: HTMLElement;
   private _cntGesture: MenuContentGesture;
   private _type: MenuType;
   private _resizeUnreg: Function;
   private _isEnabled: boolean = true;
   private _isSwipeEnabled: boolean = true;
+  private _isAnimating: boolean = false;
   private _isPers: boolean = false;
   private _init: boolean = false;
+
 
   /**
    * @private
@@ -378,21 +379,20 @@ export class Menu {
    * @private
    */
   private _setListeners() {
-    let self = this;
+    if (!this._init) {
+      return;
+    }
 
-    if (self._init) {
-      // only listen/unlisten if the menu has initialized
+    // only listen/unlisten if the menu has initialized
+    if (this._isEnabled && this._isSwipeEnabled && !this._cntGesture.isListening) {
+      // should listen, but is not currently listening
+      console.debug('menu, gesture listen', this.side);
+      this._cntGesture.listen();
 
-      if (self._isEnabled && self._isSwipeEnabled && !self._cntGesture.isListening) {
-        // should listen, but is not currently listening
-        console.debug('menu, gesture listen', self.side);
-        self._cntGesture.listen();
-
-      } else if (self._cntGesture.isListening && (!self._isEnabled || !self._isSwipeEnabled)) {
-        // should not listen, but is currently listening
-        console.debug('menu, gesture unlisten', self.side);
-        self._cntGesture.unlisten();
-      }
+    } else if (this._cntGesture.isListening && (!this._isEnabled || !this._isSwipeEnabled)) {
+      // should not listen, but is currently listening
+      console.debug('menu, gesture unlisten', this.side);
+      this._cntGesture.unlisten();
     }
   }
 
@@ -416,7 +416,7 @@ export class Menu {
   setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
     // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the MenuToggle button
-    if ((shouldOpen && this.isOpen) || this._isPrevented()) {
+    if ((shouldOpen && this.isOpen) || !this._isEnabled || this._isAnimating) {
       return Promise.resolve(this.isOpen);
     }
 
@@ -430,12 +430,20 @@ export class Menu {
     });
   }
 
+
+  /**
+   * @private
+   */
+  canSwipe(): boolean {
+    return this._isEnabled && this._isSwipeEnabled && !this._isAnimating;
+  }
+
   /**
    * @private
    */
   swipeStart() {
     // user started swiping the menu open/close
-    if (this._isEnabled && this._isSwipeEnabled && !this._isPrevented()) {
+    if (this.canSwipe()) {
       this._before();
       this._getType().setProgressStart(this.isOpen);
     }
@@ -446,46 +454,42 @@ export class Menu {
    */
   swipeProgress(stepValue: number) {
     // user actively dragging the menu
-    if (this._isEnabled && this._isSwipeEnabled) {
-      this._prevent();
-      this._getType().setProgessStep(stepValue);
-      this.ionDrag.emit(stepValue);
+    if (!this._isAnimating) {
+      return;
     }
+    this._getType().setProgessStep(stepValue);
+    this.ionDrag.emit(stepValue);
   }
 
   /**
    * @private
    */
   swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number) {
-    // user has finished dragging the menu
-    if (this._isEnabled && this._isSwipeEnabled) {
-      this._prevent();
-
-      let opening = !this.isOpen;
-      let shouldComplete = false;
-      if (opening) {
-        shouldComplete = (this.side === 'right') ? shouldCompleteLeft : shouldCompleteRight;
-      } else {
-        shouldComplete = (this.side === 'right') ? shouldCompleteRight : shouldCompleteLeft;
-      }
-
-      this._getType().setProgressEnd(shouldComplete, stepValue, (isOpen: boolean) => {
-        console.debug('menu, swipeEnd', this.side);
-        this._after(isOpen);
-      });
+    if (!this._isAnimating) {
+      return;
     }
+    // user has finished dragging the menu
+    let opening = !this.isOpen;
+    let shouldComplete = false;
+    if (opening) {
+      shouldComplete = (this.side === 'right') ? shouldCompleteLeft : shouldCompleteRight;
+    } else {
+      shouldComplete = (this.side === 'right') ? shouldCompleteRight : shouldCompleteLeft;
+    }
+
+    this._getType().setProgressEnd(shouldComplete, stepValue, (isOpen: boolean) => {
+      console.debug('menu, swipeEnd', this.side);
+      this._after(isOpen);
+    });
   }
 
   private _before() {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
-    if (this._isEnabled) {
-      this.getNativeElement().classList.add('show-menu');
-      this.getBackdropElement().classList.add('show-backdrop');
-
-      this._prevent();
-      this._keyboard.close();
-    }
+    this.getNativeElement().classList.add('show-menu');
+    this.getBackdropElement().classList.add('show-backdrop');
+    this._keyboard.close();
+    this._isAnimating = true;
   }
 
   private _after(isOpen: boolean) {
@@ -493,35 +497,22 @@ export class Menu {
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
     // emit opened/closed events
-    if ((this._isEnabled && isOpen) || !isOpen) {
-      this._prevent();
+    this.isOpen = isOpen;
+    this._isAnimating = false;
 
-      this.isOpen = isOpen;
+    (<any>this._cntEle.classList)[isOpen ? 'add' : 'remove']('menu-content-open');
 
-      (<any>this._cntEle.classList)[isOpen ? 'add' : 'remove']('menu-content-open');
+    this._cntEle.removeEventListener('click', this.onContentClick);
 
-      this._cntEle.removeEventListener('click', this.onContentClick);
+    if (isOpen) {
+      this._cntEle.addEventListener('click', this.onContentClick);
+      this.ionOpen.emit(true);
 
-      if (isOpen) {
-        this._cntEle.addEventListener('click', this.onContentClick);
-        this.ionOpen.emit(true);
-
-      } else {
-        this.getNativeElement().classList.remove('show-menu');
-        this.getBackdropElement().classList.remove('show-backdrop');
-        this.ionClose.emit(true);
-      }
+    } else {
+      this.getNativeElement().classList.remove('show-menu');
+      this.getBackdropElement().classList.remove('show-backdrop');
+      this.ionClose.emit(true);
     }
-  }
-
-  private _prevent() {
-    // used to prevent unwanted opening/closing after swiping open/close
-    // or swiping open the menu while pressing down on the MenuToggle
-    this._preventTime = Date.now() + 20;
-  }
-
-  private _isPrevented() {
-    return this._preventTime > Date.now();
   }
 
   /**
@@ -564,6 +555,9 @@ export class Menu {
                     .map(m => m.enabled = false);
     }
 
+    // TODO
+    // what happens if menu is disabled while swipping?
+
     return this;
   }
 
@@ -572,6 +566,8 @@ export class Menu {
    */
   swipeEnable(shouldEnable: boolean): Menu {
     this.swipeEnabled = shouldEnable;
+    // TODO
+    // what happens if menu swipe is disabled while swipping?
     return this;
   }
 
@@ -619,7 +615,11 @@ export class Menu {
     this._cntGesture && this._cntGesture.destroy();
     this._type && this._type.destroy();
     this._resizeUnreg && this._resizeUnreg();
+
+    this._cntGesture = null;
+    this._type = null;
     this._cntEle = null;
+    this._resizeUnreg = null;
   }
 
 }

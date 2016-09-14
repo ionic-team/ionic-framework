@@ -33,7 +33,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
   }
 
 
-  onSlideBeforeStart(slideData: SlideData, ev: any) {
+  onSlideBeforeStart(ev: any) {
     console.debug('swipeBack, onSlideBeforeStart', ev.type);
     this._nav.swipeBackStart();
   }
