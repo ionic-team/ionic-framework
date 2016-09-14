@@ -12,9 +12,9 @@ dependencies:
     - ./scripts/docs/prepare.sh
   cache_directories:
     - "~/ionic-site" # cache ionic-site
-# test:
-#   override:
-#     - echo "Automatically marking tests as passing for now"
+test:
+  override:
+    - gulp lint.ts
 deployment:
  tasks:
    branch: "master"
