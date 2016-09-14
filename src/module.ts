@@ -31,7 +31,7 @@ import { Translate } from './translation/translate';
 import { TransitionController } from './transitions/transition-controller';
 import { UserRoot } from './components/app/app-root';
 
-)
+
 /**
  * Export Providers
  */

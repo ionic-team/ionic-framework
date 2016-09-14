@@ -3,7 +3,6 @@ export { Config } from './config/config';
 export { IonicModule } from './module';
 
 export * from './directives';
-export * from './providers';
 
 export * from './gestures/drag-gesture';
 export * from './gestures/gesture';
