@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { ApiDemoApp, ApiDemoPage } from './app.component';
+import { ApiDemoApp, Login, Logout } from './app.component';
 
 @NgModule({
   declarations: [
     ApiDemoApp,
-    ApiDemoPage
+    Login,
+    Logout
   ],
   imports: [
     IonicModule.forRoot(ApiDemoApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    ApiDemoPage
+    Login,
+    Logout
   ]
 })
 export class AppModule {}

@@ -5,8 +5,6 @@ import * as fs from 'fs';
 
 import { compileSass, copyFonts, createTempTsConfig, deleteFiles, runNgc, runWebpack, setSassIonicVersion, createTimestamp } from '../util';
 
-
-
 task('e2e', e2eBuild);
 
 function e2eBuild(done: Function) {

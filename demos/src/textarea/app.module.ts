@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { ApiDemoApp, ApiDemoPage, TabPage } from './app.component';
+import { ApiDemoApp, ApiDemoPage } from './app.component';
 
 @NgModule({
   declarations: [
     ApiDemoApp,
-    ApiDemoPage,
-    TabPage
+    ApiDemoPage
   ],
   imports: [
     IonicModule.forRoot(ApiDemoApp)

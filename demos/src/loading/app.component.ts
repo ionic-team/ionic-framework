@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { LoadingController, NavController } from 'ionic-angular';
 
 @Component({
-  templateUrl: 'main.html'
+  templateUrl: 'page.html'
 })
 export class Page1 {
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController) {}
