@@ -13,7 +13,8 @@
     "types": ["jasmine", "protractor"]
   },
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "./demos/src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,
