@@ -1,0 +1,11 @@
+{
+  "name": "ionic-demos",
+  "private": true,
+  "version": "1.0.0",
+  "description": "demos of ionic framework",
+  "author": "Ionic Team <hi@ionic.io> (http://ionic.io)",
+  "license": "MIT",
+  "dependencies": {
+    "ionic-angular": "nightly"
+  }
+}
