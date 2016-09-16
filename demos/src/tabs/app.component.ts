@@ -1,5 +1,4 @@
-import { Component, NgModule, ViewEncapsulation } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { Component } from '@angular/core';
 
 @Component({
   template: '<div>johnny utah</div>',
@@ -8,9 +7,7 @@ export class TabPage {}
 
 
 @Component({
-  templateUrl: 'page.html',
-  styleUrls: ['style.css'],
-  encapsulation: ViewEncapsulation.None
+  templateUrl: 'page.html'
 })
 export class ApiDemoPage {
   root = TabPage;

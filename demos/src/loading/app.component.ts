@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoadingController, NavController } from 'ionic-angular';
 
 @Component({
@@ -122,9 +122,7 @@ export class Page2 {}
 
 
 @Component({
-  template: '<ion-nav [root]="root"></ion-nav>',
-  styleUrls: ['styles.css'],
-  encapsulation: ViewEncapsulation.None
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 export class ApiDemoApp {
   root = Page1;

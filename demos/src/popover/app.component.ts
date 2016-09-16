@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavParams, PopoverController } from 'ionic-angular';
 
 @Component({
@@ -154,9 +154,7 @@ export class ApiDemoPage {
 }
 
 @Component({
-  template: '<ion-nav [root]="root"></ion-nav>',
-  styleUrls: ['style.css'],
-  encapsulation: ViewEncapsulation.None
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 export class ApiDemoApp {
   root = ApiDemoPage;
