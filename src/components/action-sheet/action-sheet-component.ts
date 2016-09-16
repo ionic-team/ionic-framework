@@ -1,11 +1,9 @@
 import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
 
-import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
-import { Transition } from '../../transitions/transition';
 import { ViewController } from '../../navigation/view-controller';
 
 

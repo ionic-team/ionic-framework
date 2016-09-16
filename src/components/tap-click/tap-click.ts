@@ -1,4 +1,4 @@
-import { Injectable, NgZone, APP_INITIALIZER } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
 import { Activator } from './activator';
 import { App } from '../app/app';
