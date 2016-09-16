@@ -3,7 +3,7 @@ import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
 
-import { compileSass, copyFonts, createTempTsConfig, deleteFiles, runNgc, runWebpack, setSassIonicVersion, createTimestamp } from '../util';
+import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, runWebpack, setSassIonicVersion } from '../util';
 
 task('e2e', e2eBuild);
 

@@ -31,7 +31,9 @@ scripts/build/e2e-generated-tsconfig.json
 
 # demo stuff
 demos/node_modules
-demos/src/**/*.js
+demos/css
+demos/fonts
+demos/src/**/*.js*
 demos/src/**/*.ngfactory.ts
 demos/src/**/*.d.ts
 demos/src/**/*.metadata.json

@@ -9,7 +9,7 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "removeComments": true,
-    "target": "es6",
+    "target": "es5",
     "types": ["jasmine", "protractor"]
   },
   "include": [
