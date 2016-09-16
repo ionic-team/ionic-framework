@@ -118,6 +118,7 @@ export interface NavLink {
   partsLen?: number;
   staticLen?: number;
   dataLen?: number;
+  dataKeys?: {[key: string]: boolean};
   defaultHistory?: any[];
 }
 

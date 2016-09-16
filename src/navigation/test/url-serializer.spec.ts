@@ -1,11 +1,23 @@
 import { NavLink, NavSegment } from '../nav-util';
-import { UrlSerializer, isPartMatch, fillMatchedUrlParts, parseUrlParts, createMatchedData, normalizeLinks } from '../url-serializer';
+import { UrlSerializer, isPartMatch, fillMatchedUrlParts, parseUrlParts, createMatchedData, normalizeLinks, findLinkByComponentData } from '../url-serializer';
 import { mockDeepLinkConfig, noop, MockView1, MockView2, MockView3, MockView4, MockView5 } from '../../util/mock-providers';
 
 
 describe('UrlSerializer', () => {
 
   describe('serializeComponent', () => {
+
+    it('should create segement when config has multiple links to same component', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'view' };
+      const link2 = { component: MockView1, name: 'viewtwo', segment: 'view/:param1' };
+      const link3 = { component: MockView1, name: 'viewthree', segment: 'view/:param1/:param2' };
+
+      serializer = mockSerializer([link1, link2, link3]);
+      serializer.createSegment = noop;
+      spyOn(serializer, 'createSegment');
+      serializer.serializeComponent(MockView1, null);
+      expect(serializer.createSegment).toHaveBeenCalledWith(link1, null);
+    });
 
     it('should create segment if component found in links', () => {
       serializer.createSegment = noop;
@@ -529,6 +541,88 @@ describe('UrlSerializer', () => {
 
     it('should change to pascal case for one work', () => {
       expect(serializer.formatUrlPart('View1')).toEqual('view1');
+    });
+
+  });
+
+  describe('findLinkByComponentData', () => {
+
+    it('should get matching link by component w/ data and multiple links using same component, 2 matches', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'view' };
+      const link2 = { component: MockView1, name: 'viewtwo', segment: 'view/:param1' };
+      const link3 = { component: MockView1, name: 'viewthree', segment: 'view/:param1/:param2' };
+
+      let links = normalizeLinks([link1, link2, link3]);
+
+      let foundLink = findLinkByComponentData(links, MockView1, {
+        param1: false,
+        param2: 0,
+        param3: 0
+      });
+      expect(foundLink.name).toEqual('viewthree');
+    });
+
+    it('should get matching link by component w/ data and multiple links using same component, 1 match', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'view' };
+      const link2 = { component: MockView1, name: 'viewtwo', segment: 'view/:param1' };
+      const link3 = { component: MockView1, name: 'viewthree', segment: 'view/:param1/:param2' };
+
+      let links = normalizeLinks([link1, link2, link3]);
+
+      let foundLink = findLinkByComponentData(links, MockView1, {
+        param1: false,
+        param3: 0
+      });
+      expect(foundLink.name).toEqual('viewtwo');
+    });
+
+    it('should get matching link by component w/ no data and multiple links using same component', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'view' };
+      const link2 = { component: MockView1, name: 'viewtwo', segment: 'view/:param1' };
+      const link3 = { component: MockView1, name: 'viewthree', segment: 'view/:param1/:param2' };
+
+      let links = normalizeLinks([link1, link2, link3]);
+
+      let foundLink = findLinkByComponentData(links, MockView1, null);
+      expect(foundLink.name).toEqual('viewone');
+    });
+
+    it('should get matching link by component data and link data', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'view' };
+      const link2 = { component: MockView2, name: 'viewtwo', segment: 'view/:param1' };
+      const link3 = { component: MockView3, name: 'viewthree', segment: 'view/:param1/:param2' };
+
+      let links = normalizeLinks([link1, link2, link3]);
+
+      let foundLink = findLinkByComponentData(links, MockView3, {
+        param1: null,
+        param2: false,
+        param3: 0,
+        param4: 'hello'
+      });
+      expect(foundLink.name).toEqual('viewthree');
+    });
+
+    it('should get matching link by component without data and link without data', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'view' };
+      const link2 = { component: MockView2, name: 'viewtwo', segment: 'view/:param1' };
+      const link3 = { component: MockView3, name: 'viewthree', segment: 'view/:param1/:param2' };
+
+      let links = normalizeLinks([link1, link2, link3]);
+
+      let foundLink = findLinkByComponentData(links, MockView1, null);
+      expect(foundLink.name).toEqual('viewone');
+    });
+
+    it('should get no matching link by component without data, but link requires data', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'view' };
+      const link2 = { component: MockView2, name: 'viewtwo', segment: 'view/:param1' };
+      const link3 = { component: MockView3, name: 'viewthree', segment: 'view/:param1/:param2' };
+
+      let links = normalizeLinks([link1, link2, link3]);
+
+      let foundLink = findLinkByComponentData(links, MockView2, null);
+      expect(foundLink).toEqual(null);
     });
 
   });

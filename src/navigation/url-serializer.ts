@@ -59,7 +59,7 @@ export class UrlSerializer {
    */
   serializeComponent(component: any, data: any): NavSegment {
     if (component) {
-      const link = this.links.find(l => component === l.component || component.name === l.name);
+      const link = findLinkByComponentData(this.links, component, data);
       if (link) {
         return this.createSegment(link, data);
       }
@@ -203,6 +203,41 @@ export const createMatchedData = (matchedUrlParts: string[], link: NavLink): any
   return data;
 };
 
+export const findLinkByComponentData = (links: NavLink[], component: any, instanceData: any): NavLink => {
+  let foundLink: NavLink = null;
+  let foundLinkDataMatches = -1;
+
+  for (var i = 0; i < links.length; i++) {
+    var link = links[i];
+    if (link.component === component) {
+      // ok, so the component matched, but multiple links can point
+      // to the same component, so let's make sure this is the right link
+      var dataMatches = 0;
+      if (instanceData) {
+        var instanceDataKeys = Object.keys(instanceData);
+
+        // this link has data
+        for (var j = 0; j < instanceDataKeys.length; j++) {
+          if (isPresent(link.dataKeys[instanceDataKeys[j]])) {
+            dataMatches++;
+          }
+        }
+
+      } else if (link.dataLen) {
+        // this component does not have data but the link does
+        continue;
+      }
+
+      if (dataMatches >= foundLinkDataMatches) {
+        foundLink = link;
+        foundLinkDataMatches = dataMatches;
+      }
+    }
+  }
+
+  return foundLink;
+};
+
 export const normalizeLinks = (links: NavLink[]): NavLink[] => {
   for (var i = 0, ilen = links.length; i < ilen; i++) {
     var link = links[i];
@@ -211,6 +246,7 @@ export const normalizeLinks = (links: NavLink[]): NavLink[] => {
       link.segment = link.name;
     }
 
+    link.dataKeys = {};
     link.parts = link.segment.split('/');
     link.partsLen = link.parts.length;
 
@@ -222,6 +258,7 @@ export const normalizeLinks = (links: NavLink[]): NavLink[] => {
       if (link.parts[j].charAt(0) === ':') {
         link.dataLen++;
         stillCountingStatic = false;
+        link.dataKeys[link.parts[j].substring(1)] = true;
 
       } else if (stillCountingStatic) {
         link.staticLen++;
