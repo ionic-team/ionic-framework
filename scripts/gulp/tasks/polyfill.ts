@@ -95,6 +95,11 @@ task('polyfill.modern', (done) => {
 });
 
 task('polyfill.copy-readme', (done) => {
+  const rename = require('gulp-rename');
+
   return src('scripts/npm/polyfills.readme.md')
+    .pipe(rename({
+      basename: 'README'
+    }))
     .pipe(dest('dist/ionic-angular/polyfills/'), done);
 });
