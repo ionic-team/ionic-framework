@@ -11,6 +11,7 @@ import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
 import { DateTime } from './components/datetime/datetime';
+import { Fab, FabButton, FabList } from './components/fab/fab';
 import { Fixed } from './components/fixed/fixed';
 import { Grid, Row, Col } from './components/grid/grid';
 import { Icon } from './components/icon/icon';
@@ -79,6 +80,7 @@ export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { Content } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
+export { Fab, FabButton, FabList } from './components/fab/fab';
 export { Fixed } from './components/fixed/fixed';
 export { Grid, Row, Col } from './components/grid/grid';
 export { Icon } from './components/icon/icon';
@@ -171,6 +173,9 @@ export const IONIC_DIRECTIVES: any[] = [
   Col,
   Content,
   DateTime,
+  Fab,
+  FabButton,
+  FabList,
   Fixed,
   Footer,
   Grid,

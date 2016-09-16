@@ -104,7 +104,7 @@ import { isTrueProperty } from '../../util/util';
   selector: 'ion-content',
   template:
     '<div class="fixed-content">' +
-      '<ng-content select="[ion-fixed]"></ng-content>' +
+      '<ng-content select="[ion-fixed],ion-fab"></ng-content>' +
     '</div>' +
     '<div class="scroll-content">' +
       '<ng-content></ng-content>' +
@@ -182,7 +182,7 @@ export class Content extends Ion {
    * @private
    */
   ngOnInit() {
-    this._fixedEle =  this._elementRef.nativeElement.children[0];
+    this._fixedEle = this._elementRef.nativeElement.children[0];
     this._scrollEle = this._elementRef.nativeElement.children[1];
 
     this._zone.runOutsideAngular(() => {

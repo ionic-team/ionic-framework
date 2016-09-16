@@ -31,7 +31,6 @@
 
 @import
 "../components/button/button",
-"../components/button/button-fab",
 "../components/button/button-icon",
 "../components/button/button.ios",
 "../components/button/button.md",
@@ -65,6 +64,12 @@
 "../components/datetime/datetime.ios",
 "../components/datetime/datetime.md",
 "../components/datetime/datetime.wp";
+
+@import
+"../components/fab/fab",
+"../components/fab/fab.ios",
+"../components/fab/fab.md",
+"../components/fab/fab.wp";
 
 @import
 "../components/grid/grid";
