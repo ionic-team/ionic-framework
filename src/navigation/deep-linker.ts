@@ -29,6 +29,23 @@ import { ViewController } from './view-controller';
  */
 
 
+/**
+ * DeepLinker handles registering and displaying specific views based on URLs. It's used
+ * underneath NavController so you'll never have to interact with it directly. When a new
+ * view is push'ed with NavController, the URL is updated to match the path back to this
+ * page.
+ *
+ * Unlike traditional web apps, URLs don't dictate navigation in Ionic apps.
+ * Instead, URLs help us link to specific pieces of content as a breadcrumb.
+ * We keep the current URL updated as we navigate, but we use the NavController's
+ * push and pop, or navPush to move around. This makes it much easier
+ * to handle the kinds of complicated nested navigation native apps are known for.
+ *
+ * We refer to our URL system as a Deep Link system instead of a Router to encourage
+ * Ionic developers to think of URLs as a breadcrumb rather than as the source of
+ * truth in navigation. This encourages flexible navigation design and happy apps all
+ * over the world.
+ */
 export class DeepLinker {
   segments: NavSegment[] = [];
   history: string[] = [];
@@ -36,6 +53,9 @@ export class DeepLinker {
 
   constructor(public app: App, public serializer: UrlSerializer, public location: Location) { }
 
+  /**
+   * @internal
+   */
   init() {
     // scenario 1: Initial load of all navs from the initial browser URL
     const browserUrl = normalizeUrl(this.location.path());
@@ -55,6 +75,7 @@ export class DeepLinker {
 
   /**
    * The browser's location has been updated somehow.
+   * @internal
    */
   urlChange(browserUrl: string) {
     // do nothing if this url is the same as the current one
@@ -106,6 +127,7 @@ export class DeepLinker {
 
   /**
    * Update the deep linker using the NavController's current active view.
+   * @internal
    */
   navChange(direction: string) {
     // all transitions completed
@@ -126,6 +148,9 @@ export class DeepLinker {
     }
   }
 
+  /**
+   * @internal
+   */
   updateLocation(browserUrl: string, direction: string) {
     if (this.indexAliasUrl === browserUrl) {
       browserUrl = '/';
@@ -146,6 +171,9 @@ export class DeepLinker {
     }
   }
 
+  /**
+   * @internal
+   */
   getComponentFromName(componentName: any): any {
     const segment = this.serializer.createSegmentFromName(componentName);
     if (segment && segment.component) {
@@ -154,6 +182,9 @@ export class DeepLinker {
     return null;
   }
 
+  /**
+   * @internal
+   */
   createUrl(nav: any, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
     // create a segment out of just the passed in name
     const segment = this.serializer.createSegmentFromName(nameOrComponent);
@@ -171,6 +202,8 @@ export class DeepLinker {
    * Build a browser URL out of this NavController. Climbs up the tree
    * of NavController's to create a string representation of all the
    * NavControllers state.
+   *
+   * @internal
    */
   pathFromNavs(nav: NavController, component?: any, data?: any): NavSegment[] {
     const segments: NavSegment[] = [];
@@ -232,6 +265,9 @@ export class DeepLinker {
     return segments.reverse();
   }
 
+  /**
+   * @internal
+   */
   getTabSelector(tab: Tab): string {
     if (isPresent(tab.tabUrlPath)) {
       return tab.tabUrlPath;
@@ -242,6 +278,9 @@ export class DeepLinker {
     return `tab-${tab.index}`;
   }
 
+  /**
+   * @internal
+   */
   getSelectedTabIndex(tabsNav: Tabs, pathName: string, fallbackIndex: number = 0): number {
     // we found a segment which probably represents which tab to select
     const indexMatch = pathName.match(/tab-(\d+)/);
@@ -264,6 +303,7 @@ export class DeepLinker {
    * Each NavController will call this method when it initializes for
    * the first time. This allows each NavController to figure out
    * where it lives in the path and load up the correct component.
+   * @internal
    */
   initNav(nav: any): NavSegment {
     const path = this.segments;
@@ -286,6 +326,9 @@ export class DeepLinker {
     return null;
   }
 
+  /**
+   * @internal
+   */
   initViews(segment: NavSegment): ViewController[] {
     let views: ViewController[];
 
@@ -311,6 +354,8 @@ export class DeepLinker {
    * Path changes and needs to update all NavControllers to match
    * the new browser URL. Because the URL is already known, it will
    * not update the browser's URL when transitions have completed.
+   *
+   * @internal
    */
   loadNavFromPath(nav: NavController, done?: Function) {
     if (!nav) {
@@ -323,6 +368,9 @@ export class DeepLinker {
     }
   }
 
+  /**
+   * @internal
+   */
   loadViewFromSegment(navInstance: any, done: Function) {
     // load up which nav ids belong to its nav segment
     let segment = this.initNav(navInstance);
@@ -379,14 +427,23 @@ export class DeepLinker {
     }, done);
   }
 
+  /**
+   * @internal
+   */
   isBackUrl(browserUrl: string) {
     return (browserUrl === this.history[this.history.length - 2]);
   }
 
+  /**
+   * @internal
+   */
   isCurrentUrl(browserUrl: string) {
     return (browserUrl === this.history[this.history.length - 1]);
   }
 
+  /**
+   * @internal
+   */
   historyPush(browserUrl: string) {
     if (!this.isCurrentUrl(browserUrl)) {
       this.history.push(browserUrl);
@@ -396,6 +453,9 @@ export class DeepLinker {
     }
   }
 
+  /**
+   * @internal
+   */
   historyPop() {
     this.history.pop();
     if (!this.history.length) {
