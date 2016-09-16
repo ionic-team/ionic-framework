@@ -13,7 +13,8 @@ import { ApiDemoApp, ApiDemoPage, TabPage } from './app.component';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    ApiDemoPage
+    ApiDemoPage,
+    TabPage
   ]
 })
 export class AppModule {}

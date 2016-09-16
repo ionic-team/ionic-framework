@@ -33,3 +33,5 @@ scripts/build/e2e-generated-tsconfig.json
 demos/node_modules
 demos/src/**/*.js
 demos/src/**/*.ngfactory.ts
+demos/src/**/*.d.ts
+demos/src/**/*.metadata.json

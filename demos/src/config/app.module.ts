@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { ApiDemoApp, ApiDemoPage } from './app.component';
+import { ApiDemoApp, ApiDemoPage, PushPage, TabPage } from './app.component';
 
 @NgModule({
   declarations: [
     ApiDemoApp,
-    ApiDemoPage
+    ApiDemoPage,
+    PushPage,
+    TabPage
   ],
   imports: [
     IonicModule.forRoot(ApiDemoApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    ApiDemoPage
+    ApiDemoPage,
+    PushPage,
+    TabPage
   ]
 })
 export class AppModule {}

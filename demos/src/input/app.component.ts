@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 
 @Component({
-  templateUrl: 'main.html'
+  templateUrl: 'page.html'
 })
 export class ApiDemoPage {}
 

@@ -17,7 +17,8 @@ export class ApiDemoPage {
     stannis: true,
     petyr: false,
     hodor: true,
-    catelyn: true
+    catelyn: true,
+    bronn: false
   };
 
 }

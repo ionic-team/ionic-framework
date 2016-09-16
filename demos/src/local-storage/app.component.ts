@@ -25,7 +25,7 @@ export class CleanLocalDataPipe implements PipeTransform {
 
 
 @Component({
-  templateUrl: 'main.html'
+  templateUrl: 'page.html'
 })
 export class ApiDemoPage {
   local: Storage;
@@ -84,4 +84,3 @@ export class ApiDemoPage {
 export class ApiDemoApp {
   root = ApiDemoPage;
 }
-

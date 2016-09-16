@@ -13,8 +13,8 @@
     "types": ["jasmine", "protractor"]
   },
   "include": [
-    "./src/**/app.module.ts",
-    "./src/**/main.ts"
+    "./src/toolbar/app.module.ts",
+    "./src/toolbar/main.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,

@@ -2,7 +2,7 @@ import { Component, NgModule, ViewEncapsulation } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 
 @Component({
-  template: 'tab',
+  template: '<div>johnny utah</div>',
 })
 export class TabPage {}
 
@@ -23,4 +23,3 @@ export class ApiDemoPage {
 export class ApiDemoApp {
   root = ApiDemoPage;
 }
-

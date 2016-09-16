@@ -15,7 +15,7 @@ export class ApiDemoPage {
 }
 
 @Component({
-  templateUrl: 'page-page.html'
+  templateUrl: 'push-page.html'
 })
 export class PushPage {
   pageNum = pageNum;

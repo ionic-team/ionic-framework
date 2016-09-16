@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavParams, PopoverController } from 'ionic-angular';
 
-
 @Component({
   template: `
     <ion-list radio-group [(ngModel)]="fontFamily" (ionChange)="changeFontFamily()">
