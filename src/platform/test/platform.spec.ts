@@ -331,7 +331,7 @@ describe('Platform', () => {
   beforeEach(() => {
     platform = new Platform();
     platform.setPlatformConfigs(PLATFORM_CONFIGS);
-    registerModeConfigs(new Config());
+    registerModeConfigs(new Config())();
   });
 
 });

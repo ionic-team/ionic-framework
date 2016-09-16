@@ -516,10 +516,10 @@ describe('Config', () => {
 
   beforeEach(() => {
     config = new Config();
+    registerModeConfigs(config)();
     qp = new QueryParams('');
     platform = new Platform();
     platform.setPlatformConfigs(PLATFORM_CONFIGS);
-    registerModeConfigs(config);
   });
 
 });
