@@ -15,8 +15,12 @@ export function buildIonicAngularCommonJs(excludeSpec: boolean, done: Function) 
       }
 
       copySwiperToPath(`${DIST_BUILD_COMMONJS_ROOT}/components/slides`, COMMONJS_MODULE);
-      // clean up any .ts files that remain, as well as unneeded swiper stuff
-      deleteFiles([`${DIST_BUILD_COMMONJS_ROOT}/**/*.ts`, `!${DIST_BUILD_COMMONJS_ROOT}/**/*.ngfactory.ts`, `!${DIST_BUILD_COMMONJS_ROOT}/**/*.d.ts`], done);
+      // clean up any .ts files that remain as well as ngc metadata
+      deleteFiles([`${DIST_BUILD_COMMONJS_ROOT}/**/*.ts`,
+                  `${DIST_BUILD_COMMONJS_ROOT}/**/*metadata.json`,
+                  `${DIST_BUILD_COMMONJS_ROOT}/node_modules`,
+                  `${DIST_BUILD_COMMONJS_ROOT}/tsconfig.json`,
+                  `!${DIST_BUILD_COMMONJS_ROOT}/**/*.d.ts`], done);
     });
   });
 }
@@ -32,8 +36,12 @@ export function buildIonicAngularEsm(done: Function) {
         return;
       }
       copySwiperToPath(`${DIST_BUILD_ROOT}/components/slides`, ES_MODULE);
-      // clean up any .ts files that remain
-      deleteFiles([`${DIST_BUILD_ROOT}/**/*.ts`, `!${DIST_BUILD_ROOT}/**/*.ngfactory.ts`, `!${DIST_BUILD_ROOT}/**/*.d.ts`], done);
+      // clean up any .ts files that remain as well as ngc metadata
+      deleteFiles([`${DIST_BUILD_ROOT}/**/*.ts`,
+                  `${DIST_BUILD_ROOT}/**/*metadata.json`,
+                  `${DIST_BUILD_ROOT}/node_modules`,
+                  `${DIST_BUILD_ROOT}/tsconfig.json`,
+                  `!${DIST_BUILD_ROOT}/**/*.d.ts`], done);
     });
   });
 }
