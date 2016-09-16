@@ -25,25 +25,19 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "@angular/common": "2.0.0-rc.7",
-    "@angular/compiler": "2.0.0-rc.7",
-    "@angular/core": "2.0.0-rc.7",
-    "@angular/forms": "2.0.0-rc.7",
-    "@angular/http": "2.0.0-rc.7",
-    "@angular/platform-browser": "2.0.0-rc.7",
-    "@angular/platform-browser-dynamic": "2.0.0-rc.7",
-    "colors": "1.1.2",
-    "core-js": "2.4.1",
-    "inquirer": "0.11.0",
+    "@angular/common": "2.0.0",
+    "@angular/compiler": "2.0.0",
+    "@angular/core": "2.0.0",
+    "@angular/forms": "2.0.0",
+    "@angular/http": "2.0.0",
+    "@angular/platform-browser": "2.0.0",
+    "@angular/platform-browser-dynamic": "2.0.0",
+    "@angular/platform-server": "2.0.0",
     "ionicons": "3.0.0",
-    "lodash": "3.10.1",
-    "mkdirp-no-bin": "0.5.1",
-    "q": "1.4.1",
-    "rxjs": "5.0.0-beta.12",
-    "zone.js": "0.6.21"
+    "rxjs-es": "5.0.0-beta.12"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "0.6.1",
+    "@angular/compiler-cli": "0.6.2",
     "@types/glob": "^5.0.29",
     "@types/gulp": "^3.8.29",
     "@types/hammerjs": "^2.0.30",
@@ -54,6 +48,7 @@
     "@types/run-sequence": "0.0.27",
     "canonical-path": "0.0.2",
     "connect": "^3.3.4",
+    "core-js": "2.4.1",
     "cpr": "^0.4.1",
     "del": "^1.1.1",
     "dgeni": "^0.4.1",
@@ -101,6 +96,7 @@
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-uglify": "^1.0.1",
     "run-sequence": "^1.1.0",
+    "rxjs": "5.0.0-beta.12",
     "sassdoc": "^2.1.20",
     "semver": "^5.0.1",
     "serve-static": "^1.9.2",
@@ -109,12 +105,13 @@
     "ts-node": "^0.7.3",
     "tslint": "^3.15.1",
     "tslint-ionic-rules": "0.0.5",
-    "typescript": "2.0.2",
+    "typescript": "rc",
     "uglify": "^0.1.5",
     "vinyl": "^1.2.0",
     "webpack": "^2.1.0-beta.20",
     "webpack-dev-server": "^1.14.1",
-    "yargs": "^3.6.0"
+    "yargs": "^3.6.0",
+    "zone.js": "0.6.21"
   },
   "config": {
     "commitizen": {
