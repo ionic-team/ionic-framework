@@ -50,7 +50,7 @@ export const mockApp = function(config?: Config, platform?: Platform) {
 
 export const mockIonicApp = function(app: App, config: Config, platform: Platform): IonicApp {
   let appRoot = new IonicApp(
-    null, null, mockElementRef(), mockRenderer(), config, platform, null, app);
+    null, null, mockElementRef(), mockRenderer(), config, platform, app);
 
   appRoot._loadingPortal = mockOverlayPortal(app, config, platform);
   appRoot._toastPortal = mockOverlayPortal(app, config, platform);
@@ -59,8 +59,8 @@ export const mockIonicApp = function(app: App, config: Config, platform: Platfor
   return appRoot;
 };
 
-export const mockTrasitionController = function() {
-  let trnsCtrl = new TransitionController();
+export const mockTrasitionController = function(config: Config) {
+  let trnsCtrl = new TransitionController(config);
   trnsCtrl.get = (trnsId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) => {
     let trns = new PageTransition(enteringView, leavingView, opts, (callback: Function) => {
       callback();
@@ -255,7 +255,7 @@ export const mockNavController = function(): NavControllerBase {
 
   let linker = mockDeepLinker(null, app);
 
-  let trnsCtrl = mockTrasitionController();
+  let trnsCtrl = mockTrasitionController(config);
 
   let nav = new NavControllerBase(
     null,

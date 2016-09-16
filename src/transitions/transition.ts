@@ -45,20 +45,4 @@ export class Transition extends Animation {
     this.enteringView = this.leavingView = this._trnsStart = null;
   }
 
-  static createTransition(transitionName: string, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
-    let TransitionClass: any = TransitionRegistry[transitionName];
-    if (!TransitionClass) {
-      // didn't find a transition animation, default to ios-transition
-      TransitionClass = TransitionRegistry['ios-transition'];
-    }
-
-    return new TransitionClass(enteringView, leavingView, opts);
-  }
-
-  static register(name: string, TransitionClass: any) {
-    TransitionRegistry[name] = TransitionClass;
-  }
-
 }
-
-let TransitionRegistry: {[key: string]: Transition} = {};

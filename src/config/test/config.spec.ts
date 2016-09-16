@@ -1,94 +1,73 @@
 import { Config } from '../config';
 import { Platform } from '../../platform/platform';
 import { QueryParams } from '../../platform/query-params';
-import { setupPlatformRegistry } from '../../platform/registry';
-import { setupModeConfig } from '../modes';
+import { PLATFORM_CONFIGS } from '../../platform/platform-registry';
+import { registerModeConfigs } from '../mode-registry';
 
 
 describe('Config', () => {
 
   it('should set activator setting to none for old Android Browser on a linux device', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('linux');
     platform.setQueryParams(qp);
-    platform.load();
+    platform.init();
     config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('none');
   });
 
   it('should set activator setting to ripple for Android dev tools simulation on a mac', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('MacIntel');
     platform.setQueryParams(qp);
-    platform.load();
+    platform.init();
     config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('ripple');
   });
 
   it('should set activator setting to none for Android Chrome versions below v36 on a linux device', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1650.59 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
     platform.setQueryParams(qp);
-    platform.load();
+    platform.init();
     config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('none');
   });
 
   it('should set activator setting to ripple for Android Chrome v36 and above on a linux device', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1650.59 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
     platform.setQueryParams(qp);
-    platform.load();
+    platform.init();
     config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('ripple');
   });
 
   it('should set activator setting to ripple for Android v5.0 and above on a linux device not using Chrome', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Android 5.0; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
     platform.setQueryParams(qp);
-    platform.load();
+    platform.init();
     config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('ripple');
   });
 
   it('should set activator setting to none for Android versions below v5.0 on a linux device not using Chrome', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform.setUserAgent('Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
     platform.setQueryParams(qp);
-    platform.load();
+    platform.init();
     config.init(null, qp, platform);
 
     expect(config.get('activator')).toEqual('none');
   });
 
   it('should override mode settings', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init({
       mode: 'md'
@@ -99,9 +78,6 @@ describe('Config', () => {
   });
 
   it('should override mode settings from platforms setting', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init({
       platforms: {
@@ -116,9 +92,7 @@ describe('Config', () => {
   });
 
   it('should get boolean value from querystring', () => {
-    let config = new Config();
-    let qp = new QueryParams('http://biff.com/?ionicanimate=true');
-    let platform = new Platform();
+    qp = new QueryParams('http://biff.com/?ionicanimate=true');
     config.init(null, qp, platform);
     expect(config.get('animate')).toEqual(true);
 
@@ -130,9 +104,7 @@ describe('Config', () => {
   });
 
   it('should get value from case insensitive querystring key', () => {
-    let config = new Config();
-    let qp = new QueryParams('http://biff.com/?ionicConfigKey=b');
-    let platform = new Platform();
+    qp = new QueryParams('http://biff.com/?ionicConfigKey=b');
     config.init({
       mode: 'a'
     }, qp, platform);
@@ -141,9 +113,7 @@ describe('Config', () => {
   });
 
   it('should get value from querystring', () => {
-    let config = new Config();
-    let qp = new QueryParams('http://biff.com/?ionicmode=modeB');
-    let platform = new Platform();
+    qp = new QueryParams('http://biff.com/?ionicmode=modeB');
     config.init({
       mode: 'modeA'
     }, qp, platform);
@@ -152,9 +122,6 @@ describe('Config', () => {
   });
 
   it('should override mode platform', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['mobile'];
     config.init({
       mode: 'modeA',
@@ -172,9 +139,6 @@ describe('Config', () => {
   });
 
   it('should override mode', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['core'];
     config.init({
       mode: 'modeA'
@@ -184,9 +148,6 @@ describe('Config', () => {
   });
 
   it('should get user settings after user platform settings', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init({
       hoverCSS: true
@@ -196,9 +157,6 @@ describe('Config', () => {
   });
 
   it('should get md mode for core platform', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['core'];
     config.init(null, qp, platform);
 
@@ -206,9 +164,6 @@ describe('Config', () => {
   });
 
   it('should get ios mode for ipad platform', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['mobile', 'ios', 'ipad', 'tablet'];
     config.init(null, qp, platform);
 
@@ -216,9 +171,6 @@ describe('Config', () => {
   });
 
   it('should get md mode for windows platform', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['mobile', 'windows'];
     config.init(null, qp, platform);
 
@@ -226,9 +178,6 @@ describe('Config', () => {
   });
 
   it('should get md mode for android platform', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['mobile', 'android'];
     config.init(null, qp, platform);
 
@@ -236,9 +185,6 @@ describe('Config', () => {
   });
 
   it('should override ios mode config with user platform setting', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init({
       tabsPlacement: 'hide',
@@ -253,9 +199,6 @@ describe('Config', () => {
   });
 
   it('should override ios mode config with user setting', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init({
       tabsPlacement: 'top'
@@ -265,9 +208,6 @@ describe('Config', () => {
   });
 
   it('should get setting from md mode', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['android'];
     config.init(null, qp, platform);
 
@@ -275,9 +215,6 @@ describe('Config', () => {
   });
 
   it('should get setting from ios mode', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init(null, qp, platform);
 
@@ -285,9 +222,6 @@ describe('Config', () => {
   });
 
   it('should set/get platform setting from set()', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init(null, qp, platform);
 
@@ -298,9 +232,6 @@ describe('Config', () => {
   });
 
   it('should set/get setting from set()', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init(null, qp, platform);
 
@@ -310,9 +241,6 @@ describe('Config', () => {
   });
 
   it('should set ios platform settings from settings()', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init(null, qp, platform);
 
@@ -324,9 +252,6 @@ describe('Config', () => {
   });
 
   it('should set/get mobile setting even w/ higher priority ios', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['mobile', 'ios'];
 
     config.init({
@@ -342,9 +267,6 @@ describe('Config', () => {
   });
 
   it('should set/get mobile setting even w/ higher priority ios', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['mobile', 'ios'];
 
     config.init({
@@ -360,9 +282,6 @@ describe('Config', () => {
   });
 
   it('should set/get android setting w/ higher priority than mobile', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['mobile', 'android'];
     config.init({
       key: 'defaultValue',
@@ -380,9 +299,6 @@ describe('Config', () => {
   });
 
   it('should set/get ios setting w/ platforms set', () => {
-    let config = new Config();
-    let qp = new QueryParams('');
-    let platform = new Platform();
     platform._platforms = ['ios'];
     config.init(null, qp, platform);
 
@@ -402,7 +318,6 @@ describe('Config', () => {
   });
 
   it('should set/get default setting w/ platforms set, but no platform match', () => {
-    let config = new Config();
     config.settings({
       key: 'defaultValue',
       platforms: {
@@ -419,7 +334,6 @@ describe('Config', () => {
   });
 
   it('should set setting object', () => {
-    let config = new Config();
     config.settings({
       name: 'Doc Brown',
       occupation: 'Weather Man'
@@ -432,7 +346,6 @@ describe('Config', () => {
   });
 
   it('should get null setting', () => {
-    let config = new Config();
     config.init(null, null, null);
     expect(config.get('name')).toEqual(null);
     expect(config.get('name')).toEqual(null);
@@ -441,7 +354,6 @@ describe('Config', () => {
   });
 
   it('should set/get single setting', () => {
-    let config = new Config();
     config.init(null, null, null);
     config.set('name', 'Doc Brown');
     config.set('occupation', 'Weather Man');
@@ -453,7 +365,6 @@ describe('Config', () => {
   });
 
   it('should init w/ given config settings', () => {
-    let config = new Config();
     config.init({
       name: 'Doc Brown',
       occupation: 'Weather Man'
@@ -463,7 +374,6 @@ describe('Config', () => {
   });
 
   it('should get a fallback value', () => {
-    let config = new Config();
     config.init({
       name: 'Doc Brown'
     }, null, null);
@@ -472,7 +382,6 @@ describe('Config', () => {
   });
 
   it('should get a boolean value with a boolean config value', () => {
-    let config = new Config();
     config.init({
       key1: true,
       key2: false
@@ -482,7 +391,6 @@ describe('Config', () => {
   });
 
   it('should get a boolean value with a string config value', () => {
-    let config = new Config();
     config.init({
       key1: 'true',
       key2: 'false',
@@ -496,7 +404,6 @@ describe('Config', () => {
   });
 
   it('should get a boolean value with a number config value', () => {
-    let config = new Config();
     config.init({
       key1: 0,
       key2: 1,
@@ -507,7 +414,6 @@ describe('Config', () => {
   });
 
   it('should get a number value with a number config value', () => {
-    let config = new Config();
     config.init({
       key: 6
     }, null, null);
@@ -515,7 +421,6 @@ describe('Config', () => {
   });
 
   it('should get a number value with a string config value', () => {
-    let config = new Config();
     config.init({
       key: '6',
       numThenString: '6baymax',
@@ -527,7 +432,6 @@ describe('Config', () => {
   });
 
   it('should get a number NaN value with a NaN config value', () => {
-    let config = new Config();
     config.init({
       allString: 'allstring',
       imNull: null,
@@ -540,7 +444,6 @@ describe('Config', () => {
   });
 
   it('should get a number fallback value with a NaN config value', () => {
-    let config = new Config();
     config.init({
       allString: 'allstring',
       imNull: null,
@@ -554,7 +457,6 @@ describe('Config', () => {
   });
 
   it('should get settings object', () => {
-    let config = new Config();
     config.init({
       name: 'Doc Brown',
       occupation: 'Weather Man'
@@ -608,9 +510,16 @@ describe('Config', () => {
     expect(config.settings()).toEqual({});
   });
 
+  let platform: Platform;
+  let config: Config;
+  let qp: QueryParams;
+
   beforeEach(() => {
-    setupModeConfig();
-    setupPlatformRegistry();
+    config = new Config();
+    qp = new QueryParams('');
+    platform = new Platform();
+    platform.setPlatformConfigs(PLATFORM_CONFIGS);
+    registerModeConfigs(config);
   });
 
 });

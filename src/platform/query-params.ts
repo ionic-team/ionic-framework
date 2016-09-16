@@ -27,7 +27,7 @@ export class QueryParams {
 
 }
 
-export const UserUrl = new OpaqueToken('USERURL');
+export const UrlToken = new OpaqueToken('USERURL');
 
 export function setupQueryParams(url: string): QueryParams {
   return new QueryParams(url);

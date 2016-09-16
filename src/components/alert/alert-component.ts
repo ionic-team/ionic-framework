@@ -1,11 +1,9 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
-import { Transition } from '../../transitions/transition';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -287,122 +285,5 @@ export class AlertCmp {
     return values;
   }
 }
-
-
-/**
- * Animations for alerts
- */
-class AlertPopIn extends Transition {
-  init() {
-    let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
-    backdrop.fromTo('opacity', 0.01, 0.3);
-
-    this
-      .easing('ease-in-out')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-pop-in', AlertPopIn);
-
-
-class AlertPopOut extends Transition {
-  init() {
-    let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
-    backdrop.fromTo('opacity', 0.3, 0);
-
-    this
-      .easing('ease-in-out')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-pop-out', AlertPopOut);
-
-
-class AlertMdPopIn extends Transition {
-  init() {
-    let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
-    backdrop.fromTo('opacity', 0.01, 0.5);
-
-    this
-      .easing('ease-in-out')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-md-pop-in', AlertMdPopIn);
-
-
-class AlertMdPopOut extends Transition {
-  init() {
-    let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
-    backdrop.fromTo('opacity', 0.5, 0);
-
-    this
-      .easing('ease-in-out')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-md-pop-out', AlertMdPopOut);
-
-
-class AlertWpPopIn extends Transition {
-  init() {
-    let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.3, 1);
-    backdrop.fromTo('opacity', 0.01, 0.5);
-
-    this
-      .easing('cubic-bezier(0,0 0.05,1)')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-wp-pop-in', AlertWpPopIn);
-
-
-class AlertWpPopOut extends Transition {
-  init() {
-    let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 1.3);
-    backdrop.fromTo('opacity', 0.5, 0);
-
-    this
-      .easing('ease-out')
-      .duration(150)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-wp-pop-out', AlertWpPopOut);
 
 let alertIds = -1;

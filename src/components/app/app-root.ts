@@ -2,12 +2,11 @@ import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Opaque
 
 import { App } from './app';
 import { Config } from '../../config/config';
-import { FeatureDetect } from '../../util/feature-detect';
 import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
 
-export const UserRoot = new OpaqueToken('USERROOT');
+export const AppRootToken = new OpaqueToken('USERROOT');
 
 /**
  * @private
@@ -32,13 +31,12 @@ export class IonicApp extends Ion implements OnInit {
   @ViewChild('toastPortal', { read: OverlayPortal }) _toastPortal: OverlayPortal;
 
   constructor(
-    @Inject(UserRoot) private _userCmp: any,
+    @Inject(AppRootToken) private _userCmp: any,
     private _cfr: ComponentFactoryResolver,
     elementRef: ElementRef,
     renderer: Renderer,
     config: Config,
     private _platform: Platform,
-    private _featureDetect: FeatureDetect,
     app: App
   ) {
     super(config, elementRef, renderer);
@@ -80,8 +78,6 @@ export class IonicApp extends Ion implements OnInit {
     if (this._config.getBoolean('hoverCSS', true)) {
       this.setElementClass('enable-hover', true);
     }
-
-    this._featureDetect.test(this);
   }
 
   /**

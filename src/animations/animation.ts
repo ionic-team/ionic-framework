@@ -1065,24 +1065,6 @@ export class Animation {
     return (this._twn && this._hasDur && this._eL ? this._e[0] : null);
   }
 
-
-  // ***** STATIC CLASSES *********
-
-  static create(name: string, opts: AnimationOptions = {}): Animation {
-    let AnimationClass = AnimationRegistry[name];
-
-    if (!AnimationClass) {
-      // couldn't find an animation by the given name
-      // fallback to just the base Animation class
-      AnimationClass = Animation;
-    }
-    return new AnimationClass(null, opts);
-  }
-
-  static register(name: string, AnimationClass: any) {
-    AnimationRegistry[name] = AnimationClass;
-  }
-
 }
 
 export interface AnimationOptions {
@@ -1115,7 +1097,6 @@ const TRANSFORMS: {[key: string]: number} = {
   'translateX': 1, 'translateY': 1, 'translateZ': 1, 'scale': 1, 'scaleX': 1, 'scaleY': 1, 'scaleZ': 1, 'rotate': 1, 'rotateX': 1, 'rotateY': 1, 'rotateZ': 1, 'skewX': 1, 'skewY': 1, 'perspective': 1
 };
 
-const AnimationRegistry: {[key: string]: any} = {};
 const CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
 const ANIMATION_DURATION_MIN = 32;
 const TRANSITION_END_FALLBACK_PADDING_MS = 400;

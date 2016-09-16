@@ -2,7 +2,7 @@ import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
 
 import { QueryParams } from './query-params';
 import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
-import { setupPlatformRegistry } from './registry';
+
 
 /**
  * @name Platform
@@ -40,6 +40,8 @@ export class Platform {
   private _readyResolve: any;
   private _resizeTm: any;
   private _bbActions: BackButtonAction[] = [];
+  private _registry: {[name: string]: PlatformConfig};
+  private _default: string;
 
   /** @private */
   zone: NgZone;
@@ -502,29 +504,29 @@ export class Platform {
   /**
    * @private
    */
-  static register(platformConfig: PlatformConfig) {
-    platformRegistry[platformConfig.name] = platformConfig;
+  setPlatformConfigs(platformConfigs: {[key: string]: PlatformConfig}) {
+    this._registry = platformConfigs || {};
   }
 
   /**
    * @private
    */
-  static registry() {
-    return platformRegistry;
+  getPlatformConfig(platformName: string): PlatformConfig {
+    return this._registry[platformName] || {};
   }
 
   /**
    * @private
    */
-  static get(platformName: string): PlatformConfig {
-    return platformRegistry[platformName] || {};
+  registry() {
+    return this._registry;
   }
 
   /**
    * @private
    */
-  static setDefault(platformName: string) {
-    platformDefault = platformName;
+  setDefault(platformName: string) {
+    this._default = platformName;
   }
 
   /**
@@ -586,13 +588,13 @@ export class Platform {
   }
 
   /** @private */
-  load() {
+  init() {
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;
 
     // figure out the most specific platform and active engine
     let tmpPlatform: PlatformNode;
-    for (let platformName in platformRegistry) {
+    for (let platformName in this._registry) {
 
       tmpPlatform = this.matchPlatform(platformName);
       if (tmpPlatform) {
@@ -614,7 +616,7 @@ export class Platform {
     }
 
     if (!rootPlatformNode) {
-      rootPlatformNode = new PlatformNode(platformDefault);
+      rootPlatformNode = new PlatformNode(this._registry, this._default);
     }
 
     // build a Platform instance filled with the
@@ -634,7 +636,7 @@ export class Platform {
 
       let platformNode = rootPlatformNode;
       while (platformNode) {
-        insertSuperset(platformNode);
+        insertSuperset(this._registry, platformNode);
         platformNode = platformNode.child;
       }
 
@@ -674,7 +676,7 @@ export class Platform {
     // build a PlatformNode and assign config data to it
     // use it's getRoot method to build up its hierarchy
     // depending on which platforms match
-    let platformNode = new PlatformNode(platformName);
+    let platformNode = new PlatformNode(this._registry, platformName);
     let rootNode = platformNode.getRoot(this);
 
     if (rootNode) {
@@ -690,12 +692,12 @@ export class Platform {
 
 }
 
-function insertSuperset(platformNode: PlatformNode) {
+function insertSuperset(registry: any, platformNode: PlatformNode) {
   let supersetPlaformName = platformNode.superset();
   if (supersetPlaformName) {
     // add a platform in between two exist platforms
     // so we can build the correct hierarchy of active platforms
-    let supersetPlatform = new PlatformNode(supersetPlaformName);
+    let supersetPlatform = new PlatformNode(registry, supersetPlaformName);
     supersetPlatform.parent = platformNode.parent;
     supersetPlatform.child = platformNode;
     if (supersetPlatform.parent) {
@@ -717,8 +719,8 @@ class PlatformNode {
   isEngine: boolean;
   depth: number;
 
-  constructor(platformName: string) {
-    this.c = Platform.get(platformName);
+  constructor(public registry: {[name: string]: PlatformConfig}, platformName: string) {
+    this.c = registry[platformName];
     this.name = platformName;
     this.isEngine = this.c.isEngine;
   }
@@ -741,9 +743,9 @@ class PlatformNode {
 
   version(p: Platform): PlatformVersion {
     if (this.c.versionParser) {
-      let v = this.c.versionParser(p);
+      const v = this.c.versionParser(p);
       if (v) {
-        let str = v.major + '.' + v.minor;
+        const str = v.major + '.' + v.minor;
         return {
           str: str,
           num: parseFloat(str),
@@ -767,7 +769,7 @@ class PlatformNode {
       let rootPlatformNode: PlatformNode = null;
 
       for (let i = 0; i < parents.length; i++) {
-        platformNode = new PlatformNode(parents[i]);
+        platformNode = new PlatformNode(this.registry, parents[i]);
         platformNode.child = this;
 
         rootPlatformNode = platformNode.getRoot(p);
@@ -782,13 +784,11 @@ class PlatformNode {
   }
 
   getSubsetParents(subsetPlatformName: string): string[] {
-    let platformRegistry = Platform.registry();
-
-    let parentPlatformNames: string[] = [];
+    const parentPlatformNames: string[] = [];
     let platform: PlatformConfig = null;
 
-    for (let platformName in platformRegistry) {
-      platform = platformRegistry[platformName];
+    for (let platformName in this.registry) {
+      platform = this.registry[platformName];
 
       if (platform.subsets && platform.subsets.indexOf(subsetPlatformName) > -1) {
         parentPlatformNames.push(platformName);
@@ -800,11 +800,8 @@ class PlatformNode {
 
 }
 
-let platformRegistry: {[name: string]: PlatformConfig} = {};
-let platformDefault: string = null;
 
 export interface PlatformConfig {
-  name?: string;
   isEngine?: boolean;
   initialize?: Function;
   isMatch?: Function;
@@ -826,21 +823,23 @@ interface BackButtonAction {
   priority: number;
 }
 
-export function setupPlatform(queryParams: QueryParams, userAgent: string, navigatorPlatform: string, dir: string, lang: string, zone: NgZone): Platform {
-  setupPlatformRegistry();
 
+export function setupPlatform(platformConfigs: {[key: string]: PlatformConfig}, queryParams: QueryParams, userAgent: string, navigatorPlatform: string, docDirection: string, docLanguage: string, zone: NgZone): Platform {
   const p = new Platform();
+  p.setDefault('core');
+  p.setPlatformConfigs(platformConfigs);
   p.setUserAgent(userAgent);
   p.setQueryParams(queryParams);
   p.setNavigatorPlatform(navigatorPlatform);
-  p.setDir(dir, false);
-  p.setLang(lang, false);
+  p.setDir(docDirection, false);
+  p.setLang(docLanguage, false);
   p.setZone(zone);
-  p.load();
+  p.init();
   return p;
 }
 
-export const UserAgent = new OpaqueToken('USERAGENT');
-export const UserNavigatorPlatform = new OpaqueToken('USERNAVPLT');
-export const UserDir = new OpaqueToken('USERDIR');
-export const UserLang = new OpaqueToken('USERLANG');
+
+export const UserAgentToken = new OpaqueToken('USERAGENT');
+export const NavigatorPlatformToken = new OpaqueToken('NAVPLT');
+export const DocumentDirToken = new OpaqueToken('DOCDIR');
+export const DocLangToken = new OpaqueToken('DOCLANG');

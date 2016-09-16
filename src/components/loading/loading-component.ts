@@ -1,10 +1,8 @@
 import { Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
 import { isDefined, isUndefined } from '../../util/util';
 import { NavParams } from '../../navigation/nav-params';
-import { Transition } from '../../transitions/transition';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -94,122 +92,5 @@ export class LoadingCmp {
     return this._viewCtrl.dismiss(null, role);
   }
 }
-
-
-/**
- * Animations for loading
- */
- class LoadingPopIn extends Transition {
-   init() {
-     let ele = this.enteringView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
-     backdrop.fromTo('opacity', 0.01, 0.3);
-
-     this
-       .easing('ease-in-out')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-pop-in', LoadingPopIn);
-
-
- class LoadingPopOut extends Transition {
-   init() {
-     let ele = this.leavingView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
-     backdrop.fromTo('opacity', 0.3, 0);
-
-     this
-       .easing('ease-in-out')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-pop-out', LoadingPopOut);
-
-
- class LoadingMdPopIn extends Transition {
-   init() {
-     let ele = this.enteringView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
-     backdrop.fromTo('opacity', 0.01, 0.5);
-
-     this
-       .easing('ease-in-out')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-md-pop-in', LoadingMdPopIn);
-
-
- class LoadingMdPopOut extends Transition {
-   init() {
-     let ele = this.leavingView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
-     backdrop.fromTo('opacity', 0.5, 0);
-
-     this
-       .easing('ease-in-out')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-md-pop-out', LoadingMdPopOut);
-
-
- class LoadingWpPopIn extends Transition {
-   init() {
-     let ele = this.enteringView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.3, 1);
-     backdrop.fromTo('opacity', 0.01, 0.16);
-
-     this
-       .easing('cubic-bezier(0,0 0.05,1)')
-       .duration(200)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-wp-pop-in', LoadingWpPopIn);
-
-
- class LoadingWpPopOut extends Transition {
-   init() {
-     let ele = this.leavingView.pageRef().nativeElement;
-     let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-     let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
-
-     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 1.3);
-     backdrop.fromTo('opacity', 0.16, 0);
-
-     this
-       .easing('ease-out')
-       .duration(150)
-       .add(backdrop)
-       .add(wrapper);
-   }
- }
- Transition.register('loading-wp-pop-out', LoadingWpPopOut);
 
 let loadingIds = -1;

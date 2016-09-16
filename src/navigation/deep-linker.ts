@@ -1,4 +1,3 @@
-import { Injectable, OpaqueToken } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
@@ -30,7 +29,6 @@ import { ViewController } from './view-controller';
  */
 
 
-@Injectable()
 export class DeepLinker {
   segments: NavSegment[] = [];
   history: string[] = [];
@@ -413,9 +411,6 @@ export function setupDeepLinker(app: App, serializer: UrlSerializer, location: L
   deepLinker.init();
   return deepLinker;
 }
-
-
-export const UserDeepLinkConfig = new OpaqueToken('USERLINKS');
 
 
 export function normalizeUrl(browserUrl: string): string {

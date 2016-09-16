@@ -1,12 +1,7 @@
-
-import { Config } from './config';
-import { PageTransition } from '../transitions/page-transition';
-import { IOSTransition } from '../transitions/transition-ios';
-import { MDTransition } from '../transitions/transition-md';
-import { WPTransition } from '../transitions/transition-wp';
+import { Config } from '../config/config';
 
 
-const MODE_IOS: any = {
+export const MODE_IOS: any = {
   activator: 'highlight',
 
   actionSheetEnter: 'action-sheet-slide-in',
@@ -49,7 +44,7 @@ const MODE_IOS: any = {
 };
 
 
-const MODE_MD: any = {
+export const MODE_MD: any = {
   activator: 'ripple',
 
   actionSheetEnter: 'action-sheet-md-slide-in',
@@ -92,7 +87,7 @@ const MODE_MD: any = {
 };
 
 
-const MODE_WP: any = {
+export const MODE_WP: any = {
   activator: 'highlight',
 
   actionSheetEnter: 'action-sheet-wp-slide-in',
@@ -135,16 +130,15 @@ const MODE_WP: any = {
 };
 
 
-export function setupModeConfig() {
-  // iOS Mode Settings
-  Config.setModeConfig('ios', MODE_IOS);
-  PageTransition.register('ios-transition', IOSTransition);
+export function registerModeConfigs(config: Config) {
+  return function() {
+    // iOS Mode Settings
+    config.setModeConfig('ios', MODE_IOS);
 
-  // Material Design Mode Settings
-  Config.setModeConfig('md', MODE_MD);
-  PageTransition.register('md-transition', MDTransition);
+    // Material Design Mode Settings
+    config.setModeConfig('md', MODE_MD);
 
-  // Windows Mode Settings
-  Config.setModeConfig('wp', MODE_WP);
-  PageTransition.register('wp-transition', WPTransition);
+    // Windows Mode Settings
+    config.setModeConfig('wp', MODE_WP);
+  };
 }

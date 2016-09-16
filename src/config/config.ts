@@ -9,7 +9,6 @@ import { OpaqueToken } from '@angular/core';
 import { Platform } from '../platform/platform';
 import { QueryParams } from '../platform/query-params';
 import { isObject, isDefined, isFunction, isArray } from '../util/util';
-import { setupModeConfig } from './modes';
 
 /**
  * @name Config
@@ -115,7 +114,8 @@ export class Config {
   private _c: any = {};
   private _s: any;
   private _qp: QueryParams;
-
+  private _modes: any = {};
+  private _trns: any = {};
 
   /**
    * @private
@@ -182,7 +182,7 @@ export class Config {
               if (isDefined(configObj[key])) {
                 userPlatformValue = configObj[key];
               }
-              configObj = Config.getModeConfig(configObj.mode);
+              configObj = this.getModeConfig(configObj.mode);
               if (configObj && isDefined(configObj[key])) {
                 userPlatformModeValue = configObj[key];
               }
@@ -190,7 +190,7 @@ export class Config {
           }
 
           // get default platform's setting
-          configObj = Platform.get(activePlatformKeys[i]);
+          configObj = this.platform.getPlatformConfig(activePlatformKeys[i]);
           if (configObj && configObj.settings) {
 
             if (isDefined(configObj.settings[key])) {
@@ -198,7 +198,7 @@ export class Config {
               platformValue = configObj.settings[key];
             }
 
-            configObj = Config.getModeConfig(configObj.settings.mode);
+            configObj = this.getModeConfig(configObj.settings.mode);
             if (configObj && isDefined(configObj[key])) {
               // found setting for this platform's mode
               platformModeValue = configObj[key];
@@ -210,7 +210,7 @@ export class Config {
 
       }
 
-      configObj = Config.getModeConfig(this._s.mode);
+      configObj = this.getModeConfig(this._s.mode);
       if (configObj && isDefined(configObj[key])) {
         userDefaultModeValue = configObj[key];
       }
@@ -352,26 +352,36 @@ export class Config {
   /**
    * @private
    */
-  static setModeConfig(mode: string, config: any) {
-    modeConfigs[mode] = config;
+  setModeConfig(modeName: string, modeConfig: any) {
+    this._modes[modeName] = modeConfig;
   }
 
   /**
    * @private
    */
-  static getModeConfig(mode: string) {
-    return modeConfigs[mode] || null;
+  getModeConfig(modeName: string): any {
+    return this._modes[modeName] || null;
+  }
+
+  /**
+   * @private
+   */
+  setTransition(trnsName: string, trnsClass: any) {
+    this._trns[trnsName] = trnsClass;
+  }
+
+  /**
+   * @private
+   */
+  getTransition(trnsName: string): any {
+    return this._trns[trnsName] || null;
   }
 
 }
 
-let modeConfigs: any = {};
-
-export const UserConfig = new OpaqueToken('USERCONFIG');
+export const ConfigToken = new OpaqueToken('USERCONFIG');
 
 export function setupConfig(userConfig: any, queryParams: QueryParams, platform: Platform): Config {
-  setupModeConfig();
-
   const config = new Config();
   config.init(userConfig, queryParams, platform);
   return config;

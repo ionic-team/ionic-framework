@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { Animation } from '../../animations/animation';
 import { cancelRaf, pointerCoord, raf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString } from '../../util/util';
 import { Config } from '../../config/config';
@@ -9,7 +8,6 @@ import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
-import { Transition } from '../../transitions/transition';
 import { UIEventManager } from '../../util/ui-event-manager';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -545,40 +543,6 @@ export class PickerCmp {
     return selected;
   }
 }
-
-
-/**
- * Animations for pickers
- */
-class PickerSlideIn extends Transition {
-  init() {
-    let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
-
-    backdrop.fromTo('opacity', 0.01, 0.26);
-    wrapper.fromTo('translateY', '100%', '0%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('picker-slide-in', PickerSlideIn);
-
-
-class PickerSlideOut extends Transition {
-  init() {
-    let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
-
-    backdrop.fromTo('opacity', 0.26, 0);
-    wrapper.fromTo('translateY', '0%', '100%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('picker-slide-out', PickerSlideOut);
-
 
 let pickerIds = -1;
 const DECELERATION_FRICTION = 0.97;

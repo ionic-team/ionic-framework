@@ -1,6 +1,4 @@
 import { QueryParams } from '../query-params';
-import '../registry';
-import '../../config/modes';
 
 
 describe('QueryParams', () => {
@@ -96,4 +94,5 @@ describe('QueryParams', () => {
       key: ''
     });
   });
+
 });

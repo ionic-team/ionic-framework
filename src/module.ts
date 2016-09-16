@@ -1,5 +1,5 @@
-import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ModuleWithProviders, NgModule, NgZone } from '@angular/core';
-import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, Inject, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
+import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -10,10 +10,9 @@ import { HttpModule } from '@angular/http';
 import { ActionSheetController } from './components/action-sheet/action-sheet';
 import { AlertController } from './components/alert/alert';
 import { App } from './components/app/app';
-import { Config, UserConfig, setupConfig } from './config/config';
-import { DeepLinker, setupDeepLinker, UserDeepLinkConfig } from './navigation/deep-linker';
+import { Config, ConfigToken, setupConfig } from './config/config';
+import { DeepLinker, setupDeepLinker } from './navigation/deep-linker';
 import { setupProvideEvents } from './util/events';
-import { FeatureDetect } from './util/feature-detect';
 import { Form } from './util/form';
 import { GestureController } from './gestures/gesture-controller';
 import { IonicGestureConfig } from './gestures/gesture-config';
@@ -22,15 +21,18 @@ import { LoadingController } from './components/loading/loading';
 import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal';
 import { PickerController } from './components/picker/picker';
-import { Platform, setupPlatform, UserAgent, UserNavigatorPlatform, UserDir, UserLang } from './platform/platform';
+import { Platform, setupPlatform, UserAgentToken, NavigatorPlatformToken, DocumentDirToken, DocLangToken } from './platform/platform';
+import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
 import { PopoverController } from './components/popover/popover';
-import { QueryParams, setupQueryParams, UserUrl } from './platform/query-params';
+import { QueryParams, setupQueryParams, UrlToken } from './platform/query-params';
 import { TapClick, setupTapClick } from './components/tap-click/tap-click';
 import { ToastController } from './components/toast/toast';
 import { Translate } from './translation/translate';
+import { registerModeConfigs } from './config/mode-registry';
+import { registerTransitions } from './transitions/transition-registry';
 import { TransitionController } from './transitions/transition-controller';
-import { UserRoot } from './components/app/app-root';
-import { UrlSerializer } from './navigation/url-serializer';
+import { AppRootToken } from './components/app/app-root';
+import { UrlSerializer, setupUrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 
 /**
  * Import Overlay Entry Components
@@ -48,11 +50,13 @@ import { ToastCmp } from './components/toast/toast-component';
 /**
  * Export Providers
  */
-export { DeepLinker, UserDeepLinkConfig } from './navigation/deep-linker';
+export { Config, setupConfig, ConfigToken } from './config/config';
+export { Platform, setupPlatform, UserAgentToken, DocumentDirToken, DocLangToken, NavigatorPlatformToken } from './platform/platform';
+export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
 export { NavParams } from './navigation/nav-params';
 export { NavLink, NavOptions, DeepLink, DeepLinkConfig } from './navigation/nav-util';
-export { UrlSerializer } from './navigation/url-serializer';
+export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
 
 
@@ -82,65 +86,45 @@ export { ViewController } from './navigation/view-controller';
 })
 export class IonicModule {
 
-  static forRoot(userAppRoot: any, userConfig?: any, userDeepLinkConfig?: any): ModuleWithProviders {
+  static forRoot(appRoot: any, config: any = null, deepLinkConfig: any = null): ModuleWithProviders {
     return {
       ngModule: IonicModule,
       providers: [
-        { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: userAppRoot, multi: true },
-        { provide: APP_INITIALIZER, useFactory: setupTapClick,
-          deps: [
-            Config,
-            App,
-            NgZone
-          ],
-          multi: true
-        },
-        { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform ], multi: true },
-        { provide: Config, useFactory: setupConfig,
-          deps: [
-            UserConfig,
-            QueryParams,
-            Platform
-          ]
-        },
-        { provide: DeepLinker, useFactory: setupDeepLinker,
-          deps: [
-            App,
-            UrlSerializer,
-            Location
-          ]
-        },
-        { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        { provide: Platform, useFactory: setupPlatform,
-          deps: [
-            QueryParams,
-            UserAgent,
-            UserNavigatorPlatform,
-            UserDir,
-            UserLang,
-            NgZone
-          ]
-        },
-        { provide: QueryParams, useFactory: setupQueryParams,
-          deps: [
-            UserUrl
-          ]
-        },
-        { provide: UserAgent, useFactory: getWindowUserAgent },
-        { provide: UserDir, useFactory: getDocumentDir },
-        { provide: UserLang, useFactory: getDocumentLang },
-        { provide: UserNavigatorPlatform, useFactory: getWindowPlatform },
-        { provide: UserRoot, useValue: userAppRoot },
-        { provide: UserUrl, useFactory: getWindowLocation },
-        { provide: UserConfig, useValue: userConfig },
-        { provide: UserDeepLinkConfig, useValue: userDeepLinkConfig },
+        // useValue: bootstrap values
+        { provide: AppRootToken, useValue: appRoot },
+        { provide: ConfigToken, useValue: config },
+        { provide: DeepLinkConfigToken, useValue: deepLinkConfig },
 
+        // useFactory: user values
+        { provide: UserAgentToken, useFactory: provideUserAgent },
+        { provide: DocumentDirToken, useFactory: provideDocumentDirection },
+        { provide: DocLangToken, useFactory: provideDocumentLang },
+        { provide: NavigatorPlatformToken, useFactory: provideNavigatorPlatform },
+        { provide: UrlToken, useFactory: provideLocationHref },
+        { provide: PlatformConfigToken, useFactory: providePlatformConfigs },
+
+        // useFactory: ionic core providers
+        { provide: QueryParams, useFactory: setupQueryParams, deps: [ UrlToken ] },
+        { provide: Platform, useFactory: setupPlatform, deps: [ PlatformConfigToken, QueryParams, UserAgentToken, NavigatorPlatformToken, DocumentDirToken, DocLangToken, NgZone ] },
+        { provide: Config, useFactory: setupConfig, deps: [ ConfigToken, QueryParams, Platform ] },
+
+        // useFactory: ionic app initializers
+        { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: registerTransitions, deps: [ Config ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, App, NgZone ], multi: true },
+
+        // useClass
+        { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
+
+        // useValue
+        { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: appRoot, multi: true },
+
+        // ionic providers
         ActionSheetController,
         AlertController,
         App,
         Form,
-        FeatureDetect,
         GestureController,
         Keyboard,
         LoadingController,
@@ -153,7 +137,10 @@ export class IonicModule {
         ToastController,
         Translate,
         TransitionController,
-        UrlSerializer
+
+        { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [ new Inject(APP_BASE_HREF), new Optional()], Config ] },
+        { provide: UrlSerializer, useFactory: setupUrlSerializer, deps: [ DeepLinkConfigToken ] },
+        { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location ] },
       ]
     };
   }
@@ -163,34 +150,44 @@ export class IonicModule {
 /**
  * @private
  */
-export function getWindowUserAgent() {
+export function provideLocationStrategy(platformLocationStrategy: PlatformLocation,
+                                        baseHref: string, config: Config) {
+  return config.get('locationStrategy') === 'path' ?
+         new PathLocationStrategy(platformLocationStrategy, baseHref) :
+         new HashLocationStrategy(platformLocationStrategy, baseHref);
+}
+
+/**
+ * @private
+ */
+export function provideUserAgent() {
   return window && window.navigator.userAgent;
 }
 
 /**
  * @private
  */
-export function getWindowPlatform() {
+export function provideNavigatorPlatform() {
   return window && window.navigator.platform;
 }
 
 /**
  * @private
  */
-export function getWindowLocation() {
+export function provideLocationHref() {
   return window && window.location.href;
 }
 
 /**
  * @private
  */
-export function getDocumentDir() {
+export function provideDocumentDirection() {
   return document && document.documentElement.dir;
 }
 
 /**
  * @private
  */
-export function getDocumentLang() {
+export function provideDocumentLang() {
   return document && document.documentElement.lang;
 }

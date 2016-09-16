@@ -1,7 +1,8 @@
+import { Config } from '../../config/config';
 import { Platform } from '../platform';
 import { QueryParams } from '../query-params';
-import { setupPlatformRegistry } from '../registry';
-import { setupModeConfig } from '../../config/modes';
+import { PLATFORM_CONFIGS } from '../platform-registry';
+import { registerModeConfigs } from '../../config/mode-registry';
 
 
 describe('Platform', () => {
@@ -9,8 +10,6 @@ describe('Platform', () => {
   describe('registerBackButtonAction', () => {
 
     it('should register two actions with different priorities, call the highest one', () => {
-      let platform = new Platform();
-
       let ranAction1 = false;
       let action1 = () => {
         ranAction1 = true;
@@ -30,8 +29,6 @@ describe('Platform', () => {
     });
 
     it('should register two actions with the same priority, call the second one', () => {
-      let platform = new Platform();
-
       let ranAction1 = false;
       let action1 = () => {
         ranAction1 = true;
@@ -51,8 +48,6 @@ describe('Platform', () => {
     });
 
     it('should register a default action', () => {
-      let platform = new Platform();
-
       let ranAction1 = false;
       let action1 = () => {
         ranAction1 = true;
@@ -65,18 +60,17 @@ describe('Platform', () => {
     });
 
     it('should not run any actions when none registered', () => {
-      let platform = new Platform();
       platform.runBackButtonAction();
     });
 
   });
 
   it('should set core as the fallback', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
+    platform.setDefault('core');
     platform.setQueryParams(qp);
     platform.setUserAgent('idk');
-    platform.load();
+    platform.init();
 
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('ios')).toEqual(false);
@@ -84,10 +78,9 @@ describe('Platform', () => {
   });
 
   it('should set windows via querystring', () => {
-    let platform = new Platform();
     let qp = new QueryParams('/?ionicplatform=windows');
     platform.setQueryParams(qp);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('mobile')).toEqual(true);
@@ -97,10 +90,9 @@ describe('Platform', () => {
   });
 
   it('should set ios via querystring', () => {
-    let platform = new Platform();
     let qp = new QueryParams('/?ionicplatform=ios');
     platform.setQueryParams(qp);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('mobile')).toEqual(true);
@@ -110,11 +102,10 @@ describe('Platform', () => {
   });
 
   it('should set windows via querystring, even with android user agent', () => {
-    let platform = new Platform();
     let qp = new QueryParams('/?ionicplatform=windows');
     platform.setQueryParams(qp);
     platform.setUserAgent(ANDROID_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('android')).toEqual(false);
@@ -123,11 +114,10 @@ describe('Platform', () => {
   });
 
   it('should set ios via querystring, even with android user agent', () => {
-    let platform = new Platform();
     let qp = new QueryParams('/?ionicplatform=ios');
     platform.setQueryParams(qp);
     platform.setUserAgent(ANDROID_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('android')).toEqual(false);
@@ -136,10 +126,9 @@ describe('Platform', () => {
   });
 
   it('should set android via querystring', () => {
-    let platform = new Platform();
     let qp = new QueryParams('/?ionicplatform=android');
     platform.setQueryParams(qp);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('android')).toEqual(true);
@@ -148,11 +137,10 @@ describe('Platform', () => {
   });
 
   it('should set android via querystring, even with ios user agent', () => {
-    let platform = new Platform();
     let qp = new QueryParams('/?ionicplatform=android');
     platform.setQueryParams(qp);
     platform.setUserAgent(IPHONE_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('android')).toEqual(true);
@@ -161,11 +149,10 @@ describe('Platform', () => {
   });
 
   it('should set windows platform via user agent', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
     platform.setQueryParams(qp);
     platform.setUserAgent(WINDOWS_PHONE_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('mobile')).toEqual(true);
@@ -175,11 +162,10 @@ describe('Platform', () => {
   });
 
   it('should set windows platform via windows8 mobile user agent', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
     platform.setQueryParams(qp);
     platform.setUserAgent(WINDOWS8_PHONE_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('mobile')).toEqual(true);
@@ -189,11 +175,10 @@ describe('Platform', () => {
   });
 
   it('should set windows platform via windows7 mobile user agent', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
     platform.setQueryParams(qp);
     platform.setUserAgent(WINDOWS7_PHONE_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('mobile')).toEqual(true);
@@ -203,11 +188,10 @@ describe('Platform', () => {
   });
 
   it('should set android via user agent', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
     platform.setQueryParams(qp);
     platform.setUserAgent(ANDROID_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('mobile')).toEqual(true);
@@ -217,11 +201,10 @@ describe('Platform', () => {
   });
 
   it('should set iphone via user agent', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
     platform.setQueryParams(qp);
     platform.setUserAgent(IPHONE_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('mobile')).toEqual(true);
@@ -233,11 +216,10 @@ describe('Platform', () => {
   });
 
   it('should set ipad via user agent', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
     platform.setQueryParams(qp);
     platform.setUserAgent(IPAD_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(false);
     expect(platform.is('mobile')).toEqual(true);
@@ -249,11 +231,11 @@ describe('Platform', () => {
   });
 
   it('should set core platform for osx desktop firefox', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
+    platform.setDefault('core');
     platform.setQueryParams(qp);
     platform.setUserAgent(OSX_10_FIREFOX_43_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(true);
     expect(platform.is('mobile')).toEqual(false);
@@ -265,11 +247,11 @@ describe('Platform', () => {
   });
 
   it('should set core platform for osx desktop safari', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
+    platform.setDefault('core');
     platform.setQueryParams(qp);
     platform.setUserAgent(OSX_10_SAFARI_9_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(true);
     expect(platform.is('mobile')).toEqual(false);
@@ -281,11 +263,11 @@ describe('Platform', () => {
   });
 
   it('should set core platform for osx desktop chrome', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
+    platform.setDefault('core');
     platform.setQueryParams(qp);
     platform.setUserAgent(OSX_10_CHROME_49_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(true);
     expect(platform.is('mobile')).toEqual(false);
@@ -297,11 +279,11 @@ describe('Platform', () => {
   });
 
   it('should set core platform for windows desktop chrome', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
+    platform.setDefault('core');
     platform.setQueryParams(qp);
     platform.setUserAgent(WINDOWS_10_CHROME_40_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(true);
     expect(platform.is('mobile')).toEqual(false);
@@ -313,11 +295,11 @@ describe('Platform', () => {
   });
 
   it('should set core platform for windows desktop edge', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
+    platform.setDefault('core');
     platform.setQueryParams(qp);
     platform.setUserAgent(WINDOWS_10_EDGE_12_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(true);
     expect(platform.is('mobile')).toEqual(false);
@@ -329,11 +311,11 @@ describe('Platform', () => {
   });
 
   it('should set core platform for windows desktop IE', () => {
-    let platform = new Platform();
     let qp = new QueryParams('');
+    platform.setDefault('core');
     platform.setQueryParams(qp);
     platform.setUserAgent(WINDOWS_8_IE_11_UA);
-    platform.load();
+    platform.init();
 
     expect(platform.is('core')).toEqual(true);
     expect(platform.is('mobile')).toEqual(false);
@@ -344,9 +326,12 @@ describe('Platform', () => {
     expect(platform.is('tablet')).toEqual(false);
   });
 
+  let platform: Platform;
+
   beforeEach(() => {
-    setupModeConfig();
-    setupPlatformRegistry();
+    platform = new Platform();
+    platform.setPlatformConfigs(PLATFORM_CONFIGS);
+    registerModeConfigs(new Config());
   });
 
 });

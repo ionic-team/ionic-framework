@@ -1,15 +1,13 @@
-import { Inject, Injectable } from '@angular/core';
+import { OpaqueToken } from '@angular/core';
 
 import { DeepLinkConfig, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent, pascalCaseToDashCase } from '../util/util';
-import { UserDeepLinkConfig } from './deep-linker';
 
 
-@Injectable()
 export class UrlSerializer {
   links: NavLink[];
 
-  constructor(@Inject(UserDeepLinkConfig) config: DeepLinkConfig) {
+  constructor(config: DeepLinkConfig) {
     if (config && isArray(config.links)) {
       this.links = normalizeLinks(config.links);
 
@@ -265,3 +263,9 @@ function sortConfigLinks(a: NavLink, b: NavLink) {
 }
 
 const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|>|<|;|:|@|&|=/g;
+
+export const DeepLinkConfigToken = new OpaqueToken('USERLINKS');
+
+export function setupUrlSerializer(userDeepLinkConfig: any): UrlSerializer {
+  return new UrlSerializer(userDeepLinkConfig);
+}
