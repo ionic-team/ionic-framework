@@ -146,19 +146,26 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
-    return this._queueTrns({
-      insertStart: 0,
-      insertViews: [convertToView(this._linker, pageOrViewCtrl, params)],
-      removeStart: 0,
-      removeCount: -1,
-      opts: opts
-    }, done);
+    let viewControllers = [convertToView(this._linker, pageOrViewCtrl, params)];
+    return this._setPages(viewControllers, opts, done);
   }
 
   setPages(pages: any[], opts?: NavOptions, done?: Function): Promise<any> {
+    let viewControllers = convertToViews(this._linker, pages);
+    return this._setPages(viewControllers, opts, done);
+  }
+
+  _setPages(viewControllers: ViewController[], opts?: NavOptions, done?: Function): Promise<any> {
+    if (isBlank(opts)) {
+      opts = {};
+    }
+    // if animation wasn't set to true then default it to NOT animate
+    if (opts.animate !== true) {
+      opts.animate = false;
+    }
     return this._queueTrns({
       insertStart: 0,
-      insertViews: convertToViews(this._linker, pages),
+      insertViews: viewControllers,
       removeStart: 0,
       removeCount: -1,
       opts: opts
