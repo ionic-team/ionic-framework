@@ -64,7 +64,10 @@ export class ItemSlidingGesture extends PanGesture {
 
   onDragEnd(ev: any) {
     ev.preventDefault();
-
+    let coordX = pointerCoord(ev).x;
+    let deltaX = (coordX - this.firstCoordX);
+    let deltaT = (Date.now() - this.firstTimestamp);
+    this.selectedContainer.endSliding(deltaX / deltaT);
     this.selectedContainer = null;
     this.preSelectedContainer = null;
   }
