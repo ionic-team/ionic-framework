@@ -31,15 +31,15 @@
       </a>
 
       <ion-item-options side="left">
-        <button ion-button (click)="unread(item100)">
+        <button ion-button icon-only (click)="unread(item100)">
           <ion-icon name="mail"></ion-icon>
         </button>
       </ion-item-options>
       <ion-item-options side="right">
-        <button ion-button danger (click)="unread(item100)">
+        <button ion-button icon-only color="danger" (click)="unread(item100)">
           <ion-icon name="trash"></ion-icon>
         </button>
-        <button ion-button (click)="unread(item100)" >
+        <button ion-button icon-only (click)="unread(item100)" >
           <ion-icon name="star"></ion-icon>
         </button>
       </ion-item-options>
@@ -52,8 +52,8 @@
         <p>Hey do you want to go to the game tonight?</p>
       </button>
       <ion-item-options *ngIf="slidingEnabled">
-        <button ion-button primary (click)="archive(item0)">Archive</button>
-        <button ion-button danger (click)="del(item0)">Delete</button>
+        <button ion-button color="primary" (click)="archive(item0)">Archive</button>
+        <button ion-button color="danger" (click)="del(item0)">Delete</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -63,8 +63,8 @@
         <p>I think I figured out how to get more Mountain Dew</p>
       </a>
       <ion-item-options side="left" (ionSwipe)="del($event)" *ngIf="slidingEnabled">
-        <button ion-button primary (click)="archive(item1)">Archive</button>
-        <button ion-button danger (click)="del(item1)">Delete</button>
+        <button ion-button color="primary" (click)="archive(item1)">Archive</button>
+        <button ion-button color="danger" (click)="del(item1)">Delete</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -75,16 +75,16 @@
         <p>I think I figured out how to get more Mountain Dew</p>
       </ion-item>
       <ion-item-options side="left" (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
-        <button ion-button secondary expandable (click)="unread(item2)">
+        <button ion-button color="secondary" expandable (click)="unread(item2)">
           <ion-icon name="ios-checkmark"></ion-icon>Unread
         </button>
       </ion-item-options>
 
       <ion-item-options side="right" (ionSwipe)="del(item2)" *ngIf="slidingEnabled">
-        <button ion-button primary (click)="archive(item2)">
+        <button ion-button color="primary" (click)="archive(item2)">
           <ion-icon name="mail"></ion-icon>Archive
         </button>
-        <button ion-button danger (click)="del(item2)" expandable>
+        <button ion-button color="danger" (click)="del(item2)" expandable>
           <ion-icon name="trash"></ion-icon>Delete
         </button>
       </ion-item-options>
@@ -97,16 +97,16 @@
         <p>I think I figured out how to get more Mountain Dew</p>
       </ion-item>
       <ion-item-options side="left" icon-left (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
-        <button ion-button secondary expandable (click)="unread(item3)">
+        <button ion-button color="secondary" expandable (click)="unread(item3)">
           <ion-icon name="ios-checkmark"></ion-icon>Unread
         </button>
       </ion-item-options>
 
       <ion-item-options icon-left (ionSwipe)="del(item3)">
-        <button ion-button primary (click)="archive(item3)">
+        <button ion-button color="primary" (click)="archive(item3)">
           <ion-icon name="mail"></ion-icon>Archive
         </button>
-        <button ion-button danger (click)="del(item3)" expandable *ngIf="slidingEnabled">
+        <button ion-button color="danger" (click)="del(item3)" expandable *ngIf="slidingEnabled">
           <ion-icon name="trash"></ion-icon>Delete
         </button>
       </ion-item-options>
@@ -119,7 +119,7 @@
         One Line w/ Icon, div only text
       </ion-item>
       <ion-item-options icon-left (ionSwipe)="archive($event)">
-        <button ion-button primary (click)="archive(item4)" expandable *ngIf="slidingEnabled">
+        <button ion-button color="primary" (click)="archive(item4)" expandable *ngIf="slidingEnabled">
           <ion-icon name="archive"></ion-icon>Archive
         </button>
       </ion-item-options>
@@ -134,13 +134,13 @@
         One Line w/ Avatar, div only text
       </ion-item>
       <ion-item-options>
-        <button ion-button primary expandable>
+        <button ion-button color="primary" expandable>
           <ion-icon name="more"></ion-icon>More
         </button>
-        <button ion-button secondary (click)="archive(item5)">
+        <button ion-button color="secondary" (click)="archive(item5)">
           <ion-icon name="archive"></ion-icon>Archive
         </button>
-        <button ion-button danger (click)="del(item5)">
+        <button ion-button color="danger" (click)="del(item5)">
           <ion-icon name="trash"></ion-icon>Delete
         </button>
       </ion-item-options>
@@ -151,11 +151,11 @@
         One Line, dynamic option
       </ion-item>
       <ion-item-options>
-        <button ion-button primary>
+        <button ion-button color="primary">
           <ion-icon name="more"></ion-icon>
           {{ moreText }}
         </button>
-        <button ion-button secondary (click)="archive(item6)">
+        <button ion-button color="secondary" (click)="archive(item6)">
           <ion-icon name="archive"></ion-icon>
           {{ archiveText }}
         </button>
@@ -167,11 +167,11 @@
         One Line, dynamic icon-left option
       </ion-item>
       <ion-item-options icon-left>
-        <button ion-button primary>
+        <button ion-button color="primary">
           <ion-icon name="more"></ion-icon>
           {{ moreText }}
         </button>
-        <button ion-button secondary (click)="archive(item7)">
+        <button ion-button color="secondary" (click)="archive(item7)">
           <ion-icon name="archive"></ion-icon>
           {{ archiveText }}
         </button>
@@ -187,10 +187,10 @@
         <p>Paragraph text.</p>
       </ion-item>
       <ion-item-options (ionSwipe)="download($event)">
-        <button ion-button primary (click)="archive(item8)">
+        <button ion-button color="primary" (click)="archive(item8)">
           <ion-icon name="archive"></ion-icon>Archive
         </button>
-        <button ion-button secondary expandable (click)="download(item8)">
+        <button ion-button color="secondary" expandable (click)="download(item8)">
           <ion-icon name="download" class="download-hide"></ion-icon>
           <div class="download-hide">Download</div>
           <ion-spinner id="download-spinner"></ion-spinner>
@@ -227,7 +227,7 @@
         <h3>ng-for {{data}}</h3>
       </ion-item>
       <ion-item-options>
-        <button ion-button primary (click)="archive(item9)">Archive</button>
+        <button ion-button color="primary" (click)="archive(item9)">Archive</button>
       </ion-item-options>
     </ion-item-sliding>
 
