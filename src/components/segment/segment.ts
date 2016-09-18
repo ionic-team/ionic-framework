@@ -79,13 +79,13 @@ export class SegmentButton {
 
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._setCssClass('segment-button-disabled', this._disabled);
+    this._setElementClass('segment-button-disabled', this._disabled);
   }
 
   /**
    * @private
    */
-  _setCssClass(cssClass: string, shouldAdd: boolean) {
+  _setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
@@ -240,7 +240,7 @@ export class Segment extends Ion {
 
     if (this._buttons) {
       this._buttons.forEach(button => {
-        button._setCssClass('segment-button-disabled', this._disabled);
+        button._setElementClass('segment-button-disabled', this._disabled);
       });
     }
   }
@@ -275,7 +275,7 @@ export class Segment extends Ion {
      }
 
      if (isTrueProperty(this._disabled)) {
-       button._setCssClass('segment-button-disabled', this._disabled);
+       button._setElementClass('segment-button-disabled', this._disabled);
      }
    });
   }

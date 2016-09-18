@@ -210,7 +210,7 @@ export class ItemReorder {
    * @private
    */
   reorderStart() {
-    this.setCssClass('reorder-list-active', true);
+    this.setElementClass('reorder-list-active', true);
   }
 
   /**
@@ -246,7 +246,7 @@ export class ItemReorder {
     let children = this._element.children;
     let len = children.length;
 
-    this.setCssClass('reorder-list-active', false);
+    this.setElementClass('reorder-list-active', false);
     let transform = CSS.transform;
     for (let i = 0; i < len; i++) {
       (<any>children[i]).style[transform] = '';
@@ -294,7 +294,7 @@ export class ItemReorder {
   /**
    * @private
    */
-  setCssClass(classname: string, add: boolean) {
+  setElementClass(classname: string, add: boolean) {
     this._rendered.setElementClass(this._element, classname, add);
   }
 

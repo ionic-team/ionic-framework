@@ -73,14 +73,14 @@ export class ApiDemoPage {
   }
 
   expandAction(item: ItemSliding, action: string, text: string) {
-    // TODO item.setCssClass(action, true);
+    // TODO item.setElementClass(action, true);
 
     setTimeout(() => {
       const toast = this.toastCtrl.create({
         message: text
       });
       toast.present();
-      // TODO item.setCssClass(action, false);
+      // TODO item.setElementClass(action, false);
       item.close();
 
       setTimeout(() => toast.dismiss(), 2000);
