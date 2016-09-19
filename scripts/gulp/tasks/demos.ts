@@ -4,6 +4,7 @@ import * as glob from 'glob';
 import { task } from 'gulp';
 import * as rollup from 'rollup';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
+import * as commonjs from 'rollup-plugin-commonjs';
 
 import { DEMOS_ROOT, DEMOS_SRC_ROOT} from '../constants';
 import { compileSass, copyFonts, createTimestamp, deleteFiles, runNgc, setSassIonicVersion } from '../util';
@@ -60,13 +61,18 @@ function rollupTests() {
 }
 
 function recursiveRollupHelper(files: string[]) {
+  let start;
   if (!files) {
     return Promise.reject(new Error('list of files is null'));
   } else if ( files.length === 0) {
     return Promise.resolve();
   } else {
-    const outputFileName = join(dirname(files[0]), 'main.es6.js');
+    const outputFileName = join(dirname(files[0]), 'main.bundle.js');
+    start = Date.now();
     return bundle(files[0], outputFileName).then(() => {
+      const end = Date.now();
+      const seconds = (end - start) / 1000;
+      console.log(`Took ${seconds} seconds to process ${files[0]}`);
       const remainingFiles = files.concat();
       remainingFiles.shift();
       return recursiveRollupHelper(remainingFiles);
@@ -81,7 +87,7 @@ function bundle(inputFile: string, outputFile: string): Promise<any> {
   return rollup.rollup({
       entry: inputFile,
       plugins: [
-        rollupNG2(),
+        commonjs(),
         nodeResolve({
           module: true,
           jsnext: true,
@@ -94,29 +100,9 @@ function bundle(inputFile: string, outputFile: string): Promise<any> {
         format: 'iife',
         dest: outputFile,
     });
-  }).then(() => {
-    // transpile the file
-    console.log('Starting transpile to ES5 ...');
-    const es5BundleName = join(dirname(outputFile), 'main.bundle.js');
-    return transpile(outputFile, es5BundleName);
   });
 }
 
-function transpile(inputFile: string, outputFile: string) {
-  console.log(`Transpiling ${inputFile}`);
-  return new Promise((resolve, reject) => {
-    const command = `./node_modules/.bin/tsc --out ${outputFile} --target es5 --allowJs --sourceMap ${inputFile}`;
-    exec(command, (err, stdout, stderr) => {
-      if (err) {
-        console.log(stdout);
-        console.log(stderr);
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
-}
 
 function buildDemos(done: Function) {
   doNpmInstall()
@@ -127,24 +113,19 @@ function buildDemos(done: Function) {
   }).then(() => {
     done();
   }).catch(err => {
+    console.log('ERRROR: ', err.message);
     done(err);
   });
 }
 
-export function rollupNG2() {
-  return {
-    name: 'rollupNG2',
-
-    resolveId(id: string) {
-      if (id.startsWith('rxjs/')) {
-        return `${process.cwd()}/demos/node_modules/rxjs-es/${id.split('rxjs/').pop()}.js`;
-      }
-    }
-  };
-}
-
 function cleanDemos(done: Function) {
-  deleteFiles([`${DEMOS_SRC_ROOT}/**/*.js`, `${DEMOS_SRC_ROOT}/**/*.d.ts`, `${DEMOS_SRC_ROOT}/**/*.ngfactory.ts`, `${DEMOS_SRC_ROOT}/**/*.metadata.json`], done);
+  deleteFiles([`${DEMOS_SRC_ROOT}/**/*.js`,
+    `${DEMOS_SRC_ROOT}/**/*.d.ts`,
+    `${DEMOS_SRC_ROOT}/**/*.ngfactory.ts`,
+    `${DEMOS_SRC_ROOT}/**/*.metadata.json`,
+    `${DEMOS_ROOT}/css`,
+    `${DEMOS_ROOT}/fonts`,
+    ], done);
 }
 
 task('demos.build', ['demos.sass', 'demos.fonts'], (done: Function) => {
