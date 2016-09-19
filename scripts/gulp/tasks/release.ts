@@ -1,5 +1,5 @@
 import { dest, src, task } from 'gulp';
-import { ALL_ENTRIES, DIST_BUILD_ROOT, MODERN_ENTRIES, NG_ENTRIES, SRC_ROOT, PROJECT_ROOT } from '../constants';
+import { DIST_BUILD_ROOT, SRC_ROOT, PROJECT_ROOT } from '../constants';
 import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
 
@@ -118,9 +118,6 @@ task('release.nightlyPackageJson', () => {
   setSassIonicVersion(packageJson.version);
 });
 
-task('release.polyfill', (done: Function) => {
-  writePolyfills(ALL_ENTRIES, 'dist/e2e/polyfills/polyfills.js');
-  writePolyfills(NG_ENTRIES, 'dist/e2e/polyfills/polyfills.ng.js');
-  writePolyfills(MODERN_ENTRIES, 'dist/e2e/polyfills/polyfills.modern.js');
-  done();
+task('release.polyfill', () => {
+  writePolyfills('dist/ionic-angular/polyfills');
 });

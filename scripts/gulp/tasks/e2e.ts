@@ -1,4 +1,4 @@
-import { ALL_ENTRIES, COMMONJS_MODULE, DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, LOCAL_SERVER_PORT, MODERN_ENTRIES, NG_ENTRIES, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { COMMONJS_MODULE, DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -211,11 +211,8 @@ task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (do
 });
 
 
-task('e2e.polyfill', (done: Function) => {
-  writePolyfills(ALL_ENTRIES, 'dist/e2e/polyfills/polyfills.js');
-  writePolyfills(NG_ENTRIES, 'dist/e2e/polyfills/polyfills.ng.js');
-  writePolyfills(MODERN_ENTRIES, 'dist/e2e/polyfills/polyfills.modern.js');
-  done();
+task('e2e.polyfill', () => {
+  writePolyfills('dist/e2e/polyfills');
 });
 
 function e2eWatch(componentName: string, componentTest: string) {

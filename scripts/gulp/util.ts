@@ -179,23 +179,70 @@ export function createTimestamp() {
           ('0' + (d.getUTCMinutes())).slice(-2); // MM
 }
 
-export function writePolyfills(entries: string[], pathToWrite: string) {
-  return rollup({
-    entry: entries,
-    plugins: [
-      multiEntry(),
-      nodeResolve({
-        jsnext: true,
-        main: true
-      }),
-      commonjs(),
-      uglify()
-    ]
-  }).then((bundle) => {
-    bundle.write({
-      format: 'iife',
-      moduleName: 'MyBundle',
-      dest: pathToWrite
-    });
-  });
-}
+export function writePolyfills(pathToWrite: string) {
+  const MODERN_ENTRIES = [
+    'node_modules/core-js/es6/array.js',
+    'node_modules/core-js/es6/date.js',
+    'node_modules/core-js/es6/function.js',
+    'node_modules/core-js/es6/map.js',
+    'node_modules/core-js/es6/number.js',
+    'node_modules/core-js/es6/object.js',
+    'node_modules/core-js/es6/parse-float.js',
+    'node_modules/core-js/es6/parse-int.js',
+    'node_modules/core-js/es6/promise.js',
+    'node_modules/core-js/es6/set.js',
+    'node_modules/core-js/es6/string.js',
+    'node_modules/core-js/es7/reflect.js',
+    'node_modules/core-js/es6/reflect.js',
+    'node_modules/zone.js/dist/zone.js',
+  ];
+
+  const ALL_ENTRIES = [
+    'node_modules/core-js/es6/index.js',
+    'node_modules/core-js/es7/reflect.js',
+    'node_modules/zone.js/dist/zone.js',
+  ];
+
+  const NG_ENTRIES = [
+    'node_modules/core-js/es7/reflect.js',
+    'node_modules/zone.js/dist/zone.js',
+  ];
+
+  const ENTRIES = [
+    {
+      entry: MODERN_ENTRIES,
+      fileName: 'polyfills.modern.js'
+    }, {
+      entry: ALL_ENTRIES,
+      fileName: 'polyfills.js'
+    }, {
+      entry: NG_ENTRIES,
+      fileName: 'polyfills.ng.js'
+    }
+  ];
+
+  for (let i = 0; i <= 3; i++) {
+    if (i === 3) {
+      return;
+    } else {
+      rollup({
+        entry: ENTRIES[i].entry,
+        plugins: [
+          multiEntry(),
+          nodeResolve({
+            jsnext: true,
+            main: true
+          }),
+          commonjs(),
+          uglify()
+        ]
+      }).then((bundle) => {
+        bundle.write({
+          format: 'iife',
+          moduleName: 'MyBundle',
+          dest: `${pathToWrite}/${ENTRIES[i].fileName}`
+        });
+      });
+    };
+  };
+};
