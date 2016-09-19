@@ -1,7 +1,7 @@
 import { COMMONJS_MODULE, DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
-import * as fs from 'fs';
+import { accessSync, F_OK, readFileSync, writeFileSync } from 'fs';
 
 import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, runWebpack, setSassIonicVersion } from '../util';
 
@@ -32,8 +32,8 @@ task('e2e.copySource', (done: Function) => {
   stream.on('end', done);
 
   function createIndexHTML() {
-    const indexTemplate = fs.readFileSync('scripts/e2e/index.html');
-    const indexTs = fs.readFileSync('scripts/e2e/entry.ts');
+    const indexTemplate = readFileSync('scripts/e2e/index.html');
+    const indexTs = readFileSync('scripts/e2e/entry.ts');
 
     return through2.obj(function(file, enc, next) {
       this.push(new VinylFile({
@@ -57,7 +57,7 @@ task('e2e.copySource', (done: Function) => {
       'windows'
     ];
 
-    let testTemplate = _.template(fs.readFileSync('scripts/e2e/e2e.template.js'));
+    let testTemplate = _.template(readFileSync('scripts/e2e/e2e.template.js'));
 
     return through2.obj(function(file, enc, next) {
       let self = this;
@@ -164,8 +164,8 @@ task('e2e.beforeWebpack', (done) => {
       return `<p><a href="${fileName}/index.html">${testName}</a></p>`;
     }, []);
 
-    fs.writeFileSync('./scripts/e2e/webpackEntryPoints.json', JSON.stringify(webpackEntryPoints, null, 2));
-    fs.writeFileSync(`${DIST_E2E_ROOT}/index.html`,
+    writeFileSync('./scripts/e2e/webpackEntryPoints.json', JSON.stringify(webpackEntryPoints, null, 2));
+    writeFileSync(`${DIST_E2E_ROOT}/index.html`,
       '<!DOCTYPE html><html lang="en"><head></head><body style="width: 500px; margin: 100px auto">\n' +
       indexFileContents.join('\n') +
       '</center></body></html>'
@@ -190,7 +190,7 @@ task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (do
   const e2eTestPath = path.join(SRC_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'app-module.ts');
 
   try {
-    fs.accessSync(e2eTestPath, fs.F_OK);
+    accessSync(e2eTestPath, F_OK);
   } catch (e) {
     done(new Error(`Could not find e2e test: ${e2eTestPath}`));
     return;
@@ -267,7 +267,7 @@ function e2eWatch(componentName: string, componentTest: string) {
 
 function e2eComponentsExists(): boolean {
   try {
-    fs.accessSync(DIST_E2E_COMPONENTS_ROOT, fs.F_OK);
+    accessSync(DIST_E2E_COMPONENTS_ROOT, F_OK);
   } catch (e) {
     return false;
   }
