@@ -2,6 +2,11 @@ import { COMMONJS_MODULE, ES_MODULE, NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, 
 import { src, dest } from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
+import { rollup } from 'rollup';
+const nodeResolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
+const multiEntry = require('rollup-plugin-multi-entry');
+const uglify = require('rollup-plugin-uglify');
 
 export function mergeObjects(obj1: any, obj2: any ) {
   if (! obj1) {
@@ -172,4 +177,25 @@ export function createTimestamp() {
           ('0' + (d.getUTCDate())).slice(-2) + // DD
           ('0' + (d.getUTCHours())).slice(-2) + // HH
           ('0' + (d.getUTCMinutes())).slice(-2); // MM
+}
+
+export function writePolyfills(entries: string[], pathToWrite: string) {
+  return rollup({
+    entry: entries,
+    plugins: [
+      multiEntry(),
+      nodeResolve({
+        jsnext: true,
+        main: true
+      }),
+      commonjs(),
+      uglify()
+    ]
+  }).then((bundle) => {
+    bundle.write({
+      format: 'iife',
+      moduleName: 'MyBundle',
+      dest: pathToWrite
+    });
+  });
 }

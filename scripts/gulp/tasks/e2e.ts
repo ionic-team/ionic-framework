@@ -1,15 +1,16 @@
-import { COMMONJS_MODULE, DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { ALL_ENTRIES, COMMONJS_MODULE, DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, LOCAL_SERVER_PORT, MODERN_ENTRIES, NG_ENTRIES, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import * as fs from 'fs';
 
-import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, runWebpack, setSassIonicVersion } from '../util';
+import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, runWebpack, setSassIonicVersion, writePolyfills } from '../util';
+
 
 task('e2e', e2eBuild);
 
 function e2eBuild(done: Function) {
   const runSequence = require('run-sequence');
-  runSequence('polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.beforeWebpack', 'e2e.runWebpack', done);
+  runSequence('e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.beforeWebpack', 'e2e.runWebpack', done);
 }
 
 task('e2e.copyAndCompile', (done: Function) => {
@@ -207,6 +208,14 @@ task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (do
       e2eWatch(folderInfo.componentName, folderInfo.componentTest);
     });
   }
+});
+
+
+task('e2e.polyfill', (done: Function) => {
+  writePolyfills(ALL_ENTRIES, 'dist/e2e/polyfills/polyfills.js');
+  writePolyfills(NG_ENTRIES, 'dist/e2e/polyfills/polyfills.ng.js');
+  writePolyfills(MODERN_ENTRIES, 'dist/e2e/polyfills/polyfills.modern.js');
+  done();
 });
 
 function e2eWatch(componentName: string, componentTest: string) {
