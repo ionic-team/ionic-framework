@@ -318,8 +318,8 @@ export class Animation {
     // from an input event, and just having one RAF would have this code
     // run within the same frame as the triggering input event, and the
     // input event probably already did way too much work for one frame
-    this._raf(() => {
-      this._raf(this._playDomInspect.bind(this, opts));
+    this._raf && this._raf(() => {
+      this._raf && this._raf(this._playDomInspect.bind(this, opts));
     });
   }
 
@@ -379,7 +379,7 @@ export class Animation {
     if (this._isAsync) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this._raf(this._playToStep.bind(this, 1));
+      this._raf && this._raf(this._playToStep.bind(this, 1));
     }
   }
 
@@ -921,7 +921,7 @@ export class Animation {
 
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this._raf(this._playToStep.bind(this, stepValue));
+      this._raf && this._raf(this._playToStep.bind(this, stepValue));
     }
   }
 
