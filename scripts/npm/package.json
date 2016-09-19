@@ -19,6 +19,6 @@
     "@angular/platform-browser": "",
     "@angular/platform-browser-dynamic": "",
     "@angular/platform-server": "",
-    "rxjs-es": ""
+    "rxjs": ""
   }
 }

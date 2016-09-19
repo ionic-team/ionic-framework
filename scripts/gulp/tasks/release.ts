@@ -93,12 +93,10 @@ task('release.preparePackageJsonTemplate', () => {
   // copy source dependencies versions to the template's peerDependencies
   // only copy dependencies that show up as peerDependencies in the template
   for (let dependency in sourcePackageJSON.dependencies) {
+
     // if the dependency is in both, AND the value of the entry is empty, copy it over
     if (dependency in templatePackageJSON.dependencies && templatePackageJSON.dependencies[dependency] === '') {
       templatePackageJSON.dependencies[dependency] = sourcePackageJSON.dependencies[dependency];
-    } else if (dependency === 'rxjs') {
-      const value = sourcePackageJSON.dependencies[dependency];
-      templatePackageJSON.dependencies['rxjs-es'] = value;
     }
   }
 
