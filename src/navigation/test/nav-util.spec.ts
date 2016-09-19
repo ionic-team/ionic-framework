@@ -21,6 +21,18 @@ describe('NavUtil', () => {
       let linker = mockDeepLinker({
         links: [{ component: MockView, name: 'someName' }]
       });
+      let pages = ['someName', 'someName', 'someName'];
+      let views = convertToViews(linker, pages);
+      expect(views.length).toEqual(3);
+      expect(views[0].component).toEqual(MockView);
+      expect(views[1].component).toEqual(MockView);
+      expect(views[2].component).toEqual(MockView);
+    });
+
+    it('should convert all page string names', () => {
+      let linker = mockDeepLinker({
+        links: [{ component: MockView, name: 'someName' }]
+      });
       let pages = [{ page: 'someName' }, { page: 'someName' }, { page: 'someName' }];
       let views = convertToViews(linker, pages);
       expect(views.length).toEqual(3);

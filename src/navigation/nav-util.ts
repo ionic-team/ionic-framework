@@ -1,7 +1,7 @@
 import { Renderer, TypeDecorator } from '@angular/core';
 
 import { DeepLinker } from './deep-linker';
-import { isPresent } from '../util/util';
+import { isArray, isPresent } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
@@ -32,15 +32,18 @@ export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params:
 
 export function convertToViews(linker: DeepLinker, pages: any[]): ViewController[] {
   const views: ViewController[] = [];
-  if (pages) {
+  if (isArray(pages)) {
     for (var i = 0; i < pages.length; i++) {
       var page = pages[i];
       if (page) {
         if (isViewController(page)) {
           views.push(page);
 
-        } else {
+        } else if (page.page) {
           views.push(convertToView(linker, page.page, page.params));
+
+        } else {
+          views.push(convertToView(linker, page, null));
         }
       }
     }

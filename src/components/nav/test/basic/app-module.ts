@@ -490,8 +490,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     { component: FirstPage, name: 'first-page' },
     { component: AnotherPage, name: 'another-page' },
     { component: MyCmpTest, name: 'tab1-page1' },
-    { component: FullPage, name: 'full-page' },
-    { component: PrimaryHeaderPage, name: 'primary-header-page' },
+    { component: FullPage, name: 'full-page', defaultHistory: ['first-page', 'another-page'] },
+    { component: PrimaryHeaderPage, name: 'primary-header-page', defaultHistory: ['first-page', 'full-page'] },
   ]
 };
 

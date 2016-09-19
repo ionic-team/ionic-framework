@@ -42,7 +42,8 @@ export class UrlSerializer {
       id: configLink.name,
       name: configLink.name,
       component: configLink.component,
-      data: null
+      data: null,
+      defaultHistory: configLink.defaultHistory
     } : null;
   }
 
@@ -174,7 +175,8 @@ export const fillMatchedUrlParts = (segments: NavSegment[], urlParts: string[], 
         id: matchedUrlParts.join('/'),
         name: configLink.name,
         component: configLink.component,
-        data: createMatchedData(matchedUrlParts, configLink)
+        data: createMatchedData(matchedUrlParts, configLink),
+        defaultHistory: configLink.defaultHistory
       };
     }
   }
