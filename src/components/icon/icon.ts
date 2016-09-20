@@ -31,7 +31,7 @@ import { Ion } from '../ion';
  * <ion-icon name="logo-twitter"></ion-icon>
  * ```
  *
- * @demo /docs/v2/demos/icon/
+ * @demo /docs/v2/demos/src/icon/
  * @see {@link /docs/v2/components#icons Icon Component Docs}
  *
  */

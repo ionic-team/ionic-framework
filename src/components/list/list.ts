@@ -18,7 +18,7 @@ import { GestureController } from '../../gestures/gesture-controller';
  * interaction modes such as swipe to edit, drag to reorder, and
  * removing items.
  *
- * @demo /docs/v2/demos/list/
+ * @demo /docs/v2/demos/src/list/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @advanced
  *

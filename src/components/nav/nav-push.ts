@@ -39,7 +39,7 @@ import { NavController } from '../../navigation/nav-controller';
  * }
  * ```
  *
- * @demo /docs/v2/demos/navigation/
+ * @demo /docs/v2/demos/src/navigation/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  * @see {@link ../NavPop NavPop API Docs}
  *

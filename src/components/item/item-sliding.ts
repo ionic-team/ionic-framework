@@ -163,7 +163,7 @@ export const enum SlidingState {
  * ```
  *
  *
- * @demo /docs/v2/demos/item-sliding/
+ * @demo /docs/v2/demos/src/item-sliding/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../Item Item API Docs}
  * @see {@link ../../list/List List API Docs}

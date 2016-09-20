@@ -12,7 +12,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
 
 /**
  * @name Config
- * @demo /docs/v2/demos/config/
+ * @demo /docs/v2/demos/src/config/
  * @description
  * The Config lets you configure your entire app or specific platforms.
  * You can set the tab placement, icon mode, animations, and more here.

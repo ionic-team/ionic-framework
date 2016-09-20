@@ -70,7 +70,7 @@ import { Platform } from '../../platform/platform';
  * </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/input/
+ * @demo /docs/v2/demos/src/input/
  */
 @Component({
   selector: 'ion-input',
@@ -278,7 +278,7 @@ export class TextInput extends InputBase {
  *  </ion-item>
  * ```
  *
- * @demo /docs/v2/demos/textarea/
+ * @demo /docs/v2/demos/src/textarea/
  */
 @Component({
   selector: 'ion-textarea',

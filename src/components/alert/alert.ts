@@ -306,7 +306,7 @@ export class Alert extends ViewController {
  * out before starting a new transition.
  *
  *
- * @demo /docs/v2/demos/alert/
+ * @demo /docs/v2/demos/src/alert/
  */
 @Injectable()
 export class AlertController {

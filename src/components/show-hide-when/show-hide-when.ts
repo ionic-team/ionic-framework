@@ -92,7 +92,7 @@ export class DisplayWhen {
  *  I am visible on Landscape!
  * </div>
  * ```
- * @demo /docs/v2/demos/show-when/
+ * @demo /docs/v2/demos/src/show-when/
  * @see {@link ../HideWhen HideWhen API Docs}
  * @see {@link ../../../platform/Platform Platform API Docs}
  */
@@ -151,7 +151,7 @@ export class ShowWhen extends DisplayWhen {
  * </div>
  * ```
  *
- * @demo /docs/v2/demos/hide-when/
+ * @demo /docs/v2/demos/src/hide-when/
  * @see {@link ../ShowWhen ShowWhen API Docs}
  * @see {@link ../../../platform/Platform Platform API Docs}
 */

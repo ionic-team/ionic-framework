@@ -86,7 +86,7 @@ import { isTrueProperty } from '../../util/util';
   *  <button ion-button small>Small</button>
   * ```
   *
-  * @demo /docs/v2/demos/button/
+  * @demo /docs/v2/demos/src/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
  */
 @Component({

@@ -38,7 +38,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
  * ```
  *
  *
- * @demo /docs/v2/demos/segment/
+ * @demo /docs/v2/demos/src/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see {@link /docs/v2/api/components/segment/Segment/ Segment API Docs}
  */
@@ -171,7 +171,7 @@ export class SegmentButton {
  * ```
  *
  *
- * @demo /docs/v2/demos/segment/
+ * @demo /docs/v2/demos/src/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see [Angular 2 Forms](http://learnangular2.com/forms/)
  */

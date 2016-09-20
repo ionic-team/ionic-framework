@@ -241,7 +241,7 @@ export class ToolbarBase extends Ion {
  * </ion-footer>
  *  ```
  *
- * @demo /docs/v2/demos/toolbar/
+ * @demo /docs/v2/demos/src/toolbar/
  * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */
 @Component({

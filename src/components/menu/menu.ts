@@ -167,7 +167,7 @@ import { GestureController } from '../../gestures/gesture-controller';
  * and usage information.
  *
  *
- * @demo /docs/v2/demos/menu/
+ * @demo /docs/v2/demos/src/menu/
  *
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../MenuController MenuController API Docs}

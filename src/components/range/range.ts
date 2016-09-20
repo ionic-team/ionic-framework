@@ -174,7 +174,7 @@ export class RangeKnob implements OnInit {
  * ```
  *
  *
- * @demo /docs/v2/demos/range/
+ * @demo /docs/v2/demos/src/range/
  */
 @Component({
   selector: 'ion-range',

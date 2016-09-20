@@ -48,7 +48,7 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
  *  </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/checkbox/
+ * @demo /docs/v2/demos/src/checkbox/
  * @see {@link /docs/v2/components#checkbox Checkbox Component Docs}
  */
 @Component({

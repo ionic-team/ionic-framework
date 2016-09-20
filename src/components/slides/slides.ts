@@ -166,7 +166,7 @@ import { Swiper } from './swiper-widget';
  * For all of the methods you can call on the `Slider` instance, see the
  * [Instance Members](#instance-members).
  *
- * @demo /docs/v2/demos/slides/
+ * @demo /docs/v2/demos/src/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
  * Swiper.js:
@@ -838,7 +838,7 @@ export class Slides extends Ion {
   *
   * See the [Slides API Docs](../Slides) for more usage information.
   *
-  * @demo /docs/v2/demos/slides/
+  * @demo /docs/v2/demos/src/slides/
   * @see {@link /docs/v2/api/components/slides/Slides/ Slides API Docs}
   */
 @Component({

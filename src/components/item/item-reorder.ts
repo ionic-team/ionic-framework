@@ -119,7 +119,7 @@ export interface ReorderIndexes {
  * }
  * ```
  *
- * @demo /docs/v2/demos/item-reorder/
+ * @demo /docs/v2/demos/src/item-reorder/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../Item Item API Docs}

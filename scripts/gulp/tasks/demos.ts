@@ -131,6 +131,8 @@ function cleanDemos(done: Function) {
     `${DEMOS_ROOT}/css`,
     `${DEMOS_ROOT}/fonts`,
     `${DEMOS_ROOT}/polyfills`,
+    `!${DEMOS_SRC_ROOT}/scrollbar-fix.css`,
+    `!${DEMOS_SRC_ROOT}/scrollbar-fix.js`,
     ], done);
 }
 

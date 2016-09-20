@@ -9,7 +9,7 @@ import * as mkdirp from 'mkdirp';
 import { valid }from 'semver';
 import { argv } from 'yargs';
 
-import { DEMOS_ROOT, DEMOS_SRC_ROOT } from '../constants';
+import { DEMOS_ROOT } from '../constants';
 
 
 task('docs', () => {
@@ -29,7 +29,7 @@ task('docs', () => {
   }
 });
 
-task('docs.copyDemos', [], (done: Function) => {
+task('docs.copyDemos', ['demos.build'], (done: Function) => {
   const config = require('../../config.json');
   const outputDir = join(config.docsDest, 'demos');
   let promises = [];
@@ -73,7 +73,7 @@ function copyDemoPolyfills(outputDir: string) {
 
 function copyDemoContent(outputDir: string) {
   return new Promise((resolve, reject) => {
-    const stream = src([`${DEMOS_ROOT}/src/**/main.html`, `${DEMOS_ROOT}/src/**/main.bundle.js`, `${DEMOS_ROOT}/src/scrollbar-fix.*`]).pipe(dest(outputDir));
+    const stream = src([`${DEMOS_ROOT}/src/**/index.html`, `${DEMOS_ROOT}/src/**/main.bundle.js`, `${DEMOS_ROOT}/src/scrollbar-fix.*`]).pipe(dest(outputDir));
     stream.on('end', () => {
       resolve();
     });

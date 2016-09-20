@@ -139,7 +139,7 @@ export class Toast extends ViewController {
  * | closeButtonText       | `string`  | "Close"         | Text to display in the close button.                                                                          |
  * | dismissOnPageChange   | `boolean` | false           | Whether to dismiss the toast when navigating to a new page.                                                   |
  *
- * @demo /docs/v2/demos/toast/
+ * @demo /docs/v2/demos/src/toast/
  */
 @Injectable()
 export class ToastController {

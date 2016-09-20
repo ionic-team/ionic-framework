@@ -27,7 +27,7 @@ import { ScrollView } from '../util/scroll-view';
  * });
  *
  * ```
- * @demo /docs/v2/demos/events/
+ * @demo /docs/v2/demos/src/events/
  */
 export class Events {
   private _channels: Array<any> = [];

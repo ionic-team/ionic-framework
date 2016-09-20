@@ -40,7 +40,7 @@ import { ViewController } from '../../navigation/view-controller';
  * }
  * ```
  *
- * @demo /docs/v2/demos/navigation/
+ * @demo /docs/v2/demos/src/navigation/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
 @Component({

@@ -21,7 +21,7 @@ import { isTrueProperty } from '../../util/util';
  * @property {boolean} [scrollY] - whether to enable scrolling along the Y axis; requires the following CSS declaration: ion-scroll { white-space: nowrap; }
  * @property {boolean} [zoom] - whether to enable zooming
  * @property {number} [maxZoom] - set the max zoom amount for ion-scroll
- * @demo /docs/v2/demos/scroll/
+ * @demo /docs/v2/demos/src/scroll/
  */
 @Component({
   selector: 'ion-scroll',

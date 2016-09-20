@@ -26,7 +26,7 @@ import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
  *   }
  * }
  * ```
- * @demo /docs/v2/demos/platform/
+ * @demo /docs/v2/demos/src/platform/
  */
 export class Platform {
   private _versions: {[name: string]: PlatformVersion} = {};

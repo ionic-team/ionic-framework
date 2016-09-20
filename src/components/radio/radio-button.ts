@@ -39,7 +39,7 @@ import { RadioGroup } from './radio-group';
  *   </ion-item>
  * </ion-list>
  * ```
- * @demo /docs/v2/demos/radio/
+ * @demo /docs/v2/demos/src/radio/
  * @see {@link /docs/v2/components#radio Radio Component Docs}
  * @see {@link ../RadioGroup RadioGroup API Docs}
  */

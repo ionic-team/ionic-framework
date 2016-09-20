@@ -23,7 +23,7 @@ import { Debouncer } from '../../util/debouncer';
  * </ion-searchbar>
  * ```
  *
- * @demo /docs/v2/demos/searchbar/
+ * @demo /docs/v2/demos/src/searchbar/
  * @see {@link /docs/v2/components#searchbar Searchbar Component Docs}
  */
 @Component({

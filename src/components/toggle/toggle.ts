@@ -49,7 +49,7 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
  *  </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/toggle/
+ * @demo /docs/v2/demos/src/toggle/
  * @see {@link /docs/v2/components#toggle Toggle Component Docs}
  */
 @Component({

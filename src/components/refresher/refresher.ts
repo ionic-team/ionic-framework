@@ -84,7 +84,7 @@ import { PointerEvents, UIEventManager } from '../../util/ui-event-manager';
  * components. You could replace our default content with
  * custom SVG or CSS animations.
  *
- * @demo /docs/v2/demos/refresher/
+ * @demo /docs/v2/demos/src/refresher/
  *
  */
 @Directive({

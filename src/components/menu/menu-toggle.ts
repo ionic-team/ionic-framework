@@ -79,7 +79,7 @@ import { ViewController } from '../../navigation/view-controller';
  * See the [Toolbar API docs](../../toolbar/Toolbar) for more information
  * on the different positions.
  *
- * @demo /docs/v2/demos/menu/
+ * @demo /docs/v2/demos/src/menu/
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../../menu/Menu Menu API Docs}
  */

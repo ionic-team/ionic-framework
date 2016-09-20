@@ -219,7 +219,7 @@ export class ActionSheet extends ViewController {
  * out before starting a new transition.
  *
  *
- * @demo /docs/v2/demos/action-sheet/
+ * @demo /docs/v2/demos/src/action-sheet/
  * @see {@link /docs/v2/components#action-sheets ActionSheet Component Docs}
  */
 @Injectable()

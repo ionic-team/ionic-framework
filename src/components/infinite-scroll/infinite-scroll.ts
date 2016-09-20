@@ -88,7 +88,7 @@ import { Content } from '../content/content';
  * developers to create their own infinite scroll content components.
  * You could replace our default content with custom SVG or CSS animations.
  *
- * @demo /docs/v2/demos/infinite-scroll/
+ * @demo /docs/v2/demos/src/infinite-scroll/
  *
  */
 @Directive({

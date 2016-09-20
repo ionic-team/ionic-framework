@@ -14,7 +14,7 @@
  *  }
  * }
  * ```
- * @demo /docs/v2/demos/nav-params/
+ * @demo /docs/v2/demos/src/nav-params/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  * @see {@link ../NavController/ NavController API Docs}
  * @see {@link ../Nav/ Nav API Docs}

@@ -265,7 +265,7 @@ import { Label } from '../label/label';
  * ```
  *
  *
- * @demo /docs/v2/demos/item/
+ * @demo /docs/v2/demos/src/item/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../ItemSliding ItemSliding API Docs}
