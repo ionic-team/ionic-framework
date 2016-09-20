@@ -195,12 +195,14 @@ export function writePolyfills(pathToWrite: string) {
     'node_modules/core-js/es7/reflect.js',
     'node_modules/core-js/es6/reflect.js',
     'node_modules/zone.js/dist/zone.js',
+    'scripts/polyfill/polyfill.dom.js'
   ];
 
   const ALL_ENTRIES = [
     'node_modules/core-js/es6/index.js',
     'node_modules/core-js/es7/reflect.js',
     'node_modules/zone.js/dist/zone.js',
+    'scripts/polyfill/polyfill.dom.js'
   ];
 
   const NG_ENTRIES = [
