@@ -148,7 +148,7 @@ export class ToastController {
 
   /**
    * Create a new toast component. See options below
-   * @param {ToastOptions} opts Toast options. See the above table for available options.
+   * @param {ToastOptions} opts Toast options. See the below table for available options.
    */
   create(opts: ToastOptions = {}) {
     return new Toast(this._app, opts);
