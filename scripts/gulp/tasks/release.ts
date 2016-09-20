@@ -1,26 +1,30 @@
+import { spawn, exec } from 'child_process';
+import { writeFileSync } from 'fs';
+
 import { dest, src, task } from 'gulp';
+import * as runSequence from 'run-sequence';
+
 import { DIST_BUILD_ROOT, SRC_ROOT, PROJECT_ROOT } from '../constants';
 import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
 
-task('nightly', (done: Function) => {
-  const runSequence = require('run-sequence');
+task('nightly', (done: (err: any) => void) => {
   runSequence('release.nightlyPackage', 'release.publishNightly', done);
 });
 
-task('release.prepareNightly', (done: Function) => {
-  const runSequence = require('run-sequence');
-  runSequence(/*'release.pullLatest', 'validate', */'release.copyTools', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
+task('release.prepareNightly', (done: (err: any) => void) => {
+  runSequence(/*'release.pullLatest', 'validate',*/ 'release.copyTools', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
 });
 
-task('release.nightlyPackage', (done: Function) => {
-  const runSequence = require('run-sequence');
-  runSequence('clean', /*'release.prepareNightly',*/ 'release.polyfill', 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', done);
+task('release.nightlyPackage', (done: (err: any) => void) => {
+  runSequence('clean', 'release.polyfill', 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', done);
+});
+
+task('release.polyfill', () => {
+  writePolyfills('dist/ionic-angular/polyfills');
 });
 
 task('release.publishNightly', (done: Function) => {
-  const spawn = require('child_process').spawn;
-
   const npmCmd = spawn('npm', ['publish', '--tag=nightly', DIST_BUILD_ROOT]);
   npmCmd.stdout.on('data', function (data) {
     console.log(data.toString());
@@ -48,29 +52,26 @@ task('release.scss', () => {
 });
 
 task('release.pullLatest', (done: Function) => {
-  const gulpGit = require('gulp-git');
-  gulpGit.pull('origin', ['master'], err => {
-    done(err);
+  exec('git pull origin master', (err: Error, stdout: string, stderr: string) => {
+    console.log(stdout);
+    console.log(stderr);
+    if (err) {
+      done(err);
+    } else if (stderr && stderr.length > 0) {
+      done(new Error('There are outstanding changes. Commit changes in order to perform a release.'));
+    } else {
+      done();
+    }
   });
 });
 
 task('release.prepareChangelog', () => {
   const changelog = require('gulp-conventional-changelog');
-  return gulp.src(`${PROJECT_ROOT}/CHANGELOG.md`)
-         .pipe(changelog({
-           preset: 'angular'
-         }))
-         .pipe(gulp.dest(`${PROJECT_ROOT}`));
-});
-
-
-task('release.prepareRootPackageJson', () => {
-  const semver = require('semver');
-  const fs = require('fs');
-
-  let packageJSON = require('./package.json');
-  packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'beta');
-  fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, 2));
+  return src(`${PROJECT_ROOT}/CHANGELOG.md`)
+    .pipe(changelog({
+      preset: 'angular'
+    }))
+    .pipe(dest(`${PROJECT_ROOT}`));
 });
 
 task('release.copyTools', () => {
@@ -82,7 +83,6 @@ task('release.copyNpmInfo', () => {
 });
 
 task('release.preparePackageJsonTemplate', () => {
-  const fs = require('fs');
   let templatePackageJSON = require(`${PROJECT_ROOT}/scripts/npm/package.json`);
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
   // copy source package.json data to template
@@ -100,11 +100,10 @@ task('release.preparePackageJsonTemplate', () => {
     }
   }
 
-  fs.writeFileSync(`${DIST_BUILD_ROOT}` + '/package.json', JSON.stringify(templatePackageJSON, null, 2));
+  writeFileSync(`${DIST_BUILD_ROOT}` + '/package.json', JSON.stringify(templatePackageJSON, null, 2));
 });
 
 task('release.nightlyPackageJson', () => {
-  const fs = require('fs');
   const packageJson: any = require(`${DIST_BUILD_ROOT}/package.json`);
 
   packageJson.version = packageJson.version.split('-')
@@ -112,10 +111,6 @@ task('release.nightlyPackageJson', () => {
                                    .concat(createTimestamp())
                                    .join('-');
 
-  fs.writeFileSync(`${DIST_BUILD_ROOT}/package.json`, JSON.stringify(packageJson, null, 2));
+  writeFileSync(`${DIST_BUILD_ROOT}/package.json`, JSON.stringify(packageJson, null, 2));
   setSassIonicVersion(packageJson.version);
-});
-
-task('release.polyfill', () => {
-  writePolyfills('dist/ionic-angular/polyfills');
 });

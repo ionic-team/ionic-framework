@@ -1,5 +1,6 @@
-import { dirname, join } from 'path';
 import { exec } from 'child_process';
+import { dirname, join } from 'path';
+
 import * as glob from 'glob';
 import { task } from 'gulp';
 import * as rollup from 'rollup';

@@ -1,28 +1,38 @@
-import { COMMONJS_MODULE, DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
-import {dest, src, start, task} from 'gulp';
-import * as path from 'path';
 import { accessSync, F_OK, readFileSync, writeFileSync } from 'fs';
+import { dirname, join } from 'path';
 
-import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, runWebpack, setSassIonicVersion, writePolyfills } from '../util';
+import * as glob from 'glob';
+import {dest, src, start, task} from 'gulp';
+import * as gulpif from 'gulp-if';
+import * as watch from 'gulp-watch';
+import { template } from 'lodash';
+import * as rollup from 'rollup';
+import * as nodeResolve from 'rollup-plugin-node-resolve';
+import * as commonjs from 'rollup-plugin-commonjs';
+import * as runSequence from 'run-sequence';
+import { obj } from 'through2';
+import * as VinylFile from 'vinyl';
+import { argv } from 'yargs';
 
+import { DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES_MODULE, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, setSassIonicVersion, writePolyfills } from '../util';
 
 task('e2e', e2eBuild);
 
-function e2eBuild(done: Function) {
-  const runSequence = require('run-sequence');
-  runSequence('e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.beforeWebpack', 'e2e.runWebpack', done);
+function e2eBuild(done: (err: any) => void) {
+  runSequence('e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.bundle', done);
 }
 
-task('e2e.copyAndCompile', (done: Function) => {
-  const runSequence = require('run-sequence');
-  runSequence('e2e.copySource', 'e2e.compileTests', 'e2e.beforeWebpack', 'e2e.runWebpack', done);
+task('e2e.polyfill', () => {
+  writePolyfills('dist/e2e/polyfills');
+});
+
+task('e2e.copyAndCompile', (done: (err: any) => void) => {
+  runSequence('e2e.copySource', 'e2e.compileTests', 'e2e.bundle', done);
 });
 
 task('e2e.copySource', (done: Function) => {
-  const gulpif = require('gulp-if');
-  const _ = require('lodash');
-  const VinylFile = require('vinyl');
-  const through2 = require('through2');
+
   const buildConfig = require('../../build/config');
 
   const stream = src([`${SRC_ROOT}/**/*`, `!${SRC_ROOT}/**/*.spec.ts`])
@@ -36,16 +46,16 @@ task('e2e.copySource', (done: Function) => {
     const indexTemplate = readFileSync('scripts/e2e/index.html');
     const indexTs = readFileSync('scripts/e2e/entry.ts');
 
-    return through2.obj(function(file, enc, next) {
+    return obj(function(file, enc, next) {
       this.push(new VinylFile({
         base: file.base,
         contents: new Buffer(indexTemplate),
-        path: path.join(path.dirname(file.path), 'index.html'),
+        path: join(dirname(file.path), 'index.html'),
       }));
       this.push(new VinylFile({
         base: file.base,
         contents: new Buffer(indexTs),
-        path: path.join(path.dirname(file.path), 'entry.ts'),
+        path: join(dirname(file.path), 'entry.ts'),
       }));
       next(null, file);
     });
@@ -58,11 +68,11 @@ task('e2e.copySource', (done: Function) => {
       'windows'
     ];
 
-    let testTemplate = _.template(readFileSync('scripts/e2e/e2e.template.js'));
+    let testTemplate = template(readFileSync('scripts/e2e/e2e.template.js').toString());
 
-    return through2.obj(function(file, enc, next) {
+    return obj(function(file, enc, next) {
       let self = this;
-      let relativePath = path.dirname(file.path.replace(/^.*?src(\/|\\)components(\/|\\)/, ''));
+      let relativePath = dirname(file.path.replace(/^.*?src(\/|\\)components(\/|\\)/, ''));
 
       let contents = file.contents.toString();
       platforms.forEach(function(platform) {
@@ -96,7 +106,7 @@ function buildE2ETests(folderInfo: any, done: Function) {
       `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/entry.ts`,
     ];
   }
-  createTempTsConfig(includeGlob, COMMONJS_MODULE, `${DIST_E2E_ROOT}/tsconfig.json`);
+  createTempTsConfig(includeGlob, ES_MODULE, `${DIST_E2E_ROOT}/tsconfig.json`);
   runNgc(`${DIST_E2E_ROOT}/tsconfig.json`, (err) => {
     if (err) {
       done(err);
@@ -108,7 +118,6 @@ function buildE2ETests(folderInfo: any, done: Function) {
 }
 
 function getFolderInfo() {
-  const argv = require('yargs').argv;
   let componentName: string = null;
   let componentTest: string = null;
   const folder: string = argv.folder || argv.f;
@@ -137,27 +146,16 @@ task('e2e.fonts', () => {
   return copyFonts(`${DIST_E2E_ROOT}/fonts`);
 });
 
-task('e2e.beforeWebpack', (done) => {
-  /**
-   * Find all AppModule.ts files because the act as the entry points
-   * for each e2e test.
-   */
-  let glob = require('glob');
-  let includeGlob = `${DIST_E2E_ROOT}/components/*/test/*/app-module.js`;
+task('e2e.bundle', (done) => {
+  let includeGlob = `${DIST_E2E_ROOT}/components/*/test/*/entry.js`;
   let folderInfo = getFolderInfo();
   if (folderInfo.componentName && folderInfo.componentTest) {
-    includeGlob = `${DIST_E2E_ROOT}/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app-module.js`;
+    includeGlob = `${DIST_E2E_ROOT}/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/entry.js`;
   }
   glob(includeGlob, {}, function(er, files) {
     var directories = files.map(function(file) {
-      return path.dirname(file);
+      return dirname(file);
     });
-
-    var webpackEntryPoints = directories.reduce(function(endObj, dir) {
-      let relativePath = dir.replace(process.cwd() + '/', './');
-      endObj[relativePath + '/index'] = relativePath + '/entry';
-      return endObj;
-    }, {});
 
     let indexFileContents = directories.map(function(dir) {
       let testName = dir.replace(`${DIST_E2E_ROOT}/components/`, '');
@@ -165,21 +163,62 @@ task('e2e.beforeWebpack', (done) => {
       return `<p><a href="${fileName}/index.html">${testName}</a></p>`;
     }, []);
 
-    writeFileSync('./scripts/e2e/webpackEntryPoints.json', JSON.stringify(webpackEntryPoints, null, 2));
     writeFileSync(`${DIST_E2E_ROOT}/index.html`,
       '<!DOCTYPE html><html lang="en"><head></head><body style="width: 500px; margin: 100px auto">\n' +
       indexFileContents.join('\n') +
       '</center></body></html>'
     );
-    done();
+
+    createBundles(files).then(() => {
+      done();
+    }).catch(err => {
+      done(err);
+    });
   });
 });
 
-task('e2e.runWebpack', (done: Function) => {
-  const webpackConfigPath = `${SCRIPTS_ROOT}/e2e/webpack.config.js`;
-  runWebpack(webpackConfigPath, done);
-});
+function createBundles(files: string[]) {
+  let start;
+  if (!files) {
+    return Promise.reject(new Error('list of files is null'));
+  } else if ( files.length === 0) {
+    return Promise.resolve();
+  } else {
+    const outputFileName = join(dirname(files[0]), 'app.bundle.js');
+    start = Date.now();
+    return bundle(files[0], outputFileName).then(() => {
+      const end = Date.now();
+      const seconds = (end - start) / 1000;
+      console.log(`Took ${seconds} seconds to process ${files[0]}`);
+      const remainingFiles = files.concat();
+      remainingFiles.shift();
+      return createBundles(remainingFiles);
+    }).catch(err => {
+      return Promise.reject(err);
+    });
+  }
+}
 
+function bundle(inputFile: string, outputFile: string): Promise<any> {
+  console.log(`Starting rollup on ${inputFile} ... writing to ${outputFile}`);
+  return rollup.rollup({
+      entry: inputFile,
+      plugins: [
+        commonjs(),
+        nodeResolve({
+          module: true,
+          jsnext: true,
+          main: true,
+          extensions: ['.js']
+        })
+      ]
+  }).then(bundle => {
+    return bundle.write({
+        format: 'iife',
+        dest: outputFile,
+    });
+  });
+}
 
 task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (done: Function) => {
   const folderInfo = getFolderInfo();
@@ -188,7 +227,7 @@ task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (do
     return;
   }
 
-  const e2eTestPath = path.join(SRC_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'app-module.ts');
+  const e2eTestPath = join(SRC_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'app-module.ts');
 
   try {
     accessSync(e2eTestPath, F_OK);
@@ -210,18 +249,12 @@ task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (do
   }
 });
 
-
-task('e2e.polyfill', () => {
-  writePolyfills('dist/e2e/polyfills');
-});
-
 function e2eWatch(componentName: string, componentTest: string) {
-  const watch = require('gulp-watch');
   const webpack = require('webpack');
   const WebpackDevServer = require('webpack-dev-server');
   const config = require('../../e2e/webpack.config.js');
 
-  config.output.path = path.join(__dirname, '../../../');
+  config.output.path = join(__dirname, '../../../');
   config.entry = {
     'dist/e2e/vendor': './scripts/e2e/vendor',
     'dist-e2e/polyfills': './scripts/e2e/polyfills'

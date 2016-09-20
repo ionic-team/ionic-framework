@@ -1,12 +1,11 @@
-const gulp = require('gulp');
-
+import * as gulp from 'gulp';
 
 gulp.task('default', help);
 
 gulp.task('help', help);
 
 function help() {
-  const taskList = Object.keys(gulp.tasks)
+  const taskList = Object.keys((gulp as any).tasks)
     .filter(taskName => taskName !== 'default' && taskName !== 'help')
     .sort()
     .map(taskName => taskName = '     ' + taskName);

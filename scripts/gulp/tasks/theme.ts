@@ -3,8 +3,6 @@ import { SRC_ROOT, SRC_COMPONENTS_ROOT } from '../constants';
 import * as path from 'path';
 import * as fs from 'fs';
 
-
-
 task('theme', (done: () => void) => {
   let opts: GenerateThemeOptions = {
     src: path.join(SRC_COMPONENTS_ROOT),

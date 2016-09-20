@@ -1,14 +1,15 @@
 import { createReadStream, writeFileSync } from 'fs';
 import { join, relative } from 'path';
-import { DEMOS_ROOT, DEMOS_SRC_ROOT } from '../constants';
-import { src, dest, task } from 'gulp';
 
 import * as Dgeni from 'dgeni';
 import { split, map } from 'event-stream';
+import { src, dest, task } from 'gulp';
 import { AllHtmlEntities } from 'html-entities';
 import * as mkdirp from 'mkdirp';
 import { valid }from 'semver';
 import { argv } from 'yargs';
+
+import { DEMOS_ROOT, DEMOS_SRC_ROOT } from '../constants';
 
 
 task('docs', () => {
@@ -28,7 +29,7 @@ task('docs', () => {
   }
 });
 
-task('docs.copyDemos', [], () => {
+task('docs.copyDemos', ['demos.build'], () => {
   const config = require('../../config.json');
   const outputDir = join(config.docsDest, 'dist', 'demos');
   return src([`${DEMOS_ROOT}/css`, `${DEMOS_ROOT}/fonts`, `${DEMOS_ROOT}/polyfills`, `${DEMOS_SRC_ROOT}`])

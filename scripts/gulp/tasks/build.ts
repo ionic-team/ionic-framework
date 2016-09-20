@@ -1,5 +1,5 @@
-import { COMMONJS_MODULE, DIST_BUILD_ROOT, DIST_BUILD_COMMONJS_ROOT, ES_MODULE } from '../constants';
 import { task } from 'gulp';
+import { COMMONJS_MODULE, DIST_BUILD_ROOT, DIST_BUILD_COMMONJS_ROOT, ES_MODULE } from '../constants';
 import { copySourceToDest, copySwiperToPath, createTempTsConfig, deleteFiles, runNgc} from '../util';
 
 

@@ -1,7 +1,6 @@
-import { DIST_VENDOR_ROOT, NPM_VENDOR_FILES, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
-import path = require('path');
+import { join } from 'path';
 import { dest, src, task } from 'gulp';
-
+import { DIST_VENDOR_ROOT, NPM_VENDOR_FILES, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
 
 task('test', ['test.assembleVendorJs', 'compile.karma'], (done: Function) => {
   karmaTest(false, done);
@@ -22,7 +21,7 @@ function karmaTest(watch: boolean, done: Function) {
   const argv = require('yargs').argv;
 
   let karmaConfig = {
-    configFile: path.join(SCRIPTS_ROOT, 'karma/karma.conf.js'),
+    configFile: join(SCRIPTS_ROOT, 'karma/karma.conf.js'),
   };
 
   if (watch) {
@@ -41,9 +40,9 @@ function karmaTest(watch: boolean, done: Function) {
 
 task('test.assembleVendorJs', () => {
   const files = NPM_VENDOR_FILES.map((root) => {
-    const glob = path.join(root, '**/*.+(js|js.map)');
-    return src(path.join('node_modules', glob))
-           .pipe(dest(path.join(DIST_VENDOR_ROOT, root)));
+    const glob = join(root, '**/*.+(js|js.map)');
+    return src(join('node_modules', glob))
+           .pipe(dest(join(DIST_VENDOR_ROOT, root)));
   });
   const gulpMerge = require('merge2');
   return gulpMerge(files);

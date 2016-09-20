@@ -11,8 +11,6 @@ export function config(config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-coverage'),
-      require('karma-browserstack-launcher'),
-      require('karma-sauce-launcher'),
       require('karma-sourcemap-loader'),
       require('karma-chrome-launcher'),
       require('karma-firefox-launcher'),

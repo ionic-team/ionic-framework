@@ -1,7 +1,14 @@
+import { spawn } from 'child_process';
+import { createServer } from 'http';
+import { join, resolve } from 'path';
+
+import * as connect from 'connect';
 import { task } from 'gulp';
+import * as serveStatic from 'serve-static';
+import { argv } from 'yargs';
+
 import { DIST_E2E_COMPONENTS_ROOT, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
 import { mergeObjects } from '../util';
-import * as path from 'path';
 
 
 task('snapshot', ['e2e'], (done: Function) => {
@@ -18,8 +25,7 @@ task('snapshot.quick', ['e2e.sass'], (done: Function) => {
 
 function snapshot(quickMode: boolean, callback: Function) {
   const snapshotConfig = require('../../snapshot/snapshot.config').config;
-  const protractorConfigFile = path.resolve(SCRIPTS_ROOT, 'snapshot/protractor.config.js');
-  const argv = require('yargs').argv;
+  const protractorConfigFile = resolve(SCRIPTS_ROOT, 'snapshot/protractor.config.js');
 
   const snapshotDefaults = snapshotConfig.platformDefaults || {};
   const snapshotValues: any = mergeObjects(snapshotDefaults, argv || {});
@@ -39,7 +45,7 @@ function snapshot(quickMode: boolean, callback: Function) {
       e2eSpecs = folderArgPaths[1];
     }
   }
-  const specs = path.join(DIST_E2E_COMPONENTS_ROOT, component, 'test', e2eSpecs, '*e2e.js');
+  const specs = join(DIST_E2E_COMPONENTS_ROOT, component, 'test', e2eSpecs, '*e2e.js');
   console.log(`[snapshot] Specs: ${specs}`);
 
   const testId = generateTestId();
@@ -65,17 +71,13 @@ function snapshot(quickMode: boolean, callback: Function) {
 }
 
 function protractor(callback, args, testId: string) {
-  const connect = require('connect');
-  const http = require('http');
-  const serveStatic = require('serve-static');
   const buildConfig = require('../../build/config');
   const app = connect().use(serveStatic(PROJECT_ROOT));
-  const protractorHttpServer = http.createServer(app).listen(buildConfig.protractorPort);
+  const protractorHttpServer = createServer(app).listen(buildConfig.protractorPort);
 
   console.log(`Serving ${process.cwd()} on http://localhost:${buildConfig.protractorPort}`);
 
-  const cp = require('child_process');
-  const child = cp.spawn('protractor', args, {
+  const child = spawn('protractor', args, {
     stdio: [process.stdin, process.stdout, 'pipe']
   });
 
