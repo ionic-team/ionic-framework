@@ -12,8 +12,7 @@ export function config(config) {
       require('karma-jasmine'),
       require('karma-coverage'),
       require('karma-sourcemap-loader'),
-      require('karma-chrome-launcher'),
-      require('karma-firefox-launcher'),
+      require('karma-chrome-launcher')
     ],
     files: [
       {pattern: 'dist/vendor/core-js/client/core.js', included: true, watched: false},
