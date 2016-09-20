@@ -31,7 +31,7 @@ task('docs', () => {
 
 task('docs.copyDemos', [], (done: Function) => {
   const config = require('../../config.json');
-  const outputDir = join(config.docsDest, 'dist', 'demos');
+  const outputDir = join(config.docsDest, 'demos');
   let promises = [];
   promises.push(copyDemoCss(join(outputDir, 'css')));
   promises.push(copyDemoFonts(join(outputDir, 'fonts')));

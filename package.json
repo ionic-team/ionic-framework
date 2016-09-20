@@ -60,7 +60,7 @@
     "cpr": "2.0.0",
     "del": "2.2.2",
     "dgeni": "0.4.2",
-    "dgeni-packages": "0.16.0",
+    "dgeni-packages": "^0.10.18",
     "event-stream": "3.3.4",
     "file-loader": "0.9.0",
     "glob": "7.0.6",

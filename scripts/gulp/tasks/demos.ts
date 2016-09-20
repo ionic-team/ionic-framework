@@ -116,8 +116,6 @@ function buildDemos(done: Function) {
   }).then(() => {
     return rollupTests();
   }).then(() => {
-    return generatePolyfills();
-  }).then(() => {
     done();
   }).catch(err => {
     console.log('ERRROR: ', err.message);
@@ -136,7 +134,7 @@ function cleanDemos(done: Function) {
     ], done);
 }
 
-task('demos.build', ['demos.sass', 'demos.fonts'], (done: Function) => {
+task('demos.build', ['demos.sass', 'demos.fonts', 'demos.polyfills'], (done: Function) => {
   buildDemos(done);
 });
 
@@ -153,4 +151,12 @@ task('demos.sass', () => {
 
 task('demos.fonts', () => {
   return copyFonts(`${DEMOS_ROOT}/fonts`);
+});
+
+task('demos.polyfills', (done: Function) => {
+  generatePolyfills().then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
 });
