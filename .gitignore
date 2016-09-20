@@ -31,6 +31,7 @@ scripts/build/e2e-generated-tsconfig.json
 
 # demo stuff
 demos/node_modules
+demos/polyfills
 demos/css
 demos/fonts
 demos/src/**/*.js*

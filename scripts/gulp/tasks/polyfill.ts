@@ -3,8 +3,12 @@ import { writePolyfills } from '../util';
 
 task('polyfill', ['polyfill.copy-readme', 'polyfill.write']);
 
-task('polyfill.write', () => {
-  writePolyfills('dist/ionic-angular/polyfills');
+task('polyfill.write', (done: Function) => {
+  writePolyfills('dist/ionic-angular/polyfills').then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
 });
 
 task('polyfill.copy-readme', (done: Function) => {

@@ -8,7 +8,7 @@ import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as commonjs from 'rollup-plugin-commonjs';
 
 import { DEMOS_ROOT, DEMOS_SRC_ROOT} from '../constants';
-import { compileSass, copyFonts, createTimestamp, deleteFiles, runNgc, setSassIonicVersion } from '../util';
+import { compileSass, copyFonts, createTimestamp, deleteFiles, runNgc, setSassIonicVersion, writePolyfills } from '../util';
 
 function doNpmInstall() {
   return new Promise((resolve, reject) => {
@@ -30,6 +30,10 @@ function doNpmInstall() {
       reject(ex);
     }
   });
+}
+
+function generatePolyfills() {
+  return writePolyfills(join(DEMOS_ROOT, 'polyfills'));
 }
 
 function compileTests() {
@@ -112,6 +116,8 @@ function buildDemos(done: Function) {
   }).then(() => {
     return rollupTests();
   }).then(() => {
+    return generatePolyfills();
+  }).then(() => {
     done();
   }).catch(err => {
     console.log('ERRROR: ', err.message);
@@ -126,6 +132,7 @@ function cleanDemos(done: Function) {
     `${DEMOS_SRC_ROOT}/**/*.metadata.json`,
     `${DEMOS_ROOT}/css`,
     `${DEMOS_ROOT}/fonts`,
+    `${DEMOS_ROOT}/polyfills`,
     ], done);
 }
 

@@ -20,8 +20,12 @@ task('release.nightlyPackage', (done: (err: any) => void) => {
   runSequence('clean', 'release.polyfill', 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', done);
 });
 
-task('release.polyfill', () => {
-  writePolyfills('dist/ionic-angular/polyfills');
+task('release.polyfill', (done: Function) => {
+  writePolyfills('dist/ionic-angular/polyfills').then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
 });
 
 task('release.publishNightly', (done: Function) => {

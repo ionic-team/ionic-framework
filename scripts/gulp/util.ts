@@ -1,12 +1,12 @@
 import { COMMONJS_MODULE, ES_MODULE, NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
 import { src, dest } from 'gulp';
-import * as path from 'path';
+import { join } from 'path';
 import * as fs from 'fs';
 import { rollup } from 'rollup';
-const nodeResolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
-const multiEntry = require('rollup-plugin-multi-entry');
-const uglify = require('rollup-plugin-uglify');
+import * as commonjs from 'rollup-plugin-commonjs';
+import * as multiEntry from 'rollup-plugin-multi-entry';
+import * as nodeResolve from 'rollup-plugin-node-resolve';
+import * as uglify from 'rollup-plugin-uglify';
 
 export function mergeObjects(obj1: any, obj2: any ) {
   if (! obj1) {
@@ -82,11 +82,11 @@ export function compileSass(destinationPath: string) {
   let rename = require('gulp-rename');
   let buildConfig = require('../build/config');
 
-  let ioniconsPath = path.join(NODE_MODULES_ROOT, 'ionicons/dist/scss/');
+  let ioniconsPath = join(NODE_MODULES_ROOT, 'ionicons/dist/scss/');
 
   return src([
-    path.join(SRC_ROOT, 'themes/ionic.build.default.scss'),
-    path.join(SRC_ROOT, 'themes/ionic.build.dark.scss')
+    join(SRC_ROOT, 'themes/ionic.build.default.scss'),
+    join(SRC_ROOT, 'themes/ionic.build.dark.scss')
   ])
   .pipe(sass({
       includePaths: [ioniconsPath]
@@ -111,7 +111,7 @@ export function compileSass(destinationPath: string) {
 }
 
 export function setSassIonicVersion(version: string) {
-  fs.writeFileSync(path.join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
+  fs.writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
 }
 
 export function copyFile(srcPath: string, destPath: string) {
@@ -179,7 +179,7 @@ export function createTimestamp() {
           ('0' + (d.getUTCMinutes())).slice(-2); // MM
 }
 
-export function writePolyfills(pathToWrite: string) {
+export function writePolyfills(outputDirectory: string) {
   const MODERN_ENTRIES = [
     'node_modules/core-js/es6/array.js',
     'node_modules/core-js/es6/date.js',
@@ -210,41 +210,32 @@ export function writePolyfills(pathToWrite: string) {
     'node_modules/zone.js/dist/zone.js',
   ];
 
-  const ENTRIES = [
-    {
-      entry: MODERN_ENTRIES,
-      fileName: 'polyfills.modern.js'
-    }, {
-      entry: ALL_ENTRIES,
-      fileName: 'polyfills.js'
-    }, {
-      entry: NG_ENTRIES,
-      fileName: 'polyfills.ng.js'
-    }
-  ];
+  let promises = [];
+  promises.push(bundlePolyfill(MODERN_ENTRIES, join(outputDirectory, 'polyfills.modern.js')));
+  promises.push(bundlePolyfill(ALL_ENTRIES, join(outputDirectory, 'polyfills.js')));
+  promises.push(bundlePolyfill(NG_ENTRIES, join(outputDirectory, 'polyfills.ng.js')));
 
-  for (let i = 0; i <= 3; i++) {
-    if (i === 3) {
-      return;
-    } else {
-      rollup({
-        entry: ENTRIES[i].entry,
-        plugins: [
-          multiEntry(),
-          nodeResolve({
-            jsnext: true,
-            main: true
-          }),
-          commonjs(),
-          uglify()
-        ]
-      }).then((bundle) => {
-        bundle.write({
-          format: 'iife',
-          moduleName: 'MyBundle',
-          dest: `${pathToWrite}/${ENTRIES[i].fileName}`
-        });
-      });
-    };
-  };
+  return Promise.all(promises);
 };
+
+function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) {
+  return rollup({
+    entry: pathsToIncludeInPolyfill,
+    plugins: [
+      multiEntry(),
+      nodeResolve({
+        module: true,
+        jsnext: true,
+        main: true
+      }),
+      commonjs(),
+      uglify()
+    ]
+  }).then((bundle) => {
+    return bundle.write({
+      format: 'iife',
+      moduleName: 'MyBundle',
+      dest: outputPath
+    });
+  });
+}

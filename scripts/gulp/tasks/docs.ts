@@ -29,12 +29,56 @@ task('docs', () => {
   }
 });
 
-task('docs.copyDemos', ['demos.build'], () => {
+task('docs.copyDemos', [], (done: Function) => {
   const config = require('../../config.json');
   const outputDir = join(config.docsDest, 'dist', 'demos');
-  return src([`${DEMOS_ROOT}/css`, `${DEMOS_ROOT}/fonts`, `${DEMOS_ROOT}/polyfills`, `${DEMOS_SRC_ROOT}`])
-    .pipe(dest(outputDir));
+  let promises = [];
+  promises.push(copyDemoCss(join(outputDir, 'css')));
+  promises.push(copyDemoFonts(join(outputDir, 'fonts')));
+  promises.push(copyDemoPolyfills(join(outputDir, 'polyfills')));
+  promises.push(copyDemoContent(join(outputDir, 'src')));
+  Promise.all(promises).then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
 });
+
+function copyDemoCss(outputDir: string) {
+  return new Promise((resolve, reject) => {
+    const stream = src(`${DEMOS_ROOT}/css/*`).pipe(dest(outputDir));
+    stream.on('end', () => {
+      resolve();
+    });
+  });
+}
+
+function copyDemoFonts(outputDir: string) {
+  return new Promise((resolve, reject) => {
+    const stream = src(`${DEMOS_ROOT}/fonts/*`).pipe(dest(outputDir));
+    stream.on('end', () => {
+      resolve();
+    });
+  });
+}
+
+function copyDemoPolyfills(outputDir: string) {
+  return new Promise((resolve, reject) => {
+    const stream = src(`${DEMOS_ROOT}/polyfills/*`).pipe(dest(outputDir));
+    stream.on('end', () => {
+      resolve();
+    });
+  });
+}
+
+function copyDemoContent(outputDir: string) {
+  return new Promise((resolve, reject) => {
+    const stream = src([`${DEMOS_ROOT}/src/**/main.html`, `${DEMOS_ROOT}/src/**/main.bundle.js`, `${DEMOS_ROOT}/src/scrollbar-fix.*`]).pipe(dest(outputDir));
+    stream.on('end', () => {
+      resolve();
+    });
+  });
+}
 
 task('docs.sassVariables', () => {
   let variables = [];

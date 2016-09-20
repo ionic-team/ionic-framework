@@ -23,8 +23,12 @@ function e2eBuild(done: (err: any) => void) {
   runSequence('e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.bundle', done);
 }
 
-task('e2e.polyfill', () => {
-  writePolyfills('dist/e2e/polyfills');
+task('e2e.polyfill', (done: Function) => {
+  writePolyfills('dist/e2e/polyfills').then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
 });
 
 task('e2e.copyAndCompile', (done: (err: any) => void) => {
@@ -312,4 +316,3 @@ function e2eComponentsExists(): boolean {
   }
   return true;
 }
-
