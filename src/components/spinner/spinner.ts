@@ -218,12 +218,16 @@ const SPINNERS: any = {
     dur: 1000,
     lines: 12,
     fn: function(dur: number, index: number, total: number) {
+      let transform = 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)';
+      let animationDelay = -(dur - ((dur / total) * index)) + 'ms';
       return {
         y1: 17,
         y2: 29,
         style: {
-          transform: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          '-webkit-transform': transform,
+          transform: transform,
+          '-webkit-animationDelay': animationDelay,
+          animationDelay: animationDelay
         }
       };
     }
@@ -233,12 +237,16 @@ const SPINNERS: any = {
     dur: 1000,
     lines: 12,
     fn: function(dur: number, index: number, total: number) {
+      let transform = 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)';
+      let animationDelay = -(dur - ((dur / total) * index)) + 'ms';
       return {
         y1: 12,
         y2: 20,
         style: {
-          transform: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          '-webkit-transform': transform,
+          transform: transform,
+          '-webkit-animationDelay': animationDelay,
+          animationDelay: animationDelay
         }
       };
     }
@@ -248,12 +256,14 @@ const SPINNERS: any = {
     dur: 1000,
     circles: 9,
     fn: function(dur: number, index: number, total: number) {
+      let animationDelay = -(dur - ((dur / total) * index)) + 'ms';
       return {
         r: 5,
         style: {
           top: 9 * Math.sin(2 * Math.PI * index / total),
           left: 9 * Math.cos(2 * Math.PI * index / total),
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          '-webkit-animationDelay': animationDelay,
+          animationDelay: animationDelay
         }
       };
     }
@@ -263,12 +273,14 @@ const SPINNERS: any = {
     dur: 1000,
     circles: 8,
     fn: function(dur: number, index: number, total: number) {
+      let animationDelay = -(dur - ((dur / total) * index)) + 'ms';
       return {
         r: 5,
         style: {
           top: 9 * Math.sin(2 * Math.PI * index / total),
           left: 9 * Math.cos(2 * Math.PI * index / total),
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          '-webkit-animationDelay': animationDelay,
+          animationDelay: animationDelay
         }
       };
     }
@@ -289,11 +301,13 @@ const SPINNERS: any = {
     dur: 750,
     circles: 3,
     fn: function(dur: number, index: number, total: number) {
+      let animationDelay = -(110 * index) + 'ms';
       return {
         r: 6,
         style: {
           left: (9 - (9 * index)),
-          animationDelay: -(110 * index) + 'ms'
+          '-webkit-animationDelay': animationDelay,
+          animationDelay: animationDelay
         }
       };
     }
