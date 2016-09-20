@@ -3,13 +3,14 @@ import {dest, src, start, task} from 'gulp';
 import * as path from 'path';
 import { accessSync, F_OK, readFileSync, writeFileSync } from 'fs';
 
-import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, runWebpack, setSassIonicVersion } from '../util';
+import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, runWebpack, setSassIonicVersion, writePolyfills } from '../util';
+
 
 task('e2e', e2eBuild);
 
 function e2eBuild(done: Function) {
   const runSequence = require('run-sequence');
-  runSequence('polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.beforeWebpack', 'e2e.runWebpack', done);
+  runSequence('e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.beforeWebpack', 'e2e.runWebpack', done);
 }
 
 task('e2e.copyAndCompile', (done: Function) => {
@@ -207,6 +208,11 @@ task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (do
       e2eWatch(folderInfo.componentName, folderInfo.componentTest);
     });
   }
+});
+
+
+task('e2e.polyfill', () => {
+  writePolyfills('dist/e2e/polyfills');
 });
 
 function e2eWatch(componentName: string, componentTest: string) {

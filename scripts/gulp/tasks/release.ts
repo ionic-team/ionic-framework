@@ -1,6 +1,6 @@
 import { dest, src, task } from 'gulp';
 import { DIST_BUILD_ROOT, SRC_ROOT, PROJECT_ROOT } from '../constants';
-import { compileSass, copyFonts, setSassIonicVersion, createTimestamp } from '../util';
+import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
 
 task('nightly', (done: Function) => {
@@ -15,7 +15,7 @@ task('release.prepareNightly', (done: Function) => {
 
 task('release.nightlyPackage', (done: Function) => {
   const runSequence = require('run-sequence');
-  runSequence('clean', /*'release.prepareNightly',*/ 'polyfill', 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', done);
+  runSequence('clean', /*'release.prepareNightly',*/ 'release.polyfill', 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', done);
 });
 
 task('release.publishNightly', (done: Function) => {
@@ -114,4 +114,8 @@ task('release.nightlyPackageJson', () => {
 
   fs.writeFileSync(`${DIST_BUILD_ROOT}/package.json`, JSON.stringify(packageJson, null, 2));
   setSassIonicVersion(packageJson.version);
+});
+
+task('release.polyfill', () => {
+  writePolyfills('dist/ionic-angular/polyfills');
 });

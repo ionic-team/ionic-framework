@@ -41,4 +41,3 @@ export const NPM_VENDOR_FILES = [
 
 // SERVER
 export const LOCAL_SERVER_PORT = 8080;
-
