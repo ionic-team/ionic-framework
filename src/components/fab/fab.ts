@@ -11,20 +11,19 @@ import { isTrueProperty } from '../../util/util';
   * @module ionic
   *
   * @description
-  * FABs (Floating Action Buttons) are standard material design components but in Ionic, they can be used across any platform.
-  * They are shaped as a circle that represents a promoted action. When pressed, it may contain more related actions.
-  *
-  * FABs as its name suggests are floating over the content in a fixed position. This is not achieved exclusively with `<button ion-fab>Button</button>`
-  * but it has to wrapped with the `<ion-fab>` component, like this:
+  * FABs (Floating Action Buttons) are standard material design components. They are shaped as a circle that represents a promoted action. When pressed, it may contain more related actions.
+  * FABs as its name suggests are floating over the content in a fixed position. This is not achieved exclusively with `<button ion-fab>Button</button>` but it has to wrapped with the `<ion-fab>` component, like this:
   *
   * ```html
-  * <!-- Real floating action button, fixed. It will not scroll with the content -->
-  * <ion-fab>
-  *   <button ion-fab>Button</button>
-  * </ion-fab>
+  * <ion-content>
+  *  <!-- Real floating action button, fixed. It will not scroll with the content -->
+  *  <ion-fab>
+  *    <button ion-fab>Button</button>
+  *  </ion-fab>
   *
-  * <!-- Button shaped as a circle that just like a normal button scrolls with the content -->
-  * <button ion-fab>Button</button>
+  *  <!-- Button shaped as a circle that just like a normal button scrolls with the content -->
+  *  <button ion-fab>Button</button>
+  * </ion-content>
   *
   * ```
   *
@@ -66,6 +65,9 @@ import { isTrueProperty } from '../../util/util';
 })
 export class FabButton extends Ion  {
 
+  /**
+   * @private
+   */
   ngAfterContentInit() {
     this.setElementClass('fab-button', true); // set role
   }
@@ -95,6 +97,9 @@ export class FabButton extends Ion  {
   }
 
 
+  /**
+   * @private
+   */
   setActiveClose(closeVisible: boolean) {
     this.setElementClass('fab-close-active', closeVisible);
   }
@@ -107,7 +112,6 @@ export class FabButton extends Ion  {
   * @demo /docs/v2/demos/fab/
   * @see {@link /docs/v2/components#fab Fab Component Docs}
  */
-
 @Directive({
   selector: 'ion-fab-list',
   host: {
@@ -149,7 +153,7 @@ export class FabList {
   *
   * @description
   * `<ion-fab>` is not a FAB button by itself but a container that assist the fab button (`<button ion-fab>`) allowing it
-  * to be placing in fixed position that does not scroll with the content. It is also used to implement "material design speed dial",
+  * to be placed in fixed position that does not scroll with the content. It is also used to implement "material design speed dial",
   * ie. a FAB buttons displays a small lists of related actions when clicked.
   *
   * @property [top] - Places the container on the top of the content
@@ -164,14 +168,16 @@ export class FabList {
   *
   * ```html
   * <!-- this fab is placed at top right -->
-  * <ion-fab top right>
-  *   <button ion-fab>Button</button>
-  * </ion-fab>
+  * <ion-content>
+  *  <ion-fab top right>
+  *    <button ion-fab>Button</button>
+  *  </ion-fab>
   *
-  * <!-- this fab is placed at the center of the content viewport -->
-  * <ion-fab center middle>
-  *   <button ion-fab>Button</button>
-  * </ion-fab>
+  *  <!-- this fab is placed at the center of the content viewport -->
+  *  <ion-fab center middle>
+  *    <button ion-fab>Button</button>
+  *  </ion-fab>
+  * </ion-content>
   * ```
   *
   * Ionic's FAB also supports "material design's fab speed dial". It is a normal fab button
@@ -182,29 +188,34 @@ export class FabList {
   * on the top of the main button, you should use `side="top"` and so on. By default, if side is ommited, `side="bottom"`.
   *
   * ```html
-  * <!-- this fab is placed at top right -->
-  * <ion-fab bottom right >
-  *   <button ion-fab>Share</button>
-  *   <ion-fab-list side="top">
-  *     <button ion-fab>Facebook</button>
-  *     <button ion-fab>Twitter</button>
-  *     <button ion-fab>Youtube</button>
-  *   </ion-fab-list>
-  *   <ion-fab-list side="left">
-  *     <button ion-fab>Vimeo</button>
-  *   </ion-fab-list>
-  * </ion-fab>
+  * <ion-content>
+  *  <!-- this fab is placed at top right -->
+  *  <ion-fab bottom right >
+  *    <button ion-fab>Share</button>
+  *    <ion-fab-list side="top">
+  *      <button ion-fab>Facebook</button>
+  *      <button ion-fab>Twitter</button>
+  *      <button ion-fab>Youtube</button>
+  *    </ion-fab-list>
+  *    <ion-fab-list side="left">
+  *      <button ion-fab>Vimeo</button>
+  *    </ion-fab-list>
+  *  </ion-fab>
+  * </ion-content>
   * ```
   *
   * A FAB speed dial can also be closed programatically.
   *
   * ```html
-  * <ion-fab bottom right #fab>
-  *   <button ion-fab>Share</button>
-  *   <ion-fab-list side="top">
-  *     <button ion-fab (click)="share('facebook', fab)">Facebook</button>
-  *     <button ion-fab (click)="share('twitter', fab)">Twitter</button>
-  * </ion-fab>
+  * <ion-content>
+  *  <ion-fab bottom right #fab>
+  *    <button ion-fab>Share</button>
+  *    <ion-fab-list side="top">
+  *      <button ion-fab (click)="share('facebook', fab)">Facebook</button>
+  *      <button ion-fab (click)="share('twitter', fab)">Twitter</button>
+  *    </ion-fab-list>
+  *  </ion-fab>
+  * </ion-content>
   * ```
   *
   * ```ts
@@ -222,10 +233,25 @@ export class FabList {
   template: '<ng-content></ng-content>'
 })
 export class FabContainer {
+
+  /**
+   * @private
+   */
   _events: UIEventManager = new UIEventManager();
+
+  /**
+   * @private
+   */
   _listsActive: boolean = false;
 
+  /**
+   * @private
+   */
   @ContentChild(FabButton) _mainButton: FabButton;
+
+  /**
+   * @private
+   */
   @ContentChildren(FabList) _fabLists: QueryList<FabList>;
 
   constructor(private _elementRef: ElementRef) { }
@@ -264,6 +290,9 @@ export class FabContainer {
     this.setActiveLists(!this._listsActive);
   }
 
+  /**
+   * @private
+   */
   setActiveLists(isActive: boolean) {
     if (isActive === this._listsActive) {
       return;
@@ -276,6 +305,9 @@ export class FabContainer {
     this._listsActive = isActive;
   }
 
+  /**
+   * Close an active FAB list container
+   */
   close() {
     this.setActiveLists(false);
   }
