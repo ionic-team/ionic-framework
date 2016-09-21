@@ -52,6 +52,7 @@ import { ToastCmp } from './components/toast/toast-component';
  */
 export { Config, setupConfig, ConfigToken } from './config/config';
 export { Platform, setupPlatform, UserAgentToken, DocumentDirToken, DocLangToken, NavigatorPlatformToken } from './platform/platform';
+export { QueryParams, setupQueryParams, UrlToken } from './platform/query-params';
 export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
 export { NavParams } from './navigation/nav-params';
