@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Fab } from '../../../..';
+import { IonicApp, IonicModule, FabContainer } from '../../../..';
 
 @Component({
   templateUrl: 'main.html'
@@ -15,7 +15,7 @@ export class E2EPage {
     console.log('Clicked open social menu');
   }
 
-  openSocial(network: string, fab: Fab) {
+  openSocial(network: string, fab: FabContainer) {
     console.log('Share in ' + network);
     fab.close();
   }
