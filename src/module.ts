@@ -12,7 +12,7 @@ import { AlertController } from './components/alert/alert';
 import { App } from './components/app/app';
 import { Config, ConfigToken, setupConfig } from './config/config';
 import { DeepLinker, setupDeepLinker } from './navigation/deep-linker';
-import { setupProvideEvents } from './util/events';
+import { Events, setupProvideEvents } from './util/events';
 import { Form } from './util/form';
 import { GestureController } from './gestures/gesture-controller';
 import { IonicGestureConfig } from './gestures/gesture-config';
@@ -125,6 +125,7 @@ export class IonicModule {
         ActionSheetController,
         AlertController,
         App,
+        Events,
         Form,
         GestureController,
         Keyboard,
