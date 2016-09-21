@@ -20,7 +20,7 @@ function run {
   VERSION=$(readJsonProp "package.json" "version")
 
   #compile API Demos
-  ./node_modules/.bin/gulp demos --production=true
+  ./node_modules/.bin/gulp docs.demos --production=true
 
   # if release, copy old version to seperate folder and blow out docs root api
   if $IS_RELEASE; then
@@ -34,9 +34,9 @@ function run {
       rm -R $DOCS_DEST/nightly/api
     fi
 
-    ./node_modules/.bin/gulp docs --doc-version="$VERSION_NAME" --initial-build true
-    ./node_modules/.bin/gulp docs --doc-version="$VERSION_NAME"
-    ./node_modules/.bin/gulp docs --doc-version="nightly"
+    ./node_modules/.bin/gulp docs.dgeni --doc-version="$VERSION_NAME" --initial-build true
+    ./node_modules/.bin/gulp docs.dgeni --doc-version="$VERSION_NAME"
+    ./node_modules/.bin/gulp docs.dgeni --doc-version="nightly"
 
   else
 
@@ -44,12 +44,12 @@ function run {
       rm -R $DOCS_DEST/nightly/api
     fi
 
-    ./node_modules/.bin/gulp docs --doc-version="$VERSION_NAME"
+    ./node_modules/.bin/gulp docs.dgeni --doc-version="$VERSION_NAME"
 
   fi
 
   # compile sass vars json for ionic-site docs
-  ./node_modules/.bin/gulp docs.sass-variables
+  ./node_modules/.bin/gulp docs.sassVariables
   cp tmp/sass.json $DOCS_DEST/theming/overriding-ionic-variables/
 
   # CD in to the site dir to commit updated docs
