@@ -57,6 +57,27 @@ ion-content.js-scroll > .scroll-content {
 }
 
 
+// Fixed Content (ion-fixed and ion-fab)
+// --------------------------------------------------
+
+.fixed-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+}
+
+[ion-fixed] {
+  position: absolute;
+
+  z-index: $z-index-fixed-content;
+
+  transform: translateZ(0);
+}
+
+
 // Content Padding
 // --------------------------------------------------
 
@@ -150,16 +171,4 @@ ion-content.js-scroll > .scroll-content {
     margin-right: $content-margin;
     margin-left: $content-margin;
   }
-}
-
-
-// Content Fixed
-// --------------------------------------------------
-
-ion-fixed {
-  position: absolute;
-
-  z-index: $z-index-fixed-content;
-
-  transform: translateZ(0);
 }

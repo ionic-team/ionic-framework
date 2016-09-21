@@ -1,0 +1,48 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design FAB Button
+// --------------------------------------------------
+
+/// @prop - Border radius of the FAB button
+$button-md-fab-border-radius:                   50% !default;
+
+/// @prop - Box shadow of the FAB button
+$button-md-fab-box-shadow:                      0 4px 6px 0 rgba(0, 0, 0, .14), 0 4px 5px rgba(0, 0, 0, .1) !default;
+
+/// @prop - Box shadow of the activated FAB button
+$button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 0 4px 7px 0 rgba(0, 0, 0, .1) !default;
+
+
+.fab-button {
+  border-radius: $button-md-fab-border-radius;
+  box-shadow: $button-md-fab-box-shadow;
+
+  transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
+              background-color $button-md-transition-duration $button-md-transition-timing-function,
+              color $button-md-transition-duration $button-md-transition-timing-function;
+
+  &.activated {
+    box-shadow: $button-md-fab-box-shadow-activated;
+  }
+}
+
+
+// Generate iOS FAB colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  $background-color: $color-base;
+  $background-color-activated: color-shade($background-color);
+  $fg-color: $color-contrast;
+
+  .fab-md-#{$color-name} {
+    color: $fg-color;
+    background-color: $background-color;
+  }
+
+  .fab-md-#{$color-name}.activated {
+    background-color: $background-color-activated;
+  }
+}
+

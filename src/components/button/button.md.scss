@@ -394,23 +394,6 @@ $button-md-fab-box-shadow-activated:            0 5px 15px 0 rgba(0, 0, 0, .4), 
   border-radius: $button-md-round-border-radius;
 }
 
-
-// Material Design FAB Button
-// --------------------------------------------------
-
-.button-fab-md {
-  border-radius: $button-md-fab-border-radius;
-  box-shadow: $button-md-fab-box-shadow;
-
-  transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
-              background-color $button-md-transition-duration $button-md-transition-timing-function,
-              color $button-md-transition-duration $button-md-transition-timing-function;
-}
-
-.button-fab-md.activated {
-  box-shadow: $button-md-fab-box-shadow-activated;
-}
-
 .button-md [icon-only] {
   padding: 0;
 }

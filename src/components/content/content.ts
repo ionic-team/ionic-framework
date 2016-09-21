@@ -103,10 +103,12 @@ import { isTrueProperty } from '../../util/util';
 @Component({
   selector: 'ion-content',
   template:
+    '<div class="fixed-content">' +
+      '<ng-content select="[ion-fixed],ion-fab"></ng-content>' +
+    '</div>' +
     '<div class="scroll-content">' +
       '<ng-content></ng-content>' +
     '</div>' +
-    '<ng-content select="ion-fixed"></ng-content>' +
     '<ng-content select="ion-refresher"></ng-content>',
   host: {
     '[class.statusbar-padding]': '_sbPadding'
@@ -135,6 +137,11 @@ export class Content extends Ion {
    * @private
    */
   _scrollEle: HTMLElement;
+
+  /*
+   * @private
+   */
+  _fixedEle: HTMLElement;
 
   /**
    * A number representing how many pixels the top of the content has been
@@ -175,7 +182,8 @@ export class Content extends Ion {
    * @private
    */
   ngOnInit() {
-    this._scrollEle = this._elementRef.nativeElement.children[0];
+    this._fixedEle = this._elementRef.nativeElement.children[0];
+    this._scrollEle = this._elementRef.nativeElement.children[1];
 
     this._zone.runOutsideAngular(() => {
       this._scroll = new ScrollView(this._scrollEle);
@@ -530,63 +538,61 @@ export class Content extends Ion {
    * DOM WRITE
    */
   writeDimensions() {
-    let newVal: number;
-    let scrollEle = this._scrollEle;
+    let scrollEle = this._scrollEle as any;
+    if (!scrollEle) {
+      return;
+    }
 
-    if (!scrollEle) return;
+    let fixedEle = this._fixedEle;
+    if (!fixedEle) {
+      return;
+    }
 
-    // only write when it has changed
+    // Toolbar height
+    let contentTop = this._headerHeight;
+    let contentBottom = this._footerHeight;
+
+    // Tabs height
+    if (this._tabsPlacement === 'top') {
+      contentTop += this._tabbarHeight;
+
+    } else if (this._tabsPlacement === 'bottom') {
+      contentBottom += this._tabbarHeight;
+
+      // Update footer position
+      if (contentBottom > 0 && this._footerEle) {
+        this._footerEle.style.bottom = cssFormat(contentBottom - this._footerHeight);
+      }
+    }
+
+    // Handle fullscreen viewport (padding vs margin)
+    let topProperty = 'marginTop';
+    let bottomProperty = 'marginBottom';
+    let fixedTop: number = contentTop;
+    let fixedBottom: number = contentBottom;
     if (this._fullscreen) {
       // adjust the content with padding, allowing content to scroll under headers/footers
       // however, on iOS you cannot control the margins of the scrollbar (last tested iOS9.2)
       // only add inline padding styles if the computed padding value, which would
       // have come from the app's css, is different than the new padding value
+      contentTop += this._paddingTop;
+      contentBottom += this._paddingBottom;
+      topProperty = 'paddingTop';
+      bottomProperty = 'paddingBottom';
+    }
 
-      newVal = this._headerHeight + this._paddingTop;
-      if (this._tabsPlacement === 'top') {
-        newVal += this._tabbarHeight;
-      }
-      if (newVal !== this.contentTop) {
-        scrollEle.style.paddingTop = (newVal > 0 ? newVal + 'px' : '');
-        this.contentTop = newVal;
-      }
+    // Only update top margin if value changed
+    if (contentTop !== this.contentTop) {
+      scrollEle.style[topProperty] = cssFormat(contentTop);
+      fixedEle.style.marginTop = cssFormat(fixedTop);
+      this.contentTop = contentTop;
+    }
 
-      newVal = this._footerHeight + this._paddingBottom;
-      if (this._tabsPlacement === 'bottom') {
-        newVal += this._tabbarHeight;
-
-        if (newVal > 0 && this._footerEle) {
-          this._footerEle.style.bottom = (newVal - this._footerHeight - this._paddingBottom) + 'px';
-        }
-      }
-      if (newVal !== this.contentBottom) {
-        scrollEle.style.paddingBottom = (newVal > 0 ? newVal + 'px' : '');
-        this.contentBottom = newVal;
-      }
-
-    } else {
-      // adjust the content with margins
-      newVal = this._headerHeight;
-      if (this._tabsPlacement === 'top') {
-        newVal += this._tabbarHeight;
-      }
-      if (newVal !== this.contentTop) {
-        scrollEle.style.marginTop = (newVal > 0 ? newVal + 'px' : '');
-        this.contentTop = newVal;
-      }
-
-      newVal = this._footerHeight;
-      if (this._tabsPlacement === 'bottom') {
-        newVal += this._tabbarHeight;
-      }
-      if (newVal !== this.contentBottom) {
-        scrollEle.style.marginBottom = (newVal > 0 ? newVal + 'px' : '');
-        this.contentBottom = newVal;
-
-        if (newVal > 0 && this._footerEle) {
-          this._footerEle.style.bottom = (newVal - this._footerHeight) + 'px';
-        }
-      }
+    // Only update bottom margin if value changed
+    if (contentBottom !== this.contentBottom) {
+      scrollEle.style[bottomProperty] = cssFormat(contentBottom);
+      fixedEle.style.marginBottom = cssFormat(fixedBottom);
+      this.contentBottom = contentBottom;
     }
 
 
@@ -605,4 +611,8 @@ export class Content extends Ion {
 
 function parsePxUnit(val: string): number {
   return (val.indexOf('px') > 0) ? parseInt(val, 10) : 0;
+}
+
+function cssFormat(val: number): string {
+  return (val > 0 ? val + 'px' : '');
 }

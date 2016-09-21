@@ -290,10 +290,9 @@ export class FullPage {
       <p><button ion-button id="insert" (click)="insert()">Insert first page into history before this</button></p>
       <p><button ion-button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
       <div class="yellow"><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div></div>
-      <ion-fixed style="bottom:0">
-        <button ion-button (click)="presentAlert()">fixed button (alert)</button>
-      </ion-fixed>
-      <ion-fixed style="pointer-events: none; top:0; bottom:0; right:0; width:50%; background: rgba(0,0,0,0.5);"></ion-fixed>
+
+      <button ion-button ion-fixed (click)="presentAlert()">fixed button (alert)</button>
+      <div ion-fixed style="position: absolute; pointer-events: none; top:10px; bottom:10px; right:10px; width:50%; background: rgba(0,0,0,0.5);"></div>
     </ion-content>
     <ion-footer>
       <ion-toolbar no-border-bottom>
