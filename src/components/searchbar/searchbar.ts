@@ -3,7 +3,7 @@ import { NgControl }  from '@angular/forms';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-import { isPresent } from '../../util/util';
+import { isPresent, isTrueProperty } from '../../util/util';
 import { Debouncer } from '../../util/debouncer';
 
 
@@ -39,16 +39,19 @@ import { Debouncer } from '../../util/debouncer';
     '</div>' +
     '<button ion-button #cancelButton [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
   host: {
+    '[class.searchbar-animated]': 'animated',
     '[class.searchbar-has-value]': '_value',
     '[class.searchbar-active]': '_isActive',
     '[class.searchbar-show-cancel]': 'showCancelButton',
-    '[class.searchbar-left-aligned]': 'shouldAlignLeft()'
+    '[class.searchbar-left-aligned]': '_shouldAlignLeft'
   },
   encapsulation: ViewEncapsulation.None
 })
 export class Searchbar extends Ion {
   _value: string|number = '';
   _shouldBlur: boolean = true;
+  _shouldAlignLeft: boolean = true;
+  _isCancelVisible: boolean = false;
   _isActive: boolean = false;
   _searchbarInput: ElementRef;
   _debouncer: Debouncer = new Debouncer(250);
@@ -114,6 +117,11 @@ export class Searchbar extends Ion {
    * @input {string} Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
    */
   @Input() type: string = 'search';
+
+  /**
+   * @input {string|boolean} Set the input's spellcheck property. Values: `true`, `false`. Default `false`.
+   */
+  @Input() animated: string | boolean = false;
 
   /**
    * @output {event} When the Searchbar input has changed including cleared.
@@ -217,7 +225,7 @@ export class Searchbar extends Ion {
    * @private
    * After View Checked position the elements
    */
-  ngAfterViewChecked() {
+  ngAfterContentInit() {
     this.positionElements();
   }
 
@@ -227,26 +235,31 @@ export class Searchbar extends Ion {
    * based on the input value and if it is focused. (ios only)
    */
   positionElements() {
-    if (this._config.get('mode') !== 'ios') return;
+    let isAnimated = isTrueProperty(this.animated);
+    let prevAlignLeft = this._shouldAlignLeft;
+    let shouldAlignLeft = (!isAnimated || (this._value && this._value.toString().trim() !== '') || this._sbHasFocus === true);
+    this._shouldAlignLeft = shouldAlignLeft;
 
-    // Position the input placeholder & search icon
-    if (this._searchbarInput && this._searchbarIcon) {
-      this.positionInputPlaceholder(this._searchbarInput.nativeElement, this._searchbarIcon.nativeElement);
+    if (this._config.get('mode') !== 'ios') {
+      return;
     }
 
-    // Position the cancel button
-    if (this._cancelButton && this._cancelButton.nativeElement) {
-      this.positionCancelButton(this._cancelButton.nativeElement);
+    if (prevAlignLeft !== shouldAlignLeft) {
+      this.positionPlaceholder();
+    }
+    if (isAnimated) {
+      this.positionCancelButton();
     }
   }
 
-  /**
-   * @private
-   * Calculates the amount of padding/margin left for the elements
-   * in order to center them based on the placeholder width
-   */
-  positionInputPlaceholder(inputEle: HTMLElement, iconEle: HTMLElement) {
-    if (this.shouldAlignLeft()) {
+  positionPlaceholder() {
+    if (!this._searchbarInput || !this._searchbarIcon) {
+      return;
+    }
+    let inputEle = this._searchbarInput.nativeElement;
+    let iconEle = this._searchbarIcon.nativeElement;
+
+    if (this._shouldAlignLeft) {
       inputEle.removeAttribute('style');
       iconEle.removeAttribute('style');
     } else {
@@ -273,23 +286,26 @@ export class Searchbar extends Ion {
    * @private
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
-  positionCancelButton(cancelButtonEle: HTMLElement) {
-    if (cancelButtonEle.offsetWidth > 0) {
-      if (this._sbHasFocus) {
-        cancelButtonEle.style.marginRight = '0';
+  positionCancelButton() {
+    if (!this._cancelButton || !this._cancelButton.nativeElement) {
+      return;
+    }
+    let showShowCancel = this._sbHasFocus;
+    if (showShowCancel !== this._isCancelVisible) {
+      let cancelStyleEle = this._cancelButton.nativeElement;
+      let cancelStyle = cancelStyleEle.style;
+      this._isCancelVisible = showShowCancel;
+      if (showShowCancel) {
+        cancelStyle.marginRight = '0';
       } else {
-        cancelButtonEle.style.marginRight = -cancelButtonEle.offsetWidth + 'px';
+        let offset = cancelStyleEle.offsetWidth;
+        if (offset > 0) {
+          cancelStyle.marginRight = -offset + 'px';
+        }
       }
     }
   }
 
-  /**
-   * @private
-   * Align the input placeholder left on focus or if a value exists
-   */
-  shouldAlignLeft() {
-    return ( (this._value && this._value.toString().trim() !== '') || this._sbHasFocus === true );
-  }
 
   /**
    * @private
@@ -398,5 +414,9 @@ export class Searchbar extends Ion {
    */
   registerOnTouched(fn: () => {}): void {
     this.onTouched = fn;
+  }
+
+  focus() {
+    this.getNativeElement().focus();
   }
 }

@@ -14,8 +14,9 @@
 
 <ion-content>
 
-  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-
+  <form>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  </form>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="showDetail(item)" class="e2eSearchbarNavItem">
       {{ item }}
