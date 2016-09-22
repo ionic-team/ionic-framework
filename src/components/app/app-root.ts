@@ -78,6 +78,12 @@ export class IonicApp extends Ion implements OnInit {
     if (this._config.getBoolean('hoverCSS', true)) {
       this.setElementClass('enable-hover', true);
     }
+
+    // sweet, the app root has loaded!
+    // which means angular and ionic has fully loaded!
+    // fire off the platform prepare ready, which could
+    // have been switched out by any of the platform engines
+    this._platform.prepareReady();
   }
 
   /**
