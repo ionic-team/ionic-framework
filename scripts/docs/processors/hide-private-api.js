@@ -1,6 +1,6 @@
-module.exports = function removePrivateApi() {
+module.exports = function hidePrivateApi() {
   return {
-    name: 'remove-private-api',
+    name: 'hide-private-api',
     description: 'Prevent the private apis from being rendered',
     $runBefore: ['rendering-docs'],
     $process: function(docs) {
