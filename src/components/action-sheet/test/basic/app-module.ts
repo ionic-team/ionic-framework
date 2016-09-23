@@ -18,7 +18,7 @@ export class E2EPage {
         {
           text: 'Delete',
           role: 'destructive',
-          icon: !this.platform.is('ios') ? 'trash' : null,
+          icon: 'trash',
           handler: () => {
             console.log('Delete clicked');
             this.result = 'Deleted';
@@ -26,7 +26,7 @@ export class E2EPage {
         },
         {
           text: 'Share',
-          icon: !this.platform.is('ios') ? 'share' : null,
+          icon: 'share',
           handler: () => {
             console.log('Share clicked');
             this.result = 'Shared';
@@ -34,7 +34,7 @@ export class E2EPage {
         },
         {
           text: 'Play',
-          icon: !this.platform.is('ios') ? 'arrow-dropright-circle' : null,
+          icon: 'arrow-dropright-circle',
           handler: () => {
             let modal = this.modalCtrl.create(ModalPage);
             modal.present();
