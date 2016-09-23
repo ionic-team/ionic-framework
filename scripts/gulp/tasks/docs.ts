@@ -11,7 +11,7 @@ import { argv } from 'yargs';
 
 import { DEMOS_ROOT } from '../constants';
 
-task('docs', ['docs.dgeni', 'docs.copyDemos', 'docs.sassVariables']);
+task('docs', ['docs.dgeni', 'docs.demos', 'docs.sassVariables']);
 
 task('docs.dgeni', () => {
   const docVersion = argv['doc-version'] || 'nightly';
