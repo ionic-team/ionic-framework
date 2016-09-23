@@ -1,4 +1,4 @@
-import { mockView } from '../../util/mock-providers';
+import { mockNavController, mockView, mockViews } from '../../util/mock-providers';
 
 
 describe('ViewController', () => {
@@ -84,6 +84,38 @@ describe('ViewController', () => {
 
       // act
       viewController._willUnload();
+    }, 10000);
+  });
+
+  describe('willDismiss', () => {
+    it('should have data in the willDismiss', (done) => {
+      // arrange
+      let viewController = mockView();
+      let navControllerBase = mockNavController();
+      mockViews(navControllerBase, [viewController]);
+
+      viewController.onWillDismiss((data: any) => {
+        expect(data).toEqual('willDismiss data');
+        done();
+      });
+
+      viewController.dismiss('willDismiss data');
+    }, 10000);
+  });
+
+  describe('didDismiss', () => {
+    it('should have data in the didDismiss', (done) => {
+      // arrange
+      let viewController = mockView();
+      let navControllerBase = mockNavController();
+      mockViews(navControllerBase, [viewController]);
+
+      viewController.onDidDismiss((data: any) => {
+        expect(data).toEqual('didDismiss data');
+        done();
+      });
+
+      viewController.dismiss('didDismiss data');
     }, 10000);
   });
 

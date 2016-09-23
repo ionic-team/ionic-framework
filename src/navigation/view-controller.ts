@@ -179,7 +179,7 @@ export class ViewController {
     this._onWillDismiss && this._onWillDismiss(data, role);
     return this._nav.remove(this._nav.indexOf(this), 1, options).then(() => {
       this._onDidDismiss && this._onDidDismiss(data, role);
-      this._onWillDismiss = null;
+      this._onDidDismiss = null;
       return data;
     });
   }
@@ -515,7 +515,7 @@ export class ViewController {
       }
     }
 
-    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onDidDismiss = null;
+    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onWillDismiss = null;
   }
 
   /**
