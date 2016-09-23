@@ -106,6 +106,9 @@ export class Events {
   }
 }
 
+/**
+ * @private
+ */
 export function setupEvents(platform: Platform): Events {
   const events = new Events();
 
@@ -145,6 +148,9 @@ export function setupEvents(platform: Platform): Events {
   return events;
 }
 
+/**
+ * @private
+ */
 export function setupProvideEvents(platform: Platform) {
   return function() {
     return setupEvents(platform);
