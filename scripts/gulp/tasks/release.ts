@@ -4,7 +4,7 @@ import { writeFileSync } from 'fs';
 import { dest, src, task } from 'gulp';
 import * as runSequence from 'run-sequence';
 
-import { DIST_BUILD_ROOT, SRC_ROOT, PROJECT_ROOT } from '../constants';
+import { DIST_BUILD_ROOT, SCRIPTS_ROOT, SRC_ROOT, PROJECT_ROOT } from '../constants';
 import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
 
@@ -13,7 +13,7 @@ task('nightly', (done: (err: any) => void) => {
 });
 
 task('release.prepareNightly', (done: (err: any) => void) => {
-  runSequence(/*'release.pullLatest', 'validate',*/ 'release.copyTools', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
+  runSequence('release.pullLatest', 'validate', 'release.copyTemplates', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
 });
 
 task('release.nightlyPackage', (done: (err: any) => void) => {
@@ -78,8 +78,8 @@ task('release.prepareChangelog', () => {
     .pipe(dest(`${PROJECT_ROOT}`));
 });
 
-task('release.copyTools', () => {
-  return src([`${PROJECT_ROOT}/tooling/**/*`]).pipe(dest(`${DIST_BUILD_ROOT}/tooling`));
+task('release.copyTemplates', () => {
+  return src([`${SCRIPTS_ROOT}/templates/**/*`]).pipe(dest(`${DIST_BUILD_ROOT}/templates`));
 });
 
 task('release.copyNpmInfo', () => {
