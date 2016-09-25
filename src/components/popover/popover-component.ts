@@ -1,7 +1,6 @@
 import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { pascalCaseToDashCase } from '../../util/util';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
@@ -78,7 +77,6 @@ export class PopoverCmp {
       const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
       this._viewCtrl._setInstance(componentRef.instance);
 
-      this._setCssClass(componentRef, pascalCaseToDashCase(component.name));
       this._enabled = true;
     }
   }

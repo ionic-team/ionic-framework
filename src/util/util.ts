@@ -145,15 +145,6 @@ export const isCheckedProperty = function(a: any, b: any): boolean {
   /* tslint:enable */
 };
 
-/**
- * Convert a string in the format thisIsAString to a slug format this-is-a-string
- */
-export function pascalCaseToDashCase(val: string = ''): string {
-  return val.charAt(0).toLowerCase() + val.substring(1).replace(/[A-Z]/g, match => {
-    return '-' + match.toLowerCase();
-  });
-}
-
 
 /**
  * @private

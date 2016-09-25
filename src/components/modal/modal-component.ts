@@ -2,7 +2,6 @@ import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild,
 
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
-import { pascalCaseToDashCase } from '../../util/util';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -46,7 +45,6 @@ export class ModalCmp {
 
       this._setCssClass(componentRef, 'ion-page');
       this._setCssClass(componentRef, 'show-page');
-      this._setCssClass(componentRef, pascalCaseToDashCase(component.name));
       this._enabled = true;
     }
   }

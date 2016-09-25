@@ -1,7 +1,7 @@
 import { OpaqueToken } from '@angular/core';
 
 import { DeepLinkConfig, NavLink, NavSegment } from './nav-util';
-import { isArray, isBlank, isPresent, pascalCaseToDashCase } from '../util/util';
+import { isArray, isBlank, isPresent } from '../util/util';
 
 
 export class UrlSerializer {
@@ -104,7 +104,10 @@ export class UrlSerializer {
   }
 
   formatUrlPart(name: string): string {
-    name = pascalCaseToDashCase(name.replace(URL_REPLACE_REG, '-'));
+    name = name.replace(URL_REPLACE_REG, '-');
+    name = name.charAt(0).toLowerCase() + name.substring(1).replace(/[A-Z]/g, match => {
+      return '-' + match.toLowerCase();
+    });
     while (name.indexOf('--') > -1) {
       name = name.replace('--', '-');
     }

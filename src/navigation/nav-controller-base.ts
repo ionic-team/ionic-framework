@@ -8,7 +8,7 @@ import { convertToView, convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FO
 import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { GestureController } from '../gestures/gesture-controller';
-import { isBlank, isNumber, isPresent, pascalCaseToDashCase } from '../util/util';
+import { isBlank, isNumber, isPresent } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { Ion } from '../components/ion';
 import { Keyboard } from '../util/keyboard';
@@ -574,11 +574,6 @@ export class NavControllerBase extends Ion implements NavController {
       // ******** DOM WRITE ****************
       this._renderer.setElementClass(pageElement, view._cssClass, true);
     }
-
-    // auto-add page css className created from component JS class name
-    // ******** DOM WRITE ****************
-    const cssClassName = pascalCaseToDashCase(view.component.name);
-    this._renderer.setElementClass(pageElement, cssClassName, true);
 
     componentRef.changeDetectorRef.detectChanges();
   }
