@@ -8,7 +8,7 @@
     "url": "https://github.com/driftyco/ionic.git"
   },
   "license": "MIT",
-  "main": "commonjs/index.js",
+  "main": "umd/index.js",
   "module": "index.js",
   "dependencies": {
     "@angular/common": "",
@@ -19,6 +19,9 @@
     "@angular/platform-browser": "",
     "@angular/platform-browser-dynamic": "",
     "@angular/platform-server": "",
-    "rxjs": ""
+    "ionicons": "",
+    "ionic-native": "",
+    "rxjs": "",
+    "zone.js": ""
   }
 }
