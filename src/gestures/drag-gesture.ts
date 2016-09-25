@@ -1,9 +1,8 @@
-
-import { defaults } from '../util';
+import { defaults } from '../util/util';
 import { GestureDelegate } from '../gestures/gesture-controller';
-import { PointerEvents, UIEventManager } from '../util/ui-event-manager';
 import { PanRecognizer } from './recognizers';
-import { pointerCoord, Coordinates } from '../util/dom';
+import { PointerEvents, UIEventManager } from '../util/ui-event-manager';
+import { pointerCoord } from '../util/dom';
 
 /**
  * @private
@@ -19,7 +18,6 @@ export interface PanGestureConfig {
  * @private
  */
 export class PanGesture {
-  private dragging: boolean;
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;
   private detector: PanRecognizer;

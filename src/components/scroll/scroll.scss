@@ -1,37 +1,34 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 ion-scroll {
   position: relative;
   display: block;
+}
 
-  &.scroll-x scroll-content {
-    overflow-x: auto;
-  }
+ion-scroll.scroll-x .scroll-content {
+  overflow-x: auto;
+}
 
-  &.scroll-y scroll-content {
-    overflow-y: auto;
-  }
+ion-scroll.scroll-y .scroll-content {
+  overflow-y: auto;
+}
 
-  &[center] {
-    scroll-content {
-      display: flex;
+ion-scroll[center] .scroll-content {
+  display: flex;
 
-      align-items: center;
-      justify-content: center;
-    }
-  }
+  align-items: center;
+  justify-content: center;
+}
 
-  scroll-content {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+ion-scroll .scroll-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
-    overflow-y: hidden;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    will-change: scroll-position;
-  }
-
+  overflow-y: hidden;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
 }

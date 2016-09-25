@@ -7,7 +7,7 @@ import { Content } from '../content/content';
 import { Img } from '../img/img';
 import { isBlank, isFunction, isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 import { VirtualCell, VirtualData, VirtualNode } from './virtual-util';
 import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
 
@@ -99,7 +99,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * It's also important to know that Ionic's default item sizes have
  * slightly different heights between platforms, which is perfectly fine.
- * 
+ *
  *
  *
  * ### Images Within Virtual Scroll
@@ -117,7 +117,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * makes a HTTP request for the image file. HTTP requests, image
  * decoding, and image rendering can cause issues while scrolling. For virtual
  * scrolling, the natural effects of the `<img>` are not desirable features.
- * 
+ *
  * Note: `<ion-img>` should only be used with Virtual Scroll. If you are using
  * an image outside of Virtual Scroll you should use the standard `<img>` tag.
  *
@@ -155,29 +155,29 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
   selector: '[virtualScroll]'
 })
 export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
-  private _trackBy: TrackByFn;
-  private _differ: IterableDiffer;
-  private _unreg: Function;
-  private _init: boolean;
-  private _rafId: number;
-  private _tmId: number;
-  private _hdrFn: Function;
-  private _ftrFn: Function;
-  private _records: any[] = [];
-  private _cells: VirtualCell[] = [];
-  private _nodes: VirtualNode[] = [];
-  private _vHeight: number = 0;
-  private _lastCheck: number = 0;
-  private _data: VirtualData = {
+  _trackBy: TrackByFn;
+  _differ: IterableDiffer;
+  _unreg: Function;
+  _init: boolean;
+  _rafId: number;
+  _tmId: number;
+  _hdrFn: Function;
+  _ftrFn: Function;
+  _records: any[] = [];
+  _cells: VirtualCell[] = [];
+  _nodes: VirtualNode[] = [];
+  _vHeight: number = 0;
+  _lastCheck: number = 0;
+  _data: VirtualData = {
     scrollTop: 0,
   };
-  private _eventAssist: boolean;
-  private _queue: number = null;
+  _eventAssist: boolean;
+  _queue: number = null;
 
-  @ContentChild(VirtualItem) private _itmTmp: VirtualItem;
-  @ContentChild(VirtualHeader) private _hdrTmp: VirtualHeader;
-  @ContentChild(VirtualFooter) private _ftrTmp: VirtualFooter;
-  @ContentChildren(Img) private _imgs: QueryList<Img>;
+  @ContentChild(VirtualItem) _itmTmp: VirtualItem;
+  @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
+  @ContentChild(VirtualFooter) _ftrTmp: VirtualFooter;
+  @ContentChildren(Img) _imgs: QueryList<Img>;
 
   /**
    * @input {array} The data that builds the templates within the virtual scroll.
@@ -285,7 +285,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   @Input() set headerFn(val: Function) {
     if (isFunction(val)) {
-      this._hdrFn = val.bind((this._ctrl && this._ctrl.instance) || this);
+      this._hdrFn = val.bind((this._ctrl && this._ctrl._cmp) || this);
     }
   }
 
@@ -298,7 +298,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   @Input() set footerFn(val: Function) {
     if (isFunction(val)) {
-      this._ftrFn = val.bind((this._ctrl && this._ctrl.instance) || this);
+      this._ftrFn = val.bind((this._ctrl && this._ctrl._cmp) || this);
     }
   }
 
@@ -352,7 +352,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
       if (!this.approxItemHeight) {
         this.approxItemHeight = '40px';
-        console.warn('approxItemHeight set to default: Provide approxItemHeight to ensure proper virtual scroll rendering');
+        console.warn('Virtual Scroll: Please provide an "approxItemHeight" input to ensure proper virtual scroll rendering');
       }
     }
   }
@@ -387,7 +387,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         // good to go, we already have good dimension data
         done();
 
-      } else {        
+      } else {
         // ******** DOM READ ****************
         calcDimensions(self._data, self._elementRef.nativeElement.parentElement,
                       self.approxItemWidth, self.approxItemHeight,

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
 
 import { CSS, nativeRaf, nativeTimeout, clearNativeTimeout } from '../../util/dom';
 import { Item } from './item';
@@ -40,7 +40,6 @@ export const enum ItemSideFlags {
   selector: 'ion-item-options',
 })
 export class ItemOptions {
-
   /**
    * @input {string} the side the option button should be on. Defaults to right
    * If you have multiple `ion-item-options`, a side must be provided for each.
@@ -53,13 +52,6 @@ export class ItemOptions {
   @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
   constructor(private _elementRef: ElementRef, private _renderer: Renderer) {}
-
-  /**
-   * @private
-   */
-  setCssStyle(property: string, value: string) {
-    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
-  }
 
   /**
    * @private
@@ -81,7 +73,7 @@ export class ItemOptions {
 
 }
 
-const enum SlidingState {
+export const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
   Right = 1 << 3,
@@ -171,7 +163,7 @@ const enum SlidingState {
  * ```
  *
  *
- * @demo /docs/v2/demos/item-sliding/
+ * @demo /docs/v2/demos/src/item-sliding/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../Item Item API Docs}
  * @see {@link ../../list/List List API Docs}
@@ -200,7 +192,7 @@ export class ItemSliding {
   /**
    * @private
    */
-  @ContentChild(Item) private item: Item;
+  @ContentChild(Item) item: Item;
 
   /**
    * @output {event} Expression to evaluate when the sliding position changes.
@@ -225,14 +217,18 @@ export class ItemSliding {
    */
   @Output() ionDrag: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
-  constructor( @Optional() list: List, private _renderer: Renderer, private _elementRef: ElementRef) {
+  constructor(
+    @Optional() list: List,
+    private _renderer: Renderer,
+    private _elementRef: ElementRef,
+    private _zone: NgZone) {
     list && list.containsSlidingItem(true);
     _elementRef.nativeElement.$ionComponent = this;
-    this.setCssClass('item-wrapper', true);
+    this.setElementClass('item-wrapper', true);
   }
 
   @ContentChildren(ItemOptions)
-  private set _itemOptions(itemOptions: QueryList<ItemOptions>) {
+  set _itemOptions(itemOptions: QueryList<ItemOptions>) {
     let sides = 0;
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();
@@ -281,7 +277,7 @@ export class ItemSliding {
       this._setState(SlidingState.Enabled);
     }
     this._startX = startX + this._openAmount;
-    this.item.setCssStyle(CSS.transition, 'none');
+    this.item.setElementStyle(CSS.transition, 'none');
   }
 
   /**
@@ -341,9 +337,9 @@ export class ItemSliding {
    */
   private fireSwipeEvent() {
     if (this._state & SlidingState.SwipeRight) {
-      this._rightOptions.ionSwipe.emit(this);
+      this._zone.run(() => this._rightOptions.ionSwipe.emit(this));
     } else if (this._state & SlidingState.SwipeLeft) {
-      this._leftOptions.ionSwipe.emit(this);
+      this._zone.run(() => this._leftOptions.ionSwipe.emit(this));
     }
   }
 
@@ -376,7 +372,7 @@ export class ItemSliding {
     this._openAmount = openAmount;
 
     if (isFinal) {
-      this.item.setCssStyle(CSS.transition, '');
+      this.item.setElementStyle(CSS.transition, '');
 
     } else {
       if (openAmount > 0) {
@@ -399,23 +395,23 @@ export class ItemSliding {
         this._setState(SlidingState.Disabled);
         this._timer = null;
       }, 600);
-      this.item.setCssStyle(CSS.transform, '');
+      this.item.setElementStyle(CSS.transform, '');
       return;
     }
 
-    this.item.setCssStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
-    this.ionDrag.emit(this);
+    this.item.setElementStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
+    this._zone.run(() => this.ionDrag.emit(this));
   }
 
   private _setState(state: SlidingState) {
     if (state === this._state) {
       return;
     }
-    this.setCssClass('active-slide', (state !== SlidingState.Disabled));
-    this.setCssClass('active-options-right', !!(state & SlidingState.Right));
-    this.setCssClass('active-options-left', !!(state & SlidingState.Left));
-    this.setCssClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
-    this.setCssClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
+    this.setElementClass('active-slide', (state !== SlidingState.Disabled));
+    this.setElementClass('active-options-right', !!(state & SlidingState.Right));
+    this.setElementClass('active-options-left', !!(state & SlidingState.Left));
+    this.setElementClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
+    this.setElementClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
     this._state = state;
   }
 
@@ -461,15 +457,8 @@ export class ItemSliding {
   /**
    * @private
    */
-  setCssClass(cssClass: string, shouldAdd: boolean) {
+  setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
-  }
-
-  /**
-   * @private
-   */
-  setCssStyle(property: string, value: string) {
-    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
   }
 }
 

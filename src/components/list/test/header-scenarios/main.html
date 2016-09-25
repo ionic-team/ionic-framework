@@ -1,10 +1,14 @@
-<ion-toolbar><ion-title>Items as Links/Buttons</ion-title></ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>List Header Scenarios</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content class="outer-content">
   <ion-list>
-    <ion-list-header>
+    <!--<ion-list-header>
       ion-list-header
-    </ion-list-header>
+    </ion-list-header>-->
 
     <ion-list-header text-wrap>
       This is multiline text that has a
@@ -76,7 +80,7 @@
       </button>
     </ion-list-header>
 
-    <ion-list-header *ngFor="let data of [0,1,2,3,4]; let i = index" [class.activated]="i == 1">
+    <ion-list-header *ngFor="let data of [0,1,2,3,4]; let i = index">
       <ion-avatar item-left>
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-avatar>

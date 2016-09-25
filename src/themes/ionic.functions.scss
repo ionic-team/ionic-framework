@@ -1,0 +1,271 @@
+
+// Color Functions
+// --------------------------------------------------
+
+@function color-brightness($color-value) {
+  @if (type-of($color-value) != color) {
+    @return color-error($color-value);
+  }
+
+  @return (red($color-value) * .299 + green($color-value) * .587 + blue($color-value) * .114) / 255 * 100%;
+}
+
+
+@function color-inverse($color-value, $dark: #000, $light: #fff) {
+  @if (type-of($color-value) != color) {
+    @return color-error($color-value);
+  }
+
+  $brightness: color-brightness($color-value);
+  $red: red($color-value);
+  $green: green($color-value);
+
+  @if ($brightness > 79) {
+    @return $dark;
+  }
+
+  @if ($green > 240) {
+    @return $dark;
+  }
+
+  @if ($red > 220 and $green > 180) {
+    @return $dark;
+  }
+
+  @return $light;
+}
+
+// Pass dark and light colors based on the mode
+// this is mostly used for toolbar buttons/titles
+//
+// @param {String} $color-value - color to get the inverse of
+// @param {Boolean} $custom-contrast-mode - the mode to use
+// in order to pass the custom colors
+//
+// @return {Color}
+// --------------------------------------------------
+@function mode-inverse($color-value, $custom-contrast-mode) {
+  $dark: #000;
+  $light: #fff;
+
+  @if ($custom-contrast-mode == md) {
+    $dark: #424242;
+    $light: #fff;
+  } @else if ($custom-contrast-mode == ios) {
+    $dark: color($colors-ios, primary);
+    $light: #fff;
+  }
+
+  @return color-inverse($color-value, $dark, $light);
+}
+
+
+@function color-shade($color-value, $amount:8%) {
+  @if (type-of($color-value) != color) {
+    @return color-error($color-value);
+  }
+
+  $lightness: lightness($color-value);
+
+  $shade: #fff;
+
+  @if ($lightness > 50) {
+    $shade: #000;
+  }
+
+  @return mix($shade, $color-value, $amount);
+}
+
+@function color-error($color-value) {
+  @error "
+
+  The value `#{$color-value}` must be a color.
+  If you are setting the value as a map make sure
+  both the base and contrast are defined as colors.
+
+  For example:
+
+  $colors: (
+    primary:    #327eff,
+    secondary:  (base: #32db64, contrast: #000),
+  );";
+
+  @return false;
+}
+
+// Copy Colors Map
+// --------------------------------------------------
+
+@function copy-colors($colors-map) {
+  @return map-merge($colors-map, ());
+}
+
+
+// String Replace Function
+// --------------------------------------------------
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+
+// URL Encode Function
+// --------------------------------------------------
+
+@function url-encode($val) {
+  $spaces: str-replace($val, " ", "%20");
+  $encoded: str-replace($spaces, "#", "%23");
+  @return $encoded;
+}
+
+
+// Fetch nested keys
+// @param {Map} $map - Map
+// @param {Arglist} $keys - Keys to fetch
+// @return {*}
+// --------------------------------------------------
+
+@function map-fetch($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+
+  @return $map;
+}
+
+
+// Fetch map color value
+// @param {Map} $map - Map
+// @param {String} $color-name - Color name to get
+// @param {String} $color-key - Color key (optional), default base
+// @return {Color}
+// --------------------------------------------------
+
+@function color($map, $color-name, $color-key:null) {
+  // Get the value from $color-name in the map
+  // this can be of type color or a map
+  $color-value: map-get($map, $color-name);
+
+  // If we were given a map we need to grab the value
+  // of the key that is passed or the base key
+  @if(type-of($color-value) == map) {
+    @if($color-key) {
+      $color-value: map-fetch($map, $color-name, $color-key);
+    } @else {
+      $color-value: map-fetch($map, $color-name, base);
+    }
+  }
+
+  // If it isn't a map then return the value
+  @return $color-value;
+}
+
+// Get the color map key based on the value
+// if it doesn't exist then return the value
+// --------------------------------------------------
+@function color-key($colors, $value) {
+  @each $color-name, $color-value in $colors {
+    $base-value: color($colors, $color-name);
+    @if ($base-value == $value) {
+      @return map-get($colors, $color-name);
+    }
+  }
+
+  @return $value;
+}
+
+// Fetch map color contrast
+// @param {Map} $colors - colors map
+// @param {String} $value - color value or color name
+//
+// Example values
+// --------------------------------------------------
+// primary | #327eff   | #444
+// map key | map value | hex color not in map
+// --------------------------------------------------
+//
+// @param {Boolean} $custom-contrast-mode - use custom
+// contrast function
+// @return {Color}
+// --------------------------------------------------
+@function color-contrast($colors, $value, $custom-contrast-mode: null) {
+  $color-value: null;
+
+  // If the value is a color (e.g. #fff)
+  // we need to call color-key to see if
+  // it exists in the color map or not
+  @if (type-of($value) == color) {
+    $color-value: color-key($colors, $value);
+
+  } @else {
+    // If the value is a string (e.g. primary)
+    // we want to get the value from the map
+    // where it is the key
+    $color-value: map-get($colors, $value);
+  }
+
+  // If the value is a map then get the contrast
+  // from the map (e.g. (base: #327eff, contrast: blue))
+  @if (type-of($color-value) == map) {
+    // If the map has the contrast key then use that
+    // otherwise it is a map with just a base so get
+    // the inverse of that base color
+    @if map-has-key($color-value, contrast) {
+      $color-value: map-get($color-value, contrast);
+    } @else {
+      $color-value: color-inverse(map-get($color-value, base));
+    }
+
+  } @elseif ($custom-contrast-mode) {
+    // If a mode was passed we need to call
+    // the custom inverse function to get the inverse
+    // color based on the mode
+    $color-value: mode-inverse($color-value, $custom-contrast-mode);
+
+  } @else {
+    // Otherwise we were passed a color and can use the
+    // function to get the inverse of that color
+    // (e.g. #f4f4f4)
+    $color-value: color-inverse($color-value);
+  }
+
+  // If the final value being returned is not a color
+  // we should error
+  @if (type-of($color-value) != color) {
+    @return color-error($color-value);
+  }
+
+  @return $color-value;
+}
+
+
+// Create a list using the colors map
+// @param {Map} $colors - colors map
+// @return {List} $color-name, $color-base, $color-contrast
+// ----------------------------------------------------------
+@function get-colors($colors) {
+  $colors-list: ();
+
+  @each $color-name, $color-value in $colors {
+    $color-base: null;
+    $color-contrast: null;
+
+    @if(type-of($color-value) == map) {
+      $color-base: map-get($color-value, base);
+      $color-contrast: map-get($color-value, contrast);
+    } @else {
+      $color-base: $color-value;
+      $color-contrast: color-inverse($color-value);
+    }
+
+    $colors-list: append($colors-list, ($color-name, $color-base, $color-contrast), comma);
+  }
+
+  @return $colors-list;
+}

@@ -12,7 +12,7 @@
 
   <form (submit)="doSubmit($event)" [formGroup]="fruitsForm">
 
-    <ion-list radio-group formControlName="fruits">
+    <ion-list radio-group formControlName="fruitsCtrl">
 
       <ion-list-header>
         Fruits
@@ -64,8 +64,8 @@
   </div>
 
   <div padding>
-    <code><b>fruits.dirty:</b> {{fruitsForm.controls.fruits.dirty}}</code><br>
-    <code><b>fruits.value:</b> {{fruitsForm.controls.fruits.value}}</code><br>
+    <code><b>fruits.dirty:</b> {{fruitsCtrl.dirty}}</code><br>
+    <code><b>fruits.value:</b> {{fruitsCtrl.value}}</code><br>
   </div>
 
   <form (submit)="doSubmit($event)" [formGroup]="currencyForm">
@@ -81,7 +81,7 @@
   </form>
 
   <div padding>
-    <code><b>currenciesControl.value:</b> {{currencyForm.controls.currenciesControl.value}}</code>
+    <code><b>currenciesControl.value:</b> {{currenciesControl.value}}</code>
   </div>
 
   <ion-list radio-group [(ngModel)]="relationship">

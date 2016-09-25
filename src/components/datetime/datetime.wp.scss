@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./datetime";
+@import "../../themes/ionic.globals.wp";
 
 // Windows DateTime
 // --------------------------------------------------
@@ -14,13 +13,13 @@ $datetime-wp-padding-left:        $item-wp-padding-left !default;
 $datetime-wp-border-width:        2px !default;
 $datetime-wp-border-color:        $input-wp-border-color !default;
 
-ion-datetime {
+.datetime-wp {
   padding: $datetime-wp-padding-top $datetime-wp-padding-right $datetime-wp-padding-bottom $datetime-wp-padding-left;
 
   min-width: $datetime-wp-min-width;
 }
 
-.datetime-text {
+.datetime-wp .datetime-text {
   padding: 0 8px;
 
   min-height: 3.4rem;
@@ -29,6 +28,6 @@ ion-datetime {
   line-height: 3rem;
 }
 
-.item-datetime ion-label[floating] {
+.item-datetime .datetime-wp ion-label[floating] {
   transform: translate3d(8px, 41px, 0);
 }

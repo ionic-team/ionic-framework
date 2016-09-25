@@ -97,7 +97,7 @@ Looking for an issue to fix? Make sure to look through our issues with the [help
     *
     * ...
     *
-    * @demo /docs/v2/demos/badge/
+    * @demo /docs/v2/demos/src/badge/
   **/
   ```
 3. Run `gulp watch.demos` to watch for changes to the demo

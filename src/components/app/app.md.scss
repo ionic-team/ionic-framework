@@ -1,12 +1,10 @@
-@import "../../globals.md";
+@import "../../themes/ionic.globals.md";
 
 // Material Design App
 // --------------------------------------------------
 
-ion-content {
-  color: $text-md-color;
-}
-
-hr {
-  background-color: rgba(0, 0, 0, .08);
+ion-app.md {
+  font-family: $font-family-md-base;
+  font-size: $font-size-md-base;
+  background-color: $background-md-color;
 }

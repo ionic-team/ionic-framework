@@ -1,6 +1,4 @@
-import * as datetime from '../../../src/util/datetime-util';
-
-export function run() {
+import * as datetime from '../datetime-util';
 
 describe('convertDataToISO', () => {
 
@@ -876,5 +874,3 @@ var customLocale: datetime.LocaleData = {
     'dez'
   ],
 };
-
-}

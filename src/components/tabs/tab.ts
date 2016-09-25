@@ -1,15 +1,17 @@
-import { ChangeDetectorRef, Component, ComponentResolver, ElementRef, EventEmitter, forwardRef, Input, Inject, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { DeepLinker } from '../../navigation/deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
-import { NavControllerBase } from '../nav/nav-controller-base';
-import { NavOptions } from '../nav/nav-interfaces';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { NavOptions } from '../../navigation/nav-util';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
-import { ViewController } from '../nav/view-controller';
+import { TransitionController } from '../../transitions/transition-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -93,14 +95,14 @@ import { ViewController } from '../nav/view-controller';
  * the tabs.
  *
  * ```html
- * <ion-tabs preloadTabs="false">
+ * <ion-tabs>
  *   <ion-tab (ionSelect)="chat()"></ion-tab>
  * </ion-tabs>
  * ```
  *
  * ```ts
  * export class Tabs {
- *   constructor(private modalCtrl: ModalController) {
+ *   constructor(public modalCtrl: ModalController) {
  *
  *   }
  *
@@ -112,7 +114,7 @@ import { ViewController } from '../nav/view-controller';
  * ```
  *
  *
- * @demo /docs/v2/demos/tabs/
+ * @demo /docs/v2/demos/src/tabs/
  * @see {@link /docs/v2/components#tabs Tabs Component Docs}
  * @see {@link ../../tabs/Tabs Tabs API Docs}
  * @see {@link ../../nav/Nav Nav API Docs}
@@ -120,23 +122,40 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-tab',
+  template:
+    '<div #viewport></div><div class="nav-decor"></div>',
   host: {
-    '[class.show-tab]': 'isSelected',
     '[attr.id]': '_tabId',
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
-  template: '<div #viewport></div><div class="nav-decor"></div>',
   encapsulation: ViewEncapsulation.None,
 })
 export class Tab extends NavControllerBase {
-  private _isInitial: boolean;
-  private _isEnabled: boolean = true;
-  private _isShown: boolean = true;
-  private _tabId: string;
-  private _btnId: string;
-  private _loaded: boolean;
-  private _loadTmr: any;
+  /**
+   * @private
+   */
+  _isInitial: boolean;
+  /**
+   * @private
+   */
+  _isEnabled: boolean = true;
+  /**
+   * @private
+   */
+  _isShown: boolean = true;
+  /**
+   * @private
+   */
+  _tabId: string;
+  /**
+   * @private
+   */
+  _btnId: string;
+  /**
+   * @private
+   */
+  _loaded: boolean;
 
   /**
    * @private
@@ -157,6 +176,11 @@ export class Tab extends NavControllerBase {
    * @input {object} Any nav-params to pass to the root page of this tab.
    */
   @Input() rootParams: any;
+
+  /**
+   * @input {string} The URL path name to represent this tab within the URL.
+   */
+  @Input() tabUrlPath: string;
 
   /**
    * @input {string} The title of the tab button.
@@ -221,21 +245,23 @@ export class Tab extends NavControllerBase {
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
   constructor(
-    @Inject(forwardRef(() => Tabs)) public parent: Tabs,
+    parent: Tabs,
     app: App,
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
-    compiler: ComponentResolver,
+    cfr: ComponentFactoryResolver,
     private _cd: ChangeDetectorRef,
-    gestureCtrl: GestureController
+    gestureCtrl: GestureController,
+    transCtrl: TransitionController,
+    @Optional() private linker: DeepLinker
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, compiler, gestureCtrl);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
 
-    parent.add(this);
+    this.id = parent.add(this);
 
     this._tabId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
@@ -261,52 +287,33 @@ export class Tab extends NavControllerBase {
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
-      this.push(this.root, this.rootParams, opts, () => {
-        done(true);
-      });
+      this.push(this.root, this.rootParams, opts, done);
       this._loaded = true;
 
     } else {
-      done(false);
+      done(true);
     }
   }
 
-
   /**
    * @private
    */
-  preload(wait: number) {
-    this._loadTmr = setTimeout(() => {
-      if (!this._loaded) {
-        console.debug('Tabs, preload', this.id);
-        this.load({
-          animate: false,
-          preload: true
-        }, function(){});
-      }
-    }, wait);
-  }
-
-  /**
-   * @private
-   */
-  loadPage(viewCtrl: ViewController, viewport: ViewContainerRef, opts: NavOptions, done: Function) {
-    let isTabSubPage = (this.parent.subPages && viewCtrl.index > 0);
+  _viewInsert(viewCtrl: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
+    const isTabSubPage = (this.parent._subPages && viewCtrl.index > 0);
 
     if (isTabSubPage) {
       viewport = this.parent.portal;
     }
 
-    super.loadPage(viewCtrl, viewport, opts, () => {
-      if (isTabSubPage) {
-        // add the .tab-subpage css class to tabs pages that should act like subpages
-        let pageEleRef = viewCtrl.pageRef();
-        if (pageEleRef) {
-          this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
-        }
+    super._viewInsert(viewCtrl, componentRef, viewport);
+
+    if (isTabSubPage) {
+      // add the .tab-subpage css class to tabs pages that should act like subpages
+      const pageEleRef = viewCtrl.pageRef();
+      if (pageEleRef) {
+        this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
       }
-      done();
-    });
+    }
   }
 
   /**
@@ -314,6 +321,9 @@ export class Tab extends NavControllerBase {
    */
   setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
+
+    this.setElementClass('show-tab', isSelected);
+    this.setElementAttribute('aria-hidden', (!isSelected).toString());
 
     if (isSelected) {
       // this is the selected tab, detect changes
@@ -335,9 +345,18 @@ export class Tab extends NavControllerBase {
   /**
    * @private
    */
-  ngOnDestroy() {
-    clearTimeout(this._loadTmr);
-    super.ngOnDestroy();
+  updateHref(component: any, data: any) {
+    if (this.btn && this.linker) {
+      let href = this.linker.createUrl(this, component, data) || '#';
+      this.btn.updateHref(href);
+    }
+  }
+
+  /**
+   * @private
+   */
+  destroy() {
+    this.destroy();
   }
 
 }

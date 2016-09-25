@@ -1,6 +1,6 @@
 
 it('should check apple via switch element click', function() {
-  element(by.css('[formControlName="appleCtrl"]')).click();
+  element(by.css('[formControlName="apple"]')).click();
 });
 
 

@@ -1,4 +1,3 @@
-@import "./chip";
 
 // iOS Chip
 // --------------------------------------------------
@@ -31,7 +30,7 @@ $chip-ios-icon-background-color:      color($colors-ios, primary) !default;
 $chip-ios-icon-text-color:            color-contrast($colors-ios, $chip-ios-icon-background-color) !default;
 
 
-ion-chip {
+.chip-ios {
   margin: $chip-ios-margin;
 
   height: $chip-ios-height;
@@ -41,24 +40,25 @@ ion-chip {
   line-height: $chip-ios-height;
   color: $chip-ios-text-color;
   background: $chip-ios-background-color;
-
-  > ion-label {
-    margin: $chip-ios-label-margin;
-  }
-
-  > ion-icon {
-    color: $chip-ios-icon-text-color;
-    background-color: $chip-ios-icon-background-color;
-  }
 }
+
+.chip-ios > ion-label {
+  margin: $chip-ios-label-margin;
+}
+
+.chip-ios > ion-icon {
+  color: $chip-ios-icon-text-color;
+  background-color: $chip-ios-icon-background-color;
+}
+
 
 // Generate iOS Chip Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  .chip-#{$color-name},
-  ion-chip .icon-#{$color-name} {
+  .chip-ios-#{$color-name},
+  .chip-ios .icon-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

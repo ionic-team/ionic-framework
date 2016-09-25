@@ -1,0 +1,32 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS FAB Button
+// --------------------------------------------------
+
+/// @prop - Border radius of the FAB button
+$button-ios-fab-border-radius:                      50% !default;
+
+.fab-button {
+  border-radius: $button-ios-fab-border-radius;
+}
+
+
+// Generate iOS FAB colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  $background-color: $color-base;
+  $background-color-activated: color-shade($background-color);
+  $fg-color: $color-contrast;
+
+  .fab-ios-#{$color-name} {
+    color: $fg-color;
+    background-color: $background-color;
+  }
+
+  .fab-ios-#{$color-name}.activated {
+    background-color: $background-color-activated;
+  }
+}
+

@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Chip
 // --------------------------------------------------
@@ -37,42 +37,43 @@ ion-chip {
   vertical-align: middle;
 
   box-sizing: border-box;
+}
 
-  .button {
-    margin: $chip-button-margin;
+ion-chip .button {
+  margin: $chip-button-margin;
 
-    width: $chip-button-size;
-    height: $chip-button-size;
+  width: $chip-button-size;
+  height: $chip-button-size;
 
-    border-radius: $chip-button-border-radius;
-  }
+  border-radius: $chip-button-border-radius;
+}
 
-  ion-icon {
-    width: $chip-icon-size;
-    height: $chip-icon-size;
+ion-chip ion-icon {
+  width: $chip-icon-size;
+  height: $chip-icon-size;
 
-    border-radius: $chip-icon-border-radius;
-    font-size: $chip-icon-font-size;
-    line-height: $chip-icon-size;
-  }
+  border-radius: $chip-icon-border-radius;
 
-  ion-avatar {
-    width: $chip-avatar-size;
-    min-width: $chip-avatar-size;
-    height: $chip-avatar-size;
-    min-height: $chip-avatar-size;
+  font-size: $chip-icon-font-size;
+  line-height: $chip-icon-size;
+}
 
-    border-radius: $chip-avatar-border-radius;
+ion-chip ion-avatar {
+  width: $chip-avatar-size;
+  min-width: $chip-avatar-size;
+  height: $chip-avatar-size;
+  min-height: $chip-avatar-size;
 
-    img {
-      display: block;
+  border-radius: $chip-avatar-border-radius;
+}
 
-      width: 100%;
-      max-width: 100%;
-      height: 100%;
-      max-height: 100%;
+ion-chip ion-avatar img {
+  display: block;
 
-      border-radius: $chip-avatar-border-radius;
-    }
-  }
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+
+  border-radius: $chip-avatar-border-radius;
 }

@@ -5,13 +5,14 @@
 * @description
 * Config allows you to set the modes of your components
 */
-
+import { OpaqueToken } from '@angular/core';
 import { Platform } from '../platform/platform';
+import { QueryParams } from '../platform/query-params';
 import { isObject, isDefined, isFunction, isArray } from '../util/util';
 
 /**
  * @name Config
- * @demo /docs/v2/demos/config/
+ * @demo /docs/v2/demos/src/config/
  * @description
  * The Config lets you configure your entire app or specific platforms.
  * You can set the tab placement, icon mode, animations, and more here.
@@ -111,15 +112,20 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
 **/
 export class Config {
   private _c: any = {};
-  private _s: any = {};
+  private _s: any;
+  private _qp: QueryParams;
+  private _modes: any = {};
+  private _trns: any = {};
 
   /**
    * @private
    */
   platform: Platform;
 
-  constructor(config?: any) {
+  init(config: any, queryParams: QueryParams, platform: Platform) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
+    this._qp = queryParams;
+    this.platform = platform;
   }
 
 
@@ -154,7 +160,7 @@ export class Config {
       let configObj: any = null;
 
       if (this.platform) {
-        let queryStringValue = this.platform.query('ionic' + key.toLowerCase());
+        const queryStringValue = this._qp.get('ionic' + key);
         if (isDefined(queryStringValue)) {
           return this._c[key] = (queryStringValue === 'true' ? true : queryStringValue === 'false' ? false : queryStringValue);
         }
@@ -164,10 +170,10 @@ export class Config {
 
         // array of active platforms, which also knows the hierarchy,
         // with the last one the most important
-        let activePlatformKeys = this.platform.platforms();
+        const activePlatformKeys = this.platform.platforms();
 
         // loop through all of the active platforms we're on
-        for (let i = 0, l = activePlatformKeys.length; i < l; i++) {
+        for (var i = 0, ilen = activePlatformKeys.length; i < ilen; i++) {
 
           // get user defined platform values
           if (this._s.platforms) {
@@ -176,7 +182,7 @@ export class Config {
               if (isDefined(configObj[key])) {
                 userPlatformValue = configObj[key];
               }
-              configObj = Config.getModeConfig(configObj.mode);
+              configObj = this.getModeConfig(configObj.mode);
               if (configObj && isDefined(configObj[key])) {
                 userPlatformModeValue = configObj[key];
               }
@@ -184,7 +190,7 @@ export class Config {
           }
 
           // get default platform's setting
-          configObj = Platform.get(activePlatformKeys[i]);
+          configObj = this.platform.getPlatformConfig(activePlatformKeys[i]);
           if (configObj && configObj.settings) {
 
             if (isDefined(configObj.settings[key])) {
@@ -192,7 +198,7 @@ export class Config {
               platformValue = configObj.settings[key];
             }
 
-            configObj = Config.getModeConfig(configObj.settings.mode);
+            configObj = this.getModeConfig(configObj.settings.mode);
             if (configObj && isDefined(configObj[key])) {
               // found setting for this platform's mode
               platformModeValue = configObj[key];
@@ -204,7 +210,7 @@ export class Config {
 
       }
 
-      configObj = Config.getModeConfig(this._s.mode);
+      configObj = this.getModeConfig(this._s.mode);
       if (configObj && isDefined(configObj[key])) {
         userDefaultModeValue = configObj[key];
       }
@@ -249,7 +255,7 @@ export class Config {
    * value was `null`. Fallback value defaults to `false`.
    */
   getBoolean(key: string, fallbackValue: boolean = false): boolean {
-    let val = this.get(key);
+    const val = this.get(key);
     if (val === null) {
       return fallbackValue;
     }
@@ -273,7 +279,7 @@ export class Config {
    * value turned out to be `NaN`. Fallback value defaults to `NaN`.
    */
   getNumber(key: string, fallbackValue: number = NaN): number {
-    let val = parseFloat( this.get(key) );
+    const val = parseFloat( this.get(key) );
     return isNaN(val) ? fallbackValue : val;
   }
 
@@ -346,24 +352,37 @@ export class Config {
   /**
    * @private
    */
-  setPlatform(platform: Platform) {
-    this.platform = platform;
+  setModeConfig(modeName: string, modeConfig: any) {
+    this._modes[modeName] = modeConfig;
   }
 
   /**
    * @private
    */
-  static setModeConfig(mode: string, config: any) {
-    modeConfigs[mode] = config;
+  getModeConfig(modeName: string): any {
+    return this._modes[modeName] || null;
   }
 
   /**
    * @private
    */
-  static getModeConfig(mode: string) {
-    return modeConfigs[mode] || null;
+  setTransition(trnsName: string, trnsClass: any) {
+    this._trns[trnsName] = trnsClass;
+  }
+
+  /**
+   * @private
+   */
+  getTransition(trnsName: string): any {
+    return this._trns[trnsName] || null;
   }
 
 }
 
-let modeConfigs: any = {};
+export const ConfigToken = new OpaqueToken('USERCONFIG');
+
+export function setupConfig(userConfig: any, queryParams: QueryParams, platform: Platform): Config {
+  const config = new Config();
+  config.init(userConfig, queryParams, platform);
+  return config;
+}

@@ -1,5 +1,5 @@
 import { PanGesture } from './drag-gesture';
-import { clamp } from '../util';
+import { clamp } from '../util/util';
 import { pointerCoord } from '../util/dom';
 
 /**
@@ -33,23 +33,32 @@ export class SlideGesture extends PanGesture {
   }
 
   onDragStart(ev: any) {
-    this.slide = {};
-    this.onSlideBeforeStart(this.slide, ev);
-
-    let {min, max} = this.getSlideBoundaries(this.slide, ev);
+    this.onSlideBeforeStart(ev);
     let coord = <any>pointerCoord(ev);
+    let pos = coord[this.direction];
+
+    this.slide = {
+      min: 0,
+      max: 0,
+      pointerStartPos: pos,
+      pos: pos,
+      timestamp: Date.now(),
+      elementStartPos: 0,
+      started: true,
+      delta: 0,
+      distance: 0,
+      velocity: 0,
+    };
+    let {min, max} = this.getSlideBoundaries(this.slide, ev);
     this.slide.min = min;
     this.slide.max = max;
     this.slide.elementStartPos = this.getElementStartPos(this.slide, ev);
-    this.slide.pos = this.slide.pointerStartPos = coord[this.direction];
-    this.slide.timestamp = Date.now();
-    this.slide.started = true;
-    this.slide.velocity = 0;
+
     this.onSlideStart(this.slide, ev);
   }
 
   onDragMove(ev: any) {
-    let slide = this.slide;
+    let slide: SlideData = this.slide;
     let coord = <any>pointerCoord(ev);
     let newPos = coord[this.direction];
     let newTimestamp = Date.now();
@@ -74,7 +83,7 @@ export class SlideGesture extends PanGesture {
     this.slide = null;
   }
 
-  onSlideBeforeStart(slide?: SlideData, ev?: any): void {}
+  onSlideBeforeStart(ev?: any): void {}
   onSlideStart(slide?: SlideData, ev?: any): void {}
   onSlide(slide?: SlideData, ev?: any): void {}
   onSlideEnd(slide?: SlideData, ev?: any): void {}
@@ -84,14 +93,14 @@ export class SlideGesture extends PanGesture {
  * @private
  */
 export interface SlideData {
-  min?: number;
-  max?: number;
-  distance?: number;
-  delta?: number;
-  started?: boolean;
-  pos?: any;
-  timestamp?: number;
-  pointerStartPos?: number;
-  elementStartPos?: number;
-  velocity?: number;
+  min: number;
+  max: number;
+  distance: number;
+  delta: number;
+  started: boolean;
+  pos: any;
+  timestamp: number;
+  pointerStartPos: number;
+  elementStartPos: number;
+  velocity: number;
 }

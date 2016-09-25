@@ -1,0 +1,17 @@
+{
+  "name": "ionic-demos",
+  "private": true,
+  "version": "1.0.0",
+  "description": "ionic demos",
+  "author": "Ionic Team <hi@ionic.io> (http://ionic.io)",
+  "license": "MIT",
+  "dependencies": {
+    "ionic-angular": "2.0.0-beta.11-201609161747",
+    "ionicons": "3.0.0",
+    "rxjs": "5.0.0-beta.12"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "0.6.2",
+    "typescript": "rc"
+  }
+}
