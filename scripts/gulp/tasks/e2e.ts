@@ -14,7 +14,7 @@ import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
 import { argv } from 'yargs';
 
-import { DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES_MODULE, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, setSassIonicVersion, writePolyfills } from '../util';
 
 task('e2e', e2eBuild);
@@ -110,7 +110,7 @@ function buildE2ETests(folderInfo: any, done: Function) {
       `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/entry.ts`,
     ];
   }
-  createTempTsConfig(includeGlob, ES_MODULE, `${DIST_E2E_ROOT}/tsconfig.json`);
+  createTempTsConfig(includeGlob, ES5, ES_2015, `${DIST_E2E_ROOT}/tsconfig.json`);
   runNgc(`${DIST_E2E_ROOT}/tsconfig.json`, (err) => {
     if (err) {
       done(err);

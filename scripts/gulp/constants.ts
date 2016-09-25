@@ -12,9 +12,9 @@ export const BUILD_NAME = 'build';
 export const SRC_NAME = 'src';
 export const VENDOR_NAME = 'vendor';
 export const NODE_MODULES = 'node_modules';
-export const COMMONJS_MODULE = 'commonjs';
-export const ES_MODULE = 'es2015';
-
+export const UMD_MODULE = 'umd';
+export const ES_2015 = 'es2015';
+export const ES5 = 'es5';
 
 // File Paths
 export const PROJECT_ROOT = join(__dirname, '../..');
@@ -24,7 +24,8 @@ export const DIST_ROOT = join(PROJECT_ROOT, DIST_NAME);
 export const DIST_E2E_ROOT = join(DIST_ROOT, E2E_NAME);
 export const DIST_E2E_COMPONENTS_ROOT = join(DIST_E2E_ROOT, COMPONENTS_NAME);
 export const DIST_BUILD_ROOT = join(DIST_ROOT, PACKAGE_NAME);
-export const DIST_BUILD_COMMONJS_ROOT = join(DIST_BUILD_ROOT, COMMONJS_MODULE);
+export const DIST_BUILD_UMD_ROOT = join(DIST_BUILD_ROOT, UMD_MODULE);
+export const DIST_BUILD_ES2015_ROOT = join(DIST_BUILD_ROOT, ES_2015);
 export const DIST_VENDOR_ROOT = join(DIST_ROOT, VENDOR_NAME);
 export const NODE_MODULES_ROOT = join(PROJECT_ROOT, NODE_MODULES);
 export const SCRIPTS_ROOT = join(PROJECT_ROOT, SCRIPTS_NAME);

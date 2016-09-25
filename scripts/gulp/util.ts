@@ -1,4 +1,4 @@
-import { COMMONJS_MODULE, ES_MODULE, NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
+import { UMD_MODULE, ES_2015, NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import { join } from 'path';
 import * as fs from 'fs';
@@ -32,7 +32,7 @@ function getRootTsConfig(): any {
   return tsConfig;
 }
 
-export function createTempTsConfig(includeGlob: string[], moduleType: String, pathToWriteFile: string): any {
+export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToWriteFile: string): any {
   let config = getRootTsConfig();
   if (!config.compilerOptions) {
     config.compilerOptions = {};
@@ -43,6 +43,7 @@ export function createTempTsConfig(includeGlob: string[], moduleType: String, pa
   }
   if (config.compilerOptions) {
     config.compilerOptions.module = moduleType;
+    config.compilerOptions.target = target;
   }
   config.include = includeGlob;
   let json = JSON.stringify(config, null, 2);
@@ -121,9 +122,9 @@ export function copyFile(srcPath: string, destPath: string) {
 
 export function copySwiperToPath(distPath: string, moduleType: string) {
   copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.d.ts`, `${distPath}/swiper-widget.d.ts`);
-  if (!moduleType || moduleType === COMMONJS_MODULE) {
+  if (!moduleType || moduleType === UMD_MODULE) {
     copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.js`, `${distPath}/swiper-widget.js`);
-  } else if (moduleType === ES_MODULE) {
+  } else if (moduleType === ES_2015) {
     copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.es2015.js`, `${distPath}/swiper-widget.js`);
   } else {
     copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.system.js`, `${distPath}/swiper-widget.system.js`);
