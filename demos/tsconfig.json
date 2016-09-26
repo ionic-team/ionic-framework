@@ -10,7 +10,7 @@
     "noImplicitAny": false,
     "removeComments": true,
     "target": "es5",
-    "types": ["jasmine", "protractor"]
+    "types": ["jasmine"]
   },
   "include": [
     "./src/**/app.module.ts",
