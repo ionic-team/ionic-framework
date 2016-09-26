@@ -89,6 +89,8 @@ ion-alert input {
 }
 
 .alert-tappable {
+  @include appearance(none);
+
   margin: 0;
   padding: 0;
 
@@ -98,6 +100,4 @@ ion-alert input {
   line-height: initial;
   text-align: left;
   background: transparent;
-
-  -webkit-appearance: none;
 }
