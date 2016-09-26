@@ -27,6 +27,7 @@
   "dependencies": {
     "@angular/common": "^2.0.0",
     "@angular/compiler": "^2.0.0",
+    "@angular/compiler-cli": "^0.6.2",
     "@angular/core": "^2.0.0",
     "@angular/forms": "^2.0.0",
     "@angular/http": "^2.0.0",
@@ -39,7 +40,6 @@
     "zone.js": "^0.6.21"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "0.6.2",
     "@types/connect": "3.4.30",
     "@types/del": "2.2.31",
     "@types/glob": "5.0.30",
