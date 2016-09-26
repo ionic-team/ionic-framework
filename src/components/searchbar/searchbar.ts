@@ -34,7 +34,13 @@ import { Debouncer } from '../../util/debouncer';
         '<ion-icon name="arrow-back"></ion-icon>' +
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
-      '<input #searchbarInput [(ngModel)]="_value" [attr.placeholder]="placeholder" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" class="searchbar-input">' +
+      '<input #searchbarInput [(ngModel)]="_value" ' +
+        '[attr.placeholder]="placeholder" ' +
+        '[attr.type]="type" ' +
+        '[attr.autocomplete]="_autocomplete" ' +
+        '[attr.autocorrect]="_autocorrect" ' +
+        '[attr.spellcheck]="_spellcheck" ' +
+        '(input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" class="searchbar-input">' +
       '<button ion-button clear class="searchbar-clear-icon" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button"></button>' +
     '</div>' +
     '<button ion-button #cancelButton [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
@@ -52,8 +58,10 @@ export class Searchbar extends Ion {
   _shouldBlur: boolean = true;
   _shouldAlignLeft: boolean = true;
   _isCancelVisible: boolean = false;
+  _spellcheck: boolean = false;
+  _autocomplete: string = 'off';
+  _autocorrect: string = 'off';
   _isActive: boolean = false;
-  _searchbarInput: ElementRef;
   _debouncer: Debouncer = new Debouncer(250);
 
   /**
@@ -101,17 +109,26 @@ export class Searchbar extends Ion {
   /**
    * @input {string} Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
    */
-  @Input() autocomplete: string;
+  @Input()
+  set autocomplete(val: string) {
+    this._autocomplete = (val === '' || val === 'on') ? 'on' : this._config.get('autocomplete', 'off');
+  }
 
   /**
    * @input {string} Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
    */
-  @Input() autocorrect: string;
+  @Input()
+  set autocorrect(val: string) {
+    this._autocorrect = (val === '' || val === 'on') ? 'on' : this._config.get('autocorrect', 'off');
+  }
 
   /**
    * @input {string|boolean} Set the input's spellcheck property. Values: `true`, `false`. Default `false`.
    */
-  @Input() spellcheck: string|boolean;
+  @Input()
+  set spellcheck(val: string | boolean) {
+    this._spellcheck = (val === '' || val === 'true' || val === true) ? true : this._config.getBoolean('spellcheck', false);
+  }
 
   /**
    * @input {string} Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
@@ -169,30 +186,7 @@ export class Searchbar extends Ion {
     }
   }
 
-  /**
-   * @private
-   */
-  @ViewChild('searchbarInput')
-  set searchbarInput(searchbarInput: ElementRef) {
-    this._searchbarInput = searchbarInput;
-
-    let inputEle = searchbarInput.nativeElement;
-
-    // By defalt set autocomplete="off" unless specified by the input
-    let autoComplete = (this.autocomplete === '' || this.autocomplete === 'on') ? 'on' : this._config.get('autocomplete', 'off');
-    inputEle.setAttribute('autocomplete', autoComplete);
-
-    // by default set autocorrect="off" unless specified by the input
-    let autoCorrect = (this.autocorrect === '' || this.autocorrect === 'on') ? 'on' : this._config.get('autocorrect', 'off');
-    inputEle.setAttribute('autocorrect', autoCorrect);
-
-    // by default set spellcheck="false" unless specified by the input
-    let spellCheck = (this.spellcheck === '' || this.spellcheck === 'true' || this.spellcheck === true) ? true : this._config.getBoolean('spellcheck', false);
-    inputEle.setAttribute('spellcheck', spellCheck);
-
-    // by default set type="search" unless specified by the input
-    inputEle.setAttribute('type', this.type);
-  }
+  @ViewChild('searchbarInput') _searchbarInput: ElementRef;
 
   @ViewChild('searchbarIcon') _searchbarIcon: ElementRef;
 
