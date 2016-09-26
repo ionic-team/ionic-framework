@@ -1,16 +1,18 @@
 <ion-header>
 
   <ion-navbar no-border-bottom>
-    <ion-title>Searchbar</ion-title>
+    <ion-searchbar color="primary" autofocus (ionInput)="getItems($event)" placeholder="Filter Schedules">
+    </ion-searchbar>
   </ion-navbar>
 
   <ion-toolbar no-border-top>
-    <ion-searchbar color="primary" (ionInput)="getItems($event)" placeholder="Filter Schedules">
-    </ion-searchbar>
+    <ion-title>Searchbar</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openModal()">Open modal</button>
+    </ion-buttons>
   </ion-toolbar>
 
 </ion-header>
-
 
 <ion-content>
 

@@ -135,7 +135,7 @@ export class Searchbar extends Ion {
   @Input() type: string = 'search';
 
   /**
-   * @input {string|boolean} Set the input's spellcheck property. Values: `true`, `false`. Default `false`.
+   * @input {string|boolean} Configures if the searchbar is animated or no. By default, animation is disabled.
    */
   @Input() animated: string | boolean = false;
 
@@ -357,7 +357,7 @@ export class Searchbar extends Ion {
     this.ionClear.emit(ev);
 
     // setTimeout() fixes https://github.com/driftyco/ionic/issues/7527
-    // way for 4 frames
+    // wait for 4 frames
     setTimeout(() => {
       let value = this._value;
       if (isPresent(value) && value !== '') {
@@ -418,7 +418,7 @@ export class Searchbar extends Ion {
     this.onTouched = fn;
   }
 
-  focus() {
-    this.getNativeElement().focus();
+  setFocus() {
+    this._renderer.invokeElementMethod(this._searchbarInput.nativeElement, 'focus');
   }
 }
