@@ -122,6 +122,9 @@ export class Config {
    */
   platform: Platform;
 
+  /**
+   * @private
+   */
   init(config: any, queryParams: QueryParams, platform: Platform) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
     this._qp = queryParams;
@@ -379,8 +382,14 @@ export class Config {
 
 }
 
+/**
+ * @private
+ */
 export const ConfigToken = new OpaqueToken('USERCONFIG');
 
+/**
+ * @private
+ */
 export function setupConfig(userConfig: any, queryParams: QueryParams, platform: Platform): Config {
   const config = new Config();
   config.init(userConfig, queryParams, platform);

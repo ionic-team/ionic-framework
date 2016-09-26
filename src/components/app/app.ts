@@ -11,7 +11,9 @@ import { ViewController } from '../../navigation/view-controller';
 
 
 /**
- * Ionic App
+ * @name App
+ * @description
+ * App is a utility class used in Ionic to get information about various aspects of an app
  */
 @Injectable()
 export class App {

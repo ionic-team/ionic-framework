@@ -1,6 +1,7 @@
 import { Directive } from '@angular/core';
 
 /**
+  * @private
   * @name Grid
   * @module ionic
   * @description
@@ -13,6 +14,7 @@ export class Grid {
 }
 
 /**
+  * @private
   * @name Row
   * @module ionic
   * @description
@@ -25,6 +27,7 @@ export class Row {
 }
 
 /**
+  * @private
   * @name Column
   * @module ionic
   * @description

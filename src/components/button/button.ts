@@ -263,6 +263,7 @@ export class Button extends Ion {
     }
   }
 
+  /** @private */
   ngAfterContentInit() {
     this._init = true;
     this._assignCss(true);
