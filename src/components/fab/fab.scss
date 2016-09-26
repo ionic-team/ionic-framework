@@ -4,34 +4,33 @@
 // --------------------------------------------------
 
 /// @prop - Width and height of the FAB button
-$button-fab-size:            56px !default;
-$button-fab-mini-size:       40px !default;
-$button-fab-content-margin:  10px !default;
-$button-fab-list-margin:     10px !default;
+$fab-size:            56px !default;
+$fab-mini-size:       40px !default;
+$fab-content-margin:  10px !default;
+$fab-list-margin:     10px !default;
 
 
-.fab-button {
+.fab {
+  @include appearance(none);
+
   position: relative;
   z-index: 0;
   display: block;
   overflow: hidden;
 
-  width: $button-fab-size;
-  height: $button-fab-size;
+  width: $fab-size;
+  height: $fab-size;
 
+  border-radius: 50%;
   font-size: 14px;
-  line-height: $button-fab-size;
+  line-height: $fab-size;
   text-align: center;
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
-  color: #fff;
-  background-color: #327eff;
   cursor: pointer;
   transition: background-color, opacity 100ms linear;
 
-  -moz-appearance: none;
-  -webkit-appearance: none;
   background-clip: padding-box;
   font-kerning: none;
   user-select: none;
@@ -46,16 +45,16 @@ $button-fab-list-margin:     10px !default;
 // FAB mini
 // --------------------------------------------------
 
-.fab-button[mini] {
-  margin: ($button-fab-size - $button-fab-mini-size) / 2;
+.fab[mini] {
+  margin: ($fab-size - $fab-mini-size) / 2;
 
-  width: $button-fab-mini-size;
-  height: $button-fab-mini-size;
+  width: $fab-mini-size;
+  height: $fab-mini-size;
 
-  line-height: $button-fab-mini-size;
+  line-height: $fab-mini-size;
 
   .fab-close-icon {
-    line-height: $button-fab-mini-size;
+    line-height: $fab-mini-size;
   }
 }
 
@@ -70,37 +69,37 @@ ion-fab {
   &[center] {
     left: 50%;
 
-    margin-left: -$button-fab-size / 2;
+    margin-left: -$fab-size / 2;
   }
 
   &[middle] {
     top: 50%;
 
-    margin-top: -$button-fab-size / 2;
+    margin-top: -$fab-size / 2;
   }
 
   &[top] {
-    top: $button-fab-content-margin;
+    top: $fab-content-margin;
   }
 
   &[right] {
-    right: $button-fab-content-margin;
+    right: $fab-content-margin;
   }
 
   &[bottom] {
-    bottom: $button-fab-content-margin;
+    bottom: $fab-content-margin;
   }
 
   &[left] {
-    left: $button-fab-content-margin;
+    left: $fab-content-margin;
   }
 
   &[top][edge] {
-    top: -$button-fab-size / 2;
+    top: -$fab-size / 2;
   }
 
   &[bottom][edge] {
-    bottom: -$button-fab-size / 2;
+    bottom: -$fab-size / 2;
   }
 }
 
@@ -116,32 +115,30 @@ ion-fab-list {
   flex-direction: column;
   align-items: center;
 
-  margin: $button-fab-size + $button-fab-list-margin 0;
+  margin: $fab-size + $fab-list-margin 0;
 
-  min-width: $button-fab-size;
-  min-height: $button-fab-size;
+  min-width: $fab-size;
+  min-height: $fab-size;
+}
 
-  .fab-button {
-    margin: 8px;
+ion-fab-list .fab-in-list {
+  margin: 8px;
 
-    width: $button-fab-mini-size;
-    height: $button-fab-mini-size;
+  width: $fab-mini-size;
+  height: $fab-mini-size;
 
-    color: #797979;
-    background: #fff;
-    opacity: 0;
-    visibility: hidden;
-    transform: scale(0);
-    transition: all 200ms ease;
-    transition-delay: 10ms;
-    transition-property: transform, opacity;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0);
+  transition: all 200ms ease;
+  transition-delay: 10ms;
+  transition-property: transform, opacity;
+}
 
-    &.fab-dial-button-visible {
-      opacity: 1;
-      visibility: visible;
-      transform: scale(1);
-    }
-  }
+ion-fab-list .fab-in-list.show {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
 }
 
 ion-fab-list[side=top] {
@@ -156,7 +153,7 @@ ion-fab-list[side=left] {
 
   flex-direction: row-reverse;
 
-  margin: 0 $button-fab-size + $button-fab-list-margin;
+  margin: 0 $fab-size + $fab-list-margin;
 }
 
 ion-fab-list[side=right] {
@@ -164,7 +161,7 @@ ion-fab-list[side=right] {
 
   flex-direction: row;
 
-  margin: 0 $button-fab-size + $button-fab-list-margin;
+  margin: 0 $fab-size + $fab-list-margin;
 }
 
 
@@ -181,13 +178,13 @@ ion-fab-list[side=right] {
   right: 0;
   left: 0;
 
-  line-height: $button-fab-size;
+  line-height: $fab-size;
   opacity: 0;
   transform: scale(.4) rotateZ(-45deg);
   transition: all ease-in-out 300ms;
 }
 
-.fab-button .button-inner {
+.fab .button-inner {
   transition: all ease-in-out 300ms;
 }
 

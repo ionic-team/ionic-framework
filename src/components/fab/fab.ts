@@ -66,12 +66,6 @@ import { isTrueProperty } from '../../util/util';
 export class FabButton extends Ion  {
 
   /**
-   * @private
-   */
-  ngAfterContentInit() {
-    this.setElementClass('fab-button', true); // set role
-  }
-  /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
@@ -93,6 +87,7 @@ export class FabButton extends Ion  {
     renderer: Renderer,
   ) {
     super(config, elementRef, renderer);
+    this.setElementClass('fab', true); // set role
     this.mode = config.get('mode');
   }
 
@@ -120,8 +115,15 @@ export class FabButton extends Ion  {
 })
 export class FabList {
   _visible: boolean = false;
+  _fabs: FabButton[] = [];
 
-  @ContentChildren(FabButton) _buttons: QueryList<FabButton>;
+  @ContentChildren(FabButton)
+  set _setbuttons(query: QueryList<FabButton>) {
+    let fabs = this._fabs = query.toArray();
+    for (var fab of fabs) {
+      fab.setElementClass('fab-in-list', true);
+    }
+  }
 
   /**
    * @private
@@ -132,15 +134,15 @@ export class FabList {
       return;
     }
 
-    let buttons = this._buttons.toArray();
+    let fabs = this._fabs;
     let i = 1;
     if (visible) {
-      buttons.forEach(fab => {
-        setTimeout(() => fab.setElementClass('fab-dial-button-visible', true), i * 30);
+      fabs.forEach(fab => {
+        setTimeout(() => fab.setElementClass('show', true), i * 30);
         i++;
       });
     } else {
-      buttons.forEach(fab => fab.setElementClass('fab-dial-button-visible', false));
+      fabs.forEach(fab => fab.setElementClass('show', false));
     }
     this._visible = visible;
   }
