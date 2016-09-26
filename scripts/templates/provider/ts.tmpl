@@ -11,7 +11,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class $CLASSNAME {
 
-  constructor(private http: Http) {
+  constructor(public http: Http) {
+    console.log('Hello $CLASSNAME Provider');
   }
 
 }

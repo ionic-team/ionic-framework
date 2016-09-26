@@ -8,12 +8,15 @@ import { NavController } from 'ionic-angular';
   Ionic pages and navigation.
 */
 @Component({
+  selector: 'page-$FILENAME',
   templateUrl: '$FILENAME.html'
 })
 export class $CLASSNAME {
 
-  constructor(private navCtrl: NavController) {
+  constructor(public navCtrl: NavController) {}
 
+  ionViewDidLoad() {
+    console.log('Hello $CLASSNAME Page');
   }
 
 }
