@@ -20,8 +20,6 @@
     "@angular/platform-browser": "",
     "@angular/platform-browser-dynamic": "",
     "@angular/platform-server": "",
-    "ionicons": "",
-    "ionic-native": "",
     "rxjs": "",
     "zone.js": ""
   }
