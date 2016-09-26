@@ -34,13 +34,12 @@ import { Debouncer } from '../../util/debouncer';
         '<ion-icon name="arrow-back"></ion-icon>' +
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
-      '<input #searchbarInput [(ngModel)]="_value" ' +
+      '<input #searchbarInput class="searchbar-input" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" ' +
         '[attr.placeholder]="placeholder" ' +
         '[attr.type]="type" ' +
         '[attr.autocomplete]="_autocomplete" ' +
         '[attr.autocorrect]="_autocorrect" ' +
-        '[attr.spellcheck]="_spellcheck" ' +
-        '(input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" class="searchbar-input">' +
+        '[attr.spellcheck]="_spellcheck">' +
       '<button ion-button clear class="searchbar-clear-icon" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button"></button>' +
     '</div>' +
     '<button ion-button #cancelButton [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
@@ -202,6 +201,12 @@ export class Searchbar extends Ion {
 
   set value(val) {
     this._value = val;
+    if (this._searchbarInput) {
+      let ele = this._searchbarInput.nativeElement;
+      if (ele) {
+        ele.value = val;
+      }
+    }
   }
 
   /**
@@ -306,9 +311,8 @@ export class Searchbar extends Ion {
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev: any) {
-    let value = ev.target.value;
+    this._value = ev.target.value;
     this._debouncer.debounce(() => {
-      this._value = value;
       this.onChange(this._value);
       this.ionInput.emit(ev);
     });
@@ -352,12 +356,16 @@ export class Searchbar extends Ion {
   clearInput(ev: UIEvent) {
     this.ionClear.emit(ev);
 
-    if (isPresent(this._value) && this._value !== '') {
-      this._value = '';
-      this.onChange(this._value);
-      this.ionInput.emit(ev);
-    }
-
+    // setTimeout() fixes https://github.com/driftyco/ionic/issues/7527
+    // way for 4 frames
+    setTimeout(() => {
+      let value = this._value;
+      if (isPresent(value) && value !== '') {
+        this.value = ''; // DOM WRITE
+        this.onChange(this._value);
+        this.ionInput.emit(ev);
+      }
+    }, 16 * 4);
     this._shouldBlur = false;
   }
 
@@ -380,7 +388,7 @@ export class Searchbar extends Ion {
    * Write a new value to the element.
    */
   writeValue(val: any) {
-    this._value = val;
+    this.value = val;
     this.positionElements();
   }
 
