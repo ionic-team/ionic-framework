@@ -85,8 +85,44 @@ export { ViewController } from './navigation/view-controller';
     ToastCmp
   ]
 })
-export class IonicModule {
 
+/**
+ * @name IonicModule
+ * @description
+ * IonicModule is a NgModule that allows you to create an app by passing it a Root App Component to use as root
+ * It provides all the needed components/directives for an app, such as Tabs, Menus, and NavController
+ *
+ * @usage
+ * ```ts
+ * import { NgModule } from '@angular/core';
+ * import { IonicApp, IonicModule } from 'ionic-angular';
+ * import { MyApp } from './app.component';
+ * import { HomePage } from '../pages/home/home';
+ * @NgModule({
+ *   declarations: [
+ *     MyApp,
+ *     HomePage
+ *   ],
+ *   imports: [
+ *     IonicModule.forRoot(MyApp)
+ *   ],
+ *   bootstrap: [IonicApp],
+ *   entryComponents: [
+ *     MyApp,
+ *     HomePage
+ *   ],
+ *   providers: []
+ * })
+ * export class AppModule {}
+ * ```
+ */
+export class IonicModule {
+    /**
+     * Set the root app component for you IonicModule
+     * @param {any} appRoot The root AppComponent for this app.
+     * @param {any} config Config Options for the app. Accepts any config property.
+     * @param {any} deepLinkConfig Any configuration needed for the Ionic Deeplinker.
+     */
   static forRoot(appRoot: any, config: any = null, deepLinkConfig: any = null): ModuleWithProviders {
     return {
       ngModule: IonicModule,

@@ -106,8 +106,14 @@ export interface DeepLinkMetadataFactory {
   new (obj: DeepLinkMetadataType): DeepLinkMetadata;
 }
 
+/**
+ * @private
+ */
 export var DeepLink: DeepLinkMetadataFactory;
 
+/**
+ * @private
+ */
 export interface DeepLinkConfig {
   links: DeepLinkMetadata[];
 }

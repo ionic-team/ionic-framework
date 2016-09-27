@@ -46,6 +46,11 @@ import { ViewController } from './view-controller';
  * truth in navigation. This encourages flexible navigation design and happy apps all
  * over the world.
  */
+
+/**
+ * @private
+ *
+ */
 export class DeepLinker {
   segments: NavSegment[] = [];
   history: string[] = [];

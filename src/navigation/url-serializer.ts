@@ -4,6 +4,9 @@ import { DeepLinkConfig, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
 
+/**
+ * @private
+ */
 export class UrlSerializer {
   links: NavLink[];
 
@@ -306,6 +309,9 @@ function sortConfigLinks(a: NavLink, b: NavLink) {
 
 const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|>|<|;|:|@|&|=/g;
 
+/**
+ * @private
+ */
 export const DeepLinkConfigToken = new OpaqueToken('USERLINKS');
 
 export function setupUrlSerializer(userDeepLinkConfig: any): UrlSerializer {
