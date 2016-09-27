@@ -89,6 +89,29 @@
       <ion-textarea value="To infinity and beyond"></ion-textarea>
     </ion-item>
 
+    <ion-item>
+      <ion-label fixed>Attributes</ion-label>
+      <!-- 
+      [autocomplete]="str"
+      [autocorrect]="str"
+      [autocapitalize]="str"
+      [list]="str"
+      [name]="str"
+      [max]="num"
+      [maxlength]="num"
+      [min]="num"
+      [minlength]="num"
+      [step]="num"
+      [tabindex]="num"
+      autofocus
+      readonly
+      required
+      spellcheck
+      disabled
+      -->
+      <ion-input #attrs id="attr_inp"></ion-input>
+    </ion-item>
+
   </ion-list>
 
   <p>{{url}}</p>

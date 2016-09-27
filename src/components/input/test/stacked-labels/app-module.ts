@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, ViewChild } from '@angular/core';
 import { IonicApp, IonicModule } from '../../../..';
 
 
@@ -7,6 +7,8 @@ import { IonicApp, IonicModule } from '../../../..';
 })
 export class PageOne {
   gender = '';
+  str = 'foo';
+  num = 1;
 }
 
 
