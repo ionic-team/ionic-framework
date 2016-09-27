@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { LoadingController, NavController } from 'ionic-angular';
 
 @Component({
-  templateUrl: 'page.html'
+  templateUrl: 'page.html',
+  styleUrls: ['style.css']
 })
 export class Page1 {
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController) {}
