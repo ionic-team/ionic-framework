@@ -19,6 +19,21 @@ task('release', (done: (err: any) => void) => {
   runSequence('release.prepareReleasePackage', 'release.copyProdVersion', done);
 });
 
+task('release.publishRelease', (done: Function) => {
+  const npmCmd = spawn('npm', ['publish', DIST_BUILD_ROOT]);
+  npmCmd.stdout.on('data', function (data) {
+    console.log(data.toString());
+  });
+
+  npmCmd.stderr.on('data', function (data) {
+    console.log('npm err: ' + data.toString());
+  });
+
+  npmCmd.on('close', function() {
+    done();
+  });
+});
+
 task('release.copyProdVersion', () => {
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
   const packageJsonToUpdate = require(`${DIST_BUILD_ROOT}/package.json`);
