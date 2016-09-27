@@ -15,6 +15,8 @@ export const NODE_MODULES = 'node_modules';
 export const UMD_MODULE = 'umd';
 export const ES_2015 = 'es2015';
 export const ES5 = 'es5';
+export const INDEX_JS = 'index.js';
+export const BUNDLES = 'bundles';
 
 // File Paths
 export const PROJECT_ROOT = join(__dirname, '../..');
@@ -24,7 +26,9 @@ export const DIST_ROOT = join(PROJECT_ROOT, DIST_NAME);
 export const DIST_E2E_ROOT = join(DIST_ROOT, E2E_NAME);
 export const DIST_E2E_COMPONENTS_ROOT = join(DIST_E2E_ROOT, COMPONENTS_NAME);
 export const DIST_BUILD_ROOT = join(DIST_ROOT, PACKAGE_NAME);
+export const DIST_BUNDLE_ROOT = join(DIST_BUILD_ROOT, BUNDLES);
 export const DIST_BUILD_UMD_ROOT = join(DIST_BUILD_ROOT, UMD_MODULE);
+export const DIST_BUILD_UMD_BUNDLE_ENTRYPOINT = join(DIST_BUILD_ROOT, INDEX_JS);
 export const DIST_BUILD_ES2015_ROOT = join(DIST_BUILD_ROOT, ES_2015);
 export const DIST_VENDOR_ROOT = join(DIST_ROOT, VENDOR_NAME);
 export const NODE_MODULES_ROOT = join(PROJECT_ROOT, NODE_MODULES);

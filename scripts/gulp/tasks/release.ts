@@ -2,9 +2,12 @@ import { spawn, exec } from 'child_process';
 import { writeFileSync } from 'fs';
 
 import { dest, src, task } from 'gulp';
+import { rollup } from 'rollup';
+import * as commonjs from 'rollup-plugin-commonjs';
+import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as runSequence from 'run-sequence';
 
-import { DIST_BUILD_ROOT, SCRIPTS_ROOT, SRC_ROOT, PROJECT_ROOT } from '../constants';
+import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
 import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
 
@@ -13,11 +16,31 @@ task('nightly', (done: (err: any) => void) => {
 });
 
 task('release.prepareNightly', (done: (err: any) => void) => {
-  runSequence('release.pullLatest', 'validate', 'release.copyTemplates', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
+  runSequence(/*'release.pullLatest', 'validate',*/ 'release.copyTemplates', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
 });
 
 task('release.nightlyPackage', (done: (err: any) => void) => {
-  runSequence('clean', 'release.polyfill', 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', done);
+  runSequence('clean', 'release.polyfill', 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', 'release.createUmdBundle', done);
+});
+
+task('release.createUmdBundle', (done: Function) => {
+  return rollup({
+    entry: DIST_BUILD_UMD_BUNDLE_ENTRYPOINT,
+    plugins: [
+      nodeResolve({
+        module: true,
+        jsnext: true,
+        main: true
+      }),
+      commonjs()
+    ]
+  }).then((bundle) => {
+    return bundle.write({
+      format: 'umd',
+      moduleName: 'umd-bundle',
+      dest: `${DIST_BUNDLE_ROOT}/ionic.umd.js`
+    });
+  });
 });
 
 task('release.polyfill', (done: Function) => {
