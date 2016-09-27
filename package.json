@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ionic2",
-  "version": "2.0.0-beta.11",
+  "version": "ionic-angular 2.0.0-rc.test",
   "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular 2",
   "keywords": [
     "ionic",
@@ -51,7 +51,6 @@
     "@types/merge2": "0.3.29",
     "@types/mkdirp": "0.3.29",
     "@types/node": "6.0.34",
-    "@types/protractor": "1.5.19",
     "@types/run-sequence": "0.0.28",
     "@types/semver": "5.3.30",
     "@types/serve-static": "1.7.31",

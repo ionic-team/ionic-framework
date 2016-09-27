@@ -12,15 +12,36 @@ import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePoly
 
 
 task('nightly', (done: (err: any) => void) => {
-  runSequence('release.nightlyPackage', 'release.publishNightly', done);
+  runSequence('release.prepareReleasePackage', 'release.publishNightly', done);
 });
 
-task('release.prepareNightly', (done: (err: any) => void) => {
-  runSequence(/*'release.pullLatest', 'validate',*/ 'release.copyTemplates', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
+task('release', (done: (err: any) => void) => {
+  runSequence('release.prepareReleasePackage', 'release.copyProdVersion', done);
 });
 
-task('release.nightlyPackage', (done: (err: any) => void) => {
-  runSequence('clean', 'release.polyfill', 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', 'release.createUmdBundle', done);
+task('release.copyProdVersion', () => {
+  const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
+  const packageJsonToUpdate = require(`${DIST_BUILD_ROOT}/package.json`);
+
+  packageJsonToUpdate.version = sourcePackageJSON.version;
+
+  const prettyPrintedJson = JSON.stringify(packageJsonToUpdate, null, 2);
+  writeFileSync(`${DIST_BUILD_ROOT}/package.json`, prettyPrintedJson);
+});
+
+task('release.prepareReleasePackage', (done: (err: any) => void) => {
+  runSequence('clean',
+          'release.polyfill',
+          'compile.release',
+          'release.copyTemplates',
+          'release.copyNpmInfo',
+          'release.preparePackageJsonTemplate',
+          'release.nightlyPackageJson',
+          'release.compileSass',
+          'release.fonts',
+          'release.scss',
+          'release.createUmdBundle',
+          done);
 });
 
 task('release.createUmdBundle', (done: Function) => {
