@@ -13,7 +13,8 @@ import { ApiDemoApp, ApiDemoPage, PopoverRadioPage } from './app.component';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    ApiDemoPage
+    ApiDemoPage,
+    PopoverRadioPage
   ]
 })
 export class AppModule {}
