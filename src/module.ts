@@ -60,7 +60,48 @@ export { NavLink, NavOptions, DeepLink, DeepLinkConfig } from './navigation/nav-
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
 
-
+/**
+ * @name IonicModule
+ * @description
+ * Configuration Ionic Module with components, directives, provides and pipes
+ * more info about see https://angular.io/docs/ts/latest/guide/ngmodule.html
+ *
+ * @usage
+ * ```ts
+ * import { Component } from '@angular/core';
+ * import { NgModule } from '@angular/core';
+ * import { IonicApp, IonicModule } from 'ionic-angular';
+ *
+ * @Component({
+ *  template: '<div>Home</div>'
+ * })
+ * export class HomePage {}
+ *
+ * @Component({
+ *   template: `<ion-nav [root]="rootPage"></ion-nav>`
+ * })
+ * export class MyApp {
+ *   rootPage = HomePage;
+ * }
+ *
+ * @NgModule({
+ *   declarations: [
+ *     MyApp
+ *   ],
+ *   imports: [
+ *     IonicModule.forRoot(MyApp)
+ *   ],
+ *   bootstrap: [IonicApp],
+ *   entryComponents: [
+ *     MyApp
+ *   ],
+ *   providers: []
+ * })
+ * export class AppModule {}
+ * ```
+ * @see {@link config/Config Config API Docs}
+ * @see {@link config/DeepLinkConfigToken DeepLinkConfigToken API Docs}
+ */
 @NgModule({
   imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule],
   exports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES],
@@ -87,6 +128,15 @@ export { ViewController } from './navigation/view-controller';
 })
 export class IonicModule {
 
+  /**
+   * Creates a module with all the components, directives, providers and pipes. It also optionally sets up an
+   * Config and DeepLinkConfig
+   *
+   * @param {object} appRoot
+   * @param {object} config
+   * @param {object} deepLinkConfig
+   * @returns ModuleWithProviders
+   */
   static forRoot(appRoot: any, config: any = null, deepLinkConfig: any = null): ModuleWithProviders {
     return {
       ngModule: IonicModule,
