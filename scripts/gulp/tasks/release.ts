@@ -37,7 +37,7 @@ task('release.createUmdBundle', (done: Function) => {
   }).then((bundle) => {
     return bundle.write({
       format: 'umd',
-      moduleName: 'umd-bundle',
+      moduleName: 'ionicBundle',
       dest: `${DIST_BUNDLE_ROOT}/ionic.umd.js`
     });
   });
