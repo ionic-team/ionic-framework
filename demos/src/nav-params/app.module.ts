@@ -13,7 +13,8 @@ import { ApiDemoApp, ApiDemoPage, PushPage } from './app.component';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    ApiDemoPage
+    ApiDemoPage,
+    PushPage
   ]
 })
 export class AppModule {}
