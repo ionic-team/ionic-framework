@@ -1,11 +1,11 @@
-import { Component, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgControl }  from '@angular/forms';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isPresent, isTrueProperty } from '../../util/util';
 import { Debouncer } from '../../util/debouncer';
-
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @name Searchbar
@@ -420,5 +420,17 @@ export class Searchbar extends Ion {
 
   setFocus() {
     this._renderer.invokeElementMethod(this._searchbarInput.nativeElement, 'focus');
+  }
+}
+
+@Directive({
+  selector: 'ion-searchbar[autofocus]'
+})
+export class Autofocus {
+  constructor(searchbar: Searchbar,  viewController: ViewController) {
+    viewController.didEnter.subscribe(() => {
+      console.log('Autofocusing', searchbar);
+      setTimeout(() => searchbar.setFocus(), 100);
+    });
   }
 }

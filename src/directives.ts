@@ -42,7 +42,7 @@ import { Range, RangeKnob } from './components/range/range';
 import { Refresher } from './components/refresher/refresher';
 import { RefresherContent } from './components/refresher/refresher-content';
 import { Scroll } from './components/scroll/scroll';
-import { Searchbar } from './components/searchbar/searchbar';
+import { Searchbar, Autofocus } from './components/searchbar/searchbar';
 import { Segment, SegmentButton } from './components/segment/segment';
 import { Select } from './components/select/select';
 import { ShowWhen, HideWhen } from './components/show-hide-when/show-hide-when';
@@ -121,7 +121,7 @@ export { Range, RangeKnob, ClientRect } from './components/range/range';
 export { Refresher } from './components/refresher/refresher';
 export { RefresherContent } from './components/refresher/refresher-content';
 export { Scroll } from './components/scroll/scroll';
-export { Searchbar } from './components/searchbar/searchbar';
+export { Searchbar, Autofocus } from './components/searchbar/searchbar';
 export { Segment, SegmentButton } from './components/segment/segment';
 export { Select } from './components/select/select';
 export { ShowWhen, HideWhen, DisplayWhen } from './components/show-hide-when/show-hide-when';
@@ -160,6 +160,7 @@ export { ToastCmp } from './components/toast/toast-component';
  */
 export const IONIC_DIRECTIVES: any[] = [
   Avatar,
+  Autofocus,
   Backdrop,
   Badge,
   Button,
