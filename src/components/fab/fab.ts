@@ -121,7 +121,7 @@ export class FabButton extends Ion  {
   * ```
   * @module ionic
   *
-  * @demo /docs/v2/demos/fab/
+  * @demo /docs/v2/demos/src/fab/
   * @see {@link /docs/v2/components#fab Fab Component Docs}
  */
 @Directive({
