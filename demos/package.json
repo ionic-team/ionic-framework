@@ -6,12 +6,11 @@
   "author": "Ionic Team <hi@ionic.io> (http://ionic.io)",
   "license": "MIT",
   "dependencies": {
-    "ionic-angular": "2.0.0-beta.11-201609161747",
-    "ionicons": "3.0.0",
-    "rxjs": "5.0.0-beta.12"
+    "@ionic/storage": "^1.0.3",
+    "ionic-angular": "nightly",
+    "ionicons": "^3.0.0"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "0.6.2",
-    "typescript": "rc"
+    "typescript": "^2.0.3"
   }
 }

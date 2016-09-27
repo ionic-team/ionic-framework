@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { ApiDemoApp, ApiDemoPage, CleanLocalDataPipe } from './app.component';
+import { ApiDemoApp, ApiDemoPage } from './app.component';
 
 @NgModule({
   declarations: [
     ApiDemoApp,
-    ApiDemoPage,
-    CleanLocalDataPipe
+    ApiDemoPage
   ],
   imports: [
     IonicModule.forRoot(ApiDemoApp)
@@ -17,3 +16,4 @@ import { ApiDemoApp, ApiDemoPage, CleanLocalDataPipe } from './app.component';
   ]
 })
 export class AppModule {}
+
