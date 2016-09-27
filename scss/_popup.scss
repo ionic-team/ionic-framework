@@ -25,14 +25,14 @@
   }
 
   &.popup-hidden .popup {
-    @include animation-name(scaleOut);
+    @include animation-name($popup-leave-animation);
     @include animation-duration($popup-leave-animation-duration);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
 
   &.active .popup {
-    @include animation-name(superScaleIn);
+    @include animation-name($popup-enter-animation);
     @include animation-duration($popup-enter-animation-duration);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
