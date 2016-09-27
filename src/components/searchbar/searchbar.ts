@@ -357,7 +357,7 @@ export class Searchbar extends Ion {
     this.ionClear.emit(ev);
 
     // setTimeout() fixes https://github.com/driftyco/ionic/issues/7527
-    // wait for 4 frames
+    // wait for 4 frames.
     setTimeout(() => {
       let value = this._value;
       if (isPresent(value) && value !== '') {
