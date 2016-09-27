@@ -1,6 +1,7 @@
 import { spawn, exec } from 'child_process';
-import { writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
+import * as glob from 'glob';
 import { dest, src, task } from 'gulp';
 import { rollup } from 'rollup';
 import * as commonjs from 'rollup-plugin-commonjs';
@@ -12,12 +13,33 @@ import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePoly
 
 
 task('nightly', (done: (err: any) => void) => {
-  runSequence('release.prepareReleasePackage', 'release.publishNightly', done);
+  runSequence('release.prepareReleasePackage', 'release.removeDebugStatements', 'release.publishNightly', done);
 });
 
 task('release', (done: (err: any) => void) => {
-  runSequence('release.prepareReleasePackage', 'release.copyProdVersion', done);
+  // don't automatically push the button, require the user to call the publish command separately for now
+  runSequence('release.prepareReleasePackage', 'release.copyProdVersion', 'release.removeDebugStatements', done);
 });
+
+task('release.removeDebugStatements', (done: Function) => {
+  glob(`${DIST_BUILD_ROOT}/**/*.js`, (err, filePaths) => {
+    if (err) {
+      done(err);
+    } else {
+      // can make async if it's slow but it's fine for now
+      for (let filePath of filePaths) {
+        const fileContent = readFileSync(filePath).toString();
+        const consoleFree = replaceAll(fileContent, 'console.debug', '// console.debug');
+        const cleanedJs = replaceAll(consoleFree, 'debugger;', '// debugger;');
+        writeFileSync(filePath, cleanedJs);
+      }
+    }
+  });
+});
+
+function replaceAll(input: string, tokenToReplace: string, replaceWith: string) {
+  return input.split(tokenToReplace).join(replaceWith);
+}
 
 task('release.publishRelease', (done: Function) => {
   const npmCmd = spawn('npm', ['publish', DIST_BUILD_ROOT]);
