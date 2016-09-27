@@ -823,7 +823,9 @@ interface BackButtonAction {
   priority: number;
 }
 
-
+/**
+ * @private
+ */
 export function setupPlatform(platformConfigs: {[key: string]: PlatformConfig}, queryParams: QueryParams, userAgent: string, navigatorPlatform: string, docDirection: string, docLanguage: string, zone: NgZone): Platform {
   const p = new Platform();
   p.setDefault('core');
@@ -838,8 +840,19 @@ export function setupPlatform(platformConfigs: {[key: string]: PlatformConfig}, 
   return p;
 }
 
-
+/**
+ * @private
+ */
 export const UserAgentToken = new OpaqueToken('USERAGENT');
+/**
+ * @private
+ */
 export const NavigatorPlatformToken = new OpaqueToken('NAVPLT');
+/**
+ * @private
+ */
 export const DocumentDirToken = new OpaqueToken('DOCDIR');
+/**
+ * @private
+ */
 export const DocLangToken = new OpaqueToken('DOCLANG');
