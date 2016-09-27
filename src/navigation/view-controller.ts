@@ -158,21 +158,26 @@ export class ViewController {
   }
 
   /**
-   * onDidDismiss
+   * Called when the current viewController has be successfully dismissed
    */
   onDidDismiss(callback: Function) {
     this._onDidDismiss = callback;
   }
 
   /**
-   * onWillDismiss
+   * Called when the current viewController will be dismissed
    */
   onWillDismiss(callback: Function) {
     this._onWillDismiss = callback;
   }
 
   /**
-   * dismiss
+   * Dismiss the current viewController
+   * @param {any} [data] Data that you want to return when the viewController is dismissed.
+   * @param {any} [role ]
+   * @param {NavOptions} NavOptions Options for the dismiss navigation.
+   * @returns {any} data Returns the data passed in, if any.
+   *
    */
   dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
     let options = merge({}, this._leavingOpts, navOptions);

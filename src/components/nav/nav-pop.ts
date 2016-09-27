@@ -36,6 +36,9 @@ export class NavPop {
     }
   }
 
+/**
+ * @private
+ */
   @HostListener('click')
   onClick(): boolean {
     // If no target, or if target is _self, prevent default browser behavior

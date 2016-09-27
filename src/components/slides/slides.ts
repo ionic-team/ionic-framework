@@ -862,6 +862,10 @@ export class Slide {
 
   constructor(
     elementRef: ElementRef,
+
+  /**
+   * @private
+   */
     @Host() public slides: Slides
   ) {
     this.ele = elementRef.nativeElement;
@@ -870,6 +874,9 @@ export class Slide {
     slides.rapidUpdate();
   }
 
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this.slides.rapidUpdate();
   }

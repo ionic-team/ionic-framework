@@ -66,6 +66,9 @@ export class NavPush {
     }
   }
 
+/**
+ * @private
+ */
   @HostListener('click')
   onClick(): boolean {
     if (this._nav) {
