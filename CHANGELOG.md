@@ -29,7 +29,7 @@ RC0 requires changes to the structure of your app. To get started updating your 
 * buttons: `<button>` becomes `<button ion-button>`. See more [details here](#new-behavior-of-button) and [here](#new-behavior-of-icons-in-buttons).
 * Head link tags for CSS files are no longer dynamically updated, but one CSS file is imported.
 (Future build processes will narrow down the CSS file further to only include what’s used). See more [details here](#update-css-link-tags).
-* The `<scroll-content>` element, which is internal to `<ion-content>`, has been renamed to `<div class=”scroll-content”>` since it was neither a directive nor a web component.
+* The `<scroll-content>` element, which is internal to `<ion-content>`, has been renamed to `<div class="scroll-content">` since it was neither a directive nor a web component.
 * `<ion-fixed>` has been removed, use `<div ion-fixed>` instead.
 * Sass: Changes to how Sass is imported. See more [details here](#sass-import).
 * Typings: We have stopped using the `typings` tool and have migrated to `npm @types`. See more [details here](#typings).
@@ -69,7 +69,7 @@ For example:
 Becomes
 
 ```
-<ion-tabs color=”primary”>
+<ion-tabs color="primary">
 ```
 
 Or to bind an expression to color:
@@ -138,7 +138,7 @@ Select’s `alertOptions` input has been renamed to `selectOptions`. It now allo
 
 **Reason for this change:**
 - It was difficult to have custom buttons since buttons automatically received the Ionic styles. The user can now take advantage of adding their own styling to a button if they want it to behave differently than the Ionic button.
-Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute gives us the ability to take advantage of the native functionality and built-in accessibility of native elements. If Ionic provided an `<ion-button>` we’d have to copy over all the possible attributes and events to the real nested button/link (`type=submit`, `formnovalidate`, `value`, `autofocus`, `href`, `target`, `focus`/`blur`, `download`, `nofollow`, `ping`, etc). Additionally, Angular 2 does not have the “replace” directive where `<ion-button>` could be turned into `<a ion-button>`.
+Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute gives us the ability to take advantage of the native functionality and built-in accessibility of native elements. If Ionic provided an `<ion-button>` we’d have to copy over all the possible attributes and events to the real nested button/link (`type=submit`, `formnovalidate`, `value`, `autofocus`, `href`, `target`, `focus`/`blur`, `download`, `nofollow`, `ping`, etc). Additionally, Angular 2 does not have the "replace" directive where `<ion-button>` could be turned into `<a ion-button>`.
 - Since `button` was already being used as an attribute to the `<a>` element, this is more consistent between the two.
 - If a navPush or navPop directive is on an `<a ion-button>`, Ionic can automatically add the `href` attribute.
 - [A few reasons why we didn’t create `<ion-button>`](https://www.youtube.com/watch?list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g&v=CZGqnp06DnI)
@@ -150,7 +150,7 @@ Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute
 
   ```
   <button>
-    <ion-icon name=”rainy”></ion-icon>
+    <ion-icon name="rainy"></ion-icon>
   </button>
   ```
 
@@ -158,7 +158,7 @@ Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute
 
   ```
   <button ion-button icon-only>
-    <ion-icon name=”rainy”></ion-icon>
+    <ion-icon name="rainy"></ion-icon>
   </button>
   ```
 
@@ -166,7 +166,7 @@ Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute
 
   ```
   <button>
-    <ion-icon name=”rainy”></ion-icon>
+    <ion-icon name="rainy"></ion-icon>
     Rainy
   </button>
   ```
@@ -175,7 +175,7 @@ Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute
 
   ```
   <button ion-button icon-left>
-    <ion-icon name=”rainy”></ion-icon>
+    <ion-icon name="rainy"></ion-icon>
     Rainy
   </button>
   ```
@@ -185,7 +185,7 @@ Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute
   ```
   <button>
     Rainy
-    <ion-icon name=”rainy”></ion-icon>
+    <ion-icon name="rainy"></ion-icon>
   </button>
   ```
 
@@ -194,7 +194,7 @@ Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute
   ```
   <button ion-button icon-right>
     Rainy
-    <ion-icon name=”rainy”></ion-icon>
+    <ion-icon name="rainy"></ion-icon>
   </button>
   ```
 
@@ -349,7 +349,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 11. Change `<button>` to `<button ion-button>` according to [these instructions](#new-behavior-of-button).
 
-12. Pass colors to the `color` attribute : `<button primary>` changes to `<button color=”primary”>`. See [component colors](#component-colors) above.
+12. Pass colors to the `color` attribute : `<button primary>` changes to `<button color="primary">`. See [component colors](#component-colors) above.
 
 13. Move any Ionic config to the `IonicModule.forRoot` in `app.module.ts`. For example, the config should go where it says `configObject` here: `IonicModule.forRoot(MyApp, {configObject})`.
 
@@ -436,7 +436,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 32. Change any Ionic buttons from `<button>` to `<button ion-button>`. [See New Behavior of Button](#new-behavior-of-button).
 
-33. Pass colors to the `color` attribute: `<button primary>` changes to `<button color=”primary”>`.
+33. Pass colors to the `color` attribute: `<button primary>` changes to `<button color="primary">`.
 
 34. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons](#new-behavior-of-icons-in-buttons).
 
