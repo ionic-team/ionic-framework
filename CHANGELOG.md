@@ -30,7 +30,7 @@ Starters have been updated to add this, make sure to add it to your package.json
 
 * Icons in buttons require an attribute on the parent button in order to style them.
 
-* Platform and mode CSS classes have been moved from the <body> element to the <ion-app> element.
+* Platform and mode CSS classes have been moved from the `<body>` element to the `<ion-app>` element.
 
 * select: Select’s `alertOptions` input has been renamed to `selectOptions`. See more [details here](#select-changes).
 
