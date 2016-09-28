@@ -17,7 +17,8 @@
 
 * [Renamed Lifecycle events](#lifecycle-events-renamed).
 
-* Storage has been removed from ionic-angular and into a separate module, @ionic/storage. Starters have been updated to add this, make sure to add it to your package.json if you’re using the storage system.
+* Storage has been removed from ionic-angular and into a separate module, @ionic/storage.
+Starters have been updated to add this, make sure to add it to your package.json if you’re using the storage system. See more [details here](#storage).
 
 * Nav transitions are queued. For more info on what this means for you see [this section](#nav-transitions).
 
@@ -259,6 +260,49 @@ npm install @types/lodash --save-dev --save-exact
 ```
 
 Delete the `typings.json` file, and the `typings` directory.
+
+#### Storage
+
+The storage utilities have been moved outside of the framework to a separate library called `@ionic/storage`.
+
+This library can be installed by executing the following command:
+
+```
+npm install @ionic/storage --save --save-exact
+```
+
+It must be included in the app's `NgModule` list of `providers`:
+
+```
+import { Storage } from '@ionic/storage';
+
+...
+
+@NgModule({
+  ...
+  providers: [Storage]
+})
+
+```
+
+It can then be injected into any class that needs access to it:
+
+```
+import { Storage } from '@ionic/storage';
+
+...
+
+export class MyAwesomePage {
+  constructor(public storage: Storage) {
+  }
+
+  ionViewDidEnter() {
+    this.storage.get('myKey').then( (value:any) => {
+      console.log('My value is:', value);
+    });
+  }
+}
+```
 
 ### Steps to Upgrade to RC0
 
