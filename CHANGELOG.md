@@ -1,6 +1,8 @@
 <a name="2.0.0-rc.0"></a>
 # [2.0.0-rc.0](https://github.com/driftyco/ionic/compare/v2.0.0-beta.11...v2.0.0-rc.0) (2016-09-28)
 
+RC0 requires changes to the structure of your app. To get started updating your app see the [upgrade steps](#steps-to-upgrade-to-rc0) section below.
+
 ### New Features
 * Ionic 2 API finalized for `2.0.0` release
 * Angular 2.0.0 (final!)
@@ -297,6 +299,7 @@ export class MyAwesomePage {
   }
 
   ionViewDidEnter() {
+
     this.storage.get('myKey').then( (value:any) => {
       console.log('My value is:', value);
     });
