@@ -1,6 +1,431 @@
 <a name="2.0.0-rc.0"></a>
 # [2.0.0-rc.0](https://github.com/driftyco/ionic/compare/v2.0.0-beta.11...v2.0.0-rc.0) (2016-09-28)
 
+RC0 requires changes to the structure of your app. To get started updating your app see the [upgrade steps](#steps-to-upgrade-to-rc0) section below.
+
+### New Features
+* Ionic 2 API finalized for `2.0.0` release
+* Angular 2.0.0 (final!)
+* ionViewCanEnter / CanLeave lifecycle events
+* FAB Button lists
+* Ahead of Time (AoT) compiler ready
+* Components can now individually set a mode, which means an app can mix and match iOS / Material Design / Windows Platform modes if that’s desired.
+* Typescript 2.0
+* @types support for third-party libraries
+
+### BREAKING CHANGES
+
+* Angular upgrade to [2.0.0](https://angular.io/docs/ts/latest/cookbook/rc4-to-rc5.html)
+
+* [Renamed Lifecycle events](#lifecycle-events-renamed).
+
+* Storage has been removed from ionic-angular and into a separate module, @ionic/storage.
+Starters have been updated to add this, make sure to add it to your package.json if you’re using the storage system. See more [details here](#storage).
+
+* Nav transitions are queued. For more info on what this means for you see [this section](#nav-transitions).
+
+* Removed Tabs `preloadTabs` ability. This is no longer needed with the Ahead of Time (AoT) compiler.
+
+* Icons in buttons require an attribute on the parent button in order to style them.
+
+* Platform and mode CSS classes have been moved from the <body> element to the <ion-app> element.
+
+* select: Select’s `alertOptions` input has been renamed to `selectOptions`. See more [details here](#select-changes).
+
+* colors: Colors should be passed in the `color` input on components, not added
+individually as an attribute on the component. See more [details here](#component-colors).
+
+* buttons: `<button>` becomes `<button ion-button>`. See more [details here](#new-behavior-of-button) and [here](#new-behavior-of-icons-in-buttons).
+
+* Head link tags for CSS files are no longer dynamically updated, but one CSS file is imported.
+(Future build processes will narrow down the CSS file further to only include what’s used). See more [details here](#update-css-link-tags).
+
+* The `<scroll-content>` element, which is internal to `<ion-content>`, has been renamed to
+  `<div class=”scroll-content”>` since it was neither a directive nor a web component.
+
+* `<ion-fixed>` has been removed, use `<div ion-fixed>` instead.
+
+* scss: Changes to how sass/scss is imported. See more [details here](#sass-import).
+
+* typings: We have stopped using the `typings` tool and have migrated to `npm @types`. See more [details here](#typings).
+
+#### Lifecycle Events Renamed
+
+Renamed `ionViewLoaded` to `ionViewDidLoad`
+Removed `ionViewDidUnload`
+Removed `fireOtherLifecycles` from ViewController
+
+#### Nav Transitions
+
+Nav transitions are now queued. Meaning if you run:
+
+```
+navCtrl.push(Page1);
+navCtrl.push(Page2);
+```
+
+Page1 will transition in, then immediately Page2 will transition in. There can never be two transitions happening at the same time.
+
+Page transition promises can now possibly reject the returned promises. Used mainly for `ionViewCanEnter` and `ionViewCanLeave`.
+
+#### Component Colors
+
+Colors are no longer added directly to a component, they should instead be passed in the `color` attribute.
+
+For example:
+
+```
+<ion-tabs primary>
+```
+
+Becomes
+
+```
+<ion-tabs color=”primary”>
+```
+
+Or to bind an expression to color:
+
+```
+<ion-navbar [color]="barColor">
+   ...
+</ion-navbar>
+```
+
+```ts
+@Component({
+  templateUrl: 'build/pages/about/about.html'
+})
+export class AboutPage {
+  barColor: string;
+
+  constructor(private nav: NavController, platform: Platform) {
+    this.barColor = platform.is('android') ? 'primary' : 'light';
+  }
+}
+```
+
+Components with this property:
+ Badge
+ Button
+ Checkbox
+ Chip
+ FAB
+ Icon
+ Item (Item, Item Divider, List Header)
+ Label
+ Navbar
+ Radio
+ Searchbar
+ Segment
+ Spinner
+ Tabs
+ Toggle
+ Toolbar
+ Typography (headers, paragraphs, spans, etc.)
+
+**Reason for this change:**
+It was difficult to dynamically add colors to components, especially if the name of the color attribute was unknown in the template.
+This change keeps the css flat since we aren’t chaining color attributes on components and instead we assign a class to the component which includes the color’s name.
+This allows you to easily toggle a component between multiple colors.
+Speeds up performance because we are no longer reading through all of the attributes to grab the color ones.
+
+#### Select Changes
+
+Select’s `alertOptions` input has been renamed to `selectOptions`. It now allows you to pass options for either the alert or action-sheet
+interface. Refer to their documentation for the options each of them
+accept.
+
+[ActionSheet](http://ionicframework.com/docs/v2/api/components/action-sheet/ActionSheetController/#create)
+[Alert](http://ionicframework.com/docs/v2/api/components/alert/AlertController/#create)
+
+#### New Behavior of Button
+`<button>` becomes `<button ion-button>`
+`<a button>` becomes `<a ion-button>`
+`<button ion-item>` does not get the `ion-button` attribute
+Buttons inside of `<ion-item-options>` do get the `ion-button` attribute
+
+**Reason for this change:**
+It was difficult to have custom buttons since buttons automatically received the Ionic styles - the user can now take advantage of adding their own styling to a button if they want it to behave differently than the Ionic button.
+Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute gives us the ability to take advantage of the native functionality and built-in accessibility of native elements. If Ionic provided an <ion-button> we’d have to copy over all the possible attributes and events to the real nested button/link (type=submit, formnovalidate, value, autofocus, href, target, focus/blur, download, nofollow, ping, tel:86705309, etc). Additionally, ng2 does not have the “replace” directive where <ion-button> could be turned into <a ion-button>.
+Since `button` was already being used as an attribute to the `<a>` element, this is more consistent between the two.
+If a navPush or navPop directive is on an `<a ion-button>`, Ionic can automatically add the `href` attribute.
+[A few reasons why we didn’t create `<ion-button>`](https://www.youtube.com/watch?list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g&v=CZGqnp06DnI)
+
+
+references #7467
+* button: - `<button>` becomes `<button ion-button>`
+- `<a button>` becomes `<a ion-button>`
+- `<button ion-item>` does not get the `ion-button` attribute
+- Buttons inside of `<ion-item-options>` do get the `ion-button`
+attribute
+- Removed the `category` attribute, this should be passed in
+`ion-button` instead.
+- Button attributes added for icons in buttons: `icon-only`,
+`icon-left`, and `icon-right`
+
+
+#### New Behavior of Icons in Buttons
+
+Icon only buttons
+```
+<button>
+  <ion-icon name=”rainy”></ion-icon>
+</button>
+```
+
+becomes
+
+```
+<button ion-button icon-only>
+  <ion-icon name=”rainy”></ion-icon>
+</button>
+```
+Icon left of text in a button
+```
+<button>
+  <ion-icon name=”rainy”></ion-icon>
+  Rainy
+</button>
+```
+
+becomes
+
+```
+<button ion-button icon-left>
+  <ion-icon name=”rainy”></ion-icon>
+  Rainy
+</button>
+```
+Icon right of text in a button
+```
+<button>
+  Rainy
+  <ion-icon name=”rainy”></ion-icon>
+</button>
+```
+
+becomes
+
+```
+<button ion-button icon-right>
+  Rainy
+  <ion-icon name=”rainy”></ion-icon>
+</button>
+```
+Item option buttons - the `icon-left` attribute should still be added to the `<ion-item-options>` container and not the button itself.
+`menuToggle` buttons should not get the `icon-only` attribute
+
+**Reason for this change:**
+There was a noticeable performance decrease from us reading in each button to determine where icons were placed and how to style them. This change improves performance.
+This adds styling so that the buttons and icons will be padded a certain amount, but the user is free to leave these attributes off and style the components themselves.
+
+#### Update CSS Link Tags
+
+Ionic stylesheets are no longer dynamically loaded per platform. Instead there will be one CSS file to import. Note that future build processes will slim down the CSS file even further to only include component CSS actually used.
+
+In the head of your `index.html` file, replace:
+
+```
+<!-- ionic dynamically decides which stylesheet to load -->
+<link ios-href="build/css/app.ios.css" rel="stylesheet">
+<link md-href="build/css/app.md.css" rel="stylesheet">
+<link wp-href="build/css/app.wp.css" rel="stylesheet">
+```
+
+With:
+
+```
+<link href="build/main.css" rel="stylesheet">
+```
+#### Sass Import
+
+The default configuration will be updated, but if your existing app is using Sass and importing Ionic Sass files directly you’ll need to update the `includePaths` of Node Sass.
+
+```
+node_modules/ionic-angular/themes
+```
+
+Next, to include Ionic into your custom Sass file you’ll need to update the Ionic import to this:
+
+```
+@import "ionic.theme.default";
+```
+
+#### Typings
+
+Any type definitions for third party libraries that are included via the `typings` tool and are included in the the typings.json file should
+be updated to use `npm @types`. An example of how this looks is:
+
+```
+npm install @types/lodash --save-dev --save-exact
+```
+
+Delete the `typings.json` file, and the `typings` directory.
+
+#### Storage
+
+The storage utilities have been moved outside of the framework to a separate library called `@ionic/storage`.
+
+This library can be installed by executing the following command:
+
+```
+npm install @ionic/storage --save --save-exact
+```
+
+It must be included in the app's `NgModule` list of `providers`:
+
+```
+import { Storage } from '@ionic/storage';
+
+...
+
+@NgModule({
+  ...
+  providers: [Storage]
+})
+
+```
+
+It can then be injected into any class that needs access to it:
+
+```
+import { Storage } from '@ionic/storage';
+
+...
+
+export class MyAwesomePage {
+  constructor(public storage: Storage) {
+  }
+
+  ionViewDidEnter() {
+
+    this.storage.get('myKey').then( (value:any) => {
+      console.log('My value is:', value);
+    });
+  }
+}
+```
+
+### Steps to Upgrade to RC0
+
+We are providing 2 ways to update your app with this release. The first way will guide you through creating a new Ionic 2 project and copying your project files to it. This is the easiest way to update your app in our opinion. The second way will step through how to update your existing project. There are a lot of steps involved with this way, and we recommend viewing our conference app for any clarification if you choose this way. This is it! We don’t plan on making any more major API changes after this version.
+
+Note: For details on NgModules you can read the Angular docs on them [here](https://angular.io/docs/ts/latest/guide/ngmodule.html)
+
+#### Copying Your Project to a New Project
+
+1. Install the latest Ionic CLI:
+
+```
+npm install -g ionic
+```
+Note: if you have installed the beta cli you should run `npm uninstall -g ionic` first.
+
+
+2. Create a new Ionic 2 RC0 app:
+
+```
+ionic start --v2 myApp
+```
+
+3. Copy/paste all of your pages from `app/pages/` of your beta.11 app to `src/pages/`, providers from `app/providers` to `src/providers` pipes from `app/pipes` to `src/pipes` and any custom components to `src/components` in the new RC0 app.
+
+4. Modify all `templateUrl`'s to be relative to the `.ts` file. For example in `app.component.ts` the url should change from `build/app.html` to `app.html` and in a page referencing `about.html` from `build/pages/about/about.html` to `about.html`.
+
+5. Import and add each of your pages to the `declarations` array and the `entryComponents` array in `src/app/app.module.ts.
+
+6. Import and add each of your custom components to the `declarations` array in `src/app/app.module.ts`.
+
+7. Import and add each of your providers to the `providers` array in `src/app/app.module.ts`.
+
+8. Remove any use of the `providers` entry in `@Component` from your pages.
+
+9. Change any uses of the `private` TypeScript keyword to `public`.
+
+10. Change `<button />` to `<button ion-button />` according to [these instructions](#new-behavior-of-button).
+
+11. Pass colors to the `color` attribute : `<button primary />` changes to `<button color=”primary” />`.
+
+12. Move any Ionic config to the `IonicModule.forRoot(MyApp, {configObject})` in `app.module.ts` where its says `configObject`.
+
+13. Move any variables from the mode specific sass files in you're beta.11 app into the `app.variables` file under the mode heading in the new RC0 app.
+
+
+
+
+#### Modifying your Existing Project
+
+1. Install the latest Ionic CLI:
+```
+npm install -g ionic
+```
+Note: if you have installed the beta cli you should run `npm uninstall -g ionic` first.
+
+2. Update package.json dependencies and devDependencies to match the [ionic2-app-base package.json](https://github.com/driftyco/ionic2-app-base/blob/master/package.json), then run `npm install` in your project folder.
+
+3. Copy the npm scripts from the [ionic2-app-base package.json](https://github.com/driftyco/ionic2-app-base/blob/master/package.json) to your package.json.
+
+4. Delete the `gulpfile.js`.
+
+5. Rename folder `app` to `src`.
+
+6. Create directory `app` inside of `src`.
+
+7. Move `app.html` and `app.ts` inside of `src/app`.
+
+8. Rename `app.ts` to `app.component.ts`.
+
+9. Add `app.module.ts` file and copy content from [ionic2-starter-blank](https://github.com/driftyco/ionic2-starter-blank/blob/master/src/app/app.module.ts).
+
+10. Move any providers from `ionicBootstrap` in `app.component.ts` to the providers in `app.module.ts`. Make sure to copy imports too.
+
+11. Import and add any of your custom components to the `declarations` array in `src/app/app.module.ts`.
+
+12. Move any Ionic config to the `IonicModule.forRoot(MyApp, {configObject})` in `app.module.ts` where it says `configObject`.
+
+13. Remove `ionicBootstrap` code from `app.component.ts`.
+
+14. Export the main app class in `app.component.ts` and then rename all uses of `MyApp` in `app.module.ts` to your main app class (or rename the export to `MyApp` in `app.component.ts`).
+
+15. Fix any imports in `app.component.ts` to use the correct path. For example, `./pages` becomes `../pages`.
+
+16. Modify `app.module.ts` to import your page specific classes. See `HomePage` for example. All pages should be included here.
+
+17. Fix any import paths in `app.module.ts`. For example, `./providers` becomes `../providers`.
+
+18. Add `main.dev.ts` and `main.prod.ts` files from [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/tree/master/src/app) to `app/`.
+
+19. Move `www/index.html` to `src/index.html` and modify it to look like [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/src/index.html), make sure to keep any external scripts you have added.
+
+20. Move `www/assets` to `src/assets`.
+
+21. Move `www/img` to `src/assets/img`.
+
+22. Move any other resources you have in `www/` to `src/assets/`.
+
+23. Modify all `templateUrl`'s to be relative to the `.ts` file. For example in `app.component.ts` the url should change from `build/app.html` to `app.html` and in a page referencing `about.html` from `build/pages/about/about.html` to `about.html`.
+
+24. Update .gitignore to match [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/.gitignore).
+
+25. Delete the `typings/` folder and `typings.json` file.
+
+26. Update `tsconfig.json` to match [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/tsconfig.json).
+
+27. Modify `theme/` folder to delete the `app.core.scss` file and copy `app.variables.scss` from the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss), then rename it to `variables.scss`.
+
+28. Move any variables from the mode specific files into the `app.variables` file under the mode heading.
+
+29. Fix any paths to images in your app. For example, before the path may look like `<img src="img/myImg.png">` and now it should be `<img src="assets/img/myImg.png">`.
+
+30. Change any uses of the `private` TypeScript keyword to `public`.
+
+31. Change any Ionic buttons from `<button />` to `<button ion-button />`, see [docs]() above.
+
+32. Pass colors to the `color` attribute : `<button primary />` changes to `<button color=”primary” />`.
+
+33. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons]()
+
 
 ### Bug Fixes
 
@@ -58,77 +483,6 @@
 * **item:** apply will-change only when list is active ([4bcd815](https://github.com/driftyco/ionic/commit/4bcd815))
 * **reorder:** reorder icon is display: none by default ([26441ec](https://github.com/driftyco/ionic/commit/26441ec))
 * **ripple:** md ripple effect update to not affect layout ([14a3ea2](https://github.com/driftyco/ionic/commit/14a3ea2))
-
-
-### BREAKING CHANGES
-
-* select: Select’s `alertOptions` input has been renamed to `selectOptions`. It
-now allows you to pass options for either the alert or action-sheet
-interface. Refer to their documentation for the options each of them
-accept.
-
-http://ionicframework.com/docs/v2/api/components/action-sheet/ActionShee
-tController/#create
-http://ionicframework.com/docs/v2/api/components/alert/AlertController/#
-create
-* colors: Colors should be passed in the `color` input on components, not added
-individually as an attribute on the component.
-
-For example:
-
-```
-<ion-tabs primary>
-```
-
-Becomes
-
-```
-<ion-tabs color=”primary”>
-```
-
-Or to bind an expression to color:
-
-```
-<ion-navbar [color]="barColor">
-   ...
-</ion-navbar>
-```
-
-```ts
-@Component({
-  templateUrl: 'build/pages/about/about.html'
-})
-export class AboutPage {
-  barColor: string;
-
-  constructor(private nav: NavController, platform: Platform) {
-    this.barColor = platform.is('android') ? 'primary' : 'light';
-  }
-}
-```
-
-Reason for this change:
-It was difficult to dynamically add colors to components, especially if
-the name of the color attribute was unknown in the template.
-This change keeps the css flat since we aren’t chaining color
-attributes on components and instead we assign a class to the component
-which includes the color’s name.
-This allows you to easily toggle a component between multiple colors.
-Speeds up performance because we are no longer reading through all of
-the attributes to grab the color ones.
-
-references #7467
-* button: - `<button>` becomes `<button ion-button>`
-- `<a button>` becomes `<a ion-button>`
-- `<button ion-item>` does not get the `ion-button` attribute
-- Buttons inside of `<ion-item-options>` do get the `ion-button`
-attribute
-- Removed the `category` attribute, this should be passed in
-`ion-button` instead.
-- Button attributes added for icons in buttons: `icon-only`,
-`icon-left`, and `icon-right`
-
-
 
 <a name="2.0.0-beta.11"></a>
 # [2.0.0-beta.11](https://github.com/driftyco/ionic/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2016-08-05)
