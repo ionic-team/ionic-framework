@@ -66,11 +66,8 @@
 now allows you to pass options for either the alert or action-sheet
 interface. Refer to their documentation for the options each of them
 accept.
-
-http://ionicframework.com/docs/v2/api/components/action-sheet/ActionShee
-tController/#create
-http://ionicframework.com/docs/v2/api/components/alert/AlertController/#
-create
+http://ionicframework.com/docs/v2/api/components/action-sheet/ActionSheetController/#create
+http://ionicframework.com/docs/v2/api/components/alert/AlertController/#create
 * colors: Colors should be passed in the `color` input on components, not added
 individually as an attribute on the component.
 
