@@ -12,6 +12,8 @@ RC0 requires changes to the structure of your app. To get started updating your 
 * Components can now individually set a mode, which means an app can mix and match iOS / Material Design / Windows Platform modes if that’s desired.
 * Typescript 2.0
 * @types support for third-party libraries
+* Move away from `gulp` to `@ionic/app-scripts`
+* Use Rollup for bundling instead of `browserify` or `webpack`
 
 ### BREAKING CHANGES
 
@@ -307,6 +309,10 @@ export class MyAwesomePage {
 }
 ```
 
+#### Deployment Changes
+
+`ionic-angular` package includes es5 code with es2015 module import/exports, `umd` modules, and pure `es2015` code. The `package.json` is set up using the `main` and `module` options to make this work seamlessly.
+
 ### Steps to Upgrade to RC0
 
 We are providing 2 ways to update your app with this release. The first way will guide you through creating a new Ionic 2 project and copying your project files to it. This is the easiest way to update your app in our opinion. The second way will step through how to update your existing project. There are a lot of steps involved with this way, and we recommend viewing our conference app for any clarification if you choose this way. This is it! We don’t plan on making any more major API changes after this version.
@@ -350,8 +356,6 @@ ionic start --v2 myApp
 12. Move any Ionic config to the `IonicModule.forRoot(MyApp, {configObject})` in `app.module.ts` where its says `configObject`.
 
 13. Move any variables from the mode specific sass files in you're beta.11 app into the `app.variables` file under the mode heading in the new RC0 app.
-
-
 
 
 #### Modifying your Existing Project
