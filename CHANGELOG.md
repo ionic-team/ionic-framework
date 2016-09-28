@@ -321,7 +321,17 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 #### Copying Your Project to a New Project
 
-1. Install the latest Ionic CLI:
+1. Ensure that you're using `npm 3`
+
+```
+npm --version
+```
+
+If not running 3, the easiest way to update is to install the [latest version of Node.js](https://nodejs.org/en/).
+
+`npm` can also be updated by follow [these instructions](https://docs.npmjs.com/getting-started/installing-node#updating-npm). We recommend just updating Node, though.
+
+2. Install the latest Ionic CLI:
 
 ```
 npm install -g ionic
@@ -329,106 +339,116 @@ npm install -g ionic
 Note: if you have installed the beta cli you should run `npm uninstall -g ionic` first.
 
 
-2. Create a new Ionic 2 RC0 app:
+3. Create a new Ionic 2 RC0 app:
 
 ```
 ionic start --v2 myApp
 ```
 
-3. Copy/paste all of your pages from `app/pages/` of your beta.11 app to `src/pages/`, providers from `app/providers` to `src/providers` pipes from `app/pipes` to `src/pipes` and any custom components to `src/components` in the new RC0 app.
+4. Copy/paste all of your pages from `app/pages/` of your beta.11 app to `src/pages/`, providers from `app/providers` to `src/providers` pipes from `app/pipes` to `src/pipes` and any custom components to `src/components` in the new RC0 app.
 
-4. Modify all `templateUrl`'s to be relative to the `.ts` file. For example in `app.component.ts` the url should change from `build/app.html` to `app.html` and in a page referencing `about.html` from `build/pages/about/about.html` to `about.html`.
+5. Modify all `templateUrl`'s to be relative to the `.ts` file. For example in `app.component.ts` the url should change from `build/app.html` to `app.html` and in a page referencing `about.html` from `build/pages/about/about.html` to `about.html`.
 
-5. Import and add each of your pages to the `declarations` array and the `entryComponents` array in `src/app/app.module.ts.
+6. Import and add each of your pages to the `declarations` array and the `entryComponents` array in `src/app/app.module.ts.
 
-6. Import and add each of your custom components to the `declarations` array in `src/app/app.module.ts`.
+7. Import and add each of your custom components to the `declarations` array in `src/app/app.module.ts`.
 
-7. Import and add each of your providers to the `providers` array in `src/app/app.module.ts`.
+8. Import and add each of your providers to the `providers` array in `src/app/app.module.ts`.
 
-8. Remove any use of the `providers` entry in `@Component` from your pages.
+9. Remove any use of the `providers` entry in `@Component` from your pages.
 
-9. Change any uses of the `private` TypeScript keyword to `public`.
+10. Change any uses of the `private` TypeScript keyword to `public`.
 
-10. Change `<button />` to `<button ion-button />` according to [these instructions](#new-behavior-of-button).
+11. Change `<button />` to `<button ion-button />` according to [these instructions](#new-behavior-of-button).
 
-11. Pass colors to the `color` attribute : `<button primary />` changes to `<button color=”primary” />`.
+12. Pass colors to the `color` attribute : `<button primary />` changes to `<button color=”primary” />`.
 
-12. Move any Ionic config to the `IonicModule.forRoot(MyApp, {configObject})` in `app.module.ts` where its says `configObject`.
+13. Move any Ionic config to the `IonicModule.forRoot(MyApp, {configObject})` in `app.module.ts` where its says `configObject`.
 
-13. Move any variables from the mode specific sass files in you're beta.11 app into the `app.variables` file under the mode heading in the new RC0 app.
+14. Move any variables from the mode specific sass files in you're beta.11 app into the `app.variables` file under the mode heading in the new RC0 app.
 
 
 #### Modifying your Existing Project
 
-1. Install the latest Ionic CLI:
+1. Ensure that you're using `npm 3`
+
+```
+npm --version
+```
+
+If not running 3, the easiest way to update is to install the [latest version of Node.js](https://nodejs.org/en/).
+
+`npm` can also be updated by follow [these instructions](https://docs.npmjs.com/getting-started/installing-node#updating-npm). We recommend just updating Node, though.
+
+2. Install the latest Ionic CLI:
 ```
 npm install -g ionic
 ```
 Note: if you have installed the beta cli you should run `npm uninstall -g ionic` first.
 
-2. Update package.json dependencies and devDependencies to match the [ionic2-app-base package.json](https://github.com/driftyco/ionic2-app-base/blob/master/package.json), then run `npm install` in your project folder.
+3. Update package.json dependencies and devDependencies to match the [ionic2-app-base package.json](https://github.com/driftyco/ionic2-app-base/blob/master/package.json), then run `npm install` in your project folder.
 
-3. Copy the npm scripts from the [ionic2-app-base package.json](https://github.com/driftyco/ionic2-app-base/blob/master/package.json) to your package.json.
+4. Copy the npm scripts from the [ionic2-app-base package.json](https://github.com/driftyco/ionic2-app-base/blob/master/package.json) to your package.json.
 
-4. Delete the `gulpfile.js`.
+5. Delete the `gulpfile.js`.
 
-5. Rename folder `app` to `src`.
+6. Rename folder `app` to `src`.
 
-6. Create directory `app` inside of `src`.
+7. Create directory `app` inside of `src`.
 
-7. Move `app.html` and `app.ts` inside of `src/app`.
+8. Move `app.html` and `app.ts` inside of `src/app`.
 
-8. Rename `app.ts` to `app.component.ts`.
+9. Rename `app.ts` to `app.component.ts`.
 
-9. Add `app.module.ts` file and copy content from [ionic2-starter-blank](https://github.com/driftyco/ionic2-starter-blank/blob/master/src/app/app.module.ts).
+10. Add `app.module.ts` file and copy content from [ionic2-starter-blank](https://github.com/driftyco/ionic2-starter-blank/blob/master/src/app/app.module.ts).
 
-10. Move any providers from `ionicBootstrap` in `app.component.ts` to the providers in `app.module.ts`. Make sure to copy imports too.
+11. Move any providers from `ionicBootstrap` in `app.component.ts` to the providers in `app.module.ts`. Make sure to copy imports too.
 
-11. Import and add any of your custom components to the `declarations` array in `src/app/app.module.ts`.
+12. Import and add any of your custom components to the `declarations` array in `src/app/app.module.ts`.
 
-12. Move any Ionic config to the `IonicModule.forRoot(MyApp, {configObject})` in `app.module.ts` where it says `configObject`.
+13. Move any Ionic config to the `IonicModule.forRoot(MyApp, {configObject})` in `app.module.ts` where it says `configObject`.
 
-13. Remove `ionicBootstrap` code from `app.component.ts`.
+14. Remove `ionicBootstrap` code from `app.component.ts`.
 
-14. Export the main app class in `app.component.ts` and then rename all uses of `MyApp` in `app.module.ts` to your main app class (or rename the export to `MyApp` in `app.component.ts`).
+15. Export the main app class in `app.component.ts` and then rename all uses of `MyApp` in `app.module.ts` to your main app class (or rename the export to `MyApp` in `app.component.ts`).
 
-15. Fix any imports in `app.component.ts` to use the correct path. For example, `./pages` becomes `../pages`.
+16. Fix any imports in `app.component.ts` to use the correct path. For example, `./pages` becomes `../pages`.
 
-16. Modify `app.module.ts` to import your page specific classes. See `HomePage` for example. All pages should be included here.
+17. Modify `app.module.ts` to import your page specific classes. See `HomePage` for example. All pages should be included here.
 
-17. Fix any import paths in `app.module.ts`. For example, `./providers` becomes `../providers`.
+18. Fix any import paths in `app.module.ts`. For example, `./providers` becomes `../providers`.
 
-18. Add `main.dev.ts` and `main.prod.ts` files from [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/tree/master/src/app) to `app/`.
+19. Add `main.dev.ts` and `main.prod.ts` files from [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/tree/master/src/app) to `app/`.
 
-19. Move `www/index.html` to `src/index.html` and modify it to look like [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/src/index.html), make sure to keep any external scripts you have added.
+20. Move `www/index.html` to `src/index.html` and modify it to look like [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/src/index.html), make sure to keep any external scripts you have added.
 
-20. Move `www/assets` to `src/assets`.
+21. Move `www/assets` to `src/assets`.
 
-21. Move `www/img` to `src/assets/img`.
+22. Move `www/img` to `src/assets/img`.
 
-22. Move any other resources you have in `www/` to `src/assets/`.
+23. Move any other resources you have in `www/` to `src/assets/`.
 
-23. Modify all `templateUrl`'s to be relative to the `.ts` file. For example in `app.component.ts` the url should change from `build/app.html` to `app.html` and in a page referencing `about.html` from `build/pages/about/about.html` to `about.html`.
+24. Modify all `templateUrl`'s to be relative to the `.ts` file. For example in `app.component.ts` the url should change from `build/app.html` to `app.html` and in a page referencing `about.html` from `build/pages/about/about.html` to `about.html`.
 
-24. Update .gitignore to match [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/.gitignore).
+25. Update .gitignore to match [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/.gitignore).
 
-25. Delete the `typings/` folder and `typings.json` file.
+26. Delete the `typings/` folder and `typings.json` file.
 
-26. Update `tsconfig.json` to match [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/tsconfig.json).
+27. Update `tsconfig.json` to match [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/tsconfig.json).
 
-27. Modify `theme/` folder to delete the `app.core.scss` file and copy `app.variables.scss` from the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss), then rename it to `variables.scss`.
+28. Modify `theme/` folder to delete the `app.core.scss` file and copy `app.variables.scss` from the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss), then rename it to `variables.scss`.
 
-28. Move any variables from the mode specific files into the `app.variables` file under the mode heading.
+29. Move any variables from the mode specific files into the `app.variables` file under the mode heading.
 
-29. Fix any paths to images in your app. For example, before the path may look like `<img src="img/myImg.png">` and now it should be `<img src="assets/img/myImg.png">`.
+30. Fix any paths to images in your app. For example, before the path may look like `<img src="img/myImg.png">` and now it should be `<img src="assets/img/myImg.png">`.
 
-30. Change any uses of the `private` TypeScript keyword to `public`.
+31. Change any uses of the `private` TypeScript keyword to `public`.
 
-31. Change any Ionic buttons from `<button />` to `<button ion-button />`, see [docs]() above.
+32. Change any Ionic buttons from `<button />` to `<button ion-button />`, see [docs]() above.
 
-32. Pass colors to the `color` attribute : `<button primary />` changes to `<button color=”primary” />`.
+33. Pass colors to the `color` attribute : `<button primary />` changes to `<button color=”primary” />`.
 
-33. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons]()
+34. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons]()
 
 
 ### Bug Fixes
