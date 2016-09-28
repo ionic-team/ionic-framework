@@ -5,6 +5,7 @@ import { PageTransition } from './page-transition';
 const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 const OPACITY = 'opacity';
+const TRANSFORM = 'transform';
 const TRANSLATEX = 'translateX';
 const OFF_RIGHT = '99.5%';
 const OFF_LEFT = '-33%';
@@ -139,7 +140,8 @@ export class IOSTransition extends PageTransition {
         // leaving content, forward direction
         leavingContent
           .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
-          .fromTo(OPACITY, 1, OFF_OPACITY);
+          .fromTo(OPACITY, 1, OFF_OPACITY)
+          .afterClearStyles([TRANSFORM, OPACITY]);
       }
 
       if (leavingHasNavbar) {
@@ -173,7 +175,7 @@ export class IOSTransition extends PageTransition {
             // should just fade out, no sliding
             leavingNavbarBg
               .beforeClearStyles([TRANSLATEX])
-              .fromTo('opacity', 0.99, 0);
+              .fromTo(OPACITY, 0.99, 0);
 
           } else {
             // leaving navbar, back direction, and there's no entering navbar
@@ -189,7 +191,13 @@ export class IOSTransition extends PageTransition {
 
         } else {
           // leaving navbar, forward direction
-          leavingTitle.fromTo(TRANSLATEX, CENTER, OFF_LEFT);
+          leavingTitle
+            .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
+            .afterClearStyles([TRANSFORM]);
+
+          leavingBackButton.afterClearStyles([OPACITY]);
+          leavingTitle.afterClearStyles([OPACITY]);
+          leavingNavbarItems.afterClearStyles([OPACITY]);
         }
       }
 
