@@ -1,5 +1,7 @@
+declare module 'conventional-changelog';
 declare module 'dgeni';
 declare module 'event-stream';
+declare module 'github';
 declare module 'gulp-if';
 declare module 'gulp-scss-lint';
 declare module 'gulp-tslint';
