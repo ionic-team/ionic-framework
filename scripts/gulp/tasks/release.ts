@@ -1,4 +1,4 @@
-import { spawn, exec } from 'child_process';
+import { exec, spawnSync, spawn } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 
 import * as glob from 'glob';
@@ -13,12 +13,19 @@ import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePoly
 
 
 task('nightly', (done: (err: any) => void) => {
-  runSequence('release.prepareReleasePackage', 'release.removeDebugStatements', 'release.publishNightly', done);
+  runSequence('release.prepareReleasePackage',
+              'release.removeDebugStatements',
+              'release.publishNightly',
+              done);
 });
 
 task('release', (done: (err: any) => void) => {
   // don't automatically push the button, require the user to call the publish command separately for now
-  runSequence('release.prepareReleasePackage', 'release.copyProdVersion', 'release.removeDebugStatements', done);
+  runSequence('release.prepareReleasePackage',
+              'release.copyProdVersion',
+              'release.removeDebugStatements',
+              'release.prepareChangelog',
+              done);
 });
 
 task('release.removeDebugStatements', (done: Function) => {
@@ -137,14 +144,16 @@ task('release.scss', () => {
 });
 
 task('release.pullLatest', (done: Function) => {
-  exec('git pull origin master', (err: Error, stdout: string, stderr: string) => {
-    console.log(stdout);
-    console.log(stderr);
+  exec('git status --porcelain', (err: Error, stdOut: string) =>{
     if (err) {
       done(err);
-    } else if (stderr && stderr.length > 0) {
-      done(new Error('There are outstanding changes. Commit changes in order to perform a release.'));
+    } else if ( stdOut && stdOut.length > 0) {
+      done(new Error('There are uncommited changes. Please commit or stash changes.'));
     } else {
+      const gitPullResult = spawnSync('git', ['pull', 'origin', 'master']);
+      if (gitPullResult.status !== 0) {
+        done(new Error('Error running git pull'));
+      }
       done();
     }
   });

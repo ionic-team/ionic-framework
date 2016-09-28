@@ -1,3 +1,135 @@
+<a name="2.0.0-rc.0"></a>
+# [2.0.0-rc.0](https://github.com/driftyco/ionic/compare/v2.0.0-beta.11...v2.0.0-rc.0) (2016-09-28)
+
+
+### Bug Fixes
+
+* **action-sheet:** add icon-left to the button if an icon exists ([a731528](https://github.com/driftyco/ionic/commit/a731528))
+* **animation:** prevent possible raf null errors ([0e8ebe5](https://github.com/driftyco/ionic/commit/0e8ebe5))
+* **app:** corrected paths to theme from app.scss ([001c1c9](https://github.com/driftyco/ionic/commit/001c1c9))
+* **changelog:** specify version of forms ([82852fb](https://github.com/driftyco/ionic/commit/82852fb))
+* **checkbox:** disabled toggle should not fire events or animate ([3324e32](https://github.com/driftyco/ionic/commit/3324e32))
+* **di:** update dependency injection and default configs ([7c05d0c](https://github.com/driftyco/ionic/commit/7c05d0c))
+* **docs:** get rid of reference to [@Page](https://github.com/Page) ([6fb848c](https://github.com/driftyco/ionic/commit/6fb848c))
+* **exports:** update module exports ([6784f5e](https://github.com/driftyco/ionic/commit/6784f5e))
+* **fab:** colors in speed dial buttons ([b70614b](https://github.com/driftyco/ionic/commit/b70614b))
+* **gestures:** fixes scroll issue with hammer config ([174efc1](https://github.com/driftyco/ionic/commit/174efc1)), closes [#6897](https://github.com/driftyco/ionic/issues/6897)
+* **ion-fixed:** ion-fixed directive is not longer needed ([75d5526](https://github.com/driftyco/ionic/commit/75d5526))
+* **item:** regression in sliding item introduced by 52ada1c ([e0c2129](https://github.com/driftyco/ionic/commit/e0c2129))
+* **item:** sliding item events are zone wrapped ([47491fb](https://github.com/driftyco/ionic/commit/47491fb)), closes [#7630](https://github.com/driftyco/ionic/issues/7630)
+* **item:** sliding item with icon-only buttons ([1d3d5a1](https://github.com/driftyco/ionic/commit/1d3d5a1))
+* **menu:** open/close race condition ([8585427](https://github.com/driftyco/ionic/commit/8585427)), closes [#7629](https://github.com/driftyco/ionic/issues/7629) [#8001](https://github.com/driftyco/ionic/issues/8001)
+* gulp validate passes successfully ([b750e46](https://github.com/driftyco/ionic/commit/b750e46))
+* **nav:** move null assignment of _onWillDismiss ([35193c4](https://github.com/driftyco/ionic/commit/35193c4))
+* **nav:** setRoot() and setPages() should not animate ([7012734](https://github.com/driftyco/ionic/commit/7012734))
+* **navigation:** move onWillDismiss and onDidDismiss, add unit tests ([e26c425](https://github.com/driftyco/ionic/commit/e26c425))
+* **platform:** fire platform ready on app init ([963e835](https://github.com/driftyco/ionic/commit/963e835))
+* **reorder:** adjust reorder icon style for iOS and MD ([f3bb2dc](https://github.com/driftyco/ionic/commit/f3bb2dc))
+* **templates:** add template tabs [#8207](https://github.com/driftyco/ionic/issues/8207) ([#8208](https://github.com/driftyco/ionic/issues/8208)) ([0f6ce28](https://github.com/driftyco/ionic/commit/0f6ce28))
+* **urlSerializer:** improve findLinkByComponentData ([9d563f5](https://github.com/driftyco/ionic/commit/9d563f5))
+
+
+### Code Refactoring
+
+* **button:** add ion-button attribute and icon attributes to style buttons ([938864e](https://github.com/driftyco/ionic/commit/938864e)), closes [#7466](https://github.com/driftyco/ionic/issues/7466)
+* **colors:** color should be added as an input instead of directly adding the color to the component ([55a0257](https://github.com/driftyco/ionic/commit/55a0257)), closes [#7087](https://github.com/driftyco/ionic/issues/7087) [#7401](https://github.com/driftyco/ionic/issues/7401) [#7523](https://github.com/driftyco/ionic/issues/7523)
+* **select:** rename alertOptions to selectOptions, add ability to pass them for action-sheet ([b8285b7](https://github.com/driftyco/ionic/commit/b8285b7)), closes [#7764](https://github.com/driftyco/ionic/issues/7764)
+
+
+### Features
+
+* **action-sheet:** add ability to pass multiple classes to cssClass ([68ab261](https://github.com/driftyco/ionic/commit/68ab261))
+* **chips:** added Chip component ([421f637](https://github.com/driftyco/ionic/commit/421f637))
+* **chips:** finished Component ([0dece72](https://github.com/driftyco/ionic/commit/0dece72))
+* **fab:** update floating action buttons ([490a06d](https://github.com/driftyco/ionic/commit/490a06d))
+* **itemReorder:** animate reorder button ([1f78487](https://github.com/driftyco/ionic/commit/1f78487))
+* **loading:** add ability to pass multiple classes to cssClass ([466dea3](https://github.com/driftyco/ionic/commit/466dea3))
+* **loading:** add setContent function ([c750847](https://github.com/driftyco/ionic/commit/c750847))
+* add polyfill task ([ce78194](https://github.com/driftyco/ionic/commit/ce78194))
+* **nav:** component url navigation ([f477aa2](https://github.com/driftyco/ionic/commit/f477aa2))
+* **nav:** set default stack history on app init ([ca8cc0a](https://github.com/driftyco/ionic/commit/ca8cc0a))
+* **polyfills:** split up code and source polyfill task ([#8130](https://github.com/driftyco/ionic/issues/8130)) ([bcec66c](https://github.com/driftyco/ionic/commit/bcec66c))
+* **popover:** add ability to pass multiple classes to cssClass ([a685cdc](https://github.com/driftyco/ionic/commit/a685cdc))
+* **toast:** add ability to pass multiple classes to cssClass ([79e25a3](https://github.com/driftyco/ionic/commit/79e25a3))
+
+
+### Performance Improvements
+
+* **item:** apply will-change only when list is active ([4bcd815](https://github.com/driftyco/ionic/commit/4bcd815))
+* **reorder:** reorder icon is display: none by default ([26441ec](https://github.com/driftyco/ionic/commit/26441ec))
+* **ripple:** md ripple effect update to not affect layout ([14a3ea2](https://github.com/driftyco/ionic/commit/14a3ea2))
+
+
+### BREAKING CHANGES
+
+* select: Select’s `alertOptions` input has been renamed to `selectOptions`. It
+now allows you to pass options for either the alert or action-sheet
+interface. Refer to their documentation for the options each of them
+accept.
+
+http://ionicframework.com/docs/v2/api/components/action-sheet/ActionShee
+tController/#create
+http://ionicframework.com/docs/v2/api/components/alert/AlertController/#
+create
+* colors: Colors should be passed in the `color` input on components, not added
+individually as an attribute on the component.
+
+For example:
+
+```
+<ion-tabs primary>
+```
+
+Becomes
+
+```
+<ion-tabs color=”primary”>
+```
+
+Or to bind an expression to color:
+
+```
+<ion-navbar [color]="barColor">
+   ...
+</ion-navbar>
+```
+
+```ts
+@Component({
+  templateUrl: 'build/pages/about/about.html'
+})
+export class AboutPage {
+  barColor: string;
+
+  constructor(private nav: NavController, platform: Platform) {
+    this.barColor = platform.is('android') ? 'primary' : 'light';
+  }
+}
+```
+
+Reason for this change:
+It was difficult to dynamically add colors to components, especially if
+the name of the color attribute was unknown in the template.
+This change keeps the css flat since we aren’t chaining color
+attributes on components and instead we assign a class to the component
+which includes the color’s name.
+This allows you to easily toggle a component between multiple colors.
+Speeds up performance because we are no longer reading through all of
+the attributes to grab the color ones.
+
+references #7467
+* button: - `<button>` becomes `<button ion-button>`
+- `<a button>` becomes `<a ion-button>`
+- `<button ion-item>` does not get the `ion-button` attribute
+- Buttons inside of `<ion-item-options>` do get the `ion-button`
+attribute
+- Removed the `category` attribute, this should be passed in
+`ion-button` instead.
+- Button attributes added for icons in buttons: `icon-only`,
+`icon-left`, and `icon-right`
+
+
+
 <a name="2.0.0-beta.11"></a>
 # [2.0.0-beta.11](https://github.com/driftyco/ionic/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2016-08-05)
 
