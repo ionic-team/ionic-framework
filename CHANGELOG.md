@@ -347,7 +347,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 10. Change any uses of the `private` TypeScript keyword to `public`.
 
-11. Change `<button />` to `<button ion-button />` according to [these instructions](#new-behavior-of-button).
+11. Change `<button>` to `<button ion-button>` according to [these instructions](#new-behavior-of-button).
 
 12. Pass colors to the `color` attribute : `<button primary>` changes to `<button color=”primary”>`. See [component colors](#component-colors) above.
 
@@ -434,12 +434,11 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 31. Change any uses of the `private` TypeScript keyword to `public`.
 
-32. Change any Ionic buttons from `<button />` to `<button ion-button />`. [See New Behavior of Button](#new-behavior-of-button).
+32. Change any Ionic buttons from `<button>` to `<button ion-button>`. [See New Behavior of Button](#new-behavior-of-button).
 
 33. Pass colors to the `color` attribute: `<button primary>` changes to `<button color=”primary”>`.
 
 34. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons](#new-behavior-of-icons-in-buttons).
-
 
 ### Bug Fixes
 
