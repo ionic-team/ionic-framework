@@ -9,7 +9,7 @@ import { Ion } from '../ion';
   * Select all of the HTML text elements with the color attribute to apply the text-color class.
  */
 @Directive({
-  selector: 'h1[color], h2[color], h3[color], h4[color], h5[color], h6[color], a[color], p[color], span[color], b[color], i[color], strong[color], em[color], small[color], sub[color], sup[color]'
+  selector: 'h1[color], h2[color], h3[color], h4[color], h5[color], h6[color], a[color]:not([ion-button]), p[color], span[color], b[color], i[color], strong[color], em[color], small[color], sub[color], sup[color]'
 })
 export class Typography extends Ion {
 
