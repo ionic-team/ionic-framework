@@ -355,6 +355,15 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 14. Move any variables from the mode specific sass files in your `beta.11` app into the `app.variables` file under the mode heading in the new RC0 app.
 
+15. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
+```
+page-selector-you-added {
+  #title {
+    color: blue;
+  }
+}
+```
+
 
 #### Modifying your Existing Project
 
@@ -439,6 +448,15 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 33. Pass colors to the `color` attribute: `<button primary>` changes to `<button color="primary">`.
 
 34. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons](#new-behavior-of-icons-in-buttons).
+
+35. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
+```
+page-selector-you-added {
+  #title {
+    color: blue;
+  }
+}
+```
 
 ### Bug Fixes
 
