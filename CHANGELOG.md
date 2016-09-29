@@ -347,6 +347,8 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 10. Change any uses of the `private` TypeScript keyword to `public`.
 
+Note: For details as to why this change has to be made, there is a discussion about it [here](https://forum.ionicframework.com/t/rc0-typescript-private-vs-public-keyword/64863/4?u=mhartington).
+
 11. Change `<button>` to `<button ion-button>` according to [these instructions](#new-behavior-of-button).
 
 12. Pass colors to the `color` attribute : `<button primary>` changes to `<button color="primary">`. See [component colors](#component-colors) above.
