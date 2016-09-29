@@ -341,7 +341,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 7. Import and add each of your custom components and pipes to the `declarations` array in `src/app/app.module.ts`.
 
-8. Import and add each of your providers to the `providers` array in `src/app/app.module.ts`.
+8. Import and add each of your providers to the `providers` array in `src/app/app.module.ts`. This includes providers that `beta.11` previously provided for you (NavController, AlertController, etc...).
 
 9. Remove any use of the `providers`, `pipes` and `directives` arrays in `@Component`.
 
