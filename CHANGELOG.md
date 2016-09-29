@@ -339,7 +339,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 6. Import and add each of your pages to the `declarations` array and the `entryComponents` array in `src/app/app.module.ts`.
 
-7. Import and add each of your custom components to the `declarations` array in `src/app/app.module.ts`.
+7. Import and add each of your custom components and pipes to the `declarations` array in `src/app/app.module.ts`.
 
 8. Import and add each of your providers to the `providers` array in `src/app/app.module.ts`.
 
