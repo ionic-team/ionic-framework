@@ -23,7 +23,7 @@ RC0 requires changes to the structure of your app. To get started updating your 
 * Nav transitions are queued. For more info on what this means for you see [this section](#nav-transitions).
 * Removed Tabs `preloadTabs` ability. This is no longer needed with the Ahead of Time (AoT) compiler.
 * Icons in buttons require an attribute on the parent button in order to style them.
-* Platform and mode CSS classes have been moved from the <body> element to the <ion-app> element.
+* Platform and mode CSS classes have been moved from the `<body>` element to the `<ion-app>` element.
 * Select’s `alertOptions` input has been renamed to `selectOptions`. See more [details here](#select-changes).
 * Colors should be passed in the `color` input on components, not added individually as an attribute on the component. See more [details here](#component-colors).
 * buttons: `<button>` becomes `<button ion-button>`. See more [details here](#new-behavior-of-button) and [here](#new-behavior-of-icons-in-buttons).
