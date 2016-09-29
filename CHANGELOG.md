@@ -343,7 +343,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 8. Import and add each of your providers to the `providers` array in `src/app/app.module.ts`.
 
-9. Remove any use of the `providers` entry in `@Component` from your pages.
+9. Remove any use of the `providers`, `pipes` and `directives` entries in `@Component`, and their corresponding `import` statements, from your pages.
 
 10. Change any uses of the `private` TypeScript keyword to `public`.
 
