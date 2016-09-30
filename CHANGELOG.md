@@ -345,7 +345,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 9. Remove any use of the `providers`, `pipes` and `directives` arrays in `@Component`.
 
-10. Change any uses of the `private` TypeScript keyword to `public`.
+10. Change any uses of the `private` TypeScript keyword to `public` ONLY for component variables that are needed in the associated template.
 
 11. Change `<button>` to `<button ion-button>` according to [these instructions](#new-behavior-of-button).
 
@@ -441,7 +441,7 @@ page-selector-you-added {
 
 30. Fix any paths to images in your app. For example, before the path may look like `<img src="img/myImg.png">` and now it should be `<img src="assets/img/myImg.png">`.
 
-31. Change any uses of the `private` TypeScript keyword to `public`.
+31. Change any uses of the `private` TypeScript keyword to `public` ONLY for component variables that are needed in the associated template.
 
 32. Change any Ionic buttons from `<button>` to `<button ion-button>`. [See New Behavior of Button](#new-behavior-of-button).
 
@@ -450,12 +450,20 @@ page-selector-you-added {
 34. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons](#new-behavior-of-icons-in-buttons).
 
 35. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
+In your template:
 ```
-page-selector-you-added {
+about-page {
   #title {
     color: blue;
   }
 }
+```
+In your component:
+```
+@Component({
+  selector: 'about-page',
+  templateUrl: 'about.html'
+})
 ```
 
 ### Bug Fixes
