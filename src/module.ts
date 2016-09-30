@@ -58,7 +58,7 @@ export { QueryParams, setupQueryParams, UrlToken } from './platform/query-params
 export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
 export { NavParams } from './navigation/nav-params';
-export { NavLink, NavOptions, DeepLink, DeepLinkConfig } from './navigation/nav-util';
+export { NavLink, NavOptions, DeepLink, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataType } from './navigation/nav-util';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
 
