@@ -8,22 +8,19 @@
     "url": "https://github.com/driftyco/ionic.git"
   },
   "license": "MIT",
-  "main": "index.js",
-  "jsnext:main": "esm/index.js",
+  "main": "umd/index.js",
+  "module": "index.js",
   "dependencies": {
-    "colors": "^1.1.2",
-    "inquirer": "0.11.0",
-    "lodash": "3.10.1",
-    "mkdirp-no-bin": "0.5.1",
-    "q": "1.4.1"
-  },
-  "peerDependencies": {
-    "@angular/common": "// versions dynamically pulled from root ./package.json",
+    "@angular/common": "",
     "@angular/compiler": "",
+    "@angular/compiler-cli": "",
     "@angular/core": "",
     "@angular/forms": "",
     "@angular/http": "",
     "@angular/platform-browser": "",
-    "@angular/platform-browser-dynamic": ""
+    "@angular/platform-browser-dynamic": "",
+    "@angular/platform-server": "",
+    "rxjs": "",
+    "zone.js": ""
   }
 }

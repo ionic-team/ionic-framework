@@ -1,42 +1,38 @@
-import { ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ElementRef, Renderer } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
-import { closest, copyInputAttributes, Coordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
+import { copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { Form } from '../../util/form';
+import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { NativeInput, NextInput } from './native-input';
-import { NavController } from '../nav/nav-controller';
-import { NavControllerBase } from '../nav/nav-controller-base';
+import { NavController } from '../../navigation/nav-controller';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 
 
-export class InputBase {
-  protected _coord: Coordinates;
-  protected _deregScroll: Function;
-  protected _disabled: boolean = false;
-  protected _keyboardHeight: number;
-  protected _scrollMove: EventListener;
-  protected _type: string = 'text';
-  protected _useAssist: boolean;
-  protected _usePadding: boolean;
-  protected _value: any = '';
-  protected _isTouch: boolean;
-  protected _autoFocusAssist: string;
-  protected _autoComplete: string;
-  protected _autoCorrect: string;
-  protected _nav: NavControllerBase;
+export class InputBase extends Ion {
+  _coord: PointerCoordinates;
+  _deregScroll: Function;
+  _disabled: boolean = false;
+  _keyboardHeight: number;
+  _scrollMove: EventListener;
+  _type: string = 'text';
+  _useAssist: boolean;
+  _usePadding: boolean;
+  _value: any = '';
+  _isTouch: boolean;
+  _autoFocusAssist: string;
+  _autoComplete: string;
+  _autoCorrect: string;
+  _nav: NavControllerBase;
+  _native: NativeInput;
 
   inputControl: NgControl;
-
-  @Input() clearInput: any;
-  @Input() placeholder: string = '';
-  @ViewChild(NativeInput) protected _native: NativeInput;
-  @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
-  @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 
   constructor(
     config: Config,
@@ -44,11 +40,14 @@ export class InputBase {
     protected _item: Item,
     protected _app: App,
     protected _platform: Platform,
-    protected _elementRef: ElementRef,
+    elementRef: ElementRef,
+    renderer: Renderer,
     protected _scrollView: Content,
     nav: NavController,
     ngControl: NgControl
   ) {
+    super(config, elementRef, renderer);
+
     this._nav = <NavControllerBase>nav;
     this._useAssist = config.getBoolean('scrollAssist', false);
     this._usePadding = config.getBoolean('scrollPadding', this._useAssist);
@@ -66,49 +65,27 @@ export class InputBase {
     _form.register(this);
   }
 
-  ngOnInit() {
-    if (this._item) {
-      this._item.setCssClass('item-input', true);
-      this._item.registerInput(this._type);
-    }
+  scrollMove(ev: UIEvent) {
+    // scroll move event listener this instance can reuse
+    if (!(this._nav && this._nav.isTransitioning())) {
+      this.deregScrollMove();
 
-    let clearInput = this.clearInput;
-    if (typeof clearInput === 'string') {
-      this.clearInput = (clearInput === '' || clearInput === 'true');
-    }
-  }
+      if (this.hasFocus()) {
+        this._native.hideFocus(true);
 
-  ngAfterContentInit() {
-    let self = this;
+        this._scrollView.onScrollEnd(() => {
+          this._native.hideFocus(false);
 
-    self._scrollMove = function(ev: UIEvent) {
-      // scroll move event listener this instance can reuse
-      if (!(self._nav && self._nav.isTransitioning())) {
-        self.deregScrollMove();
-
-        if (self.hasFocus()) {
-          self._native.hideFocus(true);
-
-          self._scrollView.onScrollEnd(function() {
-            self._native.hideFocus(false);
-
-            if (self.hasFocus()) {
-              // if it still has focus then keep listening
-              self.regScrollMove();
-            }
-          });
-        }
+          if (this.hasFocus()) {
+            // if it still has focus then keep listening
+            this.regScrollMove();
+          }
+        });
       }
-    };
+    }
+  };
 
-    this.setItemInputControlCss();
-  }
-
-  ngAfterContentChecked() {
-    this.setItemInputControlCss();
-  }
-
-  private setItemInputControlCss() {
+  setItemInputControlCss() {
     let item = this._item;
     let nativeInput = this._native;
     let inputControl = this.inputControl;
@@ -124,35 +101,21 @@ export class InputBase {
     }
   }
 
-  private setControlCss(element: any, control: any) {
-    element.setCssClass('ng-untouched', control.untouched);
-    element.setCssClass('ng-touched', control.touched);
-    element.setCssClass('ng-pristine', control.pristine);
-    element.setCssClass('ng-dirty', control.dirty);
-    element.setCssClass('ng-valid', control.valid);
-    element.setCssClass('ng-invalid', !control.valid);
+  setControlCss(element: any, control: NgControl) {
+    element.setElementClass('ng-untouched', control.untouched);
+    element.setElementClass('ng-touched', control.touched);
+    element.setElementClass('ng-pristine', control.pristine);
+    element.setElementClass('ng-dirty', control.dirty);
+    element.setElementClass('ng-valid', control.valid);
+    element.setElementClass('ng-invalid', !control.valid);
   }
 
-  ngOnDestroy() {
-    this._form.deregister(this);
-  }
-
-  @Input()
-  get value() {
-    return this._value;
-  }
-
-  set value(val: any) {
+  setValue(val: any) {
     this._value = val;
     this.checkHasValue(val);
   }
 
-  @Input()
-  get type() {
-    return this._type;
-  }
-
-  set type(val) {
+  setType(val: string) {
     this._type = 'text';
 
     if (val) {
@@ -164,22 +127,16 @@ export class InputBase {
     }
   }
 
-  @Input()
-  get disabled() {
-    return this._disabled;
-  }
-
-  set disabled(val) {
+  setDisabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-input-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-input-disabled', this._disabled);
     this._native && this._native.isDisabled(this._disabled);
   }
 
   /**
    * @private
    */
-  @ViewChild(NativeInput)
-  private set _nativeInput(nativeInput: NativeInput) {
+  setNativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
 
     if (this._item && this._item.labelId !== null) {
@@ -200,7 +157,7 @@ export class InputBase {
     });
 
     this.checkHasValue(nativeInput.getValue());
-    this.disabled = this._disabled;
+    this.setDisabled(this._disabled);
 
     var ionInputEle: HTMLElement = this._elementRef.nativeElement;
     let nativeInputEle: HTMLElement = nativeInput.element();
@@ -245,8 +202,7 @@ export class InputBase {
   /**
    * @private
    */
-  @ViewChild(NextInput)
-  private set _nextInput(nextInput: NextInput) {
+  setNextInput(nextInput: NextInput) {
     if (nextInput) {
       nextInput.focused.subscribe(() => {
         this._form.tabFocus(this);
@@ -290,7 +246,7 @@ export class InputBase {
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
-      this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
+      this._item.setElementClass('input-has-value', !!(inputValue && inputValue !== ''));
     }
   }
 
@@ -299,14 +255,14 @@ export class InputBase {
    */
   focusChange(inputHasFocus: boolean) {
     if (this._item) {
-      this._item.setCssClass('input-has-focus', inputHasFocus);
+      this._item.setElementClass('input-has-focus', inputHasFocus);
     }
     if (!inputHasFocus) {
       this.deregScrollMove();
     }
   }
 
-  private pointerStart(ev: any) {
+  pointerStart(ev: any) {
     // input cover touchstart
     console.debug('scroll assist pointerStart', ev.type);
 
@@ -320,7 +276,7 @@ export class InputBase {
     }
   }
 
-  private pointerEnd(ev: any) {
+  pointerEnd(ev: any) {
     // input cover touchend/mouseup
     console.debug('scroll assist pointerEnd', ev.type);
 
@@ -362,8 +318,8 @@ export class InputBase {
       // find out if text input should be manually scrolled into view
 
       // get container of this input, probably an ion-item a few nodes up
-      var ele = this._elementRef.nativeElement;
-      ele = closest(ele, 'ion-item,[ion-item]') || ele;
+      var ele: HTMLElement = this._elementRef.nativeElement;
+      ele = <HTMLElement>ele.closest('ion-item,[ion-item]') || ele;
 
       var scrollData = InputBase.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this._keyboardHeight, this._platform.height());
       if (scrollData.scrollAmount > -3 && scrollData.scrollAmount < 3) {
@@ -419,7 +375,7 @@ export class InputBase {
   /**
    * @private
    */
-  private setFocus() {
+  setFocus() {
     // immediately set focus
     this._form.setAsFocused(this);
 
@@ -450,12 +406,12 @@ export class InputBase {
   /**
    * @private
    */
-  private regScrollMove() {
+  regScrollMove() {
     // register scroll move listener
     if (this._useAssist && this._scrollView) {
       setTimeout(() => {
         this.deregScrollMove();
-        this._deregScroll = this._scrollView.addScrollListener(this._scrollMove);
+        this._deregScroll = this._scrollView.addScrollListener(this.scrollMove.bind(this));
       }, 80);
     }
   }
@@ -463,7 +419,7 @@ export class InputBase {
   /**
    * @private
    */
-  private deregScrollMove() {
+  deregScrollMove() {
     // deregister the scroll move listener
     this._deregScroll && this._deregScroll();
   }

@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./picker";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Picker
 // --------------------------------------------------
@@ -12,7 +11,7 @@ $picker-wp-toolbar-height:                    44px !default;
 $picker-wp-toolbar-background-color:          $picker-wp-background-color !default;
 
 $picker-wp-button-height:                     $picker-wp-toolbar-height !default;
-$picker-wp-button-text-color:                 $link-wp-color !default;
+$picker-wp-button-text-color:                 color($colors-wp, primary) !default;
 $picker-wp-button-background-color:           transparent !default;
 
 $picker-wp-column-padding:                    0 4px !default;
@@ -24,48 +23,43 @@ $picker-wp-option-height:                     42px !default;
 $picker-wp-option-offset-y:                   (($picker-wp-height - $picker-wp-toolbar-height) / 2) - ($picker-wp-option-height / 2) - 10 !default;
 
 $picker-wp-option-selected-font-size:         22px !default;
-$picker-wp-option-selected-color:             $link-wp-color !default;
-
-$picker-highlight-opacity:                     .8 !default;
+$picker-wp-option-selected-color:             color($colors-wp, primary) !default;
 
 
-.picker-wrapper {
+.picker-wp .picker-wrapper {
   height: $picker-wp-height;
 
-  border-top: 1px solid $picker-wp-border-color;
+  border-top: $hairlines-width solid $picker-wp-border-color;
 
   background: $picker-wp-background-color;
 }
 
-.picker-toolbar {
+.picker-wp .picker-toolbar {
   display: flex;
 
   justify-content: flex-end;
 
   height: $picker-wp-toolbar-height;
 
+  border-width: $hairlines-width;
+
   background: $picker-wp-toolbar-background-color;
 }
 
-.hairlines .picker-wrapper,
-.hairlines .picker-toolbar {
-  border-width: $hairlines-width;
-}
-
-.picker-toolbar-button {
+.picker-wp .picker-toolbar-button {
   flex: 1;
 
   text-align: right;
 }
 
-.picker-toolbar-cancel {
+.picker-wp .picker-toolbar-cancel {
   font-weight: normal;
 
   text-align: left;
 }
 
-.picker-button,
-.picker-button.activated {
+.picker-wp .picker-button,
+.picker-wp .picker-button.activated {
   margin: 0;
 
   height: $picker-wp-button-height;
@@ -76,21 +70,21 @@ $picker-highlight-opacity:                     .8 !default;
   box-shadow: none;
 }
 
-.picker-columns {
+.picker-wp .picker-columns {
   height: $picker-wp-height - $picker-wp-toolbar-height;
 
   perspective: 1800px;
 }
 
-.picker-col {
+.picker-wp .picker-col {
   padding: $picker-wp-column-padding;
 
   transform-style: preserve-3d;
 }
 
-.picker-prefix,
-.picker-suffix,
-.picker-opts {
+.picker-wp .picker-prefix,
+.picker-wp .picker-suffix,
+.picker-wp .picker-opts {
   top: $picker-wp-option-offset-y;
 
   font-size: $picker-wp-option-font-size;
@@ -102,11 +96,11 @@ $picker-highlight-opacity:                     .8 !default;
   pointer-events: none;
 }
 
-.picker-opts ion-button-effect {
+.picker-wp .picker-opts .button-effect {
   display: none;
 }
 
-.picker-opt {
+.picker-wp .picker-opt {
   margin: 0;
   padding: $picker-wp-option-padding;
 
@@ -122,19 +116,19 @@ $picker-highlight-opacity:                     .8 !default;
   pointer-events: auto;
 }
 
-.picker-opt .button-inner {
+.picker-wp .picker-opt .button-inner {
   transition: 200ms;
 }
 
-.picker-prefix,
-.picker-suffix,
-.picker-opt-selected {
+.picker-wp .picker-prefix,
+.picker-wp .picker-suffix,
+.picker-wp .picker-opt-selected {
   font-size: $picker-wp-option-selected-font-size;
 
   color: $picker-wp-option-selected-color;
 }
 
-.picker-above-highlight {
+.picker-wp .picker-above-highlight {
   position: absolute;
   top: 0;
   left: 0;
@@ -152,7 +146,7 @@ $picker-highlight-opacity:                     .8 !default;
   transform: translate3d(0, 0, 90px);
 }
 
-.picker-below-highlight {
+.picker-wp .picker-below-highlight {
   position: absolute;
   top: $picker-wp-option-offset-y + $picker-wp-option-height - 4;
   left: 0;

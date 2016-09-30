@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./toast";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Phone Toast
 // --------------------------------------------------
@@ -13,7 +12,7 @@ $toast-wp-title-color:                           #fff !default;
 $toast-wp-title-font-size:                       1.4rem !default;
 $toast-wp-title-padding:                         1.5rem !default;
 
-.toast-wrapper {
+.toast-wp .toast-wrapper {
   position: absolute;
   right: 0;
   left: 0;
@@ -26,22 +25,22 @@ $toast-wp-title-padding:                         1.5rem !default;
 
   border-radius: $toast-wp-border-radius;
   background: $toast-wp-background;
+}
 
-  &.toast-top {
-    top: 0;
+.toast-wp .toast-wrapper.toast-top {
+  top: 0;
 
-    opacity: .01;
-  }
+  opacity: .01;
+}
 
-  &.toast-bottom {
-    bottom: 0;
+.toast-wp .toast-wrapper.toast-bottom {
+  bottom: 0;
 
-    opacity: .01;
-  }
+  opacity: .01;
+}
 
-  &.toast-middle {
-    opacity: .01;
-  }
+.toast-wp .toast-wrapper.toast-middle {
+  opacity: .01;
 }
 
 .toast-message {

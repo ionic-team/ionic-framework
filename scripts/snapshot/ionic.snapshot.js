@@ -15,7 +15,7 @@ var IonicSnapshot = function(options) {
     self.domain = options.domain || 'ionic-snapshot-go.appspot.com';
     self.groupId = options.groupId || 'test_group';
     self.appId = options.appId || 'test_app';
-    self.sleepBetweenSpecs = options.sleepBetweenSpecs || 750;
+    self.sleepBetweenSpecs = options.sleepBetweenSpecs || 500;
     self.testId = browser.params.test_id || 'test_id';
     self.shouldUpload = browser.params.upload !== 'false';
     self.platformId = browser.params.platform_id;
@@ -114,10 +114,11 @@ var IonicSnapshot = function(options) {
             var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
 
             self.testData.spec_index = spec.id;
-            self.testData.description = spec.getFullName();
+            self.testData.description = spec.getFullName().replace('/test/', '/');
             self.testData.highest_mismatch = self.highestMismatch;
             self.testData.png_base64 = pngBase64;
-            self.testData.url = currentUrl.replace('dist/', '/').replace('&ionicanimate=false', '');
+            self.testData.description = spec.getFullName().replace('test/', '');
+            self.testData.url = currentUrl.replace('dist', '').replace('components/', '').replace('test/', '').replace('&ionicanimate=false', '');
             pngBase64 = null;
 
             var requestDeferred = q.defer();

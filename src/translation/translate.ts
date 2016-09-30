@@ -37,6 +37,7 @@ export class Translate {
 
   setLanguage(lang: any) {
     this._language = lang;
+    console.warn('Translate provider and TranslatePipe has been deprecated and will be removed in the next version. Please use NG2-Translate instead: http://ionicframework.com/docs/v2/resources/ng2-translate/');
   }
 
   getTranslations(lang: any) {

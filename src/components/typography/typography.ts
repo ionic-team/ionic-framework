@@ -1,49 +1,38 @@
 import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
+
 
 /**
   * @private
   * Select all of the HTML text elements with the color attribute to apply the text-color class.
  */
 @Directive({
-  selector: 'h1[color], h2[color], h3[color], h4[color], h5[color], h6[color], a[color], p[color], span[color], b[color], i[color], strong[color], em[color], small[color], sub[color], sup[color]'
+  selector: 'h1[color], h2[color], h3[color], h4[color], h5[color], h6[color], a[color]:not([ion-button]), p[color], span[color], b[color], i[color], strong[color], em[color], small[color], sub[color], sup[color]'
 })
-export class Typography {
-  /** @internal */ 
-  _color: string;
+export class Typography extends Ion {
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
-  }
-
-  set color(value: string) {
-    this._updateColor(value);
-  }
-
-  constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
-  ) { }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
+  set color(val: string) {
+    this._setColor('text', val);
   }
 
   /**
-   * @internal
+   * @input {string} The mode to apply to this component.
    */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `text-${color}`, isAdd);
-    }
+  @Input()
+  set mode(val: string) {
+    this._setMode('text', val);
   }
+
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+  }
+
 }

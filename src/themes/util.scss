@@ -1,0 +1,69 @@
+@import "./ionic.globals";
+
+.hide,
+[hidden],
+template {
+  display: none !important;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+
+// Focus Outline
+// --------------------------------------------------
+
+$focus-outline-border-color:   #51a7e8 !default;
+$focus-outline-border-width:   2px !default;
+$focus-outline-box-shadow:     0 0 8px 1px $focus-outline-border-color !default;
+
+
+:focus,
+:active {
+  outline: none;
+}
+
+.focus-outline :focus {
+  outline: thin dotted;
+  outline-offset: -1px;
+}
+
+.focus-outline button:focus,
+.focus-outline [ion-button]:focus {
+  border-color: $focus-outline-border-color;
+  outline: $focus-outline-border-width solid $focus-outline-border-color;
+  box-shadow: $focus-outline-box-shadow;
+}
+
+ion-input :focus {
+  outline: none;
+}
+
+
+// Click Block
+// --------------------------------------------------
+// Fill the screen to block clicks (a better pointer-events: none)
+// to avoid full-page reflows and paints which can cause flickers
+
+.click-block {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-click-block;
+  display: block;
+
+  opacity: 0;
+  transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, calc(-100% + 1px), 0);
+
+  // background: red;
+  // opacity: .3;
+}
+
+.click-block-active {
+  transform: translate3d(0, 0, 0);
+}

@@ -4,8 +4,8 @@ import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
 import { AlertOptions, AlertInputOptions } from './alert-options';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-interfaces';
-import { ViewController } from '../nav/view-controller';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -19,14 +19,9 @@ export class Alert extends ViewController {
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(AlertCmp, opts);
+    super(AlertCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
-
-    // by default, alerts should not fire lifecycle events of other views
-    // for example, when an alert enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**
@@ -49,15 +44,6 @@ export class Alert extends ViewController {
    */
   setSubTitle(subTitle: string) {
     this.data.subTitle = subTitle;
-  }
-
-  /**
-   * @private
-   */
-  private setBody(message: string) {
-    // deprecated warning
-    console.warn('Alert setBody() has been renamed to setMessage()');
-    this.setMessage(message);
   }
 
   /**
@@ -102,7 +88,7 @@ export class Alert extends ViewController {
    * @private
    * DEPRECATED: Please inject AlertController instead
    */
-  private static create(opt: any) {
+  static create(opt: any) {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Alert.create(..) has been deprecated. Please inject AlertController instead');
   }
@@ -320,7 +306,7 @@ export class Alert extends ViewController {
  * out before starting a new transition.
  *
  *
- * @demo /docs/v2/demos/alert/
+ * @demo /docs/v2/demos/src/alert/
  */
 @Injectable()
 export class AlertController {

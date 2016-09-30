@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Directive, ElementRef, EventEmitter, Input, Host, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Animation } from '../../animations/animation';
+import { Config } from '../../config/config';
 import { Gesture } from '../../gestures/gesture';
 import { CSS } from '../../util/dom';
 import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
-import { dom } from '../../util';
 import { Ion } from '../ion';
 import { Swiper } from './swiper-widget';
 
@@ -166,7 +166,7 @@ import { Swiper } from './swiper-widget';
  * For all of the methods you can call on the `Slider` instance, see the
  * [Instance Members](#instance-members).
  *
- * @demo /docs/v2/demos/slides/
+ * @demo /docs/v2/demos/src/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
  * Swiper.js:
@@ -202,72 +202,72 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  private id: number;
+  id: number;
 
   /**
    * @private
    */
-  private slideId: string;
+  slideId: string;
 
   /**
    * @private
    */
-  private showPager: boolean;
+  showPager: boolean;
 
   /**
    * @private
    */
-  private slider: Swiper;
+  slider: Swiper;
 
   /**
    * @private
    */
-  private maxScale: number;
+  maxScale: number;
 
   /**
    * @private
    */
-  private zoomElement: HTMLElement;
+  zoomElement: HTMLElement;
 
   /**
    * @private
    */
-  private zoomGesture: Gesture;
+  zoomGesture: Gesture;
 
   /**
    * @private
    */
-  private scale: number;
+  scale: number;
 
   /**
    * @private
    */
-  private zoomLastPosX: number;
+  zoomLastPosX: number;
 
   /**
    * @private
    */
-  private zoomLastPosY: number;
+  zoomLastPosY: number;
 
   /**
    * @private
    */
-  private viewportWidth: number;
+  viewportWidth: number;
 
   /**
    * @private
    */
-  private viewportHeight: number;
+  viewportHeight: number;
 
   /**
    * @private
    */
-  private enableZoom: boolean;
+  enableZoom: boolean;
 
   /**
    * @private
    */
-  private touch: {
+  touch: {
     x: number,
     y: number,
     startX: number,
@@ -323,8 +323,8 @@ export class Slides extends Ion {
   @Output() ionDrag: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(elementRef: ElementRef, renderer: Renderer) {
-    super(elementRef);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
     this.rapidUpdate = debounce(() => {
       this.update();
     }, 10);
@@ -332,7 +332,7 @@ export class Slides extends Ion {
     this.id = ++slidesId;
     this.slideId = 'slides-' + this.id;
 
-    renderer.setElementClass(elementRef.nativeElement, this.slideId, true);
+    this.setElementClass(this.slideId, true);
   }
 
   /**
@@ -466,7 +466,7 @@ export class Slides extends Ion {
     this.zoomLastPosY = 0;
 
 
-    let lastScale: number, startX: number, startY: number, posX = 0, posY = 0, zoomRect: any;
+    let lastScale: number, zoomRect: any;
 
     this.viewportWidth = this.getNativeElement().offsetWidth;
     this.viewportHeight = this.getNativeElement().offsetHeight;
@@ -491,7 +491,7 @@ export class Slides extends Ion {
     this.zoomGesture.on('pinch', (e: any) => {
       this.scale = Math.max(1, Math.min(lastScale * e.scale, 10));
       console.debug('Scaling', this.scale);
-      this.zoomElement.style[CSS.transform] = 'scale(' + this.scale + ')';
+      (<any>this.zoomElement.style)[CSS.transform] = 'scale(' + this.scale + ')';
 
       zoomRect = this.zoomElement.getBoundingClientRect();
     });
@@ -516,8 +516,8 @@ export class Slides extends Ion {
    */
   resetZoom() {
     if (this.zoomElement) {
-      this.zoomElement.parentElement.style[CSS.transform] = '';
-      this.zoomElement.style[CSS.transform] = 'scale(1)';
+      (<any>this.zoomElement.parentElement.style)[CSS.transform] = '';
+      (<any>this.zoomElement.style)[CSS.transform] = 'scale(1)';
     }
 
     this.scale = 1;
@@ -563,9 +563,9 @@ export class Slides extends Ion {
       .duration(this.zoomDuration)
       .easing('linear');
 
-    let zw = new Animation(this.touch.target.children[0])
-      .duration(this.zoomDuration)
-      .easing('linear');
+    // let zw = new Animation(this.touch.target.children[0])
+    //   .duration(this.zoomDuration)
+    //   .easing('linear');
 
     let za = new Animation();
     za.add(zi);
@@ -620,7 +620,7 @@ export class Slides extends Ion {
 
     // TODO: Support mice as well
 
-    let target = ((dom.closest(e.target, '.slide').children[0] as HTMLElement).children[0] as HTMLElement);
+    let target = ((e.target.closest('.slide').children[0] as HTMLElement).children[0] as HTMLElement);
 
     this.touch = {
       x: null,
@@ -684,7 +684,7 @@ export class Slides extends Ion {
     } else {
       console.debug('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
       // this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
-      this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
+      (<any>this.touch.target.style)[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
       e.preventDefault();
       e.stopPropagation();
       return false;
@@ -838,7 +838,7 @@ export class Slides extends Ion {
   *
   * See the [Slides API Docs](../Slides) for more usage information.
   *
-  * @demo /docs/v2/demos/slides/
+  * @demo /docs/v2/demos/src/slides/
   * @see {@link /docs/v2/api/components/slides/Slides/ Slides API Docs}
   */
 @Component({
@@ -852,7 +852,7 @@ export class Slide {
   /**
    * @private
    */
-  private ele: HTMLElement;
+  ele: HTMLElement;
 
 
   /**
@@ -862,7 +862,11 @@ export class Slide {
 
   constructor(
     elementRef: ElementRef,
-    @Host() private slides: Slides
+
+  /**
+   * @private
+   */
+    @Host() public slides: Slides
   ) {
     this.ele = elementRef.nativeElement;
     this.ele.classList.add('swiper-slide');
@@ -870,6 +874,9 @@ export class Slide {
     slides.rapidUpdate();
   }
 
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this.slides.rapidUpdate();
   }

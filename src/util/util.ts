@@ -1,6 +1,4 @@
 
-export function noop() {}
-
 /**
  * Given a min and max, restrict the given number
  * to the range.
@@ -91,11 +89,13 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
  * @param the destination to apply defaults to.
  */
 export function defaults(dest: any, ...args: any[]) {
-  for (let i = arguments.length - 1; i >= 1; i--) {
-    let source = arguments[i] || {};
-    for (let key in source) {
-      if (source.hasOwnProperty(key) && !dest.hasOwnProperty(key)) {
-        dest[key] = source[key];
+  for (var i = arguments.length - 1; i >= 1; i--) {
+    var source = arguments[i];
+    if (source) {
+      for (var key in source) {
+        if (source.hasOwnProperty(key) && !dest.hasOwnProperty(key)) {
+          dest[key] = source[key];
+        }
       }
     }
   }
@@ -144,43 +144,6 @@ export const isCheckedProperty = function(a: any, b: any): boolean {
   return (a == b);
   /* tslint:enable */
 };
-
-/**
- * Convert a string in the format thisIsAString to a slug format this-is-a-string
- */
-export function pascalCaseToDashCase(val: string = ''): string {
-  return val.charAt(0).toLowerCase() + val.substring(1).replace(/[A-Z]/g, match => {
-    return '-' + match.toLowerCase();
-  });
-}
-
-let uid = 0;
-export function nextUid(): number {
-  return ++uid;
-}
-
-/**
- * Grab all query strings keys and values.
- * @param url
- */
-export function getQuerystring(url: string): any {
-  var queryParams: any = {};
-  if (url) {
-    const startIndex = url.indexOf('?');
-    if (startIndex !== -1) {
-      const queries = url.slice(startIndex + 1).split('&');
-      for (var i = 0; i < queries.length; i++) {
-        if (queries[i].indexOf('=') > 0) {
-          var split = queries[i].split('=');
-          if (split.length > 1) {
-            queryParams[split[0].toLowerCase()] = split[1].split('#')[0];
-          }
-        }
-      }
-    }
-  }
-  return queryParams;
-}
 
 
 /**

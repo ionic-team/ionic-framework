@@ -1,0 +1,50 @@
+@import "./ionic.theme.default";
+
+// Material Design Default Theme
+// ----------------------------------
+
+$colors-md: copy-colors($colors) !default;
+
+
+$text-md-color:                       $text-color !default;
+$background-md-color:                 $background-color !default;
+$subdued-text-md-color:               $subdued-text-color !default;
+
+$font-family-md-base:                 "Roboto", "Helvetica Neue", sans-serif !default;
+$font-size-md-base:                   $font-size-base !default;
+
+$content-md-padding:                  $content-padding !default;
+$content-md-margin:                   $content-margin !default;
+
+
+// Material Design Toolbar
+// --------------------------------------------------
+
+$toolbar-md-height:                   56px !default;
+$toolbar-md-background:               $toolbar-background !default;
+$toolbar-md-border-color:             $toolbar-border-color !default;
+$toolbar-md-text-color:               #424242 !default;
+$toolbar-md-active-color:             $toolbar-active-color !default;
+$toolbar-md-inactive-color:           $toolbar-inactive-color !default;
+
+
+// Material Design List
+// --------------------------------------------------
+
+$list-md-text-color:                  $list-text-color !default;
+$list-md-border-color:                #dedede !default;
+$list-md-background-color:            $list-background-color !default;
+$list-md-activated-background-color:  #f1f1f1 !default;
+
+
+// Material Design Item
+// --------------------------------------------------
+
+$item-md-padding-top:                 13px !default;
+$item-md-padding-right:               16px !default;
+$item-md-padding-bottom:              13px !default;
+$item-md-padding-left:                16px !default;
+$item-md-padding-media-top:           9px !default;
+$item-md-padding-media-bottom:        9px !default;
+$item-md-padding-icon-top:            11px !default;
+$item-md-padding-icon-bottom:         10px !default;

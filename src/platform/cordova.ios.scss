@@ -1,25 +1,11 @@
-@import "../globals.ios";
-@import "./cordova";
+@import "../themes/ionic.globals.ios";
 
 // iOS Cordova
 // --------------------------------------------------
 
 $cordova-ios-statusbar-padding-modal-max-width:         $cordova-statusbar-padding-modal-max-width !default;
 
-
-ion-nav > ion-page,
-ion-nav > ion-page > ion-header,
-ion-tab > ion-page > ion-header,
-ion-tabs > ion-page.tab-subpage > ion-header,
-ion-menu > .menu-inner,
-ion-menu > .menu-inner > ion-header {
-  @include toolbar-statusbar-padding($toolbar-ios-height, $content-ios-padding);
-  @include toolbar-title-statusbar-padding($toolbar-ios-height, $content-ios-padding);
-}
-
-@media only screen and (max-width: $cordova-ios-statusbar-padding-modal-max-width) {
-  .modal-wrapper > ion-page > ion-header {
-    @include toolbar-statusbar-padding($toolbar-ios-height, $content-ios-padding);
-    @include toolbar-title-statusbar-padding($toolbar-ios-height, $content-ios-padding);
-  }
+// Cordova mixins are in the main cordova file
+.ios {
+  @include statusbar-padding($toolbar-ios-height, $content-ios-padding, $cordova-ios-statusbar-padding-modal-max-width, true);
 }

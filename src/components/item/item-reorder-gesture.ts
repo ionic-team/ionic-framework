@@ -1,7 +1,6 @@
-import { Item } from './item';
+import { PointerCoordinates, CSS, pointerCoord } from '../../util/dom';
 import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
 import { UIEventManager } from '../../util/ui-event-manager';
-import { closest, Coordinates, pointerCoord, CSS, nativeRaf } from '../../util/dom';
 
 
 const AUTO_SCROLL_MARGIN = 60;
@@ -15,7 +14,7 @@ export class ItemReorderGesture {
   private selectedItemEle: HTMLElement = null;
   private selectedItemHeight: number;
 
-  private offset: Coordinates;
+  private offset: PointerCoordinates;
   private lastToIndex: number;
   private lastYcoord: number;
   private lastScrollPosition: number;
@@ -104,7 +103,7 @@ export class ItemReorderGesture {
 
     // Update selected item position
     let ydiff = Math.round(posY - this.offset.y + scrollPosition);
-    selectedItem.style[CSS.transform] = `translateY(${ydiff}px)`;
+    (<any>selectedItem.style)[CSS.transform] = `translateY(${ydiff}px)`;
   }
 
   private onDragEnd() {
@@ -129,7 +128,7 @@ export class ItemReorderGesture {
     this.reorderList.reorderEmit(fromIndex, toIndex);
   }
 
-  private itemForCoord(coord: Coordinates): HTMLElement {
+  private itemForCoord(coord: PointerCoordinates): HTMLElement {
     return itemForPosition(this.offset.x - 100, coord.y);
   }
 

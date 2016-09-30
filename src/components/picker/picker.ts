@@ -2,10 +2,10 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-interfaces';
+import { NavOptions } from '../../navigation/nav-util';
 import { PickerCmp } from './picker-component';
 import { PickerOptions, PickerColumn } from './picker-options';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @private
@@ -20,16 +20,11 @@ export class Picker extends ViewController {
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(PickerCmp, opts);
+    super(PickerCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
 
     this.ionChange = new EventEmitter<any>();
-
-    // by default, pickers should not fire lifecycle events of other views
-    // for example, when an picker enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**
@@ -59,7 +54,7 @@ export class Picker extends ViewController {
   }
 
   refresh() {
-    this.instance.refresh && this.instance.refresh();
+    this._cmp && this._cmp.instance.refresh && this._cmp.instance.refresh();
   }
 
   /**
@@ -83,7 +78,7 @@ export class Picker extends ViewController {
    * @private
    * DEPRECATED: Please inject PickerController instead
    */
-  private static create(opt: any) {
+  static create(opt: any) {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('Picker.create(..) has been deprecated. Please inject PickerController instead');
   }

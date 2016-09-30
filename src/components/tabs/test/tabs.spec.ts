@@ -1,36 +1,10 @@
 import { Component } from '@angular/core';
-import { App, Config, Nav, NavOptions, Platform, Tab, Tabs, ViewController } from '../../../../src';
-import { mockTab, mockTabs } from '../../../../src/util/mock-providers';
+import { mockTab, mockTabs } from '../../../util/mock-providers';
 
-export function run() {
 
 describe('Tabs', () => {
 
   describe('initTabs', () => {
-
-    it('should preload all tabs', () => {
-      var tabs = mockTabs();
-      var tab0 = mockTab(tabs);
-      var tab1 = mockTab(tabs);
-      tab0.root = SomePage;
-      tab1.root = SomePage;
-
-      tab0.preload = () => {};
-      tab1.preload = () => {};
-
-      spyOn(tab0, 'preload');
-      spyOn(tab1, 'preload');
-
-      tabs.preloadTabs = true;
-
-      tabs.initTabs();
-
-      expect(tab0.isSelected).toEqual(true);
-      expect(tab1.isSelected).toEqual(false);
-
-      expect(tab0.preload).not.toHaveBeenCalled();
-      expect(tab1.preload).toHaveBeenCalled();
-    });
 
     it('should not select a hidden or disabled tab', () => {
       var tabs = mockTabs();
@@ -42,7 +16,7 @@ describe('Tabs', () => {
       tab1.enabled = false;
       tab1.show = false;
 
-      tabs.selectedIndex = '1';
+      tabs.selectedIndex = 1;
       tabs.initTabs();
 
       expect(tab0.isSelected).toEqual(true);
@@ -56,7 +30,7 @@ describe('Tabs', () => {
       tab0.root = SomePage;
       tab1.root = SomePage;
 
-      tabs.selectedIndex = '1';
+      tabs.selectedIndex = 1;
       tabs.initTabs();
 
       expect(tab0.isSelected).toEqual(false);
@@ -70,16 +44,10 @@ describe('Tabs', () => {
       tab0.root = SomePage;
       tab1.root = SomePage;
 
-      spyOn(tab0, 'preload');
-      spyOn(tab1, 'preload');
-
       tabs.initTabs();
 
       expect(tab0.isSelected).toEqual(true);
       expect(tab1.isSelected).toEqual(false);
-
-      expect(tab0.preload).not.toHaveBeenCalled();
-      expect(tab1.preload).not.toHaveBeenCalled();
     });
 
   });
@@ -99,13 +67,13 @@ describe('Tabs', () => {
       tabs.select(tab1);
       tabs.select(tab2);
 
-      expect(tabs.selectHistory).toEqual([tab0.id, tab1.id, tab2.id]);
+      expect(tabs._selectHistory).toEqual([tab0.id, tab1.id, tab2.id]);
 
       expect(tabs.previousTab(true)).toEqual(tab1);
-      expect(tabs.selectHistory).toEqual([tab0.id, tab1.id]);
+      expect(tabs._selectHistory).toEqual([tab0.id, tab1.id]);
 
       expect(tabs.previousTab(true)).toEqual(tab0);
-      expect(tabs.selectHistory).toEqual([tab0.id]);
+      expect(tabs._selectHistory).toEqual([tab0.id]);
     });
 
     it('should not find a previous tab when there has only been one selection', () => {
@@ -122,7 +90,7 @@ describe('Tabs', () => {
 
     it('should not find a previous tab when theres no history', () => {
       var tabs = mockTabs();
-      expect(tabs.selectHistory.length).toEqual(0);
+      expect(tabs._selectHistory.length).toEqual(0);
       expect(tabs.previousTab(true)).toEqual(null);
     });
 
@@ -133,22 +101,22 @@ describe('Tabs', () => {
       tab0.root = SomePage;
       tab1.root = SomePage;
 
-      expect(tabs.selectHistory.length).toEqual(0);
+      expect(tabs._selectHistory.length).toEqual(0);
 
       tabs.select(tab0);
-      expect(tabs.selectHistory[0]).toEqual(tab0.id);
-      expect(tabs.selectHistory.length).toEqual(1);
+      expect(tabs._selectHistory[0]).toEqual(tab0.id);
+      expect(tabs._selectHistory.length).toEqual(1);
 
       tabs.select(tab1);
-      expect(tabs.selectHistory[0]).toEqual(tab0.id);
-      expect(tabs.selectHistory[1]).toEqual(tab1.id);
-      expect(tabs.selectHistory.length).toEqual(2);
+      expect(tabs._selectHistory[0]).toEqual(tab0.id);
+      expect(tabs._selectHistory[1]).toEqual(tab1.id);
+      expect(tabs._selectHistory.length).toEqual(2);
 
       tabs.select(tab0);
-      expect(tabs.selectHistory[0]).toEqual(tab0.id);
-      expect(tabs.selectHistory[1]).toEqual(tab1.id);
-      expect(tabs.selectHistory[2]).toEqual(tab0.id);
-      expect(tabs.selectHistory.length).toEqual(3);
+      expect(tabs._selectHistory[0]).toEqual(tab0.id);
+      expect(tabs._selectHistory[1]).toEqual(tab1.id);
+      expect(tabs._selectHistory[2]).toEqual(tab0.id);
+      expect(tabs._selectHistory.length).toEqual(3);
     });
 
   });
@@ -207,7 +175,7 @@ describe('Tabs', () => {
 
     it('should get the selected tab', () => {
       var tabs = mockTabs();
-      var tab0 = mockTab(tabs);
+      mockTab(tabs);
       var tab1 = mockTab(tabs);
 
       tab1.setSelected(true);
@@ -217,8 +185,8 @@ describe('Tabs', () => {
 
     it('should get null if no selected tab', () => {
       var tabs = mockTabs();
-      var tab0 = mockTab(tabs);
-      var tab1 = mockTab(tabs);
+      mockTab(tabs);
+      mockTab(tabs);
 
       expect(tabs.getSelected()).toEqual(null);
     });
@@ -229,6 +197,3 @@ describe('Tabs', () => {
   class SomePage {}
 
 });
-
-
-}

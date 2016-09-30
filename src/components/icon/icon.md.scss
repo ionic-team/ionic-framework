@@ -1,4 +1,3 @@
-@import "./icon";
 
 // Material Design Icon
 // --------------------------------------------------
@@ -9,7 +8,7 @@
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  .icon-#{$color-name} {
+  .icon-md-#{$color-name} {
     color: $color-base;
   }
 

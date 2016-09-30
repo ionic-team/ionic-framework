@@ -1,22 +1,20 @@
 {
   "compilerOptions": {
+    "allowUnreachableCode": false,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "lib": ["dom", "es2015"],
     "module": "commonjs",
-    "declaration": true,
-    "outDir": "dist",
-    "noImplicitAny": true
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "target": "es5",
+    "types": ["jasmine"]
   },
-  "filesGlob": [
-    "src/**/*.ts",
-    "!node_modules/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "scripts",
-    "typings/main",
-    "typings/main.d.ts"
+  "include": [
+    "./src/**/*.ts",
+    "./demos/src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,

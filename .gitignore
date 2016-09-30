@@ -8,6 +8,7 @@ log.txt
 *.sublime-workspace
 
 .idea/
+.vscode/
 .sass-cache/
 .versions/
 coverage/
@@ -21,12 +22,19 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 
-scripts/resources/web-animations-js/test/
-scripts/resources/web-animations-js/inter-*
-scripts/resources/web-animations-js/**/*.map
-scripts/resources/web-animations-js/**/*.md
-scripts/resources/web-animations-js/**/*.sh
-scripts/resources/web-animations-js/**/*.yml
-scripts/resources/web-animations-js/**/*.gz
-
 .package.tmp.json
+
+src/themes/version.scss
+scripts/e2e/webpackEntryPoints.json
+scripts/build/e2e-generated-tsconfig.json
+*.css.ts
+
+# demo stuff
+demos/node_modules
+demos/polyfills
+demos/css
+demos/fonts
+demos/src/**/*.js*
+demos/src/**/*.ngfactory.ts
+demos/src/**/*.d.ts
+demos/src/**/*.metadata.json

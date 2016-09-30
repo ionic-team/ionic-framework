@@ -4,8 +4,8 @@ export interface PointerEventsConfig {
   element?: HTMLElement;
   elementRef?: ElementRef;
   pointerDown: (ev: any) => boolean;
-  pointerMove: (ev: any) => void;
-  pointerUp: (ev: any) => void;
+  pointerMove?: (ev: any) => void;
+  pointerUp?: (ev: any) => void;
   nativeOptions?: any;
   zone?: boolean;
 }
@@ -37,7 +37,6 @@ export class PointerEvents {
     private zone: boolean,
     private option: any
   ) {
-
     this.bindTouchEnd = this.handleTouchEnd.bind(this);
     this.bindMouseUp = this.handleMouseUp.bind(this);
 
@@ -50,7 +49,7 @@ export class PointerEvents {
     if (!this.pointerDown(ev)) {
       return;
     }
-    if (!this.rmTouchMove) {
+    if (!this.rmTouchMove && this.pointerMove) {
       this.rmTouchMove = listenEvent(this.ele, 'touchmove', this.zone, this.option, this.pointerMove);
     }
     if (!this.rmTouchEnd) {
@@ -69,7 +68,7 @@ export class PointerEvents {
     if (!this.pointerDown(ev)) {
       return;
     }
-    if (!this.rmMouseMove) {
+    if (!this.rmMouseMove && this.pointerMove) {
       this.rmMouseMove = listenEvent(document, 'mousemove', this.zone, this.option, this.pointerMove);
     }
     if (!this.rmMouseUp) {
@@ -79,12 +78,12 @@ export class PointerEvents {
 
   private handleTouchEnd(ev: any) {
     this.stopTouch();
-    this.pointerUp(ev);
+    this.pointerUp && this.pointerUp(ev);
   }
 
   private handleMouseUp(ev: any) {
     this.stopMouse();
-    this.pointerUp(ev);
+    this.pointerUp && this.pointerUp(ev);
   }
 
   private stopTouch() {
@@ -147,7 +146,7 @@ export class UIEventManager {
       element = config.elementRef.nativeElement;
     }
 
-    if (!element || !config.pointerDown || !config.pointerMove || !config.pointerUp) {
+    if (!element || !config.pointerDown) {
       console.error('PointerEvents config is invalid');
       return;
     }

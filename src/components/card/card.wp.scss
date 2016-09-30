@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./card";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Card
 // --------------------------------------------------
@@ -38,7 +37,7 @@ $card-wp-header-padding:              16px !default;
 $card-wp-header-color:                #222 !default;
 
 
-ion-card {
+.card-wp {
   margin: $card-wp-margin-top $card-wp-margin-right $card-wp-margin-bottom $card-wp-margin-left;
 
   width: calc(100% - #{($card-wp-margin-right + $card-wp-margin-left)});
@@ -48,93 +47,93 @@ ion-card {
 
   background: $card-wp-background-color;
   box-shadow: $card-wp-box-shadow;
-
-  ion-list {
-    margin-bottom: 0;
-  }
-
-  > .item:last-child,
-  > .item-wrapper:last-child .item {
-    border-bottom: 0;
-  }
-
-  .item .item-inner {
-    border: 0;
-  }
-
-  ion-card-content {
-    padding: $card-wp-padding-top $card-wp-padding-right $card-wp-padding-bottom $card-wp-padding-left;
-
-    font-size: $card-wp-font-size;
-    line-height: $card-wp-line-height;
-  }
-
-  ion-card-header {
-    padding: $card-wp-header-padding;
-
-    font-size: $card-wp-header-font-size;
-    color: $card-wp-header-color;
-  }
-
-  ion-card-header + ion-card-content,
-  .item + ion-card-content {
-    padding-top: 0;
-  }
-
-  ion-note[item-left],
-  ion-note[item-right], {
-    font-size: 1.3rem;
-  }
-
-  ion-card-title {
-    display: block;
-
-    margin: $card-wp-title-margin;
-    padding: $card-wp-title-padding;
-
-    font-size: $card-wp-title-font-size;
-    line-height: 1.2;
-    color: $card-wp-title-text-color;
-  }
-
-  h1 {
-    margin: 0 0 2px;
-
-    font-size: 2.4rem;
-    font-weight: normal;
-    color: $card-wp-text-color;
-  }
-
-  h2 {
-    margin: 2px 0;
-
-    font-size: 1.6rem;
-    font-weight: normal;
-    color: $card-wp-text-color;
-  }
-
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 2px 0;
-
-    font-size: 1.4rem;
-    font-weight: normal;
-    color: $card-wp-text-color;
-  }
-
-  p {
-    margin: 0 0 2px;
-
-    font-size: 1.4rem;
-    font-weight: normal;
-    line-height: 1.5;
-    color: $card-wp-text-color;
-  }
-
 }
 
-ion-card + ion-card {
+.card-wp ion-list {
+  margin-bottom: 0;
+}
+
+.card-wp > .item:last-child,
+.card-wp > .item:last-child .item-inner,
+.card-wp > .item-wrapper:last-child .item {
+  border-bottom: 0;
+}
+
+.card-wp .item-wp.item-block .item-inner {
+  border: 0;
+}
+
+.card-wp ion-card-content {
+  padding: $card-wp-padding-top $card-wp-padding-right $card-wp-padding-bottom $card-wp-padding-left;
+
+  font-size: $card-wp-font-size;
+  line-height: $card-wp-line-height;
+}
+
+.card-wp ion-card-header {
+  padding: $card-wp-header-padding;
+
+  font-size: $card-wp-header-font-size;
+  color: $card-wp-header-color;
+}
+
+.card-wp ion-card-header + ion-card-content,
+.card-wp .item + ion-card-content {
+  padding-top: 0;
+}
+
+.card-wp ion-note[item-left],
+.card-wp ion-note[item-right] {
+  font-size: 1.3rem;
+}
+
+.card-wp ion-card-title {
+  display: block;
+
+  margin: $card-wp-title-margin;
+  padding: $card-wp-title-padding;
+
+  font-size: $card-wp-title-font-size;
+  line-height: 1.2;
+  color: $card-wp-title-text-color;
+}
+
+.card-wp h1 {
+  margin: 0 0 2px;
+
+  font-size: 2.4rem;
+  font-weight: normal;
+  color: $card-wp-text-color;
+}
+
+.card-wp h2 {
+  margin: 2px 0;
+
+  font-size: 1.6rem;
+  font-weight: normal;
+  color: $card-wp-text-color;
+}
+
+.card-wp h3,
+.card-wp h4,
+.card-wp h5,
+.card-wp h6 {
+  margin: 2px 0;
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: $card-wp-text-color;
+}
+
+.card-wp p {
+  margin: 0 0 2px;
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: 1.5;
+  color: $card-wp-text-color;
+}
+
+.card-wp + ion-card {
   margin-top: 0;
 }

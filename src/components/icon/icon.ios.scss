@@ -1,4 +1,3 @@
-@import "./icon";
 
 // iOS Icon
 // --------------------------------------------------
@@ -9,7 +8,7 @@
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  .icon-#{$color-name} {
+  .icon-ios-#{$color-name} {
     color: $color-base;
   }
 

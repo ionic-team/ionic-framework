@@ -2,7 +2,7 @@ import { Directive, ElementRef, Input, HostListener, Optional } from '@angular/c
 
 import { MenuController } from './menu-controller';
 import { Navbar } from '../navbar/navbar';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @name MenuToggle
@@ -79,7 +79,7 @@ import { ViewController } from '../nav/view-controller';
  * See the [Toolbar API docs](../../toolbar/Toolbar) for more information
  * on the different positions.
  *
- * @demo /docs/v2/demos/menu/
+ * @demo /docs/v2/demos/src/menu/
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../../menu/Menu Menu API Docs}
  */

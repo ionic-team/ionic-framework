@@ -4,8 +4,8 @@ import { ActionSheetCmp } from './action-sheet-component';
 import { ActionSheetOptions } from './action-sheet-options';
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-interfaces';
-import { ViewController } from '../nav/view-controller';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @private
@@ -17,14 +17,9 @@ export class ActionSheet extends ViewController {
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(ActionSheetCmp, opts);
+    super(ActionSheetCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
-
-    // by default, actionsheets should not fire lifecycle events of other views
-    // for example, when an actionsheets enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**
@@ -70,7 +65,7 @@ export class ActionSheet extends ViewController {
    * @private
    * DEPRECATED: Please inject ActionSheetController instead
    */
-  private static create(opt: any) {
+  static create(opt: any) {
     // deprecated warning: added beta.11 2016-06-27
     console.warn('ActionSheet.create(..) has been deprecated. Please inject ActionSheetController instead');
   }
@@ -224,7 +219,7 @@ export class ActionSheet extends ViewController {
  * out before starting a new transition.
  *
  *
- * @demo /docs/v2/demos/action-sheet/
+ * @demo /docs/v2/demos/src/action-sheet/
  * @see {@link /docs/v2/components#action-sheets ActionSheet Component Docs}
  */
 @Injectable()

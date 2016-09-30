@@ -119,7 +119,7 @@ export interface ReorderIndexes {
  * }
  * ```
  *
- * @demo /docs/v2/demos/item-reorder/
+ * @demo /docs/v2/demos/src/item-reorder/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../Item Item API Docs}
@@ -129,15 +129,24 @@ export interface ReorderIndexes {
   host: {
     '[class.reorder-enabled]': '_enableReorder',
     '[class.reorder-visible]': '_visibleReorder',
-
   }
 })
 export class ItemReorder {
-  private _enableReorder: boolean = false;
-  private _visibleReorder: boolean = false;
-  private _reorderGesture: ItemReorderGesture;
-  private _lastToIndex: number = -1;
-  private _element: HTMLElement;
+
+  /** @private */
+  _enableReorder: boolean = false;
+
+  /** @private */
+  _visibleReorder: boolean = false;
+
+  /** @private */
+  _reorderGesture: ItemReorderGesture;
+
+  /** @private */
+  _lastToIndex: number = -1;
+
+  /** @private */
+  _element: HTMLElement;
 
   /**
    * @output {object} The expression to evaluate when the item is reordered. Emits an object
@@ -191,10 +200,9 @@ export class ItemReorder {
    * @private
    */
   reorderPrepare() {
-    let children = this._element.children;
-    let len = children.length;
-    for (let i = 0; i < len; i++) {
-      children[i]['$ionIndex'] = i;
+    let children: any = this._element.children;
+    for (let i = 0, ilen = children.length; i < ilen; i++) {
+      children[i].$ionIndex = i;
     }
   }
 
@@ -202,7 +210,7 @@ export class ItemReorder {
    * @private
    */
   reorderStart() {
-    this.setCssClass('reorder-list-active', true);
+    this.setElementClass('reorder-list-active', true);
   }
 
   /**
@@ -238,7 +246,7 @@ export class ItemReorder {
     let children = this._element.children;
     let len = children.length;
 
-    this.setCssClass('reorder-list-active', false);
+    this.setElementClass('reorder-list-active', false);
     let transform = CSS.transform;
     for (let i = 0; i < len; i++) {
       (<any>children[i]).style[transform] = '';
@@ -286,7 +294,7 @@ export class ItemReorder {
   /**
    * @private
    */
-  setCssClass(classname: string, add: boolean) {
+  setElementClass(classname: string, add: boolean) {
     this._rendered.setElementClass(this._element, classname, add);
   }
 

@@ -1,0 +1,16 @@
+{
+  "name": "ionic-demos",
+  "private": true,
+  "version": "1.0.0",
+  "description": "ionic demos",
+  "author": "Ionic Team <hi@ionic.io> (http://ionic.io)",
+  "license": "MIT",
+  "dependencies": {
+    "@ionic/storage": "^1.0.3",
+    "ionic-angular": "nightly",
+    "ionicons": "^3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.0.3"
+  }
+}

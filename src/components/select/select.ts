@@ -1,21 +1,24 @@
-import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Provider, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
 import { Popover } from '../popover/popover';
 import { App } from '../app/app';
+import { Config } from '../../config/config';
 import { Form } from '../../util/form';
+import { Ion } from '../ion';
 import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/util';
 import { Item } from '../item/item';
-import { NavController } from '../nav/nav-controller';
+import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
 import { SelectPopover, SelectPopoverOption } from './select-popover-component';
 
-export const SELECT_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Select), multi: true});
-
+export const SELECT_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => Select),
+  multi: true
+};
 
 /**
  * @name Select
@@ -117,40 +120,39 @@ export const SELECT_VALUE_ACCESSOR = new Provider(
  * };
  * ```
  *
- * @demo /docs/v2/demos/select/
+ * @demo /docs/v2/demos/src/select/
  */
 @Component({
   selector: 'ion-select',
-  template: `
-    <div *ngIf="!_text" class="select-placeholder select-text">{{placeholder}}</div>
-    <div *ngIf="_text" class="select-text">{{selectedText || _text}}</div>
-    <div class="select-icon">
-      <div class="select-icon-inner"></div>
-    </div>
-    <button ion-button="item-cover"
-            aria-haspopup="true"
-            [id]="id"
-            [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled">
-    </button>
-  `,
-  directives: [NgIf],
+  template:
+    '<div *ngIf="!_text" class="select-placeholder select-text">{{placeholder}}</div>' +
+    '<div *ngIf="_text" class="select-text">{{selectedText || _text}}</div>' +
+    '<div class="select-icon">' +
+      '<div class="select-icon-inner"></div>' +
+    '</div>' +
+    '<button aria-haspopup="true" ' +
+            '[id]="id" ' +
+            'ion-button="item-cover" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover">' +
+    '</button>',
   host: {
     '[class.select-disabled]': '_disabled'
   },
   providers: [SELECT_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  private _disabled: any = false;
-  private _labelId: string;
-  private _multi: boolean = false;
-  private _options: QueryList<Option>;
-  private _values: string[] = [];
-  private _texts: string[] = [];
-  private _text: string = '';
-  private _fn: Function;
-  private _isOpen: boolean = false;
+export class Select extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy {
+  _disabled: any = false;
+  _labelId: string;
+  _multi: boolean = false;
+  _options: QueryList<Option>;
+  _values: string[] = [];
+  _texts: string[] = [];
+  _text: string = '';
+  _fn: Function;
+  _isOpen: boolean = false;
 
   /**
    * @private
@@ -191,6 +193,14 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   @Input() selectedText: string = '';
 
   /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('select', val);
+  }
+
+  /**
    * @output {any} Any expression you want to evaluate when the selection has changed.
    */
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
@@ -203,22 +213,27 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   constructor(
     private _app: App,
     private _form: Form,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
-    @Optional() private _item: Item,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    @Optional() public _item: Item,
     @Optional() private _nav: NavController
   ) {
-    this._form.register(this);
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+
+    _form.register(this);
 
     if (_item) {
       this.id = 'sel-' + _item.registerInput('select');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-select', true);
+      this._item.setElementClass('item-select', true);
     }
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  _click(ev: UIEvent) {
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -229,7 +244,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   }
 
   @HostListener('keyup.space')
-  private _keyup() {
+  _keyup() {
     if (!this._isOpen) {
       this.open();
     }
@@ -403,7 +418,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
    * @private
    */
   @ContentChildren(Option)
-  private set options(val: QueryList<Option>) {
+  set options(val: QueryList<Option>) {
     this._options = val;
 
     if (!this._values.length) {
@@ -418,7 +433,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
   /**
    * @private
    */
-  private _updOpts() {
+  _updOpts() {
     this._texts = [];
 
     if (this._options) {
@@ -447,7 +462,7 @@ export class Select implements AfterContentInit, ControlValueAccessor, OnDestroy
 
   set disabled(val) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-select-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-select-disabled', this._disabled);
   }
 
   /**

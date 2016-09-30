@@ -3,10 +3,15 @@
 # See config at https://github.com/brigade/scss-lint/blob/master/config/default.yml
 
 exclude:
-  - 'src/components/slides/**'
+  - 'src/components/item/item.ios.scss'
+  - 'src/components/item/item.md.scss'
+  - 'src/components/list/list.ios.scss'
   - 'src/components/show-hide-when/**'
-  - 'src/components.*.scss'
-  - 'src/util/*.scss'
+  - 'src/components/slides/**'
+  - 'src/themes/ionic.mixins.scss'
+  - 'src/themes/license.scss'
+  - 'src/themes/util.scss'
+  - 'src/themes/version.scss'
   - 'src/platform/cordova.*.scss'
 
 

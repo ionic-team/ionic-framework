@@ -88,20 +88,20 @@ import { Content } from '../content/content';
  * developers to create their own infinite scroll content components.
  * You could replace our default content with custom SVG or CSS animations.
  *
- * @demo /docs/v2/demos/infinite-scroll/
+ * @demo /docs/v2/demos/src/infinite-scroll/
  *
  */
 @Directive({
   selector: 'ion-infinite-scroll'
 })
 export class InfiniteScroll {
-  private _lastCheck: number = 0;
-  private _highestY: number = 0;
-  private _scLsn: Function;
-  private _thr: string = '15%';
-  private _thrPx: number = 0;
-  private _thrPc: number = 0.15;
-  private _init: boolean = false;
+  _lastCheck: number = 0;
+  _highestY: number = 0;
+  _scLsn: Function;
+  _thr: string = '15%';
+  _thrPx: number = 0;
+  _thrPc: number = 0.15;
+  _init: boolean = false;
 
   state: string = STATE_ENABLED;
 
@@ -144,10 +144,10 @@ export class InfiniteScroll {
     private _zone: NgZone,
     private _elementRef: ElementRef
   ) {
-    _content.addCssClass('has-infinite-scroll');
+    _content.setElementClass('has-infinite-scroll', true);
   }
 
-  private _onScroll() {
+  _onScroll() {
     if (this.state === STATE_LOADING || this.state === STATE_DISABLED) {
       return 1;
     }
@@ -217,7 +217,7 @@ export class InfiniteScroll {
     this._setListeners(shouldEnable);
   }
 
-  private _setListeners(shouldListen: boolean) {
+  _setListeners(shouldListen: boolean) {
     if (this._init) {
       if (shouldListen) {
         if (!this._scLsn) {

@@ -4,5 +4,5 @@ it('should open basic datetime picker', function() {
 });
 
 it('should close with Done button click', function() {
-  element(by.css('.picker-button:last-child')).click();
+  element(by.css('.picker-toolbar-button:last-child .button')).click();
 });

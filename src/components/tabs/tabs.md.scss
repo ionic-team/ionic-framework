@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./tabs";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Tabs
 // --------------------------------------------------
@@ -59,27 +58,27 @@ $tabs-md-tab-text-transition:          transform 200ms ease-in-out !default;
 $tabs-md-tab-icon-size:                2.4rem !default;
 
 
-ion-tabbar {
+.tabs-md .tabbar {
   background: $tabs-md-background;
 }
 
-.tab-button {
+.tabs-md .tab-button {
   padding: $tabs-md-tab-padding;
 
   min-height: $tabs-md-tab-min-height;
 
   font-weight: $tabs-md-tab-font-weight;
   color: $tabs-md-tab-color;
-
-  &[aria-selected=true] {
-    padding: $tabs-md-tab-padding-active;
-
-    font-size: $tabs-md-tab-font-size-active;
-    color: $tabs-md-tab-color-active;
-  }
 }
 
-.tab-button-text {
+.tabs-md .tab-button[aria-selected=true] {
+  padding: $tabs-md-tab-padding-active;
+
+  font-size: $tabs-md-tab-font-size-active;
+  color: $tabs-md-tab-color-active;
+}
+
+.tabs-md .tab-button-text {
   margin: $tabs-md-tab-text-margin;
 
   text-transform: $tabs-md-tab-text-capitalization;
@@ -89,76 +88,72 @@ ion-tabbar {
   transition: $tabs-md-tab-text-transition;
 }
 
-.tab-button[aria-selected=true] .tab-button-text {
+.tabs-md .tab-button[aria-selected=true] .tab-button-text {
   margin: $tabs-md-tab-text-margin-active;
 
   transform: $tabs-md-tab-text-transform-active;
 }
 
-.tab-button-icon {
+.tabs-md .tab-button-icon {
   min-width: $tabs-md-tab-icon-size + 5;
 
   font-size: $tabs-md-tab-icon-size;
 }
 
-[tabsLayout=icon-top] .has-icon .tab-button-text {
+.tabs-md[tabsLayout=icon-top] .has-icon .tab-button-text {
   margin-bottom: 0;
 }
 
-[tabsLayout=icon-bottom] {
-  .tab-button {
-    padding-top: 8px;
-    padding-bottom: 8px;
-
-    .tab-button-text {
-      margin-top: 0;
-    }
-  }
+.tabs-md[tabsLayout=icon-bottom] .tab-button {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
-[tabsLayout=icon-right] .tab-button,
-[tabsLayout=icon-left] .tab-button {
+.tabs-md[tabsLayout=icon-bottom] .tab-button .tab-button-text {
+  margin-top: 0;
+}
+
+.tabs-md[tabsLayout=icon-right] .tab-button,
+.tabs-md[tabsLayout=icon-left] .tab-button {
   padding-bottom: 10px;
-
-  ion-icon {
-    min-width: 24px;
-  }
 }
 
-[tabsLayout=icon-hide] .tab-button,
-[tabsLayout=title-hide] .tab-button,
-.tab-button.icon-only,
-.tab-button.has-title-only {
+.tabs-md[tabsLayout=icon-right] .tab-button ion-icon,
+.tabs-md[tabsLayout=icon-left] .tab-button ion-icon {
+  min-width: 24px;
+}
+
+.tabs-md[tabsLayout=icon-hide] .tab-button,
+.tabs-md[tabsLayout=title-hide] .tab-button,
+.tabs-md .tab-button.icon-only,
+.tabs-md .tab-button.has-title-only {
   padding: 6px 10px;
 }
+
 
 // Material Design Tab Highlight
 // --------------------------------------------------
 
-[tabsHighlight=true] {
+.tabs-md[tabsHighlight=true] .tab-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
 
-  tab-highlight {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    display: block;
+  width: 1px;
+  height: 2px;
 
-    width: 1px;
-    height: 2px;
+  background: $tabs-md-tab-color-active;
+  transform: translateZ(0);
+  transform-origin: 0 0;
+}
 
-    background: $tabs-md-tab-color-active;
-    transform: translateZ(0);
-    transform-origin: 0 0;
+.tabs-md[tabsHighlight=true] .tab-highlight.animate {
+  transition-duration: 300ms;
+}
 
-    &.animate {
-      transition-duration: 300ms;
-    }
-  }
-
-  &[tabsPlacement=bottom] tab-highlight {
-    top: 0;
-  }
-
+.tabs-md[tabsHighlight=true][tabsPlacement=bottom] .tab-highlight {
+  top: 0;
 }
 
 
@@ -167,21 +162,21 @@ ion-tabbar {
 
 @mixin tabbar-md($color-name, $color-base, $color-contrast) {
 
-  .tabs-#{$color-name} ion-tabbar {
+  .tabs-md-#{$color-name} .tabbar {
     background-color: $color-base;
+  }
 
-    .tab-button {
-      color: rgba($color-contrast, $tabs-md-tab-opacity);
-    }
+  .tabs-md-#{$color-name} .tabbar .tab-button {
+    color: rgba($color-contrast, $tabs-md-tab-opacity);
+  }
 
-    .tab-button:hover:not(.disable-hover),
-    .tab-button[aria-selected=true] {
-      color: $color-contrast;
-    }
+  .tabs-md-#{$color-name} .tabbar .tab-button:hover:not(.disable-hover),
+  .tabs-md-#{$color-name} .tabbar .tab-button[aria-selected=true] {
+    color: $color-contrast;
+  }
 
-    tab-highlight {
-      background: $color-contrast;
-    }
+  .tabs-md-#{$color-name} .tabbar .tab-highlight {
+    background: $color-contrast;
   }
 
 }

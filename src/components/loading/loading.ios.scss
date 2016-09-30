@@ -1,5 +1,4 @@
-@import "../../globals.core";
-@import "./loading";
+@import "../../themes/ionic.globals";
 
 // iOS Loading Indicator
 // --------------------------------------------------
@@ -22,7 +21,7 @@ $loading-ios-spinner-crescent-color:    $loading-ios-spinner-color !default;
 $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 
 
-.loading-wrapper {
+.loading-ios .loading-wrapper {
   padding: $loading-ios-padding;
 
   max-width: $loading-ios-max-width;
@@ -37,11 +36,11 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 // iOS Loading Content
 // -----------------------------------------
 
-.loading-content {
+.loading-ios .loading-content {
   font-weight: $loading-ios-content-font-weight;
 }
 
-.loading-spinner + .loading-content {
+.loading-ios .loading-spinner + .loading-content {
   margin-left: 16px;
 }
 
@@ -49,25 +48,23 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 // iOS Loading Spinner fill colors
 // -----------------------------------------
 
-.loading-spinner {
-  .spinner-ios line,
-  .spinner-ios-small line {
-    stroke: $loading-ios-spinner-ios-color;
-  }
+.loading-ios .spinner-ios line,
+.loading-ios .spinner-ios-small line {
+  stroke: $loading-ios-spinner-ios-color;
+}
 
-  .spinner-bubbles circle {
-    fill: $loading-ios-spinner-bubbles-color;
-  }
+.loading-ios .spinner-bubbles circle {
+  fill: $loading-ios-spinner-bubbles-color;
+}
 
-  .spinner-circles circle {
-    fill: $loading-ios-spinner-circles-color;
-  }
+.loading-ios .spinner-circles circle {
+  fill: $loading-ios-spinner-circles-color;
+}
 
-  .spinner-crescent circle {
-    stroke: $loading-ios-spinner-crescent-color;
-  }
+.loading-ios .spinner-crescent circle {
+  stroke: $loading-ios-spinner-crescent-color;
+}
 
-  .spinner-dots circle {
-    fill: $loading-ios-spinner-dots-color;
-  }
+.loading-ios .spinner-dots circle {
+  fill: $loading-ios-spinner-dots-color;
 }

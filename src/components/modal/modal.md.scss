@@ -1,11 +1,11 @@
-@import "../../globals.md";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Modals
 // --------------------------------------------------
 
 $modal-md-background-color:          $background-md-color !default;
 
-.modal-wrapper {
+.md .modal-wrapper {
   opacity: .01;
   transform: translate3d(0, 40px, 0);
 }
