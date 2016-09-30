@@ -80,7 +80,7 @@ export class Searchbar extends Ion {
   @Input() showCancelButton: any = false;
 
   /**
-   * @input {number} How long, in milliseconds, to wait to trigger the `input` event after each keystroke. Default `250`.
+   * @input {number} How long, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
    */
   @Input()
   get debounce(): number {
