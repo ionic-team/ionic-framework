@@ -273,7 +273,9 @@ export class E2EApp {
     TabsPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp, {
+      tabsHighlight: true,
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
