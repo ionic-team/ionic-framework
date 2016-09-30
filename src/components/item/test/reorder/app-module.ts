@@ -10,10 +10,14 @@ export class E2EPage {
   isReordering: boolean = false;
 
   constructor(private d: ChangeDetectorRef) {
-    let nu = 30;
+    let nu = 9;
     for (let i = 0; i < nu; i++) {
       this.items.push(i);
     }
+  }
+
+  clickedButton(num: number) {
+    console.log('clicked', num);
   }
 
   toggle() {

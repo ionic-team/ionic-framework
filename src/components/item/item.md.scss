@@ -36,7 +36,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   color: $list-md-text-color;
   background-color: $list-md-background-color;
   box-shadow: none;
-  transition: background-color 300ms cubic-bezier(.4, 0, .2, 1), transform 300ms;
+  transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
 }
 
 .item-md.activated {
