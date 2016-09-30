@@ -25,31 +25,29 @@ export class TapClick {
     private app: App,
     zone: NgZone
   ) {
-    let self = this;
-
     if (config.get('activator') === 'ripple') {
-      self.activator = new RippleActivator(app, config);
+      this.activator = new RippleActivator(app, config);
 
     } else if (config.get('activator') === 'highlight') {
-      self.activator = new Activator(app, config);
+      this.activator = new Activator(app, config);
     }
 
-    self.usePolyfill = (config.get('tapPolyfill') === true);
+    this.usePolyfill = (config.get('tapPolyfill') === true);
 
     zone.runOutsideAngular(() => {
-      addListener('click', self.click.bind(self), true);
+      addListener('click', this.click.bind(this), true);
 
-      addListener('touchstart', self.touchStart.bind(self));
-      addListener('touchend', self.touchEnd.bind(self));
-      addListener('touchcancel', self.pointerCancel.bind(self));
+      addListener('touchstart', this.touchStart.bind(this));
+      addListener('touchend', this.touchEnd.bind(this));
+      addListener('touchcancel', this.pointerCancel.bind(this));
 
-      addListener('mousedown', self.mouseDown.bind(self), true);
-      addListener('mouseup', self.mouseUp.bind(self), true);
+      addListener('mousedown', this.mouseDown.bind(this), true);
+      addListener('mouseup', this.mouseUp.bind(this), true);
     });
 
-    self.pointerMove = function(ev: UIEvent) {
-      if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, self.startCoord, pointerCoord(ev)) ) {
-        self.pointerCancel(ev);
+    this.pointerMove = (ev: UIEvent) => {
+      if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, this.startCoord, pointerCoord(ev)) ) {
+        this.pointerCancel(ev);
       }
     };
   }
