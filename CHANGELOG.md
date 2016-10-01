@@ -347,6 +347,8 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 10. Change any uses of the `private` TypeScript keyword to `public` ONLY for component variables that are needed in the associated template.
 
+  Note: For details as to why this change has to be made, there is a discussion about it [here](https://forum.ionicframework.com/t/rc0-typescript-private-vs-public-keyword/64863/4?u=mhartington).
+
 11. Change `<button>` to `<button ion-button>` according to [these instructions](#new-behavior-of-button).
 
 12. Pass colors to the `color` attribute : `<button primary>` changes to `<button color="primary">`. See [component colors](#component-colors) above.
@@ -442,6 +444,8 @@ page-selector-you-added {
 30. Fix any paths to images in your app. For example, before the path may look like `<img src="img/myImg.png">` and now it should be `<img src="assets/img/myImg.png">`.
 
 31. Change any uses of the `private` TypeScript keyword to `public` ONLY for component variables that are needed in the associated template.
+
+  Note: For details as to why this change has to be made, there is a discussion about it [here](https://forum.ionicframework.com/t/rc0-typescript-private-vs-public-keyword/64863/4?u=mhartington).
 
 32. Change any Ionic buttons from `<button>` to `<button ion-button>`. [See New Behavior of Button](#new-behavior-of-button).
 

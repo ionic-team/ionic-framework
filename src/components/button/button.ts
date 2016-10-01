@@ -202,7 +202,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button that fills its parent container without a border-radius or borders on the left/right.
+   * @input {string} The mode to apply to this component.
    */
   @Input()
   set mode(val: string) {

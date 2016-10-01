@@ -48,15 +48,14 @@ export class RippleActivator extends Activator {
   }
 
   upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
-    if (hasPointerMoved(6, startCoord, pointerCoord(ev))) {
-      return;
-    }
-    let i = activatableEle.childElementCount;
-    while (i--) {
-      var rippleEle: any = activatableEle.children[i];
-      if (rippleEle.classList.contains('button-effect')) {
-        this.startRippleEffect(rippleEle, activatableEle, startCoord);
-        break;
+    if (!hasPointerMoved(6, startCoord, pointerCoord(ev))) {
+      let i = activatableEle.childElementCount;
+      while (i--) {
+        var rippleEle: any = activatableEle.children[i];
+        if (rippleEle.classList.contains('button-effect')) {
+          this.startRippleEffect(rippleEle, activatableEle, startCoord);
+          break;
+        }
       }
     }
 

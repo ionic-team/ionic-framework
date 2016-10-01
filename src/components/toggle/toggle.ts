@@ -77,7 +77,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
   /** @private */
   _checked: boolean = false;
   /** @private */
-  _init: boolean;
+  _init: boolean = false;
   /** @private */
   _disabled: boolean = false;
   /** @private */
@@ -89,7 +89,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
   /** @private */
   _msPrv: number = 0;
   /** @private */
-  _fn: Function;
+  _fn: Function = null;
   /** @private */
   _events: UIEventManager = new UIEventManager();
 
@@ -229,18 +229,14 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
-    this.onChange = (isChecked: boolean) => {
-      console.debug('toggle, onChange', isChecked);
-      fn(isChecked);
-      this._setChecked(isChecked);
-      this.onTouched();
-    };
   }
 
   /**
    * @private
    */
-  registerOnTouched(fn: any) { this.onTouched = fn; }
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
 
   /**
    * @input {boolean} whether the toggle is disabled or not
@@ -260,7 +256,8 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
    */
   onChange(isChecked: boolean) {
     // used when this input does not have an ngModel or formControlName
-    console.debug('toggle, onChange (no ngModel)', isChecked);
+    console.debug('toggle, onChange', isChecked);
+    this._fn && this._fn(isChecked);
     this._setChecked(isChecked);
     this.onTouched();
   }
@@ -289,6 +286,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
   ngOnDestroy() {
     this._form.deregister(this);
     this._events.unlistenAll();
+    this._fn = null;
   }
 
 }
