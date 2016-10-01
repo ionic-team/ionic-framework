@@ -46,7 +46,7 @@ export class TapClick {
     });
 
     this.pointerMove = (ev: UIEvent) => {
-      if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, this.startCoord, pointerCoord(ev)) ) {
+      if (!this.startCoord || hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, this.startCoord, pointerCoord(ev)) ) {
         this.pointerCancel(ev);
       }
     };
