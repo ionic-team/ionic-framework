@@ -40,8 +40,8 @@ Looking for an issue to fix? Make sure to look through our issues with the [help
 #### TypeScript Changes
 
 1. If there is a `*.spec.ts` file located in the `test/` folder, update it to include a karma test for your change, if needed. If this file doesn't exist, please notify us.
-2. Run `gulp karma` to make sure all tests are working, regardless if a test was added.
-3. Run `gulp tslint` and fix any linter errors.
+2. Run `gulp test` to make sure all tests are working, regardless if a test was added.
+3. Run `gulp lint.ts` and fix any linter errors.
 
 
 #### Sass Changes
@@ -57,7 +57,7 @@ Looking for an issue to fix? Make sure to look through our issues with the [help
 
 #### Viewing Changes
 
-1. Run the gulp watch task for e2e tests: `gulp watch.e2e`
+1. Run the gulp watch task for e2e tests: `gulp e2e.watch`
 2. Launch your browser and navigate to `http://localhost:8000/dist/e2e`
 3. From here, navigate to the component you are changing.
 4. Any changes to the e2e tests in the `test/` directory will show here.
