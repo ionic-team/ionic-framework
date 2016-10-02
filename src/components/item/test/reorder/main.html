@@ -12,11 +12,25 @@
 <ion-content>
 
   <ion-list [reorder]="isReordering" (ionItemReorder)="reorder($event)">
-    <ion-item *ngFor="let item of items"
+    <button ion-item *ngFor="let item of items" (click)="clickedButton(item)"
     [style.background]="'rgb('+(255-item*4)+','+(255-item*4)+','+(255-item*4)+')'"
     [style.min-height]="item*2+35+'px'">
       {{item}}
-    </ion-item>
+    </button>
+  </ion-list>
+
+  <ion-list [reorder]="isReordering" (ionItemReorder)="reorder($event)">
+    <ion-item-sliding *ngFor="let item of items">
+      <button ion-item (click)="clickedButton(item)">
+        Sliding item {{item}}
+      </button>
+      <ion-item-options side="right" icon-left>
+        <button ion-button color='danger'>
+          <ion-icon name="trash"></ion-icon>
+          Remove
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 
 </ion-content>

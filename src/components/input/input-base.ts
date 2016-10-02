@@ -246,7 +246,8 @@ export class InputBase extends Ion {
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
-      this._item.setElementClass('input-has-value', !!(inputValue && inputValue !== ''));
+      let hasValue = (inputValue !== null && inputValue !== undefined && inputValue !== '');
+      this._item.setElementClass('input-has-value', hasValue);
     }
   }
 

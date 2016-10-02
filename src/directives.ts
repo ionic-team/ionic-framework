@@ -51,6 +51,7 @@ import { Spinner } from './components/spinner/spinner';
 import { Tab } from './components/tabs/tab';
 import { Tabs } from './components/tabs/tabs';
 import { TabButton } from './components/tabs/tab-button';
+import { TabHighlight } from './components/tabs/tab-highlight';
 import { TextInput, TextArea } from './components/input/input';
 import { Thumbnail } from './components/thumbnail/thumbnail';
 import { Toggle } from './components/toggle/toggle';
@@ -228,6 +229,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Tab,
   Tabs,
   TabButton,
+  TabHighlight,
   TextArea,
   TextInput,
   Thumbnail,

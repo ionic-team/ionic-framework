@@ -129,7 +129,7 @@ export class ItemReorderGesture {
   }
 
   private itemForCoord(coord: PointerCoordinates): HTMLElement {
-    return itemForPosition(this.offset.x - 100, coord.y);
+    return itemForPosition(this.offset.x - 100, coord.y, this.reorderList.getNativeElement());
   }
 
   private scroll(posY: number): number {
@@ -152,7 +152,7 @@ export class ItemReorderGesture {
   }
 }
 
-function itemForPosition(x: number, y: number): HTMLElement {
+function itemForPosition(x: number, y: number, list: any): HTMLElement {
   let element = <HTMLElement>document.elementFromPoint(x, y);
-  return findReorderItem(element);
+  return findReorderItem(element, list);
 }

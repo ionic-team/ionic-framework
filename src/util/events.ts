@@ -55,7 +55,7 @@ export class Events {
    *
    * @return true if a handler was removed
    */
-  unsubscribe(topic: string, handler: Function) {
+  unsubscribe(topic: string, handler: Function = null) {
     let t = this._channels[topic];
     if (!t) {
       // Wasn't found, wasn't removed

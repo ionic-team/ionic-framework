@@ -30,7 +30,7 @@ export class ViewController {
   private _cntRef: ElementRef;
   private _hdrDir: Header;
   private _ftrDir: Footer;
-  private _hidden: string;
+  private _isHidden: boolean = false;
   private _leavingOpts: NavOptions;
   private _nb: Navbar;
   private _onDidDismiss: Function;
@@ -273,10 +273,11 @@ export class ViewController {
     // doing checks to make sure we only update the DOM when actually needed
     if (this._cmp) {
       // if it should render, then the hidden attribute should not be on the element
-      if (shouldShow && this._hidden === '' || !shouldShow && this._hidden !== '') {
-        this._hidden = (shouldShow ? null : '');
+      if (shouldShow === this._isHidden) {
+        this._isHidden = !shouldShow;
+        let value = (shouldShow ? null : '');
         // ******** DOM WRITE ****************
-        renderer.setElementAttribute(this.pageRef().nativeElement, 'hidden', this._hidden);
+        renderer.setElementAttribute(this.pageRef().nativeElement, 'hidden', value);
       }
     }
   }

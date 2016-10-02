@@ -200,9 +200,12 @@ export class ItemReorder {
    * @private
    */
   reorderPrepare() {
-    let children: any = this._element.children;
+    let ele = this._element;
+    let children: any = ele.children;
     for (let i = 0, ilen = children.length; i < ilen; i++) {
-      children[i].$ionIndex = i;
+      var child = children[i];
+      child.$ionIndex = i;
+      child.$ionReorderList = ele;
     }
   }
 
@@ -315,14 +318,14 @@ export class ItemReorder {
 })
 export class Reorder {
   constructor(
-    @Inject(forwardRef(() => Item)) private item: Item,
+    @Inject(forwardRef(() => Item)) private item: ItemReorder,
     private elementRef: ElementRef) {
     elementRef.nativeElement['$ionComponent'] = this;
   }
 
-  getReorderNode() {
+  getReorderNode(): HTMLElement {
     let node = <any>this.item.getNativeElement();
-    return findReorderItem(node);
+    return findReorderItem(node, null);
   }
 
 }
@@ -330,10 +333,13 @@ export class Reorder {
 /**
  * @private
  */
-export function findReorderItem(node: any): HTMLElement {
+export function findReorderItem(node: any, listNode: any): HTMLElement {
   let nested = 0;
   while (node && nested < 4) {
-    if (indexForItem(node) !== undefined ) {
+    if (indexForItem(node) !== undefined) {
+      if (listNode && node.parentNode !== listNode) {
+        return null;
+      }
       return node;
     }
     node = node.parentNode;
@@ -347,5 +353,12 @@ export function findReorderItem(node: any): HTMLElement {
  */
 export function indexForItem(element: any): number {
   return element['$ionIndex'];
+}
+
+/**
+ * @private
+ */
+export function reorderListForItem(element: any): any {
+  return element['$ionReorderList'];
 }
 

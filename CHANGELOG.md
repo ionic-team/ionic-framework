@@ -1,78 +1,64 @@
 <a name="2.0.0-rc.0"></a>
 # [2.0.0-rc.0](https://github.com/driftyco/ionic/compare/v2.0.0-beta.11...v2.0.0-rc.0) (2016-09-28)
 
+RC0 requires changes to the structure of your app. To get started updating your app see the [Steps to Upgrade](#steps-to-upgrade-to-rc0) below.
 
-### Bug Fixes
-
-* **action-sheet:** add icon-left to the button if an icon exists ([a731528](https://github.com/driftyco/ionic/commit/a731528))
-* **animation:** prevent possible raf null errors ([0e8ebe5](https://github.com/driftyco/ionic/commit/0e8ebe5))
-* **app:** corrected paths to theme from app.scss ([001c1c9](https://github.com/driftyco/ionic/commit/001c1c9))
-* **changelog:** specify version of forms ([82852fb](https://github.com/driftyco/ionic/commit/82852fb))
-* **checkbox:** disabled toggle should not fire events or animate ([3324e32](https://github.com/driftyco/ionic/commit/3324e32))
-* **di:** update dependency injection and default configs ([7c05d0c](https://github.com/driftyco/ionic/commit/7c05d0c))
-* **docs:** get rid of reference to [@Page](https://github.com/Page) ([6fb848c](https://github.com/driftyco/ionic/commit/6fb848c))
-* **exports:** update module exports ([6784f5e](https://github.com/driftyco/ionic/commit/6784f5e))
-* **fab:** colors in speed dial buttons ([b70614b](https://github.com/driftyco/ionic/commit/b70614b))
-* **gestures:** fixes scroll issue with hammer config ([174efc1](https://github.com/driftyco/ionic/commit/174efc1)), closes [#6897](https://github.com/driftyco/ionic/issues/6897)
-* **ion-fixed:** ion-fixed directive is not longer needed ([75d5526](https://github.com/driftyco/ionic/commit/75d5526))
-* **item:** regression in sliding item introduced by 52ada1c ([e0c2129](https://github.com/driftyco/ionic/commit/e0c2129))
-* **item:** sliding item events are zone wrapped ([47491fb](https://github.com/driftyco/ionic/commit/47491fb)), closes [#7630](https://github.com/driftyco/ionic/issues/7630)
-* **item:** sliding item with icon-only buttons ([1d3d5a1](https://github.com/driftyco/ionic/commit/1d3d5a1))
-* **menu:** open/close race condition ([8585427](https://github.com/driftyco/ionic/commit/8585427)), closes [#7629](https://github.com/driftyco/ionic/issues/7629) [#8001](https://github.com/driftyco/ionic/issues/8001)
-* gulp validate passes successfully ([b750e46](https://github.com/driftyco/ionic/commit/b750e46))
-* **nav:** move null assignment of _onWillDismiss ([35193c4](https://github.com/driftyco/ionic/commit/35193c4))
-* **nav:** setRoot() and setPages() should not animate ([7012734](https://github.com/driftyco/ionic/commit/7012734))
-* **navigation:** move onWillDismiss and onDidDismiss, add unit tests ([e26c425](https://github.com/driftyco/ionic/commit/e26c425))
-* **platform:** fire platform ready on app init ([963e835](https://github.com/driftyco/ionic/commit/963e835))
-* **reorder:** adjust reorder icon style for iOS and MD ([f3bb2dc](https://github.com/driftyco/ionic/commit/f3bb2dc))
-* **templates:** add template tabs [#8207](https://github.com/driftyco/ionic/issues/8207) ([#8208](https://github.com/driftyco/ionic/issues/8208)) ([0f6ce28](https://github.com/driftyco/ionic/commit/0f6ce28))
-* **urlSerializer:** improve findLinkByComponentData ([9d563f5](https://github.com/driftyco/ionic/commit/9d563f5))
-
-
-### Code Refactoring
-
-* **button:** add ion-button attribute and icon attributes to style buttons ([938864e](https://github.com/driftyco/ionic/commit/938864e)), closes [#7466](https://github.com/driftyco/ionic/issues/7466)
-* **colors:** color should be added as an input instead of directly adding the color to the component ([55a0257](https://github.com/driftyco/ionic/commit/55a0257)), closes [#7087](https://github.com/driftyco/ionic/issues/7087) [#7401](https://github.com/driftyco/ionic/issues/7401) [#7523](https://github.com/driftyco/ionic/issues/7523)
-* **select:** rename alertOptions to selectOptions, add ability to pass them for action-sheet ([b8285b7](https://github.com/driftyco/ionic/commit/b8285b7)), closes [#7764](https://github.com/driftyco/ionic/issues/7764)
-
-
-### Features
-
-* **action-sheet:** add ability to pass multiple classes to cssClass ([68ab261](https://github.com/driftyco/ionic/commit/68ab261))
-* **chips:** added Chip component ([421f637](https://github.com/driftyco/ionic/commit/421f637))
-* **chips:** finished Component ([0dece72](https://github.com/driftyco/ionic/commit/0dece72))
-* **fab:** update floating action buttons ([490a06d](https://github.com/driftyco/ionic/commit/490a06d))
-* **itemReorder:** animate reorder button ([1f78487](https://github.com/driftyco/ionic/commit/1f78487))
-* **loading:** add ability to pass multiple classes to cssClass ([466dea3](https://github.com/driftyco/ionic/commit/466dea3))
-* **loading:** add setContent function ([c750847](https://github.com/driftyco/ionic/commit/c750847))
-* add polyfill task ([ce78194](https://github.com/driftyco/ionic/commit/ce78194))
-* **nav:** component url navigation ([f477aa2](https://github.com/driftyco/ionic/commit/f477aa2))
-* **nav:** set default stack history on app init ([ca8cc0a](https://github.com/driftyco/ionic/commit/ca8cc0a))
-* **polyfills:** split up code and source polyfill task ([#8130](https://github.com/driftyco/ionic/issues/8130)) ([bcec66c](https://github.com/driftyco/ionic/commit/bcec66c))
-* **popover:** add ability to pass multiple classes to cssClass ([a685cdc](https://github.com/driftyco/ionic/commit/a685cdc))
-* **toast:** add ability to pass multiple classes to cssClass ([79e25a3](https://github.com/driftyco/ionic/commit/79e25a3))
-
-
-### Performance Improvements
-
-* **item:** apply will-change only when list is active ([4bcd815](https://github.com/driftyco/ionic/commit/4bcd815))
-* **reorder:** reorder icon is display: none by default ([26441ec](https://github.com/driftyco/ionic/commit/26441ec))
-* **ripple:** md ripple effect update to not affect layout ([14a3ea2](https://github.com/driftyco/ionic/commit/14a3ea2))
+* Ionic 2 API finalized for `2.0.0` release
+* Angular `2.0.0` final!
+* `ionViewCanEnter` / `ionViewCanLeave` lifecycle events
+* Floating Action Button (FAB) lists
+* Ahead of Time (AoT) compiler ready
+* Components can now individually set a mode, which means an app can mix and match iOS / Material Design / Windows Platform modes if that’s desired
+* Typescript 2.0
+* `@types` support for third-party libraries
+* Move away from `gulp` ([ionic-gulp-tasks](https://github.com/driftyco/ionic-gulp-tasks)) to `npm scripts` ([ionic-app-scripts](https://github.com/driftyco/ionic-app-scripts))
+* Use [Rollup](http://rollupjs.org) for bundling instead of `browserify` or `webpack`
 
 
 ### BREAKING CHANGES
 
-* select: Select’s `alertOptions` input has been renamed to `selectOptions`. It
-now allows you to pass options for either the alert or action-sheet
-interface. Refer to their documentation for the options each of them
-accept.
+* Angular upgrade to [2.0.0](https://angular.io/docs/ts/latest/cookbook/rc4-to-rc5.html)
+* [Renamed Lifecycle events](#lifecycle-events-renamed).
+* Storage has been removed from `ionic-angular` and placed into a separate module, `@ionic/storage`. Starters have been updated to add this, make sure to add it to your `package.json` if you’re using the storage system. See more [details here](#storage).
+* Nav transitions are queued. For more info on what this means for you see [this section](#nav-transitions).
+* Removed Tabs `preloadTabs` ability. This is no longer needed with the Ahead of Time (AoT) compiler.
+* Icons in buttons require an attribute on the parent button in order to style them.
+* Platform and mode CSS classes have been moved from the `<body>` element to the `<ion-app>` element.
+* Select’s `alertOptions` input has been renamed to `selectOptions`. See more [details here](#select-changes).
+* Colors should be passed in the `color` input on components, not added individually as an attribute on the component. See more [details here](#component-colors).
+* buttons: `<button>` becomes `<button ion-button>`. See more [details here](#new-behavior-of-button) and [here](#new-behavior-of-icons-in-buttons).
+* Head link tags for CSS files are no longer dynamically updated, but one CSS file is imported.
+(Future build processes will narrow down the CSS file further to only include what’s used). See more [details here](#update-css-link-tags).
+* The `<scroll-content>` element, which is internal to `<ion-content>`, has been renamed to `<div class="scroll-content">` since it was neither a directive nor a web component.
+* `<ion-fixed>` has been removed, use `<div ion-fixed>` instead.
+* Sass: Changes to how Sass is imported. See more [details here](#sass-import).
+* Typings: We have stopped using the `typings` tool and have migrated to `npm @types`. See more [details here](#typings).
 
-http://ionicframework.com/docs/v2/api/components/action-sheet/ActionShee
-tController/#create
-http://ionicframework.com/docs/v2/api/components/alert/AlertController/#
-create
-* colors: Colors should be passed in the `color` input on components, not added
-individually as an attribute on the component.
+
+#### Lifecycle Events Renamed
+
+* Renamed `ionViewLoaded` to `ionViewDidLoad`
+* Removed `ionViewDidUnload`
+* Removed `fireOtherLifecycles` from `ViewController`
+
+
+#### Nav Transitions
+
+Nav transitions are now queued. Meaning if you run:
+
+```
+navCtrl.push(Page1);
+navCtrl.push(Page2);
+```
+
+`Page1` will transition in, then immediately `Page2` will transition in. There can never be two transitions happening at the same time.
+
+Page transition promises can now possibly reject the returned promises. Used mainly for `ionViewCanEnter` and `ionViewCanLeave`.
+
+
+#### Component Colors
+
+Colors are no longer added directly to a component, they should instead be passed in the `color` attribute.
 
 For example:
 
@@ -83,7 +69,7 @@ For example:
 Becomes
 
 ```
-<ion-tabs color=”primary”>
+<ion-tabs color="primary">
 ```
 
 Or to bind an expression to color:
@@ -107,28 +93,436 @@ export class AboutPage {
 }
 ```
 
-Reason for this change:
-It was difficult to dynamically add colors to components, especially if
-the name of the color attribute was unknown in the template.
-This change keeps the css flat since we aren’t chaining color
-attributes on components and instead we assign a class to the component
-which includes the color’s name.
-This allows you to easily toggle a component between multiple colors.
-Speeds up performance because we are no longer reading through all of
-the attributes to grab the color ones.
+Components with this property:
+- Badge
+- Button
+- Checkbox
+- Chip
+- FAB
+- Icon
+- Item (Item, Item Divider, List Header)
+- Label
+- Navbar
+- Radio
+- Searchbar
+- Segment
+- Spinner
+- Tabs
+- Toggle
+- Toolbar
+- Typography (headers, paragraphs, spans, etc.)
 
-references #7467
-* button: - `<button>` becomes `<button ion-button>`
+**Reason for this change:**
+- It was difficult to dynamically add colors to components, especially if the name of the color attribute was unknown in the template.
+- This change keeps the css flat since we aren’t chaining color attributes on components and instead we assign a class to the component which includes the color’s name.
+- This allows you to easily toggle a component between multiple colors.
+- Speeds up performance because we are no longer reading through all of the attributes to grab the color ones.
+
+
+#### Select Changes
+
+Select’s `alertOptions` input has been renamed to `selectOptions`. It now allows you to pass options for either the alert or action-sheet interface. Refer to their documentation for the options each of them accept.
+
+- [ActionSheet](http://ionicframework.com/docs/v2/api/components/action-sheet/ActionSheetController/#create)
+- [Alert](http://ionicframework.com/docs/v2/api/components/alert/AlertController/#create)
+
+
+#### New Behavior of Button
+
+- `<button>` becomes `<button ion-button>`
 - `<a button>` becomes `<a ion-button>`
 - `<button ion-item>` does not get the `ion-button` attribute
-- Buttons inside of `<ion-item-options>` do get the `ion-button`
-attribute
+- Buttons inside of `<ion-item-options>` do get the `ion-button` attribute
 - Removed the `category` attribute, this should be passed in
 `ion-button` instead.
-- Button attributes added for icons in buttons: `icon-only`,
-`icon-left`, and `icon-right`
+
+**Reason for this change:**
+- It was difficult to have custom buttons since buttons automatically received the Ionic styles. The user can now take advantage of adding their own styling to a button if they want it to behave differently than the Ionic button.
+Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute gives us the ability to take advantage of the native functionality and built-in accessibility of native elements. If Ionic provided an `<ion-button>` we’d have to copy over all the possible attributes and events to the real nested button/link (`type=submit`, `formnovalidate`, `value`, `autofocus`, `href`, `target`, `focus`/`blur`, `download`, `nofollow`, `ping`, etc). Additionally, Angular 2 does not have the "replace" directive where `<ion-button>` could be turned into `<a ion-button>`.
+- Since `button` was already being used as an attribute to the `<a>` element, this is more consistent between the two.
+- If a navPush or navPop directive is on an `<a ion-button>`, Ionic can automatically add the `href` attribute.
+- [A few reasons why we didn’t create `<ion-button>`](https://www.youtube.com/watch?list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g&v=CZGqnp06DnI)
 
 
+#### New Behavior of Icons in Buttons
+
+1. Icon only buttons
+
+  ```
+  <button>
+    <ion-icon name="rainy"></ion-icon>
+  </button>
+  ```
+
+  becomes
+
+  ```
+  <button ion-button icon-only>
+    <ion-icon name="rainy"></ion-icon>
+  </button>
+  ```
+
+2. Icon left of text in a button
+
+  ```
+  <button>
+    <ion-icon name="rainy"></ion-icon>
+    Rainy
+  </button>
+  ```
+
+  becomes
+
+  ```
+  <button ion-button icon-left>
+    <ion-icon name="rainy"></ion-icon>
+    Rainy
+  </button>
+  ```
+
+3. Icon right of text in a button
+
+  ```
+  <button>
+    Rainy
+    <ion-icon name="rainy"></ion-icon>
+  </button>
+  ```
+
+  becomes
+
+  ```
+  <button ion-button icon-right>
+    Rainy
+    <ion-icon name="rainy"></ion-icon>
+  </button>
+  ```
+
+4. Item option buttons - the `icon-left` attribute should still be added to the `<ion-item-options>` container and not the button itself.
+5. `menuToggle` buttons should not get the `icon-only` attribute
+
+**Reason for this change:**
+There was a noticeable performance decrease from us reading in each button to determine where icons were placed and how to style them. This change improves performance. This adds styling so that the buttons and icons will be padded a certain amount, but the user is free to leave these attributes off and style the components themselves.
+
+
+#### Update CSS Link Tags
+
+Ionic stylesheets are no longer dynamically loaded per platform. Instead there will be one CSS file to import. Note that future build processes will slim down the CSS file even further to only include component CSS actually used.
+
+In the head of your `index.html` file, replace:
+
+```
+<!-- ionic dynamically decides which stylesheet to load -->
+<link ios-href="build/css/app.ios.css" rel="stylesheet">
+<link md-href="build/css/app.md.css" rel="stylesheet">
+<link wp-href="build/css/app.wp.css" rel="stylesheet">
+```
+
+With:
+
+```
+<link href="build/main.css" rel="stylesheet">
+```
+
+
+#### Sass Import
+
+The default configuration will be updated, but if your existing app is using Sass and importing Ionic Sass files directly you’ll need to update the `includePaths` of Node Sass.
+
+```
+node_modules/ionic-angular/themes
+```
+
+Next, to include Ionic into your custom Sass file you’ll need to update the Ionic import to this:
+
+```
+@import "ionic.theme.default";
+```
+
+
+#### Typings
+
+Any type definitions for third party libraries that are included via the `typings` tool and are included in the the `typings.json` file should be updated to use `npm @types`. An example of how this looks is:
+
+```
+npm install @types/lodash --save-dev --save-exact
+```
+
+Delete the `typings.json` file, and the `typings` directory.
+
+
+#### Storage
+
+The storage utilities have been moved outside of the framework to a separate library called `@ionic/storage`.
+
+This library can be installed by executing the following command:
+
+```
+npm install @ionic/storage --save --save-exact
+```
+
+It must be included in the app's `NgModule` list of `providers`:
+
+```
+import { Storage } from '@ionic/storage';
+
+...
+
+@NgModule({
+  ...
+  providers: [Storage]
+})
+
+```
+
+It can then be injected into any class that needs access to it:
+
+```
+import { Storage } from '@ionic/storage';
+
+...
+
+export class MyAwesomePage {
+  constructor(public storage: Storage) {
+  }
+
+  ionViewDidEnter() {
+
+    this.storage.get('myKey').then( (value:any) => {
+      console.log('My value is:', value);
+    });
+  }
+}
+```
+
+
+#### Deployment Changes
+
+`ionic-angular` package includes es5 code with es2015 module import/exports, `umd` modules, and pure `es2015` code. The `package.json` is set up using the `main` and `module` options to make this work seamlessly.
+
+
+### Steps to Upgrade to RC0
+
+We are providing 2 ways to update your app with this release: [Copying your Project to a New Project](#copying-your-project-to-a-new-project) and [Modifying your Existing Project](#modifying-your-existing-project). The first way will guide you through creating a new Ionic 2 project and copying your project files to it. This is the easiest way to update your app in our opinion. The second way will step through how to update your existing project. There are a lot of steps involved with this way, and we recommend viewing our conference app for any clarification if you choose this way. This is it! We don’t plan on making any more major API changes after this version.
+
+Note: For details on NgModules you can read the Angular docs on them [here](https://angular.io/docs/ts/latest/guide/ngmodule.html)
+
+#### Copying your Project to a New Project
+
+1. Ensure that you're using npm version 3.x by running:
+
+  ```
+  npm --version
+  ```
+
+  If you are not running 3.x, the easiest way to update is to install the [latest version of Node.js](https://nodejs.org/en/).
+
+  You can also update `npm` by following [these instructions](https://docs.npmjs.com/getting-started/installing-node#updating-npm).
+
+2. Install the latest Ionic CLI:
+
+  ```
+  npm install -g ionic
+  ```
+
+  **Important:** if you have installed the `beta` cli you should run `npm uninstall -g ionic` first. You need version `2.1.0` for this release. Check your `cli` version by running `ionic -v` in the command line.
+
+3. Create a new Ionic 2 RC0 app:
+
+  ```
+  ionic start --v2 myApp
+  ```
+
+4. Copy/paste all of your pages from `app/pages/` of your `beta.11` app to `src/pages/`, providers from `app/providers` to `src/providers`, pipes from `app/pipes` to `src/pipes` and any custom components to `src/components` in the new RC0 app.
+
+5. Modify all `templateUrl`'s to be relative to the `.ts` file. For example in `app.component.ts` the url should change from `build/app.html` to `app.html` and in a page referencing `about.html` from `build/pages/about/about.html` to `about.html`.
+
+6. Import and add each of your pages to the `declarations` array and the `entryComponents` array in `src/app/app.module.ts`.
+
+7. Import and add each of your custom components and pipes to the `declarations` array in `src/app/app.module.ts`.
+
+8. Import and add each of your providers to the `providers` array in `src/app/app.module.ts`.
+
+9. Remove any use of the `providers`, `pipes` and `directives` arrays in `@Component`.
+
+10. Change any uses of the `private` TypeScript keyword to `public` ONLY for component variables that are needed in the associated template.
+
+  Note: For details as to why this change has to be made, there is a discussion about it [here](https://forum.ionicframework.com/t/rc0-typescript-private-vs-public-keyword/64863/4?u=mhartington).
+
+11. Change `<button>` to `<button ion-button>` according to [these instructions](#new-behavior-of-button).
+
+12. Pass colors to the `color` attribute : `<button primary>` changes to `<button color="primary">`. See [component colors](#component-colors) above.
+
+13. Move any Ionic config to the `IonicModule.forRoot` in `app.module.ts`. For example, the config should go where it says `configObject` here: `IonicModule.forRoot(MyApp, {configObject})`.
+
+14. Move any variables from the mode specific sass files in your `beta.11` app into the `app.variables` file under the mode heading in the new RC0 app.
+
+15. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
+```
+page-selector-you-added {
+  #title {
+    color: blue;
+  }
+}
+```
+
+
+#### Modifying your Existing Project
+
+1. Ensure that you're using npm version 3.x by running:
+
+  ```
+  npm --version
+  ```
+
+  If you are not running 3.x, the easiest way to update is to install the [latest version of Node.js](https://nodejs.org/en/).
+
+  You can also update `npm` by following [these instructions](https://docs.npmjs.com/getting-started/installing-node#updating-npm).
+
+2. Install the latest Ionic CLI:
+
+  ```
+  npm install -g ionic
+  ```
+
+  **Important:** if you have installed the `beta` cli you should run `npm uninstall -g ionic` first. You need version `2.1.0` for this release. Check your `cli` version by running `ionic -v` in the command line.
+
+3. Update `package.json` dependencies and devDependencies to match the [ionic2-app-base package.json](https://github.com/driftyco/ionic2-app-base/blob/master/package.json#L15-L24), and then run `npm install` in your project folder.
+
+4. Copy the `npm scripts` from the [ionic2-app-base package.json](https://github.com/driftyco/ionic2-app-base/blob/master/package.json#L6-L14) to your `package.json`.
+
+5. Delete the `gulpfile.js`.
+
+6. Rename the `app` folder to `src`.
+
+7. Create a new directory called `app` inside of `src`.
+
+8. Move the `app.html` and `app.ts` files inside of `src/app`.
+
+9. Rename `app.ts` to `app.component.ts`.
+
+10. Add an `app.module.ts` file and copy content from [ionic2-starter-blank](https://github.com/driftyco/ionic2-starter-blank/blob/master/src/app/app.module.ts).
+
+11. Move any providers from `ionicBootstrap` in your `app.component.ts` file to the providers in `app.module.ts`. Make sure to copy imports, too.
+
+12. Import and add any of your custom components to the `declarations` array in `src/app/app.module.ts`.
+
+13. Move any Ionic config to the `IonicModule.forRoot` in `app.module.ts`. For example, the config should go where it says `configObject` here: `IonicModule.forRoot(MyApp, {configObject})`.
+
+14. Remove the `ionicBootstrap` code from `app.component.ts`.
+
+15. Export the main app class in `app.component.ts` and then rename all uses of `MyApp` in `app.module.ts` to your main app class (or rename the export to `MyApp` in `app.component.ts`).
+
+16. Fix any imports in `app.component.ts` to use the correct path. For example, `./pages` becomes `../pages`.
+
+17. Modify `app.module.ts` to import your page specific classes. See `HomePage`, for example. All pages should be included here.
+
+18. Fix any import paths in `app.module.ts`. For example, `./providers` becomes `../providers`.
+
+19. Add `main.dev.ts` and `main.prod.ts` files from [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/tree/master/src/app) to `app/`.
+
+20. Move `www/index.html` to `src/index.html` and modify it to look like [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/src/index.html), make sure to keep any external scripts you have added.
+
+21. Move `www/assets` to `src/assets`.
+
+22. Move `www/img` to `src/assets/img`.
+
+23. Move any other resources you have in `www/` to `src/assets/`.
+
+24. Modify all `templateUrl`'s to be relative to the `.ts` file. For example in `app.component.ts` the url should change from `build/app.html` to `app.html` and in a page referencing `about.html` from `build/pages/about/about.html` to `about.html`.
+
+25. Update .gitignore to match [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/.gitignore).
+
+26. Delete the `typings/` folder and `typings.json` file.
+
+27. Update `tsconfig.json` to match [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/tsconfig.json).
+
+28. Modify `theme/` folder to delete the `app.core.scss` file and copy `app.variables.scss` from the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss), then rename it to `variables.scss`.
+
+29. Move any variables from the mode specific files into the `app.variables` file under the mode heading.
+
+30. Fix any paths to images in your app. For example, before the path may look like `<img src="img/myImg.png">` and now it should be `<img src="assets/img/myImg.png">`.
+
+31. Change any uses of the `private` TypeScript keyword to `public` ONLY for component variables that are needed in the associated template.
+
+  Note: For details as to why this change has to be made, there is a discussion about it [here](https://forum.ionicframework.com/t/rc0-typescript-private-vs-public-keyword/64863/4?u=mhartington).
+
+32. Change any Ionic buttons from `<button>` to `<button ion-button>`. [See New Behavior of Button](#new-behavior-of-button).
+
+33. Pass colors to the `color` attribute: `<button primary>` changes to `<button color="primary">`.
+
+34. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons](#new-behavior-of-icons-in-buttons).
+
+35. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
+In your template:
+```
+about-page {
+  #title {
+    color: blue;
+  }
+}
+```
+In your component:
+```
+@Component({
+  selector: 'about-page',
+  templateUrl: 'about.html'
+})
+```
+
+### Bug Fixes
+
+* **action-sheet:** add icon-left to the button if an icon exists ([a731528](https://github.com/driftyco/ionic/commit/a731528))
+* **animation:** prevent possible raf null errors ([0e8ebe5](https://github.com/driftyco/ionic/commit/0e8ebe5))
+* **app:** corrected paths to theme from app.scss ([001c1c9](https://github.com/driftyco/ionic/commit/001c1c9))
+* **checkbox:** disabled toggle should not fire events or animate ([3324e32](https://github.com/driftyco/ionic/commit/3324e32))
+* **di:** update dependency injection and default configs ([7c05d0c](https://github.com/driftyco/ionic/commit/7c05d0c))
+* **exports:** update module exports ([6784f5e](https://github.com/driftyco/ionic/commit/6784f5e))
+* **fab:** colors in speed dial buttons ([b70614b](https://github.com/driftyco/ionic/commit/b70614b))
+* **gestures:** fixes scroll issue with hammer config ([174efc1](https://github.com/driftyco/ionic/commit/174efc1)), closes [#6897](https://github.com/driftyco/ionic/issues/6897)
+* **ion-fixed:** ion-fixed directive is not longer needed ([75d5526](https://github.com/driftyco/ionic/commit/75d5526))
+* **item:** regression in sliding item introduced by 52ada1c ([e0c2129](https://github.com/driftyco/ionic/commit/e0c2129))
+* **item:** sliding item events are zone wrapped ([47491fb](https://github.com/driftyco/ionic/commit/47491fb)), closes [#7630](https://github.com/driftyco/ionic/issues/7630)
+* **item:** sliding item with icon-only buttons ([1d3d5a1](https://github.com/driftyco/ionic/commit/1d3d5a1))
+* **menu:** open/close race condition ([8585427](https://github.com/driftyco/ionic/commit/8585427)), closes [#7629](https://github.com/driftyco/ionic/issues/7629) [#8001](https://github.com/driftyco/ionic/issues/8001)
+* **nav:** move null assignment of `_onWillDismiss` ([35193c4](https://github.com/driftyco/ionic/commit/35193c4))
+* **nav:** setRoot() and setPages() should not animate ([7012734](https://github.com/driftyco/ionic/commit/7012734))
+* **nav:** move onWillDismiss and onDidDismiss, add unit tests ([e26c425](https://github.com/driftyco/ionic/commit/e26c425))
+* **platform:** fire platform ready on app init ([963e835](https://github.com/driftyco/ionic/commit/963e835))
+* **reorder:** adjust reorder icon style for iOS and MD ([f3bb2dc](https://github.com/driftyco/ionic/commit/f3bb2dc))
+* **templates:** add template tabs [#8207](https://github.com/driftyco/ionic/issues/8207) ([#8208](https://github.com/driftyco/ionic/issues/8208)) ([0f6ce28](https://github.com/driftyco/ionic/commit/0f6ce28))
+* **urlSerializer:** improve findLinkByComponentData ([9d563f5](https://github.com/driftyco/ionic/commit/9d563f5))
+
+
+### Code Refactoring
+
+* **button:** add ion-button attribute and icon attributes to style buttons ([938864e](https://github.com/driftyco/ionic/commit/938864e)), closes [#7466](https://github.com/driftyco/ionic/issues/7466)
+* **colors:** color should be added as an input instead of directly adding the color to the component ([55a0257](https://github.com/driftyco/ionic/commit/55a0257)), closes [#7087](https://github.com/driftyco/ionic/issues/7087) [#7401](https://github.com/driftyco/ionic/issues/7401) [#7523](https://github.com/driftyco/ionic/issues/7523)
+* **select:** rename alertOptions to selectOptions, add ability to pass them for action-sheet ([b8285b7](https://github.com/driftyco/ionic/commit/b8285b7)), closes [#7764](https://github.com/driftyco/ionic/issues/7764)
+
+
+### Features
+
+* **action-sheet:** add ability to pass multiple classes to cssClass ([68ab261](https://github.com/driftyco/ionic/commit/68ab261))
+* **chips:** added Chip component ([421f637](https://github.com/driftyco/ionic/commit/421f637))
+* **chips:** finished Component ([0dece72](https://github.com/driftyco/ionic/commit/0dece72))
+* **fab:** update floating action buttons ([490a06d](https://github.com/driftyco/ionic/commit/490a06d))
+* **reorder:** animate reorder button ([1f78487](https://github.com/driftyco/ionic/commit/1f78487))
+* **loading:** add ability to pass multiple classes to cssClass ([466dea3](https://github.com/driftyco/ionic/commit/466dea3))
+* **loading:** add setContent function ([c750847](https://github.com/driftyco/ionic/commit/c750847))
+* add polyfill task ([ce78194](https://github.com/driftyco/ionic/commit/ce78194))
+* **nav:** component url navigation ([f477aa2](https://github.com/driftyco/ionic/commit/f477aa2))
+* **nav:** set default stack history on app init ([ca8cc0a](https://github.com/driftyco/ionic/commit/ca8cc0a))
+* **polyfills:** split up code and source polyfill task ([#8130](https://github.com/driftyco/ionic/issues/8130)) ([bcec66c](https://github.com/driftyco/ionic/commit/bcec66c))
+* **popover:** add ability to pass multiple classes to cssClass ([a685cdc](https://github.com/driftyco/ionic/commit/a685cdc))
+* **toast:** add ability to pass multiple classes to cssClass ([79e25a3](https://github.com/driftyco/ionic/commit/79e25a3))
+
+
+### Performance Improvements
+
+* **item:** apply will-change only when list is active ([4bcd815](https://github.com/driftyco/ionic/commit/4bcd815))
+* **reorder:** reorder icon is display: none by default ([26441ec](https://github.com/driftyco/ionic/commit/26441ec))
+* **ripple:** md ripple effect update to not affect layout ([14a3ea2](https://github.com/driftyco/ionic/commit/14a3ea2))
 
 <a name="2.0.0-beta.11"></a>
 # [2.0.0-beta.11](https://github.com/driftyco/ionic/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2016-08-05)

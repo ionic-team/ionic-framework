@@ -1,12 +1,15 @@
 import { exec, spawnSync, spawn } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 
+import * as changelog from 'conventional-changelog';
+import * as GithubApi from 'github';
 import * as glob from 'glob';
 import { dest, src, task } from 'gulp';
 import { rollup } from 'rollup';
 import * as commonjs from 'rollup-plugin-commonjs';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as runSequence from 'run-sequence';
+import { obj } from 'through2';
 
 import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
 import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
@@ -20,11 +23,12 @@ task('nightly', (done: (err: any) => void) => {
 });
 
 task('release', (done: (err: any) => void) => {
-  // don't automatically push the button, require the user to call the publish command separately for now
   runSequence('release.prepareReleasePackage',
               'release.copyProdVersion',
               'release.removeDebugStatements',
               'release.prepareChangelog',
+              'release.publishNpmRelease',
+              'release.publishGithubRelease',
               done);
 });
 
@@ -48,7 +52,36 @@ function replaceAll(input: string, tokenToReplace: string, replaceWith: string) 
   return input.split(tokenToReplace).join(replaceWith);
 }
 
-task('release.publishRelease', (done: Function) => {
+task('release.publishGithubRelease', (done: Function) => {
+
+  const packageJSON = require('../../../package.json');
+
+  const github = new GithubApi({
+    version: '3.0.0'
+  });
+
+  github.authenticate({
+    type: 'oauth',
+    token: process.env.GH_TOKEN
+  });
+
+  return changelog({
+    preset: 'angular'
+  })
+  .pipe(obj(function(file, enc, cb){
+    github.releases.createRelease({
+      owner: 'driftyco',
+      repo: 'ionic',
+      target_commitish: 'master',
+      tag_name: 'v' + packageJSON.version,
+      name: packageJSON.version,
+      body: file.toString(),
+      prerelease: false
+    }, done);
+  }));
+});
+
+task('release.publishNpmRelease', (done: Function) => {
   const npmCmd = spawn('npm', ['publish', DIST_BUILD_ROOT]);
   npmCmd.stdout.on('data', function (data) {
     console.log(data.toString());

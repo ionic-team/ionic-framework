@@ -233,12 +233,9 @@ export class Config {
     // or it was from the users platform configs
     // or it was from the default platform configs
     // in that order
-    let rtnVal: any;
-    if (isFunction(this._c[key])) {
-      rtnVal = this._c[key](this.platform);
-
-    } else {
-      rtnVal = this._c[key];
+    let rtnVal: any = this._c[key];
+    if (isFunction(rtnVal)) {
+      rtnVal = rtnVal(this.platform);
     }
 
     return (rtnVal !== null ? rtnVal : fallbackValue);

@@ -197,6 +197,7 @@ export class Segment extends Ion {
   /**
    * @input {string} The mode to apply to this component.
    */
+  @Input()
   set mode(val: string) {
     this._setMode('segment', val);
   }
