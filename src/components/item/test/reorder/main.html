@@ -22,7 +22,7 @@
   <ion-list [reorder]="isReordering" (ionItemReorder)="reorder($event)">
     <ion-item-sliding *ngFor="let item of items">
       <button ion-item (click)="clickedButton(item)">
-        Sliding item {{item}}
+        <h2>Sliding item {{item}}</h2>
       </button>
       <ion-item-options side="right" icon-left>
         <button ion-button color='danger'>

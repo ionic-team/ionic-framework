@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef, EventEmitter, forwardRef, Input, NgZone, Renderer, Inject, Optional, Output } from '@angular/core';
+import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Input, NgZone, Renderer, Inject, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
 import { CSS, zoneRafFrames } from '../../util/dom';
@@ -326,6 +326,13 @@ export class Reorder {
   getReorderNode(): HTMLElement {
     let node = <any>this.item.getNativeElement();
     return findReorderItem(node, null);
+  }
+
+  @HostListener('click', ['$event'])
+  onClick(ev) {
+    // Stop propagation if click event reaches ion-reorder
+    ev.preventDefault();
+    ev.stopPropagation();
   }
 
 }
