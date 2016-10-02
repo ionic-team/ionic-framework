@@ -180,6 +180,10 @@ export class ViewController {
    *
    */
   dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
+    if (!this._nav) {
+      return Promise.resolve(false);
+    }
+
     let options = merge({}, this._leavingOpts, navOptions);
     this._onWillDismiss && this._onWillDismiss(data, role);
     return this._nav.remove(this._nav.indexOf(this), 1, options).then(() => {

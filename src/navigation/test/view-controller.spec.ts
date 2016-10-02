@@ -117,7 +117,25 @@ describe('ViewController', () => {
 
       viewController.dismiss('didDismiss data');
     }, 10000);
+
+    it('should not crash when calling dismiss() twice', (done) => {
+      // arrange
+      let viewController = mockView();
+      let navControllerBase = mockNavController();
+      mockViews(navControllerBase, [viewController]);
+
+      viewController.onDidDismiss((data: any) => {
+        expect(data).toEqual('didDismiss data');
+        setTimeout(() => {
+          viewController.dismiss(); // it should not crash
+          done();
+        }, 100);
+      });
+
+      viewController.dismiss('didDismiss data');
+    }, 10000);
   });
+
 
   afterEach(() => {
     if (subscription) {
