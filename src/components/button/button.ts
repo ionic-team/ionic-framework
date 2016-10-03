@@ -45,7 +45,7 @@ import { isTrueProperty } from '../../util/util';
   *
   *  <button ion-button round>Round Button</button>
   *
-  *  <button ion-button fab>FAB</button>
+  *  <button ion-button ion-fab>FAB</button>
   *
   *  <!-- Outline -->
   *  <button ion-button full outline>Outline + Full</button>
@@ -54,7 +54,7 @@ import { isTrueProperty } from '../../util/util';
   *
   *  <button ion-button round outline>Outline + Round</button>
   *
-  *  <button ion-button fab outline>FAB</button>
+  *  <button ion-button ion-fab outline>FAB</button>
   *
   *  <!-- Icons -->
   *  <button ion-button icon-left>
