@@ -45,16 +45,12 @@ import { isTrueProperty } from '../../util/util';
   *
   *  <button ion-button round>Round Button</button>
   *
-  *  <button ion-button ion-fab>FAB</button>
-  *
   *  <!-- Outline -->
   *  <button ion-button full outline>Outline + Full</button>
   *
   *  <button ion-button block outline>Outline + Block</button>
   *
   *  <button ion-button round outline>Outline + Round</button>
-  *
-  *  <button ion-button ion-fab outline>FAB</button>
   *
   *  <!-- Icons -->
   *  <button ion-button icon-left>
