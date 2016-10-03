@@ -21,13 +21,6 @@ import { isTrueProperty } from '../../util/util';
   * @property [small] - A button with size small.
   * @property [large] - A button with size large.
   * @property [disabled] - A disabled button.
-  * @property [fab] - A floating action button.
-  * @property [fab-left] - Position a fab button to the left.
-  * @property [fab-right] - Position a fab button to the right.
-  * @property [fab-center] - Position a fab button towards the center.
-  * @property [fab-top] - Position a fab button towards the top.
-  * @property [fab-bottom] - Position a fab button towards the bottom.
-  * @property [fab-fixed] - Makes a fab button have a fixed position.
   * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
   *
   * @usage
@@ -88,6 +81,9 @@ import { isTrueProperty } from '../../util/util';
   *
   * @demo /docs/v2/demos/src/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
+  * @see {@link /docs/v2/components#fabs FabButton Docs}
+  * @see {@link ../../fab/FabButton FabButton API Docs}
+  * @see {@link ../../fab/FabContainer FabContainer API Docs}
  */
 @Component({
   selector: '[ion-button]',
