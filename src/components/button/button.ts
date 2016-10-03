@@ -21,13 +21,6 @@ import { isTrueProperty } from '../../util/util';
   * @property [small] - A button with size small.
   * @property [large] - A button with size large.
   * @property [disabled] - A disabled button.
-  * @property [fab] - A floating action button.
-  * @property [fab-left] - Position a fab button to the left.
-  * @property [fab-right] - Position a fab button to the right.
-  * @property [fab-center] - Position a fab button towards the center.
-  * @property [fab-top] - Position a fab button towards the top.
-  * @property [fab-bottom] - Position a fab button towards the bottom.
-  * @property [fab-fixed] - Makes a fab button have a fixed position.
   * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
   *
   * @usage
@@ -52,16 +45,12 @@ import { isTrueProperty } from '../../util/util';
   *
   *  <button ion-button round>Round Button</button>
   *
-  *  <button ion-button fab>FAB</button>
-  *
   *  <!-- Outline -->
   *  <button ion-button full outline>Outline + Full</button>
   *
   *  <button ion-button block outline>Outline + Block</button>
   *
   *  <button ion-button round outline>Outline + Round</button>
-  *
-  *  <button ion-button fab outline>FAB</button>
   *
   *  <!-- Icons -->
   *  <button ion-button icon-left>
@@ -88,6 +77,9 @@ import { isTrueProperty } from '../../util/util';
   *
   * @demo /docs/v2/demos/src/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
+  * @see {@link /docs/v2/components#fabs FabButton Docs}
+  * @see {@link ../../fab/FabButton FabButton API Docs}
+  * @see {@link ../../fab/FabContainer FabContainer API Docs}
  */
 @Component({
   selector: '[ion-button]',
@@ -175,14 +167,6 @@ export class Button extends Ion {
   @Input()
   set round(val: boolean) {
     this._attr('_shape', 'round', val);
-  }
-
-  /**
-   * @input {string} A floating action button.
-   */
-  @Input()
-  set fab(val: boolean) {
-    this._attr('_shape', 'fab', val);
   }
 
   /**
