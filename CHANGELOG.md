@@ -358,13 +358,22 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 14. Move any variables from the mode specific sass files in your `beta.11` app into the `app.variables` file under the mode heading in the new RC0 app.
 
 15. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
-```
-page-selector-you-added {
-  #title {
-    color: blue;
+  
+  In your template:
+  ```
+  about-page {
+    #title {
+      color: blue;
+    }
   }
-}
-```
+  ```
+  In your component:
+  ```
+  @Component({
+    selector: 'about-page',
+    templateUrl: 'about.html'
+  })
+  ```
 
 
 #### Modifying your Existing Project
@@ -456,21 +465,24 @@ page-selector-you-added {
 35. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons](#new-behavior-of-icons-in-buttons).
 
 36. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
-In your template:
-```
-about-page {
-  #title {
-    color: blue;
+  
+  In your template:
+  ```
+  about-page {
+    #title {
+      color: blue;
+    }
   }
-}
-```
-In your component:
-```
-@Component({
-  selector: 'about-page',
-  templateUrl: 'about.html'
-})
-```
+  ```
+  In your component:
+  ```
+  @Component({
+    selector: 'about-page',
+    templateUrl: 'about.html'
+  })
+  ```
+
+37. Remove any use of the `providers`, `pipes` and `directives` arrays in `@Component`.
 
 ### Bug Fixes
 
