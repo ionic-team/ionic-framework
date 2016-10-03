@@ -174,14 +174,6 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A floating action button.
-   */
-  @Input()
-  set fab(val: boolean) {
-    this._attr('_shape', 'fab', val);
-  }
-
-  /**
    * @input {string} A button that fills its parent container with a border-radius.
    */
   @Input()
