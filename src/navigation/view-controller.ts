@@ -1,7 +1,7 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
 import { Footer, Header } from '../components/toolbar/toolbar';
-import { isPresent, merge } from '../util/util';
+import { isPresent, assign } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
 import { NavControllerBase } from './nav-controller-base';
 import { NavOptions, ViewState } from './nav-util';
@@ -184,7 +184,7 @@ export class ViewController {
       return Promise.resolve(false);
     }
 
-    let options = merge({}, this._leavingOpts, navOptions);
+    let options = assign({}, this._leavingOpts, navOptions);
     this._onWillDismiss && this._onWillDismiss(data, role);
     return this._nav.remove(this._nav.indexOf(this), 1, options).then(() => {
       this._onDidDismiss && this._onDidDismiss(data, role);
