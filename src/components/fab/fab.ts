@@ -208,7 +208,7 @@ export class FabList {
   *
   * ```html
   * <ion-content>
-  *  <!-- this fab is placed at top right -->
+  *  <!-- this fab is placed at bottom right -->
   *  <ion-fab bottom right >
   *    <button ion-fab>Share</button>
   *    <ion-fab-list side="top">
