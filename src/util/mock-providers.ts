@@ -10,14 +10,13 @@ import { Form } from './form';
 import { GestureController } from '../gestures/gesture-controller';
 import { Keyboard } from './keyboard';
 import { Menu } from '../components/menu/menu';
-import { NavOptions, ViewState, DeepLinkConfig } from '../navigation/nav-util';
+import { ViewState, DeepLinkConfig } from '../navigation/nav-util';
 import { OverlayPortal } from '../components/nav/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
 import { Platform } from '../platform/platform';
 import { QueryParams } from '../platform/query-params';
 import { Tab }  from '../components/tabs/tab';
 import { Tabs }  from '../components/tabs/tabs';
-import { Transition } from '../transitions/transition';
 import { TransitionController } from '../transitions/transition-controller';
 import { UrlSerializer } from '../navigation/url-serializer';
 import { ViewController } from '../navigation/view-controller';
@@ -271,7 +270,7 @@ export const mockNavController = function(): NavControllerBase {
     linker
   );
 
-  nav._viewInit = function(trns: Transition, enteringView: ViewController, opts: NavOptions) {
+  nav._viewInit = function(enteringView: ViewController) {
     enteringView.init(mockComponentRef());
     enteringView._state = ViewState.INITIALIZED;
   };
