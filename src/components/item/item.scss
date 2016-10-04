@@ -76,7 +76,6 @@ ion-item-group {
 }
 
 ion-item-divider {
-  z-index: 1000;
   display: flex;
   overflow: hidden;
 
@@ -92,6 +91,7 @@ ion-item-divider {
 }
 
 ion-item-divider[sticky] {
+  z-index: 1000;
   position: sticky;
   top: 0;
 }
