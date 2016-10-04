@@ -78,6 +78,7 @@
     "gulp-rename": "1.2.2",
     "gulp-sass": "2.3.2",
     "gulp-scss-lint": "0.4.0",
+    "gulp-server-livereload": "^1.8.4",
     "gulp-shell": "0.5.2",
     "gulp-strip-debug": "1.1.0",
     "gulp-tslint": "6.1.1",

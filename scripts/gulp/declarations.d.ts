@@ -4,6 +4,7 @@ declare module 'event-stream';
 declare module 'github';
 declare module 'gulp-if';
 declare module 'gulp-scss-lint';
+declare module 'gulp-server-livereload';
 declare module 'gulp-tslint';
 declare module 'html-entities';
 declare module 'rollup';
