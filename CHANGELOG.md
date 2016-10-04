@@ -361,7 +361,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
   
   In your template:
   ```
-  about-page {
+  page-about {
     #title {
       color: blue;
     }
@@ -370,7 +370,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
   In your component:
   ```
   @Component({
-    selector: 'about-page',
+    selector: 'page-about',
     templateUrl: 'about.html'
   })
   ```
@@ -468,7 +468,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
   
   In your template:
   ```
-  about-page {
+  page-about {
     #title {
       color: blue;
     }
@@ -477,7 +477,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
   In your component:
   ```
   @Component({
-    selector: 'about-page',
+    selector: 'page-about',
     templateUrl: 'about.html'
   })
   ```
