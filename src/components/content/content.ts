@@ -488,7 +488,9 @@ export class Content extends Ion {
     this._tabsPlacement = null;
 
     let ele: HTMLElement = this._elementRef.nativeElement;
-    if (!ele) return;
+    if (!ele) {
+      return;
+    }
 
     let parentEle: HTMLElement = ele.parentElement;
     let computedStyle: any;
