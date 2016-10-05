@@ -40,8 +40,9 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * ionicBootstrap(AppRoot, customProviders, {
  *   tabsPlacement: 'bottom',
  *   platforms: {
- *   ios: {
- *     tabsPlacement: 'top',
+ *     ios: {
+ *       tabsPlacement: 'top',
+ *     }
  *   }
  * });
  * ```
