@@ -73,7 +73,9 @@ export class ItemSlidingGesture extends PanGesture {
   }
 
   notCaptured(ev: any) {
-    this.closeOpened();
+    if (!clickedOptionButton(ev)) {
+      this.closeOpened();
+    }
   }
 
   closeOpened(): boolean {
@@ -99,9 +101,14 @@ export class ItemSlidingGesture extends PanGesture {
 }
 
 function getContainer(ev: any): ItemSliding {
-  let ele = ev.target.closest('ion-item-sliding', true);
+  let ele = ev.target.closest('ion-item-sliding');
   if (ele) {
     return (<any>ele)['$ionComponent'];
   }
   return null;
+}
+
+function clickedOptionButton(ev: any): boolean {
+  let ele = ev.target.closest('ion-item-options>button');
+  return !!ele;
 }
