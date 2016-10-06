@@ -10,6 +10,7 @@ export * from './gestures/gesture-controller';
 
 export * from './util/click-block';
 export * from './util/events';
+export * from './util/haptic';
 export * from './util/keyboard';
 export * from './util/form';
 export { reorderArray } from './util/util';

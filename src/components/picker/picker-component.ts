@@ -8,6 +8,7 @@ import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
+import { Haptic } from '../../util/haptic';
 import { UIEventManager } from '../../util/ui-event-manager';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -53,12 +54,13 @@ export class PickerColumnCmp {
   maxY: number;
   rotateFactor: number;
   lastIndex: number;
+  lastTempIndex: number;
   receivingEvents: boolean = false;
   events: UIEventManager = new UIEventManager();
 
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(config: Config, private elementRef: ElementRef, private _sanitizer: DomSanitizer) {
+  constructor(config: Config, private elementRef: ElementRef, private _sanitizer: DomSanitizer, private _haptic: Haptic) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
   }
 
@@ -114,6 +116,9 @@ export class PickerColumnCmp {
 
     this.minY = (minY * this.optHeight * -1);
     this.maxY = (maxY * this.optHeight * -1);
+
+    this._haptic.gestureSelectionStart();
+
     return true;
   }
 
@@ -146,6 +151,14 @@ export class PickerColumnCmp {
     }
 
     this.update(y, 0, false, false);
+
+    let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+    if (currentIndex !== this.lastTempIndex) {
+      // Trigger a haptic event for physical feedback that the index has changed
+      this._haptic.gestureSelectionChanged();
+    }
+    this.lastTempIndex = currentIndex;
+
   }
 
   pointerEnd(ev: UIEvent) {
@@ -209,6 +222,8 @@ export class PickerColumnCmp {
     if (isNaN(this.y) || !this.optHeight) {
       // fallback in case numbers get outta wack
       this.update(y, 0, true, true);
+      this._haptic.gestureSelectionEnd();
+
 
     } else if (Math.abs(this.velocity) > 0) {
       // still decelerating
@@ -230,11 +245,12 @@ export class PickerColumnCmp {
         this.velocity = 0;
       }
 
-      console.log(`decelerate y: ${y}, velocity: ${this.velocity}, optHeight: ${this.optHeight}`);
+      //console.debug(`decelerate y: ${y}, velocity: ${this.velocity}, optHeight: ${this.optHeight}`);
 
       var notLockedIn = (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1);
 
       this.update(y, 0, true, !notLockedIn);
+
 
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
@@ -247,9 +263,17 @@ export class PickerColumnCmp {
 
       // create a velocity in the direction it needs to scroll
       this.velocity = (currentPos > (this.optHeight / 2) ? 1 : -1);
+      this._haptic.gestureSelectionEnd();
 
       this.decelerate();
     }
+
+    let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+    if (currentIndex !== this.lastTempIndex) {
+      // Trigger a haptic event for physical feedback that the index has changed
+      this._haptic.gestureSelectionChanged();
+    }
+    this.lastTempIndex = currentIndex;
   }
 
   optClick(ev: UIEvent, index: number) {

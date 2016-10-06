@@ -15,6 +15,7 @@ import { DeepLinker, setupDeepLinker } from './navigation/deep-linker';
 import { Events, setupProvideEvents } from './util/events';
 import { Form } from './util/form';
 import { GestureController } from './gestures/gesture-controller';
+import { Haptic } from './util/haptic';
 import { IonicGestureConfig } from './gestures/gesture-config';
 import { Keyboard } from './util/keyboard';
 import { LoadingController } from './components/loading/loading';
@@ -52,6 +53,7 @@ import { ToastCmp } from './components/toast/toast-component';
  */
 export { Config, setupConfig, ConfigToken } from './config/config';
 export { Platform, setupPlatform, UserAgentToken, DocumentDirToken, DocLangToken, NavigatorPlatformToken } from './platform/platform';
+export { Haptic } from './util/haptic';
 export { QueryParams, setupQueryParams, UrlToken } from './platform/query-params';
 export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
@@ -163,6 +165,7 @@ export class IonicModule {
         App,
         Events,
         Form,
+        Haptic,
         GestureController,
         Keyboard,
         LoadingController,
