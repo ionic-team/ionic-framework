@@ -184,7 +184,7 @@ export class UIEventManager {
 }
 
 function listenEvent(ele: any, eventName: string, zoneWrapped: boolean, option: any, callback: any): Function {
-  let rawEvent = ('__zone_symbol__addEventListener' in ele && !zoneWrapped);
+  let rawEvent = (!zoneWrapped && '__zone_symbol__addEventListener' in ele);
   if (rawEvent) {
     ele.__zone_symbol__addEventListener(eventName, callback, option);
     return () => ele.__zone_symbol__removeEventListener(eventName, callback);

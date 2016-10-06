@@ -5,6 +5,7 @@ import { Ion } from '../ion';
 
 import { UIEventManager } from '../../util/ui-event-manager';
 import { isTrueProperty } from '../../util/util';
+import { nativeTimeout } from '../../util/dom';
 
 /**
   * @name FabButton
@@ -126,13 +127,12 @@ export class FabButton extends Ion  {
  */
 @Directive({
   selector: 'ion-fab-list',
-  host: {
-    '[class.fab-list-active]': '_visible'
-  }
 })
 export class FabList {
   _visible: boolean = false;
   _fabs: FabButton[] = [];
+
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer) { }
 
   @ContentChildren(FabButton)
   set _setbuttons(query: QueryList<FabButton>) {
@@ -150,18 +150,23 @@ export class FabList {
     if (visible === this._visible) {
       return;
     }
+    this._visible = visible;
 
     let fabs = this._fabs;
     let i = 1;
     if (visible) {
       fabs.forEach(fab => {
-        setTimeout(() => fab.setElementClass('show', true), i * 30);
+        nativeTimeout(() => fab.setElementClass('show', true), i * 30);
         i++;
       });
     } else {
       fabs.forEach(fab => fab.setElementClass('show', false));
     }
-    this._visible = visible;
+    this.setElementClass('fab-list-active', visible);
+  }
+
+  setElementClass(className: string, add: boolean) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }
 
 }
