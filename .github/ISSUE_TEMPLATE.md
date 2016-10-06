@@ -11,6 +11,9 @@ http://ionicworldwide.herokuapp.com/
 
 https://github.com/driftyco/ionic-app-scripts
 
+**Note: for plugins Cordova related issues you can open up an issue on the ionic-native repo**
+
+https://github.com/driftyco/ionic-native
 
 #### Short description of the problem:
 
