@@ -3,8 +3,10 @@
 // --------------------------------------------------
 
 @mixin appearance($val) {
-  -webkit-appearance: $val;
   -moz-appearance: $val;
+  -ms-appearance: $val;
+  -webkit-appearance: $val;
+  appearance: $val;
 }
 
 

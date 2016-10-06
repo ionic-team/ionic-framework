@@ -176,14 +176,12 @@
   opacity: .2;
 }
 button.swiper-pagination-bullet {
+  @include appearance(none);
+
   border: 0;
   margin: 0;
   padding: 0;
   box-shadow: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
 }
 .swiper-pagination-clickable .swiper-pagination-bullet {
   cursor: pointer;
