@@ -42,7 +42,7 @@ export class Haptic {
    * Trigger a selection changed haptic event. Good for one-time events (not for gestures)
    */
   selection() {
-    if(!this.plugin) {
+    if (!this.plugin) {
       return;
     }
 
@@ -53,7 +53,7 @@ export class Haptic {
    * Tell the haptic engine that a gesture for a selection change is starting.
    */
   gestureSelectionStart() {
-    if(!this.plugin) {
+    if (!this.plugin) {
       return;
     }
 
@@ -64,7 +64,7 @@ export class Haptic {
    * Tell the haptic engine that a selection changed during a gesture.
    */
   gestureSelectionChanged() {
-    if(!this.plugin) {
+    if (!this.plugin) {
       return;
     }
 
@@ -76,7 +76,7 @@ export class Haptic {
    * called lest resources are not properly recycled.
    */
   gestureSelectionEnd() {
-    if(!this.plugin) {
+    if (!this.plugin) {
       return;
     }
 
@@ -88,7 +88,7 @@ export class Haptic {
    * options should be of the type { type: 'success' } (or 'warning'/'error')
    */
   notification(options: { type: string }) {
-    if(!this.plugin) {
+    if (!this.plugin) {
       return;
     }
 
@@ -100,7 +100,7 @@ export class Haptic {
    * options should be of the type { style: 'light' } (or 'medium'/'heavy')
    */
   impact(options: { style: string }) {
-    if(!this.plugin) {
+    if (!this.plugin) {
       return;
     }
 
