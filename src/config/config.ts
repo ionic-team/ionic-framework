@@ -18,16 +18,23 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * You can set the tab placement, icon mode, animations, and more here.
  *
  * ```ts
- * import { ionicBootstrap } from 'ionic-angular';
+ * import { IonicApp, IonicModule } from 'ionic-angular';
  *
- * ionicBootstrap(AppRoot, customProviders, {
- *   backButtonText: 'Go Back',
- *   iconMode: 'ios',
- *   modalEnter: 'modal-slide-in',
- *   modalLeave: 'modal-slide-out',
- *   tabsPlacement: 'bottom',
- *   pageTransition: 'ios',
- * });
+ * @NgModule({
+ *   declarations: [ MyApp ],
+ *   imports: [
+ *     IonicModule.forRoot(MyApp, {
+ *       backButtonText: 'Go Back',
+ *       iconMode: 'ios',
+ *       modalEnter: 'modal-slide-in',
+ *       modalLeave: 'modal-slide-out',
+ *       tabsPlacement: 'bottom',
+ *       pageTransition: 'ios'
+ *     }, {}],
+ *   bootstrap: [IonicApp],
+ *   entryComponents: [ MyApp ],
+ *   providers: []
+ * })
  * ```
  *
  *
@@ -35,15 +42,17 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * Below is an example where an app can override any setting we want based on a platform.
  *
  * ```ts
- * import { ionicBootstrap } from 'ionic-angular';
- *
- * ionicBootstrap(AppRoot, customProviders, {
+ * import { IonicModule } from 'ionic-angular';
+ * ...
+ *  IonicModule.forRoot(MyApp, {
  *   tabsPlacement: 'bottom',
  *   platforms: {
- *   ios: {
- *     tabsPlacement: 'top',
+ *    ios: {
+ *      tabsPlacement: 'top',
+ *    }
  *   }
- * });
+ *  }
+ *  ...
  * ```
  *
  * We could also configure these values at a component level. Take `tabsPlacement`,
