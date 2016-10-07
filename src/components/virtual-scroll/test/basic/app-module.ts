@@ -60,9 +60,7 @@ export class E2EApp {
     E2EPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, {
-      prodMode: true
-    })
+    IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
