@@ -63,36 +63,15 @@ export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer'
 export { ViewController } from './navigation/view-controller';
 
 
-@NgModule({
-  imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule],
-  exports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES],
-  declarations: [
-    ActionSheetCmp,
-    AlertCmp,
-    IONIC_DIRECTIVES,
-    LoadingCmp,
-    ModalCmp,
-    PickerCmp,
-    PopoverCmp,
-    ToastCmp
-  ],
-  entryComponents: [
-    ActionSheetCmp,
-    AlertCmp,
-    IonicApp,
-    LoadingCmp,
-    ModalCmp,
-    PickerCmp,
-    PopoverCmp,
-    ToastCmp
-  ]
-})
-
 /**
  * @name IonicModule
  * @description
- * IonicModule is a NgModule that allows you to create an app by passing it a Root App Component to use as root
- * It provides all the needed components/directives for an app, such as Tabs, Menus, and NavController
+ * IonicModule is a NgModule that helps bootstrap a whole Ionic App. By passing a root component, IonicModule will make sure that all the components and directives from the framework are provided. This includes components such as Tabs, Menus, and Slides, as well as classes like AlertController.
+ *
+ *
+ * We're also able to pass any configuration to our app as a second argument for `.forRoot`. This is any valid config property from [the Config Class](/docs/v2/api/config/Config/).
+ *
+ * The last functionality that IonicModule allows you to configure is optional routes for DeepLinker. For more information on DeepLinker, please see the [DeepLinker Docs](/docs/v2/api/navigation/DeepLinker/)
  *
  * @usage
  * ```ts
@@ -118,6 +97,31 @@ export { ViewController } from './navigation/view-controller';
  * export class AppModule {}
  * ```
  */
+@NgModule({
+  imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule],
+  exports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES],
+  declarations: [
+    ActionSheetCmp,
+    AlertCmp,
+    IONIC_DIRECTIVES,
+    LoadingCmp,
+    ModalCmp,
+    PickerCmp,
+    PopoverCmp,
+    ToastCmp
+  ],
+  entryComponents: [
+    ActionSheetCmp,
+    AlertCmp,
+    IonicApp,
+    LoadingCmp,
+    ModalCmp,
+    PickerCmp,
+    PopoverCmp,
+    ToastCmp
+  ]
+})
+
 export class IonicModule {
     /**
      * Set the root app component for you IonicModule
