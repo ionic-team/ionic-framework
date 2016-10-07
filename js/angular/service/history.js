@@ -637,7 +637,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       replacementView.forwardViewId = currentView.viewId;
       // update the cursor and set new backView
       viewHistory.backView = replacementView;
-      currentHistory.currentCursor += -1;
+      currentHistory.cursor += -1;
     },
 
     enabledBack: function(view) {
