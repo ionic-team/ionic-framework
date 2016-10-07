@@ -219,6 +219,20 @@ describe('Ionic Angular Side Menu', function() {
 
   }));
 
+  it('should closeMenuOnTap', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-side-menus><div ion-side-menu-content></div></ion-side-menus>')($rootScope.$new());
+    $rootScope.$apply();
+    expect(el.controller('ionSideMenus').closeMenuOnTap()).toBe(true);
+    expect(el.scope().closeMenuOnTap).toBe(true);
+
+    el.controller('ionSideMenus').closeMenuOnTap(false);
+    expect(el.controller('ionSideMenus').closeMenuOnTap()).toBe(false);
+    expect(el.scope().closeMenuOnTap).toBe(false);
+
+    el.controller('ionSideMenus').closeMenuOnTap(true);
+    expect(el.controller('ionSideMenus').closeMenuOnTap()).toBe(true);
+    expect(el.scope().closeMenuOnTap).toBe(true);
+  }));
 });
 
 describe('Ionic Side Menu Content Directive', function () {
