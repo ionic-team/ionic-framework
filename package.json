@@ -63,6 +63,8 @@
     "del": "2.2.2",
     "dgeni": "0.4.2",
     "dgeni-packages": "^0.10.18",
+    "q": "1.4.1",
+    "lodash": "3.10.1",
     "event-stream": "3.3.4",
     "file-loader": "0.9.0",
     "github": "0.2.4",
