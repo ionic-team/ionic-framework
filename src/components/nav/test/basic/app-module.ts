@@ -633,7 +633,7 @@ export class Tab3 {
   }
 
   presentModal() {
-    //this.modalCtrl.create(MyModal).present();
+    // this.modalCtrl.create(MyModal).present();
   }
 
   selectPrevious() {
