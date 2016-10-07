@@ -159,7 +159,7 @@ ionic.tap = {
   },
 
   isContentEditable: function(ele) {
-    return ele.contentEditable || (ele.parentElement && ele.parentElement.contentEditable);
+    return ele.contentEditable === 'true'|| (ele.parentElement && ele.parentElement.contentEditable === 'true');
   },
 
   isTextInput: function(ele) {
