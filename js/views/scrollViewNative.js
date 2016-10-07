@@ -22,6 +22,8 @@
 
       if(options.startY >= 0 || options.startX >= 0) {
         ionic.requestAnimationFrame(function() {
+          self.__originalContainerHeight = self.el.getBoundingClientRect().height;
+
           self.el.scrollTop = options.startY || 0;
           self.el.scrollLeft = options.startX || 0;
 
