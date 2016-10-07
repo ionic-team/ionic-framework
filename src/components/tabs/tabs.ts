@@ -297,6 +297,10 @@ export class Tabs extends Ion implements AfterViewInit {
     }
   }
 
+  ngOnDestroy() {
+    this.parent.unregisterChildNav(this);
+  }
+
   /**
    * @internal
    */
