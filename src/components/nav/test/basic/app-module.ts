@@ -28,6 +28,7 @@ export class MyCmpTest {}
         </ion-list-header>
         <button ion-item class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</button>
         <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
+        <button ion-item (click)="pushRedirect()">Push to Redirect</button>
         <button ion-item (click)="pushTabsPage()">Push to Tabs Page</button>
         <button ion-item (click)="pushAnother()">Push to AnotherPage</button>
         <ion-item>
@@ -125,6 +126,11 @@ export class FirstPage {
     });
   }
 
+  pushRedirect() {
+    this.navCtrl.push(RedirectPage).then(() => { }, (rejectReason: string) => {
+    });
+  }
+
   pushFullPage() {
     this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] }).catch(() => {
     });
@@ -176,6 +182,14 @@ export class FirstPage {
   }
 }
 
+
+@Component({template: ''})
+export class RedirectPage {
+  constructor(public navCtrl: NavController) { }
+  ionViewDidEnter() {
+    this.navCtrl.push(PrimaryHeaderPage);
+  }
+}
 
 @Component({
   template: `
@@ -732,6 +746,7 @@ export const deepLinkConfig: DeepLinkConfig = {
   declarations: [
     E2EApp,
     FirstPage,
+    RedirectPage,
     AnotherPage,
     MyCmpTest,
     FullPage,
@@ -749,6 +764,7 @@ export const deepLinkConfig: DeepLinkConfig = {
   entryComponents: [
     E2EApp,
     FirstPage,
+    RedirectPage,
     AnotherPage,
     FullPage,
     PrimaryHeaderPage,

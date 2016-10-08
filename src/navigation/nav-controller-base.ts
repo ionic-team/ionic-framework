@@ -623,7 +623,7 @@ export class NavControllerBase extends Ion implements NavController {
     const duration = trns.getDuration();
 
     // set that this nav is actively transitioning
-    this.setTransitioning(true, duration + ACTIVE_TRANSITION_OFFSET);
+    this.setTransitioning(true, duration);
 
     if (!trns.parent) {
       // this is the top most, or only active transition, so disable the app
@@ -872,7 +872,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   setTransitioning(isTransitioning: boolean, durationPadding: number = 2000) {
-    this._trnsTm = (isTransitioning ? Date.now() + durationPadding : 0);
+    this._trnsTm = (isTransitioning ? (Date.now() + durationPadding + ACTIVE_TRANSITION_OFFSET) : 0);
   }
 
   getActive() {
@@ -959,4 +959,4 @@ let ctrlIds = -1;
 
 const DISABLE_APP_MINIMUM_DURATION = 64;
 const ACTIVE_TRANSITION_MAX_TIME = 5000;
-const ACTIVE_TRANSITION_OFFSET = 200;
+const ACTIVE_TRANSITION_OFFSET = 400;
