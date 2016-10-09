@@ -50,26 +50,26 @@ export class SecondPage {
       index: this._index++
     }).then(() => {
       console.log('INSERTED! Stack:\n', this.navCtrl.getViews());
-    })
+    });
   }
 
   removePage() {
     this.navCtrl.remove(1, 1).then(() => {
-      console.log('REMOVED! Stack:\n', this.navCtrl.getViews())
-    })
+      console.log('REMOVED! Stack:\n', this.navCtrl.getViews());
+    });
   }
 
   removeTwoPages() {
     this.navCtrl.remove(this.navCtrl.length() - 2, 2).then(() => {
-      console.log('REMOVED TWO! Stack:\n', this.navCtrl.getViews())
-    })
+      console.log('REMOVED TWO! Stack:\n', this.navCtrl.getViews());
+    });
   }
 
   testThing() {
     console.log('TEST THING');
     this.navCtrl.push(InsertPage).then(() => {
       console.log('Pushed', this.navCtrl.getViews());
-      console.log('Removing', this.navCtrl.getActive().index-1);
+      console.log('Removing', this.navCtrl.getActive().index - 1);
       this.navCtrl.remove(this.navCtrl.getActive().index - 1, 1);
       console.log('REMOVED! Stack:\n', this.navCtrl.getViews());
     });
