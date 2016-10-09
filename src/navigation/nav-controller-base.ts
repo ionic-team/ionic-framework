@@ -237,7 +237,7 @@ export class NavControllerBase extends Ion implements NavController {
 
     this._queue.push(ti);
 
-    // if there isn't a transitoin already happening
+    // if there isn't a transition already happening
     // then this will kick off this transition
     this._nextTrns();
 
@@ -287,8 +287,8 @@ export class NavControllerBase extends Ion implements NavController {
 
       leavingRequiresTransition = (ti.removeStart + ti.removeCount === viewsLength);
 
-      for (var i = ti.removeStart; i <= ti.removeCount; i++) {
-        destroyQueue.push(this._views[i]);
+      for (var i = 0; i < ti.removeCount; i++) {
+        destroyQueue.push(this._views[i + ti.removeStart]);
       }
 
       for (var i = viewsLength - 1; i >= 0; i--) {
@@ -912,6 +912,13 @@ export class NavControllerBase extends Ion implements NavController {
 
   length(): number {
     return this._views.length;
+  }
+
+  /**
+   * Return the stack of views in this NavController.
+   */
+  getViews(): Array<ViewController> {
+    return this._views;
   }
 
   isSwipeBackEnabled(): boolean {
