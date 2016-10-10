@@ -15,10 +15,10 @@ import { ViewController } from '../../navigation/view-controller';
  * @name Nav
  * @description
  *
- * `ion-nav` is the declarative component for a [NavController](../NavController/).
+ * `ion-nav` is the declarative component for a [NavController](/docs/v2/api/navigation/NavController/).
  *
- * For more information on using nav controllers like Nav or [Tab](../../Tabs/Tab/),
- * take a look at the [NavController API Docs](../NavController/).
+ * For more information on using nav controllers like Nav or [Tab](/docs/v2/api/components/tabs/Tabs/),
+ * take a look at the [NavController API Docs](/docs/v2/api/navigation/NavController/).
  *
  *
  * @usage
