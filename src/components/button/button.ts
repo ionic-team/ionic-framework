@@ -8,21 +8,9 @@ import { isTrueProperty } from '../../util/util';
 /**
   * @name Button
   * @module ionic
-  *
   * @description
   * Buttons are simple components in Ionic. They can consist of text and icons
   * and be enhanced by a wide range of attributes.
-  *
-  * @property [outline] - A transparent button with a border.
-  * @property [clear] - A transparent button without a border.
-  * @property [round] - A button with rounded corners.
-  * @property [block] - A button that fills its parent container with a border-radius.
-  * @property [full] - A button that fills its parent container without a border-radius or borders on the left/right.
-  * @property [small] - A button with size small.
-  * @property [large] - A button with size large.
-  * @property [disabled] - A disabled button.
-  * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
-  *
   * @usage
   *
   * ```html

@@ -33,7 +33,6 @@ import { nativeTimeout } from '../../util/dom';
   * See [ion-fab] to learn more information about how to position the fab button.
   *
   * @property [mini] - Makes a fab button with a reduced size.
-  * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
   *
   * @usage
   *
@@ -165,6 +164,9 @@ export class FabList {
     this.setElementClass('fab-list-active', visible);
   }
 
+  /**
+   * @internal
+   */
   setElementClass(className: string, add: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }

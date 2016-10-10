@@ -26,6 +26,10 @@ declare var window;
 
 @Injectable()
 export class Haptic {
+
+  /**
+   * @internal
+   */
   plugin: any;
 
   constructor(platform: Platform) {
@@ -34,6 +38,11 @@ export class Haptic {
     });
   }
 
+  /**
+   * Check to see if the Haptic Plugin is available
+   * @return {boolean} Retuns true or false if the plugin is available
+   *
+   */
   available() {
     return !!this.plugin;
   }
@@ -85,7 +94,7 @@ export class Haptic {
 
   /**
    * Use this to indicate success/failure/warning to the user.
-   * options should be of the type { type: 'success' } (or 'warning'/'error')
+   * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
    */
   notification(options: { type: string }) {
     if (!this.plugin) {
@@ -97,7 +106,7 @@ export class Haptic {
 
   /**
    * Use this to indicate success/failure/warning to the user.
-   * options should be of the type { style: 'light' } (or 'medium'/'heavy')
+   * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
    */
   impact(options: { style: string }) {
     if (!this.plugin) {

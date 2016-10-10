@@ -103,6 +103,10 @@ export class InfiniteScroll {
   _thrPc: number = 0.15;
   _init: boolean = false;
 
+
+  /**
+   * @internal
+   */
   state: string = STATE_ENABLED;
 
   /**
