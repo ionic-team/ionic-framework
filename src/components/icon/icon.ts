@@ -106,9 +106,10 @@ export class Icon extends Ion {
     if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
-      val = this._iconMode + '-' + val;
+      this._name = this._iconMode + '-' + val;
+    } else {
+      this._name = val;
     }
-    this._name = val;
     this.update();
   }
 
@@ -161,34 +162,43 @@ export class Icon extends Ion {
    * @private
    */
   update() {
-    let css = 'ion-';
-
-    this._hidden = (this._name === null);
-
+    let name;
     if (this._ios && this._iconMode === 'ios') {
-      css += this._ios;
-
+      name = this._ios;
     } else if (this._md && this._iconMode === 'md') {
-      css += this._md;
-
+      name = this._md;
     } else {
-      css += this._name;
+      name = this._name;
+    }
+    let hidden = this._hidden = (name === null);
+    if (hidden) {
+      return;
     }
 
-    if (this._iconMode === 'ios' && !this.isActive && css.indexOf('logo') < 0) {
-      css += '-outline';
+    let iconMode = name.split('-', 2)[0];
+    if (
+      iconMode === 'ios' &&
+      !this.isActive &&
+      name.indexOf('logo-') < 0 &&
+      name.indexOf('-outline') < 0) {
+      name += '-outline';
     }
 
-    if (this._css !== css) {
-      if (this._css) {
-        this.setElementClass(this._css, false);
-      }
-      this._css = css;
-      this.setElementClass(css, true);
-
-      this.setElementAttribute('aria-label',
-          css.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
+    let css = 'ion-' + name;
+    if (this._css === css) {
+      return;
     }
+    if (this._css) {
+      this.setElementClass(this._css, false);
+    }
+    this._css = css;
+    this.setElementClass(css, true);
+
+    let label = name
+      .replace('ios-', '')
+      .replace('md-', '')
+      .replace('-', ' ');
+    this.setElementAttribute('aria-label', label);
   }
 
 }

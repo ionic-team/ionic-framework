@@ -237,8 +237,8 @@ export class Tab3 {
       <ion-tab tabTitle="Plain List" tabIcon="star" [root]="root1" (ionSelect)="onSelect($event)"></ion-tab>
       <ion-tab tabTitle="Schedule" tabIcon="globe" [root]="root2"></ion-tab>
       <ion-tab tabTitle="Stopwatch" tabIcon="logo-facebook" [root]="root3"></ion-tab>
-      <ion-tab tabTitle="Messages" tabIcon="chatboxes" [root]="root1"></ion-tab>
-      <ion-tab tabTitle="My Profile" tabIcon="person" [root]="root2"></ion-tab>
+      <ion-tab tabTitle="Messages" tabIcon="md-chatboxes" [root]="root1"></ion-tab>
+      <ion-tab tabTitle="My Profile" tabIcon="ios-person" [root]="root2"></ion-tab>
     </ion-tabs>
   `
 })
