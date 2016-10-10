@@ -131,6 +131,14 @@ export class Spinner extends Ion {
   }
 
   /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('spinner', val);
+  }
+
+  /**
    * @input {string} SVG spinner name.
    */
   @Input()
@@ -163,6 +171,8 @@ export class Spinner extends Ion {
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
     super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
   }
 
   /**
