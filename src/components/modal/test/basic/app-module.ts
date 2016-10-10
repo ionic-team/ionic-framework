@@ -1,8 +1,8 @@
 import { Component, Injectable, NgModule } from '@angular/core';
 
-import { ActionSheetController, App, Config,
+import { ActionSheetController, AlertController, App, Config,
   IonicApp, IonicModule, ModalController, NavController,
-  NavParams, Platform, ViewController } from '../../../..';
+  NavParams, Platform, ToastController, ViewController } from '../../../..';
 
 
 @Injectable()
@@ -67,7 +67,7 @@ export class E2EPage {
       console.timeEnd('modal');
     });
     modal.onDidDismiss((data: any) => {
-      console.log('modal data', data);
+      console.log('DID DISMISS modal data', data);
       console.timeEnd('modal');
     });
   }
@@ -87,10 +87,6 @@ export class E2EPage {
       console.log('Modal with inputs data:', data);
     });
     modal.present();
-  }
-
-  presentNavigableModal() {
-    this.modalCtrl.create(NavigableModal).present();
   }
 
   ionViewDidLoad() {
@@ -113,61 +109,6 @@ export class E2EPage {
     console.log('E2EPage ionViewDidLeave fired');
   }
 }
-
-@Component({
-  template: `
-  <ion-header>
-    <ion-navbar>
-      <ion-buttons>
-        <button ion-button (click)="dismiss()">Close</button>
-      </ion-buttons>
-      <ion-title>Page One</ion-title>
-    </ion-navbar>
-  </ion-header>
-
-  <ion-content>
-    <div padding>
-      NavigableModal
-    </div>
-    <button ion-button full (click)="submit()">Submit</button>
-  </ion-content>
-  `
-})
-export class NavigableModal {
-
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController) {}
-
-  submit() {
-    this.navCtrl.push(NavigableModal2);
-  }
-
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
-}
-
-@Component({
-  template: `
-  <ion-header>
-    <ion-navbar>
-      <ion-title>Page Two</ion-title>
-    </ion-navbar>
-  </ion-header>
-
-  <ion-content>
-    <button ion-button full (click)="submit()">Submit</button>
-  </ion-content>
-  `
-})
-export class NavigableModal2 {
-
-  constructor(public navCtrl: NavController) {}
-
-  submit() {
-    this.navCtrl.pop();
-  }
-}
-
 
 
 @Component({
@@ -196,7 +137,12 @@ export class NavigableModal2 {
 export class ModalPassData {
   data: any;
 
-  constructor(params: NavParams, public viewCtrl: ViewController, someComponentProvider: SomeComponentProvider, someAppProvider: SomeAppProvider) {
+  constructor(
+    public viewCtrl: ViewController,
+    public toastCtrl: ToastController,
+    params: NavParams,
+    someComponentProvider: SomeComponentProvider,
+    someAppProvider: SomeAppProvider) {
     this.data = {
       userId: params.get('userId'),
       name: someComponentProvider.getName()
@@ -219,6 +165,10 @@ export class ModalPassData {
 
   ionViewDidEnter() {
     console.log('ModalPassData ionViewDidEnter fired');
+    this.toastCtrl.create({
+      message: 'test toast',
+      duration: 1000
+    }).present();
   }
 
   ionViewWillLeave() {
@@ -266,7 +216,20 @@ export class ModalPassData {
 })
 export class ToolbarModal {
 
-  constructor(public viewCtrl: ViewController) {}
+  constructor(public viewCtrl: ViewController, public alertCtrl: AlertController) {}
+
+  ionViewDidEnter() {
+    let alert = this.alertCtrl.create({
+        title: 'Test',
+        buttons: [
+            {
+                text: 'Something',
+                role: 'cancel'
+            }
+        ]
+    });
+    alert.present();
+  }
 
   dismiss() {
     this.viewCtrl.dismiss();
@@ -391,7 +354,11 @@ export class ContactUs {
 export class ModalFirstPage {
   items: any[] = [];
 
-  constructor(public navCtrl: NavController, public app: App, public actionSheetCtrl: ActionSheetController) {
+  constructor(
+    public navCtrl: NavController,
+    public app: App,
+    public actionSheetCtrl: ActionSheetController,
+    public alertCtrl: AlertController) {
     for (let i = 0; i < 50; i++) {
       this.items.push({
         value: (i + 1)
@@ -420,6 +387,16 @@ export class ModalFirstPage {
 
   ionViewDidEnter() {
     console.log('ModalFirstPage ionViewDidEnter fired');
+    let alert = this.alertCtrl.create({
+      title: 'Test',
+      buttons: [
+          {
+              text: 'Something',
+              role: 'cancel'
+          }
+      ]
+    });
+    alert.present();
   }
 
   openActionSheet() {
@@ -517,13 +494,13 @@ export class E2EApp {
     ModalSecondPage,
     ModalWithInputs,
     ContactUs,
-    NavigableModal,
-    NavigableModal2,
     ModalPassData,
     ToolbarModal
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp, {
+      statusbarPadding: true
+    })
   ],
   bootstrap: [IonicApp],
   providers: [SomeAppProvider],
@@ -534,8 +511,6 @@ export class E2EApp {
     ModalSecondPage,
     ModalWithInputs,
     ContactUs,
-    NavigableModal,
-    NavigableModal2,
     ModalPassData,
     ToolbarModal
   ]
