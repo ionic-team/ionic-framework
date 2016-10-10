@@ -13,6 +13,7 @@
   "peerDependencies": {
     "@angular/common": "",
     "@angular/compiler": "",
+    "@angular/compiler-cli": "",
     "@angular/core": "",
     "@angular/forms": "",
     "@angular/http": "",
