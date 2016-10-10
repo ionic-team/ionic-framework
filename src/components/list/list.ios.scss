@@ -79,7 +79,7 @@ $list-ios-header-background-color:    transparent !default;
   margin: 0 auto;
 }
 
-.list-ios + ion-list ion-list-header {
+.list-ios:not([inset]) + .list-ios:not([inset]) ion-list-header {
   margin-top: -$list-ios-margin-top;
   padding-top: 0;
 }
