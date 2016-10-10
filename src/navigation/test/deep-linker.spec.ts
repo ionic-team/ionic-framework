@@ -16,43 +16,43 @@ describe('DeepLinker', () => {
     });
 
     it('should update location.back when back direction and previous url is the same', () => {
-      spyOn(linker.location, 'back');
-      spyOn(linker.location, 'go');
+      spyOn(linker._location, 'back');
+      spyOn(linker._location, 'go');
       spyOn(linker, 'historyPop');
       linker.history = ['first-page', 'some-page', 'current-page'];
       linker.updateLocation('some-page', 'back');
-      expect(linker.location.back).toHaveBeenCalled();
-      expect(linker.location.go).not.toHaveBeenCalled();
+      expect(linker._location.back).toHaveBeenCalled();
+      expect(linker._location.go).not.toHaveBeenCalled();
       expect(linker.historyPop).toHaveBeenCalled();
     });
 
     it('should not update location.go when same as current page', () => {
-      spyOn(linker.location, 'back');
-      spyOn(linker.location, 'go');
+      spyOn(linker._location, 'back');
+      spyOn(linker._location, 'go');
       linker.history = ['current-page'];
       linker.updateLocation('current-page', 'forward');
-      expect(linker.location.back).not.toHaveBeenCalled();
-      expect(linker.location.go).not.toHaveBeenCalled();
+      expect(linker._location.back).not.toHaveBeenCalled();
+      expect(linker._location.go).not.toHaveBeenCalled();
     });
 
     it('should update location.go when back direction but not actually the previous url', () => {
-      spyOn(linker.location, 'back');
-      spyOn(linker.location, 'go');
+      spyOn(linker._location, 'back');
+      spyOn(linker._location, 'go');
       spyOn(linker, 'historyPush');
       linker.history = ['first-page', 'some-other-page'];
       linker.updateLocation('some-page', 'forward');
-      expect(linker.location.back).not.toHaveBeenCalled();
-      expect(linker.location.go).toHaveBeenCalledWith('some-page');
+      expect(linker._location.back).not.toHaveBeenCalled();
+      expect(linker._location.go).toHaveBeenCalledWith('some-page');
       expect(linker.historyPush).toHaveBeenCalledWith('some-page');
     });
 
     it('should update location.go when forward direction', () => {
-      spyOn(linker.location, 'back');
-      spyOn(linker.location, 'go');
+      spyOn(linker._location, 'back');
+      spyOn(linker._location, 'go');
       spyOn(linker, 'historyPush');
       linker.updateLocation('new-url', 'forward');
-      expect(linker.location.back).not.toHaveBeenCalled();
-      expect(linker.location.go).toHaveBeenCalledWith('new-url');
+      expect(linker._location.back).not.toHaveBeenCalled();
+      expect(linker._location.go).toHaveBeenCalledWith('new-url');
       expect(linker.historyPush).toHaveBeenCalledWith('new-url');
     });
 
@@ -383,7 +383,7 @@ describe('DeepLinker', () => {
 
     it('should use indexAliasUrl when set and browserUrl is /', () => {
       linker.loadNavFromPath = (nav: any): any => {};
-      linker.app.getRootNav = () => {
+      linker._app.getRootNav = () => {
         return mockNavController();
       };
       spyOn(serializer, 'parse');
@@ -396,7 +396,7 @@ describe('DeepLinker', () => {
 
     it('should use indexAliasUrl when set and browserUrl is /', () => {
       linker.loadNavFromPath = (nav: any): any => {};
-      linker.app.getRootNav = () => {
+      linker._app.getRootNav = () => {
         return mockNavController();
       };
       spyOn(serializer, 'parse');
