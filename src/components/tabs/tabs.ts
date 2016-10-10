@@ -6,7 +6,6 @@ import { Content } from '../content/content';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
 import { isBlank } from '../../util/util';
-import { nativeRaf } from '../../util/dom';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
@@ -476,10 +475,7 @@ export class Tabs extends Ion implements AfterViewInit {
       if (alreadyLoaded && selectedPage) {
         let content = <Content>selectedPage.getContent();
         if (content && content instanceof Content) {
-          nativeRaf(() => {
-            content.readDimensions();
-            content.writeDimensions();
-          });
+          content.resize();
         }
       }
     });

@@ -14,6 +14,7 @@ export class PageTransition extends Transition {
       this.enteringPage = new Animation(this.enteringView.pageRef());
       this.add(this.enteringPage.beforeAddClass('show-page'));
 
+      // Resize content before transition starts
       this.beforeAddRead(this.readDimensions.bind(this));
       this.beforeAddWrite(this.writeDimensions.bind(this));
     }
