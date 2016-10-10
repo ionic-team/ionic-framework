@@ -222,8 +222,8 @@ task('release.preparePackageJsonTemplate', () => {
   for (let dependency in sourcePackageJSON.dependencies) {
 
     // if the dependency is in both, AND the value of the entry is empty, copy it over
-    if (dependency in templatePackageJSON.dependencies && templatePackageJSON.dependencies[dependency] === '') {
-      templatePackageJSON.dependencies[dependency] = sourcePackageJSON.dependencies[dependency];
+    if (dependency in templatePackageJSON.peerDependencies && templatePackageJSON.peerDependencies[dependency] === '') {
+      templatePackageJSON.peerDependencies[dependency] = sourcePackageJSON.dependencies[dependency];
     }
   }
 
