@@ -170,6 +170,8 @@ export interface TransitionInstruction {
   removeCount?: number;
   resolve?: TransitionResolveFn;
   reject?: TransitionRejectFn;
+  leavingRequiresTransition?: boolean;
+  enteringRequiresTransition?: boolean;
 }
 
 export enum ViewState {

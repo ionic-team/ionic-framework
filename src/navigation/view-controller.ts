@@ -532,18 +532,18 @@ export class ViewController {
    * @private
    */
   _lifecycleTest(lifecycle: string): boolean | string | Promise<any> {
-    let result: any = true;
-
-    if (this.instance && this.instance['ionViewCan' + lifecycle]) {
+    let instance = this.instance;
+    let methodName = 'ionViewCan' + lifecycle;
+    if (instance && instance[methodName]) {
       try {
-        result = this.instance['ionViewCan' + lifecycle]();
+        return instance[methodName]();
 
       } catch (e) {
         console.error(`${this.name} ionViewCan${lifecycle} error: ${e}`);
-        result = false;
+        return false;
       }
     }
-    return result;
+    return true;
   }
 
 }

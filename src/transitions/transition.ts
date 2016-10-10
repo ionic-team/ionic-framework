@@ -21,7 +21,7 @@ export class Transition extends Animation {
   _trnsStart: Function;
 
   parent: Transition;
-  hasChildTrns: boolean;
+  hasChildTrns: boolean = false;
   trnsId: number;
 
 
