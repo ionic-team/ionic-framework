@@ -116,7 +116,7 @@ task('release.prepareReleasePackage', (done: (err: any) => void) => {
           'release.nightlyPackageJson',
           'release.compileSass',
           'release.fonts',
-          'release.scss',
+          'release.sass',
           'release.createUmdBundle',
           done);
 });
@@ -172,7 +172,7 @@ task('release.fonts', () => {
   return copyFonts(`${DIST_BUILD_ROOT}/fonts`);
 });
 
-task('release.scss', () => {
+task('release.sass', () => {
   return src([`${SRC_ROOT}/**/*.scss`, `!${SRC_ROOT}/components/*/test/**/*`, `!${SRC_ROOT}/util/test/*`]).pipe(dest(`${DIST_BUILD_ROOT}`));
 });
 
