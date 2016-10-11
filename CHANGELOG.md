@@ -356,7 +356,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 13. Move any Ionic config to the `IonicModule.forRoot` in `app.module.ts`. For example, the config should go where it says `configObject` here: `IonicModule.forRoot(MyApp, {configObject})`.
 
-14. Move any variables from the mode specific sass files in your `beta.11` app into the `app.variables` file under the mode heading in the new RC0 app.
+14. Move any variables from the mode specific sass files in your `beta.11` app into the `theme/variables.scss` file under each comment section for the specific mode in the new RC0 app: [ios section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L35-L37), [md section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L42-L44), [wp section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L49-L51).
 
 15. Add selectors to each of your components that you would like to add custom styling for. These element selectors will be used for scoped sass. Previously a CSS class was dynamically added with the component class name, this is now the proper way to scope your sass for an individual page. For example, adding the `page-about` selector:
 
@@ -454,7 +454,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 29. Move app Sass rule files from `app/theme` to `src/app`. This includes `app.core.scss`, `app.ios.scss`, etc.
 
-30. Move any variables from the mode specific files into the `theme/variables.scss` file.
+30. Move any variables from the mode specific sass files in your `beta.11` app into the `theme/variables.scss` file under each comment section for the specific mode in the new RC0 app: [ios section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L35-L37), [md section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L42-L44), [wp section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L49-L51).
 
 31. Fix any paths to images in your app. For example, before the path may look like `<img src="img/myImg.png">` and now it should be `<img src="assets/img/myImg.png">`.
 
