@@ -3,12 +3,15 @@ import { dirname, join } from 'path';
 
 import * as glob from 'glob';
 import {dest, src, start, task} from 'gulp';
+import * as connect from 'gulp-connect';
 import * as gulpif from 'gulp-if';
+import * as open from 'gulp-open';
 import * as watch from 'gulp-watch';
 import { template } from 'lodash';
 import * as rollup from 'rollup';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as commonjs from 'rollup-plugin-commonjs';
+import * as del from 'del';
 import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
@@ -20,8 +23,16 @@ import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFile
 task('e2e', e2eBuild);
 
 function e2eBuild(done: (err: any) => void) {
-  runSequence('e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.bundle', done);
+  runSequence('e2e.clean', 'e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.bundle', done);
 }
+
+task('e2e.clean', (done: Function) => {
+  del(['dist/e2e/**']).then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
+});
 
 task('e2e.polyfill', (done: Function) => {
   writePolyfills('dist/e2e/polyfills').then(() => {
@@ -254,19 +265,6 @@ task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (do
 });
 
 function e2eWatch(componentName: string, componentTest: string) {
-  const webpack = require('webpack');
-  const WebpackDevServer = require('webpack-dev-server');
-  const config = require('../../e2e/webpack.config.js');
-
-  config.output.path = join(__dirname, '../../../');
-  config.entry = {
-    'dist/e2e/vendor': './scripts/e2e/vendor',
-    'dist-e2e/polyfills': './scripts/e2e/polyfills'
-  };
-  config.entry[`./dist/e2e/components/${componentName}/test/${componentTest}/index`] = `./dist/e2e/components/${componentName}/test/${componentTest}/entry`;
-
-  const compiler = webpack(config);
-
   // If any tests change within components then run e2e.resources.
   watch([
     'src/components/*/test/**/*'
@@ -293,19 +291,17 @@ function e2eWatch(componentName: string, componentTest: string) {
     start('e2e.sass');
   });
 
-  new WebpackDevServer(compiler, {
-    noInfo: true,
-    quiet: false,
-    watchOptions: {
-      aggregateTimeout: 2000,
-      poll: 1000
-    }
-  }).listen(LOCAL_SERVER_PORT, 'localhost', function(err) {
-    if (err) {
-      throw err;
-    }
-    console.log(`http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}/components/${componentName}/test/${componentTest}/`);
+  console.log(`http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}/components/${componentName}/test/${componentTest}/`);
+
+  connect.server({
+    root: './',
+    port: LOCAL_SERVER_PORT,
+    livereload: true
   });
+
+  src('dist').pipe(
+    open({uri: `http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}`})
+  );
 }
 
 function e2eComponentsExists(): boolean {
