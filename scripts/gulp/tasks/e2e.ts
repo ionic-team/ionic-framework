@@ -3,14 +3,15 @@ import { dirname, join } from 'path';
 
 import * as glob from 'glob';
 import {dest, src, start, task} from 'gulp';
+import * as connect from 'gulp-connect';
 import * as gulpif from 'gulp-if';
+import * as open from 'gulp-open';
 import * as watch from 'gulp-watch';
 import { template } from 'lodash';
 import * as rollup from 'rollup';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as commonjs from 'rollup-plugin-commonjs';
 import * as del from 'del';
-import * as server from 'gulp-server-livereload';
 import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
@@ -292,31 +293,15 @@ function e2eWatch(componentName: string, componentTest: string) {
 
   console.log(`http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}/components/${componentName}/test/${componentTest}/`);
 
-  console.log(join(PROJECT_ROOT, `${DIST_NAME}/${E2E_NAME}/components/${componentName}/test/${componentTest}/`));
+  connect.server({
+    root: './',
+    port: LOCAL_SERVER_PORT,
+    livereload: true
+  });
 
-  // Livereload server on dist/e2e
-  src('./dist/')
-    .pipe(server({
-      livereload: true,
-      directoryListing: {
-        enable: true
-      },
-      open: true,
-      port: LOCAL_SERVER_PORT
-    }));
-
-  // new WebpackDevServer(compiler, {
-  //   noInfo: true,
-  //   quiet: false,
-  //   watchOptions: {
-  //     aggregateTimeout: 2000,
-  //     poll: 1000
-  //   }
-  // }).listen(LOCAL_SERVER_PORT, 'localhost', function(err) {
-  //   if (err) {
-  //     throw err;
-  //   }
-  // });
+  src('dist').pipe(
+    open({uri: `http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}`})
+  );
 }
 
 function e2eComponentsExists(): boolean {
