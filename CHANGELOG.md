@@ -33,6 +33,7 @@ RC0 requires changes to the structure of your app. To get started updating your 
 * `<ion-fixed>` has been removed, use `<div ion-fixed>` instead.
 * Sass: Changes to how Sass is imported. See more [details here](#sass-import).
 * Typings: We have stopped using the `typings` tool and have migrated to `npm @types`. See more [details here](#typings).
+* Components no longer get a CSS class added based on the component class name. This should be added using the Component selector. See the [Steps to Upgrade](#steps-to-upgrade-to-rc0) for more information on this change.
 
 
 #### Lifecycle Events Renamed
@@ -357,14 +358,26 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 14. Move any variables from the mode specific sass files in your `beta.11` app into the `app.variables` file under the mode heading in the new RC0 app.
 
-15. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
-```
-page-selector-you-added {
-  #title {
-    color: blue;
+15. Add selectors to each of your components that you would like to add custom styling for. These element selectors will be used for scoped sass. Previously a CSS class was dynamically added with the component class name, this is now the proper way to scope your sass for an individual page. For example, adding the `page-about` selector:
+
+  In your template:
+
+  ```
+  page-about {
+    #title {
+      color: blue;
+    }
   }
-}
-```
+  ```
+
+  In your component:
+
+  ```
+  @Component({
+    selector: 'page-about',
+    templateUrl: 'about.html'
+  })
+  ```
 
 
 #### Modifying your Existing Project
@@ -455,22 +468,26 @@ page-selector-you-added {
 
 35. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons](#new-behavior-of-icons-in-buttons).
 
-36. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
-In your template:
-```
-about-page {
-  #title {
-    color: blue;
+36. Add selectors to each of your components that you would like to add custom styling for. These element selectors will be used for scoped sass. Previously a CSS class was dynamically added with the component class name, this is now the proper way to scope your sass for an individual page. For example, adding the `page-about` selector:
+
+  In your template:
+
+  ```
+  page-about {
+    #title {
+      color: blue;
+    }
   }
-}
-```
-In your component:
-```
-@Component({
-  selector: 'about-page',
-  templateUrl: 'about.html'
-})
-```
+  ```
+
+  In your component:
+
+  ```
+  @Component({
+    selector: 'page-about',
+    templateUrl: 'about.html'
+  })
+  ```
 
 ### Bug Fixes
 
