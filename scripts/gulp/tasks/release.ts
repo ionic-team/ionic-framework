@@ -45,7 +45,7 @@ task('release.removeDebugStatements', (done: Function) => {
         writeFileSync(filePath, cleanedJs);
       }
     }
-  });
+  }, done());
 });
 
 function replaceAll(input: string, tokenToReplace: string, replaceWith: string) {
