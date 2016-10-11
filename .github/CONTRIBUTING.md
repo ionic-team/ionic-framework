@@ -47,21 +47,19 @@ Looking for an issue to fix? Make sure to look through our issues with the [help
 #### Sass Changes
 
 1. If the css property is something that the user may want to override and it won't break the component layout, it should be given a Sass variable. See our [doc on naming Sass variables](https://docs.google.com/document/d/1OyOyrRE5lpB_9mdkF0HWVQLV97fHma450N8XqE4mjZQ/edit?usp=sharing).
-2. After any changes to the Sass files run the [Sass Linter](https://github.com/brigade/scss-lint), and fix any linter errors:
+2. After any changes to the Sass files run the [Sass Linter](https://github.com/brigade/scss-lint):
  - Requires [Ruby](https://www.ruby-lang.org/en/documentation/installation/). **Skip this step entirely if you are unable to install Ruby.**
  - Install the linter: `gem install scss_lint`
  - Make sure to run the linter at the root of the repository.
- - To check all component Sass files: `scss-lint ionic/**/**/*.scss`
- - To check a specific Sass file: `scss-lint src/components/toolbar/toolbar.ios.scss`
+ - Run `gulp lint.sass` and fix any linter errors.
 
 
 #### Viewing Changes
 
-1. Run the gulp watch task for e2e tests: `gulp e2e.watch`
-2. Launch your browser and navigate to `http://localhost:8000/dist/e2e`
-3. From here, navigate to the component you are changing.
-4. Any changes to the e2e tests in the `test/` directory will show here.
-5. If your changes look good, you're ready to [commit](#committing)!
+1. Run the gulp e2e task to build all tests: `gulp e2e`
+2. Run the gulp e2e.watch task to watch your specific test (replace `button` with the component you are modifying and `basic` with the test folder): `gulp e2e.watch --f=button/basic`
+3. A browser should open at `http://localhost:8080/dist/e2e`. From here, navigate to the component you are changing.
+4. If your changes look good, you're ready to [commit](#committing)!
 
 
 #### Adding Documentation
