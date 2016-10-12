@@ -50,17 +50,18 @@ import { ViewController } from './view-controller';
  *
  * ```ts
  *  imports: [
- *     IonicModule.forRoot(MyApp, {} {
+ *     IonicModule.forRoot(MyApp, {}, {
  *       links: []
  *    })
  *   ]
  * ```
  *
- * DeepLinker implements `DeepLinkerConfig`, is an object with an links array. So for basic example based on the blank starer, a link setup like so:
+ * DeepLinker implements `DeepLinkerConfig`, which is an object with an array of links.
+ * So for basic example based on the blank starer, a link setup like so:
  *
  * ```ts
  *  imports: [
- *     IonicModule.forRoot(MyApp, {} {
+ *     IonicModule.forRoot(MyApp, {}, {
  *       links: [
  *        { component: HomePage, name: 'Home', segment: 'home' }
  *      ]
@@ -68,7 +69,7 @@ import { ViewController } from './view-controller';
  *   ]
  * ```
  *
- * This Feels pretty familiar to how Angular sets up routes, but how some fundamental differences.
+ * This Feels pretty familiar to how Angular sets up routes, but has some fundamental differences.
  * Where Angular router uses a traditional approach to declaring routes and navigating around, Ionic uses a segment/bread crumb approach.
  * Since components could be loaded anywhere in the app, DeepLinker lets you define their URL segment.
  * So at any point, when a Component becomes the active view, we just append the URL segment.
@@ -80,11 +81,11 @@ import { ViewController } from './view-controller';
  * ```ts
  *  links: [
  *    { component: HomePage, name: 'Home', segment: 'home' }
- *    { component: DetailPage, name: 'Detail', segment: 'detal/:user' }
+ *    { component: DetailPage, name: 'Detail', segment: 'detail/:user' }
  *  ]
  *  ```
  * This approach of using `:param` has been around in previous routing solutions.
- * All this means is that when we push a new component on to the stack, in the navParams, there should be a property of of `user`.
+ * All this means is that when we push a new component on to the stack, in the navParams, there should be a property of `user`.
  *
  * So in a typical `navCtrl.push()` scenario, we'd do something like this:
  *
@@ -109,7 +110,7 @@ import { ViewController } from './view-controller';
  * ```ts
  *  links: [
  *    { component: HomePage, name: 'Home', segment: 'home' }
- *    { component: DetailPage, name: 'Detail', segment: 'detal/:user', defaultHistory: [HomePage] }
+ *    { component: DetailPage, name: 'Detail', segment: 'detail/:user', defaultHistory: [HomePage] }
  *  ]
  *  ```
  */
