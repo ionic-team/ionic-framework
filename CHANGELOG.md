@@ -489,6 +489,8 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
   })
   ```
 
+37. Remove any use of the `providers`, `pipes` and `directives` arrays in `@Component`.
+
 ### Bug Fixes
 
 * **action-sheet:** add icon-left to the button if an icon exists ([a731528](https://github.com/driftyco/ionic/commit/a731528))
