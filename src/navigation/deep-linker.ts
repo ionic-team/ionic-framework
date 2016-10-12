@@ -43,11 +43,11 @@ import { ViewController } from './view-controller';
  * - Path: Deep linker's array of segments
  * - History: Deep linker's string array of internal URL history
  * - Location: Angular's Location provider, which abstracts Hash/Path Location Strategies
- * 
+ *
  * @usage
- * 
+ *
  * DeepLinker can be used in the `IonicModule.forRoot` method, as the third parameter
- * 
+ *
  * ```ts
  *  imports: [
  *     IonicModule.forRoot(MyApp, {} {
@@ -55,9 +55,9 @@ import { ViewController } from './view-controller';
  *    })
  *   ]
  * ```
- * 
- * DeepLinker impliments `DeepLinkerConfig`, is an object with an links array. So for basic example based on the blank starer, a link setup like so:
- * 
+ *
+ * DeepLinker implements `DeepLinkerConfig`, is an object with an links array. So for basic example based on the blank starer, a link setup like so:
+ *
  * ```ts
  *  imports: [
  *     IonicModule.forRoot(MyApp, {} {
@@ -67,11 +67,51 @@ import { ViewController } from './view-controller';
  *    })
  *   ]
  * ```
- *  
- * This Feels pretty familiar to how Angular sets up routes, but how some fundimental differences. Where Angular router uses a traditional appoach to declaring routes and navigating around, Ionic uses a segment/bread crumb aproach.
- * Since components could be loaded anywhere in the app, DeepLinker lets you define their URL segment. So at any point, when a Component becomes the active view, we just append the url segment.
- * 
- * 
+ *
+ * This Feels pretty familiar to how Angular sets up routes, but how some fundamental differences.
+ * Where Angular router uses a traditional approach to declaring routes and navigating around, Ionic uses a segment/bread crumb approach.
+ * Since components could be loaded anywhere in the app, DeepLinker lets you define their URL segment.
+ * So at any point, when a Component becomes the active view, we just append the URL segment.
+ *
+ * ### Dynamic Links
+ *
+ * Since passing data around is common practice in an app, we can reflect that in our app's URL in a similar manner to Angular's router.
+ *
+ * ```ts
+ *  links: [
+ *    { component: HomePage, name: 'Home', segment: 'home' }
+ *    { component: DetailPage, name: 'Detail', segment: 'detal/:user' }
+ *  ]
+ *  ```
+ * This approach of using `:param` has been around in previous routing solutions.
+ * All this means is that when we push a new component on to the stack, in the navParams, there should be a property of of `user`.
+ *
+ * So in a typical `navCtrl.push()` scenario, we'd do something like this:
+ *
+ * ```ts
+ * pushPage(userInfo) {
+ *   this.navCtrl.push(DetailPage, {
+ *   'user': userInfo
+ *   })
+ * }
+ * ```
+ *
+ *
+ *
+ * ### Default History
+ *
+ *  In some cases when a page loads, you might be sent to a component that has it's own information, but not back view.
+ *  This situation is common when loading a page from a Push Notification.
+ *  If you want a component to have a default history when none is present, you can use the `defaultHistory` property
+ *
+ * The `defaultHistory` property takes an array of components to create the history stack if none exist.
+ *
+ * ```ts
+ *  links: [
+ *    { component: HomePage, name: 'Home', segment: 'home' }
+ *    { component: DetailPage, name: 'Detail', segment: 'detal/:user', defaultHistory: [HomePage] }
+ *  ]
+ *  ```
  */
 export class DeepLinker {
 
