@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEn
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-
+import { CSS } from '../../util/dom';
 /**
  * @name Spinner
  * @description
@@ -232,8 +232,8 @@ const SPINNERS: any = {
         y1: 17,
         y2: 29,
         style: {
-          transform: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          [CSS.transform]: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
+          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
     }
@@ -247,8 +247,8 @@ const SPINNERS: any = {
         y1: 12,
         y2: 20,
         style: {
-          transform: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          [CSS.transform]: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
+          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
     }
@@ -263,7 +263,7 @@ const SPINNERS: any = {
         style: {
           top: 9 * Math.sin(2 * Math.PI * index / total),
           left: 9 * Math.cos(2 * Math.PI * index / total),
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
     }
@@ -278,7 +278,7 @@ const SPINNERS: any = {
         style: {
           top: 9 * Math.sin(2 * Math.PI * index / total),
           left: 9 * Math.cos(2 * Math.PI * index / total),
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
     }
@@ -303,7 +303,7 @@ const SPINNERS: any = {
         r: 6,
         style: {
           left: (9 - (9 * index)),
-          animationDelay: -(110 * index) + 'ms'
+          [CSS.animationDelay]: -(110 * index) + 'ms'
         }
       };
     }
