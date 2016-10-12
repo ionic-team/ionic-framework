@@ -102,6 +102,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * | `menuType`               | `string`            | Type of menu to display. Available options: `"overlay"`, `"reveal"`, `"push"`.                                                                   |
  * | `modalEnter`             | `string`            | The name of the transition to use while a modal is presented.                                                                                    |
  * | `modalLeave`             | `string`            | The name of the transition to use while a modal is dismiss.                                                                                      |
+ * | `mode`                   | `string`            | The mode to use throughout the application.                                                                                     |
  * | `pageTransition`         | `string`            | The name of the transition to use while changing pages.                                                                                          |
  * | `pageTransitionDelay`    | `number`            | The delay in milliseconds before the transition starts while changing pages.                                                                     |
  * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
