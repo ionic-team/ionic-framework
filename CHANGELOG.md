@@ -360,7 +360,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 15. Add selectors to each of your components that you would like to add custom styling for. These element selectors will be used for scoped sass. Previously a CSS class was dynamically added with the component class name, this is now the proper way to scope your sass for an individual page. For example, adding the `page-about` selector:
 
-  In your template:
+  In your component's stylesheet:
 
   ```
   page-about {
@@ -470,7 +470,7 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 36. Add selectors to each of your components that you would like to add custom styling for. These element selectors will be used for scoped sass. Previously a CSS class was dynamically added with the component class name, this is now the proper way to scope your sass for an individual page. For example, adding the `page-about` selector:
 
-  In your template:
+  In your component's stylesheet:
 
   ```
   page-about {
