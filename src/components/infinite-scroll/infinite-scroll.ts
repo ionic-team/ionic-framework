@@ -136,6 +136,16 @@ export class InfiniteScroll {
   }
 
   /**
+   * @input {boolean} Whether or not the infinite scroll should be
+   * enabled or not. Setting to `false` will remove scroll event listeners
+   * and hide the display.
+   */
+  @Input()
+  set enabled(shouldEnable: boolean) {
+    this.enable(shouldEnable);
+  }
+
+  /**
    * @output {event} The expression to call when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
@@ -221,6 +231,9 @@ export class InfiniteScroll {
     this._setListeners(shouldEnable);
   }
 
+  /**
+   * @private
+   */
   _setListeners(shouldListen: boolean) {
     if (this._init) {
       if (shouldListen) {
