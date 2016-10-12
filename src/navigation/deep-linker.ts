@@ -56,7 +56,6 @@ import { ViewController } from './view-controller';
  * ```
  *
  * This Feels pretty familiar to how Angular sets up routes, but has some fundamental differences.
- * Ionic uses a segment/bread crumb approach to set up routes.
  * Since components could be loaded anywhere in the app, DeepLinker lets you define their URL segment.
  * So at any point, when a Component becomes the active view, we just append the URL segment.
  *
@@ -72,7 +71,7 @@ import { ViewController } from './view-controller';
  *  ```
  * This approach of using `:param` has been around in previous routing solutions.
  * All this means is that when we push a new component on to the stack, in the navParams, there should be a property of `user`.
- * The property needs to be something that can be serialize by the DeepLinker. 
+ * The property needs to be something that can be serialized by the DeepLinker. 
  * So setting its value to be that of a string or number is suggested.
  *
  * So in a typical `navCtrl.push()` scenario, we'd do something like this:
