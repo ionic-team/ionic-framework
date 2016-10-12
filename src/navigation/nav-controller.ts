@@ -22,7 +22,7 @@ import { ViewController } from './view-controller';
  * navigation stack causes the new page to be animated in, while [popping](#pop)
  * the current page will navigate to the previous page in the stack.
  *
- * Unless you are using a directive like [NavPush](docs/v2/api/components/nav/NavPush/), or need a
+ * Unless you are using a directive like [NavPush](../../components/nav/NavPush/), or need a
  * specific NavController, most times you will inject and use a reference to the
  * nearest NavController to manipulate the navigation stack.
  *

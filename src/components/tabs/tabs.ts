@@ -21,10 +21,10 @@ import { ViewController } from '../../navigation/view-controller';
  * Tabs make it easy to navigate between different pages or functional
  * aspects of an app. The Tabs component, written as `<ion-tabs>`, is
  * a container of individual [Tab](../Tab/) components. Each individual `ion-tab`
- * is a declarative component for a [NavController](/docs/v2/api/components/modal/ModalController/)
+ * is a declarative component for a [NavController](../../../navigation/NavController/)
  *
  * For more information on using nav controllers like Tab or [Nav](../../nav/Nav/),
- * take a look at the [NavController API Docs](/docs/v2/api/components/modal/ModalController/).
+ * take a look at the [NavController API Docs](../../../navigation/NavController/).
  *
  * ### Placement
  *
