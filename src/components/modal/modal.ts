@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
+import { AppPortal } from '../app/app-root';
 import { isPresent } from '../../util/util';
 import { ModalCmp } from './modal-component';
 import { ModalOptions } from './modal-options';
@@ -40,7 +41,7 @@ export class Modal extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
-    return this._app.present(this, navOptions);
+    return this._app.present(this, navOptions, AppPortal.MODAL);
   }
 
   /**
