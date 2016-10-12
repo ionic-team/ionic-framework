@@ -432,6 +432,7 @@ export class NavControllerBase extends Ion implements NavController {
     // create ComponentRef and set it to the entering view
     enteringView.init(componentFactory.create(childInjector, []));
     enteringView._state = ViewState.INITIALIZED;
+    this._willLoad(enteringView);
   }
 
   _viewTest(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
@@ -549,7 +550,6 @@ export class NavControllerBase extends Ion implements NavController {
   _viewInsert(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     // successfully finished loading the entering view
     // fire off the "didLoad" lifecycle events
-    this._willLoad(view);
     this._didLoad(view);
 
     // render the component ref instance to the DOM
