@@ -30,7 +30,8 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  *       modalLeave: 'modal-slide-out',
  *       tabsPlacement: 'bottom',
  *       pageTransition: 'ios'
- *     }, {}],
+ *     }, {}
+ *   )],
  *   bootstrap: [IonicApp],
  *   entryComponents: [ MyApp ],
  *   providers: []
@@ -43,16 +44,21 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  *
  * ```ts
  * import { IonicModule } from 'ionic-angular';
- * ...
- *  IonicModule.forRoot(MyApp, {
- *   tabsPlacement: 'bottom',
- *   platforms: {
- *    ios: {
- *      tabsPlacement: 'top',
- *    }
- *   }
- *  }
- *  ...
+ *
+ * @NgModule({
+ *   ...
+ *   imports: [
+ *     IonicModule.forRoot(MyApp, {
+ *       tabsPlacement: 'bottom',
+ *       platforms: {
+ *         ios: {
+ *           tabsPlacement: 'top',
+ *         }
+ *       }
+ *     }, {}
+ *   )],
+ *   ...
+ * })
  * ```
  *
  * We could also configure these values at a component level. Take `tabsPlacement`,
