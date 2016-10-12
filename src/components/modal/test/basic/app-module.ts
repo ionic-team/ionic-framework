@@ -130,6 +130,8 @@ export class E2EPage {
         </ion-item>
       </ion-list>
       <button ion-button full (click)="submit()">Submit</button>
+      <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+      <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
       <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
       <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
       <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
@@ -146,6 +148,7 @@ export class ModalPassData {
   constructor(
     public viewCtrl: ViewController,
     public toastCtrl: ToastController,
+    public alertCtrl: AlertController,
     params: NavParams,
     someComponentProvider: SomeComponentProvider,
     someAppProvider: SomeAppProvider) {
@@ -156,6 +159,8 @@ export class ModalPassData {
     console.log('SomeAppProvider Data', someAppProvider.getData());
 
     this.called = {
+      ionViewCanEnter: 0,
+      ionViewCanLeave: 0,
       ionViewDidLoad: 0,
       ionViewWillEnter: 0,
       ionViewDidEnter: 0,
@@ -166,7 +171,29 @@ export class ModalPassData {
 
   submit() {
     console.time('modal');
-    this.viewCtrl.dismiss(this.data);
+    this.viewCtrl.dismiss(this.data).catch(() => {
+      console.log('submit was cancelled');
+    });
+  }
+
+  ionViewCanEnter() {
+    console.log('ModalPassData ionViewCanEnter fired');
+    this.called.ionViewCanEnter++;
+
+    return true;
+  }
+
+  ionViewCanLeave() {
+    console.log('ModalPassData ionViewCanLeave fired');
+    this.called.ionViewCanLeave++;
+
+    return new Promise((resolve: any, reject: any) => {
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Do you want to submit?');
+      alert.addButton({ text: 'Submit', handler: resolve });
+      alert.addButton({ text: 'Cancel', role: 'cancel', handler: reject });
+      alert.present();
+    });
   }
 
   ionViewDidLoad() {
@@ -360,6 +387,8 @@ export class ContactUs {
       <p>
         <button ion-button (click)="openActionSheet()">Open Action Sheet</button>
       </p>
+      <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+      <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
       <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
       <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
       <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
@@ -391,6 +420,8 @@ export class ModalFirstPage {
     }
 
     this.called = {
+      ionViewCanEnter: 0,
+      ionViewCanLeave: 0,
       ionViewDidLoad: 0,
       ionViewWillEnter: 0,
       ionViewDidEnter: 0,
@@ -408,6 +439,18 @@ export class ModalFirstPage {
 
   dismiss() {
     this.navCtrl.parent.pop();
+  }
+
+  ionViewCanEnter() {
+    console.log('ModalFirstPage ionViewCanEnter fired');
+    this.called.ionViewCanEnter++;
+    return true;
+  }
+
+  ionViewCanLeave() {
+    console.log('ModalFirstPage ionViewCanLeave fired');
+    this.called.ionViewCanLeave++;
+    return true;
   }
 
   ionViewDidLoad() {

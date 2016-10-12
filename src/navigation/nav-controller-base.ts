@@ -38,21 +38,19 @@ export class NavControllerBase extends Ion implements NavController {
   _viewport: ViewContainerRef;
   _views: ViewController[] = [];
 
-  viewDidLoad: EventEmitter<any>;
-  viewWillEnter: EventEmitter<any>;
-  viewDidEnter: EventEmitter<any>;
-  viewWillLeave: EventEmitter<any>;
-  viewDidLeave: EventEmitter<any>;
-  viewWillUnload: EventEmitter<any>;
+  viewDidLoad: EventEmitter<any> = new EventEmitter();
+  viewWillEnter: EventEmitter<any> = new EventEmitter();
+  viewDidEnter: EventEmitter<any> = new EventEmitter();
+  viewWillLeave: EventEmitter<any> = new EventEmitter();
+  viewDidLeave: EventEmitter<any> = new EventEmitter();
+  viewWillUnload: EventEmitter<any> = new EventEmitter();
 
   id: string;
-  parent: any;
-  config: Config;
 
   constructor(
-    parent: any,
+    public parent: any,
     public _app: App,
-    config: Config,
+    public config: Config,
     public _keyboard: Keyboard,
     elementRef: ElementRef,
     public _zone: NgZone,
@@ -64,20 +62,10 @@ export class NavControllerBase extends Ion implements NavController {
   ) {
     super(config, elementRef, renderer);
 
-    this.parent = parent;
-    this.config = config;
-
     this._sbEnabled = config.getBoolean('swipeBackEnabled');
     this._sbThreshold = config.getNumber('swipeBackThreshold', 40);
 
     this.id = 'n' + (++ctrlIds);
-
-    this.viewDidLoad = new EventEmitter();
-    this.viewWillEnter = new EventEmitter();
-    this.viewDidEnter = new EventEmitter();
-    this.viewWillLeave = new EventEmitter();
-    this.viewDidLeave = new EventEmitter();
-    this.viewWillUnload = new EventEmitter();
   }
 
   push(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
@@ -280,7 +268,8 @@ export class NavControllerBase extends Ion implements NavController {
       return this._viewTest(enteringView, leavingView, ti);
 
     } else {
-      return this._postViewInit(enteringView, leavingView, ti, ti.resolve);
+      this._postViewInit(enteringView, leavingView, ti, ti.resolve);
+      return true;
     }
   }
 
@@ -334,7 +323,7 @@ export class NavControllerBase extends Ion implements NavController {
     return null;
   }
 
-  _postViewInit(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction, resolve: TransitionResolveFn): boolean {
+  _postViewInit(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction, resolve: TransitionResolveFn) {
     const opts = ti.opts || {};
 
     const insertViews = ti.insertViews;
@@ -425,8 +414,6 @@ export class NavControllerBase extends Ion implements NavController {
       // resolve immediately because there's no animation that's happening
       resolve(true, false);
     }
-
-    return true;
   }
 
   /**
@@ -447,7 +434,7 @@ export class NavControllerBase extends Ion implements NavController {
     enteringView._state = ViewState.INITIALIZED;
   }
 
-  _viewTest(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction): boolean {
+  _viewTest(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
     const promises: Promise<any>[] = [];
     const reject = ti.reject;
     const resolve = ti.resolve;
@@ -490,20 +477,16 @@ export class NavControllerBase extends Ion implements NavController {
         // all promises resolved! let's continue
         this._postViewInit(enteringView, leavingView, ti, resolve);
 
-      }).catch((rejectReason) => {
-        reject(rejectReason);
-      });
-
-      return false;
+      }).catch(reject);
+      return true;
     }
 
     // synchronous and all tests passed! let's move on already
     this._postViewInit(enteringView, leavingView, ti, resolve);
-
     return true;
   }
 
-  _transition(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, resolve: TransitionResolveFn): void {
+  _transition(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, resolve: TransitionResolveFn) {
     // figure out if this transition is the root one or a
     // child of a parent nav that has the root transition
     this._trnsId = this._trnsCtrl.getRootTrnsId(this);
