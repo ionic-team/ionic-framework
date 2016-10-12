@@ -92,6 +92,9 @@ export interface DeepLinkMetadataType {
   defaultHistory?: any[];
 }
 
+/**
+ * @private
+ */
 export class DeepLinkMetadata implements DeepLinkMetadataType {
   component: any;
   name: string;
