@@ -23,9 +23,10 @@ import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFile
 task('e2e', e2eBuild);
 
 function e2eBuild(done: (err: any) => void) {
-  runSequence('e2e.clean', 'e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.bundle', done);
+  runSequence('e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.bundle', done);
 }
 
+// TODO this should run when building all of e2e, not when folder passed
 task('e2e.clean', (done: Function) => {
   del(['dist/e2e/**']).then(() => {
     done();
