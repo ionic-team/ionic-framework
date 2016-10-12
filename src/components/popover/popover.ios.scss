@@ -66,11 +66,11 @@ $popover-ios-arrow-background:          $popover-ios-background !default;
   transform: rotate(45deg);
 }
 
-.popover-ios .popover-bottom .popover-arrow {
+.popover-ios.popover-bottom .popover-arrow {
   top: auto;
   bottom: -10px;
 }
 
-.popover-ios .popover-bottom .popover-arrow::after {
+.popover-ios.popover-bottom .popover-arrow::after {
   top: -6px;
 }
