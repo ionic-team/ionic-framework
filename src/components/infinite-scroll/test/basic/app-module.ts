@@ -29,7 +29,6 @@ export class E2EPage1 {
 
       if (this.items.length > 90) {
         this.enabled = false;
-        infiniteScroll.enable(this.enabled);
       }
     });
   }
@@ -40,7 +39,6 @@ export class E2EPage1 {
 
   toggleInfiniteScroll() {
     this.enabled = !this.enabled;
-    this.infiniteScroll.enable(this.enabled);
   }
 }
 
