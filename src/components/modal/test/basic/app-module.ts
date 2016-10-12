@@ -381,12 +381,6 @@ export class ContactUs {
     </ion-header>
 
     <ion-content padding>
-      <p>
-        <button ion-button (click)="push()">Push (Go to 2nd)</button>
-      </p>
-      <p>
-        <button ion-button (click)="openActionSheet()">Open Action Sheet</button>
-      </p>
       <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
       <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
       <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
@@ -394,6 +388,12 @@ export class ContactUs {
       <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
       <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
       <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
+      <p>
+        <button ion-button (click)="push()">Push (Go to 2nd)</button>
+      </p>
+      <p>
+        <button ion-button (click)="openActionSheet()">Open Action Sheet</button>
+      </p>
       <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       <ion-list>
