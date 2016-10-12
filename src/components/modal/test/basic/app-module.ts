@@ -130,12 +130,18 @@ export class E2EPage {
         </ion-item>
       </ion-list>
       <button ion-button full (click)="submit()">Submit</button>
+      <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+      <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+      <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+      <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+      <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
     </ion-content>
   `,
   providers: [SomeComponentProvider]
 })
 export class ModalPassData {
   data: any;
+  called: any;
 
   constructor(
     public viewCtrl: ViewController,
@@ -148,6 +154,14 @@ export class ModalPassData {
       name: someComponentProvider.getName()
     };
     console.log('SomeAppProvider Data', someAppProvider.getData());
+
+    this.called = {
+      ionViewDidLoad: 0,
+      ionViewWillEnter: 0,
+      ionViewDidEnter: 0,
+      ionViewWillLeave: 0,
+      ionViewDidLeave: 0
+    };
   }
 
   submit() {
@@ -157,10 +171,12 @@ export class ModalPassData {
 
   ionViewDidLoad() {
     console.log('ModalPassData ionViewDidLoad fired');
+    this.called.ionViewDidLoad++;
   }
 
   ionViewWillEnter() {
     console.log('ModalPassData ionViewWillEnter fired');
+    this.called.ionViewWillEnter++;
   }
 
   ionViewDidEnter() {
@@ -169,14 +185,17 @@ export class ModalPassData {
       message: 'test toast',
       duration: 1000
     }).present();
+    this.called.ionViewDidEnter++;
   }
 
   ionViewWillLeave() {
     console.log('ModalPassData ionViewWillLeave fired');
+    this.called.ionViewWillLeave++;
   }
 
   ionViewDidLeave() {
     console.log('ModalPassData ionViewDidLeave fired');
+    this.called.ionViewDidLeave++;
   }
 }
 
@@ -341,6 +360,11 @@ export class ContactUs {
       <p>
         <button ion-button (click)="openActionSheet()">Open Action Sheet</button>
       </p>
+      <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+      <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+      <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+      <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+      <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
       <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       <ion-list>
@@ -353,6 +377,7 @@ export class ContactUs {
 })
 export class ModalFirstPage {
   items: any[] = [];
+  called: any;
 
   constructor(
     public navCtrl: NavController,
@@ -364,6 +389,14 @@ export class ModalFirstPage {
         value: (i + 1)
       });
     }
+
+    this.called = {
+      ionViewDidLoad: 0,
+      ionViewWillEnter: 0,
+      ionViewDidEnter: 0,
+      ionViewWillLeave: 0,
+      ionViewDidLeave: 0
+    };
   }
 
   push() {
@@ -379,10 +412,12 @@ export class ModalFirstPage {
 
   ionViewDidLoad() {
     console.log('ModalFirstPage ionViewDidLoad fired');
+    this.called.ionViewDidLoad++;
   }
 
   ionViewWillEnter() {
     console.log('ModalFirstPage ionViewWillEnter fired');
+    this.called.ionViewWillEnter++;
   }
 
   ionViewDidEnter() {
@@ -397,6 +432,15 @@ export class ModalFirstPage {
       ]
     });
     alert.present();
+    this.called.ionViewDidEnter++;
+  }
+
+  ionViewWillLeave() {
+    this.called.ionViewWillLeave++;
+  }
+
+  ionViewDidLeave() {
+    this.called.ionViewDidLeave++;
   }
 
   openActionSheet() {

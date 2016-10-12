@@ -410,6 +410,13 @@ export class ViewController {
 
   /**
    * @private
+   */
+  _willLoad() {
+    ctrlFn(this, 'WillLoad');
+  }
+
+  /**
+   * @private
    * The view has loaded. This event only happens once per view being
    * created. If a view leaves but is cached, then this will not
    * fire again on a subsequent viewing. This method is a good place

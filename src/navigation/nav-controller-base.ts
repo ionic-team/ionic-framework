@@ -187,17 +187,20 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     ti.resolve = (hasCompleted: boolean, isAsync: boolean, enteringName: string, leavingName: string, direction: string) => {
+      this.setTransitioning(false);
+
       // transition has successfully resolved
       this._trnsId = null;
       resolve && resolve(hasCompleted, isAsync, enteringName, leavingName, direction);
       this._sbCheck();
 
       // let's see if there's another to kick off
-      this.setTransitioning(false);
       this._nextTrns();
     };
 
     ti.reject = (rejectReason: any, trns: Transition) => {
+      this.setTransitioning(false);
+
       // rut row raggy, something rejected this transition
       this._trnsId = null;
       this._queue.length = 0;
@@ -218,7 +221,6 @@ export class NavControllerBase extends Ion implements NavController {
 
       reject && reject(false, false, rejectReason);
 
-      this.setTransitioning(false);
       this._nextTrns();
     };
 
@@ -390,17 +392,9 @@ export class NavControllerBase extends Ion implements NavController {
       // batch all of lifecycles together
       var view = destroyQueue[i];
       if (view && view !== enteringView && view !== leavingView) {
-        view._willLeave();
-        this.viewWillLeave.emit(view);
-        this._app.viewWillLeave.emit(view);
-
-        view._didLeave();
-        this.viewDidLeave.emit(view);
-        this._app.viewDidLeave.emit(view);
-
-        view._willUnload();
-        this.viewWillUnload.emit(view);
-        this._app.viewWillUnload.emit(view);
+        this._willLeave(view);
+        this._didLeave(view);
+        this._willUnload(view);
       }
     }
     for (var i = 0; i < destroyQueue.length; i++) {
@@ -571,20 +565,19 @@ export class NavControllerBase extends Ion implements NavController {
 
   _viewInsert(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     // successfully finished loading the entering view
-    // fire off the "loaded" lifecycle events
-    view._didLoad();
-    this.viewDidLoad.emit(view);
-    this._app.viewDidLoad.emit(view);
+    // fire off the "didLoad" lifecycle events
+    this._willLoad(view);
+    this._didLoad(view);
 
     // render the component ref instance to the DOM
     // ******** DOM WRITE ****************
     viewport.insert(componentRef.hostView, viewport.length);
     view._state = ViewState.PRE_RENDERED;
 
-    // the ElementRef of the actual ion-page created
-    const pageElement = componentRef.location.nativeElement;
-
     if (view._cssClass) {
+      // the ElementRef of the actual ion-page created
+      var pageElement = componentRef.location.nativeElement;
+
       // ******** DOM WRITE ****************
       this._renderer.setElementClass(pageElement, view._cssClass, true);
     }
@@ -666,17 +659,8 @@ export class NavControllerBase extends Ion implements NavController {
 
   _viewsWillLifecycles(enteringView: ViewController, leavingView: ViewController) {
     // call each view's lifecycle events
-    if (enteringView) {
-      enteringView._willEnter();
-      this.viewWillEnter.emit(enteringView);
-      this._app.viewWillEnter.emit(enteringView);
-    }
-
-    if (leavingView) {
-      leavingView._willLeave();
-      this.viewWillLeave.emit(leavingView);
-      this._app.viewWillLeave.emit(leavingView);
-    }
+    enteringView && this._willEnter(enteringView);
+    leavingView && this._willLeave(leavingView);
   }
 
   _trnsFinish(trns: Transition, opts: NavOptions, resolve: TransitionResolveFn) {
@@ -690,16 +674,12 @@ export class NavControllerBase extends Ion implements NavController {
       // transition has completed (went from 0 to 1)
       if (trns.enteringView) {
         enteringName = trns.enteringView.name;
-        trns.enteringView._didEnter();
-        this.viewDidEnter.emit(trns.enteringView);
-        this._app.viewDidEnter.emit(trns.enteringView);
+        this._didEnter(trns.enteringView);
       }
 
       if (trns.leavingView) {
         leavingName = trns.leavingView.name;
-        trns.leavingView._didLeave();
-        this.viewDidLeave.emit(trns.leavingView);
-        this._app.viewDidLeave.emit(trns.leavingView);
+        this._didLeave(trns.leavingView);
       }
 
       this._cleanup(trns.enteringView);
@@ -744,9 +724,7 @@ export class NavControllerBase extends Ion implements NavController {
       if (i > activeViewIndex) {
         // this view comes after the active view
         // let's unload it
-        view._willUnload();
-        this.viewWillUnload.emit(view);
-        this._app.viewWillUnload.emit(view);
+        this._willUnload(view);
         view._destroy(this._renderer);
 
       } else if (i < activeViewIndex && !this._isPortal) {
@@ -768,6 +746,47 @@ export class NavControllerBase extends Ion implements NavController {
       }
     }
   }
+
+  _willLoad(view: ViewController) {
+    view._willLoad();
+  }
+
+  _didLoad(view: ViewController) {
+    view._didLoad();
+    this.viewDidLoad.emit(view);
+    this._app.viewDidLoad.emit(view);
+  }
+
+  _willEnter(view: ViewController) {
+    view._willEnter();
+    this.viewWillEnter.emit(view);
+    this._app.viewWillEnter.emit(view);
+  }
+
+  _didEnter(view: ViewController) {
+    view._didEnter();
+    this.viewDidEnter.emit(view);
+    this._app.viewDidEnter.emit(view);
+  }
+
+  _willLeave(view: ViewController) {
+    view._willLeave();
+    this.viewWillLeave.emit(view);
+    this._app.viewWillLeave.emit(view);
+  }
+
+  _didLeave(view: ViewController) {
+    view._didLeave();
+    this.viewDidLeave.emit(view);
+    this._app.viewDidLeave.emit(view);
+  }
+
+  _willUnload(view: ViewController) {
+    view._willUnload();
+    this.viewWillUnload.emit(view);
+    this._app.viewWillUnload.emit(view);
+  }
+
 
   getActiveChildNav(): any {
     return this._children[this._children.length - 1];
@@ -980,4 +999,4 @@ let ctrlIds = -1;
 
 const DISABLE_APP_MINIMUM_DURATION = 64;
 const ACTIVE_TRANSITION_MAX_TIME = 5000;
-const ACTIVE_TRANSITION_OFFSET = 400;
+const ACTIVE_TRANSITION_OFFSET = 2000;
