@@ -95,7 +95,9 @@ export class E2EApp {
     AnotherPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp, {
+      statusbarPadding: true
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,6 +1,6 @@
 import { Animation } from '../../animations/animation';
 import { Transition } from '../../transitions/transition';
-
+import { ToastOptions } from './toast-options';
 
 export class ToastSlideIn extends Transition {
   init() {
@@ -8,14 +8,19 @@ export class ToastSlideIn extends Transition {
     let ele = this.enteringView.pageRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
     let wrapper = new Animation(wrapperEle);
+    let opts: ToastOptions = this.enteringView.data;
+    let padding = 10;
 
-    if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_TOP) {
+    if (opts && opts.position === TOAST_POSITION_TOP) {
       // top
       // by default, it is -100% hidden (above the screen)
       // so move from that to 10px below top: 0px;
-      wrapper.fromTo('translateY', '-100%', `${10}px`);
+      if (opts.statusBarPadding) {
+        padding += 20;
+      }
+      wrapper.fromTo('translateY', '-100%', `${padding}px`);
 
-    } else if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_MIDDLE) {
+    } else if (opts && opts.position === TOAST_POSITION_MIDDLE) {
       // Middle
       // just center it and fade it in
       let topPosition = Math.floor(ele.clientHeight / 2 - wrapperEle.clientHeight / 2);
@@ -27,7 +32,7 @@ export class ToastSlideIn extends Transition {
       // bottom
       // by default, it is 100% hidden (below the screen),
       // so move from that to 10 px above bottom: 0px
-      wrapper.fromTo('translateY', '100%', `${0 - 10}px`);
+      wrapper.fromTo('translateY', '100%', `${0 - padding}px`);
     }
 
     this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(wrapper);
