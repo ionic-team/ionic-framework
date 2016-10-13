@@ -343,6 +343,11 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
       this._init = true;
 
+      if (!this.approxItemHeight) {
+        this.approxItemHeight = '40px';
+        console.warn('Virtual Scroll: Please provide an "approxItemHeight" input to ensure proper virtual scroll rendering');
+      }
+
       this.update(true);
 
       this._platform.onResize(() => {
@@ -350,10 +355,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         this.update(false);
       });
 
-      if (!this.approxItemHeight) {
-        this.approxItemHeight = '40px';
-        console.warn('Virtual Scroll: Please provide an "approxItemHeight" input to ensure proper virtual scroll rendering');
-      }
     }
   }
 
