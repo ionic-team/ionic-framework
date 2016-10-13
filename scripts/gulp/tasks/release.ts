@@ -9,6 +9,7 @@ import { rollup } from 'rollup';
 import * as commonjs from 'rollup-plugin-commonjs';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as runSequence from 'run-sequence';
+import * as semver from 'semver';
 import { obj } from 'through2';
 
 import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
@@ -16,14 +17,18 @@ import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePoly
 
 
 task('nightly', (done: (err: any) => void) => {
-  runSequence('release.prepareReleasePackage',
+  runSequence('release.pullLatest',
+              'validate',
+              'release.prepareReleasePackage',
               'release.removeDebugStatements',
               'release.publishNightly',
               done);
 });
 
 task('release', (done: (err: any) => void) => {
-  runSequence('release.prepareReleasePackage',
+  runSequence('release.pullLatest',
+              'validate',
+              'release.prepareReleasePackage',
               'release.copyProdVersion',
               'release.removeDebugStatements',
               'release.prepareChangelog',
@@ -97,7 +102,15 @@ task('release.publishNpmRelease', (done: Function) => {
 });
 
 task('release.copyProdVersion', () => {
+  // Increment the version and update the source package file
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
+
+  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, 'prerelease', true);
+
+  const sourcePrettyPrintedJson = JSON.stringify(sourcePackageJSON, null, 2);
+  writeFileSync(`${PROJECT_ROOT}/package.json`, sourcePrettyPrintedJson);
+
+  // Copy the source package version and update it in the build package file
   const packageJsonToUpdate = require(`${DIST_BUILD_ROOT}/package.json`);
 
   packageJsonToUpdate.version = sourcePackageJSON.version;

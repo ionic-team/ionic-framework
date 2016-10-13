@@ -14,5 +14,6 @@ declare module 'rollup-plugin-commonjs';
 declare module 'rollup-plugin-multi-entry';
 declare module 'rollup-plugin-node-resolve';
 declare module 'rollup-plugin-uglify';
+declare module 'semver';
 declare module 'vinyl';
 declare module 'yargs';
