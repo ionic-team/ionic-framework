@@ -88,21 +88,9 @@ export class IOSTransition extends PageTransition {
           // entering navbar, forward direction
           enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
-          if (leavingHasNavbar) {
-            // entering navbar, forward direction, and there's a leaving navbar
-            // should just fade in, no sliding
-            enteringNavbarBg
-              .beforeClearStyles([TRANSLATEX])
-              .fromTo(OPACITY, 0.01, 1, true);
-
-          } else {
-            // entering navbar, forward direction, and there's no leaving navbar
-            // should just slide in, no fading in
-            enteringNavbarBg
-              .beforeClearStyles([OPACITY])
-              .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
-          }
-
+          enteringNavbarBg
+            .beforeClearStyles([OPACITY])
+            .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
           if (enteringView.enableBack()) {
             // forward direction, entering page has a back button
@@ -170,20 +158,11 @@ export class IOSTransition extends PageTransition {
           // leaving navbar, back direction
           leavingTitle.fromTo(TRANSLATEX, CENTER, '100%');
 
-          if (enteringHasNavbar) {
-            // leaving navbar, back direction, and there's an entering navbar
-            // should just fade out, no sliding
-            leavingNavbarBg
-              .beforeClearStyles([TRANSLATEX])
-              .fromTo(OPACITY, 0.99, 0);
-
-          } else {
-            // leaving navbar, back direction, and there's no entering navbar
-            // should just slide out, no fading out
-            leavingNavbarBg
-              .beforeClearStyles([OPACITY])
-              .fromTo(TRANSLATEX, CENTER, '100%');
-          }
+          // leaving navbar, back direction, and there's no entering navbar
+          // should just slide out, no fading out
+          leavingNavbarBg
+            .beforeClearStyles([OPACITY])
+            .fromTo(TRANSLATEX, CENTER, '100%');
 
           let leavingBackBtnText = new Animation(leavingNavbarEle.querySelector('.back-button-text'));
           leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (300) + 'px');
