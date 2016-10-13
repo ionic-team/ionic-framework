@@ -66,15 +66,6 @@ export class Toast extends ViewController {
     this._nav && this._nav.popAll();
   }
 
-  /**
-   * @private
-   * DEPRECATED: Please inject ToastController instead
-   */
-  static create(opt: any) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('Toast.create(..) has been deprecated. Please inject ToastController instead');
-  }
-
 }
 
 

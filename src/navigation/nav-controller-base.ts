@@ -883,6 +883,9 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   isTransitioning(): boolean {
+    if (this._trnsTm === 0) {
+      return false;
+    }
     // using a timestamp instead of boolean incase something goes wrong
     return (this._trnsTm > Date.now());
   }
@@ -952,28 +955,6 @@ export class NavControllerBase extends Ion implements NavController {
 
   setViewport(val: ViewContainerRef) {
     this._viewport = val;
-  }
-
-
-  /**
-   * @private
-   * DEPRECATED: Please use app.getRootNav() instead
-   */
-  get rootNav(): NavController {
-    // deprecated 07-14-2016 beta.11
-    console.warn('nav.rootNav() has been deprecated, please use app.getRootNav() instead');
-    return this._app.getRootNav();
-  }
-
-  /**
-   * @private
-   * DEPRECATED: Please use inject the overlays controller and use the present method on the instance instead.
-   */
-  present(): Promise<any> {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('nav.present() has been deprecated.\n' +
-                 'Please inject the overlay\'s controller and use the present method on the instance instead.');
-    return Promise.resolve();
   }
 
 }

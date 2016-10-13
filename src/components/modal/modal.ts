@@ -44,14 +44,6 @@ export class Modal extends ViewController {
     return this._app.present(this, navOptions, AppPortal.MODAL);
   }
 
-  /**
-   * @private
-   * DEPRECATED: Please inject ModalController instead
-   */
-  static create(cmp: any, opt: any) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('Modal.create(..) has been deprecated. Please inject ModalController instead');
-  }
 }
 
 

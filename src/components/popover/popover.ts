@@ -43,15 +43,6 @@ export class Popover extends ViewController {
     return this._app.present(this, navOptions);
   }
 
-  /**
-   * @private
-   * DEPRECATED: Please inject PopoverController instead
-   */
-  static create(component: any, data = {}, opts: PopoverOptions = {}) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('Popover.create(..) has been deprecated. Please inject PopoverController instead');
-  }
-
 }
 
 

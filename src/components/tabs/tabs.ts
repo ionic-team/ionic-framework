@@ -193,19 +193,9 @@ export class Tabs extends Ion implements AfterViewInit {
   @Input() selectedIndex: number;
 
   /**
-   * @internal DEPRECATED. Please use `tabsLayout` instead.
-   */
-  @Input() private tabbarLayout: string;
-
-  /**
    * @input {string} Set the tabbar layout: `icon-top`, `icon-left`, `icon-right`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
   @Input() tabsLayout: string;
-
-  /**
-   * @internal DEPRECATED. Please use `tabsPlacement` instead.
-   */
-  @Input() private tabbarPlacement: string;
 
   /**
    * @input {string} Set position of the tabbar: `top`, `bottom`.
@@ -261,18 +251,6 @@ export class Tabs extends Ion implements AfterViewInit {
     this._subPages = config.getBoolean('tabsHideOnSubPages');
     this.tabsHighlight = config.getBoolean('tabsHighlight');
 
-    // TODO deprecated 07-07-2016 beta.11
-    if (config.get('tabSubPages') !== null) {
-      console.warn('Config option "tabSubPages" has been deprecated. Please use "tabsHideOnSubPages" instead.');
-      this._subPages = config.getBoolean('tabSubPages');
-    }
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (config.get('tabbarHighlight') !== null) {
-      console.warn('Config option "tabbarHighlight" has been deprecated. Please use "tabsHighlight" instead.');
-      this.tabsHighlight = config.getBoolean('tabbarHighlight');
-    }
-
     if (this.parent) {
       // this Tabs has a parent Nav
       this.parent.registerChildNav(this);
@@ -307,36 +285,6 @@ export class Tabs extends Ion implements AfterViewInit {
     this._setConfig('tabsPlacement', 'bottom');
     this._setConfig('tabsLayout', 'icon-top');
     this._setConfig('tabsHighlight', this.tabsHighlight);
-
-    // TODO deprecated 07-07-2016 beta.11
-    this._setConfig('tabbarPlacement', 'bottom');
-    this._setConfig('tabbarLayout', 'icon-top');
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (this.tabbarPlacement !== undefined) {
-      console.warn('Input "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
-      this.setElementAttribute('tabsPlacement', this.tabbarPlacement);
-      this.tabsPlacement = this.tabbarPlacement;
-    }
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (this._config.get('tabbarPlacement') !== null) {
-      console.warn('Config option "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
-      this.setElementAttribute('tabsPlacement', this._config.get('tabbarPlacement'));
-    }
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (this.tabbarLayout !== undefined) {
-      console.warn('Input "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
-      this.setElementAttribute('tabsLayout', this.tabbarLayout);
-      this.tabsLayout = this.tabbarLayout;
-    }
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (this._config.get('tabbarLayout') !== null) {
-      console.warn('Config option "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
-      this.setElementAttribute('tabsLayout', this._config.get('tabsLayout'));
-    }
 
     if (this.tabsHighlight) {
       this._platform.onResize(() => {

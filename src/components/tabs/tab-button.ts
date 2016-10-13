@@ -39,11 +39,6 @@ export class TabButton extends Ion implements OnInit {
 
     this.disHover = (config.get('hoverCSS') === false);
     this.layout = config.get('tabsLayout');
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (config.get('tabbarLayout') !== undefined) {
-      this.layout = config.get('tabbarLayout');
-    }
   }
 
   ngOnInit() {
