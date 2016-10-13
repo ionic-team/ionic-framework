@@ -236,32 +236,68 @@ import { ViewController } from './view-controller';
  *  | `ionViewCanLeave`   | Runs before the view can leave. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave                                                                                                     |
  *
  *
- * ## Asynchronous Nav Transitions
+ * ## Nav Guards
  *
- * Navigation transitions are asynchronous operations. When a transition is started,
- * the `push` or `pop` method will return immediately, before the transition is complete.
+ * In some cases, a developer should be able to control views leaving and entering. To allow for this, NavController has the `ionViewCanEnter` and `ionViewCanLeave` methods.
+ * Similar to Angular 2 route guards, but are more integrated with NavController. For example, if you wanted to prevent a user from leaving a view:
  *
- * Generally, the developer does not need to be concerned about this. In the event
- * multiple transitions need to be synchronized or transition timing is critical,
- * the best practice is to chain the transitions together using the return value
- * from the `push` and `pop` methods.
+ * ```ts
+ * export class MyClass{
+ *  constructor(
+ *    public navCtrl: NavController
+ *   ){}
  *
- * The `push` and `pop` methods return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
- * Promises are a way to represent and chain together multiple asynchronous
- * operations in order. Navigation actions can be chained together very easily using promises.
+ *   pushPage(){
+ *     this.navCtrl.push(DetailPage)
+ *      .catch(()=> console.log('should I stay or should I go now'))
+ *   }
  *
- * ```typescript
- * let navTransitionPromise = this.navCtrl.push(Page2);
- * navTransitionPromise.then(() => {
- *   // the transition has completed, so I can push another page now
- *   return this.navCtrl.push(Page3);
- * }).then(() => {
- *   // the second transition has completed, so I can push yet another page
-    return this.navCtrl.push(Page4);
- * }).then(() => {
- *   console.log('The transitions are complete!');
- * })
+ *   ionCanViewLeave(): boolean{
+ *    // here we can either return true or false
+ *    // depending on if we want to leave this view
+ *    if(isValid(randomValue)){
+ *       return true;
+ *     } else {
+ *       return false;
+ *     }
+ *   }
+ * }
  * ```
+ *
+ * We need to make sure that or `navCtrl.push` has a catch in order to catch the and handle the error.
+ * If you need to prevent a view from entering, you can do the same thing
+ *
+ * ```ts
+ * export class MyClass{
+ *  constructor(
+ *    public navCtrl: NavController
+ *   ){}
+ *
+ *   pushPage(){
+ *     this.navCtrl.push(DetailPage)
+ *      .catch(()=> console.log('should I stay or should I go now'))
+ *   }
+ *
+ * }
+ *
+ * export class DetailPage(){
+ *   constructor(
+ *     public navCtrl: NavController
+ *   ){}
+ *   ionCanViewEnter(): boolean{
+ *    // here we can either return true or false
+ *    // depending on if we want to leave this view
+ *    if(isValid(randomValue)){
+ *       return true;
+ *     } else {
+ *       return false;
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * Similar to `ionViewCanLeave` we still need a catch on the original `navCtrl.push` in order to handle it properly.
+ * When handling the back button in the `ion-navbar`, the catch is already taken care of for you by the framework.
  *
  * ## NavOptions
  *
