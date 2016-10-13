@@ -88,7 +88,7 @@ import { CSS } from '../../util/dom';
  * of `background-color`.
  *
  * ```css
- * ion-spinner svg {
+ * ion-spinner * {
  *   width: 28px;
  *   height: 28px;
  *   stroke: #444;
