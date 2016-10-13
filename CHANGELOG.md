@@ -1,6 +1,34 @@
 <a name="2.0.0-rc.1"></a>
 # [2.0.0-rc.1](https://github.com/driftyco/ionic/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2016-10-13)
 
+### Package.json Updates
+
+`package.json` has been upated to include Angular dependcies and the latest version of app-scripts. Please update your package.json to reflect these changes.
+
+```
+  "dependencies": {
+    "@angular/common": "^2.0.0",
+    "@angular/compiler": "^2.0.0",
+    "@angular/compiler-cli": "^0.6.2",
+    "@angular/core": "^2.0.0",
+    "@angular/forms": "^2.0.0",
+    "@angular/http": "^2.0.0",
+    "@angular/platform-browser": "^2.0.0",
+    "@angular/platform-browser-dynamic": "^2.0.0",
+    "@angular/platform-server": "^2.0.0",
+    "ionic-angular": "^2.0.0-rc.0",
+    "ionicons" : "^3.0.0",
+    "@ionic/storage": "^1.0.3",
+    "ionic-native": "^2.0.3",
+    "rxjs": "^5.0.0-beta.12",
+    "zone.js": "^0.6.21"
+  },
+   "devDependencies": {
+    "@ionic/app-scripts": "^0.0.31",
+    "typescript": "^2.0.3"
+  }
+  ```
+
 
 ### Bug Fixes
 
