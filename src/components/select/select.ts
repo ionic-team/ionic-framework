@@ -267,7 +267,9 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        this.ionCancel.emit(null);
+        overlay.onDidDismiss(() => {
+          this.ionCancel.emit(null);
+        });
       }
     }];
 
@@ -295,7 +297,9 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
           text: input.text,
           handler: () => {
             this.onChange(input.value);
-            this.ionChange.emit(input.value);
+            overlay.onDidDismiss(() => {
+              this.ionChange.emit(input.value);
+            });
           }
         };
       }));
@@ -344,7 +348,9 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
         text: this.okText,
         handler: (selectedValues: any) => {
           this.onChange(selectedValues);
-          this.ionChange.emit(selectedValues);
+          overlay.onDidDismiss(() => {
+            this.ionChange.emit(selectedValues);
+          });
         }
       });
 
