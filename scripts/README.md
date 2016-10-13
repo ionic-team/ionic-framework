@@ -95,7 +95,7 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
   - Creates a new tag and release on Github
 3. Verify that the `changelog` changes are accurate and the `package.json` version is correct (`git status` && `git diff`)
 4. Commit and push
-5. Sit back and have a beer :beer: (or wine :wine_glass:)
+5. Sit back and have a beer :beers: (or wine :wine_glass:)
 
 ### Publish a nightly release
 1. Run `gulp nightly`
