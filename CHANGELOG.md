@@ -3,7 +3,7 @@
 
 ### Package.json Updates
 
-`package.json` has been upated to include Angular dependcies and the latest version of app-scripts. Please update your package.json to reflect these changes.
+`package.json` has been upated to include Angular dependcies and the latest version of app-scripts. Please update your package.json to reflect these changes and then run `npm install`.
 
 ```
   "dependencies": {
@@ -16,7 +16,7 @@
     "@angular/platform-browser": "^2.0.0",
     "@angular/platform-browser-dynamic": "^2.0.0",
     "@angular/platform-server": "^2.0.0",
-    "ionic-angular": "^2.0.0-rc.0",
+    "ionic-angular": "^2.0.0-rc.1",
     "ionicons" : "^3.0.0",
     "@ionic/storage": "^1.0.3",
     "ionic-native": "^2.0.3",
@@ -27,7 +27,7 @@
     "@ionic/app-scripts": "^0.0.31",
     "typescript": "^2.0.3"
   }
-  ```
+```
 
 
 ### Bug Fixes
