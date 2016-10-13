@@ -148,16 +148,6 @@ export class ViewController {
   }
 
   /**
-   * @private
-   * onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead
-   */
-  onDismiss(callback: Function) {
-    // deprecated warning: added beta.11 2016-06-30
-    console.warn('onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead');
-    this.onDidDismiss(callback);
-  }
-
-  /**
    * Called when the current viewController has be successfully dismissed
    */
   onDidDismiss(callback: Function) {
@@ -412,7 +402,7 @@ export class ViewController {
    * @private
    */
   _willLoad() {
-    ctrlFn(this, 'WillLoad');
+    this._lifecycle('WillLoad');
   }
 
   /**
@@ -424,17 +414,7 @@ export class ViewController {
    * recommended method to use when a view becomes active.
    */
   _didLoad() {
-    // deprecated warning: added 2016-08-14, beta.12
-    if (this.instance && this.instance.ionViewLoaded) {
-      try {
-        console.warn('ionViewLoaded() has been deprecated. Please rename to ionViewDidLoad()');
-        this.instance.ionViewLoaded();
-      } catch (e) {
-        console.error(this.name + ' iionViewLoaded: ' + e.message);
-      }
-    }
-
-    ctrlFn(this, 'DidLoad');
+    this._lifecycle('DidLoad');
   }
 
   /**
@@ -449,7 +429,7 @@ export class ViewController {
     }
 
     this.willEnter.emit(null);
-    ctrlFn(this, 'WillEnter');
+    this._lifecycle('WillEnter');
   }
 
   /**
@@ -460,7 +440,7 @@ export class ViewController {
   _didEnter() {
     this._nb && this._nb.didEnter();
     this.didEnter.emit(null);
-    ctrlFn(this, 'DidEnter');
+    this._lifecycle('DidEnter');
   }
 
   /**
@@ -469,7 +449,7 @@ export class ViewController {
    */
   _willLeave() {
     this.willLeave.emit(null);
-    ctrlFn(this, 'WillLeave');
+    this._lifecycle('WillLeave');
   }
 
   /**
@@ -479,7 +459,7 @@ export class ViewController {
    */
   _didLeave() {
     this.didLeave.emit(null);
-    ctrlFn(this, 'DidLeave');
+    this._lifecycle('DidLeave');
 
     // when this is not the active page
     // we no longer need to detect changes
@@ -494,17 +474,7 @@ export class ViewController {
    */
   _willUnload() {
     this.willUnload.emit(null);
-    ctrlFn(this, 'WillUnload');
-
-    // deprecated warning: added 2016-08-14, beta.12
-    if (this.instance && this.instance.ionViewDidUnload) {
-      console.warn('ionViewDidUnload() has been deprecated. Please use ionViewWillUnload() instead');
-      try {
-        this.instance.ionViewDidUnload();
-      } catch (e) {
-        console.error(this.name + ' ionViewDidUnload: ' + e.message);
-      }
-    }
+    this._lifecycle('WillUnload');
   }
 
   /**
@@ -516,8 +486,9 @@ export class ViewController {
       if (renderer) {
         // ensure the element is cleaned up for when the view pool reuses this element
         // ******** DOM WRITE ****************
-        renderer.setElementAttribute(this._cmp.location.nativeElement, 'class', null);
-        renderer.setElementAttribute(this._cmp.location.nativeElement, 'style', null);
+        const cmpEle = this._cmp.location.nativeElement;
+        renderer.setElementAttribute(cmpEle, 'class', null);
+        renderer.setElementAttribute(cmpEle, 'style', null);
       }
 
       // completely destroy this component. boom.
@@ -546,27 +517,26 @@ export class ViewController {
         return instance[methodName]();
 
       } catch (e) {
-        console.error(`${this.name} ionViewCan${lifecycle} error: ${e}`);
+        console.error(`${this.name} ${methodName} error: ${e.message}`);
         return false;
       }
     }
     return true;
   }
 
-}
-
-
-function ctrlFn(viewCtrl: ViewController, fnName: string) {
-  if (viewCtrl.instance) {
-    // fire off ionView lifecycle instance method
-    if (viewCtrl.instance['ionView' + fnName]) {
+  _lifecycle(lifecycle: string) {
+    let instance = this.instance;
+    let methodName = 'ionView' + lifecycle;
+    if (instance && instance[methodName]) {
       try {
-        viewCtrl.instance['ionView' + fnName]();
+        instance[methodName]();
+
       } catch (e) {
-        console.error(viewCtrl.name + ' ionView' + fnName + ': ' + e.message);
+        console.error(`${this.name} ${methodName} error: ${e.message}`);
       }
     }
   }
+
 }
 
 
