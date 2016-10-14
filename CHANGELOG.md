@@ -19,7 +19,7 @@
     "ionic-angular": "^2.0.0-rc.1",
     "ionicons" : "^3.0.0",
     "@ionic/storage": "^1.0.3",
-    "ionic-native": "^2.0.3",
+    "ionic-native": "^2.2.3",
     "rxjs": "5.0.0-beta.12",
     "zone.js": "^0.6.21"
   },
