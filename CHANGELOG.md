@@ -16,17 +16,17 @@
     "@angular/platform-browser": "^2.0.0",
     "@angular/platform-browser-dynamic": "^2.0.0",
     "@angular/platform-server": "^2.0.0",
-    "ionic-angular": "^2.0.0-rc.1",
-    "ionicons" : "^3.0.0",
     "@ionic/storage": "^1.0.3",
+    "ionic-angular": "^2.0.0-rc.1",
     "ionic-native": "^2.2.3",
+    "ionicons": "^3.0.0",
     "rxjs": "5.0.0-beta.12",
     "zone.js": "^0.6.21"
   },
-   "devDependencies": {
+  "devDependencies": {
     "@ionic/app-scripts": "^0.0.33",
     "typescript": "^2.0.3"
-  }
+  },
 ```
 
 
