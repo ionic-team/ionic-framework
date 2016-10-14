@@ -9,7 +9,7 @@
   "dependencies": {
     "@angular/common": "^2.0.0",
     "@angular/compiler": "^2.0.0",
-    "@angular/compiler-cli": "^0.6.2",
+    "@angular/compiler-cli": "0.6.2",
     "@angular/core": "^2.0.0",
     "@angular/forms": "^2.0.0",
     "@angular/http": "^2.0.0",
@@ -19,12 +19,12 @@
     "ionic-angular": "^2.0.0-rc.1",
     "ionicons" : "^3.0.0",
     "@ionic/storage": "^1.0.3",
-    "ionic-native": "^2.0.3",
-    "rxjs": "^5.0.0-beta.12",
+    "ionic-native": "^2.2.3",
+    "rxjs": "5.0.0-beta.12",
     "zone.js": "^0.6.21"
   },
    "devDependencies": {
-    "@ionic/app-scripts": "^0.0.31",
+    "@ionic/app-scripts": "^0.0.33",
     "typescript": "^2.0.3"
   }
 ```
