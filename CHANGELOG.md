@@ -24,7 +24,7 @@
     "zone.js": "^0.6.21"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^0.0.33",
+    "@ionic/app-scripts": "^0.0.34",
     "typescript": "^2.0.3"
   },
 ```
