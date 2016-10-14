@@ -3,7 +3,7 @@
 
 ### Package.json Updates
 
-`package.json` has been upated to include Angular dependcies and the latest version of app-scripts. Please update your package.json to reflect these changes and then run `npm install`.
+`package.json` has been upated to include Angular dependencies and the latest version of app-scripts. Please update your package.json to reflect these changes and then run `npm install`.
 
 ```
   "dependencies": {
