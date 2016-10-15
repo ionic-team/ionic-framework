@@ -175,20 +175,17 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     ti.resolve = (hasCompleted: boolean, isAsync: boolean, enteringName: string, leavingName: string, direction: string) => {
-      this.setTransitioning(false);
-
       // transition has successfully resolved
       this._trnsId = null;
       resolve && resolve(hasCompleted, isAsync, enteringName, leavingName, direction);
       this._sbCheck();
 
       // let's see if there's another to kick off
+      this.setTransitioning(false);
       this._nextTrns();
     };
 
     ti.reject = (rejectReason: any, trns: Transition) => {
-      this.setTransitioning(false);
-
       // rut row raggy, something rejected this transition
       this._trnsId = null;
       this._queue.length = 0;
@@ -209,6 +206,7 @@ export class NavControllerBase extends Ion implements NavController {
 
       reject && reject(false, false, rejectReason);
 
+      this.setTransitioning(false);
       this._nextTrns();
     };
 
@@ -248,6 +246,8 @@ export class NavControllerBase extends Ion implements NavController {
     if (!ti) {
       return false;
     }
+    // set that this nav is actively transitioning
+    this.setTransitioning(true);
 
     // Get entering and leaving views
     const leavingView = this.getActive();
@@ -325,7 +325,6 @@ export class NavControllerBase extends Ion implements NavController {
 
   _postViewInit(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction, resolve: TransitionResolveFn) {
     const opts = ti.opts || {};
-
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
 
@@ -822,8 +821,8 @@ export class NavControllerBase extends Ion implements NavController {
   swipeBackProgress(stepValue: number) {
     if (this._sbTrns && this._sbGesture) {
       // continue to disable the app while actively dragging
-      this._app.setEnabled(false, ACTIVE_TRANSITION_MAX_TIME);
-      this.setTransitioning(true, ACTIVE_TRANSITION_MAX_TIME);
+      this._app.setEnabled(false, ACTIVE_TRANSITION_DEFAULT);
+      this.setTransitioning(true);
 
       // set the transition animation's progress
       this._sbTrns.progressStep(stepValue);
@@ -890,7 +889,7 @@ export class NavControllerBase extends Ion implements NavController {
     return (this._trnsTm > Date.now());
   }
 
-  setTransitioning(isTransitioning: boolean, durationPadding: number = 2000) {
+  setTransitioning(isTransitioning: boolean, durationPadding: number = ACTIVE_TRANSITION_DEFAULT) {
     this._trnsTm = (isTransitioning ? (Date.now() + durationPadding + ACTIVE_TRANSITION_OFFSET) : 0);
   }
 
@@ -962,5 +961,5 @@ export class NavControllerBase extends Ion implements NavController {
 let ctrlIds = -1;
 
 const DISABLE_APP_MINIMUM_DURATION = 64;
-const ACTIVE_TRANSITION_MAX_TIME = 5000;
+const ACTIVE_TRANSITION_DEFAULT = 5000;
 const ACTIVE_TRANSITION_OFFSET = 2000;

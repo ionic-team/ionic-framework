@@ -173,8 +173,8 @@ export class Content extends Ion {
     this._sbPadding = config.getBoolean('statusbarPadding', false);
 
     if (viewCtrl) {
-      viewCtrl._setContent(this);
-      viewCtrl._setContentRef(elementRef);
+      viewCtrl._setIONContent(this);
+      viewCtrl._setIONContentRef(elementRef);
     }
   }
 

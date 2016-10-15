@@ -6,6 +6,7 @@ import { Navbar } from '../components/navbar/navbar';
 import { NavControllerBase } from './nav-controller-base';
 import { NavOptions, ViewState } from './nav-util';
 import { NavParams } from './nav-params';
+import { Content } from '../components/content/content';
 
 
 /**
@@ -28,6 +29,8 @@ import { NavParams } from './nav-params';
 export class ViewController {
   private _cntDir: any;
   private _cntRef: ElementRef;
+  private _ionCntDir: Content;
+  private _ionCntRef: ElementRef;
   private _hdrDir: Header;
   private _ftrDir: Footer;
   private _isHidden: boolean = false;
@@ -308,7 +311,7 @@ export class ViewController {
   /**
    * @returns {component} Returns the Page's Content component reference.
    */
-  getContent() {
+  getContent(): any {
     return this._cntDir;
   }
 
@@ -324,6 +327,36 @@ export class ViewController {
    */
   contentRef(): ElementRef {
     return this._cntRef;
+  }
+
+  /**
+   * @private
+   */
+  _setIONContent(content: Content) {
+    this._setContent(content);
+    this._ionCntDir = content;
+  }
+
+  /**
+   * @private
+   */
+  getIONContent(): Content {
+    return this._ionCntDir;
+  }
+
+  /**
+   * @private
+   */
+  _setIONContentRef(elementRef: ElementRef) {
+    this._setContentRef(elementRef);
+    this._ionCntRef = elementRef;
+  }
+
+  /**
+   * @private
+   */
+  getIONContentRef(): ElementRef {
+    return this._ionCntRef;
   }
 
   /**

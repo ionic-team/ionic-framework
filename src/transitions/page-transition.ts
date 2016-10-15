@@ -24,8 +24,8 @@ export class PageTransition extends Transition {
    * DOM READ
    */
   readDimensions() {
-    const content = <Content>this.enteringView.getContent();
-    if (content && content instanceof Content) {
+    const content = <Content>this.enteringView.getIONContent();
+    if (content) {
       content.readDimensions();
     }
   }
@@ -34,8 +34,8 @@ export class PageTransition extends Transition {
    * DOM WRITE
    */
   writeDimensions() {
-    const content = <Content>this.enteringView.getContent();
-    if (content && content instanceof Content) {
+    const content = <Content>this.enteringView.getIONContent();
+    if (content) {
       content.writeDimensions();
     }
   }

@@ -421,8 +421,8 @@ export class Tabs extends Ion implements AfterViewInit {
       // to refresh the tabbar and content dimensions to be sure
       // they're lined up correctly
       if (alreadyLoaded && selectedPage) {
-        let content = <Content>selectedPage.getContent();
-        if (content && content instanceof Content) {
+        let content = <Content>selectedPage.getIONContent();
+        if (content) {
           content.resize();
         }
       }
