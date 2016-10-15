@@ -20,14 +20,14 @@ Run `gulp build` or `gulp watch` to watch for changes.
 
 ### Building & Running e2e Tests
 
-1. Run `gulp e2e` or `gulp watch.e2e` to watch for changes.
-2. Navigate to `http://localhost:8000/dist/e2e`
+1. Run `gulp e2e` or `gulp e2e.watch` with a folder passed to watch for changes.
+2. Navigate to `http://localhost:8080/dist/e2e`
 
 
 ### Building & Running API Demos
 
-1. Run `gulp demos` or `gulp watch.demos` to watch for changes.
-2. Navigate to `http://localhost:8000/dist/demos`
+1. Run `gulp demos` or `gulp demos.watch` with a folder passed to watch for changes.
+2. Navigate to `http://localhost:80808080/dist/demos`
 
 
 ### Building API Docs
@@ -62,39 +62,50 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 ### Running Tests
 
-1. `gulp karma`
+1. `gulp validate`
+
 
 ### Running Sass Linter
 
-1. See the [Sass Guidelines](https://github.com/driftyco/ionic/blob/master/CONTRIBUTING.md#sass-guidelines) for editing Sass and running the linter.
+**Requires Ruby. Skip this step entirely if you are unable to install Ruby.**
+
+1. See the [Sass Guidelines](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md#sass-changes) for editing the Sass.
+2. Install the linter: `gem install scss_lint`
+3. Run `gulp lint.sass` and fix any linter errors.
+
+
+### Running TypeScript Linter
+
+1. Run `gulp lint.ts` and fix any errors.
+
 
 # Releasing
 
 ### Releasing Ionic Source
 
-1. Run `gulp prerelease`
-  - Pulls latest
-  - updates package.json minor version
-  - updates changelog
-  - builds npm package files into dist
-
-2. Verify that changelog changes and package.json update are correct (`git status` && `git diff`)
-3. Run [snapshot](#running-snapshot) & update if necessary
-4. Commit and push
-5. Run `gulp release`
-  - publishes to npm
+1. Run [snapshot](#running-snapshot) & verify all changes are intentional, update master snapshot if so
+2. Run `gulp release`
+  - Pulls latest from GitHub
+  - Runs `gulp validate`
+  - Builds npm package files into dist
+  - Updates package.json version
+  - Removes debug statements
+  - Updates changelog
+  - Publishes to npm
   - Creates a new tag and release on Github
-
-6. Sit back and have a beer :beer: (or wine :wine_glass:)
-
+3. Verify that the `changelog` changes are accurate and the `package.json` version is correct (`git status` && `git diff`)
+4. Commit and push
+5. Sit back and have a beer :beers: (or wine :wine_glass:)
 
 ### Publish a nightly release
-1. Run `gulp publish.nightly`
-  - Pulls latest
-  - builds npm package files into dist
-  - updates package.json to a nightly version for publish: 0.1.0-beta.0 results in 0.1.0-beta.0-r8e7684t
-  - publishes to NPM using the nightly tag
+1. Run `gulp nightly`
+  - Pulls latest from GitHub
+  - Runs `gulp validate`
+  - Builds npm package files into dist
+  - Removes debug statements
+  - Publishes to npm using the `nightly` tag with the date/time of publish added to the version: `2.0.0-rc.0` results in `2.0.0-rc.0-201610131811`
 2. `npm install ionic-angular@nightly` will now install the latest nightly release
+3. Run `npm view ionic-angular` to see the latest nightly release
 
 
 ### Releasing Component Demos

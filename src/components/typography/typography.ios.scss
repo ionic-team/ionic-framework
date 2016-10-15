@@ -1,20 +1,10 @@
-@import "./typography";
 
 // iOS Typography
 // --------------------------------------------------
 
-p {
-  color: $paragraph-ios-color;
-}
-
-a {
-  color: $link-ios-color;
-}
-
-
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  .text-#{$color-name} {
+  .text-ios-#{$color-name} {
     color: $color-base;
   }
 

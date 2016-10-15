@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Input/Textarea Wrapper
 // --------------------------------------------------
@@ -32,6 +32,7 @@ ion-textarea {
 
 .text-input {
   @include placeholder();
+  @include appearance(none);
 
   display: inline-block;
 
@@ -43,8 +44,6 @@ ion-textarea {
   border: 0;
   border-radius: 0;
   background: transparent;
-
-  -webkit-appearance: none;
 }
 
 textarea.text-input {

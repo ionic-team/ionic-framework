@@ -1,11 +1,10 @@
-@import "./spinner";
 
 // iOS Spinner
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  .spinner-#{$color-name} {
+  .spinner-ios-#{$color-name} {
 
     &.spinner-ios line,
     &.spinner-ios-small line,

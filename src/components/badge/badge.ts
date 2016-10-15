@@ -1,6 +1,7 @@
 import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { Ion } from '../ion';
 
 
 /**
@@ -13,43 +14,28 @@ import { Config } from '../../config/config';
 @Directive({
   selector: 'ion-badge'
 })
-export class Badge {
-  /** @internal */ 
-  _color: string;
+export class Badge extends Ion {
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
-  get color(): string {
-    return this._color;
-  }
-
-  set color(value: string) {
-    this._updateColor(value);
-  }
-
-  constructor(
-    config: Config,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
-  ) { }
-
-  /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
+  set color(val: string) {
+    this._setColor('badge', val);
   }
 
   /**
-   * @internal
+   * @input {string} The mode to apply to this component.
    */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `badge-${color}`, isAdd);
-    }
+  @Input()
+  set mode(val: string) {
+    this._setMode('badge', val);
   }
+
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+  }
+
 }

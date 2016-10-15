@@ -1,4 +1,4 @@
-@import "./badge";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Badge
 // --------------------------------------------------
@@ -13,7 +13,7 @@ $badge-wp-background-color:         color($colors-wp, primary) !default;
 $badge-wp-text-color:               color-contrast($colors-wp, $badge-wp-background-color) !default;
 
 
-ion-badge {
+.badge-wp {
   border-radius: $badge-wp-border-radius;
   color: $badge-wp-text-color;
   background-color: $badge-wp-background-color;
@@ -25,7 +25,7 @@ ion-badge {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .badge-#{$color-name} {
+  .badge-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

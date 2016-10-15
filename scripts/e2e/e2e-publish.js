@@ -4,7 +4,7 @@ module.exports = function(options) {
   var fs = require('fs');
   var path = require('path');
   var request = require('request');
-  var inputDir = path.join(__dirname, '../../dist');
+  var inputDir = path.join(__dirname, '../../dist/e2e/tests');
   var uploadQueue = [];
 
   var ignoreFiles = /(\/test\/|\/ts\/|\/q\/|\/ionic-site\/|\/docs\/|\/examples\/|\/inquirer\/|\/lodash\/|\/tooling\/|\/colors\/|\/bin\/|\.ts$|\.bin|\.map$|\.md$|\.git|\.scss$|\.yml$|\.yaml$|\.dart$|\.txt|\.npm|bower|DS_Store|LICENSE)/i;
@@ -13,17 +13,16 @@ module.exports = function(options) {
     fs.readdir(dir, function(err, list) {
 
       list.forEach(function(file) {
-        var url = urlPath + '/' + file
+        var url = urlPath + '/' + file;
 
-        if (ignoreFiles.test(url)) {
-          return;
-        }
 
         fs.stat(dir + '/' + file, function(err, stat) {
           if (stat && stat.isDirectory()) {
             uploadFiles(dir + '/' + file, urlPath + '/' + file);
           } else {
-            uploadFile(url, dir + '/' + file);
+            if ( shouldProcessPath (url) ){
+              uploadFile(url, dir + '/' + file);
+            }
           }
         });
 
@@ -122,6 +121,17 @@ module.exports = function(options) {
         }
       }
     );
+  }
+
+  function shouldProcessPath(urlPath) {
+    if ( urlPath && urlPath.length > 0 ) {
+      var cleanedUpString = urlPath.substring(1);
+      var tokens = cleanedUpString.split('/');
+      // {component}/test/{testName}/{file}
+      var extension = path.extname(cleanedUpString);
+      return tokens && tokens.length > 3 && tokens[1] === 'test' && ( extension === '.html' || extension === '.js' );
+    }
+    return false;
   }
 
   console.log('Uploading e2e tests:', options.testId);

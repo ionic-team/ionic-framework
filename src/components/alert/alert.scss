@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Alerts
 // --------------------------------------------------
@@ -22,10 +22,10 @@ ion-alert {
 
   align-items: center;
   justify-content: center;
+}
 
-  input {
-    width: 100%;
-  }
+ion-alert input {
+  width: 100%;
 }
 
 .alert-wrapper {
@@ -71,11 +71,11 @@ ion-alert {
   display: flex;
 
   flex-direction: row;
+}
 
-  &.vertical {
-    flex-direction: column;
-    flex-wrap: nowrap;
-  }
+.alert-button-group-vertical {
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 .alert-button {
@@ -89,6 +89,8 @@ ion-alert {
 }
 
 .alert-tappable {
+  @include appearance(none);
+
   margin: 0;
   padding: 0;
 
@@ -98,6 +100,4 @@ ion-alert {
   line-height: initial;
   text-align: left;
   background: transparent;
-
-  -webkit-appearance: none;
 }

@@ -1,7 +1,7 @@
-import { pointerCoord, Coordinates } from '../util/dom';
+import { PointerCoordinates } from '../util/dom';
 
 interface Point {
-  coord: Coordinates;
+  coord: PointerCoordinates;
   duration: number;
 }
 
@@ -121,7 +121,7 @@ export class Simulate {
   }
 
 
-  private newPoint(coord: Coordinates, duration: number) {
+  private newPoint(coord: PointerCoordinates, duration: number) {
     this.points.push({
       coord: coord,
       duration: duration,
@@ -149,13 +149,13 @@ function randomAngle(maxAngle: number): number {
   return (Math.random() * maxAngle * 2) - maxAngle;
 }
 
-function distance(a: Coordinates, b: Coordinates): number {
+function distance(a: PointerCoordinates, b: PointerCoordinates): number {
   let deltaX = a.x - b.x;
   let deltaY = a.y - a.y;
   return Math.hypot(deltaX, deltaY);
 }
 
-function parseCoordinates(coord: Coordinates | number, y?: number): Coordinates {
+function parseCoordinates(coord: PointerCoordinates | number, y?: number): PointerCoordinates {
   if (typeof coord === 'number') {
     return { x: coord, y: y };
   }

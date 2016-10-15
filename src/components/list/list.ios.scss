@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./list";
+@import "../../themes/ionic.globals.ios";
 
 // iOS List
 // --------------------------------------------------
@@ -15,176 +14,137 @@ $list-inset-ios-margin-bottom:        16px !default;
 $list-inset-ios-margin-left:          16px !default;
 $list-inset-ios-border-radius:        4px !default;
 
-$list-ios-header-padding-left:             $item-ios-padding-left !default;
+$list-ios-header-padding-left:        $item-ios-padding-left !default;
 $list-ios-header-font-size:           1.2rem !default;
 $list-ios-header-font-weight:         500 !default;
 $list-ios-header-letter-spacing:      .1rem !default;
 $list-ios-header-color:               #333 !default;
+$list-ios-header-background-color:    transparent !default;
 
 
-//
-// DEFAULT LIST
-//
+// iOS Default List
+// --------------------------------------------------
 
-ion-list-header {
+.list-ios {
+  margin: -1px $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
+}
+
+.list-ios > .item-block:first-child {
+  border-top: $hairlines-width solid $list-ios-border-color;
+}
+
+.list-ios > .item-block:last-child,
+.list-ios > .item-wrapper:last-child .item-block {
+  border-bottom: $hairlines-width solid $list-ios-border-color;
+}
+
+.list-ios > .item-block:last-child .item-inner,
+.list-ios > .item-wrapper:last-child .item-block .item-inner {
+  border-bottom: 0;
+}
+
+.list-ios .item-block .item-inner {
+  border-bottom: $hairlines-width solid $list-ios-border-color;
+}
+
+// If the item has the no-lines attribute remove the bottom border from:
+// the item itself (for last-child items)
+// the item-inner class (if it is not last)
+.list-ios .item[no-lines],
+.list-ios .item[no-lines] .item-inner, {
+  border-width: 0;
+}
+
+.list-ios ion-item-options {
+  border-bottom: $hairlines-width solid $list-ios-border-color;
+}
+
+.list-ios ion-item-options .button {
+  display: inline-flex;
+
+  align-items: center;
+
+  margin: 0;
+
+  height: 100%;
+  min-height: 100%;
+
+  border: 0;
+  border-radius: 0;
+
+  box-sizing: border-box;
+}
+
+.list-ios ion-item-options .button::before {
+  margin: 0 auto;
+}
+
+.list-ios:not([inset]) + .list-ios:not([inset]) ion-list-header {
+  margin-top: -$list-ios-margin-top;
+  padding-top: 0;
+}
+
+
+// iOS Inset List
+// --------------------------------------------------
+
+.list-ios[inset] {
+  margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
+
+  border-radius: $list-inset-ios-border-radius;
+}
+
+.list-ios[inset] ion-list-header {
+  background-color: $list-ios-background-color;
+}
+
+.list-ios[inset] .item {
+  border-bottom: 1px solid $list-ios-border-color;
+}
+
+.list-ios[inset] .item-inner {
+  border-bottom: 0;
+}
+
+.list-ios[inset] > .item:first-child,
+.list-ios[inset] > .item-wrapper:first-child .item {
+  border-top: 0;
+}
+
+.list-ios[inset] > .item:last-child,
+.list-ios[inset] > .item-wrapper:last-child .item {
+  border-bottom: 0;
+}
+
+.list-ios[inset] + ion-list[inset] {
+  margin-top: 0;
+}
+
+
+// iOS No Lines List
+// --------------------------------------------------
+
+.list-ios[no-lines] ion-list-header,
+.list-ios[no-lines] ion-item-options,
+.list-ios[no-lines] .item,
+.list-ios[no-lines] .item .item-inner {
+  border-width: 0;
+}
+
+
+// iOS List Header
+// --------------------------------------------------
+
+.list-header-ios {
   position: relative;
 
   padding-left: $list-ios-header-padding-left;
 
-  border-bottom: 1px solid $list-ios-border-color;
+  border-bottom: $hairlines-width solid $list-ios-border-color;
   font-size: $list-ios-header-font-size;
   font-weight: $list-ios-header-font-weight;
   letter-spacing: $list-ios-header-letter-spacing;
   text-transform: uppercase;
   color: $list-ios-header-color;
-}
-
-ion-list {
-  margin: -1px $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
-
-  > .item:first-child {
-    border-top: 1px solid $list-ios-border-color;
-  }
-
-  > .item:last-child,
-  > .item-wrapper:last-child .item {
-    border-bottom: 1px solid $list-ios-border-color;
-  }
-
-  > .item:last-child,
-  > .item-wrapper:last-child {
-    .item-inner {
-      border-bottom: 0;
-    }
-  }
-
-  .item .item-inner {
-    border-bottom: 1px solid $list-ios-border-color;
-  }
-
-  // If the item has the no-lines attribute remove the bottom border from:
-  // the item itself (for last-child items)
-  // the item-inner class (if it is not last)
-  .item[no-lines],
-  .item[no-lines] .item-inner, {
-    border-width: 0;
-  }
-
-  ion-item-options {
-    border-bottom: 1px solid $list-ios-border-color;
-  }
-
-  ion-item-options button,
-  ion-item-options [button] {
-    display: inline-flex;
-
-    align-items: center;
-
-    margin: 0;
-
-    height: 100%;
-    min-height: 100%;
-
-    border: 0;
-    border-radius: 0;
-
-    box-sizing: border-box;
-
-    &::before {
-      margin: 0 auto;
-    }
-  }
-}
-
-ion-list + ion-list {
-  ion-list-header {
-    margin-top: -$list-ios-margin-top;
-    padding-top: 0;
-  }
-}
-
-&.hairlines {
-
-  ion-list-header {
-    border-bottom-width: $hairlines-width;
-  }
-
-  ion-list {
-
-    ion-item-options {
-      border-width: $hairlines-width;
-    }
-
-    .item .item-inner {
-      border-width: $hairlines-width;
-    }
-
-    > .item:first-child {
-      border-top-width: $hairlines-width;
-    }
-
-    > .item:last-child,
-    > .item-wrapper:last-child .item {
-      border-bottom-width: $hairlines-width;
-    }
-  }
-
-}
-
-
-//
-// INSET LIST
-//
-
-ion-list[inset] {
-  margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
-
-  border-radius: $list-inset-ios-border-radius;
-
-  ion-list-header {
-    background-color: $list-ios-background-color;
-  }
-
-  .item {
-    border-bottom: 1px solid $list-ios-border-color;
-
-    .item-inner {
-      border-bottom: 0;
-    }
-  }
-
-  > .item:first-child,
-  > .item-wrapper:first-child .item {
-    border-top: 0;
-  }
-
-  > .item:last-child,
-  > .item-wrapper:last-child .item {
-    border-bottom: 0;
-  }
-}
-
-ion-list[inset] + ion-list[inset] {
-  margin-top: 0;
-}
-
-&.hairlines ion-list[inset] {
-  .item {
-    border-width: $hairlines-width;
-  }
-}
-
-
-//
-// NO LINES LIST
-//
-
-ion-list[no-lines],
-&.hairlines ion-list[no-lines] {
-  ion-list-header,
-  ion-item-options,
-  .item,
-  .item .item-inner {
-    border-width: 0;
-  }
+  background: $list-ios-header-background-color;
 }

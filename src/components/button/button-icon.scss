@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Button Icons
 // --------------------------------------------------
@@ -23,7 +23,7 @@
   padding-left: .4em;
 }
 
-[icon-only] {
+.button[icon-only] {
   padding: 0;
 
   min-width: .9em;

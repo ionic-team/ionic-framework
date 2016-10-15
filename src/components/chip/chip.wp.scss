@@ -1,4 +1,3 @@
-@import "./chip";
 
 // Windows Chip
 // --------------------------------------------------
@@ -31,7 +30,7 @@ $chip-wp-icon-background-color:      color($colors-wp, primary) !default;
 $chip-wp-icon-text-color:            color-contrast($colors-wp, $chip-wp-icon-background-color) !default;
 
 
-ion-chip {
+.chip-wp {
   margin: $chip-wp-margin;
 
   height: $chip-wp-height;
@@ -41,28 +40,29 @@ ion-chip {
   line-height: $chip-wp-height;
   color: $chip-wp-text-color;
   background: $chip-wp-background-color;
-
-  > ion-label {
-    margin: $chip-wp-label-margin;
-  }
-
-  > ion-icon {
-    color: $chip-wp-icon-text-color;
-    background-color: $chip-wp-icon-background-color;
-  }
-
-  .button {
-    border: 0;
-  }
 }
+
+.chip-wp > ion-label {
+  margin: $chip-wp-label-margin;
+}
+
+.chip-wp > ion-icon {
+  color: $chip-wp-icon-text-color;
+  background-color: $chip-wp-icon-background-color;
+}
+
+.chip-wp .button {
+  border: 0;
+}
+
 
 // Generate Windows Chip Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .chip-#{$color-name},
-  ion-chip .icon-#{$color-name} {
+  .chip-wp-#{$color-name},
+  .chip-wp .icon-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

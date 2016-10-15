@@ -1,4 +1,4 @@
 
 it('should navigate to details', function() {
-  element(by.css('.e2eSearchbarNavItem')).click();
+  element(by.css('.e2eSearchbarNavItem:first-child')).click();
 });

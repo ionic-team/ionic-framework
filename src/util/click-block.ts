@@ -11,7 +11,7 @@ const DEFAULT_EXPIRE = 330;
  * @private
  */
 @Directive({
-  selector: 'click-block'
+  selector: '.click-block'
 })
 export class ClickBlock {
   private _tmrId: number;
@@ -24,7 +24,7 @@ export class ClickBlock {
     private elementRef: ElementRef,
     private renderer: Renderer
   ) {
-    app.clickBlock = this;
+    app._clickBlock = this;
     this.isEnabled = config.getBoolean('clickBlock', true);
   }
 

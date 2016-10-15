@@ -1,5 +1,4 @@
-@import "../../globals.core";
-@import "./loading";
+@import "../../themes/ionic.globals";
 
 // Material Design Loading Indicator
 // --------------------------------------------------
@@ -22,7 +21,7 @@ $loading-md-spinner-crescent-color:    $loading-md-spinner-color !default;
 $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 
 
-.loading-wrapper {
+.loading-md .loading-wrapper {
   padding: $loading-md-padding;
 
   max-width: $loading-md-max-width;
@@ -39,7 +38,7 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 // Material Design Loading Content
 // -----------------------------------------
 
-.loading-spinner + .loading-content {
+.loading-md .loading-spinner + .loading-content {
   margin-left: 16px;
 }
 
@@ -47,25 +46,23 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 // Material Design Loading Spinner fill colors
 // -----------------------------------------
 
-.loading-spinner {
-  .spinner-ios line,
-  .spinner-ios-small line {
-    stroke: $loading-md-spinner-ios-color;
-  }
+.loading-md .spinner-ios line,
+.loading-md .spinner-ios-small line {
+  stroke: $loading-md-spinner-ios-color;
+}
 
-  .spinner-bubbles circle {
-    fill: $loading-md-spinner-bubbles-color;
-  }
+.loading-md .spinner-bubbles circle {
+  fill: $loading-md-spinner-bubbles-color;
+}
 
-  .spinner-circles circle {
-    fill: $loading-md-spinner-circles-color;
-  }
+.loading-md .spinner-circles circle {
+  fill: $loading-md-spinner-circles-color;
+}
 
-  .spinner-crescent circle {
-    stroke: $loading-md-spinner-crescent-color;
-  }
+.loading-md .spinner-crescent circle {
+  stroke: $loading-md-spinner-crescent-color;
+}
 
-  .spinner-dots circle {
-    fill: $loading-md-spinner-dots-color;
-  }
+.loading-md .spinner-dots circle {
+  fill: $loading-md-spinner-dots-color;
 }

@@ -1,19 +1,16 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { DomSanitizationService } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
-import { Animation } from '../../animations/animation';
-import { Backdrop } from '../backdrop/backdrop';
 import { cancelRaf, pointerCoord, raf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString } from '../../util/util';
 import { Config } from '../../config/config';
 import { Key } from '../../util/key';
-import { NavParams } from '../nav/nav-params';
+import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
-import { Transition, TransitionOptions } from '../../transitions/transition';
+import { Haptic } from '../../util/haptic';
 import { UIEventManager } from '../../util/ui-event-manager';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -21,16 +18,21 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: '.picker-col',
-  template: `
-    <div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>
-    <div class="picker-opts" #colEle [style.width]="col.optionsWidth">
-      <button ion-button="picker-opt" *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" [style.transitionDuration]="o._dur" [style.webkitTransform]="o._trans" [style.webkitTransitionDuration]="o._dur" [class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" (click)="optClick($event, i)" type="button">
-        {{o.text}}
-      </button>
-    </div>
-    <div *ngIf="col.suffix" class="picker-suffix" [style.width]="col.suffixWidth">{{col.suffix}}</div>
-  `,
-  directives: [NgFor, NgIf],
+  template:
+    '<div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>' +
+    '<div class="picker-opts" #colEle [style.width]="col.optionsWidth">' +
+      '<button *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" ' +
+              '[style.transitionDuration]="o._dur" ' +
+              '[style.webkitTransform]="o._trans" ' +
+              '[style.webkitTransitionDuration]="o._dur" ' +
+              '[class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" ' +
+              '(click)="optClick($event, i)" ' +
+              'type="button" ' +
+              'ion-button="picker-opt">' +
+        '{{o.text}}' +
+      '</button>' +
+    '</div>' +
+    '<div *ngIf="col.suffix" class="picker-suffix" [style.width]="col.suffixWidth">{{col.suffix}}</div>',
   host: {
     '[style.min-width]': 'col.columnWidth',
     '[class.picker-opts-left]': 'col.align=="left"',
@@ -52,12 +54,13 @@ export class PickerColumnCmp {
   maxY: number;
   rotateFactor: number;
   lastIndex: number;
+  lastTempIndex: number;
   receivingEvents: boolean = false;
   events: UIEventManager = new UIEventManager();
 
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(config: Config, private elementRef: ElementRef, private _sanitizer: DomSanitizationService) {
+  constructor(config: Config, private elementRef: ElementRef, private _sanitizer: DomSanitizer, private _haptic: Haptic) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
   }
 
@@ -113,6 +116,9 @@ export class PickerColumnCmp {
 
     this.minY = (minY * this.optHeight * -1);
     this.maxY = (maxY * this.optHeight * -1);
+
+    this._haptic.gestureSelectionStart();
+
     return true;
   }
 
@@ -145,6 +151,14 @@ export class PickerColumnCmp {
     }
 
     this.update(y, 0, false, false);
+
+    let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+    if (currentIndex !== this.lastTempIndex) {
+      // Trigger a haptic event for physical feedback that the index has changed
+      this._haptic.gestureSelectionChanged();
+    }
+    this.lastTempIndex = currentIndex;
+
   }
 
   pointerEnd(ev: UIEvent) {
@@ -208,6 +222,8 @@ export class PickerColumnCmp {
     if (isNaN(this.y) || !this.optHeight) {
       // fallback in case numbers get outta wack
       this.update(y, 0, true, true);
+      this._haptic.gestureSelectionEnd();
+
 
     } else if (Math.abs(this.velocity) > 0) {
       // still decelerating
@@ -229,11 +245,12 @@ export class PickerColumnCmp {
         this.velocity = 0;
       }
 
-      console.log(`decelerate y: ${y}, velocity: ${this.velocity}, optHeight: ${this.optHeight}`);
+      // console.debug(`decelerate y: ${y}, velocity: ${this.velocity}, optHeight: ${this.optHeight}`);
 
       var notLockedIn = (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1);
 
       this.update(y, 0, true, !notLockedIn);
+
 
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
@@ -246,9 +263,17 @@ export class PickerColumnCmp {
 
       // create a velocity in the direction it needs to scroll
       this.velocity = (currentPos > (this.optHeight / 2) ? 1 : -1);
+      this._haptic.gestureSelectionEnd();
 
       this.decelerate();
     }
+
+    let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+    if (currentIndex !== this.lastTempIndex) {
+      // Trigger a haptic event for physical feedback that the index has changed
+      this._haptic.gestureSelectionChanged();
+    }
+    this.lastTempIndex = currentIndex;
   }
 
   optClick(ev: UIEvent, index: number) {
@@ -344,7 +369,6 @@ export class PickerColumnCmp {
 }
 
 
-
 /**
  * @private
  */
@@ -367,18 +391,18 @@ export class PickerColumnCmp {
       </div>
     </div>
   `,
-  directives: [Backdrop, NgClass, NgFor, PickerColumnCmp],
   host: {
     'role': 'dialog'
   },
   encapsulation: ViewEncapsulation.None,
 })
 export class PickerCmp {
-  @ViewChildren(PickerColumnCmp) private _cols: QueryList<PickerColumnCmp>;
-  private d: PickerOptions;
-  private enabled: boolean;
-  private lastClick: number;
-  private id: number;
+  @ViewChildren(PickerColumnCmp) _cols: QueryList<PickerColumnCmp>;
+  d: PickerOptions;
+  enabled: boolean;
+  lastClick: number;
+  id: number;
+  mode: string;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -388,6 +412,8 @@ export class PickerCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
+    this.mode = _config.get('mode');
+    renderer.setElementClass(_elementRef.nativeElement, `picker-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
@@ -399,7 +425,7 @@ export class PickerCmp {
     this.lastClick = 0;
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     // normalize the data
     let data = this.d;
 
@@ -452,14 +478,14 @@ export class PickerCmp {
     });
   }
 
-  private _colChange(selectedOption: PickerColumnOption) {
+  _colChange(selectedOption: PickerColumnOption) {
     // one of the columns has changed its selected index
     var picker = <Picker>this._viewCtrl;
     picker.ionChange.emit(this.getSelected());
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  _keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
       if (ev.keyCode === Key.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
@@ -541,44 +567,6 @@ export class PickerCmp {
     return selected;
   }
 }
-
-
-/**
- * Animations for pickers
- */
-class PickerSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
-
-    backdrop.fromTo('opacity', 0.01, 0.26);
-    wrapper.fromTo('translateY', '100%', '0%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('picker-slide-in', PickerSlideIn);
-
-
-class PickerSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
-
-    backdrop.fromTo('opacity', 0.26, 0);
-    wrapper.fromTo('translateY', '0%', '100%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('picker-slide-out', PickerSlideOut);
-
 
 let pickerIds = -1;
 const DECELERATION_FRICTION = 0.97;

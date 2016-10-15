@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Range
 // --------------------------------------------------
@@ -15,10 +15,10 @@
 
 .item-range ion-range {
   width: 100%;
+}
 
-  ion-label {
-    align-self: center;
-  }
+.item-range ion-range ion-label {
+  align-self: center;
 }
 
 ion-range {
@@ -26,17 +26,17 @@ ion-range {
   display: flex;
 
   align-items: center;
+}
 
-  ion-label {
-    flex: initial;
-  }
+ion-range ion-label {
+  flex: initial;
+}
 
-  ion-icon {
-    min-height: 2.4rem;
+ion-range ion-icon {
+  min-height: 2.4rem;
 
-    font-size: 2.4rem;
-    line-height: 1;
-  }
+  font-size: 2.4rem;
+  line-height: 1;
 }
 
 .range-slider {

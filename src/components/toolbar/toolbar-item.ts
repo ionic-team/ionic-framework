@@ -1,6 +1,8 @@
-import { Directive, ElementRef, Optional, forwardRef, Inject, ContentChildren } from '@angular/core';
+import { ContentChildren, Directive, ElementRef, forwardRef, Optional, Inject, Renderer } from '@angular/core';
 
 import { Button } from '../button/button';
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
 import { Navbar } from '../navbar/navbar';
 import { Toolbar } from './toolbar';
 
@@ -11,16 +13,19 @@ import { Toolbar } from './toolbar';
 @Directive({
   selector: 'ion-buttons,[menuToggle]'
 })
-export class ToolbarItem {
+export class ToolbarItem extends Ion {
   inToolbar: boolean;
 
   constructor(
+    config: Config,
     elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() toolbar: Toolbar,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
-    toolbar && toolbar.addItemRef(elementRef);
-    navbar && navbar.addItemRef(elementRef);
+    super(config, elementRef, renderer);
+
+    this._setMode('bar-buttons', config.get('mode'));
     this.inToolbar = !!(toolbar || navbar);
   }
 

@@ -1,7 +1,8 @@
-import { pointerCoord, Coordinates } from '../util/dom';
+import { PointerCoordinates } from '../util/dom';
+
 
 export class PanRecognizer {
-  private startCoord: Coordinates;
+  private startCoord: PointerCoordinates;
   private dirty: boolean = false;
   private threshold: number;
   private maxCosine: number;
@@ -14,14 +15,14 @@ export class PanRecognizer {
     this.threshold = threshold * threshold;
   }
 
-  start(coord: Coordinates) {
+  start(coord: PointerCoordinates) {
     this.startCoord = coord;
     this._angle = 0;
     this._isPan = 0;
     this.dirty = true;
   }
 
-  detect(coord: Coordinates): boolean {
+  detect(coord: PointerCoordinates): boolean {
     if (!this.dirty) {
       return false;
     }

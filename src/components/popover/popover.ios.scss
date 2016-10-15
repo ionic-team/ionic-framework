@@ -1,5 +1,4 @@
-@import "../../globals.core";
-@import "./popover";
+@import "../../themes/ionic.globals";
 
 // iOS Popover
 // --------------------------------------------------
@@ -17,7 +16,7 @@ $popover-ios-item-background:           $popover-ios-background !default;
 $popover-ios-arrow-background:          $popover-ios-background !default;
 
 
-.popover-content {
+.popover-ios .popover-content {
   width: $popover-ios-width;
   min-width: $popover-ios-min-width;
   min-height: $popover-ios-min-height;
@@ -32,7 +31,7 @@ $popover-ios-arrow-background:          $popover-ios-background !default;
   }
 }
 
-.popover-content .item {
+.popover-ios .popover-content .item {
   background-color: $popover-ios-item-background;
 }
 
@@ -40,7 +39,7 @@ $popover-ios-arrow-background:          $popover-ios-background !default;
 // Popover Arrow
 // -----------------------------------------
 
-.popover-arrow {
+.popover-ios .popover-arrow {
   position: absolute;
   display: block;
 
@@ -48,30 +47,30 @@ $popover-ios-arrow-background:          $popover-ios-background !default;
 
   width: 20px;
   height: 10px;
-
-  &::after {
-    position: absolute;
-
-    top: 3px;
-    left: 3px;
-
-    z-index: $z-index-overlay-wrapper;
-
-    width: 14px;
-    height: 14px;
-
-    border-radius: 3px;
-    background-color: $popover-ios-arrow-background;
-    content: "";
-    transform: rotate(45deg);
-  }
 }
 
-.popover-bottom .popover-arrow {
+.popover-ios .popover-arrow::after {
+  position: absolute;
+
+  top: 3px;
+  left: 3px;
+
+  z-index: $z-index-overlay-wrapper;
+
+  width: 14px;
+  height: 14px;
+
+  border-radius: 3px;
+  background-color: $popover-ios-arrow-background;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.popover-ios.popover-bottom .popover-arrow {
   top: auto;
   bottom: -10px;
+}
 
-  &::after {
-    top: -6px;
-  }
+.popover-ios.popover-bottom .popover-arrow::after {
+  top: -6px;
 }

@@ -1,11 +1,21 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Item
 // --------------------------------------------------
 // Core structure only, dimensions belong in specific modes
+//
+// ".item" includes elements:
+//   ion-item
+//   [ion-item]
+//   ion-item-divider
+//   ion-list-header
+//
+// ".item-block" includes elements:
+//   ion-item
+//   [ion-item]
 
 
-.item {
+.item-block {
   display: flex;
   overflow: hidden;
 
@@ -57,7 +67,7 @@
 }
 
 .item[no-lines],
-.item[no-lines] .item-inner {
+.item.item[no-lines] .item-inner {
   border: 0;
 }
 
@@ -66,7 +76,7 @@ ion-item-group {
 }
 
 ion-item-divider {
-  z-index: 1000;
+  z-index: $z-index-item-divider;
   display: flex;
   overflow: hidden;
 
@@ -79,11 +89,11 @@ ion-item-divider {
   width: 100%;
 
   min-height: 30px;
+}
 
-  &[sticky] {
-    position: sticky;
-    top: 0;
-  }
+ion-item-divider[sticky] {
+  position: sticky;
+  top: 0;
 }
 
 [vertical-align-top],
@@ -91,6 +101,3 @@ ion-input.item {
   align-items: flex-start;
 }
 
-@import "item-media";
-@import "item-sliding";
-@import "item-reorder";

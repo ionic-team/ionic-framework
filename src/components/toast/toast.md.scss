@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./toast";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Toast
 // --------------------------------------------------
@@ -12,7 +11,7 @@ $toast-md-title-color:                           #fff !default;
 $toast-md-title-font-size:                       1.5rem !default;
 $toast-md-title-padding:                         19px 16px 17px !default;
 
-.toast-wrapper {
+.toast-md .toast-wrapper {
   position: absolute;
   right: 0;
   left: 0;
@@ -25,25 +24,25 @@ $toast-md-title-padding:                         19px 16px 17px !default;
   max-width: $toast-max-width;
 
   background: $toast-md-background;
-
-  &.toast-top {
-    top: 0;
-
-    transform: translate3d(0, -100%, 0);
-  }
-
-  &.toast-bottom {
-    bottom: 0;
-
-    transform: translate3d(0, 100%, 0);
-  }
-
-  &.toast-middle {
-    opacity: .01;
-  }
 }
 
-.toast-message {
+.toast-md .toast-wrapper.toast-top {
+  top: 0;
+
+  transform: translate3d(0, -100%, 0);
+}
+
+.toast-md .toast-wrapper.toast-bottom {
+  bottom: 0;
+
+  transform: translate3d(0, 100%, 0);
+}
+
+.toast-md .toast-wrapper.toast-middle {
+  opacity: .01;
+}
+
+.toast-md .toast-message {
   padding: $toast-md-title-padding;
 
   font-size: $toast-md-title-font-size;

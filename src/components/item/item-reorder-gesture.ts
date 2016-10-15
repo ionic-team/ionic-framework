@@ -1,7 +1,6 @@
-import { Item } from './item';
+import { PointerCoordinates, CSS, pointerCoord } from '../../util/dom';
 import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
 import { UIEventManager } from '../../util/ui-event-manager';
-import { closest, Coordinates, pointerCoord, CSS, nativeRaf } from '../../util/dom';
 
 
 const AUTO_SCROLL_MARGIN = 60;
@@ -15,7 +14,7 @@ export class ItemReorderGesture {
   private selectedItemEle: HTMLElement = null;
   private selectedItemHeight: number;
 
-  private offset: Coordinates;
+  private offset: PointerCoordinates;
   private lastToIndex: number;
   private lastYcoord: number;
   private lastScrollPosition: number;
@@ -35,6 +34,9 @@ export class ItemReorderGesture {
   }
 
   private onDragStart(ev: any): boolean {
+    if (this.selectedItemEle) {
+      return false;
+    }
     let reorderElement = ev.target;
     if (reorderElement.nodeName !== 'ION-REORDER') {
       return false;
@@ -91,7 +93,7 @@ export class ItemReorderGesture {
       if (overItem) {
         let toIndex = indexForItem(overItem);
         if (toIndex !== undefined && (toIndex !== this.lastToIndex || this.emptyZone)) {
-          let fromIndex = indexForItem(this.selectedItemEle);
+          let fromIndex = indexForItem(selectedItem);
           this.lastToIndex = toIndex;
           this.lastYcoord = posY;
           this.emptyZone = false;
@@ -104,16 +106,21 @@ export class ItemReorderGesture {
 
     // Update selected item position
     let ydiff = Math.round(posY - this.offset.y + scrollPosition);
-    selectedItem.style[CSS.transform] = `translateY(${ydiff}px)`;
+    (<any>selectedItem.style)[CSS.transform] = `translateY(${ydiff}px)`;
   }
 
-  private onDragEnd() {
-    if (!this.selectedItemEle) {
+  private onDragEnd(ev: any) {
+    let selectedItem = this.selectedItemEle;
+    if (!selectedItem) {
       return;
+    }
+    if (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
     }
 
     let toIndex = this.lastToIndex;
-    let fromIndex = indexForItem(this.selectedItemEle);
+    let fromIndex = indexForItem(selectedItem);
     let reorderInactive = () => {
       this.selectedItemEle.style.transition = '';
       this.selectedItemEle.classList.remove(ITEM_REORDER_ACTIVE);
@@ -121,7 +128,7 @@ export class ItemReorderGesture {
     };
 
     if (toIndex === fromIndex) {
-      this.selectedItemEle.style.transition = 'transform 200ms ease-in-out';
+      selectedItem.style.transition = 'transform 200ms ease-in-out';
       setTimeout(reorderInactive, 200);
     } else {
       reorderInactive();
@@ -129,8 +136,8 @@ export class ItemReorderGesture {
     this.reorderList.reorderEmit(fromIndex, toIndex);
   }
 
-  private itemForCoord(coord: Coordinates): HTMLElement {
-    return itemForPosition(this.offset.x - 100, coord.y);
+  private itemForCoord(coord: PointerCoordinates): HTMLElement {
+    return itemForPosition(this.offset.x - 100, coord.y, this.reorderList.getNativeElement());
   }
 
   private scroll(posY: number): number {
@@ -146,14 +153,14 @@ export class ItemReorderGesture {
    * @private
    */
   destroy() {
-    this.onDragEnd();
+    this.onDragEnd(null);
     this.events.unlistenAll();
     this.events = null;
     this.reorderList = null;
   }
 }
 
-function itemForPosition(x: number, y: number): HTMLElement {
+function itemForPosition(x: number, y: number, list: any): HTMLElement {
   let element = <HTMLElement>document.elementFromPoint(x, y);
-  return findReorderItem(element);
+  return findReorderItem(element, list);
 }

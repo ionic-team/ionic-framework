@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Buttons
 // --------------------------------------------------
@@ -11,7 +11,6 @@ $button-round-border-radius:      64px !default;
 
 
 .button {
-  @include user-select-none();
   @include appearance(none);
 
   position: relative;
@@ -31,6 +30,7 @@ $button-round-border-radius:      64px !default;
   transition: background-color, opacity 100ms linear;
 
   font-kerning: none;
+  user-select: none;
 }
 
 .button-inner {
@@ -68,10 +68,10 @@ button[disabled],
   clear: both;
 
   width: 100%;
+}
 
-  &::after {
-    clear: both;
-  }
+.button-block::after {
+  clear: both;
 }
 
 

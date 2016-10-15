@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./list";
+@import "../../themes/ionic.globals.md";
 
 // Material Design List
 // --------------------------------------------------
@@ -15,140 +14,136 @@ $list-inset-md-margin-bottom:    16px !default;
 $list-inset-md-margin-left:      16px !default;
 $list-inset-md-border-radius:    2px !default;
 
-$list-md-header-padding-left:         $item-md-padding-left !default;
+$list-md-header-padding-left:    $item-md-padding-left !default;
 $list-md-header-font-size:       1.4rem !default;
 $list-md-header-color:           #858585 !default;
 
 
-//
-// DEFAULT LIST
-//
+// Material Design Default List
+// --------------------------------------------------
 
-ion-list-header,
-ion-item-divider {
+.list-md {
+  margin: 0 $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
+}
+
+.list-md .item-block .item-inner {
+  border-bottom: 1px solid $list-md-border-color;
+}
+
+.list-md > .item-block:first-child,
+.list-md > .item-wrapper:first-child .item-block {
+  border-top: 1px solid $list-md-border-color;
+}
+
+.list-md > .item-block:last-child,
+.list-md > .item-wrapper:last-child .item-block {
+  border-bottom: 1px solid $list-md-border-color;
+}
+
+.list-md > .item-block:last-child,
+.list-md > .item-wrapper:last-child {
+  ion-label,
+  .item-inner {
+    border-bottom: 0;
+  }
+}
+
+.list-md > ion-input:last-child::after {
+  left: 0;
+}
+
+.list-md ion-item-options {
+  border-bottom: 1px solid $list-md-border-color;
+}
+
+.list-md ion-item-options .button {
+  display: inline-flex;
+
+  align-items: center;
+
+  margin: 1px 0;
+
+  height: calc(100% - 2px);
+
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+
+  box-sizing: border-box;
+}
+
+.list-md ion-item-options .button::before {
+  margin: 0 auto;
+}
+
+// If the item has the no-lines attribute remove the bottom border from:
+// the item itself (for last-child items)
+// the item-inner class (if it is not last)
+.list-md .item[no-lines],
+.list-md .item[no-lines] .item-inner {
+  border-width: 0;
+}
+
+.list-md + ion-list ion-list-header {
+  margin-top: -$list-md-margin-top;
+  padding-top: 0;
+}
+
+
+// Material Design Inset List
+// --------------------------------------------------
+
+.list-md[inset] {
+  margin: $list-inset-md-margin-top $list-inset-md-margin-right $list-inset-md-margin-bottom $list-inset-md-margin-left;
+
+  border-radius: $list-inset-md-border-radius;
+}
+
+.list-md[inset] .item:first-child {
+  border-top-width: 0;
+  border-top-left-radius: $list-inset-md-border-radius;
+  border-top-right-radius: $list-inset-md-border-radius;
+}
+
+.list-md[inset] .item:last-child {
+  border-bottom-width: 0;
+  border-bottom-left-radius: $list-inset-md-border-radius;
+  border-bottom-right-radius: $list-inset-md-border-radius;
+}
+
+.list-md[inset] .item-input {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.list-md[inset] + ion-list[inset] {
+  margin-top: 0;
+}
+
+.list-md[inset] ion-list-header {
+  background-color: $list-md-background-color;
+}
+
+
+// Material Design No Lines List
+// --------------------------------------------------
+
+.list-md[no-lines] .item-block,
+.list-md[no-lines] ion-item-options,
+.list-md[no-lines] .item .item-inner {
+  border-width: 0;
+}
+
+
+// Material Design List Header / Divider
+// --------------------------------------------------
+
+.list-header-md,
+.list-md ion-item-divider {
   margin-left: 0;
   padding-left: $list-md-header-padding-left;
 
   border-bottom: 1px solid $list-md-border-color;
   font-size: $list-md-header-font-size;
   color: $list-md-header-color;
-}
-
-ion-list {
-  margin: 0 $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
-
-  .item .item-inner {
-    border-bottom: 1px solid $list-md-border-color;
-  }
-
-  > .item:first-child,
-  > .item-wrapper:first-child .item {
-    border-top: 1px solid $list-md-border-color;
-  }
-
-  > .item:last-child,
-  > .item-wrapper:last-child .item {
-    border-bottom: 1px solid $list-md-border-color;
-  }
-
-  > .item:last-child,
-  > .item-wrapper:last-child {
-    ion-label,
-    .item-inner {
-      border-bottom: 0;
-    }
-  }
-
-  > ion-input:last-child::after {
-    left: 0;
-  }
-
-  ion-item-options {
-    border-bottom: 1px solid $list-md-border-color;
-  }
-
-  ion-item-options button,
-  ion-item-options [button] {
-    display: inline-flex;
-
-    align-items: center;
-
-    margin: 1px 0;
-
-    height: calc(100% - 2px);
-
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-
-    box-sizing: border-box;
-
-    &::before {
-      margin: 0 auto;
-    }
-  }
-
-  // If the item has the no-lines attribute remove the bottom border from:
-  // the item itself (for last-child items)
-  // the item-inner class (if it is not last)
-  .item[no-lines],
-  .item[no-lines] .item-inner {
-    border-width: 0;
-  }
-
-  + ion-list {
-    ion-list-header {
-      margin-top: -$list-md-margin-top;
-      padding-top: 0;
-    }
-  }
-}
-
-
-//
-// INSET LIST
-//
-
-ion-list[inset] {
-  margin: $list-inset-md-margin-top $list-inset-md-margin-right $list-inset-md-margin-bottom $list-inset-md-margin-left;
-
-  border-radius: $list-inset-md-border-radius;
-
-  .item:first-child {
-    border-top-width: 0;
-    border-top-left-radius: $list-inset-md-border-radius;
-    border-top-right-radius: $list-inset-md-border-radius;
-  }
-
-  .item:last-child {
-    border-bottom-width: 0;
-    border-bottom-left-radius: $list-inset-md-border-radius;
-    border-bottom-right-radius: $list-inset-md-border-radius;
-  }
-
-  .item-input {
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  + ion-list[inset] {
-    margin-top: 0;
-  }
-
-  ion-list-header {
-    background-color: $list-md-background-color;
-  }
-}
-
-
-//
-// NO LINES LIST
-//
-
-ion-list[no-lines] {
-  .item,
-  ion-item-options,
-  .item .item-inner {
-    border-width: 0;
-  }
 }

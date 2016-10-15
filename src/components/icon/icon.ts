@@ -1,6 +1,7 @@
-import { Directive, ElementRef, Renderer, Input } from '@angular/core';
+import { Directive, ElementRef, HostBinding, Input, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { Ion } from '../ion';
 
 
 /**
@@ -30,7 +31,7 @@ import { Config } from '../../config/config';
  * <ion-icon name="logo-twitter"></ion-icon>
  * ```
  *
- * @demo /docs/v2/demos/icon/
+ * @demo /docs/v2/demos/src/icon/
  * @see {@link /docs/v2/components#icons Icon Component Docs}
  *
  */
@@ -40,15 +41,19 @@ import { Config } from '../../config/config';
     'role': 'img'
   }
 })
-export class Icon {
-  private _isActive: any;
-  private _name: string = '';
-  private _ios: string = '';
-  private _md: string = '';
-  private _css: string = '';
-
-    /** @internal */ 
-  _color: string;
+export class Icon extends Ion {
+  /** @private */
+  _iconMode: string;
+  /** @private */
+  _isActive: any;
+  /** @private */
+  _name: string = '';
+  /** @private */
+  _ios: string = '';
+  /** @private */
+  _md: string = '';
+  /** @private */
+  _css: string = '';
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
@@ -57,22 +62,27 @@ export class Icon {
   get color(): string {
     return this._color;
   }
-
   set color(value: string) {
-    this._updateColor(value);
+    this._setColor('icon', value);
   }
 
   /**
-   * @private
+   * @input {string} The mode to apply to this component.
    */
-  mode: string;
+  @Input()
+  set mode(val: string) {
+    this._setMode('icon', val);
+  }
 
   constructor(
     config: Config,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
-    this.mode = config.get('iconMode');
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
+    this._iconMode = config.get('iconMode');
   }
 
   /**
@@ -80,7 +90,7 @@ export class Icon {
    */
   ngOnDestroy() {
     if (this._css) {
-      this._renderer.setElementClass(this._elementRef.nativeElement, this._css, false);
+      this.setElementClass(this._css, false);
     }
   }
 
@@ -96,9 +106,10 @@ export class Icon {
     if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
-      val = this.mode + '-' + val;
+      this._name = this._iconMode + '-' + val;
+    } else {
+      this._name = val;
     }
-    this._name = val;
     this.update();
   }
 
@@ -145,59 +156,49 @@ export class Icon {
   /**
    * @private
    */
-  update() {
-    let css = 'ion-';
-
-    if (this._ios && this.mode === 'ios') {
-      css += this._ios;
-
-    } else if (this._md && this.mode === 'md') {
-      css += this._md;
-
-    } else {
-      css += this._name;
-    }
-
-    if (this.mode === 'ios' && !this.isActive && css.indexOf('logo') < 0) {
-      css += '-outline';
-    }
-
-    if (this._css !== css) {
-      if (this._css) {
-        this._renderer.setElementClass(this._elementRef.nativeElement, this._css, false);
-      }
-      this._css = css;
-      this._renderer.setElementClass(this._elementRef.nativeElement, css, true);
-
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-label',
-          css.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
-    }
-  }
+  @HostBinding('class.hide') _hidden: boolean = false;
 
   /**
    * @private
-   * @param {string} add class name
    */
-  addClass(className: string) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
-  }
-
-   /**
-   * @internal
-   */
-  _updateColor(newColor: string) {
-    this._setElementColor(this._color, false);
-    this._setElementColor(newColor, true);
-    this._color = newColor;
-  }
-
-  /**
-   * @internal
-   */
-  _setElementColor(color: string, isAdd: boolean) {
-    if (color !== null && color !== '') {
-      this._renderer.setElementClass(this._elementRef.nativeElement, `icon-${color}`, isAdd);
+  update() {
+    let name;
+    if (this._ios && this._iconMode === 'ios') {
+      name = this._ios;
+    } else if (this._md && this._iconMode === 'md') {
+      name = this._md;
+    } else {
+      name = this._name;
     }
+    let hidden = this._hidden = (name === null);
+    if (hidden) {
+      return;
+    }
+
+    let iconMode = name.split('-', 2)[0];
+    if (
+      iconMode === 'ios' &&
+      !this.isActive &&
+      name.indexOf('logo-') < 0 &&
+      name.indexOf('-outline') < 0) {
+      name += '-outline';
+    }
+
+    let css = 'ion-' + name;
+    if (this._css === css) {
+      return;
+    }
+    if (this._css) {
+      this.setElementClass(this._css, false);
+    }
+    this._css = css;
+    this.setElementClass(css, true);
+
+    let label = name
+      .replace('ios-', '')
+      .replace('md-', '')
+      .replace('-', ' ');
+    this.setElementAttribute('aria-label', label);
   }
 
 }
