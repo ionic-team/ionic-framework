@@ -45,7 +45,12 @@ export class MenuContentGesture extends SlideEdgeGesture {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
     let stepValue = (slide.distance / z);
 
-    console.debug('menu gesture, onSlide', this.menu.side, 'distance', slide.distance, 'min', slide.min, 'max', slide.max, 'z', z, 'stepValue', stepValue);
+    console.debug('menu gesture, onSlide', this.menu.side,
+      'distance', slide.distance,
+      'min', slide.min,
+      'max', slide.max,
+      'z', z,
+      'stepValue', stepValue);
 
     ev.preventDefault();
     this.menu.swipeProgress(stepValue);
@@ -62,15 +67,16 @@ export class MenuContentGesture extends SlideEdgeGesture {
     let shouldCompleteLeft = (velocity <= 0)
       && (velocity < -0.2 || slide.delta < -z);
 
-    console.debug('menu gesture, onSlideEnd', this.menu.side);
-    console.debug('distance', slide.distance);
-    console.debug('delta', slide.delta);
-    console.debug('velocity', velocity);
-    console.debug('min', slide.min);
-    console.debug('max', slide.max);
-    console.debug('shouldCompleteLeft', shouldCompleteLeft);
-    console.debug('shouldCompleteRight', shouldCompleteRight);
-    console.debug('currentStepValue', currentStepValue);
+    console.debug('menu gesture, onSlideEnd', this.menu.side,
+      'distance', slide.distance,
+      'delta', slide.delta,
+      'velocity', velocity,
+      'min', slide.min,
+      'max', slide.max,
+      'shouldCompleteLeft', shouldCompleteLeft,
+      'shouldCompleteRight', shouldCompleteRight,
+      'currentStepValue', currentStepValue);
+
     this.menu.swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue);
   }
 

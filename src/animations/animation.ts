@@ -290,8 +290,6 @@ export class Animation {
   play(opts?: PlayOptions) {
     const dur = this.getDuration(opts);
 
-    // console.debug('Animation, play, duration', dur, 'easing', this._es);
-
     // this is the top level animation and is in full control
     // of when the async play() should actually kick off
     // if there is no duration then it'll set the TO property immediately
@@ -450,8 +448,6 @@ export class Animation {
 
     function onTransitionEnd(ev: any) {
       // congrats! a successful transition completed!
-      // console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName);
-
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();
 

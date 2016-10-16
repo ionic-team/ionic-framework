@@ -20,7 +20,6 @@ task('nightly', (done: (err: any) => void) => {
   runSequence('release.pullLatest',
               'validate',
               'release.prepareReleasePackage',
-              'release.removeDebugStatements',
               'release.publishNightly',
               done);
 });
@@ -30,32 +29,19 @@ task('release', (done: (err: any) => void) => {
               'validate',
               'release.prepareReleasePackage',
               'release.copyProdVersion',
-              'release.removeDebugStatements',
               'release.prepareChangelog',
               'release.publishNpmRelease',
               'release.publishGithubRelease',
               done);
 });
 
-task('release.removeDebugStatements', (done: Function) => {
-  glob(`${DIST_BUILD_ROOT}/**/*.js`, (err, filePaths) => {
-    if (err) {
-      done(err);
-    } else {
-      // can make async if it's slow but it's fine for now
-      for (let filePath of filePaths) {
-        const fileContent = readFileSync(filePath).toString();
-        const consoleFree = replaceAll(fileContent, 'console.debug', '// console.debug');
-        const cleanedJs = replaceAll(consoleFree, 'debugger;', '// debugger;');
-        writeFileSync(filePath, cleanedJs);
-      }
-    }
-  }, done());
+task('release.test', (done: (err: any) => void) => {
+  runSequence('validate',
+              'release.prepareReleasePackage',
+              'release.copyProdVersion',
+              done);
 });
 
-function replaceAll(input: string, tokenToReplace: string, replaceWith: string) {
-  return input.split(tokenToReplace).join(replaceWith);
-}
 
 task('release.publishGithubRelease', (done: Function) => {
 
@@ -190,7 +176,7 @@ task('release.sass', () => {
 });
 
 task('release.pullLatest', (done: Function) => {
-  exec('git status --porcelain', (err: Error, stdOut: string) =>{
+  exec('git status --porcelain', (err: Error, stdOut: string) => {
     if (err) {
       done(err);
     } else if ( stdOut && stdOut.length > 0) {

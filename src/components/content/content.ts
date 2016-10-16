@@ -8,7 +8,7 @@ import { nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
 import { ScrollView } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
 import { ViewController } from '../../navigation/view-controller';
-import { isTrueProperty } from '../../util/util';
+import { isTrueProperty, assert } from '../../util/util';
 
 
 /**
@@ -182,8 +182,11 @@ export class Content extends Ion {
    * @private
    */
   ngOnInit() {
-    this._fixedEle = this._elementRef.nativeElement.children[0];
-    this._scrollEle = this._elementRef.nativeElement.children[1];
+    let children = this._elementRef.nativeElement.children;
+    assert(children && children.length >= 2, 'content needs at least two children');
+
+    this._fixedEle = children[0];
+    this._scrollEle = children[1];
 
     this._zone.runOutsideAngular(() => {
       this._scroll = new ScrollView(this._scrollEle);
@@ -250,7 +253,8 @@ export class Content extends Ion {
   }
 
   _addListener(type: string, handler: any): Function {
-    if (!this._scrollEle) { return; }
+    assert(handler, 'handler must be valid');
+    assert(this._scrollEle, '_scrollEle must be valid');
 
     // ensure we're not creating duplicates
     this._scrollEle.removeEventListener(type, handler);
@@ -489,16 +493,18 @@ export class Content extends Ion {
 
     let ele: HTMLElement = this._elementRef.nativeElement;
     if (!ele) {
+      assert(true, 'ele should be valid');
       return;
     }
 
-    let parentEle: HTMLElement = ele.parentElement;
     let computedStyle: any;
-
-    for (var i = 0; i < parentEle.children.length; i++) {
-      ele = <HTMLElement>parentEle.children[i];
-
-      if (ele.tagName === 'ION-CONTENT') {
+    let tagName: string;
+    let parentEle: HTMLElement = ele.parentElement;
+    let children = parentEle.children;
+    for (var i = children.length - 1; i >= 0; i--) {
+      ele = <HTMLElement>children[i];
+      tagName = ele.tagName;
+      if (tagName === 'ION-CONTENT') {
         if (this._fullscreen) {
           computedStyle = getComputedStyle(ele);
           this._paddingTop = parsePxUnit(computedStyle.paddingTop);
@@ -507,10 +513,10 @@ export class Content extends Ion {
           this._paddingLeft = parsePxUnit(computedStyle.paddingLeft);
         }
 
-      } else if (ele.tagName === 'ION-HEADER') {
+      } else if (tagName === 'ION-HEADER') {
         this._headerHeight = ele.clientHeight;
 
-      } else if (ele.tagName === 'ION-FOOTER') {
+      } else if (tagName === 'ION-FOOTER') {
         this._footerHeight = ele.clientHeight;
         this._footerEle = ele;
       }
@@ -542,11 +548,13 @@ export class Content extends Ion {
   writeDimensions() {
     let scrollEle = this._scrollEle as any;
     if (!scrollEle) {
+      assert(true, 'this._scrollEle should be valid');
       return;
     }
 
     let fixedEle = this._fixedEle;
     if (!fixedEle) {
+      assert(true, 'this._fixedEle should be valid');
       return;
     }
 
