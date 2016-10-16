@@ -621,7 +621,7 @@ export class NavControllerBase extends Ion implements NavController {
       if (duration > DISABLE_APP_MINIMUM_DURATION) {
         // if this transition has a duration and this is the root transition
         // then set that the app is actively disabled
-        this._app.setEnabled(false, duration);
+        this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET);
       }
 
       // cool, let's do this, start the transition
@@ -802,7 +802,9 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   swipeBackStart() {
-    if (this.isTransitioning() || this._queue.length > 0) return;
+    if (this.isTransitioning() || this._queue.length > 0) {
+      return;
+    }
 
     // default the direction to "back";
     const opts: NavOptions = {
@@ -822,7 +824,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (this._sbTrns && this._sbGesture) {
       // continue to disable the app while actively dragging
       this._app.setEnabled(false, ACTIVE_TRANSITION_DEFAULT);
-      this.setTransitioning(true);
+      this.setTransitioning(true, ACTIVE_TRANSITION_DEFAULT);
 
       // set the transition animation's progress
       this._sbTrns.progressStep(stepValue);
