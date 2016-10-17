@@ -2,10 +2,9 @@ import { accessSync, F_OK, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 
 import * as glob from 'glob';
-import {dest, src, start, task} from 'gulp';
+import { dest, src, start, task } from 'gulp';
 import * as connect from 'gulp-connect';
 import * as gulpif from 'gulp-if';
-import * as open from 'gulp-open';
 import * as watch from 'gulp-watch';
 import { template } from 'lodash';
 import * as rollup from 'rollup';
@@ -23,7 +22,16 @@ import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFile
 task('e2e', e2eBuild);
 
 function e2eBuild(done: (err: any) => void) {
-  runSequence('e2e.clean', 'e2e.polyfill', 'e2e.copySource', 'e2e.compileTests', 'e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts', 'e2e.bundle', done);
+  runSequence(
+    'e2e.clean',
+    'e2e.polyfill',
+    'e2e.copySource',
+    'e2e.compileTests',
+    'e2e.copyExternalDependencies',
+    'e2e.sass',
+    'e2e.fonts',
+    'e2e.bundle',
+    done);
 }
 
 task('e2e.clean', (done: Function) => {
@@ -43,7 +51,11 @@ task('e2e.polyfill', (done: Function) => {
 });
 
 task('e2e.copyAndCompile', (done: (err: any) => void) => {
-  runSequence('e2e.copySource', 'e2e.compileTests', 'e2e.bundle', done);
+  runSequence(
+    'e2e.copySource',
+    'e2e.compileTests',
+    'e2e.bundle',
+    done);
 });
 
 task('e2e.copySource', (done: Function) => {
@@ -61,7 +73,7 @@ task('e2e.copySource', (done: Function) => {
     const indexTemplate = readFileSync('scripts/e2e/index.html');
     const indexTs = readFileSync('scripts/e2e/entry.ts');
 
-    return obj(function(file, enc, next) {
+    return obj(function (file, enc, next) {
       this.push(new VinylFile({
         base: file.base,
         contents: new Buffer(indexTemplate),
@@ -85,12 +97,12 @@ task('e2e.copySource', (done: Function) => {
 
     let testTemplate = template(readFileSync('scripts/e2e/e2e.template.js').toString());
 
-    return obj(function(file, enc, next) {
+    return obj(function (file, enc, next) {
       let self = this;
       let relativePath = dirname(file.path.replace(/^.*?src(\/|\\)components(\/|\\)/, ''));
 
       let contents = file.contents.toString();
-      platforms.forEach(function(platform) {
+      platforms.forEach(function (platform) {
         let platformContents = testTemplate({
           contents: contents,
           buildConfig: buildConfig,
@@ -167,12 +179,12 @@ task('e2e.bundle', (done) => {
   if (folderInfo.componentName && folderInfo.componentTest) {
     includeGlob = `${DIST_E2E_ROOT}/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/entry.js`;
   }
-  glob(includeGlob, {}, function(er, files) {
-    var directories = files.map(function(file) {
+  glob(includeGlob, {}, function (er, files) {
+    var directories = files.map(function (file) {
       return dirname(file);
     });
 
-    let indexFileContents = directories.map(function(dir) {
+    let indexFileContents = directories.map(function (dir) {
       let testName = dir.replace(`${DIST_E2E_ROOT}/components/`, '');
       let fileName = dir.replace(`${PROJECT_ROOT}`, '');
       return `<p><a href="${fileName}/index.html">${testName}</a></p>`;
@@ -196,7 +208,7 @@ function createBundles(files: string[]) {
   let start;
   if (!files) {
     return Promise.reject(new Error('list of files is null'));
-  } else if ( files.length === 0) {
+  } else if (files.length === 0) {
     return Promise.resolve();
   } else {
     const outputFileName = join(dirname(files[0]), 'app.bundle.js');
@@ -217,32 +229,46 @@ function createBundles(files: string[]) {
 function bundle(inputFile: string, outputFile: string): Promise<any> {
   console.log(`Starting rollup on ${inputFile} ... writing to ${outputFile}`);
   return rollup.rollup({
-      entry: inputFile,
-      plugins: [
-        commonjs(),
-        nodeResolve({
-          module: true,
-          jsnext: true,
-          main: true,
-          extensions: ['.js']
-        })
-      ]
+    entry: inputFile,
+    plugins: [
+      commonjs(),
+      nodeResolve({
+        module: true,
+        jsnext: true,
+        main: true,
+        extensions: ['.js']
+      })
+    ]
   }).then(bundle => {
     return bundle.write({
-        format: 'iife',
-        dest: outputFile,
+      format: 'iife',
+      dest: outputFile,
     });
   });
 }
 
+task('e2e.serve', function () {
+  connect.server({
+    name: 'Ionic Dist',
+    root: './',
+    port: LOCAL_SERVER_PORT,
+    livereload: {
+      port: 35700
+    }
+  });
+});
+
+task('e2e.reload', function () {
+  connect.reload();
+});
+
 task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (done: Function) => {
   const folderInfo = getFolderInfo();
-  if (! folderInfo.componentName || ! folderInfo.componentTest) {
-    done(new Error('Passing in a folder to watch is required for this command. Use the --folder or -f option.'));
-    return;
-  }
+  let e2eTestPath = SRC_COMPONENTS_ROOT;
 
-  const e2eTestPath = join(SRC_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'app-module.ts');
+  if (folderInfo.componentName && folderInfo.componentTest) {
+    e2eTestPath = join(SRC_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'app-module.ts');
+  }
 
   try {
     accessSync(e2eTestPath, F_OK);
@@ -269,10 +295,10 @@ function e2eWatch(componentName: string, componentTest: string) {
   watch([
     'src/components/*/test/**/*'
   ],
-  function(file) {
-    console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
-    start('e2e.copyAndCompile');
-  });
+    function (file) {
+      console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
+      start('e2e.copyAndCompile');
+    });
 
   // If any src files change except for tests then transpile only the source ionic files
   watch([
@@ -280,10 +306,10 @@ function e2eWatch(componentName: string, componentTest: string) {
     '!src/components/*/test/**/*',
     '!src/util/test/*'
   ],
-  function(file) {
-    console.log('start e2e.ngcSource - ' + JSON.stringify(file.history, null, 2));
-    start('e2e.copyAndCompile');
-  });
+    function (file) {
+      console.log('start e2e.ngcSource - ' + JSON.stringify(file.history, null, 2));
+      start('e2e.copyAndCompile');
+    });
 
   // If any scss files change then recompile all sass
   watch(['src/**/*.scss'], (file) => {
@@ -293,15 +319,7 @@ function e2eWatch(componentName: string, componentTest: string) {
 
   console.log(`http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}/components/${componentName}/test/${componentTest}/`);
 
-  connect.server({
-    root: './',
-    port: LOCAL_SERVER_PORT,
-    livereload: true
-  });
-
-  src('dist').pipe(
-    open({uri: `http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}`})
-  );
+  start('e2e.serve');
 }
 
 function e2eComponentsExists(): boolean {

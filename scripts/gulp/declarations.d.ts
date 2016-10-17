@@ -4,7 +4,6 @@ declare module 'event-stream';
 declare module 'github';
 declare module 'gulp-connect';
 declare module 'gulp-if';
-declare module 'gulp-open';
 declare module 'gulp-scss-lint';
 declare module 'gulp-server-livereload';
 declare module 'gulp-tslint';
