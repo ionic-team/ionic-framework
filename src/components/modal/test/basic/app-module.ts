@@ -34,7 +34,11 @@ export class SomeAppProvider {
 export class E2EPage {
   platforms: string[];
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, config: Config, platform: Platform) {
+  constructor(
+    public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    public toastCtrl: ToastController,
+    config: Config, platform: Platform) {
     console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
@@ -73,12 +77,25 @@ export class E2EPage {
   }
 
   presentModalChildNav() {
-    this.modalCtrl.create(ContactUs).present();
+    this.toastCtrl.create({
+      message: 'Will present a modal with child nav...',
+      duration: 1000,
+    }).present();
+
+    setTimeout(() => {
+      this.modalCtrl.create(ContactUs).present();
+    }, 500);
   }
 
   presentToolbarModal() {
-    let modal = this.modalCtrl.create(ToolbarModal);
-    modal.present();
+    this.toastCtrl.create({
+      message: 'Will present a modal with toolbars...',
+      duration: 1000,
+    }).present();
+
+    setTimeout(() => {
+      this.modalCtrl.create(ToolbarModal).present();
+    }, 500);
   }
 
   presentModalWithInputs() {
@@ -412,7 +429,9 @@ export class ModalFirstPage {
     public navCtrl: NavController,
     public app: App,
     public actionSheetCtrl: ActionSheetController,
+    public toastCtrl: ToastController,
     public alertCtrl: AlertController) {
+
     for (let i = 0; i < 50; i++) {
       this.items.push({
         value: (i + 1)
@@ -431,10 +450,17 @@ export class ModalFirstPage {
   }
 
   push() {
-    let page = ModalSecondPage;
-    let params = { id: 8675309, myData: [1, 2, 3, 4] };
+    this.toastCtrl.create({
+      message: 'Will push a page in a moment...',
+      duration: 1000,
+    }).present();
 
-    this.navCtrl.push(page, params);
+    setTimeout(() => {
+      this.navCtrl.push(ModalSecondPage, {
+        id: 8675309,
+        myData: [1, 2, 3, 4]
+      });
+    }, 500);
   }
 
   dismiss() {
