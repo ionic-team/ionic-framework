@@ -30,6 +30,7 @@ export class SecondPage {
 export class E2EPage {
   pushPage: any = SecondPage;
   visible: boolean = false;
+  buttons: number[] = [1, 2, 3, 4, 5];
 
   ionViewDidEnter() {
     this.visible = true;

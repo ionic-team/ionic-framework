@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, HostBinding, HostListener, OnChanges, Optional } from '@angular/core';
+import { AfterContentInit, Directive, HostListener, Optional } from '@angular/core';
 
 import { DeepLinker } from '../../navigation/deep-linker';
 import { NavController } from '../../navigation/nav-controller';
@@ -57,32 +57,31 @@ export class NavPop {
  * @private
  */
 @Directive({
-  selector: 'a[navPop]'
+  selector: 'a[navPop]',
+  host: {
+    '[attr.href]': '_href'
+  }
 })
-export class NavPopAnchor implements OnChanges, AfterViewInit {
+export class NavPopAnchor implements AfterContentInit {
+
+  _href: string;
 
   constructor(
     @Optional() public host: NavPop,
     public linker: DeepLinker,
     @Optional() public viewCtrl: ViewController) {}
 
-  @HostBinding() href: string;
-
   updateHref() {
     if (this.host && this.viewCtrl) {
       const previousView = this.host._nav.getPrevious(this.viewCtrl);
-      this.href = (previousView && this.linker.createUrl(this.host._nav, this.viewCtrl.component, this.viewCtrl.data)) || '#';
+      this._href = (previousView && this.linker.createUrl(this.host._nav, this.viewCtrl.component, this.viewCtrl.data)) || '#';
 
     } else {
-      this.href = '#';
+      this._href = '#';
     }
   }
 
-  ngOnChanges() {
-    this.updateHref();
-  }
-
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this.updateHref();
   }
 
