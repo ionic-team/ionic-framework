@@ -298,14 +298,14 @@ export class Tab extends NavControllerBase {
   /**
    * @private
    */
-  _viewInsert(viewCtrl: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
+  _viewAttachToDOM(viewCtrl: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     const isTabSubPage = (this.parent._subPages && viewCtrl.index > 0);
 
     if (isTabSubPage) {
       viewport = this.parent.portal;
     }
 
-    super._viewInsert(viewCtrl, componentRef, viewport);
+    super._viewAttachToDOM(viewCtrl, componentRef, viewport);
 
     if (isTabSubPage) {
       // add the .tab-subpage css class to tabs pages that should act like subpages

@@ -34,6 +34,7 @@ export class Animation {
 
   parent: Animation;
   opts: AnimationOptions;
+  hasChildren: boolean = false;
   isPlaying: boolean = false;
   hasCompleted: boolean = false;
 
@@ -81,6 +82,7 @@ export class Animation {
    */
   add(childAnimation: Animation): Animation {
     childAnimation.parent = this;
+    this.hasChildren = true;
     this._cL = (this._c = this._c || []).push(childAnimation);
     return this;
   }

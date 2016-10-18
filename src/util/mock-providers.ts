@@ -275,9 +275,9 @@ export const mockNavController = function(): NavControllerBase {
     enteringView._state = ViewState.INITIALIZED;
   };
 
-  (<any>nav)._orgViewInsert = nav._viewInsert;
+  (<any>nav)._orgViewInsert = nav._viewAttachToDOM;
 
-  nav._viewInsert = function(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
+  nav._viewAttachToDOM = function(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     let mockedViewport: any = {
       insert: () => { }
     };

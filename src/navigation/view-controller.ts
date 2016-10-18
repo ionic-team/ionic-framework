@@ -528,26 +528,25 @@ export class ViewController {
       this._cmp.destroy();
     }
 
-    if (this._nav) {
-      // remove it from the nav
-      const index = this._nav.indexOf(this);
-      if (index > -1) {
-        this._nav._views.splice(index, 1);
-      }
-    }
-
     this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onWillDismiss = null;
   }
 
   /**
    * @private
    */
-  _lifecycleTest(lifecycle: string): boolean | string | Promise<any> {
+  _lifecycleTest(lifecycle: string): boolean | Promise<any> {
     let instance = this.instance;
     let methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
       try {
-        return instance[methodName]();
+        let result = instance[methodName]();
+        if (result === false) {
+          return false;
+        } else if (result instanceof Promise) {
+          return result;
+        } else {
+          return true;
+        }
 
       } catch (e) {
         console.error(`${this.name} ${methodName} error: ${e.message}`);
@@ -571,7 +570,6 @@ export class ViewController {
   }
 
 }
-
 
 export function isViewController(viewCtrl: any) {
   return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
