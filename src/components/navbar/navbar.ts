@@ -47,19 +47,19 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-navbar',
   template:
-    '<div class="toolbar-background" [ngClass]="\'toolbar-background-\' + _mode"></div>' +
-    '<button (click)="backButtonClick($event)" ion-button="bar-button" class="back-button" [ngClass]="\'back-button-\' + _mode" [hidden]="_hideBb">' +
-      '<span class="button-inner">' +
-        '<ion-icon class="back-button-icon" [ngClass]="\'back-button-icon-\' + _mode" [name]="_bbIcon"></ion-icon>' +
-        '<span class="back-button-text" [ngClass]="\'back-button-text-\' + _mode" #bbTxt></span>' +
-      '</span>' +
-    '</button>' +
-    '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
-    '<ng-content select="ion-buttons[start]"></ng-content>' +
-    '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
-    '<div class="toolbar-content" [ngClass]="\'toolbar-content-\' + _mode">' +
-      '<ng-content></ng-content>' +
-    '</div>',
+  '<div class="toolbar-background" [ngClass]="\'toolbar-background-\' + _mode"></div>' +
+  '<button (click)="backButtonClick($event)" ion-button="bar-button" class="back-button" [ngClass]="\'back-button-\' + _mode" [hidden]="_hideBb">' +
+  '<span class="button-inner">' +
+  '<ion-icon class="back-button-icon" [ngClass]="\'back-button-icon-\' + _mode" [name]="_bbIcon"></ion-icon>' +
+  '<span class="back-button-text" [ngClass]="\'back-button-text-\' + _mode" #bbTxt></span>' +
+  '</span>' +
+  '</button>' +
+  '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
+  '<ng-content select="ion-buttons[start]"></ng-content>' +
+  '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
+  '<div class="toolbar-content" [ngClass]="\'toolbar-content-\' + _mode">' +
+  '<ng-content></ng-content>' +
+  '</div>',
   host: {
     '[hidden]': '_hidden',
     'class': 'toolbar',
@@ -114,6 +114,11 @@ export class Navbar extends ToolbarBase {
   set hideBackButton(val: boolean) {
     this._hideBb = isTrueProperty(val);
   }
+  /**
+   * Last backbutton click timestamp
+   */
+  lastBackClick: Date;
+
 
   constructor(
     public _app: App,
@@ -140,6 +145,19 @@ export class Navbar extends ToolbarBase {
   backButtonClick(ev: UIEvent) {
     ev.preventDefault();
     ev.stopPropagation();
+
+
+    if (!this.lastBackClick) {
+      this.lastBackClick = new Date();
+    }
+    else {
+      var dif = new Date().getTime() - this.lastBackClick.getTime();
+
+      this.lastBackClick = new Date();
+      if (dif < 1000) {
+        return;
+      }
+    }
 
     this.navCtrl && this.navCtrl.pop(null, null);
   }
