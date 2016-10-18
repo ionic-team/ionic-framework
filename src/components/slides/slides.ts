@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Directive, ElementRef, EventEmitter, Input, Host, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Directive, ElementRef, EventEmitter, Input, Host, Output, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
 
 import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
@@ -323,7 +323,7 @@ export class Slides extends Ion {
   @Output() ionDrag: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, private zone: NgZone) {
     super(config, elementRef, renderer);
     this.rapidUpdate = debounce(() => {
       this.update();
@@ -350,6 +350,7 @@ export class Slides extends Ion {
     let paginationId = '.' + this.slideId + ' .swiper-pagination';
 
     var options = defaults({
+      runCallbacksOnInit: false,
       pagination: paginationId
     }, this.options);
 
@@ -392,11 +393,7 @@ export class Slides extends Ion {
       return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
     };
 
-
-    setTimeout(() => {
-      var swiper = new Swiper(this.getNativeElement().children[0], options);
-      this.slider = swiper;
-    }, 300);
+    this.slider = this.createSwiper(options);
 
     /*
     * TODO: Finish this
@@ -407,7 +404,19 @@ export class Slides extends Ion {
       })
     }
     */
+  }
 
+  /**
+   * @private
+   */
+  createSwiper(options: Object) {
+    const swiper = new Swiper(this.getNativeElement().children[0], options);
+    const subscription = this.zone.onStable.subscribe(debounce(() => {
+      subscription.unsubscribe();
+      this.update();
+    }, 10));
+
+    return swiper;
   }
 
   /**
@@ -728,14 +737,12 @@ export class Slides extends Ion {
    * child slides.
    */
   update() {
-    setTimeout(() => {
-      this.slider.update();
+    this.slider.update();
 
-      // Don't allow pager to show with > 10 slides
-      if (this.length() > 10) {
-        this.showPager = false;
-      }
-    }, 300);
+    // Don't allow pager to show with > 10 slides
+    if (this.length() > 10) {
+      this.showPager = false;
+    }
   }
 
   /**
