@@ -8,7 +8,7 @@ import { convertToView, convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FO
 import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { GestureController } from '../gestures/gesture-controller';
-import { isBlank, isNumber, isPresent } from '../util/util';
+import { isBlank, isNumber, isPresent, assert } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { Ion } from '../components/ion';
 import { Keyboard } from '../util/keyboard';
@@ -730,40 +730,54 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _willLoad(view: ViewController) {
+    assert(this.isTransitioning(), 'nav controller should be transitioning');
+
     view._willLoad();
   }
 
   _didLoad(view: ViewController) {
+    assert(this.isTransitioning(), 'nav controller should be transitioning');
+
     view._didLoad();
     this.viewDidLoad.emit(view);
     this._app.viewDidLoad.emit(view);
   }
 
   _willEnter(view: ViewController) {
+    assert(this.isTransitioning(), 'nav controller should be transitioning');
+
     view._willEnter();
     this.viewWillEnter.emit(view);
     this._app.viewWillEnter.emit(view);
   }
 
   _didEnter(view: ViewController) {
+    assert(this.isTransitioning(), 'nav controller should be transitioning');
+
     view._didEnter();
     this.viewDidEnter.emit(view);
     this._app.viewDidEnter.emit(view);
   }
 
   _willLeave(view: ViewController) {
+    assert(this.isTransitioning(), 'nav controller should be transitioning');
+
     view._willLeave();
     this.viewWillLeave.emit(view);
     this._app.viewWillLeave.emit(view);
   }
 
   _didLeave(view: ViewController) {
+    assert(this.isTransitioning(), 'nav controller should be transitioning');
+
     view._didLeave();
     this.viewDidLeave.emit(view);
     this._app.viewDidLeave.emit(view);
   }
 
   _willUnload(view: ViewController) {
+    assert(this.isTransitioning(), 'nav controller should be transitioning');
+
     view._willUnload();
     this.viewWillUnload.emit(view);
     this._app.viewWillUnload.emit(view);

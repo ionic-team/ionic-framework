@@ -3,10 +3,12 @@ import { src, dest } from 'gulp';
 import { join } from 'path';
 import * as fs from 'fs';
 import { rollup } from 'rollup';
+import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
 import * as multiEntry from 'rollup-plugin-multi-entry';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as uglify from 'rollup-plugin-uglify';
+import * as through from 'through2';
 
 export function mergeObjects(obj1: any, obj2: any ) {
   if (! obj1) {
@@ -50,7 +52,17 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
   fs.writeFileSync(pathToWriteFile, json);
 }
 
-export function copySourceToDest(destinationPath: string, excludeSpecs: boolean = true, excludeE2e: boolean = true) {
+function removeDebugStatements() {
+  let replacer = new Replacer(['console.debug', 'assert']);
+  return through.obj(function (file, encoding, callback) {
+    const content = file.contents.toString();
+    const cleanedJs = replacer.replace(content);
+    file.contents =  new Buffer(cleanedJs, 'utf8');
+    callback(null, file);
+  });
+};
+
+export function copySourceToDest(destinationPath: string, excludeSpecs: boolean, excludeE2e: boolean, stripDebug: boolean) {
   let glob = [`${SRC_ROOT}/**/*.ts`];
   if (excludeSpecs) {
     glob.push(`!${SRC_ROOT}/**/*.spec.ts`);
@@ -60,8 +72,11 @@ export function copySourceToDest(destinationPath: string, excludeSpecs: boolean 
   if (excludeE2e) {
     glob.push(`!${SRC_ROOT}/components/*/test/*/*.ts`);
   }
-  return src(glob)
-    .pipe(dest(destinationPath));
+  let stream = src(glob);
+  if (stripDebug) {
+    stream = stream.pipe(removeDebugStatements());
+  }
+  return stream.pipe(dest(destinationPath));
 }
 
 export function copyGlobToDest(sourceGlob: string[], destPath: string) {

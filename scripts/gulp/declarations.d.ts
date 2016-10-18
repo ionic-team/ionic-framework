@@ -17,3 +17,4 @@ declare module 'rollup-plugin-uglify';
 declare module 'semver';
 declare module 'vinyl';
 declare module 'yargs';
+declare module 'strip-function';

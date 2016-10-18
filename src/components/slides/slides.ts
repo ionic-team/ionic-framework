@@ -556,7 +556,6 @@ export class Slides extends Ion {
       ty = y-my;
     }
 
-    console.debug(y);
     */
 
     let zi = new Animation(this.touch.target.children[0])
