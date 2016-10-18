@@ -102,7 +102,7 @@ export class Button extends Ion {
   _init: boolean;
 
   /**
-   * @input {string} Large button.
+   * @input {boolean} Large button.
    */
   @Input()
   set large(val: boolean) {
@@ -110,7 +110,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Small button.
+   * @input {boolean} Small button.
    */
   @Input()
   set small(val: boolean) {
@@ -118,7 +118,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Default button.
+   * @input {boolean} Default button.
    */
   @Input()
   set default(val: boolean) {
@@ -126,7 +126,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A transparent button with a border.
+   * @input {boolean} A transparent button with a border.
    */
   @Input()
   set outline(val: boolean) {
@@ -134,7 +134,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A transparent button without a border.
+   * @input {boolean} A transparent button without a border.
    */
   @Input()
   set clear(val: boolean) {
@@ -142,7 +142,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Force a solid button. Useful for buttons within an item.
+   * @input {boolean} Force a solid button. Useful for buttons within an item.
    */
   @Input()
   set solid(val: boolean) {
@@ -150,7 +150,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button with rounded corners.
+   * @input {boolean} A button with rounded corners.
    */
   @Input()
   set round(val: boolean) {
@@ -158,7 +158,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button that fills its parent container with a border-radius.
+   * @input {boolean} A button that fills its parent container with a border-radius.
    */
   @Input()
   set block(val: boolean) {
@@ -166,7 +166,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button that fills its parent container without a border-radius or borders on the left/right.
+   * @input {boolean} A button that fills its parent container without a border-radius or borders on the left/right.
    */
   @Input()
   set full(val: boolean) {
