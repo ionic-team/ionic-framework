@@ -156,11 +156,13 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
   return array;
 }
 
+
+const ASSERT_ENABLED = true;
 /**
  * @private
  */
 function _assert(actual: any, reason?: string) {
-  if (!actual) {
+  if (!actual && ASSERT_ENABLED === true) {
     let message = 'IONIC ASSERT: ' + reason;
     console.error(message);
     throw new Error(message);

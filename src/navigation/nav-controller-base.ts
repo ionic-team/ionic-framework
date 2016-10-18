@@ -521,6 +521,14 @@ export class NavControllerBase extends Ion implements NavController {
       this._sbTrns = transition;
     }
 
+    // transition start has to be registered before attaching the view to the DOM!
+    transition.registerStart(() => {
+      this._trnsStart(transition, enteringView, leavingView, opts, resolve);
+      if (transition.parent) {
+        transition.parent.start();
+      }
+    });
+
     if (enteringView && enteringView._state === ViewState.INITIALIZED) {
       // render the entering component in the DOM
       // this would also render new child navs/views
@@ -530,13 +538,6 @@ export class NavControllerBase extends Ion implements NavController {
     } else {
       console.debug('enteringView state is not INITIALIZED', enteringView);
     }
-
-    transition.registerStart(() => {
-      this._trnsStart(transition, enteringView, leavingView, opts, resolve);
-      if (transition.parent) {
-        transition.parent.start();
-      }
-    });
 
     if (!transition.hasChildren) {
       // lowest level transition, so kick it off and let it bubble up to start all of them
@@ -633,8 +634,9 @@ export class NavControllerBase extends Ion implements NavController {
     // mainly for testing
     let enteringName: string;
     let leavingName: string;
+    let hasCompleted = transition.hasCompleted;
 
-    if (transition.hasCompleted) {
+    if (hasCompleted) {
       // transition has completed (went from 0 to 1)
       if (transition.enteringView) {
         enteringName = transition.enteringView.name;
@@ -671,7 +673,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     // congrats, we did it!
-    resolve(transition.hasCompleted, true, enteringName, leavingName, opts.direction);
+    resolve(hasCompleted, true, enteringName, leavingName, opts.direction);
   }
 
   _insertViewAt(view: ViewController, index: number) {
