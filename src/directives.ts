@@ -38,7 +38,7 @@ import { OverlayPortal } from './components/nav/overlay-portal';
 import { PickerColumnCmp } from './components/picker/picker-component';
 import { RadioButton } from './components/radio/radio-button';
 import { RadioGroup } from './components/radio/radio-group';
-import { Range, RangeKnob } from './components/range/range';
+//import { Range, RangeKnob } from './components/range/range';
 import { Refresher } from './components/refresher/refresher';
 import { RefresherContent } from './components/refresher/refresher-content';
 import { Scroll } from './components/scroll/scroll';
@@ -117,7 +117,7 @@ export { Popover, PopoverController } from './components/popover/popover';
 export { PopoverOptions } from './components/popover/popover-options';
 export { RadioButton } from './components/radio/radio-button';
 export { RadioGroup } from './components/radio/radio-group';
-export { Range, RangeKnob, ClientRect } from './components/range/range';
+//export { Range, RangeKnob, ClientRect } from './components/range/range';
 export { Refresher } from './components/refresher/refresher';
 export { RefresherContent } from './components/refresher/refresher-content';
 export { Scroll } from './components/scroll/scroll';
@@ -210,8 +210,8 @@ export const IONIC_DIRECTIVES: any[] = [
   PickerColumnCmp,
   RadioButton,
   RadioGroup,
-  Range,
-  RangeKnob,
+  //Range,
+  //RangeKnob,
   Refresher,
   RefresherContent,
   Reorder,
