@@ -92,7 +92,14 @@ export class Animation {
    * not have a duration, then it'll get the duration from its parent.
    */
   getDuration(opts?: PlayOptions): number {
-    return (opts && isDefined(opts.duration) ? opts.duration : this._dur !== null ? this._dur : (this.parent && this.parent.getDuration()) || 0);
+    if (opts && isDefined(opts.duration)) {
+      return opts.duration;
+    } else if (this._dur !== null) {
+      return this._dur;
+    } else if (this.parent) {
+      return this.parent.getDuration();
+    }
+    return 0;
   }
 
   /**
