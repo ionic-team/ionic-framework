@@ -146,6 +146,9 @@ export class ItemReorder {
   _lastToIndex: number = -1;
 
   /** @private */
+  _lastDirection: number = 0;
+
+  /** @private */
   _element: HTMLElement;
 
   /**
@@ -221,6 +224,15 @@ export class ItemReorder {
    */
   reorderEmit(fromIndex: number, toIndex: number) {
     this.reorderReset();
+
+    // fixes bug: https://github.com/driftyco/ionic/issues/8782
+    let diff = fromIndex - toIndex;
+    if( this._lastDirection > 0 && diff === 1 ) {
+      toIndex = toIndex + 1
+    } else if ( this._lastDirection < 0 && diff === -1 ) {
+      toIndex = toIndex - 1
+    }
+
     if (fromIndex !== toIndex) {
       this._zone.run(() => {
         this.ionItemReorder.emit({
@@ -264,6 +276,8 @@ export class ItemReorder {
     if (this._lastToIndex === -1) {
       this._lastToIndex = fromIndex;
     }
+    //store last direction
+    this._lastDirection = this._lastToIndex > toIndex ? -1 : 1;
     let lastToIndex = this._lastToIndex;
     this._lastToIndex = toIndex;
 
