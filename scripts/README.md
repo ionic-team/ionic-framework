@@ -20,14 +20,14 @@ Run `gulp build` or `gulp watch` to watch for changes.
 
 ### Building & Running e2e Tests
 
-1. Run `gulp e2e` or `gulp e2e.watch` with a folder passed to watch for changes.
-2. Navigate to `http://localhost:8080/dist/e2e`
+1. Run `gulp e2e` or `gulp e2e.watch` to watch for changes.
+2. Navigate to `http://localhost:8000/dist/e2e`
 
 
 ### Building & Running API Demos
 
-1. Run `gulp demos` or `gulp demos.watch` with a folder passed to watch for changes.
-2. Navigate to `http://localhost:80808080/dist/demos`
+1. Run `gulp demos` or `gulp demos.watch` to watch for changes.
+2. Navigate to `http://localhost:8000/dist/demos`
 
 
 ### Building API Docs
