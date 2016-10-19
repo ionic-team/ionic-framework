@@ -167,6 +167,7 @@ describe('NavController', () => {
 
     it('should insert at the begining with no async transition', () => {
       let view4 = mockView(MockView4);
+      view4.id = 'testId';
       let instance4 = spyOnLifecycles(view4);
       let opts: NavOptions = {};
 
@@ -189,6 +190,7 @@ describe('NavController', () => {
       );
       expect(nav.length()).toEqual(4);
       expect(nav.first().component).toEqual(MockView4);
+      expect(nav.first().id).toEqual('testId');
       expect(nav.last().component).toEqual(MockView3);
     });
 
