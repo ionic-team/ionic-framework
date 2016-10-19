@@ -15,7 +15,7 @@ import * as watch from 'gulp-watch';
 import { template } from 'lodash';
 import * as merge from 'merge2';
 import * as path from 'path';
-// import * as del from 'del';
+import * as del from 'del';
 // import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
@@ -31,13 +31,25 @@ const buildConfig = require('../../build/config');
  * to run.
  */
 task('e2e', [
+  // 'e2e.clean',
   'e2e.build',
-  'e2e.copyExternalDependencies',
   'e2e.polyfill',
+  'e2e.copyExternalDependencies',
   'e2e.sass',
   'e2e.fonts',
   'e2e.bundle'
 ]);
+
+    // 'e2e.copySource',
+    // 'e2e.compileTests',
+
+task('e2e.clean', (done: Function) => {
+  del([`${DIST_E2E_ROOT}/**`]).then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
+});
 
 /**
  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'e2e.bundle' or
@@ -92,7 +104,6 @@ task('e2e.bundle', function(){
 
   return merge([tsResult, swiper])
     .pipe(remember('system'))
-    // .pipe(gulpif(!DEBUG, stripDebug()))
     .pipe(concat('ionic.system.js'))
     .pipe(dest('dist/bundles'))
     .pipe(connect.reload());
@@ -198,7 +209,7 @@ task('e2e.build', function() {
       var sep = path.sep;
       file.dirname = file.dirname.replace(sep + 'test' + sep, sep);
     }))
-    .pipe(dest('dist/e2e/'))
+    .pipe(dest(DIST_E2E_ROOT))
     .pipe(connect.reload());
 
   function createIndexHTML() {
@@ -251,7 +262,7 @@ task('e2e.fonts', () => {
 });
 
 task('e2e.polyfill', (done: Function) => {
-  writePolyfills('dist/e2e/polyfills').then(() => {
+  writePolyfills(`${DIST_E2E_ROOT}/polyfills`).then(() => {
     done();
   }).catch(err => {
     done(err);
