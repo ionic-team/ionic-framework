@@ -128,7 +128,7 @@ ion-fab-list {
 }
 
 ion-fab-list .fab-in-list {
-  margin: 8px;
+  margin: 8px 0;
 
   width: $fab-mini-size;
   height: $fab-mini-size;
@@ -145,6 +145,11 @@ ion-fab-list .fab-in-list.show {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
+}
+
+ion-fab-list[side=left] .fab-in-list,
+ion-fab-list[side=right] .fab-in-list {
+  margin: 0 8px;
 }
 
 ion-fab-list[side=top] {

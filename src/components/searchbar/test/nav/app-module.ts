@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController, NavParams } from '../../../..';
+import { IonicApp, IonicModule, ModalController, NavController, NavParams, ViewController } from '../../../..';
 
 
 @Component({
@@ -14,12 +14,22 @@ export class MainPage {
 }
 
 @Component({
+  templateUrl: 'modal.html'
+})
+export class ModalPage {
+ constructor(public viewCtrl: ViewController) {}
+  close() {
+    this.viewCtrl.dismiss();
+  }
+}
+
+@Component({
   templateUrl: 'search.html'
 })
 export class SearchPage {
   items: string[];
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController) {
     this.initializeItems();
   }
 
@@ -88,6 +98,11 @@ export class SearchPage {
       return false;
     });
   }
+
+  openModal() {
+    let modal = this.modalCtrl.create(ModalPage);
+    modal.present();
+  }
 }
 
 @Component({
@@ -121,6 +136,7 @@ export class E2EApp {
     E2EApp,
     MainPage,
     SearchPage,
+    ModalPage,
     DetailPage,
     TabsPage
   ],
@@ -132,6 +148,7 @@ export class E2EApp {
     E2EApp,
     MainPage,
     SearchPage,
+    ModalPage,
     DetailPage,
     TabsPage
   ]

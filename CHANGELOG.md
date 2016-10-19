@@ -1,3 +1,91 @@
+<a name="2.0.0-rc.1"></a>
+# [2.0.0-rc.1](https://github.com/driftyco/ionic/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2016-10-13)
+
+### Package.json Updates
+
+`package.json` has been upated to include Angular dependencies and the latest version of app-scripts. Please update your package.json to reflect these changes and then run `npm install`.
+
+```
+  "dependencies": {
+    "@angular/common": "^2.0.0",
+    "@angular/compiler": "^2.0.0",
+    "@angular/compiler-cli": "0.6.2",
+    "@angular/core": "^2.0.0",
+    "@angular/forms": "^2.0.0",
+    "@angular/http": "^2.0.0",
+    "@angular/platform-browser": "^2.0.0",
+    "@angular/platform-browser-dynamic": "^2.0.0",
+    "@angular/platform-server": "^2.0.0",
+    "@ionic/storage": "^1.0.3",
+    "ionic-angular": "^2.0.0-rc.1",
+    "ionic-native": "^2.2.3",
+    "ionicons": "^3.0.0",
+    "rxjs": "5.0.0-beta.12",
+    "zone.js": "^0.6.21"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "^0.0.34",
+    "typescript": "^2.0.3"
+  },
+```
+
+
+### Bug Fixes
+
+* **content:** move $text-ios-color to content ([#8421](https://github.com/driftyco/ionic/issues/8421)) ([91168af](https://github.com/driftyco/ionic/commit/91168af))
+* **datetime-util:** add missing date property conditions ([2aea1cb](https://github.com/driftyco/ionic/commit/2aea1cb))
+* **demos:** double quote in script tag ([424b9e0](https://github.com/driftyco/ionic/commit/424b9e0))
+* **fab:** center fab list for larger buttons ([267a77b](https://github.com/driftyco/ionic/commit/267a77b))
+* **fab:** not using change detection ([47e1e17](https://github.com/driftyco/ionic/commit/47e1e17)), closes [#8424](https://github.com/driftyco/ionic/issues/8424)
+* **icon:** isActive="false" with ios mode ([bcbe03c](https://github.com/driftyco/ionic/commit/bcbe03c)), closes [#8435](https://github.com/driftyco/ionic/issues/8435)
+* **input:** detect value when it is zero ([d02e14c](https://github.com/driftyco/ionic/commit/d02e14c)), closes [#8019](https://github.com/driftyco/ionic/issues/8019)
+* **input:** text input width calculation ([#8063](https://github.com/driftyco/ionic/issues/8063)) ([21fa5cd](https://github.com/driftyco/ionic/commit/21fa5cd))
+* **item:** regression in expandable sliding option button ([695d25c](https://github.com/driftyco/ionic/commit/695d25c)), closes [#8460](https://github.com/driftyco/ionic/issues/8460)
+* **item:** sliding item should not close when clicking an option button ([ec6615d](https://github.com/driftyco/ionic/commit/ec6615d)), closes [#8481](https://github.com/driftyco/ionic/issues/8481)
+* **item-divider:** fabs have higher z-index than item-dividers ([14e668c](https://github.com/driftyco/ionic/commit/14e668c)), closes [#8489](https://github.com/driftyco/ionic/issues/8489)
+* **list:** consecutive inset lists with headers ([93616c4](https://github.com/driftyco/ionic/commit/93616c4)), closes [#8412](https://github.com/driftyco/ionic/issues/8412) [#6164](https://github.com/driftyco/ionic/issues/6164)
+* **menu:** backdrop click without 300ms delay ([9bbe485](https://github.com/driftyco/ionic/commit/9bbe485)), closes [#6405](https://github.com/driftyco/ionic/issues/6405)
+* **menu:** console.debug statements are one line ([a06bd69](https://github.com/driftyco/ionic/commit/a06bd69))
+* **menu:** menu's content is resized properly ([db72a7d](https://github.com/driftyco/ionic/commit/db72a7d)), closes [#8504](https://github.com/driftyco/ionic/issues/8504)
+* **modal:** alerts do not trigger modal lifecycle events ([e2704a4](https://github.com/driftyco/ionic/commit/e2704a4)), closes [#8616](https://github.com/driftyco/ionic/issues/8616)
+* **modal:** canEnter is called in modals ([a40b42c](https://github.com/driftyco/ionic/commit/a40b42c))
+* **nav:** ionViewCanLeave does not break navigation ([c8954d8](https://github.com/driftyco/ionic/commit/c8954d8)), closes [#8408](https://github.com/driftyco/ionic/issues/8408)
+* **nav:** ionViewDidLoad is called in modals ([451ffe1](https://github.com/driftyco/ionic/commit/451ffe1)), closes [#8449](https://github.com/driftyco/ionic/issues/8449)
+* **nav:** push-pop pages too quickly ([9b65022](https://github.com/driftyco/ionic/commit/9b65022)), closes [#8319](https://github.com/driftyco/ionic/issues/8319)
+* **nav:** remove incorrectly used removeStart as a starting index in for loop. Fixes [#8442](https://github.com/driftyco/ionic/issues/8442) ([6496c7a](https://github.com/driftyco/ionic/commit/6496c7a))
+* **navbar:** Don't fade out navbars. Fixes [#8060](https://github.com/driftyco/ionic/issues/8060) ([eab5726](https://github.com/driftyco/ionic/commit/eab5726))
+* **popover:** flipped arrow on iOS ([#8462](https://github.com/driftyco/ionic/issues/8462)) ([c996d85](https://github.com/driftyco/ionic/commit/c996d85))
+* **reorder:** not trigger click event when reordering ([9b2ae8a](https://github.com/driftyco/ionic/commit/9b2ae8a)), closes [#8362](https://github.com/driftyco/ionic/issues/8362)
+* **reorder:** several reorder lists in the same view ([e75d9be](https://github.com/driftyco/ionic/commit/e75d9be))
+* **ripple:** always remove the activated class ([d893441](https://github.com/driftyco/ionic/commit/d893441))
+* **searchbar:** autocomplete, autocorrect and type works again ([7e63650](https://github.com/driftyco/ionic/commit/7e63650)), closes [#7744](https://github.com/driftyco/ionic/issues/7744)
+* **searchbar:** clear button makes keyboard dismissal fail on iOS ([6aaa601](https://github.com/driftyco/ionic/commit/6aaa601)), closes [#7527](https://github.com/driftyco/ionic/issues/7527)
+* **searchbar:** ENTER does not clear when it is inside a form ([2e1bb4b](https://github.com/driftyco/ionic/commit/2e1bb4b)), closes [#7010](https://github.com/driftyco/ionic/issues/7010)
+* **segment:** add missing input ([0052480](https://github.com/driftyco/ionic/commit/0052480)), closes [#8371](https://github.com/driftyco/ionic/issues/8371)
+* **spinner:** add input mode fix [#8598](https://github.com/driftyco/ionic/issues/8598) ([8ee895f](https://github.com/driftyco/ionic/commit/8ee895f))
+* **spinner:** works in iOS8 ([a2ffa63](https://github.com/driftyco/ionic/commit/a2ffa63)), closes [#8145](https://github.com/driftyco/ionic/issues/8145)
+* **tabs:** add TabHighlight to IONIC_DIRECTIVES ([ac88547](https://github.com/driftyco/ionic/commit/ac88547)), closes [#8294](https://github.com/driftyco/ionic/issues/8294)
+* **tabs:** remove from parent nav when destroyed ([5156917](https://github.com/driftyco/ionic/commit/5156917))
+* **tap-click:** null is not an object when scrolling after focusing an input on iOS ([21eae2e](https://github.com/driftyco/ionic/commit/21eae2e)), closes [#7964](https://github.com/driftyco/ionic/issues/7964)
+* **transition:** ios-transition can be used in MD/WP ([fcc515f](https://github.com/driftyco/ionic/commit/fcc515f)), closes [#7171](https://github.com/driftyco/ionic/issues/7171)
+* **view-controller:** dismiss does not crash when called more than once ([d5f71a4](https://github.com/driftyco/ionic/commit/d5f71a4)), closes [#8395](https://github.com/driftyco/ionic/issues/8395)
+* **view-controller:** avoid deep copy in dismiss() that can turn into an infinite loop ([9227310](https://github.com/driftyco/ionic/commit/9227310))
+* **virtual-scroll:** set this.approxItemHeight before update(true) is called first ([#8350](https://github.com/driftyco/ionic/issues/8350)) ([b16228b](https://github.com/driftyco/ionic/commit/b16228b))
+
+
+### Features
+
+* **events:** handler argument is optional in unsubscribe() ([8878e70](https://github.com/driftyco/ionic/commit/8878e70)), closes [#8235](https://github.com/driftyco/ionic/issues/8235)
+* **haptic:** add haptic/taptic support to toggle/range/picker ([713e2a1](https://github.com/driftyco/ionic/commit/713e2a1))
+* **infinite-scroll:** it can be enabled/disabled from a ng input ([#8385](https://github.com/driftyco/ionic/issues/8385)) ([fd5cdf0](https://github.com/driftyco/ionic/commit/fd5cdf0)), closes [#8380](https://github.com/driftyco/ionic/issues/8380)
+
+
+### Performance Improvements
+
+* **searchbar:** searchbar animation is disabled by default ([d03182e](https://github.com/driftyco/ionic/commit/d03182e)), closes [#6023](https://github.com/driftyco/ionic/issues/6023)
+
+
+
 <a name="2.0.0-rc.0"></a>
 # [2.0.0-rc.0](https://github.com/driftyco/ionic/compare/v2.0.0-beta.11...v2.0.0-rc.0) (2016-09-28)
 
@@ -33,6 +121,7 @@ RC0 requires changes to the structure of your app. To get started updating your 
 * `<ion-fixed>` has been removed, use `<div ion-fixed>` instead.
 * Sass: Changes to how Sass is imported. See more [details here](#sass-import).
 * Typings: We have stopped using the `typings` tool and have migrated to `npm @types`. See more [details here](#typings).
+* Components no longer get a CSS class added based on the component class name. This should be added using the Component selector. See the [Steps to Upgrade](#steps-to-upgrade-to-rc0) for more information on this change.
 
 
 #### Lifecycle Events Renamed
@@ -321,11 +410,11 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 2. Install the latest Ionic CLI:
 
+  **Important:** if you have installed the `beta` cli you should run `npm uninstall -g ionic` first. You need version `2.1.0` for this release. Check your `cli` version by running `ionic -v` in the command line.
+
   ```
   npm install -g ionic
   ```
-
-  **Important:** if you have installed the `beta` cli you should run `npm uninstall -g ionic` first. You need version `2.1.0` for this release. Check your `cli` version by running `ionic -v` in the command line.
 
 3. Create a new Ionic 2 RC0 app:
 
@@ -355,16 +444,28 @@ Note: For details on NgModules you can read the Angular docs on them [here](http
 
 13. Move any Ionic config to the `IonicModule.forRoot` in `app.module.ts`. For example, the config should go where it says `configObject` here: `IonicModule.forRoot(MyApp, {configObject})`.
 
-14. Move any variables from the mode specific sass files in your `beta.11` app into the `app.variables` file under the mode heading in the new RC0 app.
+14. Move any variables from the mode specific sass files in your `beta.11` app into the `theme/variables.scss` file under each comment section for the specific mode in the new RC0 app: [ios section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L35-L37), [md section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L42-L44), [wp section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L49-L51).
 
-15. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
-```
-page-selector-you-added {
-  #title {
-    color: blue;
+15. Add selectors to each of your components that you would like to add custom styling for. These element selectors will be used for scoped sass. Previously a CSS class was dynamically added with the component class name, this is now the proper way to scope your sass for an individual page. For example, adding the `page-about` selector:
+
+  In your component's stylesheet:
+
+  ```
+  page-about {
+    #title {
+      color: blue;
+    }
   }
-}
-```
+  ```
+
+  In your component:
+
+  ```
+  @Component({
+    selector: 'page-about',
+    templateUrl: 'about.html'
+  })
+  ```
 
 
 #### Modifying your Existing Project
@@ -381,11 +482,11 @@ page-selector-you-added {
 
 2. Install the latest Ionic CLI:
 
+  **Important:** if you have installed the `beta` cli you should run `npm uninstall -g ionic` first. You need version `2.1.0` for this release. Check your `cli` version by running `ionic -v` in the command line.
+
   ```
   npm install -g ionic
   ```
-
-  **Important:** if you have installed the `beta` cli you should run `npm uninstall -g ionic` first. You need version `2.1.0` for this release. Check your `cli` version by running `ionic -v` in the command line.
 
 3. Update `package.json` dependencies and devDependencies to match the [ionic2-app-base package.json](https://github.com/driftyco/ionic2-app-base/blob/master/package.json#L15-L24), and then run `npm install` in your project folder.
 
@@ -441,7 +542,7 @@ page-selector-you-added {
 
 29. Move app Sass rule files from `app/theme` to `src/app`. This includes `app.core.scss`, `app.ios.scss`, etc.
 
-30. Move any variables from the mode specific files into the `theme/variables.scss` file.
+30. Move any variables from the mode specific sass files in your `beta.11` app into the `theme/variables.scss` file under each comment section for the specific mode in the new RC0 app: [ios section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L35-L37), [md section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L42-L44), [wp section](https://github.com/driftyco/ionic2-app-base/blob/master/src/theme/variables.scss#L49-L51).
 
 31. Fix any paths to images in your app. For example, before the path may look like `<img src="img/myImg.png">` and now it should be `<img src="assets/img/myImg.png">`.
 
@@ -455,22 +556,28 @@ page-selector-you-added {
 
 35. Add appropriate icon attributes, if the icon is on the left of the text in a button it should get `icon-left`, if the icon is on the right add `icon-right`, and if the button only has an icon in it, add the `icon-only` attribute to the button. [See New Behavior of Icons in Buttons](#new-behavior-of-icons-in-buttons).
 
-36. Add selectors to each of your components that are used as pages. These selectors will be used for scoped sass. With this change this is now the proper way to scope your sass for an individual page:
-In your template:
-```
-about-page {
-  #title {
-    color: blue;
+36. Add selectors to each of your components that you would like to add custom styling for. These element selectors will be used for scoped sass. Previously a CSS class was dynamically added with the component class name, this is now the proper way to scope your sass for an individual page. For example, adding the `page-about` selector:
+
+  In your component's stylesheet:
+
+  ```
+  page-about {
+    #title {
+      color: blue;
+    }
   }
-}
-```
-In your component:
-```
-@Component({
-  selector: 'about-page',
-  templateUrl: 'about.html'
-})
-```
+  ```
+
+  In your component:
+
+  ```
+  @Component({
+    selector: 'page-about',
+    templateUrl: 'about.html'
+  })
+  ```
+
+37. Remove any use of the `providers`, `pipes` and `directives` arrays in `@Component`.
 
 ### Bug Fixes
 

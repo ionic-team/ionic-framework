@@ -66,8 +66,6 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
   background-repeat: no-repeat;
   background-size: $searchbar-ios-input-search-icon-size;
-
-  transition: $searchbar-ios-input-transition;
 }
 
 
@@ -87,8 +85,6 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
   color: $searchbar-ios-input-text-color;
   background-color: $searchbar-ios-input-background-color;
-
-  transition: $searchbar-ios-input-transition;
 }
 
 
@@ -119,7 +115,6 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
   flex-shrink: 0;
 
-  margin-right: -100%;
   margin-left: 0;
   padding: 0;
   padding-left: 8px;
@@ -127,19 +122,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   height: 30px;
 
   cursor: pointer;
-
-  opacity: 0;
-
-  transform: translate3d(0, 0, 0);
-  transition: $searchbar-ios-cancel-transition;
-
-  pointer-events: none;
 }
-
-.searchbar-ios.searchbar-show-cancel .searchbar-ios-cancel {
-  display: block;
-}
-
 
 // Searchbar Left Aligned (iOS only)
 // -----------------------------------------
@@ -156,10 +139,8 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // Searchbar Has Focus
 // -----------------------------------------
 
-.searchbar-ios.searchbar-has-focus .searchbar-ios-cancel {
-  opacity: 1;
-
-  pointer-events: auto;
+.searchbar-ios.searchbar-show-cancel.searchbar-has-focus .searchbar-ios-cancel {
+  display: block;
 }
 
 
@@ -224,4 +205,30 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
     color: color-contrast($colors-ios, $color-base, ios);
   }
 
+}
+
+// Searchbar animation
+// -----------------------------------------
+
+.searchbar-ios.searchbar-animated .searchbar-search-icon,
+.searchbar-ios.searchbar-animated .searchbar-input {
+  transition: $searchbar-ios-input-transition;
+}
+
+.searchbar-animated.searchbar-has-focus .searchbar-ios-cancel {
+  opacity: 1;
+
+  pointer-events: auto;
+}
+
+.searchbar-animated .searchbar-ios-cancel {
+  display: block;
+
+  margin-right: -100%;
+
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  transition: $searchbar-ios-cancel-transition;
+
+  pointer-events: none;
 }

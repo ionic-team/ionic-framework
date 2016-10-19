@@ -23,7 +23,6 @@ export class MDTransition extends PageTransition {
     if (enteringView) {
       if (backDirection) {
         this.duration(isPresent(opts.duration) ? opts.duration : 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-        this.enteringPage.beforeClearStyles([TRANSLATEY]);
 
       } else {
         this.duration(isPresent(opts.duration) ? opts.duration : 280).easing('cubic-bezier(0.36,0.66,0.04,1)');

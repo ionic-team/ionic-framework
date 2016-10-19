@@ -1,4 +1,5 @@
 import { Config } from '../config/config';
+import { Transition } from './transition';
 import { IOSTransition } from './transition-ios';
 import { MDTransition } from './transition-md';
 import { WPTransition } from './transition-wp';
@@ -62,7 +63,7 @@ export function registerTransitions(config: Config) {
 }
 
 
-export function createTransition(config: Config, transitionName: string, enteringView: any, leavingView: any, opts: any) {
+export function createTransition(config: Config, transitionName: string, enteringView: any, leavingView: any, opts: any): Transition {
   let TransitionClass: any = config.getTransition(transitionName);
   if (!TransitionClass) {
     // didn't find a transition animation, default to ios-transition

@@ -69,7 +69,7 @@ import { Label } from '../label/label';
  * ## Detail Arrows
  * By default, `<button>` and `<a>` elements with the `ion-item` attribute will display a right arrow icon
  * on `ios` mode. To hide the right arrow icon on either of these elements, add the `detail-none` attribute
- * to the item. To show the right arrow icon on an element that doesn't display is naturally, add the
+ * to the item. To show the right arrow icon on an element that doesn't display it naturally, add the
  * `detail-push` attribute to the item.
  *
  * ```html

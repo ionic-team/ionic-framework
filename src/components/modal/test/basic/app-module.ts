@@ -1,8 +1,8 @@
 import { Component, Injectable, NgModule } from '@angular/core';
 
-import { ActionSheetController, App, Config,
+import { ActionSheetController, AlertController, App, Config,
   IonicApp, IonicModule, ModalController, NavController,
-  NavParams, Platform, ViewController } from '../../../..';
+  NavParams, Platform, ToastController, ViewController } from '../../../..';
 
 
 @Injectable()
@@ -34,7 +34,11 @@ export class SomeAppProvider {
 export class E2EPage {
   platforms: string[];
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, config: Config, platform: Platform) {
+  constructor(
+    public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    public toastCtrl: ToastController,
+    config: Config, platform: Platform) {
     console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
@@ -67,18 +71,31 @@ export class E2EPage {
       console.timeEnd('modal');
     });
     modal.onDidDismiss((data: any) => {
-      console.log('modal data', data);
+      console.log('DID DISMISS modal data', data);
       console.timeEnd('modal');
     });
   }
 
   presentModalChildNav() {
-    this.modalCtrl.create(ContactUs).present();
+    this.toastCtrl.create({
+      message: 'Will present a modal with child nav...',
+      duration: 1000,
+    }).present();
+
+    setTimeout(() => {
+      this.modalCtrl.create(ContactUs).present();
+    }, 500);
   }
 
   presentToolbarModal() {
-    let modal = this.modalCtrl.create(ToolbarModal);
-    modal.present();
+    this.toastCtrl.create({
+      message: 'Will present a modal with toolbars...',
+      duration: 1000,
+    }).present();
+
+    setTimeout(() => {
+      this.modalCtrl.create(ToolbarModal).present();
+    }, 500);
   }
 
   presentModalWithInputs() {
@@ -87,10 +104,6 @@ export class E2EPage {
       console.log('Modal with inputs data:', data);
     });
     modal.present();
-  }
-
-  presentNavigableModal() {
-    this.modalCtrl.create(NavigableModal).present();
   }
 
   ionViewDidLoad() {
@@ -114,61 +127,6 @@ export class E2EPage {
   }
 }
 
-@Component({
-  template: `
-  <ion-header>
-    <ion-navbar>
-      <ion-buttons>
-        <button ion-button (click)="dismiss()">Close</button>
-      </ion-buttons>
-      <ion-title>Page One</ion-title>
-    </ion-navbar>
-  </ion-header>
-
-  <ion-content>
-    <div padding>
-      NavigableModal
-    </div>
-    <button ion-button full (click)="submit()">Submit</button>
-  </ion-content>
-  `
-})
-export class NavigableModal {
-
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController) {}
-
-  submit() {
-    this.navCtrl.push(NavigableModal2);
-  }
-
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
-}
-
-@Component({
-  template: `
-  <ion-header>
-    <ion-navbar>
-      <ion-title>Page Two</ion-title>
-    </ion-navbar>
-  </ion-header>
-
-  <ion-content>
-    <button ion-button full (click)="submit()">Submit</button>
-  </ion-content>
-  `
-})
-export class NavigableModal2 {
-
-  constructor(public navCtrl: NavController) {}
-
-  submit() {
-    this.navCtrl.pop();
-  }
-}
-
-
 
 @Component({
   template: `
@@ -189,44 +147,99 @@ export class NavigableModal2 {
         </ion-item>
       </ion-list>
       <button ion-button full (click)="submit()">Submit</button>
+      <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+      <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+      <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+      <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+      <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+      <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+      <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
     </ion-content>
   `,
   providers: [SomeComponentProvider]
 })
 export class ModalPassData {
   data: any;
+  called: any;
 
-  constructor(params: NavParams, public viewCtrl: ViewController, someComponentProvider: SomeComponentProvider, someAppProvider: SomeAppProvider) {
+  constructor(
+    public viewCtrl: ViewController,
+    public toastCtrl: ToastController,
+    public alertCtrl: AlertController,
+    params: NavParams,
+    someComponentProvider: SomeComponentProvider,
+    someAppProvider: SomeAppProvider) {
     this.data = {
       userId: params.get('userId'),
       name: someComponentProvider.getName()
     };
     console.log('SomeAppProvider Data', someAppProvider.getData());
+
+    this.called = {
+      ionViewCanEnter: 0,
+      ionViewCanLeave: 0,
+      ionViewDidLoad: 0,
+      ionViewWillEnter: 0,
+      ionViewDidEnter: 0,
+      ionViewWillLeave: 0,
+      ionViewDidLeave: 0
+    };
   }
 
   submit() {
     console.time('modal');
-    this.viewCtrl.dismiss(this.data);
+    this.viewCtrl.dismiss(this.data).catch(() => {
+      console.log('submit was cancelled');
+    });
+  }
+
+  ionViewCanEnter() {
+    console.log('ModalPassData ionViewCanEnter fired');
+    this.called.ionViewCanEnter++;
+
+    return true;
+  }
+
+  ionViewCanLeave() {
+    console.log('ModalPassData ionViewCanLeave fired');
+    this.called.ionViewCanLeave++;
+
+    return new Promise((resolve: any, reject: any) => {
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Do you want to submit?');
+      alert.addButton({ text: 'Submit', handler: resolve });
+      alert.addButton({ text: 'Cancel', role: 'cancel', handler: reject });
+      alert.present();
+    });
   }
 
   ionViewDidLoad() {
     console.log('ModalPassData ionViewDidLoad fired');
+    this.called.ionViewDidLoad++;
   }
 
   ionViewWillEnter() {
     console.log('ModalPassData ionViewWillEnter fired');
+    this.called.ionViewWillEnter++;
   }
 
   ionViewDidEnter() {
     console.log('ModalPassData ionViewDidEnter fired');
+    this.toastCtrl.create({
+      message: 'test toast',
+      duration: 1000
+    }).present();
+    this.called.ionViewDidEnter++;
   }
 
   ionViewWillLeave() {
     console.log('ModalPassData ionViewWillLeave fired');
+    this.called.ionViewWillLeave++;
   }
 
   ionViewDidLeave() {
     console.log('ModalPassData ionViewDidLeave fired');
+    this.called.ionViewDidLeave++;
   }
 }
 
@@ -266,7 +279,20 @@ export class ModalPassData {
 })
 export class ToolbarModal {
 
-  constructor(public viewCtrl: ViewController) {}
+  constructor(public viewCtrl: ViewController, public alertCtrl: AlertController) {}
+
+  ionViewDidEnter() {
+    let alert = this.alertCtrl.create({
+        title: 'Test',
+        buttons: [
+            {
+                text: 'Something',
+                role: 'cancel'
+            }
+        ]
+    });
+    alert.present();
+  }
 
   dismiss() {
     this.viewCtrl.dismiss();
@@ -291,15 +317,15 @@ export class ToolbarModal {
         <ion-list>
           <ion-item>
             <ion-label floating>Title <span [hidden]="data.title.valid">(Required)</span></ion-label>
-            <ion-input formControlName="title" type="text" [(ngModel)]="data.title" required autofocus></ion-input>
+            <ion-input [(ngModel)]="data.title" name="title" #title="ngModel" type="text" required autofocus></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Note <span [hidden]="data.note.valid">(Required)</span></ion-label>
-            <ion-input formControlName="note" type="text" [(ngModel)]="data.note" required></ion-input>
+            <ion-input [(ngModel)]="data.note" name="note" #note="ngModel" type="text" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Icon</ion-label>
-            <ion-input formControlName="icon" type="text" [(ngModel)]="data.icon" autocomplete="on" autocorrect="on"></ion-input>
+            <ion-input [(ngModel)]="data.icon" name="icon" #icon="ngModel" type="text" autocomplete="on" autocorrect="on"></ion-input>
           </ion-item>
         </ion-list>
         <div padding>
@@ -372,6 +398,13 @@ export class ContactUs {
     </ion-header>
 
     <ion-content padding>
+      <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+      <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+      <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+      <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+      <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+      <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+      <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
       <p>
         <button ion-button (click)="push()">Push (Go to 2nd)</button>
       </p>
@@ -390,36 +423,93 @@ export class ContactUs {
 })
 export class ModalFirstPage {
   items: any[] = [];
+  called: any;
 
-  constructor(public navCtrl: NavController, public app: App, public actionSheetCtrl: ActionSheetController) {
+  constructor(
+    public navCtrl: NavController,
+    public app: App,
+    public actionSheetCtrl: ActionSheetController,
+    public toastCtrl: ToastController,
+    public alertCtrl: AlertController) {
+
     for (let i = 0; i < 50; i++) {
       this.items.push({
         value: (i + 1)
       });
     }
+
+    this.called = {
+      ionViewCanEnter: 0,
+      ionViewCanLeave: 0,
+      ionViewDidLoad: 0,
+      ionViewWillEnter: 0,
+      ionViewDidEnter: 0,
+      ionViewWillLeave: 0,
+      ionViewDidLeave: 0
+    };
   }
 
   push() {
-    let page = ModalSecondPage;
-    let params = { id: 8675309, myData: [1, 2, 3, 4] };
+    this.toastCtrl.create({
+      message: 'Will push a page in a moment...',
+      duration: 1000,
+    }).present();
 
-    this.navCtrl.push(page, params);
+    setTimeout(() => {
+      this.navCtrl.push(ModalSecondPage, {
+        id: 8675309,
+        myData: [1, 2, 3, 4]
+      });
+    }, 500);
   }
 
   dismiss() {
     this.navCtrl.parent.pop();
   }
 
+  ionViewCanEnter() {
+    console.log('ModalFirstPage ionViewCanEnter fired');
+    this.called.ionViewCanEnter++;
+    return true;
+  }
+
+  ionViewCanLeave() {
+    console.log('ModalFirstPage ionViewCanLeave fired');
+    this.called.ionViewCanLeave++;
+    return true;
+  }
+
   ionViewDidLoad() {
     console.log('ModalFirstPage ionViewDidLoad fired');
+    this.called.ionViewDidLoad++;
   }
 
   ionViewWillEnter() {
     console.log('ModalFirstPage ionViewWillEnter fired');
+    this.called.ionViewWillEnter++;
   }
 
   ionViewDidEnter() {
     console.log('ModalFirstPage ionViewDidEnter fired');
+    let alert = this.alertCtrl.create({
+      title: 'Test',
+      buttons: [
+          {
+              text: 'Something',
+              role: 'cancel'
+          }
+      ]
+    });
+    alert.present();
+    this.called.ionViewDidEnter++;
+  }
+
+  ionViewWillLeave() {
+    this.called.ionViewWillLeave++;
+  }
+
+  ionViewDidLeave() {
+    this.called.ionViewDidLeave++;
   }
 
   openActionSheet() {
@@ -517,13 +607,13 @@ export class E2EApp {
     ModalSecondPage,
     ModalWithInputs,
     ContactUs,
-    NavigableModal,
-    NavigableModal2,
     ModalPassData,
     ToolbarModal
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp, {
+      statusbarPadding: true
+    })
   ],
   bootstrap: [IonicApp],
   providers: [SomeAppProvider],
@@ -534,8 +624,6 @@ export class E2EApp {
     ModalSecondPage,
     ModalWithInputs,
     ContactUs,
-    NavigableModal,
-    NavigableModal2,
     ModalPassData,
     ToolbarModal
   ]

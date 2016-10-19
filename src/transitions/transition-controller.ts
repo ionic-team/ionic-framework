@@ -34,7 +34,7 @@ export class TransitionController {
     return this._ids++;
   }
 
-  get(trnsId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions) {
+  get(trnsId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
     const trns = createTransition(this._config, opts.animation, enteringView, leavingView, opts);
     trns.trnsId = trnsId;
 

@@ -1,11 +1,12 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
 import { Footer, Header } from '../components/toolbar/toolbar';
-import { isPresent, merge } from '../util/util';
+import { isPresent, assign } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
 import { NavControllerBase } from './nav-controller-base';
 import { NavOptions, ViewState } from './nav-util';
 import { NavParams } from './nav-params';
+import { Content } from '../components/content/content';
 
 
 /**
@@ -28,6 +29,8 @@ import { NavParams } from './nav-params';
 export class ViewController {
   private _cntDir: any;
   private _cntRef: ElementRef;
+  private _ionCntDir: Content;
+  private _ionCntRef: ElementRef;
   private _hdrDir: Header;
   private _ftrDir: Footer;
   private _isHidden: boolean = false;
@@ -148,16 +151,6 @@ export class ViewController {
   }
 
   /**
-   * @private
-   * onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead
-   */
-  onDismiss(callback: Function) {
-    // deprecated warning: added beta.11 2016-06-30
-    console.warn('onDismiss(..) has been deprecated. Please use onDidDismiss(..) instead');
-    this.onDidDismiss(callback);
-  }
-
-  /**
    * Called when the current viewController has be successfully dismissed
    */
   onDidDismiss(callback: Function) {
@@ -184,7 +177,7 @@ export class ViewController {
       return Promise.resolve(false);
     }
 
-    let options = merge({}, this._leavingOpts, navOptions);
+    let options = assign({}, this._leavingOpts, navOptions);
     this._onWillDismiss && this._onWillDismiss(data, role);
     return this._nav.remove(this._nav.indexOf(this), 1, options).then(() => {
       this._onDidDismiss && this._onDidDismiss(data, role);
@@ -318,7 +311,7 @@ export class ViewController {
   /**
    * @returns {component} Returns the Page's Content component reference.
    */
-  getContent() {
+  getContent(): any {
     return this._cntDir;
   }
 
@@ -334,6 +327,36 @@ export class ViewController {
    */
   contentRef(): ElementRef {
     return this._cntRef;
+  }
+
+  /**
+   * @private
+   */
+  _setIONContent(content: Content) {
+    this._setContent(content);
+    this._ionCntDir = content;
+  }
+
+  /**
+   * @private
+   */
+  getIONContent(): Content {
+    return this._ionCntDir;
+  }
+
+  /**
+   * @private
+   */
+  _setIONContentRef(elementRef: ElementRef) {
+    this._setContentRef(elementRef);
+    this._ionCntRef = elementRef;
+  }
+
+  /**
+   * @private
+   */
+  getIONContentRef(): ElementRef {
+    return this._ionCntRef;
   }
 
   /**
@@ -410,6 +433,13 @@ export class ViewController {
 
   /**
    * @private
+   */
+  _willLoad() {
+    this._lifecycle('WillLoad');
+  }
+
+  /**
+   * @private
    * The view has loaded. This event only happens once per view being
    * created. If a view leaves but is cached, then this will not
    * fire again on a subsequent viewing. This method is a good place
@@ -417,17 +447,7 @@ export class ViewController {
    * recommended method to use when a view becomes active.
    */
   _didLoad() {
-    // deprecated warning: added 2016-08-14, beta.12
-    if (this.instance && this.instance.ionViewLoaded) {
-      try {
-        console.warn('ionViewLoaded() has been deprecated. Please rename to ionViewDidLoad()');
-        this.instance.ionViewLoaded();
-      } catch (e) {
-        console.error(this.name + ' iionViewLoaded: ' + e.message);
-      }
-    }
-
-    ctrlFn(this, 'DidLoad');
+    this._lifecycle('DidLoad');
   }
 
   /**
@@ -442,7 +462,7 @@ export class ViewController {
     }
 
     this.willEnter.emit(null);
-    ctrlFn(this, 'WillEnter');
+    this._lifecycle('WillEnter');
   }
 
   /**
@@ -453,7 +473,7 @@ export class ViewController {
   _didEnter() {
     this._nb && this._nb.didEnter();
     this.didEnter.emit(null);
-    ctrlFn(this, 'DidEnter');
+    this._lifecycle('DidEnter');
   }
 
   /**
@@ -462,7 +482,7 @@ export class ViewController {
    */
   _willLeave() {
     this.willLeave.emit(null);
-    ctrlFn(this, 'WillLeave');
+    this._lifecycle('WillLeave');
   }
 
   /**
@@ -472,7 +492,7 @@ export class ViewController {
    */
   _didLeave() {
     this.didLeave.emit(null);
-    ctrlFn(this, 'DidLeave');
+    this._lifecycle('DidLeave');
 
     // when this is not the active page
     // we no longer need to detect changes
@@ -487,17 +507,7 @@ export class ViewController {
    */
   _willUnload() {
     this.willUnload.emit(null);
-    ctrlFn(this, 'WillUnload');
-
-    // deprecated warning: added 2016-08-14, beta.12
-    if (this.instance && this.instance.ionViewDidUnload) {
-      console.warn('ionViewDidUnload() has been deprecated. Please use ionViewWillUnload() instead');
-      try {
-        this.instance.ionViewDidUnload();
-      } catch (e) {
-        console.error(this.name + ' ionViewDidUnload: ' + e.message);
-      }
-    }
+    this._lifecycle('WillUnload');
   }
 
   /**
@@ -509,20 +519,13 @@ export class ViewController {
       if (renderer) {
         // ensure the element is cleaned up for when the view pool reuses this element
         // ******** DOM WRITE ****************
-        renderer.setElementAttribute(this._cmp.location.nativeElement, 'class', null);
-        renderer.setElementAttribute(this._cmp.location.nativeElement, 'style', null);
+        const cmpEle = this._cmp.location.nativeElement;
+        renderer.setElementAttribute(cmpEle, 'class', null);
+        renderer.setElementAttribute(cmpEle, 'style', null);
       }
 
       // completely destroy this component. boom.
       this._cmp.destroy();
-    }
-
-    if (this._nav) {
-      // remove it from the nav
-      const index = this._nav.indexOf(this);
-      if (index > -1) {
-        this._nav._views.splice(index, 1);
-      }
     }
 
     this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onWillDismiss = null;
@@ -531,37 +534,42 @@ export class ViewController {
   /**
    * @private
    */
-  _lifecycleTest(lifecycle: string): boolean | string | Promise<any> {
-    let result: any = true;
-
-    if (this.instance && this.instance['ionViewCan' + lifecycle]) {
+  _lifecycleTest(lifecycle: string): boolean | Promise<any> {
+    let instance = this.instance;
+    let methodName = 'ionViewCan' + lifecycle;
+    if (instance && instance[methodName]) {
       try {
-        result = this.instance['ionViewCan' + lifecycle]();
+        let result = instance[methodName]();
+        if (result === false) {
+          return false;
+        } else if (result instanceof Promise) {
+          return result;
+        } else {
+          return true;
+        }
 
       } catch (e) {
-        console.error(`${this.name} ionViewCan${lifecycle} error: ${e}`);
-        result = false;
+        console.error(`${this.name} ${methodName} error: ${e.message}`);
+        return false;
       }
     }
-    return result;
+    return true;
+  }
+
+  _lifecycle(lifecycle: string) {
+    let instance = this.instance;
+    let methodName = 'ionView' + lifecycle;
+    if (instance && instance[methodName]) {
+      try {
+        instance[methodName]();
+
+      } catch (e) {
+        console.error(`${this.name} ${methodName} error: ${e.message}`);
+      }
+    }
   }
 
 }
-
-
-function ctrlFn(viewCtrl: ViewController, fnName: string) {
-  if (viewCtrl.instance) {
-    // fire off ionView lifecycle instance method
-    if (viewCtrl.instance['ionView' + fnName]) {
-      try {
-        viewCtrl.instance['ionView' + fnName]();
-      } catch (e) {
-        console.error(viewCtrl.name + ' ionView' + fnName + ': ' + e.message);
-      }
-    }
-  }
-}
-
 
 export function isViewController(viewCtrl: any) {
   return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);

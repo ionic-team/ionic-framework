@@ -15,6 +15,7 @@ export const AppRootToken = new OpaqueToken('USERROOT');
   selector: 'ion-app',
   template:
     '<div #viewport app-viewport></div>' +
+    '<div #modalPortal overlay-portal></div>' +
     '<div #overlayPortal overlay-portal></div>' +
     '<div #loadingPortal class="loading-portal" overlay-portal></div>' +
     '<div #toastPortal class="toast-portal" overlay-portal></div>' +
@@ -23,6 +24,8 @@ export const AppRootToken = new OpaqueToken('USERROOT');
 export class IonicApp extends Ion implements OnInit {
 
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
+
+  @ViewChild('modalPortal', { read: OverlayPortal }) _modalPortal: OverlayPortal;
 
   @ViewChild('overlayPortal', { read: OverlayPortal }) _overlayPortal: OverlayPortal;
 
@@ -96,6 +99,9 @@ export class IonicApp extends Ion implements OnInit {
     if (portal === AppPortal.TOAST) {
       return this._toastPortal;
     }
+    if (portal === AppPortal.MODAL) {
+      return this._modalPortal;
+    }
     return this._overlayPortal;
   }
 
@@ -110,6 +116,7 @@ export class IonicApp extends Ion implements OnInit {
 
 export enum AppPortal {
   DEFAULT,
+  MODAL,
   LOADING,
   TOAST
 };

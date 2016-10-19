@@ -12,8 +12,6 @@ export class E2EPage {
   constructor(config: Config) {
     this.duration = '1000';
     this.easing = 'ease-in-out';
-
-    console.log('isProd', config.getBoolean('prodMode'));
   }
 
   playGreen() {

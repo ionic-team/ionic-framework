@@ -6,7 +6,6 @@ import { Content } from '../content/content';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
 import { isBlank } from '../../util/util';
-import { nativeRaf } from '../../util/dom';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
@@ -22,10 +21,10 @@ import { ViewController } from '../../navigation/view-controller';
  * Tabs make it easy to navigate between different pages or functional
  * aspects of an app. The Tabs component, written as `<ion-tabs>`, is
  * a container of individual [Tab](../Tab/) components. Each individual `ion-tab`
- * is a declarative component for a [NavController](../../nav/NavController/)
+ * is a declarative component for a [NavController](../../../navigation/NavController/)
  *
  * For more information on using nav controllers like Tab or [Nav](../../nav/Nav/),
- * take a look at the [NavController API Docs](../../nav/NavController/).
+ * take a look at the [NavController API Docs](../../../navigation/NavController/).
  *
  * ### Placement
  *
@@ -145,7 +144,7 @@ import { ViewController } from '../../navigation/view-controller';
       '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">' +
         '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
         '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
-        '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
+        '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [color]="t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
         '<div class="button-effect"></div>' +
       '</a>' +
       '<div class="tab-highlight"></div>' +
@@ -194,19 +193,9 @@ export class Tabs extends Ion implements AfterViewInit {
   @Input() selectedIndex: number;
 
   /**
-   * @internal DEPRECATED. Please use `tabsLayout` instead.
-   */
-  @Input() private tabbarLayout: string;
-
-  /**
    * @input {string} Set the tabbar layout: `icon-top`, `icon-left`, `icon-right`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
   @Input() tabsLayout: string;
-
-  /**
-   * @internal DEPRECATED. Please use `tabsPlacement` instead.
-   */
-  @Input() private tabbarPlacement: string;
 
   /**
    * @input {string} Set position of the tabbar: `top`, `bottom`.
@@ -262,18 +251,6 @@ export class Tabs extends Ion implements AfterViewInit {
     this._subPages = config.getBoolean('tabsHideOnSubPages');
     this.tabsHighlight = config.getBoolean('tabsHighlight');
 
-    // TODO deprecated 07-07-2016 beta.11
-    if (config.get('tabSubPages') !== null) {
-      console.warn('Config option "tabSubPages" has been deprecated. Please use "tabsHideOnSubPages" instead.');
-      this._subPages = config.getBoolean('tabSubPages');
-    }
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (config.get('tabbarHighlight') !== null) {
-      console.warn('Config option "tabbarHighlight" has been deprecated. Please use "tabsHighlight" instead.');
-      this.tabsHighlight = config.getBoolean('tabbarHighlight');
-    }
-
     if (this.parent) {
       // this Tabs has a parent Nav
       this.parent.registerChildNav(this);
@@ -297,6 +274,10 @@ export class Tabs extends Ion implements AfterViewInit {
     }
   }
 
+  ngOnDestroy() {
+    this.parent.unregisterChildNav(this);
+  }
+
   /**
    * @internal
    */
@@ -304,36 +285,6 @@ export class Tabs extends Ion implements AfterViewInit {
     this._setConfig('tabsPlacement', 'bottom');
     this._setConfig('tabsLayout', 'icon-top');
     this._setConfig('tabsHighlight', this.tabsHighlight);
-
-    // TODO deprecated 07-07-2016 beta.11
-    this._setConfig('tabbarPlacement', 'bottom');
-    this._setConfig('tabbarLayout', 'icon-top');
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (this.tabbarPlacement !== undefined) {
-      console.warn('Input "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
-      this.setElementAttribute('tabsPlacement', this.tabbarPlacement);
-      this.tabsPlacement = this.tabbarPlacement;
-    }
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (this._config.get('tabbarPlacement') !== null) {
-      console.warn('Config option "tabbarPlacement" has been deprecated. Please use "tabsPlacement" instead.');
-      this.setElementAttribute('tabsPlacement', this._config.get('tabbarPlacement'));
-    }
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (this.tabbarLayout !== undefined) {
-      console.warn('Input "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
-      this.setElementAttribute('tabsLayout', this.tabbarLayout);
-      this.tabsLayout = this.tabbarLayout;
-    }
-
-    // TODO deprecated 07-07-2016 beta.11
-    if (this._config.get('tabbarLayout') !== null) {
-      console.warn('Config option "tabbarLayout" has been deprecated. Please use "tabsLayout" instead.');
-      this.setElementAttribute('tabsLayout', this._config.get('tabsLayout'));
-    }
 
     if (this.tabsHighlight) {
       this._platform.onResize(() => {
@@ -470,12 +421,9 @@ export class Tabs extends Ion implements AfterViewInit {
       // to refresh the tabbar and content dimensions to be sure
       // they're lined up correctly
       if (alreadyLoaded && selectedPage) {
-        let content = <Content>selectedPage.getContent();
-        if (content && content instanceof Content) {
-          nativeRaf(() => {
-            content.readDimensions();
-            content.writeDimensions();
-          });
+        let content = <Content>selectedPage.getIONContent();
+        if (content) {
+          content.resize();
         }
       }
     });

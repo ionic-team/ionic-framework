@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Dire
 
 import { CSS, nativeRaf, nativeTimeout, clearNativeTimeout } from '../../util/dom';
 import { Item } from './item';
-import { isPresent } from '../../util/util';
+import { isPresent, assert } from '../../util/util';
 import { List } from '../list/list';
 
 const SWIPE_MARGIN = 30;
@@ -294,7 +294,7 @@ export class ItemSliding {
       case ItemSideFlags.Right: openAmount = Math.max(0, openAmount); break;
       case ItemSideFlags.Left: openAmount = Math.min(0, openAmount); break;
       case ItemSideFlags.Both: break;
-      default: return;
+      default: assert(true, 'invalid ItemSideFlags value'); break;
     }
 
     if (openAmount > this._optsWidthRightSide) {
@@ -354,11 +354,13 @@ export class ItemSliding {
       this._optsWidthRightSide = 0;
       if (this._rightOptions) {
         this._optsWidthRightSide = this._rightOptions.width();
+        assert(this._optsWidthRightSide > 0, '_optsWidthRightSide should not be zero');
       }
 
       this._optsWidthLeftSide = 0;
       if (this._leftOptions) {
         this._optsWidthLeftSide = this._leftOptions.width();
+        assert(this._optsWidthLeftSide > 0, '_optsWidthLeftSide should not be zero');
       }
       this._optsDirty = false;
     });

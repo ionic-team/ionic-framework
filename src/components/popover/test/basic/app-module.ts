@@ -28,6 +28,9 @@ import { IonicApp, IonicModule, PopoverController, NavParams, ViewController } f
             <button ion-button="dot" (click)="changeBackground('black')" class="dot-black" [class.selected]="background == 'black'"></button>
           </ion-col>
         </ion-row>
+        <ion-item-divider color="dark">
+          <ion-label>Font Family</ion-label>
+        </ion-item-divider>
         <ion-item class="text-athelas">
           <ion-label>Athelas</ion-label>
           <ion-radio value="Athelas"></ion-radio>
@@ -59,6 +62,7 @@ import { IonicApp, IonicModule, PopoverController, NavParams, ViewController } f
       </ion-list>
     </ion-content>
   `,
+  selector: 'e2e-popover-basic'
 })
 export class PopoverRadioPage {
   background: string;
@@ -173,7 +177,8 @@ export class PopoverLongListPage {
 
 
 @Component({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  selector: 'e2e-popover-basic'
 })
 export class E2EPage {
   @ViewChild('popoverContent', {read: ElementRef}) content: ElementRef;

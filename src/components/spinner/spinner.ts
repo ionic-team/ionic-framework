@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEn
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-
+import { CSS } from '../../util/dom';
 /**
  * @name Spinner
  * @description
@@ -88,7 +88,7 @@ import { Ion } from '../ion';
  * of `background-color`.
  *
  * ```css
- * ion-spinner svg {
+ * ion-spinner * {
  *   width: 28px;
  *   height: 28px;
  *   stroke: #444;
@@ -131,6 +131,14 @@ export class Spinner extends Ion {
   }
 
   /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('spinner', val);
+  }
+
+  /**
    * @input {string} SVG spinner name.
    */
   @Input()
@@ -163,6 +171,8 @@ export class Spinner extends Ion {
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
     super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
   }
 
   /**
@@ -222,8 +232,8 @@ const SPINNERS: any = {
         y1: 17,
         y2: 29,
         style: {
-          transform: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          [CSS.transform]: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
+          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
     }
@@ -237,8 +247,8 @@ const SPINNERS: any = {
         y1: 12,
         y2: 20,
         style: {
-          transform: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          [CSS.transform]: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
+          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
     }
@@ -253,7 +263,7 @@ const SPINNERS: any = {
         style: {
           top: 9 * Math.sin(2 * Math.PI * index / total),
           left: 9 * Math.cos(2 * Math.PI * index / total),
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
     }
@@ -268,7 +278,7 @@ const SPINNERS: any = {
         style: {
           top: 9 * Math.sin(2 * Math.PI * index / total),
           left: 9 * Math.cos(2 * Math.PI * index / total),
-          animationDelay: -(dur - ((dur / total) * index)) + 'ms'
+          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
     }
@@ -293,7 +303,7 @@ const SPINNERS: any = {
         r: 6,
         style: {
           left: (9 - (9 * index)),
-          animationDelay: -(110 * index) + 'ms'
+          [CSS.animationDelay]: -(110 * index) + 'ms'
         }
       };
     }

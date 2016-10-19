@@ -149,14 +149,14 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-ios .alert-input {
+  @include appearance(none);
+
   margin-top: $alert-ios-input-margin-top;
   padding: $alert-ios-input-padding;
 
   border: $alert-ios-input-border;
   border-radius: $alert-ios-input-border-radius;
   background-color: $alert-ios-input-background-color;
-
-  -webkit-appearance: none;
 }
 
 

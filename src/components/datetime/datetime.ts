@@ -488,7 +488,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       {
         text: this.doneText,
         handler: (data: any) => {
-          console.log('datetime, done', data);
+          console.debug('datetime, done', data);
           this.onChange(data);
           this.ionChange.emit(data);
         }

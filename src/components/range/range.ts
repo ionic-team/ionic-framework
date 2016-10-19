@@ -8,6 +8,7 @@ import { Form } from '../../util/form';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
 import { PointerCoordinates, pointerCoord, raf } from '../../util/dom';
+import { Haptic } from '../../util/haptic';
 import { UIEventManager } from '../../util/ui-event-manager';
 
 export const RANGE_VALUE_ACCESSOR: any = {
@@ -343,6 +344,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
   constructor(
     private _form: Form,
+    private _haptic: Haptic,
     @Optional() private _item: Item,
     config: Config,
     elementRef: ElementRef,
@@ -436,6 +438,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     this._active.position();
     this._pressed = this._active.pressed = true;
 
+    this._haptic.gestureSelectionStart();
+
     return true;
   }
 
@@ -473,6 +477,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     // update the active knob's position
     this._active.position();
 
+    this._haptic.gestureSelectionEnd();
+
     // clear the start coordinates and active knob
     this._start = this._active = null;
     this._pressed = this._knobs.first.pressed = this._knobs.last.pressed = false;
@@ -505,6 +511,12 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       let newVal = this._active.value;
 
       if (oldVal !== newVal) {
+        // Trigger a haptic selection changed event if this is
+        // a snap range
+        if (this.snaps) {
+          this._haptic.gestureSelectionChanged();
+        }
+
         // value has been updated
         if (this._dual) {
           this.value = {

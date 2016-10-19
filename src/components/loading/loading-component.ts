@@ -4,7 +4,7 @@ import { Config } from '../../config/config';
 import { isDefined, isUndefined } from '../../util/util';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
-
+import { LoadingOptions } from './loading-options';
 
 /**
 * @private
@@ -25,15 +25,7 @@ import { ViewController } from '../../navigation/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class LoadingCmp {
-  d: {
-    spinner?: string;
-    content?: string;
-    cssClass?: string;
-    showBackdrop?: boolean;
-    dismissOnPageChange?: boolean;
-    delay?: number;
-    duration?: number;
-  };
+  d: LoadingOptions;
   id: number;
   showSpinner: boolean;
   durationTimeout: number;

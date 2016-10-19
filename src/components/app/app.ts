@@ -145,7 +145,7 @@ export class App {
 
   /**
    * Boolean if the app is actively scrolling or not.
-   * @return {boolean}
+   * @return {boolean} returns true or false
    */
   isScrolling(): boolean {
     return (this._scrollTime + 48 > Date.now());
@@ -170,7 +170,7 @@ export class App {
   }
 
   /**
-   * retuns the root NavController
+   * @return {NavController} Retuns the root NavController
    */
   getRootNav(): NavController {
     return this._rootNav;

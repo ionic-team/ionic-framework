@@ -11,6 +11,10 @@ http://ionicworldwide.herokuapp.com/
 
 https://github.com/driftyco/ionic-app-scripts
 
+**Note: for Ionic-Native related issues you can open up an issues on the Ionic-Native repo**
+
+https://github.com/driftyco/ionic-native
+
 
 #### Short description of the problem:
 

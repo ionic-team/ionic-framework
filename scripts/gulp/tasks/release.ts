@@ -9,6 +9,7 @@ import { rollup } from 'rollup';
 import * as commonjs from 'rollup-plugin-commonjs';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as runSequence from 'run-sequence';
+import * as semver from 'semver';
 import { obj } from 'through2';
 
 import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
@@ -16,41 +17,31 @@ import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePoly
 
 
 task('nightly', (done: (err: any) => void) => {
-  runSequence('release.prepareReleasePackage',
-              'release.removeDebugStatements',
+  runSequence('release.pullLatest',
+              'validate',
+              'release.prepareReleasePackage',
               'release.publishNightly',
               done);
 });
 
 task('release', (done: (err: any) => void) => {
-  runSequence('release.prepareReleasePackage',
+  runSequence('release.pullLatest',
+              'validate',
+              'release.prepareReleasePackage',
               'release.copyProdVersion',
-              'release.removeDebugStatements',
               'release.prepareChangelog',
               'release.publishNpmRelease',
               'release.publishGithubRelease',
               done);
 });
 
-task('release.removeDebugStatements', (done: Function) => {
-  glob(`${DIST_BUILD_ROOT}/**/*.js`, (err, filePaths) => {
-    if (err) {
-      done(err);
-    } else {
-      // can make async if it's slow but it's fine for now
-      for (let filePath of filePaths) {
-        const fileContent = readFileSync(filePath).toString();
-        const consoleFree = replaceAll(fileContent, 'console.debug', '// console.debug');
-        const cleanedJs = replaceAll(consoleFree, 'debugger;', '// debugger;');
-        writeFileSync(filePath, cleanedJs);
-      }
-    }
-  }, done());
+task('release.test', (done: (err: any) => void) => {
+  runSequence('validate',
+              'release.prepareReleasePackage',
+              'release.copyProdVersion',
+              done);
 });
 
-function replaceAll(input: string, tokenToReplace: string, replaceWith: string) {
-  return input.split(tokenToReplace).join(replaceWith);
-}
 
 task('release.publishGithubRelease', (done: Function) => {
 
@@ -97,7 +88,15 @@ task('release.publishNpmRelease', (done: Function) => {
 });
 
 task('release.copyProdVersion', () => {
+  // Increment the version and update the source package file
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
+
+  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, 'prerelease', true);
+
+  const sourcePrettyPrintedJson = JSON.stringify(sourcePackageJSON, null, 2);
+  writeFileSync(`${PROJECT_ROOT}/package.json`, sourcePrettyPrintedJson);
+
+  // Copy the source package version and update it in the build package file
   const packageJsonToUpdate = require(`${DIST_BUILD_ROOT}/package.json`);
 
   packageJsonToUpdate.version = sourcePackageJSON.version;
@@ -116,7 +115,7 @@ task('release.prepareReleasePackage', (done: (err: any) => void) => {
           'release.nightlyPackageJson',
           'release.compileSass',
           'release.fonts',
-          'release.scss',
+          'release.sass',
           'release.createUmdBundle',
           done);
 });
@@ -172,12 +171,12 @@ task('release.fonts', () => {
   return copyFonts(`${DIST_BUILD_ROOT}/fonts`);
 });
 
-task('release.scss', () => {
+task('release.sass', () => {
   return src([`${SRC_ROOT}/**/*.scss`, `!${SRC_ROOT}/components/*/test/**/*`, `!${SRC_ROOT}/util/test/*`]).pipe(dest(`${DIST_BUILD_ROOT}`));
 });
 
 task('release.pullLatest', (done: Function) => {
-  exec('git status --porcelain', (err: Error, stdOut: string) =>{
+  exec('git status --porcelain', (err: Error, stdOut: string) => {
     if (err) {
       done(err);
     } else if ( stdOut && stdOut.length > 0) {
@@ -222,8 +221,8 @@ task('release.preparePackageJsonTemplate', () => {
   for (let dependency in sourcePackageJSON.dependencies) {
 
     // if the dependency is in both, AND the value of the entry is empty, copy it over
-    if (dependency in templatePackageJSON.dependencies && templatePackageJSON.dependencies[dependency] === '') {
-      templatePackageJSON.dependencies[dependency] = sourcePackageJSON.dependencies[dependency];
+    if (dependency in templatePackageJSON.peerDependencies && templatePackageJSON.peerDependencies[dependency] === '') {
+      templatePackageJSON.peerDependencies[dependency] = sourcePackageJSON.dependencies[dependency];
     }
   }
 

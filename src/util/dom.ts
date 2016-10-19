@@ -72,6 +72,7 @@ export let CSS: {
   transitionStart?: string,
   transitionEnd?: string,
   transformOrigin?: string
+  animationDelay?: string;
 } = {};
 
 (function() {
@@ -113,6 +114,9 @@ export let CSS: {
 
   // transform origin
   CSS.transformOrigin = (isWebkit ? '-webkit-' : '') + 'transform-origin';
+
+  // animation delay
+  CSS.animationDelay = (isWebkit ? 'webkitAnimationDelay' : 'animationDelay');
 })();
 
 

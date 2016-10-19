@@ -242,7 +242,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
         return;
       }
 
-    } else if ((isPresent(newData.year) || isPresent(newData.hour))) {
+    } else if ((isPresent(newData.year) || isPresent(newData.hour) || isPresent(newData.month) || isPresent(newData.day) || isPresent(newData.minute) || isPresent(newData.second))) {
       // newData is from of a datetime picker's selected values
       // update the existing DateTimeData data with the new values
 

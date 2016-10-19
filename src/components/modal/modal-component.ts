@@ -30,7 +30,7 @@ export class ModalCmp {
     this._bdDismiss = _navParams.data.opts.enableBackdropDismiss;
   }
 
-  ngAfterViewInit() {
+  ionViewWillLoad() {
     this._load(this._navParams.data.component);
   }
 

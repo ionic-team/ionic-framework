@@ -34,6 +34,7 @@ export class Animation {
 
   parent: Animation;
   opts: AnimationOptions;
+  hasChildren: boolean = false;
   isPlaying: boolean = false;
   hasCompleted: boolean = false;
 
@@ -81,6 +82,7 @@ export class Animation {
    */
   add(childAnimation: Animation): Animation {
     childAnimation.parent = this;
+    this.hasChildren = true;
     this._cL = (this._c = this._c || []).push(childAnimation);
     return this;
   }
@@ -90,7 +92,14 @@ export class Animation {
    * not have a duration, then it'll get the duration from its parent.
    */
   getDuration(opts?: PlayOptions): number {
-    return (opts && isDefined(opts.duration) ? opts.duration : this._dur !== null ? this._dur : (this.parent && this.parent.getDuration()) || 0);
+    if (opts && isDefined(opts.duration)) {
+      return opts.duration;
+    } else if (this._dur !== null) {
+      return this._dur;
+    } else if (this.parent) {
+      return this.parent.getDuration();
+    }
+    return 0;
   }
 
   /**
@@ -290,8 +299,6 @@ export class Animation {
   play(opts?: PlayOptions) {
     const dur = this.getDuration(opts);
 
-    // console.debug('Animation, play, duration', dur, 'easing', this._es);
-
     // this is the top level animation and is in full control
     // of when the async play() should actually kick off
     // if there is no duration then it'll set the TO property immediately
@@ -450,8 +457,6 @@ export class Animation {
 
     function onTransitionEnd(ev: any) {
       // congrats! a successful transition completed!
-      // console.debug('Animation onTransitionEnd', ev.target.nodeName, ev.propertyName);
-
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();
 

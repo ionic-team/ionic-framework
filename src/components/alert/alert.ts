@@ -84,15 +84,6 @@ export class Alert extends ViewController {
     return this._app.present(this, navOptions);
   }
 
-  /**
-   * @private
-   * DEPRECATED: Please inject AlertController instead
-   */
-  static create(opt: any) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('Alert.create(..) has been deprecated. Please inject AlertController instead');
-  }
-
 }
 
 
