@@ -258,10 +258,6 @@ task('e2e.serve', function () {
   });
 });
 
-task('e2e.reload', function () {
-  connect.reload();
-});
-
 task('e2e.watch', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'], (done: Function) => {
   const folderInfo = getFolderInfo();
   let e2eTestPath = SRC_COMPONENTS_ROOT;
