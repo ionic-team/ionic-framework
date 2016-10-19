@@ -190,7 +190,7 @@ export class Content extends Ion {
 
     this._zone.runOutsideAngular(() => {
       this._scroll = new ScrollView(this._scrollEle);
-      this._scLsn = this.addScrollListener(this._app.setScrolling);
+      this._scLsn = this.addScrollListener(this._app.setScrolling.bind(this._app));
     });
   }
 
@@ -252,6 +252,9 @@ export class Content extends Ion {
     return this._addListener('mousemove', handler);
   }
 
+  /**
+   * @private
+   */
   _addListener(type: string, handler: any): Function {
     assert(handler, 'handler must be valid');
     assert(this._scrollEle, '_scrollEle must be valid');
