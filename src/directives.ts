@@ -12,7 +12,6 @@ import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
 import { DateTime } from './components/datetime/datetime';
 import { FabContainer, FabButton, FabList } from './components/fab/fab';
-import { Fixed } from './components/fixed/fixed';
 import { Grid, Row, Col } from './components/grid/grid';
 import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
@@ -52,6 +51,7 @@ import { Spinner } from './components/spinner/spinner';
 import { Tab } from './components/tabs/tab';
 import { Tabs } from './components/tabs/tabs';
 import { TabButton } from './components/tabs/tab-button';
+import { TabHighlight } from './components/tabs/tab-highlight';
 import { TextInput, TextArea } from './components/input/input';
 import { Thumbnail } from './components/thumbnail/thumbnail';
 import { Toggle } from './components/toggle/toggle';
@@ -81,7 +81,6 @@ export { Chip } from './components/chip/chip';
 export { Content } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
 export { FabContainer, FabButton, FabList } from './components/fab/fab';
-export { Fixed } from './components/fixed/fixed';
 export { Grid, Row, Col } from './components/grid/grid';
 export { Icon } from './components/icon/icon';
 export { Img } from './components/img/img';
@@ -176,7 +175,6 @@ export const IONIC_DIRECTIVES: any[] = [
   FabContainer,
   FabButton,
   FabList,
-  Fixed,
   Footer,
   Grid,
   Header,
@@ -231,6 +229,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Tab,
   Tabs,
   TabButton,
+  TabHighlight,
   TextArea,
   TextInput,
   Thumbnail,

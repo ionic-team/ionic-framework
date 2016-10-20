@@ -14,24 +14,23 @@ export class Activator {
 
   downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     // the user just pressed down
-    let self = this;
-    if (self.disableActivated(ev)) {
+    if (this.disableActivated(ev)) {
       return;
     }
 
     // queue to have this element activated
-    self._queue.push(activatableEle);
+    this._queue.push(activatableEle);
 
-    rafFrames(2, function() {
+    rafFrames(2, () => {
       let activatableEle: HTMLElement;
-      for (let i = 0; i < self._queue.length; i++) {
-        activatableEle = self._queue[i];
+      for (let i = 0; i < this._queue.length; i++) {
+        activatableEle = this._queue[i];
         if (activatableEle && activatableEle.parentNode) {
-          self._active.push(activatableEle);
-          activatableEle.classList.add(self._css);
+          this._active.push(activatableEle);
+          activatableEle.classList.add(this._css);
         }
       }
-      self._queue = [];
+      this._queue = [];
     });
   }
 
@@ -60,24 +59,29 @@ export class Activator {
 
   deactivate() {
     // remove the active class from all active elements
-    let self = this;
-    self._queue = [];
+    this._queue = [];
 
-    rafFrames(2, function() {
-      for (var i = 0; i < self._active.length; i++) {
-        self._active[i].classList.remove(self._css);
+    rafFrames(2, () => {
+      for (var i = 0; i < this._active.length; i++) {
+        this._active[i].classList.remove(this._css);
       }
-      self._active = [];
+      this._active = [];
     });
   }
 
   disableActivated(ev: any) {
-    if (ev.defaultPrevented) return true;
+    if (ev.defaultPrevented) {
+      return true;
+    }
 
     let targetEle = ev.target;
-    for (let x = 0; x < 4; x++) {
-      if (!targetEle) break;
-      if (targetEle.hasAttribute('disable-activated')) return true;
+    for (let i = 0; i < 4; i++) {
+      if (!targetEle) {
+        break;
+      }
+      if (targetEle.hasAttribute('disable-activated')) {
+        return true;
+      }
       targetEle = targetEle.parentElement;
     }
     return false;

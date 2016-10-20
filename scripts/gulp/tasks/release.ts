@@ -1,23 +1,143 @@
-import { spawn, exec } from 'child_process';
-import { writeFileSync } from 'fs';
+import { exec, spawnSync, spawn } from 'child_process';
+import { readFileSync, writeFileSync } from 'fs';
 
+import * as changelog from 'conventional-changelog';
+import * as GithubApi from 'github';
+import * as glob from 'glob';
 import { dest, src, task } from 'gulp';
+import { rollup } from 'rollup';
+import * as commonjs from 'rollup-plugin-commonjs';
+import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as runSequence from 'run-sequence';
+import * as semver from 'semver';
+import { obj } from 'through2';
 
-import { DIST_BUILD_ROOT, SCRIPTS_ROOT, SRC_ROOT, PROJECT_ROOT } from '../constants';
+import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
 import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
 
 task('nightly', (done: (err: any) => void) => {
-  runSequence('release.nightlyPackage', 'release.publishNightly', done);
+  runSequence('release.pullLatest',
+              'validate',
+              'release.prepareReleasePackage',
+              'release.publishNightly',
+              done);
 });
 
-task('release.prepareNightly', (done: (err: any) => void) => {
-  runSequence('release.pullLatest', 'validate', 'release.copyTemplates', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
+task('release', (done: (err: any) => void) => {
+  runSequence('release.pullLatest',
+              'validate',
+              'release.prepareReleasePackage',
+              'release.copyProdVersion',
+              'release.prepareChangelog',
+              'release.publishNpmRelease',
+              'release.publishGithubRelease',
+              done);
 });
 
-task('release.nightlyPackage', (done: (err: any) => void) => {
-  runSequence('clean', 'release.polyfill', 'compile.release', 'release.prepareNightly', 'release.compileSass', 'release.fonts', 'release.scss', done);
+task('release.test', (done: (err: any) => void) => {
+  runSequence('validate',
+              'release.prepareReleasePackage',
+              'release.copyProdVersion',
+              done);
+});
+
+
+task('release.publishGithubRelease', (done: Function) => {
+
+  const packageJSON = require('../../../package.json');
+
+  const github = new GithubApi({
+    version: '3.0.0'
+  });
+
+  github.authenticate({
+    type: 'oauth',
+    token: process.env.GH_TOKEN
+  });
+
+  return changelog({
+    preset: 'angular'
+  })
+  .pipe(obj(function(file, enc, cb){
+    github.releases.createRelease({
+      owner: 'driftyco',
+      repo: 'ionic',
+      target_commitish: 'master',
+      tag_name: 'v' + packageJSON.version,
+      name: packageJSON.version,
+      body: file.toString(),
+      prerelease: false
+    }, done);
+  }));
+});
+
+task('release.publishNpmRelease', (done: Function) => {
+  const npmCmd = spawn('npm', ['publish', DIST_BUILD_ROOT]);
+  npmCmd.stdout.on('data', function (data) {
+    console.log(data.toString());
+  });
+
+  npmCmd.stderr.on('data', function (data) {
+    console.log('npm err: ' + data.toString());
+  });
+
+  npmCmd.on('close', function() {
+    done();
+  });
+});
+
+task('release.copyProdVersion', () => {
+  // Increment the version and update the source package file
+  const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
+
+  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, 'prerelease', true);
+
+  const sourcePrettyPrintedJson = JSON.stringify(sourcePackageJSON, null, 2);
+  writeFileSync(`${PROJECT_ROOT}/package.json`, sourcePrettyPrintedJson);
+
+  // Copy the source package version and update it in the build package file
+  const packageJsonToUpdate = require(`${DIST_BUILD_ROOT}/package.json`);
+
+  packageJsonToUpdate.version = sourcePackageJSON.version;
+
+  const prettyPrintedJson = JSON.stringify(packageJsonToUpdate, null, 2);
+  writeFileSync(`${DIST_BUILD_ROOT}/package.json`, prettyPrintedJson);
+});
+
+task('release.prepareReleasePackage', (done: (err: any) => void) => {
+  runSequence('clean',
+          'release.polyfill',
+          'compile.release',
+          'release.copyTemplates',
+          'release.copyNpmInfo',
+          'release.preparePackageJsonTemplate',
+          'release.nightlyPackageJson',
+          'release.compileSass',
+          'release.fonts',
+          'release.sass',
+          'release.createUmdBundle',
+          done);
+});
+
+task('release.createUmdBundle', (done: Function) => {
+  return rollup({
+    entry: DIST_BUILD_UMD_BUNDLE_ENTRYPOINT,
+    plugins: [
+      nodeResolve({
+        module: true,
+        jsnext: true,
+        main: true
+      }),
+      commonjs()
+    ]
+  }).then((bundle) => {
+    return bundle.write({
+      format: 'umd',
+      moduleName: 'ionicBundle',
+      dest: `${DIST_BUNDLE_ROOT}/ionic.umd.js`
+    });
+  });
 });
 
 task('release.polyfill', (done: Function) => {
@@ -51,19 +171,21 @@ task('release.fonts', () => {
   return copyFonts(`${DIST_BUILD_ROOT}/fonts`);
 });
 
-task('release.scss', () => {
+task('release.sass', () => {
   return src([`${SRC_ROOT}/**/*.scss`, `!${SRC_ROOT}/components/*/test/**/*`, `!${SRC_ROOT}/util/test/*`]).pipe(dest(`${DIST_BUILD_ROOT}`));
 });
 
 task('release.pullLatest', (done: Function) => {
-  exec('git pull origin master', (err: Error, stdout: string, stderr: string) => {
-    console.log(stdout);
-    console.log(stderr);
+  exec('git status --porcelain', (err: Error, stdOut: string) => {
     if (err) {
       done(err);
-    } else if (stderr && stderr.length > 0) {
-      done(new Error('There are outstanding changes. Commit changes in order to perform a release.'));
+    } else if ( stdOut && stdOut.length > 0) {
+      done(new Error('There are uncommited changes. Please commit or stash changes.'));
     } else {
+      const gitPullResult = spawnSync('git', ['pull', 'origin', 'master']);
+      if (gitPullResult.status !== 0) {
+        done(new Error('Error running git pull'));
+      }
       done();
     }
   });
@@ -99,8 +221,8 @@ task('release.preparePackageJsonTemplate', () => {
   for (let dependency in sourcePackageJSON.dependencies) {
 
     // if the dependency is in both, AND the value of the entry is empty, copy it over
-    if (dependency in templatePackageJSON.dependencies && templatePackageJSON.dependencies[dependency] === '') {
-      templatePackageJSON.dependencies[dependency] = sourcePackageJSON.dependencies[dependency];
+    if (dependency in templatePackageJSON.peerDependencies && templatePackageJSON.peerDependencies[dependency] === '') {
+      templatePackageJSON.peerDependencies[dependency] = sourcePackageJSON.dependencies[dependency];
     }
   }
 

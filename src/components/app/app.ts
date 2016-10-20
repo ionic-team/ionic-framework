@@ -11,7 +11,9 @@ import { ViewController } from '../../navigation/view-controller';
 
 
 /**
- * Ionic App
+ * @name App
+ * @description
+ * App is a utility class used in Ionic to get information about various aspects of an app
  */
 @Injectable()
 export class App {
@@ -143,7 +145,7 @@ export class App {
 
   /**
    * Boolean if the app is actively scrolling or not.
-   * @return {boolean}
+   * @return {boolean} returns true or false
    */
   isScrolling(): boolean {
     return (this._scrollTime + 48 > Date.now());
@@ -168,7 +170,7 @@ export class App {
   }
 
   /**
-   * retuns the root NavController
+   * @return {NavController} Retuns the root NavController
    */
   getRootNav(): NavController {
     return this._rootNav;

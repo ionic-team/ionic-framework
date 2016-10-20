@@ -8,6 +8,7 @@ $content-ios-transition-background:     #000 !default;
 
 
 .content-ios {
+  color: $text-ios-color;
   background-color: $background-ios-color;
 }
 
@@ -18,7 +19,6 @@ $content-ios-transition-background:     #000 !default;
 .content-ios hr {
   height: $hairlines-width;
 
-  color: $text-ios-color;
   background-color: rgba(0, 0, 0, .12);
 }
 

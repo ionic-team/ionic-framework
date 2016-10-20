@@ -7,6 +7,7 @@ import { isTrueProperty } from '../../util/util';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
 import { pointerCoord } from '../../util/dom';
+import { Haptic } from '../../util/haptic';
 import { UIEventManager } from '../../util/ui-event-manager';
 
 export const TOGGLE_VALUE_ACCESSOR: any = {
@@ -77,7 +78,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
   /** @private */
   _checked: boolean = false;
   /** @private */
-  _init: boolean;
+  _init: boolean = false;
   /** @private */
   _disabled: boolean = false;
   /** @private */
@@ -89,7 +90,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
   /** @private */
   _msPrv: number = 0;
   /** @private */
-  _fn: Function;
+  _fn: Function = null;
   /** @private */
   _events: UIEventManager = new UIEventManager();
 
@@ -124,6 +125,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
     config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
+    public _haptic: Haptic,
     @Optional() public _item: Item
   ) {
     super(config, elementRef, renderer);
@@ -158,12 +160,15 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
       if (this._checked) {
         if (currentX + 15 < this._startX) {
           this.onChange(false);
+          this._haptic.selection();
           this._startX = currentX;
           this._activated = true;
         }
 
       } else if (currentX - 15 > this._startX) {
         this.onChange(true);
+        // Create a haptic event
+        this._haptic.selection();
         this._startX = currentX;
         this._activated = (currentX < this._startX + 5);
       }
@@ -180,10 +185,12 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
       if (this.checked) {
         if (this._startX + 4 > endX) {
           this.onChange(false);
+          this._haptic.selection();
         }
 
       } else if (this._startX - 4 < endX) {
         this.onChange(true);
+        this._haptic.selection();
       }
 
       this._activated = false;
@@ -229,18 +236,14 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
-    this.onChange = (isChecked: boolean) => {
-      console.debug('toggle, onChange', isChecked);
-      fn(isChecked);
-      this._setChecked(isChecked);
-      this.onTouched();
-    };
   }
 
   /**
    * @private
    */
-  registerOnTouched(fn: any) { this.onTouched = fn; }
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
 
   /**
    * @input {boolean} whether the toggle is disabled or not
@@ -260,7 +263,8 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
    */
   onChange(isChecked: boolean) {
     // used when this input does not have an ngModel or formControlName
-    console.debug('toggle, onChange (no ngModel)', isChecked);
+    console.debug('toggle, onChange', isChecked);
+    this._fn && this._fn(isChecked);
     this._setChecked(isChecked);
     this.onTouched();
   }
@@ -289,6 +293,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
   ngOnDestroy() {
     this._form.deregister(this);
     this._events.unlistenAll();
+    this._fn = null;
   }
 
 }

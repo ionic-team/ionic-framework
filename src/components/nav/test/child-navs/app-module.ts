@@ -27,11 +27,14 @@ export class E2EApp {
 })
 export class LandingPage {
 
-  constructor(public navCtrl: NavController) {
-  }
+  constructor(public navCtrl: NavController) {}
 
   goToPage() {
     this.navCtrl.push(FirstPage);
+  }
+
+  ionViewDidLoad() {
+    this.goToPage();
   }
 }
 

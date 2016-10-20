@@ -1,6 +1,8 @@
 import { OpaqueToken } from '@angular/core';
 
-
+/**
+ * @private
+ */
 export class QueryParams {
   data: {[key: string]: any} = {};
 
@@ -27,8 +29,14 @@ export class QueryParams {
 
 }
 
+/**
+ * @private
+ */
 export const UrlToken = new OpaqueToken('USERURL');
 
+/**
+ * @private
+ */
 export function setupQueryParams(url: string): QueryParams {
   return new QueryParams(url);
 }

@@ -39,6 +39,10 @@ export class E2EPage {
     this.list.closeSlidingItems();
   }
 
+  noclose(item: ItemSliding) {
+    console.log('no close', item);
+  }
+
   unread(item: ItemSliding) {
     if (item) {
       item.close();

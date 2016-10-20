@@ -556,7 +556,6 @@ export class Slides extends Ion {
       ty = y-my;
     }
 
-    console.debug(y);
     */
 
     let zi = new Animation(this.touch.target.children[0])
@@ -862,6 +861,10 @@ export class Slide {
 
   constructor(
     elementRef: ElementRef,
+
+  /**
+   * @private
+   */
     @Host() public slides: Slides
   ) {
     this.ele = elementRef.nativeElement;
@@ -870,6 +873,9 @@ export class Slide {
     slides.rapidUpdate();
   }
 
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this.slides.rapidUpdate();
   }

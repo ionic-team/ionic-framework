@@ -8,17 +8,19 @@
     "url": "https://github.com/driftyco/ionic.git"
   },
   "license": "MIT",
-  "main": "commonjs/index.js",
+  "main": "umd/index.js",
   "module": "index.js",
-  "dependencies": {
+  "peerDependencies": {
     "@angular/common": "",
     "@angular/compiler": "",
+    "@angular/compiler-cli": "",
     "@angular/core": "",
     "@angular/forms": "",
     "@angular/http": "",
     "@angular/platform-browser": "",
     "@angular/platform-browser-dynamic": "",
     "@angular/platform-server": "",
-    "rxjs": ""
+    "rxjs": "",
+    "zone.js": ""
   }
 }

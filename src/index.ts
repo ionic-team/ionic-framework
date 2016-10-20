@@ -8,12 +8,10 @@ export * from './gestures/slide-edge-gesture';
 export * from './gestures/slide-gesture';
 export * from './gestures/gesture-controller';
 
-export * from './storage/storage';
-export * from './storage/sql';
-export * from './storage/local-storage';
-
 export * from './util/click-block';
 export * from './util/events';
+export * from './util/haptic';
+export * from './util/ionic-error-handler';
 export * from './util/keyboard';
 export * from './util/form';
 export { reorderArray } from './util/util';

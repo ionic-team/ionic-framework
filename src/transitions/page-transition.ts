@@ -14,6 +14,7 @@ export class PageTransition extends Transition {
       this.enteringPage = new Animation(this.enteringView.pageRef());
       this.add(this.enteringPage.beforeAddClass('show-page'));
 
+      // Resize content before transition starts
       this.beforeAddRead(this.readDimensions.bind(this));
       this.beforeAddWrite(this.writeDimensions.bind(this));
     }
@@ -23,8 +24,8 @@ export class PageTransition extends Transition {
    * DOM READ
    */
   readDimensions() {
-    const content = <Content>this.enteringView.getContent();
-    if (content && content instanceof Content) {
+    const content = <Content>this.enteringView.getIONContent();
+    if (content) {
       content.readDimensions();
     }
   }
@@ -33,8 +34,8 @@ export class PageTransition extends Transition {
    * DOM WRITE
    */
   writeDimensions() {
-    const content = <Content>this.enteringView.getContent();
-    if (content && content instanceof Content) {
+    const content = <Content>this.enteringView.getIONContent();
+    if (content) {
       content.writeDimensions();
     }
   }

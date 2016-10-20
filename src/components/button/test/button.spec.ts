@@ -161,11 +161,6 @@ describe('button', () => {
     b.round = true;
     b._assignCss(true);
     expect(hasClass(b, 'button-round')).toEqual(true);
-
-    b = mockButton();
-    b.fab = true;
-    b._assignCss(true);
-    expect(hasClass(b, 'button-fab')).toEqual(true);
   });
 
   it('should read button display attributes', () => {

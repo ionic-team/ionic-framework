@@ -92,6 +92,9 @@ export interface DeepLinkMetadataType {
   defaultHistory?: any[];
 }
 
+/**
+ * @private
+ */
 export class DeepLinkMetadata implements DeepLinkMetadataType {
   component: any;
   name: string;
@@ -106,8 +109,14 @@ export interface DeepLinkMetadataFactory {
   new (obj: DeepLinkMetadataType): DeepLinkMetadata;
 }
 
+/**
+ * @private
+ */
 export var DeepLink: DeepLinkMetadataFactory;
 
+/**
+ * @private
+ */
 export interface DeepLinkConfig {
   links: DeepLinkMetadata[];
 }
@@ -164,6 +173,8 @@ export interface TransitionInstruction {
   removeCount?: number;
   resolve?: TransitionResolveFn;
   reject?: TransitionRejectFn;
+  leavingRequiresTransition?: boolean;
+  enteringRequiresTransition?: boolean;
 }
 
 export enum ViewState {

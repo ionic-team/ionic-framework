@@ -103,6 +103,10 @@ export class InfiniteScroll {
   _thrPc: number = 0.15;
   _init: boolean = false;
 
+
+  /**
+   * @internal
+   */
   state: string = STATE_ENABLED;
 
   /**
@@ -129,6 +133,16 @@ export class InfiniteScroll {
       this._thrPx = parseFloat(val);
       this._thrPc = 0;
     }
+  }
+
+  /**
+   * @input {boolean} Whether or not the infinite scroll should be
+   * enabled or not. Setting to `false` will remove scroll event listeners
+   * and hide the display.
+   */
+  @Input()
+  set enabled(shouldEnable: boolean) {
+    this.enable(shouldEnable);
   }
 
   /**
@@ -217,6 +231,9 @@ export class InfiniteScroll {
     this._setListeners(shouldEnable);
   }
 
+  /**
+   * @private
+   */
   _setListeners(shouldListen: boolean) {
     if (this._init) {
       if (shouldListen) {

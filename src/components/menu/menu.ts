@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
@@ -9,7 +9,8 @@ import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
 import { GestureController } from '../../gestures/gesture-controller';
-
+import { UIEventManager } from '../../util/ui-event-manager';
+import { Content } from '../content/content';
 
 /**
  * @name Menu
@@ -178,7 +179,7 @@ import { GestureController } from '../../gestures/gesture-controller';
   selector: 'ion-menu',
   template:
     '<div class="menu-inner"><ng-content></ng-content></div>' +
-    '<ion-backdrop (click)="bdClick($event)" disableScroll="false"></ion-backdrop>',
+    '<ion-backdrop disableScroll="false"></ion-backdrop>',
   host: {
     'role': 'navigation'
   },
@@ -195,7 +196,7 @@ export class Menu {
   private _isAnimating: boolean = false;
   private _isPers: boolean = false;
   private _init: boolean = false;
-
+  private _events: UIEventManager = new UIEventManager();
 
   /**
    * @private
@@ -210,7 +211,7 @@ export class Menu {
   /**
    * @private
    */
-  onContentClick: EventListener;
+  @ContentChild(Content) menuContent: Content;
 
   /**
    * @input {any} A reference to the content element the menu should use.
@@ -292,11 +293,8 @@ export class Menu {
    */
   @Output() ionClose: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  /** @private */
-  _menuCtrl: MenuController;
-
   constructor(
-    _menuCtrl: MenuController,
+    public _menuCtrl: MenuController,
     private _elementRef: ElementRef,
     private _config: Config,
     private _platform: Platform,
@@ -304,75 +302,63 @@ export class Menu {
     private _keyboard: Keyboard,
     private _zone: NgZone,
     public gestureCtrl: GestureController
-  ) {
-    this._menuCtrl = _menuCtrl;
-  }
+  ) {}
 
   /**
    * @private
    */
   ngOnInit() {
-    let self = this;
-    self._init = true;
+    this._init = true;
 
-    let content = self.content;
-    self._cntEle = (content instanceof Node) ? content : content && content.getNativeElement && content.getNativeElement();
+    let content = this.content;
+    this._cntEle = (content instanceof Node) ? content : content && content.getNativeElement && content.getNativeElement();
 
     // requires content element
-    if (!self._cntEle) {
+    if (!this._cntEle) {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
     }
 
     // normalize the "side"
-    if (self.side !== 'left' && self.side !== 'right') {
-      self.side = 'left';
+    if (this.side !== 'left' && this.side !== 'right') {
+      this.side = 'left';
     }
-    self._renderer.setElementAttribute(self._elementRef.nativeElement, 'side', self.side);
+    this.setElementAttribute('side', this.side);
 
     // normalize the "type"
-    if (!self.type) {
-      self.type = self._config.get('menuType');
+    if (!this.type) {
+      this.type = this._config.get('menuType');
     }
-    self._renderer.setElementAttribute(self._elementRef.nativeElement, 'type', self.type);
+    this.setElementAttribute('type', this.type);
 
     // add the gestures
-    self._cntGesture = new MenuContentGesture(self, document.body);
+    this._cntGesture = new MenuContentGesture(this, document.body);
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side
-    let hasEnabledSameSideMenu = self._menuCtrl.getMenus().some(m => {
-      return m.side === self.side && m.enabled;
+    let hasEnabledSameSideMenu = this._menuCtrl.getMenus().some(m => {
+      return m.side === this.side && m.enabled;
     });
     if (hasEnabledSameSideMenu) {
       // auto-disable if another menu on the same side is already enabled
-      self._isEnabled = false;
+      this._isEnabled = false;
     }
-    self._setListeners();
+    this._setListeners();
 
-    // create a reusable click handler on this instance, but don't assign yet
-    self.onContentClick = function(ev: UIEvent) {
-      if (self._isEnabled) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        self.close();
-      }
-    };
-
-    self._cntEle.classList.add('menu-content');
-    self._cntEle.classList.add('menu-content-' + self.type);
+    this._cntEle.classList.add('menu-content');
+    this._cntEle.classList.add('menu-content-' + this.type);
 
     // register this menu with the app's menu controller
-    self._menuCtrl.register(self);
+    this._menuCtrl.register(this);
   }
 
   /**
    * @private
    */
-  bdClick(ev: Event) {
-    console.debug('backdrop clicked');
+  onBackdropClick(ev: UIEvent): boolean {
     ev.preventDefault();
     ev.stopPropagation();
     this._menuCtrl.close();
+    return false;
   }
 
   /**
@@ -486,8 +472,9 @@ export class Menu {
   private _before() {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
-    this.getNativeElement().classList.add('show-menu');
-    this.getBackdropElement().classList.add('show-backdrop');
+    this.menuContent && this.menuContent.resize();
+    this.setElementClass('show-menu', true);
+    this.backdrop.setElementClass('show-backdrop', true);
     this._keyboard.close();
     this._isAnimating = true;
   }
@@ -500,17 +487,26 @@ export class Menu {
     this.isOpen = isOpen;
     this._isAnimating = false;
 
-    (<any>this._cntEle.classList)[isOpen ? 'add' : 'remove']('menu-content-open');
-
-    this._cntEle.removeEventListener('click', this.onContentClick);
-
+    this._events.unlistenAll();
     if (isOpen) {
-      this._cntEle.addEventListener('click', this.onContentClick);
+      this._cntEle.classList.add('menu-content-open');
+
+      let callback = this.onBackdropClick.bind(this);
+      this._events.pointerEvents({
+        element: this._cntEle,
+        pointerDown: callback
+      });
+      this._events.pointerEvents({
+        element: this.backdrop.getNativeElement(),
+        pointerDown: callback
+      });
       this.ionOpen.emit(true);
 
     } else {
-      this.getNativeElement().classList.remove('show-menu');
-      this.getBackdropElement().classList.remove('show-backdrop');
+      this._cntEle.classList.remove('menu-content-open');
+      this.setElementClass('show-menu', false);
+      this.backdrop.setElementClass('show-menu', false);
+
       this.ionClose.emit(true);
     }
   }
@@ -610,8 +606,20 @@ export class Menu {
   /**
    * @private
    */
+  setElementClass(className: string, add: boolean) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
+  }
+
+  setElementAttribute(attributeName: string, value: string) {
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, attributeName, value);
+  }
+
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this._menuCtrl.unregister(this);
+    this._events.unlistenAll();
     this._cntGesture && this._cntGesture.destroy();
     this._type && this._type.destroy();
     this._resizeUnreg && this._resizeUnreg();

@@ -24,7 +24,7 @@ System.config({
     '@angular/http': 'vendor/@angular/http/bundles/http.umd.js',
     '@angular/forms': 'vendor/@angular/forms/bundles/forms.umd.js',
     'rxjs': 'vendor/rxjs',
-    'ionic-angular': 'ionic-angular/commonjs'
+    'ionic-angular': 'ionic-angular/umd'
   },
   packages: {
     'ionic-angular': {

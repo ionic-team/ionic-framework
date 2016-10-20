@@ -76,7 +76,7 @@ ion-item-group {
 }
 
 ion-item-divider {
-  z-index: 1000;
+  z-index: $z-index-item-divider;
   display: flex;
   overflow: hidden;
 

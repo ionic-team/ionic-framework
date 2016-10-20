@@ -15,7 +15,7 @@ import { ViewController } from '../../navigation/view-controller';
  * button. A navbar can contain a `ion-title`, any number of buttons,
  * a segment, or a searchbar. Navbars must be placed within an
  * `<ion-header>` in order for them to be placed above the content.
- * It's important to note that navbar's are part of the dynamica navigation
+ * It's important to note that navbar's are part of the dynamic navigation
  * stack. If you need a static toolbar, use ion-toolbar.
  *
  * @usage
@@ -23,7 +23,7 @@ import { ViewController } from '../../navigation/view-controller';
  * <ion-header>
  *
  *   <ion-navbar>
- *     <button ion-button menuToggle>
+ *     <button ion-button icon-only menuToggle>
  *       <ion-icon name="menu"></ion-icon>
  *     </button>
  *
@@ -32,7 +32,7 @@ import { ViewController } from '../../navigation/view-controller';
  *     </ion-title>
  *
  *     <ion-buttons end>
- *       <button ion-button (click)="openModal()">
+ *       <button ion-button icon-only (click)="openModal()">
  *         <ion-icon name="options"></ion-icon>
  *       </button>
  *     </ion-buttons>

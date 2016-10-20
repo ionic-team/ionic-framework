@@ -7,6 +7,14 @@ https://guides.github.com/features/mastering-markdown/
 https://forum.ionicframework.com/
 http://ionicworldwide.herokuapp.com/
 
+**Note: for build related issues you can open up an issue on the ionic-app-scripts repo**
+
+https://github.com/driftyco/ionic-app-scripts
+
+**Note: for Ionic-Native related issues you can open up an issues on the Ionic-Native repo**
+
+https://github.com/driftyco/ionic-native
+
 
 #### Short description of the problem:
 

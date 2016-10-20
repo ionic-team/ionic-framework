@@ -31,6 +31,7 @@ export class ChatPage {
   templateUrl: './tabs.html'
 })
 export class TabsPage {
+  showTab: boolean = false;
 
   @ViewChild(Tabs) tabs: Tabs;
 
@@ -42,7 +43,9 @@ export class TabsPage {
     });
   }
 
-  onTabChange() {
+  onTabChange(tab: Tab) {
+    this.showTab = tab.index !== 1;
+
     // wired up through the template
     // <ion-tabs (ionChange)="onTabChange()">
     console.log('onTabChange');

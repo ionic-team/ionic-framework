@@ -8,28 +8,9 @@ import { isTrueProperty } from '../../util/util';
 /**
   * @name Button
   * @module ionic
-  *
   * @description
   * Buttons are simple components in Ionic. They can consist of text and icons
   * and be enhanced by a wide range of attributes.
-  *
-  * @property [outline] - A transparent button with a border.
-  * @property [clear] - A transparent button without a border.
-  * @property [round] - A button with rounded corners.
-  * @property [block] - A button that fills its parent container with a border-radius.
-  * @property [full] - A button that fills its parent container without a border-radius or borders on the left/right.
-  * @property [small] - A button with size small.
-  * @property [large] - A button with size large.
-  * @property [disabled] - A disabled button.
-  * @property [fab] - A floating action button.
-  * @property [fab-left] - Position a fab button to the left.
-  * @property [fab-right] - Position a fab button to the right.
-  * @property [fab-center] - Position a fab button towards the center.
-  * @property [fab-top] - Position a fab button towards the top.
-  * @property [fab-bottom] - Position a fab button towards the bottom.
-  * @property [fab-fixed] - Makes a fab button have a fixed position.
-  * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
-  *
   * @usage
   *
   * ```html
@@ -52,16 +33,12 @@ import { isTrueProperty } from '../../util/util';
   *
   *  <button ion-button round>Round Button</button>
   *
-  *  <button ion-button fab>FAB</button>
-  *
   *  <!-- Outline -->
   *  <button ion-button full outline>Outline + Full</button>
   *
   *  <button ion-button block outline>Outline + Block</button>
   *
   *  <button ion-button round outline>Outline + Round</button>
-  *
-  *  <button ion-button fab outline>FAB</button>
   *
   *  <!-- Icons -->
   *  <button ion-button icon-left>
@@ -88,6 +65,9 @@ import { isTrueProperty } from '../../util/util';
   *
   * @demo /docs/v2/demos/src/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
+  * @see {@link /docs/v2/components#fabs FabButton Docs}
+  * @see {@link ../../fab/FabButton FabButton API Docs}
+  * @see {@link ../../fab/FabContainer FabContainer API Docs}
  */
 @Component({
   selector: '[ion-button]',
@@ -122,7 +102,7 @@ export class Button extends Ion {
   _init: boolean;
 
   /**
-   * @input {string} Large button.
+   * @input {boolean} Large button.
    */
   @Input()
   set large(val: boolean) {
@@ -130,7 +110,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Small button.
+   * @input {boolean} Small button.
    */
   @Input()
   set small(val: boolean) {
@@ -138,7 +118,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Default button.
+   * @input {boolean} Default button.
    */
   @Input()
   set default(val: boolean) {
@@ -146,7 +126,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A transparent button with a border.
+   * @input {boolean} A transparent button with a border.
    */
   @Input()
   set outline(val: boolean) {
@@ -154,7 +134,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A transparent button without a border.
+   * @input {boolean} A transparent button without a border.
    */
   @Input()
   set clear(val: boolean) {
@@ -162,7 +142,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Force a solid button. Useful for buttons within an item.
+   * @input {boolean} Force a solid button. Useful for buttons within an item.
    */
   @Input()
   set solid(val: boolean) {
@@ -170,7 +150,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button with rounded corners.
+   * @input {boolean} A button with rounded corners.
    */
   @Input()
   set round(val: boolean) {
@@ -178,15 +158,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A floating action button.
-   */
-  @Input()
-  set fab(val: boolean) {
-    this._attr('_shape', 'fab', val);
-  }
-
-  /**
-   * @input {string} A button that fills its parent container with a border-radius.
+   * @input {boolean} A button that fills its parent container with a border-radius.
    */
   @Input()
   set block(val: boolean) {
@@ -194,7 +166,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button that fills its parent container without a border-radius or borders on the left/right.
+   * @input {boolean} A button that fills its parent container without a border-radius or borders on the left/right.
    */
   @Input()
   set full(val: boolean) {
@@ -202,7 +174,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button that fills its parent container without a border-radius or borders on the left/right.
+   * @input {string} The mode to apply to this component.
    */
   @Input()
   set mode(val: string) {
@@ -263,6 +235,7 @@ export class Button extends Ion {
     }
   }
 
+  /** @private */
   ngAfterContentInit() {
     this._init = true;
     this._assignCss(true);

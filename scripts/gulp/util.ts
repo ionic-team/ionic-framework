@@ -1,12 +1,14 @@
-import { COMMONJS_MODULE, ES_MODULE, NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
+import { UMD_MODULE, ES_2015, NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import { join } from 'path';
 import * as fs from 'fs';
 import { rollup } from 'rollup';
+import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
 import * as multiEntry from 'rollup-plugin-multi-entry';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as uglify from 'rollup-plugin-uglify';
+import * as through from 'through2';
 
 export function mergeObjects(obj1: any, obj2: any ) {
   if (! obj1) {
@@ -32,7 +34,7 @@ function getRootTsConfig(): any {
   return tsConfig;
 }
 
-export function createTempTsConfig(includeGlob: string[], moduleType: String, pathToWriteFile: string): any {
+export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToWriteFile: string): any {
   let config = getRootTsConfig();
   if (!config.compilerOptions) {
     config.compilerOptions = {};
@@ -43,13 +45,24 @@ export function createTempTsConfig(includeGlob: string[], moduleType: String, pa
   }
   if (config.compilerOptions) {
     config.compilerOptions.module = moduleType;
+    config.compilerOptions.target = target;
   }
   config.include = includeGlob;
   let json = JSON.stringify(config, null, 2);
   fs.writeFileSync(pathToWriteFile, json);
 }
 
-export function copySourceToDest(destinationPath: string, excludeSpecs: boolean = true, excludeE2e: boolean = true) {
+function removeDebugStatements() {
+  let replacer = new Replacer(['console.debug', 'assert']);
+  return through.obj(function (file, encoding, callback) {
+    const content = file.contents.toString();
+    const cleanedJs = replacer.replace(content);
+    file.contents =  new Buffer(cleanedJs, 'utf8');
+    callback(null, file);
+  });
+};
+
+export function copySourceToDest(destinationPath: string, excludeSpecs: boolean, excludeE2e: boolean, stripDebug: boolean) {
   let glob = [`${SRC_ROOT}/**/*.ts`];
   if (excludeSpecs) {
     glob.push(`!${SRC_ROOT}/**/*.spec.ts`);
@@ -59,8 +72,11 @@ export function copySourceToDest(destinationPath: string, excludeSpecs: boolean 
   if (excludeE2e) {
     glob.push(`!${SRC_ROOT}/components/*/test/*/*.ts`);
   }
-  return src(glob)
-    .pipe(dest(destinationPath));
+  let stream = src(glob);
+  if (stripDebug) {
+    stream = stream.pipe(removeDebugStatements());
+  }
+  return stream.pipe(dest(destinationPath));
 }
 
 export function copyGlobToDest(sourceGlob: string[], destPath: string) {
@@ -121,9 +137,9 @@ export function copyFile(srcPath: string, destPath: string) {
 
 export function copySwiperToPath(distPath: string, moduleType: string) {
   copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.d.ts`, `${distPath}/swiper-widget.d.ts`);
-  if (!moduleType || moduleType === COMMONJS_MODULE) {
+  if (!moduleType || moduleType === UMD_MODULE) {
     copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.js`, `${distPath}/swiper-widget.js`);
-  } else if (moduleType === ES_MODULE) {
+  } else if (moduleType === ES_2015) {
     copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.es2015.js`, `${distPath}/swiper-widget.js`);
   } else {
     copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.system.js`, `${distPath}/swiper-widget.system.js`);

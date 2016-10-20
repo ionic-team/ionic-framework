@@ -145,15 +145,6 @@ export const isCheckedProperty = function(a: any, b: any): boolean {
   /* tslint:enable */
 };
 
-/**
- * Convert a string in the format thisIsAString to a slug format this-is-a-string
- */
-export function pascalCaseToDashCase(val: string = ''): string {
-  return val.charAt(0).toLowerCase() + val.substring(1).replace(/[A-Z]/g, match => {
-    return '-' + match.toLowerCase();
-  });
-}
-
 
 /**
  * @private
@@ -164,3 +155,18 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
   array.splice(indexes.to, 0, element);
   return array;
 }
+
+
+const ASSERT_ENABLED = true;
+/**
+ * @private
+ */
+function _assert(actual: any, reason?: string) {
+  if (!actual && ASSERT_ENABLED === true) {
+    let message = 'IONIC ASSERT: ' + reason;
+    console.error(message);
+    throw new Error(message);
+  }
+}
+
+export { _assert as assert};

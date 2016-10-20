@@ -84,15 +84,6 @@ export class Alert extends ViewController {
     return this._app.present(this, navOptions);
   }
 
-  /**
-   * @private
-   * DEPRECATED: Please inject AlertController instead
-   */
-  static create(opt: any) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('Alert.create(..) has been deprecated. Please inject AlertController instead');
-  }
-
 }
 
 
@@ -115,7 +106,7 @@ export class Alert extends ViewController {
  * In the array of `buttons`, each button includes properties for its `text`,
  * and optionally a `handler`. If a handler returns `false` then the alert
  * will not automatically be dismissed when the button is clicked. All
- * buttons will show  up in the order they have been added to the `buttons`
+ * buttons will show up in the order they have been added to the `buttons`
  * array, from left to right. Note: The right most button (the last one in
  * the array) is the main button.
  *

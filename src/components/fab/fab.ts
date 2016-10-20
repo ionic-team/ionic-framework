@@ -5,6 +5,7 @@ import { Ion } from '../ion';
 
 import { UIEventManager } from '../../util/ui-event-manager';
 import { isTrueProperty } from '../../util/util';
+import { nativeTimeout } from '../../util/dom';
 
 /**
   * @name FabButton
@@ -32,7 +33,6 @@ import { isTrueProperty } from '../../util/util';
   * See [ion-fab] to learn more information about how to position the fab button.
   *
   * @property [mini] - Makes a fab button with a reduced size.
-  * @property [color] - Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
   *
   * @usage
   *
@@ -66,12 +66,6 @@ import { isTrueProperty } from '../../util/util';
 export class FabButton extends Ion  {
 
   /**
-   * @private
-   */
-  ngAfterContentInit() {
-    this.setElementClass('fab-button', true); // set role
-  }
-  /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
@@ -93,6 +87,7 @@ export class FabButton extends Ion  {
     renderer: Renderer,
   ) {
     super(config, elementRef, renderer);
+    this.setElementClass('fab', true); // set role
     this.mode = config.get('mode');
   }
 
@@ -107,21 +102,44 @@ export class FabButton extends Ion  {
 
 /**
   * @name FabList
+  * @description
+  * `ion-fab-list` is a container for multiple FAB buttons. They are components of `ion-fab` and allow you to specificy the buttons position, left, right, top, bottom.
+  * @usage
+  *
+  * ```html
+  *  <ion-fab bottom right >
+  *    <button ion-fab>Share</button>
+  *    <ion-fab-list side="top">
+  *      <button ion-fab>Facebook</button>
+  *      <button ion-fab>Twitter</button>
+  *      <button ion-fab>Youtube</button>
+  *    </ion-fab-list>
+  *    <ion-fab-list side="left">
+  *      <button ion-fab>Vimeo</button>
+  *    </ion-fab-list>
+  *  </ion-fab>
+  * ```
   * @module ionic
   *
-  * @demo /docs/v2/demos/fab/
+  * @demo /docs/v2/demos/src/fab/
   * @see {@link /docs/v2/components#fab Fab Component Docs}
  */
 @Directive({
   selector: 'ion-fab-list',
-  host: {
-    '[class.fab-list-active]': '_visible'
-  }
 })
 export class FabList {
   _visible: boolean = false;
+  _fabs: FabButton[] = [];
 
-  @ContentChildren(FabButton) _buttons: QueryList<FabButton>;
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer) { }
+
+  @ContentChildren(FabButton)
+  set _setbuttons(query: QueryList<FabButton>) {
+    let fabs = this._fabs = query.toArray();
+    for (var fab of fabs) {
+      fab.setElementClass('fab-in-list', true);
+    }
+  }
 
   /**
    * @private
@@ -131,18 +149,26 @@ export class FabList {
     if (visible === this._visible) {
       return;
     }
+    this._visible = visible;
 
-    let buttons = this._buttons.toArray();
+    let fabs = this._fabs;
     let i = 1;
     if (visible) {
-      buttons.forEach(fab => {
-        setTimeout(() => fab.setElementClass('fab-dial-button-visible', true), i * 30);
+      fabs.forEach(fab => {
+        nativeTimeout(() => fab.setElementClass('show', true), i * 30);
         i++;
       });
     } else {
-      buttons.forEach(fab => fab.setElementClass('fab-dial-button-visible', false));
+      fabs.forEach(fab => fab.setElementClass('show', false));
     }
-    this._visible = visible;
+    this.setElementClass('fab-list-active', visible);
+  }
+
+  /**
+   * @internal
+   */
+  setElementClass(className: string, add: boolean) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }
 
 }
@@ -189,7 +215,7 @@ export class FabList {
   *
   * ```html
   * <ion-content>
-  *  <!-- this fab is placed at top right -->
+  *  <!-- this fab is placed at bottom right -->
   *  <ion-fab bottom right >
   *    <button ion-fab>Share</button>
   *    <ion-fab-list side="top">

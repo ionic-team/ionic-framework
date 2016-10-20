@@ -1,9 +1,12 @@
 import { OpaqueToken } from '@angular/core';
 
 import { DeepLinkConfig, NavLink, NavSegment } from './nav-util';
-import { isArray, isBlank, isPresent, pascalCaseToDashCase } from '../util/util';
+import { isArray, isBlank, isPresent } from '../util/util';
 
 
+/**
+ * @private
+ */
 export class UrlSerializer {
   links: NavLink[];
 
@@ -104,7 +107,10 @@ export class UrlSerializer {
   }
 
   formatUrlPart(name: string): string {
-    name = pascalCaseToDashCase(name.replace(URL_REPLACE_REG, '-'));
+    name = name.replace(URL_REPLACE_REG, '-');
+    name = name.charAt(0).toLowerCase() + name.substring(1).replace(/[A-Z]/g, match => {
+      return '-' + match.toLowerCase();
+    });
     while (name.indexOf('--') > -1) {
       name = name.replace('--', '-');
     }
@@ -303,6 +309,9 @@ function sortConfigLinks(a: NavLink, b: NavLink) {
 
 const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|>|<|;|:|@|&|=/g;
 
+/**
+ * @private
+ */
 export const DeepLinkConfigToken = new OpaqueToken('USERLINKS');
 
 export function setupUrlSerializer(userDeepLinkConfig: any): UrlSerializer {

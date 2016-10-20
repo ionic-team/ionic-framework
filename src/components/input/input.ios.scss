@@ -31,7 +31,7 @@ $text-input-ios-highlight-color-invalid:   color($colors-ios, danger) !default;
   margin: $text-input-ios-margin-top $text-input-ios-margin-right $text-input-ios-margin-bottom $text-input-ios-margin-left;
   padding: 0;
 
-  width: calc(100% - #{$text-input-ios-margin-right} - #{$text-input-ios-margin-left});
+  width: calc(100% - #{($text-input-ios-margin-right + $text-input-ios-margin-left)});
 }
 
 

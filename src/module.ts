@@ -15,6 +15,7 @@ import { DeepLinker, setupDeepLinker } from './navigation/deep-linker';
 import { Events, setupProvideEvents } from './util/events';
 import { Form } from './util/form';
 import { GestureController } from './gestures/gesture-controller';
+import { Haptic } from './util/haptic';
 import { IonicGestureConfig } from './gestures/gesture-config';
 import { Keyboard } from './util/keyboard';
 import { LoadingController } from './components/loading/loading';
@@ -52,15 +53,50 @@ import { ToastCmp } from './components/toast/toast-component';
  */
 export { Config, setupConfig, ConfigToken } from './config/config';
 export { Platform, setupPlatform, UserAgentToken, DocumentDirToken, DocLangToken, NavigatorPlatformToken } from './platform/platform';
+export { Haptic } from './util/haptic';
 export { QueryParams, setupQueryParams, UrlToken } from './platform/query-params';
 export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
 export { NavParams } from './navigation/nav-params';
-export { NavLink, NavOptions, DeepLink, DeepLinkConfig } from './navigation/nav-util';
+export { NavLink, NavOptions, DeepLink, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataType } from './navigation/nav-util';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
 
 
+/**
+ * @name IonicModule
+ * @description
+ * IonicModule is a NgModule that helps bootstrap a whole Ionic App. By passing a root component, IonicModule will make sure that all the components and directives from the framework are provided. This includes components such as Tabs, Menus, and Slides, as well as classes like AlertController.
+ *
+ *
+ * We're also able to pass any configuration to our app as a second argument for `.forRoot`. This is any valid config property from [the Config Class](/docs/v2/api/config/Config/).
+ *
+ * The last functionality that IonicModule allows you to configure is optional routes for DeepLinker. For more information on DeepLinker, please see the [DeepLinker Docs](/docs/v2/api/navigation/DeepLinker/)
+ *
+ * @usage
+ * ```ts
+ * import { NgModule } from '@angular/core';
+ * import { IonicApp, IonicModule } from 'ionic-angular';
+ * import { MyApp } from './app.component';
+ * import { HomePage } from '../pages/home/home';
+ * @NgModule({
+ *   declarations: [
+ *     MyApp,
+ *     HomePage
+ *   ],
+ *   imports: [
+ *     IonicModule.forRoot(MyApp)
+ *   ],
+ *   bootstrap: [IonicApp],
+ *   entryComponents: [
+ *     MyApp,
+ *     HomePage
+ *   ],
+ *   providers: []
+ * })
+ * export class AppModule {}
+ * ```
+ */
 @NgModule({
   imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule],
   exports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES],
@@ -85,8 +121,14 @@ export { ViewController } from './navigation/view-controller';
     ToastCmp
   ]
 })
-export class IonicModule {
 
+export class IonicModule {
+    /**
+     * Set the root app component for you IonicModule
+     * @param {any} appRoot The root AppComponent for this app.
+     * @param {any} config Config Options for the app. Accepts any config property.
+     * @param {any} deepLinkConfig Any configuration needed for the Ionic Deeplinker.
+     */
   static forRoot(appRoot: any, config: any = null, deepLinkConfig: any = null): ModuleWithProviders {
     return {
       ngModule: IonicModule,
@@ -127,6 +169,7 @@ export class IonicModule {
         App,
         Events,
         Form,
+        Haptic,
         GestureController,
         Keyboard,
         LoadingController,

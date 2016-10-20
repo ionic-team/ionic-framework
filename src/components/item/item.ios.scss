@@ -33,7 +33,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   font-size: $item-ios-body-text-font-size;
   color: $list-ios-text-color;
   background-color: $list-ios-background-color;
-  transition-duration: 200ms;
+  transition: background-color 200ms linear;
 }
 
 .item-ios.activated {

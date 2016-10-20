@@ -74,15 +74,6 @@ export class Picker extends ViewController {
     return this._app.present(this, navOptions);
   }
 
-  /**
-   * @private
-   * DEPRECATED: Please inject PickerController instead
-   */
-  static create(opt: any) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('Picker.create(..) has been deprecated. Please inject PickerController instead');
-  }
-
 }
 
 

@@ -45,8 +45,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
     let stepValue = (slide.distance / z);
 
-    console.debug(
-      'menu gesture, onSlide', this.menu.side,
+    console.debug('menu gesture, onSlide', this.menu.side,
       'distance', slide.distance,
       'min', slide.min,
       'max', slide.max,
@@ -68,8 +67,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
     let shouldCompleteLeft = (velocity <= 0)
       && (velocity < -0.2 || slide.delta < -z);
 
-    console.debug(
-      'menu gesture, onSlide', this.menu.side,
+    console.debug('menu gesture, onSlideEnd', this.menu.side,
       'distance', slide.distance,
       'delta', slide.delta,
       'velocity', velocity,
@@ -104,4 +102,3 @@ export class MenuContentGesture extends SlideEdgeGesture {
     };
   }
 }
-

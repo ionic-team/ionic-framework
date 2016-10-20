@@ -17,10 +17,6 @@ import { isTrueProperty } from '../../util/util';
  * <ion-scroll scrollX="true" scrollY="true">
  * </ion-scroll>
  * ```
- * @property {boolean} [scrollX] - whether to enable scrolling along the X axis
- * @property {boolean} [scrollY] - whether to enable scrolling along the Y axis; requires the following CSS declaration: ion-scroll { white-space: nowrap; }
- * @property {boolean} [zoom] - whether to enable zooming
- * @property {number} [maxZoom] - set the max zoom amount for ion-scroll
  * @demo /docs/v2/demos/src/scroll/
  */
 @Component({
@@ -44,6 +40,9 @@ export class Scroll {
   _zoom: boolean = false;
   _maxZoom: number = 1;
 
+  /**
+   * @input {boolean} whether to enable scrolling along the X axis
+   */
   @Input()
   get scrollX() {
     return this._scrollX;
@@ -52,6 +51,9 @@ export class Scroll {
     this._scrollX = isTrueProperty(val);
   }
 
+  /**
+   * @input {boolean} whether to enable scrolling along the Y axis; requires the following CSS declaration: ion-scroll { white-space: nowrap; }
+   */
   @Input()
   get scrollY() {
     return this._scrollY;
@@ -60,6 +62,9 @@ export class Scroll {
     this._scrollY = isTrueProperty(val);
   }
 
+  /**
+   * @input {boolean} whether to enable zooming
+   */
   @Input()
   get zoom() {
     return this._zoom;
@@ -68,6 +73,9 @@ export class Scroll {
     this._zoom = isTrueProperty(val);
   }
 
+  /**
+   * @input {number} set the max zoom amount for ion-scroll
+   */
   @Input()
   get maxZoom() {
     return this._maxZoom;

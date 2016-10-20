@@ -74,7 +74,10 @@ function copyDemoPolyfills(outputDir: string) {
 
 function copyDemoContent(outputDir: string) {
   return new Promise((resolve, reject) => {
-    const stream = src([`${DEMOS_ROOT}/src/**/index.html`, `${DEMOS_ROOT}/src/**/main.bundle.js`, `${DEMOS_ROOT}/src/scrollbar-fix.*`]).pipe(dest(outputDir));
+    const stream = src([
+      `${DEMOS_ROOT}/src/**/*`,
+      `${DEMOS_ROOT}/src/scrollbar-fix.*`
+      ]).pipe(dest(outputDir));
     stream.on('end', () => {
       resolve();
     });

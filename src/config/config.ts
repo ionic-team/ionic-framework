@@ -18,16 +18,24 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * You can set the tab placement, icon mode, animations, and more here.
  *
  * ```ts
- * import { ionicBootstrap } from 'ionic-angular';
+ * import { IonicApp, IonicModule } from 'ionic-angular';
  *
- * ionicBootstrap(AppRoot, customProviders, {
- *   backButtonText: 'Go Back',
- *   iconMode: 'ios',
- *   modalEnter: 'modal-slide-in',
- *   modalLeave: 'modal-slide-out',
- *   tabsPlacement: 'bottom',
- *   pageTransition: 'ios',
- * });
+ * @NgModule({
+ *   declarations: [ MyApp ],
+ *   imports: [
+ *     IonicModule.forRoot(MyApp, {
+ *       backButtonText: 'Go Back',
+ *       iconMode: 'ios',
+ *       modalEnter: 'modal-slide-in',
+ *       modalLeave: 'modal-slide-out',
+ *       tabsPlacement: 'bottom',
+ *       pageTransition: 'ios'
+ *     }, {}
+ *   )],
+ *   bootstrap: [IonicApp],
+ *   entryComponents: [ MyApp ],
+ *   providers: []
+ * })
  * ```
  *
  *
@@ -35,15 +43,22 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * Below is an example where an app can override any setting we want based on a platform.
  *
  * ```ts
- * import { ionicBootstrap } from 'ionic-angular';
+ * import { IonicModule } from 'ionic-angular';
  *
- * ionicBootstrap(AppRoot, customProviders, {
- *   tabsPlacement: 'bottom',
- *   platforms: {
- *   ios: {
- *     tabsPlacement: 'top',
- *   }
- * });
+ * @NgModule({
+ *   ...
+ *   imports: [
+ *     IonicModule.forRoot(MyApp, {
+ *       tabsPlacement: 'bottom',
+ *       platforms: {
+ *         ios: {
+ *           tabsPlacement: 'top',
+ *         }
+ *       }
+ *     }, {}
+ *   )],
+ *   ...
+ * })
  * ```
  *
  * We could also configure these values at a component level. Take `tabsPlacement`,
@@ -93,13 +108,13 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * | `menuType`               | `string`            | Type of menu to display. Available options: `"overlay"`, `"reveal"`, `"push"`.                                                                   |
  * | `modalEnter`             | `string`            | The name of the transition to use while a modal is presented.                                                                                    |
  * | `modalLeave`             | `string`            | The name of the transition to use while a modal is dismiss.                                                                                      |
+ * | `mode`                   | `string`            | The mode to use throughout the application.                                                                                     |
  * | `pageTransition`         | `string`            | The name of the transition to use while changing pages.                                                                                          |
  * | `pageTransitionDelay`    | `number`            | The delay in milliseconds before the transition starts while changing pages.                                                                     |
  * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
  * | `pickerLeave`            | `string`            | The name of the transition to use while a picker is dismissed.                                                                                   |
  * | `popoverEnter`           | `string`            | The name of the transition to use while a popover is presented.                                                                                  |
  * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.                                                                                  |
- * | `prodMode`               | `boolean`           | Disable development mode, which turns off assertions and other checks within the framework. One important assertion this disables verifies that a change detection pass does not result in additional changes to any bindings (also known as unidirectional data flow).
  * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
  * | `swipeBackEnabled`       | `boolean`           | Whether native iOS swipe to go back functionality is enabled.
  * | `tabsHighlight`          | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
@@ -122,6 +137,9 @@ export class Config {
    */
   platform: Platform;
 
+  /**
+   * @private
+   */
   init(config: any, queryParams: QueryParams, platform: Platform) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
     this._qp = queryParams;
@@ -230,12 +248,9 @@ export class Config {
     // or it was from the users platform configs
     // or it was from the default platform configs
     // in that order
-    let rtnVal: any;
-    if (isFunction(this._c[key])) {
-      rtnVal = this._c[key](this.platform);
-
-    } else {
-      rtnVal = this._c[key];
+    let rtnVal: any = this._c[key];
+    if (isFunction(rtnVal)) {
+      rtnVal = rtnVal(this.platform);
     }
 
     return (rtnVal !== null ? rtnVal : fallbackValue);
@@ -379,8 +394,14 @@ export class Config {
 
 }
 
+/**
+ * @private
+ */
 export const ConfigToken = new OpaqueToken('USERCONFIG');
 
+/**
+ * @private
+ */
 export function setupConfig(userConfig: any, queryParams: QueryParams, platform: Platform): Config {
   const config = new Config();
   config.init(userConfig, queryParams, platform);

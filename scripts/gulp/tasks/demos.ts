@@ -125,6 +125,7 @@ function buildDemos(done: Function) {
 
 function cleanDemos(done: Function) {
   deleteFiles([`${DEMOS_SRC_ROOT}/**/*.js`,
+    `${DEMOS_SRC_ROOT}/**/*.js.map`,
     `${DEMOS_SRC_ROOT}/**/*.d.ts`,
     `${DEMOS_SRC_ROOT}/**/*.ngfactory.ts`,
     `${DEMOS_SRC_ROOT}/**/*.metadata.json`,

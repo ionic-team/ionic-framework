@@ -29,8 +29,6 @@ import { Platform } from '../../platform/platform';
  * An `ion-input` is **not** used for non-text type inputs, such as a
  * `checkbox`, `radio`, `toggle`, `range`, `select`, etc.
  *
- * @property [type] - The HTML input type (text, password, email, number, search, tel, or url)
- * @property [clearInput] - A clear icon will appear in the input when there is a value. Clicking it clears the input.
  *
  * @usage
  * ```html
@@ -106,12 +104,12 @@ export class TextInput extends InputBase {
   _clearInput: boolean = false;
 
   /**
-   * @private
+   * @input {string} The placeholder for the input
    */
   @Input() placeholder: string = '';
 
   /**
-   * @private
+   * @input {bool} A clear icon will appear in the input when there is a value. Clicking it clears the input.
    */
   @Input()
   get clearInput() {
@@ -133,7 +131,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @private
+   * @input {string} The HTML input type (text, password, email, number, search, tel, or url)
    */
   @Input()
   get type() {
@@ -179,12 +177,12 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @private
+   * @output {event} Expression to call when the input no longer has focus
    */
   @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @private
+   * @output {event} Expression to call when the input has focus
    */
   @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 

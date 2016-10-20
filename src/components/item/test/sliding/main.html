@@ -31,8 +31,8 @@
       </a>
 
       <ion-item-options side="left">
-        <button ion-button icon-only (click)="unread(item100)">
-          <ion-icon name="mail"></ion-icon>
+        <button ion-button (click)="noclose(item100)">
+          No close
         </button>
       </ion-item-options>
       <ion-item-options side="right">
@@ -62,7 +62,7 @@
         <h2>LEFT side - no icons</h2>
         <p>I think I figured out how to get more Mountain Dew</p>
       </a>
-      <ion-item-options side="left" (ionSwipe)="del($event)" *ngIf="slidingEnabled">
+      <ion-item-options side="left" *ngIf="slidingEnabled">
         <button ion-button color="primary" (click)="archive(item1)">Archive</button>
         <button ion-button color="danger" (click)="del(item1)">Delete</button>
       </ion-item-options>

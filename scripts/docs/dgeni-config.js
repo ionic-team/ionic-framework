@@ -67,7 +67,7 @@ module.exports = function(currentVersion, initialVersionBuild) {
   // sort by version so we can find latest
   versions.sort(semver.rcompare);
   // add nightly if it isn't in the list
-  !_.contains(versions, 'nightly') && versions.unshift('nightly');
+  !_.includes(versions, 'nightly') && versions.unshift('nightly');
 
   //First semver valid version is latest
   var latestVersion = _.find(versions, semver.valid);

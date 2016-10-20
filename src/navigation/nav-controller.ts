@@ -22,7 +22,7 @@ import { ViewController } from './view-controller';
  * navigation stack causes the new page to be animated in, while [popping](#pop)
  * the current page will navigate to the previous page in the stack.
  *
- * Unless you are using a directive like [NavPush](../NavPush/), or need a
+ * Unless you are using a directive like [NavPush](../../components/nav/NavPush/), or need a
  * specific NavController, most times you will inject and use a reference to the
  * nearest NavController to manipulate the navigation stack.
  *
@@ -224,42 +224,80 @@ import { ViewController } from './view-controller';
  * }
  * ```
  *
- *  | Page Event          | Description                                                                                                                                                                                                                                                                        |
- *  |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
- *  | `ionViewDidLoad`       | Runs when the page has loaded. This event only happens once per page being created. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewDidLoad` event is good place to put your setup code for the page. |
- *  | `ionViewWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                                                   |
- *  | `ionViewDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                                             |
- *  | `ionViewWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                                             |
- *  | `ionViewDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                                          |
- *  | `ionViewWillUnload` | Runs when the page is about to be destroyed and have its elements removed.
+ *  | Page Event          | Description                                                                                                                                                                                                                                                    |
+ *  |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+ *  | `ionViewDidLoad`    | Runs when the page has loaded. This event only happens once per page being created. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `ionViewDidLoad` event is good place to put your setup code for the page. |
+ *  | `ionViewWillEnter`  | Runs when the page is about to enter and become the active page.                                                                                                                                                                                               |
+ *  | `ionViewDidEnter`   | Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.                                                                                                                         |
+ *  | `ionViewWillLeave`  | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                         |
+ *  | `ionViewDidLeave`   | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                      |
+ *  | `ionViewWillUnload` | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                     |
+ *  | `ionViewCanEnter`   | Runs before the view can enter. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can enter                                                                                                     |
+ *  | `ionViewCanLeave`   | Runs before the view can leave. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave                                                                                                     |
  *
  *
- * ## Asynchronous Nav Transitions
+ * ## Nav Guards
  *
- * Navigation transitions are asynchronous operations. When a transition is started,
- * the `push` or `pop` method will return immediately, before the transition is complete.
+ * In some cases, a developer should be able to control views leaving and entering. To allow for this, NavController has the `ionViewCanEnter` and `ionViewCanLeave` methods.
+ * Similar to Angular 2 route guards, but are more integrated with NavController. For example, if you wanted to prevent a user from leaving a view:
  *
- * Generally, the developer does not need to be concerned about this. In the event
- * multiple transitions need to be synchronized or transition timing is critical,
- * the best practice is to chain the transitions together using the return value
- * from the `push` and `pop` methods.
+ * ```ts
+ * export class MyClass{
+ *  constructor(
+ *    public navCtrl: NavController
+ *   ){}
  *
- * The `push` and `pop` methods return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
- * Promises are a way to represent and chain together multiple asynchronous
- * operations in order. Navigation actions can be chained together very easily using promises.
+ *   pushPage(){
+ *     this.navCtrl.push(DetailPage)
+ *      .catch(()=> console.log('should I stay or should I go now'))
+ *   }
  *
- * ```typescript
- * let navTransitionPromise = this.navCtrl.push(Page2);
- * navTransitionPromise.then(() => {
- *   // the transition has completed, so I can push another page now
- *   return this.navCtrl.push(Page3);
- * }).then(() => {
- *   // the second transition has completed, so I can push yet another page
-    return this.navCtrl.push(Page4);
- * }).then(() => {
- *   console.log('The transitions are complete!');
- * })
+ *   ionViewCanLeave(): boolean{
+ *    // here we can either return true or false
+ *    // depending on if we want to leave this view
+ *    if(isValid(randomValue)){
+ *       return true;
+ *     } else {
+ *       return false;
+ *     }
+ *   }
+ * }
  * ```
+ *
+ * We need to make sure that or `navCtrl.push` has a catch in order to catch the and handle the error.
+ * If you need to prevent a view from entering, you can do the same thing
+ *
+ * ```ts
+ * export class MyClass{
+ *  constructor(
+ *    public navCtrl: NavController
+ *   ){}
+ *
+ *   pushPage(){
+ *     this.navCtrl.push(DetailPage)
+ *      .catch(()=> console.log('should I stay or should I go now'))
+ *   }
+ *
+ * }
+ *
+ * export class DetailPage(){
+ *   constructor(
+ *     public navCtrl: NavController
+ *   ){}
+ *   ionViewCanEnter(): boolean{
+ *    // here we can either return true or false
+ *    // depending on if we want to leave this view
+ *    if(isValid(randomValue)){
+ *       return true;
+ *     } else {
+ *       return false;
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * Similar to `ionViewCanLeave` we still need a catch on the original `navCtrl.push` in order to handle it properly.
+ * When handling the back button in the `ion-navbar`, the catch is already taken care of for you by the framework.
  *
  * ## NavOptions
  *
@@ -485,6 +523,13 @@ export abstract class NavController {
    * @returns {number} The number of views in this stack, including the current view.
    */
   abstract length(): number;
+
+
+  /**
+   * Returns the current stack of views in this nav controller.
+   * @returns {Array<ViewController>} the stack of view controllers in this nav controller.
+   */
+  abstract getViews(): Array<ViewController>;
 
   /**
    * Returns the active child navigation.
