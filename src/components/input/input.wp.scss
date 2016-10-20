@@ -62,9 +62,9 @@ $text-input-wp-highlight-color-invalid:     color($colors-wp, danger) !default;
   }
 }
 
-// Show the valid highlight when it has the .ng-valid class and a value
+// Show the valid highlight when it has the .ng-valid class, the .ng-touched class, and a value
 @if ($text-input-wp-show-valid-highlight) {
-  .item-wp.item-input.ng-valid.input-has-value:not(.input-has-focus) .text-input {
+  .item-wp.item-input.ng-valid.ng-touched.input-has-value:not(.input-has-focus) .text-input {
     border-color: $text-input-wp-highlight-color-valid;
   }
 }

@@ -71,13 +71,13 @@ $text-input-ios-highlight-color-invalid:   color($colors-ios, danger) !default;
   }
 }
 
-// Show the valid highlight when it has the .ng-valid class and a value
+// Show the valid highlight when it has the .ng-valid class, the .ng-touched class, and a value
 @if ($text-input-ios-show-valid-highlight) {
-  .item-ios.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+  .item-ios.item-input.ng-valid.ng-touched.input-has-value:not(.input-has-focus) .item-inner {
     @include ios-input-highlight($text-input-ios-highlight-color-valid);
   }
 
-  .list-ios .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
+  .list-ios .item-input.ng-valid.ng-touched.input-has-value:not(.input-has-focus):last-child {
     @include ios-input-highlight($text-input-ios-highlight-color-valid);
 
     .item-inner {
