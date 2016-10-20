@@ -1,7 +1,5 @@
-import { accessSync, F_OK, readFileSync, writeFileSync } from 'fs';
-// import { dirname, join } from 'path';
+import { readFileSync } from 'fs';
 
-// import * as glob from 'glob';
 import { dest, src, start, task } from 'gulp';
 import * as babel from 'gulp-babel';
 import * as cache from 'gulp-cached';
@@ -12,17 +10,18 @@ import * as remember from 'gulp-remember';
 import * as rename from 'gulp-rename';
 import * as tsc from 'gulp-typescript';
 import * as watch from 'gulp-watch';
+
+import * as del from 'del';
 import { template } from 'lodash';
 import * as merge from 'merge2';
 import * as path from 'path';
-import * as del from 'del';
-// import * as runSequence from 'run-sequence';
+import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
-// import { argv } from 'yargs';
+import { argv } from 'yargs';
 
-import { DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
-import { compileSass, copyFonts, createTempTsConfig, createTimestamp, deleteFiles, runNgc, setSassIonicVersion, writePolyfills } from '../util';
+import { DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, SCRIPTS_ROOT } from '../constants';
+import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
 const buildConfig = require('../../build/config');
 
@@ -30,18 +29,19 @@ const buildConfig = require('../../build/config');
  * Builds Ionic e2e tests to dist/e2e and creates the necessary files for tests
  * to run.
  */
-task('e2e', [
-  // 'e2e.clean',
-  'e2e.build',
-  'e2e.polyfill',
-  'e2e.copyExternalDependencies',
-  'e2e.sass',
-  'e2e.fonts',
-  'e2e.bundle'
-]);
+task('e2e', e2eBuild);
 
-    // 'e2e.copySource',
-    // 'e2e.compileTests',
+function e2eBuild(done: (err: any) => void) {
+  runSequence(
+    'e2e.clean',
+    'e2e.build',
+    'e2e.polyfill',
+    'e2e.copyExternalDependencies',
+    'e2e.sass',
+    'e2e.fonts',
+    'e2e.bundle',
+    done);
+}
 
 task('e2e.clean', (done: Function) => {
   del([`${DIST_E2E_ROOT}/**`]).then(() => {
@@ -105,7 +105,7 @@ task('e2e.bundle', function(){
   return merge([tsResult, swiper])
     .pipe(remember('system'))
     .pipe(concat('ionic.system.js'))
-    .pipe(dest('dist/bundles'))
+    .pipe(dest(`${DIST_NAME}/bundles`))
     .pipe(connect.reload());
 });
 
@@ -128,7 +128,7 @@ function getTscOptions(name?: string) {
   var opts = {
     emitDecoratorMetadata: true,
     experimentalDecorators: true,
-    target: 'es5',
+    target: ES5,
     module: 'commonjs',
     isolatedModules: true,
     typescript: require('typescript'),
@@ -147,9 +147,7 @@ function getTscOptions(name?: string) {
 
 var tscReporter = {
   error: function (error) {
-    // TODO
-    // suppress type errors until we convert everything to TS
-    // console.error(error.message);
+    console.error(error.message);
   }
 };
 
@@ -162,7 +160,7 @@ const babelOptions = {
     return 'ionic-angular/' + name;
   },
   plugins: ['transform-es2015-modules-systemjs'],
-  presets: ['es2015']
+  presets: [ES_2015]
 };
 
 /**
@@ -170,11 +168,11 @@ const babelOptions = {
  */
 task('e2e.build', function() {
   var indexTemplate = template(
-   readFileSync('scripts/e2e/e2e.template.html').toString()
+   readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.html`).toString()
   )({
     buildConfig: buildConfig
   });
-  var testTemplate = template(readFileSync('scripts/e2e/e2e.template.js').toString());
+  var testTemplate = template(readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.js`).toString());
 
   var platforms = [
     'android',
@@ -248,7 +246,7 @@ task('e2e.build', function() {
 });
 
 task('e2e.copyExternalDependencies', () => {
-  src([`${SCRIPTS_ROOT}/e2e/*.css`]).pipe(dest(`${DIST_E2E_ROOT}/css`));
+  src([`${SCRIPTS_ROOT}/${E2E_NAME}/*.css`]).pipe(dest(`${DIST_E2E_ROOT}/css`));
 });
 
 task('e2e.sass', () => {
