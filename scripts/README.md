@@ -20,8 +20,18 @@ Run `gulp build` or `gulp watch` to watch for changes.
 
 ### Building & Running e2e Tests
 
+#### Development
+
 1. Run `gulp e2e` or `gulp e2e.watch` to watch for changes.
 2. Navigate to `http://localhost:8000/dist/e2e`
+
+#### Validation
+
+The following commands take longer to run because they use AoT compilation. They should really only be used to validate that our components work with AoT, and fix them if not.
+
+1. Run `gulp e2e.prod` to bundle all e2e tests, or pass a folder for a specific test. For example, `gulp e2e.prod --f=alert/basic` will build the test in `src/components/alert/test/basic`.
+2. Run `gulp e2e.watchProd` with a folder passed to watch a test. For example, `gulp e2e.watchProd --f=select/single-value` will watch the test in `src/components/select/test/single-value`.
+3. Navigate to `http://localhost:8000/dist/e2e`
 
 
 ### Building & Running API Demos

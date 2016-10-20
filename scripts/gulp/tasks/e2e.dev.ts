@@ -44,7 +44,7 @@ function e2eBuild(done: (err: any) => void) {
  */
 task('e2e.build', function() {
   var indexTemplate = template(
-   readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.html`).toString()
+   readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.dev.html`).toString()
   )({
     buildConfig: buildConfig
   });

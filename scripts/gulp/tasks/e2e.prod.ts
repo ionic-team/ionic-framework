@@ -14,7 +14,7 @@ import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
 import { argv } from 'yargs';
 
-import { DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, PROJECT_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
+import { DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
 import { createTempTsConfig, deleteFiles, runNgc } from '../util';
 
 task('e2e.prod', e2eBuild);
@@ -44,8 +44,8 @@ task('e2e.copySource', (done: Function) => {
   stream.on('end', done);
 
   function createIndexHTML() {
-    const indexTemplate = readFileSync('scripts/e2e/index.html');
-    const indexTs = readFileSync('scripts/e2e/entry.ts');
+    const indexTemplate = readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.prod.html`);
+    const indexTs = readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/entry.ts`);
 
     return obj(function (file, enc, next) {
       this.push(new VinylFile({
@@ -69,7 +69,7 @@ task('e2e.copySource', (done: Function) => {
       'windows'
     ];
 
-    let testTemplate = template(readFileSync('scripts/e2e/e2e.template.js').toString());
+    let testTemplate = template(readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.js`).toString());
 
     return obj(function (file, enc, next) {
       let self = this;
