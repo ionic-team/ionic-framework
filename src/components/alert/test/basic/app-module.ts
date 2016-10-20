@@ -286,7 +286,7 @@ export class E2EPage {
   doAlertWithMode() {
     let alert = this.alertCtrl.create({
       title: 'Alert!',
-      mode:'md',
+      mode: 'md',
       buttons: ['OK']
     });
 
