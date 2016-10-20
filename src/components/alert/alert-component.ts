@@ -74,6 +74,7 @@ export class AlertCmp {
     message?: string;
     title?: string;
     subTitle?: string;
+    mode?: string;
     buttons?: any[];
     inputs?: any[];
     enableBackdropDismiss?: boolean;
@@ -95,7 +96,7 @@ export class AlertCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
-    this.mode = _config.get('mode');
+    this.mode = this.d.mode || _config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
     if (this.d.cssClass) {
