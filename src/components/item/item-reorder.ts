@@ -256,7 +256,7 @@ export class ItemReorder {
    */
   reorderReset() {
     // remove temp bottom item.
-    this._element.querySelector('.ion-reorder-temp-item').remove()
+    this._element.querySelector('.ion-reorder-temp-item').remove();
 
     let children = this._element.children;
     let len = children.length;
