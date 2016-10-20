@@ -21,7 +21,7 @@ export class Activator {
     // queue to have this element activated
     this._queue.push(activatableEle);
 
-    rafFrames(2, () => {
+    rafFrames(6, () => {
       let activatableEle: HTMLElement;
       for (let i = 0; i < this._queue.length; i++) {
         activatableEle = this._queue[i];
@@ -30,7 +30,7 @@ export class Activator {
           activatableEle.classList.add(this._css);
         }
       }
-      this._queue = [];
+      this._queue.length = 0;
     });
   }
 
@@ -59,7 +59,7 @@ export class Activator {
 
   deactivate() {
     // remove the active class from all active elements
-    this._queue = [];
+    this._queue.length = 0;
 
     rafFrames(2, () => {
       for (var i = 0; i < this._active.length; i++) {
