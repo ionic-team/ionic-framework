@@ -10,18 +10,14 @@ import * as remember from 'gulp-remember';
 import * as rename from 'gulp-rename';
 import * as tsc from 'gulp-typescript';
 import * as watch from 'gulp-watch';
-
-import * as del from 'del';
 import { template } from 'lodash';
 import * as merge from 'merge2';
 import * as path from 'path';
 import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
-import { argv } from 'yargs';
 
-import { DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, SCRIPTS_ROOT } from '../constants';
-import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
+import { DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES5, ES_2015, SCRIPTS_ROOT } from '../constants';
 
 const buildConfig = require('../../build/config');
 
@@ -42,126 +38,6 @@ function e2eBuild(done: (err: any) => void) {
     'e2e.bundle',
     done);
 }
-
-task('e2e.clean', (done: Function) => {
-  del([`${DIST_E2E_ROOT}/**`]).then(() => {
-    done();
-  }).catch(err => {
-    done(err);
-  });
-});
-
-/**
- * Builds e2e tests to dist/e2e and watches for changes.  Runs 'e2e.bundle' or
- * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
- */
-task('e2e.watch', ['e2e'], function() {
-  watchTask('e2e.bundle');
-
-  watch('src/components/*/test/**/*', function(file) {
-    start('e2e.build');
-  });
-});
-
-function watchTask(task) {
-  watch([
-      'src/**/*.ts',
-      '!src/components/*/test/**/*',
-      '!src/util/test/*'
-    ],
-    function(file) {
-      if (file.event !== 'unlink') {
-        start(task);
-      }
-    }
-  );
-
-  watch('src/**/*.scss', function() {
-    start('sass');
-  });
-
-  start('e2e.serve');
-}
-
-task('e2e.serve', function() {
-  connect.server({
-    root: './',
-    port: LOCAL_SERVER_PORT,
-    livereload: {
-      port: 35700
-    }
-  });
-});
-
-/**
- * Creates SystemJS bundle from Ionic source files.
- */
-task('e2e.bundle', function(){
-  var tsResult = tsCompile(getTscOptions('es6'), 'system')
-    .pipe(babel(babelOptions));
-
-  var swiper = src('src/components/slides/swiper-widget.system.js');
-
-  return merge([tsResult, swiper])
-    .pipe(remember('system'))
-    .pipe(concat('ionic.system.js'))
-    .pipe(dest(`${DIST_NAME}/bundles`))
-    .pipe(connect.reload());
-});
-
-function tsCompile(options, cacheName) {
-  return src([
-      'typings/main.d.ts',
-      'src/**/*.ts',
-      '!src/**/*.d.ts',
-      '!src/components/*/test/**/*',
-      '!src/util/test/*',
-      '!src/config/test/*',
-      '!src/platform/test/*',
-      '!src/**/*.spec.ts'
-    ])
-    .pipe(cache(cacheName, { optimizeMemory: true }))
-    .pipe(tsc(options, undefined, tscReporter));
-}
-
-function getTscOptions(name?: string) {
-  var opts = {
-    emitDecoratorMetadata: true,
-    experimentalDecorators: true,
-    target: ES5,
-    module: 'commonjs',
-    isolatedModules: true,
-    typescript: require('typescript'),
-    declaration: false
-  };
-
-  if (name === 'typecheck') {
-    opts.declaration = true;
-    delete opts.isolatedModules;
-  } else if (name === 'es6') {
-    opts.target = 'es6';
-    delete opts.module;
-  }
-  return opts;
-}
-
-var tscReporter = {
-  error: function (error) {
-    console.error(error.message);
-  }
-};
-
-// We use Babel to easily create named System.register modules
-// See: https://github.com/Microsoft/TypeScript/issues/4801
-// and https://github.com/ivogabe/gulp-typescript/issues/211
-const babelOptions = {
-  moduleIds: true,
-  getModuleId: function(name) {
-    return 'ionic-angular/' + name;
-  },
-  plugins: ['transform-es2015-modules-systemjs'],
-  presets: [ES_2015]
-};
 
 /**
  * Builds Ionic e2e tests to dist/e2e.
@@ -245,24 +121,104 @@ task('e2e.build', function() {
   }
 });
 
-task('e2e.copyExternalDependencies', () => {
-  src([`${SCRIPTS_ROOT}/${E2E_NAME}/*.css`]).pipe(dest(`${DIST_E2E_ROOT}/css`));
+/**
+ * Creates SystemJS bundle from Ionic source files.
+ */
+task('e2e.bundle', function(){
+  var tsResult = tsCompile(getTscOptions('es6'), 'system')
+    .pipe(babel(babelOptions));
+
+  var swiper = src('src/components/slides/swiper-widget.system.js');
+
+  return merge([tsResult, swiper])
+    .pipe(remember('system'))
+    .pipe(concat('ionic.system.js'))
+    .pipe(dest(`${DIST_NAME}/bundles`))
+    .pipe(connect.reload());
 });
 
-task('e2e.sass', () => {
-  // ensure there is a version.scss file
-  setSassIonicVersion(`E2E-${createTimestamp()}`);
-  return compileSass(`${DIST_E2E_ROOT}/css`);
-});
+function tsCompile(options, cacheName) {
+  return src([
+      'typings/main.d.ts',
+      'src/**/*.ts',
+      '!src/**/*.d.ts',
+      '!src/components/*/test/**/*',
+      '!src/util/test/*',
+      '!src/config/test/*',
+      '!src/platform/test/*',
+      '!src/**/*.spec.ts'
+    ])
+    .pipe(cache(cacheName, { optimizeMemory: true }))
+    .pipe(tsc(options, undefined, tscReporter));
+}
 
-task('e2e.fonts', () => {
-  return copyFonts(`${DIST_E2E_ROOT}/fonts`);
-});
+function getTscOptions(name?: string) {
+  var opts = {
+    emitDecoratorMetadata: true,
+    experimentalDecorators: true,
+    target: ES5,
+    module: 'commonjs',
+    isolatedModules: true,
+    typescript: require('typescript'),
+    declaration: false
+  };
 
-task('e2e.polyfill', (done: Function) => {
-  writePolyfills(`${DIST_E2E_ROOT}/polyfills`).then(() => {
-    done();
-  }).catch(err => {
-    done(err);
+  if (name === 'typecheck') {
+    opts.declaration = true;
+    delete opts.isolatedModules;
+  } else if (name === 'es6') {
+    opts.target = 'es6';
+    delete opts.module;
+  }
+  return opts;
+}
+
+var tscReporter = {
+  error: function (error) {
+    console.error(error.message);
+  }
+};
+
+// We use Babel to easily create named System.register modules
+// See: https://github.com/Microsoft/TypeScript/issues/4801
+// and https://github.com/ivogabe/gulp-typescript/issues/211
+const babelOptions = {
+  moduleIds: true,
+  getModuleId: function(name) {
+    return 'ionic-angular/' + name;
+  },
+  plugins: ['transform-es2015-modules-systemjs'],
+  presets: [ES_2015]
+};
+
+/**
+ * Builds e2e tests to dist/e2e and watches for changes.  Runs 'e2e.bundle' or
+ * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
+ */
+task('e2e.watch', ['e2e'], function() {
+  watchTask('e2e.bundle');
+
+  watch('src/components/*/test/**/*', function(file) {
+    start('e2e.build');
   });
 });
+
+function watchTask(task) {
+  watch([
+      'src/**/*.ts',
+      '!src/components/*/test/**/*',
+      '!src/util/test/*'
+    ],
+    function(file) {
+      if (file.event !== 'unlink') {
+        start(task);
+      }
+    }
+  );
+
+  watch('src/**/*.scss', function() {
+    start('sass');
+  });
+
+  start('e2e.serve');
+}
