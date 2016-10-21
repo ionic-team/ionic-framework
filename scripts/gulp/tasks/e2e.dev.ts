@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+import { dirname, join, sep } from 'path';
 
 import { dest, src, start, task } from 'gulp';
 import * as babel from 'gulp-babel';
@@ -12,7 +13,6 @@ import * as tsc from 'gulp-typescript';
 import * as watch from 'gulp-watch';
 import { template } from 'lodash';
 import * as merge from 'merge2';
-import * as path from 'path';
 import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
@@ -42,69 +42,71 @@ function e2eBuild(done: (err: any) => void) {
 /**
  * Builds Ionic e2e tests to dist/e2e.
  */
-task('e2e.build', function() {
+task('e2e.build', function () {
   var indexTemplate = template(
-   readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.dev.html`).toString()
+    readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.dev.html`).toString()
   )({
     buildConfig: buildConfig
   });
-  var testTemplate = template(readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.js`).toString());
-
-  var platforms = [
-    'android',
-    'ios',
-    'windows'
-  ];
 
   // Get each test folder with src
   var tsResult = src([
-      'src/components/*/test/*/**/*.ts',
-      '!src/components/*/test/*/**/*.spec.ts'
-    ])
+    'src/components/*/test/*/**/*.ts',
+    '!src/components/*/test/*/**/*.spec.ts'
+  ])
     .pipe(cache('e2e.ts'))
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
-    .on('error', function(error) {
+    .on('error', function (error) {
       console.log(error.message);
     })
     .pipe(gulpif(/app-module.js$/, createIndexHTML()))
     .pipe(gulpif(/e2e.js$/, createPlatformTests()));
 
   var testFiles = src([
-      'src/components/*/test/*/**/*',
-      '!src/components/*/test/*/**/*.ts'
-    ])
+    'src/components/*/test/*/**/*',
+    '!src/components/*/test/*/**/*.ts'
+  ])
     .pipe(cache('e2e.files'));
 
   return merge([
-      tsResult,
-      testFiles
-    ])
-    .pipe(rename(function(file) {
-      var sep = path.sep;
+    tsResult,
+    testFiles
+  ])
+    .pipe(rename(function (file) {
       file.dirname = file.dirname.replace(sep + 'test' + sep, sep);
     }))
     .pipe(dest(DIST_E2E_ROOT))
     .pipe(connect.reload());
 
   function createIndexHTML() {
-    return obj(function(file, enc, next) {
+    return obj(function (file, enc, next) {
       this.push(new VinylFile({
         base: file.base,
         contents: new Buffer(indexTemplate),
-        path: path.join(path.dirname(file.path), 'index.html'),
+        path: join(dirname(file.path), 'index.html'),
       }));
       next(null, file);
     });
   }
 
-  function createPlatformTests(file?: any) {
-    return obj(function(file, enc, next) {
-      var self = this;
-      var relativePath = path.dirname(file.path.replace(/^.*?ionic(\/|\\)components(\/|\\)/, ''));
+  function createPlatformTests() {
+    let platforms = [
+      'android',
+      'ios',
+      'windows'
+    ];
+
+    let testTemplate = template(readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.js`).toString());
+
+    return obj(function (file, enc, next) {
+      let self = this;
+
+      let relativePath = dirname(file.path.replace(/^.*?src(\/|\\)components(\/|\\)/, ''));
       relativePath = relativePath.replace('/test/', '/');
-      var contents = file.contents.toString();
-      platforms.forEach(function(platform) {
-        var platformContents = testTemplate({
+
+      let contents = file.contents.toString();
+      platforms.forEach(function (platform) {
+        let platformContents = testTemplate({
           contents: contents,
           buildConfig: buildConfig,
           relativePath: relativePath,
@@ -124,7 +126,7 @@ task('e2e.build', function() {
 /**
  * Creates SystemJS bundle from Ionic source files.
  */
-task('e2e.bundle', function(){
+task('e2e.bundle', function () {
   var tsResult = tsCompile(getTscOptions('es6'), 'system')
     .pipe(babel(babelOptions));
 
@@ -139,15 +141,15 @@ task('e2e.bundle', function(){
 
 function tsCompile(options, cacheName) {
   return src([
-      'typings/main.d.ts',
-      'src/**/*.ts',
-      '!src/**/*.d.ts',
-      '!src/components/*/test/**/*',
-      '!src/util/test/*',
-      '!src/config/test/*',
-      '!src/platform/test/*',
-      '!src/**/*.spec.ts'
-    ])
+    'typings/main.d.ts',
+    'src/**/*.ts',
+    '!src/**/*.d.ts',
+    '!src/components/*/test/**/*',
+    '!src/util/test/*',
+    '!src/config/test/*',
+    '!src/platform/test/*',
+    '!src/**/*.spec.ts'
+  ])
     .pipe(cache(cacheName, { optimizeMemory: true }))
     .pipe(tsc(options, undefined, tscReporter));
 }
@@ -184,7 +186,7 @@ var tscReporter = {
 // and https://github.com/ivogabe/gulp-typescript/issues/211
 const babelOptions = {
   moduleIds: true,
-  getModuleId: function(name) {
+  getModuleId: function (name) {
     return 'ionic-angular/' + name;
   },
   plugins: ['transform-es2015-modules-systemjs'],
@@ -195,29 +197,29 @@ const babelOptions = {
  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'e2e.bundle' or
  * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
  */
-task('e2e.watch', ['e2e'], function() {
+task('e2e.watch', ['e2e'], function () {
   watchTask('e2e.bundle');
 
-  watch('src/components/*/test/**/*', function(file) {
+  watch('src/components/*/test/**/*', function (file) {
     start('e2e.build');
   });
 });
 
 function watchTask(task) {
   watch([
-      'src/**/*.ts',
-      '!src/components/*/test/**/*',
-      '!src/util/test/*'
-    ],
-    function(file) {
+    'src/**/*.ts',
+    '!src/components/*/test/**/*',
+    '!src/util/test/*'
+  ],
+    function (file) {
       if (file.event !== 'unlink') {
         start(task);
       }
     }
   );
 
-  watch('src/**/*.scss', function() {
-    start('sass');
+  watch('src/**/*.scss', function () {
+    start('e2e.sass');
   });
 
   start('e2e.serve');
