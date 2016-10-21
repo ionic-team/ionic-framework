@@ -62,6 +62,7 @@ task('e2e.copySource', (done: Function) => {
     });
   }
 
+  // TODO this is almost the same as dev, diff and combine
   function createPlatformTests() {
     let platforms = [
       'android',
@@ -73,7 +74,8 @@ task('e2e.copySource', (done: Function) => {
 
     return obj(function (file, enc, next) {
       let self = this;
-      let relativePath = dirname(file.path.replace(/^.*?src(\/|\\)components(\/|\\)/, ''));
+
+      let relativePath = dirname(file.path.replace(/^.*?src(\/|\\)/, ''));
 
       let contents = file.contents.toString();
       platforms.forEach(function (platform) {
