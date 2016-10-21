@@ -145,7 +145,8 @@ export class AlertCmp {
         label: input.label,
         checked: !!input.checked,
         disabled: !!input.disabled,
-        id: 'alert-input-' + this.id + '-' + index
+        id: 'alert-input-' + this.id + '-' + index,
+        handler: isPresent(input.handler) ? input.handler : null,
       };
     });
 
@@ -237,12 +238,20 @@ export class AlertCmp {
         input.checked = (checkedInput === input);
       });
       this.activeId = checkedInput.id;
+
+      if (checkedInput.handler) {
+        checkedInput.handler(checkedInput);
+      }
     }
   }
 
   cbClick(checkedInput: any) {
     if (this.enabled) {
       checkedInput.checked = !checkedInput.checked;
+
+      if (checkedInput.handler) {
+        checkedInput.handler(checkedInput);
+      }
     }
   }
 

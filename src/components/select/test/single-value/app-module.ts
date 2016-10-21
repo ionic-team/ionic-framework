@@ -67,8 +67,12 @@ export class E2EPage {
     console.log('Gaming Select, Change value:', selectedValue);
   }
 
-  stpSelect() {
-    console.log('STP selected');
+  musicSelect(selectedValue: any) {
+    console.log('Music selected', selectedValue);
+  }
+
+  notificationSelect(selectedValue: any) {
+    console.log('Notification select', selectedValue);
   }
 
   statusChange(ev: string) {
