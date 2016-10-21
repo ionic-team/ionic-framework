@@ -52,8 +52,7 @@ ion-content.js-scroll > .scroll-content {
 }
 
 .disable-scroll .ion-page .scroll-content {
-  overflow-y: hidden;
-  overflow-x: hidden;
+  pointer-events: none;
 }
 
 

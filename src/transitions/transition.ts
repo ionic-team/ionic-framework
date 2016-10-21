@@ -21,9 +21,7 @@ export class Transition extends Animation {
   _trnsStart: Function;
 
   parent: Transition;
-  hasChildTrns: boolean = false;
   trnsId: number;
-
 
   constructor(public enteringView: ViewController, public leavingView: ViewController, opts: AnimationOptions, raf?: Function) {
     super(null, opts, raf);
@@ -33,6 +31,10 @@ export class Transition extends Animation {
 
   registerStart(trnsStart: Function) {
     this._trnsStart = trnsStart;
+  }
+
+  isRoot(): boolean {
+    return !this.parent;
   }
 
   start() {

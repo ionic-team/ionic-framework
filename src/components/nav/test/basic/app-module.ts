@@ -40,7 +40,7 @@ export class MyCmpTest {}
         <button ion-item [navPush]="'FirstPage'">Push w/ [navPush] and string view name</button>
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
-        <button ion-item (click)="navCtrl.pop()">Pop</button>
+        <button ion-item (click)="pop()">Pop</button>
         <ion-item>
           <ion-label>Toggle Can Leave</ion-label>
           <ion-toggle (click)="canLeave = !canLeave"></ion-toggle>
@@ -172,6 +172,10 @@ export class FirstPage {
       this.navCtrl.remove(1, 1).catch(() => {
       });
     }, 250);
+  }
+
+  pop() {
+    this.navCtrl.pop().catch(() => {});
   }
 
   viewDismiss() {

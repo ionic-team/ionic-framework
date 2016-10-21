@@ -127,7 +127,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
 **/
 export class Config {
   private _c: any = {};
-  private _s: any;
+  private _s: any = {};
   private _qp: QueryParams;
   private _modes: any = {};
   private _trns: any = {};

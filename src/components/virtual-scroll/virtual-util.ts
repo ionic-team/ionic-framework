@@ -233,10 +233,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
       };
 
       totalNodes = nodes.push(availableNode);
-      // console.debug(`VirtrualScroll, new node, tmpl ${cell.tmpl}, height ${cell.height}`);
     }
-
-    // console.debug(`node was cell ${availableNode.cell} but is now ${cellIndex}, was top: ${cell.top}`);
 
     // assign who's the new cell index for this node
     availableNode.cell = cellIndex;

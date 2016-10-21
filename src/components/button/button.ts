@@ -11,6 +11,7 @@ import { isTrueProperty } from '../../util/util';
   * @description
   * Buttons are simple components in Ionic. They can consist of text and icons
   * and be enhanced by a wide range of attributes.
+  *
   * @usage
   *
   * ```html
@@ -63,6 +64,48 @@ import { isTrueProperty } from '../../util/util';
   *  <button ion-button small>Small</button>
   * ```
   *
+  * @advanced
+  *
+  * ```html
+  *
+  * <!-- Bind the color and outline inputs to an expression -->
+  * <button ion-button [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline">
+  *   Danger (Solid)
+  * </button>
+  *
+  * <!-- Bind the color and round inputs to an expression -->
+  * <button ion-button [color]="myColor" [round]="isRound">
+  *   Secondary (Round)
+  * </button>
+  *
+  * <!-- Bind the color and clear inputs to an expression -->
+  * <button ion-button [color]="isSecondary ? 'secondary' : 'primary'"  [clear]="isClear">
+  *   Primary (Clear)
+  * </button>
+  *
+  * <!-- Bind the color, outline and round inputs to an expression -->
+  * <button ion-button [color]="myColor2" [outline]="isOutline" [round]="isRound">
+  *   Dark (Solid + Round)
+  * </button>
+  *
+  * ```
+  *
+  * ```ts
+  * @Component({
+  *   templateUrl: 'main.html'
+  * })
+  * class E2EPage {
+  *   isDanger: boolean = true;
+  *   isSecondary: boolean = false;
+  *   isRound: boolean = true;
+  *   isOutline: boolean = false;
+  *   isClear: boolean = true;
+  *   myColor: string = 'secondary';
+  *   myColor2: string = 'dark';
+  * }
+  *
+  * ```
+  *
   * @demo /docs/v2/demos/src/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
   * @see {@link /docs/v2/components#fabs FabButton Docs}
@@ -102,7 +145,7 @@ export class Button extends Ion {
   _init: boolean;
 
   /**
-   * @input {string} Large button.
+   * @input {boolean} Large button.
    */
   @Input()
   set large(val: boolean) {
@@ -110,7 +153,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Small button.
+   * @input {boolean} Small button.
    */
   @Input()
   set small(val: boolean) {
@@ -118,7 +161,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Default button.
+   * @input {boolean} Default button.
    */
   @Input()
   set default(val: boolean) {
@@ -126,7 +169,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A transparent button with a border.
+   * @input {boolean} A transparent button with a border.
    */
   @Input()
   set outline(val: boolean) {
@@ -134,7 +177,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A transparent button without a border.
+   * @input {boolean} A transparent button without a border.
    */
   @Input()
   set clear(val: boolean) {
@@ -142,7 +185,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Force a solid button. Useful for buttons within an item.
+   * @input {boolean} Force a solid button. Useful for buttons within an item.
    */
   @Input()
   set solid(val: boolean) {
@@ -150,7 +193,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button with rounded corners.
+   * @input {boolean} A button with rounded corners.
    */
   @Input()
   set round(val: boolean) {
@@ -158,7 +201,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button that fills its parent container with a border-radius.
+   * @input {boolean} A button that fills its parent container with a border-radius.
    */
   @Input()
   set block(val: boolean) {
@@ -166,7 +209,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} A button that fills its parent container without a border-radius or borders on the left/right.
+   * @input {boolean} A button that fills its parent container without a border-radius or borders on the left/right.
    */
   @Input()
   set full(val: boolean) {
@@ -201,7 +244,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
   set color(val: string) {

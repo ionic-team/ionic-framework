@@ -252,7 +252,7 @@ import { ViewController } from './view-controller';
  *      .catch(()=> console.log('should I stay or should I go now'))
  *   }
  *
- *   ionCanViewLeave(): boolean{
+ *   ionViewCanLeave(): boolean{
  *    // here we can either return true or false
  *    // depending on if we want to leave this view
  *    if(isValid(randomValue)){
@@ -284,7 +284,7 @@ import { ViewController } from './view-controller';
  *   constructor(
  *     public navCtrl: NavController
  *   ){}
- *   ionCanViewEnter(): boolean{
+ *   ionViewCanEnter(): boolean{
  *    // here we can either return true or false
  *    // depending on if we want to leave this view
  *    if(isValid(randomValue)){

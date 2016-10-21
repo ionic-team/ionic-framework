@@ -36,7 +36,7 @@ ion-refresher {
   margin-top: -1px;
 
   border-top: 1px solid $refresher-border-color;
-  transition: all 320ms cubic-bezier(.36, .66, .04, 1);
+  transition: transform 320ms cubic-bezier(.36, .66, .04, 1);
 }
 
 

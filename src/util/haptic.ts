@@ -33,9 +33,11 @@ export class Haptic {
   plugin: any;
 
   constructor(platform: Platform) {
-    platform.ready().then(() => {
-      this.plugin = window.TapticEngine;
-    });
+    if (platform) {
+      platform.ready().then(() => {
+        this.plugin = window.TapticEngine;
+      });
+    }
   }
 
   /**

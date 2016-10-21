@@ -245,8 +245,6 @@ export class PickerColumnCmp {
         this.velocity = 0;
       }
 
-      // console.debug(`decelerate y: ${y}, velocity: ${this.velocity}, optHeight: ${this.optHeight}`);
-
       var notLockedIn = (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1);
 
       this.update(y, 0, true, !notLockedIn);

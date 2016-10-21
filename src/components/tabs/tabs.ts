@@ -130,6 +130,16 @@ import { ViewController } from '../../navigation/view-controller';
  * }
  *```
  *
+ * You can also switch tabs from a child component by calling `select()` on the 
+ * parent view using the `NavController` instance. For example, assuming you have
+ * a `TabsPage` component, you could call the following from any of the child 
+ * components to switch to `TabsRoot3`:
+ *
+ *```ts
+ * switchTabs() {
+ *   this.navCtrl.parent.switch(2);
+ * }
+ *```
  * @demo /docs/v2/demos/src/tabs/
  *
  * @see {@link /docs/v2/components#tabs Tabs Component Docs}
@@ -421,8 +431,8 @@ export class Tabs extends Ion implements AfterViewInit {
       // to refresh the tabbar and content dimensions to be sure
       // they're lined up correctly
       if (alreadyLoaded && selectedPage) {
-        let content = <Content>selectedPage.getContent();
-        if (content && content instanceof Content) {
+        let content = <Content>selectedPage.getIONContent();
+        if (content) {
           content.resize();
         }
       }

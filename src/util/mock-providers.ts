@@ -22,6 +22,7 @@ import { UrlSerializer } from '../navigation/url-serializer';
 import { ViewController } from '../navigation/view-controller';
 
 import { NavControllerBase } from '../navigation/nav-controller-base';
+import { Haptic } from './haptic';
 
 export const mockConfig = function(config?: any, url: string = '/', platform?: Platform) {
   const c = new Config();
@@ -275,9 +276,9 @@ export const mockNavController = function(): NavControllerBase {
     enteringView._state = ViewState.INITIALIZED;
   };
 
-  (<any>nav)._orgViewInsert = nav._viewInsert;
+  (<any>nav)._orgViewInsert = nav._viewAttachToDOM;
 
-  nav._viewInsert = function(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
+  nav._viewAttachToDOM = function(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     let mockedViewport: any = {
       insert: () => { }
     };
@@ -395,6 +396,10 @@ export const mockDeepLinkConfig = function(links?: any[]): DeepLinkConfig {
       { component: MockView5, name: 'viewfive' }
     ]
   };
+};
+
+export const mockHaptic = function (): Haptic {
+  return new Haptic(null);
 };
 
 export class MockView {}

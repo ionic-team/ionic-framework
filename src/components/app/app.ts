@@ -22,6 +22,7 @@ export class App {
   private _title: string = '';
   private _titleSrv: Title = new Title();
   private _rootNav: NavController = null;
+  private _canDisableScroll: boolean;
 
   /**
    * @private
@@ -70,6 +71,7 @@ export class App {
     // listen for hardware back button events
     // register this back button action with a default priority
     _platform.registerBackButtonAction(this.navPop.bind(this));
+    this._canDisableScroll = _config.get('canDisableScroll', true);
   }
 
   /**
@@ -122,7 +124,7 @@ export class App {
    * scrolling is enabled. When set to `true`, scrolling is disabled.
    */
   setScrollDisabled(disableScroll: boolean) {
-    if (this._config.get('canDisableScroll', true)) {
+    if (this._canDisableScroll) {
       this._appRoot._disableScroll(disableScroll);
     }
   }
@@ -148,7 +150,7 @@ export class App {
    * @return {boolean} returns true or false
    */
   isScrolling(): boolean {
-    return (this._scrollTime + 48 > Date.now());
+    return ((this._scrollTime + ACTIVE_SCROLLING_TIME) > Date.now());
   }
 
   /**
@@ -275,4 +277,5 @@ export class App {
 
 }
 
+const ACTIVE_SCROLLING_TIME = 100;
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;

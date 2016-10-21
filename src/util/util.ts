@@ -155,3 +155,18 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
   array.splice(indexes.to, 0, element);
   return array;
 }
+
+
+const ASSERT_ENABLED = true;
+/**
+ * @private
+ */
+function _assert(actual: any, reason?: string) {
+  if (!actual && ASSERT_ENABLED === true) {
+    let message = 'IONIC ASSERT: ' + reason;
+    console.error(message);
+    throw new Error(message);
+  }
+}
+
+export { _assert as assert};

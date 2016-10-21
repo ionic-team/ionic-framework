@@ -40,7 +40,7 @@ $tabs-md-tab-text-margin:              6px 0 !default;
 $tabs-md-tab-text-capitalization:      none !default;
 
 /// @prop - Transform for the tab button text
-$tabs-md-tab-text-transform:           scale(.85) !default;
+$tabs-md-tab-text-transform:           scale($tabs-md-tab-font-size / $tabs-md-tab-font-size-active) !default;
 
 /// @prop - Transform origin for the tab button text
 $tabs-md-tab-text-transform-origin:    bottom center !default;
@@ -67,6 +67,7 @@ $tabs-md-tab-icon-size:                2.4rem !default;
 
   min-height: $tabs-md-tab-min-height;
 
+  font-size: $tabs-md-tab-font-size-active;
   font-weight: $tabs-md-tab-font-weight;
   color: $tabs-md-tab-color;
 }
@@ -74,7 +75,6 @@ $tabs-md-tab-icon-size:                2.4rem !default;
 .tabs-md .tab-button[aria-selected=true] {
   padding: $tabs-md-tab-padding-active;
 
-  font-size: $tabs-md-tab-font-size-active;
   color: $tabs-md-tab-color-active;
 }
 

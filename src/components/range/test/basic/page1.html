@@ -18,6 +18,12 @@
 <ion-content>
 
   <ion-list>
+
+    <ion-item>
+      <ion-label>step="5199" max="5199" min="2499" snaps="true"</ion-label>
+      <ion-range step="5199" max="5199" min="2499" snaps="true"></ion-range>
+    </ion-item>
+
     <ion-item>
       <ion-range [(ngModel)]="singleValue" color="danger" pin="true" (ionChange)="rangeChange($event)" [debounce]="100"></ion-range>
     </ion-item>

@@ -6,6 +6,7 @@ import { Navbar } from '../components/navbar/navbar';
 import { NavControllerBase } from './nav-controller-base';
 import { NavOptions, ViewState } from './nav-util';
 import { NavParams } from './nav-params';
+import { Content } from '../components/content/content';
 
 
 /**
@@ -28,6 +29,8 @@ import { NavParams } from './nav-params';
 export class ViewController {
   private _cntDir: any;
   private _cntRef: ElementRef;
+  private _ionCntDir: Content;
+  private _ionCntRef: ElementRef;
   private _hdrDir: Header;
   private _ftrDir: Footer;
   private _isHidden: boolean = false;
@@ -308,7 +311,7 @@ export class ViewController {
   /**
    * @returns {component} Returns the Page's Content component reference.
    */
-  getContent() {
+  getContent(): any {
     return this._cntDir;
   }
 
@@ -324,6 +327,36 @@ export class ViewController {
    */
   contentRef(): ElementRef {
     return this._cntRef;
+  }
+
+  /**
+   * @private
+   */
+  _setIONContent(content: Content) {
+    this._setContent(content);
+    this._ionCntDir = content;
+  }
+
+  /**
+   * @private
+   */
+  getIONContent(): Content {
+    return this._ionCntDir;
+  }
+
+  /**
+   * @private
+   */
+  _setIONContentRef(elementRef: ElementRef) {
+    this._setContentRef(elementRef);
+    this._ionCntRef = elementRef;
+  }
+
+  /**
+   * @private
+   */
+  getIONContentRef(): ElementRef {
+    return this._ionCntRef;
   }
 
   /**
@@ -495,26 +528,25 @@ export class ViewController {
       this._cmp.destroy();
     }
 
-    if (this._nav) {
-      // remove it from the nav
-      const index = this._nav.indexOf(this);
-      if (index > -1) {
-        this._nav._views.splice(index, 1);
-      }
-    }
-
     this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onWillDismiss = null;
   }
 
   /**
    * @private
    */
-  _lifecycleTest(lifecycle: string): boolean | string | Promise<any> {
+  _lifecycleTest(lifecycle: string): boolean | Promise<any> {
     let instance = this.instance;
     let methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
       try {
-        return instance[methodName]();
+        let result = instance[methodName]();
+        if (result === false) {
+          return false;
+        } else if (result instanceof Promise) {
+          return result;
+        } else {
+          return true;
+        }
 
       } catch (e) {
         console.error(`${this.name} ${methodName} error: ${e.message}`);
@@ -538,7 +570,6 @@ export class ViewController {
   }
 
 }
-
 
 export function isViewController(viewCtrl: any) {
   return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
