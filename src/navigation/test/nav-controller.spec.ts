@@ -165,6 +165,15 @@ describe('NavController', () => {
 
   describe('insert', () => {
 
+    it('should not modify the view id', () => {
+      let view = mockView(MockView4);
+      view.id = 'custom_id';
+      nav.insert(0, view);
+
+      expect(view.id).toEqual('custom_id');
+    });
+
+
     it('should insert at the begining with no async transition', () => {
       let view4 = mockView(MockView4);
       let instance4 = spyOnLifecycles(view4);

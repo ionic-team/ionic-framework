@@ -689,7 +689,10 @@ export class NavControllerBase extends Ion implements NavController {
       view._setNav(this);
 
       // give this inserted view an ID
-      view.id = this.id + '-' + (++this._ids);
+      this._ids++;
+      if (!view.id) {
+        view.id = `${this.id}-${this._ids}`;
+      }
 
       // insert the entering view into the correct index in the stack
       this._views.splice(index, 0, view);

@@ -130,11 +130,11 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-md .searchbar-has-focus.searchbar-show-cancel .searchbar-search-icon {
+.searchbar-md.searchbar-has-focus.searchbar-show-cancel .searchbar-search-icon {
   display: none;
 }
 
-.searchbar-md .searchbar-has-focus.searchbar-show-cancel .searchbar-md-cancel {
+.searchbar-md.searchbar-has-focus.searchbar-show-cancel .searchbar-md-cancel {
   display: inline-flex;
 }
 
