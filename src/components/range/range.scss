@@ -4,17 +4,15 @@
 // --------------------------------------------------
 
 .item-range .item-inner {
-  width: 100%;
-
   overflow: visible;
 }
 
 .item-range .input-wrapper {
-  width: 100%;
-
   overflow: visible;
 
   flex-direction: column;
+
+  width: 100%;
 }
 
 .item-range ion-range {

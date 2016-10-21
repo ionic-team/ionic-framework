@@ -400,7 +400,7 @@ export const mockDeepLinkConfig = function(links?: any[]): DeepLinkConfig {
 
 export const mockHaptic = function (): Haptic {
   return new Haptic(null);
-}
+};
 
 export class MockView {}
 export class MockView1 {}

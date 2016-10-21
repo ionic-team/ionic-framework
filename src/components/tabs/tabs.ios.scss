@@ -49,6 +49,7 @@ $tabs-ios-tab-icon-size:            30px !default;
   max-width: $tabs-ios-tab-max-width;
   min-height: $tabs-ios-tab-min-height;
 
+  font-size: $tabs-ios-tab-font-size;
   color: $tabs-ios-tab-color;
 }
 
@@ -62,8 +63,6 @@ $tabs-ios-tab-icon-size:            30px !default;
   margin-bottom: 0;
 
   min-height: $tabs-ios-tab-font-size + 1;
-
-  font-size: $tabs-ios-tab-font-size;
 }
 
 .tabs-ios .has-title-only .tab-button-text {
