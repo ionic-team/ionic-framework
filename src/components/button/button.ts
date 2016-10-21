@@ -11,6 +11,7 @@ import { isTrueProperty } from '../../util/util';
   * @description
   * Buttons are simple components in Ionic. They can consist of text and icons
   * and be enhanced by a wide range of attributes.
+  *
   * @usage
   *
   * ```html
@@ -61,6 +62,48 @@ import { isTrueProperty } from '../../util/util';
   *  <button ion-button>Default</button>
   *
   *  <button ion-button small>Small</button>
+  * ```
+  *
+  * @advanced
+  *
+  * ```html
+  *
+  * <!-- Bind the color and outline inputs to an expression -->
+  * <button ion-button [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline">
+  *   Danger (Solid)
+  * </button>
+  *
+  * <!-- Bind the color and round inputs to an expression -->
+  * <button ion-button [color]="myColor" [round]="isRound">
+  *   Secondary (Round)
+  * </button>
+  *
+  * <!-- Bind the color and clear inputs to an expression -->
+  * <button ion-button [color]="isSecondary ? 'secondary' : 'primary'"  [clear]="isClear">
+  *   Primary (Clear)
+  * </button>
+  *
+  * <!-- Bind the color, outline and round inputs to an expression -->
+  * <button ion-button [color]="myColor2" [outline]="isOutline" [round]="isRound">
+  *   Dark (Solid + Round)
+  * </button>
+  *
+  * ```
+  *
+  * ```ts
+  * @Component({
+  *   templateUrl: 'main.html'
+  * })
+  * class E2EPage {
+  *   isDanger: boolean = true;
+  *   isSecondary: boolean = false;
+  *   isRound: boolean = true;
+  *   isOutline: boolean = false;
+  *   isClear: boolean = true;
+  *   myColor: string = 'secondary';
+  *   myColor2: string = 'dark';
+  * }
+  *
   * ```
   *
   * @demo /docs/v2/demos/src/button/
@@ -201,7 +244,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Dynamically set which predefined color this button should use (e.g. primary, secondary, danger, etc).
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
   set color(val: string) {
