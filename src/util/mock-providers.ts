@@ -22,6 +22,7 @@ import { UrlSerializer } from '../navigation/url-serializer';
 import { ViewController } from '../navigation/view-controller';
 
 import { NavControllerBase } from '../navigation/nav-controller-base';
+import { Haptic } from './haptic';
 
 export const mockConfig = function(config?: any, url: string = '/', platform?: Platform) {
   const c = new Config();
@@ -396,6 +397,10 @@ export const mockDeepLinkConfig = function(links?: any[]): DeepLinkConfig {
     ]
   };
 };
+
+export const mockHaptic = function (): Haptic {
+  return new Haptic(null);
+}
 
 export class MockView {}
 export class MockView1 {}

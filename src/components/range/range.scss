@@ -4,10 +4,14 @@
 // --------------------------------------------------
 
 .item-range .item-inner {
+  width: 100%;
+
   overflow: visible;
 }
 
 .item-range .input-wrapper {
+  width: 100%;
+
   overflow: visible;
 
   flex-direction: column;
