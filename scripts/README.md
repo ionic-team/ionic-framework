@@ -2,7 +2,8 @@
 
 ## Getting Started
 
-All of these commands require you to run `npm install` first.  Add the `--typecheck` flag to generate type definitions (`.d.ts`) and do type checking, but keep in mind builds and rebuilds when watching will be significantly slower (~1min and ~1s respectively, vs ~20s and ~200ms without typechecking).
+All of these commands require you to run `npm install` first. To see a full list of the gulp commands, run `gulp`.
+
 
 ### Installing Nightly Version
 
@@ -20,14 +21,24 @@ Run `gulp build` or `gulp watch` to watch for changes.
 
 ### Building & Running e2e Tests
 
-1. Run `gulp e2e` or `gulp e2e.watch` with a folder passed to watch for changes.
-2. Navigate to `http://localhost:8080/dist/e2e`
+#### Development
+
+1. Run `gulp e2e` or `gulp e2e.watch` to watch for changes.
+2. Navigate to `http://localhost:8000/dist/e2e`
+
+#### Validation
+
+The following commands take longer to run because they use AoT compilation. They should really only be used to validate that our components work with AoT, and fix them if not.
+
+1. Run `gulp e2e.prod` to bundle all e2e tests, or pass a folder for a specific test. For example, `gulp e2e.prod --f=alert/basic` will build the test in `src/components/alert/test/basic`.
+2. Run `gulp e2e.watchProd` with a folder passed to watch a test. For example, `gulp e2e.watchProd --f=select/single-value` will watch the test in `src/components/select/test/single-value`.
+3. Navigate to `http://localhost:8000/dist/e2e`
 
 
 ### Building & Running API Demos
 
-1. Run `gulp demos` or `gulp demos.watch` with a folder passed to watch for changes.
-2. Navigate to `http://localhost:80808080/dist/demos`
+1. Run `gulp demos` or `gulp demos.watch` to watch for changes.
+2. Navigate to `http://localhost:8000/dist/demos`
 
 
 ### Building API Docs
@@ -54,11 +65,22 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 ### Running Snapshot
 
+#### Setup
+
 1. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor@2.5.1`
 2. Run `webdriver-manager update`
 3. Export `IONIC_SNAPSHOT_KEY` (get from someone)
-4. Run `gulp snapshot`
 
+#### Commands
+
+- `gulp snapshot` will run the `gulp e2e.prod` task with AoT compilation.
+- `gulp snapshot.skipBuild` will skip the `gulp e2e.prod` task with AoT compilation.
+- `gulp snapshot.dev` will run a development build using the `gulp e2e` task.
+- `gulp snapshot.quick` will skip the build and run snapshot without uploading to the server.
+
+#### Flags
+
+- `--f | -folder` will run the command with a test folder. For example, `gulp snapshot --f=action-sheet/basic` will run snapshot for the test at `src/components/action-sheet/test/basic`.
 
 ### Running Tests
 

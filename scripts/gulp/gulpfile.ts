@@ -4,6 +4,8 @@ import './tasks/default';
 import './tasks/demos';
 import './tasks/docs';
 import './tasks/e2e';
+import './tasks/e2e.dev';
+import './tasks/e2e.prod';
 import './tasks/lint';
 import './tasks/release';
 import './tasks/snapshot';

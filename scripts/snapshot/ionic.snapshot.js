@@ -15,7 +15,8 @@ var IonicSnapshot = function(options) {
     self.domain = options.domain || 'ionic-snapshot-go.appspot.com';
     self.groupId = options.groupId || 'test_group';
     self.appId = options.appId || 'test_app';
-    self.sleepBetweenSpecs = options.sleepBetweenSpecs || 500;
+    self.build = (browser.params.dev === 'true') ? 'Development' : 'Production';
+    self.sleepBetweenSpecs = self.build === 'Development' ? 3000 : (options.sleepBetweenSpecs || 500);
     self.testId = browser.params.test_id || 'test_id';
     self.shouldUpload = browser.params.upload !== 'false';
     self.platformId = browser.params.platform_id;
@@ -83,7 +84,7 @@ var IonicSnapshot = function(options) {
       }
     });
 
-    log(colors.green('Start Snapshot:'),
+    log(colors.green('Start ' + self.build + ' Snapshot - ' + self.sleepBetweenSpecs + ' between Specs:'),
         self.groupId, self.appId, self.platformId, self.testId, '(' + self.width + 'x' + self.height + ')');
 
   };
@@ -114,10 +115,9 @@ var IonicSnapshot = function(options) {
             var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
 
             self.testData.spec_index = spec.id;
-            self.testData.description = spec.getFullName().replace('/test/', '/');
             self.testData.highest_mismatch = self.highestMismatch;
             self.testData.png_base64 = pngBase64;
-            self.testData.description = spec.getFullName().replace('test/', '');
+            self.testData.description = spec.getFullName().replace('components/', '').replace('test/', '');
             self.testData.url = currentUrl.replace('dist', '').replace('components/', '').replace('test/', '').replace('&ionicanimate=false', '');
             pngBase64 = null;
 
