@@ -30,8 +30,8 @@ import { Debouncer } from '../../util/debouncer';
   selector: 'ion-searchbar',
   template:
     '<div class="searchbar-input-container">' +
-      '<button ion-button (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" clear color="dark" class="searchbar-md-cancel" type="button">' +
-        '<ion-icon name="arrow-back"></ion-icon>' +
+      '<button ion-button mode="md" (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" clear color="dark" class="searchbar-md-cancel" type="button">' +
+        '<ion-icon name="md-arrow-back"></ion-icon>' +
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
       '<input #searchbarInput class="searchbar-input" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" ' +
@@ -40,9 +40,9 @@ import { Debouncer } from '../../util/debouncer';
         '[attr.autocomplete]="_autocomplete" ' +
         '[attr.autocorrect]="_autocorrect" ' +
         '[attr.spellcheck]="_spellcheck">' +
-      '<button ion-button clear class="searchbar-clear-icon" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button"></button>' +
+      '<button ion-button clear class="searchbar-clear-icon" [mode]="_mode" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button"></button>' +
     '</div>' +
-    '<button ion-button #cancelButton [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
+    '<button ion-button #cancelButton mode="ios" [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
   host: {
     '[class.searchbar-animated]': 'animated',
     '[class.searchbar-has-value]': '_value',
