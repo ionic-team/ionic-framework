@@ -41,6 +41,10 @@ export class E2EPage {
     console.log('onSubmit', data);
   }
 
+  toppingsSelect(selectedValue: any) {
+    console.log('Selected', selectedValue);
+  }
+
 }
 
 
