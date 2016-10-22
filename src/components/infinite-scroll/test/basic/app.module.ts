@@ -16,16 +16,15 @@ export class E2EPage1 {
     }
   }
 
-  doInfinite(infiniteScroll: InfiniteScroll) {
+  doInfinite(): Promise<any> {
     console.log('Begin async operation');
 
-    getAsyncData().then(newData => {
+    return getAsyncData().then(newData => {
       for (var i = 0; i < newData.length; i++) {
         this.items.push( this.items.length );
       }
 
       console.log('Finished receiving data, async operation complete');
-      infiniteScroll.complete();
 
       if (this.items.length > 90) {
         this.enabled = false;
