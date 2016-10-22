@@ -193,10 +193,12 @@ ion-fab-list[side=right] {
   opacity: 0;
   transform: scale(.4) rotateZ(-45deg);
   transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
 }
 
 .fab .button-inner {
   transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
 }
 
 .fab-close-active .fab-close-icon {
