@@ -57,6 +57,52 @@ import { DomController } from '../../platform/dom-controller';
  * }
  * ```
  *
+ * ## `waitFor` method of InfiniteScroll
+ *
+ * In case if your async operation returns promise you can utilize
+ * `waitFor` method inside your template.
+ *
+ * ```html
+ * <ion-content>
+ *
+ *  <ion-list>
+ *    <ion-item *ngFor="let item of items">{{item}}</ion-item>
+ *  </ion-list>
+ *
+ *  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+ *    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+ *  </ion-infinite-scroll>
+ *
+ * </ion-content>
+ * ```
+ *
+ * ```ts
+ * @Component({...})
+ * export class NewsFeedPage {
+ *   items = [];
+ *
+ *   constructor() {
+ *     for (var i = 0; i < 30; i++) {
+ *       this.items.push( this.items.length );
+ *     }
+ *   }
+ *
+ *   doInfinite(): Promise<any> {
+ *     console.log('Begin async operation');
+ *
+ *     return new Promise((resolve) => {
+ *       setTimeout(() => {
+ *         for (var i = 0; i < 30; i++) {
+ *           this.items.push( this.items.length );
+ *         }
+ *
+ *         console.log('Async operation has ended');
+ *         resolve();
+ *       }, 500);
+ *     })
+ *   }
+ * }
+ * ```
  *
  * ## Infinite Scroll Content
  *
@@ -221,7 +267,18 @@ export class InfiniteScroll {
    * to `enabled`.
    */
   complete() {
-    this.state = STATE_ENABLED;
+    if (this.state === STATE_LOADING) {
+      this.state = STATE_ENABLED;
+    }
+  }
+
+  /**
+  * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
+  * change state of infiniteScroll to "complete"
+  */
+  waitFor(action: Promise) {
+    const enable = this.complete.bind(this);
+    action.then(enable, enable);
   }
 
   /**
