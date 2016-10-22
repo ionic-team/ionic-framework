@@ -19,7 +19,7 @@
     </button>
   </ion-list>
 
-  <ion-list [reorder]="isReordering" (ionItemReorder)="reorder($event)">
+  <ion-list [reorder]="isReordering" (ionItemReorder)="$event.applyTo(items)">
     <ion-item-sliding *ngFor="let item of items">
       <button ion-item (click)="clickedButton(item)">
         <h2>Sliding item {{item}}</h2>
