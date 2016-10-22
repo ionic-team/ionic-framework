@@ -294,7 +294,7 @@ export class ItemSliding {
       case ItemSideFlags.Right: openAmount = Math.max(0, openAmount); break;
       case ItemSideFlags.Left: openAmount = Math.min(0, openAmount); break;
       case ItemSideFlags.Both: break;
-      default: assert(true, 'invalid ItemSideFlags value'); break;
+      default: assert(false, 'invalid ItemSideFlags value'); break;
     }
 
     if (openAmount > this._optsWidthRightSide) {

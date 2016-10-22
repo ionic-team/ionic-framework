@@ -167,8 +167,7 @@ export class Content extends Ion {
   ) {
     super(config, elementRef, renderer);
 
-    this._mode = config.get('mode');
-    this._setMode('content', this._mode);
+    this._setMode('content', config.get('mode'));
 
     this._sbPadding = config.getBoolean('statusbarPadding', false);
 
@@ -496,7 +495,7 @@ export class Content extends Ion {
 
     let ele: HTMLElement = this._elementRef.nativeElement;
     if (!ele) {
-      assert(true, 'ele should be valid');
+      assert(false, 'ele should be valid');
       return;
     }
 
@@ -551,13 +550,13 @@ export class Content extends Ion {
   writeDimensions() {
     let scrollEle = this._scrollEle as any;
     if (!scrollEle) {
-      assert(true, 'this._scrollEle should be valid');
+      assert(false, 'this._scrollEle should be valid');
       return;
     }
 
     let fixedEle = this._fixedEle;
     if (!fixedEle) {
-      assert(true, 'this._fixedEle should be valid');
+      assert(false, 'this._fixedEle should be valid');
       return;
     }
 
@@ -608,13 +607,13 @@ export class Content extends Ion {
       this.contentBottom = contentBottom;
     }
 
-
     if (this._tabsPlacement !== null && this._tabs) {
       // set the position of the tabbar
       if (this._tabsPlacement === 'top') {
         this._tabs.setTabbarPosition(this._headerHeight, -1);
 
       } else {
+        assert(this._tabsPlacement === 'bottom', 'tabsPlacement should be bottom');
         this._tabs.setTabbarPosition(-1, 0);
       }
     }
