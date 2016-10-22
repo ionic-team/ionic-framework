@@ -303,7 +303,7 @@ export class Menu {
     private _renderer: Renderer,
     private _keyboard: Keyboard,
     private _zone: NgZone,
-    public gestureCtrl: GestureController
+    private _gestureCtrl: GestureController
   ) {}
 
   /**
@@ -333,7 +333,7 @@ export class Menu {
     this.setElementAttribute('type', this.type);
 
     // add the gestures
-    this._cntGesture = new MenuContentGesture(this, document.body);
+    this._cntGesture = new MenuContentGesture(this, this._gestureCtrl, document.body);
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side

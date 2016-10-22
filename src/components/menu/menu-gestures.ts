@@ -2,21 +2,25 @@ import { Menu } from './menu';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
 import { assign } from '../../util/util';
-import { GesturePriority } from '../../gestures/gesture-controller';
+import { GestureController, GesturePriority } from '../../gestures/gesture-controller';
 
 /**
  * Gesture attached to the content which the menu is assigned to
  */
 export class MenuContentGesture extends SlideEdgeGesture {
 
-  constructor(public menu: Menu, contentEle: HTMLElement, options: any = {}) {
+  constructor(
+    public menu: Menu,
+    gestureCtrl: GestureController,
+    contentEle: HTMLElement,
+    options: any = {}) {
     super(contentEle, assign({
       direction: 'x',
       edge: menu.side,
       threshold: 0,
       maxEdgeStart: menu.maxEdgeStart || 50,
       maxAngle: 40,
-      gesture: menu.gestureCtrl.create('menu-swipe', {
+      gesture: gestureCtrl.create('menu-swipe', {
         priority: GesturePriority.MenuSwipe,
       })
     }, options));
