@@ -7,24 +7,24 @@
 
 ```
   "dependencies": {
-    "@angular/common": "^2.0.0",
-    "@angular/compiler": "^2.0.0",
+    "@angular/common": "2.0.0",
+    "@angular/compiler": "2.0.0",
     "@angular/compiler-cli": "0.6.2",
-    "@angular/core": "^2.0.0",
-    "@angular/forms": "^2.0.0",
-    "@angular/http": "^2.0.0",
-    "@angular/platform-browser": "^2.0.0",
-    "@angular/platform-browser-dynamic": "^2.0.0",
-    "@angular/platform-server": "^2.0.0",
-    "@ionic/storage": "^1.0.3",
-    "ionic-angular": "^2.0.0-rc.1",
-    "ionic-native": "^2.2.3",
-    "ionicons": "^3.0.0",
+    "@angular/core": "2.0.0",
+    "@angular/forms": "2.0.0",
+    "@angular/http": "2.0.0",
+    "@angular/platform-browser": "2.0.0",
+    "@angular/platform-browser-dynamic": "2.0.0",
+    "@angular/platform-server": "2.0.0",
+    "@ionic/storage": "1.0.3",
+    "ionic-angular": "2.0.0-rc.1",
+    "ionic-native": "2.2.3",
+    "ionicons": "3.0.0",
     "rxjs": "5.0.0-beta.12",
-    "zone.js": "^0.6.21"
+    "zone.js": "0.6.21"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^0.0.34",
+    "@ionic/app-scripts": "^0.0.36",
     "typescript": "^2.0.3"
   },
 ```
