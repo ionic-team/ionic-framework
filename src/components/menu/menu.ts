@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmit
 
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
-import { isTrueProperty } from '../../util/util';
+import { isTrueProperty, assert } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
@@ -194,11 +194,15 @@ export class Menu {
   private _type: MenuType;
   private _resizeUnreg: Function;
   private _isEnabled: boolean = true;
-  private _isSwipeEnabled: boolean = true;
-  private _isAnimating: boolean = false;
+  private _isSwipeEnabled: boolean|string = true;
   private _isPers: boolean = false;
   private _init: boolean = false;
   private _events: UIEventManager = new UIEventManager();
+
+  /**
+   * @private
+   */
+  isAnimating: boolean = false;
 
   /**
    * @private
@@ -246,21 +250,26 @@ export class Menu {
   }
 
   set enabled(val: boolean) {
+    // TODO: should we call enable()?
     this._isEnabled = isTrueProperty(val);
     this._setListeners();
   }
 
   /**
-   * @input {boolean} Whether or not swiping the menu should be enabled. Default `true`.
+   * @input {boolean|string} Whether or not swiping the menu should be enabled.
+   * It accepts `true`, `false`, `"open"` and `"close"`. Default `true`.
+   * - `true`: menu can be opened and closed with a finger swipe
+   * - `false`: swipe gesture is completely disabled. Menu can only be opened programatically or using a button.
+   * - `"open"`: menu can be opened with a swipe, but it can't be closed.
+   * - `"close": menu can be closed with a swipe, but it can't be opened, you would still need a button to open it.
    */
   @Input()
-  get swipeEnabled(): boolean {
+  get swipeEnabled(): boolean | string {
     return this._isSwipeEnabled;
   }
 
-  set swipeEnabled(val: boolean) {
-    this._isSwipeEnabled = isTrueProperty(val);
-    this._setListeners();
+  set swipeEnabled(val: boolean | string) {
+    this.swipeEnable(val);
   }
 
   /**
@@ -304,7 +313,9 @@ export class Menu {
     private _keyboard: Keyboard,
     private _zone: NgZone,
     private _gestureCtrl: GestureController
-  ) {}
+  ) {
+    this._isSwipeEnabled = _config.get('swipeMenuEnabled', true);
+  }
 
   /**
    * @private
@@ -372,12 +383,13 @@ export class Menu {
     }
 
     // only listen/unlisten if the menu has initialized
-    if (this._isEnabled && this._isSwipeEnabled && !this._cntGesture.isListening) {
+    let shouldListen = this.canSwipe();
+    if (!this._cntGesture.isListening && shouldListen) {
       // should listen, but is not currently listening
       console.debug('menu, gesture listen', this.side);
       this._cntGesture.listen();
 
-    } else if (this._cntGesture.isListening && (!this._isEnabled || !this._isSwipeEnabled)) {
+    } else if (this._cntGesture.isListening && !shouldListen) {
       // should not listen, but is currently listening
       console.debug('menu, gesture unlisten', this.side);
       this._cntGesture.unlisten();
@@ -404,7 +416,7 @@ export class Menu {
   setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
     // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the MenuToggle button
-    if ((shouldOpen && this.isOpen) || !this._isEnabled || this._isAnimating) {
+    if ((shouldOpen && this.isOpen) || !this._isEnabled || this.isAnimating) {
       return Promise.resolve(this.isOpen);
     }
 
@@ -423,7 +435,18 @@ export class Menu {
    * @private
    */
   canSwipe(): boolean {
-    return this._isEnabled && this._isSwipeEnabled && !this._isAnimating;
+    if (!this._isEnabled) {
+      return false;
+    }
+    switch (this._isSwipeEnabled) {
+      case true: return true;
+      case false: return false;
+      case 'close': return this.isOpen;
+      case 'open': return !this.isOpen;
+      default:
+        assert(false, 'invalid isSwipeEnabled state');
+        return false;
+    }
   }
 
   /**
@@ -431,7 +454,7 @@ export class Menu {
    */
   swipeStart() {
     // user started swiping the menu open/close
-    if (this.canSwipe()) {
+    if (this.canSwipe() && !this.isAnimating) {
       this._before();
       this._getType().setProgressStart(this.isOpen);
     }
@@ -442,7 +465,8 @@ export class Menu {
    */
   swipeProgress(stepValue: number) {
     // user actively dragging the menu
-    if (!this._isAnimating) {
+    if (!this.isAnimating) {
+      assert(false, 'it should be animating, how did we get here?');
       return;
     }
     this._getType().setProgessStep(stepValue);
@@ -453,7 +477,8 @@ export class Menu {
    * @private
    */
   swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number) {
-    if (!this._isAnimating) {
+    if (!this.isAnimating) {
+      assert(false, 'it should be animating, how did we get here?');
       return;
     }
     // user has finished dragging the menu
@@ -478,7 +503,7 @@ export class Menu {
     this.setElementClass('show-menu', true);
     this.backdrop.setElementClass('show-backdrop', true);
     this._keyboard.close();
-    this._isAnimating = true;
+    this.isAnimating = true;
   }
 
   private _after(isOpen: boolean) {
@@ -487,8 +512,8 @@ export class Menu {
     // and only remove listeners/css if it's not open
     // emit opened/closed events
     this.isOpen = isOpen;
-    this._isAnimating = false;
-
+    this.isAnimating = false;
+    this._setListeners();
     this._events.unlistenAll();
     if (isOpen) {
       this._cntEle.classList.add('menu-content-open');
@@ -562,8 +587,13 @@ export class Menu {
   /**
    * @private
    */
-  swipeEnable(shouldEnable: boolean): Menu {
-    this.swipeEnabled = shouldEnable;
+  swipeEnable(shouldEnable: boolean | string): Menu {
+    if (shouldEnable === 'close' || shouldEnable === 'open') {
+      this._isSwipeEnabled = shouldEnable;
+    } else {
+      this._isSwipeEnabled = isTrueProperty(shouldEnable);
+    }
+    this._setListeners();
     // TODO
     // what happens if menu swipe is disabled while swipping?
     return this;

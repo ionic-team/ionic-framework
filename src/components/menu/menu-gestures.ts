@@ -1,7 +1,7 @@
 import { Menu } from './menu';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
-import { assign } from '../../util/util';
+import { assign, assert } from '../../util/util';
 import { GestureController, GesturePriority } from '../../gestures/gesture-controller';
 
 /**
@@ -28,7 +28,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
   canStart(ev: any): boolean {
     let menu = this.menu;
-    if (!menu.canSwipe()) {
+    if (!menu.canSwipe() || menu.isAnimating) {
       return false;
     }
     if (menu.isOpen) {
@@ -84,11 +84,11 @@ export class MenuContentGesture extends SlideEdgeGesture {
     this.menu.swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue);
   }
 
-  getElementStartPos(slide: SlideData, ev: any) {
+  getElementStartPos(slide: SlideData, ev: any): number {
     if (this.menu.side === 'right') {
       return this.menu.isOpen ? slide.min : slide.max;
     }
-    // left menu
+    assert(this.menu.side === 'left', 'menu side should be left');
     return this.menu.isOpen ? slide.max : slide.min;
   }
 
@@ -99,7 +99,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
         max: 0
       };
     }
-    // left menu
+    assert(this.menu.side === 'left', 'menu side should be left');
     return {
       min: 0,
       max: this.menu.width()
