@@ -106,16 +106,18 @@ import { Content } from '../content/content';
  * `push` for all modes, and then set the type to `overlay` for the `ios` mode.
  *
  * ```ts
- * import { ionicBootstrap } from 'ionic-angular';
+ * // in NgModules
  *
- * ionicBootstrap(MyApp, customProviders, {
- *   menuType: 'push',
- *   platforms: {
- *     ios: {
- *       menuType: 'overlay',
+ * imports: [
+ *   IonicModule.forRoot(MyApp,{
+ *     menuType: 'push',
+ *     platforms: {
+ *       ios: {
+ *         menuType: 'overlay',
+ *       }
  *     }
- *   }
- * });
+ *   })
+ * ],
  * ```
  *
  *
@@ -567,6 +569,9 @@ export class Menu {
     return this;
   }
 
+  /**
+   * @private
+   */
   getNativeElement(): HTMLElement {
     return this._elementRef.nativeElement;
   }
@@ -592,6 +597,9 @@ export class Menu {
     return this.backdrop.getNativeElement();
   }
 
+  /**
+   * @private
+   */
   width(): number {
     return this.getMenuElement().offsetWidth;
   }
@@ -610,6 +618,9 @@ export class Menu {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }
 
+  /**
+   * @private
+   */
   setElementAttribute(attributeName: string, value: string) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attributeName, value);
   }
