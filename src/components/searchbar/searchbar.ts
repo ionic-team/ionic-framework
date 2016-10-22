@@ -239,7 +239,7 @@ export class Searchbar extends Ion {
     let shouldAlignLeft = (!isAnimated || (this._value && this._value.toString().trim() !== '') || this._sbHasFocus === true);
     this._shouldAlignLeft = shouldAlignLeft;
 
-    if (this._config.get('mode') !== 'ios') {
+    if (this._mode !== 'ios') {
       return;
     }
 

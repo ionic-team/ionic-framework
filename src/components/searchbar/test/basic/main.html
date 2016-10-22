@@ -29,6 +29,12 @@
   <h5 padding-left> Search - Value passed </h5>
   <ion-searchbar value="mysearch" showCancelButton (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)" cancelButtonText="Really Long Cancel" color="dark"></ion-searchbar>
 
+  <h5 padding-left> Search - Mode iOS passed </h5>
+  <ion-searchbar mode="ios" animated="true" showCancelButton placeholder="Search"></ion-searchbar>
+
+  <h5 padding-left> Search - Mode MD passed </h5>
+  <ion-searchbar mode="md" animated="true" showCancelButton placeholder="Search"></ion-searchbar>
+
   <p padding>
     <button ion-button block (click)="changeValue()">Change Value</button>
   </p>
