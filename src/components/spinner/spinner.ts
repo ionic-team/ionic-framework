@@ -261,8 +261,8 @@ const SPINNERS: any = {
       return {
         r: 5,
         style: {
-          top: 9 * Math.sin(2 * Math.PI * index / total),
-          left: 9 * Math.cos(2 * Math.PI * index / total),
+          top: (9 * Math.sin(2 * Math.PI * index / total)) + 'px',
+          left: (9 * Math.cos(2 * Math.PI * index / total)) + 'px',
           [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
@@ -276,8 +276,8 @@ const SPINNERS: any = {
       return {
         r: 5,
         style: {
-          top: 9 * Math.sin(2 * Math.PI * index / total),
-          left: 9 * Math.cos(2 * Math.PI * index / total),
+          top: (9 * Math.sin(2 * Math.PI * index / total)) + 'px',
+          left: (9 * Math.cos(2 * Math.PI * index / total)) + 'px',
           [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
         }
       };
@@ -302,7 +302,7 @@ const SPINNERS: any = {
       return {
         r: 6,
         style: {
-          left: (9 - (9 * index)),
+          left: (9 - (9 * index)) + 'px',
           [CSS.animationDelay]: -(110 * index) + 'ms'
         }
       };
