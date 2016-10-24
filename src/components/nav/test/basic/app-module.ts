@@ -1,11 +1,20 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
-import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule, NavController, NavParams, Tabs, Tab, ModalController, ViewController } from '../../../..';
+import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule, Label, NavController, NavParams, Tabs, Tab, ModalController, ViewController } from '../../../..';
 
 @Component({
   selector: 'my-cmp',
-  template: `<p>My Custom Component Test <ion-icon name="star"></ion-icon></p>`
+  template: `<ion-label>My Custom Component Test <ion-icon name="star"></ion-icon>
+  <span style="color:green">{{value}}</span></ion-label>`
 })
-export class MyCmpTest {}
+export class MyCmpTest {
+  @ViewChild(Label) _label: Label;
+  label: Label;
+  value: string = '';
+
+  ngOnInit() {
+    this.label = this._label;
+  }
+}
 
 
 @Component({
@@ -22,6 +31,16 @@ export class MyCmpTest {}
       </ion-navbar>
     </ion-header>
     <ion-content>
+      <div padding>
+        <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+        <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+        <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+        <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+        <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+        <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+        <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
+        <my-cmp></my-cmp>
+      </div>
       <ion-list>
         <ion-list-header>
           {{title}}
@@ -53,7 +72,6 @@ export class MyCmpTest {}
         <button ion-item *ngFor="let i of pages" (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
         <button ion-item (click)="content.scrollToTop()">Scroll to top</button>
       </ion-list>
-      <my-cmp></my-cmp>
     </ion-content>`
 })
 export class FirstPage {
@@ -61,39 +79,62 @@ export class FirstPage {
   title = 'First Page';
   pages: Array<number> = [];
   @ViewChild(Content) content: Content;
+  @ViewChild(MyCmpTest) myCmp: MyCmpTest;
   canLeave = true;
+  called: any;
 
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
     public alertCtrl: AlertController
-  ) {}
+  ) {
+    this.called = {
+      ionViewCanEnter: 0,
+      ionViewCanLeave: 0,
+      ionViewDidLoad: 0,
+      ionViewWillEnter: 0,
+      ionViewDidEnter: 0,
+      ionViewWillLeave: 0,
+      ionViewDidLeave: 0
+    };
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad, FirstPage');
     for (var i = 1; i <= 50; i++) {
       this.pages.push(i);
     }
+    if (!this.myCmp || !this.content || !this.myCmp.label) {
+      throw new Error('children are not loaded');
+    }
+    this.myCmp.value = 'root!';
+    this.myCmp.label.color = 'primary';
+    this.called.ionViewDidLoad++;
   }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter, FirstPage', this.viewCtrl.id);
+    this.called.ionViewWillEnter++;
   }
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter, FirstPage', this.viewCtrl.id);
+    this.called.ionViewDidEnter++;
   }
 
   ionViewWillLeave() {
     console.log('ionViewWillLeave, FirstPage', this.viewCtrl.id);
+    this.called.ionViewWillLeave++;
   }
 
   ionViewDidLeave() {
     console.log('ionViewDidLeave, FirstPage', this.viewCtrl.id);
+    this.called.ionViewDidLeave++;
   }
 
   ionViewWillUnload() {
     console.log('ionViewWillUnload, FirstPage', this.viewCtrl.id);
+    this.called.ionViewWillUnload++;
   }
 
   ionViewCanLeave() {
@@ -106,7 +147,14 @@ export class FirstPage {
     alert.addButton({ text: 'Umm, ok', role: 'cancel', });
     alert.present();
 
+    this.called.ionViewCanLeave++;
+
     return false;
+  }
+
+  ionViewCanEnter() {
+    this.called.ionViewCanEnter++;
+    return true;
   }
 
   setPages() {

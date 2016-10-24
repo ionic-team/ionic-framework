@@ -425,10 +425,6 @@ export class NavControllerBase extends Ion implements NavController {
   _viewAttachToDOM(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     assert(view._state === ViewState.INITIALIZED, 'view state must be INITIALIZED');
 
-    // successfully finished loading the entering view
-    // fire off the "didLoad" lifecycle events
-    this._didLoad(view);
-
     // render the component ref instance to the DOM
     // ******** DOM WRITE ****************
     viewport.insert(componentRef.hostView, viewport.length);
@@ -443,6 +439,10 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     componentRef.changeDetectorRef.detectChanges();
+
+    // successfully finished loading the entering view
+    // fire off the "didLoad" lifecycle events
+    this._didLoad(view);
   }
 
   _viewTest(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
