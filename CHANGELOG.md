@@ -1,3 +1,24 @@
+<a name="1.3.2"></a>
+## 1.3.2 "france" (2016-10-24)
+
+#### Bug Fixes
+
+* **ion-option-button:**  ion-option button now works with nested lists. ([6e622a4](https://github.com/driftyco/ionic/commit/6e622a4))
+
+* **ion-content height** ion-content height is now adjusted upon the first opening of the keyboard. ([26f33970](https://github.com/driftyco/ionic/commit/26f3397))
+
+* **select** select now works on chrome 53 and up. click is no longer simulated ([417997d](https://github.com/driftyco/ionic/commit/417997d))
+
+* **button** button border style now configurable ([80b9020](https://github.com/driftyco/ionic/commit/80b9020))
+
+* **pullToRefresh** pull to refresh now only fires when their is a scrollview ([160629c](https://github.com/driftyco/ionic/commit/160629c))
+
+* **scrollComplete** onScrollComplete event added to ionScroll ([34d663e](https://github.com/driftyco/ionic/commit/34d663e))
+
+* **scroll** fixed memory leak with event listeners ([491e256](https://github.com/driftyco/ionic/commit/491e256))
+
+* **modal-open** modal-open class is now removed when no modals are in the dom ([6ed7253](https://github.com/driftyco/ionic/commit/6ed7253))
+
 <a name"1.3.1"></a>
 ## 1.3.1 "el salvador" (2016-05-12)
 
@@ -15,7 +36,7 @@
 
 * **Slides:** changed the way looped/duplicates slides work, added documentation ([44d5a0f8](https://github.com/driftyco/ionic/commit/44d5a0f8), closes [#6305](https://github.com/driftyco/ionic/issues/6305))
 
-* **Header:** 
+* **Header:**
   * ion-nav-title will fill up available space ([677d2d4c](https://github.com/driftyco/ionic/commit/677d2d4c), closes [#4661](https://github.com/driftyco/ionic/issues/4661))
   * subheader visiblity fix, remove display as block ([01ab8b03](https://github.com/driftyco/ionic/commit/01ab8b03), closes [#3055](https://github.com/driftyco/ionic/pull/3055))
   * set correct title bar height ([6a5e6bc4](https://github.com/driftyco/ionic/commit/6a5e6bc4), closes [#4965](https://github.com/driftyco/ionic/pull/4965))
@@ -86,7 +107,7 @@
 
 * **drag:** fix #4022 and #3695 ([d3d2c14](https://github.com/driftyco/ionic/commit/d3d2c14))
 * **fonts:** iOS 9 fonts now for safari ([760b70d](https://github.com/driftyco/ionic/commit/760b70d))
-* **gestures:** revert fix for dragging. Fixes #3695 ([1b0d3dd](https://github.com/driftyco/ionic/commit/1b0d3dd))  
+* **gestures:** revert fix for dragging. Fixes #3695 ([1b0d3dd](https://github.com/driftyco/ionic/commit/1b0d3dd))
 * **keyboard:**
   * check for slide first before update. Fixes #4870 ([074976f](https://github.com/driftyco/ionic/commit/074976f))
   * fix blank spot. Fixes #4849 and #4645 ([4ad6021](https://github.com/driftyco/ionic/commit/4ad6021))
