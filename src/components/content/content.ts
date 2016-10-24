@@ -4,7 +4,7 @@ import { App } from '../app/app';
 import { Ion } from '../ion';
 import { Config } from '../../config/config';
 import { Keyboard } from '../../util/keyboard';
-import { nativeRaf, nativeTimeout, transitionEnd}  from '../../util/dom';
+import { nativeRaf, nativeTimeout, transitionEnd } from '../../util/dom';
 import { ScrollView } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
 import { ViewController } from '../../navigation/view-controller';
@@ -121,7 +121,7 @@ export class Content extends Ion {
   _paddingRight: number;
   _paddingBottom: number;
   _paddingLeft: number;
-  _scrollPadding: number;
+  _scrollPadding: number = 0;
   _headerHeight: number;
   _footerHeight: number;
   _tabbarHeight: number;
@@ -443,11 +443,12 @@ export class Content extends Ion {
    * so content below the keyboard can be scrolled into view.
    */
   addScrollPadding(newPadding: number) {
+    assert(typeof this._scrollPadding === 'number', '_scrollPadding must be a number');
     if (newPadding > this._scrollPadding) {
       console.debug('content addScrollPadding', newPadding);
 
       this._scrollPadding = newPadding;
-      this._scrollEle.style.paddingBottom = newPadding + 'px';
+      this._scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
     }
   }
 
@@ -460,9 +461,8 @@ export class Content extends Ion {
       this._inputPolling = true;
 
       this._keyboard.onClose(() => {
-        this._scrollPadding = 0;
-        this._scrollEle.style.paddingBottom = (this._paddingBottom > 0 ? this._paddingBottom + 'px' : '');
         this._inputPolling = false;
+        this._scrollPadding = -1;
         this.addScrollPadding(0);
       }, 200, Infinity);
     }
@@ -548,6 +548,7 @@ export class Content extends Ion {
    * DOM WRITE
    */
   writeDimensions() {
+
     let scrollEle = this._scrollEle as any;
     if (!scrollEle) {
       assert(false, 'this._scrollEle should be valid');
@@ -566,14 +567,19 @@ export class Content extends Ion {
 
     // Tabs height
     if (this._tabsPlacement === 'top') {
+      assert(this._tabbarHeight >= 0, '_tabbarHeight has to be positive');
       contentTop += this._tabbarHeight;
 
     } else if (this._tabsPlacement === 'bottom') {
+      assert(this._tabbarHeight >= 0, '_tabbarHeight has to be positive');
       contentBottom += this._tabbarHeight;
 
       // Update footer position
       if (contentBottom > 0 && this._footerEle) {
-        this._footerEle.style.bottom = cssFormat(contentBottom - this._footerHeight);
+        let footerPos = contentBottom - this._footerHeight;
+        assert(footerPos >= 0, 'footerPos has to be positive');
+
+        this._footerEle.style.bottom = cssFormat(footerPos);
       }
     }
 
@@ -583,6 +589,9 @@ export class Content extends Ion {
     let fixedTop: number = contentTop;
     let fixedBottom: number = contentBottom;
     if (this._fullscreen) {
+      assert(this._paddingTop >= 0, '_paddingTop has to be positive');
+      assert(this._paddingBottom >= 0, '_paddingBottom has to be positive');
+
       // adjust the content with padding, allowing content to scroll under headers/footers
       // however, on iOS you cannot control the margins of the scrollbar (last tested iOS9.2)
       // only add inline padding styles if the computed padding value, which would
@@ -595,6 +604,9 @@ export class Content extends Ion {
 
     // Only update top margin if value changed
     if (contentTop !== this.contentTop) {
+      assert(contentTop >= 0, 'contentTop has to be positive');
+      assert(fixedTop >= 0, 'fixedTop has to be positive');
+
       scrollEle.style[topProperty] = cssFormat(contentTop);
       fixedEle.style.marginTop = cssFormat(fixedTop);
       this.contentTop = contentTop;
@@ -602,6 +614,9 @@ export class Content extends Ion {
 
     // Only update bottom margin if value changed
     if (contentBottom !== this.contentBottom) {
+      assert(contentBottom >= 0, 'contentBottom has to be positive');
+      assert(fixedBottom >= 0, 'fixedBottom has to be positive');
+
       scrollEle.style[bottomProperty] = cssFormat(contentBottom);
       fixedEle.style.marginBottom = cssFormat(fixedBottom);
       this.contentBottom = contentBottom;
