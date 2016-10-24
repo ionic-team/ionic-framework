@@ -1,7 +1,7 @@
 // package metadata file for Meteor.js
 var packageName = 'driftyco:ionic'; // https://atmospherejs.com/driftyco/ionic
 var where = 'client'; // where to install: 'client' or 'server'. For both, pass nothing.
-var version = '1.3.1';
+var version = '1.3.2';
 
 Package.describe({
   name: packageName,
