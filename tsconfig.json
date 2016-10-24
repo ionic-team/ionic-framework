@@ -9,6 +9,7 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "removeComments": true,
+    "sourceMap": true,
     "target": "es5",
     "types": ["jasmine"]
   },
