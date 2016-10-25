@@ -20,8 +20,8 @@ $text-input-md-show-valid-highlight:        $text-input-md-show-focus-highlight 
 $text-input-md-show-invalid-highlight:      $text-input-md-show-focus-highlight !default;
 
 $text-input-md-highlight-color:             color($colors-md, primary) !default;
-$text-input-md-highlight-color-valid:       color($colors-md, secondary) !default;
-$text-input-md-highlight-color-invalid:     color($colors-md, danger) !default;
+$text-input-md-highlight-color-valid:       #32db64 !default;
+$text-input-md-highlight-color-invalid:     #f53d3d !default;
 
 
 // Material Design Default Input

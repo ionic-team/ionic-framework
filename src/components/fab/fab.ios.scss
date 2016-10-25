@@ -13,7 +13,7 @@ $fab-ios-text-color:                          color-contrast($colors-ios, $fab-i
 $fab-ios-background-color-activated:          color-shade($fab-ios-background-color) !default;
 
 /// @prop - Background color of the button
-$fab-ios-in-list-background-color:            color($colors-ios, light) !default;
+$fab-ios-in-list-background-color:            #f4f4f4 !default;
 
 /// @prop - Text color of the button
 $fab-ios-in-list-text-color:                  color-contrast($colors-ios, $fab-ios-in-list-background-color) !default;

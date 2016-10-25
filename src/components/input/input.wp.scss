@@ -25,8 +25,8 @@ $text-input-wp-show-valid-highlight:        $text-input-wp-show-focus-highlight 
 $text-input-wp-show-invalid-highlight:      $text-input-wp-show-focus-highlight !default;
 
 $text-input-wp-highlight-color:             color($colors-wp, primary) !default;
-$text-input-wp-highlight-color-valid:       color($colors-wp, secondary) !default;
-$text-input-wp-highlight-color-invalid:     color($colors-wp, danger) !default;
+$text-input-wp-highlight-color-valid:       #32db64 !default;
+$text-input-wp-highlight-color-invalid:     #f53d3d !default;
 
 
 // Windows Default Input

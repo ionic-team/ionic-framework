@@ -19,7 +19,7 @@ $fab-md-text-color:                         color-contrast($colors-md, $fab-md-b
 $fab-md-background-color-activated:         color-shade($fab-md-background-color) !default;
 
 /// @prop - Background color of the button
-$fab-md-in-list-background-color:           color($colors-md, light) !default;
+$fab-md-in-list-background-color:           #f4f4f4 !default;
 
 /// @prop - Text color of the button
 $fab-md-in-list-text-color:                 color-contrast($colors-md, $fab-md-in-list-background-color) !default;

@@ -20,8 +20,8 @@ $text-input-ios-show-valid-highlight:      $text-input-ios-show-focus-highlight 
 $text-input-ios-show-invalid-highlight:    $text-input-ios-show-focus-highlight !default;
 
 $text-input-ios-highlight-color:           color($colors-ios, primary) !default;
-$text-input-ios-highlight-color-valid:     color($colors-ios, secondary) !default;
-$text-input-ios-highlight-color-invalid:   color($colors-ios, danger) !default;
+$text-input-ios-highlight-color-valid:     #32db64 !default;
+$text-input-ios-highlight-color-invalid:   #f53d3d !default;
 
 
 // iOS Default Input
