@@ -486,7 +486,7 @@ function tapIgnoreEvent(e) {
     return true;
   }
 
-  if(e.target.tagName == 'SELECT') {
+  if(e.target && e.target.tagName == 'SELECT') {
     return true;
   }
 

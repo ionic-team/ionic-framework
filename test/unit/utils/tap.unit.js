@@ -446,7 +446,7 @@ describe('Ionic Tap', function() {
       preventDefault:function(){ this.preventedDefault = true; }
     };
     tapTouchEnd(e);
-    expect( e.preventedDefault ).toEqual(true);
+    expect( e.preventedDefault ).toBeUndefined();
 
     e = {
       target: document.createElement('div'),
@@ -526,7 +526,7 @@ describe('Ionic Tap', function() {
       stopPropagation: function(){ this.stoppedPropagation = true; }
     };
     tapMouseDown(e);
-    expect( e.stoppedPropagation ).toEqual(true);
+    expect( e.stoppedPropagation ).toBeUndefined();
     expect( e.defaultedPrevented ).toBeUndefined();
 
     e = {
