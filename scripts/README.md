@@ -51,9 +51,7 @@ The following commands take longer to run because they use AoT compilation. They
 
 From `ionic` directory:
 
-1. `gulp package build` or (`gulp package watch`, then open another terminal for step 2)
-2. `cd dist`
-3. `npm link` (may require `sudo`)
+1. `npm run link`
 
 From your app directory:
 

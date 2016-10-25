@@ -20,9 +20,9 @@
     "url": "https://github.com/driftyco/ionic.git"
   },
   "scripts": {
-    "test": "gulp karma",
+    "test": "gulp validate",
     "test:generators": "jasmine-node ./tooling/spec",
-    "link": "npm install && gulp src && npm link"
+    "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link"
   },
   "dependencies": {
     "@angular/common": "2.0.0",
