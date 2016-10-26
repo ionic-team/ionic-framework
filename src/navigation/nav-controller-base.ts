@@ -438,11 +438,14 @@ export class NavControllerBase extends Ion implements NavController {
       this._renderer.setElementClass(pageElement, view._cssClass, true);
     }
 
-    componentRef.changeDetectorRef.detectChanges();
+    // TODO:
+    // componentRef.changeDetectorRef.detectChanges();
 
     // successfully finished loading the entering view
     // fire off the "didLoad" lifecycle events
     this._didLoad(view);
+
+    componentRef.changeDetectorRef.detectChanges();
   }
 
   _viewTest(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {

@@ -104,11 +104,11 @@ export class FirstPage {
     for (var i = 1; i <= 50; i++) {
       this.pages.push(i);
     }
-    if (!this.myCmp || !this.content || !this.myCmp.label) {
-      throw new Error('children are not loaded');
-    }
+    // if (!this.myCmp || !this.content || !this.myCmp.label) {
+    //   throw new Error('children are not loaded');
+    // }
     this.myCmp.value = 'root!';
-    this.myCmp.label.color = 'primary';
+    // this.myCmp.label.color = 'primary';
     this.called.ionViewDidLoad++;
   }
 
