@@ -384,8 +384,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       containerNode.appendChild(computedStyleNode);
 
       var style = $window.getComputedStyle(computedStyleNode);
-      computedStyleDimensions.width = parseInt(style.width) || computedStyleDimensions.width;
-      computedStyleDimensions.height = parseInt(style.height) || computedStyleDimensions.height;
+      computedStyleDimensions.width = style.width !== 'auto' ? parseInt(style.width) : style.width;
+      computedStyleDimensions.height = style.width !== 'auto' ? parseInt(style.height) : style.width;
 
       containerNode.removeChild(computedStyleNode);
     }
