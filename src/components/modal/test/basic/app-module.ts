@@ -149,6 +149,7 @@ export class E2EPage {
       <button ion-button full (click)="submit()">Submit</button>
       <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
       <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+      <p>ionViewWillLoad ({{called.ionViewWillLoad}})</p>
       <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
       <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
       <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
@@ -178,6 +179,7 @@ export class ModalPassData {
     this.called = {
       ionViewCanEnter: 0,
       ionViewCanLeave: 0,
+      ionViewWillLoad: 0,
       ionViewDidLoad: 0,
       ionViewWillEnter: 0,
       ionViewDidEnter: 0,
@@ -211,6 +213,11 @@ export class ModalPassData {
       alert.addButton({ text: 'Cancel', role: 'cancel', handler: reject });
       alert.present();
     });
+  }
+
+  ionViewWillLoad() {
+    console.log('ModalPassData ionViewWillLoad fired');
+    this.called.ionViewWillLoad++;
   }
 
   ionViewDidLoad() {
@@ -400,6 +407,7 @@ export class ContactUs {
     <ion-content padding>
       <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
       <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+      <p>ionViewWillLoad ({{called.ionViewWillLoad}})</p>
       <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
       <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
       <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
@@ -441,6 +449,7 @@ export class ModalFirstPage {
     this.called = {
       ionViewCanEnter: 0,
       ionViewCanLeave: 0,
+      ionViewWillLoad: 0,
       ionViewDidLoad: 0,
       ionViewWillEnter: 0,
       ionViewDidEnter: 0,
@@ -477,6 +486,11 @@ export class ModalFirstPage {
     console.log('ModalFirstPage ionViewCanLeave fired');
     this.called.ionViewCanLeave++;
     return true;
+  }
+
+  ionViewWillLoad() {
+    console.log('ModalFirstPage ionViewWillLoad fired');
+    this.called.ionViewWillLoad++;
   }
 
   ionViewDidLoad() {

@@ -419,11 +419,14 @@ export class NavControllerBase extends Ion implements NavController {
     // create ComponentRef and set it to the entering view
     enteringView.init(componentFactory.create(childInjector, []));
     enteringView._state = ViewState.INITIALIZED;
-    this._willLoad(enteringView);
+    this._preLoad(enteringView);
   }
 
   _viewAttachToDOM(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     assert(view._state === ViewState.INITIALIZED, 'view state must be INITIALIZED');
+
+    // fire willLoad before change detection runs
+    this._willLoad(view);
 
     // render the component ref instance to the DOM
     // ******** DOM WRITE ****************
@@ -438,14 +441,11 @@ export class NavControllerBase extends Ion implements NavController {
       this._renderer.setElementClass(pageElement, view._cssClass, true);
     }
 
-    // TODO:
-    // componentRef.changeDetectorRef.detectChanges();
+    componentRef.changeDetectorRef.detectChanges();
 
     // successfully finished loading the entering view
     // fire off the "didLoad" lifecycle events
     this._didLoad(view);
-
-    componentRef.changeDetectorRef.detectChanges();
   }
 
   _viewTest(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
@@ -751,6 +751,12 @@ export class NavControllerBase extends Ion implements NavController {
         });
       }
     }
+  }
+
+  _preLoad(view: ViewController) {
+    assert(this.isTransitioning(), 'nav controller should be transitioning');
+
+    view._preLoad();
   }
 
   _willLoad(view: ViewController) {
