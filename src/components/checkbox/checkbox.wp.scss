@@ -3,28 +3,61 @@
 // Windows Checkbox
 // --------------------------------------------------
 
+/// @prop - Border bottom width of the checkbox
 $checkbox-wp-border-bottom-width:        1px !default;
+
+/// @prop - Border bottom style of the checkbox
 $checkbox-wp-border-bottom-style:        solid !default;
+
+/// @prop - Border bottom color of the checkbox
 $checkbox-wp-border-bottom-color:        $list-wp-border-color !default;
+
+/// @prop - Padding of the checkbox
 $checkbox-wp-padding:                    $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0 !default;
+
+/// @prop - Margin of the checkbox
 $checkbox-wp-margin:                     0 !default;
+
+/// @prop - Opacity of the disabled checkbox
 $checkbox-wp-disabled-opacity:           .3 !default;
 
+/// @prop - Background color of the checkbox icon when off
 $checkbox-wp-icon-background-color-off:  $list-wp-background-color !default;
+
+/// @prop - Background color of the checkbox icon when on
 $checkbox-wp-icon-background-color-on:   color($colors-wp, primary) !default;
+
+/// @prop - Size of the checkbox icon
 $checkbox-wp-icon-size:                  16px !default;
 
+/// @prop - Width of the checkbox icon checkmark
 $checkbox-wp-icon-checkmark-width:       1px !default;
+
+/// @prop - Style of the checkbox icon checkmark
 $checkbox-wp-icon-checkmark-style:       solid !default;
+
+/// @prop - Color of the checkbox icon checkmark
 $checkbox-wp-icon-checkmark-color:       color-contrast($colors-wp, $checkbox-wp-icon-background-color-on) !default;
 
+/// @prop - Border width of the checkbox icon
 $checkbox-wp-icon-border-width:          2px !default;
+
+/// @prop - Border style of the checkbox icon
 $checkbox-wp-icon-border-style:          solid !default;
+
+/// @prop - Border radius of the checkbox icon
 $checkbox-wp-icon-border-radius:         0 !default;
+
+/// @prop - Border color of the checkbox icon when off
 $checkbox-wp-icon-border-color-off:      #333 !default;
+
+/// @prop - Border color of the checkbox icon when on
 $checkbox-wp-icon-border-color-on:       color($colors-wp, primary) !default;
 
+/// @prop - Margin of the left checkbox item
 $checkbox-wp-item-left-margin:           $item-wp-padding-media-top $item-wp-padding-right $item-wp-padding-media-bottom 4px !default;
+
+/// @prop - Margin of the right checkbox item
 $checkbox-wp-item-right-margin:          11px 10px 10px 0 !default;
 
 
