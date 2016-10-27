@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmit
 
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
-import { isTrueProperty } from '../../util/util';
+import { isTrueProperty, assert } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
@@ -192,7 +192,6 @@ export class Menu {
   private _cntEle: HTMLElement;
   private _cntGesture: MenuContentGesture;
   private _type: MenuType;
-  private _resizeUnreg: Function;
   private _isEnabled: boolean = true;
   private _isSwipeEnabled: boolean = true;
   private _isAnimating: boolean = false;
@@ -472,6 +471,8 @@ export class Menu {
   }
 
   private _before() {
+    assert(this._isAnimating === false, '_before should be called when we are not animating');
+
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
     this.menuContent && this.menuContent.resize();
@@ -482,6 +483,8 @@ export class Menu {
   }
 
   private _after(isOpen: boolean) {
+    assert(this._isAnimating === true, '_after should be called when we are animating');
+
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
@@ -516,21 +519,21 @@ export class Menu {
   /**
    * @private
    */
-  open() {
+  open(): Promise<boolean> {
     return this.setOpen(true);
   }
 
   /**
    * @private
    */
-  close() {
+  close(): Promise<boolean> {
     return this.setOpen(false);
   }
 
   /**
    * @private
    */
-  toggle() {
+  toggle(): Promise<boolean> {
     return this.setOpen(!this.isOpen);
   }
 
@@ -633,12 +636,10 @@ export class Menu {
     this._events.unlistenAll();
     this._cntGesture && this._cntGesture.destroy();
     this._type && this._type.destroy();
-    this._resizeUnreg && this._resizeUnreg();
 
     this._cntGesture = null;
     this._type = null;
     this._cntEle = null;
-    this._resizeUnreg = null;
   }
 
 }
