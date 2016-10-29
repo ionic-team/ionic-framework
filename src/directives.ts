@@ -9,6 +9,7 @@ import { Button } from './components/button/button';
 import { Card, CardContent, CardHeader, CardTitle } from './components/card/card';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
+import { ClickBlock } from './util/click-block';
 import { Content } from './components/content/content';
 import { DateTime } from './components/datetime/datetime';
 import { FabContainer, FabButton, FabList } from './components/fab/fab';
@@ -58,6 +59,7 @@ import { Toggle } from './components/toggle/toggle';
 import { Toolbar, Header, Footer } from './components/toolbar/toolbar';
 import { ToolbarItem } from './components/toolbar/toolbar-item';
 import { ToolbarTitle } from './components/toolbar/toolbar-title';
+import { TranslatePipe } from './translation/translate_pipe';
 import { Typography } from './components/typography/typography';
 import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
 import { VirtualItem, VirtualHeader, VirtualFooter } from './components/virtual-scroll/virtual-item';
@@ -78,6 +80,7 @@ export { Button } from './components/button/button';
 export { Card, CardContent, CardHeader, CardTitle } from './components/card/card';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
+export { ClickBlock } from './util/click-block';
 export { Content } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
 export { FabContainer, FabButton, FabList } from './components/fab/fab';
@@ -138,6 +141,7 @@ export { Toggle } from './components/toggle/toggle';
 export { Toolbar, ToolbarBase, Header, Footer } from './components/toolbar/toolbar';
 export { ToolbarItem } from './components/toolbar/toolbar-item';
 export { ToolbarTitle } from'./components/toolbar/toolbar-title';
+export { TranslatePipe } from './translation/translate_pipe';
 export { Thumbnail } from './components/thumbnail/thumbnail';
 export { Typography } from './components/typography/typography';
 export { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
@@ -170,6 +174,7 @@ export const IONIC_DIRECTIVES: any[] = [
   CardTitle,
   Checkbox,
   Chip,
+  ClickBlock,
   Col,
   Content,
   DateTime,
@@ -238,6 +243,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Toolbar,
   ToolbarItem,
   ToolbarTitle,
+  TranslatePipe,
   Typography,
   VirtualFooter,
   VirtualHeader,
