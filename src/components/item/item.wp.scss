@@ -3,25 +3,52 @@
 // Windows Item
 // --------------------------------------------------
 
+/// @prop - Font size of the item text
 $item-wp-body-text-font-size:        1.4rem !default;
+
+/// @prop - line height of the item text
 $item-wp-body-text-line-height:      1.5 !default;
+
+/// @prop - Background color of the item
 $item-wp-body-background-color:      $list-wp-background-color !default;
+
+/// @prop - Color of the item text
 $item-wp-body-text-color:            $list-wp-text-color !default;
+
+/// @prop - Color of the item paragraph
 $item-wp-paragraph-text-color:       #666 !default;
 
+/// @prop - Font size of the item
 $item-wp-font-size:                  1.6rem !default;
+
+/// @prop - Size of the avatar in the item
 $item-wp-avatar-size:                4rem !default;
+
+/// @prop - Size of the thumbnail in the item
 $item-wp-thumbnail-size:             8rem !default;
+
+/// @prop - Color of the note in the item
 $item-wp-note-color:                 $input-wp-border-color !default;
 
+/// @prop - Shows the detail arrow icon on an item
 $item-wp-detail-push-show:           false !default;
+
+/// @prop - Color of the detail arrow icon
 $item-wp-detail-push-color:          $input-wp-border-color !default;
+
+/// @prop - Icon for the detail arrow
 $item-wp-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-wp-detail-push-color}'/></svg>" !default;
 
+/// @prop - Background for the divider
 $item-wp-divider-background:         #fff !default;
+
+/// @prop - Color for the divider
 $item-wp-divider-color:              #222 !default;
+
+/// @prop - Padding for the divider
 $item-wp-divider-padding:            5px 15px !default;
 
+/// @prop - Background for the sliding content
 $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 
