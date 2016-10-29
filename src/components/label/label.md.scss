@@ -3,8 +3,13 @@
 // Material Design Label
 // --------------------------------------------------
 
+/// @prop - Text color of the label
 $label-md-text-color:                 #999 !default;
+
+/// @prop - Text color of the label when it has focused
 $label-md-text-color-focused:         color($colors-md, primary) !default;
+
+/// @prop - Margin of the label
 $label-md-margin:                     $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0 !default;
 
 
