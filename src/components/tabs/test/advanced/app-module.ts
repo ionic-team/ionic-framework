@@ -134,6 +134,12 @@ export class Tab1Page1 {
   templateUrl: './tab1page2.html'
 })
 export class Tab1Page2 {
+  constructor(public tabs: Tabs) { }
+
+  favoritesTab() {
+    // TODO fix this with tabsHideOnSubPages=true
+    this.tabs.select(1);
+  }
 
   ionViewWillEnter() {
     console.log('Tab1Page2, ionViewWillEnter');
@@ -346,7 +352,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     Tab3Page1
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, null, deepLinkConfig)
+    IonicModule.forRoot(E2EApp, {tabsHideOnSubPages: true}, deepLinkConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

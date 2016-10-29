@@ -72,15 +72,7 @@ export const mockTrasitionController = function(config: Config) {
 };
 
 export const mockZone = function(): NgZone {
-  let zone: any = {
-    run: function(cb: any) {
-      cb();
-    },
-    runOutsideAngular: function(cb: any) {
-      cb();
-    }
-  };
-  return zone;
+  return new NgZone(false);
 };
 
 export const mockChangeDetectorRef = function(): ChangeDetectorRef {

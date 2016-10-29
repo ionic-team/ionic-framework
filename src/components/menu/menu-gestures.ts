@@ -3,6 +3,7 @@ import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
 import { assign } from '../../util/util';
 import { GestureController, GesturePriority } from '../../gestures/gesture-controller';
+import { NativeRafDebouncer } from '../../util/debouncer';
 
 /**
  * Gesture attached to the content which the menu is assigned to
@@ -11,8 +12,8 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
   constructor(
     public menu: Menu,
-    gestureCtrl: GestureController,
     contentEle: HTMLElement,
+    gestureCtrl: GestureController,
     options: any = {}) {
     super(contentEle, assign({
       direction: 'x',
@@ -20,6 +21,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
       threshold: 0,
       maxEdgeStart: menu.maxEdgeStart || 50,
       maxAngle: 40,
+      debouncer: new NativeRafDebouncer(),
       gesture: gestureCtrl.create('menu-swipe', {
         priority: GesturePriority.MenuSwipe,
       })

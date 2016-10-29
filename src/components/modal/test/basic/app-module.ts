@@ -147,14 +147,16 @@ export class E2EPage {
         </ion-item>
       </ion-list>
       <button ion-button full (click)="submit()">Submit</button>
-      <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
-      <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
-      <p>ionViewWillLoad ({{called.ionViewWillLoad}})</p>
-      <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
-      <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
-      <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
-      <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
-      <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
+      <div padding>
+        <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+        <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+        <p>ionViewWillLoad ({{called.ionViewWillLoad}})</p>
+        <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+        <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+        <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+        <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+        <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
+      </div>
     </ion-content>
   `,
   providers: [SomeComponentProvider]
@@ -519,10 +521,12 @@ export class ModalFirstPage {
   }
 
   ionViewWillLeave() {
+    console.log('ModalFirstPage ionViewWillLeave fired');
     this.called.ionViewWillLeave++;
   }
 
   ionViewDidLeave() {
+    console.log('ModalFirstPage ionViewDidLeave fired');
     this.called.ionViewDidLeave++;
   }
 
@@ -626,7 +630,8 @@ export class E2EApp {
   ],
   imports: [
     IonicModule.forRoot(E2EApp, {
-      statusbarPadding: true
+      statusbarPadding: true,
+      swipeBackEnabled: true
     })
   ],
   bootstrap: [IonicApp],

@@ -198,6 +198,7 @@ export class Menu {
   private _isPers: boolean = false;
   private _init: boolean = false;
   private _events: UIEventManager = new UIEventManager();
+  private _gestureID: number = 0;
 
   /**
    * @private
@@ -303,7 +304,11 @@ export class Menu {
     private _keyboard: Keyboard,
     private _zone: NgZone,
     private _gestureCtrl: GestureController
-  ) {}
+  ) {
+    if (_gestureCtrl) {
+      this._gestureID = _gestureCtrl.newID();
+    }
+  }
 
   /**
    * @private
@@ -332,7 +337,7 @@ export class Menu {
     this.setElementAttribute('type', this.type);
 
     // add the gestures
-    this._cntGesture = new MenuContentGesture(this, this._gestureCtrl, document.body);
+    this._cntGesture = new MenuContentGesture(this, document.body, this._gestureCtrl);
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side
@@ -471,7 +476,7 @@ export class Menu {
   }
 
   private _before() {
-    assert(this._isAnimating === false, '_before should be called when we are not animating');
+    assert(!this._isAnimating, '_before() should not be called while animating');
 
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
@@ -483,8 +488,7 @@ export class Menu {
   }
 
   private _after(isOpen: boolean) {
-    assert(this._isAnimating === true, '_after should be called when we are animating');
-
+    assert(this._isAnimating, '_before() should be called while animating');
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
@@ -494,8 +498,10 @@ export class Menu {
 
     this._events.unlistenAll();
     if (isOpen) {
-      this._cntEle.classList.add('menu-content-open');
+      // Disable swipe to go back gesture
+      this._gestureCtrl.disableGesture('goback-swipe', this._gestureID);
 
+      this._cntEle.classList.add('menu-content-open');
       let callback = this.onBackdropClick.bind(this);
       this._events.pointerEvents({
         element: this._cntEle,
@@ -508,6 +514,9 @@ export class Menu {
       this.ionOpen.emit(true);
 
     } else {
+      // Enable swipe to go back gesture
+      this._gestureCtrl.enableGesture('goback-swipe', this._gestureID);
+
       this._cntEle.classList.remove('menu-content-open');
       this.setElementClass('show-menu', false);
       this.backdrop.setElementClass('show-menu', false);

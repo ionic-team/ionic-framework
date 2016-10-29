@@ -132,7 +132,6 @@ export class MenuController {
       }
       return menu.open();
     }
-
     return Promise.resolve(false);
   }
 

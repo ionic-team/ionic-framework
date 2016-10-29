@@ -178,10 +178,10 @@ export class NavControllerBase extends Ion implements NavController {
       // transition has successfully resolved
       this._trnsId = null;
       resolve && resolve(hasCompleted, isAsync, enteringName, leavingName, direction);
-      this._sbCheck();
 
       // let's see if there's another to kick off
       this.setTransitioning(false);
+      this._sbCheck();
       this._nextTrns();
     };
 
@@ -204,11 +204,10 @@ export class NavControllerBase extends Ion implements NavController {
         this._trnsCtrl.destroy(trns.trnsId);
       }
 
-      this._sbCheck();
-
       reject && reject(false, false, rejectReason);
 
       this.setTransitioning(false);
+      this._sbCheck();
       this._nextTrns();
     };
 
@@ -371,11 +370,14 @@ export class NavControllerBase extends Ion implements NavController {
     // and there is not a view that needs to visually transition out
     // then just destroy them and don't transition anything
     // batch all of lifecycles together
-    for (view of destroyQueue) {
-      this._willLeave(view);
-      this._didLeave(view);
-      this._willUnload(view);
-    }
+    // let's make sure, callbacks are zoned
+    this._zone.run(() => {
+      for (view of destroyQueue) {
+        this._willLeave(view);
+        this._didLeave(view);
+        this._willUnload(view);
+      }
+    });
 
     // once all lifecycle events has been delivered, we can safely detroy the views
     for (view of destroyQueue) {
@@ -445,7 +447,7 @@ export class NavControllerBase extends Ion implements NavController {
 
     // successfully finished loading the entering view
     // fire off the "didLoad" lifecycle events
-    this._didLoad(view);
+    this._zone.run(this._didLoad.bind(this, view));
   }
 
   _viewTest(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
@@ -652,6 +654,10 @@ export class NavControllerBase extends Ion implements NavController {
       }
 
       this._cleanup(transition.enteringView);
+    } else {
+      // If transition does not complete, we have to cleanup anyway, because
+      // previous pages in the stack are not hidden probably.
+      this._cleanup(transition.leavingView);
     }
 
     if (transition.isRoot()) {
@@ -761,12 +767,14 @@ export class NavControllerBase extends Ion implements NavController {
 
   _willLoad(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
+    assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     view._willLoad();
   }
 
   _didLoad(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
+    assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     view._didLoad();
     this.viewDidLoad.emit(view);
@@ -775,6 +783,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   _willEnter(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
+    assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     view._willEnter();
     this.viewWillEnter.emit(view);
@@ -783,6 +792,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   _didEnter(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
+    assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     view._didEnter();
     this.viewDidEnter.emit(view);
@@ -791,6 +801,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   _willLeave(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
+    assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     view._willLeave();
     this.viewWillLeave.emit(view);
@@ -799,6 +810,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   _didLeave(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
+    assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     view._didLeave();
     this.viewDidLeave.emit(view);
@@ -807,6 +819,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   _willUnload(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
+    assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     view._willUnload();
     this.viewWillUnload.emit(view);
@@ -830,18 +843,19 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   destroy() {
-    let view;
-    for (view of this._views) {
+    for (var view of this._views) {
       view._willUnload();
       view._destroy(this._renderer);
     }
     // purge stack
     this._views.length = 0;
 
+    // release swipe back gesture and transition
     this._sbGesture && this._sbGesture.destroy();
     this._sbTrns && this._sbTrns.destroy();
     this._sbGesture = this._sbTrns = null;
 
+    // Unregister navcontroller
     if (this.parent && this.parent.unregisterChildNav) {
       this.parent.unregisterChildNav(this);
     }
@@ -863,7 +877,6 @@ export class NavControllerBase extends Ion implements NavController {
       removeCount: 1,
       opts: opts,
     }, null);
-
   }
 
   swipeBackProgress(stepValue: number) {
@@ -880,39 +893,29 @@ export class NavControllerBase extends Ion implements NavController {
   swipeBackEnd(shouldComplete: boolean, currentStepValue: number) {
     if (this._sbTrns && this._sbGesture) {
       // the swipe back gesture has ended
-      this._sbTrns.progressEnd(shouldComplete, currentStepValue);
+      this._sbTrns.progressEnd(shouldComplete, currentStepValue, 300);
     }
   }
 
   _sbCheck() {
-    if (this._sbEnabled && !this._isPortal) {
-      // this nav controller can have swipe to go back
+    if (!this._sbEnabled && this._isPortal) {
+      return;
+    }
 
-      if (!this._sbGesture) {
-        // create the swipe back gesture if we haven't already
-        const opts = {
-          edge: 'left',
-          threshold: this._sbThreshold
-        };
-        this._sbGesture = new SwipeBackGesture(this.getNativeElement(), opts, this, this._gestureCtrl);
-      }
+    // this nav controller can have swipe to go back
+    if (!this._sbGesture) {
+      // create the swipe back gesture if we haven't already
+      const opts = {
+        edge: 'left',
+        threshold: this._sbThreshold
+      };
+      this._sbGesture = new SwipeBackGesture(this, document.body, this._gestureCtrl, opts);
+    }
 
-      if (this.canSwipeBack()) {
-        // it is be possible to swipe back
-        if (!this._sbGesture.isListening) {
-          this._zone.runOutsideAngular(() => {
-            // start listening if it's not already
-            console.debug('swipeBack gesture, listen');
-            this._sbGesture.listen();
-          });
-        }
-
-      } else if (this._sbGesture.isListening) {
-        // it should not be possible to swipe back
-        // but the gesture is still listening
-        console.debug('swipeBack gesture, unlisten');
-        this._sbGesture.unlisten();
-      }
+    if (this.canSwipeBack()) {
+      this._sbGesture.listen();
+    } else {
+      this._sbGesture.unlisten();
     }
   }
 
