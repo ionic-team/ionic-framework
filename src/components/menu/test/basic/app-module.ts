@@ -6,7 +6,18 @@ import { IonicApp, IonicModule, MenuController, NavController, AlertController, 
   templateUrl: 'page1.html'
 })
 export class Page1 {
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {}
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public alertCtrl: AlertController) {}
+
+  get swipeMenuMode() {
+    return this.menuCtrl.get().swipeEnabled;
+  }
+
+  set swipeMenuMode(value: any) {
+    console.log('swipeMenuMode', value);
+    this.menuCtrl.getMenus().forEach(menu => {
+      menu.swipeEnable(value);
+    });
+  }
 
   presentAlert() {
     let alert = this.alertCtrl.create({
