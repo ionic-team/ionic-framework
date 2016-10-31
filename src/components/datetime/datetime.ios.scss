@@ -3,9 +3,16 @@
 // iOS DateTime
 // --------------------------------------------------
 
+/// @prop - Padding top of the DateTime component
 $datetime-ios-padding-top:         $item-ios-padding-top !default;
+
+/// @prop - Padding right of the DateTime component
 $datetime-ios-padding-right:       ($item-ios-padding-right / 2) !default;
+
+/// @prop - Padding bottom of the DateTime component
 $datetime-ios-padding-bottom:      $item-ios-padding-bottom !default;
+
+/// @prop - Padding left of the DateTime component
 $datetime-ios-padding-left:        $item-ios-padding-left !default;
 
 
