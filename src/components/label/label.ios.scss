@@ -3,7 +3,10 @@
 // iOS Label
 // --------------------------------------------------
 
+/// @prop - Text color of the label
 $label-ios-text-color:         #7f7f7f !default;
+
+/// @prop - Margin of the label
 $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0 !default;
 
 
