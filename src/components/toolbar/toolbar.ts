@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Optional, QueryList, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Directive, ElementRef, Input, Optional, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-import { ViewController } from '../nav/view-controller';
+import { ToolbarTitle } from './toolbar-title';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
  * @name Header
  * @description
- * Header is a parent compnent that holds the navbar and toolbar component.
+ * Header is a parent component that holds the navbar and toolbar component.
  * It's important to note that `ion-header` needs to be the one of the three root elements of a page
  *
  * @usage
@@ -35,10 +36,12 @@ import { ViewController } from '../nav/view-controller';
 @Directive({
   selector: 'ion-header'
 })
-export class Header {
+export class Header extends Ion {
 
-  constructor(@Optional() viewCtrl: ViewController) {
-    viewCtrl && viewCtrl.setHeader(this);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
+    super(config, elementRef, renderer);
+    this._setMode('header', config.get('mode'));
+    viewCtrl && viewCtrl._setHeader(this);
   }
 
 }
@@ -69,10 +72,12 @@ export class Header {
 @Directive({
   selector: 'ion-footer'
 })
-export class Footer {
+export class Footer extends Ion {
 
-  constructor(@Optional() viewCtrl: ViewController) {
-    viewCtrl && viewCtrl.setFooter(this);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
+    super(config, elementRef, renderer);
+    this._setMode('footer', config.get('mode'));
+    viewCtrl && viewCtrl._setFooter(this);
   }
 
 }
@@ -82,19 +87,17 @@ export class Footer {
  * @private
  */
 export class ToolbarBase extends Ion {
-  itemRefs: ElementRef[] = [];
-  titleRef: any = null;
-  titleCmp: any;
+  private _title: ToolbarTitle;
 
-  constructor(elementRef: ElementRef) {
-    super(elementRef);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
   }
 
   /**
    * @private
    */
-  setTitleCmp(titleCmp: any) {
-    this.titleCmp = titleCmp;
+  _setTitle(titleCmp: ToolbarTitle) {
+    this._title = titleCmp;
   }
 
   /**
@@ -102,31 +105,7 @@ export class ToolbarBase extends Ion {
    * Returns the toolbar title text if it exists or an empty string
    */
   getTitleText() {
-    return (this.titleCmp && this.titleCmp.getTitleText()) || '';
-  }
-
-  /**
-   * @private
-   */
-  getTitleRef() {
-    return this.titleCmp && this.titleCmp.elementRef;
-  }
-
-  /**
-   * @private
-   * A toolbar items include the left and right side `ion-buttons`,
-   * and every `menu-toggle`. It does not include the `ion-title`.
-   * @returns {TODO} Array of this toolbar's item ElementRefs.
-   */
-  getItemRefs() {
-    return this.itemRefs;
-  }
-
-  /**
-   * @private
-   */
-  addItemRef(itemElementRef: ElementRef) {
-    this.itemRefs.push(itemElementRef);
+    return (this._title && this._title.getTitleText()) || '';
   }
 
 }
@@ -210,10 +189,10 @@ export class ToolbarBase extends Ion {
  *
  *   <ion-toolbar no-border-bottom>
  *     <ion-buttons start>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="contact"></ion-icon>
  *       </button>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="search"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -241,7 +220,7 @@ export class ToolbarBase extends Ion {
  *   <ion-toolbar no-border>
  *     <ion-title>I'm a subfooter</ion-title>
  *     <ion-buttons right>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="menu"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -250,10 +229,10 @@ export class ToolbarBase extends Ion {
  *   <ion-toolbar no-border-top>
  *     <ion-title>I'm a footer</ion-title>
  *     <ion-buttons end>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="more"></ion-icon>
  *       </button>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="options"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -262,20 +241,19 @@ export class ToolbarBase extends Ion {
  * </ion-footer>
  *  ```
  *
- * @demo /docs/v2/demos/toolbar/
+ * @demo /docs/v2/demos/src/toolbar/
  * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */
 @Component({
   selector: 'ion-toolbar',
-  template: `
-    <div class="toolbar-background"></div>
-    <ng-content select="[menuToggle],ion-buttons[left]"></ng-content>
-    <ng-content select="ion-buttons[start]"></ng-content>
-    <ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>
-    <div class="toolbar-content">
-      <ng-content></ng-content>
-    </div>
-  `,
+  template:
+    '<div class="toolbar-background" [ngClass]="\'toolbar-background-\' + _mode"></div>' +
+    '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
+    '<ng-content select="ion-buttons[start]"></ng-content>' +
+    '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
+    '<div class="toolbar-content" [ngClass]="\'toolbar-content-\' + _mode">' +
+      '<ng-content></ng-content>' +
+    '</div>',
   host: {
     'class': 'toolbar',
     '[class.statusbar-padding]': '_sbPadding'
@@ -283,24 +261,34 @@ export class ToolbarBase extends Ion {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toolbar extends ToolbarBase {
-  private _sbPadding: boolean;
+  /** @private */
+  _sbPadding: boolean;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor('toolbar', val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('toolbar', val);
+  }
 
   constructor(
     @Optional() viewCtrl: ViewController,
-    @Optional() header: Header,
-    @Optional() footer: Footer,
     config: Config,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
-    super(elementRef);
+    super(config, elementRef, renderer);
 
-    if (viewCtrl && (header || footer)) {
-      // only toolbars within headers and footer are view toolbars
-      // toolbars within the content are not view toolbars, since they
-      // are apart of the content, and could be anywhere within the content
-      viewCtrl.setToolbarRef(elementRef);
-    }
-
+    this.mode = config.get('mode');
     this._sbPadding = config.getBoolean('statusbarPadding');
   }
 

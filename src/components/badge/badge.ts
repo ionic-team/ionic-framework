@@ -1,6 +1,7 @@
-import { Directive, ElementRef, Renderer, Attribute } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { Ion } from '../ion';
 
 
 /**
@@ -9,46 +10,32 @@ import { Config } from '../../config/config';
   * @description
   * Badges are simple components in Ionic containing numbers or text. You can display a badge to indicate that there is new information associated with the item it is on.
   * @see {@link /docs/v2/components/#badges Badges Component Docs}
-
  */
 @Directive({
   selector: 'ion-badge'
 })
-export class Badge {
+export class Badge extends Ion {
 
-  constructor(
-    config: Config,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
-  ) {
-    let element = _elementRef.nativeElement;
-
-    this._readAttrs(element);
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor('badge', val);
   }
 
   /**
-   * @private
+   * @input {string} The mode to apply to this component.
    */
-  private _readAttrs(element: HTMLElement) {
-    let elementAttrs = element.attributes;
-    let attrName: string;
-
-    for (let i = 0, l = elementAttrs.length; i < l; i++) {
-      if (elementAttrs[i].value !== '') continue;
-
-      attrName = elementAttrs[i].name;
-
-      // Ignore attributes item-left, item-right
-      if (attrName.indexOf('item') === -1) {
-        this._setClass(attrName);
-      }
-    }
+  @Input()
+  set mode(val: string) {
+    this._setMode('badge', val);
   }
 
-  /**
-   * @private
-   */
-  private _setClass(color: string) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, 'badge-' + color, true);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
   }
+
 }

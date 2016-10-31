@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./input";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Input
 // --------------------------------------------------
@@ -28,67 +27,20 @@ $text-input-ios-highlight-color-invalid:   color($colors-ios, danger) !default;
 // iOS Default Input
 // --------------------------------------------------
 
-.text-input {
+.text-input-ios {
   margin: $text-input-ios-margin-top $text-input-ios-margin-right $text-input-ios-margin-bottom $text-input-ios-margin-left;
   padding: 0;
 
-  width: calc(100% - #{$text-input-ios-margin-right} - #{$text-input-ios-margin-left});
+  width: calc(100% - #{($text-input-ios-margin-right + $text-input-ios-margin-left)});
 }
 
 
 // iOS Inset Input
 // --------------------------------------------------
 
-.inset-input {
+.input-ios .inset-input {
   margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
   padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
-}
-
-
-// iOS Stacked & Floating Inputs
-// --------------------------------------------------
-
-.item-label-stacked .text-input,
-.item-label-floating .text-input {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-left: 0;
-
-  width: calc(100% - #{$text-input-ios-margin-right});
-}
-
-.item-label-stacked ion-select,
-.item-label-floating ion-select {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 0;
-}
-
-.item-label-floating .text-input.cloned-input,
-.item-label-stacked .text-input.cloned-input {
-  top: 30px;
-}
-
-
-// iOS Clear Input Icon
-// --------------------------------------------------
-
-ion-input[clearInput] {
-  position: relative;
-
-  .text-input {
-    padding-right: $text-input-ios-input-clear-icon-width;
-  }
-}
-
-.text-input-clear-icon {
-  @include svg-background-image($text-input-ios-input-clear-icon-svg);
-
-  right: ($item-ios-padding-right / 2);
-
-  width: $text-input-ios-input-clear-icon-width;
-
-  background-size: $text-input-ios-input-clear-icon-size;
 }
 
 
@@ -104,13 +56,13 @@ ion-input[clearInput] {
 @if ($text-input-ios-show-focus-highlight) {
   // In order to get a 2px border we need to add an inset
   // box-shadow 1px (this is to avoid the div resizing)
-  .item-input.input-has-focus .item-inner {
+  .item-ios.item-input.input-has-focus .item-inner {
     @include ios-input-highlight($text-input-ios-highlight-color);
   }
 
   // The last item in a list has a border on the item, not the
   // inner item, so add it to the item itself
-  ion-list .item-input.input-has-focus:last-child {
+  .list-ios .item-input.input-has-focus:last-child {
     @include ios-input-highlight($text-input-ios-highlight-color);
 
     .item-inner {
@@ -121,11 +73,11 @@ ion-input[clearInput] {
 
 // Show the valid highlight when it has the .ng-valid class and a value
 @if ($text-input-ios-show-valid-highlight) {
-  .item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+  .item-ios.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
     @include ios-input-highlight($text-input-ios-highlight-color-valid);
   }
 
-  ion-list .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
+  .list-ios .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
     @include ios-input-highlight($text-input-ios-highlight-color-valid);
 
     .item-inner {
@@ -136,15 +88,62 @@ ion-input[clearInput] {
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($text-input-ios-show-invalid-highlight) {
-  .item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+  .item-ios.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
     @include ios-input-highlight($text-input-ios-highlight-color-invalid);
   }
 
-  ion-list .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
+  .list-ios .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
     @include ios-input-highlight($text-input-ios-highlight-color-invalid);
 
     .item-inner {
       box-shadow: none;
     }
   }
+}
+
+
+// iOS Stacked & Floating Inputs
+// --------------------------------------------------
+
+.item-ios.item-label-stacked .text-input,
+.item-ios.item-label-floating .text-input {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 0;
+
+  width: calc(100% - #{$text-input-ios-margin-right});
+}
+
+.item-label-stacked .select-ios,
+.item-label-floating .select-ios {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 0;
+}
+
+.item-label-floating .text-input-ios.cloned-input,
+.item-label-stacked .text-input-ios.cloned-input {
+  top: 30px;
+}
+
+
+// iOS Clear Input Icon
+// --------------------------------------------------
+
+.input-ios[clearInput] {
+  position: relative;
+}
+
+.input-ios .text-input {
+  padding-right: $text-input-ios-input-clear-icon-width;
+}
+
+.input-ios .text-input-clear-icon {
+  @include svg-background-image($text-input-ios-input-clear-icon-svg);
+
+  right: ($item-ios-padding-right / 2);
+
+  width: $text-input-ios-input-clear-icon-width;
+
+  background-size: $text-input-ios-input-clear-icon-size;
 }

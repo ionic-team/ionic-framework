@@ -2,7 +2,7 @@ import { Directive, ElementRef, Input, HostListener, Optional } from '@angular/c
 
 import { MenuController } from './menu-controller';
 import { Navbar } from '../navbar/navbar';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @name MenuToggle
@@ -18,14 +18,14 @@ import { ViewController } from '../nav/view-controller';
  * A simple `menuToggle` button can be added using the following markup:
  *
  * ```html
- * <button menuToggle>Toggle Menu</button>
+ * <button ion-button menuToggle>Toggle Menu</button>
  * ```
  *
  * To toggle a specific menu by its id or side, give the `menuToggle`
  * directive a value.
  *
  * ```html
- * <button menuToggle="right">Toggle Right Menu</button>
+ * <button ion-button menuToggle="right">Toggle Right Menu</button>
  * ```
  *
  * If placing the `menuToggle` in a navbar or toolbar, it should be
@@ -37,18 +37,18 @@ import { ViewController } from '../nav/view-controller';
  *
  *   <ion-navbar>
  *     <ion-buttons start>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="contact"></ion-icon>
  *       </button>
  *     </ion-buttons>
- *     <button menuToggle>
+ *     <button ion-button menuToggle>
  *       <ion-icon name="menu"></ion-icon>
  *     </button>
  *     <ion-title>
  *       Title
  *     </ion-title>
  *     <ion-buttons end>
- *       <button (click)="doClick()">
+ *       <button ion-button (click)="doClick()">
  *         <ion-icon name="more"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -62,14 +62,14 @@ import { ViewController } from '../nav/view-controller';
  *
  * ```html
  * <ion-toolbar>
- *   <button menuToggle right>
+ *   <button ion-button menuToggle right>
  *     <ion-icon name="menu"></ion-icon>
  *   </button>
  *   <ion-title>
  *     Title
  *   </ion-title>
  *   <ion-buttons end>
- *     <button (click)="doClick()">
+ *     <button ion-button (click)="doClick()">
  *       <ion-icon name="more"></ion-icon>
  *     </button>
  *   </ion-buttons>
@@ -79,7 +79,7 @@ import { ViewController } from '../nav/view-controller';
  * See the [Toolbar API docs](../../toolbar/Toolbar) for more information
  * on the different positions.
  *
- * @demo /docs/v2/demos/menu/
+ * @demo /docs/v2/demos/src/menu/
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../../menu/Menu Menu API Docs}
  */

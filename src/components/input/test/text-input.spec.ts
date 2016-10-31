@@ -1,7 +1,6 @@
-import { TextInput } from '../../../../src';
+import { TextInput } from '../input';
 
-export function run() {
-
+describe('input', () => {
   it('should scroll, top and bottom below safe area, no room to scroll', () => {
     let inputOffsetTop = 350;
     let inputOffsetHeight = 35;
@@ -131,5 +130,4 @@ export function run() {
     let scrollData = TextInput.getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
     expect(scrollData.scrollAmount).toBe(0);
   });
-
-}
+});

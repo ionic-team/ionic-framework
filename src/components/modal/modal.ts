@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
+import { AppPortal } from '../app/app-root';
 import { isPresent } from '../../util/util';
 import { ModalCmp } from './modal-component';
 import { ModalOptions } from './modal-options';
-import { NavOptions } from '../nav/nav-interfaces';
-import { ViewController } from '../nav/view-controller';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -14,13 +15,13 @@ import { ViewController } from '../nav/view-controller';
 export class Modal extends ViewController {
   private _app: App;
 
-  constructor(app: App, componentType: any, data: any = {}, opts: ModalOptions = {}) {
-    data.componentType = componentType;
+  constructor(app: App, component: any, data: any = {}, opts: ModalOptions = {}) {
+    data.component = component;
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
     data.opts = opts;
 
-    super(ModalCmp, data);
+    super(ModalCmp, data, null);
     this._app = app;
     this.isOverlay = true;
   }
@@ -34,39 +35,15 @@ export class Modal extends ViewController {
   }
 
   /**
-   * @private
-   * Override the load method and load our child component
-   */
-  loaded(done: Function) {
-    // grab the instance, and proxy the ngAfterViewInit method
-    let originalNgAfterViewInit = this.instance.ngAfterViewInit;
-
-    this.instance.ngAfterViewInit = () => {
-      if (originalNgAfterViewInit) {
-        originalNgAfterViewInit();
-      }
-      this.instance.loadComponent(done);
-    };
-  }
-
-  /**
    * Present the action sheet instance.
    *
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
-    return this._app.present(this, navOptions);
+    return this._app.present(this, navOptions, AppPortal.MODAL);
   }
 
-  /**
-   * @private
-   * DEPRECATED: Please inject ModalController instead
-   */
-  private static create(cmp: any, opt: any) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('Modal.create(..) has been deprecated. Please inject ModalController instead');
-  }
 }
 
 
@@ -86,7 +63,8 @@ export class Modal extends ViewController {
  * After the modal has been presented, from within the component instance The
  * modal can later be closed or "dismissed" by using the ViewController's
  * `dismiss` method. Additionally, you can dismiss any overlay by using `pop`
- * on the root nav controller.
+ * on the root nav controller. Modals are not reusable. When a modal is dismissed
+ * it is destroyed.
  *
  * Data can be passed to a new modal through `Modal.create()` as the second
  * argument. The data can then be accessed from the opened page by injecting
@@ -174,7 +152,7 @@ export class Modal extends ViewController {
  *
  * }
  * ```
- * @demo /docs/v2/demos/modal/
+ * @demo /docs/v2/demos/src/modal/
  * @see {@link /docs/v2/components#modals Modal Component Docs}
  */
 @Injectable()
@@ -184,11 +162,11 @@ export class ModalController {
   /**
    * Create a modal to display. See below for options.
    *
-   * @param {object} componentType The Modal view
+   * @param {object} component The Modal view
    * @param {object} data Any data to pass to the Modal view
    * @param {object} opts Modal options
    */
-  create(componentType: any, data: any = {}, opts: ModalOptions = {}) {
-    return new Modal(this._app, componentType, data, opts);
+  create(component: any, data: any = {}, opts: ModalOptions = {}) {
+    return new Modal(this._app, component, data, opts);
   }
 }

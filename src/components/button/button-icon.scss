@@ -1,38 +1,39 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Button Icons
 // --------------------------------------------------
 
+// Icons inside of buttons with text
+@mixin button-icon {
+  font-size: 1.4em;
+  line-height: .67;
 
-.button-icon-left ion-icon {
+  pointer-events: none;
+}
+
+[icon-left] ion-icon {
+  @include button-icon;
+
   padding-right: .3em;
-
-  font-size: 1.4em;
-  line-height: .67;
-
-  pointer-events: none;
 }
 
-.button-icon-right ion-icon {
+[icon-right] ion-icon {
+  @include button-icon;
+
   padding-left: .4em;
-
-  font-size: 1.4em;
-  line-height: .67;
-
-  pointer-events: none;
 }
 
-.button-icon-only {
+.button[icon-only] {
   padding: 0;
 
   min-width: .9em;
+}
 
-  ion-icon {
-    padding: 0 .5em;
+[icon-only] ion-icon {
+  padding: 0 .5em;
 
-    font-size: 1.8em;
-    line-height: .67;
+  font-size: 1.8em;
+  line-height: .67;
 
-    pointer-events: none;
-  }
+  pointer-events: none;
 }

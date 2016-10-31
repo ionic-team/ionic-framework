@@ -1,4 +1,3 @@
-
 import { forwardRef, Inject, Injectable } from '@angular/core';
 import { App } from '../components/app/app';
 
@@ -29,7 +28,7 @@ export interface GestureOptions {
 }
 
 /**
-* @priavte
+* @private
 */
 @Injectable()
 export class GestureController {
@@ -152,7 +151,7 @@ export class GestureController {
 }
 
 /**
-* @priavte
+* @private
 */
 export class GestureDelegate {
   private disable: string[];

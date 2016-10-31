@@ -1,5 +1,8 @@
 import { Attribute, Directive, ElementRef, Renderer, Input } from '@angular/core';
 
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
+
 
 /**
  * @name Label
@@ -45,7 +48,7 @@ import { Attribute, Directive, ElementRef, Renderer, Input } from '@angular/core
  *  </ion-item>
  * ```
  *
- * @demo /docs/v2/demos/label/
+ * @demo /docs/v2/demos/src/label/
  * @see {@link ../../../../components#inputs Input Component Docs}
  * @see {@link ../../input/Input Input API Docs}
  *
@@ -54,8 +57,24 @@ import { Attribute, Directive, ElementRef, Renderer, Input } from '@angular/core
 @Directive({
   selector: 'ion-label'
 })
-export class Label {
+export class Label extends Ion {
   private _id: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor('label', val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('label', val);
+  }
 
   /**
    * @private
@@ -63,13 +82,17 @@ export class Label {
   type: string;
 
   constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Attribute('floating') isFloating: string,
     @Attribute('stacked') isStacked: string,
     @Attribute('fixed') isFixed: string,
     @Attribute('inset') isInset: string
   ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
     this.type = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : (isInset === '' ? 'inset' : null))));
   }
 
@@ -84,7 +107,7 @@ export class Label {
   set id(val: string) {
     this._id = val;
     if (val) {
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', val);
+      this.setElementAttribute('id', val);
     }
   }
 
@@ -92,15 +115,7 @@ export class Label {
    * @private
    */
   get text(): string {
-    return this._elementRef.nativeElement.textContent || '';
-  }
-
-  /**
-   * @private
-   * @param {string} add class name
-   */
-  addClass(className: string) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
+    return this.getNativeElement().textContent || '';
   }
 
 }

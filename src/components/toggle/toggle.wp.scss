@@ -1,4 +1,4 @@
-@import "../../globals.wp";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Toggle
 // --------------------------------------------------
@@ -36,7 +36,7 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
 // Windows Toggle
 // -----------------------------------------
 
-ion-toggle {
+.toggle-wp {
   position: relative;
 }
 
@@ -44,7 +44,7 @@ ion-toggle {
 // Windows Toggle Background Track: Unchecked
 // -----------------------------------------
 
-.toggle-icon {
+.toggle-wp .toggle-icon {
   position: relative;
   display: block;
 
@@ -62,7 +62,7 @@ ion-toggle {
 // Windows Toggle Inner Knob: Unchecked
 // -----------------------------------------
 
-.toggle-inner {
+.toggle-wp .toggle-inner {
   position: absolute;
   top: $toggle-wp-handle-top;
   left: $toggle-wp-handle-left;
@@ -81,7 +81,7 @@ ion-toggle {
 // Windows Toggle Background Track: Checked
 // -----------------------------------------
 
-.toggle-checked {
+.toggle-wp .toggle-checked {
   border-color: $toggle-wp-track-background-color-on;
   background-color: $toggle-wp-track-background-color-on;
 }
@@ -90,7 +90,7 @@ ion-toggle {
 // Windows Toggle Inner Knob: Checked
 // -----------------------------------------
 
-.toggle-checked .toggle-inner {
+.toggle-wp .toggle-checked .toggle-inner {
   background-color: $toggle-wp-handle-background-color-on;
   // transform: translate3d(23px, 0, 0);
   transform: translate3d($toggle-wp-track-width - $toggle-wp-handle-width - ($toggle-wp-track-border-width * 2) - ($toggle-wp-handle-left * 2), 0, 0);
@@ -100,14 +100,14 @@ ion-toggle {
 // Windows Toggle: Disabled
 // -----------------------------------------
 
-.toggle-disabled,
-.item-toggle-disabled ion-label {
+.toggle-wp.toggle-disabled,
+.item-wp.item-toggle-disabled ion-label {
   opacity: $toggle-wp-disabled-opacity;
 
   pointer-events: none;
 }
 
-.toggle-disabled ion-radio {
+.toggle-wp.toggle-disabled ion-radio {
   opacity: $toggle-wp-disabled-opacity;
 }
 
@@ -115,18 +115,18 @@ ion-toggle {
 // Windows Toggle Within An Item
 // -----------------------------------------
 
-.item ion-toggle {
+.item-wp .toggle-wp {
   margin: $toggle-wp-media-margin;
   padding: $toggle-wp-item-right-padding;
 
   cursor: pointer;
-
-  &[item-left] {
-    padding: $toggle-wp-item-left-padding;
-  }
 }
 
-.item-toggle ion-label {
+.item-wp .toggle-wp[item-left] {
+  padding: $toggle-wp-item-left-padding;
+}
+
+.item-wp.item-toggle ion-label {
   margin-left: 0;
 }
 
@@ -136,19 +136,14 @@ ion-toggle {
 
 @mixin toggle-theme-wp($color-name, $color-base, $color-contrast) {
 
-  ion-toggle[#{$color-name}] {
-
-    .toggle-checked {
-      border-color: $color-base;
-      background-color: $color-base;
-    }
-
-    .toggle-checked .toggle-inner {
-      background-color: $color-contrast;
-    }
-
+  .toggle-wp-#{$color-name} .toggle-checked {
+    border-color: $color-base;
+    background-color: $color-base;
   }
 
+  .toggle-wp-#{$color-name} .toggle-checked .toggle-inner {
+    background-color: $color-contrast;
+  }
 }
 
 

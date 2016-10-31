@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./label";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Label
 // --------------------------------------------------
@@ -11,7 +10,7 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 // Windows Default Label
 // --------------------------------------------------
 
-ion-label {
+.label-wp {
   margin: $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0;
 }
 
@@ -19,9 +18,9 @@ ion-label {
 // Windows Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-input ion-label,
-.item-select ion-label,
-.item-datetime ion-label {
+.item-input .label-wp,
+.item-select .label-wp,
+.item-datetime .label-wp {
   color: $label-wp-text-color;
 }
 
@@ -29,33 +28,33 @@ ion-label {
 // Windows Stacked & Floating Labels
 // --------------------------------------------------
 
-ion-label[stacked] {
+.label-wp[stacked] {
   font-size: 1.2rem;
 }
 
-ion-label[floating] {
+.label-wp[floating] {
   transform: translate3d(8px, 34px, 0);
   transform-origin: left top;
 }
 
-ion-label[stacked],
-ion-label[floating] {
+.label-wp[stacked],
+.label-wp[floating] {
   margin-bottom: 0;
   margin-left: 0;
 }
 
-.input-has-focus ion-label[stacked],
-.input-has-focus ion-label[floating] {
+.input-has-focus .label-wp[stacked],
+.input-has-focus .label-wp[floating] {
   color: $label-wp-text-color-focused;
 }
 
-.input-has-focus ion-label[floating],
-.input-has-value ion-label[floating] {
+.input-has-focus .label-wp[floating],
+.input-has-value .label-wp[floating] {
   transform: translate3d(0, 0, 0) scale(.8);
 }
 
-.item-label-stacked [item-right],
-.item-label-floating [item-right] {
+.item-wp.item-label-stacked [item-right],
+.item-wp.item-label-floating [item-right] {
   margin-top: $item-wp-padding-media-top + 4;
   margin-bottom: $item-wp-padding-media-top + 4;
 }
@@ -66,7 +65,10 @@ ion-label[floating] {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  ion-label[#{$color-name}] {
+  .label-wp-#{$color-name},
+  .item-input .label-wp-#{$color-name},
+  .item-select .label-wp-#{$color-name},
+  .item-datetime .label-wp-#{$color-name} {
     color: $color-base;
   }
 

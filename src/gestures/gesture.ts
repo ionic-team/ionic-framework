@@ -1,4 +1,4 @@
-import { defaults, assign } from '../util';
+import { defaults, assign } from '../util/util';
 import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
 
 /**

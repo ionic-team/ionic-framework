@@ -1,14 +1,16 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Buttons
 // --------------------------------------------------
 
+/// @prop - Padding of the round button
 $button-round-padding:            0 2.6rem !default;
+
+/// @prop - Border radius of the round button
 $button-round-border-radius:      64px !default;
 
 
 .button {
-  @include user-select-none();
   @include appearance(none);
 
   position: relative;
@@ -28,6 +30,7 @@ $button-round-border-radius:      64px !default;
   transition: background-color, opacity 100ms linear;
 
   font-kerning: none;
+  user-select: none;
 }
 
 .button-inner {
@@ -42,14 +45,14 @@ $button-round-border-radius:      64px !default;
   height: 100%;
 }
 
-a.button,
-a[button] {
+
+[ion-button] {
   text-decoration: none;
 }
 
 a[disabled],
 button[disabled],
-.button[disabled] {
+[ion-button][disabled] {
   cursor: default;
   opacity: .4;
 
@@ -65,10 +68,10 @@ button[disabled],
   clear: both;
 
   width: 100%;
+}
 
-  &::after {
-    clear: both;
-  }
+.button-block::after {
+  clear: both;
 }
 
 
@@ -79,22 +82,13 @@ button[disabled],
   display: block;
 
   width: 100%;
-
-  // Full Outline Button
-  // --------------------------------------------------
-  &.button-outline {
-    border-right-width: 0;
-    border-left-width: 0;
-    border-radius: 0;
-  }
 }
 
-
-// Round Button
+// Full Outline Button
 // --------------------------------------------------
 
-.button-round {
-  padding: $button-round-padding;
-
-  border-radius: $button-round-border-radius;
+.button-full.button-outline {
+  border-right-width: 0;
+  border-left-width: 0;
+  border-radius: 0;
 }

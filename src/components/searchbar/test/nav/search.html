@@ -1,21 +1,24 @@
 <ion-header>
 
   <ion-navbar no-border-bottom>
-    <ion-title>Searchbar</ion-title>
+    <ion-searchbar color="primary" autofocus (ionInput)="getItems($event)" placeholder="Filter Schedules">
+    </ion-searchbar>
   </ion-navbar>
 
   <ion-toolbar no-border-top>
-    <ion-searchbar primary (ionInput)="getItems($event)" placeholder="Filter Schedules">
-    </ion-searchbar>
+    <ion-title>Searchbar</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openModal()">Open modal</button>
+    </ion-buttons>
   </ion-toolbar>
 
 </ion-header>
 
-
 <ion-content>
 
-  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-
+  <form>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  </form>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="showDetail(item)" class="e2eSearchbarNavItem">
       {{ item }}

@@ -1,23 +1,23 @@
 <ion-slides #mySlider [options]="mySlideOptions" (ionDidChange)="onSlideChanged()" (ionDrag)="onSlideMove($event)" class="my-slides">
   <ion-slide padding>
     <h1>Slide 1</h1>
-    <button block (click)="goToPrevSlide()">Navigate Back</button>
-    <button block (click)="goToNextSlide()">Navigate Forward</button>
-    <button block (click)="goToSlide(2)">Navigate to 3rd Slide</button>
-    <button block (click)="getLength()">Get Slide Length</button>
-    <button block (click)="getIndex()">Get Index</button>
+    <button ion-button block (click)="goToPrevSlide()">Navigate Back</button>
+    <button ion-button block (click)="goToNextSlide()">Navigate Forward</button>
+    <button ion-button block (click)="goToSlide(2)">Navigate to 3rd Slide</button>
+    <button ion-button block (click)="getLength()">Get Slide Length</button>
+    <button ion-button block (click)="getIndex()">Get Index</button>
   </ion-slide>
   <ion-slide padding>
     <h1>Slide 2</h1>
-    <button block (click)="goToPrevSlide()">Navigate Back</button>
-    <button block (click)="goToNextSlide()">Navigate Forward</button>
-    <button block (click)="goToSlide(2)">Navigate to 3rd Slide</button>
-    <button block (click)="getIndex()">Get Index</button>
+    <button ion-button block (click)="goToPrevSlide()">Navigate Back</button>
+    <button ion-button block (click)="goToNextSlide()">Navigate Forward</button>
+    <button ion-button block (click)="goToSlide(2)">Navigate to 3rd Slide</button>
+    <button ion-button block (click)="getIndex()">Get Index</button>
   </ion-slide>
   <ion-slide padding>
     <h1>Slide 3</h1>
-    <button block (click)="goToPrevSlide()">Navigate Back</button>
-    <button block (click)="goToNextSlide()">Navigate Forward</button>
-    <button block (click)="getIndex()">Get Index</button>
+    <button ion-button block (click)="goToPrevSlide()">Navigate Back</button>
+    <button ion-button block (click)="goToNextSlide()">Navigate Forward</button>
+    <button ion-button block (click)="getIndex()">Get Index</button>
   </ion-slide>
 </ion-slides>

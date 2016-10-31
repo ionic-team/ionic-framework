@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./tabs";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Tabs
 // --------------------------------------------------
@@ -41,11 +40,11 @@ $tabs-wp-tab-background-activated:      rgba(0, 0, 0, .1) !default;
 $tabs-wp-tab-icon-size:                 2.4rem !default;
 
 
-ion-tabbar {
+.tabs-wp .tabbar {
   background: $tabs-wp-background;
 }
 
-.tab-button {
+.tabs-wp .tab-button {
   padding: $tabs-wp-tab-padding;
 
   min-height: $tabs-wp-tab-min-height;
@@ -56,59 +55,58 @@ ion-tabbar {
   font-weight: $tabs-wp-tab-font-weight;
   color: $tabs-wp-tab-color;
   box-shadow: none;
-
-  &[aria-selected=true] {
-    border-bottom-color: $tabs-wp-tab-border-color-active;
-    color: $tabs-wp-tab-color-active;
-  }
-
-  &.activated {
-    background: $tabs-wp-tab-background-activated;
-  }
 }
 
-.tab-button-text {
+.tabs-wp .tab-button[aria-selected=true] {
+  border-bottom-color: $tabs-wp-tab-border-color-active;
+  color: $tabs-wp-tab-color-active;
+}
+
+.tabs-wp .tab-button.activated {
+  background: $tabs-wp-tab-background-activated;
+}
+
+.tabs-wp .tab-button-text {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-.tab-button-icon {
+.tabs-wp .tab-button-icon {
   min-width: $tabs-wp-tab-icon-size;
 
   font-size: $tabs-wp-tab-icon-size;
 }
 
-[tabsLayout=icon-bottom] .tab-button {
+.tabs-wp[tabsLayout=icon-bottom] .tab-button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-[tabsLayout=icon-right] .tab-button,
-[tabsLayout=icon-left] .tab-button {
+.tabs-wp[tabsLayout=icon-right] .tab-button,
+.tabs-wp[tabsLayout=icon-left] .tab-button {
   padding-bottom: 10px;
-
-  ion-icon {
-    min-width: 24px;
-  }
 }
 
-[tabsLayout=icon-hide] .tab-button,
-[tabsLayout=title-hide] .tab-button,
+.tabs-wp[tabsLayout=icon-right] .tab-button ion-icon,
+.tabs-wp[tabsLayout=icon-left] .tab-button ion-icon {
+  min-width: 24px;
+}
+
+.tabs-wp[tabsLayout=icon-hide] .tab-button,
+.tabs-wp[tabsLayout=title-hide] .tab-button,
 .tab-button.icon-only,
 .tab-button.has-title-only {
   padding: 6px 10px;
 }
 
-[tabsPlacement=bottom] .tab-button {
+.tabs-wp[tabsPlacement=bottom] .tab-button {
   border-top: $tabs-wp-tab-border;
   border-bottom-width: 0;
-
-  &[aria-selected=true] {
-    border-top-color: $tabs-wp-tab-border-color-active;
-  }
 }
 
-
+.tabs-wp[tabsPlacement=bottom] .tab-button[aria-selected=true] {
+  border-top-color: $tabs-wp-tab-border-color-active;
+}
 
 
 // Windows Tabbar Color Mixin
@@ -116,18 +114,18 @@ ion-tabbar {
 
 @mixin tabbar-wp($color-name, $color-base, $color-contrast) {
 
-  ion-tabs[#{$color-name}] ion-tabbar {
+  .tabs-wp-#{$color-name} .tabbar {
     background-color: $color-base;
+  }
 
-    .tab-button {
-      color: rgba($color-contrast, $tabs-wp-tab-opacity);
-    }
+  .tabs-wp-#{$color-name} .tabbar .tab-button {
+    color: rgba($color-contrast, $tabs-wp-tab-opacity);
+  }
 
-    .tab-button:hover:not(.disable-hover),
-    .tab-button[aria-selected=true] {
-      border-color: $color-contrast;
-      color: $color-contrast;
-    }
+  .tabs-wp-#{$color-name} .tabbar .tab-button:hover:not(.disable-hover),
+  .tabs-wp-#{$color-name} .tabbar .tab-button[aria-selected=true] {
+    border-color: $color-contrast;
+    color: $color-contrast;
   }
 
 }

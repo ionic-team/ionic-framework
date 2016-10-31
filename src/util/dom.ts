@@ -49,6 +49,20 @@ export function rafFrames(framesToWait: number, callback: Function) {
   }
 }
 
+// TODO: DRY rafFrames and zoneRafFrames
+export function zoneRafFrames(framesToWait: number, callback: Function) {
+  framesToWait = Math.ceil(framesToWait);
+
+  if (framesToWait < 2) {
+    raf(callback);
+
+  } else {
+    setTimeout(() => {
+      raf(callback);
+    }, (framesToWait - 1) * 16.6667);
+  }
+}
+
 export let CSS: {
   transform?: string,
   transition?: string,
@@ -58,6 +72,7 @@ export let CSS: {
   transitionStart?: string,
   transitionEnd?: string,
   transformOrigin?: string
+  animationDelay?: string;
 } = {};
 
 (function() {
@@ -67,7 +82,7 @@ export let CSS: {
                  '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
   for (i = 0; i < keys.length; i++) {
-    if (document.documentElement.style[keys[i]] !== undefined) {
+    if ((<any>document.documentElement.style)[keys[i]] !== undefined) {
       CSS.transform = keys[i];
       break;
     }
@@ -76,7 +91,7 @@ export let CSS: {
   // transition
   keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
   for (i = 0; i < keys.length; i++) {
-    if (document.documentElement.style[keys[i]] !== undefined) {
+    if ((<any>document.documentElement.style)[keys[i]] !== undefined) {
       CSS.transition = keys[i];
       break;
     }
@@ -99,6 +114,9 @@ export let CSS: {
 
   // transform origin
   CSS.transformOrigin = (isWebkit ? '-webkit-' : '') + 'transform-origin';
+
+  // animation delay
+  CSS.animationDelay = (isWebkit ? 'webkitAnimationDelay' : 'animationDelay');
 })();
 
 
@@ -174,7 +192,7 @@ export function windowLoad(callback?: Function) {
   }
 }
 
-export function pointerCoord(ev: any): Coordinates {
+export function pointerCoord(ev: any): PointerCoordinates {
   // get coordinates for either a mouse click
   // or a touch depending on the given event
   let c = { x: 0, y: 0 };
@@ -189,7 +207,7 @@ export function pointerCoord(ev: any): Coordinates {
   return c;
 }
 
-export function hasPointerMoved(threshold: number, startCoord: Coordinates, endCoord: Coordinates) {
+export function hasPointerMoved(threshold: number, startCoord: PointerCoordinates, endCoord: PointerCoordinates) {
   let deltaX = (startCoord.x - endCoord.x);
   let deltaY = (startCoord.y - endCoord.y);
   let distance = deltaX * deltaX + deltaY * deltaY;
@@ -231,32 +249,6 @@ export function copyInputAttributes(srcElement: HTMLElement, destElement: HTMLEl
       destElement.setAttribute(attr.name, attr.value);
     }
   }
-}
-
-let matchesFn: string;
-let matchesMethods = ['matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector'];
-matchesMethods.some((fn: string) => {
-  if (typeof document.documentElement[fn] === 'function') {
-    matchesFn = fn;
-    return true;
-  }
-});
-
-export function closest(ele: HTMLElement, selector: string, checkSelf?: boolean) {
-  if (ele && matchesFn) {
-
-    // traverse parents
-    ele = (checkSelf ? ele : ele.parentElement);
-
-    while (ele !== null) {
-      if (ele[matchesFn](selector)) {
-        return ele;
-      }
-      ele = ele.parentElement;
-    }
-  }
-
-  return null;
 }
 
 
@@ -314,7 +306,7 @@ export function flushDimensionCache() {
 let dimensionCache: any = {};
 
 
-export interface Coordinates {
+export interface PointerCoordinates {
   x?: number;
   y?: number;
 }

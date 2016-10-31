@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./label";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Label
 // --------------------------------------------------
@@ -12,11 +11,11 @@ $label-md-margin:                     $item-md-padding-top ($item-md-padding-rig
 // Material Design Default Label
 // --------------------------------------------------
 
-ion-label {
+.label-md {
   margin: $label-md-margin;
 }
 
-[text-wrap] ion-label {
+[text-wrap] .label-md {
   font-size: $item-md-body-text-font-size;
   line-height: $item-md-body-text-line-height;
 }
@@ -24,9 +23,9 @@ ion-label {
 // Material Design Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-input ion-label,
-.item-select ion-label,
-.item-datetime ion-label {
+.item-input .label-md,
+.item-select .label-md,
+.item-datetime .label-md {
   color: $label-md-text-color;
 }
 
@@ -34,34 +33,34 @@ ion-label {
 // Material Design Stacked & Floating Labels
 // --------------------------------------------------
 
-ion-label[stacked] {
+.label-md[stacked] {
   font-size: 1.2rem;
 }
 
-ion-label[floating] {
+.label-md[floating] {
   transform: translate3d(0, 27px, 0);
   transform-origin: left top;
   transition: transform 150ms ease-in-out;
 }
 
-ion-label[stacked],
-ion-label[floating] {
+.label-md[stacked],
+.label-md[floating] {
   margin-bottom: 0;
   margin-left: 0;
 }
 
-.input-has-focus ion-label[stacked],
-.input-has-focus ion-label[floating] {
+.input-has-focus .label-md[stacked],
+.input-has-focus .label-md[floating] {
   color: $label-md-text-color-focused;
 }
 
-.input-has-focus ion-label[floating],
-.input-has-value ion-label[floating] {
+.input-has-focus .label-md[floating],
+.input-has-value .label-md[floating] {
   transform: translate3d(0, 0, 0) scale(.8);
 }
 
-.item-label-stacked [item-right],
-.item-label-floating [item-right] {
+.item-md.item-label-stacked [item-right],
+.item-md.item-label-floating [item-right] {
   margin-top: $item-md-padding-media-top - 2;
   margin-bottom: $item-md-padding-media-bottom - 2;
 }
@@ -72,7 +71,10 @@ ion-label[floating] {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  ion-label[#{$color-name}] {
+  .label-md-#{$color-name},
+  .item-input .label-md-#{$color-name},
+  .item-select .label-md-#{$color-name},
+  .item-datetime .label-md-#{$color-name} {
     color: $color-base;
   }
 

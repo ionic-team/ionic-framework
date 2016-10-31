@@ -1,4 +1,4 @@
-@import "../../globals.ios";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Modals
 // --------------------------------------------------
@@ -6,7 +6,7 @@
 $modal-ios-background-color:          $background-ios-color !default;
 $modal-ios-border-radius:             5px !default;
 
-.modal-wrapper {
+.ios .modal-wrapper {
   // hidden by default to prevent flickers, the animation will show it
   transform: translate3d(0, 100%, 0);
 }

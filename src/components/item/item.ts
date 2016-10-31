@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, forwardRef, Input, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Button } from '../button/button';
+import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
-import { Reorder } from '../item/item-reorder';
+import { Ion } from '../ion';
 import { Label } from '../label/label';
 
 
@@ -69,7 +69,7 @@ import { Label } from '../label/label';
  * ## Detail Arrows
  * By default, `<button>` and `<a>` elements with the `ion-item` attribute will display a right arrow icon
  * on `ios` mode. To hide the right arrow icon on either of these elements, add the `detail-none` attribute
- * to the item. To show the right arrow icon on an element that doesn't display is naturally, add the
+ * to the item. To show the right arrow icon on an element that doesn't display it naturally, add the
  * `detail-push` attribute to the item.
  *
  * ```html
@@ -181,9 +181,9 @@ import { Label } from '../label/label';
  *
  *   <!-- List header with buttons on each side -->
  *   <ion-list-header>
- *     <button item-left (click)="buttonClick()">Button</button>
+ *     <button ion-button item-left (click)="buttonClick()">Button</button>
  *     List Header
- *     <button outline item-right (click)="buttonClick()">Outline</button>
+ *     <button ion-button outline item-right (click)="buttonClick()">Outline</button>
  *   </ion-list-header>
  *
  *   <!-- Loops through and creates multiple items -->
@@ -209,25 +209,25 @@ import { Label } from '../label/label';
  *
  *   <!-- Item with left and right buttons -->
  *   <ion-item>
- *     <button item-left (click)="buttonClick()">Button</button>
+ *     <button ion-button item-left (click)="buttonClick()">Button</button>
  *     Item
- *     <button outline item-right (click)="buttonClick()">Outline</button>
+ *     <button ion-button outline item-right (click)="buttonClick()">Outline</button>
  *   </ion-item>
  *
  *   <!-- Item divider with a right button -->
  *   <ion-item-divider>
  *     Item Divider
- *     <button item-right>Button</button>
+ *     <button ion-button item-right>Button</button>
  *   </ion-item-divider>
  *
  *   <!-- Disabled button item with left and right buttons -->
  *   <button ion-item disabled>
- *     <button item-left (click)="buttonClick()">
+ *     <button ion-button item-left (click)="buttonClick()">
  *       <ion-icon name="home"></ion-icon>
  *       Left Icon
  *     </button>
  *     Disabled Button Item
- *     <button outline item-right (click)="buttonClick()">
+ *     <button ion-button outline item-right (click)="buttonClick()">
  *       <ion-icon name="star"></ion-icon>
  *       Left Icon
  *     </button>
@@ -239,7 +239,7 @@ import { Label } from '../label/label';
  *       <img src="img/my-avatar.png">
  *     </ion-avatar>
  *     Avatar Item
- *     <button outline item-right>View</button>
+ *     <button ion-button outline item-right>View</button>
  *   </ion-item>
  *
  *   <!-- Item with a thumbnail on the right -->
@@ -257,7 +257,7 @@ import { Label } from '../label/label';
  *       Item
  *     </ion-item>
  *     <ion-item-options>
- *       <button primary (click)="archive()">Archive</button>
+ *       <button ion-button color="primary" (click)="archive()">Archive</button>
  *     </ion-item-options>
  *   </ion-item-sliding>
  *
@@ -265,37 +265,38 @@ import { Label } from '../label/label';
  * ```
  *
  *
- * @demo /docs/v2/demos/item/
+ * @demo /docs/v2/demos/src/item/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../ItemSliding ItemSliding API Docs}
  */
 @Component({
   selector: 'ion-list-header,ion-item,[ion-item],ion-item-divider',
-  template: `
-    <ng-content select="[item-left],ion-checkbox:not([item-right])"></ng-content>
-    <div class="item-inner">
-      <div class="input-wrapper">
-        <ng-content select="ion-label"></ng-content>
-        <ion-label *ngIf="_viewLabel">
-          <ng-content></ng-content>
-        </ion-label>
-        <ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>
-      </div>
-      <ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>
-      <ion-reorder></ion-reorder>
-    </div>
-    <ion-button-effect></ion-button-effect>
-  `,
-  directives: [NgIf, Label, forwardRef(() => Reorder)],
+  template:
+    '<ng-content select="[item-left],ion-checkbox:not([item-right])"></ng-content>' +
+    '<div class="item-inner">' +
+      '<div class="input-wrapper">' +
+        '<ng-content select="ion-label"></ng-content>' +
+        '<ion-label *ngIf="_viewLabel">' +
+          '<ng-content></ng-content>' +
+        '</ion-label>' +
+        '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
+      '</div>' +
+      '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
+      '<ion-reorder></ion-reorder>' +
+    '</div>' +
+    '<div class="button-effect"></div>',
+  host: {
+    'class': 'item'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class Item {
-  private _ids: number = -1;
-  private _inputs: Array<string> = [];
-  private _label: Label;
-  private _viewLabel: boolean = true;
+export class Item extends Ion {
+  _ids: number = -1;
+  _inputs: Array<string> = [];
+  _label: Label;
+  _viewLabel: boolean = true;
 
   /**
    * @private
@@ -307,7 +308,26 @@ export class Item {
    */
   labelId: string = null;
 
-  constructor(form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  set color(val: string) {
+    this._updateColor(val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('item', val);
+  }
+
+  constructor(form: Form, config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
     this.id = form.nextId().toString();
   }
 
@@ -329,8 +349,13 @@ export class Item {
     }
 
     if (this._inputs.length > 1) {
-      this.setCssClass('item-multiple-inputs', true);
+      this.setElementClass('item-multiple-inputs', true);
     }
+  }
+
+  _updateColor(newColor: string, colorClass?: string) {
+    colorClass = colorClass || 'item'; // item-radio
+    this._setColor(colorClass, newColor);
   }
 
   /**
@@ -344,12 +369,12 @@ export class Item {
    * @private
    */
   @ContentChild(Label)
-  private set contentLabel(label: Label) {
+  set contentLabel(label: Label) {
     if (label) {
       this._label = label;
       this.labelId = label.id = ('lbl-' + this.id);
       if (label.type) {
-        this.setCssClass('item-label-' + label.type, true);
+        this.setElementClass('item-label-' + label.type, true);
       }
       this._viewLabel = false;
     }
@@ -359,7 +384,7 @@ export class Item {
    * @private
    */
   @ViewChild(Label)
-  private set viewLabel(label: Label) {
+  set viewLabel(label: Label) {
     if (!this._label) {
       this._label = label;
     }
@@ -369,12 +394,10 @@ export class Item {
    * @private
    */
   @ContentChildren(Button)
-  private set _buttons(buttons: any) {
-    buttons.toArray().forEach((button: any) => {
-      // Don't add the item-button class if the user specifies
-      // a different size button
-      if (!button.isItem && !button._size) {
-        button.addClass('item-button');
+  set _buttons(buttons: QueryList<Button>) {
+    buttons.forEach(button => {
+      if (!button._size) {
+        button.setElementClass('item-button', true);
       }
     });
   }
@@ -383,32 +406,12 @@ export class Item {
    * @private
    */
   @ContentChildren(Icon)
-  private set _icons(icons: any) {
-    icons.toArray().forEach((icon: any) => {
-      icon.addClass('item-icon');
+  set _icons(icons: QueryList<Icon>) {
+    icons.forEach(icon => {
+      icon.setElementClass('item-icon', true);
     });
   }
 
-  /**
-   * @private
-   */
-  setCssClass(cssClass: string, shouldAdd: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
-  }
-
-  /**
-   * @private
-   */
-  setCssStyle(property: string, value: string) {
-    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
-  }
-
-  /**
-   * @private
-   */
-  getNativeElement(): HTMLElement {
-    return this._elementRef.nativeElement;
-  }
 }
 
 /**
@@ -417,9 +420,16 @@ export class Item {
 @Directive({
   selector: 'ion-item,[ion-item]',
   host: {
-    'class': 'item'
+    'class': 'item-block'
   }
 })
-export class ItemContent {
+export class ItemContent {}
 
-}
+
+/**
+  * @private
+  */
+@Directive({
+  selector: 'ion-item-group'
+})
+export class ItemGroup {}

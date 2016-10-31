@@ -19,8 +19,12 @@
       <ion-input type="password"></ion-input>
     </ion-item>
     <ion-item>
-      <button block id="signIn" (click)="push()">Sign In</button>
+      <a ion-button block navPush="TabsPage" class="e2eSignIn">Sign In</a>
     </ion-item>
   </ion-card>
+
+  <p style="text-align: center;">
+    <a navPush="TabsPage">View Tabs Page</a>
+  </p>
 
 </ion-content>

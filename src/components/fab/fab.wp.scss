@@ -1,0 +1,61 @@
+@import "../../themes/ionic.globals.wp";
+
+// Windows FAB Button
+// --------------------------------------------------
+
+/// @prop - Background color of the button
+$fab-wp-background-color:                   color($colors-wp, primary) !default;
+
+/// @prop - Text color of the button
+$fab-wp-text-color:                         color-contrast($colors-wp, $fab-wp-background-color) !default;
+
+/// @prop - Background color of the activated button
+$fab-wp-background-color-activated:         color-shade($fab-wp-background-color) !default;
+
+/// @prop - Background color of the button
+$fab-wp-in-list-background-color:           color($colors-wp, light) !default;
+
+/// @prop - Text color of the button
+$fab-wp-in-list-text-color:                 color-contrast($colors-wp, $fab-wp-in-list-background-color) !default;
+
+/// @prop - Background color of the activated button
+$fab-wp-in-list-background-color-activated: color-shade($fab-wp-in-list-background-color) !default;
+
+
+.fab-wp {
+  color: $fab-wp-text-color;
+  background-color: $fab-wp-background-color;
+}
+
+.fab-wp.activated {
+  background-color: $fab-wp-background-color-activated;
+}
+
+.fab-wp.fab-in-list {
+  color: $fab-wp-in-list-text-color;
+  background-color: $fab-wp-in-list-background-color;
+}
+
+.fab-wp.fab-in-list.activated {
+  background-color: $fab-wp-in-list-background-color-activated;
+}
+
+
+// Generate WP FAB colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  $bg-color: $color-base;
+  $bg-color-activated: color-shade($bg-color);
+  $fg-color: $color-contrast;
+
+  .fab-wp.fab-wp-#{$color-name} {
+    color: $fg-color;
+    background-color: $bg-color;
+  }
+
+  .fab-wp.fab-wp-#{$color-name}.activated {
+    background-color: $bg-color-activated;
+  }
+}

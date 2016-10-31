@@ -1,9 +1,9 @@
 <ion-header>
 
-  <ion-toolbar primary>
+  <ion-toolbar color="primary">
     <ion-title>Inset Focus</ion-title>
     <ion-buttons end>
-      <button (click)="reload()">
+      <button ion-button (click)="reload()">
         Reload
       </button>
     </ion-buttons>
@@ -25,7 +25,7 @@
 
     <ion-item>
       Item with button right
-      <button item-right>Button 1</button>
+      <button ion-button item-right>Button 1</button>
     </ion-item>
 
     <ion-item>
@@ -40,7 +40,7 @@
     <ion-item>
       <ion-label>Text 3:</ion-label>
       <ion-input></ion-input>
-      <button clear item-right>
+      <button ion-button clear item-right>
         <ion-icon name="power"></ion-icon>
       </button>
     </ion-item>
@@ -87,7 +87,7 @@
     <ion-item>
       <ion-label>Score:</ion-label>
       <ion-input value="10" type="number"></ion-input>
-      <button outline item-right>Update</button>
+      <button ion-button outline item-right>Update</button>
     </ion-item>
 
     <ion-item>

@@ -1,0 +1,6 @@
+body.has-scrollbar .scroll-content {
+  margin-right: -15px;
+}
+body.has-scrollbar ion-menu .scroll-content {
+  margin-right: 0;
+}

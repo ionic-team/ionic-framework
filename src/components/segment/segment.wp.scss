@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./segment";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Segment
 // --------------------------------------------------
@@ -22,11 +21,11 @@ $segment-button-wp-opacity-disabled:           .3 !default;
 
 $segment-button-wp-buttons-justify-content:    flex-start !default;
 
-ion-segment {
+.segment-wp {
   justify-content: $segment-button-wp-buttons-justify-content;
 }
 
-.segment-button {
+.segment-wp .segment-button {
   padding: $segment-button-wp-padding;
 
   height: $segment-button-wp-height;
@@ -51,7 +50,7 @@ ion-segment {
   }
 }
 
-.segment-button-disabled {
+.segment-wp .segment-button-disabled {
   opacity: $segment-button-wp-opacity-disabled;
 
   pointer-events: none;
@@ -59,7 +58,7 @@ ion-segment {
 
 .toolbar {
 
-  ion-segment {
+  .segment-wp {
     margin: 0 auto;
   }
 }
@@ -70,7 +69,7 @@ ion-segment {
 
 @mixin wp-segment-button($color-name, $color-base) {
 
-  ion-segment[#{$color-name}] .segment-button {
+  .segment-wp-#{$color-name} .segment-button {
     color: $color-base;
 
     &.activated,

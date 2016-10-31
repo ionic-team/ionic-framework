@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./range";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Range
 // --------------------------------------------------
@@ -38,32 +37,27 @@ $range-md-pin-padding-horizontal:            0 !default;
 $range-md-pin-min-background-color:          $range-md-bar-background-color !default;
 
 
-ion-range {
+.range-md {
   padding: $range-md-padding-vertical $range-md-padding-horizontal;
 }
 
-[range-left],
-[range-right] {
-  margin: 0 12px;
+.range-md [range-left] {
+  margin: 0 12px 0 0;
 }
 
-[range-left] {
-  margin-left: 0;
+.range-md [range-right] {
+  margin: 0 0 0 12px;
 }
 
-[range-right] {
-  margin-right: 0;
-}
-
-.range-has-pin {
+.range-md.range-has-pin {
   padding-top: $range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical;
 }
 
-.range-slider {
+.range-md .range-slider {
   height: $range-md-slider-height;
 }
 
-.range-bar {
+.range-md .range-bar {
   position: absolute;
   top: ($range-md-slider-height / 2);
   left: 0;
@@ -76,15 +70,15 @@ ion-range {
   pointer-events: none;
 }
 
-.range-pressed .range-bar-active {
+.range-md.range-pressed .range-bar-active {
   will-change: left, right;
 }
 
-.range-pressed .range-knob-handle {
+.range-md.range-pressed .range-knob-handle {
   will-change: left;
 }
 
-.range-bar-active {
+.range-md .range-bar-active {
   bottom: 0;
 
   width: auto;
@@ -92,7 +86,7 @@ ion-range {
   background: $range-md-bar-active-background-color;
 }
 
-.range-knob-handle {
+.range-md .range-knob-handle {
   position: absolute;
   top: ($range-md-slider-height / 2);
   left: 0%;
@@ -106,7 +100,7 @@ ion-range {
   text-align: center;
 }
 
-.range-knob {
+.range-md .range-knob {
   position: absolute;
 
   top: ($range-md-hit-height / 2) - ($range-md-knob-height / 2) + ($range-md-bar-height / 2);
@@ -129,7 +123,7 @@ ion-range {
   pointer-events: none;
 }
 
-.range-tick {
+.range-md .range-tick {
   position: absolute;
 
   top: ($range-md-hit-height / 2) - ($range-md-tick-height / 2) + ($range-md-bar-height / 2);
@@ -148,11 +142,11 @@ ion-range {
   pointer-events: none;
 }
 
-.range-tick-active {
+.range-md .range-tick-active {
   background: $range-md-tick-active-background-color;
 }
 
-.range-pin {
+.range-md .range-pin {
   position: relative;
   top: -20px;
   display: inline-block;
@@ -195,16 +189,16 @@ ion-range {
   }
 }
 
-.range-knob-pressed .range-pin {
+.range-md .range-knob-pressed .range-pin {
   transform: translate3d(0, 0, 0) scale(1);
 }
 
-ion-range:not(.range-has-pin) .range-knob-pressed .range-knob {
+.range-md:not(.range-has-pin) .range-knob-pressed .range-knob {
   transform: scale(1);
 }
 
 @mixin md-range-min() {
-  .range-knob-min {
+  .range-md .range-knob-min.range-knob-min {
     .range-knob {
       border: $range-md-knob-min-border;
       background: $range-md-knob-min-background-color;
@@ -220,7 +214,7 @@ ion-range:not(.range-has-pin) .range-knob-pressed .range-knob {
 
 @include md-range-min();
 
-.range-disabled {
+.range-md.range-disabled {
   .range-bar-active {
     background-color: $range-md-bar-background-color;
   }
@@ -239,7 +233,7 @@ ion-range:not(.range-has-pin) .range-knob-pressed .range-knob {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  ion-range[#{$color-name}] {
+  .range-md-#{$color-name} {
     @include md-range-min();
 
     .range-bar-active,

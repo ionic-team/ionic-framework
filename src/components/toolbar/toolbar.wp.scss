@@ -1,6 +1,4 @@
-@import "../../globals.wp";
-@import "./toolbar";
-@import "./toolbar-button";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Toolbar
 // --------------------------------------------------
@@ -17,7 +15,6 @@ $toolbar-order-wp: (
 );
 
 $toolbar-wp-padding:                     4px !default;
-$toolbar-wp-height:                      4.6rem !default;
 $toolbar-wp-title-padding:               0 6px !default;
 $toolbar-wp-title-font-size:             1.5rem !default;
 $toolbar-wp-title-font-weight:           bold !default;
@@ -31,7 +28,7 @@ $toolbar-wp-button-border-radius:        2px !default;
 $navbar-wp-height:                       $toolbar-wp-height !default;
 
 
-.toolbar {
+.toolbar-wp {
   padding: $toolbar-wp-padding;
 
   min-height: $toolbar-wp-height;
@@ -41,7 +38,7 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 // Windows Toolbar Background
 // --------------------------------------------------
 
-.toolbar-background {
+.toolbar-background-wp {
   border-color: $toolbar-wp-border-color;
   background: $toolbar-wp-background;
 }
@@ -50,7 +47,7 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 // Windows Toolbar Content
 // --------------------------------------------------
 
-.toolbar-content {
+.toolbar-content-wp {
   flex: 1;
   order: map-get($toolbar-order-wp, content);
 
@@ -58,7 +55,7 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
   max-width: 100%;
 }
 
-.toolbar-title {
+.toolbar-title-wp {
   padding: $toolbar-wp-title-padding;
 
   font-size: $toolbar-wp-title-font-size;
@@ -68,30 +65,23 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 }
 
 @mixin wp-toolbar-theme($color-name, $color-base, $color-contrast) {
-  .toolbar[#{$color-name}] {
-    $fg-color: $color-contrast;
 
-    .toolbar-background {
-      background: $color-base;
-    }
+  .toolbar-wp-#{$color-name} .toolbar-background-wp {
+    background: $color-base;
+  }
 
-    .bar-button-default,
-    .bar-button-outline,
-    .toolbar-title {
-      color: $fg-color;
-    }
+  .toolbar-wp-#{$color-name} .bar-button-clear-wp,
+  .toolbar-wp-#{$color-name} .bar-button-default-wp,
+  .toolbar-wp-#{$color-name} .bar-button-outline-wp,
+  .toolbar-wp-#{$color-name} .toolbar-title-wp {
+    color: $color-contrast;
+  }
 
-    .bar-button-default,
-    .bar-button-outline {
-      ion-button-effect {
-        background-color: $fg-color;
-      }
-    }
+  .toolbar-wp-#{$color-name} .bar-button-outline-wp {
+    border-color: $color-contrast;
+  }
 
-    .bar-button-outline {
-      border-color: $fg-color;
-    }
-
+  .toolbar-wp-#{$color-name} {
     @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
       @include wp-bar-button-default($color-name, $color-base, $color-contrast);
       @include wp-bar-button-outline($color-name, $color-base, $color-contrast);
@@ -104,27 +94,27 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 // Windows Toolbar Button Placement
 // --------------------------------------------------
 
-ion-buttons {
+.bar-buttons-wp {
   order: map-get($toolbar-order-wp, buttons-start);
 
   transform: translateZ(0);
 }
 
-ion-buttons[left] {
+.bar-buttons-wp[left] {
   order: map-get($toolbar-order-wp, buttons-left);
 }
 
-ion-buttons[left] .bar-button:first-child {
+.bar-buttons-wp[left] .bar-button:first-child {
   margin-left: 0;
 }
 
-ion-buttons[end] {
+.bar-buttons-wp[end] {
   order: map-get($toolbar-order-wp, buttons-end);
 
   text-align: right;
 }
 
-ion-buttons[right] {
+.bar-buttons-wp[right] {
   order: map-get($toolbar-order-wp, buttons-right);
 
   text-align: right;
@@ -134,7 +124,7 @@ ion-buttons[right] {
 // Windows Toolbar Button Default
 // --------------------------------------------------
 
-.bar-button {
+.bar-button-wp {
   margin-top: 0;
   margin-right: .2rem;
   margin-bottom: 0;
@@ -150,15 +140,17 @@ ion-buttons[right] {
   text-transform: uppercase;
 }
 
-.bar-button-solid,
-.bar-button-outline {
+.bar-button-solid-wp,
+.bar-button-outline-wp {
   // restrict the ripple to button size
   overflow: hidden;
 }
 
 @mixin wp-bar-button-default($color-name, $color-base, $color-contrast) {
 
-  .bar-button-#{$color-name} {
+  .bar-button-#{$color-name}-wp,
+  .bar-button-clear-wp-#{$color-name},
+  .bar-button-wp-#{$color-name} {
     color: $color-base;
     background-color: transparent;
 
@@ -173,7 +165,7 @@ ion-buttons[right] {
 // Windows Toolbar Button Outline
 // --------------------------------------------------
 
-.bar-button-outline {
+.bar-button-outline-wp {
   border-width: 1px;
   border-style: solid;
   border-color: $toolbar-wp-button-color;
@@ -192,7 +184,7 @@ ion-buttons[right] {
 
 @mixin wp-bar-button-outline($color-name, $color-base, $color-contrast) {
 
-  .bar-button-outline-#{$color-name} {
+  .bar-button-outline-wp-#{$color-name} {
     $fg-color: color-shade($color-base);
     border-color: $fg-color;
     color: $fg-color;
@@ -210,7 +202,7 @@ ion-buttons[right] {
 // Windows Toolbar Button Solid
 // --------------------------------------------------
 
-.bar-button-solid {
+.bar-button-solid-wp {
   color: color-contrast($colors-wp, $toolbar-wp-button-color, wp);
   background-color: $toolbar-wp-button-color;
 
@@ -226,7 +218,7 @@ ion-buttons[right] {
 
 @mixin wp-bar-button-solid($color-name, $color-base, $color-contrast) {
 
-  .bar-button-solid-#{$color-name} {
+  .bar-button-solid-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 
@@ -242,7 +234,7 @@ ion-buttons[right] {
 // Windows Toolbar Button Icon
 // --------------------------------------------------
 
-.bar-button-icon-left ion-icon {
+.bar-button-wp.bar-button-icon-left ion-icon {
   padding-right: .3em;
 
   font-size: 1.4em;
@@ -251,7 +243,7 @@ ion-buttons[right] {
   pointer-events: none;
 }
 
-.bar-button-icon-right ion-icon {
+.bar-button-wp.bar-button-icon-right ion-icon {
   padding-left: .4em;
 
   font-size: 1.4em;
@@ -260,7 +252,7 @@ ion-buttons[right] {
   pointer-events: none;
 }
 
-.bar-button-icon-only {
+.bar-button-wp[icon-only] {
   padding: 0;
 
   ion-icon {
@@ -279,7 +271,7 @@ ion-buttons[right] {
 // Windows Toolbar Back Button
 // --------------------------------------------------
 
-.back-button {
+.back-button-wp {
   margin: 0 6px;
 
   min-width: 44px;
@@ -287,7 +279,7 @@ ion-buttons[right] {
   box-shadow: none;
 }
 
-.back-button-icon {
+.back-button-icon-wp {
   margin: 0;
   padding: 0 6px;
 
@@ -300,7 +292,7 @@ ion-buttons[right] {
 // Windows Toolbar Menu Toggle
 // --------------------------------------------------
 
-.bar-button-menutoggle {
+.bar-button-menutoggle-wp {
   order: map-get($toolbar-order-wp, menu-toggle-start);
 
   margin: 0 6px;
@@ -315,8 +307,8 @@ ion-buttons[right] {
   }
 }
 
-.bar-button-menutoggle[end],
-.bar-button-menutoggle[right] {
+.bar-button-menutoggle-wp[end],
+.bar-button-menutoggle-wp[right] {
   order: map-get($toolbar-order-wp, menu-toggle-end);
 
   margin: 0 2px;
@@ -329,6 +321,7 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 @include wp-bar-button-default(default, $toolbar-wp-button-color, color-contrast($colors-wp, $toolbar-wp-button-color, wp));
+@include wp-bar-button-default(clear, $toolbar-wp-button-color, color-contrast($colors-wp, $toolbar-wp-button-color, wp));
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
   @include wp-toolbar-theme($color-name, $color-base, $color-contrast);

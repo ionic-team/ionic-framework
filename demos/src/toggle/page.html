@@ -1,0 +1,71 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Toggle</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label>Frodo Baggins</ion-label>
+      <ion-toggle [(ngModel)]="data.frodo"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Sam</ion-label>
+      <ion-toggle [(ngModel)]="data.sam"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Éowyn</ion-label>
+      <ion-toggle [(ngModel)]="data.eowyn" color="danger"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Legolas</ion-label>
+      <ion-toggle [(ngModel)]="data.legolas" disabled="true"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Gimli</ion-label>
+      <ion-toggle [(ngModel)]="data.gimli" color="danger"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Saruman</ion-label>
+      <ion-toggle [(ngModel)]="data.saruman" color="dark"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Gandalf</ion-label>
+      <ion-toggle [(ngModel)]="data.gandalf" color="secondary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Arwen</ion-label>
+      <ion-toggle [(ngModel)]="data.arwen" disabled="true"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Boromir</ion-label>
+      <ion-toggle [(ngModel)]="data.boromir"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Gollum</ion-label>
+      <ion-toggle [(ngModel)]="data.gollum" color="dark"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Galadriel</ion-label>
+      <ion-toggle [(ngModel)]="data.galadriel" color="secondary"></ion-toggle>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

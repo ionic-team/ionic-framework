@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./range";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Range
 // --------------------------------------------------
@@ -33,32 +32,27 @@ $range-wp-pin-font-size:                     12px !default;
 $range-wp-pin-padding:                       8px !default;
 
 
-ion-range {
+.range-wp {
   padding: $range-wp-padding-vertical $range-wp-padding-horizontal;
 }
 
-[range-left],
-[range-right] {
-  margin: 0 12px;
+.range-wp [range-left] {
+  margin: 0 12px 0 0;
 }
 
-[range-left] {
-  margin-left: 0;
+.range-wp [range-right] {
+  margin: 0 0 0 12px;
 }
 
-[range-right] {
-  margin-right: 0;
-}
-
-.range-has-pin {
+.range-wp.range-has-pin {
   padding-top: $range-wp-padding-vertical + $range-wp-pin-font-size + $range-wp-pin-padding;
 }
 
-.range-slider {
+.range-wp .range-slider {
   height: $range-wp-slider-height;
 }
 
-.range-bar {
+.range-wp .range-bar {
   position: absolute;
   top: ($range-wp-slider-height / 2);
   left: 0;
@@ -71,15 +65,15 @@ ion-range {
   pointer-events: none;
 }
 
-.range-pressed .range-bar-active {
+.range-wp.range-pressed .range-bar-active {
   will-change: left, right;
 }
 
-.range-pressed .range-knob-handle {
+.range-wp.range-pressed .range-knob-handle {
   will-change: left;
 }
 
-.range-bar-active {
+.range-wp .range-bar-active {
   bottom: 0;
 
   width: auto;
@@ -87,7 +81,7 @@ ion-range {
   background: $range-wp-bar-active-background-color;
 }
 
-.range-knob-handle {
+.range-wp .range-knob-handle {
   position: absolute;
   top: ($range-wp-slider-height / 2);
   left: 0%;
@@ -101,7 +95,7 @@ ion-range {
   text-align: center;
 }
 
-.range-knob {
+.range-wp .range-knob {
   position: absolute;
   top: ($range-wp-hit-height / 2) - ($range-wp-knob-height / 2) + ($range-wp-bar-height / 2);
   left: ($range-wp-hit-width / 2) - ($range-wp-knob-width / 2);
@@ -116,7 +110,7 @@ ion-range {
   pointer-events: none;
 }
 
-.range-tick {
+.range-wp .range-tick {
   position: absolute;
   top: ($range-wp-hit-height / 2) - ($range-wp-tick-height / 2) + ($range-wp-bar-height / 2);
 
@@ -132,11 +126,11 @@ ion-range {
   pointer-events: none;
 }
 
-.range-tick-active {
+.range-wp .range-tick-active {
   background: $range-wp-tick-active-background-color;
 }
 
-.range-pin {
+.range-wp .range-pin {
   position: relative;
   top: -24px;
   display: inline-block;
@@ -159,11 +153,11 @@ ion-range {
   transition: transform 120ms ease;
 }
 
-.range-knob-pressed .range-pin {
+.range-wp .range-knob-pressed .range-pin {
   transform: translate3d(0, 0, 0) scale(1);
 }
 
-.range-disabled {
+.range-wp.range-disabled {
   opacity: .5;
 }
 
@@ -172,7 +166,7 @@ ion-range {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  ion-range[#{$color-name}] {
+  .range-wp-#{$color-name} {
     .range-bar-active,
     .range-tick-active,
     .range-knob,

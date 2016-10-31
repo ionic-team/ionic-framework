@@ -1,0 +1,61 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS FAB Button
+// --------------------------------------------------
+
+/// @prop - Background color of the button
+$fab-ios-background-color:                    color($colors-ios, primary) !default;
+
+/// @prop - Text color of the button
+$fab-ios-text-color:                          color-contrast($colors-ios, $fab-ios-background-color) !default;
+
+/// @prop - Background color of the activated button
+$fab-ios-background-color-activated:          color-shade($fab-ios-background-color) !default;
+
+/// @prop - Background color of the button
+$fab-ios-in-list-background-color:            color($colors-ios, light) !default;
+
+/// @prop - Text color of the button
+$fab-ios-in-list-text-color:                  color-contrast($colors-ios, $fab-ios-in-list-background-color) !default;
+
+/// @prop - Background color of the activated button
+$fab-ios-in-list-background-color-activated:  color-shade($fab-ios-in-list-background-color) !default;
+
+.fab-ios {
+  color: $fab-ios-text-color;
+  background-color: $fab-ios-background-color;
+}
+
+.fab-ios.activated {
+  background-color: $fab-ios-background-color-activated;
+}
+
+.fab-ios.fab-in-list {
+  color: $fab-ios-in-list-text-color;
+  background-color: $fab-ios-in-list-background-color;
+}
+
+.fab-ios.fab-in-list.activated {
+  background-color: $fab-ios-in-list-background-color-activated;
+}
+
+
+// Generate iOS FAB colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  $bg-color: $color-base;
+  $bg-color-activated: color-shade($bg-color);
+  $fg-color: $color-contrast;
+
+  .fab-ios.fab-ios-#{$color-name} {
+    color: $fg-color;
+    background-color: $bg-color;
+  }
+
+  .fab-ios.fab-ios-#{$color-name}.activated {
+    background-color: $bg-color-activated;
+  }
+}
+

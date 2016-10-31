@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./item";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Item
 // --------------------------------------------------
@@ -24,7 +23,7 @@ $item-md-divider-padding:            5px 15px !default;
 $item-md-sliding-content-background: $list-md-background-color !default;
 
 
-.item {
+.item-md {
   position: relative;
 
   padding-right: 0;
@@ -37,54 +36,54 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   color: $list-md-text-color;
   background-color: $list-md-background-color;
   box-shadow: none;
-  transition: background-color 300ms cubic-bezier(.4, 0, .2, 1), transform 300ms;
-
-  h1 {
-    margin: 0 0 2px;
-
-    font-size: 2.4rem;
-    font-weight: normal;
-  }
-
-  h2 {
-    margin: 2px 0;
-
-    font-size: 1.6rem;
-    font-weight: normal;
-  }
-
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 2px 0;
-
-    font-size: 1.4rem;
-    font-weight: normal;
-    line-height: normal;
-  }
-
-  p {
-    overflow: inherit;
-
-    margin: 0 0 2px;
-
-    font-size: 1.4rem;
-    line-height: normal;
-    text-overflow: inherit;
-    color: $item-md-paragraph-text-color;
-  }
+  transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
 }
 
-.item.activated {
+.item-md.activated {
   background-color: $list-md-activated-background-color;
 }
 
-.item[no-lines] {
+.item-md[no-lines] {
   border-width: 0;
 }
 
-.item .item-inner {
+.item-md h1 {
+  margin: 0 0 2px;
+
+  font-size: 2.4rem;
+  font-weight: normal;
+}
+
+.item-md h2 {
+  margin: 2px 0;
+
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+.item-md h3,
+.item-md h4,
+.item-md h5,
+.item-md h6 {
+  margin: 2px 0;
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: normal;
+}
+
+.item-md p {
+  overflow: inherit;
+
+  margin: 0 0 2px;
+
+  font-size: 1.4rem;
+  line-height: normal;
+  text-overflow: inherit;
+  color: $item-md-paragraph-text-color;
+}
+
+.item-md.item-block .item-inner {
   padding-right: ($item-md-padding-right / 2);
 
   border-bottom: 1px solid $list-md-border-color;
@@ -94,22 +93,18 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 // Material Design Item Detail Push
 // --------------------------------------------------
 
-@mixin md-detail-push() {
-  @include svg-background-image($item-md-detail-push-svg);
-
-  padding-right: 32px;
-
-  background-repeat: no-repeat;
-  background-position: right ($item-md-padding-right - 2) center;
-  background-size: 14px 14px;
-}
-
 // Only show the forward arrow icon if true
 @if $item-md-detail-push-show == true {
-  .item[detail-push] .item-inner,
-  button.item:not([detail-none]) .item-inner,
-  a.item:not([detail-none]) .item-inner {
-    @include md-detail-push();
+  .item-md[detail-push] .item-inner,
+  button.item-md:not([detail-none]) .item-inner,
+  a.item-md:not([detail-none]) .item-inner {
+    @include svg-background-image($item-md-detail-push-svg);
+
+    padding-right: 32px;
+
+    background-repeat: no-repeat;
+    background-position: right ($item-md-padding-right - 2) center;
+    background-size: 14px 14px;
   }
 }
 
@@ -117,19 +112,19 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 // Material Design Item Media
 // --------------------------------------------------
 
-[item-left],
-[item-right] {
+.item-md [item-left],
+.item-md [item-right] {
   margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom 0;
 }
 
-ion-icon[item-left],
-ion-icon[item-right] {
+.item-md ion-icon[item-left],
+.item-md ion-icon[item-right] {
   margin-top: $item-md-padding-icon-top;
   margin-bottom: $item-md-padding-icon-bottom;
   margin-left: 0;
 }
 
-.item-button {
+.item-md .item-button {
   padding: 0 .6em;
 
   height: 25px;
@@ -137,49 +132,49 @@ ion-icon[item-right] {
   font-size: 1.2rem;
 }
 
-.item-button.button-icon-only ion-icon,
-.item-button.button-icon-only {
+.item-md .item-button[icon-only] ion-icon,
+.item-md .item-button[icon-only] {
   padding: 0 1px;
 }
 
-ion-icon[item-left] + .item-inner,
-ion-icon[item-left] + .item-input {
+.item-md ion-icon[item-left] + .item-inner,
+.item-md ion-icon[item-left] + .item-input {
   margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
 }
 
-ion-avatar[item-left],
-ion-thumbnail[item-left] {
+.item-md ion-avatar[item-left],
+.item-md ion-thumbnail[item-left] {
   margin: ($item-md-padding-right / 2) $item-md-padding-right ($item-md-padding-right / 2) 0;
 }
 
-ion-avatar[item-right],
-ion-thumbnail[item-right] {
+.item-md ion-avatar[item-right],
+.item-md ion-thumbnail[item-right] {
   margin: ($item-md-padding-right / 2);
 }
 
-ion-avatar {
+.item-md ion-avatar {
   min-width: $item-md-avatar-size;
   min-height: $item-md-avatar-size;
-
-  img {
-    max-width: $item-md-avatar-size;
-    max-height: $item-md-avatar-size;
-
-    border-radius: $item-md-avatar-size / 2;
-  }
 }
 
-ion-thumbnail {
+.item-md ion-avatar img {
+  max-width: $item-md-avatar-size;
+  max-height: $item-md-avatar-size;
+
+  border-radius: $item-md-avatar-size / 2;
+}
+
+.item-md ion-thumbnail {
   min-width: $item-md-thumbnail-size;
   min-height: $item-md-thumbnail-size;
-
-  img {
-    max-width: $item-md-thumbnail-size;
-    max-height: $item-md-thumbnail-size;
-  }
 }
 
-ion-note {
+.item-md ion-thumbnail img {
+  max-width: $item-md-thumbnail-size;
+  max-height: $item-md-thumbnail-size;
+}
+
+.item-md ion-note {
   color: $item-md-note-color;
 }
 
@@ -187,24 +182,20 @@ ion-note {
 // Material Design Item Group
 // --------------------------------------------------
 
-ion-item-group {
-  .item:first-child {
-    .item-inner {
-      border-top-width: 0;
-    }
-  }
+ion-item-group .item-md:first-child .item-inner {
+  border-top-width: 0;
+}
 
-  .item:last-child .item-inner,
-  .item-wrapper:last-child .item-inner {
-    border: 0;
-  }
+ion-item-group .item-md:last-child .item-inner,
+ion-item-group .item-md .item-wrapper:last-child .item-inner {
+  border: 0;
 }
 
 
 // Material Design Item Divider
 // --------------------------------------------------
 
-ion-item-divider {
+ion-item-divider.item-md {
   padding-left: $item-md-padding-left;
 
   color: $item-md-divider-color;
@@ -216,7 +207,13 @@ ion-item-divider {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-  ion-item-divider[#{$color-name}] {
+  // If there is text with a color it should use this color
+  // and override whatever item sets it to
+  .item-md .text-md-#{$color-name} {
+    color: $color-base;
+  }
+
+  .item-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }
@@ -226,6 +223,14 @@ ion-item-divider {
 // Material Design Item Sliding
 // --------------------------------------------------
 
-ion-item-sliding {
+.list-md ion-item-sliding {
   background-color: $item-md-sliding-content-background;
+}
+
+// Item reorder
+// --------------------------------------------------
+
+.item-md ion-reorder {
+  font-size: 1.5em;
+  opacity: .3;
 }

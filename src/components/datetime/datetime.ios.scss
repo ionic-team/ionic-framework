@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./datetime";
+@import "../../themes/ionic.globals.ios";
 
 // iOS DateTime
 // --------------------------------------------------
@@ -10,6 +9,6 @@ $datetime-ios-padding-bottom:      $item-ios-padding-bottom !default;
 $datetime-ios-padding-left:        $item-ios-padding-left !default;
 
 
-ion-datetime {
+.datetime-ios {
   padding: $datetime-ios-padding-top $datetime-ios-padding-right $datetime-ios-padding-bottom $datetime-ios-padding-left;
 }

@@ -1,6 +1,6 @@
-import { Attribute, Directive, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
-import { Content } from '../content/content';
+import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { ItemSlidingGesture } from '../item/item-sliding-gesture';
@@ -18,7 +18,7 @@ import { GestureController } from '../../gestures/gesture-controller';
  * interaction modes such as swipe to edit, drag to reorder, and
  * removing items.
  *
- * @demo /docs/v2/demos/list/
+ * @demo /docs/v2/demos/src/list/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @advanced
  *
@@ -50,17 +50,22 @@ export class List extends Ion {
   private _slidingGesture: ItemSlidingGesture;
 
   constructor(
+    config: Config,
     elementRef: ElementRef,
-    private _rendered: Renderer,
-    public _gestureCtrl: GestureController) {
-    super(elementRef);
+    renderer: Renderer,
+    public _gestureCtrl: GestureController
+  ) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
   }
 
   /**
-   * @private
+   * @input {string} The mode to apply to this component.
    */
-  ngOnDestroy() {
-    this._slidingGesture && this._slidingGesture.destroy();
+  @Input()
+  set mode(val: string) {
+    this._setMode('list', val);
   }
 
   /**
@@ -74,7 +79,6 @@ export class List extends Ion {
     this._enableSliding = isTrueProperty(val);
     this._updateSlidingState();
   }
-
 
   /**
    * @private
@@ -98,31 +102,17 @@ export class List extends Ion {
     }
   }
 
-
   /**
    * Close any sliding items that are open.
    */
   closeSlidingItems() {
     this._slidingGesture && this._slidingGesture.closeOpened();
   }
-}
 
-
-/**
- * @private
- */
-@Directive({
-  selector: 'ion-list-header'
-})
-export class ListHeader {
-  constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') private _id: string) { }
-
-  public get id(): string {
-    return this._id;
-  }
-
-  public set id(val: string) {
-    this._id = val;
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', val);
+  /**
+   * @private
+   */
+  destroy() {
+    this._slidingGesture && this._slidingGesture.destroy();
   }
 }

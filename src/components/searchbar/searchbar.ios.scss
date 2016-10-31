@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./searchbar";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Searchbar
 // --------------------------------------------------
@@ -30,13 +29,13 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // Searchbar
 // -----------------------------------------
 
-ion-searchbar {
+.searchbar-ios {
   padding: $searchbar-ios-padding-top-bottom $searchbar-ios-padding-left-right;
 
   min-height: $searchbar-ios-min-height;
 
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid $searchbar-ios-border-color;
+  border-top: $hairlines-width solid transparent;
+  border-bottom: $hairlines-width solid $searchbar-ios-border-color;
   background: $searchbar-ios-background-color;
 }
 
@@ -53,30 +52,28 @@ ion-searchbar {
 // Searchbar Search Icon
 // -----------------------------------------
 
-.searchbar-search-icon {
+.searchbar-ios .searchbar-search-icon {
   @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $searchbar-ios-input-search-icon-color);
-  @include calc(margin-left, "50% - 60px");
 
   position: absolute;
   top: 9px;
   left: 9px;
+
+  margin-left: calc(50% - 60px);
 
   width: $searchbar-ios-input-search-icon-size + 1;
   height: $searchbar-ios-input-search-icon-size + 1;
 
   background-repeat: no-repeat;
   background-size: $searchbar-ios-input-search-icon-size;
-
-  transition: $searchbar-ios-input-transition;
 }
 
 
 // Searchbar Input Field
 // -----------------------------------------
 
-.searchbar-input {
+.searchbar-ios .searchbar-input {
   @include placeholder($searchbar-ios-input-placeholder-color);
-  @include calc(padding-left, "50% - 28px");
 
   padding: 0 28px;
 
@@ -88,15 +85,13 @@ ion-searchbar {
 
   color: $searchbar-ios-input-text-color;
   background-color: $searchbar-ios-input-background-color;
-
-  transition: $searchbar-ios-input-transition;
 }
 
 
 // Searchbar Clear Input Icon
 // -----------------------------------------
 
-.searchbar-clear-icon {
+.searchbar-ios .searchbar-clear-icon {
   @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $searchbar-ios-input-clear-icon-color);
 
   position: absolute;
@@ -115,12 +110,11 @@ ion-searchbar {
 // Searchbar Cancel (iOS only)
 // -----------------------------------------
 
-.searchbar-ios-cancel {
+.searchbar-ios .searchbar-ios-cancel {
   display: none;
 
   flex-shrink: 0;
 
-  margin-right: -100%;
   margin-left: 0;
   padding: 0;
   padding-left: 8px;
@@ -128,87 +122,54 @@ ion-searchbar {
   height: 30px;
 
   cursor: pointer;
-
-  opacity: 0;
-
-  transform: translate3d(0, 0, 0);
-  transition: $searchbar-ios-cancel-transition;
-
-  pointer-events: none;
-}
-
-.searchbar-show-cancel .searchbar-ios-cancel {
-  display: block;
 }
 
 // Searchbar Left Aligned (iOS only)
 // -----------------------------------------
 
-.searchbar-left-aligned {
-  .searchbar-search-icon {
-    margin-left: 0;
-  }
+.searchbar-ios.searchbar-left-aligned .searchbar-search-icon {
+  margin-left: 0;
+}
 
-  .searchbar-input {
-    padding-left: 30px;
-  }
+.searchbar-ios.searchbar-left-aligned .searchbar-input {
+  padding-left: 30px;
 }
 
 
 // Searchbar Has Focus
 // -----------------------------------------
 
-.searchbar-has-focus {
-  .searchbar-ios-cancel {
-    opacity: 1;
-
-    pointer-events: auto;
-  }
+.searchbar-ios.searchbar-show-cancel.searchbar-has-focus .searchbar-ios-cancel {
+  display: block;
 }
 
 
 // Searchbar in Toolbar
 // -----------------------------------------
 
-.toolbar {
+.toolbar .searchbar-ios {
+  border-bottom-width: 0;
+  background: transparent;
+}
 
-  ion-searchbar {
-    border-bottom-width: 0;
-    background: transparent;
+.toolbar .searchbar-ios .searchbar-input {
+  background: $searchbar-ios-toolbar-input-background;
+}
 
-    .searchbar-input {
-      background: $searchbar-ios-toolbar-input-background;
-    }
+.toolbar .searchbar-ios .searchbar-ios-cancel {
+  padding: 0;
+}
 
-    .searchbar-ios-cancel {
-      padding: 0;
-    }
-  }
-
-  .searchbar-has-focus .searchbar-ios-cancel {
-    padding-left: 8px;
-  }
-
+.toolbar .searchbar-ios.searchbar-has-focus .searchbar-ios-cancel {
+  padding-left: 8px;
 }
 
 
 // Searchbar Cancel (MD only)
 // -----------------------------------------
 
-.searchbar-md-cancel {
+.searchbar-ios .searchbar-md-cancel {
   display: none;
-}
-
-
-// Searchbar Hairlines (iOS only)
-// -----------------------------------------
-
-&.hairlines ion-searchbar {
-  border-bottom-width: $hairlines-width;
-}
-
-&.hairlines ion-toolbar ion-searchbar {
-  border-bottom-width: 0;
 }
 
 
@@ -218,34 +179,56 @@ ion-searchbar {
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   $fg-color: rgba($color-contrast, .5);
 
-  ion-searchbar[#{$color-name}] {
-    .searchbar-ios-cancel {
-      color: $color-base;
-
-      &:hover:not(.disable-hover) {
-        color: color-shade($color-base);
-      }
-    }
+  .searchbar-ios-#{$color-name} .searchbar-ios-cancel {
+    color: $color-base;
   }
 
-  .toolbar[#{$color-name}] ion-searchbar {
-    .searchbar-search-icon {
-      @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
-    }
-
-    .searchbar-input {
-      @include placeholder($fg-color);
-      color: $color-contrast;
-      background: rgba($color-contrast, .08);
-    }
-
-    .searchbar-clear-icon {
-      @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $fg-color);
-    }
-
-    .searchbar-ios-cancel {
-      color: color-contrast($colors-ios, $color-base, ios);
-    }
+  .searchbar-ios-#{$color-name} .searchbar-ios-cancel:hover:not(.disable-hover) {
+    color: color-shade($color-base);
   }
 
+  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-search-icon {
+    @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
+  }
+
+  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-input {
+    @include placeholder($fg-color);
+    color: $color-contrast;
+    background: rgba($color-contrast, .08);
+  }
+
+  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-clear-icon {
+    @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $fg-color);
+  }
+
+  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-ios-cancel {
+    color: color-contrast($colors-ios, $color-base, ios);
+  }
+
+}
+
+// Searchbar animation
+// -----------------------------------------
+
+.searchbar-ios.searchbar-animated .searchbar-search-icon,
+.searchbar-ios.searchbar-animated .searchbar-input {
+  transition: $searchbar-ios-input-transition;
+}
+
+.searchbar-animated.searchbar-has-focus .searchbar-ios-cancel {
+  opacity: 1;
+
+  pointer-events: auto;
+}
+
+.searchbar-animated .searchbar-ios-cancel {
+  display: block;
+
+  margin-right: -100%;
+
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  transition: $searchbar-ios-cancel-transition;
+
+  pointer-events: none;
 }

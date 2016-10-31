@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-interfaces';
+import { NavOptions } from '../../navigation/nav-util';
 import { PopoverCmp } from './popover-component';
 import { PopoverOptions } from './popover-options';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -14,20 +14,15 @@ import { ViewController } from '../nav/view-controller';
 export class Popover extends ViewController {
   private _app: App;
 
-  constructor(app: App, componentType: any, data: any = {}, opts: PopoverOptions = {}) {
+  constructor(app: App, component: any, data: any = {}, opts: PopoverOptions = {}) {
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    data.componentType = componentType;
+    data.component = component;
     data.opts = opts;
-    super(PopoverCmp, data);
+    super(PopoverCmp, data, null);
     this._app = app;
     this.isOverlay = true;
-
-    // by default, popovers should not fire lifecycle events of other views
-    // for example, when a popover enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**
@@ -46,15 +41,6 @@ export class Popover extends ViewController {
    */
   present(navOptions: NavOptions = {}) {
     return this._app.present(this, navOptions);
-  }
-
-  /**
-   * @private
-   * DEPRECATED: Please inject PopoverController instead
-   */
-  static create(componentType: any, data = {}, opts: PopoverOptions = {}) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('Popover.create(..) has been deprecated. Please inject PopoverController instead');
   }
 
 }
@@ -76,21 +62,21 @@ export class Popover extends ViewController {
  * below for all available options.
  *
  * ### Presenting
- * To present a popover, call the `present` method on the [NavController](../../nav/NavController).
- * The first argument passed to the `present` should be the popover. In order
- * to position the popover relative to the element clicked, the event needs to be
- * passed as the second argument. If the event is not passed, the popover will be
- * positioned in the center of the current view. See the [usage](#usage) section for
- * an example of passing this event.
+ * To present a popover, call the `present` method on a [PopoverController](../../nav/PopoverConroller) instance.
+ * In order to position the popover relative to the element clicked, a click event
+ * needs to be passed into the options of the the `present method. If the event
+ * is not passed, the popover will be positioned in the center of the current
+ * view. See the [usage](#usage) section for an example of passing this event.
  *
  * ### Dismissing
  * To dismiss the popover after creation, call the `dismiss()` method on the
  * `Popover` instance. The popover can also be dismissed from within the popover's
  * view by calling the `dismiss()` method on the [ViewController](../../nav/ViewController).
- * The `onDidDismiss` function can be called to perform an action after the popover
- * is dismissed. The popover will dismiss when the backdrop is clicked, but this
- * can be disabled by setting `enableBackdropDismiss` to `false` in the popover
- * options.
+ * The `dismiss()` call accepts an optional parameter that will be passed to the callback described
+ * as follows. The `onDidDismiss(<func>)` function can be called to set up a callback action that will
+ * be performed after the popover is dismissed, receiving the parameter passed to `dismiss()`.
+ * The popover will dismiss when the backdrop is clicked by implicitly performing `dismiss(null)`,
+ * but this can be disabled by setting `enableBackdropDismiss` to `false` in the popover options.
  *
  * > Note that after the component is dismissed, it will not be usable anymore and
  * another one must be created. This can be avoided by wrapping the creation and
@@ -103,7 +89,7 @@ export class Popover extends ViewController {
  * which creates and presents the popover:
  *
  * ```html
- * <button (click)="presentPopover($event)">
+ * <button ion-button (click)="presentPopover($event)">
  *   <ion-icon name="more"></ion-icon>
  * </button>
  * ```
@@ -111,7 +97,7 @@ export class Popover extends ViewController {
  * ```ts
  * @Component({})
  * class MyPage {
- *   constructor(private popoverCtrl: PopoverController) {}
+ *   constructor(public popoverCtrl: PopoverController) {}
  *
  *   presentPopover(myEvent) {
  *     let popover = this.popoverCtrl.create(PopoverPage);
@@ -139,7 +125,7 @@ export class Popover extends ViewController {
  *   `
  * })
  * class PopoverPage {
- *   constructor(private viewCtrl: ViewController) {}
+ *   constructor(public viewCtrl: ViewController) {}
  *
  *   close() {
  *     this.viewCtrl.dismiss();
@@ -157,7 +143,7 @@ export class Popover extends ViewController {
  *
  *
  *
- * @demo /docs/v2/demos/popover/
+ * @demo /docs/v2/demos/src/popover/
  */
 @Injectable()
 export class PopoverController {
@@ -166,12 +152,12 @@ export class PopoverController {
 
   /**
    * Present a popover. See below for options
-   * @param {object} componentType The Popover
+   * @param {object} component The Popover
    * @param {object} data Any data to pass to the Popover view
    * @param {PopoverOptions} opts Popover options
    */
-  create(componentType: any, data = {}, opts: PopoverOptions = {}): Popover {
-    return new Popover(this._app, componentType, data, opts);
+  create(component: any, data = {}, opts: PopoverOptions = {}): Popover {
+    return new Popover(this._app, component, data, opts);
   }
 
 }

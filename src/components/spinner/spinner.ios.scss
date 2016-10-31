@@ -1,0 +1,23 @@
+
+// iOS Spinner
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  .spinner-ios-#{$color-name} {
+
+    &.spinner-ios line,
+    &.spinner-ios-small line,
+    &.spinner-crescent circle {
+      stroke: $color-base;
+    }
+
+    &.spinner-bubbles circle,
+    &.spinner-circles circle,
+    &.spinner-dots circle {
+      fill: $color-base;
+    }
+
+  }
+
+}

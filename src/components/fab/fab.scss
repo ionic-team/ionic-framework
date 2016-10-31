@@ -1,0 +1,212 @@
+@import "../../themes/ionic.globals";
+
+// Floating Action Buttons
+// --------------------------------------------------
+
+/// @prop - Width and height of the FAB button
+$fab-size:            56px !default;
+
+/// @prop - Width and height of the FAB button mini
+$fab-mini-size:       40px !default;
+
+/// @prop - Margin of the FAB Container
+$fab-content-margin:  10px !default;
+
+/// @prop - Margin of the FAB List
+$fab-list-margin:     10px !default;
+
+
+.fab {
+  @include appearance(none);
+
+  position: relative;
+  z-index: 0;
+  display: block;
+  overflow: hidden;
+
+  width: $fab-size;
+  height: $fab-size;
+
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: $fab-size;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color, opacity 100ms linear;
+
+  background-clip: padding-box;
+  font-kerning: none;
+  user-select: none;
+
+  ion-icon {
+    flex: 1;
+
+    font-size: 2.4rem;
+  }
+}
+
+// FAB mini
+// --------------------------------------------------
+
+.fab[mini] {
+  margin: ($fab-size - $fab-mini-size) / 2;
+
+  width: $fab-mini-size;
+  height: $fab-mini-size;
+
+  line-height: $fab-mini-size;
+
+  .fab-close-icon {
+    line-height: $fab-mini-size;
+  }
+}
+
+
+// FAB container
+// --------------------------------------------------
+
+ion-fab {
+  position: absolute;
+  z-index: $z-index-fixed-content;
+
+  &[center] {
+    left: 50%;
+
+    margin-left: -$fab-size / 2;
+  }
+
+  &[middle] {
+    top: 50%;
+
+    margin-top: -$fab-size / 2;
+  }
+
+  &[top] {
+    top: $fab-content-margin;
+  }
+
+  &[right] {
+    right: $fab-content-margin;
+  }
+
+  &[bottom] {
+    bottom: $fab-content-margin;
+  }
+
+  &[left] {
+    left: $fab-content-margin;
+  }
+
+  &[top][edge] {
+    top: -$fab-size / 2;
+  }
+
+  &[bottom][edge] {
+    bottom: -$fab-size / 2;
+  }
+}
+
+
+// FAB list (speed dial)
+// --------------------------------------------------
+
+ion-fab-list {
+  position: absolute;
+  top: 0;
+  display: none;
+
+  flex-direction: column;
+  align-items: center;
+
+  margin: $fab-size + $fab-list-margin 0;
+
+  min-width: $fab-size;
+  min-height: $fab-size;
+}
+
+ion-fab-list .fab-in-list {
+  margin: 8px 0;
+
+  width: $fab-mini-size;
+  height: $fab-mini-size;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0);
+  transition: all 200ms ease;
+  transition-delay: 10ms;
+  transition-property: transform, opacity;
+}
+
+ion-fab-list .fab-in-list.show {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+ion-fab-list[side=left] .fab-in-list,
+ion-fab-list[side=right] .fab-in-list {
+  margin: 0 8px;
+}
+
+ion-fab-list[side=top] {
+  top: initial;
+  bottom: 0;
+
+  flex-direction: column-reverse;
+}
+
+ion-fab-list[side=left] {
+  right: 0;
+
+  flex-direction: row-reverse;
+
+  margin: 0 $fab-size + $fab-list-margin;
+}
+
+ion-fab-list[side=right] {
+  left: 0;
+
+  flex-direction: row;
+
+  margin: 0 $fab-size + $fab-list-margin;
+}
+
+
+// FAB animation
+// --------------------------------------------------
+
+.fab-list-active {
+  display: flex;
+}
+
+.fab-close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+
+  line-height: $fab-size;
+  opacity: 0;
+  transform: scale(.4) rotateZ(-45deg);
+  transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
+}
+
+.fab .button-inner {
+  transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
+}
+
+.fab-close-active .fab-close-icon {
+  opacity: 1;
+  transform: scale(1) rotateZ(0deg);
+}
+
+.fab-close-active .button-inner {
+  opacity: 0;
+  transform: scale(.4) rotateZ(45deg);
+}

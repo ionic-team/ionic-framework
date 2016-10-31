@@ -7,7 +7,7 @@ import { Content } from '../content/content';
 import { Img } from '../img/img';
 import { isBlank, isFunction, isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 import { VirtualCell, VirtualData, VirtualNode } from './virtual-util';
 import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
 
@@ -86,6 +86,11 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * ### Approximate Widths and Heights
  *
+ * If the height of items in the virtual scroll are not close to the
+ * default size of 40px, it is extremely important to provide an value for
+ * approxItemHeight height. An exact pixel-perfect size is not necessary,
+ * but without an estimate the virtual scroll will not render correctly.
+ *
  * The approximate width and height of each template is used to help
  * determine how many cells should be created, and to help calculate
  * the height of the scrollable area. Note that the actual rendered size
@@ -94,10 +99,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * It's also important to know that Ionic's default item sizes have
  * slightly different heights between platforms, which is perfectly fine.
- * An exact pixel-perfect size is not necessary, but a good estimation
- * is important. Basically if each item is roughly 500px tall, rather than
- * the default of 40px tall, it's extremely important to know for virtual
- * scroll to calculate a good height.
+ *
  *
  *
  * ### Images Within Virtual Scroll
@@ -115,7 +117,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * makes a HTTP request for the image file. HTTP requests, image
  * decoding, and image rendering can cause issues while scrolling. For virtual
  * scrolling, the natural effects of the `<img>` are not desirable features.
- * 
+ *
  * Note: `<ion-img>` should only be used with Virtual Scroll. If you are using
  * an image outside of Virtual Scroll you should use the standard `<img>` tag.
  *
@@ -153,29 +155,29 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
   selector: '[virtualScroll]'
 })
 export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
-  private _trackBy: TrackByFn;
-  private _differ: IterableDiffer;
-  private _unreg: Function;
-  private _init: boolean;
-  private _rafId: number;
-  private _tmId: number;
-  private _hdrFn: Function;
-  private _ftrFn: Function;
-  private _records: any[] = [];
-  private _cells: VirtualCell[] = [];
-  private _nodes: VirtualNode[] = [];
-  private _vHeight: number = 0;
-  private _lastCheck: number = 0;
-  private _data: VirtualData = {
+  _trackBy: TrackByFn;
+  _differ: IterableDiffer;
+  _unreg: Function;
+  _init: boolean;
+  _rafId: number;
+  _tmId: number;
+  _hdrFn: Function;
+  _ftrFn: Function;
+  _records: any[] = [];
+  _cells: VirtualCell[] = [];
+  _nodes: VirtualNode[] = [];
+  _vHeight: number = 0;
+  _lastCheck: number = 0;
+  _data: VirtualData = {
     scrollTop: 0,
   };
-  private _eventAssist: boolean;
-  private _queue: number = null;
+  _eventAssist: boolean;
+  _queue: number = null;
 
-  @ContentChild(VirtualItem) private _itmTmp: VirtualItem;
-  @ContentChild(VirtualHeader) private _hdrTmp: VirtualHeader;
-  @ContentChild(VirtualFooter) private _ftrTmp: VirtualFooter;
-  @ContentChildren(Img) private _imgs: QueryList<Img>;
+  @ContentChild(VirtualItem) _itmTmp: VirtualItem;
+  @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
+  @ContentChild(VirtualFooter) _ftrTmp: VirtualFooter;
+  @ContentChildren(Img) _imgs: QueryList<Img>;
 
   /**
    * @input {array} The data that builds the templates within the virtual scroll.
@@ -215,15 +217,17 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @Input() approxItemWidth: string = '100%';
 
   /**
-   * @input {string} The approximate height of each item template's cell.
+   * @input {string} Default is `40px`. It is important to provide this
+   * if virtual item height will be significantly larger than the default
+   * The approximate height of each virtual item template's cell.
    * This dimension is used to help determine how many cells should
    * be created when initialized, and to help calculate the height of
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `40px`.
+   * initial dimensions.
    */
-  @Input() approxItemHeight: string = '40px';
+  @Input() approxItemHeight: string;
 
   /**
    * @input {string} The approximate width of each header template's cell.
@@ -281,7 +285,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   @Input() set headerFn(val: Function) {
     if (isFunction(val)) {
-      this._hdrFn = val.bind((this._ctrl && this._ctrl.instance) || this);
+      this._hdrFn = val.bind((this._ctrl && this._ctrl._cmp) || this);
     }
   }
 
@@ -294,7 +298,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   @Input() set footerFn(val: Function) {
     if (isFunction(val)) {
-      this._ftrFn = val.bind((this._ctrl && this._ctrl.instance) || this);
+      this._ftrFn = val.bind((this._ctrl && this._ctrl._cmp) || this);
     }
   }
 
@@ -339,12 +343,18 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
       this._init = true;
 
+      if (!this.approxItemHeight) {
+        this.approxItemHeight = '40px';
+        console.warn('Virtual Scroll: Please provide an "approxItemHeight" input to ensure proper virtual scroll rendering');
+      }
+
       this.update(true);
 
       this._platform.onResize(() => {
         console.debug('VirtualScroll, onResize');
         this.update(false);
       });
+
     }
   }
 

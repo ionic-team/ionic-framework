@@ -13,11 +13,11 @@
 
   <ion-toolbar no-border-top>
     <ion-buttons end>
-      <button>
+      <button ion-button icon-only>
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-segment [(ngModel)]="icons" secondary>
+    <ion-segment [(ngModel)]="icons" color="secondary">
       <ion-segment-button value="camera">
         <ion-icon name="camera"></ion-icon>
       </ion-segment-button>
@@ -37,7 +37,7 @@
   <h4>Map mode: formControlName</h4>
 
   <form (submit)="doSubmit($event)" [formGroup]="myForm">
-    <ion-segment formControlName="mapStyle" danger>
+    <ion-segment formControlName="mapStyle" color="danger">
       <ion-segment-button value="active" class="e2eSegmentStandard">
         Active
       </ion-segment-button>
@@ -70,7 +70,7 @@
 
   <h4>Model style: NgModel</h4>
 
-  <ion-segment [(ngModel)]="modelStyle" dark>
+  <ion-segment [(ngModel)]="modelStyle" color="dark">
     <ion-segment-button value="A">
       Model A
     </ion-segment-button>
@@ -96,15 +96,15 @@
     </ion-segment-button>
   </ion-segment>
 
-  <button block dark (click)="toggleDisabled()">Toggle Disabled</button>
+  <button ion-button block color="dark" (click)="toggleDisabled()">Toggle Disabled</button>
 
 </ion-content>
 
 
 <ion-footer>
 
-  <ion-toolbar primary>
-    <ion-segment [(ngModel)]="appType" light>
+  <ion-toolbar color="primary">
+    <ion-segment [(ngModel)]="appType" color="light">
       <ion-segment-button value="paid">
         Primary
       </ion-segment-button>
@@ -118,7 +118,7 @@
   </ion-toolbar>
 
   <ion-toolbar no-border-top no-border-bottom>
-    <ion-segment [(ngModel)]="appType" danger>
+    <ion-segment [(ngModel)]="appType" color="danger">
       <ion-segment-button value="paid">
         Default
       </ion-segment-button>
@@ -132,7 +132,7 @@
   </ion-toolbar>
 
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="appType" dark [disabled]="isDisabled">
+    <ion-segment [(ngModel)]="appType" color="dark" [disabled]="isDisabled">
       <ion-segment-button value="paid">
         Default
       </ion-segment-button>

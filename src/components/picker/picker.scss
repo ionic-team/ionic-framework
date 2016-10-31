@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Picker
 // --------------------------------------------------
@@ -71,7 +71,6 @@ ion-picker-cmp {
 
   flex: 1;
 
-  min-width: 50px;
   min-width: 45%;
 
   text-align: right;
@@ -83,7 +82,6 @@ ion-picker-cmp {
 
   flex: 1;
 
-  min-width: 50px;
   min-width: 45%;
 
   text-align: left;

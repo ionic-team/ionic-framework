@@ -1,5 +1,4 @@
-@import "../../globals.md";
-@import "./select";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Select
 // --------------------------------------------------
@@ -13,26 +12,26 @@ $select-md-icon-color:          #999 !default;
 $select-md-placeholder-color:   $select-md-icon-color !default;
 
 
-ion-select {
+.select-md {
   padding: $select-md-padding-top $select-md-padding-right $select-md-padding-bottom $select-md-padding-left;
 }
 
-.select-placeholder {
+.select-md .select-placeholder {
   color: $select-md-placeholder-color;
 }
 
-.item-select ion-label {
+.select-md .item-select ion-label {
   margin-left: 0;
 }
 
-.select-icon {
+.select-md .select-icon {
   position: relative;
 
   width: 12px;
   height: 19px;
 }
 
-.select-icon .select-icon-inner {
+.select-md .select-icon .select-icon-inner {
   position: absolute;
   top: 50%;
   left: 5px;

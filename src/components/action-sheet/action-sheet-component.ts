@@ -1,15 +1,10 @@
 import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
 
-import { Animation } from '../../animations/animation';
-import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
-import { Icon } from '../icon/icon';
 import { Key } from '../../util/key';
-import { NavParams } from '../nav/nav-params';
-import { Transition, TransitionOptions } from '../../transitions/transition';
-import { ViewController } from '../nav/view-controller';
+import { NavParams } from '../../navigation/nav-params';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -17,28 +12,26 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-action-sheet',
-  template: `
-    <ion-backdrop (click)="bdClick()"></ion-backdrop>
-    <div class="action-sheet-wrapper">
-      <div class="action-sheet-container">
-        <div class="action-sheet-group">
-          <div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>
-          <div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>
-          <button category="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [ngClass]="b.cssClass">
-            <ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon>
-            {{b.text}}
-          </button>
-        </div>
-        <div class="action-sheet-group" *ngIf="d.cancelButton">
-          <button category="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">
-            <ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon>
-            {{d.cancelButton.text}}
-          </button>
-        </div>
-      </div>
-    </div>
-    `,
-  directives: [Backdrop, Icon, NgClass, NgFor, NgIf],
+  template:
+    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
+    '<div class="action-sheet-wrapper">' +
+      '<div class="action-sheet-container">' +
+        '<div class="action-sheet-group">' +
+          '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
+          '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
+          '<button ion-button="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [attr.icon-left]="b.icon ? \'\' : null" [ngClass]="b.cssClass">' +
+            '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon>' +
+            '{{b.text}}' +
+          '</button>' +
+        '</div>' +
+        '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
+          '<button ion-button="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [attr.icon-left]="d.cancelButton.icon ? \'\' : null" [ngClass]="d.cancelButton.cssClass">' +
+            '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
+            '{{d.cancelButton.text}}' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>',
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
@@ -47,7 +40,7 @@ import { ViewController } from '../nav/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class ActionSheetCmp {
-  private d: {
+  d: {
     title?: string;
     subTitle?: string;
     cssClass?: string;
@@ -55,10 +48,11 @@ export class ActionSheetCmp {
     enableBackdropDismiss?: boolean;
     cancelButton: any;
   };
-  private descId: string;
-  private enabled: boolean;
-  private hdrId: string;
-  private id: number;
+  descId: string;
+  enabled: boolean;
+  hdrId: string;
+  id: number;
+  mode: string;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -69,6 +63,8 @@ export class ActionSheetCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
+    this.mode = _config.get('mode');
+    renderer.setElementClass(_elementRef.nativeElement, `action-sheet-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
@@ -86,7 +82,7 @@ export class ActionSheetCmp {
     }
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     // normalize the data
     let buttons: any[] = [];
 
@@ -125,7 +121,7 @@ export class ActionSheetCmp {
   }
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
       if (ev.keyCode === Key.ESCAPE) {
         console.debug('actionsheet, escape button');
@@ -171,106 +167,5 @@ export class ActionSheetCmp {
     return this._viewCtrl.dismiss(null, role);
   }
 }
-
-
-class ActionSheetSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.01, 0.4);
-    wrapper.fromTo('translateY', '100%', '0%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-slide-in', ActionSheetSlideIn);
-
-
-class ActionSheetSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.4, 0);
-    wrapper.fromTo('translateY', '0%', '100%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-slide-out', ActionSheetSlideOut);
-
-
-class ActionSheetMdSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.01, 0.26);
-    wrapper.fromTo('translateY', '100%', '0%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
-
-
-class ActionSheetMdSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.26, 0);
-    wrapper.fromTo('translateY', '0%', '100%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);
-
-class ActionSheetWpSlideIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.01, 0.16);
-    wrapper.fromTo('translateY', '100%', '0%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-wp-slide-in', ActionSheetWpSlideIn);
-
-
-class ActionSheetWpSlideOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
-
-    backdrop.fromTo('opacity', 0.1, 0);
-    wrapper.fromTo('translateY', '0%', '100%');
-
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
-  }
-}
-Transition.register('action-sheet-wp-slide-out', ActionSheetWpSlideOut);
 
 let actionSheetIds = -1;

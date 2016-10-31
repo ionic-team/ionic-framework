@@ -1,0 +1,47 @@
+
+// Ionic Version
+@import "./version";
+
+
+// Global Functions
+@import "./ionic.functions";
+
+
+// Global Mixins
+@import "./ionic.mixins";
+
+
+// Global include-rtl
+$include-rtl: true !default;
+
+
+// Global font path
+$font-path: "../fonts" !default;
+
+
+// Hairline width
+$hairlines-width: .55px !default;
+
+
+// Z-Index
+// --------------------------------------------------
+// Grouped by elements which would be siblings
+
+$z-index-menu-overlay:           80;
+$z-index-menu-backdrop:          79;
+$z-index-overlay:                1000;
+$z-index-click-block:            9999;
+
+$z-index-fixed-content:          999;
+$z-index-scroll-content:         1;
+$z-index-refresher:              0;
+
+$z-index-page-container:         0;
+$z-index-toolbar:                10;
+$z-index-toolbar-background:     -1;
+
+$z-index-backdrop:               2;
+$z-index-overlay-wrapper:        10;
+
+$z-index-item-options:           1;
+$z-index-item-divider:          100;

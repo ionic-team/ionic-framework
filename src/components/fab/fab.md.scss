@@ -1,0 +1,75 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design FAB Button
+// --------------------------------------------------
+
+/// @prop - Box shadow of the FAB button
+$fab-md-box-shadow:                         0 4px 6px 0 rgba(0, 0, 0, .14), 0 4px 5px rgba(0, 0, 0, .1) !default;
+
+/// @prop - Box shadow of the activated FAB button
+$fab-md-box-shadow-activated:               0 5px 15px 0 rgba(0, 0, 0, .4), 0 4px 7px 0 rgba(0, 0, 0, .1) !default;
+
+/// @prop - Background color of the button
+$fab-md-background-color:                   color($colors-md, primary) !default;
+
+/// @prop - Text color of the button
+$fab-md-text-color:                         color-contrast($colors-md, $fab-md-background-color) !default;
+
+/// @prop - Background color of the activated button
+$fab-md-background-color-activated:         color-shade($fab-md-background-color) !default;
+
+/// @prop - Background color of the button
+$fab-md-in-list-background-color:           color($colors-md, light) !default;
+
+/// @prop - Text color of the button
+$fab-md-in-list-text-color:                 color-contrast($colors-md, $fab-md-in-list-background-color) !default;
+
+/// @prop - Background color of the activated button
+$fab-md-in-list-background-color-activated: color-shade($fab-md-in-list-background-color) !default;
+
+
+.fab-md {
+  color: $fab-md-text-color;
+  background-color: $fab-md-background-color;
+
+  box-shadow: $fab-md-box-shadow;
+
+  transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
+              background-color $button-md-transition-duration $button-md-transition-timing-function,
+              color $button-md-transition-duration $button-md-transition-timing-function;
+}
+
+.fab-md.activated {
+  background-color: $fab-md-background-color-activated;
+  box-shadow: $fab-md-box-shadow-activated;
+}
+
+.fab-md.fab-in-list {
+  color: $fab-md-in-list-text-color;
+  background-color: $fab-md-in-list-background-color;
+}
+
+.fab-md.fab-wp.fab-in-list.activated {
+  background-color: $fab-md-in-list-background-color-activated;
+}
+
+
+// Generate MD FAB colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  $bg-color: $color-base;
+  $bg-color-activated: color-shade($bg-color);
+  $fg-color: $color-contrast;
+
+  .fab-md.fab-md-#{$color-name} {
+    color: $fg-color;
+    background-color: $bg-color;
+  }
+
+  .fab-md.fab-md-#{$color-name}.activated {
+    background-color: $bg-color-activated;
+  }
+}
+

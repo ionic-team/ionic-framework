@@ -1,4 +1,4 @@
-@import "../../globals.md";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Radio
 // --------------------------------------------------
@@ -20,7 +20,7 @@ $radio-md-disabled-opacity:       .3 !default;
 $radio-md-item-left-margin:       11px 36px 10px 4px !default;
 $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-padding-media-bottom 0 !default;
 
-ion-radio {
+.radio-md {
   position: relative;
   display: inline-block;
 }
@@ -29,7 +29,7 @@ ion-radio {
 // Material Design Radio Outer Circle: Unchecked
 // -----------------------------------------
 
-.radio-icon {
+.radio-md .radio-icon {
   position: relative;
   top: 0;
   left: 0;
@@ -50,7 +50,7 @@ ion-radio {
 // Material Design Radio Inner Circle: Unchecked
 // -----------------------------------------
 
-.radio-inner {
+.radio-md .radio-inner {
   position: absolute;
   top: $radio-md-icon-border-width;
   left: $radio-md-icon-border-width;
@@ -68,7 +68,7 @@ ion-radio {
 // Material Design Radio Outer Circle: Checked
 // -----------------------------------------
 
-.radio-checked {
+.radio-md .radio-checked {
   border-color: $radio-md-color-on;
 }
 
@@ -76,7 +76,7 @@ ion-radio {
 // Material Design Radio Inner Circle: Checked
 // -----------------------------------------
 
-.radio-checked .radio-inner {
+.radio-md .radio-checked .radio-inner {
   transform: scale3d(1, 1, 1);
 }
 
@@ -84,8 +84,8 @@ ion-radio {
 // Material Design Radio: Disabled
 // -----------------------------------------
 
-.radio-disabled,
-.item-radio-disabled ion-label {
+.radio-md.radio-disabled,
+.item-md.item-radio-disabled ion-label {
   opacity: $radio-md-disabled-opacity;
 
   pointer-events: none;
@@ -95,7 +95,7 @@ ion-radio {
 // Material Design Radio Within An Item
 // -----------------------------------------
 
-.item ion-radio {
+.item-md .radio-md {
   position: static;
   display: block;
 
@@ -106,7 +106,7 @@ ion-radio {
   }
 }
 
-.item-radio ion-label {
+.item-radio.item-md ion-label {
   margin-left: 0;
 }
 
@@ -114,7 +114,7 @@ ion-radio {
 // Material Design Radio Item Label: Checked
 // -----------------------------------------
 
-.item-radio-checked ion-label {
+.item-radio-checked.item-md ion-label {
   color: $radio-md-color-on;
 }
 
@@ -124,16 +124,16 @@ ion-radio {
 
 @mixin radio-theme-md($color-name, $color-base, $color-contrast) {
 
-  ion-radio[#{$color-name}] {
+  .item-radio-md-#{$color-name}.item-radio-checked ion-label {
+    color: $color-base;
+  }
 
-    .radio-checked {
-      border-color: $color-base;
-    }
+  .radio-md-#{$color-name} .radio-checked {
+    border-color: $color-base;
+  }
 
-    .radio-inner {
-      background-color: $color-base;
-    }
-
+  .radio-md-#{$color-name} .radio-inner {
+    background-color: $color-base;
   }
 
 }
@@ -143,7 +143,5 @@ ion-radio {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-
   @include radio-theme-md($color-name, $color-base, $color-contrast);
-
 }

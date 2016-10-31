@@ -16,13 +16,13 @@ import { Platform } from '../../platform/platform';
   encapsulation: ViewEncapsulation.None,
 })
 export class Img {
-  private _src: string = '';
-  private _normalizeSrc: string = '';
-  private _imgs: HTMLImageElement[] = [];
-  private _w: string;
-  private _h: string;
-  private _enabled: boolean = true;
-  private _init: boolean;
+  _src: string = '';
+  _normalizeSrc: string = '';
+  _imgs: HTMLImageElement[] = [];
+  _w: string;
+  _h: string;
+  _enabled: boolean = true;
+  _init: boolean;
 
   constructor(private _elementRef: ElementRef, private _platform: Platform, private _zone: NgZone) {}
 
@@ -44,7 +44,7 @@ export class Img {
     this._update();
   }
 
-  private _update() {
+  _update() {
     if (this._enabled && this._src !== '') {
       // actively update the image
 
@@ -101,7 +101,7 @@ export class Img {
     }
   }
 
-  private _loaded(isLoaded: boolean) {
+  _loaded(isLoaded: boolean) {
     this._elementRef.nativeElement.classList[isLoaded ? 'add' : 'remove']('img-loaded');
   }
 

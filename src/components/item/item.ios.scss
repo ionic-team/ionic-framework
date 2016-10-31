@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./item";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Item
 // --------------------------------------------------
@@ -25,7 +24,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 // iOS Item
 // --------------------------------------------------
 
-.item {
+.item-ios {
   position: relative;
 
   padding-left: $item-ios-padding-left;
@@ -34,103 +33,95 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   font-size: $item-ios-body-text-font-size;
   color: $list-ios-text-color;
   background-color: $list-ios-background-color;
-  transition-duration: 200ms;
-
-  h1 {
-    margin: 0 0 2px;
-
-    font-size: 2.4rem;
-    font-weight: normal;
-  }
-
-  h2 {
-    margin: 0 0 2px;
-
-    font-size: 1.6rem;
-    font-weight: normal;
-  }
-
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0 0 3px;
-
-    font-size: 1.4rem;
-    font-weight: normal;
-    line-height: normal;
-  }
-
-  p {
-    overflow: inherit;
-
-    margin: 0 0 2px;
-
-    font-size: 1.2rem;
-    line-height: normal;
-    text-overflow: inherit;
-    color: $item-ios-paragraph-text-color;
-  }
-
-  h2:last-child,
-  h3:last-child,
-  h4:last-child,
-  h5:last-child,
-  h6:last-child,
-  p:last-child {
-    margin-bottom: 0;
-  }
-
-  a {
-    text-decoration: none;
-  }
+  transition: background-color 200ms linear;
 }
 
-.item.activated {
+.item-ios.activated {
   background-color: $list-ios-activated-background-color;
   transition-duration: 0ms;
 }
 
-.item .item-inner {
-  padding-right: ($item-ios-padding-right / 2);
+.item-ios h1 {
+  margin: 0 0 2px;
 
-  border-bottom: 1px solid $list-ios-border-color;
+  font-size: 2.4rem;
+  font-weight: normal;
 }
 
-&.hairlines .item-inner {
-  border-bottom-width: $hairlines-width;
+.item-ios h2 {
+  margin: 0 0 2px;
+
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+.item-ios h3,
+.item-ios h4,
+.item-ios h5,
+.item-ios h6 {
+  margin: 0 0 3px;
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: normal;
+}
+
+.item-ios p {
+  overflow: inherit;
+
+  margin: 0 0 2px;
+
+  font-size: 1.2rem;
+  line-height: normal;
+  text-overflow: inherit;
+  color: $item-ios-paragraph-text-color;
+}
+
+.item-ios h2:last-child,
+.item-ios h3:last-child,
+.item-ios h4:last-child,
+.item-ios h5:last-child,
+.item-ios h6:last-child,
+.item-ios p:last-child {
+  margin-bottom: 0;
+}
+
+.item-ios.item-block .item-inner {
+  padding-right: ($item-ios-padding-right / 2);
+
+  border-bottom: $hairlines-width solid $list-ios-border-color;
 }
 
 
 // iOS Item Media
 // --------------------------------------------------
 
-[item-left] {
+.item-ios [item-left] {
   margin: $item-ios-padding-media-top $item-ios-padding-left $item-ios-padding-media-bottom 0;
 }
 
-[item-right] {
+.item-ios [item-right] {
   margin: $item-ios-padding-media-top ($item-ios-padding-left / 2) $item-ios-padding-media-bottom ($item-ios-padding-right / 2);
 }
 
-ion-icon[item-left],
-ion-icon[item-right] {
+.item-ios ion-icon[item-left],
+.item-ios ion-icon[item-right] {
   margin-top: $item-ios-padding-icon-top;
   margin-bottom: $item-ios-padding-icon-bottom;
   margin-left: 0;
 }
 
-ion-avatar[item-left],
-ion-thumbnail[item-left] {
+.item-ios ion-avatar[item-left],
+.item-ios ion-thumbnail[item-left] {
   margin: ($item-ios-padding-right / 2) $item-ios-padding-right ($item-ios-padding-right / 2) 0;
 }
 
-ion-avatar[item-right],
-ion-thumbnail[item-right] {
+.item-ios ion-avatar[item-right],
+.item-ios ion-thumbnail[item-right] {
   margin: ($item-ios-padding-right / 2);
 }
 
-.item-button {
+.item-ios .item-button {
   padding: 0 .5em;
 
   height: 24px;
@@ -138,34 +129,34 @@ ion-thumbnail[item-right] {
   font-size: 1.3rem;
 }
 
-.item-button.button-icon-only ion-icon,
-.item-button.button-icon-only {
+.item-ios .item-button[icon-only] ion-icon,
+.item-ios .item-button[icon-only] {
   padding: 0 1px;
 }
 
-ion-avatar {
+.item-ios ion-avatar {
   min-width: $item-ios-avatar-size;
   min-height: $item-ios-avatar-size;
-
-  img {
-    max-width: $item-ios-avatar-size;
-    max-height: $item-ios-avatar-size;
-
-    border-radius: $item-ios-avatar-size / 2;
-  }
 }
 
-ion-thumbnail {
+.item-ios ion-avatar img {
+  max-width: $item-ios-avatar-size;
+  max-height: $item-ios-avatar-size;
+
+  border-radius: $item-ios-avatar-size / 2;
+}
+
+.item-ios ion-thumbnail {
   min-width: $item-ios-thumbnail-size;
   min-height: $item-ios-thumbnail-size;
-
-  img {
-    max-width: $item-ios-thumbnail-size;
-    max-height: $item-ios-thumbnail-size;
-  }
 }
 
-ion-note {
+.item-ios ion-thumbnail img {
+  max-width: $item-ios-thumbnail-size;
+  max-height: $item-ios-thumbnail-size;
+}
+
+.item-ios ion-note {
   color: $item-ios-note-color;
 }
 
@@ -173,22 +164,18 @@ ion-note {
 // iOS Item Detail Push
 // --------------------------------------------------
 
-@mixin ios-detail-push() {
-  @include svg-background-image($item-ios-detail-push-svg);
-
-  padding-right: 32px;
-
-  background-repeat: no-repeat;
-  background-position: right ($item-ios-padding-right - 2) center;
-  background-size: 14px 14px;
-}
-
 // Only show the forward arrow icon if true
 @if $item-ios-detail-push-show == true {
-  .item[detail-push] .item-inner,
-  button.item:not([detail-none]) .item-inner,
-  a.item:not([detail-none]) .item-inner {
-    @include ios-detail-push();
+  .item-ios[detail-push] .item-inner,
+  button.item-ios:not([detail-none]) .item-inner,
+  a.item-ios:not([detail-none]) .item-inner {
+    @include svg-background-image($item-ios-detail-push-svg);
+
+    padding-right: 32px;
+
+    background-repeat: no-repeat;
+    background-position: right ($item-ios-padding-right - 2) center;
+    background-size: 14px 14px;
   }
 }
 
@@ -196,24 +183,20 @@ ion-note {
 // iOS Item Group
 // --------------------------------------------------
 
-ion-item-group {
-  .item:first-child {
-    .item-inner {
-      border-top-width: 0;
-    }
-  }
+ion-item-group .item-ios:first-child .item-inner {
+  border-top-width: 0;
+}
 
-  .item:last-child .item-inner,
-  .item-wrapper:last-child .item-inner {
-    border: 0;
-  }
+ion-item-group .item-ios:last-child .item-inner,
+ion-item-group .item-wrapper:last-child .item-ios .item-inner {
+  border: 0;
 }
 
 
 // iOS Item Divider
 // --------------------------------------------------
 
-ion-item-divider {
+ion-item-divider.item-ios {
   padding-left: $item-ios-padding-left;
 
   color: $item-ios-divider-color;
@@ -225,7 +208,13 @@ ion-item-divider {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  ion-item-divider[#{$color-name}] {
+  // If there is text with a color it should use this color
+  // and override whatever item sets it to
+  .item-ios .text-ios-#{$color-name} {
+    color: $color-base;
+  }
+
+  .item-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }
@@ -235,20 +224,6 @@ ion-item-divider {
 // iOS Item Sliding
 // --------------------------------------------------
 
-ion-item-sliding {
+.list-ios ion-item-sliding {
   background-color: $item-ios-sliding-content-background;
-}
-
-// iOS item right-to-left
-// --------------------------------------------------
-@if $include-rtl {
-  @at-root {
-
-    .rtl.ios {
-
-      // todo
-
-    }
-
-  }
 }

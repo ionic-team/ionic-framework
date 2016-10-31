@@ -1,5 +1,4 @@
-@import "../../globals.wp";
-@import "./item";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Item
 // --------------------------------------------------
@@ -26,7 +25,7 @@ $item-wp-divider-padding:            5px 15px !default;
 $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 
-.item {
+.item-wp {
   position: relative;
 
   padding-right: 0;
@@ -39,53 +38,53 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   color: $item-wp-body-text-color;
   background-color: $item-wp-body-background-color;
   box-shadow: none;
-
-  h1 {
-    margin: 0 0 2px;
-
-    font-size: 2.4rem;
-    font-weight: normal;
-  }
-
-  h2 {
-    margin: 2px 0;
-
-    font-size: 1.6rem;
-    font-weight: normal;
-  }
-
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 2px 0;
-
-    font-size: 1.4rem;
-    font-weight: normal;
-    line-height: normal;
-  }
-
-  p {
-    overflow: inherit;
-
-    margin: 0 0 2px;
-
-    font-size: 1.4rem;
-    line-height: normal;
-    text-overflow: inherit;
-    color: $item-wp-paragraph-text-color;
-  }
 }
 
-.item.activated {
+.item-wp.activated {
   background-color: $list-wp-activated-background-color;
 }
 
-.item[no-lines] {
+.item-wp[no-lines] {
   border-width: 0;
 }
 
-.item .item-inner {
+.item-wp h1 {
+  margin: 0 0 2px;
+
+  font-size: 2.4rem;
+  font-weight: normal;
+}
+
+.item-wp h2 {
+  margin: 2px 0;
+
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+.item-wp h3,
+.item-wp h4,
+.item-wp h5,
+.item-wp h6 {
+  margin: 2px 0;
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: normal;
+}
+
+.item-wp p {
+  overflow: inherit;
+
+  margin: 0 0 2px;
+
+  font-size: 1.4rem;
+  line-height: normal;
+  text-overflow: inherit;
+  color: $item-wp-paragraph-text-color;
+}
+
+.item-wp.item-block .item-inner {
   padding-right: ($item-wp-padding-right / 2);
 
   border-bottom: 1px solid $list-wp-border-color;
@@ -95,22 +94,18 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 // Windows Item Detail Push
 // --------------------------------------------------
 
-@mixin wp-detail-push() {
-  @include svg-background-image($item-wp-detail-push-svg);
-
-  padding-right: 32px;
-
-  background-repeat: no-repeat;
-  background-position: right ($item-wp-padding-right - 2) center;
-  background-size: 14px 14px;
-}
-
 // Only show the forward arrow icon if true
 @if $item-wp-detail-push-show == true {
-  .item[detail-push] .item-inner,
-  button.item:not([detail-none]) .item-inner,
-  a.item:not([detail-none]) .item-inner {
-    @include wp-detail-push();
+  .item-wp[detail-push] .item-inner,
+  button.item-wp:not([detail-none]) .item-inner,
+  a.item-wp:not([detail-none]) .item-inner {
+    @include svg-background-image($item-wp-detail-push-svg);
+
+    padding-right: 32px;
+
+    background-repeat: no-repeat;
+    background-position: right ($item-wp-padding-right - 2) center;
+    background-size: 14px 14px;
   }
 }
 
@@ -118,19 +113,19 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 // Windows Item Media
 // --------------------------------------------------
 
-[item-left],
-[item-right] {
+.item-wp [item-left],
+.item-wp [item-right] {
   margin: $item-wp-padding-media-top ($item-wp-padding-right / 2) $item-wp-padding-media-bottom 0;
 }
 
-ion-icon[item-left],
-ion-icon[item-right] {
+.item-wp ion-icon[item-left],
+.item-wp ion-icon[item-right] {
   margin-top: $item-wp-padding-icon-top;
   margin-bottom: $item-wp-padding-icon-bottom;
   margin-left: 0;
 }
 
-.item-button {
+.item-wp .item-button {
   padding: 0 .6em;
 
   height: 25px;
@@ -138,54 +133,54 @@ ion-icon[item-right] {
   font-size: 1.2rem;
 }
 
-.item-button.button-icon-only ion-icon,
-.item-button.button-icon-only {
+.item-wp .item-button[icon-only] ion-icon,
+.item-wp .item-button[icon-only] {
   padding: 0 1px;
 }
 
-[text-wrap] ion-label {
+.item-wp[text-wrap] ion-label {
   font-size: $item-wp-body-text-font-size;
   line-height: $item-wp-body-text-line-height;
 }
 
-ion-icon[item-left] + .item-inner,
-ion-icon[item-left] + .item-input {
+.item-wp ion-icon[item-left] + .item-inner,
+.item-wp ion-icon[item-left] + .item-input {
   margin-left: ($item-wp-padding-left / 2);
 }
 
-ion-avatar[item-left],
-ion-thumbnail[item-left] {
+.item-wp ion-avatar[item-left],
+.item-wp ion-thumbnail[item-left] {
   margin: ($item-wp-padding-right / 2) $item-wp-padding-right ($item-wp-padding-right / 2) 0;
 }
 
-ion-avatar[item-right],
-ion-thumbnail[item-right] {
+.item-wp ion-avatar[item-right],
+.item-wp ion-thumbnail[item-right] {
   margin: ($item-wp-padding-right / 2);
 }
 
-ion-avatar {
+.item-wp ion-avatar {
   min-width: $item-wp-avatar-size;
   min-height: $item-wp-avatar-size;
-
-  img {
-    max-width: $item-wp-avatar-size;
-    max-height: $item-wp-avatar-size;
-
-    border-radius: $item-wp-avatar-size / 2;
-  }
 }
 
-ion-thumbnail {
+.item-wp ion-avatar img {
+  max-width: $item-wp-avatar-size;
+  max-height: $item-wp-avatar-size;
+
+  border-radius: $item-wp-avatar-size / 2;
+}
+
+.item-wp ion-thumbnail {
   min-width: $item-wp-thumbnail-size;
   min-height: $item-wp-thumbnail-size;
-
-  img {
-    max-width: $item-wp-thumbnail-size;
-    max-height: $item-wp-thumbnail-size;
-  }
 }
 
-ion-note {
+.item-wp ion-thumbnail img {
+  max-width: $item-wp-thumbnail-size;
+  max-height: $item-wp-thumbnail-size;
+}
+
+.item-wp ion-note {
   color: $item-wp-note-color;
 }
 
@@ -193,7 +188,7 @@ ion-note {
 // Windows Item Divider
 // --------------------------------------------------
 
-ion-item-divider {
+ion-item-divider.item-wp {
   padding-left: $item-wp-padding-left;
 
   color: $item-wp-divider-color;
@@ -205,7 +200,13 @@ ion-item-divider {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
-  ion-item-divider[#{$color-name}] {
+  // If there is text with a color it should use this color
+  // and override whatever item sets it to
+  .item-wp .text-wp-#{$color-name} {
+    color: $color-base;
+  }
+
+  .item-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }
@@ -215,6 +216,6 @@ ion-item-divider {
 // Windows Item Sliding
 // --------------------------------------------------
 
-ion-item-sliding {
+.list-wp ion-item-sliding {
   background-color: $item-wp-sliding-content-background;
 }

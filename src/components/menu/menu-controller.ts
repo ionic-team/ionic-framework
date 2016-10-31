@@ -77,11 +77,11 @@ import { Platform } from '../../platform/platform';
  *
  * ```ts
  *  toggleLeftMenu() {
- *    this.menu.toggle();
+ *    this.menuCtrl.toggle();
  *  }
  *
  *  toggleRightMenu() {
- *    this.menu.toggle('right');
+ *    this.menuCtrl.toggle('right');
  *  }
  * ```
  *
@@ -101,15 +101,15 @@ import { Platform } from '../../platform/platform';
  *
  * ```ts
  *  enableAuthenticatedMenu() {
- *    this.menu.enable(true, 'authenticated');
- *    this.menu.enable(false, 'unauthenticated');
+ *    this.menuCtrl.enable(true, 'authenticated');
+ *    this.menuCtrl.enable(false, 'unauthenticated');
  *  }
  * ```
  *
  * Note: if an app only has one menu, there is no reason to pass an `id`.
  *
  *
- * @demo /docs/v2/demos/menu/
+ * @demo /docs/v2/demos/src/menu/
  *
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../Menu Menu API Docs}
@@ -120,6 +120,7 @@ export class MenuController {
 
   /**
    * Progamatically open the Menu.
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu is fully opened
    */
   open(menuId?: string): Promise<boolean> {
@@ -210,6 +211,7 @@ export class MenuController {
   }
 
   /**
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {boolean} Returns true if the menu is currently open, otherwise false.
    */
   isOpen(menuId?: string): boolean {
@@ -218,6 +220,7 @@ export class MenuController {
   }
 
   /**
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {boolean} Returns true if the menu is currently enabled, otherwise false.
    */
   isEnabled(menuId?: string): boolean {

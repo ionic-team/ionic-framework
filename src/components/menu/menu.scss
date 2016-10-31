@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Menu
 // --------------------------------------------------
@@ -15,10 +15,10 @@ ion-menu {
   left: 0;
 
   display: none;
+}
 
-  &.show-menu {
-    display: block;
-  }
+ion-menu.show-menu {
+  display: block;
 }
 
 
@@ -29,9 +29,7 @@ ion-menu {
   bottom: 0;
   left: 0;
 
-  display: flex;
-
-  flex-direction: column;
+  display: block;
 
   width: $menu-width;
 
@@ -41,7 +39,7 @@ ion-menu {
 .menu-inner > ion-header,
 .menu-inner > ion-content,
 .menu-inner > ion-footer {
-  position: relative;
+  position: absolute;
 }
 
 ion-menu[side=right] > .menu-inner {
@@ -99,8 +97,8 @@ ion-menu[type=reveal].show-menu .menu-inner {
 
 ion-menu[type=overlay] {
   z-index: $z-index-menu-overlay;
+}
 
-  .show-backdrop {
-    display: block;
-  }
+ion-menu[type=overlay] .show-backdrop {
+  display: block;
 }
