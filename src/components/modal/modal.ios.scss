@@ -3,7 +3,10 @@
 // iOS Modals
 // --------------------------------------------------
 
+/// @prop - Background color for the modal
 $modal-ios-background-color:          $background-ios-color !default;
+
+/// @prop - Border radius for the modal
 $modal-ios-border-radius:             5px !default;
 
 .ios .modal-wrapper {
