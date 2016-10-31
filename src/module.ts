@@ -1,6 +1,6 @@
 import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, Inject, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
-import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
-import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { CommonModule, APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -98,8 +98,8 @@ export { ViewController } from './navigation/view-controller';
  * ```
  */
 @NgModule({
-  imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule],
-  exports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES],
+  imports: [CommonModule, HttpModule, FormsModule, ReactiveFormsModule],
+  exports: [CommonModule, HttpModule, FormsModule, ReactiveFormsModule, IONIC_DIRECTIVES],
   declarations: [
     ActionSheetCmp,
     AlertCmp,
