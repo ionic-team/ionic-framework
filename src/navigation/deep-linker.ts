@@ -65,7 +65,7 @@ import { ViewController } from './view-controller';
  *
  * ```ts
  *  links: [
- *    { component: HomePage, name: 'Home', segment: 'home' }
+ *    { component: HomePage, name: 'Home', segment: 'home' },
  *    { component: DetailPage, name: 'Detail', segment: 'detail/:user' }
  *  ]
  *  ```
@@ -96,7 +96,7 @@ import { ViewController } from './view-controller';
  *
  * ```ts
  *  links: [
- *    { component: HomePage, name: 'Home', segment: 'home' }
+ *    { component: HomePage, name: 'Home', segment: 'home' },
  *    { component: DetailPage, name: 'Detail', segment: 'detail/:user', defaultHistory: [HomePage] }
  *  ]
  *  ```
