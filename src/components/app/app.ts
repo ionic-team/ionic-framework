@@ -71,7 +71,7 @@ export class App {
     // listen for hardware back button events
     // register this back button action with a default priority
     _platform.registerBackButtonAction(this.navPop.bind(this));
-    this._canDisableScroll = _config.get('canDisableScroll', true);
+    this._canDisableScroll = _config.get('canDisableScroll', false);
   }
 
   /**

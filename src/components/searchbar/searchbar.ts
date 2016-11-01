@@ -4,7 +4,7 @@ import { NgControl }  from '@angular/forms';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isPresent, isTrueProperty } from '../../util/util';
-import { Debouncer } from '../../util/debouncer';
+import { TimeoutDebouncer } from '../../util/debouncer';
 
 
 /**
@@ -61,7 +61,7 @@ export class Searchbar extends Ion {
   _autocomplete: string = 'off';
   _autocorrect: string = 'off';
   _isActive: boolean = false;
-  _debouncer: Debouncer = new Debouncer(250);
+  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(250);
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
