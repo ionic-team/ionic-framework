@@ -15,11 +15,8 @@ $action-sheet-wp-box-shadow-color:                rgba(0, 0, 0, .2) !default;
 /// @prop - Box shadow of the action sheet
 $action-sheet-wp-box-shadow:                      0 -1px 0 $action-sheet-wp-box-shadow-color !default;
 
-/// @prop - Bottom margin of the action sheet button group
-$action-sheet-wp-group-margin-bottom:             8px !default;
-
 /// @prop - Padding of the action sheet title
-$action-sheet-wp-title-padding:                   19px 16px 17px !default;
+$action-sheet-wp-title-padding:                   11px 16px 17px !default;
 
 /// @prop - Font size of the action sheet title
 $action-sheet-wp-title-font-size:                 2rem !default;
@@ -51,8 +48,11 @@ $action-sheet-wp-button-background:               transparent !default;
 /// @prop - Background color of the action sheet activated button
 $action-sheet-wp-button-background-activated:     $list-wp-activated-background-color !default;
 
-/// @prop - Min width of the icon in the action sheet button
-$action-sheet-wp-icon-min-width:                  24px !default;
+/// @prop - Font size of the icon in the action sheet button
+$action-sheet-wp-icon-font-size:                  2.4rem !default;
+
+/// @prop - Width of the icon in the action sheet button
+$action-sheet-wp-icon-width:                      2.3rem !default;
 
 /// @prop - Text align of the icon in the action sheet button
 $action-sheet-wp-icon-text-align:                 center !default;
@@ -60,11 +60,8 @@ $action-sheet-wp-icon-text-align:                 center !default;
 /// @prop - Vertical align of the icon in the action sheet button
 $action-sheet-wp-icon-vertical-align:             middle !default;
 
-/// @prop - Font size of the icon in the action sheet button
-$action-sheet-wp-icon-font-size:                  2.4rem !default;
-
 /// @prop - Margin of the icon in the action sheet button
-$action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
+$action-sheet-wp-icon-margin:                     0 20px 0 0 !default;
 
 
 .action-sheet-wp .action-sheet-wrapper {
@@ -96,20 +93,19 @@ $action-sheet-wp-icon-margin:                     0 16px 0 0 !default;
 
 .action-sheet-wp .action-sheet-icon {
   margin: $action-sheet-wp-icon-margin;
+  padding: 0;
 
-  min-width: $action-sheet-wp-icon-min-width;
+  width: $action-sheet-wp-icon-width;
 
   font-size: $action-sheet-wp-icon-font-size;
   text-align: $action-sheet-wp-icon-text-align;
   vertical-align: $action-sheet-wp-icon-vertical-align;
 }
 
-.action-sheet-wp .action-sheet-group {
-  background: $action-sheet-wp-background;
-}
+.action-sheet-wp .action-sheet-container {
+  padding: .8rem 0;
 
-.action-sheet-wp .action-sheet-group:last-child .action-sheet-button {
-  margin-bottom: $action-sheet-wp-group-margin-bottom;
+  background: $action-sheet-wp-background;
 }
 
 .action-sheet-wp .action-sheet-group .button-inner {
