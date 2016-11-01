@@ -1,15 +1,22 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
-import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule, Label, NavController, NavParams, Tabs, Tab, ModalController, ViewController } from '../../../..';
+import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule, NavController, NavParams, Tabs, Tab, ModalController, ViewController } from '../../../..';
+
+@Component({
+  selector: 'my-cmp2',
+  template: `<span style="color:green">{{value}}</span>`
+})
+export class MyCmpTest2 {
+  value: string = 'Test Failed';
+}
 
 @Component({
   selector: 'my-cmp',
-  template: `<ion-label>My Custom Component Test <ion-icon name="star"></ion-icon>
-  <span style="color:green">{{value}}</span></ion-label>`
+  template: `<my-cmp2></my-cmp2> <span style="color:green">{{value}}</span>`
 })
 export class MyCmpTest {
-  @ViewChild(Label) _label: Label;
-  label: Label;
-  value: string = '';
+  @ViewChild(MyCmpTest2) _label: MyCmpTest2;
+  label: MyCmpTest2;
+  value: string = 'Test Failed';
 
   ngOnInit() {
     this.label = this._label;
@@ -34,6 +41,7 @@ export class MyCmpTest {
       <div padding>
         <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
         <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+        <p>ionViewWillLoad ({{called.ionViewWillLoad}})</p>
         <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
         <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
         <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
@@ -91,6 +99,7 @@ export class FirstPage {
     this.called = {
       ionViewCanEnter: 0,
       ionViewCanLeave: 0,
+      ionViewWillLoad: 0,
       ionViewDidLoad: 0,
       ionViewWillEnter: 0,
       ionViewDidEnter: 0,
@@ -104,11 +113,11 @@ export class FirstPage {
     for (var i = 1; i <= 50; i++) {
       this.pages.push(i);
     }
-    // if (!this.myCmp || !this.content || !this.myCmp.label) {
-    //   throw new Error('children are not loaded');
-    // }
-    this.myCmp.value = 'root!';
-    // this.myCmp.label.color = 'primary';
+    if (!this.myCmp || !this.content || !this.myCmp.label) {
+      throw new Error('children are not loaded');
+    }
+    this.myCmp.value = '👍 self test passed!';
+    this.myCmp.label.value = '👍 children test passed!';
     this.called.ionViewDidLoad++;
   }
 
@@ -810,6 +819,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     RedirectPage,
     AnotherPage,
     MyCmpTest,
+    MyCmpTest2,
     FullPage,
     PrimaryHeaderPage,
     TabsPage,

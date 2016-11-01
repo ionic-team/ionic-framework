@@ -423,7 +423,7 @@ export class PickerCmp {
     this.lastClick = 0;
   }
 
-  ionViewDidLoad() {
+  ionViewWillLoad() {
     // normalize the data
     let data = this.d;
 

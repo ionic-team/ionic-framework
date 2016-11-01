@@ -434,6 +434,15 @@ export class ViewController {
   /**
    * @private
    */
+  _preLoad() {
+    this._lifecycle('PreLoad');
+  }
+
+  /**
+   * @private
+   * The view has loaded. This event only happens once per view will be created.
+   * This event is fired before the component and his children have been initialized.
+   */
   _willLoad() {
     this._lifecycle('WillLoad');
   }

@@ -60,7 +60,7 @@ export class PopoverCmp {
     this.id = (++popoverIds);
   }
 
-  ionViewWillLoad() {
+  ionViewPreLoad() {
     let activeElement: any = document.activeElement;
     if (document.activeElement) {
       activeElement.blur();
