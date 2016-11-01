@@ -168,6 +168,11 @@ export class Tab extends NavControllerBase {
   btn: TabButton;
 
   /**
+   * @private
+   */
+  _tabsHideOnSubPages: boolean;
+
+  /**
    * @input {Page} Set the root page for this tab.
    */
   @Input() root: any;
@@ -240,6 +245,17 @@ export class Tab extends NavControllerBase {
   }
 
   /**
+   * @input {boolean} Whether it's possible to swipe-to-go-back on this tab or not.
+   */
+  @Input()
+  get tabsHideOnSubPages(): boolean {
+    return this._tabsHideOnSubPages;
+  }
+  set tabsHideOnSubPages(val: boolean) {
+    this._tabsHideOnSubPages = isTrueProperty(val);
+  }
+
+  /**
    * @output {Tab} Method to call when the current tab is selected
    */
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
@@ -262,7 +278,7 @@ export class Tab extends NavControllerBase {
     super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
 
     this.id = parent.add(this);
-
+    this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');
     this._tabId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
   }
@@ -299,7 +315,7 @@ export class Tab extends NavControllerBase {
    * @private
    */
   _viewAttachToDOM(viewCtrl: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
-    const isTabSubPage = (this.parent._subPages && viewCtrl.index > 0);
+    const isTabSubPage = (this._tabsHideOnSubPages && viewCtrl.index > 0);
 
     if (isTabSubPage) {
       viewport = this.parent.portal;
