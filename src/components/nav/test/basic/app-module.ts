@@ -108,6 +108,11 @@ export class FirstPage {
     };
   }
 
+  ionViewWillLoad() {
+    console.log('ionViewWillLoad, FirstPage', this.viewCtrl.id);
+    this.called.ionViewWillLoad++;
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad, FirstPage');
     for (var i = 1; i <= 50; i++) {
