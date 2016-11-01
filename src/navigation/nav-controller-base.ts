@@ -767,7 +767,6 @@ export class NavControllerBase extends Ion implements NavController {
 
   _willLoad(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
-    assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     view._willLoad();
   }
