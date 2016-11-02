@@ -29,7 +29,7 @@ import { Toolbar } from './toolbar';
  * <ion-header>
  *
  *   <ion-navbar>
- *     <ion-title>Main Heder</ion-title>
+ *     <ion-title>Main Header</ion-title>
  *   </ion-navbar>
  *
  *   <ion-toolbar>
