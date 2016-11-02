@@ -149,7 +149,7 @@ export class ToastWpPopIn extends Transition {
       wrapper.fromTo('scale', 1.3, 1);
     }
 
-    this.easing('cubic-bezier(0,0 0.05,1)').duration(200).add(wrapper);
+    this.easing('cubic-bezier(0,0,0.05,1)').duration(200).add(wrapper);
   }
 }
 
