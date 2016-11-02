@@ -136,6 +136,7 @@ export { Toast, ToastController } from './components/toast/toast';
 export { ToastOptions } from './components/toast/toast-options';
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar, ToolbarBase, Header, Footer } from './components/toolbar/toolbar';
+export { ToolbarItem } from './components/toolbar/toolbar-item';
 export { ToolbarTitle } from'./components/toolbar/toolbar-title';
 export { Thumbnail } from './components/thumbnail/thumbnail';
 export { Typography } from './components/typography/typography';
