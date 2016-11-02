@@ -21,6 +21,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
       threshold: 0,
       maxEdgeStart: menu.maxEdgeStart || 50,
       maxAngle: 40,
+      zone: false,
       debouncer: new NativeRafDebouncer(),
       gesture: gestureCtrl.create('menu-swipe', {
         priority: GesturePriority.MenuSwipe,
@@ -58,7 +59,6 @@ export class MenuContentGesture extends SlideEdgeGesture {
       'z', z,
       'stepValue', stepValue);
 
-    ev.preventDefault();
     this.menu.swipeProgress(stepValue);
   }
 
