@@ -74,6 +74,7 @@ export function copySourceToDest(destinationPath: string, excludeSpecs: boolean,
   }
   let stream = src(glob);
   if (stripDebug) {
+    console.log('Removing debug statements ', destinationPath);
     stream = stream.pipe(removeDebugStatements());
   }
   return stream.pipe(dest(destinationPath));
