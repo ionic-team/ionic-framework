@@ -4,7 +4,7 @@ it('should open modal', function() {
 });
 
 it('should close alert with button click', function() {
-  element(by.css('.alert-button:last-child')).click();
+  element(by.css('.alert-button')).click();
 });
 
 it('should close with close button click', function() {
@@ -16,7 +16,7 @@ it('should open toolbar modal', function() {
 });
 
 it('should close alert with button click', function() {
-  element(by.css('.alert-button:last-child')).click();
+  element(by.css('.alert-button')).click();
 });
 
 it('should close toolbar modal', function() {

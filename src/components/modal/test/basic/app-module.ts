@@ -77,6 +77,22 @@ export class E2EPage {
   }
 
   presentModalChildNav() {
+    this.modalCtrl.create(ContactUs).present();
+  }
+
+  presentToolbarModal() {
+    this.modalCtrl.create(ToolbarModal).present();
+  }
+
+  presentModalWithInputs() {
+    let modal = this.modalCtrl.create(ModalWithInputs);
+    modal.onDidDismiss((data: any) => {
+      console.log('Modal with inputs data:', data);
+    });
+    modal.present();
+  }
+
+  presentNavModalWithToast() {
     this.toastCtrl.create({
       message: 'Will present a modal with child nav...',
       duration: 1000,
@@ -87,7 +103,7 @@ export class E2EPage {
     }, 500);
   }
 
-  presentToolbarModal() {
+  presentToolbarModalWithToast() {
     this.toastCtrl.create({
       message: 'Will present a modal with toolbars...',
       duration: 1000,
@@ -96,14 +112,6 @@ export class E2EPage {
     setTimeout(() => {
       this.modalCtrl.create(ToolbarModal).present();
     }, 500);
-  }
-
-  presentModalWithInputs() {
-    let modal = this.modalCtrl.create(ModalWithInputs);
-    modal.onDidDismiss((data: any) => {
-      console.log('Modal with inputs data:', data);
-    });
-    modal.present();
   }
 
   ionViewDidLoad() {
