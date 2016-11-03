@@ -23,8 +23,8 @@ export class DisplayWhen {
     // a platform/mode does not change during the life of an app
     for (let i = 0; i < this.conditions.length; i++) {
       if (this.conditions[i]) {
-        if ((this.conditions[i].indexOf("mode-") == 0 && this.conditions[i].slice(5) === _config.get('mode'))
-            || (this.conditions[i].indexOf("platform-") == 0 && platform.is(this.conditions[i].slice(9)))
+        if ((this.conditions[i].indexOf('mode-') === 0 && this.conditions[i].slice(5) === _config.get('mode'))
+            || (this.conditions[i].indexOf('platform-') === 0 && platform.is(this.conditions[i].slice(9)))
             || (platform.is(this.conditions[i]))) {
           this.isMatch = true;
           return;
