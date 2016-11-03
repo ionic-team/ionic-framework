@@ -1,5 +1,7 @@
 import { Attribute, Directive, NgZone } from '@angular/core';
 
+import { Config } from '../../config/config';
+
 import { Platform } from '../../platform/platform';
 
 
@@ -10,19 +12,23 @@ export class DisplayWhen {
   isMatch: boolean = false;
   conditions: string[];
 
-  constructor(conditions: string, public platform: Platform, public zone: NgZone) {
+  constructor(conditions: string, public platform: Platform, public zone: NgZone, private _config: Config) {
     this.platform = platform;
 
     if (!conditions) return;
 
     this.conditions = conditions.split(',');
 
-    // check if its one of the matching platforms first
-    // a platform does not change during the life of an app
+    // check if its one of the matching platforms/modes first
+    // a platform/mode does not change during the life of an app
     for (let i = 0; i < this.conditions.length; i++) {
-      if (this.conditions[i] && platform.is(this.conditions[i])) {
-        this.isMatch = true;
-        return;
+      if (this.conditions[i]) {
+        if ((this.conditions[i].indexOf("mode-") == 0 && this.conditions[i].slice(5) === _config.get('mode'))
+            || (this.conditions[i].indexOf("platform-") == 0 && platform.is(this.conditions[i].slice(9)))
+            || (platform.is(this.conditions[i]))) {
+          this.isMatch = true;
+          return;
+        }
       }
     }
 
@@ -59,8 +65,13 @@ export class DisplayWhen {
  *
  * @name ShowWhen
  * @description
- * The `showWhen` attribute takes a string that represents a platform or screen orientation.
+ * The `showWhen` attribute takes a string that represents a platform, a mode or screen orientation.
  * The element the attribute is added to will only be shown when that platform or screen orientation is active.
+ *
+ * Valid tests:
+ * -Platform ( showWhen="xxx" or showWhen="platform-xxx" )
+ * -Mode ( showWhen="mode-xxx" )
+ * -Screen orientation ( showWhen="xxx" )
  *
  * Complements the [hideWhen attribute](../HideWhen). If the `showWhen` attribute is used on an
  * element that also has the `hideWhen` attribute, the element will not show if `hideWhen` evaluates
@@ -107,9 +118,10 @@ export class ShowWhen extends DisplayWhen {
   constructor(
     @Attribute('showWhen') showWhen: string,
     platform: Platform,
-    zone: NgZone
+    zone: NgZone,
+    _config: Config
   ) {
-    super(showWhen, platform, zone);
+    super(showWhen, platform, zone, _config);
   }
 
 }
@@ -166,9 +178,10 @@ export class HideWhen extends DisplayWhen {
   constructor(
     @Attribute('hideWhen') hideWhen: string,
     platform: Platform,
-    zone: NgZone
+    zone: NgZone,
+    _config: Config
   ) {
-    super(hideWhen, platform, zone);
+    super(hideWhen, platform, zone, _config);
   }
 
 }
