@@ -1,6 +1,32 @@
 <a name="2.0.0-rc.2"></a>
 # [2.0.0-rc.2](https://github.com/driftyco/ionic/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2016-11-03)
 
+### Updating to 2.0.0-rc.2
+
+Update the following dependencies in your `package.json` file:
+
+```
+"dependencies": {
+  "@angular/common": "2.1.1",
+  "@angular/compiler": "2.1.1",
+  "@angular/compiler-cli": "2.1.1",
+  "@angular/core": "2.1.1",
+  "@angular/forms": "2.1.1",
+  "@angular/http": "2.1.1",
+  "@angular/platform-browser": "2.1.1",
+  "@angular/platform-browser-dynamic": "2.1.1",
+  "@angular/platform-server": "2.1.1",
+  "@ionic/storage": "1.1.6",
+  "ionic-angular": "2.0.0-rc.2"
+},
+"devDependencies": {
+  "@ionic/app-scripts": "0.0.39"
+}
+```
+
+_Note: you should have other dependencies in this file that are not listed above, these are only the dependencies that need to be updated._
+
+Remove the `node_modules` directory from your project, and then run `npm install` inside of your project. Then, you should be on the latest version!
 
 ### Bug Fixes
 
