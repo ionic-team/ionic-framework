@@ -18,11 +18,10 @@ $picker-wp-column-padding:                    0 4px !default;
 
 $picker-wp-option-padding:                    0 !default;
 $picker-wp-option-text-color:                 $list-wp-text-color !default;
-$picker-wp-option-font-size:                  18px !default;
+$picker-wp-option-font-size:                  22px !default;
 $picker-wp-option-height:                     42px !default;
 $picker-wp-option-offset-y:                   (($picker-wp-height - $picker-wp-toolbar-height) / 2) - ($picker-wp-option-height / 2) - 10 !default;
 
-$picker-wp-option-selected-font-size:         22px !default;
 $picker-wp-option-selected-color:             color($colors-wp, primary) !default;
 
 
@@ -96,13 +95,11 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   pointer-events: none;
 }
 
-.picker-wp .picker-opts .button-effect {
-  display: none;
-}
-
 .picker-wp .picker-opt {
   margin: 0;
   padding: $picker-wp-option-padding;
+
+  height: 4.2rem;
 
   font-size: $picker-wp-option-font-size;
   line-height: $picker-wp-option-height;
@@ -116,15 +113,9 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   pointer-events: auto;
 }
 
-.picker-wp .picker-opt .button-inner {
-  transition: 200ms;
-}
-
 .picker-wp .picker-prefix,
 .picker-wp .picker-suffix,
 .picker-wp .picker-opt-selected {
-  font-size: $picker-wp-option-selected-font-size;
-
   color: $picker-wp-option-selected-color;
 }
 

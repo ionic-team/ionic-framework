@@ -18,11 +18,10 @@ $picker-md-column-padding:                    0 8px !default;
 
 $picker-md-option-padding:                    0 !default;
 $picker-md-option-text-color:                 $list-md-text-color !default;
-$picker-md-option-font-size:                  18px !default;
+$picker-md-option-font-size:                  22px !default;
 $picker-md-option-height:                     42px !default;
 $picker-md-option-offset-y:                   (($picker-md-height - $picker-md-toolbar-height) / 2) - ($picker-md-option-height / 2) - 10 !default;
 
-$picker-md-option-selected-font-size:         22px !default;
 $picker-md-option-selected-color:             color($colors-md, primary) !default;
 
 
@@ -82,13 +81,12 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
   pointer-events: none;
 }
 
-.picker-md .picker-opts .button-effect {
-  display: none;
-}
 
 .picker-md .picker-opt {
   margin: 0;
   padding: $picker-md-option-padding;
+
+  height: 4.3rem;
 
   font-size: $picker-md-option-font-size;
   line-height: $picker-md-option-height;
@@ -102,14 +100,9 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
   pointer-events: auto;
 }
 
-.picker-md .picker-opt .button-inner {
-  transition: 200ms;
-}
-
 .picker-md .picker-prefix,
 .picker-md .picker-suffix,
-.picker-md .picker-opt-selected {
-  font-size: $picker-md-option-selected-font-size;
+.picker-md .picker-opt.picker-opt-selected {
 
   color: $picker-md-option-selected-color;
 }
