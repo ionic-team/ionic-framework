@@ -177,6 +177,7 @@ export class NavControllerBase extends Ion implements NavController {
     ti.resolve = (hasCompleted: boolean, isAsync: boolean, enteringName: string, leavingName: string, direction: string) => {
       // transition has successfully resolved
       this._trnsId = null;
+      this._init = true;
       resolve && resolve(hasCompleted, isAsync, enteringName, leavingName, direction);
 
       // let's see if there's another to kick off
