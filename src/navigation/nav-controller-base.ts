@@ -34,7 +34,7 @@ export class NavControllerBase extends Ion implements NavController {
   _sbThreshold: number;
   _sbTrns: Transition;
   _trnsId: number = null;
-  _trnsTm: number = 0;
+  _trnsTm: boolean = false;
   _viewport: ViewContainerRef;
   _views: ViewController[] = [];
 
@@ -597,7 +597,7 @@ export class NavControllerBase extends Ion implements NavController {
     const duration = transition.getDuration();
 
     // set that this nav is actively transitioning
-    this.setTransitioning(true, duration);
+    this.setTransitioning(true);
 
     if (transition.isRoot()) {
       // this is the top most, or only active transition, so disable the app
@@ -883,7 +883,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (this._sbTrns && this._sbGesture) {
       // continue to disable the app while actively dragging
       this._app.setEnabled(false, ACTIVE_TRANSITION_DEFAULT);
-      this.setTransitioning(true, ACTIVE_TRANSITION_DEFAULT);
+      this.setTransitioning(true);
 
       // set the transition animation's progress
       this._sbTrns.progressStep(stepValue);
@@ -933,15 +933,11 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   isTransitioning(): boolean {
-    if (this._trnsTm === 0) {
-      return false;
-    }
-    // using a timestamp instead of boolean incase something goes wrong
-    return (this._trnsTm > Date.now());
+    return this._trnsTm;
   }
 
-  setTransitioning(isTransitioning: boolean, durationPadding: number = ACTIVE_TRANSITION_DEFAULT) {
-    this._trnsTm = (isTransitioning ? (Date.now() + durationPadding + ACTIVE_TRANSITION_OFFSET) : 0);
+  setTransitioning(isTransitioning: boolean) {
+    this._trnsTm = isTransitioning;
   }
 
   getActive(): ViewController {
