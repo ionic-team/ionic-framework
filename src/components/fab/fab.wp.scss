@@ -12,13 +12,13 @@ $fab-wp-text-color:                         color-contrast($colors-wp, $fab-wp-b
 /// @prop - Background color of the activated button
 $fab-wp-background-color-activated:         color-shade($fab-wp-background-color) !default;
 
-/// @prop - Background color of the button
-$fab-wp-in-list-background-color:           #f4f4f4 !default;
+/// @prop - Background color of the button in a list
+$fab-wp-in-list-background-color:           $fab-in-list-background-color !default;
 
-/// @prop - Text color of the button
+/// @prop - Text color of the button in a list
 $fab-wp-in-list-text-color:                 color-contrast($colors-wp, $fab-wp-in-list-background-color) !default;
 
-/// @prop - Background color of the activated button
+/// @prop - Background color of the activated button in a list
 $fab-wp-in-list-background-color-activated: color-shade($fab-wp-in-list-background-color) !default;
 
 
