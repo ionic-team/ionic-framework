@@ -485,8 +485,13 @@ export class NavControllerBase extends Ion implements NavController {
     if (promises.length) {
       // darn, async promises, gotta wait for them to resolve
       Promise.all(promises)
-        .then(() => this._postViewInit(enteringView, leavingView, ti, resolve))
-        .catch(reject);
+        .then((values: any[]) => {
+          if (values.some(result => result === false)) {
+            reject(`ionViewCanEnter rejected`);
+          } else {
+            this._postViewInit(enteringView, leavingView, ti, resolve);
+          }
+        }).catch(reject);
     } else {
       // synchronous and all tests passed! let's move on already
       this._postViewInit(enteringView, leavingView, ti, resolve);
