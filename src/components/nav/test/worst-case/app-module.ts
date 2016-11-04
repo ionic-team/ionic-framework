@@ -31,11 +31,11 @@ export class Base {
   ionViewWillUnload() {
     log(`${this._name} willUnload`);
   }
-  ionViewCanLeave() {
+  ionViewCanLeave(): boolean|Promise<any> {
     log(`${this._name} canLeave`);
     return true;
   }
-  ionViewCanEnter() {
+  ionViewCanEnter(): boolean|Promise<any> {
     log(`${this._name} canEnter`);
     return true;
   }
