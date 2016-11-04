@@ -402,7 +402,10 @@ export class ItemSliding {
     }
 
     this.item.setElementStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
-    this._zone.run(() => this.ionDrag.emit(this));
+    let ionDrag = this.ionDrag;
+    if (ionDrag.observers.length > 0) {
+      this._zone.run(ionDrag.emit.bind(ionDrag, this));
+    }
   }
 
   private _setState(state: SlidingState) {
