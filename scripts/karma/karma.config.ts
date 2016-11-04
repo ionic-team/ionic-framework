@@ -43,7 +43,7 @@ export function config(config) {
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-      'dist/ionic-angular/**/!(*spec).js': ['coverage'],
+      'dist/ionic-angular/umd/**/!(*spec).js': ['coverage'],
       'dist/ionic-angular/**/*.js': ['sourcemap']
     },
     reporters: ['dots', 'coverage'],

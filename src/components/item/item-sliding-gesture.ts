@@ -4,6 +4,7 @@ import { List } from '../list/list';
 import { GesturePriority } from '../../gestures/gesture-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
 import { pointerCoord } from '../../util/dom';
+import { NativeRafDebouncer } from '../../util/debouncer';
 
 const DRAG_THRESHOLD = 10;
 const MAX_ATTACK_ANGLE = 20;
@@ -19,6 +20,8 @@ export class ItemSlidingGesture extends PanGesture {
     super(list.getNativeElement(), {
       maxAngle: MAX_ATTACK_ANGLE,
       threshold: DRAG_THRESHOLD,
+      zone: false,
+      debouncer: new NativeRafDebouncer(),
       gesture: list._gestureCtrl.create('item-sliding', {
         priority: GesturePriority.SlidingItem,
       })

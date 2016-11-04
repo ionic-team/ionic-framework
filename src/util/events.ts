@@ -1,4 +1,4 @@
-import { nativeTimeout } from '../util/dom';
+import { nativeTimeout, nativeRaf } from '../util/dom';
 import { Platform } from '../platform/platform';
 import { ScrollView } from '../util/scroll-view';
 
@@ -135,7 +135,29 @@ export function setupEvents(platform: Platform): Events {
       let content = <HTMLElement>el.closest('.scroll-content');
       if (content) {
         var scroll = new ScrollView(content);
-        scroll.scrollTo(0, 0, 300);
+          // We need to stop scrolling if it's happening and scroll up
+
+        content.style['WebkitBackfaceVisibility'] = 'hidden';
+        content.style['WebkitTransform'] = 'translate3d(0,0,0)';
+
+        nativeRaf(function() {
+          content.style.overflow = 'hidden';
+
+          function finish() {
+            content.style.overflow = '';
+            content.style['WebkitBackfaceVisibility'] = '';
+            content.style['WebkitTransform'] = '';
+          }
+
+          let didScrollTimeout = setTimeout(() => {
+            finish();
+          }, 400);
+
+          scroll.scrollTo(0, 0, 300).then(() => {
+            clearTimeout(didScrollTimeout);
+            finish();
+          });
+        });
       }
     });
 

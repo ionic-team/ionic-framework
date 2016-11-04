@@ -3,32 +3,73 @@
 // iOS Action Sheet
 // --------------------------------------------------
 
+/// @prop - Text align of the action sheet
 $action-sheet-ios-text-align:                           center !default;
+
+/// @prop - Padding of the action sheet
 $action-sheet-ios-padding:                              0 10px !default;
+
+/// @prop - Bottom margin of the action sheet button group
 $action-sheet-ios-group-margin-bottom:                  10px !default;
+
+/// @prop - Background color of the action sheet
 $action-sheet-ios-background:                           #f9f9f9 !default;
 
+/// @prop - Border color of the action sheet
 $action-sheet-ios-border-color:                         #d6d6da !default;
+
+/// @prop - Border radius of the action sheet
 $action-sheet-ios-border-radius:                        13px !default;
 
+/// @prop - Padding of the action sheet title
 $action-sheet-ios-title-padding:                        1.5rem !default;
+
+/// @prop - Color of the action sheet title
 $action-sheet-ios-title-color:                          #8f8f8f !default;
+
+/// @prop - Font size of the action sheet title
 $action-sheet-ios-title-font-size:                      1.3rem !default;
+
+/// @prop - Font weight of the action sheet title
 $action-sheet-ios-title-font-weight:                    400 !default;
+
+/// @prop - Border radius of the action sheet title
 $action-sheet-ios-title-border-radius:                  0 !default;
 
+/// @prop - Min height of the action sheet button
 $action-sheet-ios-button-min-height:                    5.6rem !default;
+
+/// @prop - Padding of the action sheet button
 $action-sheet-ios-button-padding:                       18px !default;
+
+/// @prop - Text color of the action sheet button
 $action-sheet-ios-button-text-color:                    #007aff !default;
+
+/// @prop - Font size of the action sheet button
 $action-sheet-ios-button-font-size:                     2rem !default;
+
+/// @prop - Border width of the action sheet button
 $action-sheet-ios-button-border-width:                  $hairlines-width !default;
+
+/// @prop - Border style of the action sheet button
 $action-sheet-ios-button-border-style:                  solid !default;
+
+/// @prop - Border color of the action sheet button
 $action-sheet-ios-button-border-color:                  #d1d3d6 !default;
+
+/// @prop - Background color of the action sheet button
 $action-sheet-ios-button-background:                    transparent !default;
+
+/// @prop - Background color of the activated action sheet button
 $action-sheet-ios-button-background-activated:          #ebebeb !default;
 
+/// @prop - Destructive text color of the action sheet button
 $action-sheet-ios-button-destructive-text-color:        #f53d3d !default;
+
+/// @prop - Background color of the action sheet cancel button
 $action-sheet-ios-button-cancel-background:             #fff !default;
+
+/// @prop - Font weight of the action sheet cancel button
 $action-sheet-ios-button-cancel-font-weight:            600 !default;
 
 

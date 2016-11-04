@@ -3,19 +3,40 @@
 // Material Design List
 // --------------------------------------------------
 
+/// @prop - Margin top of the list
 $list-md-margin-top:             16px !default;
+
+/// @prop - Margin right of the list
 $list-md-margin-right:           0 !default;
+
+/// @prop - Margin bottom of the list
 $list-md-margin-bottom:          16px !default;
+
+/// @prop - Margin left of the list
 $list-md-margin-left:            0 !default;
 
+/// @prop - Margin top of the inset list
 $list-inset-md-margin-top:       16px !default;
+
+/// @prop - Margin right of the inset list
 $list-inset-md-margin-right:     16px !default;
+
+/// @prop - Margin bottom of the inset list
 $list-inset-md-margin-bottom:    16px !default;
+
+/// @prop - Margin left of the inset list
 $list-inset-md-margin-left:      16px !default;
+
+/// @prop - Border radius of the inset list
 $list-inset-md-border-radius:    2px !default;
 
+/// @prop - Padding left of the header in a list
 $list-md-header-padding-left:    $item-md-padding-left !default;
+
+/// @prop - Font size of the header in a list
 $list-md-header-font-size:       1.4rem !default;
+
+/// @prop - Text color of the header in a list
 $list-md-header-color:           #858585 !default;
 
 

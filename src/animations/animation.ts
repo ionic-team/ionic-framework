@@ -861,9 +861,32 @@ export class Animation {
    * Start the animation with a user controlled progress.
    */
   progressStart() {
+    // ensure all past transition end events have been cleared
+    this._clearAsync();
+
+    // fire off all the "before" function that have DOM READS in them
+    // elements will be in the DOM, however visibily hidden
+    // so we can read their dimensions if need be
+    // ******** DOM READ ****************
+    this._beforeReadFn();
+
+    // fire off all the "before" function that have DOM WRITES in them
+    // ******** DOM WRITE ****************
+    this._beforeWriteFn();
+
+    // ******** DOM WRITE ****************
+    this._progressStart();
+  }
+
+  /**
+   * @private
+   * DOM WRITE
+   * RECURSION
+   */
+  _progressStart() {
     for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
-      this._c[i].progressStart();
+      this._c[i]._progressStart();
     }
 
     // ******** DOM WRITE ****************
@@ -907,13 +930,14 @@ export class Animation {
   /**
    * End the progress animation.
    */
-  progressEnd(shouldComplete: boolean, currentStepValue: number) {
+  progressEnd(shouldComplete: boolean, currentStepValue: number, maxDelta: number = 0) {
     console.debug('Animation, progressEnd, shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
     this._isAsync = (currentStepValue > 0.05 && currentStepValue < 0.95);
 
-    const dur = 64;
     const stepValue = shouldComplete ? 1 : 0;
+    const factor = Math.max(Math.abs(currentStepValue - stepValue), 0.5) * 2;
+    const dur = 64 + factor * maxDelta;
 
     this._progressEnd(shouldComplete, stepValue, dur, this._isAsync);
 
@@ -922,7 +946,7 @@ export class Animation {
       // set the async TRANSITION END event
       // and run onFinishes when the transition ends
       // ******** DOM WRITE ****************
-      this._asyncEnd(dur, true);
+      this._asyncEnd(dur, shouldComplete);
 
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in

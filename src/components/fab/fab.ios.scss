@@ -45,17 +45,17 @@ $fab-ios-in-list-background-color-activated:  color-shade($fab-ios-in-list-backg
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  $background-color: $color-base;
-  $background-color-activated: color-shade($background-color);
+  $bg-color: $color-base;
+  $bg-color-activated: color-shade($bg-color);
   $fg-color: $color-contrast;
 
   .fab-ios.fab-ios-#{$color-name} {
     color: $fg-color;
-    background-color: $background-color;
+    background-color: $bg-color;
   }
 
   .fab-ios.fab-ios-#{$color-name}.activated {
-    background-color: $background-color-activated;
+    background-color: $bg-color-activated;
   }
 }
 

@@ -3,7 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
 import { Config } from '../../config/config';
-import { Debouncer } from '../../util/debouncer';
+import { TimeoutDebouncer } from '../../util/debouncer';
 import { Form } from '../../util/form';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
@@ -217,7 +217,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   _step: number = 1;
   _snaps: boolean = false;
 
-  _debouncer: Debouncer = new Debouncer(0);
+  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
   _events: UIEventManager = new UIEventManager();
   /**
    * @private

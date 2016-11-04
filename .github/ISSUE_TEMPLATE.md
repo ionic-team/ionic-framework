@@ -41,7 +41,7 @@ insert any relevant code between the above and below backticks
 
 **For Ionic 1 issues** - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
 
-**For Ionic 2 issues** - http://plnkr.co/edit/me3Uk0GKWVRhZWU0usad?p=preview
+**For Ionic 2 issues** - http://plnkr.co/edit/GJte2b?p=preview
 
 
 **Run `ionic info` from terminal/cmd prompt:** (paste output below)

@@ -1,8 +1,9 @@
 import { defaults } from '../util/util';
 import { GestureDelegate } from '../gestures/gesture-controller';
 import { PanRecognizer } from './recognizers';
-import { PointerEvents, UIEventManager } from '../util/ui-event-manager';
+import { PointerEvents, PointerEventsConfig, UIEventManager } from '../util/ui-event-manager';
 import { pointerCoord } from '../util/dom';
+import { Debouncer, FakeDebouncer } from '../util/debouncer';
 
 /**
  * @private
@@ -12,12 +13,16 @@ export interface PanGestureConfig {
   maxAngle?: number;
   direction?: 'x' | 'y';
   gesture?: GestureDelegate;
+  debouncer?: Debouncer;
+  zone?: boolean;
+  capture?: boolean;
 }
 
 /**
  * @private
  */
 export class PanGesture {
+  private debouncer: Debouncer;
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;
   private detector: PanRecognizer;
@@ -26,31 +31,45 @@ export class PanGesture {
   public isListening: boolean = false;
   protected gestute: GestureDelegate;
   protected direction: string;
+  private eventsConfig: PointerEventsConfig;
 
   constructor(private element: HTMLElement, opts: PanGestureConfig = {}) {
     defaults(opts, {
       threshold: 20,
       maxAngle: 40,
-      direction: 'x'
+      direction: 'x',
+      zone: true,
+      capture: false,
     });
+
+    this.debouncer = (opts.debouncer)
+      ? opts.debouncer
+      : new FakeDebouncer();
     this.gestute = opts.gesture;
     this.direction = opts.direction;
+    this.eventsConfig = {
+      element: this.element,
+      pointerDown: this.pointerDown.bind(this),
+      pointerMove: this.pointerMove.bind(this),
+      pointerUp: this.pointerUp.bind(this),
+      zone: opts.zone,
+      capture: opts.capture
+    };
     this.detector = new PanRecognizer(opts.direction, opts.threshold, opts.maxAngle);
   }
 
   listen() {
-    if (!this.isListening) {
-      this.pointerEvents = this.events.pointerEvents({
-        element: this.element,
-        pointerDown: this.pointerDown.bind(this),
-        pointerMove: this.pointerMove.bind(this),
-        pointerUp: this.pointerUp.bind(this),
-      });
-      this.isListening = true;
+    if (this.isListening) {
+      return;
     }
+    this.pointerEvents = this.events.pointerEvents(this.eventsConfig);
+    this.isListening = true;
   }
 
   unlisten() {
+    if (!this.isListening) {
+      return;
+    }
     this.gestute && this.gestute.release();
     this.events.unlistenAll();
     this.isListening = false;
@@ -58,6 +77,7 @@ export class PanGesture {
 
   destroy() {
     this.gestute && this.gestute.destroy();
+    this.gestute = null;
     this.unlisten();
     this.element = null;
   }
@@ -86,32 +106,36 @@ export class PanGesture {
   }
 
   pointerMove(ev: any) {
-    if (!this.started) {
-      return;
-    }
-    if (this.captured) {
-      this.onDragMove(ev);
-      return;
-    }
-    let coord = pointerCoord(ev);
-    if (this.detector.detect(coord)) {
-
-      if (this.detector.pan() !== 0 && this.canCapture(ev) &&
-        (!this.gestute || this.gestute.capture())) {
-        this.onDragStart(ev);
-        this.captured = true;
+    this.debouncer.debounce(() => {
+      if (!this.started) {
         return;
       }
+      if (this.captured) {
+        this.onDragMove(ev);
+        return;
+      }
+      let coord = pointerCoord(ev);
+      if (this.detector.detect(coord)) {
 
-      // Detection/capturing was not successful, aborting!
-      this.started = false;
-      this.captured = false;
-      this.pointerEvents.stop();
-      this.notCaptured(ev);
-    }
+        if (this.detector.pan() !== 0 && this.canCapture(ev) &&
+          (!this.gestute || this.gestute.capture())) {
+          this.onDragStart(ev);
+          this.captured = true;
+          return;
+        }
+
+        // Detection/capturing was not successful, aborting!
+        this.started = false;
+        this.captured = false;
+        this.pointerEvents.stop();
+        this.notCaptured(ev);
+      }
+    });
   }
 
   pointerUp(ev: any) {
+    this.debouncer.cancel();
+
     if (!this.started) {
       return;
     }

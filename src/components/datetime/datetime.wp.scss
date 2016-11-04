@@ -3,14 +3,25 @@
 // Windows DateTime
 // --------------------------------------------------
 
+/// @prop - Min width of the DateTime component
 $datetime-wp-min-width:           45% !default;
 
+/// @prop - Padding top of the DateTime component
 $datetime-wp-padding-top:         $item-wp-padding-top !default;
+
+/// @prop - Padding right of the DateTime component
 $datetime-wp-padding-right:       ($item-wp-padding-right / 2) !default;
+
+/// @prop - Padding bottom of the DateTime component
 $datetime-wp-padding-bottom:      $item-wp-padding-bottom !default;
+
+/// @prop - Padding left of the DateTime component
 $datetime-wp-padding-left:        $item-wp-padding-left !default;
 
+/// @prop - Border width of the DateTime component
 $datetime-wp-border-width:        2px !default;
+
+/// @prop - Border color of the DateTime component
 $datetime-wp-border-color:        $input-wp-border-color !default;
 
 .datetime-wp {

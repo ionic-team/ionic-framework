@@ -24,7 +24,7 @@ export class WPTransition extends PageTransition {
         this.enteringPage.beforeClearStyles(['scale']);
 
       } else {
-        this.duration(isPresent(opts.duration) ? opts.duration : 280).easing('cubic-bezier(0,0 0.05,1)');
+        this.duration(isPresent(opts.duration) ? opts.duration : 280).easing('cubic-bezier(0,0,0.05,1)');
         this.enteringPage
           .fromTo('scale', SCALE_SMALL, 1, true)
           .fromTo('opacity', 0.01, 1, true);

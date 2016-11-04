@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmit
 
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
-import { isTrueProperty } from '../../util/util';
+import { isTrueProperty, assert } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
@@ -192,13 +192,13 @@ export class Menu {
   private _cntEle: HTMLElement;
   private _cntGesture: MenuContentGesture;
   private _type: MenuType;
-  private _resizeUnreg: Function;
   private _isEnabled: boolean = true;
   private _isSwipeEnabled: boolean = true;
   private _isAnimating: boolean = false;
   private _isPers: boolean = false;
   private _init: boolean = false;
   private _events: UIEventManager = new UIEventManager();
+  private _gestureID: number = 0;
 
   /**
    * @private
@@ -304,7 +304,11 @@ export class Menu {
     private _keyboard: Keyboard,
     private _zone: NgZone,
     private _gestureCtrl: GestureController
-  ) {}
+  ) {
+    if (_gestureCtrl) {
+      this._gestureID = _gestureCtrl.newID();
+    }
+  }
 
   /**
    * @private
@@ -333,7 +337,7 @@ export class Menu {
     this.setElementAttribute('type', this.type);
 
     // add the gestures
-    this._cntGesture = new MenuContentGesture(this, this._gestureCtrl, document.body);
+    this._cntGesture = new MenuContentGesture(this, document.body, this._gestureCtrl);
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side
@@ -446,7 +450,11 @@ export class Menu {
       return;
     }
     this._getType().setProgessStep(stepValue);
-    this.ionDrag.emit(stepValue);
+
+    let ionDrag = this.ionDrag;
+    if (ionDrag.observers.length > 0) {
+      this._zone.run(ionDrag.emit.bind(ionDrag, stepValue));
+    }
   }
 
   /**
@@ -472,6 +480,8 @@ export class Menu {
   }
 
   private _before() {
+    assert(!this._isAnimating, '_before() should not be called while animating');
+
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
     this.menuContent && this.menuContent.resize();
@@ -482,6 +492,7 @@ export class Menu {
   }
 
   private _after(isOpen: boolean) {
+    assert(this._isAnimating, '_before() should be called while animating');
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
@@ -491,8 +502,10 @@ export class Menu {
 
     this._events.unlistenAll();
     if (isOpen) {
-      this._cntEle.classList.add('menu-content-open');
+      // Disable swipe to go back gesture
+      this._gestureCtrl.disableGesture('goback-swipe', this._gestureID);
 
+      this._cntEle.classList.add('menu-content-open');
       let callback = this.onBackdropClick.bind(this);
       this._events.pointerEvents({
         element: this._cntEle,
@@ -505,6 +518,9 @@ export class Menu {
       this.ionOpen.emit(true);
 
     } else {
+      // Enable swipe to go back gesture
+      this._gestureCtrl.enableGesture('goback-swipe', this._gestureID);
+
       this._cntEle.classList.remove('menu-content-open');
       this.setElementClass('show-menu', false);
       this.backdrop.setElementClass('show-menu', false);
@@ -516,21 +532,21 @@ export class Menu {
   /**
    * @private
    */
-  open() {
+  open(): Promise<boolean> {
     return this.setOpen(true);
   }
 
   /**
    * @private
    */
-  close() {
+  close(): Promise<boolean> {
     return this.setOpen(false);
   }
 
   /**
    * @private
    */
-  toggle() {
+  toggle(): Promise<boolean> {
     return this.setOpen(!this.isOpen);
   }
 
@@ -633,12 +649,10 @@ export class Menu {
     this._events.unlistenAll();
     this._cntGesture && this._cntGesture.destroy();
     this._type && this._type.destroy();
-    this._resizeUnreg && this._resizeUnreg();
 
     this._cntGesture = null;
     this._type = null;
     this._cntEle = null;
-    this._resizeUnreg = null;
   }
 
 }

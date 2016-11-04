@@ -3,27 +3,62 @@
 // Material Design Action Sheet
 // --------------------------------------------------
 
+/// @prop - Text align of the action sheet
 $action-sheet-md-text-align:                            left !default;
+
+/// @prop - Background color of the action sheet
 $action-sheet-md-background:                            #fafafa !default;
+
+/// @prop - Bottom margin of the action sheet button group
 $action-sheet-md-group-margin-bottom:                   8px !default;
 
+/// @prop - Color of the action sheet title
 $action-sheet-md-title-color:                           #757575 !default;
-$action-sheet-md-title-font-size:                       1.6rem !default;
-$action-sheet-md-title-padding:                         19px 16px 17px !default;
 
+/// @prop - Font size of the action sheet title
+$action-sheet-md-title-font-size:                       1.6rem !default;
+
+/// @prop - Padding of the action sheet title
+$action-sheet-md-title-padding:                         11px 16px 17px !default;
+
+/// @prop - Min height of the action sheet button
 $action-sheet-md-button-min-height:                     4.8rem !default;
+
+/// @prop - Text color of the action sheet button
 $action-sheet-md-button-text-color:                     #222 !default;
+
+/// @prop - Font size of the action sheet button
 $action-sheet-md-button-font-size:                      1.6rem !default;
+
+/// @prop - Padding of the action sheet button
 $action-sheet-md-button-padding:                        0 16px !default;
+
+/// @prop - Background color of the action sheet button
 $action-sheet-md-button-background:                     transparent !default;
+
+/// @prop - Background color of the action sheet activated button
 $action-sheet-md-button-background-activated:           #f1f1f1 !default;
 
+/// @prop - Font size of the icon in the action sheet button
 $action-sheet-md-icon-font-size:                        2.4rem !default;
-$action-sheet-md-icon-min-width:                        24px !default;
-$action-sheet-md-icon-text-align:                       center !default;
-$action-sheet-md-icon-vertical-align:                   middle !default;
-$action-sheet-md-icon-margin:                           0 28px 0 0 !default;
 
+/// @prop - Width of the icon in the action sheet button
+$action-sheet-md-icon-width:                            2.3rem !default;
+
+/// @prop - Text align of the icon in the action sheet button
+$action-sheet-md-icon-text-align:                       center !default;
+
+/// @prop - Vertical align of the icon in the action sheet button
+$action-sheet-md-icon-vertical-align:                   middle !default;
+
+/// @prop - Margin of the icon in the action sheet button
+$action-sheet-md-icon-margin:                           0 32px 0 0 !default;
+
+.action-sheet-md .action-sheet-container {
+  padding: .8rem 0;
+
+  background: $action-sheet-md-background;
+}
 
 .action-sheet-md .action-sheet-title {
   padding: $action-sheet-md-title-padding;
@@ -53,8 +88,9 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
 
 .action-sheet-md .action-sheet-icon {
   margin: $action-sheet-md-icon-margin;
+  padding: 0;
 
-  min-width: $action-sheet-md-icon-min-width;
+  width: $action-sheet-md-icon-width;
 
   font-size: $action-sheet-md-icon-font-size;
   text-align: $action-sheet-md-icon-text-align;
@@ -63,12 +99,6 @@ $action-sheet-md-icon-margin:                           0 28px 0 0 !default;
 
 .action-sheet-md .action-sheet-group {
   overflow: hidden;
-
-  background: $action-sheet-md-background;
-}
-
-.action-sheet-md .action-sheet-group:last-child .action-sheet-button {
-  margin-bottom: $action-sheet-md-group-margin-bottom;
 }
 
 .action-sheet-md .action-sheet-group .button-inner {

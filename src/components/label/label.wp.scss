@@ -3,7 +3,10 @@
 // Windows Label
 // --------------------------------------------------
 
+/// @prop - Text color of the label
 $label-wp-text-color:                 #999 !default;
+
+/// @prop - Text color of the label when it has focused
 $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 
 
