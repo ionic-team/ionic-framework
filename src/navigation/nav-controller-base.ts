@@ -248,14 +248,15 @@ export class NavControllerBase extends Ion implements NavController {
     if (!ti) {
       return false;
     }
-    // set that this nav is actively transitioning
-    this.setTransitioning(true);
 
     // Get entering and leaving views
     const leavingView = this.getActive();
     const enteringView = this._getEnteringView(ti, leavingView);
 
-    assert(leavingView || enteringView, 'Both leavingView and enteringView are null');
+    assert(leavingView || enteringView, 'both leavingView and enteringView are null');
+
+    // set that this nav is actively transitioning
+    this.setTransitioning(true);
 
     // Initialize enteringView
     if (enteringView && isBlank(enteringView._state)) {
@@ -328,6 +329,16 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _postViewInit(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction, resolve: TransitionResolveFn) {
+    assert(leavingView || enteringView, 'Both leavingView and enteringView are null');
+
+    if (!enteringView && !this._isPortal) {
+      console.warn(`You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,
+        this, this.getNativeElement());
+
+      ti.reject && ti.reject('navigation stack needs at least one root page');
+      return false;
+    }
+
     const opts = ti.opts || {};
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
