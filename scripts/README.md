@@ -5,6 +5,11 @@
 All of these commands require you to run `npm install` first. To see a full list of the gulp commands, run `gulp`.
 
 
+### Committing
+
+Please follow the commit message format in [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format).
+
+
 ### Installing Nightly Version
 
 The latest nightly version can be installed via npm.
@@ -115,7 +120,7 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
   - Creates a new tag and release on Github
 3. Verify that the `changelog` changes are accurate and the `package.json` version is correct (`git status` && `git diff`)
 4. Commit and push
-5. Sit back and have a beer :beers: (or wine :wine_glass:)
+5. Sit back and have some beer :beers: (or wine :wine_glass:)
 
 ### Publish a nightly release
 1. Run `gulp nightly`
