@@ -189,6 +189,11 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       if (lastStateId !== currentStateId) {
         lastStateId = currentStateId;
         stateChangeCounter++;
+      } else {
+        if (currentView) {
+          viewId = currentView.viewId;
+          action = ACTION_INITIAL_VIEW;
+        }
       }
 
       if (forcedNav) {
@@ -251,6 +256,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           historyId = forwardView.historyId;
         }
 
+        forwardView.backViewId = currentView.viewId ? currentView.viewId : null;
+
       } else if (currentView && currentView.historyId !== historyId &&
                 hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
                 hist.stack[hist.cursor].stateId === currentStateId) {
@@ -290,7 +297,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           hist.stack[hist.cursor].backViewId = currentView.viewId;
         }
 
-      } else {
+      } else if (!currentView || !action) {
 
         // create an element from the viewLocals template
         ele = $ionicViewSwitcher.createViewEle(viewLocals);
