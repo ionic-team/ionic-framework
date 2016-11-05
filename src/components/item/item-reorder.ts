@@ -201,6 +201,8 @@ export class ItemReorder {
    */
   reorderPrepare() {
     let ele = this._element;
+    // append child to allow reordering to bottom position
+    ele.insertAdjacentHTML('beforeend', '<div class="ion-reorder-temp-item item-block"></div>');
     let children: any = ele.children;
     for (let i = 0, ilen = children.length; i < ilen; i++) {
       var child = children[i];
@@ -221,6 +223,13 @@ export class ItemReorder {
    */
   reorderEmit(fromIndex: number, toIndex: number) {
     this.reorderReset();
+
+    // fixes bug: https://github.com/driftyco/ionic/issues/8782
+    let diff = fromIndex - toIndex;
+    if(diff < 0 ) {
+      toIndex = toIndex - 1
+    }
+
     if (fromIndex !== toIndex) {
       this._zone.run(() => {
         this.ionItemReorder.emit({
@@ -246,6 +255,9 @@ export class ItemReorder {
    * @private
    */
   reorderReset() {
+    // remove temp bottom item.
+    this._element.querySelector('.ion-reorder-temp-item').remove();
+
     let children = this._element.children;
     let len = children.length;
 
@@ -276,16 +288,16 @@ export class ItemReorder {
     /********* DOM WRITE ********* */
     let transform = CSS.transform;
     if (toIndex >= lastToIndex) {
-      for (var i = lastToIndex; i <= toIndex; i++) {
+      for (var i = lastToIndex; i <= toIndex-1; i++) {
         if (i !== fromIndex) {
-          (<any>children[i]).style[transform] = (i > fromIndex)
+          (<any>children[i]).style[transform] = (i >= fromIndex)
             ? `translateY(${-itemHeight}px)` : '';
         }
       }
     }
 
-    if (toIndex <= lastToIndex) {
-      for (var i = toIndex; i <= lastToIndex; i++) {
+    if (toIndex < lastToIndex) {
+      for (var i = toIndex; i <= lastToIndex+1; i++) {
         if (i !== fromIndex) {
           (<any>children[i]).style[transform] = (i < fromIndex)
             ? `translateY(${itemHeight}px)` : '';
