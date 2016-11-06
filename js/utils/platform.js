@@ -22,6 +22,22 @@
    * A set of utility methods that can be used to retrieve the device ready state and
    * various other information such as what kind of platform the app is currently installed on.
    *
+   * ionic.Platform.device() will return the following object with the example from calling on iOS device,
+   *
+   * {
+   *    available: true,
+   *    platform: iOS,
+   *    version: 10.1,
+   *    uuid: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX,
+   *    cordova: 4.2.1,
+   *    model: iPhone8.1,
+   *    manufacturer: Apple,
+   *    isVirtual: false,
+   *    serial: unknown
+   * }
+   *
+   * So you can get particular information out of ionic.Platform.device().
+   *
    * @usage
    * ```js
    * angular.module('PlatformApp', ['ionic'])
