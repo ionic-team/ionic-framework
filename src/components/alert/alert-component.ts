@@ -1,11 +1,11 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { isPresent } from '../../util/util';
+import { isPresent, assert } from '../../util/util';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
-
+import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 
 /**
  * @private
@@ -86,14 +86,18 @@ export class AlertCmp {
   msgId: string;
   subHdrId: string;
   mode: string;
+  gestureBlocker: BlockerDelegate;
 
   constructor(
     public _viewCtrl: ViewController,
     public _elementRef: ElementRef,
     public _config: Config,
+    gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer
   ) {
+    // gesture blocker is used to disable gestures dynamically
+    this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
     this.mode = _config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
@@ -172,6 +176,27 @@ export class AlertCmp {
     }
   }
 
+  ionViewWillEnter() {
+    this.gestureBlocker.block();
+  }
+
+  ionViewDidLeave() {
+    this.gestureBlocker.unblock();
+  }
+
+  ionViewDidEnter() {
+    let activeElement: any = document.activeElement;
+    if (document.activeElement) {
+      activeElement.blur();
+    }
+
+    let focusableEle = this._elementRef.nativeElement.querySelector('input,button');
+    if (focusableEle) {
+      focusableEle.focus();
+    }
+    this.enabled = true;
+  }
+
   @HostListener('body:keyup', ['$event'])
   keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
@@ -191,19 +216,6 @@ export class AlertCmp {
         this.bdClick();
       }
     }
-  }
-
-  ionViewDidEnter() {
-    let activeElement: any = document.activeElement;
-    if (document.activeElement) {
-      activeElement.blur();
-    }
-
-    let focusableEle = this._elementRef.nativeElement.querySelector('input,button');
-    if (focusableEle) {
-      focusableEle.focus();
-    }
-    this.enabled = true;
   }
 
   btnClick(button: any, dismissDelay?: number) {
@@ -292,6 +304,11 @@ export class AlertCmp {
       values[i.name] = i.value;
     });
     return values;
+  }
+
+  ngOnDestroy() {
+    assert(this.gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
+    this.gestureBlocker.destroy();
   }
 }
 
