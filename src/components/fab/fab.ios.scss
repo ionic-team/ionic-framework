@@ -4,22 +4,23 @@
 // --------------------------------------------------
 
 /// @prop - Background color of the button
-$fab-ios-background-color:                    color($colors-ios, primary) !default;
+$fab-ios-background-color:                        color($colors-ios, primary) !default;
 
 /// @prop - Text color of the button
-$fab-ios-text-color:                          color-contrast($colors-ios, $fab-ios-background-color) !default;
+$fab-ios-text-color:                              color-contrast($colors-ios, $fab-ios-background-color) !default;
 
 /// @prop - Background color of the activated button
-$fab-ios-background-color-activated:          color-shade($fab-ios-background-color) !default;
+$fab-ios-background-color-activated:              color-shade($fab-ios-background-color) !default;
 
-/// @prop - Background color of the button
-$fab-ios-in-list-background-color:            color($colors-ios, light) !default;
+/// @prop - Background color of the button in a list
+$fab-ios-list-button-background-color:            $fab-list-button-background-color !default;
 
-/// @prop - Text color of the button
-$fab-ios-in-list-text-color:                  color-contrast($colors-ios, $fab-ios-in-list-background-color) !default;
+/// @prop - Text color of the button in a list
+$fab-ios-list-button-text-color:                  color-contrast($colors-ios, $fab-ios-list-button-background-color) !default;
 
-/// @prop - Background color of the activated button
-$fab-ios-in-list-background-color-activated:  color-shade($fab-ios-in-list-background-color) !default;
+/// @prop - Background color of the activated button in a list
+$fab-ios-list-button-background-color-activated:  color-shade($fab-ios-list-button-background-color) !default;
+
 
 .fab-ios {
   color: $fab-ios-text-color;
@@ -31,12 +32,12 @@ $fab-ios-in-list-background-color-activated:  color-shade($fab-ios-in-list-backg
 }
 
 .fab-ios.fab-in-list {
-  color: $fab-ios-in-list-text-color;
-  background-color: $fab-ios-in-list-background-color;
+  color: $fab-ios-list-button-text-color;
+  background-color: $fab-ios-list-button-background-color;
 }
 
 .fab-ios.fab-in-list.activated {
-  background-color: $fab-ios-in-list-background-color-activated;
+  background-color: $fab-ios-list-button-background-color-activated;
 }
 
 
