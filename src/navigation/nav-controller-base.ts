@@ -117,7 +117,7 @@ export class NavControllerBase extends Ion implements NavController {
     }, done);
   }
 
-  popAll() {
+  popAll(): Promise<any[]> {
     let promises: any[] = [];
     for (var i = this._views.length - 1; i >= 0; i--) {
       promises.push(this.pop(null));
@@ -131,6 +131,10 @@ export class NavControllerBase extends Ion implements NavController {
       removeCount: removeCount,
       opts: opts,
     }, done);
+  }
+
+  removeView(viewController: ViewController, opts?: NavOptions, done?: Function): Promise<any> {
+    return this.remove(this.indexOf(viewController), 1, opts, done);
   }
 
   setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
@@ -330,15 +334,16 @@ export class NavControllerBase extends Ion implements NavController {
     const opts = ti.opts || {};
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
-    let view;
-    let destroyQueue: ViewController[] = [];
+    let view: ViewController;
+    let i: number;
+    let destroyQueue: ViewController[];
 
     // there are views to remove
     if (isPresent(removeStart)) {
       assert(removeStart >= 0, 'removeStart can not be negative');
       assert(ti.removeCount >= 0, 'removeCount can not be negative');
-
-      for (var i = 0; i < ti.removeCount; i++) {
+      destroyQueue = [];
+      for (i = 0; i < ti.removeCount; i++) {
         view = this._views[i + removeStart];
         if (view && view !== enteringView && view !== leavingView) {
           destroyQueue.push(view);
@@ -356,7 +361,7 @@ export class NavControllerBase extends Ion implements NavController {
       }
 
       // add the views to the
-      for (var i = 0; i < insertViews.length; i++) {
+      for (i = 0; i < insertViews.length; i++) {
         view = insertViews[i];
         this._insertViewAt(view, ti.insertStart + i);
       }
@@ -366,22 +371,26 @@ export class NavControllerBase extends Ion implements NavController {
         opts.direction = opts.direction || DIRECTION_FORWARD;
       }
     }
+
     // if the views to be removed are in the beginning or middle
     // and there is not a view that needs to visually transition out
     // then just destroy them and don't transition anything
     // batch all of lifecycles together
     // let's make sure, callbacks are zoned
-    this._zone.run(() => {
-      for (view of destroyQueue) {
-        this._willLeave(view);
-        this._didLeave(view);
-        this._willUnload(view);
-      }
-    });
+    if (destroyQueue && destroyQueue.length > 0) {
+      this._zone.run(() => {
+        for (i = 0; i < destroyQueue.length; i++) {
+          view = destroyQueue[i];
+          this._willLeave(view);
+          this._didLeave(view);
+          this._willUnload(view);
+        }
+      });
 
-    // once all lifecycle events has been delivered, we can safely detroy the views
-    for (view of destroyQueue) {
-      this._destroyView(view);
+      // once all lifecycle events has been delivered, we can safely detroy the views
+      for (i = 0; i < destroyQueue.length; i++) {
+        this._destroyView(destroyQueue[i]);
+      }
     }
 
     if (ti.enteringRequiresTransition || ti.leavingRequiresTransition && enteringView !== leavingView) {
