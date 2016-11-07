@@ -321,17 +321,6 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
-   */
-  @Input()
-  get type() {
-    return this._type;
-  }
-  set type(val: any) {
-    super.setType(val);
-  }
-
-  /**
    * @input {bool} Wheather the textara should be disabled or not
    */
   @Input()
