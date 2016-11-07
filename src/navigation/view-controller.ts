@@ -216,7 +216,6 @@ export class ViewController {
 
   /**
    * Check to see if you can go back in the navigation stack.
-   * @param {boolean} Check whether or not you can go back from this page
    * @returns {boolean} Returns if it's possible to go back from this Page.
    */
   enableBack(): boolean {
