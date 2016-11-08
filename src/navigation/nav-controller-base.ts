@@ -24,6 +24,7 @@ import { TransitionController } from '../transitions/transition-controller';
  * This class is for internal use only. It is not exported publicly.
  */
 export class NavControllerBase extends Ion implements NavController {
+
   _children: any[] = [];
   _ids: number = -1;
   _init = false;
