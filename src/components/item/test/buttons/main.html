@@ -17,12 +17,20 @@
     a[ion-item].activated
   </a>
 
+   <a ion-item color="secondary" href="#" (click)="testClick($event)">
+    a[ion-item] secondary
+  </a>
+
   <button ion-item (click)="testClick($event)">
     button[ion-item]
   </button>
 
   <button ion-item class="activated" (click)="testClick($event)">
     button[ion-item].activated
+  </button>
+
+  <button ion-item color="danger" (click)="testClick($event)">
+    button[ion-item] danger
   </button>
 
   <ion-item>
