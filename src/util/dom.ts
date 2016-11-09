@@ -36,16 +36,53 @@ export const cancelRaf = window.cancelAnimationFrame.bind(window);
 export const nativeTimeout = window[window['Zone']['__symbol__']('setTimeout')]['bind'](window);
 export const clearNativeTimeout = window[window['Zone']['__symbol__']('clearTimeout')]['bind'](window);
 
+/**
+ * Run a function in an animation frame after waiting `framesToWait` frames.
+ *
+ * @param framesToWait number how many frames to wait
+ * @param callback Function the function call to defer
+ * @return Function a function to call to cancel the wait
+ */
 export function rafFrames(framesToWait: number, callback: Function) {
-  framesToWait = Math.ceil(framesToWait);
+  let running = true;
+  let lastRid;
 
-  if (framesToWait < 2) {
-    nativeRaf(callback);
+  function start() {
+    function runTimes(frame) {
+      return function() {
+        run(frame);
+      }
+    }
 
-  } else {
-    nativeTimeout(() => {
-      nativeRaf(callback);
-    }, (framesToWait - 1) * 16.6667);
+    function run(frame) {
+      // End if no longer running
+      if(!running) { return; }
+
+      // If we only have two frames, just queue the next actual raf call
+      if(frame <= 2) {
+        running = false;
+        lastRid = nativeRaf(callback);
+      } else {
+        // Otherwise, queue up another frame
+        lastRid = nativeRaf(runTimes(frame - 1));
+      }
+    }
+
+    run(framesToWait);
+  }
+
+  function cancel() {
+    cancelRaf(lastRid);
+    running = false;
+  }
+
+  start();
+
+  return function() {
+    if (!running) {
+      return;
+    }
+    cancel();
   }
 }
 
