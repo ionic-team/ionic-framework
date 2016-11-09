@@ -10,10 +10,8 @@ $popover-wp-max-height:                90% !default;
 
 $popover-wp-border:                    2px solid #ccc !default;
 $popover-wp-border-radius:             0 !default;
-
-$popover-wp-text-color:                #000 !default;
-$popover-wp-background:                #f2f2f2 !default;
-$popover-wp-item-background:           $popover-wp-background !default;
+$popover-wp-text-color:                $text-wp-color !default;
+$popover-wp-background:                $background-wp-color !default;
 
 
 .popover-wp .popover-content {
@@ -28,14 +26,6 @@ $popover-wp-item-background:           $popover-wp-background !default;
   background: $popover-wp-background;
 
   transform-origin: top left;
-}
-
-.popover-wp ion-content {
-  background: $popover-wp-background;
-}
-
-.popover-wp .popover-content .item {
-  background-color: $popover-wp-item-background;
 }
 
 .popover-wp .popover-viewport {

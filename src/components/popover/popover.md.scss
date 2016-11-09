@@ -9,12 +9,10 @@ $popover-md-min-height:                0 !default;
 $popover-md-max-height:                90% !default;
 
 $popover-md-border-radius:             2px !default;
-$popover-md-text-color:                #000 !default;
-$popover-md-background:                #fafafa !default;
+$popover-md-text-color:                $text-md-color !default;
+$popover-md-background:                $background-md-color !default;
 $popover-md-box-shadow-color:          rgba(0, 0, 0, .3) !default;
 $popover-md-box-shadow:                0 3px 12px 2px $popover-md-box-shadow-color !default;
-
-$popover-md-item-background:           $popover-md-background !default;
 
 
 .popover-md .popover-content {
@@ -29,14 +27,6 @@ $popover-md-item-background:           $popover-md-background !default;
   box-shadow: $popover-md-box-shadow;
 
   transform-origin: top left;
-}
-
-.popover-md .popover-content ion-content {
-  background: $popover-md-background;
-}
-
-.popover-md .popover-content .item {
-  background-color: $popover-md-item-background;
 }
 
 .popover-md .popover-viewport {
