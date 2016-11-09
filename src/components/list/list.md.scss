@@ -33,6 +33,9 @@ $list-inset-md-border-radius:    2px !default;
 /// @prop - Padding left of the header in a list
 $list-md-header-padding-left:    $item-md-padding-left !default;
 
+/// @prop - Border bottom of the header in a list
+$list-md-header-border-bottom:   1px solid $list-md-border-color !default;
+
 /// @prop - Font size of the header in a list
 $list-md-header-font-size:       1.4rem !default;
 
@@ -156,15 +159,24 @@ $list-md-header-color:           #858585 !default;
 }
 
 
-// Material Design List Header / Divider
+// Material Design List Header
 // --------------------------------------------------
 
-.list-header-md,
-.list-md ion-item-divider {
-  margin-left: 0;
+.list-header-md {
   padding-left: $list-md-header-padding-left;
 
-  border-bottom: 1px solid $list-md-border-color;
+  border-bottom: $list-md-header-border-bottom;
   font-size: $list-md-header-font-size;
   color: $list-md-header-color;
+}
+
+
+// Generate Material Design List Header Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  .list-header-md-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
 }

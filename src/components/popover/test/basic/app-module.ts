@@ -140,7 +140,7 @@ export class PopoverRadioPage {
 @Component({
   template: `
     <ion-list>
-      <ion-list-header>Ionic</ion-list-header>
+      <ion-list-header color="secondary">Ionic</ion-list-header>
       <button ion-item (click)="close()">Learn Ionic</button>
       <button ion-item (click)="close()">Documentation</button>
     </ion-list>

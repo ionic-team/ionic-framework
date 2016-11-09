@@ -18,7 +18,7 @@ import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
 import { IonicApp } from './components/app/app-root';
-import { Item, ItemContent, ItemGroup } from './components/item/item';
+import { Item, ItemContent, ItemDivider, ItemGroup } from './components/item/item';
 import { ItemReorder, Reorder } from './components/item/item-reorder';
 import { ItemSliding, ItemOptions } from './components/item/item-sliding';
 import { Label } from './components/label/label';
@@ -88,7 +88,7 @@ export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 export { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
 export { TextArea, TextInput } from './components/input/input';
 export { IonicApp } from './components/app/app-root';
-export { Item, ItemContent, ItemGroup } from './components/item/item';
+export { Item, ItemContent, ItemDivider, ItemGroup } from './components/item/item';
 export { ItemReorder, Reorder } from './components/item/item-reorder';
 export { ItemSliding, ItemOptions, ItemSideFlags } from './components/item/item-sliding';
 export { Label } from './components/label/label';
@@ -187,6 +187,7 @@ export const IONIC_DIRECTIVES: any[] = [
   IonicApp,
   Item,
   ItemContent,
+  ItemDivider,
   ItemGroup,
   ItemOptions,
   ItemReorder,
