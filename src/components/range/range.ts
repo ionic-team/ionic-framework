@@ -215,6 +215,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   _min: number = 0;
   _max: number = 100;
   _step: number = 1;
+  _resolution: number = 0;
   _snaps: boolean = false;
 
   _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
@@ -250,6 +251,21 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   id: string;
 
   /**
+   * @input {number} Resolution for the step. Defaults to `0`.
+   */
+  @Input()
+  get resolution(): number {
+    //console.log('retur')
+    return this._resolution;
+  }
+  set resolution(val: number) {
+    val = Math.round(val);
+    if (!isNaN(val)) {
+      this._resolution = val;
+    }
+  }
+
+  /**
    * @input {number} Minimum integer value of the range. Defaults to `0`.
    */
   @Input()
@@ -262,6 +278,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       this._min = val;
     }
   }
+
 
   /**
    * @input {number} Maximum integer value of the range. Defaults to `100`.
@@ -602,8 +619,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    * @private
    */
   ratioToValue(ratio: number) {
-    ratio = Math.round(((this._max - this._min) * ratio));
-    ratio = Math.round(ratio / this._step) * this._step + this._min;
+    ratio = ((this._max - this._min) * ratio).toFixed(this.resolution);
+    ratio = ((ratio / this._step) * this._step + this._min).toFixed(this.resolution);
     return clamp(this._min, ratio, this._max);
   }
 
