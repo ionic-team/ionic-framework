@@ -229,7 +229,7 @@ export class Button extends Ion {
   /** @private */
   _attr(type: string, attrName: string, attrValue: boolean) {
     if (type === '_style') {
-      this._updateColor(this._color, isTrueProperty(attrValue));
+      this._updateColor(this._color, false);
     }
     this._setClass((<any>this)[type], false);
     if (isTrueProperty(attrValue)) {
@@ -241,6 +241,10 @@ export class Button extends Ion {
       (<any>this)[type] = (type === '_style' ? 'default' : null);
       this._setClass((<any>this)[type], true);
     }
+    if (type === '_style') {
+      this._updateColor(this._color, true);
+    }
+
   }
 
   /**
@@ -251,6 +255,7 @@ export class Button extends Ion {
     this._updateColor(this._color, false);
     this._updateColor(val, true);
     this._color = val;
+
   }
 
   constructor(
