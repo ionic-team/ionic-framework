@@ -112,8 +112,6 @@ $card-md-header-color:                #222 !default;
 
   font-size: $card-md-font-size;
   line-height: $card-md-line-height;
-
-  color: $card-md-text-color;
 }
 
 .card-header-md {
@@ -149,6 +147,7 @@ $card-md-header-color:                #222 !default;
 
   font-size: 2.4rem;
   font-weight: normal;
+  color: $card-md-text-color;
 }
 
 .card-md h2 {
@@ -156,6 +155,7 @@ $card-md-header-color:                #222 !default;
 
   font-size: 1.6rem;
   font-weight: normal;
+  color: $card-md-text-color;
 }
 
 .card-md h3,
@@ -166,6 +166,7 @@ $card-md-header-color:                #222 !default;
 
   font-size: 1.4rem;
   font-weight: normal;
+  color: $card-md-text-color;
 }
 
 .card-md p {
@@ -174,6 +175,7 @@ $card-md-header-color:                #222 !default;
   font-size: 1.4rem;
   font-weight: normal;
   line-height: 1.5;
+  color: $card-md-text-color;
 }
 
 .card-md + ion-card {
@@ -186,17 +188,29 @@ $card-md-header-color:                #222 !default;
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
+  .card-md .text-md-#{$color-name} {
+    color: $color-base;
+  }
+
   .card-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 
     .card-header-md,
     .card-title-md,
-    .card-content-md {
+    .card-content-md,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
       color: $color-contrast;
     }
 
     @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+      .text-md-#{$color-name},
       .card-header-md-#{$color-name},
       .card-title-md-#{$color-name},
       .card-content-md-#{$color-name} {

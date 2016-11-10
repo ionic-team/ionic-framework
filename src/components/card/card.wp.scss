@@ -113,7 +113,6 @@ $card-wp-header-color:                #222 !default;
 
   font-size: $card-wp-font-size;
   line-height: $card-wp-line-height;
-  color: $card-wp-text-color;
 }
 
 .card-header-wp {
@@ -150,6 +149,7 @@ $card-wp-header-color:                #222 !default;
 
   font-size: 2.4rem;
   font-weight: normal;
+  color: $card-wp-text-color;
 }
 
 .card-wp h2 {
@@ -157,6 +157,7 @@ $card-wp-header-color:                #222 !default;
 
   font-size: 1.6rem;
   font-weight: normal;
+  color: $card-wp-text-color;
 }
 
 .card-wp h3,
@@ -167,6 +168,7 @@ $card-wp-header-color:                #222 !default;
 
   font-size: 1.4rem;
   font-weight: normal;
+  color: $card-wp-text-color;
 }
 
 .card-wp p {
@@ -175,6 +177,7 @@ $card-wp-header-color:                #222 !default;
   font-size: 1.4rem;
   font-weight: normal;
   line-height: 1.5;
+  color: $card-wp-text-color;
 }
 
 .card-wp + ion-card {
@@ -187,17 +190,29 @@ $card-wp-header-color:                #222 !default;
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
+  .card-wp .text-wp-#{$color-name} {
+    color: $color-base;
+  }
+
   .card-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 
     .card-header-wp,
     .card-title-wp,
-    .card-content-wp {
+    .card-content-wp,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
       color: $color-contrast;
     }
 
     @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+      .text-wp-#{$color-name},
       .card-header-wp-#{$color-name},
       .card-title-wp-#{$color-name},
       .card-content-wp-#{$color-name} {

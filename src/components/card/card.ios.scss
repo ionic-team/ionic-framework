@@ -107,7 +107,6 @@ $card-ios-header-color:                #333 !default;
 
   font-size: $card-ios-font-size;
   line-height: 1.4;
-  color: $card-ios-text-color;
 }
 
 .card-header-ios {
@@ -167,6 +166,7 @@ $card-ios-header-color:                #333 !default;
   margin: 0 0 2px;
 
   font-size: 1.4rem;
+  color: $card-ios-text-color;
 }
 
 .card-ios + ion-card {
@@ -179,17 +179,23 @@ $card-ios-header-color:                #333 !default;
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
+  .card-ios .text-ios-#{$color-name} {
+    color: $color-base;
+  }
+
   .card-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 
     .card-header-ios,
     .card-title-ios,
-    .card-content-ios {
+    .card-content-ios,
+    p {
       color: $color-contrast;
     }
 
     @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+      .text-ios-#{$color-name},
       .card-header-ios-#{$color-name},
       .card-title-ios-#{$color-name},
       .card-content-ios-#{$color-name} {
