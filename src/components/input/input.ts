@@ -321,7 +321,7 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @input {bool} Wheather the textara should be disabled or not
+   * @input {bool} Wheather the textarea should be disabled or not
    */
   @Input()
   get disabled() {
