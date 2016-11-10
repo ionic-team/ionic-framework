@@ -120,7 +120,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      * @ngdoc method
      * @name ionicModal#show
      * @description Show this modal instance.
-     * @returns {promise} A promise which is resolved when the modal is finished animating in.
+     * @returns {promise} An empty promise which is resolved when the modal is finished animating in.
      */
     show: function(target) {
       var self = this;
@@ -207,7 +207,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      * @ngdoc method
      * @name ionicModal#hide
      * @description Hide this modal instance.
-     * @returns {promise} A promise which is resolved when the modal is finished animating out.
+     * @returns {promise} An empty promise which is resolved when the modal is finished animating out.
      */
     hide: function() {
       var self = this;
@@ -253,7 +253,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      * @ngdoc method
      * @name ionicModal#remove
      * @description Remove this modal instance from the DOM and clean up.
-     * @returns {promise} A promise which is resolved when the modal is finished animating out.
+     * @returns {promise} An empty promise which is resolved when the modal is finished animating out.
      */
     remove: function() {
       var self = this,
