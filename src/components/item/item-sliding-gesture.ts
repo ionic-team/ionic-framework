@@ -10,6 +10,7 @@ const DRAG_THRESHOLD = 10;
 const MAX_ATTACK_ANGLE = 20;
 
 export class ItemSlidingGesture extends PanGesture {
+
   private preSelectedContainer: ItemSliding = null;
   private selectedContainer: ItemSliding = null;
   private openContainer: ItemSliding = null;

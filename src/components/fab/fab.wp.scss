@@ -4,22 +4,22 @@
 // --------------------------------------------------
 
 /// @prop - Background color of the button
-$fab-wp-background-color:                   color($colors-wp, primary) !default;
+$fab-wp-background-color:                         color($colors-wp, primary) !default;
 
 /// @prop - Text color of the button
-$fab-wp-text-color:                         color-contrast($colors-wp, $fab-wp-background-color) !default;
+$fab-wp-text-color:                               color-contrast($colors-wp, $fab-wp-background-color) !default;
 
 /// @prop - Background color of the activated button
-$fab-wp-background-color-activated:         color-shade($fab-wp-background-color) !default;
+$fab-wp-background-color-activated:               color-shade($fab-wp-background-color) !default;
 
-/// @prop - Background color of the button
-$fab-wp-in-list-background-color:           color($colors-wp, light) !default;
+/// @prop - Background color of the button in a list
+$fab-wp-list-button-background-color:             $fab-list-button-background-color !default;
 
-/// @prop - Text color of the button
-$fab-wp-in-list-text-color:                 color-contrast($colors-wp, $fab-wp-in-list-background-color) !default;
+/// @prop - Text color of the button in a list
+$fab-wp-list-button-text-color:                   color-contrast($colors-wp, $fab-wp-list-button-background-color) !default;
 
-/// @prop - Background color of the activated button
-$fab-wp-in-list-background-color-activated: color-shade($fab-wp-in-list-background-color) !default;
+/// @prop - Background color of the activated button in a list
+$fab-wp-list-button-background-color-activated:   color-shade($fab-wp-list-button-background-color) !default;
 
 
 .fab-wp {
@@ -32,12 +32,12 @@ $fab-wp-in-list-background-color-activated: color-shade($fab-wp-in-list-backgrou
 }
 
 .fab-wp.fab-in-list {
-  color: $fab-wp-in-list-text-color;
-  background-color: $fab-wp-in-list-background-color;
+  color: $fab-wp-list-button-text-color;
+  background-color: $fab-wp-list-button-background-color;
 }
 
 .fab-wp.fab-in-list.activated {
-  background-color: $fab-wp-in-list-background-color-activated;
+  background-color: $fab-wp-list-button-background-color-activated;
 }
 
 

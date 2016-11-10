@@ -113,6 +113,12 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
     .bar-button-default-ios {
       color: $color-contrast;
     }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+      @include ios-bar-button-default($color-name, $color-base, $color-contrast);
+      @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
+      @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
+    }
   }
 }
 

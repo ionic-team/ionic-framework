@@ -43,10 +43,10 @@ $text-input-ios-show-invalid-highlight:    $text-input-ios-show-focus-highlight 
 $text-input-ios-highlight-color:           color($colors-ios, primary) !default;
 
 /// @prop - Color of the input highlight when valid
-$text-input-ios-highlight-color-valid:     color($colors-ios, secondary) !default;
+$text-input-ios-highlight-color-valid:     $text-input-highlight-color-valid !default;
 
 /// @prop - Color of the input highlight when invalid
-$text-input-ios-highlight-color-invalid:   color($colors-ios, danger) !default;
+$text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !default;
 
 
 // iOS Default Input

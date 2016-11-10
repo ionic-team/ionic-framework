@@ -4,16 +4,19 @@
 // --------------------------------------------------
 
 /// @prop - Width and height of the FAB button
-$fab-size:            56px !default;
+$fab-size:                              56px !default;
 
 /// @prop - Width and height of the FAB button mini
-$fab-mini-size:       40px !default;
+$fab-mini-size:                         40px !default;
 
 /// @prop - Margin of the FAB Container
-$fab-content-margin:  10px !default;
+$fab-content-margin:                    10px !default;
 
 /// @prop - Margin of the FAB List
-$fab-list-margin:     10px !default;
+$fab-list-margin:                       10px !default;
+
+/// @prop - Background color of the button in a list
+$fab-list-button-background-color:      #f4f4f4 !default;
 
 
 .fab {

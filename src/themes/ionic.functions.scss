@@ -76,8 +76,8 @@
   @return mix($shade, $color-value, $amount);
 }
 
-@function color-error($color-value) {
-  @error "
+@function color-error($color-value, $color-name: null) {
+  $error-msg: "
 
   The value `#{$color-value}` must be a color.
   If you are setting the value as a map make sure
@@ -90,7 +90,25 @@
     secondary:  (base: #32db64, contrast: #000),
   );";
 
-  @return false;
+  // If there was a name passed it means the value doesn't exist
+  // so error that the value isn't defined
+  @if ($color-name) {
+    $error-msg: "
+
+    The map color `#{$color-name}` is not defined.
+    Please make sure the color exists in your
+    `$colors` map.
+
+    For example:
+
+    $colors: (
+      #{$color-name}:    #327eff
+    );";
+  }
+
+  @error $error-msg;
+
+  @return null;
 }
 
 // Copy Colors Map
@@ -162,8 +180,12 @@
     }
   }
 
-  // If it isn't a map then return the value
-  @return $color-value;
+  // If the value is a color then return the value
+  // otherwise we need to error with the name
+  @if (type-of($color-value) == color) {
+    @return $color-value;
+  }
+  @return color-error($color-value, $color-name);
 }
 
 // Get the color map key based on the value

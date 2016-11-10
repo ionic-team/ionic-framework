@@ -120,7 +120,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @private
+   * @input {string} The text value of the input
    */
   @Input()
   get value() {
@@ -142,7 +142,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @private
+   * @input {bool} If the input should be disabled or not
    */
   @Input()
   get disabled() {
@@ -305,12 +305,12 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
+   * @input {string} The placeholder for the textarea
    */
   @Input() placeholder: string = '';
 
   /**
-   * @private
+   * @input {string} The value of the textarea
    */
   @Input()
   get value() {
@@ -321,18 +321,7 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
-   */
-  @Input()
-  get type() {
-    return this._type;
-  }
-  set type(val: any) {
-    super.setType(val);
-  }
-
-  /**
-   * @private
+   * @input {bool} Wheather the textara should be disabled or not
    */
   @Input()
   get disabled() {
@@ -367,12 +356,12 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
+   * @output {event} Expression to call when the textarea no longer has focus
    */
   @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @private
+   * @output {event} Expression to call when the textarea has focus
    */
   @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 

@@ -27,7 +27,7 @@ $card-ios-header-color:                #ddd !default;
 // iOS Note
 // --------------------------------------------------
 
-$item-ios-note-color:                  color($colors-ios, light) !default;
+$item-ios-note-color:                  #f4f4f4 !default;
 
 
 // iOS Toolbar
@@ -72,4 +72,4 @@ $item-ios-padding-icon-bottom:        9px !default;
 // iOS Toggle
 // --------------------------------------------------
 
-$toggle-ios-handle-background-color:  color($colors-ios, light) !default;
+$toggle-ios-handle-background-color:  #f4f4f4 !default;

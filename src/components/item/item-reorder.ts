@@ -133,19 +133,10 @@ export interface ReorderIndexes {
 })
 export class ItemReorder {
 
-  /** @private */
   _enableReorder: boolean = false;
-
-  /** @private */
   _visibleReorder: boolean = false;
-
-  /** @private */
   _reorderGesture: ItemReorderGesture;
-
-  /** @private */
   _lastToIndex: number = -1;
-
-  /** @private */
   _element: HTMLElement;
 
   /**
@@ -196,10 +187,7 @@ export class ItemReorder {
     }
   }
 
-  /**
-   * @private
-   */
-  reorderPrepare() {
+  _reorderPrepare() {
     let ele = this._element;
     let children: any = ele.children;
     for (let i = 0, ilen = children.length; i < ilen; i++) {
@@ -209,18 +197,12 @@ export class ItemReorder {
     }
   }
 
-  /**
-   * @private
-   */
-  reorderStart() {
+  _reorderStart() {
     this.setElementClass('reorder-list-active', true);
   }
 
-  /**
-   * @private
-   */
-  reorderEmit(fromIndex: number, toIndex: number) {
-    this.reorderReset();
+  _reorderEmit(fromIndex: number, toIndex: number) {
+    this._reorderReset();
     if (fromIndex !== toIndex) {
       this._zone.run(() => {
         this.ionItemReorder.emit({
@@ -231,10 +213,7 @@ export class ItemReorder {
     }
   }
 
-  /**
-   * @private
-   */
-  scrollContent(scroll: number) {
+  _scrollContent(scroll: number) {
     let scrollTop = this._content.getScrollTop() + scroll;
     if (scroll !== 0) {
       this._content.scrollTo(0, scrollTop, 0);
@@ -242,10 +221,7 @@ export class ItemReorder {
     return scrollTop;
   }
 
-  /**
-   * @private
-   */
-  reorderReset() {
+  _reorderReset() {
     let children = this._element.children;
     let len = children.length;
 
@@ -257,10 +233,7 @@ export class ItemReorder {
     this._lastToIndex = -1;
   }
 
-  /**
-   * @private
-   */
-  reorderMove(fromIndex: number, toIndex: number, itemHeight: number) {
+  _reorderMove(fromIndex: number, toIndex: number, itemHeight: number) {
     if (this._lastToIndex === -1) {
       this._lastToIndex = fromIndex;
     }

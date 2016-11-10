@@ -453,6 +453,15 @@ export abstract class NavController {
   abstract remove(startIndex: number, removeCount?: number, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
+   * Removes the specified view controller from the nav stack.
+   *
+   * @param {ViewController} [viewController] The viewcontroller to remove.
+   * @param {object} [opts={}] Any options you want to use pass to transtion.
+   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
+   */
+  abstract removeView(viewController: ViewController, opts?: NavOptions, done?: Function): Promise<any>;
+
+  /**
    * Set the root for the current navigation stack.
    * @param {Page|ViewController} page  The name of the component you want to push on the navigation stack.
    * @param {object} [params={}] Any nav-params you want to pass along to the next view.

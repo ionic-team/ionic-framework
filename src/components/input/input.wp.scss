@@ -58,10 +58,10 @@ $text-input-wp-show-invalid-highlight:      $text-input-wp-show-focus-highlight 
 $text-input-wp-highlight-color:             color($colors-wp, primary) !default;
 
 /// @prop - Color of the input highlight when valid
-$text-input-wp-highlight-color-valid:       color($colors-wp, secondary) !default;
+$text-input-wp-highlight-color-valid:       $text-input-highlight-color-valid !default;
 
 /// @prop - Color of the input highlight when invalid
-$text-input-wp-highlight-color-invalid:     color($colors-wp, danger) !default;
+$text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid !default;
 
 
 // Windows Default Input

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Button } from '../button/button';
 import { Config } from '../../config/config';
@@ -6,6 +6,7 @@ import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
 import { Label } from '../label/label';
+import { ItemReorder } from './item-reorder';
 
 
 /**
@@ -283,7 +284,7 @@ import { Label } from '../label/label';
         '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
       '</div>' +
       '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
-      '<ion-reorder></ion-reorder>' +
+      '<ion-reorder *ngIf="_shouldHaveReorder"></ion-reorder>' +
     '</div>' +
     '<div class="button-effect"></div>',
   host: {
@@ -298,6 +299,7 @@ export class Item extends Ion {
   _label: Label;
   _viewLabel: boolean = true;
   _name: string = 'item';
+  _shouldHaveReorder: boolean = false;
 
   /**
    * @private
@@ -325,11 +327,17 @@ export class Item extends Ion {
     this._setMode('item', val);
   }
 
-  constructor(form: Form, config: Config, elementRef: ElementRef, renderer: Renderer) {
+  constructor(
+    form: Form,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    @Optional() reorder: ItemReorder
+  ) {
     super(config, elementRef, renderer);
 
     this._setName(elementRef);
-
+    this._shouldHaveReorder = !!reorder;
     this.mode = config.get('mode');
     this.id = form.nextId().toString();
   }

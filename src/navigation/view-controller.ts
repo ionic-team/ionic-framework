@@ -179,7 +179,7 @@ export class ViewController {
 
     let options = assign({}, this._leavingOpts, navOptions);
     this._onWillDismiss && this._onWillDismiss(data, role);
-    return this._nav.remove(this._nav.indexOf(this), 1, options).then(() => {
+    return this._nav.removeView(this, options).then(() => {
       this._onDidDismiss && this._onDidDismiss(data, role);
       this._onDidDismiss = null;
       return data;
@@ -216,7 +216,6 @@ export class ViewController {
 
   /**
    * Check to see if you can go back in the navigation stack.
-   * @param {boolean} Check whether or not you can go back from this page
    * @returns {boolean} Returns if it's possible to go back from this Page.
    */
   enableBack(): boolean {
