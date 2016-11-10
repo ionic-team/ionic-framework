@@ -107,13 +107,13 @@
   </p>
 
   <p *ngIf="!visible">
-    <a color="danger"
+    <a ion-text color="danger"
       [navPush]="pushPage"
       [navParams]="{msg:'a (p *ngIf=!visible)'}">a (p *ngIf="!visible")</a>
   </p>
 
   <p>
-    <a color="danger"
+    <a ion-text color="danger"
       *ngIf="!visible"
       [navPush]="pushPage"
       [navParams]="{msg:'a (a *ngIf=!visible)'}">a (a *ngIf="!visible")</a>
