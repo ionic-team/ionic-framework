@@ -6,9 +6,6 @@
 /// @prop - Font size of the item text
 $item-ios-body-text-font-size:            1.6rem !default;
 
-/// @prop - Color of the item paragraph
-$item-ios-paragraph-text-color:           #666 !default;
-
 /// @prop - Size of the avatar in the item
 $item-ios-avatar-size:                    3.6rem !default;
 
@@ -93,7 +90,6 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   font-size: 1.2rem;
   line-height: normal;
   text-overflow: inherit;
-  color: $item-ios-paragraph-text-color;
 }
 
 .item-ios h2:last-child,
@@ -236,6 +232,10 @@ ion-item-divider.item-ios {
   .item-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    &.activated {
+     background-color: color-shade($color-base);
+    }
   }
 }
 

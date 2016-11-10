@@ -9,9 +9,6 @@ $item-md-body-text-font-size:        1.4rem !default;
 /// @prop - line height of the item text
 $item-md-body-text-line-height:      1.5 !default;
 
-/// @prop - Color of the item paragraph
-$item-md-paragraph-text-color:       #666 !default;
-
 /// @prop - Font size of the item
 $item-md-font-size:                  1.6rem !default;
 
@@ -103,7 +100,6 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   font-size: 1.4rem;
   line-height: normal;
   text-overflow: inherit;
-  color: $item-md-paragraph-text-color;
 }
 
 .item-md.item-block .item-inner {
@@ -239,6 +235,10 @@ ion-item-divider.item-md {
   .item-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    &.activated {
+     background-color: color-shade($color-base);
+    }
   }
 }
 
