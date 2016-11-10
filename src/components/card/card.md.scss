@@ -107,22 +107,24 @@ $card-md-header-color:                #222 !default;
   border: 0;
 }
 
-.card-md ion-card-content {
+.card-content-md {
   padding: $card-md-padding-top $card-md-padding-right $card-md-padding-bottom $card-md-padding-left;
 
   font-size: $card-md-font-size;
   line-height: $card-md-line-height;
+
+  color: $card-md-text-color;
 }
 
-.card-md ion-card-header {
+.card-header-md {
   padding: $card-md-header-padding;
 
   font-size: $card-md-header-font-size;
   color: $card-md-header-color;
 }
 
-.card-md ion-card-header + ion-card-content,
-.card-md .item + ion-card-content {
+.card-header-md + .card-content-md,
+.card-md .item + .card-content-md {
   padding-top: 0;
 }
 
@@ -131,7 +133,7 @@ $card-md-header-color:                #222 !default;
   font-size: 1.3rem;
 }
 
-.card-md ion-card-title {
+.card-title-md {
   display: block;
 
   margin: $card-md-title-margin;
@@ -147,7 +149,6 @@ $card-md-header-color:                #222 !default;
 
   font-size: 2.4rem;
   font-weight: normal;
-  color: $card-md-text-color;
 }
 
 .card-md h2 {
@@ -155,7 +156,6 @@ $card-md-header-color:                #222 !default;
 
   font-size: 1.6rem;
   font-weight: normal;
-  color: $card-md-text-color;
 }
 
 .card-md h3,
@@ -166,7 +166,6 @@ $card-md-header-color:                #222 !default;
 
   font-size: 1.4rem;
   font-weight: normal;
-  color: $card-md-text-color;
 }
 
 .card-md p {
@@ -175,9 +174,41 @@ $card-md-header-color:                #222 !default;
   font-size: 1.4rem;
   font-weight: normal;
   line-height: 1.5;
-  color: $card-md-text-color;
 }
 
 .card-md + ion-card {
   margin-top: 0;
+}
+
+
+// Generate Material Design Card Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .card-md-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+
+    .card-header-md,
+    .card-title-md,
+    .card-content-md {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+      .card-header-md-#{$color-name},
+      .card-title-md-#{$color-name},
+      .card-content-md-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-header-md-#{$color-name},
+  .card-title-md-#{$color-name},
+  .card-content-md-#{$color-name} {
+    color: $color-base;
+  }
+
 }
