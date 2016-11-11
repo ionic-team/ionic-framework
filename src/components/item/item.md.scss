@@ -239,6 +239,14 @@ ion-item-divider.item-md {
   .item-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    p {
+      color: $color-contrast;
+    }
+
+    &.activated {
+     background-color: color-shade($color-base);
+    }
   }
 }
 

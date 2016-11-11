@@ -236,6 +236,14 @@ ion-item-divider.item-wp {
   .item-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    p {
+      color: $color-contrast;
+    }
+
+    &.activated {
+      background-color: color-shade($color-base);
+    }
   }
 }
 
