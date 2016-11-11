@@ -22,9 +22,19 @@
   <button ion-button block [color]="myColor1" [round]="isCustom">Custom #1</button>
   <button ion-button block [color]="myColor2" [outline]="isOutline" [round]="isCustom">Custom #2 (Outline)</button>
   <hr/>
+  <button ion-button block color="secondary" [outline]="!liked" (click)="reportLike(true)" class="e2eButtonToggle">Secondary (Toggle)</button>
+  <button ion-button block color="danger" [outline]="liked !== false" (click)="reportLike(false)">Danger (Toggle)</button>
+  <hr/>
   <button ion-button block outline color="danger" (click)="showIf = !showIf">Toggle Header</button>
   <hr/>
   <button ion-button block outline color="danger" (click)="unify()" class="e2eButtonDynamicUnify">Unify all buttons</button>
   <button ion-button block clear color="danger" (click)="reset()">Reset all buttons</button>
+  <button ion-button small *ngFor="let button of buttons"
+          [outline]="!button.selected && button.value !== value"
+          [color]="(button.selected || button.value === value) ? button.value : 'secondary'"
+          (click)="setValue(button.value)">
+    <ion-icon *ngIf="button.icon" name="{{button.icon}}"></ion-icon>
+    {{button.text}}
+  </button>
 
 </ion-content>
