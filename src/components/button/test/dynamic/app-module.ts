@@ -63,7 +63,7 @@ export class E2EPage {
   }
 
   setValue(value: any) {
-    if (this.value !== value){
+    if (this.value !== value) {
       this.buttons.forEach((btn: any) => btn.selected = (value === btn.value));
       this.value = value;
     }
