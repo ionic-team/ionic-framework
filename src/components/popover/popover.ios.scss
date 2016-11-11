@@ -9,10 +9,9 @@ $popover-ios-min-height:                0 !default;
 $popover-ios-max-height:                90% !default;
 
 $popover-ios-border-radius:             10px !default;
-$popover-ios-text-color:                #000 !default;
+$popover-ios-text-color:                $text-ios-color !default;
 
-$popover-ios-background:                #fff !default;
-$popover-ios-item-background:           $popover-ios-background !default;
+$popover-ios-background:                $background-ios-color !default;
 $popover-ios-arrow-background:          $popover-ios-background !default;
 
 
@@ -25,14 +24,6 @@ $popover-ios-arrow-background:          $popover-ios-background !default;
   border-radius: $popover-ios-border-radius;
   color: $popover-ios-text-color;
   background: $popover-ios-background;
-
-  ion-content {
-    background: $popover-ios-background;
-  }
-}
-
-.popover-ios .popover-content .item {
-  background-color: $popover-ios-item-background;
 }
 
 

@@ -215,7 +215,7 @@ ion-item-group .item-wrapper:last-child .item-ios .item-inner {
 // iOS Item Divider
 // --------------------------------------------------
 
-ion-item-divider.item-ios {
+.item-divider-ios {
   padding-left: $item-ios-padding-left;
 
   color: $item-ios-divider-color;
@@ -223,7 +223,7 @@ ion-item-divider.item-ios {
 }
 
 
-// Generate iOS Item Divider Colors
+// Generate iOS Item and Item Divider Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
@@ -233,7 +233,8 @@ ion-item-divider.item-ios {
     color: $color-base;
   }
 
-  .item-ios-#{$color-name} {
+  .item-ios-#{$color-name},
+  .item-divider-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 

@@ -8,20 +8,42 @@
 
 
 <ion-content class="outer-content">
+  <ion-item-divider>
+    Divider by itself
+  </ion-item-divider>
+
+  <ion-list>
+    <ion-item-divider>
+      Divider in List
+    </ion-item-divider>
+    <ion-item-divider color="danger">
+      Danger Divider in List
+    </ion-item-divider>
+  </ion-list>
+
+  <ion-item-group>
+    <ion-item-divider>
+      Divider in Item Group
+    </ion-item-divider>
+    <ion-item-divider color="secondary">
+      Secondary Divider in Item Group
+    </ion-item-divider>
+  </ion-item-group>
 
   <ion-item-group>
     <ion-item>
+      <h3 color="secondary">Secondary header</h3>
       Plain Ol' div with some text
     </ion-item>
   </ion-item-group>
 
   <ion-item-group>
     <ion-item-divider>
-      Item Divider
+      Item Divider <span color="danger">Danger Span</span>
       <button ion-button item-right>button</button>
     </ion-item-divider>
 
-    <ion-item text-wrap>
+    <ion-item text-wrap class="custom-item">
       Multiline text that should wrap when it is too long
       to fit on one line in the item. Attribute on .item
     </ion-item>
@@ -35,15 +57,11 @@
       <button ion-button item-left clear color="light">
         <ion-icon name="rainy"></ion-icon>
       </button>
-      Dark
+      Dark <h5 color="primary">Primary h5</h5>
     </ion-item-divider>
 
     <ion-item text-wrap>
       <h1>H1 Title Text</h1>
-    </ion-item>
-
-    <ion-item text-wrap>
-      <h2>H2 Title Text</h2>
     </ion-item>
   </ion-item-group>
 
@@ -58,22 +76,12 @@
       </button>
     </ion-item-divider>
 
-    <ion-item text-wrap>
-      <h3>H3 Title Text</h3>
-    </ion-item>
-  </ion-item-group>
-
-  <ion-item-group>
     <ion-item-divider color="primary">
       Primary
       <ion-thumbnail item-right>
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-thumbnail>
     </ion-item-divider>
-
-    <ion-item text-wrap>
-      <h4>H4 Title Text</h4>
-    </ion-item>
   </ion-item-group>
 
   <ion-item-group>

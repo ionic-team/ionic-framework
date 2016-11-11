@@ -33,6 +33,9 @@ $list-inset-wp-border-radius:    2px !default;
 /// @prop - Padding left of the header in a list
 $list-wp-header-padding-left:    $item-wp-padding-left !default;
 
+/// @prop - Border bottom of the header in a list
+$list-wp-header-border-bottom:   1px solid $list-wp-border-color !default;
+
 /// @prop - Font size of the header in a list
 $list-wp-header-font-size:       2rem !default;
 
@@ -151,15 +154,24 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 
-// Windows List Header / Divider
+// Windows List Header
 // --------------------------------------------------
 
-.list-header-wp,
-.list-wp ion-item-divider {
-  margin-left: 0;
+.list-header-wp {
   padding-left: $list-wp-header-padding-left;
 
-  border-bottom: 1px solid $list-wp-border-color;
+  border-bottom: $list-wp-header-border-bottom;
   font-size: $list-wp-header-font-size;
   color: $list-wp-header-color;
+}
+
+
+// Generate Windows List Header Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  .list-header-wp-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
 }

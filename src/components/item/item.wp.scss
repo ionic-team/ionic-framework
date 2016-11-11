@@ -39,11 +39,17 @@ $item-wp-detail-push-color:          $input-wp-border-color !default;
 /// @prop - Icon for the detail arrow
 $item-wp-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-wp-detail-push-color}'/></svg>" !default;
 
+/// @prop - Color for the divider
+$item-wp-divider-color:              $list-wp-text-color !default;
+
 /// @prop - Background for the divider
 $item-wp-divider-background:         #fff !default;
 
-/// @prop - Color for the divider
-$item-wp-divider-color:              #222 !default;
+/// @prop - Bodrer bottom for the divider
+$item-wp-divider-border-bottom:      1px solid $list-wp-border-color !default;
+
+/// @prop - Font size for the divider
+$item-wp-divider-font-size:          2rem !default;
 
 /// @prop - Padding for the divider
 $item-wp-divider-padding:            5px 15px !default;
@@ -215,15 +221,18 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 // Windows Item Divider
 // --------------------------------------------------
 
-ion-item-divider.item-wp {
+.item-divider-wp {
   padding-left: $item-wp-padding-left;
+
+  border-bottom: $item-wp-divider-border-bottom;
+  font-size: $item-wp-divider-font-size;
 
   color: $item-wp-divider-color;
   background-color: $item-wp-divider-background;
 }
 
 
-// Generate Windows Item Divider Colors
+// Generate Windows Item and Item Divider Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
@@ -233,7 +242,8 @@ ion-item-divider.item-wp {
     color: $color-base;
   }
 
-  .item-wp-#{$color-name} {
+  .item-wp-#{$color-name},
+  .item-divider-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 

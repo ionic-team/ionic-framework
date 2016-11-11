@@ -16,10 +16,6 @@
   </ion-fab>
 
   <ion-list>
-    <!--<ion-list-header>
-      ion-list-header
-    </ion-list-header>-->
-
     <ion-list-header text-wrap>
       This is multiline text that has a
       long description of about how the text is really long
@@ -27,9 +23,9 @@
       <button ion-button outline item-right (click)="testClick($event)">View</button>
     </ion-list-header>
 
-    <ion-list-header>
+    <ion-list-header color="secondary">
       <button ion-button item-left (click)="testClick($event)">Default</button>
-      Inner Buttons
+      Secondary Inner Buttons
       <button ion-button outline item-right (click)="testClick($event)">Outline</button>
     </ion-list-header>
 
@@ -45,12 +41,12 @@
       </button>
     </ion-list-header>
 
-    <ion-list-header>
+    <ion-list-header color="dark">
       <button ion-button icon-right item-left (click)="testClick($event)">
         Right Icon
         <ion-icon name="home"></ion-icon>
       </button>
-      right icon buttons
+      Dark right icon buttons
       <button ion-button icon-right outline item-right (click)="testClick($event)">
         Right Icon
         <ion-icon name="star"></ion-icon>

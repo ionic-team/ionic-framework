@@ -298,6 +298,7 @@ export class Item extends Ion {
   _inputs: Array<string> = [];
   _label: Label;
   _viewLabel: boolean = true;
+  _name: string = 'item';
   _shouldHaveReorder: boolean = false;
 
   /**
@@ -315,7 +316,7 @@ export class Item extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._updateColor(val);
+    this._updateColor(val, this._name);
   }
 
   /**
@@ -334,6 +335,8 @@ export class Item extends Ion {
     @Optional() reorder: ItemReorder
   ) {
     super(config, elementRef, renderer);
+
+    this._setName(elementRef);
     this._shouldHaveReorder = !!reorder;
     this.mode = config.get('mode');
     this.id = form.nextId().toString();
@@ -361,9 +364,23 @@ export class Item extends Ion {
     }
   }
 
+  /**
+   * @private
+   */
   _updateColor(newColor: string, colorClass?: string) {
     colorClass = colorClass || 'item'; // item-radio
     this._setColor(colorClass, newColor);
+  }
+
+  /**
+   * @private
+   */
+  _setName(elementRef: ElementRef) {
+    let nodeName = elementRef.nativeElement.nodeName.replace('ION-', '');
+
+    if (nodeName === 'LIST-HEADER' || nodeName === 'ITEM-DIVIDER') {
+      this._name = nodeName;
+    }
   }
 
   /**
@@ -418,6 +435,40 @@ export class Item extends Ion {
     icons.forEach(icon => {
       icon.setElementClass('item-icon', true);
     });
+  }
+}
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'ion-item-divider',
+  host: {
+    'class': 'item-divider'
+  }
+})
+export class ItemDivider extends Ion {
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor('item-divider', val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode('item-divider', val);
+  }
+
+  constructor(form: Form, config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer);
+
+    this.mode = config.get('mode');
   }
 
 }
