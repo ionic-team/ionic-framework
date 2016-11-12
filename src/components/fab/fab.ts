@@ -56,9 +56,9 @@ import { nativeTimeout } from '../../util/dom';
   selector: '[ion-fab]',
   template:
   '<ion-icon name="close" class="fab-close-icon"></ion-icon>' +
-    '<span class="button-inner">' +
-      '<ng-content></ng-content>' +
-    '</span>' +
+  '<span class="button-inner">' +
+    '<ng-content></ng-content>' +
+  '</span>' +
   '<div class="button-effect"></div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

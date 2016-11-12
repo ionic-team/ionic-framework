@@ -251,15 +251,15 @@ export const DATETIME_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'ion-datetime',
   template:
-  '<div class="datetime-text">{{_text}}</div>' +
-  '<button aria-haspopup="true" ' +
-  'type="button" ' +
-  '[id]="id" ' +
-  'ion-button="item-cover" ' +
-  '[attr.aria-labelledby]="_labelId" ' +
-  '[attr.aria-disabled]="_disabled" ' +
-  'class="item-cover">' +
-  '</button>',
+    '<div class="datetime-text">{{_text}}</div>' +
+    '<button aria-haspopup="true" ' +
+            'type="button" ' +
+            '[id]="id" ' +
+            'ion-button="item-cover" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover">' +
+    '</button>',
   host: {
     '[class.datetime-disabled]': '_disabled'
   },
