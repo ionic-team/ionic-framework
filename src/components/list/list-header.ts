@@ -16,7 +16,7 @@ export class ListHeader extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('list-header', val);
+    this._setColor(val);
   }
 
   /**
@@ -24,13 +24,11 @@ export class ListHeader extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('list-header', val);
+    this._setMode(val);
   }
 
   constructor(config: Config, renderer: Renderer, elementRef: ElementRef, @Attribute('id') private _id: string) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'list-header');
   }
 
   get id(): string {

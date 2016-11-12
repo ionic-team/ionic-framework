@@ -23,8 +23,8 @@ export const RANGE_VALUE_ACCESSOR: any = {
 @Component({
   selector: '.range-knob-handle',
   template:
-    '<div class="range-pin" *ngIf="range.pin">{{_val}}</div>' +
-    '<div class="range-knob"></div>',
+  '<div class="range-pin" *ngIf="range.pin">{{_val}}</div>' +
+  '<div class="range-knob"></div>',
   host: {
     '[class.range-knob-pressed]': 'pressed',
     '[class.range-knob-min]': '_val===range.min',
@@ -45,7 +45,7 @@ export class RangeKnob implements OnInit {
 
   @Input() upper: boolean;
 
-  constructor(@Inject(forwardRef(() => Range)) public range: Range) {}
+  constructor( @Inject(forwardRef(() => Range)) public range: Range) { }
 
   get ratio(): number {
     return this._ratio;
@@ -180,15 +180,15 @@ export class RangeKnob implements OnInit {
 @Component({
   selector: 'ion-range',
   template:
-    '<ng-content select="[range-left]"></ng-content>' +
-    '<div class="range-slider" #slider>' +
-      '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>' +
-      '<div class="range-bar"></div>' +
-      '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>' +
-      '<div class="range-knob-handle"></div>' +
-      '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
-    '</div>' +
-    '<ng-content select="[range-right]"></ng-content>',
+  '<ng-content select="[range-left]"></ng-content>' +
+  '<div class="range-slider" #slider>' +
+  '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>' +
+  '<div class="range-bar"></div>' +
+  '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>' +
+  '<div class="range-knob-handle"></div>' +
+  '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
+  '</div>' +
+  '<ng-content select="[range-right]"></ng-content>',
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',
@@ -229,7 +229,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   @Input()
   set color(val: string) {
-    this._setColor('range', val);
+    this._setColor(val);
   }
 
   /**
@@ -237,7 +237,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   @Input()
   set mode(val: string) {
-    this._setMode('range', val);
+    this._setMode(val);
   }
 
   @ViewChild('bar') public _bar: ElementRef;
@@ -350,9 +350,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'range');
     _form.register(this);
 
     if (_item) {
@@ -700,7 +698,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   /**
    * @private
    */
-  onTouched() {}
+  onTouched() { }
 
   /**
    * @private

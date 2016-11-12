@@ -100,7 +100,7 @@ export class Chip extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('chip', val);
+    this._setColor(val);
   }
 
   /**
@@ -108,13 +108,11 @@ export class Chip extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('chip', val);
+    this._setMode(val);
   }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'chip');
   }
 
 }

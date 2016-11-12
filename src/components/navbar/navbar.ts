@@ -93,7 +93,7 @@ export class Navbar extends ToolbarBase {
    */
   @Input()
   set color(val: string) {
-    this._setColor('toolbar', val);
+    this._setColor(val);
   }
 
   /**
@@ -101,7 +101,7 @@ export class Navbar extends ToolbarBase {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('toolbar', val);
+    this._setMode(val);
   }
 
   /**
@@ -124,8 +124,6 @@ export class Navbar extends ToolbarBase {
     renderer: Renderer
   ) {
     super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
 
     viewCtrl && viewCtrl._setNavbar(this);
 

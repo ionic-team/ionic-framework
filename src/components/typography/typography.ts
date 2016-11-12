@@ -56,7 +56,7 @@ export class Typography extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('text', val);
+    this._setColor(val);
   }
 
   /**
@@ -64,13 +64,11 @@ export class Typography extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('text', val);
+    this._setMode(val);
   }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Attribute('ion-text') ionText: string) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'text');
 
     // TODO: Deprecated: all selectors besides `[ion-text]` rc.3
     // Remove all other selectors and the `ionText` attribute

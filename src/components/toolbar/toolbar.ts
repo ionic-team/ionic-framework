@@ -39,8 +39,7 @@ import { ViewController } from '../../navigation/view-controller';
 export class Header extends Ion {
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
-    super(config, elementRef, renderer);
-    this._setMode('header', config.get('mode'));
+    super(config, elementRef, renderer, 'header');
     viewCtrl && viewCtrl._setHeader(this);
   }
 
@@ -75,8 +74,7 @@ export class Header extends Ion {
 export class Footer extends Ion {
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
-    super(config, elementRef, renderer);
-    this._setMode('footer', config.get('mode'));
+    super(config, elementRef, renderer, 'footer');
     viewCtrl && viewCtrl._setFooter(this);
   }
 
@@ -90,7 +88,7 @@ export class ToolbarBase extends Ion {
   private _title: ToolbarTitle;
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'toolbar');
   }
 
   /**
@@ -269,7 +267,7 @@ export class Toolbar extends ToolbarBase {
    */
   @Input()
   set color(val: string) {
-    this._setColor('toolbar', val);
+    this._setColor(val);
   }
 
   /**
@@ -277,7 +275,7 @@ export class Toolbar extends ToolbarBase {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('toolbar', val);
+    this._setMode( val);
   }
 
   constructor(
@@ -287,8 +285,6 @@ export class Toolbar extends ToolbarBase {
     renderer: Renderer
   ) {
     super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
     this._sbPadding = config.getBoolean('statusbarPadding');
   }
 

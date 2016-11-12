@@ -7,34 +7,34 @@ describe('Ion', () => {
   describe('color', () => {
 
     it('should set color when it hasnt been set yet', () => {
-      ion._setMode('icon', 'md');
-      ion._setColor('icon', 'primary');
-      expect(className(ion)).toEqual('icon-md icon-md-primary');
+      ion._setMode('md');
+      ion._setColor('primary');
+      expect(className(ion)).toEqual('icon icon-md icon-md-primary');
     });
 
     it('should remove color when it has already been set', () => {
-      ion._setMode('icon', 'md');
-      ion._setColor('icon', 'primary');
-      ion._setColor('icon', null);
-      expect(className(ion)).toEqual('icon-md');
+      ion._setMode('md');
+      ion._setColor('primary');
+      ion._setColor(null);
+      expect(className(ion)).toEqual('icon icon-md');
     });
 
     it('should update color when it has already been set', () => {
-      ion._setMode('icon', 'md');
-      ion._setColor('icon', 'primary');
-      ion._setColor('icon', 'secondary');
-      expect(className(ion)).toEqual('icon-md icon-md-secondary');
+      ion._setMode('md');
+      ion._setColor('primary');
+      ion._setColor('secondary');
+      expect(className(ion)).toEqual('icon icon-md icon-md-secondary');
     });
 
     it('should not setElementClass if its the same value', () => {
-      ion._setMode('icon', 'ios');
-      ion._setColor('icon', 'primary');
+      ion._setMode('ios');
+      ion._setColor('primary');
       spyOn(ion, 'setElementClass');
 
       expect(ion.setElementClass).not.toHaveBeenCalled();
-      ion._setColor('icon', 'primary');
+      ion._setColor('primary');
 
-      expect(className(ion)).toEqual('icon-ios icon-ios-primary');
+      expect(className(ion)).toEqual('icon icon-ios icon-ios-primary');
     });
 
   });
@@ -42,7 +42,7 @@ describe('Ion', () => {
   var ion: Ion;
 
   beforeEach(() => {
-    ion = new Ion(mockConfig(), mockElementRef(), mockRenderer());
+    ion = new Ion(mockConfig(), mockElementRef(), mockRenderer(), 'icon');
   });
 
   function className(ion: Ion) {

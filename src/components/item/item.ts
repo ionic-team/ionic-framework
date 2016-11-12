@@ -274,19 +274,19 @@ import { ItemReorder } from './item-reorder';
 @Component({
   selector: 'ion-list-header,ion-item,[ion-item],ion-item-divider',
   template:
-    '<ng-content select="[item-left],ion-checkbox:not([item-right])"></ng-content>' +
-    '<div class="item-inner">' +
-      '<div class="input-wrapper">' +
-        '<ng-content select="ion-label"></ng-content>' +
-        '<ion-label *ngIf="_viewLabel">' +
-          '<ng-content></ng-content>' +
-        '</ion-label>' +
-        '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
-      '</div>' +
-      '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
-      '<ion-reorder *ngIf="_shouldHaveReorder"></ion-reorder>' +
-    '</div>' +
-    '<div class="button-effect"></div>',
+  '<ng-content select="[item-left],ion-checkbox:not([item-right])"></ng-content>' +
+  '<div class="item-inner">' +
+  '<div class="input-wrapper">' +
+  '<ng-content select="ion-label"></ng-content>' +
+  '<ion-label *ngIf="_viewLabel">' +
+  '<ng-content></ng-content>' +
+  '</ion-label>' +
+  '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
+  '</div>' +
+  '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
+  '<ion-reorder *ngIf="_shouldHaveReorder"></ion-reorder>' +
+  '</div>' +
+  '<div class="button-effect"></div>',
   host: {
     'class': 'item'
   },
@@ -324,7 +324,7 @@ export class Item extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('item', val);
+    this._setMode(val);
   }
 
   constructor(
@@ -334,11 +334,10 @@ export class Item extends Ion {
     renderer: Renderer,
     @Optional() reorder: ItemReorder
   ) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'item');
 
     this._setName(elementRef);
     this._shouldHaveReorder = !!reorder;
-    this.mode = config.get('mode');
     this.id = form.nextId().toString();
   }
 
@@ -367,9 +366,9 @@ export class Item extends Ion {
   /**
    * @private
    */
-  _updateColor(newColor: string, colorClass?: string) {
-    colorClass = colorClass || 'item'; // item-radio
-    this._setColor(colorClass, newColor);
+  _updateColor(newColor: string, componentName?: string) {
+    componentName = componentName || 'item'; // item-radio
+    this._setColor(newColor, componentName);
   }
 
   /**
@@ -454,7 +453,7 @@ export class ItemDivider extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('item-divider', val);
+    this._setColor(val);
   }
 
   /**
@@ -462,13 +461,11 @@ export class ItemDivider extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('item-divider', val);
+    this._setMode(val);
   }
 
   constructor(form: Form, config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'item-divider');
   }
 
 }
@@ -482,7 +479,7 @@ export class ItemDivider extends Ion {
     'class': 'item-block'
   }
 })
-export class ItemContent {}
+export class ItemContent { }
 
 
 /**
@@ -491,4 +488,4 @@ export class ItemContent {}
 @Directive({
   selector: 'ion-item-group'
 })
-export class ItemGroup {}
+export class ItemGroup { }

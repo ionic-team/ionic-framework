@@ -191,7 +191,7 @@ export class Segment extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('segment', val);
+    this._setColor(val);
   }
 
   /**
@@ -199,7 +199,7 @@ export class Segment extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('segment', val);
+    this._setMode( val);
   }
 
   /**
@@ -219,9 +219,7 @@ export class Segment extends Ion {
     renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'segment');
 
     if (ngControl) {
       ngControl.valueAccessor = this;
