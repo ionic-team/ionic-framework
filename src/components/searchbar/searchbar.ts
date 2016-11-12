@@ -68,7 +68,7 @@ export class Searchbar extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('searchbar', val);
+    this._setColor( val);
   }
 
   /**
@@ -76,7 +76,7 @@ export class Searchbar extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('searchbar', val);
+    this._setMode( val);
   }
 
   /**
@@ -175,9 +175,7 @@ export class Searchbar extends Ion {
     renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'searchbar');
 
     // If the user passed a ngControl we need to set the valueAccessor
     if (ngControl) {

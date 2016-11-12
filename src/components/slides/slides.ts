@@ -324,7 +324,7 @@ export class Slides extends Ion {
 
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'slides');
     this.rapidUpdate = debounce(() => {
       this.update();
     }, 10);

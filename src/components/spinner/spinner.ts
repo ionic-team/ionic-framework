@@ -99,12 +99,12 @@ import { CSS } from '../../util/dom';
 @Component({
   selector: 'ion-spinner',
   template:
-    '<svg viewBox="0 0 64 64" *ngFor="let i of _c" [ngStyle]="i.style">' +
-      '<circle [attr.r]="i.r" transform="translate(32,32)"></circle>' +
-    '</svg>' +
-    '<svg viewBox="0 0 64 64" *ngFor="let i of _l" [ngStyle]="i.style">' +
-      '<line [attr.y1]="i.y1" [attr.y2]="i.y2" transform="translate(32,32)"></line>' +
-    '</svg>',
+  '<svg viewBox="0 0 64 64" *ngFor="let i of _c" [ngStyle]="i.style">' +
+  '<circle [attr.r]="i.r" transform="translate(32,32)"></circle>' +
+  '</svg>' +
+  '<svg viewBox="0 0 64 64" *ngFor="let i of _l" [ngStyle]="i.style">' +
+  '<line [attr.y1]="i.y1" [attr.y2]="i.y2" transform="translate(32,32)"></line>' +
+  '</svg>',
   host: {
     '[class.spinner-paused]': 'paused'
   },
@@ -127,7 +127,7 @@ export class Spinner extends Ion {
     return this._color;
   }
   set color(value: string) {
-    this._setColor('spinner', value);
+    this._setColor(value);
   }
 
   /**
@@ -135,7 +135,7 @@ export class Spinner extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('spinner', val);
+    this._setMode(val);
   }
 
   /**
@@ -170,9 +170,7 @@ export class Spinner extends Ion {
   @Input() paused: boolean = false;
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'spinner');
   }
 
   /**
@@ -199,12 +197,12 @@ export class Spinner extends Ion {
 
         if (spinner.lines) {
           for (var i = 0, l = spinner.lines; i < l; i++) {
-            this._l.push( this._loadEle(spinner, i, l) );
+            this._l.push(this._loadEle(spinner, i, l));
           }
 
         } else if (spinner.circles) {
           for (var i = 0, l = spinner.circles; i < l; i++) {
-            this._c.push( this._loadEle(spinner, i, l) );
+            this._c.push(this._loadEle(spinner, i, l));
           }
         }
 
@@ -227,7 +225,7 @@ const SPINNERS: any = {
   ios: {
     dur: 1000,
     lines: 12,
-    fn: function(dur: number, index: number, total: number) {
+    fn: function (dur: number, index: number, total: number) {
       return {
         y1: 17,
         y2: 29,
@@ -242,7 +240,7 @@ const SPINNERS: any = {
   'ios-small': {
     dur: 1000,
     lines: 12,
-    fn: function(dur: number, index: number, total: number) {
+    fn: function (dur: number, index: number, total: number) {
       return {
         y1: 12,
         y2: 20,
@@ -257,7 +255,7 @@ const SPINNERS: any = {
   bubbles: {
     dur: 1000,
     circles: 9,
-    fn: function(dur: number, index: number, total: number) {
+    fn: function (dur: number, index: number, total: number) {
       return {
         r: 5,
         style: {
@@ -272,7 +270,7 @@ const SPINNERS: any = {
   circles: {
     dur: 1000,
     circles: 8,
-    fn: function(dur: number, index: number, total: number) {
+    fn: function (dur: number, index: number, total: number) {
       return {
         r: 5,
         style: {
@@ -287,7 +285,7 @@ const SPINNERS: any = {
   crescent: {
     dur: 750,
     circles: 1,
-    fn: function(dur: number) {
+    fn: function (dur: number) {
       return {
         r: 26,
         style: {}
@@ -298,7 +296,7 @@ const SPINNERS: any = {
   dots: {
     dur: 750,
     circles: 3,
-    fn: function(dur: number, index: number, total: number) {
+    fn: function (dur: number, index: number, total: number) {
       return {
         r: 6,
         style: {

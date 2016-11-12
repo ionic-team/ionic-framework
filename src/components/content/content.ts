@@ -165,9 +165,7 @@ export class Content extends Ion {
     @Optional() viewCtrl: ViewController,
     @Optional() public _tabs: Tabs
   ) {
-    super(config, elementRef, renderer);
-
-    this._setMode('content', config.get('mode'));
+    super(config, elementRef, renderer, 'content');
 
     this._sbPadding = config.getBoolean('statusbarPadding', false);
 

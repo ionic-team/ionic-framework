@@ -17,7 +17,7 @@ export class Card extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('card', val);
+    this._setColor(val);
   }
 
   /**
@@ -25,13 +25,11 @@ export class Card extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('card', val);
+    this._setMode(val);
   }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'card');
   }
 
 }
@@ -50,7 +48,7 @@ export class CardContent extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('card-content', val);
+    this._setColor(val);
   }
 
   /**
@@ -58,13 +56,11 @@ export class CardContent extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('card-content', val);
+    this._setMode(val);
   }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'card-content');
   }
 
 }
@@ -83,7 +79,7 @@ export class CardHeader extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('card-header', val);
+    this._setColor(val);
   }
 
   /**
@@ -91,13 +87,11 @@ export class CardHeader extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('card-header', val);
+    this._setMode(val);
   }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'card-header');
   }
 
 }
@@ -115,7 +109,7 @@ export class CardTitle extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('card-title', val);
+    this._setColor(val);
   }
 
   /**
@@ -123,13 +117,11 @@ export class CardTitle extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('card-title', val);
+    this._setMode(val);
   }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'card-title');
   }
 
 }

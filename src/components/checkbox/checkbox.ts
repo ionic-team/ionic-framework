@@ -54,18 +54,18 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'ion-checkbox',
   template:
-    '<div class="checkbox-icon" [class.checkbox-checked]="_checked">' +
-      '<div class="checkbox-inner"></div>' +
-    '</div>' +
-    '<button role="checkbox" ' +
-            'type="button" ' +
-            'ion-button="item-cover" ' +
-            '[id]="id" ' +
-            '[attr.aria-checked]="_checked" ' +
-            '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover"> ' +
-    '</button>',
+  '<div class="checkbox-icon" [class.checkbox-checked]="_checked">' +
+  '<div class="checkbox-inner"></div>' +
+  '</div>' +
+  '<button role="checkbox" ' +
+  'type="button" ' +
+  'ion-button="item-cover" ' +
+  '[id]="id" ' +
+  '[attr.aria-checked]="_checked" ' +
+  '[attr.aria-labelledby]="_labelId" ' +
+  '[attr.aria-disabled]="_disabled" ' +
+  'class="item-cover"> ' +
+  '</button>',
   host: {
     '[class.checkbox-disabled]': '_disabled'
   },
@@ -91,7 +91,7 @@ export class Checkbox extends Ion implements AfterContentInit, ControlValueAcces
    */
   @Input()
   set color(val: string) {
-    this._setColor('checkbox', val);
+    this._setColor(val);
   }
 
   /**
@@ -99,7 +99,7 @@ export class Checkbox extends Ion implements AfterContentInit, ControlValueAcces
    */
   @Input()
   set mode(val: string) {
-    this._setMode('checkbox', val);
+    this._setMode(val);
   }
 
   /**
@@ -114,9 +114,7 @@ export class Checkbox extends Ion implements AfterContentInit, ControlValueAcces
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'checkbox');
 
     _form.register(this);
 
@@ -168,7 +166,7 @@ export class Checkbox extends Ion implements AfterContentInit, ControlValueAcces
    * @private
    */
   writeValue(val: any) {
-    this._setChecked( isTrueProperty(val) );
+    this._setChecked(isTrueProperty(val));
   }
 
   /**
@@ -215,7 +213,7 @@ export class Checkbox extends Ion implements AfterContentInit, ControlValueAcces
   /**
    * @private
    */
-  onTouched() {}
+  onTouched() { }
 
   /**
    * @private
