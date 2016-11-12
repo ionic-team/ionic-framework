@@ -23,8 +23,8 @@ export const RANGE_VALUE_ACCESSOR: any = {
 @Component({
   selector: '.range-knob-handle',
   template:
-  '<div class="range-pin" *ngIf="range.pin">{{_val}}</div>' +
-  '<div class="range-knob"></div>',
+    '<div class="range-pin" *ngIf="range.pin">{{_val}}</div>' +
+    '<div class="range-knob"></div>',
   host: {
     '[class.range-knob-pressed]': 'pressed',
     '[class.range-knob-min]': '_val===range.min',

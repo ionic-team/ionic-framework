@@ -277,7 +277,7 @@ import { ItemReorder } from './item-reorder';
     '<ng-content select="[item-left],ion-checkbox:not([item-right])"></ng-content>' +
     '<div class="item-inner">' +
       '<div class="input-wrapper">' +
-      '<ng-content select="ion-label"></ng-content>' +
+        '<ng-content select="ion-label"></ng-content>' +
         '<ion-label *ngIf="_viewLabel">' +
           '<ng-content></ng-content>' +
         '</ion-label>' +
