@@ -99,12 +99,12 @@ import { CSS } from '../../util/dom';
 @Component({
   selector: 'ion-spinner',
   template:
-  '<svg viewBox="0 0 64 64" *ngFor="let i of _c" [ngStyle]="i.style">' +
-  '<circle [attr.r]="i.r" transform="translate(32,32)"></circle>' +
-  '</svg>' +
-  '<svg viewBox="0 0 64 64" *ngFor="let i of _l" [ngStyle]="i.style">' +
-  '<line [attr.y1]="i.y1" [attr.y2]="i.y2" transform="translate(32,32)"></line>' +
-  '</svg>',
+    '<svg viewBox="0 0 64 64" *ngFor="let i of _c" [ngStyle]="i.style">' +
+      '<circle [attr.r]="i.r" transform="translate(32,32)"></circle>' +
+    '</svg>' +
+    '<svg viewBox="0 0 64 64" *ngFor="let i of _l" [ngStyle]="i.style">' +
+      '<line [attr.y1]="i.y1" [attr.y2]="i.y2" transform="translate(32,32)"></line>' +
+    '</svg>',
   host: {
     '[class.spinner-paused]': 'paused'
   },

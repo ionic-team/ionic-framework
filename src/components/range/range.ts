@@ -180,15 +180,15 @@ export class RangeKnob implements OnInit {
 @Component({
   selector: 'ion-range',
   template:
-  '<ng-content select="[range-left]"></ng-content>' +
-  '<div class="range-slider" #slider>' +
-  '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>' +
-  '<div class="range-bar"></div>' +
-  '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>' +
-  '<div class="range-knob-handle"></div>' +
-  '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
-  '</div>' +
-  '<ng-content select="[range-right]"></ng-content>',
+    '<ng-content select="[range-left]"></ng-content>' +
+    '<div class="range-slider" #slider>' +
+      '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>' +
+      '<div class="range-bar"></div>' +
+      '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>' +
+      '<div class="range-knob-handle"></div>' +
+      '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
+    '</div>' +
+    '<ng-content select="[range-right]"></ng-content>',
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',
