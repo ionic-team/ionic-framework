@@ -29,6 +29,7 @@ export const MODE_IOS: any = {
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
   pickerRotateFactor: -0.46,
+  pickerScaleFactor: 1,
 
   popoverEnter: 'popover-pop-in',
   popoverLeave: 'popover-pop-out',
@@ -72,6 +73,7 @@ export const MODE_MD: any = {
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
   pickerRotateFactor: 0,
+  pickerScaleFactor: 0.81,
 
   popoverEnter: 'popover-md-pop-in',
   popoverLeave: 'popover-md-pop-out',
@@ -115,6 +117,7 @@ export const MODE_WP: any = {
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
   pickerRotateFactor: 0,
+  pickerScaleFactor: 0.81,
 
   popoverEnter: 'popover-md-pop-in',
   popoverLeave: 'popover-md-pop-out',

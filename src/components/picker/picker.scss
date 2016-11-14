@@ -88,41 +88,38 @@ ion-picker-cmp {
   white-space: nowrap;
 }
 
+// contain property is supported by Chrome
 .picker-opt {
   position: absolute;
   top: 0;
   left: 0;
+  display: block;
   overflow: hidden;
-
-  flex: 1;
 
   width: 100%;
-}
 
-.picker-opt .button-inner {
-  display: block;
-
-  overflow: hidden;
-
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #000;
 
-  transition: opacity 150ms ease-in-out;
+  will-change: transform;
+  contain: strict;
 }
 
 .picker-opt.picker-opt-disabled {
   pointer-events: none;
 }
 
-.picker-opt-disabled .button-inner {
+.picker-opt-disabled {
   opacity: 0;
 }
 
-.picker-opts-left .button-inner {
+.picker-opts-left .picker-opt {
   justify-content: flex-start;
 }
 
-.picker-opts-right .button-inner {
+.picker-opts-right .picker-opt {
   justify-content: flex-end;
 }
 

@@ -203,3 +203,7 @@ linters:
   StringQuotes:
     enabled: true
     style: double_quotes
+
+  PropertySpelling:
+    extra_properties:
+      - contain

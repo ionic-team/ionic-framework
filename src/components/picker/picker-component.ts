@@ -1,7 +1,7 @@
-import { Component, ElementRef, EventEmitter, Input, HostListener, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, HostListener, NgZone, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { cancelRaf, pointerCoord, raf } from '../../util/dom';
+import { CSS, cancelRaf, pointerCoord, nativeRaf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString } from '../../util/util';
 import { Config } from '../../config/config';
 import { Key } from '../../util/key';
@@ -11,7 +11,7 @@ import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-option
 import { Haptic } from '../../util/haptic';
 import { UIEventManager } from '../../util/ui-event-manager';
 import { ViewController } from '../../navigation/view-controller';
-
+import { Debouncer, NativeRafDebouncer } from '../../util/debouncer';
 
 /**
  * @private
@@ -21,14 +21,9 @@ import { ViewController } from '../../navigation/view-controller';
   template:
     '<div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>' +
     '<div class="picker-opts" #colEle [style.width]="col.optionsWidth">' +
-      '<button *ngFor="let o of col.options; let i=index" [style.transform]="o._trans" ' +
-              '[style.transitionDuration]="o._dur" ' +
-              '[style.webkitTransform]="o._trans" ' +
-              '[style.webkitTransitionDuration]="o._dur" ' +
-              '[class.picker-opt-selected]="col.selectedIndex === i" [class.picker-opt-disabled]="o.disabled" ' +
-              '(click)="optClick($event, i)" ' +
-              'type="button" ' +
-              'ion-button="picker-opt">' +
+      '<button *ngFor="let o of col.options; let i=index"' +
+        '[class.picker-opt-disabled]="o.disabled" ' +
+        'class="picker-opt" disable-activated (click)="optClick($event, i)">' +
         '{{o.text}}' +
       '</button>' +
     '</div>' +
@@ -53,15 +48,24 @@ export class PickerColumnCmp {
   minY: number;
   maxY: number;
   rotateFactor: number;
+  scaleFactor: number;
   lastIndex: number;
   lastTempIndex: number;
-  receivingEvents: boolean = false;
-  events: UIEventManager = new UIEventManager();
+  decelerateFunc: Function;
+  debouncer: Debouncer = new NativeRafDebouncer();
+  events: UIEventManager = new UIEventManager(false);
 
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(config: Config, private elementRef: ElementRef, private _sanitizer: DomSanitizer, private _haptic: Haptic) {
+  constructor(
+    config: Config,
+    private elementRef: ElementRef,
+    private _sanitizer: DomSanitizer,
+    private _zone: NgZone,
+    private _haptic: Haptic) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
+    this.scaleFactor = config.getNumber('pickerScaleFactor', 1);
+    this.decelerateFunc = this.decelerate.bind(this);
   }
 
   ngAfterViewInit() {
@@ -81,7 +85,8 @@ export class PickerColumnCmp {
       elementRef: this.elementRef,
       pointerDown: this.pointerStart.bind(this),
       pointerMove: this.pointerMove.bind(this),
-      pointerUp: this.pointerEnd.bind(this)
+      pointerUp: this.pointerEnd.bind(this),
+      capture: true
     });
   }
 
@@ -91,34 +96,36 @@ export class PickerColumnCmp {
 
   pointerStart(ev: UIEvent): boolean {
     console.debug('picker, pointerStart', ev.type, this.startY);
-
-    // cancel any previous raf's that haven't fired yet
-    cancelRaf(this.rafId);
-
-    // remember where the pointer started from`
-    this.startY = pointerCoord(ev).y;
-
-    // reset everything
-    this.receivingEvents = true;
-    this.velocity = 0;
-    this.pos.length = 0;
-    this.pos.push(this.startY, Date.now());
-
-    let minY = (this.col.options.length - 1);
-    let maxY = 0;
-
-    for (var i = 0; i < this.col.options.length; i++) {
-      if (!this.col.options[i].disabled) {
-        minY = Math.min(minY, i);
-        maxY = Math.max(maxY, i);
-      }
-    }
-
-    this.minY = (minY * this.optHeight * -1);
-    this.maxY = (maxY * this.optHeight * -1);
-
     this._haptic.gestureSelectionStart();
 
+    this.debouncer.debounce(() => {
+      // cancel any previous raf's that haven't fired yet
+      if (this.rafId) {
+        cancelRaf(this.rafId);
+        this.rafId = null;
+      }
+
+      // remember where the pointer started from`
+      this.startY = pointerCoord(ev).y;
+
+      // reset everything
+      this.velocity = 0;
+      this.pos.length = 0;
+      this.pos.push(this.startY, Date.now());
+
+      let options = this.col.options;
+      let minY = (options.length - 1);
+      let maxY = 0;
+      for (var i = 0; i < options.length; i++) {
+        if (!options[i].disabled) {
+          minY = Math.min(minY, i);
+          maxY = Math.max(maxY, i);
+        }
+      }
+
+      this.minY = (minY * this.optHeight * -1);
+      this.maxY = (maxY * this.optHeight * -1);
+    });
     return true;
   }
 
@@ -126,89 +133,86 @@ export class PickerColumnCmp {
     ev.preventDefault();
     ev.stopPropagation();
 
-    if (this.startY === null) {
-      return;
-    }
+    this.debouncer.debounce(() => {
+      if (this.startY === null) {
+        return;
+      }
+      let currentY = pointerCoord(ev).y;
+      this.pos.push(currentY, Date.now());
 
-    var currentY = pointerCoord(ev).y;
-    this.pos.push(currentY, Date.now());
+      // update the scroll position relative to pointer start position
+      let y = this.y + (currentY - this.startY);
 
-    // update the scroll position relative to pointer start position
-    var y = this.y + (currentY - this.startY);
+      if (y > this.minY) {
+        // scrolling up higher than scroll area
+        y = Math.pow(y, 0.8);
+        this.bounceFrom = y;
 
-    if (y > this.minY) {
-      // scrolling up higher than scroll area
-      y = Math.pow(y, 0.8);
-      this.bounceFrom = y;
+      } else if (y < this.maxY) {
+        // scrolling down below scroll area
+        y += Math.pow(this.maxY - y, 0.9);
+        this.bounceFrom = y;
 
-    } else if (y < this.maxY) {
-      // scrolling down below scroll area
-      y += Math.pow(this.maxY - y, 0.9);
-      this.bounceFrom = y;
+      } else {
+        this.bounceFrom = 0;
+      }
 
-    } else {
-      this.bounceFrom = 0;
-    }
+      this.update(y, 0, false, false);
 
-    this.update(y, 0, false, false);
-
-    let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
-    if (currentIndex !== this.lastTempIndex) {
-      // Trigger a haptic event for physical feedback that the index has changed
-      this._haptic.gestureSelectionChanged();
-    }
-    this.lastTempIndex = currentIndex;
-
+      let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+      if (currentIndex !== this.lastTempIndex) {
+        // Trigger a haptic event for physical feedback that the index has changed
+        this._haptic.gestureSelectionChanged();
+        this.lastTempIndex = currentIndex;
+      }
+    });
   }
 
   pointerEnd(ev: UIEvent) {
-    if (!this.receivingEvents) {
+    this.debouncer.cancel();
+
+    if (this.startY === null) {
       return;
     }
-    this.receivingEvents = false;
+    console.debug('picker, pointerEnd', ev.type);
+
     this.velocity = 0;
 
     if (this.bounceFrom > 0) {
       // bounce back up
       this.update(this.minY, 100, true, true);
-
+      return;
     } else if (this.bounceFrom < 0) {
       // bounce back down
       this.update(this.maxY, 100, true, true);
+      return;
+    }
 
-    } else if (this.startY !== null) {
-      var endY = pointerCoord(ev).y;
+    let endY = pointerCoord(ev).y;
 
-      console.debug('picker, pointerEnd', ev.type, endY);
+    this.pos.push(endY, Date.now());
 
-      this.pos.push(endY, Date.now());
+    let endPos = (this.pos.length - 1);
+    let startPos = endPos;
+    let timeRange = (Date.now() - 100);
 
-      var endPos = (this.pos.length - 1);
-      var startPos = endPos;
-      var timeRange = (Date.now() - 100);
+    // move pointer to position measured 100ms ago
+    for (var i = endPos; i > 0 && this.pos[i] > timeRange; i -= 2) {
+      startPos = i;
+    }
 
-      // move pointer to position measured 100ms ago
-      for (var i = endPos; i > 0 && this.pos[i] > timeRange; i -= 2) {
-        startPos = i;
-      }
+    if (startPos !== endPos) {
+      // compute relative movement between these two points
+      var timeOffset = (this.pos[endPos] - this.pos[startPos]);
+      var movedTop = (this.pos[startPos - 1] - this.pos[endPos - 1]);
 
-      if (startPos !== endPos) {
-        // compute relative movement between these two points
-        var timeOffset = (this.pos[endPos] - this.pos[startPos]);
-        var movedTop = (this.pos[startPos - 1] - this.pos[endPos - 1]);
+      // based on XXms compute the movement to apply for each render step
+      this.velocity = ((movedTop / timeOffset) * FRAME_MS);
+    }
 
-        // based on XXms compute the movement to apply for each render step
-        this.velocity = ((movedTop / timeOffset) * FRAME_MS);
-      }
-
-      if (Math.abs(endY - this.startY) > 3) {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        var y = this.y + (endY - this.startY);
-        this.update(y, 0, true, true);
-      }
-
+    if (Math.abs(endY - this.startY) > 3) {
+      var y = this.y + (endY - this.startY);
+      this.update(y, 0, true, true);
     }
 
     this.startY = null;
@@ -217,20 +221,20 @@ export class PickerColumnCmp {
 
   decelerate() {
     let y = 0;
-    cancelRaf(this.rafId);
 
     if (isNaN(this.y) || !this.optHeight) {
       // fallback in case numbers get outta wack
       this.update(y, 0, true, true);
       this._haptic.gestureSelectionEnd();
 
-
     } else if (Math.abs(this.velocity) > 0) {
       // still decelerating
       this.velocity *= DECELERATION_FRICTION;
 
       // do not let it go slower than a velocity of 1
-      this.velocity = (this.velocity > 0 ? Math.max(this.velocity, 1) : Math.min(this.velocity, -1));
+      this.velocity = (this.velocity > 0)
+        ? Math.max(this.velocity, 1)
+        : Math.min(this.velocity, -1);
 
       y = Math.round(this.y - this.velocity);
 
@@ -252,7 +256,7 @@ export class PickerColumnCmp {
 
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
-        this.rafId = raf(this.decelerate.bind(this));
+        this.rafId = nativeRaf(this.decelerateFunc);
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -288,7 +292,10 @@ export class PickerColumnCmp {
     // if there isn't a selected index, then just use the top y position
     let y = (selectedIndex > -1) ? ((selectedIndex * this.optHeight) * -1) : 0;
 
-    cancelRaf(this.rafId);
+    if (this.rafId) {
+      cancelRaf(this.rafId);
+      this.rafId = null;
+    }
     this.velocity = 0;
 
     // so what y position we're at
@@ -299,32 +306,69 @@ export class PickerColumnCmp {
     // ensure we've got a good round number :)
     y = Math.round(y);
 
-    this.col.selectedIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+    let i, button, opt, optOffset, visible, translateX, translateY, translateZ, rotateX, transform, selected;
+    const parent = this.colEle.nativeElement;
+    const children = parent.children;
+    const length = children.length;
+    const selectedIndex = this.col.selectedIndex = Math.min(Math.max(Math.round(-y / this.optHeight), 0), length - 1);
 
-    for (var i = 0; i < this.col.options.length; i++) {
-      var opt = <any>this.col.options[i];
-      var optTop = (i * this.optHeight);
-      var optOffset = (optTop + y);
+    const durationStr = (duration === 0) ? null : duration + 'ms';
+    const scaleStr = `scale(${this.scaleFactor})`;
 
-      var rotateX = (optOffset * this.rotateFactor);
-      var translateX = 0;
-      var translateY = 0;
-      var translateZ = 0;
+    for (i = 0; i < length; i++) {
+      button = children[i];
+      opt = <any>this.col.options[i];
+      optOffset = (i * this.optHeight) + y;
+      visible = true;
+      transform = '';
 
       if (this.rotateFactor !== 0) {
-        translateX = 0;
-        translateZ = 90;
-        if (rotateX > 90 || rotateX < -90) {
-          translateX = -9999;
-          rotateX = 0;
+        rotateX = optOffset * this.rotateFactor;
+        if (Math.abs(rotateX) > 90) {
+          visible = false;
+        } else {
+          translateX = 0;
+          translateY = 0;
+          translateZ = 90;
+          transform = `rotateX(${rotateX}deg) `;
         }
-
       } else {
+        translateX = 0;
+        translateZ = 0;
         translateY = optOffset;
+        if (Math.abs(translateY) > 170) {
+          visible = false;
+        }
       }
 
-      opt._trans = this._sanitizer.bypassSecurityTrustStyle(`rotateX(${rotateX}deg) translate3d(${translateX}px,${translateY}px,${translateZ}px)`);
-      opt._dur = (duration > 0 ? duration + 'ms' : '');
+      selected = selectedIndex === i;
+      if (visible) {
+        transform += `translate3d(0px,${translateY}px,${translateZ}px) `;
+        if (this.scaleFactor !== 1 && !selected) {
+          transform += scaleStr;
+        }
+      } else {
+        transform = 'translate3d(-9999px,0px,0px)';
+      }
+      // Update transition duration
+      if (duration !== opt._dur) {
+        opt._dur = duration;
+        button.style[CSS.transitionDuration] = durationStr;
+      }
+      // Update transform
+      if (transform !== opt._trans) {
+        opt._trans = transform;
+        button.style[CSS.transform] = transform;
+      }
+      // Update selected item
+      if (selected !== opt._selected) {
+        opt._selected = selected;
+        if (selected) {
+          button.classList.add(PICKER_OPT_SELECTED);
+        } else {
+          button.classList.remove(PICKER_OPT_SELECTED);
+        }
+      }
     }
 
     if (saveY) {
@@ -340,7 +384,10 @@ export class PickerColumnCmp {
         // new selected index has changed from the last index
         // update the lastIndex and emit that it has changed
         this.lastIndex = this.col.selectedIndex;
-        this.ionChange.emit(this.col.options[this.col.selectedIndex]);
+        var ionChange = this.ionChange;
+        if (ionChange.observers.length > 0) {
+          this._zone.run(ionChange.emit.bind(ionChange, this.col.options[this.col.selectedIndex]));
+        }
       }
     }
   }
@@ -567,5 +614,6 @@ export class PickerCmp {
 }
 
 let pickerIds = -1;
+const PICKER_OPT_SELECTED = 'picker-opt-selected';
 const DECELERATION_FRICTION = 0.97;
 const FRAME_MS = (1000 / 60);
