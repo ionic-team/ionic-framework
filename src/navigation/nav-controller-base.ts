@@ -35,7 +35,7 @@ export class NavControllerBase extends Ion implements NavController {
   _sbThreshold: number;
   _sbTrns: Transition;
   _trnsId: number = null;
-  _trnsTm: number = 0;
+  _trnsTm: boolean = false;
   _viewport: ViewContainerRef;
   _views: ViewController[] = [];
 
@@ -182,6 +182,7 @@ export class NavControllerBase extends Ion implements NavController {
     ti.resolve = (hasCompleted: boolean, isAsync: boolean, enteringName: string, leavingName: string, direction: string) => {
       // transition has successfully resolved
       this._trnsId = null;
+      this._init = true;
       resolve && resolve(hasCompleted, isAsync, enteringName, leavingName, direction);
 
       // let's see if there's another to kick off
@@ -252,14 +253,15 @@ export class NavControllerBase extends Ion implements NavController {
     if (!ti) {
       return false;
     }
-    // set that this nav is actively transitioning
-    this.setTransitioning(true);
 
     // Get entering and leaving views
     const leavingView = this.getActive();
     const enteringView = this._getEnteringView(ti, leavingView);
 
-    assert(leavingView || enteringView, 'Both leavingView and enteringView are null');
+    assert(leavingView || enteringView, 'both leavingView and enteringView are null');
+
+    // set that this nav is actively transitioning
+    this.setTransitioning(true);
 
     // Initialize enteringView
     if (enteringView && isBlank(enteringView._state)) {
@@ -332,6 +334,16 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _postViewInit(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction, resolve: TransitionResolveFn) {
+    assert(leavingView || enteringView, 'Both leavingView and enteringView are null');
+
+    if (!enteringView && !this._isPortal) {
+      console.warn(`You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,
+        this, this.getNativeElement());
+
+      ti.reject && ti.reject('navigation stack needs at least one root page');
+      return false;
+    }
+
     const opts = ti.opts || {};
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
@@ -494,8 +506,13 @@ export class NavControllerBase extends Ion implements NavController {
     if (promises.length) {
       // darn, async promises, gotta wait for them to resolve
       Promise.all(promises)
-        .then(() => this._postViewInit(enteringView, leavingView, ti, resolve))
-        .catch(reject);
+        .then((values: any[]) => {
+          if (values.some(result => result === false)) {
+            reject(`ionViewCanEnter rejected`);
+          } else {
+            this._postViewInit(enteringView, leavingView, ti, resolve);
+          }
+        }).catch(reject);
     } else {
       // synchronous and all tests passed! let's move on already
       this._postViewInit(enteringView, leavingView, ti, resolve);
@@ -606,7 +623,7 @@ export class NavControllerBase extends Ion implements NavController {
     const duration = transition.getDuration();
 
     // set that this nav is actively transitioning
-    this.setTransitioning(true, duration);
+    this.setTransitioning(true);
 
     if (transition.isRoot()) {
       // this is the top most, or only active transition, so disable the app
@@ -892,7 +909,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (this._sbTrns && this._sbGesture) {
       // continue to disable the app while actively dragging
       this._app.setEnabled(false, ACTIVE_TRANSITION_DEFAULT);
-      this.setTransitioning(true, ACTIVE_TRANSITION_DEFAULT);
+      this.setTransitioning(true);
 
       // set the transition animation's progress
       this._sbTrns.progressStep(stepValue);
@@ -942,15 +959,11 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   isTransitioning(): boolean {
-    if (this._trnsTm === 0) {
-      return false;
-    }
-    // using a timestamp instead of boolean incase something goes wrong
-    return (this._trnsTm > Date.now());
+    return this._trnsTm;
   }
 
-  setTransitioning(isTransitioning: boolean, durationPadding: number = ACTIVE_TRANSITION_DEFAULT) {
-    this._trnsTm = (isTransitioning ? (Date.now() + durationPadding + ACTIVE_TRANSITION_OFFSET) : 0);
+  setTransitioning(isTransitioning: boolean) {
+    this._trnsTm = isTransitioning;
   }
 
   getActive(): ViewController {

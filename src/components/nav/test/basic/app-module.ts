@@ -258,7 +258,7 @@ export class FirstPage {
 }
 
 
-@Component({template: ''})
+@Component({template: '<ion-content></ion-content>'})
 export class RedirectPage {
   constructor(public navCtrl: NavController) { }
   ionViewDidEnter() {
