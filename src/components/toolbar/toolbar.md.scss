@@ -345,7 +345,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
 // Material Design Toolbar Menu Toggle
 // --------------------------------------------------
 
-.bar-button-menutoggle-md {
+.bar-button-md[menuToggle] {
   order: map-get($toolbar-order-md, menu-toggle-start);
 
   margin: 0 6px;
@@ -354,14 +354,14 @@ $navbar-md-height:                       $toolbar-md-height !default;
   min-width: 44px;
 }
 
-.bar-button-menutoggle-md ion-icon {
+.bar-button-md[menuToggle] ion-icon {
   padding: 0 6px;
 
   font-size: 2.4rem;
 }
 
-.bar-button-menutoggle-md[end],
-.bar-button-menutoggle-md[right] {
+.bar-button-md[menuToggle][end],
+.bar-button-md[menuToggle][right] {
   order: map-get($toolbar-order-md, menu-toggle-end);
 
   margin: 0 2px;

@@ -127,9 +127,6 @@ export class Button extends Ion {
   _role: string = 'button'; // bar-button
 
   /** @private */
-  _mt: boolean; // menutoggle
-
-  /** @private */
   _size: string; // large/small/default
 
   /** @private */
@@ -259,7 +256,6 @@ export class Button extends Ion {
   }
 
   constructor(
-    @Attribute('menuToggle') menuToggle: string,
     @Attribute('ion-button') ionButton: string,
     config: Config,
     elementRef: ElementRef,
@@ -274,12 +270,6 @@ export class Button extends Ion {
 
     if (ionButton.trim().length > 0) {
       this.setRole(ionButton);
-    }
-
-    // menuToggle can be added with or without a string
-    // but if the attribute isn't added it will be null
-    if (menuToggle !== null) {
-      this._mt = true;
     }
   }
 
@@ -307,7 +297,6 @@ export class Button extends Ion {
       this.setElementClass(role, assignCssClass); // button
       this.setElementClass(`${role}-${this._mode}`, assignCssClass); // button
 
-      this._setClass('menutoggle', this._mt); // menutoggle
       this._setClass(this._style, assignCssClass); // button-clear
       this._setClass(this._shape, assignCssClass); // button-round
       this._setClass(this._display, assignCssClass); // button-full

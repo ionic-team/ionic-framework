@@ -292,7 +292,7 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 // Windows Toolbar Menu Toggle
 // --------------------------------------------------
 
-.bar-button-menutoggle-wp {
+.bar-button-wp[menuToggle]{
   order: map-get($toolbar-order-wp, menu-toggle-start);
 
   margin: 0 6px;
@@ -307,8 +307,8 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
   }
 }
 
-.bar-button-menutoggle-wp[end],
-.bar-button-menutoggle-wp[right] {
+.bar-button-wp[menuToggle][end],
+.bar-button-wp[menuToggle][right] {
   order: map-get($toolbar-order-wp, menu-toggle-end);
 
   margin: 0 2px;

@@ -325,7 +325,7 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
 // iOS Toolbar Menu Toggle
 // --------------------------------------------------
 
-.bar-button-menutoggle-ios {
+.bar-button-ios[menuToggle] {
   order: map-get($toolbar-order-ios, menu-toggle-start);
 
   margin: 0 6px;
@@ -340,8 +340,8 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
   }
 }
 
-.bar-button-menutoggle-ios[end],
-.bar-button-menutoggle-ios[right] {
+.bar-button-ios[menuToggle][end],
+.bar-button-ios[menuToggle][right] {
   order: map-get($toolbar-order-ios, menu-toggle-end);
 }
 
