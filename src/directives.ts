@@ -62,6 +62,10 @@ import { Typography } from './components/typography/typography';
 import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
 import { VirtualItem, VirtualHeader, VirtualFooter } from './components/virtual-scroll/virtual-item';
 
+/**
+ * Export Abstract Class Components
+ */
+export { Ion } from './components/ion';
 
 /**
  * Export Components
