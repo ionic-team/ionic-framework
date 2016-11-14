@@ -1,5 +1,5 @@
 import { CSS, nativeRaf, transitionEnd, nativeTimeout } from '../util/dom';
-import { isDefined } from '../util/util';
+import { isDefined, assert } from '../util/util';
 
 
 /**
@@ -297,7 +297,10 @@ export class Animation {
    * Play the animation.
    */
   play(opts?: PlayOptions) {
-    const dur = this.getDuration(opts);
+    // If the animation was already invalidated (it did finish), do nothing
+    if (!this._raf) {
+      return;
+    }
 
     // this is the top level animation and is in full control
     // of when the async play() should actually kick off
@@ -311,22 +314,16 @@ export class Animation {
     this._clearAsync();
 
     // recursively kicks off the correct progress step for each child animation
+    // ******** DOM WRITE ****************
     this._playInit(opts);
-
-    if (this._isAsync) {
-      // for the root animation only
-      // set the async TRANSITION END event
-      // and run onFinishes when the transition ends
-      // ******** DOM WRITE ****************
-      this._asyncEnd(dur, true);
-    }
 
     // doubling up RAFs since this animation was probably triggered
     // from an input event, and just having one RAF would have this code
     // run within the same frame as the triggering input event, and the
     // input event probably already did way too much work for one frame
-    this._raf && this._raf(() => {
-      this._raf && this._raf(this._playDomInspect.bind(this, opts));
+    this._raf(() => {
+      assert(this._raf, '_raf has to be valid');
+      this._raf(this._playDomInspect.bind(this, opts));
     });
   }
 
@@ -372,21 +369,24 @@ export class Animation {
     // elements will be in the DOM, however visibily hidden
     // so we can read their dimensions if need be
     // ******** DOM READ ****************
-    this._beforeReadFn();
-
-    // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
-
-    // fire off all the "before" function that have DOM WRITES in them
     // ******** DOM WRITE ****************
-    this._beforeWriteFn();
+    this._beforeAnimation();
+
+    // for the root animation only
+    // set the async TRANSITION END event
+    // and run onFinishes when the transition ends
+    const dur = this.getDuration(opts);
+    if (this._isAsync) {
+      this._asyncEnd(dur, true);
+    }
 
     // ******** DOM WRITE ****************
     this._playProgress(opts);
 
-    if (this._isAsync) {
+    if (this._isAsync && this._raf) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this._raf && this._raf(this._playToStep.bind(this, 1));
+      this._raf(this._playToStep.bind(this, 1));
     }
   }
 
@@ -401,10 +401,6 @@ export class Animation {
       this._c[i]._playProgress(opts);
     }
 
-    // stage all of the before css classes and inline styles
-    // ******** DOM WRITE ****************
-    this._before();
-
     if (this._hasDur) {
       // set the CSS TRANSITION duration/easing
       // ******** DOM WRITE ****************
@@ -418,7 +414,7 @@ export class Animation {
 
       // since there was no animation, immediately run the after
       // ******** DOM WRITE ****************
-      this._after();
+      this._afterAnimation();
 
       // this animation has no duration, so it has finished
       // other animations could still be running
@@ -517,7 +513,7 @@ export class Animation {
 
       // set the after styles
       // ******** DOM WRITE ****************
-      this._after();
+      this._afterAnimation();
 
       // remove the will-change properties
       // ******** DOM WRITE ****************
@@ -684,38 +680,69 @@ export class Animation {
 
   /**
    * @private
+   * DOM READ
    * DOM WRITE
-   * NO RECURSION
+   * RECURSION
    */
-  _before() {
+  _beforeAnimation() {
+    // fire off all the "before" function that have DOM READS in them
+    // elements will be in the DOM, however visibily hidden
+    // so we can read their dimensions if need be
+    // ******** DOM READ ****************
+    this._fireBeforeReadFunc();
+
+    // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
+
+    // fire off all the "before" function that have DOM WRITES in them
+    // ******** DOM WRITE ****************
+    this._fireBeforeWriteFunc();
+
+    // stage all of the before css classes and inline styles
+    // ******** DOM WRITE ****************
+    this._setBeforeStyles();
+  }
+
+  /**
+   * @private
+   * DOM WRITE
+   * RECURSION
+   */
+  _setBeforeStyles() {
+    for (var i = 0; i < this._cL; i++) {
+      this._c[i]._setBeforeStyles();
+    }
+
     // before the animations have started
-    if (!this._rv) {
-      let ele: HTMLElement;
-      for (var i = 0; i < this._eL; i++) {
-        ele = this._e[i];
+    // only set before styles if animation is not reversed
+    if (this._rv) {
+      return;
+    }
 
-        // css classes to add before the animation
-        if (this._bfAdd) {
-          for (var j = 0; j < this._bfAdd.length; j++) {
-            // ******** DOM WRITE ****************
-            ele.classList.add(this._bfAdd[j]);
-          }
+    let ele: HTMLElement;
+    for (var i = 0; i < this._eL; i++) {
+      ele = this._e[i];
+
+      // css classes to add before the animation
+      if (this._bfAdd) {
+        for (var j = 0; j < this._bfAdd.length; j++) {
+          // ******** DOM WRITE ****************
+          ele.classList.add(this._bfAdd[j]);
         }
+      }
 
-        // css classes to remove before the animation
-        if (this._bfRm) {
-          for (var j = 0; j < this._bfRm.length; j++) {
-            // ******** DOM WRITE ****************
-            ele.classList.remove(this._bfRm[j]);
-          }
+      // css classes to remove before the animation
+      if (this._bfRm) {
+        for (var j = 0; j < this._bfRm.length; j++) {
+          // ******** DOM WRITE ****************
+          ele.classList.remove(this._bfRm[j]);
         }
+      }
 
-        // inline styles to add before the animation
-        if (this._bfSty) {
-          for (var prop in this._bfSty) {
-            // ******** DOM WRITE ****************
-            (<any>ele).style[prop] = this._bfSty[prop];
-          }
+      // inline styles to add before the animation
+      if (this._bfSty) {
+        for (var prop in this._bfSty) {
+          // ******** DOM WRITE ****************
+          (<any>ele).style[prop] = this._bfSty[prop];
         }
       }
     }
@@ -726,10 +753,10 @@ export class Animation {
    * DOM READ
    * RECURSION
    */
-  _beforeReadFn() {
+  _fireBeforeReadFunc() {
     for (var i = 0; i < this._cL; i++) {
       // ******** DOM READ ****************
-      this._c[i]._beforeReadFn();
+      this._c[i]._fireBeforeReadFunc();
     }
 
     if (this._rdFn) {
@@ -745,10 +772,10 @@ export class Animation {
    * DOM WRITE
    * RECURSION
    */
-  _beforeWriteFn() {
+  _fireBeforeWriteFunc() {
     for (var i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
-      this._c[i]._beforeWriteFn();
+      this._c[i]._fireBeforeWriteFunc();
     }
 
     if (this._wrFn) {
@@ -762,9 +789,13 @@ export class Animation {
   /**
    * @private
    * DOM WRITE
-   * NO RECURSION
+   * RECURSION
    */
-  _after() {
+  _afterAnimation() {
+    for (var i = 0; i < this._cL; i++) {
+      this._c[i]._afterAnimation();
+    }
+
     let ele: HTMLElement;
     for (var i = 0; i < this._eL; i++) {
       ele = this._e[i];
@@ -828,7 +859,6 @@ export class Animation {
         }
       }
     }
-
   }
 
   /**
@@ -864,15 +894,8 @@ export class Animation {
     // ensure all past transition end events have been cleared
     this._clearAsync();
 
-    // fire off all the "before" function that have DOM READS in them
-    // elements will be in the DOM, however visibily hidden
-    // so we can read their dimensions if need be
-    // ******** DOM READ ****************
-    this._beforeReadFn();
-
-    // fire off all the "before" function that have DOM WRITES in them
-    // ******** DOM WRITE ****************
-    this._beforeWriteFn();
+    // ******** DOM READ/WRITE ****************
+    this._beforeAnimation();
 
     // ******** DOM WRITE ****************
     this._progressStart();
@@ -888,9 +911,6 @@ export class Animation {
       // ******** DOM WRITE ****************
       this._c[i]._progressStart();
     }
-
-    // ******** DOM WRITE ****************
-    this._before();
 
     // force no duration, linear easing
     // ******** DOM WRITE ****************
@@ -971,7 +991,7 @@ export class Animation {
       // ******** DOM WRITE ****************
       this._progress(stepValue);
       this._willChg(false);
-      this._after();
+      this._afterAnimation();
       this._didFinish(shouldComplete);
 
     } else {
