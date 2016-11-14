@@ -412,7 +412,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    */
   @Input()
   set mode(val: string) {
-    this._setMode('datetime', val);
+    this._setMode(val);
   }
 
   /**
@@ -433,9 +433,8 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     @Optional() private _item: Item,
     @Optional() private _pickerCtrl: PickerController
   ) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'datetime');
 
-    this.mode = config.get('mode');
     _form.register(this);
 
     if (_item) {
@@ -632,7 +631,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
         // loop through each month and see if it
         // is within the min/max date range
         monthOpt.disabled = (dateSortValue(selectedYear, monthOpt.value, 31) < minCompareVal ||
-                             dateSortValue(selectedYear, monthOpt.value, 1) > maxCompareVal);
+          dateSortValue(selectedYear, monthOpt.value, 1) > maxCompareVal);
       }
     }
 
@@ -648,8 +647,8 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
           var compareVal = dateSortValue(selectedYear, selectedMonth, dayOpt.value);
 
           dayOpt.disabled = (compareVal < minCompareVal ||
-                             compareVal > maxCompareVal ||
-                             numDaysInMonth <= i);
+            compareVal > maxCompareVal ||
+            numDaysInMonth <= i);
         }
 
       } else {

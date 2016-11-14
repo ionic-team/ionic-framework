@@ -195,7 +195,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
    */
   @Input()
   set mode(val: string) {
-    this._setMode('select', val);
+    this._setMode(val);
   }
 
   /**
@@ -217,9 +217,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     @Optional() public _item: Item,
     @Optional() private _nav: NavController
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'select');
 
     _form.register(this);
 

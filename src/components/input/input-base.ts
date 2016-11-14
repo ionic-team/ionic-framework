@@ -46,7 +46,7 @@ export class InputBase extends Ion {
     nav: NavController,
     ngControl: NgControl
   ) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'input');
 
     this._nav = <NavControllerBase>nav;
     this._useAssist = config.getBoolean('scrollAssist', false);

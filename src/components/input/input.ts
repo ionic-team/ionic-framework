@@ -157,7 +157,7 @@ export class TextInput extends InputBase {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('input', val);
+    this._setMode(val);
   }
 
   /**
@@ -336,7 +336,7 @@ export class TextArea extends InputBase {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('input', val);
+    this._setMode(val);
   }
 
   /**

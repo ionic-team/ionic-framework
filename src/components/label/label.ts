@@ -65,7 +65,7 @@ export class Label extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._setColor('label', val);
+    this._setColor(val);
   }
 
   /**
@@ -73,7 +73,7 @@ export class Label extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('label', val);
+    this._setMode(val);
   }
 
   /**
@@ -90,9 +90,7 @@ export class Label extends Ion {
     @Attribute('fixed') isFixed: string,
     @Attribute('inset') isInset: string
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'label');
     this.type = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : (isInset === '' ? 'inset' : null))));
   }
 

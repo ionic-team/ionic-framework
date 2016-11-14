@@ -95,7 +95,7 @@ export class RadioButton extends Ion implements OnDestroy, OnInit {
    */
   @Input()
   set color(val: string) {
-    this._setColor('radio', val);
+    this._setColor(val);
 
     if (this._item) {
       this._item._updateColor(val, 'item-radio');
@@ -107,7 +107,7 @@ export class RadioButton extends Ion implements OnDestroy, OnInit {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('radio', val);
+    this._setMode(val);
   }
 
   /**
@@ -123,9 +123,7 @@ export class RadioButton extends Ion implements OnDestroy, OnInit {
     @Optional() private _item: Item,
     @Optional() private _group: RadioGroup
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'radio');
     _form.register(this);
 
     if (_group) {

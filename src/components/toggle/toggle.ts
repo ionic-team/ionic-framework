@@ -104,7 +104,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
    */
   @Input()
   set color(val: string) {
-    this._setColor('toggle', val);
+    this._setColor(val);
   }
 
   /**
@@ -112,7 +112,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
    */
   @Input()
   set mode(val: string) {
-    this._setMode('toggle', val);
+    this._setMode(val);
   }
 
   /**
@@ -128,9 +128,7 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
     public _haptic: Haptic,
     @Optional() public _item: Item
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'toggle');
     _form.register(this);
 
     if (_item) {

@@ -184,7 +184,7 @@ export class Tabs extends Ion implements AfterViewInit {
    */
   @Input()
   set color(value: string) {
-    this._setColor('tabs', value);
+    this._setColor( value);
   }
 
   /**
@@ -192,7 +192,7 @@ export class Tabs extends Ion implements AfterViewInit {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('tabs', val);
+    this._setMode( val);
   }
 
   /**
@@ -250,9 +250,8 @@ export class Tabs extends Ion implements AfterViewInit {
     renderer: Renderer,
     private _linker: DeepLinker
   ) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'tabs');
 
-    this.mode = config.get('mode');
     this.parent = <NavControllerBase>parent;
     this.id = 't' + (++tabIds);
     this._sbPadding = config.getBoolean('statusbarPadding');

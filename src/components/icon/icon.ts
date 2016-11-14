@@ -64,7 +64,7 @@ export class Icon extends Ion {
     return this._color;
   }
   set color(value: string) {
-    this._setColor('icon', value);
+    this._setColor(value);
   }
 
   /**
@@ -72,7 +72,7 @@ export class Icon extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('icon', val);
+    this._setMode(val);
   }
 
   constructor(
@@ -80,9 +80,7 @@ export class Icon extends Ion {
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'icon');
     this._iconMode = config.get('iconMode');
   }
 

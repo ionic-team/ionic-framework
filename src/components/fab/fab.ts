@@ -63,14 +63,14 @@ import { nativeTimeout } from '../../util/dom';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class FabButton extends Ion  {
+export class FabButton extends Ion {
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
   set color(val: string) {
-    this._setColor('fab', val);
+    this._setColor(val);
   }
 
   /**
@@ -78,7 +78,7 @@ export class FabButton extends Ion  {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('fab', val);
+    this._setMode(val);
   }
 
   constructor(
@@ -86,9 +86,7 @@ export class FabButton extends Ion  {
     elementRef: ElementRef,
     renderer: Renderer,
   ) {
-    super(config, elementRef, renderer);
-    this.setElementClass('fab', true); // set role
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'fab');
   }
 
 
@@ -324,7 +322,7 @@ export class FabContainer {
       return;
     }
     let lists = this._fabLists.toArray();
-    for (let list of lists) {
+    for (let list of lists) {
       list.setVisible(isActive);
     }
     this._mainButton.setActiveClose(isActive);

@@ -45,7 +45,7 @@ export class RangeKnob implements OnInit {
 
   @Input() upper: boolean;
 
-  constructor(@Inject(forwardRef(() => Range)) public range: Range) {}
+  constructor( @Inject(forwardRef(() => Range)) public range: Range) { }
 
   get ratio(): number {
     return this._ratio;
@@ -229,7 +229,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   @Input()
   set color(val: string) {
-    this._setColor('range', val);
+    this._setColor(val);
   }
 
   /**
@@ -237,7 +237,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   @Input()
   set mode(val: string) {
-    this._setMode('range', val);
+    this._setMode(val);
   }
 
   @ViewChild('bar') public _bar: ElementRef;
@@ -350,9 +350,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'range');
     _form.register(this);
 
     if (_item) {
@@ -700,7 +698,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   /**
    * @private
    */
-  onTouched() {}
+  onTouched() { }
 
   /**
    * @private
