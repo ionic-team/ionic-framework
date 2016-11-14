@@ -22,3 +22,5 @@ export * from './transitions/transition';
 
 export * from './translation/translate';
 export * from './translation/translate_pipe';
+
+export * from './navigation/nav-controller-base';
