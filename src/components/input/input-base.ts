@@ -340,7 +340,7 @@ export class InputBase extends Ion {
       // do not allow any clicks while it's scrolling
       var scrollDuration = getScrollAssistDuration(scrollData.scrollAmount);
       this._app.setEnabled(false, scrollDuration);
-      this._nav && this._nav.setTransitioning(true, scrollDuration);
+      this._nav && this._nav.setTransitioning(true);
 
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place

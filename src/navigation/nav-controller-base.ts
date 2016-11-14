@@ -335,15 +335,6 @@ export class NavControllerBase extends Ion implements NavController {
 
   _postViewInit(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction, resolve: TransitionResolveFn) {
     assert(leavingView || enteringView, 'Both leavingView and enteringView are null');
-
-    if (!enteringView && !this._isPortal) {
-      console.warn(`You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,
-        this, this.getNativeElement());
-
-      ti.reject && ti.reject('navigation stack needs at least one root page');
-      return false;
-    }
-
     const opts = ti.opts || {};
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
@@ -364,6 +355,16 @@ export class NavControllerBase extends Ion implements NavController {
       }
       // default the direction to "back"
       opts.direction = opts.direction || DIRECTION_BACK;
+    }
+
+    const finalBalance = this._views.length + (insertViews ? insertViews.length : 0) - (destroyQueue ? destroyQueue.length : 0);
+    assert(finalBalance >= 0, 'final balance can not be negative');
+    if (finalBalance === 0 && !this._isPortal) {
+      console.warn(`You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,
+        this, this.getNativeElement());
+
+      ti.reject && ti.reject('navigation stack needs at least one root page');
+      return false;
     }
 
     // there are views to insert
