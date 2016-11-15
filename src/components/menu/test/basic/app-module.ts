@@ -1,12 +1,16 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, MenuController, NavController, AlertController, Nav } from '../../../..';
+import { AlertController, IonicApp, IonicModule, MenuController, ModalController, NavController, Nav, ViewController } from '../../../..';
 
 
 @Component({
   templateUrl: 'page1.html'
 })
 export class Page1 {
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {}
+  constructor(
+    public navCtrl: NavController,
+    public alertCtrl: AlertController,
+    public modalCtrl: ModalController
+  ) { }
 
   presentAlert() {
     let alert = this.alertCtrl.create({
@@ -18,8 +22,21 @@ export class Page1 {
     alert.present();
   }
 
+  presentModal() {
+    let modal = this.modalCtrl.create(Modal);
+    modal.present();
+  }
+
   goToPage2() {
     this.navCtrl.push(Page2);
+  }
+}
+
+@Component({templateUrl: 'modal.html'})
+export class Modal {
+  constructor(public viewController: ViewController) {}
+  close() {
+    this.viewController.dismiss();
   }
 }
 
@@ -106,7 +123,8 @@ export class E2EApp {
     E2EPage,
     Page1,
     Page2,
-    Page3
+    Page3,
+    Modal
   ],
   imports: [
     IonicModule.forRoot(E2EApp)
@@ -117,7 +135,8 @@ export class E2EApp {
     E2EPage,
     Page1,
     Page2,
-    Page3
+    Page3,
+    Modal
   ]
 })
 export class AppModule {}

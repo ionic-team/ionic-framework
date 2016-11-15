@@ -5,7 +5,7 @@ import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
-import { rafFrames } from '../../util/dom';
+import { nativeTimeout } from '../../util/dom';
 
 export const AppRootToken = new OpaqueToken('USERROOT');
 
@@ -25,6 +25,7 @@ export const AppRootToken = new OpaqueToken('USERROOT');
 export class IonicApp extends Ion implements OnInit {
 
   private _stopScrollPlugin: any;
+  private _rafId: number;
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
   @ViewChild('modalPortal', { read: OverlayPortal }) _modalPortal: OverlayPortal;
@@ -116,10 +117,11 @@ export class IonicApp extends Ion implements OnInit {
 
     if (shouldDisableScroll) {
       this.stopScroll().then(() => {
-        rafFrames(2, () => this.setElementClass('disable-scroll', true));
+        this._rafId = nativeTimeout(() => this.setElementClass('disable-scroll', true), 16 * 2);
       });
     } else {
-      rafFrames(2, () => this.setElementClass('disable-scroll', false));
+      cancelAnimationFrame(this._rafId);
+      this.setElementClass('disable-scroll', false);
     }
   }
 

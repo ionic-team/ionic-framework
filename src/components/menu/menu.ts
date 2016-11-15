@@ -8,7 +8,7 @@ import { MenuContentGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
-import { GestureController } from '../../gestures/gesture-controller';
+import { BlockerDelegate, GestureController, GESTURE_GO_BACK_SWIPE } from '../../gestures/gesture-controller';
 import { UIEventManager } from '../../util/ui-event-manager';
 import { Content } from '../content/content';
 
@@ -181,7 +181,7 @@ import { Content } from '../content/content';
   selector: 'ion-menu',
   template:
     '<div class="menu-inner"><ng-content></ng-content></div>' +
-    '<ion-backdrop disableScroll="false"></ion-backdrop>',
+    '<ion-backdrop></ion-backdrop>',
   host: {
     'role': 'navigation'
   },
@@ -198,7 +198,7 @@ export class Menu {
   private _isPers: boolean = false;
   private _init: boolean = false;
   private _events: UIEventManager = new UIEventManager();
-  private _gestureID: number = 0;
+  private _gestureBlocker: BlockerDelegate;
 
   /**
    * @private
@@ -305,9 +305,9 @@ export class Menu {
     private _zone: NgZone,
     private _gestureCtrl: GestureController
   ) {
-    if (_gestureCtrl) {
-      this._gestureID = _gestureCtrl.newID();
-    }
+    this._gestureBlocker = _gestureCtrl.createBlocker({
+      disable: [GESTURE_GO_BACK_SWIPE]
+    });
   }
 
   /**
@@ -503,7 +503,7 @@ export class Menu {
     this._events.unlistenAll();
     if (isOpen) {
       // Disable swipe to go back gesture
-      this._gestureCtrl.disableGesture('goback-swipe', this._gestureID);
+      this._gestureBlocker.block();
 
       this._cntEle.classList.add('menu-content-open');
       let callback = this.onBackdropClick.bind(this);
@@ -519,7 +519,7 @@ export class Menu {
 
     } else {
       // Enable swipe to go back gesture
-      this._gestureCtrl.enableGesture('goback-swipe', this._gestureID);
+      this._gestureBlocker.unblock();
 
       this._cntEle.classList.remove('menu-content-open');
       this.setElementClass('show-menu', false);

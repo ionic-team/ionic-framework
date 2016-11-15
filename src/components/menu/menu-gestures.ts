@@ -2,7 +2,7 @@ import { Menu } from './menu';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
 import { assign } from '../../util/util';
-import { GestureController, GesturePriority, DisableScroll } from '../../gestures/gesture-controller';
+import { GestureController, GesturePriority, GESTURE_MENU_SWIPE } from '../../gestures/gesture-controller';
 import { NativeRafDebouncer } from '../../util/debouncer';
 
 /**
@@ -14,18 +14,19 @@ export class MenuContentGesture extends SlideEdgeGesture {
     public menu: Menu,
     contentEle: HTMLElement,
     gestureCtrl: GestureController,
-    options: any = {}) {
+    options: any = {}
+  ) {
     super(contentEle, assign({
       direction: 'x',
       edge: menu.side,
       threshold: 0,
       maxEdgeStart: menu.maxEdgeStart || 50,
-      maxAngle: 40,
       zone: false,
       debouncer: new NativeRafDebouncer(),
-      gesture: gestureCtrl.create('menu-swipe', {
+      gesture: gestureCtrl.createGesture({
+        name: GESTURE_MENU_SWIPE,
         priority: GesturePriority.MenuSwipe,
-        disableScroll: DisableScroll.DuringCapture
+        disableScroll: true
       })
     }, options));
   }
