@@ -18,7 +18,7 @@ import { ViewController } from './view-controller';
  * arbitrary locations in history.
  *
  * The current page is the last one in the array, or the top of the stack if we
- * think of it that way.  [Pushing](#push) a new page onto the top of the
+ * think of it that way. [Pushing](#push) a new page onto the top of the
  * navigation stack causes the new page to be animated in, while [popping](#pop)
  * the current page will navigate to the previous page in the stack.
  *
@@ -33,7 +33,6 @@ import { ViewController } from './view-controller';
  *
  * ```typescript
  * import { Component } from `@angular/core`;
- * import { ionicBootstrap } from 'ionic-angular';
  * import { StartPage } from './start-page';
  *
  * @Component(
@@ -47,7 +46,6 @@ import { ViewController } from './view-controller';
  *   }
  * }
  *
- * ionicBootstrap(MyApp);
  * ```
  *
  * ### Injecting NavController
@@ -85,10 +83,10 @@ import { ViewController } from './view-controller';
  *
  * ```typescript
  *
- * import { App, ViewChild } from '@angular/core';
+ * import { Component, ViewChild } from '@angular/core';
  * import { NavController } from 'ionic-angular';
  *
- * @App({
+ * @Component({
  *    template: '<ion-nav #myNav [root]="rootPage"></ion-nav>'
  * })
  * export class MyApp {
@@ -103,6 +101,36 @@ import { ViewController } from './view-controller';
  *    }
  * }
  * ```
+ *
+ * ### Navigating from an Overlay Component
+ * What if you wanted to navigate from an overlay component (popover, modal, alert, etc)?
+ * For this, you need to have access to the root `NavController`.
+ *
+ * ```typescript
+ * import { Component } from '@angular/core';
+ * import { App, ViewController } from 'ionic-angular';
+ *
+ * @Component({
+ *     template: `
+ *     <ion-content>
+ *       <h1>My PopoverPage</h1>
+ *       <button ion-button (click)="pusPage()">Call pushPage</button>
+ *      </ion-content>
+ *     `
+ *   })
+ *   class PopoverPage {
+ *     constructor(
+ *       public viewCtrl: ViewController
+ *       public appCtrl: App
+ *     ) {}
+ *
+ *     pushPage() {
+ *       this.viewCtrl.dismiss();
+ *       this.appCtrl.getRootNav().push(SecondPage);
+ *     }
+ *   }
+ *```
+ *
  *
  * ## View creation
  * Views are created when they are added to the navigation stack.  For methods
