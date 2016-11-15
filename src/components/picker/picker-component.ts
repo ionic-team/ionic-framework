@@ -98,6 +98,11 @@ export class PickerColumnCmp {
     console.debug('picker, pointerStart', ev.type, this.startY);
     this._haptic.gestureSelectionStart();
 
+    // We have to prevent default in order to block scrolling under the picker
+    // but we DO NOT have to stop propagation, since we still want
+    // some "click" events to capture
+    ev.preventDefault();
+
     this.debouncer.debounce(() => {
       // cancel any previous raf's that haven't fired yet
       if (this.rafId) {
@@ -169,6 +174,7 @@ export class PickerColumnCmp {
   }
 
   pointerEnd(ev: UIEvent) {
+    ev.preventDefault();
     this.debouncer.cancel();
 
     if (this.startY === null) {
