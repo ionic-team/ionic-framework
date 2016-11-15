@@ -36,17 +36,31 @@ export const cancelRaf = window.cancelAnimationFrame.bind(window);
 export const nativeTimeout = window[window['Zone']['__symbol__']('setTimeout')]['bind'](window);
 export const clearNativeTimeout = window[window['Zone']['__symbol__']('clearTimeout')]['bind'](window);
 
+/**
+ * Run a function in an animation frame after waiting `framesToWait` frames.
+ *
+ * @param framesToWait number how many frames to wait
+ * @param callback Function the function call to defer
+ * @return Function a function to call to cancel the wait
+ */
 export function rafFrames(framesToWait: number, callback: Function) {
   framesToWait = Math.ceil(framesToWait);
+  let rafId: any;
+  let timeoutId: any;
 
   if (framesToWait < 2) {
-    nativeRaf(callback);
+    rafId = nativeRaf(callback);
 
   } else {
-    nativeTimeout(() => {
-      nativeRaf(callback);
+    timeoutId = nativeTimeout(() => {
+      rafId = nativeRaf(callback);
     }, (framesToWait - 1) * 16.6667);
   }
+
+  return function() {
+    clearNativeTimeout(timeoutId);
+    cancelRaf(raf);
+  };
 }
 
 // TODO: DRY rafFrames and zoneRafFrames
@@ -210,10 +224,13 @@ export function pointerCoord(ev: any): PointerCoordinates {
 }
 
 export function hasPointerMoved(threshold: number, startCoord: PointerCoordinates, endCoord: PointerCoordinates) {
-  let deltaX = (startCoord.x - endCoord.x);
-  let deltaY = (startCoord.y - endCoord.y);
-  let distance = deltaX * deltaX + deltaY * deltaY;
-  return distance > (threshold * threshold);
+  if (startCoord && endCoord) {
+    const deltaX = (startCoord.x - endCoord.x);
+    const deltaY = (startCoord.y - endCoord.y);
+    const distance = deltaX * deltaX + deltaY * deltaY;
+    return distance > (threshold * threshold);
+  }
+  return false;
 }
 
 export function isActive(ele: HTMLElement) {

@@ -7,9 +7,27 @@ export class Activator {
   protected _css: string;
   protected _queue: HTMLElement[] = [];
   protected _active: HTMLElement[] = [];
+  protected _activeRafDefer: Function;
 
   constructor(protected app: App, config: Config) {
     this._css = config.get('activatedClass') || 'activated';
+  }
+
+  clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+    // a click happened, so immediately deactive all activated elements
+    this._clearDeferred();
+    this._queue.length = 0;
+
+    for (var i = 0; i < this._active.length; i++) {
+      this._active[i].classList.remove(this._css);
+    }
+    this._active.length = 0;
+
+    // then immediately activate this element
+    if (activatableEle && activatableEle.parentNode) {
+      this._active.push(activatableEle);
+      activatableEle.classList.add(this._css);
+    }
   }
 
   downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
@@ -21,7 +39,7 @@ export class Activator {
     // queue to have this element activated
     this._queue.push(activatableEle);
 
-    rafFrames(6, () => {
+    this._activeRafDefer = rafFrames(6, () => {
       let activatableEle: HTMLElement;
       for (let i = 0; i < this._queue.length; i++) {
         activatableEle = this._queue[i];
@@ -31,18 +49,22 @@ export class Activator {
         }
       }
       this._queue.length = 0;
+      this._clearDeferred();
     });
   }
 
+  // the user was pressing down, then just let up
   upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
-    // the user was pressing down, then just let up
+    this._clearDeferred();
+
     rafFrames(CLEAR_STATE_DEFERS, () => {
       this.clearState();
     });
   }
 
+  // all states should return to normal
   clearState() {
-    // all states should return to normal
+
     if (!this.app.isEnabled()) {
       // the app is actively disabled, so don't bother deactivating anything.
       // this makes it easier on the GPU so it doesn't have to redraw any
@@ -57,16 +79,26 @@ export class Activator {
     }
   }
 
+  // remove the active class from all active elements
   deactivate() {
-    // remove the active class from all active elements
+    this._clearDeferred();
+
     this._queue.length = 0;
 
     rafFrames(2, () => {
       for (var i = 0; i < this._active.length; i++) {
         this._active[i].classList.remove(this._css);
       }
-      this._active = [];
+      this._active.length = 0;
     });
+  }
+
+  _clearDeferred() {
+    // Clear any active deferral
+    if (this._activeRafDefer) {
+      this._activeRafDefer();
+      this._activeRafDefer = null;
+    }
   }
 
   disableActivated(ev: any) {

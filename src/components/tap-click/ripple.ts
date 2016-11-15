@@ -13,38 +13,34 @@ export class RippleActivator extends Activator {
     super(app, config);
   }
 
+  clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+    this.downAction(ev, activatableEle, startCoord);
+    this.upAction(ev, activatableEle, startCoord);
+  }
+
   downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
-    if (this.disableActivated(ev)) {
+    if (this.disableActivated(ev) || !activatableEle || !activatableEle.parentNode) {
       return;
     }
 
-    // queue to have this element activated
-    this._queue.push(activatableEle);
+    this._active.push(activatableEle);
 
-    for (var i = 0; i < this._queue.length; i++) {
-      var queuedEle = this._queue[i];
-      if (queuedEle && queuedEle.parentNode) {
-        this._active.push(queuedEle);
-
-        // DOM WRITE
-        queuedEle.classList.add(this._css);
-
-        var j = queuedEle.childElementCount;
-        while (j--) {
-          var rippleEle: any = queuedEle.children[j];
-          if (rippleEle.classList.contains('button-effect')) {
-            // DOM READ
-            var clientRect = activatableEle.getBoundingClientRect();
-            rippleEle.$top = clientRect.top;
-            rippleEle.$left = clientRect.left;
-            rippleEle.$width = clientRect.width;
-            rippleEle.$height = clientRect.height;
-            break;
-          }
-        }
+    var j = activatableEle.childElementCount;
+    while (j--) {
+      var rippleEle: any = activatableEle.children[j];
+      if (rippleEle.classList.contains('button-effect')) {
+        // DOM READ
+        var clientRect = activatableEle.getBoundingClientRect();
+        rippleEle.$top = clientRect.top;
+        rippleEle.$left = clientRect.left;
+        rippleEle.$width = clientRect.width;
+        rippleEle.$height = clientRect.height;
+        break;
       }
     }
-    this._queue = [];
+
+    // DOM WRITE
+    activatableEle.classList.add(this._css);
   }
 
   upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
@@ -53,6 +49,7 @@ export class RippleActivator extends Activator {
       while (i--) {
         var rippleEle: any = activatableEle.children[i];
         if (rippleEle.classList.contains('button-effect')) {
+          // DOM WRITE
           this.startRippleEffect(rippleEle, activatableEle, startCoord);
           break;
         }
@@ -63,6 +60,10 @@ export class RippleActivator extends Activator {
   }
 
   startRippleEffect(rippleEle: any, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+    if (!startCoord) {
+      return;
+    }
+
     let clientPointerX = (startCoord.x - rippleEle.$left);
     let clientPointerY = (startCoord.y - rippleEle.$top);
 
@@ -82,6 +83,7 @@ export class RippleActivator extends Activator {
     diameter = Math.round(diameter);
 
     // Reset ripple
+    // DOM WRITE
     rippleEle.style.opacity = '';
     rippleEle.style[CSS.transform] = `translate3d(${clientPointerX}px, ${clientPointerY}px, 0px) scale(0.001)`;
     rippleEle.style[CSS.transition] = '';
@@ -106,14 +108,12 @@ export class RippleActivator extends Activator {
   }
 
   deactivate() {
-    // remove the active class from all active elements
-    this._queue = [];
-
     rafFrames(2, () => {
       for (var i = 0; i < this._active.length; i++) {
+        // DOM WRITE
         this._active[i].classList.remove(this._css);
       }
-      this._active = [];
+      this._active.length = 0;
     });
   }
 
