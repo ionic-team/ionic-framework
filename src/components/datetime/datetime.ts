@@ -309,7 +309,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    * the datetime picker's columns. See the `pickerFormat` input description for
    * more info. Defaults to `MMM D, YYYY`.
    */
-  @Input() displayFormat: string = 'MMM D, YYYY';
+  @Input() displayFormat: string;
 
   /**
    * @input {string} The format of the date and time picker columns the user selects.
@@ -515,7 +515,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   generate(picker: Picker) {
     // if a picker format wasn't provided, then fallback
     // to use the display format
-    let template = this.pickerFormat || this.displayFormat;
+    let template = this.pickerFormat || this.displayFormat || DEFAULT_FORMAT;
 
     if (isPresent(template)) {
       // make sure we've got up to date sizing information
@@ -724,14 +724,15 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    */
   updateText() {
     // create the text of the formatted data
-    this._text = renderDateTime(this.displayFormat, this._value, this._locale);
+    const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
+    this._text = renderDateTime(template, this._value, this._locale);
   }
 
   /**
    * @private
    */
-  calcMinMax() {
-    let todaysYear = new Date().getFullYear();
+  calcMinMax(now?: Date) {
+    const todaysYear = (now || new Date()).getFullYear();
 
     if (isBlank(this.min)) {
       if (isPresent(this.yearValues)) {
@@ -751,8 +752,18 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       }
     }
 
-    let min = this._min = parseDate(this.min);
-    let max = this._max = parseDate(this.max);
+    const min = this._min = parseDate(this.min);
+    const max = this._max = parseDate(this.max);
+
+    if (min.year > max.year) {
+      min.year = this._min.year = (max.year - 100);
+    } else if (min.year === max.year) {
+      if (min.month > max.month) {
+        min.month = this._min.month = 1;
+      } else if (min.month === max.month && min.day > max.day) {
+        min.day = this._min.day = 1;
+      }
+    }
 
     min.month = min.month || 1;
     min.day = min.day || 1;
@@ -915,3 +926,5 @@ function convertToArrayOfStrings(input: any, type: string): string[] {
     return values;
   }
 }
+
+const DEFAULT_FORMAT = 'MMM D, YYYY';
