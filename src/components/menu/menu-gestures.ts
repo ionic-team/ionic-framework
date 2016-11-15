@@ -2,7 +2,7 @@ import { Menu } from './menu';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
 import { assign } from '../../util/util';
-import { GestureController, GesturePriority } from '../../gestures/gesture-controller';
+import { GestureController, GesturePriority, DisableScroll } from '../../gestures/gesture-controller';
 import { NativeRafDebouncer } from '../../util/debouncer';
 
 /**
@@ -25,6 +25,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
       debouncer: new NativeRafDebouncer(),
       gesture: gestureCtrl.create('menu-swipe', {
         priority: GesturePriority.MenuSwipe,
+        disableScroll: DisableScroll.DuringCapture
       })
     }, options));
   }
@@ -51,13 +52,6 @@ export class MenuContentGesture extends SlideEdgeGesture {
   onSlide(slide: SlideData, ev: any) {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
     let stepValue = (slide.distance / z);
-
-    console.debug('menu gesture, onSlide', this.menu.side,
-      'distance', slide.distance,
-      'min', slide.min,
-      'max', slide.max,
-      'z', z,
-      'stepValue', stepValue);
 
     this.menu.swipeProgress(stepValue);
   }
