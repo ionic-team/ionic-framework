@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, forwardRef, Inject, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, forwardRef, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -12,7 +12,7 @@ import { TransitionController } from '../../transitions/transition-controller';
  * @private
  */
 @Directive({
-  selector: '[overlay-portal]'
+  selector: '[overlay-portal]',
 })
 export class OverlayPortal extends NavControllerBase {
   constructor(
@@ -38,4 +38,10 @@ export class OverlayPortal extends NavControllerBase {
     app.viewDidLeave.subscribe(this.dismissPageChangeViews.bind(this));
   }
 
+  @Input('overlay-portal')
+  set _overlayPortal(val: number) {
+    this._zIndexOffset = (val || 0);
+  }
+
 }
+

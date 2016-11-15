@@ -33,9 +33,10 @@ export class E2EPage {
           }
         },
         {
-          text: 'Play',
+          text: 'Play (open modal)',
           icon: 'arrow-dropright-circle',
           handler: () => {
+            this.result = 'Play (open modal)';
             let modal = this.modalCtrl.create(ModalPage);
             modal.present();
 

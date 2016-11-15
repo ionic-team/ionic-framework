@@ -51,8 +51,15 @@ export function convertToViews(linker: DeepLinker, pages: any[]): ViewController
   return views;
 }
 
+let portalZindex = 9999;
+
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
   if (enteringView) {
+    if (nav._isPortal) {
+      enteringView._setZIndex(nav._zIndexOffset + portalZindex, renderer);
+      portalZindex++;
+      return;
+    }
 
     leavingView = leavingView || nav.getPrevious(enteringView);
 
@@ -65,7 +72,7 @@ export function setZIndex(nav: NavControllerBase, enteringView: ViewController, 
       }
 
     } else {
-      enteringView._setZIndex(nav._isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, renderer);
+      enteringView._setZIndex(INIT_ZINDEX + nav._zIndexOffset, renderer);
     }
   }
 }
@@ -184,7 +191,6 @@ export enum ViewState {
 }
 
 export const INIT_ZINDEX = 100;
-export const PORTAL_ZINDEX = 9999;
 
 export const DIRECTION_BACK = 'back';
 export const DIRECTION_FORWARD = 'forward';
