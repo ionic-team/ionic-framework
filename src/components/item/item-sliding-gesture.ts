@@ -1,7 +1,7 @@
 import { ItemSliding } from './item-sliding';
 import { List } from '../list/list';
 
-import { GesturePriority } from '../../gestures/gesture-controller';
+import { GesturePriority, DisableScroll } from '../../gestures/gesture-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
 import { pointerCoord } from '../../util/dom';
 import { NativeRafDebouncer } from '../../util/debouncer';
@@ -25,6 +25,7 @@ export class ItemSlidingGesture extends PanGesture {
       debouncer: new NativeRafDebouncer(),
       gesture: list._gestureCtrl.create('item-sliding', {
         priority: GesturePriority.SlidingItem,
+        disableScroll: DisableScroll.DuringCapture
       })
     });
   }
