@@ -1,11 +1,15 @@
 import { assign, swipeShouldReset } from '../util/util';
-import { GestureController, GesturePriority, DisableScroll } from '../gestures/gesture-controller';
+import { GestureController, GesturePriority, GESTURE_GO_BACK_SWIPE } from '../gestures/gesture-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { SlideData } from '../gestures/slide-gesture';
 import { SlideEdgeGesture } from '../gestures/slide-edge-gesture';
 import { NativeRafDebouncer } from '../util/debouncer';
 
+/**
+ * @private
+ */
 export class SwipeBackGesture extends SlideEdgeGesture {
+
   constructor(
     private _nav: NavControllerBase,
     element: HTMLElement,
@@ -17,11 +21,11 @@ export class SwipeBackGesture extends SlideEdgeGesture {
       maxEdgeStart: 75,
       zone: false,
       threshold: 0,
-      maxAngle: 40,
       debouncer: new NativeRafDebouncer(),
-      gesture: gestureCtlr.create('goback-swipe', {
+      gesture: gestureCtlr.createGesture({
+        name: GESTURE_GO_BACK_SWIPE,
         priority: GesturePriority.GoBackSwipe,
-        disableScroll: DisableScroll.DuringCapture
+        disableScroll: true
       })
     }, options));
   }

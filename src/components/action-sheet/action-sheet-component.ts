@@ -5,7 +5,8 @@ import { Form } from '../../util/form';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
-
+import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { assert } from '../../util/util';
 
 /**
  * @private
@@ -53,15 +54,18 @@ export class ActionSheetCmp {
   hdrId: string;
   id: number;
   mode: string;
+  gestureBlocker: BlockerDelegate;
 
   constructor(
     private _viewCtrl: ViewController,
     private _config: Config,
     private _elementRef: ElementRef,
     private _form: Form,
+    gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer
   ) {
+    this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
     this.mode = _config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `action-sheet-${this.mode}`, true);
@@ -108,6 +112,14 @@ export class ActionSheetCmp {
     });
 
     this.d.buttons = buttons;
+  }
+
+  ionViewWillEnter() {
+    this.gestureBlocker.block();
+  }
+
+  ionViewDidLeave() {
+    this.gestureBlocker.unblock();
   }
 
   ionViewDidEnter() {
@@ -165,6 +177,11 @@ export class ActionSheetCmp {
 
   dismiss(role: any): Promise<any> {
     return this._viewCtrl.dismiss(null, role);
+  }
+
+  ngOnDestroy() {
+    assert(this.gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
+    this.gestureBlocker.destroy();
   }
 }
 

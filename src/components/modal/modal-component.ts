@@ -11,7 +11,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-modal',
   template:
-    '<ion-backdrop disableScroll="false" (click)="_bdClick()"></ion-backdrop>' +
+    '<ion-backdrop (click)="_bdClick()"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
       '<div #viewport nav-viewport></div>' +
     '</div>'
@@ -26,7 +26,12 @@ export class ModalCmp {
   /** @private */
   _enabled: boolean;
 
-  constructor(public _cfr: ComponentFactoryResolver, public _renderer: Renderer, public _navParams: NavParams, public _viewCtrl: ViewController) {
+  constructor(
+    public _cfr: ComponentFactoryResolver,
+    public _renderer: Renderer,
+    public _navParams: NavParams,
+    public _viewCtrl: ViewController
+  ) {
     this._bdDismiss = _navParams.data.opts.enableBackdropDismiss;
   }
 

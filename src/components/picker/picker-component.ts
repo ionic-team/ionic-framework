@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, HostListener, NgZone, Outpu
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { CSS, cancelRaf, pointerCoord, nativeRaf } from '../../util/dom';
-import { clamp, isNumber, isPresent, isString } from '../../util/util';
+import { clamp, isNumber, isPresent, isString, assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
@@ -12,6 +12,7 @@ import { Haptic } from '../../util/haptic';
 import { UIEventManager } from '../../util/ui-event-manager';
 import { ViewController } from '../../navigation/view-controller';
 import { Debouncer, NativeRafDebouncer } from '../../util/debouncer';
+import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 
 /**
  * @private
@@ -454,14 +455,17 @@ export class PickerCmp {
   lastClick: number;
   id: number;
   mode: string;
+  _gestureBlocker: BlockerDelegate;
 
   constructor(
     private _viewCtrl: ViewController,
     private _elementRef: ElementRef,
     private _config: Config,
+    gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer
   ) {
+    this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
     this.mode = _config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `picker-${this.mode}`, true);
@@ -521,6 +525,14 @@ export class PickerCmp {
       });
       return column;
     });
+  }
+
+  ionViewWillEnter() {
+    this._gestureBlocker.block();
+  }
+
+  ionViewDidLeave() {
+    this._gestureBlocker.unblock();
   }
 
   refresh() {
@@ -616,6 +628,12 @@ export class PickerCmp {
       };
     });
     return selected;
+  }
+
+  ngOnDestroy() {
+    assert(this._gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
+    this._gestureBlocker.destroy();
+
   }
 }
 

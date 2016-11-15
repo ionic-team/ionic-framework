@@ -1,14 +1,14 @@
 import { ItemSliding } from './item-sliding';
 import { List } from '../list/list';
 
-import { GesturePriority } from '../../gestures/gesture-controller';
+import { GestureController, GesturePriority } from '../../gestures/gesture-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
 import { pointerCoord } from '../../util/dom';
 import { NativeRafDebouncer } from '../../util/debouncer';
 
-const DRAG_THRESHOLD = 10;
-const MAX_ATTACK_ANGLE = 20;
-
+/**
+ * @private
+ */
 export class ItemSlidingGesture extends PanGesture {
 
   private preSelectedContainer: ItemSliding = null;
@@ -17,13 +17,14 @@ export class ItemSlidingGesture extends PanGesture {
   private firstCoordX: number;
   private firstTimestamp: number;
 
-  constructor(public list: List) {
+  constructor(public list: List, gestureCtrl: GestureController) {
     super(list.getNativeElement(), {
-      maxAngle: MAX_ATTACK_ANGLE,
-      threshold: DRAG_THRESHOLD,
+      maxAngle: 20,
+      threshold: 10,
       zone: false,
       debouncer: new NativeRafDebouncer(),
-      gesture: list._gestureCtrl.create('item-sliding', {
+      gesture: gestureCtrl.createGesture({
+        name: 'item-sliding',
         priority: GesturePriority.SlidingItem,
       })
     });
