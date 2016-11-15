@@ -40,7 +40,7 @@ import { ViewController } from './view-controller';
  * })
  * class MyApp {
  *   // set the rootPage to the first page we want displayed
- *   private rootPage: any = StartPage;
+ *   public rootPage: any = StartPage;
  *
  *   constructor(){
  *   }
@@ -91,11 +91,11 @@ import { ViewController } from './view-controller';
  * })
  * export class MyApp {
  *    @ViewChild('myNav') nav: NavController
- *    private rootPage = TabsPage;
+ *    public rootPage = TabsPage;
  *
  *    // Wait for the components in MyApp's template to be initialized
- *    // In this case, we are waiting for the Nav with id="my-nav"
- *    ngAfterViewInit() {
+ *    // In this case, we are waiting for the Nav with refernce varialbe of "#myNa"
+ *    ngOnInit() {
  *       // Let's navigate from TabsPage to Page1
  *       this.nav.push(Page1);
  *    }
@@ -223,7 +223,7 @@ import { ViewController } from './view-controller';
  *   <ion-content>I'm the other page!</ion-content>`
  * })
  * class OtherPage {
- *    constructor(private navCtrl: NavController ){
+ *    constructor(public navCtrl: NavController ){
  *    }
  *
  *    popView(){
