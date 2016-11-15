@@ -756,12 +756,12 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     const max = this._max = parseDate(this.max);
 
     if (min.year > max.year) {
-      min.year = this._min.year = (max.year - 100);
+      min.year = max.year - 100;
     } else if (min.year === max.year) {
       if (min.month > max.month) {
-        min.month = this._min.month = 1;
+        min.month = 1;
       } else if (min.month === max.month && min.day > max.day) {
-        min.day = this._min.day = 1;
+        min.day = 1;
       }
     }
 
