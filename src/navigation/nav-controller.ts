@@ -94,7 +94,7 @@ import { ViewController } from './view-controller';
  *    public rootPage = TabsPage;
  *
  *    // Wait for the components in MyApp's template to be initialized
- *    // In this case, we are waiting for the Nav with refernce varialbe of "#myNa"
+ *    // In this case, we are waiting for the Nav with reference variable of "#myNav"
  *    ngOnInit() {
  *       // Let's navigate from TabsPage to Page1
  *       this.nav.push(Page1);
