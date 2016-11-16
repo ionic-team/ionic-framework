@@ -19,6 +19,7 @@ export class NativeInput {
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() keydown: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     public _elementRef: ElementRef,
@@ -33,6 +34,13 @@ export class NativeInput {
   @HostListener('input', ['$event'])
   _change(ev: any) {
     this.valueChange.emit(ev.target.value);
+  }
+  
+  @HostListener('keydown', ['$event'])
+  _keyDown(ev: any) {
+    if(ev) {
+      ev.target && this.keydown.emit(ev.target.value);
+    }
   }
 
   @HostListener('focus')

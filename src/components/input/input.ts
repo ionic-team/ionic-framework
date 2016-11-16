@@ -161,6 +161,18 @@ export class TextInput extends InputBase {
   }
 
   /**
+   * @input {boolean} whether to clear the input upon editing or not
+   */
+  @Input()
+  get clearOnEdit() {
+    return this._clearOnEdit;
+  }
+  set clearOnEdit(val: any) {
+    super.setClearOnEdit(val);
+  }
+
+
+  /**
    * @private
    */
   @ViewChild(NativeInput)
@@ -206,6 +218,11 @@ export class TextInput extends InputBase {
     if (this._item) {
       this._item.setElementClass('item-input', true);
       this._item.registerInput(this._type);
+    }
+
+    // By default, password inputs clear after focus when they have content
+    if(this.type === 'password' && this.clearOnEdit !== false) {
+      this.clearOnEdit = true;
     }
   }
 

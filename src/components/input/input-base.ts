@@ -32,6 +32,11 @@ export class InputBase extends Ion {
   _nav: NavControllerBase;
   _native: NativeInput;
 
+  // Whether to clear after the user returns to the input and resumes editing
+  _clearOnEdit: boolean;
+  // A tracking flag to watch for the blur after editing to help with clearOnEdit
+  _didBlurAfterEdit: boolean;
+
   inputControl: NgControl;
 
   constructor(
@@ -133,6 +138,33 @@ export class InputBase extends Ion {
     this._native && this._native.isDisabled(this._disabled);
   }
 
+  setClearOnEdit(val: boolean) {
+    this._clearOnEdit = isTrueProperty(val);
+  }
+
+  /**
+  * Check if we need to clear the text input if clearOnEdit is enabled
+  * @private
+  */
+  checkClearOnEdit(inputValue: string) {
+    if(!this._clearOnEdit) { return; }
+
+    // Did the input value change after it was blurred and edited?
+    if (this._didBlurAfterEdit && this.hasValue()) {
+      // Clear the input
+      this.clearTextInput();
+    }
+
+    // Reset the flag
+    this._didBlurAfterEdit = false;
+  }
+
+  /**
+   * Overriden in child input
+   * @private
+   */
+  clearTextInput() {}
+
   /**
    * @private
    */
@@ -145,6 +177,10 @@ export class InputBase extends Ion {
 
     nativeInput.valueChange.subscribe((inputValue: any) => {
       this.onChange(inputValue);
+    });
+
+    nativeInput.keydown.subscribe((inputValue: any) => {
+      this.onKeydown(inputValue);
     });
 
     this.focusChange(this.hasFocus());
@@ -229,6 +265,16 @@ export class InputBase extends Ion {
   }
 
   /**
+   * onKeydown handler for clearOnEdit
+   * @private
+   */
+  onKeydown(val: any) {
+    if(this._clearOnEdit) {
+      this.checkClearOnEdit(val);
+    }
+  }
+
+  /**
    * @private
    */
   onTouched(val: any) {}
@@ -244,9 +290,18 @@ export class InputBase extends Ion {
   /**
    * @private
    */
+  hasValue(): boolean {
+    let inputValue = this._value;
+    return (inputValue !== null && inputValue !== undefined && inputValue !== '');
+  }
+
+  /**
+   * @private
+   */
   checkHasValue(inputValue: any) {
     if (this._item) {
       let hasValue = (inputValue !== null && inputValue !== undefined && inputValue !== '');
+
       this._item.setElementClass('input-has-value', hasValue);
     }
   }
@@ -260,6 +315,12 @@ export class InputBase extends Ion {
     }
     if (!inputHasFocus) {
       this.deregScrollMove();
+
+    }
+
+    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
+    if(this._clearOnEdit && !inputHasFocus && this.hasValue()) {
+      this._didBlurAfterEdit = true;
     }
   }
 
