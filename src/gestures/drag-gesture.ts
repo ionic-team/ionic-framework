@@ -117,7 +117,7 @@ export class PanGesture {
       let coord = pointerCoord(ev);
       if (this.detector.detect(coord)) {
 
-        if (this.detector.pan() !== 0 && this.canCapture(ev) &&
+        if (this.detector.pan() !== 0 &&
           (!this.gestute || this.gestute.capture())) {
           this.onDragStart(ev);
           this.captured = true;
@@ -156,7 +156,6 @@ export class PanGesture {
 
   // Implemented in a subclass
   canStart(ev: any): boolean { return true; }
-  canCapture(ev: any): boolean { return true; }
   onDragStart(ev: any) { }
   onDragMove(ev: any) { }
   onDragEnd(ev: any) { }

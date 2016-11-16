@@ -10,7 +10,7 @@ export class Animation {
   private _cL: number;
   private _e: HTMLElement[];
   private _eL: number;
-  private _fx: {[key: string]: EffectProperty};
+  private _fx: EffectProperty[];
   private _dur: number = null;
   private _es: string = null;
   private _bfSty: { [property: string]: any; };
@@ -159,26 +159,39 @@ export class Animation {
    * @private
    * NO DOM
    */
+
+  private _getProp(name: string): EffectProperty {
+    if (this._fx) {
+      return this._fx.find((prop) => prop.name === name);
+    } else {
+      this._fx = [];
+    }
+    return null;
+  }
+
   private _addProp(state: string, prop: string, val: any): EffectProperty {
-    this._fx = this._fx || {};
-    let fxProp = this._fx[prop];
+    let fxProp = this._getProp(prop);
 
     if (!fxProp) {
       // first time we've see this EffectProperty
-      fxProp = this._fx[prop] = {
-        trans: (TRANSFORMS[prop] === 1)
-      };
+      var shouldTrans = (TRANSFORMS[prop] === 1);
+      fxProp = {
+        name: prop,
+        trans: shouldTrans,
 
-      // add the will-change property for transforms or opacity
-      fxProp.wc = (fxProp.trans ? CSS.transform : prop);
+        // add the will-change property for transforms or opacity
+        wc: (shouldTrans ? CSS.transform : prop)
+      };
+      this._fx.push(fxProp);
     }
 
     // add from/to EffectState to the EffectProperty
-    let fxState: EffectState = (<any>fxProp)[state] = {
+    let fxState: EffectState = {
       val: val,
       num: null,
       unit: '',
     };
+    fxProp[state] = fxState;
 
     if (typeof val === 'string' && val.indexOf(' ') < 0) {
       let r = val.match(CSS_VALUE_REGEX);
@@ -594,72 +607,72 @@ export class Animation {
    */
   _progress(stepValue: number) {
     // bread 'n butter
-    var val: any;
+    let val: any;
+    let effects = this._fx;
+    let nuElements = this._eL;
 
-    if (this._fx && this._eL) {
-      // flip the number if we're going in reverse
-      if (this._rv) {
-        stepValue = ((stepValue * -1) + 1);
-      }
-      var transforms: string[] = [];
-      var effects = this._fx;
-      var elements = this._e;
-      for (var prop in effects) {
-        var fx = effects[prop];
+    if (!effects || !nuElements) {
+      return;
+    }
 
-        if (fx.from && fx.to) {
-          var fromNum = fx.from.num;
-          var toNum = fx.to.num;
-          var tweenEffect = (fromNum !== toNum);
-          if (tweenEffect) {
-            this._twn = true;
-          }
+    // flip the number if we're going in reverse
+    if (this._rv) {
+      stepValue = ((stepValue * -1) + 1);
+    }
+    var i, j;
+    var finalTransform: string = '';
+    var elements = this._e;
+    for (i = 0; i < effects.length; i++) {
+      var fx = effects[i];
 
-          if (stepValue === 0) {
-            // FROM
-            val = fx.from.val;
+      if (fx.from && fx.to) {
+        var fromNum = fx.from.num;
+        var toNum = fx.to.num;
+        var tweenEffect = (fromNum !== toNum);
+        if (tweenEffect) {
+          this._twn = true;
+        }
 
-          } else if (stepValue === 1) {
-            // TO
-            val = fx.to.val;
+        if (stepValue === 0) {
+          // FROM
+          val = fx.from.val;
 
-          } else if (tweenEffect) {
-            // EVERYTHING IN BETWEEN
-            val = (((toNum - fromNum) * stepValue) + fromNum) + fx.to.unit;
+        } else if (stepValue === 1) {
+          // TO
+          val = fx.to.val;
+
+        } else if (tweenEffect) {
+          // EVERYTHING IN BETWEEN
+          val = (((toNum - fromNum) * stepValue) + fromNum) + fx.to.unit;
+        }
+
+        if (val !== null) {
+          var prop = fx.name;
+          if (fx.trans) {
+            finalTransform += prop + '(' + val + ') ';
 
           } else {
-            val = null;
-          }
-
-          if (val !== null) {
-            if (fx.trans) {
-              transforms.push(prop + '(' + val + ')');
-
-            } else {
-              for (var i = 0; i < this._eL; i++) {
-                // ******** DOM WRITE ****************
-                elements[i].style[prop] = val;
-              }
+            for (j = 0; j < nuElements; j++) {
+              // ******** DOM WRITE ****************
+              elements[j].style[prop] = val;
             }
           }
         }
       }
-
-      // place all transforms on the same property
-      if (transforms.length) {
-        if (!this._rv && stepValue !== 1 || this._rv && stepValue !== 0) {
-          transforms.push('translateZ(0px)');
-        }
-
-        var transformString = transforms.join(' ');
-        var cssTransform = CSS.transform;
-        for (var i = 0; i < this._eL; i++) {
-          // ******** DOM WRITE ****************
-          elements[i].style[cssTransform] = transformString;
-        }
-      }
     }
 
+    // place all transforms on the same property
+    if (finalTransform.length) {
+      if (!this._rv && stepValue !== 1 || this._rv && stepValue !== 0) {
+        finalTransform += 'translateZ(0px)';
+      }
+
+      var cssTransform = CSS.transform;
+      for (i = 0; i < elements.length; i++) {
+        // ******** DOM WRITE ****************
+        elements[i].style[cssTransform] = finalTransform;
+      }
+    }
   }
 
   /**
@@ -900,15 +913,16 @@ export class Animation {
    */
   _willChg(addWillChange: boolean) {
     let wc: string[];
-
-    if (addWillChange) {
+    var effects = this._fx;
+    if (addWillChange && effects) {
       wc = [];
-      for (var prop in this._fx) {
-        if (this._fx[prop].wc === 'webkitTransform') {
+      for (var i = 0; i < effects.length; i++) {
+        var propWC = effects[i].wc;
+        if (propWC === 'webkitTransform') {
           wc.push('transform', '-webkit-transform');
 
         } else {
-          wc.push(this._fx[prop].wc);
+          wc.push(propWC);
         }
       }
     }
@@ -1164,6 +1178,7 @@ export interface PlayOptions {
 }
 
 export interface EffectProperty {
+  name: string;
   trans: boolean;
   wc?: string;
   to?: EffectState;

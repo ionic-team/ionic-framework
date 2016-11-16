@@ -232,7 +232,8 @@ describe('Refresher', () => {
   function touchEv(y: number) {
     return {
       type: 'mockTouch',
-      touches: [{clientY: y}],
+      pageX: 0,
+      pageY: y,
       preventDefault: function(){}
     };
   }

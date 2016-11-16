@@ -195,16 +195,18 @@ export function windowLoad(callback?: Function) {
 export function pointerCoord(ev: any): PointerCoordinates {
   // get coordinates for either a mouse click
   // or a touch depending on the given event
-  let c = { x: 0, y: 0 };
   if (ev) {
-    const touches = ev.touches && ev.touches.length ? ev.touches : [ev];
-    const e = (ev.changedTouches && ev.changedTouches[0]) || touches[0];
-    if (e) {
-      c.x = e.clientX || e.pageX || 0;
-      c.y = e.clientY || e.pageY || 0;
+    var changedTouches = ev.changedTouches;
+    if (changedTouches && changedTouches.length > 0) {
+      var touch = changedTouches[0];
+      return { x: touch.clientX, y: touch.clientY };
+    }
+    var pageX = ev.pageX;
+    if (pageX !== undefined) {
+      return { x: pageX, y: ev.pageY };
     }
   }
-  return c;
+  return { x: 0, y: 0 };
 }
 
 export function hasPointerMoved(threshold: number, startCoord: PointerCoordinates, endCoord: PointerCoordinates) {
