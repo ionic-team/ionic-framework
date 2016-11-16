@@ -104,7 +104,9 @@ import { ViewController } from './view-controller';
  *
  * ### Navigating from an Overlay Component
  * What if you wanted to navigate from an overlay component (popover, modal, alert, etc)?
- * For this, you need to have access to the root `NavController`.
+ * In this example, we've displayed a popover in our app. From the popover, we'll get a
+ * reference of the root `NavController` in our app, using the `getRootNav()` method.
+ *
  *
  * ```typescript
  * import { Component } from '@angular/core';
@@ -114,7 +116,7 @@ import { ViewController } from './view-controller';
  *     template: `
  *     <ion-content>
  *       <h1>My PopoverPage</h1>
- *       <button ion-button (click)="pusPage()">Call pushPage</button>
+ *       <button ion-button (click)="pushPage()">Call pushPage</button>
  *      </ion-content>
  *     `
  *   })
