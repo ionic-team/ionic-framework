@@ -414,7 +414,7 @@ export class Animation {
 
       // since there was no animation, immediately run the after
       // ******** DOM WRITE ****************
-      this._afterAnimation();
+      this._setAfterStyles();
 
       // this animation has no duration, so it has finished
       // other animations could still be running
@@ -513,7 +513,7 @@ export class Animation {
 
       // set the after styles
       // ******** DOM WRITE ****************
-      this._afterAnimation();
+      this._setAfterStyles();
 
       // remove the will-change properties
       // ******** DOM WRITE ****************
@@ -789,13 +789,8 @@ export class Animation {
   /**
    * @private
    * DOM WRITE
-   * RECURSION
    */
-  _afterAnimation() {
-    for (var i = 0; i < this._cL; i++) {
-      this._c[i]._afterAnimation();
-    }
-
+  _setAfterStyles() {
     let ele: HTMLElement;
     for (var i = 0; i < this._eL; i++) {
       ele = this._e[i];
@@ -991,7 +986,7 @@ export class Animation {
       // ******** DOM WRITE ****************
       this._progress(stepValue);
       this._willChg(false);
-      this._afterAnimation();
+      this._setAfterStyles();
       this._didFinish(shouldComplete);
 
     } else {
