@@ -120,6 +120,17 @@ export class App {
 
   /**
    * Toggles whether an application can be scrolled
+   * ```ts
+   * import { app } from 'ionic-angular';
+   *
+   * @Component({...})
+   * export class MyPage {
+   *
+   *  constructor(private app: App) {};
+   *
+   *  this.app.setScrollDisabled(true);
+   * }
+   * ```
    * @param {boolean} disableScroll when set to `false`, the application's
    * scrolling is enabled. When set to `true`, scrolling is disabled.
    */
