@@ -38,6 +38,7 @@ export class NavControllerBase extends Ion implements NavController {
   _trnsTm: boolean = false;
   _viewport: ViewContainerRef;
   _views: ViewController[] = [];
+  _zIndexOffset: number = 0;
 
   viewDidLoad: EventEmitter<any> = new EventEmitter();
   viewWillEnter: EventEmitter<any> = new EventEmitter();
