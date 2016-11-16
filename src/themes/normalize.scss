@@ -169,6 +169,10 @@ button {
   -webkit-appearance: button;
 }
 
+[tappable] {
+  cursor: pointer;
+}
+
 // Re-set default cursor for disabled elements.
 a[disabled],
 button[disabled],
