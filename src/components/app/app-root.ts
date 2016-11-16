@@ -5,6 +5,7 @@ import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
+import { nativeTimeout } from '../../util/dom';
 
 export const AppRootToken = new OpaqueToken('USERROOT');
 
@@ -23,6 +24,8 @@ export const AppRootToken = new OpaqueToken('USERROOT');
 })
 export class IonicApp extends Ion implements OnInit {
 
+  private _stopScrollPlugin: any;
+  private _rafId: number;
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
   @ViewChild('modalPortal', { read: OverlayPortal }) _modalPortal: OverlayPortal;
@@ -45,6 +48,7 @@ export class IonicApp extends Ion implements OnInit {
     super(config, elementRef, renderer);
     // register with App that this is Ionic's appRoot component. tada!
     app._appRoot = this;
+    this._stopScrollPlugin = window['IonicStopScroll'];
   }
 
   ngOnInit() {
@@ -109,7 +113,26 @@ export class IonicApp extends Ion implements OnInit {
    * @private
    */
   _disableScroll(shouldDisableScroll: boolean) {
-    this.setElementClass('disable-scroll', shouldDisableScroll);
+    console.log('App Root: Scroll Disable Assist', shouldDisableScroll);
+
+    if (shouldDisableScroll) {
+      this.stopScroll().then(() => {
+        this._rafId = nativeTimeout(() => this.setElementClass('disable-scroll', true), 16 * 2);
+      });
+    } else {
+      cancelAnimationFrame(this._rafId);
+      this.setElementClass('disable-scroll', false);
+    }
+  }
+
+  stopScroll(): Promise<boolean> {
+    if (this._stopScrollPlugin) {
+      return new Promise((resolve, reject) => {
+        this._stopScrollPlugin.stop(() => resolve(true));
+      });
+    } else {
+      return Promise.resolve(false);
+    }
   }
 
 }

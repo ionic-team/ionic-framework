@@ -110,6 +110,7 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
       swipeBackThreshold: 40,
       tapPolyfill: isIOSDevice,
       virtualScrollEventAssist: !(window.indexedDB),
+      disableScrollAssist: isIOSDevice,
     },
     isMatch(p: Platform) {
       return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);

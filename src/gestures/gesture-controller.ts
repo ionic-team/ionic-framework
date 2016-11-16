@@ -1,6 +1,22 @@
 import { forwardRef, Inject, Injectable } from '@angular/core';
 import { App } from '../components/app/app';
+import { assert } from '../util/util';
 
+/** @private */
+export const GESTURE_GO_BACK_SWIPE = 'goback-swipe';
+
+/** @private */
+export const GESTURE_MENU_SWIPE = 'menu-swipe';
+
+/** @private */
+export const GESTURE_ITEM_SWIPE = 'item-swipe';
+
+/** @private */
+export const GESTURE_REFRESHER = 'refresher';
+
+/**
+* @private
+*/
 export const enum GesturePriority {
   Minimun = -10000,
   VeryLow = -20,
@@ -15,23 +31,37 @@ export const enum GesturePriority {
   Refresher = Normal,
 }
 
-export const enum DisableScroll {
-  Never,
-  DuringCapture,
-  Always,
-}
-
+/**
+* @private
+*/
 export interface GestureOptions {
-  disable?: string[];
-  disableScroll?: DisableScroll;
+  name: string;
+  disableScroll?: boolean;
   priority?: number;
 }
 
 /**
 * @private
 */
+export interface BlockerOptions {
+  disableScroll?: boolean;
+  disable?: string[];
+}
+
+/**
+* @private
+*/
+export const BLOCK_ALL: BlockerOptions = {
+  disable: [GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE],
+  disableScroll: true
+};
+
+/**
+* @private
+*/
 @Injectable()
 export class GestureController {
+
   private id: number = 1;
   private requestedStart: { [eventId: number]: number } = {};
   private disabledGestures: { [eventName: string]: Set<number> } = {};
@@ -40,8 +70,21 @@ export class GestureController {
 
   constructor(@Inject(forwardRef(() => App)) private _app: App) { }
 
-  create(name: string, opts: GestureOptions = {}): GestureDelegate {
-    return new GestureDelegate(name, this.newID(), this, opts);
+  createGesture(opts: GestureOptions): GestureDelegate {
+    if (!opts.name) {
+      throw new Error('name is undefined');
+    }
+    return new GestureDelegate(opts.name, this.newID(), this,
+      opts.priority || 0,
+      !!opts.disableScroll
+    );
+  }
+
+  createBlocker(opts: BlockerOptions = {}): BlockerDelegate {
+    return new BlockerDelegate(this.newID(), this,
+      opts.disable,
+      !!opts.disableScroll
+    );
   }
 
   newID(): number {
@@ -127,6 +170,7 @@ export class GestureController {
     }
 
     if (this.isDisabled(gestureName)) {
+      console.debug('GestureController: Disabled', gestureName);
       return false;
     }
     return true;
@@ -154,33 +198,18 @@ export class GestureController {
 * @private
 */
 export class GestureDelegate {
-  private disable: string[];
-  private disableScroll: DisableScroll;
-  public priority: number = 0;
 
   constructor(
     private name: string,
     private id: number,
     private controller: GestureController,
-    opts: GestureOptions
-  ) {
-    this.disable = opts.disable || [];
-    this.disableScroll = opts.disableScroll || DisableScroll.Never;
-    this.priority = opts.priority || 0;
-
-    // Disable gestures
-    for (let gestureName of this.disable) {
-      controller.disableGesture(gestureName, id);
-    }
-
-    // Disable scrolling (always)
-    if (this.disableScroll === DisableScroll.Always) {
-      controller.disableScroll(id);
-    }
-  }
+    private priority: number,
+    private disableScroll: boolean
+  ) { }
 
   canStart(): boolean {
     if (!this.controller) {
+      assert(false, 'delegate was destroyed');
       return false;
     }
     return this.controller.canStart(this.name);
@@ -188,6 +217,7 @@ export class GestureDelegate {
 
   start(): boolean {
     if (!this.controller) {
+      assert(false, 'delegate was destroyed');
       return false;
     }
     return this.controller.start(this.name, this.id, this.priority);
@@ -195,10 +225,11 @@ export class GestureDelegate {
 
   capture(): boolean {
     if (!this.controller) {
+      assert(false, 'delegate was destroyed');
       return false;
     }
     let captured = this.controller.capture(this.name, this.id, this.priority);
-    if (captured && this.disableScroll === DisableScroll.DuringCapture) {
+    if (captured && this.disableScroll) {
       this.controller.disableScroll(this.id);
     }
     return captured;
@@ -206,26 +237,70 @@ export class GestureDelegate {
 
   release() {
     if (!this.controller) {
+      assert(false, 'delegate was destroyed');
       return;
     }
     this.controller.release(this.id);
-    if (this.disableScroll === DisableScroll.DuringCapture) {
+    if (this.disableScroll) {
       this.controller.enableScroll(this.id);
     }
   }
 
   destroy() {
+    this.release();
+    this.controller = null;
+  }
+}
+
+/**
+* @private
+*/
+export class BlockerDelegate {
+
+  blocked: boolean = false;
+
+  constructor(
+    private id: number,
+    private controller: GestureController,
+    private disable: string[],
+    private disableScroll: boolean
+  ) { }
+
+  block() {
     if (!this.controller) {
+      assert(false, 'delegate was destroyed');
       return;
     }
-    this.release();
-
-    for (let disabled of this.disable) {
-      this.controller.enableGesture(disabled, this.id);
+    if (this.disable) {
+      this.disable.forEach(gesture => {
+        this.controller.disableGesture(gesture, this.id);
+      });
     }
-    if (this.disableScroll === DisableScroll.Always) {
+
+    if (this.disableScroll) {
+      this.controller.disableScroll(this.id);
+    }
+    this.blocked = true;
+  }
+
+  unblock() {
+    if (!this.controller) {
+      assert(false, 'delegate was destroyed');
+      return;
+    }
+    if (this.disable) {
+      this.disable.forEach(gesture => {
+        this.controller.enableGesture(gesture, this.id);
+      });
+    }
+    if (this.disableScroll) {
       this.controller.enableScroll(this.id);
     }
+    this.blocked = false;
+  }
+
+  destroy() {
+    this.unblock();
     this.controller = null;
   }
 }

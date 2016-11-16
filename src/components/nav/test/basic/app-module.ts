@@ -834,7 +834,9 @@ export const deepLinkConfig: DeepLinkConfig = {
     TabItemPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, null, deepLinkConfig)
+    IonicModule.forRoot(E2EApp, {
+      swipeBackEnabled: true
+    }, deepLinkConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
