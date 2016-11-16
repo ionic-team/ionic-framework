@@ -76,6 +76,7 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
         return 'ripple';
       },
       autoFocusAssist: 'immediate',
+      scrollAssist: true,
       hoverCSS: false,
       keyboardHeight: 300,
       mode: 'md',
