@@ -60,7 +60,7 @@ module.exports = function(currentVersion, initialVersionBuild) {
   }
 
   // new version, add it to the versions list
-  if (currentVersion != 'nightly' && !_.contains(versions, currentVersion)){
+  if (currentVersion != 'nightly' && !_.includes(versions, currentVersion)){
     versions.unshift(currentVersion);
   }
 
