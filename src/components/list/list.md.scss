@@ -30,11 +30,17 @@ $list-inset-md-margin-left:      16px !default;
 /// @prop - Border radius of the inset list
 $list-inset-md-border-radius:    2px !default;
 
+/// @prop - Margin bottom of the header in a list
+$list-md-header-margin-bottom:   13px !default;
+
 /// @prop - Padding left of the header in a list
 $list-md-header-padding-left:    $item-md-padding-left !default;
 
-/// @prop - Border bottom of the header in a list
-$list-md-header-border-bottom:   1px solid $list-md-border-color !default;
+/// @prop - Minimum height of the header in a list
+$list-md-header-min-height:      4.5rem !default;
+
+/// @prop - Border top of the header in a list
+$list-md-header-border-top:      1px solid $list-md-border-color !default;
 
 /// @prop - Font size of the header in a list
 $list-md-header-font-size:       1.4rem !default;
@@ -47,20 +53,10 @@ $list-md-header-color:           #858585 !default;
 // --------------------------------------------------
 
 .list-md {
-  margin: 0 $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
+  margin: -1px $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
 }
 
 .list-md .item-block .item-inner {
-  border-bottom: 1px solid $list-md-border-color;
-}
-
-.list-md > .item-block:first-child,
-.list-md > .item-wrapper:first-child .item-block {
-  border-top: 1px solid $list-md-border-color;
-}
-
-.list-md > .item-block:last-child,
-.list-md > .item-wrapper:last-child .item-block {
   border-bottom: 1px solid $list-md-border-color;
 }
 
@@ -110,7 +106,6 @@ $list-md-header-color:           #858585 !default;
 
 .list-md + ion-list ion-list-header {
   margin-top: -$list-md-margin-top;
-  padding-top: 0;
 }
 
 
@@ -163,9 +158,12 @@ $list-md-header-color:           #858585 !default;
 // --------------------------------------------------
 
 .list-header-md {
+  margin-bottom: $list-md-header-margin-bottom;
   padding-left: $list-md-header-padding-left;
 
-  border-bottom: $list-md-header-border-bottom;
+  min-height: $list-md-header-min-height;
+
+  border-top: $list-md-header-border-top;
   font-size: $list-md-header-font-size;
   color: $list-md-header-color;
 }

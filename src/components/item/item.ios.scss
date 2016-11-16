@@ -4,10 +4,16 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the item text
-$item-ios-body-text-font-size:            1.6rem !default;
+$item-ios-body-text-font-size:            1.7rem !default;
+
+/// @prop - Margin of the item paragraph
+$item-ios-paragraph-margin:               0 0 2px !default;
+
+/// @prop - Font size of the item paragraph
+$item-ios-paragraph-font-size:            1.4rem !default;
 
 /// @prop - Color of the item paragraph
-$item-ios-paragraph-text-color:           #666 !default;
+$item-ios-paragraph-text-color:           #8e9093 !default;
 
 /// @prop - Size of the avatar in the item
 $item-ios-avatar-size:                    3.6rem !default;
@@ -70,7 +76,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 .item-ios h2 {
   margin: 0 0 2px;
 
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: normal;
 }
 
@@ -88,9 +94,9 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 .item-ios p {
   overflow: inherit;
 
-  margin: 0 0 2px;
+  margin: $item-ios-paragraph-margin;
 
-  font-size: 1.2rem;
+  font-size: $item-ios-paragraph-font-size;
   line-height: normal;
   text-overflow: inherit;
   color: $item-ios-paragraph-text-color;

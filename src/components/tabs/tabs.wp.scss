@@ -94,8 +94,8 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 
 .tabs-wp[tabsLayout=icon-hide] .tab-button,
 .tabs-wp[tabsLayout=title-hide] .tab-button,
-.tab-button.icon-only,
-.tab-button.has-title-only {
+.tabs-wp .tab-button.icon-only,
+.tabs-wp .tab-button.has-title-only {
   padding: 6px 10px;
 }
 
