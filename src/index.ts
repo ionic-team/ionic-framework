@@ -20,7 +20,4 @@ export * from './animations/animation';
 export * from './transitions/page-transition';
 export * from './transitions/transition';
 
-export * from './translation/translate';
-export * from './translation/translate_pipe';
-
 export * from './navigation/nav-controller-base';
