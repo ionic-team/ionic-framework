@@ -913,7 +913,7 @@ export class Animation {
    */
   _willChg(addWillChange: boolean) {
     let wc: string[];
-    var effects = this._fx;
+    let effects = this._fx;
     if (addWillChange && effects) {
       wc = [];
       for (var i = 0; i < effects.length; i++) {
@@ -926,10 +926,10 @@ export class Animation {
         }
       }
     }
-
+    let willChange = (wc && wc.length) ? wc.join(',') : '';
     for (var i = 0; i < this._eL; i++) {
       // ******** DOM WRITE ****************
-      (<any>this._e[i]).style.willChange = addWillChange ? wc.join(',') : '';
+      (<any>this._e[i]).style.willChange = willChange;
     }
   }
 
