@@ -160,9 +160,8 @@ export const isActivatable = function (ele: HTMLElement) {
     return true;
   }
 
-  let attributes = ele.attributes;
-  for (let i = 0, l = attributes.length; i < l; i++) {
-    if (ACTIVATABLE_ATTRIBUTES.indexOf(attributes[i].name) > -1) {
+  for (let i = 0, l = ACTIVATABLE_ATTRIBUTES.length; i < l; i++) {
+    if (ele.hasAttribute(ACTIVATABLE_ATTRIBUTES[i])) {
       return true;
     }
   }
@@ -170,7 +169,7 @@ export const isActivatable = function (ele: HTMLElement) {
 };
 
 const ACTIVATABLE_ELEMENTS = ['A', 'BUTTON'];
-const ACTIVATABLE_ATTRIBUTES = ['tappable', 'button'];
+const ACTIVATABLE_ATTRIBUTES = ['tappable', 'ion-button'];
 const POINTER_TOLERANCE = 60;
 const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
 

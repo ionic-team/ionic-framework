@@ -53,7 +53,7 @@ export class MyCmpTest {
         <ion-list-header>
           {{title}}
         </ion-list-header>
-        <button ion-item class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</button>
+        <ion-item class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</ion-item>
         <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
         <button ion-item (click)="pushRedirect()">Push to Redirect</button>
         <button ion-item (click)="pushTabsPage()">Push to Tabs Page</button>

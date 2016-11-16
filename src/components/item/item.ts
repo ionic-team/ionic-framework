@@ -339,6 +339,17 @@ export class Item extends Ion {
     this._setName(elementRef);
     this._shouldHaveReorder = !!reorder;
     this.id = form.nextId().toString();
+
+    // auto add "tappable" attribute to ion-item components that have a click listener
+    if (!(<any>renderer).orgListen) {
+      (<any>renderer).orgListen = renderer.listen;
+      renderer.listen = function(renderElement: HTMLElement, name: string, callback: Function): Function {
+        if (name === 'click' && renderElement.setAttribute) {
+          renderElement.setAttribute('tappable', '');
+        }
+        return (<any>renderer).orgListen(renderElement, name, callback);
+      };
+    }
   }
 
   /**
