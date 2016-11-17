@@ -682,17 +682,16 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 
     if (columns.length === 2) {
       var width = Math.max(columns[0], columns[1]);
-      pickerColumns[0].columnWidth = pickerColumns[1].columnWidth = `${width * 16}px`;
+      pickerColumns[0].align = 'right';
+      pickerColumns[1].align = 'left';
+      pickerColumns[0].optionsWidth = pickerColumns[1].optionsWidth = `${width * 17}px`;
 
     } else if (columns.length === 3) {
       var width = Math.max(columns[0], columns[2]);
-      pickerColumns[1].columnWidth = `${columns[1] * 16}px`;
-      pickerColumns[0].columnWidth = pickerColumns[2].columnWidth = `${width * 16}px`;
-
-    } else if (columns.length > 3) {
-      columns.forEach((col, i) => {
-        pickerColumns[i].columnWidth = `${col * 12}px`;
-      });
+      pickerColumns[0].align = 'right';
+      pickerColumns[1].columnWidth = `${columns[1] * 17}px`;
+      pickerColumns[0].optionsWidth = pickerColumns[2].optionsWidth = `${width * 17}px`;
+      pickerColumns[2].align = 'left';
     }
   }
 

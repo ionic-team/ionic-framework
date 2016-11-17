@@ -55,23 +55,29 @@ ion-picker-cmp {
   position: relative;
   display: flex;
 
-  max-height: 100%;
+  flex: 1;
+  justify-content: center;
+
+  height: 100%;
+
+  box-sizing: content-box;
 }
 
 .picker-opts {
   position: relative;
 
-  width: 100%;
-  min-width: 50px;
+  flex: 1;
+
   max-width: 100%;
 }
 
 .picker-prefix {
   position: relative;
 
-  flex: 1;
+  flex: 2;
 
   min-width: 45%;
+  max-width: 50%;
 
   text-align: right;
   white-space: nowrap;
@@ -80,9 +86,10 @@ ion-picker-cmp {
 .picker-suffix {
   position: relative;
 
-  flex: 1;
+  flex: 2;
 
   min-width: 45%;
+  max-width: 50%;
 
   text-align: left;
   white-space: nowrap;
@@ -115,11 +122,11 @@ ion-picker-cmp {
   opacity: 0;
 }
 
-.picker-opts-left .picker-opt {
+.picker-opts-left {
   justify-content: flex-start;
 }
 
-.picker-opts-right .picker-opt {
+.picker-opts-right {
   justify-content: flex-end;
 }
 

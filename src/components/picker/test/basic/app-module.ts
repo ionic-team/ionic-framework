@@ -183,8 +183,8 @@ export class E2EPage {
     picker.addColumn({
       name: 'hour',
       suffix: 'hour',
-      columnWidth: '30%',
       optionsWidth: '50px',
+      align: 'right',
       options: Array.apply(null, {length: 23}).map(Number.call, Number)
     });
 
@@ -200,8 +200,8 @@ export class E2EPage {
     picker.addColumn({
       name: 'min',
       suffix: 'min',
-      columnWidth: '40%',
       optionsWidth: '80px',
+      align: 'left',
       options: minuteOptions
     });
 
