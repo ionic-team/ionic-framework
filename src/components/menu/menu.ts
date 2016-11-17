@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
+import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { isTrueProperty, assert } from '../../util/util';
@@ -303,7 +304,8 @@ export class Menu {
     private _renderer: Renderer,
     private _keyboard: Keyboard,
     private _zone: NgZone,
-    private _gestureCtrl: GestureController
+    private _gestureCtrl: GestureController,
+    private _app: App
   ) {
     this._gestureBlocker = _gestureCtrl.createBlocker({
       disable: [GESTURE_GO_BACK_SWIPE]
@@ -427,7 +429,10 @@ export class Menu {
    * @private
    */
   canSwipe(): boolean {
-    return this._isEnabled && this._isSwipeEnabled && !this._isAnimating;
+    return this._isEnabled &&
+      this._isSwipeEnabled &&
+      !this._isAnimating &&
+      this._app.isEnabled();
   }
 
   /**
