@@ -33,7 +33,7 @@ import { registerTransitions } from './transitions/transition-registry';
 import { TransitionController } from './transitions/transition-controller';
 import { AppRootToken } from './components/app/app-root';
 import { UrlSerializer, setupUrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
-
+import { ClickBlock } from './util/click-block';
 /**
  * Import Overlay Entry Components
  */
@@ -107,7 +107,8 @@ export { ViewController } from './navigation/view-controller';
     ModalCmp,
     PickerCmp,
     PopoverCmp,
-    ToastCmp
+    ToastCmp,
+    ClickBlock
   ],
   entryComponents: [
     ActionSheetCmp,
