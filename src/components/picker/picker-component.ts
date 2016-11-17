@@ -63,7 +63,8 @@ export class PickerColumnCmp {
     private elementRef: ElementRef,
     private _sanitizer: DomSanitizer,
     private _zone: NgZone,
-    private _haptic: Haptic) {
+    private _haptic: Haptic
+  ) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
     this.scaleFactor = config.getNumber('pickerScaleFactor', 1);
     this.decelerateFunc = this.decelerate.bind(this);
@@ -104,34 +105,32 @@ export class PickerColumnCmp {
     // some "click" events to capture
     ev.preventDefault();
 
-    this.debouncer.debounce(() => {
-      // cancel any previous raf's that haven't fired yet
-      if (this.rafId) {
-        cancelRaf(this.rafId);
-        this.rafId = null;
+    // cancel any previous raf's that haven't fired yet
+    if (this.rafId) {
+      cancelRaf(this.rafId);
+      this.rafId = null;
+    }
+
+    // remember where the pointer started from`
+    this.startY = pointerCoord(ev).y;
+
+    // reset everything
+    this.velocity = 0;
+    this.pos.length = 0;
+    this.pos.push(this.startY, Date.now());
+
+    let options = this.col.options;
+    let minY = (options.length - 1);
+    let maxY = 0;
+    for (var i = 0; i < options.length; i++) {
+      if (!options[i].disabled) {
+        minY = Math.min(minY, i);
+        maxY = Math.max(maxY, i);
       }
+    }
 
-      // remember where the pointer started from`
-      this.startY = pointerCoord(ev).y;
-
-      // reset everything
-      this.velocity = 0;
-      this.pos.length = 0;
-      this.pos.push(this.startY, Date.now());
-
-      let options = this.col.options;
-      let minY = (options.length - 1);
-      let maxY = 0;
-      for (var i = 0; i < options.length; i++) {
-        if (!options[i].disabled) {
-          minY = Math.min(minY, i);
-          maxY = Math.max(maxY, i);
-        }
-      }
-
-      this.minY = (minY * this.optHeight * -1);
-      this.maxY = (maxY * this.optHeight * -1);
-    });
+    this.minY = (minY * this.optHeight * -1);
+    this.maxY = (maxY * this.optHeight * -1);
     return true;
   }
 
@@ -139,12 +138,13 @@ export class PickerColumnCmp {
     ev.preventDefault();
     ev.stopPropagation();
 
+    let currentY = pointerCoord(ev).y;
+    this.pos.push(currentY, Date.now());
+
     this.debouncer.debounce(() => {
       if (this.startY === null) {
         return;
       }
-      let currentY = pointerCoord(ev).y;
-      this.pos.push(currentY, Date.now());
 
       // update the scroll position relative to pointer start position
       let y = this.y + (currentY - this.startY);
@@ -214,7 +214,8 @@ export class PickerColumnCmp {
       var movedTop = (this.pos[startPos - 1] - this.pos[endPos - 1]);
 
       // based on XXms compute the movement to apply for each render step
-      this.velocity = ((movedTop / timeOffset) * FRAME_MS);
+      var velocity = ((movedTop / timeOffset) * FRAME_MS);
+      this.velocity = clamp(-MAX_PICKER_SPEED, velocity, MAX_PICKER_SPEED);
     }
 
     if (Math.abs(endY - this.startY) > 3) {
@@ -641,3 +642,4 @@ let pickerIds = -1;
 const PICKER_OPT_SELECTED = 'picker-opt-selected';
 const DECELERATION_FRICTION = 0.97;
 const FRAME_MS = (1000 / 60);
+const MAX_PICKER_SPEED = 50;

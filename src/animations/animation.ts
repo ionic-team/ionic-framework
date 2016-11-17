@@ -914,6 +914,7 @@ export class Animation {
   _willChg(addWillChange: boolean) {
     let wc: string[];
     let effects = this._fx;
+    let willChange: string;
     if (addWillChange && effects) {
       wc = [];
       for (var i = 0; i < effects.length; i++) {
@@ -925,8 +926,10 @@ export class Animation {
           wc.push(propWC);
         }
       }
+      willChange = wc.join(',');
+    } else {
+      willChange = '';
     }
-    let willChange = (wc && wc.length) ? wc.join(',') : '';
     for (var i = 0; i < this._eL; i++) {
       // ******** DOM WRITE ****************
       (<any>this._e[i]).style.willChange = willChange;
