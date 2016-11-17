@@ -1,3 +1,53 @@
+<a name="2.0.0-rc.3"></a>
+# [2.0.0-rc.3](https://github.com/driftyco/ionic/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2016-11-17)
+
+
+### Bug Fixes
+
+* **animation:** always run before classes and functions ([d9e9ece](https://github.com/driftyco/ionic/commit/d9e9ece)), closes [#8842](https://github.com/driftyco/ionic/issues/8842) [#8769](https://github.com/driftyco/ionic/issues/8769)
+* **animation:** fix regression in _willChg() ([91f5087](https://github.com/driftyco/ionic/commit/91f5087))
+* **button:** fix ios buttons in colored toolbar so they don't use the default color ([0e53ec3](https://github.com/driftyco/ionic/commit/0e53ec3)), closes [#8566](https://github.com/driftyco/ionic/issues/8566)
+* **colors:** override element styling and tweak colors for card and item ([ee3decc](https://github.com/driftyco/ionic/commit/ee3decc)), closes [#9081](https://github.com/driftyco/ionic/issues/9081)
+* **components:** add a mode agnostic css class ([#9133](https://github.com/driftyco/ionic/issues/9133)) ([025c5cc](https://github.com/driftyco/ionic/commit/025c5cc)), closes [#8545](https://github.com/driftyco/ionic/issues/8545)
+* **datetime:** fix min/max displayFormat and pickerFormat ([c72b67d](https://github.com/driftyco/ionic/commit/c72b67d)), closes [#8729](https://github.com/driftyco/ionic/issues/8729)
+* **gestures:** gesture controller handled by components ([32ab817](https://github.com/driftyco/ionic/commit/32ab817)), closes [#9046](https://github.com/driftyco/ionic/issues/9046) [#9130](https://github.com/driftyco/ionic/issues/9130) [#9052](https://github.com/driftyco/ionic/issues/9052) [#7444](https://github.com/driftyco/ionic/issues/7444)
+* **item:** fix color input for item divider and list header ([5e5c33a](https://github.com/driftyco/ionic/commit/5e5c33a)), closes [#8376](https://github.com/driftyco/ionic/issues/8376)
+* **nav:** controller is initialized ([beab06f](https://github.com/driftyco/ionic/commit/beab06f))
+* **nav:** fixes empty stack condition ([909293a](https://github.com/driftyco/ionic/commit/909293a))
+* **nav:** it is not allowed to pop all the views ([0ab990c](https://github.com/driftyco/ionic/commit/0ab990c))
+* **nav:** returning Promise<false> in canLeave / canEnter works as expected ([5f1a862](https://github.com/driftyco/ionic/commit/5f1a862))
+* **nav:** transitioning state is a boolean not a timer ([63d495a](https://github.com/driftyco/ionic/commit/63d495a))
+* **nav:** willLeave is called before willEnter ([b77b2ae](https://github.com/driftyco/ionic/commit/b77b2ae)), closes [#9163](https://github.com/driftyco/ionic/issues/9163)
+* **nav:** zIndex in overlays ([70f8a8e](https://github.com/driftyco/ionic/commit/70f8a8e))
+* **picker:** prevents scrolling under the picker ([2348d22](https://github.com/driftyco/ionic/commit/2348d22))
+* **sass:** change default font path ([#8811](https://github.com/driftyco/ionic/issues/8811)) ([0940d5a](https://github.com/driftyco/ionic/commit/0940d5a))
+* **sass:** remove usage of colors other than primary, improve error ([#8907](https://github.com/driftyco/ionic/issues/8907)) ([eb0b05d](https://github.com/driftyco/ionic/commit/eb0b05d)), closes [#8266](https://github.com/driftyco/ionic/issues/8266)
+* **styles:** update ios and md styles closer to native ([9f7972b](https://github.com/driftyco/ionic/commit/9f7972b))
+* **typography:** Exclude ion-item on a tags selector ([#8340](https://github.com/driftyco/ionic/issues/8340)) ([b00860b](https://github.com/driftyco/ionic/commit/b00860b))
+
+
+### Features
+
+* **input:** clearOnEdit feature. Closes [#9187](https://github.com/driftyco/ionic/issues/9187) ([9469b4f](https://github.com/driftyco/ionic/commit/9469b4f))
+* **nav:** export NavControllerBase for building of components similar to ion-tab ([24b087c](https://github.com/driftyco/ionic/commit/24b087c))
+* **tappable:** auto add tappable attribute for ion-item clicks ([5c4838b](https://github.com/driftyco/ionic/commit/5c4838b))
+* **util:** custom ionic error handler provider ([6b77772](https://github.com/driftyco/ionic/commit/6b77772))
+
+
+### Performance Improvements
+
+* **animation:** improves _progress() hot function ([c44f6b6](https://github.com/driftyco/ionic/commit/c44f6b6))
+* **animation:** optimizing hot loops ([c78dc19](https://github.com/driftyco/ionic/commit/c78dc19))
+* **animation:** set after styles should not be recursive ([3a2ff85](https://github.com/driftyco/ionic/commit/3a2ff85))
+* **click:** increase number to find activatable elements ([c8aad56](https://github.com/driftyco/ionic/commit/c8aad56)), closes [#9190](https://github.com/driftyco/ionic/issues/9190)
+* **item:** improve performance of sliding item ([#9005](https://github.com/driftyco/ionic/issues/9005)) ([759e3ea](https://github.com/driftyco/ionic/commit/759e3ea))
+* **item:** reorder is only added to the DOM if needed ([dec5a0b](https://github.com/driftyco/ionic/commit/dec5a0b)), closes [#9065](https://github.com/driftyco/ionic/issues/9065)
+* **menu:** avoid change detection when it isn't needed ([#8986](https://github.com/driftyco/ionic/issues/8986)) ([d531ec2](https://github.com/driftyco/ionic/commit/d531ec2))
+* **nav:** avoid running zone when it is not needed ([be72d39](https://github.com/driftyco/ionic/commit/be72d39))
+* **picker:** improves performance of picker and datepicker ([fc2ee64](https://github.com/driftyco/ionic/commit/fc2ee64))
+* **picker:** improves picker UX feedback ([cfbc5ea](https://github.com/driftyco/ionic/commit/cfbc5ea))
+
+
 <a name="2.0.0-rc.2"></a>
 # [2.0.0-rc.2](https://github.com/driftyco/ionic/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2016-11-03)
 
