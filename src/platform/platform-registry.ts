@@ -101,17 +101,17 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
     settings: {
       autoFocusAssist: 'delay',
       hoverCSS: false,
-      inputBlurring: isIOSDevice,
-      inputCloning: isIOSDevice,
+      inputBlurring: isIOS,
+      inputCloning: isIOS,
       keyboardHeight: 300,
       mode: 'ios',
-      scrollAssist: isIOSDevice,
+      scrollAssist: isIOS,
       statusbarPadding: !!((<any>window).cordova),
-      swipeBackEnabled: isIOSDevice,
+      swipeBackEnabled: isIOS,
       swipeBackThreshold: 40,
-      tapPolyfill: isIOSDevice,
-      virtualScrollEventAssist: !(window.indexedDB),
-      disableScrollAssist: isIOSDevice,
+      tapPolyfill: isIOSUI,
+      virtualScrollEventAssist: isIOSUI,
+      disableScrollAssist: isIOS,
     },
     isMatch(p: Platform) {
       return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
@@ -219,13 +219,32 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
 };
 
 
-function isIOSDevice(p: Platform) {
+function isIOS(p: Platform): boolean {
   // shortcut function to be reused internally
   // checks navigator.platform to see if it's an actual iOS device
   // this does not use the user-agent string because it is often spoofed
   // an actual iPad will return true, a chrome dev tools iPad will return false
   return p.testNavigatorPlatform('iphone|ipad|ipod');
 }
+
+function isSafari(p: Platform): boolean {
+  return p.testUserAgent('Safari');
+}
+
+
+function isWK(): boolean {
+  return !!window['webkit'];
+}
+
+// Commented out becuase it is not used yet
+// function isIOSWK(p: Platform): boolean {
+//   return isIOS(p) && isWK();
+// }
+
+function isIOSUI(p: Platform): boolean {
+  return isIOS(p) && !isWK() && !isSafari(p);
+}
+
 
 
 export const PlatformConfigToken = new OpaqueToken('PLTCONFIG');
