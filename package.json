@@ -22,7 +22,8 @@
   "scripts": {
     "test": "gulp validate",
     "test:generators": "jasmine-node ./tooling/spec",
-    "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link"
+    "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link",
+    "prepush": "gulp lint.ts"
   },
   "dependencies": {
     "@angular/common": "2.1.1",
@@ -90,6 +91,7 @@
     "gulp-util": "3.0.7",
     "gulp-watch": "4.3.9",
     "html-entities": "1.2.0",
+    "husky": "^0.11.9",
     "ionic-cz-conventional-changelog": "1.0.0",
     "ionic-native": "^2.2.6",
     "jasmine-core": "2.5.2",
