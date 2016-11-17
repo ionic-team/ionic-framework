@@ -35,10 +35,10 @@ export class NativeInput {
   _change(ev: any) {
     this.valueChange.emit(ev.target.value);
   }
-  
+
   @HostListener('keydown', ['$event'])
   _keyDown(ev: any) {
-    if(ev) {
+    if (ev) {
       ev.target && this.keydown.emit(ev.target.value);
     }
   }

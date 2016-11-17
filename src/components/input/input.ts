@@ -221,7 +221,7 @@ export class TextInput extends InputBase {
     }
 
     // By default, password inputs clear after focus when they have content
-    if(this.type === 'password' && this.clearOnEdit !== false) {
+    if (this.type === 'password' && this.clearOnEdit !== false) {
       this.clearOnEdit = true;
     }
   }

@@ -147,7 +147,9 @@ export class InputBase extends Ion {
   * @private
   */
   checkClearOnEdit(inputValue: string) {
-    if(!this._clearOnEdit) { return; }
+    if (!this._clearOnEdit) {
+      return;
+    }
 
     // Did the input value change after it was blurred and edited?
     if (this._didBlurAfterEdit && this.hasValue()) {
@@ -269,7 +271,7 @@ export class InputBase extends Ion {
    * @private
    */
   onKeydown(val: any) {
-    if(this._clearOnEdit) {
+    if (this._clearOnEdit) {
       this.checkClearOnEdit(val);
     }
   }
@@ -319,7 +321,7 @@ export class InputBase extends Ion {
     }
 
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if(this._clearOnEdit && !inputHasFocus && this.hasValue()) {
+    if (this._clearOnEdit && !inputHasFocus && this.hasValue()) {
       this._didBlurAfterEdit = true;
     }
   }
