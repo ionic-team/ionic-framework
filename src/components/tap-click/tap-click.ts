@@ -72,14 +72,14 @@ export class TapClick {
     if (!this.startCoord) {
       return;
     }
-    if (type === PointerEventType.TOUCH && this.usePolyfill && this.app.isEnabled()) {
-      this.handleTapPolyfill(ev);
-    }
     if (this.activator) {
       let activatableEle = getActivatableTarget(ev.target);
       if (activatableEle) {
         this.activator.upAction(ev, activatableEle, this.startCoord);
       }
+    }
+    if (type === PointerEventType.TOUCH && this.usePolyfill && this.app.isEnabled()) {
+      this.handleTapPolyfill(ev);
     }
     this.startCoord = null;
   }
@@ -93,6 +93,13 @@ export class TapClick {
 
   click(ev: any) {
     let preventReason: string = null;
+
+    if (this.activator) {
+      let activatableEle = getActivatableTarget(ev.target);
+      if (activatableEle) {
+        this.activator.clickAction(ev, activatableEle, this.startCoord);
+      }
+    }
 
     if (!this.app.isEnabled()) {
       preventReason = 'appDisabled';
