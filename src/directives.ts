@@ -9,6 +9,7 @@ import { Button } from './components/button/button';
 import { Card, CardContent, CardHeader, CardTitle } from './components/card/card';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
+import { ClickBlock } from './util/click-block';
 import { Content } from './components/content/content';
 import { DateTime } from './components/datetime/datetime';
 import { FabContainer, FabButton, FabList } from './components/fab/fab';
@@ -82,6 +83,7 @@ export { Button } from './components/button/button';
 export { Card, CardContent, CardHeader, CardTitle } from './components/card/card';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
+export { ClickBlock } from './util/click-block';
 export { Content } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
 export { FabContainer, FabButton, FabList } from './components/fab/fab';
@@ -174,6 +176,7 @@ export const IONIC_DIRECTIVES: any[] = [
   CardTitle,
   Checkbox,
   Chip,
+  ClickBlock,
   Col,
   Content,
   DateTime,
