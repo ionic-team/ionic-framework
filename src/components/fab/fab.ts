@@ -301,7 +301,7 @@ export class FabContainer {
    */
   canActivateList(ev: any): boolean {
     if (this._fabLists.length > 0 && this._mainButton && ev.target) {
-      let ele = ev.target.closest('ion-fab>button');
+      let ele = ev.target.closest('ion-fab>[ion-fab]');
       return (ele && ele === this._mainButton.getNativeElement());
     }
     return false;
