@@ -560,6 +560,13 @@ export class Platform {
     }
   }
 
+  testUserAgent(expression: string): boolean {
+    if (this._ua) {
+      return this._ua.indexOf(expression) >= 0;
+    }
+    return false;
+  }
+
   /**
    * @private
    */

@@ -32,7 +32,8 @@ export class TapClick {
       this.activator = new Activator(app, config);
     }
 
-    this.usePolyfill = (config.get('tapPolyfill') === true);
+    this.usePolyfill = config.getBoolean('tapPolyfill');
+    console.debug('Using usePolyfill:', this.usePolyfill);
 
     this.events.listen(document, 'click', this.click.bind(this), true);
     this.pointerEvents = this.events.pointerEvents({
@@ -96,7 +97,7 @@ export class TapClick {
     if (!this.app.isEnabled()) {
       preventReason = 'appDisabled';
 
-    } else if (!ev.isIonicTap && this.isDisabledNativeClick()) {
+    } else if (this.usePolyfill && !ev.isIonicTap && this.isDisabledNativeClick()) {
       preventReason = 'nativeClick';
     }
 
