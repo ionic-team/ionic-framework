@@ -2,7 +2,7 @@ import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Host
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Form } from '../../util/form';
+import { Form, IonicTapInput } from '../../util/form';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
@@ -72,7 +72,7 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
   providers: [CHECKBOX_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Checkbox extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy {
+export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, ControlValueAccessor, OnDestroy {
   /** @private */
   _checked: boolean = false;
   /** @private */
@@ -208,6 +208,13 @@ export class Checkbox extends Ion implements AfterContentInit, ControlValueAcces
     console.debug('checkbox, onChange (no ngModel)', isChecked);
     this._setChecked(isChecked);
     this.onTouched();
+  }
+
+  /**
+   * @private
+   */
+  initFocus() {
+    this._elementRef.nativeElement.querySelector('button').focus();
   }
 
   /**

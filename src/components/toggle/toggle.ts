@@ -1,12 +1,13 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Form } from '../../util/form';
+import { Form, IonicTapInput } from '../../util/form';
 import { isTrueProperty } from '../../util/util';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
 import { pointerCoord } from '../../util/dom';
+import { Key } from '../../util/key';
 import { Haptic } from '../../util/haptic';
 import { UIEventManager } from '../../util/ui-event-manager';
 
@@ -74,7 +75,7 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
   providers: [TOGGLE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Toggle extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy  {
+export class Toggle extends Ion implements IonicTapInput, AfterContentInit, ControlValueAccessor, OnDestroy  {
   /** @private */
   _checked: boolean = false;
   /** @private */
@@ -283,6 +284,25 @@ export class Toggle extends Ion implements AfterContentInit, ControlValueAccesso
       pointerMove: this.pointerMove.bind(this),
       pointerUp: this.pointerUp.bind(this)
     });
+  }
+
+  /**
+   * @private
+   */
+  @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
+    if (ev.keyCode === Key.SPACE || ev.keyCode === Key.ENTER) {
+      console.debug(`toggle, keyup: ${ev.keyCode}`);
+      ev.preventDefault();
+      ev.stopPropagation();
+      this.onChange(!this._checked);
+    }
+  }
+
+  /**
+   * @private
+   */
+  initFocus() {
+    this._elementRef.nativeElement.querySelector('button').focus();
   }
 
   /**
