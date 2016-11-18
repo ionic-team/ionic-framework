@@ -44,12 +44,12 @@ $fab-md-list-button-background-color-activated:   color-shade($fab-md-list-butto
   box-shadow: $fab-md-box-shadow-activated;
 }
 
-.fab-md.fab-in-list {
+.fab-md-in-list {
   color: $fab-md-list-button-text-color;
   background-color: $fab-md-list-button-background-color;
 }
 
-.fab-md.fab-wp.fab-in-list.activated {
+.fab-md-in-list.activated {
   background-color: $fab-md-list-button-background-color-activated;
 }
 

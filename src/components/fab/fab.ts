@@ -128,14 +128,23 @@ export class FabButton extends Ion {
 export class FabList {
   _visible: boolean = false;
   _fabs: FabButton[] = [];
+  _mode: string;
 
-  constructor(private _elementRef: ElementRef, private _renderer: Renderer) { }
+  constructor(
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
+    config: Config
+  ) {
+    this._mode = config.get('mode');
+  }
 
   @ContentChildren(FabButton)
   set _setbuttons(query: QueryList<FabButton>) {
-    let fabs = this._fabs = query.toArray();
+    const fabs = this._fabs = query.toArray();
+    const className = `fab-${this._mode}-in-list`;
     for (var fab of fabs) {
       fab.setElementClass('fab-in-list', true);
+      fab.setElementClass(className, true);
     }
   }
 
@@ -284,13 +293,17 @@ export class FabContainer {
    * @private
    */
   ngAfterContentInit() {
-    this._events.listen(this._mainButton.getNativeElement(), 'click', this.pointerUp.bind(this));
+    if (!this._mainButton || !this._mainButton.getNativeElement()) {
+      console.error('FAB container needs a main <button ion-fab>');
+      return;
+    }
+    this._events.listen(this._mainButton.getNativeElement(), 'click', this.clickHandler.bind(this));
   }
 
   /**
    * @private
    */
-  pointerUp(ev: any) {
+  clickHandler(ev: any) {
     if (this.canActivateList(ev)) {
       this.toggleList();
     }

@@ -378,7 +378,7 @@ export const mockTabs = function(app?: App): Tabs {
 export const mockMenu = function (): Menu {
   let app = mockApp();
   let gestureCtrl = new GestureController(app);
-  return new Menu(null, null, null, null, null, null, null, gestureCtrl);
+  return new Menu(null, null, null, null, null, null, null, gestureCtrl, app);
 };
 
 export const mockDeepLinkConfig = function(links?: any[]): DeepLinkConfig {

@@ -7,11 +7,13 @@
 <ion-content fullscreen>
   <div f></div>
   <div f></div>
+
+  <pre ion-fixed style="right:10px; bottom:20px; text-shadow: 0 0 2px rgba(0, 0, 0, 0.24);">{{log}}</pre>
   <button ion-button>Test</button>
   <div f *ngFor="let a of array"></div>
 
   <ion-fab top right edge #fab1>
-    <button ion-fab mini (click)="clickMainFAB()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (click)="clickMainFAB()" class="e2eFabTopRight"><ion-icon name="add"></ion-icon></button>
     <ion-fab-list>
       <button ion-fab (click)="openSocial('facebook', fab1)"><ion-icon name="logo-facebook"></ion-icon></button>
       <button ion-fab (click)="openSocial('twitter', fab1)"><ion-icon name="logo-twitter"></ion-icon></button>
@@ -20,8 +22,8 @@
     </ion-fab-list>
   </ion-fab>
 
-  <ion-fab right bottom edge #fab2>
-    <button ion-fab color="dark"><ion-icon name="arrow-dropleft"></ion-icon></button>
+  <ion-fab bottom right edge #fab2>
+    <button ion-fab color="dark" class="e2eFabBottomRight"><ion-icon name="arrow-dropleft"></ion-icon></button>
     <ion-fab-list side="left">
       <button ion-fab (click)="openSocial('facebook', fab2)"><ion-icon name="logo-facebook"></ion-icon></button>
       <button ion-fab (click)="openSocial('twitter', fab2)"><ion-icon name="logo-twitter"></ion-icon></button>
@@ -30,8 +32,8 @@
     </ion-fab-list>
   </ion-fab>
 
-  <ion-fab left top #fab3>
-    <button ion-fab color="secondary"><ion-icon name="arrow-dropright"></ion-icon></button>
+  <ion-fab top left #fab3>
+    <button ion-fab color="secondary" class="e2eFabTopLeft"><ion-icon name="arrow-dropright"></ion-icon></button>
     <ion-fab-list side="right">
       <button ion-fab (click)="openSocial('facebook', fab3)"><ion-icon name="logo-facebook"></ion-icon></button>
       <button ion-fab (click)="openSocial('twitter', fab3)"><ion-icon name="logo-twitter"></ion-icon></button>
@@ -40,8 +42,8 @@
     </ion-fab-list>
   </ion-fab>
 
-  <ion-fab left bottom #fab4>
-    <button ion-fab color="light"><ion-icon name="arrow-dropup"></ion-icon></button>
+  <ion-fab bottom left #fab4>
+    <button ion-fab color="light" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></button>
     <ion-fab-list side="top">
       <button ion-fab (click)="openSocial('facebook', fab4)"><ion-icon name="logo-facebook"></ion-icon></button>
       <button ion-fab (click)="openSocial('twitter', fab4)"><ion-icon name="logo-twitter"></ion-icon></button>
@@ -51,7 +53,7 @@
   </ion-fab>
 
   <ion-fab center middle #fab5>
-    <a ion-fab color="danger" (click)="clickMainFAB()"><ion-icon name="md-share"></ion-icon></a>
+    <a ion-fab color="danger" (click)="clickMainFAB()" class="e2eFabCenter"><ion-icon name="md-share"></ion-icon></a>
     <ion-fab-list side="top">
       <button ion-fab (click)="openSocial('vimeo', fab5)" color="primary"><ion-icon name="logo-vimeo"></ion-icon></button>
     </ion-fab-list>

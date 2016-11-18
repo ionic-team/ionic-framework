@@ -31,12 +31,12 @@ $fab-ios-list-button-background-color-activated:  color-shade($fab-ios-list-butt
   background-color: $fab-ios-background-color-activated;
 }
 
-.fab-ios.fab-in-list {
+.fab-ios-in-list {
   color: $fab-ios-list-button-text-color;
   background-color: $fab-ios-list-button-background-color;
 }
 
-.fab-ios.fab-in-list.activated {
+.fab-ios-in-list.activated {
   background-color: $fab-ios-list-button-background-color-activated;
 }
 

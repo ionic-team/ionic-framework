@@ -6,17 +6,26 @@ import { IonicApp, IonicModule, FabContainer } from '../../../..';
 })
 export class E2EPage {
   array: number[] = [];
+  log: string = '';
 
   add() {
     this.array.push(1);
+    this.log += 'add\n';
   }
 
   clickMainFAB() {
-    console.log('Clicked open social menu');
+    let message = 'Clicked open social menu';
+
+    console.log(message);
+    this.log += message + '\n';
   }
 
   openSocial(network: string, fab: FabContainer) {
-    console.log('Share in ' + network);
+    let message = 'Share in ' + network;
+
+    console.log(message);
+    this.log += message + '\n';
+
     fab.close();
   }
 }

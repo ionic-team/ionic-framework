@@ -31,12 +31,12 @@ $fab-wp-list-button-background-color-activated:   color-shade($fab-wp-list-butto
   background-color: $fab-wp-background-color-activated;
 }
 
-.fab-wp.fab-in-list {
+.fab-wp-in-list {
   color: $fab-wp-list-button-text-color;
   background-color: $fab-wp-list-button-background-color;
 }
 
-.fab-wp.fab-in-list.activated {
+.fab-wp-in-list.activated {
   background-color: $fab-wp-list-button-background-color-activated;
 }
 
