@@ -96,7 +96,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```html
  * <ion-tabs>
- *   <ion-tab (ionSelect)="chat()"></ion-tab>
+ *   <ion-tab (ionSelect)="chat()" tabTitle="Show Modal"></ion-tab>
  * </ion-tabs>
  * ```
  *
