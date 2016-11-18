@@ -1,50 +1,45 @@
-**Note: If you are having problems formatting your issue please refer to this article on using markdown in Github:**
+<!--
+IF YOU DON'T FILL OUT THE FOLLOWING INFORMATION WE MIGHT CLOSE YOUR ISSUE WITHOUT INVESTIGATING
 
-https://guides.github.com/features/mastering-markdown/
+If you are having problems formatting your issue please refer to this article on using markdown in Github: https://guides.github.com/features/mastering-markdown/
+-->
 
-**Note: for support questions, please use one of these channels:** 
+**Ionic version:**  (check one with "x")
+[ ] **1.x**
+[ ] **2.x**
 
-https://forum.ionicframework.com/
-http://ionicworldwide.herokuapp.com/
+**I'm submitting a ...**  (check one with "x")
+[ ] bug report
+[ ] feature request
+[ ] support request => Please do not submit support requests here, use one of these channels: https://forum.ionicframework.com/ or http://ionicworldwide.herokuapp.com/
 
-**Note: for build related issues you can open up an issue on the ionic-app-scripts repo**
+**Current behavior:**
+<!-- Describe how the bug manifests. -->
 
-https://github.com/driftyco/ionic-app-scripts
-
-**Note: for Ionic-Native related issues you can open up an issues on the Ionic-Native repo**
-
-https://github.com/driftyco/ionic-native
-
-
-#### Short description of the problem:
-
-
-#### What behavior are you expecting?
-
+**Expected behavior:**
+<!-- Describe what the behavior would be without the bug. -->
 
 **Steps to reproduce:**
-1. 
-2. 
-3. 
+<!-- If you are able to illustrate the bug or feature request with an example, please provide steps to reproduce and if possible a demo using one of the following templates:
+
+For Ionic 1 issues - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
+
+For Ionic 2 issues - http://plnkr.co/edit/GJte2b?p=preview
+-->
+
+**Related code:**
 
 ```
-insert any relevant code between the above and below backticks
+insert any relevant code here
 ```
 
-**Other information:** (e.g. stacktraces, related issues, suggestions how to fix, stackoverflow links, forum links, etc)
- 
+**Other information:**
+<!-- List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc. -->
 
-**Which Ionic Version?** 1.x or 2.x
+**Ionic info:** (run `ionic info` from a terminal/cmd prompt and paste output below):
 
-
-#### Plunker that shows an example of your issue
-
-**For Ionic 1 issues** - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
-
-**For Ionic 2 issues** - http://plnkr.co/edit/GJte2b?p=preview
-
-
-**Run `ionic info` from terminal/cmd prompt:** (paste output below)
-
+```
+insert the output from ionic info here
+```
 
 
