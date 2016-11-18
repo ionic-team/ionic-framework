@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 
+import { ActivatorBase } from './activator-base';
 import { Activator } from './activator';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -15,7 +16,7 @@ import { UIEventManager, PointerEvents, PointerEventType } from '../../util/ui-e
 export class TapClick {
   private disableClick: number = 0;
   private usePolyfill: boolean;
-  private activator: Activator;
+  private activator: ActivatorBase;
   private startCoord: any;
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;

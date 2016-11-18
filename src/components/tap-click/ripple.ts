@@ -1,3 +1,4 @@
+import { ActivatorBase, isActivatedDisabled } from './activator-base';
 import { Activator } from './activator';
 import { App } from '../app/app';
 import { PointerCoordinates, CSS, hasPointerMoved, pointerCoord, rafFrames } from '../../util/dom';
@@ -7,19 +8,47 @@ import { Config } from '../../config/config';
 /**
  * @private
  */
-export class RippleActivator extends Activator {
+export class RippleActivator implements ActivatorBase {
+  protected _queue: HTMLElement[] = [];
+  protected _active: HTMLElement[] = [];
+  protected highlight: Activator;
 
   constructor(app: App, config: Config) {
-    super(app, config);
+    this.highlight = new Activator(app, config);
+    this.highlight.activatedDelay = 0;
   }
 
   clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
-    this.downAction(ev, activatableEle, startCoord);
-    this.upAction(ev, activatableEle, startCoord);
+    // Highlight
+    this.highlight && this.highlight.clickAction(ev, activatableEle, startCoord);
+
+    // Ripple
+    this._clickAction(ev, activatableEle, startCoord);
   }
 
   downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
-    if (this.disableActivated(ev) || !activatableEle || !activatableEle.parentNode) {
+    // Highlight
+    this.highlight && this.highlight.downAction(ev, activatableEle, startCoord);
+
+    // Ripple
+    this._downAction(ev, activatableEle, startCoord);
+  }
+
+  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+    // Highlight
+    this.highlight && this.highlight.upAction(ev, activatableEle, startCoord);
+
+    // Ripple
+    this._upAction(ev, activatableEle, startCoord);
+  }
+
+  clearState() {
+    // Highlight
+    this.highlight && this.highlight.clearState();
+  }
+
+  _downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+    if (isActivatedDisabled(ev, activatableEle)) {
       return;
     }
 
@@ -38,12 +67,9 @@ export class RippleActivator extends Activator {
         break;
       }
     }
-
-    // DOM WRITE
-    activatableEle.classList.add(this._css);
   }
 
-  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+  _upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     if (!hasPointerMoved(6, startCoord, pointerCoord(ev))) {
       let i = activatableEle.childElementCount;
       while (i--) {
@@ -55,8 +81,10 @@ export class RippleActivator extends Activator {
         }
       }
     }
+  }
 
-    super.upAction(ev, activatableEle, startCoord);
+  _clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+    // NOTHING
   }
 
   startRippleEffect(rippleEle: any, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
@@ -104,16 +132,6 @@ export class RippleActivator extends Activator {
       rippleEle.style.opacity = '0';
       rippleEle.style[CSS.transform] = transform;
       rippleEle.style[CSS.transition] = transition;
-    });
-  }
-
-  deactivate() {
-    rafFrames(2, () => {
-      for (var i = 0; i < this._active.length; i++) {
-        // DOM WRITE
-        this._active[i].classList.remove(this._css);
-      }
-      this._active.length = 0;
     });
   }
 

@@ -48,7 +48,10 @@ export function rafFrames(framesToWait: number, callback: Function) {
   let rafId: any;
   let timeoutId: any;
 
-  if (framesToWait < 2) {
+  if (framesToWait === 0) {
+    callback();
+
+  }else if (framesToWait < 2) {
     rafId = nativeRaf(callback);
 
   } else {
@@ -67,7 +70,10 @@ export function rafFrames(framesToWait: number, callback: Function) {
 export function zoneRafFrames(framesToWait: number, callback: Function) {
   framesToWait = Math.ceil(framesToWait);
 
-  if (framesToWait < 2) {
+  if (framesToWait === 0) {
+    callback();
+
+  } else if (framesToWait < 2) {
     raf(callback);
 
   } else {
