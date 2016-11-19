@@ -4,9 +4,24 @@
 // --------------------------------------------------
 
 /// @prop - Background color for the modal
-$modal-md-background-color:          $background-md-color !default;
+$modal-md-background-color:       $background-md-color !default;
+
+/// @prop - Box shadow color of the alert
+$modal-inset-box-shadow-color:    rgba(0, 0, 0, .4) !default;
+
+/// @prop - Box shadow of the alert
+$modal-inset-box-shadow:          0 28px 48px $modal-inset-box-shadow-color !default;
 
 .md .modal-wrapper {
   opacity: .01;
   transform: translate3d(0, 40px, 0);
+
+  @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+    overflow: hidden;
+
+    border-radius: 2px;
+
+    box-shadow: $modal-inset-box-shadow;
+  }
+
 }

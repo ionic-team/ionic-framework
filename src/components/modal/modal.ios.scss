@@ -7,9 +7,15 @@
 $modal-ios-background-color:          $background-ios-color !default;
 
 /// @prop - Border radius for the modal
-$modal-ios-border-radius:             5px !default;
+$modal-ios-border-radius:             10px !default;
 
 .ios .modal-wrapper {
   // hidden by default to prevent flickers, the animation will show it
   transform: translate3d(0, 100%, 0);
+
+  @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+    overflow: hidden;
+
+    border-radius: $modal-ios-border-radius;
+  }
 }
