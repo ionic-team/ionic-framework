@@ -62,6 +62,10 @@ export class E2EPage {
     this.platforms = platform.platforms();
   }
 
+  push() {
+    this.navCtrl.push(E2EPage);
+  }
+
   presentModal() {
     let modal = this.modalCtrl.create(ModalPassData, { userId: 8675309 });
     modal.present();
@@ -77,7 +81,9 @@ export class E2EPage {
   }
 
   presentModalChildNav() {
-    this.modalCtrl.create(ContactUs).present();
+    this.modalCtrl.create(ContactUs, null, {
+      enableBackdropDismiss: false
+    }).present();
   }
 
   presentToolbarModal() {

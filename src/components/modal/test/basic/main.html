@@ -2,6 +2,9 @@
 
   <ion-navbar>
     <ion-title>Modals</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="push()">Push</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -13,7 +16,10 @@
     <button ion-button (click)="presentModal()">Present modal, pass params</button>
   </p>
   <p>
-    <button ion-button class="e2eOpenModal" (click)="presentModalChildNav()">Present modal w/ child ion-nav</button>
+    <button ion-button class="e2eOpenModal" (click)="presentModalChildNav()">
+      Present modal w/ child ion-nav
+      <span style="font-size:0.5em; text-transform: none"> (enableBackdropDismiss: false)</span>
+    </button>
   </p>
   <p>
     <button ion-button class="e2eOpenToolbarModal" (click)="presentToolbarModal()">Present modal w/ toolbar (and alert)</button>

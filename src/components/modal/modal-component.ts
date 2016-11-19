@@ -32,10 +32,13 @@ export class ModalCmp {
     public _viewCtrl: ViewController,
     gestureCtrl: GestureController
   ) {
+    let opts = _navParams.get('opts');
+    assert(opts, 'modal data must be valid');
+
     this._gestureBlocker = gestureCtrl.createBlocker({
       disable: [GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE]
     });
-    this._bdDismiss = _navParams.data.opts.enableBackdropDismiss;
+    this._bdDismiss = opts.enableBackdropDismiss;
   }
 
   ionViewPreLoad() {

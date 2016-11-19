@@ -15,7 +15,8 @@ import { ViewController } from '../../navigation/view-controller';
 export class Modal extends ViewController {
   private _app: App;
 
-  constructor(app: App, component: any, data: any = {}, opts: ModalOptions = {}) {
+  constructor(app: App, component: any, data: any, opts: ModalOptions = {}) {
+    data = data || {};
     data.component = component;
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;

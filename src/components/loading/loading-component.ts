@@ -40,6 +40,7 @@ export class LoadingCmp {
     params: NavParams,
     renderer: Renderer
   ) {
+    assert(params.data, 'params data must be valid');
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
 
