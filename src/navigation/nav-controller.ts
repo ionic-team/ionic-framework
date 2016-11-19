@@ -10,7 +10,7 @@ import { ViewController } from './view-controller';
  * @description
  *
  * NavController is the base class for navigation controller components like
- * [`Nav`](../Nav/) and [`Tab`](../../tabs/Tab/). You use navigation controllers
+ * [`Nav`](../../components/nav/Nav/) and [`Tab`](../../components/tabs/Tab/). You use navigation controllers
  * to navigate to [pages](#view-creation) in your app. At a basic level, a
  * navigation controller is an array of pages representing a particular history
  * (of a Tab for example). This array can be manipulated to navigate throughout
