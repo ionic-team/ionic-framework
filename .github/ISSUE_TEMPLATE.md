@@ -1,9 +1,3 @@
-<!--
-IF YOU DON'T FILL OUT THE FOLLOWING INFORMATION WE MIGHT CLOSE YOUR ISSUE WITHOUT INVESTIGATING
-
-If you are having problems formatting your issue please refer to this article on using markdown in Github: https://guides.github.com/features/mastering-markdown/
--->
-
 **Ionic version:**  (check one with "x")
 [ ] **1.x**
 [ ] **2.x**
