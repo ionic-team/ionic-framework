@@ -75,7 +75,9 @@ export class ModalCmp {
 
   _bdClick() {
     if (this._enabled && this._bdDismiss) {
-      return this._viewCtrl.dismiss(null, 'backdrop');
+      return this._viewCtrl.dismiss(null, 'backdrop').catch(() => {
+        console.debug('Dismiss modal by clicking backdrop was cancelled');
+      });
     }
   }
 
