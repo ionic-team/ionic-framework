@@ -7,10 +7,12 @@ import { ItemReorderGesture } from '../item/item-reorder-gesture';
 import { isTrueProperty, reorderArray } from '../../util/util';
 
 
-export interface ReorderIndexes {
-  from: number;
-  to: number;
-  applyTo: Function;
+export class ReorderIndexes {
+  constructor(public from: number, public to: number) {}
+
+  applyTo(array: any) {
+    reorderArray(array, this);
+  }
 }
 
 /**
@@ -216,10 +218,8 @@ export class ItemReorder {
     this._reorderReset();
     if (fromIndex !== toIndex) {
       this._zone.run(() => {
-        const indexes = { from: fromIndex, to: toIndex };
-        this.ionItemReorder.emit(Object.assign({
-          applyTo: (array) => reorderArray(array, indexes)
-        }, indexes));
+        const indexes = new ReorderIndexes(fromIndex, toIndex);
+        this.ionItemReorder.emit(indexes);
       });
     }
   }
