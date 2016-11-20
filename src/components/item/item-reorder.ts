@@ -151,6 +151,7 @@ export class ItemReorder {
   _reorderGesture: ItemReorderGesture;
   _lastToIndex: number = -1;
   _element: HTMLElement;
+  _children: any;
 
   /**
    * @output {object} The expression to evaluate when the item is reordered. Emits an object
@@ -164,6 +165,7 @@ export class ItemReorder {
     private _zone: NgZone,
     @Optional() private _content: Content) {
     this._element = elementRef.nativeElement;
+    this._children = this._element.children;
   }
 
   /**
@@ -200,14 +202,28 @@ export class ItemReorder {
     }
   }
 
-  _reorderPrepare() {
+  _reorderPrepare(): number[] {
+    let heights = [];
     let ele = this._element;
     let children: any = ele.children;
+    if (!children || children.length === 0) {
+      return [];
+    }
     for (let i = 0, ilen = children.length; i < ilen; i++) {
       var child = children[i];
+      heights.push(child.offsetHeight);
       child.$ionIndex = i;
       child.$ionReorderList = ele;
     }
+    return heights;
+  }
+
+  _reorderTopOfList(): number {
+    let children = this._element.children;
+    if (children && children.length > 0) {
+      return children[0].getBoundingClientRect().top;
+    }
+    return 0;
   }
 
   _reorderStart() {
@@ -233,7 +249,7 @@ export class ItemReorder {
   }
 
   _reorderReset() {
-    let children = this._element.children;
+    let children = this._children;
     let len = children.length;
 
     this.setElementClass('reorder-list-active', false);
@@ -248,32 +264,29 @@ export class ItemReorder {
     if (this._lastToIndex === -1) {
       this._lastToIndex = fromIndex;
     }
-    let lastToIndex = this._lastToIndex;
+    // let lastToIndex = this._lastToIndex;
     this._lastToIndex = toIndex;
 
-    // TODO: I think both loops can be merged into a single one
-    // but I had no luck last time I tried
-
-    /********* DOM READ ********** */
+    // if (toIndex <= lastToIndex) {
+    //   for (var i = toIndex; i <= lastToIndex; i++) {
+    //     if (i !== fromIndex) {
+    //       (<any>children[i]).style[transform] = (i < fromIndex)
+    //         ? `translateY(${itemHeight}px)` : '';
+    //     }
+    //   }
+    // }
     let children = this._element.children;
+    console.log('from', fromIndex, 'to', toIndex);
 
     /********* DOM WRITE ********* */
     let transform = CSS.transform;
-    if (toIndex >= lastToIndex) {
-      for (var i = lastToIndex; i <= toIndex; i++) {
-        if (i !== fromIndex) {
-          (<any>children[i]).style[transform] = (i > fromIndex)
-            ? `translateY(${-itemHeight}px)` : '';
-        }
-      }
-    }
-
-    if (toIndex <= lastToIndex) {
-      for (var i = toIndex; i <= lastToIndex; i++) {
-        if (i !== fromIndex) {
-          (<any>children[i]).style[transform] = (i < fromIndex)
-            ? `translateY(${itemHeight}px)` : '';
-        }
+    for (var i = 0; i < children.length; i++) {
+      if (i > fromIndex && i <= toIndex) {
+        children[i].style[transform] = `translateY(${-itemHeight}px)`;
+      } else if (i < fromIndex && i >= toIndex) {
+        children[i].style[transform] = `translateY(${itemHeight}px)`;
+      } else {
+        children[i].style[transform] = '';
       }
     }
   }
