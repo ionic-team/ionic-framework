@@ -12,7 +12,7 @@ import { assert } from '../../util/util';
 @Component({
   selector: 'ion-modal',
   template:
-    '<ion-backdrop (click)="_bdClick()"></ion-backdrop>' +
+    '<ion-backdrop (click)="_bdClick()" [class.backdrop-no-tappable]="!_bdDismiss"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
       '<div #viewport nav-viewport></div>' +
     '</div>'

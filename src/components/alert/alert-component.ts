@@ -13,7 +13,7 @@ import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/ge
 @Component({
   selector: 'ion-alert',
   template:
-    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
+    '<ion-backdrop (click)="bdClick()" [class.backdrop-no-tappable]="!d.enableBackdropDismiss"></ion-backdrop>' +
     '<div class="alert-wrapper">' +
       '<div class="alert-head">' +
         '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +

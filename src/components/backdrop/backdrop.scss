@@ -19,3 +19,7 @@ ion-backdrop {
   opacity: .01;
   transform: translateZ(0);
 }
+
+ion-backdrop.backdrop-no-tappable {
+  cursor: auto;
+}

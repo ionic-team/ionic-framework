@@ -14,7 +14,7 @@ import { assert } from '../../util/util';
 @Component({
   selector: 'ion-action-sheet',
   template:
-    '<ion-backdrop (click)="bdClick()"></ion-backdrop>' +
+    '<ion-backdrop (click)="bdClick()" [class.backdrop-no-tappable]="!d.enableBackdropDismiss"></ion-backdrop>' +
     '<div class="action-sheet-wrapper">' +
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group">' +
