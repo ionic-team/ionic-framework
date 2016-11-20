@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 
+import { ActivatorBase } from './activator-base';
 import { Activator } from './activator';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -15,7 +16,7 @@ import { UIEventManager, PointerEvents, PointerEventType } from '../../util/ui-e
 export class TapClick {
   private disableClick: number = 0;
   private usePolyfill: boolean;
-  private activator: Activator;
+  private activator: ActivatorBase;
   private startCoord: any;
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;
@@ -73,20 +74,20 @@ export class TapClick {
     if (!this.startCoord) {
       return;
     }
-    if (this.usePolyfill && type === PointerEventType.TOUCH && this.app.isEnabled()) {
-      this.handleTapPolyfill(ev);
-    }
     if (this.activator) {
       let activatableEle = getActivatableTarget(ev.target);
       if (activatableEle) {
         this.activator.upAction(ev, activatableEle, this.startCoord);
       }
     }
+    if (this.usePolyfill && type === PointerEventType.TOUCH && this.app.isEnabled()) {
+      this.handleTapPolyfill(ev);
+    }
     this.startCoord = null;
   }
 
   pointerCancel(ev: UIEvent) {
-    console.debug('pointerCancel from ' + ev.type + ' ' + Date.now());
+    console.debug(`pointerCancel from ${ev.type} ${Date.now()}`);
     this.startCoord = null;
     this.activator && this.activator.clearState();
     this.pointerEvents.stop();
@@ -103,9 +104,18 @@ export class TapClick {
     }
 
     if (preventReason !== null) {
-      console.debug('click prevent ' + preventReason + ' ' + Date.now());
+      // darn, there was a reason to prevent this click, let's not allow it
+      console.debug(`click prevent ${preventReason} ${Date.now()}`);
       ev.preventDefault();
       ev.stopPropagation();
+
+    } else if (this.activator) {
+      // cool, a click is gonna happen, let's tell the activator
+      // so the element can get the given "active" style
+      const activatableEle = getActivatableTarget(ev.target);
+      if (activatableEle) {
+        this.activator.clickAction(ev, activatableEle, this.startCoord);
+      }
     }
   }
 
@@ -117,7 +127,7 @@ export class TapClick {
     let endCoord = pointerCoord(ev);
 
     if (hasPointerMoved(POINTER_TOLERANCE, this.startCoord, endCoord)) {
-      console.debug('click from touch prevented by pointer moved');
+      console.debug(`click from touch prevented by pointer moved`);
       return;
     }
     // prevent native mouse click events for XX amount of time
@@ -125,11 +135,11 @@ export class TapClick {
 
     if (this.app.isScrolling()) {
       // do not fire off a click event while the app was scrolling
-      console.debug('click from touch prevented by scrolling ' + Date.now());
+      console.debug(`click from touch prevented by scrolling ${Date.now()}`);
 
     } else {
       // dispatch a mouse click event
-      console.debug('create click from touch ' + Date.now());
+      console.debug(`create click from touch ${Date.now()}`);
 
       let clickEvent: any = document.createEvent('MouseEvents');
       clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
