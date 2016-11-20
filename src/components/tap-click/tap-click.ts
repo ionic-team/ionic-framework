@@ -3,6 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Activator } from './activator';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { assert } from '../../util/util';
 import { hasPointerMoved, pointerCoord } from '../../util/dom';
 import { RippleActivator } from './ripple';
 import { UIEventManager, PointerEvents, PointerEventType } from '../../util/ui-event-manager';
@@ -72,7 +73,7 @@ export class TapClick {
     if (!this.startCoord) {
       return;
     }
-    if (type === PointerEventType.TOUCH && this.usePolyfill && this.app.isEnabled()) {
+    if (this.usePolyfill && type === PointerEventType.TOUCH && this.app.isEnabled()) {
       this.handleTapPolyfill(ev);
     }
     if (this.activator) {
@@ -109,6 +110,7 @@ export class TapClick {
   }
 
   handleTapPolyfill(ev: any) {
+    assert(this.usePolyfill, 'this code should not be used if tapPolyfill is disabled');
     // only dispatch mouse click events from a touchend event
     // when tapPolyfill config is true, and the startCoordand endCoord
     // are not too far off from each other

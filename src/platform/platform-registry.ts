@@ -106,7 +106,7 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
       keyboardHeight: 300,
       mode: 'ios',
       scrollAssist: isIOS,
-      statusbarPadding: !!((<any>window).cordova),
+      statusbarPadding: isCordova,
       swipeBackEnabled: isIOS,
       swipeBackThreshold: 40,
       tapPolyfill: isIOSUI,
@@ -218,6 +218,9 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
   }
 };
 
+function isCordova(): boolean {
+  return !!((<any>window).cordova);
+}
 
 function isIOS(p: Platform): boolean {
   // shortcut function to be reused internally

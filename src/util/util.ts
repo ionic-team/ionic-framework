@@ -140,9 +140,7 @@ export const isCheckedProperty = function(a: any, b: any): boolean {
   }
 
   // not using strict comparison on purpose
-  /* tslint:disable */
-  return (a == b);
-  /* tslint:enable */
+  return (a == b); // tslint:disable-line
 };
 
 
