@@ -156,7 +156,7 @@ ion-fab-list[side=right] .fab-in-list {
 }
 
 ion-fab-list[side=top] {
-  top: initial;
+  top: auto;
   bottom: 0;
 
   flex-direction: column-reverse;
