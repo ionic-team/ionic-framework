@@ -17,12 +17,16 @@
     <button ion-button (click)="emptyList()">Empty List</button>
   </div>
 
- <ion-list [virtualScroll]="items">
+  <ion-list [virtualScroll]="items">
 
-  <ion-item text-wrap *virtualItem="let item" (click)="itemTapped($event, item)">
-    {{item.title}}
-  </ion-item>
+    <ion-item class="item-text-wrap" *virtualItem="let item" (click)="itemTapped(item)">
+      <ion-thumbnail item-left>
+        <ion-img src="http://loremflickr.com/80/80/dog?{{item.id}}"></ion-img>
+      </ion-thumbnail>
 
-</ion-list>
+      <h2 class="text-wrap">{{item.title}}</h2>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

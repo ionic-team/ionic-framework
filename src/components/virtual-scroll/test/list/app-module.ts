@@ -6,17 +6,18 @@ import { IonicApp, IonicModule } from '../../../..';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  items: Array<{title: string}>;
+  items: Array<{title: string; id: number}>;
 
   constructor() {
-    this.emptyList();
+    this.fillList();
   }
 
   fillList() {
     this.items = [];
     for (let i = 0; i < 500; i++) {
       this.items.push({
-        title: 'Item ' + i
+        title: 'Item ' + i,
+        id: i
       });
     }
   }

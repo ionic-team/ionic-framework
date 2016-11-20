@@ -106,10 +106,13 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * Ionic provides `<ion-img>` to manage HTTP requests and image rendering.
  * Additionally, it includes a customizable placeholder element which shows
  * before the image has finished loading. While scrolling through items
- * quickly, `<ion-img>` knows not to make any image requests, and only loads
- * the images that are viewable after scrolling. It's also important for app
- * developers to ensure image sizes are locked in, and after images have fully
- * loaded they do not change size and affect any other element sizes.
+ * quickly, `<ion-img>` knows not to make any image http requests, and only
+ * loads the images that are viewable after scrolling.
+ *
+ * It's also important for app developers to ensure image sizes are locked in,
+ * and after images have fully loaded they do not change size and affect any
+ * other element sizes. Simply put, to ensure rendering bugs are not introduced,
+ * it's vital that elements within a virtual item does not dynamically change.
  *
  * We recommend using our `<ion-img>` element over the native `<img>` element
  * because when an `<img>` element is added to the DOM, it immediately
@@ -164,6 +167,9 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *   while scrolling.
  * - Image sizes should be locked in, meaning the size of any element
  *   should not change after the image has loaded.
+ * - For the most part, ensure the element size for each virtual item
+ *   does not dynamically change, but rather, their size must already be
+ *   locked in via CSS at the time they are rendered.
  * - Provide an approximate width and height so the virtual scroll can
  *   best calculate the cell height.
  * - Changing the dataset requires the entire virtual scroll to be
