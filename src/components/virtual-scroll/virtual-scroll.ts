@@ -157,6 +157,9 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * ### Performance Tips
  *
+ * - When deploying to iOS with Cordova, it's highly recommended to use the
+ *   [WKWebView plugin](http://blog.ionic.io/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
+ *   in order to take advantage of iOS's higher performimg webview.
  * - Use `<ion-img>` rather than `<img>` so images are lazy loaded
  *   while scrolling.
  * - Image sizes should be locked in, meaning the size of any element
