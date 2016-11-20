@@ -283,6 +283,16 @@ export class E2EPage {
     alert.present();
   }
 
+  doAlertWithMode() {
+    let alert = this.alertCtrl.create({
+      title: 'Alert!',
+      mode: 'md',
+      buttons: ['OK']
+    });
+
+    alert.present();
+  }
+
   ionViewDidLeave() {
     console.log('E2EPage, ionViewDidLeave');
   }

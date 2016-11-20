@@ -4,6 +4,7 @@ export interface AlertOptions {
   subTitle?: string;
   message?: string;
   cssClass?: string;
+  mode?: string;
   inputs?: Array<AlertInputOptions>;
   buttons?: Array<any>;
   enableBackdropDismiss?: boolean;
