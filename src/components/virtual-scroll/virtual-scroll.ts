@@ -101,7 +101,6 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * slightly different heights between platforms, which is perfectly fine.
  *
  *
- *
  * ### Images Within Virtual Scroll
  *
  * Ionic provides `<ion-img>` to manage HTTP requests and image rendering.
@@ -130,6 +129,27 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *     </ion-avatar>
  *    {% raw %} {{ item.firstName }} {{ item.lastName }}{% endraw %}
  *   </ion-item>
+ *
+ * </ion-list>
+ * ```
+ *
+ *
+ * ### Custom Components
+ *
+ * If a custom component is going to be used within Virtual Scroll, it's best
+ * to wrap it with a good old `<div>` to ensure the component is rendered
+ * correctly. Since each custom component's implementation and internals can be
+ * quite different, wrapping within a `<div>` is a safe way to make sure
+ * dimensions are measured correctly.
+ *
+ * ```html
+ * <ion-list [virtualScroll]="items">
+ *
+ *   <div *virtualItem="let item">
+ *     <my-custom-item [item]="item">
+ *       {% raw %} {{ item }}{% endraw %}
+ *     </my-custom-item>
+ *   </div>
  *
  * </ion-list>
  * ```
