@@ -20,16 +20,7 @@
  <ion-list [virtualScroll]="items">
 
   <ion-item text-wrap *virtualItem="let item" (click)="itemTapped($event, item)">
-
-    <ion-row class="item-row">
-      <ion-col class="item-title" width-80>
-        {{item.title}}
-      </ion-col>
-      <ion-col class="item-time" width-20>
-        {{item.date}}
-      </ion-col>
-    </ion-row>
-
+    {{item.title}}
   </ion-item>
 
 </ion-list>

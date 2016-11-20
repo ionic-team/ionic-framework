@@ -6,7 +6,7 @@ import { IonicApp, IonicModule } from '../../../..';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  items: Array<{title: string, date: string}>;
+  items: Array<{title: string}>;
 
   constructor() {
     this.emptyList();
@@ -14,10 +14,9 @@ export class E2EPage {
 
   fillList() {
     this.items = [];
-    for (let i = 0; i < 59; i++) {
+    for (let i = 0; i < 500; i++) {
       this.items.push({
-        title: 'Item ' + i,
-        date: '23:' + (59 - i)
+        title: 'Item ' + i
       });
     }
   }
