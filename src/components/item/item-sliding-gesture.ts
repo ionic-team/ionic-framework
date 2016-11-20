@@ -26,7 +26,7 @@ export class ItemSlidingGesture extends PanGesture {
       gesture: gestureCtrl.createGesture({
         name: GESTURE_ITEM_SWIPE,
         priority: GesturePriority.SlidingItem,
-        disableScroll: false // TODO: set true
+        disableScroll: true
       })
     });
   }
