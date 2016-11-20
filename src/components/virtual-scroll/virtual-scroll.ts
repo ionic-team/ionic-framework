@@ -363,9 +363,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * DOM READ THEN DOM WRITE
    */
   update(checkChanges: boolean) {
-    var self = this;
+    const self = this;
 
-    if (!self._records || !self._records.length) return;
+    if (!self._records) return;
 
     if (checkChanges) {
       if (isPresent(self._differ)) {

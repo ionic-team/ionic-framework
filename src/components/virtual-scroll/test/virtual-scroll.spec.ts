@@ -1,5 +1,5 @@
 import { VirtualCell, VirtualData, VirtualNode } from '../virtual-util';
-import { processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered } from '../virtual-util';
+import { processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered, estimateHeight } from '../virtual-util';
 
 
 describe('VirtualScroll', () => {
@@ -30,6 +30,15 @@ describe('VirtualScroll', () => {
       };
       return styles;
     };
+  });
+
+  describe('estimateHeight', () =>  {
+
+    it('should return zero when no records', () => {
+      const h = estimateHeight(0, undefined, 100, .25);
+      expect(h).toEqual(0);
+    });
+
   });
 
   describe('processRecords', () =>  {
@@ -211,6 +220,20 @@ describe('VirtualScroll', () => {
   });
 
   describe('populateNodeData', () => {
+
+    it('should set no nodes when no records', () => {
+      nodes = [];
+      records = [];
+
+      let startCellIndex = 0;
+      let endCellIndex = 0;
+
+      populateNodeData(startCellIndex, endCellIndex, data.viewWidth, true,
+                    cells, records, nodes, viewContainer,
+                    itmTmp, hdrTmp, ftrTmp, false);
+
+      expect(nodes.length).toBe(0);
+    });
 
     it('should skip already rendered, and create nodes', () => {
       cells = [
