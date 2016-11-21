@@ -21,7 +21,7 @@ import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/ge
   selector: '.picker-col',
   template:
     '<div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>' +
-    '<div class="picker-opts" #colEle [style.width]="col.optionsWidth">' +
+    '<div class="picker-opts" #colEle [style.max-width]="col.optionsWidth">' +
       '<button *ngFor="let o of col.options; let i=index"' +
         '[class.picker-opt-disabled]="o.disabled" ' +
         'class="picker-opt" disable-activated (click)="optClick($event, i)">' +
@@ -30,7 +30,7 @@ import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/ge
     '</div>' +
     '<div *ngIf="col.suffix" class="picker-suffix" [style.width]="col.suffixWidth">{{col.suffix}}</div>',
   host: {
-    '[style.min-width]': 'col.columnWidth',
+    '[style.max-width]': 'col.columnWidth',
     '[class.picker-opts-left]': 'col.align=="left"',
     '[class.picker-opts-right]': 'col.align=="right"',
   }
@@ -497,9 +497,6 @@ export class PickerCmp {
 
     // clean up dat data
     data.columns = data.columns.map(column => {
-      if (!isPresent(column.columnWidth)) {
-        column.columnWidth = (100 / data.columns.length) + '%';
-      }
       if (!isPresent(column.options)) {
         column.options = [];
       }
@@ -642,4 +639,4 @@ let pickerIds = -1;
 const PICKER_OPT_SELECTED = 'picker-opt-selected';
 const DECELERATION_FRICTION = 0.97;
 const FRAME_MS = (1000 / 60);
-const MAX_PICKER_SPEED = 50;
+const MAX_PICKER_SPEED = 60;
