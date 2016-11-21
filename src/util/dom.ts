@@ -83,7 +83,7 @@ export function zoneRafFrames(framesToWait: number, callback: Function) {
   }
 }
 
-export let CSS: {
+export const CSS: {
   transform?: string,
   transition?: string,
   transitionDuration?: string,
@@ -255,7 +255,7 @@ export function isTextInput(ele: any) {
 }
 
 export function hasFocusedTextInput() {
-  let ele = <HTMLElement>document.activeElement;
+  const ele = <HTMLElement>document.activeElement;
   if (isTextInput(ele)) {
     return (ele.parentElement.querySelector(':focus') === ele);
   }
