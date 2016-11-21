@@ -325,8 +325,9 @@ export class Content extends Ion {
    * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
    * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
-  scrollTo(x: number, y: number, duration: number = 300): Promise<any> {
-    return this._scroll.scrollTo(x, y, duration);
+  scrollTo(x: number, y: number, duration: number = 300, done?: Function): Promise<any> {
+    console.debug(`content, scrollTo started, y: ${y}, duration: ${duration}`);
+    return this._scroll.scrollTo(x, y, duration, done);
   }
 
   /**
@@ -336,6 +337,7 @@ export class Content extends Ion {
    * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
   scrollToTop(duration: number = 300) {
+    console.debug(`content, scrollToTop, duration: ${duration}`);
     return this._scroll.scrollToTop(duration);
   }
 
@@ -352,6 +354,7 @@ export class Content extends Ion {
    * @param {number} top
    */
   setScrollTop(top: number) {
+    console.debug(`content, setScrollTop, top: ${top}`);
     this._scroll.setTop(top);
   }
 
@@ -361,6 +364,7 @@ export class Content extends Ion {
    * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
   scrollToBottom(duration: number = 300) {
+    console.debug(`content, scrollToBottom, duration: ${duration}`);
     return this._scroll.scrollToBottom(duration);
   }
 
@@ -411,26 +415,23 @@ export class Content extends Ion {
    * {number} dimensions.scrollLeft  scroll scrollLeft
    * {number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
    */
-  getContentDimensions() {
-    let _scrollEle = this._scrollEle;
-    let parentElement = _scrollEle.parentElement;
+  getContentDimensions(): ContentDimensions {
+    const scrollEle = this._scrollEle;
+    const parentElement = scrollEle.parentElement;
 
     return {
-      contentHeight: parentElement.offsetHeight,
-      contentTop: parentElement.offsetTop,
-      contentBottom: parentElement.offsetTop + parentElement.offsetHeight,
+      contentHeight: parentElement.offsetHeight - this.contentTop - this.contentBottom,
+      contentTop: this.contentTop,
+      contentBottom: this.contentBottom,
 
       contentWidth: parentElement.offsetWidth,
       contentLeft: parentElement.offsetLeft,
-      contentRight: parentElement.offsetLeft + parentElement.offsetWidth,
 
-      scrollHeight: _scrollEle.scrollHeight,
-      scrollTop: _scrollEle.scrollTop,
-      scrollBottom: _scrollEle.scrollTop + _scrollEle.scrollHeight,
+      scrollHeight: scrollEle.scrollHeight,
+      scrollTop: scrollEle.scrollTop,
 
-      scrollWidth: _scrollEle.scrollWidth,
-      scrollLeft: _scrollEle.scrollLeft,
-      scrollRight: _scrollEle.scrollLeft + _scrollEle.scrollWidth,
+      scrollWidth: scrollEle.scrollWidth,
+      scrollLeft: scrollEle.scrollLeft,
     };
   }
 
@@ -443,7 +444,7 @@ export class Content extends Ion {
   addScrollPadding(newPadding: number) {
     assert(typeof this._scrollPadding === 'number', '_scrollPadding must be a number');
     if (newPadding > this._scrollPadding) {
-      console.debug('content addScrollPadding', newPadding);
+      console.debug(`content, addScrollPadding, newPadding: ${newPadding}, this._scrollPadding: ${this._scrollPadding}`);
 
       this._scrollPadding = newPadding;
       this._scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
@@ -456,13 +457,15 @@ export class Content extends Ion {
    */
   clearScrollPaddingFocusOut() {
     if (!this._inputPolling) {
+      console.debug(`content, clearScrollPaddingFocusOut begin`);
       this._inputPolling = true;
 
       this._keyboard.onClose(() => {
+        console.debug(`content, clearScrollPaddingFocusOut _keyboard.onClose`);
         this._inputPolling = false;
         this._scrollPadding = -1;
         this.addScrollPadding(0);
-      }, 200, Infinity);
+      }, 200, 3000);
     }
   }
 
@@ -640,4 +643,19 @@ function parsePxUnit(val: string): number {
 
 function cssFormat(val: number): string {
   return (val > 0 ? val + 'px' : '');
+}
+
+export interface ContentDimensions {
+  contentHeight: number;
+  contentTop: number;
+  contentBottom: number;
+
+  contentWidth: number;
+  contentLeft: number;
+
+  scrollHeight: number;
+  scrollTop: number;
+
+  scrollWidth: number;
+  scrollLeft: number;
 }
