@@ -94,15 +94,15 @@ export const RANGE_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'ion-range',
   template:
-    '<ng-content select="[range-left]"></ng-content>' +
-    '<div class="range-slider" #slider>' +
-      '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active" role="presentation"></div>' +
-      '<div class="range-bar" role="presentation"></div>' +
-      '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar role="presentation"></div>' +
-      '<div class="range-knob-handle" (ionIncrease)="_keyChg(true, false)" (ionDecrease)="_keyChg(false, false)" [ratio]="_ratioA" [val]="_valA" [pin]="_pin" [pressed]="_pressedA" [min]="_min" [max]="_max" [disabled]="_disabled" [labelId]="_lblId"></div>' +
-      '<div class="range-knob-handle" (ionIncrease)="_keyChg(true, true)" (ionDecrease)="_keyChg(false, true)" [ratio]="_ratioB" [val]="_valB" [pin]="_pin" [pressed]="_pressedB" [min]="_min" [max]="_max" [disabled]="_disabled" [labelId]="_lblId" *ngIf="_dual"></div>' +
-    '</div>' +
-    '<ng-content select="[range-right]"></ng-content>',
+  '<ng-content select="[range-left]"></ng-content>' +
+  '<div class="range-slider" #slider>' +
+  '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active" role="presentation"></div>' +
+  '<div class="range-bar" role="presentation"></div>' +
+  '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar role="presentation"></div>' +
+  '<div class="range-knob-handle" (ionIncrease)="_keyChg(true, false)" (ionDecrease)="_keyChg(false, false)" [ratio]="_ratioA" [val]="_valA" [pin]="_pin" [pressed]="_pressedA" [min]="_min" [max]="_max" [disabled]="_disabled" [labelId]="_lblId"></div>' +
+  '<div class="range-knob-handle" (ionIncrease)="_keyChg(true, true)" (ionDecrease)="_keyChg(false, true)" [ratio]="_ratioB" [val]="_valB" [pin]="_pin" [pressed]="_pressedB" [min]="_min" [max]="_max" [disabled]="_disabled" [labelId]="_lblId" *ngIf="_dual"></div>' +
+  '</div>' +
+  '<ng-content select="[range-right]"></ng-content>',
   host: {
     '[class.range-disabled]': '_disabled',
     '[class.range-pressed]': '_pressed',
@@ -119,6 +119,7 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
 
   _activeB: boolean;
   _rect: ClientRect;
+  _start: PointerCoordinates;
   _ticks: any[];
 
   _min = 0;
@@ -137,6 +138,10 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
 
   _barL: string;
   _barR: string;
+
+  _forceScroll: boolean;
+  _forceRange: boolean;
+  _forceDelta = 5;
 
   _events: UIEventManager;
 
@@ -298,28 +303,11 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
       return false;
     }
 
+    // get the start coordinates
+    this._start = pointerCoord(ev);
+
     // trigger ionFocus event
     this._fireFocus();
-
-    // prevent default so scrolling does not happen
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    // get the start coordinates
-    const current = pointerCoord(ev);
-
-    // get the full dimensions of the slider element
-    const rect = this._rect = this._plt.getElementBoundingClientRect(this._slider.nativeElement);
-
-    // figure out which knob they started closer to
-    const ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);
-    this._activeB = this._dual && (Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB));
-
-    // update the active knob's position
-    this._update(current, rect, true);
-
-    // trigger a haptic start
-    this._haptic.gestureSelectionStart();
 
     // return true so the pointer events
     // know everything's still valid
@@ -328,20 +316,37 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
 
   /** @internal */
   _pointerMove(ev: UIEvent) {
-    if (this._disabled) {
+    // ignore range component if disabled or when scrolling the page
+    if (this._disabled || this._forceScroll) {
       return;
     }
     // prevent default so scrolling does not happen
     ev.preventDefault();
     ev.stopPropagation();
 
-    // update the active knob's position
-    const hasChanged = this._update(pointerCoord(ev), this._rect, true);
+    // get the start coordinates
+    const current = pointerCoord(ev);
 
-    if (hasChanged && this._snaps) {
-      // trigger a haptic selection changed event
-      // if this is a snap range
-      this._haptic.gestureSelectionChanged();
+    // are we using the range component?
+    if (this._forceRange) {
+      // update the active knob's position
+      const hasChanged = this._update(pointerCoord(ev), this._rect, true);
+
+      if (hasChanged && this._snaps) {
+        // trigger a haptic selection changed event
+        // if this is a snap range
+        this._haptic.gestureSelectionChanged();
+      }
+    } else {
+      // if the pointer hasn't moved yet, figure out which direction the user is moving it to
+      if (this._start.y > current.y + this._forceDelta || this._start.y < current.y - this._forceDelta) {
+        // moving up or down, activate scroll
+        this._forceScroll = true;
+      } else if (this._start.x > current.x + this._forceDelta || this._start.x < current.x - this._forceDelta) {
+        // moving left or right, activate range component
+        this._setupKnob(ev);
+        this._forceRange = true;
+      }
     }
   }
 
@@ -350,18 +355,39 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
     if (this._disabled) {
       return;
     }
+    // ignore range cleanup if we're scrolling
+    if (this._forceScroll) {
+      this._forceScroll = this._forceRange = false;
+      return;
+    }
+
     // prevent default so scrolling does not happen
     ev.preventDefault();
     ev.stopPropagation();
 
-    // update the active knob's position
-    this._update(pointerCoord(ev), this._rect, false);
+    // if the user touched the range component but didn't move their finger
+    // move knob regardless
+    if (!this._forceRange) {
+      this._setupKnob(ev);
+      // TODO trigger DOM update without forcing timeout
+      // this is needed to ensure the pin appears
+      setTimeout(() => {
+        // update the active knob's position
+        this._update(pointerCoord(ev), this._rect, false);
+      }, 100)
+    } else {
+      this._update(pointerCoord(ev), this._rect, false);
+    }
 
     // trigger a haptic end
     this._haptic.gestureSelectionEnd();
 
     // trigger ionBlur event
     this._fireBlur();
+
+    // clear the start coordinates and forced range/scroll behavior
+    this._forceScroll = this._forceRange = false;
+    this._start = null
   }
 
   /** @internal */
@@ -478,6 +504,25 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
         });
       }
     }
+  }
+
+  /** @internal */
+  _setupKnob(ev: UIEvent) {
+    // get the start coordinates
+    const current = pointerCoord(ev);
+
+    // get the full dimensions of the slider element
+    const rect = this._rect = this._plt.getElementBoundingClientRect(this._slider.nativeElement);
+
+    // figure out which knob they started closer to
+    const ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);
+    this._activeB = this._dual && (Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB));
+
+    // update the active knob's position
+    this._update(current, rect, true);
+
+    // trigger a haptic start
+    this._haptic.gestureSelectionStart();
   }
 
   /** @hidden */

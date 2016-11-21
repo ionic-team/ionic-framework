@@ -207,6 +207,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 
   transform: translate3d(0, 28px, 0) scale(.01);
   transition: transform 120ms ease, background-color 120ms ease;
+  transition-delay: 0.5s;
 
   &::before {
     position: absolute;
@@ -230,6 +231,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 
 .range-md .range-knob-pressed .range-pin {
   transform: translate3d(0, 0, 0) scale(1);
+  transition-delay: 0s;
 }
 
 .range-md:not(.range-has-pin) .range-knob-pressed .range-knob {
