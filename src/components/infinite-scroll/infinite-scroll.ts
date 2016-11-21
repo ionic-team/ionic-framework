@@ -35,7 +35,7 @@ import { Content } from '../content/content';
  *   items = [];
  *
  *   constructor() {
- *     for (var i = 0; i < 30; i++) {
+ *     for (let i = 0; i < 30; i++) {
  *       this.items.push( this.items.length );
  *     }
  *   }
@@ -44,7 +44,7 @@ import { Content } from '../content/content';
  *     console.log('Begin async operation');
  *
  *     setTimeout(() => {
- *       for (var i = 0; i < 30; i++) {
+ *       for (let i = 0; i < 30; i++) {
  *         this.items.push( this.items.length );
  *       }
  *
