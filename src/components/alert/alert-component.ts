@@ -1,11 +1,14 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { focusOutActiveElement, NON_TEXT_INPUT_REGEX } from '../../util/dom';
+import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { isPresent, assert } from '../../util/util';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
+import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+
 
 /**
  * @private
@@ -91,21 +94,22 @@ export class AlertCmp {
   constructor(
     public _viewCtrl: ViewController,
     public _elementRef: ElementRef,
-    public _config: Config,
+    config: Config,
     gestureCtrl: GestureController,
     params: NavParams,
-    renderer: Renderer
+    private _renderer: Renderer,
+    private _platform: Platform
   ) {
     // gesture blocker is used to disable gestures dynamically
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
-    this.mode = _config.get('mode');
-    renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
+    this.mode = config.get('mode');
+    _renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
         // Make sure the class isn't whitespace, otherwise it throws exceptions
-        if (cssClass.trim() !== '') renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+        if (cssClass.trim() !== '') _renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
       });
     }
 
@@ -131,7 +135,7 @@ export class AlertCmp {
 
   ionViewDidLoad() {
     // normalize the data
-    let data = this.d;
+    const data = this.d;
 
     data.buttons = data.buttons.map(button => {
       if (typeof button === 'string') {
@@ -149,7 +153,7 @@ export class AlertCmp {
         label: input.label,
         checked: !!input.checked,
         disabled: !!input.disabled,
-        id: 'alert-input-' + this.id + '-' + index,
+        id: `alert-input-${this.id}-${index}`,
         handler: isPresent(input.handler) ? input.handler : null,
       };
     });
@@ -157,7 +161,7 @@ export class AlertCmp {
 
     // An alert can be created with several different inputs. Radios,
     // checkboxes and inputs are all accepted, but they cannot be mixed.
-    let inputTypes: any[] = [];
+    const inputTypes: string[] = [];
     data.inputs.forEach(input => {
       if (inputTypes.indexOf(input.type) < 0) {
         inputTypes.push(input.type);
@@ -165,14 +169,23 @@ export class AlertCmp {
     });
 
     if (inputTypes.length > 1 && (inputTypes.indexOf('checkbox') > -1 || inputTypes.indexOf('radio') > -1)) {
-      console.warn('Alert cannot mix input types: ' + (inputTypes.join('/')) + '. Please see alert docs for more info.');
+      console.warn(`Alert cannot mix input types: ${(inputTypes.join('/'))}. Please see alert docs for more info.`);
     }
 
     this.inputType = inputTypes.length ? inputTypes[0] : null;
 
-    let checkedInput = this.d.inputs.find(input => input.checked);
+    const checkedInput = this.d.inputs.find(input => input.checked);
     if (checkedInput) {
       this.activeId = checkedInput.id;
+    }
+
+    const hasTextInput = (this.d.inputs.length && this.d.inputs.some(i => !(NON_TEXT_INPUT_REGEX.test(i.type))));
+    if (hasTextInput && this._platform.is('mobile')) {
+      // this alert has a text input and it's on a mobile device so we should align
+      // the alert up high because we need to leave space for the virtual keboard
+      // this also helps prevent the layout getting all messed up from
+      // the browser trying to scroll the input into a safe area
+      this._renderer.setElementClass(this._elementRef.nativeElement, 'alert-top', true);
     }
   }
 
@@ -185,12 +198,14 @@ export class AlertCmp {
   }
 
   ionViewDidEnter() {
-    let activeElement: any = document.activeElement;
-    if (document.activeElement) {
-      activeElement.blur();
-    }
+    // focus out of the active element
+    focusOutActiveElement();
 
-    let focusableEle = this._elementRef.nativeElement.querySelector('input,button');
+    // set focus on the first input or button in the alert
+    // note that this does not always work and bring up the keyboard on
+    // devices since the focus command must come from the user's touch event
+    // and ionViewDidEnter is not in the same callstack as the touch event :(
+    const focusableEle = this._elementRef.nativeElement.querySelector('input,button');
     if (focusableEle) {
       focusableEle.focus();
     }
@@ -206,19 +221,19 @@ export class AlertCmp {
           // this can happen when the button has focus and used the enter
           // key to click the button. However, both the click handler and
           // this keyup event will fire, so only allow one of them to go.
-          console.debug('alert, enter button');
+          console.debug(`alert, enter button`);
           let button = this.d.buttons[this.d.buttons.length - 1];
           this.btnClick(button);
         }
 
       } else if (ev.keyCode === Key.ESCAPE) {
-        console.debug('alert, escape button');
+        console.debug(`alert, escape button`);
         this.bdClick();
       }
     }
   }
 
-  btnClick(button: any, dismissDelay?: number) {
+  btnClick(button: any) {
     if (!this.enabled) {
       return;
     }
@@ -238,9 +253,8 @@ export class AlertCmp {
     }
 
     if (shouldDismiss) {
-      setTimeout(() => {
-        this.dismiss(button.role);
-      }, dismissDelay || this._config.get('pageTransitionDelay'));
+      this.dismiss(button.role);
+      focusOutActiveElement();
     }
   }
 
@@ -271,7 +285,7 @@ export class AlertCmp {
     if (this.enabled && this.d.enableBackdropDismiss) {
       let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {
-        this.btnClick(cancelBtn, 1);
+        this.btnClick(cancelBtn);
 
       } else {
         this.dismiss('backdrop');
@@ -280,14 +294,15 @@ export class AlertCmp {
   }
 
   dismiss(role: any): Promise<any> {
+    focusOutActiveElement();
     return this._viewCtrl.dismiss(this.getValues(), role);
   }
 
-  getValues() {
+  getValues(): any {
     if (this.inputType === 'radio') {
       // this is an alert with radio buttons (single value select)
       // return the one value which is checked, otherwise undefined
-      let checkedInput = this.d.inputs.find(i => i.checked);
+      const checkedInput = this.d.inputs.find(i => i.checked);
       return checkedInput ? checkedInput.value : undefined;
     }
 
@@ -299,7 +314,7 @@ export class AlertCmp {
 
     // this is an alert with text inputs
     // return an object of all the values with the input name as the key
-    let values: {[k: string]: string} = {};
+    const values: {[k: string]: string} = {};
     this.d.inputs.forEach(i => {
       values[i.name] = i.value;
     });

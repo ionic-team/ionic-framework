@@ -24,11 +24,6 @@ export class Form {
     }
   }
 
-  focusOut() {
-    const activeElement = <HTMLElement>document.activeElement;
-    activeElement && activeElement.blur && activeElement.blur();
-  }
-
   setAsFocused(input: any) {
     this._focused = input;
   }

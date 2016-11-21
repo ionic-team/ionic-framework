@@ -1,8 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 
 import { Config } from '../config/config';
-import { Form } from './form';
-import { hasFocusedTextInput, nativeRaf, nativeTimeout, zoneRafFrames } from './dom';
+import { focusOutActiveElement, hasFocusedTextInput, nativeRaf, nativeTimeout, zoneRafFrames } from './dom';
 import { Key } from './key';
 
 
@@ -24,7 +23,7 @@ import { Key } from './key';
 @Injectable()
 export class Keyboard {
 
-  constructor(config: Config, private _form: Form, private _zone: NgZone) {
+  constructor(config: Config, private _zone: NgZone) {
     _zone.runOutsideAngular(() => {
       this.focusOutline(config.get('focusOutline'), document);
 
@@ -33,7 +32,7 @@ export class Keyboard {
         // useful when the virtual keyboard is closed natively
         // https://github.com/driftyco/ionic-plugin-keyboard
         if (hasFocusedTextInput()) {
-          this._form.focusOut();
+          focusOutActiveElement();
         }
       });
     });
@@ -117,7 +116,7 @@ export class Keyboard {
     nativeRaf(() => {
       if (hasFocusedTextInput()) {
         // only focus out when a text input has focus
-        this._form.focusOut();
+        focusOutActiveElement();
       }
     });
   }

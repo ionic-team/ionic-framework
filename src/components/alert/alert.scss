@@ -24,6 +24,12 @@ ion-alert {
   justify-content: center;
 }
 
+ion-alert.alert-top {
+  align-items: flex-start;
+
+  padding-top: 50px;
+}
+
 ion-alert input {
   width: 100%;
 }

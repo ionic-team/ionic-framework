@@ -6,7 +6,6 @@ import { App } from '../components/app/app';
 import { IonicApp } from '../components/app/app-root';
 import { Config } from '../config/config';
 import { DeepLinker } from '../navigation/deep-linker';
-import { Form } from './form';
 import { GestureController } from '../gestures/gesture-controller';
 import { Keyboard } from './keyboard';
 import { Menu } from '../components/menu/menu';
@@ -231,11 +230,9 @@ export const mockNavController = function(): NavControllerBase {
 
   let app = mockApp(config, platform);
 
-  let form = new Form();
-
   let zone = mockZone();
 
-  let keyboard = new Keyboard(config, form, zone);
+  let keyboard = new Keyboard(config, zone);
 
   let elementRef = mockElementRef();
 
@@ -281,11 +278,9 @@ export const mockNavController = function(): NavControllerBase {
 };
 
 export const mockOverlayPortal = function(app: App, config: Config, platform: Platform): OverlayPortal {
-  let form = new Form();
-
   let zone = mockZone();
 
-  let keyboard = new Keyboard(config, form, zone);
+  let keyboard = new Keyboard(config, zone);
 
   let elementRef = mockElementRef();
 
@@ -323,11 +318,9 @@ export const mockTab = function(parentTabs: Tabs): Tab {
 
   let app = (<any>parentTabs)._app || mockApp(config, platform);
 
-  let form = new Form();
-
   let zone = mockZone();
 
-  let keyboard = new Keyboard(config, form, zone);
+  let keyboard = new Keyboard(config, zone);
 
   let elementRef = mockElementRef();
 
