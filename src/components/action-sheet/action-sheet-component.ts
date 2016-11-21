@@ -58,7 +58,7 @@ export class ActionSheetCmp {
 
   constructor(
     private _viewCtrl: ViewController,
-    private _config: Config,
+    config: Config,
     private _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,
@@ -66,7 +66,7 @@ export class ActionSheetCmp {
   ) {
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
-    this.mode = _config.get('mode');
+    this.mode = config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `action-sheet-${this.mode}`, true);
 
     if (this.d.cssClass) {
@@ -141,7 +141,7 @@ export class ActionSheetCmp {
     }
   }
 
-  click(button: any, dismissDelay?: number) {
+  click(button: any) {
     if (! this.enabled ) {
       return;
     }
@@ -157,16 +157,14 @@ export class ActionSheetCmp {
     }
 
     if (shouldDismiss) {
-      setTimeout(() => {
-        this.dismiss(button.role);
-      }, dismissDelay || this._config.get('pageTransitionDelay'));
+      this.dismiss(button.role);
     }
   }
 
   bdClick() {
     if (this.enabled && this.d.enableBackdropDismiss) {
       if (this.d.cancelButton) {
-        this.click(this.d.cancelButton, 1);
+        this.click(this.d.cancelButton);
 
       } else {
         this.dismiss('backdrop');

@@ -94,7 +94,7 @@ export class AlertCmp {
   constructor(
     public _viewCtrl: ViewController,
     public _elementRef: ElementRef,
-    public _config: Config,
+    config: Config,
     gestureCtrl: GestureController,
     params: NavParams,
     private _renderer: Renderer,
@@ -103,7 +103,7 @@ export class AlertCmp {
     // gesture blocker is used to disable gestures dynamically
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
-    this.mode = _config.get('mode');
+    this.mode = config.get('mode');
     _renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
     if (this.d.cssClass) {
@@ -233,7 +233,7 @@ export class AlertCmp {
     }
   }
 
-  btnClick(button: any, dismissDelay?: number) {
+  btnClick(button: any) {
     if (!this.enabled) {
       return;
     }
@@ -253,10 +253,7 @@ export class AlertCmp {
     }
 
     if (shouldDismiss) {
-      setTimeout(() => {
-        this.dismiss(button.role);
-      }, dismissDelay || this._config.get('pageTransitionDelay'));
-
+      this.dismiss(button.role);
       focusOutActiveElement();
     }
   }
@@ -288,7 +285,7 @@ export class AlertCmp {
     if (this.enabled && this.d.enableBackdropDismiss) {
       let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {
-        this.btnClick(cancelBtn, 1);
+        this.btnClick(cancelBtn);
 
       } else {
         this.dismiss('backdrop');

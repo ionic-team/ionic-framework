@@ -461,14 +461,14 @@ export class PickerCmp {
   constructor(
     private _viewCtrl: ViewController,
     private _elementRef: ElementRef,
-    private _config: Config,
+    config: Config,
     gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer
   ) {
     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
-    this.mode = _config.get('mode');
+    this.mode = config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `picker-${this.mode}`, true);
 
     if (this.d.cssClass) {
@@ -579,7 +579,7 @@ export class PickerCmp {
     this.enabled = true;
   }
 
-  btnClick(button: any, dismissDelay?: number) {
+  btnClick(button: any) {
     if (!this.enabled) {
       return;
     }
@@ -599,9 +599,7 @@ export class PickerCmp {
     }
 
     if (shouldDismiss) {
-      setTimeout(() => {
-        this.dismiss(button.role);
-      }, dismissDelay || this._config.get('pageTransitionDelay'));
+      this.dismiss(button.role);
     }
   }
 
