@@ -46,7 +46,10 @@ export class E2EApp {
     E2EPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp, {
+      inputCloning: true,
+      scrollAssist: true
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
