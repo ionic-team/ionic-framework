@@ -126,14 +126,6 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
   width: calc(100% - #{$text-input-wp-margin-right});
 }
 
-.item-label-floating .text-input-wp.cloned-input {
-  top: 32px;
-}
-
-.item-label-stacked .text-input-wp.cloned-input {
-  top: 27px;
-}
-
 .item-wp.item-label-stacked [item-right],
 .item-wp.item-label-floating [item-right] {
   align-self: flex-end;

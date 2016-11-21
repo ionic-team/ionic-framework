@@ -107,6 +107,10 @@ textarea {
   color: inherit;
 }
 
+textarea::placeholder {
+  padding-left: 2px;
+}
+
 form,
 input,
 optgroup,

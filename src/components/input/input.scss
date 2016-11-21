@@ -119,7 +119,7 @@ input.text-input:-webkit-autofill {
 
 [next-input] {
   position: absolute;
-  bottom: 1px;
+  bottom: 20px;
 
   padding: 0;
 
@@ -152,19 +152,4 @@ input.text-input:-webkit-autofill {
 
 .input-has-focus.input-has-value .text-input-clear-icon {
   display: block;
-}
-
-
-// Cloned Input
-// --------------------------------------------------
-
-.text-input.cloned-input {
-  position: relative;
-  top: 0;
-
-  pointer-events: none;
-}
-
-.item-input:not(.item-label-floating) .text-input.cloned-active {
-  display: none;
 }
