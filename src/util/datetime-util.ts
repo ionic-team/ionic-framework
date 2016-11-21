@@ -294,8 +294,6 @@ export function parseTemplate(template: string): string[] {
       if (word === format.f) {
         if (word === FORMAT_A || word === FORMAT_a) {
           // this format is an am/pm format, so it's an "a" or "A"
-          console.log(`word: ${word}, words[i - 1]: ${words[i - 1]}`);
-
           if ((formats.indexOf(FORMAT_h) < 0 && formats.indexOf(FORMAT_hh) < 0) ||
               VALID_AMPM_PREFIX.indexOf(words[i - 1]) === -1) {
             // template does not already have a 12-hour format
