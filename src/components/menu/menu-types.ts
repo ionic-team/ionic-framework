@@ -15,10 +15,18 @@ export class MenuType {
   ani: Animation = new Animation();
   isOpening: boolean;
 
+  constructor() {
+    this.ani
+      .easing('cubic-bezier(0.0, 0.0, 0.2, 1)')
+      .easingReverse('cubic-bezier(0.4, 0.0, 0.6, 1)')
+      .duration(280);
+  }
+
   setOpen(shouldOpen: boolean, animated: boolean, done: Function) {
     let ani = this.ani
       .onFinish(done, true)
       .reverse(!shouldOpen);
+
     if (animated) {
       ani.play();
     } else {
@@ -40,7 +48,7 @@ export class MenuType {
     this.ani.progressStep(stepValue);
   }
 
-  setProgressEnd(shouldComplete: boolean, currentStepValue: number, done: Function) {
+  setProgressEnd(shouldComplete: boolean, currentStepValue: number, velocity: number, done: Function) {
     let isOpen = (this.isOpening && shouldComplete);
     if (!this.isOpening && !shouldComplete) {
       isOpen = true;
@@ -51,7 +59,9 @@ export class MenuType {
       done(isOpen);
     }, true);
 
-    this.ani.progressEnd(shouldComplete, currentStepValue);
+    let dur = this.ani.getDuration() / (Math.abs(velocity) + 1);
+
+    this.ani.progressEnd(shouldComplete, currentStepValue, dur);
   }
 
   destroy() {
@@ -72,11 +82,6 @@ class MenuRevealType extends MenuType {
     super();
 
     let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
-
-    this.ani
-        .easing('ease')
-        .duration(250);
-
     let contentOpen = new Animation(menu.getContentElement());
     contentOpen.fromTo('translateX', '0px', openedX);
     this.ani.add(contentOpen);
@@ -94,10 +99,6 @@ MenuController.registerType('reveal', MenuRevealType);
 class MenuPushType extends MenuType {
   constructor(menu: Menu, platform: Platform) {
     super();
-
-    this.ani
-        .easing('ease')
-        .duration(250);
 
     let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
 
@@ -134,10 +135,6 @@ MenuController.registerType('push', MenuPushType);
 class MenuOverlayType extends MenuType {
   constructor(menu: Menu, platform: Platform) {
     super();
-
-    this.ani
-        .easing('ease')
-        .duration(250);
 
     let closedX: string, openedX: string;
     if (menu.side === 'right') {

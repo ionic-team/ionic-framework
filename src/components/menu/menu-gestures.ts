@@ -78,7 +78,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
       'shouldCompleteRight', shouldCompleteRight,
       'currentStepValue', currentStepValue);
 
-    this.menu.swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue);
+    this.menu.swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue, velocity);
   }
 
   getElementStartPos(slide: SlideData, ev: any) {

@@ -65,7 +65,7 @@ export class NavControllerBase extends Ion implements NavController {
     super(config, elementRef, renderer);
 
     this._sbEnabled = config.getBoolean('swipeBackEnabled');
-    this._sbThreshold = config.getNumber('swipeBackThreshold', 40);
+    this._sbThreshold = config.getNumber('swipeBackThreshold', 0);
 
     this.id = 'n' + (++ctrlIds);
   }
@@ -918,10 +918,11 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  swipeBackEnd(shouldComplete: boolean, currentStepValue: number) {
+  swipeBackEnd(shouldComplete: boolean, currentStepValue: number, velocity: number) {
     if (this._sbTrns && this._sbGesture) {
       // the swipe back gesture has ended
-      this._sbTrns.progressEnd(shouldComplete, currentStepValue, 300);
+      const dur = this._sbTrns.getDuration() / (Math.abs(velocity) + 1);
+      this._sbTrns.progressEnd(shouldComplete, currentStepValue, dur);
     }
   }
 

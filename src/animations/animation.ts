@@ -13,6 +13,7 @@ export class Animation {
   private _fx: EffectProperty[];
   private _dur: number = null;
   private _es: string = null;
+  private _rvEs: string = null;
   private _bfSty: { [property: string]: any; };
   private _bfAdd: string[];
   private _bfRm: string[];
@@ -114,6 +115,9 @@ export class Animation {
    * not have an easing, then it'll get the easing from its parent.
    */
   getEasing(): string {
+    if (this._rv && this._rvEs) {
+      return this._rvEs;
+    }
     return this._es !== null ? this._es : (this.parent && this.parent.getEasing()) || null;
   }
 
@@ -122,6 +126,14 @@ export class Animation {
    */
   easing(name: string): Animation {
     this._es = name;
+    return this;
+  }
+
+  /**
+   * Set the easing for this reversed animation.
+   */
+  easingReverse(name: string): Animation {
+    this._rvEs = name;
     return this;
   }
 
@@ -996,14 +1008,15 @@ export class Animation {
   /**
    * End the progress animation.
    */
-  progressEnd(shouldComplete: boolean, currentStepValue: number, maxDelta: number = 0) {
+  progressEnd(shouldComplete: boolean, currentStepValue: number, dur: number = -1) {
     console.debug('Animation, progressEnd, shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
-    this._isAsync = (currentStepValue > 0.05 && currentStepValue < 0.95);
-
     const stepValue = shouldComplete ? 1 : 0;
-    const factor = Math.max(Math.abs(currentStepValue - stepValue), 0.5) * 2;
-    const dur = 64 + factor * maxDelta;
+
+    if (dur < 0) {
+      dur = this._dur;
+    }
+    this._isAsync = (currentStepValue > 0.05 && currentStepValue < 0.95 && dur > 30);
 
     this._progressEnd(shouldComplete, stepValue, dur, this._isAsync);
 

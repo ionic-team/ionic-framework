@@ -58,6 +58,12 @@ ion-menu ion-backdrop {
   transform: translate3d(0, 0, 0);
 }
 
+.menu-content-open {
+  cursor: pointer;
+
+  touch-action: manipulation;
+}
+
 .menu-content-open ion-pane,
 .menu-content-open ion-content,
 .menu-content-open .toolbar {

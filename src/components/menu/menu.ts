@@ -465,7 +465,7 @@ export class Menu {
   /**
    * @private
    */
-  swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number) {
+  swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number, velocity: number) {
     if (!this._isAnimating) {
       return;
     }
@@ -478,7 +478,7 @@ export class Menu {
       shouldComplete = (this.side === 'right') ? shouldCompleteRight : shouldCompleteLeft;
     }
 
-    this._getType().setProgressEnd(shouldComplete, stepValue, (isOpen: boolean) => {
+    this._getType().setProgressEnd(shouldComplete, stepValue, velocity, (isOpen: boolean) => {
       console.debug('menu, swipeEnd', this.side);
       this._after(isOpen);
     });
@@ -512,14 +512,9 @@ export class Menu {
 
       this._cntEle.classList.add('menu-content-open');
       let callback = this.onBackdropClick.bind(this);
-      this._events.pointerEvents({
-        element: this._cntEle,
-        pointerDown: callback
-      });
-      this._events.pointerEvents({
-        element: this.backdrop.getNativeElement(),
-        pointerDown: callback
-      });
+      this._events.listen(this._cntEle, 'click', callback, true);
+      this._events.listen(this.backdrop.getNativeElement(), 'click', callback, true);
+
       this.ionOpen.emit(true);
 
     } else {

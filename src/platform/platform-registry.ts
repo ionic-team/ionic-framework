@@ -109,7 +109,6 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
       scrollAssist: isIOS,
       statusbarPadding: isCordova,
       swipeBackEnabled: isIOS,
-      swipeBackThreshold: 40,
       tapPolyfill: isIOSUI,
       virtualScrollEventAssist: isIOSUI,
       disableScrollAssist: isIOS,

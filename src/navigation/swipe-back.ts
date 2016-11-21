@@ -53,12 +53,13 @@ export class SwipeBackGesture extends SlideEdgeGesture {
   }
 
   onSlideEnd(slide: SlideData, ev: any) {
+    const velocity = slide.velocity;
     const currentStepValue = (slide.distance / slide.max);
-    const isResetDirecction = slide.velocity < 0;
+    const isResetDirecction = velocity < 0;
     const isMovingFast = Math.abs(slide.velocity) > 0.4;
     const isInResetZone = Math.abs(slide.delta) < Math.abs(slide.max) * 0.5;
     const shouldComplete = !swipeShouldReset(isResetDirecction, isMovingFast, isInResetZone);
 
-    this._nav.swipeBackEnd(shouldComplete, currentStepValue);
+    this._nav.swipeBackEnd(shouldComplete, currentStepValue, velocity);
   }
 }
