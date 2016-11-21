@@ -251,8 +251,10 @@ export function isTextInput(ele: any) {
   return !!ele &&
          (ele.tagName === 'TEXTAREA' ||
           ele.contentEditable === 'true' ||
-          (ele.tagName === 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset|color|image|button)$/i).test(ele.type)));
+          (ele.tagName === 'INPUT' && !(NON_TEXT_INPUT_REGEX.test(ele.type))));
 }
+
+export const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|color|image|button)$/i;
 
 export function hasFocusedTextInput() {
   const ele = <HTMLElement>document.activeElement;
@@ -260,6 +262,11 @@ export function hasFocusedTextInput() {
     return (ele.parentElement.querySelector(':focus') === ele);
   }
   return false;
+}
+
+export function focusOutActiveElement() {
+  const activeElement = <HTMLElement>document.activeElement;
+  activeElement && activeElement.blur && activeElement.blur();
 }
 
 const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id|autofocus|autocomplete|autocorrect)$/i;

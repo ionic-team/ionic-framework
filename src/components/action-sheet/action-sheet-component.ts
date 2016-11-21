@@ -1,7 +1,7 @@
 import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { Form } from '../../util/form';
+import { focusOutActiveElement } from '../../util/dom';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
@@ -60,7 +60,6 @@ export class ActionSheetCmp {
     private _viewCtrl: ViewController,
     private _config: Config,
     private _elementRef: ElementRef,
-    private _form: Form,
     gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer
@@ -123,7 +122,7 @@ export class ActionSheetCmp {
   }
 
   ionViewDidEnter() {
-    this._form.focusOut();
+    focusOutActiveElement();
 
     let focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {
