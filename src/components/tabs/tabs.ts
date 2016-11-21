@@ -137,7 +137,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  *```ts
  * switchTabs() {
- *   this.navCtrl.parent.switch(2);
+ *   this.navCtrl.parent.select(2);
  * }
  *```
  * @demo /docs/v2/demos/src/tabs/
