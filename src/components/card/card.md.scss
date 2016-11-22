@@ -126,8 +126,7 @@ $card-md-header-color:                #222 !default;
   padding-top: 0;
 }
 
-.card-md ion-note[item-left],
-.card-md ion-note[item-right] {
+.card .note-md {
   font-size: 1.3rem;
 }
 

@@ -21,9 +21,6 @@ $item-ios-avatar-size:                    3.6rem !default;
 /// @prop - Size of the thumbnail in the item
 $item-ios-thumbnail-size:                 5.6rem !default;
 
-/// @prop - Color of the note in the item
-$item-ios-note-color:                     darken($list-ios-border-color, 10%) !default;
-
 /// @prop - Shows the detail arrow icon on an item
 $item-ios-detail-push-show:               true !default;
 
@@ -179,10 +176,6 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 .item-ios ion-thumbnail img {
   max-width: $item-ios-thumbnail-size;
   max-height: $item-ios-thumbnail-size;
-}
-
-.item-ios ion-note {
-  color: $item-ios-note-color;
 }
 
 

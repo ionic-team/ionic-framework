@@ -128,8 +128,7 @@ $card-wp-header-color:                #222 !default;
   padding-top: 0;
 }
 
-.card-wp ion-note[item-left],
-.card-wp ion-note[item-right] {
+.card .note-wp {
   font-size: 1.3rem;
 }
 

@@ -21,9 +21,6 @@ $item-md-avatar-size:                4rem !default;
 /// @prop - Size of the thumbnail in the item
 $item-md-thumbnail-size:             8rem !default;
 
-/// @prop - Color of the note in the item
-$item-md-note-color:                 darken($list-md-border-color, 10%) !default;
-
 /// @prop - Shows the detail arrow icon on an item
 $item-md-detail-push-show:           false !default;
 
@@ -201,10 +198,6 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 .item-md ion-thumbnail img {
   max-width: $item-md-thumbnail-size;
   max-height: $item-md-thumbnail-size;
-}
-
-.item-md ion-note {
-  color: $item-md-note-color;
 }
 
 

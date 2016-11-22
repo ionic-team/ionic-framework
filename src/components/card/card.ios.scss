@@ -122,8 +122,7 @@ $card-ios-header-color:                #333 !default;
   padding-top: 0;
 }
 
-.card-ios ion-note[item-left],
-.card-ios ion-note[item-right] {
+.card .note-ios {
   font-size: 1.3rem;
 }
 

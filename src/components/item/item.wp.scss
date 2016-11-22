@@ -27,9 +27,6 @@ $item-wp-avatar-size:                4rem !default;
 /// @prop - Size of the thumbnail in the item
 $item-wp-thumbnail-size:             8rem !default;
 
-/// @prop - Color of the note in the item
-$item-wp-note-color:                 $input-wp-border-color !default;
-
 /// @prop - Shows the detail arrow icon on an item
 $item-wp-detail-push-show:           false !default;
 
@@ -211,10 +208,6 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 .item-wp ion-thumbnail img {
   max-width: $item-wp-thumbnail-size;
   max-height: $item-wp-thumbnail-size;
-}
-
-.item-wp ion-note {
-  color: $item-wp-note-color;
 }
 
 
