@@ -2,6 +2,33 @@
 # [2.0.0-rc.3](https://github.com/driftyco/ionic/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2016-11-17)
 
 
+### Updating to 2.0.0-rc.3
+
+Update the following dependencies in your `package.json` file:
+
+```
+"dependencies": {
+  "@angular/common": "2.1.1",
+  "@angular/compiler": "2.1.1",
+  "@angular/compiler-cli": "2.1.1",
+  "@angular/core": "2.1.1",
+  "@angular/forms": "2.1.1",
+  "@angular/http": "2.1.1",
+  "@angular/platform-browser": "2.1.1",
+  "@angular/platform-browser-dynamic": "2.1.1",
+  "@angular/platform-server": "2.1.1",
+  "@ionic/storage": "1.1.6",
+  "ionic-angular": "2.0.0-rc.3",
+  "ionic-native": "2.2.3",
+  "ionicons": "3.0.0",
+  "rxjs": "5.0.0-beta.12",
+  "zone.js": "0.6.26"
+},
+"devDependencies": {
+  "@ionic/app-scripts": "0.0.45",
+}
+```
+
 ### Bug Fixes
 
 * **animation:** always run before classes and functions ([d9e9ece](https://github.com/driftyco/ionic/commit/d9e9ece)), closes [#8842](https://github.com/driftyco/ionic/issues/8842) [#8769](https://github.com/driftyco/ionic/issues/8769)
