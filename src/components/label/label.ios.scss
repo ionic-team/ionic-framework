@@ -29,7 +29,7 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
 
 .label-ios + ion-input .text-input,
 .label-ios + ion-textarea .text-input,
-.label-ios + ion-input + .cloned-input {
+.label-ios + .input + .cloned-input {
   margin-left: $item-ios-padding-left;
 
   width: calc(100% - (#{$item-ios-padding-right} / 2) - #{$item-ios-padding-left});
