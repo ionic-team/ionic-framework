@@ -70,7 +70,7 @@ export class MyModal {
   template: `
     <ion-header>
       <ion-navbar>
-        <ion-title>Heart</ion-title>
+        <ion-title>Settings</ion-title>
       </ion-navbar>
     </ion-header>
 
