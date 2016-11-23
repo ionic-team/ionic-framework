@@ -59,7 +59,8 @@ export class MenuType {
       done(isOpen);
     }, true);
 
-    let dur = this.ani.getDuration() / (Math.abs(velocity) + 1);
+    let factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
+    let dur = this.ani.getDuration() * factor;
 
     this.ani.progressEnd(shouldComplete, currentStepValue, dur);
   }

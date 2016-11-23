@@ -1016,7 +1016,7 @@ export class Animation {
     if (dur < 0) {
       dur = this._dur;
     }
-    this._isAsync = (currentStepValue > 0.05 && currentStepValue < 0.95 && dur > 30);
+    this._isAsync = (dur > 30);
 
     this._progressEnd(shouldComplete, stepValue, dur, this._isAsync);
 
