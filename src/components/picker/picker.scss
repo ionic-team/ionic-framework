@@ -16,10 +16,16 @@ ion-picker-cmp {
 
   width: $picker-width;
   height: $picker-width;
+
+  contain: strict;
 }
 
 .picker-toolbar {
   z-index: 1;
+
+  width: 100%;
+
+  contain: strict;
 }
 
 .picker-wrapper {
@@ -40,6 +46,8 @@ ion-picker-cmp {
   max-width: $picker-max-width;
 
   transform: translate3d(0, 100%, 0);
+
+  contain: strict;
 }
 
 .picker-columns {
@@ -49,6 +57,8 @@ ion-picker-cmp {
   overflow: hidden;
 
   justify-content: center;
+
+  contain: strict;
 }
 
 .picker-col {
@@ -61,6 +71,8 @@ ion-picker-cmp {
   height: 100%;
 
   box-sizing: content-box;
+
+  contain: content;
 }
 
 .picker-opts {

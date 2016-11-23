@@ -92,6 +92,14 @@ ion-tab.show-tab {
   transform: translateY(0);
 }
 
+ion-app,
+ion-nav,
+ion-tab,
+.app-root,
+.ion-page {
+  contain: strict;
+}
+
 
 // Page Container Structure
 // --------------------------------------------------

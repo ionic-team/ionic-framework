@@ -31,6 +31,8 @@ ion-modal {
 
   width: 100%;
   height: 100%;
+
+  contain: strict;
 }
 
 ion-modal ion-backdrop {
@@ -43,6 +45,8 @@ ion-modal ion-backdrop {
   z-index: 10;
 
   height: 100%;
+
+  contain: strict;
 
   @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
     position: absolute;

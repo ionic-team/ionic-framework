@@ -16,7 +16,6 @@ $button-round-border-radius:      64px !default;
   position: relative;
   z-index: 0;
   display: inline-block;
-  overflow: hidden;
 
   text-align: center;
   text-overflow: ellipsis;
@@ -31,6 +30,8 @@ $button-round-border-radius:      64px !default;
 
   font-kerning: none;
   user-select: none;
+
+  contain: content;
 }
 
 .button-inner {
@@ -68,6 +69,8 @@ button[disabled],
   clear: both;
 
   width: 100%;
+
+  contain: strict;
 }
 
 .button-block::after {
@@ -82,6 +85,8 @@ button[disabled],
   display: block;
 
   width: 100%;
+
+  contain: strict;
 }
 
 // Full Outline Button
