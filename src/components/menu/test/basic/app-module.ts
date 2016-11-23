@@ -9,8 +9,9 @@ export class Page1 {
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public modalCtrl: ModalController
-  ) { }
+    public modalCtrl: ModalController) { }
+
+  myMenu: string = 'right';
 
   presentAlert() {
     let alert = this.alertCtrl.create({
@@ -32,22 +33,22 @@ export class Page1 {
   }
 }
 
-@Component({templateUrl: 'modal.html'})
+@Component({ templateUrl: 'modal.html' })
 export class Modal {
-  constructor(public viewController: ViewController) {}
+  constructor(public viewController: ViewController) { }
   close() {
     this.viewController.dismiss();
   }
 }
 
 
-@Component({templateUrl: 'page3.html'})
-export class Page3 {}
+@Component({ templateUrl: 'page3.html' })
+export class Page3 { }
 
 
-@Component({templateUrl: 'page2.html'})
+@Component({ templateUrl: 'page2.html' })
 export class Page2 {
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) { }
 
   page3() {
     this.navCtrl.push(Page3);
@@ -61,7 +62,7 @@ export class Page2 {
 export class E2EPage {
   rootPage: any;
   changeDetectionCount: number = 0;
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
   @ViewChild(Nav) nav: Nav;
 
   constructor(public menuCtrl: MenuController) {
@@ -139,4 +140,4 @@ export class E2EApp {
     Modal
   ]
 })
-export class AppModule {}
+export class AppModule { }
