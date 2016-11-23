@@ -17,6 +17,8 @@ ion-toolbar {
   justify-content: space-between;
 
   width: 100%;
+
+  contain: content;
 }
 
 .toolbar-background {
@@ -32,6 +34,8 @@ ion-toolbar {
   transform: translateZ(0);
 
   pointer-events: none;
+
+  contain: strict;
 }
 
 ion-title {

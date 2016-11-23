@@ -11,6 +11,8 @@ ion-content {
 
   width: 100%;
   height: 100%;
+
+  contain: layout size style;
 }
 
 .ion-page > ion-content {
@@ -38,6 +40,8 @@ a {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
+
+  contain: size style layout;
 }
 
 ion-content.js-scroll > .scroll-content {

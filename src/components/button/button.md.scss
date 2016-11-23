@@ -166,6 +166,8 @@ $button-md-round-border-radius:                 $button-round-border-radius !def
 // --------------------------------------------------
 
 .button-md {
+  overflow: hidden;
+
   margin: $button-md-margin;
   padding: $button-md-padding;
 

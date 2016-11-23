@@ -20,6 +20,8 @@ ion-toast {
   height: $toast-width;
 
   pointer-events: none;
+
+  contain: strict;
 }
 
 .toast-container {
@@ -28,6 +30,8 @@ ion-toast {
   align-items: center;
 
   pointer-events: auto;
+
+  contain: content;
 }
 
 .toast-button {

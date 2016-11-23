@@ -44,11 +44,13 @@ $fab-list-button-background-color:      #f4f4f4 !default;
   font-kerning: none;
   user-select: none;
 
-  ion-icon {
-    flex: 1;
+  contain: strict;
+}
 
-    font-size: 2.4rem;
-  }
+.fab ion-icon {
+  flex: 1;
+
+  font-size: 2.4rem;
 }
 
 // FAB mini
@@ -61,10 +63,10 @@ $fab-list-button-background-color:      #f4f4f4 !default;
   height: $fab-mini-size;
 
   line-height: $fab-mini-size;
+}
 
-  .fab-close-icon {
-    line-height: $fab-mini-size;
-  }
+.fab[mini] .fab-close-icon {
+  line-height: $fab-mini-size;
 }
 
 
