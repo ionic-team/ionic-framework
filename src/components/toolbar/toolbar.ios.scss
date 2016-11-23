@@ -39,30 +39,33 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 // --------------------------------------------------
 
 .toolbar-background-ios {
-  border-top-width: $hairlines-width;
-  border-bottom-width: $hairlines-width;
-  border-style: solid;
-  border-color: $toolbar-ios-border-color;
   background: $toolbar-ios-background;
 }
 
-// iOS Toolbar Borders
+
+// iOS Header / Footer Borders
 // --------------------------------------------------
 
-ion-header .toolbar-ios:first-child .toolbar-background,
-ion-menu > .toolbar-ios:first-child .toolbar-background,
-.toolbar-ios[no-border-top] .toolbar-background {
+.header-ios,
+.footer-ios {
+  border-style: solid;
+  border-color: $toolbar-ios-border-color;
+}
+
+.header-ios {
+  border-width: 0 0 $hairlines-width;
+}
+
+.footer-ios {
+  border-width: $hairlines-width 0 0;
+}
+
+.header-ios[no-border] {
   border-top-width: 0;
 }
 
-ion-footer .toolbar-ios:last-child .toolbar-background,
-.toolbar-ios[no-border-bottom] .toolbar-background {
-  border-bottom-width: 0;
-}
-
-.toolbar-ios[no-border] .toolbar-background {
+.footer-ios[no-border] {
   border-top-width: 0;
-  border-bottom-width: 0;
 }
 
 
@@ -81,6 +84,7 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
   font-weight: $toolbar-ios-title-font-weight;
   text-align: $toolbar-ios-title-text-align;
   color: $toolbar-ios-title-text-color;
+  margin-top: 1px;
 
   pointer-events: auto;
 }
@@ -104,7 +108,6 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
   .toolbar-ios-#{$color-name} {
 
     .toolbar-background-ios {
-      border-color: darken($color-base, 10%);
       background: $color-base;
     }
 

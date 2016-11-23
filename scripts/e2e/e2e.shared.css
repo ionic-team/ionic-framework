@@ -259,3 +259,7 @@ e2e-popover-basic .text-seravek {
 e2e-popover-basic .text-times-new-roman {
   font-family: "Times New Roman";
 }
+
+.rainbow-content {
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+}
