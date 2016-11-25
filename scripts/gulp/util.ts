@@ -53,7 +53,7 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
 }
 
 function removeDebugStatements() {
-  let replacer = new Replacer(['console.debug', 'assert']);
+  let replacer = new Replacer(['console.debug', 'assert', 'runInDev']);
   return through.obj(function (file, encoding, callback) {
     const content = file.contents.toString();
     const cleanedJs = replacer.replace(content);

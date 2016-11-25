@@ -13,6 +13,7 @@ export class E2EPage {}
     `
     ion-tabs {
       margin-bottom: 20px;
+      contain: none;
     }
     `,
     `
