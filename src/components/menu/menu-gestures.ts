@@ -47,6 +47,11 @@ export class MenuContentGesture extends SlideEdgeGesture {
   // Set CSS, then wait one frame for it to apply before sliding starts
   onSlideBeforeStart(ev: any) {
     console.debug('menu gesture, onSlideBeforeStart', this.menu.side);
+    this.menu.swipeBeforeStart();
+  }
+
+  onSlideStart() {
+    console.debug('menu gesture, onSlideStart', this.menu.side);
     this.menu.swipeStart();
   }
 

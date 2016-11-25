@@ -438,12 +438,24 @@ export class Menu {
   /**
    * @private
    */
-  swipeStart() {
-    // user started swiping the menu open/close
-    if (this.canSwipe()) {
-      this._before();
-      this._getType().setProgressStart(this.isOpen);
+  swipeBeforeStart() {
+    if (!this.canSwipe()) {
+      assert(false, 'canSwipe() has to be true');
+      return;
     }
+    this._before();
+  }
+
+  /**
+   * @private
+   */
+  swipeStart() {
+    // user actively dragging the menu
+    if (!this._isAnimating) {
+      assert(false, '_isAnimating has to be true');
+      return;
+    }
+    this._getType().setProgressStart(this.isOpen);
   }
 
   /**
@@ -452,6 +464,7 @@ export class Menu {
   swipeProgress(stepValue: number) {
     // user actively dragging the menu
     if (!this._isAnimating) {
+      assert(false, '_isAnimating has to be true');
       return;
     }
     this._getType().setProgessStep(stepValue);

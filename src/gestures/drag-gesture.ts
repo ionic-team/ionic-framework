@@ -1,4 +1,4 @@
-import { defaults } from '../util/util';
+import { defaults, assert } from '../util/util';
 import { GestureDelegate } from '../gestures/gesture-controller';
 import { PanRecognizer } from './recognizers';
 import { PointerEvents, PointerEventsConfig, UIEventManager } from '../util/ui-event-manager';
@@ -26,7 +26,7 @@ export class PanGesture {
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;
   private detector: PanRecognizer;
-  private started: boolean = false;
+  protected started: boolean = false;
   private captured: boolean = false;
   public isListening: boolean = false;
   protected gestute: GestureDelegate;
@@ -106,10 +106,10 @@ export class PanGesture {
   }
 
   pointerMove(ev: any) {
+    if (!this.started) {
+      return;
+    }
     this.debouncer.debounce(() => {
-      if (!this.started) {
-        return;
-      }
       if (this.captured) {
         this.onDragMove(ev);
         return;
@@ -134,11 +134,9 @@ export class PanGesture {
   }
 
   pointerUp(ev: any) {
+    assert(this.started, 'started failed');
     this.debouncer.cancel();
 
-    if (!this.started) {
-      return;
-    }
     this.gestute && this.gestute.release();
 
     if (this.captured) {

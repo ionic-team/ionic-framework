@@ -1,5 +1,4 @@
 import { Animation } from '../animations/animation';
-import { Content } from '../components/content/content';
 import { Transition } from './transition';
 
 
@@ -24,7 +23,7 @@ export class PageTransition extends Transition {
    * DOM READ
    */
   readDimensions() {
-    const content = <Content>this.enteringView.getIONContent();
+    const content = this.enteringView.getIONContent();
     if (content) {
       content.readDimensions();
     }
@@ -34,7 +33,7 @@ export class PageTransition extends Transition {
    * DOM WRITE
    */
   writeDimensions() {
-    const content = <Content>this.enteringView.getIONContent();
+    const content = this.enteringView.getIONContent();
     if (content) {
       content.writeDimensions();
     }

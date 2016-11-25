@@ -504,11 +504,13 @@ export class Animation {
 
       // set the after styles
       // ******** DOM WRITE ****************
-      self._playEnd(1);
+      self._playEnd(shouldComplete ? 1 : 0);
 
       // transition finished
       self._didFinishAll(shouldComplete, true, false);
     }
+
+    assert(dur > 0, 'duration can not be 0 in async animations');
 
     // set the TRANSITION END event on one of the transition elements
     self._unrgTrns = transitionEnd(self._transEl(), onTransitionEnd);
@@ -641,6 +643,8 @@ export class Animation {
         var fromNum = fx.from.num;
         var toNum = fx.to.num;
         var tweenEffect = (fromNum !== toNum);
+
+        assert(tweenEffect || !this._isAsync, 'in async animations to != from value');
         if (tweenEffect) {
           this._twn = true;
         }
@@ -655,7 +659,12 @@ export class Animation {
 
         } else if (tweenEffect) {
           // EVERYTHING IN BETWEEN
-          val = (((toNum - fromNum) * stepValue) + fromNum) + fx.to.unit;
+          var valNum = (((toNum - fromNum) * stepValue) + fromNum);
+          var unit = fx.to.unit;
+          if (unit === 'px') {
+            valNum = Math.round(valNum);
+          }
+          val = valNum + unit;
         }
 
         if (val !== null) {
@@ -1011,11 +1020,20 @@ export class Animation {
   progressEnd(shouldComplete: boolean, currentStepValue: number, dur: number = -1) {
     console.debug('Animation, progressEnd, shouldComplete', shouldComplete, 'currentStepValue', currentStepValue);
 
+    if (this._rv) {
+      // if the animation is going in reverse then
+      // flip the step value: 0 becomes 1, 1 becomes 0
+      currentStepValue = ((currentStepValue * -1) + 1);
+    }
     const stepValue = shouldComplete ? 1 : 0;
 
-    if (dur < 0) {
+    const diff = Math.abs(currentStepValue - stepValue);
+    if (diff < 0.05) {
+      dur = 0;
+    } else if (dur < 0) {
       dur = this._dur;
     }
+
     this._isAsync = (dur > 30);
 
     this._progressEnd(shouldComplete, stepValue, dur, this._isAsync);

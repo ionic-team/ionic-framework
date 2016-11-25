@@ -1,6 +1,6 @@
 import { PanGesture } from './drag-gesture';
-import { clamp } from '../util/util';
-import { pointerCoord } from '../util/dom';
+import { clamp, assert } from '../util/util';
+import { nativeRaf, pointerCoord } from '../util/dom';
 
 /**
  * @private
@@ -49,16 +49,21 @@ export class SlideGesture extends PanGesture {
       distance: 0,
       velocity: 0,
     };
-    let {min, max} = this.getSlideBoundaries(this.slide, ev);
-    this.slide.min = min;
-    this.slide.max = max;
-    this.slide.elementStartPos = this.getElementStartPos(this.slide, ev);
-
-    this.onSlideStart(this.slide, ev);
+    this.started = false;
+    nativeRaf(() => {
+      let {min, max} = this.getSlideBoundaries(this.slide, ev);
+      this.slide.min = min;
+      this.slide.max = max;
+      this.slide.elementStartPos = this.getElementStartPos(this.slide, ev);
+      this.started = true;
+      this.onSlideStart(this.slide, ev);
+    });
   }
 
   onDragMove(ev: any) {
     let slide: SlideData = this.slide;
+    assert(slide.min !== slide.max, 'slide data must be properly initialized');
+
     let coord = <any>pointerCoord(ev);
     let newPos = coord[this.direction];
     let newTimestamp = Date.now();
@@ -74,8 +79,6 @@ export class SlideGesture extends PanGesture {
     slide.velocity = velocity;
     slide.delta = newPos - slide.pointerStartPos;
     this.onSlide(slide, ev);
-
-    return true;
   }
 
   onDragEnd(ev: any) {
