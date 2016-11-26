@@ -1,0 +1,68 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Item inputs</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      Simple item
+    </ion-item>
+
+    <button ion-item>
+      Item Button
+    </button>
+
+    <ion-item>
+      <ion-label>DateTime</ion-label>
+      <ion-datetime [(ngModel)]="datetime" min="1994-03-14" max="2017-12-09" displayFormat="MM/DD/YYYY" required></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Select</ion-label>
+      <ion-select [(ngModel)]="select">
+        <ion-option value="nes">NES</ion-option>
+        <ion-option value="n64">Nintendo64</ion-option>
+        <ion-option value="ps">PlayStation</ion-option>
+        <ion-option value="genesis">Sega Genesis</ion-option>
+        <ion-option value="saturn">Sega Saturn</ion-option>
+        <ion-option value="snes">SNES</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Toggle</ion-label>
+      <ion-toggle name="Actually" [(ngModel)]="toggle"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Input (text)</ion-label>
+      <ion-input [(ngModel)]="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Input (placeholder)</ion-label>
+      <ion-input placeholder="Placeholder"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Checkbox</ion-label>
+      <ion-checkbox [(ngModel)]="checkbox"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Toggle (left)</ion-label>
+      <ion-toggle [(ngModel)]="toggle" item-left></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Range</ion-label>
+      <ion-range [(ngModel)]="range"></ion-range>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
