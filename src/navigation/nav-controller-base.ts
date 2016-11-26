@@ -136,7 +136,10 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   removeView(viewController: ViewController, opts?: NavOptions, done?: Function): Promise<any> {
-    return this.remove(this.indexOf(viewController), 1, opts, done);
+    return this._queueTrns({
+      removeView: viewController,
+      opts: opts,
+    }, done);
   }
 
   setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
@@ -291,7 +294,17 @@ export class NavControllerBase extends Ion implements NavController {
     }
     const viewsLength = this._views.length;
 
-    if (isPresent(ti.removeStart)) {
+    if (isPresent(ti.removeView)) {
+      assert(!isPresent(ti.removeStart), 'removeView and removeIndex can not be enabled at the same time');
+      let index = this._views.indexOf(ti.removeView);
+
+      if (index >= 0) {
+        ti.removeStart = index;
+        ti.removeCount = 1;
+        ti.leavingRequiresTransition = ((ti.removeStart + ti.removeCount) === viewsLength);
+      }
+
+    } else if (isPresent(ti.removeStart)) {
       if (ti.removeStart < 0) {
         ti.removeStart = (viewsLength - 1);
       }
@@ -347,6 +360,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (isPresent(removeStart)) {
       assert(removeStart >= 0, 'removeStart can not be negative');
       assert(ti.removeCount >= 0, 'removeCount can not be negative');
+
       destroyQueue = [];
       for (i = 0; i < ti.removeCount; i++) {
         view = this._views[i + removeStart];
@@ -580,6 +594,8 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _trnsStart(transition: Transition, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, resolve: TransitionResolveFn) {
+    assert(this.isTransitioning(), 'isTransitioning() has to be true');
+
     this._trnsId = null;
 
     // set the correct zIndex for the entering and leaving views
@@ -623,9 +639,6 @@ export class NavControllerBase extends Ion implements NavController {
 
     // get the set duration of this transition
     const duration = transition.getDuration();
-
-    // set that this nav is actively transitioning
-    this.setTransitioning(true);
 
     if (transition.isRoot()) {
       // this is the top most, or only active transition, so disable the app

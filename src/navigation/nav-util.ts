@@ -177,6 +177,7 @@ export interface TransitionInstruction {
   opts: NavOptions;
   insertStart?: number;
   insertViews?: ViewController[];
+  removeView?: ViewController;
   removeStart?: number;
   removeCount?: number;
   resolve?: TransitionResolveFn;
