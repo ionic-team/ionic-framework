@@ -6,6 +6,7 @@ import { IonicApp, IonicModule } from '../../../..';
   templateUrl: 'main.html'
 })
 export class E2EPage {
+  disabled = false;
   datetime = '2016-12-09';
   toggle = true;
   select = 'n64';
