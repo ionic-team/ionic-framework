@@ -631,7 +631,7 @@ export class NavControllerBase extends Ion implements NavController {
       // this is the top most, or only active transition, so disable the app
       // add XXms to the duration the app is disabled when the keyboard is open
 
-      if (duration > DISABLE_APP_MINIMUM_DURATION) {
+      if (duration > DISABLE_APP_MINIMUM_DURATION && opts.disableApp !== false) {
         // if this transition has a duration and this is the root transition
         // then set that the app is actively disabled
         this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET);

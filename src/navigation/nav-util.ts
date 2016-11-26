@@ -159,6 +159,7 @@ export interface NavOptions {
   id?: string;
   keyboardClose?: boolean;
   progressAnimation?: boolean;
+  disableApp?: boolean;
   ev?: any;
   updateUrl?: boolean;
   isNavRoot?: boolean;
