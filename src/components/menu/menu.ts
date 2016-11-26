@@ -471,7 +471,7 @@ export class Menu {
 
     let ionDrag = this.ionDrag;
     if (ionDrag.observers.length > 0) {
-      this._zone.run(ionDrag.emit.bind(ionDrag, stepValue));
+      ionDrag.emit(stepValue);
     }
   }
 

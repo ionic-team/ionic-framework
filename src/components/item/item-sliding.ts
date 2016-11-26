@@ -404,7 +404,7 @@ export class ItemSliding {
     this.item.setElementStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
     let ionDrag = this.ionDrag;
     if (ionDrag.observers.length > 0) {
-      this._zone.run(ionDrag.emit.bind(ionDrag, this));
+      ionDrag.emit(this);
     }
   }
 
