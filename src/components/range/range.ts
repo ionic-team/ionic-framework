@@ -255,7 +255,6 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   @Input()
   get resolution(): number {
-    //console.log('retur')
     return this._resolution;
   }
   set resolution(val: number) {
@@ -619,8 +618,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    * @private
    */
   ratioToValue(ratio: number) {
-    ratio = ((this._max - this._min) * ratio).toFixed(this.resolution);
-    ratio = ((ratio / this._step) * this._step + this._min).toFixed(this.resolution);
+    ratio = parseFloat(((this._max - this._min) * ratio).toFixed(this.resolution));
+    ratio = parseFloat(((ratio / this._step) * this._step + this._min).toFixed(this.resolution));
     return clamp(this._min, ratio, this._max);
   }
 
