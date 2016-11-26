@@ -113,14 +113,20 @@ export class IonicApp extends Ion implements OnInit {
    * @private
    */
   _disableScroll(shouldDisableScroll: boolean) {
-    console.log('App Root: Scroll Disable Assist', shouldDisableScroll);
-
     if (shouldDisableScroll) {
       this.stopScroll().then(() => {
-        this._rafId = nativeTimeout(() => this.setElementClass('disable-scroll', true), 16 * 2);
+        this._rafId = nativeTimeout(() => {
+          console.debug('App Root: adding .disable-scroll');
+          this.setElementClass('disable-scroll', true);
+        }, 16 * 2);
       });
     } else {
-      cancelAnimationFrame(this._rafId);
+      let plugin = this._stopScrollPlugin;
+      if (plugin && plugin.cancel) {
+        plugin.cancel();
+      }
+      clearTimeout(this._rafId);
+      console.debug('App Root: removing .disable-scroll');
       this.setElementClass('disable-scroll', false);
     }
   }
