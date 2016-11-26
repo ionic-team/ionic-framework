@@ -339,7 +339,7 @@ export class Menu {
     this.setElementAttribute('type', this.type);
 
     // add the gestures
-    this._cntGesture = new MenuContentGesture(this, document.body, this._gestureCtrl);
+    this._cntGesture = new MenuContentGesture(this, <any>document, this._gestureCtrl);
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side
@@ -502,9 +502,9 @@ export class Menu {
 
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
-    this.menuContent && this.menuContent.resize();
     this.setElementClass('show-menu', true);
     this.backdrop.setElementClass('show-backdrop', true);
+    this.menuContent && this.menuContent.resize();
     this._keyboard.close();
     this._isAnimating = true;
   }

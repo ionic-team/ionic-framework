@@ -16,6 +16,7 @@ export interface PanGestureConfig {
   debouncer?: Debouncer;
   zone?: boolean;
   capture?: boolean;
+  passive?: boolean;
 }
 
 /**
@@ -40,6 +41,7 @@ export class PanGesture {
       direction: 'x',
       zone: true,
       capture: false,
+      passive: false,
     });
 
     this.debouncer = (opts.debouncer)
@@ -53,7 +55,8 @@ export class PanGesture {
       pointerMove: this.pointerMove.bind(this),
       pointerUp: this.pointerUp.bind(this),
       zone: opts.zone,
-      capture: opts.capture
+      capture: opts.capture,
+      passive: opts.passive
     };
     this.detector = new PanRecognizer(opts.direction, opts.threshold, opts.maxAngle);
   }

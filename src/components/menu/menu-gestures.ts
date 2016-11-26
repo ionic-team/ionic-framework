@@ -22,6 +22,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
       threshold: 0,
       maxEdgeStart: menu.maxEdgeStart || 50,
       zone: false,
+      passive: true,
       debouncer: new NativeRafDebouncer(),
       gesture: gestureCtrl.createGesture({
         name: GESTURE_MENU_SWIPE,
