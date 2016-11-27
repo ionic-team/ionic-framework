@@ -94,6 +94,10 @@ export class PickerColumnCmp {
 
   ngOnDestroy() {
     this.events.unlistenAll();
+    if (this.rafId) {
+      cancelRaf(this.rafId);
+      this.rafId = null;
+    }
   }
 
   pointerStart(ev: UIEvent): boolean {
