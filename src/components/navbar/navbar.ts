@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Optional, Renderer, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, Optional, Renderer } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -49,10 +49,8 @@ import { ViewController } from '../../navigation/view-controller';
   template:
     '<div class="toolbar-background" [ngClass]="\'toolbar-background-\' + _mode"></div>' +
     '<button (click)="backButtonClick($event)" ion-button="bar-button" class="back-button" [ngClass]="\'back-button-\' + _mode" [hidden]="_hideBb">' +
-      '<span class="button-inner">' +
-        '<ion-icon class="back-button-icon" [ngClass]="\'back-button-icon-\' + _mode" [name]="_bbIcon"></ion-icon>' +
-        '<span class="back-button-text" [ngClass]="\'back-button-text-\' + _mode" #bbTxt></span>' +
-      '</span>' +
+      '<ion-icon class="back-button-icon" [ngClass]="\'back-button-icon-\' + _mode" [name]="_bbIcon"></ion-icon>' +
+      '<span class="back-button-text" [ngClass]="\'back-button-text-\' + _mode">{{_backText}}</span>' +
     '</button>' +
     '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
     '<ng-content select="ion-buttons[start]"></ng-content>' +
@@ -70,7 +68,7 @@ export class Navbar extends ToolbarBase {
   /**
    * @private
    */
-  @ViewChild('bbTxt') _bbTxt: ElementRef;
+  _backText: string;
   /**
    * @private
    */
@@ -129,11 +127,9 @@ export class Navbar extends ToolbarBase {
 
     this._bbIcon = config.get('backButtonIcon');
     this._sbPadding = config.getBoolean('statusbarPadding');
+    this._backText = config.get('backButtonText', 'Back');
   }
 
-  ngAfterViewInit() {
-    this.setBackButtonText(this._config.get('backButtonText', 'Back'));
-  }
 
   backButtonClick(ev: UIEvent) {
     ev.preventDefault();
@@ -146,7 +142,7 @@ export class Navbar extends ToolbarBase {
    * Set the text of the Back Button in the Nav Bar. Defaults to "Back".
    */
   setBackButtonText(text: string) {
-    this._renderer.setText(this._bbTxt.nativeElement, text);
+    this._backText = text;
   }
 
   /**
