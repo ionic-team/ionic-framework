@@ -8,6 +8,20 @@ function log(message: string) {
   LOG += '\n';
 }
 
+const TEMPLATE: string = `
+  <ion-header>
+    <ion-navbar>
+      <ion-title>{{_name}}</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content text-center>
+    <p>This is the {{_name}}</p>
+    <div f></div>
+    <div f></div>
+  </ion-content>
+  `;
+
 export class Base {
   constructor(private _name: string) { }
   ionViewWillLoad() {
@@ -42,7 +56,7 @@ export class Base {
 }
 
 @Component({
-  template: `<ion-content text-center><h1>Page 1</h1></ion-content>`
+  template: TEMPLATE
 })
 export class Page1 extends Base {
   constructor(private nav: NavController) {
@@ -51,10 +65,10 @@ export class Page1 extends Base {
 }
 
 @Component({
-  template: `<ion-content text-center><h1>Page 2</h1></ion-content>`
+  template: TEMPLATE
 })
 export class Page2 extends Base {
-  counter = 5;
+  counter = 4;
   constructor(private nav: NavController) {
     super('Page2');
   }
@@ -73,7 +87,7 @@ export class Page2 extends Base {
 }
 
 @Component({
-  template: `<ion-content text-center><h1>Page 3</h1></ion-content>`
+  template: TEMPLATE
 })
 export class Page3 extends Base {
   constructor(private nav: NavController) {
@@ -86,7 +100,7 @@ export class Page3 extends Base {
 }
 
 @Component({
-  template: `<ion-content text-center><h1>Page 4</h1></ion-content>`
+  template: TEMPLATE
 })
 export class Page4 extends Base {
   constructor(private nav: NavController) {
@@ -122,7 +136,7 @@ export class Page4 extends Base {
 }
 
 @Component({
-  template: `<ion-content text-center><h1>Page 5</h1></ion-content>`
+  template: TEMPLATE
 })
 export class Page5 extends Base {
   constructor(private nav: NavController) {
@@ -138,7 +152,7 @@ export class Page5 extends Base {
 }
 
 @Component({
-  template: `<ion-content text-center><h1>Page 6</h1></ion-content>`
+  template: TEMPLATE
 })
 export class Page6 extends Base {
   continue: boolean = false;
@@ -203,7 +217,7 @@ export class Page6 extends Base {
 }
 
 @Component({
-  template: `<ion-content text-center><h1>Page 7</h1></ion-content>`
+  template: TEMPLATE
 })
 export class Page7 extends Base {
   constructor(private nav: NavController) {
@@ -211,15 +225,46 @@ export class Page7 extends Base {
   }
   ionViewCanEnter() {
     super.ionViewCanEnter();
-    this.nav.setRoot(Results);
+    this.nav.setRoot(Page8);
+    this.nav.setRoot(Page8, {animate: false});
+    this.nav.setRoot(Page8).then(() => {
+      this.nav.setRoot(Results);
+    });
+    this.nav.push(Page8);
+    this.nav.push(Page8);
+    setTimeout(() => {
+      this.nav.pop({ animate: false });
+    }, Math.random() * 100);
+
+    setTimeout(() => {
+      this.nav.pop();
+    }, Math.random() * 100);
+
     return true;
+  }
+}
+
+@Component({
+  template: TEMPLATE
+})
+export class Page8 extends Base {
+  constructor(private nav: NavController) {
+    super('Page8');
   }
 }
 
 
 @Component({
-  template: `<ion-header><ion-navbar><ion-title>Results</ion-title></ion-navbar></ion-header>
-  <ion-content padding><pre style="font-size: 0.72em; column-count: 3;">{{result}}</pre></ion-content>`
+  template: `
+  <ion-header>
+    <ion-navbar>
+      <ion-title>Results</ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding>
+    <pre style="font-size: 0.72em; column-count: 3;">{{result}}</pre>
+  </ion-content>
+`
 })
 export class Results {
   result: string = 'Loading...';
@@ -250,6 +295,7 @@ export class E2EApp {
     Page5,
     Page6,
     Page7,
+    Page8,
     Results
   ],
   imports: [
@@ -265,6 +311,7 @@ export class E2EApp {
     Page5,
     Page6,
     Page7,
+    Page8,
     Results
   ]
 })
