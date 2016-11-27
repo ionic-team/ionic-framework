@@ -14,7 +14,6 @@ $toolbar-order-ios: (
   menu-toggle-end: 7,
 );
 
-$toolbar-ios-padding:                       4px !default;
 $toolbar-ios-button-font-size:              1.7rem !default;
 
 $toolbar-ios-title-font-size:               1.7rem !default;
@@ -80,8 +79,6 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 }
 
 .toolbar-title-ios {
-  margin-top: 1px;
-
   font-size: $toolbar-ios-title-font-size;
   font-weight: $toolbar-ios-title-font-weight;
   text-align: $toolbar-ios-title-text-align;
@@ -157,7 +154,7 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 // --------------------------------------------------
 
 .bar-button-ios {
-  padding: 0 5px;
+  padding: 0 4px;
 
   height: 32px;
 
