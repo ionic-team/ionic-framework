@@ -135,14 +135,18 @@ export class App {
    * @return {boolean}
    */
   isEnabled(): boolean {
-    return (this._disTime < Date.now());
+    const disTime = this._disTime;
+    if (disTime === 0) {
+      return true;
+    }
+    return (disTime < Date.now());
   }
 
   /**
    * @private
    */
   setScrolling() {
-    this._scrollTime = Date.now();
+    this._scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
   }
 
   /**
@@ -150,7 +154,15 @@ export class App {
    * @return {boolean} returns true or false
    */
   isScrolling(): boolean {
-    return ((this._scrollTime + ACTIVE_SCROLLING_TIME) > Date.now());
+    const scrollTime = this._scrollTime;
+    if (scrollTime === 0) {
+      return false;
+    }
+    if (scrollTime < Date.now()) {
+      this._scrollTime = 0;
+      return false;
+    }
+    return true;
   }
 
   /**
