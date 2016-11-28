@@ -20,7 +20,7 @@
  * reach to trigger the on-infinite expression. Default: 1%.
  * @param {string=} spinner The {@link ionic.directive:ionSpinner} to show while loading. The SVG
  * {@link ionic.directive:ionSpinner} is now the default, replacing rotating font icons.
- * @param {string=} icon The icon to show while loading. Default: 'ion-load-d'.  This is depreicated
+ * @param {string=} icon The icon to show while loading. Default: 'ion-load-d'.  This is depreciated
  * in favor of the SVG {@link ionic.directive:ionSpinner}.
  * @param {boolean=} immediate-check Whether to check the infinite scroll bounds immediately on load.
  *
