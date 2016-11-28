@@ -579,17 +579,18 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    * @private
    */
   updateTicks() {
-    if (this._snaps && this._ticks) {
-      let ratio = this.ratio;
+    const ticks = this._ticks;
+    if (this._snaps && ticks) {
+      var ratio = this.ratio;
       if (this._dual) {
-        let upperRatio = this.ratioUpper;
+        var upperRatio = this.ratioUpper;
 
-        this._ticks.forEach(t => {
+        ticks.forEach(t => {
           t.active = (t.ratio >= ratio && t.ratio <= upperRatio);
         });
 
       } else {
-        this._ticks.forEach(t => {
+        ticks.forEach(t => {
           t.active = (t.ratio <= ratio);
         });
       }
