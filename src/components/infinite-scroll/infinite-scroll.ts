@@ -35,7 +35,7 @@ import { Content } from '../content/content';
  *   items = [];
  *
  *   constructor() {
- *     for (var i = 0; i < 30; i++) {
+ *     for (let i = 0; i < 30; i++) {
  *       this.items.push( this.items.length );
  *     }
  *   }
@@ -44,7 +44,7 @@ import { Content } from '../content/content';
  *     console.log('Begin async operation');
  *
  *     setTimeout(() => {
- *       for (var i = 0; i < 30; i++) {
+ *       for (let i = 0; i < 30; i++) {
  *         this.items.push( this.items.length );
  *       }
  *
@@ -88,21 +88,25 @@ import { Content } from '../content/content';
  * developers to create their own infinite scroll content components.
  * You could replace our default content with custom SVG or CSS animations.
  *
- * @demo /docs/v2/demos/infinite-scroll/
+ * @demo /docs/v2/demos/src/infinite-scroll/
  *
  */
 @Directive({
   selector: 'ion-infinite-scroll'
 })
 export class InfiniteScroll {
-  private _lastCheck: number = 0;
-  private _highestY: number = 0;
-  private _scLsn: Function;
-  private _thr: string = '15%';
-  private _thrPx: number = 0;
-  private _thrPc: number = 0.15;
-  private _init: boolean = false;
+  _lastCheck: number = 0;
+  _highestY: number = 0;
+  _scLsn: Function;
+  _thr: string = '15%';
+  _thrPx: number = 0;
+  _thrPc: number = 0.15;
+  _init: boolean = false;
 
+
+  /**
+   * @internal
+   */
   state: string = STATE_ENABLED;
 
   /**
@@ -132,6 +136,16 @@ export class InfiniteScroll {
   }
 
   /**
+   * @input {boolean} Whether or not the infinite scroll should be
+   * enabled or not. Setting to `false` will remove scroll event listeners
+   * and hide the display.
+   */
+  @Input()
+  set enabled(shouldEnable: boolean) {
+    this.enable(shouldEnable);
+  }
+
+  /**
    * @output {event} The expression to call when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
@@ -144,10 +158,10 @@ export class InfiniteScroll {
     private _zone: NgZone,
     private _elementRef: ElementRef
   ) {
-    _content.addCssClass('has-infinite-scroll');
+    _content.setElementClass('has-infinite-scroll', true);
   }
 
-  private _onScroll() {
+  _onScroll() {
     if (this.state === STATE_LOADING || this.state === STATE_DISABLED) {
       return 1;
     }
@@ -217,7 +231,10 @@ export class InfiniteScroll {
     this._setListeners(shouldEnable);
   }
 
-  private _setListeners(shouldListen: boolean) {
+  /**
+   * @private
+   */
+  _setListeners(shouldListen: boolean) {
     if (this._init) {
       if (shouldListen) {
         if (!this._scLsn) {

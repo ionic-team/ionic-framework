@@ -12,17 +12,18 @@ import { CSS, hasFocus }  from '../../util/dom';
   selector: '.text-input'
 })
 export class NativeInput {
-  private _relocated: boolean;
-  private _clone: boolean;
-  private _blurring: boolean;
-  private _unrefBlur: Function;
+  _relocated: boolean;
+  _clone: boolean;
+  _blurring: boolean;
+  _unrefBlur: Function;
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() keydown: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    public _elementRef: ElementRef,
+    public _renderer: Renderer,
     config: Config,
     public ngControl: NgControl
   ) {
@@ -31,12 +32,19 @@ export class NativeInput {
   }
 
   @HostListener('input', ['$event'])
-  private _change(ev: any) {
+  _change(ev: any) {
     this.valueChange.emit(ev.target.value);
   }
 
+  @HostListener('keydown', ['$event'])
+  _keyDown(ev: any) {
+    if (ev) {
+      ev.target && this.keydown.emit(ev.target.value);
+    }
+  }
+
   @HostListener('focus')
-  private _focus() {
+  _focus() {
     var self = this;
 
     self.focusChange.emit(true);
@@ -54,18 +62,18 @@ export class NativeInput {
       // automatically blur input if:
       // 1) this input has focus
       // 2) the newly tapped document element is not an input
-      console.debug('input blurring enabled');
+      console.debug(`native-input, blurring enabled`);
 
       document.addEventListener('touchend', docTouchEnd, true);
       self._unrefBlur = function() {
-        console.debug('input blurring disabled');
+        console.debug(`native-input, blurring disabled`);
         document.removeEventListener('touchend', docTouchEnd, true);
       };
     }
   }
 
   @HostListener('blur')
-  private _blur() {
+  _blur() {
     this.focusChange.emit(false);
     this.hideFocus(false);
 
@@ -91,7 +99,7 @@ export class NativeInput {
 
   beginFocus(shouldFocus: boolean, inputRelativeY: number) {
     if (this._relocated !== shouldFocus) {
-      var focusedInputEle = this.element();
+      const focusedInputEle = this.element();
       if (shouldFocus) {
         // we should focus into this element
 
@@ -105,13 +113,12 @@ export class NativeInput {
           // the cloned input fills the area of where native input should be
           // while the native input fakes out the browser by relocating itself
           // before it receives the actual focus event
-          var clonedInputEle = cloneInput(focusedInputEle, 'cloned-focus');
-          focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
+          cloneInputComponent(focusedInputEle);
 
           // move the native input to a location safe to receive focus
           // according to the browser, the native input receives focus in an
           // area which doesn't require the browser to scroll the input into place
-          focusedInputEle.style[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+          (<any>focusedInputEle.style)[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
           focusedInputEle.style.opacity = '0';
         }
 
@@ -120,18 +127,11 @@ export class NativeInput {
         // to scroll the input into view itself (screwing up headers/footers)
         this.setFocus();
 
-        if (this._clone) {
-          focusedInputEle.classList.add('cloned-active');
-        }
-
       } else {
         // should remove the focus
         if (this._clone) {
           // should remove the cloned node
-          focusedInputEle.classList.remove('cloned-active');
-          focusedInputEle.style[CSS.transform] = '';
-          focusedInputEle.style.opacity = '';
-          removeClone(focusedInputEle, 'cloned-focus');
+          removeClone(focusedInputEle);
         }
       }
 
@@ -142,17 +142,14 @@ export class NativeInput {
   hideFocus(shouldHideFocus: boolean) {
     let focusedInputEle = this.element();
 
-    console.debug(`native input hideFocus, shouldHideFocus: ${shouldHideFocus}, input value: ${focusedInputEle.value}`);
+    console.debug(`native-input, hideFocus, shouldHideFocus: ${shouldHideFocus}, input value: ${focusedInputEle.value}`);
 
     if (shouldHideFocus) {
-      let clonedInputEle = cloneInput(focusedInputEle, 'cloned-move');
-
-      focusedInputEle.classList.add('cloned-active');
-      focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
+      cloneInputComponent(focusedInputEle);
+      focusedInputEle.style.transform = 'scale(0)';
 
     } else {
-      focusedInputEle.classList.remove('cloned-active');
-      removeClone(focusedInputEle, 'cloned-move');
+      removeClone(focusedInputEle);
     }
   }
 
@@ -164,7 +161,7 @@ export class NativeInput {
     return this.element().value;
   }
 
-  setCssClass(cssClass: string, shouldAdd: boolean) {
+  setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
@@ -178,26 +175,56 @@ export class NativeInput {
 
 }
 
-function cloneInput(focusedInputEle: any, addCssClass: string) {
-  let clonedInputEle = focusedInputEle.cloneNode(true);
-  clonedInputEle.classList.add('cloned-input');
-  clonedInputEle.classList.add(addCssClass);
-  clonedInputEle.setAttribute('aria-hidden', true);
-  clonedInputEle.removeAttribute('aria-labelledby');
-  clonedInputEle.tabIndex = -1;
-  clonedInputEle.style.width = (focusedInputEle.offsetWidth + 10) + 'px';
-  clonedInputEle.style.height = focusedInputEle.offsetHeight + 'px';
-  clonedInputEle.value = focusedInputEle.value;
-  return clonedInputEle;
-}
+function cloneInputComponent(srcNativeInputEle: HTMLInputElement) {
+  // given a native <input> or <textarea> element
+  // find its parent wrapping component like <ion-input> or <ion-textarea>
+  // then clone the entire component
+  const srcComponentEle = <HTMLElement>srcNativeInputEle.closest('ion-input,ion-textarea');
+  if (srcComponentEle) {
+    // DOM READ
+    const srcTop = srcComponentEle.offsetTop;
+    const srcLeft = srcComponentEle.offsetLeft;
+    const srcWidth = srcComponentEle.offsetWidth;
+    const srcHeight = srcComponentEle.offsetHeight;
 
-function removeClone(focusedInputEle: any, queryCssClass: string) {
-  let clonedInputEle = focusedInputEle.parentElement.querySelector('.' + queryCssClass);
-  if (clonedInputEle) {
-    clonedInputEle.parentNode.removeChild(clonedInputEle);
+    // DOM WRITE
+    // not using deep clone so we don't pull in unnecessary nodes
+    const clonedComponentEle = <HTMLElement>srcComponentEle.cloneNode(false);
+    clonedComponentEle.classList.add('cloned-input');
+    clonedComponentEle.setAttribute('aria-hidden', 'true');
+    clonedComponentEle.style.pointerEvents = 'none';
+    clonedComponentEle.style.position = 'absolute';
+    clonedComponentEle.style.top = srcTop + 'px';
+    clonedComponentEle.style.left = srcLeft + 'px';
+    clonedComponentEle.style.width = srcWidth + 'px';
+    clonedComponentEle.style.height = srcHeight + 'px';
+
+    const clonedNativeInputEle = <HTMLInputElement>srcNativeInputEle.cloneNode(false);
+    clonedNativeInputEle.value = srcNativeInputEle.value;
+    clonedNativeInputEle.tabIndex = -1;
+
+    clonedComponentEle.appendChild(clonedNativeInputEle);
+    srcComponentEle.parentNode.appendChild(clonedComponentEle);
+
+    srcComponentEle.style.pointerEvents = 'none';
   }
+
+  srcNativeInputEle.style.transform = 'scale(0)';
 }
 
+function removeClone(srcNativeInputEle: HTMLElement) {
+  const srcComponentEle = <HTMLElement>srcNativeInputEle.closest('ion-input,ion-textarea');
+  if (srcComponentEle && srcComponentEle.parentElement) {
+    const clonedInputEles = srcComponentEle.parentElement.querySelectorAll('.cloned-input');
+    for (var i = 0; i < clonedInputEles.length; i++) {
+      clonedInputEles[i].parentNode.removeChild(clonedInputEles[i]);
+    }
+
+    srcComponentEle.style.pointerEvents = '';
+  }
+  srcNativeInputEle.style.transform = '';
+  srcNativeInputEle.style.opacity = '';
+}
 
 
 /**

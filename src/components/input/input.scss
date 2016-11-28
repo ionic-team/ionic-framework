@@ -1,4 +1,14 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
+
+// Input
+// --------------------------------------------------
+
+/// @prop - Color of the input highlight when valid
+$text-input-highlight-color-valid:       #32db64 !default;
+
+/// @prop - Color of the input highlight when invalid
+$text-input-highlight-color-invalid:     #f53d3d !default;
+
 
 // Input/Textarea Wrapper
 // --------------------------------------------------
@@ -32,6 +42,7 @@ ion-textarea {
 
 .text-input {
   @include placeholder();
+  @include appearance(none);
 
   display: inline-block;
 
@@ -43,8 +54,6 @@ ion-textarea {
   border: 0;
   border-radius: 0;
   background: transparent;
-
-  -webkit-appearance: none;
 }
 
 textarea.text-input {
@@ -110,7 +119,7 @@ input.text-input:-webkit-autofill {
 
 [next-input] {
   position: absolute;
-  bottom: 1px;
+  bottom: 20px;
 
   padding: 0;
 
@@ -143,19 +152,4 @@ input.text-input:-webkit-autofill {
 
 .input-has-focus.input-has-value .text-input-clear-icon {
   display: block;
-}
-
-
-// Cloned Input
-// --------------------------------------------------
-
-.text-input.cloned-input {
-  position: relative;
-  top: 0;
-
-  pointer-events: none;
-}
-
-.item-input:not(.item-label-floating) .text-input.cloned-active {
-  display: none;
 }

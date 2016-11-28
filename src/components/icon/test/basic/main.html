@@ -12,16 +12,9 @@
   <ion-list>
 
     <ion-item>
-      <ion-icon name="home" item-left></ion-icon>
+      <ion-icon name="home" [color]="dynamicColor" item-left></ion-icon>
       <code>
         name="home"
-      </code>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon [name]="homeIcon" item-left></ion-icon>
-      <code>
-        [name]="homeIcon"
       </code>
     </ion-item>
 
@@ -33,9 +26,23 @@
     </ion-item>
 
     <ion-item>
-      <ion-icon name="home" [isActive]="isActive" item-left></ion-icon>
+      <ion-icon [name]="homeIcon" [isActive]="isActive" item-left></ion-icon>
       <code>
-        name="home" [isActive]="isActive"
+        [name]="homeIcon" [isActive]="isActive" (false)
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="md-home" isActive="false" item-left></ion-icon>
+      <code>
+        name="md-home" isActive="false"
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-home" isActive="false" item-left></ion-icon>
+      <code>
+        name="ios-home" isActive="false"
       </code>
     </ion-item>
 
@@ -54,14 +61,21 @@
     </ion-item>
 
     <ion-item>
-      <ion-icon name="md-home" item-left></ion-icon>
+      <ion-icon name="ios-home-outline" isActive="false" item-left></ion-icon>
+      <code>
+        name="ios-home-outline" isActive="false"
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="md-home" color="primary" item-left></ion-icon>
       <code>
         name="md-home"
       </code>
     </ion-item>
 
     <ion-item>
-      <ion-icon name="logo-twitter" item-left></ion-icon>
+      <ion-icon name="logo-twitter" color="secondary" item-left></ion-icon>
       <code>
         name="logo-twitter"
       </code>
@@ -74,16 +88,38 @@
       </code>
     </ion-item>
 
+    <ion-item>
+      <ion-icon ios="md-color-filter" md="ios-color-filter" item-left></ion-icon>
+      <code>
+        ios="md-color-filter" md="ios-color-filter"
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon ios="md-color-filter" md="ios-color-filter" isActive="false" item-left></ion-icon>
+      <code>
+        ios="md-color-filter" md="ios-color-filter" isActive="false"
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon item-left></ion-icon>
+      <code>
+        name="null"
+      </code>
+    </ion-item>
+
     <ion-item detail-push>
       <code>
         ion-item w/ [detail-push] attr. text text text text text text
       </code>
     </ion-item>
 
+
   </ion-list>
 
   <p>
-    <button (click)="updateIcon()">
+    <button ion-button icon-left (click)="updateIcon()">
       <ion-icon [name]="btnIcon"></ion-icon>
       Update icon
     </button>

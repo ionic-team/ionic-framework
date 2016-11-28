@@ -1,0 +1,52 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Anchor Buttons</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding style="text-align:center" no-bounce>
+
+  <p>
+    <a ion-button>Default</a>
+    <a ion-button class="activated">Default.activated</a>
+  </p>
+
+  <p>
+    <a ion-button color="primary">Primary</a>
+    <a ion-button color="primary" class="activated">Primary.activated</a>
+  </p>
+
+  <p>
+    <a ion-button color="secondary">Secondary</a>
+    <a ion-button color="secondary" class="activated">Secondary.activated</a>
+  </p>
+
+  <p>
+    <a ion-button color="danger">Danger</a>
+    <a ion-button color="danger" class="activated">Danger.activated</a>
+  </p>
+
+  <p>
+    <a ion-button color="light">Light</a>
+    <a ion-button color="light" class="activated">Light.activated</a>
+  </p>
+
+  <p>
+    <a ion-button color="dark">Dark</a>
+    <a ion-button color="dark" class="activated">Dark.activated</a>
+  </p>
+
+  <p>
+    <a ion-button disabled>A Disabled</a>
+    <a ion-button color="secondary" disabled>Secondary Disabled</a>
+  </p>
+
+  <p>
+    <a ion-button [color]="btnColor" (click)="chgColor()">Change Color</a>
+    <a ion-button outline [color]="btnColor" (click)="chgColor()">Change Color</a>
+  </p>
+
+</ion-content>

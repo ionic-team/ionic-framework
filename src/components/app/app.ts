@@ -1,22 +1,19 @@
-import { Component, ComponentResolver, EventEmitter, HostBinding, Injectable, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
+import { AppPortal, IonicApp } from './app-root';
 import { ClickBlock } from '../../util/click-block';
 import { Config } from '../../config/config';
-import { NavController } from '../nav/nav-controller';
-import { isTabs, isNav } from '../nav/nav-controller-base';
-import { NavOptions } from '../nav/nav-interfaces';
-import { NavPortal } from '../nav/nav-portal';
+import { isNav, isTabs, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
-
-/**
- * @private
- */
-export abstract class UserComponent {}
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
- * Ionic App utility service.
+ * @name App
+ * @description
+ * App is a utility class used in Ionic to get information about various aspects of an app
  */
 @Injectable()
 export class App {
@@ -25,25 +22,47 @@ export class App {
   private _title: string = '';
   private _titleSrv: Title = new Title();
   private _rootNav: NavController = null;
-  private _portal: NavPortal;
+  private _disableScrollAssist: boolean;
 
   /**
    * @private
    */
-  clickBlock: ClickBlock;
+  _clickBlock: ClickBlock;
 
   /**
    * @private
    */
-  appRoot: AppRoot;
+  _appRoot: IonicApp;
 
+  /**
+   * @private
+   */
   viewDidLoad: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewWillEnter: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewDidEnter: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewWillLeave: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewDidLeave: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   viewWillUnload: EventEmitter<any> = new EventEmitter();
-  viewDidUnload: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _config: Config,
@@ -52,6 +71,7 @@ export class App {
     // listen for hardware back button events
     // register this back button action with a default priority
     _platform.registerBackButtonAction(this.navPop.bind(this));
+    this._disableScrollAssist = _config.getBoolean('disableScrollAssist', false);
   }
 
   /**
@@ -67,11 +87,17 @@ export class App {
 
   /**
    * @private
+   */
+  setElementClass(className: string, isAdd: boolean) {
+    this._appRoot.setElementClass(className, isAdd);
+  }
+
+  /**
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
    * while views transition, a modal slides up, an action-sheet
    * slides up, etc. After the transition completes it is set back to `true`.
-   * @param {boolean} isEnabled
+   * @param {boolean} isEnabled `true` for enabled, `false` for disabled
    * @param {number} duration  When `isEnabled` is set to `false`, this argument
    * is used to set the maximum number of milliseconds that app will wait until
    * it will automatically enable the app again. It's basically a fallback incase
@@ -80,31 +106,27 @@ export class App {
   setEnabled(isEnabled: boolean, duration: number = 700) {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
-    if (this.clickBlock) {
+    if (this._clickBlock) {
       if (isEnabled || duration <= 32) {
         // disable the click block if it's enabled, or the duration is tiny
-        this.clickBlock.activate(false, 0);
+        this._clickBlock.activate(false, 0);
 
       } else {
         // show the click block for duration + some number
-        this.clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
+        this._clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
       }
     }
   }
 
   /**
-   * @private
+   * Toggles whether an application can be scrolled
+   * @param {boolean} disableScroll when set to `false`, the application's
+   * scrolling is enabled. When set to `true`, scrolling is disabled.
    */
   setScrollDisabled(disableScroll: boolean) {
-    let enabled = this._config.get('canDisableScroll', true);
-    if (!enabled) {
-      return;
+    if (this._disableScrollAssist) {
+      this._appRoot._disableScroll(disableScroll);
     }
-    if (!this.appRoot) {
-      console.error('appRoot is missing, scrolling can not be enabled/disabled');
-      return;
-    }
-    this.appRoot.disableScroll = disableScroll;
   }
 
   /**
@@ -125,10 +147,10 @@ export class App {
 
   /**
    * Boolean if the app is actively scrolling or not.
-   * @return {boolean}
+   * @return {boolean} returns true or false
    */
   isScrolling(): boolean {
-    return (this._scrollTime + 48 > Date.now());
+    return ((this._scrollTime + ACTIVE_SCROLLING_TIME) > Date.now());
   }
 
   /**
@@ -150,7 +172,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @return {NavController} Retuns the root NavController
    */
   getRootNav(): NavController {
     return this._rootNav;
@@ -159,38 +181,33 @@ export class App {
   /**
    * @private
    */
-  setRootNav(nav: any) {
+  _setRootNav(nav: any) {
     this._rootNav = nav;
   }
 
   /**
    * @private
    */
-  setPortal(portal: NavPortal) {
-    this._portal = portal;
-  }
+  present(enteringView: ViewController, opts: NavOptions, appPortal?: AppPortal): Promise<any> {
+    const portal = this._appRoot._getPortal(appPortal);
 
-  /**
-   * @private
-   */
-  present(enteringView: any, opts: NavOptions = {}): Promise<any> {
-    enteringView.setNav(this._portal);
+    enteringView._setNav(portal);
 
     opts.keyboardClose = false;
-    opts.direction = 'forward';
+    opts.direction = DIRECTION_FORWARD;
 
     if (!opts.animation) {
-      opts.animation = enteringView.getTransitionName('forward');
+      opts.animation = enteringView.getTransitionName(DIRECTION_FORWARD);
     }
 
     enteringView.setLeavingOpts({
       keyboardClose: false,
-      direction: 'back',
-      animation: enteringView.getTransitionName('back'),
+      direction: DIRECTION_BACK,
+      animation: enteringView.getTransitionName(DIRECTION_BACK),
       ev: opts.ev
     });
 
-    return this._portal.insertViews(-1, [enteringView], opts);
+    return portal.insertPages(-1, [enteringView], opts);
   }
 
   /**
@@ -229,14 +246,15 @@ export class App {
     // app must be enabled and there must be a
     // root nav controller for go back to work
     if (this._rootNav && this.isEnabled()) {
+      const portal = this._appRoot._getPortal();
 
       // first check if the root navigation has any overlays
       // opened in it's portal, like alert/actionsheet/popup
-      if (this._portal && this._portal.length() > 0) {
+      if (portal.length() > 0) {
         // there is an overlay view in the portal
         // let's pop this one off to go back
         console.debug('app, goBack pop overlay');
-        return this._portal.pop();
+        return portal.pop();
       }
 
       // next get the active nav, check itself and climb up all
@@ -257,72 +275,7 @@ export class App {
     return Promise.resolve();
   }
 
-  /**
-   * @private
-   */
-  private getRegisteredComponent(cls: any): any {
-    // deprecated warning: added 2016-04-28, beta7
-    console.warn('Using app.getRegisteredComponent() to query components has been deprecated. ' +
-                 'Please use Angular\'s ViewChild annotation instead:\n\nhttp://learnangular2.com/viewChild/');
-  }
-
-  /**
-   * @private
-   */
-  private getComponent(id: string): any {
-    // deprecated warning: added 2016-04-28, beta7
-    console.warn('Using app.getComponent() to query components has been deprecated. ' +
-                 'Please use Angular\'s ViewChild annotation instead:\n\nhttp://learnangular2.com/viewChild/');
-  }
-
-  /**
-   * Get an instance of the global app injector that contains references to all of the instantiated providers
-   * @returns {Injector}
-   */
-  private getAppInjector(): any {
-    // deprecated warning: added 2016-06-27, beta10
-    console.warn('Recent Angular2 versions should no longer require App.getAppInjector()');
-  }
 }
 
-
-/**
- * @private
- */
-@Component({
-  selector: 'ion-app',
-  template: `
-    <div #anchor nav-portal></div>
-    <click-block></click-block>
-  `,
-  directives: [NavPortal, ClickBlock]
-})
-export class AppRoot {
-
-  @ViewChild('anchor', {read: ViewContainerRef}) private _viewport: ViewContainerRef;
-
-  constructor(
-    private _cmp: UserComponent,
-    private _cr: ComponentResolver,
-    private _renderer: Renderer,
-    app: App
-  ) {
-    app.appRoot = this;
-  }
-
-  ngAfterViewInit() {
-    // load the user app's root component
-    this._cr.resolveComponent(<any>this._cmp).then(componentFactory => {
-      let appEle: HTMLElement = this._renderer.createElement(null, componentFactory.selector || 'div', null);
-      appEle.setAttribute('class', 'app-root');
-
-      let componentRef = componentFactory.create(this._viewport.injector, null, appEle);
-      this._viewport.insert(componentRef.hostView, 0);
-    });
-  }
-
-  @HostBinding('class.disable-scroll') disableScroll: boolean = false;
-
-}
-
+const ACTIVE_SCROLLING_TIME = 100;
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;

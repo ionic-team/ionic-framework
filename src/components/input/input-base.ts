@@ -1,42 +1,47 @@
-import { ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ElementRef, Renderer } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
-import { closest, copyInputAttributes, Coordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
+import { copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { Config } from '../../config/config';
-import { Content } from '../content/content';
-import { Form } from '../../util/form';
+import { Content, ContentDimensions } from '../content/content';
+import { Form, IonicFormInput } from '../../util/form';
+import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { NativeInput, NextInput } from './native-input';
-import { NavController } from '../nav/nav-controller';
-import { NavControllerBase } from '../nav/nav-controller-base';
+import { NavController } from '../../navigation/nav-controller';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 
 
-export class InputBase {
-  protected _coord: Coordinates;
-  protected _deregScroll: Function;
-  protected _disabled: boolean = false;
-  protected _keyboardHeight: number;
-  protected _scrollMove: EventListener;
-  protected _type: string = 'text';
-  protected _useAssist: boolean;
-  protected _usePadding: boolean;
-  protected _value: any = '';
-  protected _isTouch: boolean;
-  protected _autoFocusAssist: string;
-  protected _autoComplete: string;
-  protected _autoCorrect: string;
-  protected _nav: NavControllerBase;
+/**
+ * @private
+ * Hopefully someday a majority of the auto-scrolling tricks can get removed.
+ */
+export class InputBase extends Ion implements IonicFormInput {
+  _coord: PointerCoordinates;
+  _deregScroll: Function;
+  _disabled: boolean = false;
+  _keyboardHeight: number;
+  _scrollMove: EventListener;
+  _type: string = 'text';
+  _useAssist: boolean;
+  _usePadding: boolean;
+  _value: any = '';
+  _isTouch: boolean;
+  _autoFocusAssist: string;
+  _autoComplete: string;
+  _autoCorrect: string;
+  _nav: NavControllerBase;
+  _native: NativeInput;
+
+  // Whether to clear after the user returns to the input and resumes editing
+  _clearOnEdit: boolean;
+  // A tracking flag to watch for the blur after editing to help with clearOnEdit
+  _didBlurAfterEdit: boolean;
 
   inputControl: NgControl;
-
-  @Input() clearInput: any;
-  @Input() placeholder: string = '';
-  @ViewChild(NativeInput) protected _native: NativeInput;
-  @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
-  @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 
   constructor(
     config: Config,
@@ -44,11 +49,14 @@ export class InputBase {
     protected _item: Item,
     protected _app: App,
     protected _platform: Platform,
-    protected _elementRef: ElementRef,
+    elementRef: ElementRef,
+    renderer: Renderer,
     protected _scrollView: Content,
     nav: NavController,
     ngControl: NgControl
   ) {
+    super(config, elementRef, renderer, 'input');
+
     this._nav = <NavControllerBase>nav;
     this._useAssist = config.getBoolean('scrollAssist', false);
     this._usePadding = config.getBoolean('scrollPadding', this._useAssist);
@@ -66,49 +74,29 @@ export class InputBase {
     _form.register(this);
   }
 
-  ngOnInit() {
-    if (this._item) {
-      this._item.setCssClass('item-input', true);
-      this._item.registerInput(this._type);
-    }
+  scrollMove(ev: UIEvent) {
+    // scroll move event listener this instance can reuse
+    console.debug(`input-base, scrollMove`);
 
-    let clearInput = this.clearInput;
-    if (typeof clearInput === 'string') {
-      this.clearInput = (clearInput === '' || clearInput === 'true');
-    }
-  }
+    if (!(this._nav && this._nav.isTransitioning())) {
+      this.deregScrollMove();
 
-  ngAfterContentInit() {
-    let self = this;
+      if (this.hasFocus()) {
+        this._native.hideFocus(true);
 
-    self._scrollMove = function(ev: UIEvent) {
-      // scroll move event listener this instance can reuse
-      if (!(self._nav && self._nav.isTransitioning())) {
-        self.deregScrollMove();
+        this._scrollView.onScrollEnd(() => {
+          this._native.hideFocus(false);
 
-        if (self.hasFocus()) {
-          self._native.hideFocus(true);
-
-          self._scrollView.onScrollEnd(function() {
-            self._native.hideFocus(false);
-
-            if (self.hasFocus()) {
-              // if it still has focus then keep listening
-              self.regScrollMove();
-            }
-          });
-        }
+          if (this.hasFocus()) {
+            // if it still has focus then keep listening
+            this.regScrollMove();
+          }
+        });
       }
-    };
+    }
+  };
 
-    this.setItemInputControlCss();
-  }
-
-  ngAfterContentChecked() {
-    this.setItemInputControlCss();
-  }
-
-  private setItemInputControlCss() {
+  setItemInputControlCss() {
     let item = this._item;
     let nativeInput = this._native;
     let inputControl = this.inputControl;
@@ -124,35 +112,21 @@ export class InputBase {
     }
   }
 
-  private setControlCss(element: any, control: any) {
-    element.setCssClass('ng-untouched', control.untouched);
-    element.setCssClass('ng-touched', control.touched);
-    element.setCssClass('ng-pristine', control.pristine);
-    element.setCssClass('ng-dirty', control.dirty);
-    element.setCssClass('ng-valid', control.valid);
-    element.setCssClass('ng-invalid', !control.valid);
+  setControlCss(element: any, control: NgControl) {
+    element.setElementClass('ng-untouched', control.untouched);
+    element.setElementClass('ng-touched', control.touched);
+    element.setElementClass('ng-pristine', control.pristine);
+    element.setElementClass('ng-dirty', control.dirty);
+    element.setElementClass('ng-valid', control.valid);
+    element.setElementClass('ng-invalid', !control.valid);
   }
 
-  ngOnDestroy() {
-    this._form.deregister(this);
-  }
-
-  @Input()
-  get value() {
-    return this._value;
-  }
-
-  set value(val: any) {
+  setValue(val: any) {
     this._value = val;
     this.checkHasValue(val);
   }
 
-  @Input()
-  get type() {
-    return this._type;
-  }
-
-  set type(val) {
+  setType(val: string) {
     this._type = 'text';
 
     if (val) {
@@ -164,22 +138,45 @@ export class InputBase {
     }
   }
 
-  @Input()
-  get disabled() {
-    return this._disabled;
-  }
-
-  set disabled(val) {
+  setDisabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-input-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-input-disabled', this._disabled);
     this._native && this._native.isDisabled(this._disabled);
   }
+
+  setClearOnEdit(val: boolean) {
+    this._clearOnEdit = isTrueProperty(val);
+  }
+
+  /**
+  * Check if we need to clear the text input if clearOnEdit is enabled
+  * @private
+  */
+  checkClearOnEdit(inputValue: string) {
+    if (!this._clearOnEdit) {
+      return;
+    }
+
+    // Did the input value change after it was blurred and edited?
+    if (this._didBlurAfterEdit && this.hasValue()) {
+      // Clear the input
+      this.clearTextInput();
+    }
+
+    // Reset the flag
+    this._didBlurAfterEdit = false;
+  }
+
+  /**
+   * Overriden in child input
+   * @private
+   */
+  clearTextInput() {}
 
   /**
    * @private
    */
-  @ViewChild(NativeInput)
-  private set _nativeInput(nativeInput: NativeInput) {
+  setNativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
 
     if (this._item && this._item.labelId !== null) {
@@ -188,6 +185,10 @@ export class InputBase {
 
     nativeInput.valueChange.subscribe((inputValue: any) => {
       this.onChange(inputValue);
+    });
+
+    nativeInput.keydown.subscribe((inputValue: any) => {
+      this.onKeydown(inputValue);
     });
 
     this.focusChange(this.hasFocus());
@@ -200,7 +201,7 @@ export class InputBase {
     });
 
     this.checkHasValue(nativeInput.getValue());
-    this.disabled = this._disabled;
+    this.setDisabled(this._disabled);
 
     var ionInputEle: HTMLElement = this._elementRef.nativeElement;
     let nativeInputEle: HTMLElement = nativeInput.element();
@@ -245,8 +246,7 @@ export class InputBase {
   /**
    * @private
    */
-  @ViewChild(NextInput)
-  private set _nextInput(nextInput: NextInput) {
+  setNextInput(nextInput: NextInput) {
     if (nextInput) {
       nextInput.focused.subscribe(() => {
         this._form.tabFocus(this);
@@ -273,6 +273,16 @@ export class InputBase {
   }
 
   /**
+   * onKeydown handler for clearOnEdit
+   * @private
+   */
+  onKeydown(val: any) {
+    if (this._clearOnEdit) {
+      this.checkClearOnEdit(val);
+    }
+  }
+
+  /**
    * @private
    */
   onTouched(val: any) {}
@@ -288,9 +298,19 @@ export class InputBase {
   /**
    * @private
    */
+  hasValue(): boolean {
+    let inputValue = this._value;
+    return (inputValue !== null && inputValue !== undefined && inputValue !== '');
+  }
+
+  /**
+   * @private
+   */
   checkHasValue(inputValue: any) {
     if (this._item) {
-      this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
+      let hasValue = (inputValue !== null && inputValue !== undefined && inputValue !== '');
+
+      this._item.setElementClass('input-has-value', hasValue);
     }
   }
 
@@ -299,17 +319,21 @@ export class InputBase {
    */
   focusChange(inputHasFocus: boolean) {
     if (this._item) {
-      this._item.setCssClass('input-has-focus', inputHasFocus);
+      console.debug(`input-base, focusChange, inputHasFocus: ${inputHasFocus}, ${this._item.getNativeElement().nodeName}.${this._item.getNativeElement().className}`);
+      this._item.setElementClass('input-has-focus', inputHasFocus);
     }
     if (!inputHasFocus) {
       this.deregScrollMove();
     }
+
+    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
+    if (this._clearOnEdit && !inputHasFocus && this.hasValue()) {
+      this._didBlurAfterEdit = true;
+    }
   }
 
-  private pointerStart(ev: any) {
+  pointerStart(ev: any) {
     // input cover touchstart
-    console.debug('scroll assist pointerStart', ev.type);
-
     if (ev.type === 'touchstart') {
       this._isTouch = true;
     }
@@ -318,11 +342,13 @@ export class InputBase {
       // remember where the touchstart/mousedown started
       this._coord = pointerCoord(ev);
     }
+
+    console.debug(`input-base, pointerStart, type: ${ev.type}`);
   }
 
-  private pointerEnd(ev: any) {
+  pointerEnd(ev: any) {
     // input cover touchend/mouseup
-    console.debug('scroll assist pointerEnd', ev.type);
+    console.debug(`input-base, pointerEnd, type: ${ev.type}`);
 
     if ((this._isTouch && ev.type === 'mouseup') || !this._app.isEnabled()) {
       // the app is actively doing something right now
@@ -341,10 +367,8 @@ export class InputBase {
         ev.stopPropagation();
 
         // begin the input focus process
-        console.debug('initFocus', ev.type);
         this.initFocus();
       }
-
     }
 
     this._coord = null;
@@ -355,22 +379,32 @@ export class InputBase {
    */
   initFocus() {
     // begin the process of setting focus to the inner input element
-    var scrollView = this._scrollView;
+    const scrollView = this._scrollView;
+
+    console.debug(`input-base, initFocus(), scrollView: ${!!scrollView}`);
 
     if (scrollView) {
       // this input is inside of a scroll view
       // find out if text input should be manually scrolled into view
 
       // get container of this input, probably an ion-item a few nodes up
-      var ele = this._elementRef.nativeElement;
-      ele = closest(ele, 'ion-item,[ion-item]') || ele;
+      let ele: HTMLElement = this._elementRef.nativeElement;
+      ele = <HTMLElement>ele.closest('ion-item,[ion-item]') || ele;
 
-      var scrollData = InputBase.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this._keyboardHeight, this._platform.height());
-      if (scrollData.scrollAmount > -3 && scrollData.scrollAmount < 3) {
+      const scrollData = getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this._keyboardHeight, this._platform.height());
+      if (Math.abs(scrollData.scrollAmount) < 4) {
         // the text input is in a safe position that doesn't
         // require it to be scrolled into view, just set focus now
         this.setFocus();
+
+        // all good, allow clicks again
+        this._app.setEnabled(true);
+        this._nav && this._nav.setTransitioning(false);
         this.regScrollMove();
+
+        if (this._usePadding) {
+          this._scrollView.clearScrollPaddingFocusOut();
+        }
         return;
       }
 
@@ -381,9 +415,9 @@ export class InputBase {
 
       // manually scroll the text input to the top
       // do not allow any clicks while it's scrolling
-      var scrollDuration = getScrollAssistDuration(scrollData.scrollAmount);
+      const scrollDuration = getScrollAssistDuration(scrollData.scrollAmount);
       this._app.setEnabled(false, scrollDuration);
-      this._nav && this._nav.setTransitioning(true, scrollDuration);
+      this._nav && this._nav.setTransitioning(true);
 
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
@@ -391,7 +425,8 @@ export class InputBase {
       this._native.beginFocus(true, scrollData.inputSafeY);
 
       // scroll the input into place
-      scrollView.scrollTo(0, scrollData.scrollTo, scrollDuration).then(() => {
+      scrollView.scrollTo(0, scrollData.scrollTo, scrollDuration, () => {
+        console.debug(`input-base, scrollTo completed, scrollTo: ${scrollData.scrollTo}, scrollDuration: ${scrollDuration}`);
         // the scroll view is in the correct position now
         // give the native text input focus
         this._native.beginFocus(false, 0);
@@ -419,7 +454,7 @@ export class InputBase {
   /**
    * @private
    */
-  private setFocus() {
+  setFocus() {
     // immediately set focus
     this._form.setAsFocused(this);
 
@@ -450,12 +485,12 @@ export class InputBase {
   /**
    * @private
    */
-  private regScrollMove() {
+  regScrollMove() {
     // register scroll move listener
     if (this._useAssist && this._scrollView) {
       setTimeout(() => {
         this.deregScrollMove();
-        this._deregScroll = this._scrollView.addScrollListener(this._scrollMove);
+        this._deregScroll = this._scrollView.addScrollListener(this.scrollMove.bind(this));
       }, 80);
     }
   }
@@ -463,7 +498,7 @@ export class InputBase {
   /**
    * @private
    */
-  private deregScrollMove() {
+  deregScrollMove() {
     // deregister the scroll move listener
     this._deregScroll && this._deregScroll();
   }
@@ -471,124 +506,115 @@ export class InputBase {
   focusNext() {
     this._form.tabFocus(this);
   }
+}
 
-  /**
-   * @private
-   */
-  static getScrollData(inputOffsetTop: number, inputOffsetHeight: number, scrollViewDimensions: any, keyboardHeight: number, plaformHeight: number) {
-    // compute input's Y values relative to the body
-    let inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
-    let inputBottom = (inputTop + inputOffsetHeight);
 
-    // compute the safe area which is the viewable content area when the soft keyboard is up
-    let safeAreaTop = scrollViewDimensions.contentTop;
-    let safeAreaHeight = plaformHeight - keyboardHeight - safeAreaTop;
-    safeAreaHeight /= 2;
-    let safeAreaBottom = safeAreaTop + safeAreaHeight;
 
-    let inputTopWithinSafeArea = (inputTop >= safeAreaTop && inputTop <= safeAreaBottom);
-    let inputTopAboveSafeArea = (inputTop < safeAreaTop);
-    let inputTopBelowSafeArea = (inputTop > safeAreaBottom);
-    let inputBottomWithinSafeArea = (inputBottom >= safeAreaTop && inputBottom <= safeAreaBottom);
-    let inputBottomBelowSafeArea = (inputBottom > safeAreaBottom);
+/**
+ * @private
+ */
+export function getScrollData(inputOffsetTop: number, inputOffsetHeight: number, scrollViewDimensions: ContentDimensions, keyboardHeight: number, plaformHeight: number) {
+  // compute input's Y values relative to the body
+  let inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
+  let inputBottom = (inputTop + inputOffsetHeight);
 
-    /*
-    Text Input Scroll To Scenarios
-    ---------------------------------------
-    1) Input top within safe area, bottom within safe area
-    2) Input top within safe area, bottom below safe area, room to scroll
-    3) Input top above safe area, bottom within safe area, room to scroll
-    4) Input top below safe area, no room to scroll, input smaller than safe area
-    5) Input top within safe area, bottom below safe area, no room to scroll, input smaller than safe area
-    6) Input top within safe area, bottom below safe area, no room to scroll, input larger than safe area
-    7) Input top below safe area, no room to scroll, input larger than safe area
-    */
+  // compute the safe area which is the viewable content area when the soft keyboard is up
+  let safeAreaTop = scrollViewDimensions.contentTop;
+  let safeAreaHeight = (plaformHeight - keyboardHeight - safeAreaTop) / 2;
+  let safeAreaBottom = safeAreaTop + safeAreaHeight;
 
-    let scrollData = {
-      scrollAmount: 0,
-      scrollTo: 0,
-      scrollPadding: 0,
-      inputSafeY: 0
-    };
+  // figure out if each edge of teh input is within the safe area
+  let inputTopWithinSafeArea = (inputTop >= safeAreaTop && inputTop <= safeAreaBottom);
+  let inputTopAboveSafeArea = (inputTop < safeAreaTop);
+  let inputTopBelowSafeArea = (inputTop > safeAreaBottom);
+  let inputBottomWithinSafeArea = (inputBottom >= safeAreaTop && inputBottom <= safeAreaBottom);
+  let inputBottomBelowSafeArea = (inputBottom > safeAreaBottom);
 
-    if (inputTopWithinSafeArea && inputBottomWithinSafeArea) {
-      // Input top within safe area, bottom within safe area
-      // no need to scroll to a position, it's good as-is
-      return scrollData;
-    }
+  /*
+  Text Input Scroll To Scenarios
+  ---------------------------------------
+  1) Input top within safe area, bottom within safe area
+  2) Input top within safe area, bottom below safe area, room to scroll
+  3) Input top above safe area, bottom within safe area, room to scroll
+  4) Input top below safe area, no room to scroll, input smaller than safe area
+  5) Input top within safe area, bottom below safe area, no room to scroll, input smaller than safe area
+  6) Input top within safe area, bottom below safe area, no room to scroll, input larger than safe area
+  7) Input top below safe area, no room to scroll, input larger than safe area
+  */
 
-    // looks like we'll have to do some auto-scrolling
-    if (inputTopBelowSafeArea || inputBottomBelowSafeArea) {
-      // Input top and bottom below safe area
-      // auto scroll the input up so at least the top of it shows
+  const scrollData: ScrollData = {
+    scrollAmount: 0,
+    scrollTo: 0,
+    scrollPadding: 0,
+    inputSafeY: 0
+  };
 
-      if (safeAreaHeight > inputOffsetHeight) {
-        // safe area height is taller than the input height, so we
-        // can bring it up the input just enough to show the input bottom
-        scrollData.scrollAmount = Math.round(safeAreaBottom - inputBottom);
-
-      } else {
-        // safe area height is smaller than the input height, so we can
-        // only scroll it up so the input top is at the top of the safe area
-        // however the input bottom will be below the safe area
-        scrollData.scrollAmount = Math.round(safeAreaTop - inputTop);
-      }
-
-      scrollData.inputSafeY = -(inputTop - safeAreaTop) + 4;
-
-    } else if (inputTopAboveSafeArea) {
-      // Input top above safe area
-      // auto scroll the input down so at least the top of it shows
-      scrollData.scrollAmount = Math.round(safeAreaTop - inputTop);
-
-      scrollData.inputSafeY = (safeAreaTop - inputTop) + 4;
-    }
-
-    // figure out where it should scroll to for the best position to the input
-    scrollData.scrollTo = (scrollViewDimensions.scrollTop - scrollData.scrollAmount);
-
-    if (scrollData.scrollAmount < 0) {
-      // when auto-scrolling up, there also needs to be enough
-      // content padding at the bottom of the scroll view
-      // manually add it if there isn't enough scrollable area
-
-      // figure out how many scrollable area is left to scroll up
-      let availablePadding = (scrollViewDimensions.scrollHeight - scrollViewDimensions.scrollTop) - scrollViewDimensions.contentHeight;
-
-      let paddingSpace = availablePadding + scrollData.scrollAmount;
-      if (paddingSpace < 0) {
-        // there's not enough scrollable area at the bottom, so manually add more
-        scrollData.scrollPadding = (scrollViewDimensions.contentHeight - safeAreaHeight);
-      }
-    }
-
-    // if (!window.safeAreaEle) {
-    //   window.safeAreaEle = document.createElement('div');
-    //   window.safeAreaEle.style.position = 'absolute';
-    //   window.safeAreaEle.style.background = 'rgba(0, 128, 0, 0.7)';
-    //   window.safeAreaEle.style.padding = '2px 5px';
-    //   window.safeAreaEle.style.textShadow = '1px 1px white';
-    //   window.safeAreaEle.style.left = '0px';
-    //   window.safeAreaEle.style.right = '0px';
-    //   window.safeAreaEle.style.fontWeight = 'bold';
-    //   window.safeAreaEle.style.pointerEvents = 'none';
-    //   document.body.appendChild(window.safeAreaEle);
-    // }
-    // window.safeAreaEle.style.top = safeAreaTop + 'px';
-    // window.safeAreaEle.style.height = safeAreaHeight + 'px';
-    // window.safeAreaEle.innerHTML = `
-    //   <div>scrollTo: ${scrollData.scrollTo}</div>
-    //   <div>scrollAmount: ${scrollData.scrollAmount}</div>
-    //   <div>scrollPadding: ${scrollData.scrollPadding}</div>
-    //   <div>inputSafeY: ${scrollData.inputSafeY}</div>
-    //   <div>scrollHeight: ${scrollViewDimensions.scrollHeight}</div>
-    //   <div>scrollTop: ${scrollViewDimensions.scrollTop}</div>
-    //   <div>contentHeight: ${scrollViewDimensions.contentHeight}</div>
-    // `;
-
+  if (inputTopWithinSafeArea && inputBottomWithinSafeArea) {
+    // Input top within safe area, bottom within safe area
+    // no need to scroll to a position, it's good as-is
     return scrollData;
   }
+
+  // looks like we'll have to do some auto-scrolling
+  if (inputTopBelowSafeArea || inputBottomBelowSafeArea || inputTopAboveSafeArea) {
+    // Input top or bottom below safe area
+    // auto scroll the input up so at least the top of it shows
+
+    if (safeAreaHeight > inputOffsetHeight) {
+      // safe area height is taller than the input height, so we
+      // can bring up the input just enough to show the input bottom
+      scrollData.scrollAmount = Math.round(safeAreaBottom - inputBottom);
+
+    } else {
+      // safe area height is smaller than the input height, so we can
+      // only scroll it up so the input top is at the top of the safe area
+      // however the input bottom will be below the safe area
+      scrollData.scrollAmount = Math.round(safeAreaTop - inputTop);
+    }
+
+    scrollData.inputSafeY = -(inputTop - safeAreaTop) + 4;
+
+    if (inputTopAboveSafeArea && scrollData.scrollAmount > inputOffsetHeight) {
+      // the input top is above the safe area and we're already scrolling it into place
+      // don't let it scroll more than the height of the input
+      scrollData.scrollAmount = inputOffsetHeight;
+    }
+  }
+
+  // figure out where it should scroll to for the best position to the input
+  scrollData.scrollTo = (scrollViewDimensions.scrollTop - scrollData.scrollAmount);
+
+  // when auto-scrolling, there also needs to be enough
+  // content padding at the bottom of the scroll view
+  // always add scroll padding when a text input has focus
+  // this allows for the content to scroll above of the keyboard
+  // content behind the keyboard would be blank
+  // some cases may not need it, but when jumping around it's best
+  // to have the padding already rendered so there's no jank
+  scrollData.scrollPadding = keyboardHeight;
+
+  // var safeAreaEle: HTMLElement = (<any>window).safeAreaEle;
+  // if (!safeAreaEle) {
+  //   safeAreaEle = (<any>window).safeAreaEle  = document.createElement('div');
+  //   safeAreaEle.style.cssText = 'position:absolute; padding:1px 5px; left:0; right:0; font-weight:bold; font-size:10px; font-family:Courier; text-align:right; background:rgba(0, 128, 0, 0.8); text-shadow:1px 1px white; pointer-events:none;';
+  //   document.body.appendChild(safeAreaEle);
+  // }
+  // safeAreaEle.style.top = safeAreaTop + 'px';
+  // safeAreaEle.style.height = safeAreaHeight + 'px';
+  // safeAreaEle.innerHTML = `
+  //   <div>scrollTo: ${scrollData.scrollTo}</div>
+  //   <div>scrollAmount: ${scrollData.scrollAmount}</div>
+  //   <div>scrollPadding: ${scrollData.scrollPadding}</div>
+  //   <div>inputSafeY: ${scrollData.inputSafeY}</div>
+  //   <div>scrollHeight: ${scrollViewDimensions.scrollHeight}</div>
+  //   <div>scrollTop: ${scrollViewDimensions.scrollTop}</div>
+  //   <div>contentHeight: ${scrollViewDimensions.contentHeight}</div>
+  //   <div>plaformHeight: ${plaformHeight}</div>
+  // `;
+
+  return scrollData;
 }
+
 
 const SCROLL_ASSIST_SPEED = 0.3;
 
@@ -596,4 +622,11 @@ function getScrollAssistDuration(distanceToScroll: number) {
   distanceToScroll = Math.abs(distanceToScroll);
   let duration = distanceToScroll / SCROLL_ASSIST_SPEED;
   return Math.min(400, Math.max(150, duration));
+}
+
+export interface ScrollData {
+  scrollAmount: number;
+  scrollTo: number;
+  scrollPadding: number;
+  inputSafeY: number;
 }

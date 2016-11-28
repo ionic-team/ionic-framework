@@ -5,17 +5,17 @@ import { isPresent, isTrueProperty } from '../../util/util';
 /**
  * @name Option
  * @description
- * `ion-option` is a child component of `ion-select`. Similar to the native option element, `ion-option` can take a value and a checked property.
+ * `ion-option` is a child component of `ion-select`. Similar to the native option element, `ion-option` can take a value and a selected property.
  *
- * @demo /docs/v2/demos/item-sliding/
+ * @demo /docs/v2/demos/src/select/
  */
 @Directive({
   selector: 'ion-option'
 })
 export class Option {
-  private _checked: any = false;
-  private _disabled: any = false;
-  private _value: any;
+  _selected: any = false;
+  _disabled: any = false;
+  _value: any;
 
   /**
    * @input {any} Event to evaluate when option is selected
@@ -25,15 +25,15 @@ export class Option {
   constructor(private _elementRef: ElementRef) {}
 
   /**
-   * @input {boolean} Whether or not the option is already checked and selected
+   * @input {boolean} Whether or not the option is already selected
    */
   @Input()
-  get checked() {
-    return this._checked;
+  get selected() {
+    return this._selected;
   }
 
-  set checked(val) {
-    this._checked = isTrueProperty(val);
+  set selected(val) {
+    this._selected = isTrueProperty(val);
   }
 
   /**

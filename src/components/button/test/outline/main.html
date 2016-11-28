@@ -10,53 +10,53 @@
 <ion-content padding style="text-align:center" class="outer-content">
 
   <p>
-    <button outline>Default</button>
-    <button outline class="activated">Default.activated</button>
+    <button ion-button outline>Default</button>
+    <button ion-button outline class="activated">Default.activated</button>
   </p>
 
   <p>
-    <button outline primary>Primary</button>
-    <button outline primary class="activated">Primary.activated</button>
+    <button ion-button outline color="primary">Primary</button>
+    <button ion-button outline color="primary" class="activated">Primary.activated</button>
   </p>
 
   <p>
-    <button outline secondary>Secondary</button>
-    <button outline secondary class="activated">Secondary.activated</button>
+    <button ion-button outline color="secondary">Secondary</button>
+    <button ion-button outline color="secondary" class="activated">Secondary.activated</button>
   </p>
 
   <p>
-    <button outline danger>Danger</button>
-    <button outline danger class="activated">Danger.activated</button>
+    <button ion-button outline color="danger">Danger</button>
+    <button ion-button outline color="danger" class="activated">Danger.activated</button>
   </p>
 
   <p>
-    <button outline light>Light</button>
-    <button outline light class="activated">Light.activated</button>
+    <button ion-button outline color="light">Light</button>
+    <button ion-button outline color="light" class="activated">Light.activated</button>
   </p>
 
   <p>
-    <button outline dark>Dark</button>
-    <button outline dark class="activated">Dark.activated</button>
+    <button ion-button outline color="dark">Dark</button>
+    <button ion-button outline color="dark" class="activated">Dark.activated</button>
   </p>
 
   <p>
-    <button outline block>button[outline][block]</button>
+    <button ion-button outline block>button[ion-button][outline][block]</button>
   </p>
 
   <p>
-    <button outline block class="activated">[outline][block].activated</button>
+    <button ion-button outline block class="activated">[outline][block].activated</button>
   </p>
 
   <p>
-    <button outline block secondary>button[outline][block][secondary]</button>
+    <button ion-button outline block color="secondary">button[ion-button][outline][block][secondary]</button>
   </p>
 
   <p>
-    <button outline block secondary class="activated">[outline][block][secondary].activated</button>
+    <button ion-button outline block color="secondary" class="activated">[outline][block][secondary].activated</button>
   </p>
 
   <p>
-    <button [outline]="outlineButton" (click)="toggleOutline()">Toggle Outline</button>
+    <button ion-button [outline]="outlineButton" (click)="toggleOutline()">Toggle Outline</button>
   </p>
 
 </ion-content>

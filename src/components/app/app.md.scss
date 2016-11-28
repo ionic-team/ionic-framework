@@ -1,44 +1,10 @@
-@import "../../globals.md";
+@import "../../themes/ionic.globals.md";
 
 // Material Design App
 // --------------------------------------------------
 
-ion-content {
-  color: $text-md-color;
-}
-
-p {
-  color: $paragraph-md-color;
-}
-
-a {
-  color: $link-md-color;
-}
-
-hr {
-  background-color: rgba(0, 0, 0, .08);
-}
-
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  span,
-  a:not([button]),
-  small,
-  b,
-  i,
-  strong,
-  em,
-  sub,
-  sup,
-  ion-icon {
-    &[#{$color-name}] {
-      color: $color-base;
-    }
-  }
+ion-app.md {
+  font-family: $font-family-md-base;
+  font-size: $font-size-md-base;
+  background-color: $background-md-color;
 }

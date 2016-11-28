@@ -9,20 +9,24 @@
 
 <ion-content class="outer-content">
 
-  <ion-list inset>
+  <div>
+    <ion-fab top center>
+      <button ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  </div>
+  <ion-fab bottom center>
+    <button ion-fab><ion-icon name="close"></ion-icon></button>
+  </ion-fab>
+
+  <ion-list inset no-lines>
 
     <ion-list-header>
-      Inset List Header
+      List Header 1
     </ion-list-header>
 
     <a ion-item href="#">
       <ion-icon name="alarm" item-left></ion-icon>
       List Link Item 1
-    </a>
-
-    <a ion-item href="#">
-      <ion-icon name="analytics" item-left></ion-icon>
-      List Link Item 2
     </a>
 
     <ion-item>
@@ -35,24 +39,48 @@
       <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
-    <button ion-item>
+    <ion-item>
       <ion-icon name="boat" item-left></ion-icon>
       List Button Item 1
-    </button>
-
-    <button ion-item>
-      <ion-icon name="book" item-left></ion-icon>
-      List Button Item 2
-    </button>
+    </ion-item>
 
   </ion-list>
 
+  <ion-list inset no-lines>
+      <ion-list-header>
+          List header 2
+      </ion-list-header>
+      <ion-item>
+          <ion-icon name="list" item-left></ion-icon>
+          item 1
+      </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+        List header 3
+    </ion-list-header>
+    <ion-item>
+        <ion-icon name="list" item-left></ion-icon>
+        item 1
+    </ion-item>
+  </ion-list>
+
+  <ion-list inset no-lines>
+    <ion-list-header>
+        List header 4
+    </ion-list-header>
+    <ion-item>
+        <ion-icon name="list" item-left></ion-icon>
+        item 1
+    </ion-item>
+  </ion-list>
 
   <ion-list inset>
 
     <ion-item>
       Inset List, No Header
-      <button outline item-right>View</button>
+      <button ion-button outline item-right>View</button>
     </ion-item>
 
     <ion-item>

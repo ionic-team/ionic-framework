@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button >
+          Does nothing
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="close()">
+          Close
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  Close the modal with the button and the searchbar SHOULD NOT become focused.
+  <button ion-button (click)="close()">
+    Close
+  </button>
+</ion-content>

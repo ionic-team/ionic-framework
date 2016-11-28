@@ -1,4 +1,4 @@
-@import "../../globals.md";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Toggle
 // --------------------------------------------------
@@ -30,7 +30,7 @@ $toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px 
 // Material Design Toggle
 // -----------------------------------------
 
-ion-toggle {
+.toggle-md {
   position: relative;
 }
 
@@ -38,7 +38,7 @@ ion-toggle {
 // Material Design Toggle Background Track: Unchecked
 // -----------------------------------------
 
-.toggle-icon {
+.toggle-md .toggle-icon {
   position: relative;
   display: block;
 
@@ -57,7 +57,7 @@ ion-toggle {
 // Material Design Toggle Inner Knob: Unchecked
 // -----------------------------------------
 
-.toggle-inner {
+.toggle-md .toggle-inner {
   position: absolute;
   top: ($toggle-md-handle-height - $toggle-md-track-height) / -2;
   left: 0;
@@ -78,7 +78,7 @@ ion-toggle {
 // Material Design Toggle Background Track: Checked
 // -----------------------------------------
 
-.toggle-checked {
+.toggle-md .toggle-checked {
   background-color: $toggle-md-track-background-color-on;
 }
 
@@ -86,7 +86,7 @@ ion-toggle {
 // Material Design Toggle Inner Knob: Checked
 // -----------------------------------------
 
-.toggle-checked .toggle-inner {
+.toggle-md .toggle-checked .toggle-inner {
   background-color: $toggle-md-handle-background-color-on;
   transform: translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0);
 }
@@ -95,14 +95,14 @@ ion-toggle {
 // Material Design Toggle: Disabled
 // -----------------------------------------
 
-.toggle-disabled,
-.item-toggle-disabled ion-label {
+.toggle-md.toggle-disabled,
+.item-md.item-toggle-disabled ion-label {
   opacity: $toggle-md-disabled-opacity;
 
   pointer-events: none;
 }
 
-.toggle-disabled ion-radio {
+.toggle-md.toggle-disabled ion-radio {
   opacity: $toggle-md-disabled-opacity;
 }
 
@@ -110,18 +110,18 @@ ion-toggle {
 // Material Design Toggle Within An Item
 // -----------------------------------------
 
-.item ion-toggle {
+.item-md .toggle-md {
   margin: $toggle-md-media-margin;
   padding: $toggle-md-item-right-padding;
 
   cursor: pointer;
-
-  &[item-left] {
-    padding: $toggle-md-item-left-padding;
-  }
 }
 
-.item-toggle ion-label {
+.item-md .toggle-md[item-left] {
+  padding: $toggle-md-item-left-padding;
+}
+
+.item-md.item-toggle ion-label {
   margin-left: 0;
 }
 
@@ -131,16 +131,12 @@ ion-toggle {
 
 @mixin toggle-theme-md($color-name, $color-base) {
 
-  ion-toggle[#{$color-name}] {
+  .toggle-md-#{$color-name} .toggle-checked {
+    background-color: lighten($color-base, 25%);
+  }
 
-    .toggle-checked {
-      background-color: lighten($color-base, 25%);
-    }
-
-    .toggle-checked .toggle-inner {
-      background-color: $color-base;
-    }
-
+  .toggle-md-#{$color-name} .toggle-checked .toggle-inner {
+    background-color: $color-base;
   }
 
 }
@@ -150,7 +146,5 @@ ion-toggle {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-
   @include toggle-theme-md($color-name, $color-base);
-
 }

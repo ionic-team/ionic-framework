@@ -1,162 +1,96 @@
 import { Injectable, NgZone } from '@angular/core';
 
+import { ActivatorBase } from './activator-base';
 import { Activator } from './activator';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { assert } from '../../util/util';
 import { hasPointerMoved, pointerCoord } from '../../util/dom';
 import { RippleActivator } from './ripple';
-
+import { UIEventManager, PointerEvents, PointerEventType } from '../../util/ui-event-manager';
 
 /**
  * @private
  */
 @Injectable()
 export class TapClick {
-  private lastTouch: number = 0;
   private disableClick: number = 0;
-  private lastActivated: number = 0;
   private usePolyfill: boolean;
-  private activator: Activator;
+  private activator: ActivatorBase;
   private startCoord: any;
-  private pointerMove: any;
+  private events: UIEventManager = new UIEventManager(false);
+  private pointerEvents: PointerEvents;
 
   constructor(
     config: Config,
     private app: App,
     zone: NgZone
   ) {
-    let self = this;
+    let activator = config.get('activator');
+    if (activator === 'ripple') {
+      this.activator = new RippleActivator(app, config);
 
-    if (config.get('activator') === 'ripple') {
-      self.activator = new RippleActivator(app, config);
-
-    } else if (config.get('activator') === 'highlight') {
-      self.activator = new Activator(app, config);
+    } else if (activator === 'highlight') {
+      this.activator = new Activator(app, config);
     }
 
-    self.usePolyfill = (config.get('tapPolyfill') === true);
+    this.usePolyfill = config.getBoolean('tapPolyfill');
+    console.debug('Using usePolyfill:', this.usePolyfill);
 
-    zone.runOutsideAngular(() => {
-      addListener('click', self.click.bind(self), true);
-
-      addListener('touchstart', self.touchStart.bind(self));
-      addListener('touchend', self.touchEnd.bind(self));
-      addListener('touchcancel', self.pointerCancel.bind(self));
-
-      addListener('mousedown', self.mouseDown.bind(self), true);
-      addListener('mouseup', self.mouseUp.bind(self), true);
+    this.events.listen(document, 'click', this.click.bind(this), true);
+    this.pointerEvents = this.events.pointerEvents({
+      element: <any>document,
+      pointerDown: this.pointerStart.bind(this),
+      pointerMove: this.pointerMove.bind(this),
+      pointerUp: this.pointerEnd.bind(this),
+      passive: true
     });
-
-    self.pointerMove = function(ev: UIEvent) {
-      if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, self.startCoord, pointerCoord(ev)) ) {
-        self.pointerCancel(ev);
-      }
-    };
+    this.pointerEvents.mouseWait = DISABLE_NATIVE_CLICK_AMOUNT;
   }
 
-  touchStart(ev: UIEvent) {
-    this.lastTouch = Date.now();
-    this.pointerStart(ev);
-  }
-
-  touchEnd(ev: UIEvent) {
-    this.lastTouch = Date.now();
-
-    if (this.usePolyfill && this.startCoord && this.app.isEnabled()) {
-      // only dispatch mouse click events from a touchend event
-      // when tapPolyfill config is true, and the startCoordand endCoord
-      // are not too far off from each other
-      let endCoord = pointerCoord(ev);
-
-      if (!hasPointerMoved(POINTER_TOLERANCE, this.startCoord, endCoord)) {
-        // prevent native mouse click events for XX amount of time
-        this.disableClick = this.lastTouch + DISABLE_NATIVE_CLICK_AMOUNT;
-
-        if (this.app.isScrolling()) {
-          // do not fire off a click event while the app was scrolling
-          console.debug('click from touch prevented by scrolling ' + Date.now());
-
-        } else {
-          // dispatch a mouse click event
-          console.debug('create click from touch ' + Date.now());
-
-          let clickEvent: any = document.createEvent('MouseEvents');
-          clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
-          clickEvent.isIonicTap = true;
-          ev.target.dispatchEvent(clickEvent);
-        }
-      }
+  pointerStart(ev: any): boolean {
+    if (this.startCoord) {
+      return false;
     }
-
-    this.pointerEnd(ev);
-  }
-
-  mouseDown(ev: any) {
-    if (this.isDisabledNativeClick()) {
-      console.debug('mouseDown prevent ' + ev.target.tagName + ' ' + Date.now());
-      // does not prevent default on purpose
-      // so native blur events from inputs can happen
-      ev.stopPropagation();
-
-    } else if (this.lastTouch + DISABLE_NATIVE_CLICK_AMOUNT < Date.now()) {
-      this.pointerStart(ev);
-    }
-  }
-
-  mouseUp(ev: any) {
-    if (this.isDisabledNativeClick()) {
-      console.debug('mouseUp prevent ' + ev.target.tagName + ' ' + Date.now());
-      ev.preventDefault();
-      ev.stopPropagation();
-    }
-
-    if (this.lastTouch + DISABLE_NATIVE_CLICK_AMOUNT < Date.now()) {
-      this.pointerEnd(ev);
-    }
-  }
-
-  pointerStart(ev: any) {
     let activatableEle = getActivatableTarget(ev.target);
-
-    if (activatableEle) {
-      this.startCoord = pointerCoord(ev);
-
-      let now = Date.now();
-      if (this.lastActivated + 150 < now && !this.app.isScrolling()) {
-        this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
-        this.lastActivated = now;
-      }
-
-      this.moveListeners(true);
-
-    } else {
+    if (!activatableEle) {
       this.startCoord = null;
+      return false;
+    }
+    this.startCoord = pointerCoord(ev);
+    this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
+    return true;
+  }
+
+  pointerMove(ev: UIEvent) {
+    if (!this.startCoord ||
+      hasPointerMoved(POINTER_TOLERANCE, this.startCoord, pointerCoord(ev)) ||
+      this.app.isScrolling()) {
+      this.pointerCancel(ev);
     }
   }
 
-  pointerEnd(ev: any) {
-    if (this.startCoord && this.activator) {
+  pointerEnd(ev: any, type: PointerEventType) {
+    if (!this.startCoord) {
+      return;
+    }
+    if (this.activator) {
       let activatableEle = getActivatableTarget(ev.target);
       if (activatableEle) {
         this.activator.upAction(ev, activatableEle, this.startCoord);
       }
     }
-
-    this.moveListeners(false);
+    if (this.usePolyfill && type === PointerEventType.TOUCH && this.app.isEnabled()) {
+      this.handleTapPolyfill(ev);
+    }
+    this.startCoord = null;
   }
 
   pointerCancel(ev: UIEvent) {
-    console.debug('pointerCancel from ' + ev.type + ' ' + Date.now());
+    console.debug(`pointerCancel from ${ev.type} ${Date.now()}`);
+    this.startCoord = null;
     this.activator && this.activator.clearState();
-    this.moveListeners(false);
-  }
-
-  moveListeners(shouldAdd: boolean) {
-    removeListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
-
-    if (shouldAdd) {
-      addListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
-    }
+    this.pointerEvents.stop();
   }
 
   click(ev: any) {
@@ -165,14 +99,52 @@ export class TapClick {
     if (!this.app.isEnabled()) {
       preventReason = 'appDisabled';
 
-    } else if (!ev.isIonicTap && this.isDisabledNativeClick()) {
+    } else if (this.usePolyfill && !ev.isIonicTap && this.isDisabledNativeClick()) {
       preventReason = 'nativeClick';
     }
 
     if (preventReason !== null) {
-      console.debug('click prevent ' + preventReason + ' ' + Date.now());
+      // darn, there was a reason to prevent this click, let's not allow it
+      console.debug(`click prevent ${preventReason} ${Date.now()}`);
       ev.preventDefault();
       ev.stopPropagation();
+
+    } else if (this.activator) {
+      // cool, a click is gonna happen, let's tell the activator
+      // so the element can get the given "active" style
+      const activatableEle = getActivatableTarget(ev.target);
+      if (activatableEle) {
+        this.activator.clickAction(ev, activatableEle, this.startCoord);
+      }
+    }
+  }
+
+  handleTapPolyfill(ev: any) {
+    assert(this.usePolyfill, 'this code should not be used if tapPolyfill is disabled');
+    // only dispatch mouse click events from a touchend event
+    // when tapPolyfill config is true, and the startCoordand endCoord
+    // are not too far off from each other
+    let endCoord = pointerCoord(ev);
+
+    if (hasPointerMoved(POINTER_TOLERANCE, this.startCoord, endCoord)) {
+      console.debug(`click from touch prevented by pointer moved`);
+      return;
+    }
+    // prevent native mouse click events for XX amount of time
+    this.disableClick = Date.now() + DISABLE_NATIVE_CLICK_AMOUNT;
+
+    if (this.app.isScrolling()) {
+      // do not fire off a click event while the app was scrolling
+      console.debug(`click from touch prevented by scrolling ${Date.now()}`);
+
+    } else {
+      // dispatch a mouse click event
+      console.debug(`create click from touch ${Date.now()}`);
+
+      let clickEvent: any = document.createEvent('MouseEvents');
+      clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
+      clickEvent.isIonicTap = true;
+      ev.target.dispatchEvent(clickEvent);
     }
   }
 
@@ -185,7 +157,7 @@ export class TapClick {
 
 function getActivatableTarget(ele: HTMLElement) {
   let targetEle = ele;
-  for (let x = 0; x < 4; x++) {
+  for (let x = 0; x < 10; x++) {
     if (!targetEle) break;
     if (isActivatable(targetEle)) return targetEle;
     targetEle = targetEle.parentElement;
@@ -196,31 +168,26 @@ function getActivatableTarget(ele: HTMLElement) {
 /**
  * @private
  */
-export const isActivatable = function(ele: HTMLElement) {
-  if (ACTIVATABLE_ELEMENTS.test(ele.tagName)) {
+export const isActivatable = function (ele: HTMLElement) {
+  if (ACTIVATABLE_ELEMENTS.indexOf(ele.tagName) > -1) {
     return true;
   }
 
-  let attributes = ele.attributes;
-  for (let i = 0, l = attributes.length; i < l; i++) {
-    if (ACTIVATABLE_ATTRIBUTES.test(attributes[i].name)) {
+  for (let i = 0, l = ACTIVATABLE_ATTRIBUTES.length; i < l; i++) {
+    if (ele.hasAttribute(ACTIVATABLE_ATTRIBUTES[i])) {
       return true;
     }
   }
-
   return false;
 };
 
-function addListener(type: string, listener: any, useCapture?: boolean) {
-  document.addEventListener(type, listener, useCapture);
-}
-
-function removeListener(type: string, listener: any) {
-  document.removeEventListener(type, listener);
-}
-
-const ACTIVATABLE_ELEMENTS = /^(A|BUTTON)$/;
-const ACTIVATABLE_ATTRIBUTES = /tappable|button/i;
-const POINTER_TOLERANCE = 4;
-const POINTER_MOVE_UNTIL_CANCEL = 10;
+const ACTIVATABLE_ELEMENTS = ['A', 'BUTTON'];
+const ACTIVATABLE_ATTRIBUTES = ['tappable', 'ion-button'];
+const POINTER_TOLERANCE = 60;
 const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
+
+export function setupTapClick(config: Config, app: App, zone: NgZone) {
+  return function() {
+    return new TapClick(config, app, zone);
+  };
+}

@@ -15,37 +15,37 @@
 
       <ion-item>
         <ion-label>Apple, formControlName</ion-label>
-        <ion-checkbox formControlName="appleCtrl"></ion-checkbox>
+        <ion-checkbox formControlName="apple"></ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>Banana, formControlName</ion-label>
-        <ion-checkbox formControlName="bananaCtrl"></ion-checkbox>
+        <ion-checkbox formControlName="banana"></ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>Cherry, formControlName, disabled</ion-label>
-        <ion-checkbox disabled="true" formControlName="cherryCtrl"></ion-checkbox>
+        <ion-checkbox disabled="true" formControlName="cherry"></ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>Grape, formControlName, checked, disabled</ion-label>
-        <ion-checkbox [checked]="grapeChecked" [disabled]="grapeDisabled" formControlName="grapeCtrl"></ion-checkbox>
+        <ion-checkbox [checked]="grapeChecked" [disabled]="grapeDisabled" formControlName="grape"></ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>Kiwi, (ionChange) Secondary color</ion-label>
-        <ion-checkbox secondary (ionChange)="kiwiChange($event)"></ion-checkbox>
+        <ion-checkbox color="secondary" (ionChange)="kiwiChange($event)"></ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>Strawberry, (ionChange) [checked]="true"</ion-label>
-        <ion-checkbox light (ionChange)="strawberryChange($event)" [checked]="true"></ion-checkbox>
+        <ion-checkbox color="light" (ionChange)="strawberryChange($event)" [checked]="true"></ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
-        <ion-checkbox item-right danger checked></ion-checkbox>
+        <ion-checkbox item-right [color]="dangerColor" checked></ion-checkbox>
       </ion-item>
 
       <button ion-item detail-none>
@@ -63,9 +63,9 @@
   </form>
 
   <p aria-hidden="true" text-center>
-    <button (click)="toggleGrapeChecked()" outline small class="e2eGrapeChecked">Grape Checked</button>
-    <button (click)="toggleGrapeDisabled()" outline small class="e2eGrapeDisabled">Grape Disabled</button>
-    <button (click)="doSubmit($event)" outline small class="e2eSubmit">Submit</button>
+    <button ion-button (click)="toggleGrapeChecked()" outline small class="e2eGrapeChecked">Grape Checked</button>
+    <button ion-button (click)="toggleGrapeDisabled()" outline small class="e2eGrapeDisabled">Grape Disabled</button>
+    <button ion-button (click)="doSubmit($event)" outline small class="e2eSubmit">Submit</button>
   </p>
 
   <p>
@@ -74,14 +74,14 @@
   </p>
 
   <p aria-hidden="true" padding>
-    <code>appleCtrl.dirty: {{fruitsForm.controls.appleCtrl.dirty}}</code><br>
-    <code>appleCtrl.value: {{fruitsForm.controls.appleCtrl.value}}</code><br>
-    <code>bananaCtrl.dirty: {{fruitsForm.controls.bananaCtrl.dirty}}</code><br>
-    <code>bananaCtrl.value: {{fruitsForm.controls.bananaCtrl.value}}</code><br>
-    <code>cherry.dirty: {{fruitsForm.controls.cherryCtrl.dirty}}</code><br>
-    <code>cherry.value: {{fruitsForm.controls.cherryCtrl.value}}</code><br>
-    <code>grape.dirty: {{fruitsForm.controls.grapeCtrl.dirty}}</code><br>
-    <code>grape.value: {{fruitsForm.controls.grapeCtrl.value}}</code><br>
+    <code>appleCtrl.dirty: {{appleCtrl.dirty}}</code><br>
+    <code>appleCtrl.value: {{appleCtrl.value}}</code><br>
+    <code>bananaCtrl.dirty: {{bananaCtrl.dirty}}</code><br>
+    <code>bananaCtrl.value: {{bananaCtrl.value}}</code><br>
+    <code>cherry.dirty: {{cherryCtrl.dirty}}</code><br>
+    <code>cherry.value: {{cherryCtrl.value}}</code><br>
+    <code>grape.dirty: {{grapeCtrl.dirty}}</code><br>
+    <code>grape.value: {{grapeCtrl.value}}</code><br>
     <code>kiwiValue: {{kiwiValue}}</code><br>
     <code>strawberryValue: {{strawberryValue}}</code><br>
   </p>

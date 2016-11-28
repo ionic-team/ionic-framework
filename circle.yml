@@ -2,17 +2,19 @@ general:
   branches:
     ignore:
       - ins_n_outs
-dependencies:
-  pre:
-   - ./scripts/docs/prepare.sh
-  cache_directories:
-    - "~/ionic-site" # cache ionic-site
 machine:
   node:
     version: 4.1.0
+  post:
+    - npm install -g npm@3.x.x
+dependencies:
+  pre:
+    - ./scripts/docs/prepare.sh
+  cache_directories:
+    - "~/ionic-site" # cache ionic-site
 test:
   override:
-    - echo "Automatically marking tests as passing for now"
+    - gulp lint.ts
 deployment:
  tasks:
    branch: "master"

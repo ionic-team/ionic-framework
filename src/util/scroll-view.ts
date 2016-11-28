@@ -1,4 +1,4 @@
-import { CSS, pointerCoord, nativeRaf, cancelRaf } from '../util/dom';
+import { CSS, pointerCoord, nativeRaf, rafFrames, cancelRaf } from '../util/dom';
 
 
 export class ScrollView {
@@ -28,80 +28,89 @@ export class ScrollView {
     this._top = top;
 
     if (this._js) {
-      this._el.style[CSS.transform] = `translate3d(0px,${top * -1}px,0px)`;
+      (<any>this._el.style)[CSS.transform] = `translate3d(0px,${top * -1}px,0px)`;
 
     } else {
       this._el.scrollTop = top;
     }
   }
 
-  scrollTo(x: number, y: number, duration: number): Promise<any> {
+  scrollTo(x: number, y: number, duration: number, done?: Function): Promise<any> {
     // scroll animation loop w/ easing
     // credit https://gist.github.com/dezinezync/5487119
-    let self = this;
 
+    let promise: Promise<any>;
+    if (done === undefined) {
+      // only create a promise if a done callback wasn't provided
+      // done can be a null, which avoids any functions
+      promise = new Promise((res, rej) => {
+        done = res;
+        done = rej;
+      });
+    }
+
+    const self = this;
     if (!self._el) {
       // invalid element
-      return Promise.resolve();
+      done();
+      return promise;
     }
 
     x = x || 0;
     y = y || 0;
 
-    let fromY = self._el.scrollTop;
-    let fromX = self._el.scrollLeft;
+    const fromY = self._el.scrollTop;
+    const fromX = self._el.scrollLeft;
 
-    let xDistance = Math.abs(x - fromX);
-    let yDistance = Math.abs(y - fromY);
-    let maxAttempts = (duration / 16) + 100;
+    const maxAttempts = (duration / 16) + 100;
 
-    return new Promise(resolve => {
-      let startTime: number;
-      let attempts = 0;
+    let startTime: number;
+    let attempts = 0;
 
-      // scroll loop
-      function step() {
-        attempts++;
+    // scroll loop
+    function step() {
+      attempts++;
 
-        if (!self._el || !self.isPlaying || attempts > maxAttempts) {
-          self.isPlaying = false;
-          resolve();
-          return;
-        }
-
-        let time = Math.min(1, ((Date.now() - startTime) / duration));
-
-        // where .5 would be 50% of time on a linear scale easedT gives a
-        // fraction based on the easing method
-        let easedT = (--time) * time * time + 1;
-
-        if (fromY !== y) {
-          self.setTop((easedT * (y - fromY)) + fromY);
-        }
-
-        if (fromX !== x) {
-          self._el.scrollLeft = Math.floor((easedT * (x - fromX)) + fromX);
-        }
-
-        if (easedT < 1) {
-          nativeRaf(step);
-
-        } else {
-          // done
-          resolve();
-        }
+      if (!self._el || !self.isPlaying || attempts > maxAttempts) {
+        self.isPlaying = false;
+        self._el.style.transform = ``;
+        done();
+        return;
       }
 
-      // start scroll loop
-      self.isPlaying = true;
+      let time = Math.min(1, ((Date.now() - startTime) / duration));
 
-      // chill out for a frame first
-      nativeRaf(() => {
-        startTime = Date.now();
+      // where .5 would be 50% of time on a linear scale easedT gives a
+      // fraction based on the easing method
+      let easedT = (--time) * time * time + 1;
+
+      if (fromY !== y) {
+        self.setTop((easedT * (y - fromY)) + fromY);
+      }
+
+      if (fromX !== x) {
+        self._el.scrollLeft = Math.floor((easedT * (x - fromX)) + fromX);
+      }
+
+      if (easedT < 1) {
         nativeRaf(step);
-      });
 
+      } else {
+        self._el.style.transform = ``;
+        done();
+      }
+    }
+
+    // start scroll loop
+    self.isPlaying = true;
+
+    // chill out for a frame first
+    rafFrames(2, () => {
+      startTime = Date.now();
+      step();
     });
+
+    return promise;
   }
 
   scrollToTop(duration: number): Promise<any> {
@@ -278,7 +287,6 @@ export class ScrollView {
 
 }
 
-const MAX_VELOCITY = 150;
 const MIN_VELOCITY_START_DECELERATION = 4;
 const MIN_VELOCITY_CONTINUE_DECELERATION = 0.12;
 const DECELERATION_FRICTION = 0.97;

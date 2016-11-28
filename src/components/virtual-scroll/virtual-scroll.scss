@@ -2,9 +2,10 @@
 // Virtual Scroll
 // --------------------------------------------------
 
-
 .virtual-scroll {
   position: relative;
+
+  contain: content;
 }
 
 .virtual-scroll .virtual-position,
@@ -15,6 +16,8 @@
   left: 0;
 
   transition-duration: 0ms;
+
+  contain: content;
 }
 
 .virtual-scroll .virtual-hidden {

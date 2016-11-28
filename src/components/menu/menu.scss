@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Menu
 // --------------------------------------------------
@@ -16,9 +16,11 @@ ion-menu {
 
   display: none;
 
-  &.show-menu {
-    display: block;
-  }
+  contain: strict;
+}
+
+ion-menu.show-menu {
+  display: block;
 }
 
 
@@ -29,19 +31,20 @@ ion-menu {
   bottom: 0;
   left: 0;
 
-  display: flex;
-
-  flex-direction: column;
+  display: block;
 
   width: $menu-width;
+  height: 100%;
 
   transform: translate3d(-9999px, 0, 0);
+
+  contain: strict;
 }
 
 .menu-inner > ion-header,
 .menu-inner > ion-content,
 .menu-inner > ion-footer {
-  position: relative;
+  position: absolute;
 }
 
 ion-menu[side=right] > .menu-inner {
@@ -53,11 +56,17 @@ ion-menu ion-backdrop {
   z-index: -1;
   display: none;
 
-  opacity: .1;
+  opacity: .01;
 }
 
 .menu-content {
   transform: translate3d(0, 0, 0);
+}
+
+.menu-content-open {
+  cursor: pointer;
+
+  touch-action: manipulation;
 }
 
 .menu-content-open ion-pane,
@@ -99,8 +108,8 @@ ion-menu[type=reveal].show-menu .menu-inner {
 
 ion-menu[type=overlay] {
   z-index: $z-index-menu-overlay;
+}
 
-  .show-backdrop {
-    display: block;
-  }
+ion-menu[type=overlay] .show-backdrop {
+  display: block;
 }

@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./toast";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Toast
 // --------------------------------------------------
@@ -12,7 +11,7 @@ $toast-ios-title-color:                           #fff !default;
 $toast-ios-title-font-size:                       1.4rem !default;
 $toast-ios-title-padding:                         1.5rem !default;
 
-.toast-wrapper {
+.toast-ios .toast-wrapper {
   position: absolute;
   right: 10px;
 
@@ -27,25 +26,25 @@ $toast-ios-title-padding:                         1.5rem !default;
   border-radius: $toast-ios-border-radius;
 
   background: $toast-ios-background;
-
-  &.toast-top {
-    top: 0;
-
-    transform: translate3d(0, -100%, 0);
-  }
-
-  &.toast-bottom {
-    bottom: 0;
-
-    transform: translate3d(0, 100%, 0);
-  }
-
-  &.toast-middle {
-    opacity: .01;
-  }
 }
 
-.toast-message {
+.toast-ios .toast-wrapper.toast-top {
+  top: 0;
+
+  transform: translate3d(0, -100%, 0);
+}
+
+.toast-ios .toast-wrapper.toast-bottom {
+  bottom: 0;
+
+  transform: translate3d(0, 100%, 0);
+}
+
+.toast-ios .toast-wrapper.toast-middle {
+  opacity: .01;
+}
+
+.toast-ios .toast-message {
   padding: $toast-ios-title-padding;
 
   font-size: $toast-ios-title-font-size;

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Virtual Scroll: List</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="reload()">
+        Reload
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div padding>
+    <button ion-button (click)="fillList()">Fill List</button>
+    <button ion-button (click)="emptyList()">Empty List</button>
+  </div>
+
+  <ion-list [virtualScroll]="items">
+
+    <ion-item class="item-text-wrap" *virtualItem="let item" (click)="itemTapped(item)">
+      <ion-thumbnail item-left>
+        <ion-img src="http://loremflickr.com/80/80/dog?{{item.id}}"></ion-img>
+      </ion-thumbnail>
+
+      <h2 class="text-wrap">{{item.title}}</h2>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

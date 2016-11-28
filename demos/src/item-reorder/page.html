@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Item Reorder</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="toggleEdit()">{{editButton}}</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content fullscreen>
+
+  <ion-list class="chat-sliding-demo">
+    <ion-list-header>
+      Playlist
+    </ion-list-header>
+
+    <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">
+      <ion-item *ngFor="let song of songs">
+        <h2>{{ song.title }}</h2>
+        <p>{{ song.band }} • {{ song.album }}</p>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+
+</ion-content>

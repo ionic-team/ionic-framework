@@ -14,7 +14,7 @@
     <ion-item>
       <ion-label floating>Params: {{ myParam }}</ion-label>
       <ion-input [(ngModel)]="myParam" type="text"></ion-input>
-      <button clear item-right>
+      <button ion-button icon-only clear item-right>
         <ion-icon name="settings"></ion-icon>
       </button>
     </ion-item>
@@ -35,20 +35,20 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating primary>Floating Label 4: {{ myValues.value2 }}</ion-label>
+      <ion-label floating color="primary">Floating Label 4: {{ myValues.value2 }}</ion-label>
       <ion-textarea [(ngModel)]='myValues.value2'></ion-textarea>
-      <button outline item-right>
+      <button ion-button outline item-right>
         View
       </button>
     </ion-item>
 
     <ion-item>
-      <ion-label floating secondary>Floating Label 5</ion-label>
+      <ion-label floating color="secondary">Floating Label 5</ion-label>
       <ion-input type="url"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating danger>Floating Label 6</ion-label>
+      <ion-label floating color="danger">Floating Label 6</ion-label>
       <ion-input type="email"></ion-input>
       <ion-avatar item-right>
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">

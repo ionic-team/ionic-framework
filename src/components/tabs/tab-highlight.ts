@@ -7,7 +7,7 @@ import { Tab } from './tab';
  * @private
  */
 @Directive({
-  selector: 'tab-highlight'
+  selector: '.tab-highlight'
 })
 export class TabHighlight {
   private _init: boolean;

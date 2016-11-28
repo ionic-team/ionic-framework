@@ -1,4 +1,4 @@
-import { Directive, Input, ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
+import { ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
 
 import { CSS } from '../../util/dom';
 
@@ -131,17 +131,22 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
                                  cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
                                  itmTmp: TemplateRef<Object>, hdrTmp: TemplateRef<Object>, ftrTmp: TemplateRef<Object>,
                                  initialLoad: boolean): boolean {
+
+  if (!records.length) {
+    nodes.length = 0;
+    // made changes
+    return true;
+  }
+
   let madeChanges = false;
   let node: VirtualNode;
   let availableNode: VirtualNode;
   let cell: VirtualCell;
-  let previousCell: VirtualCell;
   let isAlreadyRendered: boolean;
   let lastRecordIndex = (records.length - 1);
   let viewInsertIndex: number = null;
   let totalNodes = nodes.length;
   let templateRef: TemplateRef<any>;
-
   startCellIndex = Math.max(startCellIndex, 0);
   endCellIndex = Math.min(endCellIndex, cells.length - 1);
 
@@ -234,10 +239,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
       };
 
       totalNodes = nodes.push(availableNode);
-      // console.debug(`VirtrualScroll, new node, tmpl ${cell.tmpl}, height ${cell.height}`);
     }
-
-    // console.debug(`node was cell ${availableNode.cell} but is now ${cellIndex}, was top: ${cell.top}`);
 
     // assign who's the new cell index for this node
     availableNode.cell = cellIndex;
@@ -428,7 +430,7 @@ export function writeToNodes(nodes: VirtualNode[], cells: VirtualCell[], totalRe
 
         if (element) {
           // ******** DOM WRITE ****************
-          element.style[CSS.transform] = node.lastTransform = transform;
+          (<any>element.style)[CSS.transform] = node.lastTransform = transform;
 
           // ******** DOM WRITE ****************
           element.classList.add('virtual-position');
@@ -531,10 +533,14 @@ export function getVirtualHeight(totalRecords: number, lastCell: VirtualCell): n
  * NO DOM
  */
 export function estimateHeight(totalRecords: number, lastCell: VirtualCell, existingHeight: number, difference: number): number {
-  let newHeight = getVirtualHeight(totalRecords, lastCell);
+  if (!totalRecords) {
+    return 0;
+  }
 
-  let percentToBottom = (lastCell.record / (totalRecords - 1));
-  let diff = Math.abs(existingHeight - newHeight);
+  const newHeight = getVirtualHeight(totalRecords, lastCell);
+
+  const percentToBottom = (lastCell.record / (totalRecords - 1));
+  const diff = Math.abs(existingHeight - newHeight);
 
   if ((diff > (newHeight * difference)) ||
       (percentToBottom > .995)) {

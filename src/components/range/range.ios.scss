@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./range";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Range
 // --------------------------------------------------
@@ -34,32 +33,27 @@ $range-ios-pin-font-size:                     12px !default;
 $range-ios-pin-padding:                       8px !default;
 
 
-ion-range {
+.range-ios {
   padding: $range-ios-padding-vertical $range-ios-padding-horizontal;
 }
 
-[range-left],
-[range-right] {
-  margin: 0 20px;
+.range-ios [range-left] {
+  margin: 0 20px 0 0;
 }
 
-[range-left] {
-  margin-left: 0;
+.range-ios [range-right] {
+  margin: 0 0 0 20px;
 }
 
-[range-right] {
-  margin-right: 0;
-}
-
-.range-has-pin {
+.range-ios.range-has-pin {
   padding-top: $range-ios-padding-vertical + $range-ios-pin-font-size;
 }
 
-.range-slider {
+.range-ios .range-slider {
   height: $range-ios-slider-height;
 }
 
-.range-bar {
+.range-ios .range-bar {
   position: absolute;
   top: ($range-ios-slider-height / 2);
   left: 0;
@@ -74,15 +68,15 @@ ion-range {
   pointer-events: none;
 }
 
-.range-pressed .range-bar-active {
+.range-ios.range-pressed .range-bar-active {
   will-change: left, right;
 }
 
-.range-pressed .range-knob-handle {
+.range-ios.range-pressed .range-knob-handle {
   will-change: left;
 }
 
-.range-bar-active {
+.range-ios .range-bar-active {
   bottom: 0;
 
   width: auto;
@@ -90,7 +84,7 @@ ion-range {
   background: $range-ios-bar-active-background-color;
 }
 
-.range-knob-handle {
+.range-ios .range-knob-handle {
   position: absolute;
   top: ($range-ios-slider-height / 2);
   left: 0%;
@@ -104,7 +98,7 @@ ion-range {
   text-align: center;
 }
 
-.range-knob {
+.range-ios .range-knob {
   position: absolute;
   top: ($range-ios-hit-height / 2) - ($range-ios-knob-height / 2) + ($range-ios-bar-height / 2) - .5px;
   left: ($range-ios-hit-width / 2) - ($range-ios-knob-width / 2);
@@ -121,7 +115,7 @@ ion-range {
   pointer-events: none;
 }
 
-.range-tick {
+.range-ios .range-tick {
   position: absolute;
   top: ($range-ios-hit-height / 2) - ($range-ios-tick-height / 2) + ($range-ios-bar-height / 2);
 
@@ -137,11 +131,11 @@ ion-range {
   pointer-events: none;
 }
 
-.range-tick-active {
+.range-ios .range-tick-active {
   background: $range-ios-tick-active-background-color;
 }
 
-.range-pin {
+.range-ios .range-pin {
   position: relative;
   top: -20px;
   display: inline-block;
@@ -164,11 +158,11 @@ ion-range {
   transition: transform 120ms ease;
 }
 
-.range-knob-pressed .range-pin {
+.range-ios .range-knob-pressed .range-pin {
   transform: translate3d(0, 0, 0) scale(1);
 }
 
-.range-disabled {
+.range-ios.range-disabled {
   opacity: .5;
 }
 
@@ -178,7 +172,7 @@ ion-range {
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
-  ion-range[#{$color-name}] {
+  .range-ios-#{$color-name} {
     .range-bar-active,
     .range-tick-active {
       background: $color-base;

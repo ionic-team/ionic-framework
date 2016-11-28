@@ -24,11 +24,6 @@ export class Form {
     }
   }
 
-  focusOut() {
-    let activeElement = <HTMLElement>document.activeElement;
-    activeElement && activeElement.blur && activeElement.blur();
-  }
-
   setAsFocused(input: any) {
     this._focused = input;
   }
@@ -59,5 +54,26 @@ export class Form {
   nextId() {
     return ++this._ids;
   }
+
+}
+
+
+export abstract class IonicTapInput implements IonicFormInput {
+
+  abstract initFocus();
+
+  abstract get checked(): boolean;
+
+  abstract set checked(val: boolean);
+
+  abstract get disabled(): boolean;
+
+  abstract set disabled(val: boolean);
+
+}
+
+export abstract class IonicFormInput {
+
+  abstract initFocus();
 
 }

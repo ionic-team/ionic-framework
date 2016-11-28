@@ -1,5 +1,4 @@
-@import "../../globals.ios";
-@import "./select";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Select
 // --------------------------------------------------
@@ -13,22 +12,22 @@ $select-ios-icon-color:          #999 !default;
 $select-ios-placeholder-color:   $select-ios-icon-color !default;
 
 
-ion-select {
+.select-ios {
   padding: $select-ios-padding-top $select-ios-padding-right  $select-ios-padding-bottom $select-ios-padding-left;
 }
 
-.select-placeholder {
+.select-ios .select-placeholder {
   color: $select-ios-placeholder-color;
 }
 
-.select-icon {
+.select-ios .select-icon {
   position: relative;
 
   width: 12px;
   height: 18px;
 }
 
-.select-icon .select-icon-inner {
+.select-ios .select-icon .select-icon-inner {
   position: absolute;
   top: 50%;
   left: 5px;

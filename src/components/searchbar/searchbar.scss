@@ -1,8 +1,7 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Search Bar
 // --------------------------------------------------
-
 
 ion-searchbar {
   position: relative;
@@ -49,3 +48,4 @@ ion-searchbar {
 .searchbar-has-value.searchbar-has-focus .searchbar-clear-icon {
   display: block;
 }
+

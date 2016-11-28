@@ -1,6 +1,8 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { Form } from '../../util/form';
+import { Config } from '../../config/config';
+import { Form, IonicTapInput } from '../../util/form';
+import { Ion } from '../ion';
 import { isBlank, isCheckedProperty, isPresent, isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { RadioGroup } from './radio-group';
@@ -37,41 +39,76 @@ import { RadioGroup } from './radio-group';
  *   </ion-item>
  * </ion-list>
  * ```
- * @demo /docs/v2/demos/radio/
+ * @demo /docs/v2/demos/src/radio/
  * @see {@link /docs/v2/components#radio Radio Component Docs}
  * @see {@link ../RadioGroup RadioGroup API Docs}
  */
 @Component({
   selector: 'ion-radio',
-  template: `
-    <div class="radio-icon" [class.radio-checked]="_checked">
-      <div class="radio-inner"></div>
-    </div>
-    <button role="radio"
-            type="button"
-            category="item-cover"
-            [id]="id"
-            [attr.aria-checked]="_checked"
-            [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled"
-            class="item-cover">
-    </button>
-  `,
+  template:
+    '<div class="radio-icon" [class.radio-checked]="_checked"> ' +
+      '<div class="radio-inner"></div> ' +
+    '</div> ' +
+    '<button role="radio" ' +
+            'type="button" ' +
+            'ion-button="item-cover" ' +
+            '[id]="id" ' +
+            '[attr.aria-checked]="_checked" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover"> ' +
+    '</button>',
   host: {
     '[class.radio-disabled]': '_disabled'
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class RadioButton implements OnDestroy, OnInit {
-  private _checked: boolean = false;
-  private _disabled: boolean = false;
-  private _labelId: string;
-  private _value: any = null;
+export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit {
 
   /**
-   * @private
+   * @internal
+   */
+  _checked: boolean = false;
+
+  /**
+   * @internal
+   */
+  _disabled: boolean = false;
+
+  /**
+   * @internal
+   */
+  _labelId: string;
+
+  /**
+   * @internal
+   */
+  _value: any = null;
+
+  /**
+   * @internal
    */
   id: string;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor(val);
+
+    if (this._item) {
+      this._item._updateColor(val, 'item-radio');
+    }
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode(val);
+  }
 
   /**
    * @output {any} expression to be evaluated when selected
@@ -80,9 +117,13 @@ export class RadioButton implements OnDestroy, OnInit {
 
   constructor(
     private _form: Form,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() private _item: Item,
     @Optional() private _group: RadioGroup
   ) {
+    super(config, elementRef, renderer, 'radio');
     _form.register(this);
 
     if (_group) {
@@ -95,7 +136,7 @@ export class RadioButton implements OnDestroy, OnInit {
       // reset to the item's id instead of the radiogroup id
       this.id = 'rb-' + _item.registerInput('radio');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-radio', true);
+      this._item.setElementClass('item-radio', true);
     }
   }
 
@@ -107,7 +148,6 @@ export class RadioButton implements OnDestroy, OnInit {
     // if the value is not defined then use it's unique id
     return isBlank(this._value) ? this.id : this._value;
   }
-
   set value(val: any) {
     this._value = val;
   }
@@ -124,7 +164,7 @@ export class RadioButton implements OnDestroy, OnInit {
     this._checked = isTrueProperty(isChecked);
 
     if (this._item) {
-      this._item.setCssClass('item-radio-checked', this._checked);
+      this._item.setElementClass('item-radio-checked', this._checked);
     }
   }
 
@@ -135,17 +175,23 @@ export class RadioButton implements OnDestroy, OnInit {
   get disabled(): boolean {
     return this._disabled;
   }
-
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-radio-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-radio-disabled', this._disabled);
   }
 
   /**
    * @private
    */
+  initFocus() {
+    this._elementRef.nativeElement.querySelector('button').focus();
+  }
+
+  /**
+   * @internal
+   */
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  _click(ev: UIEvent) {
     console.debug('radio, select', this.id);
     ev.preventDefault();
     ev.stopPropagation();
@@ -155,7 +201,7 @@ export class RadioButton implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnInit() {
     if (this._group && isPresent(this._group.value)) {
@@ -164,7 +210,7 @@ export class RadioButton implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @internal
    */
   ngOnDestroy() {
     this._form.deregister(this);

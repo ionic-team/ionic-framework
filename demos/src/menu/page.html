@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button [menuToggle]="activeMenu">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Menu
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <h4>Active Menu: <b color="primary">{{ (activeMenu == 'menu1') ? 'Menu 1' : 'Menu 2' }}</b></h4>
+
+  <p>This page has two menus with different id's, but only one is active at a time.</p>
+
+  <button ion-button block color="secondary" (click)="menu1Active()">Make Menu 1 Active</button>
+
+  <button ion-button block color="danger" (click)="menu2Active()">Make Menu 2 Active</button>
+
+  <button ion-button block [menuToggle]="activeMenu">Toggle Menu</button>
+
+</ion-content>

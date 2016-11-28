@@ -1,5 +1,6 @@
-import { Component, ElementRef, Optional, forwardRef, Inject, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Optional, Inject, Renderer, ViewEncapsulation } from '@angular/core';
 
+import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { Navbar } from '../navbar/navbar';
 import { Toolbar } from './toolbar';
@@ -28,7 +29,7 @@ import { Toolbar } from './toolbar';
  * <ion-header>
  *
  *   <ion-navbar>
- *     <ion-title>Main Heder</ion-title>
+ *     <ion-title>Main Header</ion-title>
  *   </ion-navbar>
  *
  *   <ion-toolbar>
@@ -38,12 +39,12 @@ import { Toolbar } from './toolbar';
  * </ion-header>
  * ```
  *
- * @demo /docs/v2/demos/title/
+ * @demo /docs/v2/demos/src/title/
  */
 @Component({
   selector: 'ion-title',
   template:
-    '<div class="toolbar-title">' +
+    '<div class="toolbar-title" [ngClass]="\'toolbar-title-\' + _mode">' +
       '<ng-content></ng-content>' +
     '</div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,13 +52,16 @@ import { Toolbar } from './toolbar';
 })
 export class ToolbarTitle extends Ion {
   constructor(
-    private _elementRef: ElementRef,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() toolbar: Toolbar,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
-    super(_elementRef);
-    toolbar && toolbar.setTitleCmp(this);
-    navbar && navbar.setTitleCmp(this);
+    super(config, elementRef, renderer, 'title');
+
+    toolbar && toolbar._setTitle(this);
+    navbar && navbar._setTitle(this);
   }
 
   /**
