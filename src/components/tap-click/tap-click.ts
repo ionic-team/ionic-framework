@@ -8,6 +8,7 @@ import { assert, runInDev } from '../../util/util';
 import { hasPointerMoved, pointerCoord } from '../../util/dom';
 import { RippleActivator } from './ripple';
 import { UIEventManager, PointerEvents, PointerEventType } from '../../util/ui-event-manager';
+import { GestureController } from '../../gestures/gesture-controller';
 
 /**
  * @private
@@ -21,11 +22,13 @@ export class TapClick {
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;
   private lastTouchEnd: number;
+  private dispatchClick: boolean;
 
   constructor(
     config: Config,
     private app: App,
-    zone: NgZone
+    zone: NgZone,
+    private gestureCtrl: GestureController
   ) {
     let activator = config.get('activator');
     if (activator === 'ripple') {
@@ -53,6 +56,7 @@ export class TapClick {
     if (this.startCoord) {
       return false;
     }
+
     let activatableEle = getActivatableTarget(ev.target);
     if (!activatableEle) {
       this.startCoord = null;
@@ -60,20 +64,25 @@ export class TapClick {
     }
 
     this.lastTouchEnd = 0;
+    this.dispatchClick = true;
     this.startCoord = pointerCoord(ev);
     this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
     return true;
   }
 
   pointerMove(ev: UIEvent) {
-    if (!this.startCoord ||
-      hasPointerMoved(POINTER_TOLERANCE, this.startCoord, pointerCoord(ev)) ||
-      this.app.isScrolling()) {
+    assert(this.startCoord, 'startCoord must be valid');
+    assert(this.dispatchClick === true, 'disableClick must be true');
+
+    if (this.shouldCancelEvent(ev)) {
       this.pointerCancel(ev);
     }
   }
 
   pointerEnd(ev: any, type: PointerEventType) {
+    assert(this.startCoord, 'startCoord must be valid');
+    assert(this.dispatchClick === true, 'disableClick must be true');
+
     runInDev(() => this.lastTouchEnd = Date.now());
 
     if (!this.startCoord) {
@@ -94,28 +103,27 @@ export class TapClick {
   pointerCancel(ev: UIEvent) {
     console.debug(`pointerCancel from ${ev.type} ${Date.now()}`);
     this.startCoord = null;
+    this.dispatchClick = false;
     this.activator && this.activator.clearState();
     this.pointerEvents.stop();
   }
 
+  shouldCancelEvent(ev: UIEvent): boolean {
+    return (
+      this.app.isScrolling() ||
+      this.gestureCtrl.isCaptured() ||
+      hasPointerMoved(POINTER_TOLERANCE, this.startCoord, pointerCoord(ev))
+    );
+  }
+
   click(ev: any) {
-    let preventReason: string = null;
-
-    if (!this.app.isEnabled()) {
-      preventReason = 'appDisabled';
-
-    } else if (this.usePolyfill && !ev.isIonicTap && this.isDisabledNativeClick()) {
-      preventReason = 'nativeClick';
-    }
-
-    if (preventReason !== null) {
-      // darn, there was a reason to prevent this click, let's not allow it
-      console.debug(`click prevent ${preventReason} ${Date.now()}`);
+    if (this.shouldCancelClick(ev)) {
       ev.preventDefault();
       ev.stopPropagation();
       return;
+    }
 
-    } else if (this.activator) {
+    if (this.activator) {
       // cool, a click is gonna happen, let's tell the activator
       // so the element can get the given "active" style
       const activatableEle = getActivatableTarget(ev.target);
@@ -123,19 +131,39 @@ export class TapClick {
         this.activator.clickAction(ev, activatableEle, this.startCoord);
       }
     }
-    runInDev(() => {
-      if (this.lastTouchEnd) {
-        let diff = Date.now() - this.lastTouchEnd;
-        if (diff < 100) {
-          console.debug(`FAST click dispatched. Delay(ms):`, diff);
-        } else {
-          console.warn(`SLOW click dispatched. Delay(ms):`, diff, ev);
-        }
-        this.lastTouchEnd = null;
-      } else {
-        console.debug('Click dispatched. Unknown delay');
+
+    runInDev(() => this.profileClickDelay(ev));
+  }
+
+  private shouldCancelClick(ev: any): boolean {
+    if (this.usePolyfill) {
+      if (!ev.isIonicTap && this.isDisabledNativeClick()) {
+        console.debug('click prevent: nativeClick');
+        return true;
       }
-    });
+    } else if (!this.dispatchClick) {
+      console.debug('click prevent: tap-click');
+      return true;
+    }
+    if (!this.app.isEnabled()) {
+      console.debug('click prevent: appDisabled');
+      return true;
+    }
+    return false;
+  }
+
+  private profileClickDelay(ev: any) {
+    if (this.lastTouchEnd) {
+      let diff = Date.now() - this.lastTouchEnd;
+      if (diff < 100) {
+        console.debug(`FAST click dispatched. Delay(ms):`, diff);
+      } else {
+        console.warn(`SLOW click dispatched. Delay(ms):`, diff, ev);
+      }
+      this.lastTouchEnd = null;
+    } else {
+      console.debug('Click dispatched. Unknown delay');
+    }
   }
 
   handleTapPolyfill(ev: any) {
@@ -202,11 +230,11 @@ export const isActivatable = function (ele: HTMLElement) {
 
 const ACTIVATABLE_ELEMENTS = ['A', 'BUTTON'];
 const ACTIVATABLE_ATTRIBUTES = ['tappable', 'ion-button'];
-const POINTER_TOLERANCE = 60;
+const POINTER_TOLERANCE = 100;
 const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
 
-export function setupTapClick(config: Config, app: App, zone: NgZone) {
+export function setupTapClick(config: Config, app: App, zone: NgZone, gestureCtrl: GestureController) {
   return function() {
-    return new TapClick(config, app, zone);
+    return new TapClick(config, app, zone, gestureCtrl);
   };
 }

@@ -155,7 +155,7 @@ export class IonicModule {
         { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
         { provide: APP_INITIALIZER, useFactory: registerTransitions, deps: [ Config ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform ], multi: true },
-        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, App, NgZone ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, App, NgZone, GestureController ], multi: true },
 
         // useClass
         { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
