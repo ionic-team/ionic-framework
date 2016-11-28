@@ -24,7 +24,7 @@
  * $ionicConfigProvider.views.maxCache(10);
  * ```
  *
- * Additionally, each platform can have it's own config within the `$ionicConfigProvider.platform`
+ * Additionally, each platform can have its own config within the `$ionicConfigProvider.platform`
  * property. The config below would only apply to Android devices.
  *
  * ```js
