@@ -100,7 +100,7 @@ export class Events {
 
     let responses: any[] = [];
     t.forEach((handler: any) => {
-      responses.push(handler(args));
+      responses.push(handler(...args));
     });
     return responses;
   }
