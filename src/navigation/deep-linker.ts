@@ -55,31 +55,34 @@ import { ViewController } from './view-controller';
  *   ]
  * ```
  *
- * This Feels pretty familiar to how Angular sets up routes, but has some fundamental differences.
- * Since components could be loaded anywhere in the app, DeepLinker lets you define their URL segment.
- * So at any point, when a Component becomes the active view, we just append the URL segment.
+ * Since components/pages can be loaded anywhere in the app, DeepLinker lets you define their URL segment but
+ * doesn't require a full URL route.
+ *
+ * So, at any point a Page becomes the active page, we just append the URL segment.
  *
  * ### Dynamic Links
  *
- * Since passing data around is common practice in an app, we can reflect that in our app's URL in a similar manner to Angular's router.
+ * Since passing data around is common practice in an app, we can reflect that in our app's URL by
+ * using the common `:param` syntax:
  *
  * ```ts
  *  links: [
  *    { component: HomePage, name: 'Home', segment: 'home' },
- *    { component: DetailPage, name: 'Detail', segment: 'detail/:user' }
+ *    { component: DetailPage, name: 'Detail', segment: 'detail/:userId' }
  *  ]
  *  ```
- * This approach of using `:param` has been around in previous routing solutions.
- * All this means is that when we push a new component on to the stack, in the navParams, there should be a property of `user`.
- * The property needs to be something that can be serialized by the DeepLinker. 
- * So setting its value to be that of a string or number is suggested.
+ *
+ * In this case, when we `push` to a new instance of `DetailPage`, the `user` field of
+ * the data we pass to `push` will be put into the URL.
+ *
+ * The property needs to be something that can be serialized into a string by the DeepLinker.
  *
  * So in a typical `navCtrl.push()` scenario, we'd do something like this:
  *
  * ```ts
  * pushPage(userInfo) {
  *   this.navCtrl.push(DetailPage, {
- *   'user': userInfo
+ *     'userId': userInfo.id
  *   })
  * }
  * ```
@@ -88,18 +91,29 @@ import { ViewController } from './view-controller';
  *
  * ### Default History
  *
- *  In some cases when a page loads, you might be sent to a component that has it's own information, but not back view.
- *  This situation is common when loading a page from a Push Notification.
- *  If you want a component to have a default history when none is present, you can use the `defaultHistory` property
+ * While pages can be navigated to anywhere and loaded at any time, what happens when an app is launched from a deeplink while cold or suspended?
  *
- * The `defaultHistory` property takes an array of components to create the history stack if none exist.
+ * By default, the page would be navigated to in the root NavController, but often the history stack is a UX design issue that you'll
+ * want to tweak as you iterate on the UX of your app.
+ *
+ * An example here is the App Store app on iOS. If you navigate to an app link to the App Store app, the app decides to show
+ * a single page for the app detail, and no back button. In constrast, opening an instagram link shows a back button that
+ * goes back to the profile page of the user. The point is: this back button experience is totally up to you as the designer
+ * of the app experience.
+ *
+ * This is where `defaultHistory` comes in.
+ *
+ * The `defaultHistory` property takes an array of components to create the initial history stack if none exists.
  *
  * ```ts
  *  links: [
  *    { component: HomePage, name: 'Home', segment: 'home' },
- *    { component: DetailPage, name: 'Detail', segment: 'detail/:user', defaultHistory: [HomePage] }
+ *    { component: DetailPage, name: 'Detail', segment: 'detail/:userId', defaultHistory: [HomePage] }
  *  ]
  *  ```
+ *
+ * In this example above, if we launch the app at myapp.com/detail/4, then the user will see the DetailPage and then the back button will
+ * go to the HomePage.
  */
 export class DeepLinker {
 
