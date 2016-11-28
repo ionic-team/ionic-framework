@@ -478,7 +478,11 @@ export class Animation {
    * ROOT ANIMATION
    */
   _asyncEnd(dur: number, shouldComplete: boolean) {
-    var self = this;
+    assert(!this._unrgTrns, '_unrgTrns must be null');
+    assert(!this._tm, '_tm must be null');
+    assert(dur > 0, 'duration can not be 0 in async animations');
+
+    const self = this;
 
     function onTransitionEnd(ev: any) {
       // congrats! a successful transition completed!
@@ -499,7 +503,7 @@ export class Animation {
       // if all goes well this fallback should never fire
 
       // clear the other async end events from firing
-      self._tm = 0;
+      self._tm = undefined;
       self._clearAsync();
 
       // set the after styles
@@ -509,8 +513,6 @@ export class Animation {
       // transition finished
       self._didFinishAll(shouldComplete, true, false);
     }
-
-    assert(dur > 0, 'duration can not be 0 in async animations');
 
     // set the TRANSITION END event on one of the transition elements
     self._unrgTrns = transitionEnd(self._transEl(), onTransitionEnd);
