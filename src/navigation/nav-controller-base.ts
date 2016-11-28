@@ -216,6 +216,7 @@ export class NavControllerBase extends Ion implements NavController {
 
       reject && reject(false, false, rejectReason);
 
+      // let's see if there's another to kick off
       this.setTransitioning(false);
       this._sbCheck();
       this._nextTrns();
@@ -226,12 +227,12 @@ export class NavControllerBase extends Ion implements NavController {
       ti.insertViews = ti.insertViews.filter(v => v !== null);
       if (ti.insertViews.length === 0) {
         ti.reject('invalid views to insert');
-        return;
+        return promise;
       }
 
-    } else if (isPresent(ti.removeStart) && !this._views.length && !this._isPortal) {
+    } else if (isPresent(ti.removeStart) && this._views.length === 0 && !this._isPortal) {
       ti.reject('no views in the stack to be removed');
-      return;
+      return promise;
     }
 
     this._queue.push(ti);
@@ -275,15 +276,14 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     // Only test canLeave/canEnter if there is transition
-    let requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
+    const requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
     if (requiresTransition) {
       // views have been initialized, now let's test
       // to see if the transition is even allowed or not
       return this._viewTest(enteringView, leavingView, ti);
 
     } else {
-      this._postViewInit(enteringView, leavingView, ti, ti.resolve);
-      return true;
+      return this._postViewInit(enteringView, leavingView, ti);
     }
   }
 
@@ -335,10 +335,12 @@ export class NavControllerBase extends Ion implements NavController {
 
     const removeStart = ti.removeStart;
     if (isPresent(removeStart)) {
-      let views = this._views;
+      const views = this._views;
       const removeEnd = removeStart + ti.removeCount;
-      for (var i = views.length - 1; i >= 0; i--) {
-        var view = views[i];
+      let i: number;
+      let view: ViewController;
+      for (i = views.length - 1; i >= 0; i--) {
+        view = views[i];
         if ((i < removeStart || i >= removeEnd) && view !== leavingView) {
           return view;
         }
@@ -347,11 +349,15 @@ export class NavControllerBase extends Ion implements NavController {
     return null;
   }
 
-  _postViewInit(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction, resolve: TransitionResolveFn) {
+  _postViewInit(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
     assert(leavingView || enteringView, 'Both leavingView and enteringView are null');
+    assert(ti.resolve, 'resolve must be valid');
+    assert(ti.reject, 'reject must be valid');
+
     const opts = ti.opts || {};
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
+    const removeCount = ti.removeCount;
     let view: ViewController;
     let i: number;
     let destroyQueue: ViewController[];
@@ -359,10 +365,10 @@ export class NavControllerBase extends Ion implements NavController {
     // there are views to remove
     if (isPresent(removeStart)) {
       assert(removeStart >= 0, 'removeStart can not be negative');
-      assert(ti.removeCount >= 0, 'removeCount can not be negative');
+      assert(removeCount >= 0, 'removeCount can not be negative');
 
       destroyQueue = [];
-      for (i = 0; i < ti.removeCount; i++) {
+      for (i = 0; i < removeCount; i++) {
         view = this._views[i + removeStart];
         if (view && view !== enteringView && view !== leavingView) {
           destroyQueue.push(view);
@@ -378,7 +384,7 @@ export class NavControllerBase extends Ion implements NavController {
       console.warn(`You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,
         this, this.getNativeElement());
 
-      ti.reject && ti.reject('navigation stack needs at least one root page');
+      ti.reject('navigation stack needs at least one root page');
       return false;
     }
 
@@ -392,6 +398,7 @@ export class NavControllerBase extends Ion implements NavController {
       // add the views to the
       for (i = 0; i < insertViews.length; i++) {
         view = insertViews[i];
+        assert(view, 'view must be non null');
         this._insertViewAt(view, ti.insertStart + i);
       }
 
@@ -433,14 +440,15 @@ export class NavControllerBase extends Ion implements NavController {
       }
 
       // huzzah! let us transition these views
-      this._transition(enteringView, leavingView, opts, resolve);
+      this._transition(enteringView, leavingView, opts, ti.resolve);
 
     } else {
       // they're inserting/removing the views somewhere in the middle or
       // beginning, so visually nothing needs to animate/transition
       // resolve immediately because there's no animation that's happening
-      resolve(true, false);
+      ti.resolve(true, false);
     }
+    return true;
   }
 
   /**
@@ -488,17 +496,15 @@ export class NavControllerBase extends Ion implements NavController {
     this._zone.run(this._didLoad.bind(this, view));
   }
 
-  _viewTest(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
+  _viewTest(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction): boolean {
     const promises: Promise<any>[] = [];
-    const reject = ti.reject;
-    const resolve = ti.resolve;
 
     if (leavingView) {
       const leavingTestResult = leavingView._lifecycleTest('Leave');
 
       if (leavingTestResult === false) {
         // synchronous reject
-        reject((leavingTestResult !== false ? leavingTestResult : `ionViewCanLeave rejected`));
+        ti.reject((leavingTestResult !== false ? leavingTestResult : `ionViewCanLeave rejected`));
         return false;
       } else if (leavingTestResult instanceof Promise) {
         // async promise
@@ -511,7 +517,7 @@ export class NavControllerBase extends Ion implements NavController {
 
       if (enteringTestResult === false) {
         // synchronous reject
-        reject((enteringTestResult !== false ? enteringTestResult : `ionViewCanEnter rejected`));
+        ti.reject((enteringTestResult !== false ? enteringTestResult : `ionViewCanEnter rejected`));
         return false;
       } else if (enteringTestResult instanceof Promise) {
         // async promise
@@ -521,19 +527,18 @@ export class NavControllerBase extends Ion implements NavController {
 
     if (promises.length) {
       // darn, async promises, gotta wait for them to resolve
-      Promise.all(promises)
-        .then((values: any[]) => {
-          if (values.some(result => result === false)) {
-            reject(`ionViewCanEnter rejected`);
-          } else {
-            this._postViewInit(enteringView, leavingView, ti, resolve);
-          }
-        }).catch(reject);
+      Promise.all(promises).then((values: any[]) => {
+        if (values.some(result => result === false)) {
+          ti.reject(`ionViewCanEnter rejected`);
+        } else {
+          this._postViewInit(enteringView, leavingView, ti);
+        }
+      }).catch(ti.reject);
+      return true;
     } else {
       // synchronous and all tests passed! let's move on already
-      this._postViewInit(enteringView, leavingView, ti, resolve);
+      return this._postViewInit(enteringView, leavingView, ti);
     }
-    return true;
   }
 
   _transition(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, resolve: TransitionResolveFn) {
@@ -678,28 +683,31 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _trnsFinish(transition: Transition, opts: NavOptions, resolve: TransitionResolveFn) {
+    const hasCompleted = transition.hasCompleted;
+    const enteringView = transition.enteringView;
+    const leavingView = transition.leavingView;
+
     // mainly for testing
     let enteringName: string;
     let leavingName: string;
-    let hasCompleted = transition.hasCompleted;
 
     if (hasCompleted) {
       // transition has completed (went from 0 to 1)
-      if (transition.enteringView) {
-        enteringName = transition.enteringView.name;
-        this._didEnter(transition.enteringView);
+      if (enteringView) {
+        enteringName = enteringView.name;
+        this._didEnter(enteringView);
       }
 
-      if (transition.leavingView) {
-        leavingName = transition.leavingView.name;
-        this._didLeave(transition.leavingView);
+      if (leavingView) {
+        leavingName = leavingView.name;
+        this._didLeave(leavingView);
       }
 
-      this._cleanup(transition.enteringView);
+      this._cleanup(enteringView);
     } else {
       // If transition does not complete, we have to cleanup anyway, because
       // previous pages in the stack are not hidden probably.
-      this._cleanup(transition.leavingView);
+      this._cleanup(leavingView);
     }
 
     if (transition.isRoot()) {
@@ -754,7 +762,7 @@ export class NavControllerBase extends Ion implements NavController {
     const views = this._views;
     const index = views.indexOf(view);
     assert(index > -1, 'view must be part of the stack');
-    if (index > -1) {
+    if (index >= 0) {
       views.splice(index, 1);
     }
   }
@@ -771,10 +779,13 @@ export class NavControllerBase extends Ion implements NavController {
     // ok, cleanup time!! Destroy all of the views that are
     // INACTIVE and come after the active view
     const activeViewIndex = this.indexOf(activeView);
-
+    const views = this._views;
     let reorderZIndexes = false;
-    for (var i = this._views.length - 1; i >= 0; i--) {
-      var view = this._views[i];
+    let view: ViewController;
+    let i: number;
+
+    for (i = views.length - 1; i >= 0; i--) {
+      view = views[i];
       if (i > activeViewIndex) {
         // this view comes after the active view
         // let's unload it
@@ -791,12 +802,11 @@ export class NavControllerBase extends Ion implements NavController {
       }
     }
 
-    if (!this._isPortal) {
-      if (reorderZIndexes) {
-        this._views.forEach(view => {
-          // ******** DOM WRITE ****************
-          view._setZIndex(view._zIndex + INIT_ZINDEX + 1, this._renderer);
-        });
+    if (!this._isPortal && reorderZIndexes) {
+      for (i = 0; i < views.length; i++) {
+        view = views[i];
+        // ******** DOM WRITE ****************
+        view._setZIndex(view._zIndex + INIT_ZINDEX + 1, this._renderer);
       }
     }
   }
@@ -866,7 +876,6 @@ export class NavControllerBase extends Ion implements NavController {
     this.viewWillUnload.emit(view);
     this._app.viewWillUnload.emit(view);
   }
-
 
   getActiveChildNav(): any {
     return this._children[this._children.length - 1];
