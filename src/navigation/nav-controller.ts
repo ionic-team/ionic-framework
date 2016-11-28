@@ -403,8 +403,8 @@ export abstract class NavController {
   config: Config;
 
   /**
-   * Push a new component onto the current navication stack. Pass any aditional information
-   * along as an object. This additional information is acessible through NavParams
+   * Push a new component onto the current navigation stack. Pass any aditional information
+   * along as an object. This additional information is accessible through NavParams
    *
    * @param {Page} page  The page component class you want to push on to the navigation stack
    * @param {object} [params={}] Any nav-params you want to pass along to the next view
