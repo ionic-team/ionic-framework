@@ -22,7 +22,7 @@ import { ScrollView } from '../util/scroll-view';
  *
  * // second page (listen for the user created event)
  * events.subscribe('user:created', (user, time) => {
- *   // userEventData is an array of parameters, so grab our first and only arg
+ *   // user and time are the same arguments passed in `events.publish(user, time)`
  *   console.log('Welcome', user, 'at', time);
  * });
  *
