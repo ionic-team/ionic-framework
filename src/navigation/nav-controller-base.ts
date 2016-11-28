@@ -378,7 +378,7 @@ export class NavControllerBase extends Ion implements NavController {
       opts.direction = opts.direction || DIRECTION_BACK;
     }
 
-    const finalBalance = this._views.length + (insertViews ? insertViews.length : 0) - (destroyQueue ? destroyQueue.length : 0);
+    const finalBalance = this._views.length + (insertViews ? insertViews.length : 0) - (removeCount ? removeCount : 0);
     assert(finalBalance >= 0, 'final balance can not be negative');
     if (finalBalance === 0 && !this._isPortal) {
       console.warn(`You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,

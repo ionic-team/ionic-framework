@@ -172,7 +172,7 @@ export class ViewController {
    * @returns {any} data Returns the data passed in, if any.
    *
    */
-  dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
+  dismiss(data?: any, role?: any, navOptions: NavOptions = {}): Promise<any> {
     if (!this._nav) {
       return Promise.resolve(false);
     }

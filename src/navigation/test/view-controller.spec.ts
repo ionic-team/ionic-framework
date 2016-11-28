@@ -108,6 +108,7 @@ describe('ViewController', () => {
       // arrange
       let viewController = mockView();
       let navControllerBase = mockNavController();
+      navControllerBase._isPortal = true;
       mockViews(navControllerBase, [viewController]);
 
       viewController.onDidDismiss((data: any) => {
@@ -122,6 +123,7 @@ describe('ViewController', () => {
       // arrange
       let viewController = mockView();
       let navControllerBase = mockNavController();
+      navControllerBase._isPortal = true;
       mockViews(navControllerBase, [viewController]);
 
       viewController.onDidDismiss((data: any) => {
