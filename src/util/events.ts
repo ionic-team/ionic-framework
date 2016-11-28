@@ -17,13 +17,13 @@ import { ScrollView } from '../util/scroll-view';
  * // first page (publish an event when a user is created)
  * function createUser(user) {
  *   console.log('User created!')
- *   events.publish('user:created', user);
+ *   events.publish('user:created', user, Date.now());
  * }
  *
  * // second page (listen for the user created event)
- * events.subscribe('user:created', (userEventData) => {
+ * events.subscribe('user:created', (user, time) => {
  *   // userEventData is an array of parameters, so grab our first and only arg
- *   console.log('Welcome', userEventData[0]);
+ *   console.log('Welcome', user, 'at', time);
  * });
  *
  * ```
