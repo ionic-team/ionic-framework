@@ -4,7 +4,7 @@ import { ActivatorBase } from './activator-base';
 import { Activator } from './activator';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { assert } from '../../util/util';
+import { assert, runInDev } from '../../util/util';
 import { hasPointerMoved, pointerCoord } from '../../util/dom';
 import { RippleActivator } from './ripple';
 import { UIEventManager, PointerEvents, PointerEventType } from '../../util/ui-event-manager';
@@ -20,6 +20,7 @@ export class TapClick {
   private startCoord: any;
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;
+  private lastTouchEnd: number;
 
   constructor(
     config: Config,
@@ -57,6 +58,8 @@ export class TapClick {
       this.startCoord = null;
       return false;
     }
+
+    this.lastTouchEnd = 0;
     this.startCoord = pointerCoord(ev);
     this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
     return true;
@@ -71,6 +74,8 @@ export class TapClick {
   }
 
   pointerEnd(ev: any, type: PointerEventType) {
+    runInDev(() => this.lastTouchEnd = Date.now());
+
     if (!this.startCoord) {
       return;
     }
@@ -108,6 +113,7 @@ export class TapClick {
       console.debug(`click prevent ${preventReason} ${Date.now()}`);
       ev.preventDefault();
       ev.stopPropagation();
+      return;
 
     } else if (this.activator) {
       // cool, a click is gonna happen, let's tell the activator
@@ -117,6 +123,19 @@ export class TapClick {
         this.activator.clickAction(ev, activatableEle, this.startCoord);
       }
     }
+    runInDev(() => {
+      if (this.lastTouchEnd) {
+        let diff = Date.now() - this.lastTouchEnd;
+        if (diff < 100) {
+          console.debug(`FAST click dispatched. Delay(ms):`, diff);
+        } else {
+          console.warn(`SLOW click dispatched. Delay(ms):`, diff, ev);
+        }
+        this.lastTouchEnd = null;
+      } else {
+        console.debug('Click dispatched. Unknown delay');
+      }
+    });
   }
 
   handleTapPolyfill(ev: any) {

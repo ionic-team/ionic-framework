@@ -181,6 +181,13 @@ const ASSERT_ENABLED = true;
 /**
  * @private
  */
+
+function _runInDev(fn: Function) {
+  if (ASSERT_ENABLED === true) {
+    return fn();
+  }
+}
+
 function _assert(actual: any, reason?: string) {
   if (!actual && ASSERT_ENABLED === true) {
     let message = 'IONIC ASSERT: ' + reason;
@@ -191,3 +198,4 @@ function _assert(actual: any, reason?: string) {
 }
 
 export { _assert as assert};
+export { _runInDev as runInDev};

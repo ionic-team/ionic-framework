@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Opti
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { Content } from '../content/content';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
 import { isBlank } from '../../util/util';
@@ -421,16 +420,6 @@ export class Tabs extends Ion implements AfterViewInit {
       // do not track if the tab index is the same as the previous
       if (this._selectHistory[this._selectHistory.length - 1] !== selectedTab.id) {
         this._selectHistory.push(selectedTab.id);
-      }
-
-      // if this is not the Tab's initial load then we need
-      // to refresh the tabbar and content dimensions to be sure
-      // they're lined up correctly
-      if (alreadyLoaded && selectedPage) {
-        let content = <Content>selectedPage.getIONContent();
-        if (content) {
-          content.resize();
-        }
       }
     });
   }

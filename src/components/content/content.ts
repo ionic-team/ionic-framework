@@ -132,6 +132,7 @@ export class Content extends Ion {
   _sbPadding: boolean;
   _fullscreen: boolean;
   _footerEle: HTMLElement;
+  _dirty: boolean = false;
 
   /*
    * @private
@@ -472,7 +473,6 @@ export class Content extends Ion {
   /**
    * Tell the content to recalculate its dimensions. This should be called
    * after dynamically adding headers, footers, or tabs.
-   *
    */
   resize() {
     nativeRaf(() => {
@@ -486,6 +486,14 @@ export class Content extends Ion {
    * DOM READ
    */
   readDimensions() {
+    let cachePaddingTop = this._paddingTop;
+    let cachePaddingRight = this._paddingRight;
+    let cachePaddingBottom = this._paddingBottom;
+    let cachePaddingLeft = this._paddingLeft;
+    let cacheHeaderHeight = this._headerHeight;
+    let cacheFooterHeight = this._footerHeight;
+    let cacheTabsPlacement = this._tabsPlacement;
+
     this._paddingTop = 0;
     this._paddingRight = 0;
     this._paddingBottom = 0;
@@ -542,6 +550,16 @@ export class Content extends Ion {
 
       ele = ele.parentElement;
     }
+
+    this._dirty = (
+      cachePaddingTop !== this._paddingTop ||
+      cachePaddingBottom !== this._paddingBottom ||
+      cachePaddingLeft !== this._paddingLeft ||
+      cachePaddingRight !== this._paddingRight ||
+      cacheHeaderHeight !== this._headerHeight ||
+      cacheFooterHeight !== this._footerHeight ||
+      cacheTabsPlacement !== this._tabsPlacement
+    );
   }
 
   /**
@@ -549,6 +567,10 @@ export class Content extends Ion {
    * DOM WRITE
    */
   writeDimensions() {
+    if (!this._dirty) {
+      console.debug('Skipping writeDimenstions');
+      return;
+    }
 
     let scrollEle = this._scrollEle as any;
     if (!scrollEle) {

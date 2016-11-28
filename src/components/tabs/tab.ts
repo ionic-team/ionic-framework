@@ -5,6 +5,7 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
+import { nativeRaf } from '../../util/dom';
 import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
@@ -303,10 +304,18 @@ export class Tab extends NavControllerBase {
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
+      this.setElementClass('show-tab', true);
       this.push(this.root, this.rootParams, opts, done);
       this._loaded = true;
 
     } else {
+      // if this is not the Tab's initial load then we need
+      // to refresh the tabbar and content dimensions to be sure
+      // they're lined up correctly
+      nativeRaf(() => {
+        var content = this.getActive().getIONContent();
+        content.resize();
+      });
       done(true);
     }
   }
