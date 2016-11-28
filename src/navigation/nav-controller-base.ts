@@ -103,12 +103,18 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   popTo(indexOrViewCtrl: any, opts?: NavOptions, done?: Function): Promise<any> {
-    const startIndex = isViewController(indexOrViewCtrl) ? this.indexOf(indexOrViewCtrl) : isNumber(indexOrViewCtrl) ? indexOrViewCtrl : -1;
-    return this._queueTrns({
-      removeStart: startIndex + 1,
+    let config: TransitionInstruction = {
+      removeStart: -1,
       removeCount: -1,
-      opts: opts,
-    }, done);
+      opts: opts
+    };
+    if (isViewController(indexOrViewCtrl)) {
+      config.removeView = indexOrViewCtrl;
+      config.removeStart = 1;
+    } else if (isNumber(indexOrViewCtrl)) {
+      config.removeStart = indexOrViewCtrl + 1;
+    }
+    return this._queueTrns(config, done);
   }
 
   popToRoot(opts?: NavOptions, done?: Function): Promise<any> {
@@ -138,6 +144,8 @@ export class NavControllerBase extends Ion implements NavController {
   removeView(viewController: ViewController, opts?: NavOptions, done?: Function): Promise<any> {
     return this._queueTrns({
       removeView: viewController,
+      removeStart: 0,
+      removeCount: 1,
       opts: opts,
     }, done);
   }
@@ -295,16 +303,15 @@ export class NavControllerBase extends Ion implements NavController {
     const viewsLength = this._views.length;
 
     if (isPresent(ti.removeView)) {
-      assert(!isPresent(ti.removeStart), 'removeView and removeIndex can not be enabled at the same time');
+      assert(isPresent(ti.removeStart), 'removeView needs removeStart');
+      assert(isPresent(ti.removeCount), 'removeView needs removeCount');
+
       let index = this._views.indexOf(ti.removeView);
-
       if (index >= 0) {
-        ti.removeStart = index;
-        ti.removeCount = 1;
-        ti.leavingRequiresTransition = ((ti.removeStart + ti.removeCount) === viewsLength);
+        ti.removeStart += index;
       }
-
-    } else if (isPresent(ti.removeStart)) {
+    }
+    if (isPresent(ti.removeStart)) {
       if (ti.removeStart < 0) {
         ti.removeStart = (viewsLength - 1);
       }
