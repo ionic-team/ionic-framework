@@ -158,7 +158,7 @@ export class E2EPage {
     <ion-header>
       <ion-toolbar>
         <ion-buttons start>
-          <button ion-button (click)="dismiss()">Close</button>
+          <button ion-button (click)="dismiss()" strong>Close</button>
         </ion-buttons>
         <ion-title>Modal</ion-title>
       </ion-toolbar>

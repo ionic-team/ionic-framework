@@ -329,7 +329,7 @@ export class ToolbarModal {
     <ion-header>
       <ion-toolbar color="secondary">
         <ion-buttons start>
-          <button ion-button (click)="dismiss()">Close</button>
+          <button ion-button (click)="dismiss()" strong>Close</button>
         </ion-buttons>
         <ion-title>Modal w/ Inputs</ion-title>
       </ion-toolbar>
@@ -415,7 +415,7 @@ export class ContactUs {
       <ion-navbar>
         <ion-title>First Page Header</ion-title>
         <ion-buttons start>
-          <button ion-button class="e2eCloseMenu" (click)="dismiss()">Close</button>
+          <button ion-button class="e2eCloseMenu" (click)="dismiss()" strong>Close</button>
         </ion-buttons>
       </ion-navbar>
     </ion-header>

@@ -315,3 +315,11 @@ $button-wp-round-border-radius:                           $button-round-border-r
   @include wp-button-outline($color-name, $color-base, $color-contrast);
   @include wp-button-clear($color-name, $color-base, $color-contrast);
 }
+
+
+// WP strong Button
+// --------------------------------------------------
+
+.button-strong-wp {
+  font-weight: bold;
+}

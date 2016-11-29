@@ -359,3 +359,11 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
   @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
   @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
 }
+
+
+// iOS strong Button
+// --------------------------------------------------
+
+.bar-button-strong-ios {
+  font-weight: bold;
+}
