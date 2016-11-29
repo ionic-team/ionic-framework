@@ -20,15 +20,27 @@ export const enum PointerEventType {
 }
 
 // Test via a getter in the options object to see if the passive property is accessed
-var supportsPassive = false;
+var supportsOptions = false;
 try {
   var opts = Object.defineProperty({}, 'passive', {
     get: function() {
-      supportsPassive = true;
+      supportsOptions = true;
     }
   });
   window.addEventListener('test', null, opts);
 } catch (e) { }
+
+
+export function eventOptions(useCapture = false, usePassive = false): any {
+  if (supportsOptions && usePassive) {
+    return {
+      capture: useCapture,
+      passive: usePassive
+    };
+  }
+  return useCapture;
+}
+
 
 /**
  * @private
@@ -180,7 +192,7 @@ export class UIEventManager {
     }
     let zone = config.zone || this.zoneWrapped;
     let opts;
-    if (supportsPassive) {
+    if (supportsOptions) {
       opts = {};
       if (config.passive === true) {
         opts['passive'] = true;
@@ -231,7 +243,7 @@ export class UIEventManager {
   }
 }
 
-function listenEvent(ele: any, eventName: string, zoneWrapped: boolean, option: any, callback: any): Function {
+export function listenEvent(ele: any, eventName: string, zoneWrapped: boolean, option: any, callback: any): Function {
   let rawEvent = (!zoneWrapped && '__zone_symbol__addEventListener' in ele);
   if (rawEvent) {
     ele.__zone_symbol__addEventListener(eventName, callback, option);
