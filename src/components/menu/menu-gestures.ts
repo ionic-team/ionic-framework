@@ -19,7 +19,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
     super(contentEle, assign({
       direction: 'x',
       edge: menu.side,
-      threshold: 0,
+      threshold: 5,
       maxEdgeStart: menu.maxEdgeStart || 50,
       zone: false,
       passive: true,

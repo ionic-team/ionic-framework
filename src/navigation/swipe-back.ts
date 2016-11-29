@@ -20,7 +20,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
       direction: 'x',
       maxEdgeStart: 75,
       zone: false,
-      threshold: 0,
+      threshold: 5,
       debouncer: new NativeRafDebouncer(),
       gesture: gestureCtlr.createGesture({
         name: GESTURE_GO_BACK_SWIPE,
