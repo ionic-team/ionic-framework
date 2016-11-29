@@ -1,6 +1,7 @@
 import { Menu } from './menu';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
+import { removeArrayItem } from '../../util/util';
 
 
 /**
@@ -291,10 +292,7 @@ export class MenuController {
    * @private
    */
   unregister(menu: Menu) {
-    let index = this._menus.indexOf(menu);
-    if (index > -1) {
-      this._menus.splice(index, 1);
-    }
+    removeArrayItem(this._menus, menu);
   }
 
   /**

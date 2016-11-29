@@ -51,7 +51,7 @@ export function rafFrames(framesToWait: number, callback: Function) {
   if (framesToWait === 0) {
     callback();
 
-  }else if (framesToWait < 2) {
+  } else if (framesToWait < 2) {
     rafId = nativeRaf(callback);
 
   } else {

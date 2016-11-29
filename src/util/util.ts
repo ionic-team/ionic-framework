@@ -148,10 +148,19 @@ export const isCheckedProperty = function(a: any, b: any): boolean {
  * @private
  */
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
-  let element = array[indexes.from];
+  const element = array[indexes.from];
   array.splice(indexes.from, 1);
   array.splice(indexes.to, 0, element);
   return array;
+}
+
+
+/**
+ * @private
+ */
+export function removeArrayItem(array: any[], item: any) {
+  const index = array.indexOf(item);
+  return !!~index && !!array.splice(index, 1);
 }
 
 /**

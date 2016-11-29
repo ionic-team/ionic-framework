@@ -2,6 +2,7 @@ import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
 
 import { QueryParams } from './query-params';
 import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
+import { removeArrayItem } from '../util/util';
 
 
 /**
@@ -373,10 +374,7 @@ export class Platform {
 
     // return a function to unregister this back button action
     return () => {
-      let index = this._bbActions.indexOf(action);
-      if (index > -1) {
-        this._bbActions.splice(index, 1);
-      }
+      removeArrayItem(this._bbActions, action);
     };
   }
 
@@ -524,14 +522,11 @@ export class Platform {
    * @private
    */
   onResize(cb: Function): Function {
-    let self = this;
+    const self = this;
     self._onResizes.push(cb);
 
     return function() {
-      const index = self._onResizes.indexOf(cb);
-      if (index > -1) {
-        self._onResizes.splice(index, 1);
-      }
+      removeArrayItem(self._onResizes, cb);
     };
   }
 

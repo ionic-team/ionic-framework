@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { removeArrayItem } from './util';
 
 
 /**
@@ -15,10 +16,7 @@ export class Form {
   }
 
   deregister(input: any) {
-    let index = this._inputs.indexOf(input);
-    if (index > -1) {
-      this._inputs.splice(index, 1);
-    }
+    removeArrayItem(this._inputs, input);
     if (input === this._focused) {
       this._focused = null;
     }

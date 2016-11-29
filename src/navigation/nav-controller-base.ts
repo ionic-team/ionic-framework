@@ -8,7 +8,7 @@ import { convertToView, convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FO
 import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { GestureController } from '../gestures/gesture-controller';
-import { isBlank, isNumber, isPresent, assert } from '../util/util';
+import { isBlank, isNumber, isPresent, assert, removeArrayItem } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { Ion } from '../components/ion';
 import { Keyboard } from '../util/keyboard';
@@ -893,10 +893,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   unregisterChildNav(nav: any) {
-    const index = this._children.indexOf(nav);
-    if (index > -1) {
-      this._children.splice(index, 1);
-    }
+    removeArrayItem(this._children, nav);
   }
 
   destroy() {
