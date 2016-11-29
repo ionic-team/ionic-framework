@@ -1,3 +1,4 @@
+import { DomController } from '../util/dom-controller';
 import { nativeTimeout, nativeRaf } from '../util/dom';
 import { Platform } from '../platform/platform';
 import { ScrollView } from '../util/scroll-view';
@@ -109,7 +110,7 @@ export class Events {
 /**
  * @private
  */
-export function setupEvents(platform: Platform): Events {
+export function setupEvents(platform: Platform, dom: DomController): Events {
   const events = new Events();
 
   // start listening for resizes XXms after the app starts
@@ -134,7 +135,7 @@ export function setupEvents(platform: Platform): Events {
 
       let content = <HTMLElement>el.closest('.scroll-content');
       if (content) {
-        var scroll = new ScrollView(content);
+        var scroll = new ScrollView(content, dom);
           // We need to stop scrolling if it's happening and scroll up
 
         content.style['WebkitBackfaceVisibility'] = 'hidden';
@@ -173,8 +174,8 @@ export function setupEvents(platform: Platform): Events {
 /**
  * @private
  */
-export function setupProvideEvents(platform: Platform) {
+export function setupProvideEvents(platform: Platform, dom: DomController) {
   return function() {
-    return setupEvents(platform);
+    return setupEvents(platform, dom);
   };
 }
