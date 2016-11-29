@@ -78,6 +78,10 @@
  * @param {boolean=} force-refresh-images Force images to refresh as you scroll. This fixes a problem
  *   where, when an element is interchanged as scrolling, its image will still have the old src
  *   while the new src loads. Setting this to true comes with a small performance loss.
+ * @param {boolean=} use-content-size When enabled, also use the original scroll view content size
+ *   instead of using only the list size. This fixes a problem where the scroll view needs to be
+ *   manipulated with additional, like when implementing a pull-to-search pattern. Setting this to
+ *   true comes with a small performance loss.
  */
 
 IonicModule
@@ -220,6 +224,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
         heightData: heightData,
         widthData: widthData,
         forceRefreshImages: !!(isDefined(attr.forceRefreshImages) && attr.forceRefreshImages !== 'false'),
+        useContentSize: !!(isDefined(attr.useContentSize) && attr.useContentSize !== 'false'),
         keyExpression: keyExpr,
         renderBuffer: renderBuffer,
         scope: scope,
@@ -402,6 +407,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     var afterItemsNode = options.afterItemsNode;
     var containerNode = options.containerNode;
     var forceRefreshImages = options.forceRefreshImages;
+    var useContentSize = options.useContentSize;
     var heightData = options.heightData;
     var widthData = options.widthData;
     var keyExpression = options.keyExpression;
@@ -462,10 +468,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     var itemsShownMap = {};
     var nextItemId = 0;
 
-    var scrollViewSetDimensions = isVertical ?
-      function() { scrollView.setDimensions(null, null, null, view.getContentSize(), true); } :
-      function() { scrollView.setDimensions(null, null, view.getContentSize(), null, true); };
-
     // view is a mix of list/grid methods + static/dynamic methods.
     // See bottom for implementations. Available methods:
     //
@@ -478,7 +480,15 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
     var contentSizeStr = isVertical ? 'getContentHeight' : 'getContentWidth';
     var originalGetContentSize = scrollView.options[contentSizeStr];
-    scrollView.options[contentSizeStr] = angular.bind(view, view.getContentSize);
+    var getContentSize = useContentSize ?
+      function() { return Math.max(originalGetContentSize(), view.getContentSize()); } :
+      angular.bind(view, view.getContentSize);
+
+    scrollView.options[contentSizeStr] = getContentSize;
+
+    var scrollViewSetDimensions = isVertical ?
+      function() { scrollView.setDimensions(null, null, null, getContentSize(), true); } :
+      function() { scrollView.setDimensions(null, null, getContentSize(), null, true); };
 
     scrollView.__$callback = scrollView.__callback;
     scrollView.__callback = function(transformLeft, transformTop, zoom, wasResize) {
