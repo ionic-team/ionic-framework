@@ -312,3 +312,11 @@ $button-ios-round-border-radius:                    $button-round-border-radius 
   @include ios-button-outline($color-name, $color-base, $color-contrast);
   @include ios-button-clear($color-name, $color-base, $color-contrast);
 }
+
+
+// iOS strong Button
+// --------------------------------------------------
+
+.button-strong-ios {
+  font-weight: bold;
+}

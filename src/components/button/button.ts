@@ -139,6 +139,9 @@ export class Button extends Ion {
   _display: string; // block/full
 
   /** @private */
+  _decorator: string; // strong
+
+  /** @private */
   _init: boolean;
 
   /**
@@ -211,6 +214,14 @@ export class Button extends Ion {
   @Input()
   set full(val: boolean) {
     this._attr('_display', 'full', val);
+  }
+
+  /**
+   * @input {boolean} A button that has strong importance, ie. it represents an important action.
+   */
+  @Input()
+  set strong(val: boolean) {
+    this._attr('_decorator', 'strong', val);
   }
 
   /**
@@ -301,6 +312,7 @@ export class Button extends Ion {
       this._setClass(this._shape, assignCssClass); // button-round
       this._setClass(this._display, assignCssClass); // button-full
       this._setClass(this._size, assignCssClass); // button-small
+      this._setClass(this._decorator, assignCssClass); // button-strong
       this._updateColor(this._color, assignCssClass); // button-secondary, bar-button-secondary
     }
   }

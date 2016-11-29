@@ -381,3 +381,11 @@ $navbar-md-height:                       $toolbar-md-height !default;
   @include md-bar-button-outline($color-name, $color-base, $color-contrast);
   @include md-bar-button-solid($color-name, $color-base, $color-contrast);
 }
+
+
+// MD strong Button
+// --------------------------------------------------
+
+.bar-button-strong-md {
+  font-weight: bold;
+}
