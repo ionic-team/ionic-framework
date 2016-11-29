@@ -41,9 +41,16 @@ export class RangeKnob implements OnInit {
   _ratio: number;
   _val: number;
   _x: string;
+  _upper: boolean = false;
   pressed: boolean;
 
-  @Input() upper: boolean;
+  @Input()
+  get upper(): boolean {
+    return this._upper;
+  }
+  set upper(val: boolean) {
+    this._upper = isTrueProperty(val);
+  }
 
   constructor( @Inject(forwardRef(() => Range)) public range: Range) { }
 
@@ -81,7 +88,7 @@ export class RangeKnob implements OnInit {
       // we already have a value
       if (this.range.dualKnobs) {
         // we have a value and there are two knobs
-        if (this.upper) {
+        if (this._upper) {
           // this is the upper knob
           this.value = this.range.value.upper;
 

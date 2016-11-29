@@ -3,6 +3,8 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEn
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { CSS } from '../../util/dom';
+import { isTrueProperty } from '../../util/util';
+
 /**
  * @name Spinner
  * @description
@@ -106,7 +108,7 @@ import { CSS } from '../../util/dom';
       '<line [attr.y1]="i.y1" [attr.y2]="i.y2" transform="translate(32,32)"></line>' +
     '</svg>',
   host: {
-    '[class.spinner-paused]': 'paused'
+    '[class.spinner-paused]': '_paused'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -118,6 +120,7 @@ export class Spinner extends Ion {
   _dur: number = null;
   _init: boolean;
   _applied: string;
+  _paused: boolean = false;
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
@@ -145,7 +148,6 @@ export class Spinner extends Ion {
   get name(): string {
     return this._name;
   }
-
   set name(val: string) {
     this._name = val;
     this.load();
@@ -158,16 +160,21 @@ export class Spinner extends Ion {
   get duration(): number {
     return this._dur;
   }
-
   set duration(val: number) {
     this._dur = val;
     this.load();
   }
 
   /**
-   * @input {string} If the animation is paused or not. Defaults to `false`.
+   * @input {boolean} If the animation is paused or not. Defaults to `false`.
    */
-  @Input() paused: boolean = false;
+  @Input()
+  get paused(): boolean {
+    return this._paused;
+  }
+  set paused(val: boolean) {
+    this._paused = isTrueProperty(val);
+  }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
     super(config, elementRef, renderer, 'spinner');
