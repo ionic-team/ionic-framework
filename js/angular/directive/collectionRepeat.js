@@ -468,6 +468,10 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     var itemsShownMap = {};
     var nextItemId = 0;
 
+    var scrollViewSetDimensions = isVertical ?
+      function() { scrollView.setDimensions(null, null, null, getContentSize(), true); } :
+      function() { scrollView.setDimensions(null, null, getContentSize(), null, true); };
+
     // view is a mix of list/grid methods + static/dynamic methods.
     // See bottom for implementations. Available methods:
     //
@@ -485,10 +489,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       angular.bind(view, view.getContentSize);
 
     scrollView.options[contentSizeStr] = getContentSize;
-
-    var scrollViewSetDimensions = isVertical ?
-      function() { scrollView.setDimensions(null, null, null, getContentSize(), true); } :
-      function() { scrollView.setDimensions(null, null, getContentSize(), null, true); };
 
     scrollView.__$callback = scrollView.__callback;
     scrollView.__callback = function(transformLeft, transformTop, zoom, wasResize) {
