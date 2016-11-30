@@ -135,7 +135,7 @@ export function setupEvents(platform: Platform, dom: DomController): Events {
 
       let content = <HTMLElement>el.closest('.scroll-content');
       if (content) {
-        var scroll = new ScrollView(content, dom);
+        var scroll = new ScrollView(content);
           // We need to stop scrolling if it's happening and scroll up
 
         content.style['WebkitBackfaceVisibility'] = 'hidden';

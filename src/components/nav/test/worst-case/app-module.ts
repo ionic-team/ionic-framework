@@ -23,7 +23,7 @@ const TEMPLATE: string = `
   `;
 
 export class Base {
-  constructor(private _name: string) { }
+  constructor(public _name: string) { }
   ionViewWillLoad() {
     log(`${this._name} willLoad`);
   }
