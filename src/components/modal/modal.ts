@@ -14,6 +14,8 @@ import { ViewController } from '../../navigation/view-controller';
  */
 export class Modal extends ViewController {
   private _app: App;
+  private _enterAnimation: string;
+  private _leaveAnimation: string;
 
   constructor(app: App, component: any, data: any, opts: ModalOptions = {}) {
     data = data || {};
@@ -24,14 +26,28 @@ export class Modal extends ViewController {
 
     super(ModalCmp, data, null);
     this._app = app;
+    this._enterAnimation = opts.enterAnimation;
+    this._leaveAnimation = opts.leaveAnimation;
+
     this.isOverlay = true;
   }
 
   /**
    * @private
    */
-  getTransitionName(direction: string) {
-    let key = (direction === 'back' ? 'modalLeave' : 'modalEnter');
+  getTransitionName(direction: string): string {
+    let key: string;
+    if (direction === 'back') {
+      if (this._leaveAnimation) {
+        return this._leaveAnimation;
+      }
+      key = 'modalLeave';
+    } else {
+      if (this._enterAnimation) {
+        return this._enterAnimation;
+      }
+      key = 'modalEnter';
+    }
     return this._nav && this._nav.config.get(key);
   }
 

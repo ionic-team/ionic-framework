@@ -67,7 +67,10 @@ export class E2EPage {
   }
 
   presentModal() {
-    let modal = this.modalCtrl.create(ModalPassData, { userId: 8675309 });
+    let modal = this.modalCtrl.create(ModalPassData, { userId: 8675309 }, {
+      enterAnimation: 'modal-slide-in',
+      leaveAnimation: 'modal-slide-out'
+    });
     modal.present();
 
     modal.onWillDismiss((data: any) => {
@@ -87,7 +90,10 @@ export class E2EPage {
   }
 
   presentToolbarModal() {
-    this.modalCtrl.create(ToolbarModal).present();
+    this.modalCtrl.create(ToolbarModal, null, {
+      enterAnimation: 'modal-md-slide-in',
+      leaveAnimation: 'modal-md-slide-out'
+    }).present();
   }
 
   presentModalWithInputs() {

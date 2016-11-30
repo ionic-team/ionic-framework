@@ -39,7 +39,8 @@ export class Animation {
   hasCompleted: boolean = false;
 
   constructor(ele?: any, opts?: AnimationOptions, raf?: Function) {
-    this.element(ele).opts = opts;
+    this.element(ele);
+    this.opts = opts;
     this._raf = raf || nativeRaf;
   }
 
