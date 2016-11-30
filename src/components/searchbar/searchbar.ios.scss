@@ -210,6 +210,9 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // Searchbar animation
 // -----------------------------------------
 
+.searchbar-ios.searchbar-animated.searchbar-show-cancel .searchbar-ios-cancel {
+  display: block;
+}
 .searchbar-ios.searchbar-animated .searchbar-search-icon,
 .searchbar-ios.searchbar-animated .searchbar-input {
   transition: $searchbar-ios-input-transition;
@@ -222,8 +225,6 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 }
 
 .searchbar-animated .searchbar-ios-cancel {
-  display: block;
-
   margin-right: -100%;
 
   opacity: 0;

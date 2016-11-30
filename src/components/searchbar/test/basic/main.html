@@ -38,6 +38,9 @@
   <h5 padding-left> Search - Mode WP</h5>
   <ion-searchbar mode="wp" animated="true" showCancelButton placeholder="Search"></ion-searchbar>
 
+  <h5 padding-left> Search - Animated and No Cancel</h5>
+  <ion-searchbar [placeholder]="'Search'" [animated]="true" [showCancelButton]="false"></ion-searchbar>
+
   <p padding>
     <button ion-button block (click)="changeValue()">Change Value</button>
   </p>
