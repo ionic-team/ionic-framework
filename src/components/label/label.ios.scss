@@ -21,12 +21,6 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
 // iOS Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-input .label-ios,
-.item-select .label-ios,
-.item-datetime .label-ios {
-  color: $label-ios-text-color;
-}
-
 .label-ios + ion-input .text-input,
 .label-ios + ion-textarea .text-input,
 .label-ios + .input + .cloned-input {
