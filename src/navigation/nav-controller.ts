@@ -294,8 +294,8 @@ import { ViewController } from './view-controller';
  * }
  * ```
  *
- * We need to make sure that or `navCtrl.push` has a catch in order to catch the and handle the error.
- * If you need to prevent a view from entering, you can do the same thing
+ * We need to make sure that `navCtrl.pop` or `navCtrl.push` has a catch in order to catch the boolean and handle the error.
+ * If you need to prevent a view from entering, you can do the same thing in `ionViewCanEnter`:
  *
  * ```ts
  * export class MyClass{
