@@ -18,6 +18,7 @@ $font-size-wp-base:                   $font-size-base !default;
 // --------------------------------------------------
 $outer-content-wp-background-color:   $background-color !default;
 
+
 // Windows Toolbar
 // --------------------------------------------------
 
@@ -27,12 +28,23 @@ $toolbar-wp-text-color:               #fff !default;
 $toolbar-wp-active-color:             $toolbar-active-color !default;
 $toolbar-wp-inactive-color:           $toolbar-inactive-color !default;
 
+
+// Windows Tabs
+// --------------------------------------------------
+
+$tabs-wp-background:                  $tabs-background !default;
+$tabs-wp-border-color:                transparent !default;
+$tabs-wp-tab-color-inactive:          $tabs-tab-color-inactive !default;
+$tabs-wp-tab-color-active:            $tabs-tab-color-active !default;
+
+
 // Windows Card
 // --------------------------------------------------
 
 $card-wp-header-color:                #ddd !default;
 $card-wp-title-text-color:            #fff !default;
 $card-wp-text-color:                  #ddd !default;
+
 
 // Windows List
 // --------------------------------------------------
