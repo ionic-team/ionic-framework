@@ -35,32 +35,38 @@ export class App {
   _appRoot: IonicApp;
 
   /**
-   * @private
+   * Observable that emits whenever a view loads in the app.
+   * @returns {Observable} Returns an observable
    */
   viewDidLoad: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits before any view is entered in the app.
+   * @returns {Observable} Returns an observable
    */
   viewWillEnter: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits after any view is entered in the app.
+   * @returns {Observable} Returns an observable
    */
   viewDidEnter: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits before any view is exited in the app.
+   * @returns {Observable} Returns an observable
    */
   viewWillLeave: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits after any view is exited in the app.
+   * @returns {Observable} Returns an observable
    */
   viewDidLeave: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits before any view unloads in the app.
+   * @returns {Observable} Returns an observable
    */
   viewWillUnload: EventEmitter<any> = new EventEmitter();
 
