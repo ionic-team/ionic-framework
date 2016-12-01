@@ -158,16 +158,16 @@ describe('ionicInfiniteScroll directive', function() {
         it('should default to 2.5%', function() {
           setupJS('', {}, opts);
           expect(ctrl.getJSMaxScroll()).toEqual({
-            left: opts.scrollingX ? scrollLeftMaxValue * 0.975 : -1,
-            top: opts.scrollingY ? scrollTopMaxValue * 0.975 : -1
+            left: opts.scrollingX ? scrollLeftMaxValue * 0.975 : null,
+            top: opts.scrollingY ? scrollTopMaxValue * 0.975 : null
           });
 
           setupNative('', {}, opts);
           var tmp = window.getComputedStyle;
           window.getComputedStyle = function() {return {};};
           expect(ctrl.getNativeMaxScroll()).toEqual({
-            left: opts.scrollingX ? scrollLeftMaxValue * 0.975 : -1,
-            top: opts.scrollingY ? scrollTopMaxValue * 0.975 : -1
+            left: opts.scrollingX ? scrollLeftMaxValue * 0.975 : null,
+            top: opts.scrollingY ? scrollTopMaxValue * 0.975 : null
           });
           window.getComputedStyle = tmp;
         });
@@ -175,8 +175,8 @@ describe('ionicInfiniteScroll directive', function() {
         it('should use attr.distance as number', function() {
           setupJS('distance=3', {}, opts);
           expect(ctrl.getJSMaxScroll()).toEqual({
-            left: opts.scrollingX ? scrollLeftMaxValue - 3 : -1,
-            top: opts.scrollingY ? scrollTopMaxValue - 3 : -1
+            left: opts.scrollingX ? scrollLeftMaxValue - 3 : null,
+            top: opts.scrollingY ? scrollTopMaxValue - 3 : null
           });
 
           setupNative('distance=3', {}, opts);
@@ -184,8 +184,8 @@ describe('ionicInfiniteScroll directive', function() {
           var tmp = window.getComputedStyle;
           window.getComputedStyle = function() {return {};};
           expect(ctrl.getNativeMaxScroll()).toEqual({
-            left: opts.scrollingX ? scrollLeftMaxValue - 3 : -1,
-            top: opts.scrollingY ? scrollTopMaxValue - 3 : -1
+            left: opts.scrollingX ? scrollLeftMaxValue - 3 : null,
+            top: opts.scrollingY ? scrollTopMaxValue - 3 : null
           });
           window.getComputedStyle = tmp;
         });
@@ -193,8 +193,8 @@ describe('ionicInfiniteScroll directive', function() {
         it('should use attr.distance as percent', function() {
           setupJS('distance=5%', {}, opts);
           expect(ctrl.getJSMaxScroll()).toEqual({
-            left: opts.scrollingX ? scrollLeftMaxValue * 0.95 : -1,
-            top: opts.scrollingY ? scrollTopMaxValue * 0.95 : -1
+            left: opts.scrollingX ? scrollLeftMaxValue * 0.95 : null,
+            top: opts.scrollingY ? scrollTopMaxValue * 0.95 : null
           });
 
           setupNative('distance=5%', {}, opts);
@@ -202,8 +202,8 @@ describe('ionicInfiniteScroll directive', function() {
           var tmp = window.getComputedStyle;
           window.getComputedStyle = function() {return {};};
           expect(ctrl.getNativeMaxScroll()).toEqual({
-            left: opts.scrollingX ? scrollLeftMaxValue * 0.95 : -1,
-            top: opts.scrollingY ? scrollTopMaxValue * 0.95 : -1
+            left: opts.scrollingX ? scrollLeftMaxValue * 0.95 : null,
+            top: opts.scrollingY ? scrollTopMaxValue * 0.95 : null
           });
           window.getComputedStyle = tmp;
         });
