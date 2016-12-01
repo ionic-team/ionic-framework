@@ -14,6 +14,9 @@ export const GESTURE_ITEM_SWIPE = 'item-swipe';
 /** @private */
 export const GESTURE_REFRESHER = 'refresher';
 
+/** @private */
+export const GESTURE_TOGGLE = 'toggle';
+
 /**
 * @private
 */
@@ -24,11 +27,13 @@ export const enum GesturePriority {
   Normal = 0,
   High = 10,
   VeryHigh = 20,
+  VeryVeryHigh = 30,
 
   SlidingItem = Low,
   MenuSwipe = High,
   GoBackSwipe = VeryHigh,
   Refresher = Normal,
+  Toggle = VeryVeryHigh
 }
 
 /**

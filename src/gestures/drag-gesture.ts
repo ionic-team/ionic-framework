@@ -23,6 +23,7 @@ export interface PanGestureConfig {
  * @private
  */
 export class PanGesture {
+
   private debouncer: Debouncer;
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;
@@ -58,7 +59,9 @@ export class PanGesture {
       capture: opts.capture,
       passive: opts.passive
     };
-    this.detector = new PanRecognizer(opts.direction, opts.threshold, opts.maxAngle);
+    if (opts.threshold > 0) {
+      this.detector = new PanRecognizer(opts.direction, opts.threshold, opts.maxAngle);
+    }
   }
 
   listen() {
@@ -100,40 +103,42 @@ export class PanGesture {
         return false;
       }
     }
-
-    let coord = pointerCoord(ev);
-    this.detector.start(coord);
     this.started = true;
     this.captured = false;
+
+    const coord = pointerCoord(ev);
+    if (this.detector) {
+      this.detector.start(coord);
+
+    } else {
+      if (!this.tryToCapture(ev)) {
+        this.started = false;
+        this.captured = false;
+        this.gestute.release();
+        return false;
+      }
+    }
     return true;
   }
 
   pointerMove(ev: any) {
-    if (!this.started) {
+    assert(this.started === true, 'started must be true');
+    if (this.captured) {
+      this.debouncer.debounce(() => {
+        this.onDragMove(ev);
+      });
       return;
     }
-    this.debouncer.debounce(() => {
-      if (this.captured) {
-        this.onDragMove(ev);
-        return;
-      }
-      let coord = pointerCoord(ev);
-      if (this.detector.detect(coord)) {
 
-        if (this.detector.pan() !== 0 &&
-          (!this.gestute || this.gestute.capture())) {
-          this.onDragStart(ev);
-          this.captured = true;
-          return;
+    assert(this.detector, 'detector has to be valid');
+    const coord = pointerCoord(ev);
+    if (this.detector.detect(coord)) {
+      if (this.detector.pan() !== 0) {
+        if (!this.tryToCapture(ev)) {
+          this.abort(ev);
         }
-
-        // Detection/capturing was not successful, aborting!
-        this.started = false;
-        this.captured = false;
-        this.pointerEvents.stop();
-        this.notCaptured(ev);
       }
-    });
+    }
   }
 
   pointerUp(ev: any) {
@@ -149,6 +154,26 @@ export class PanGesture {
     }
     this.captured = false;
     this.started = false;
+  }
+
+  tryToCapture(ev: any): boolean {
+    assert(this.started === true, 'started has be true');
+    assert(this.captured === false, 'captured has be false');
+
+    if (this.gestute && !this.gestute.capture()) {
+      return false;
+    }
+    this.onDragStart(ev);
+    this.captured = true;
+    return true;
+  }
+
+  abort(ev: any) {
+    this.started = false;
+    this.captured = false;
+    this.gestute.release();
+    this.pointerEvents.stop();
+    this.notCaptured(ev);
   }
 
   getNativeElement(): HTMLElement {

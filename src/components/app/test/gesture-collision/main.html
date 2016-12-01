@@ -22,6 +22,16 @@
         </ion-item-options>
       </ion-item-sliding>
 
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle item-left></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle></ion-toggle>
+      </ion-item>
+
       <button ion-item menuClose="left" class="e2eCloseLeftMenu" detail-none>
         Close Menu
       </button>
@@ -93,6 +103,16 @@
   <ion-content>
 
     <ion-list>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle item-left></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle></ion-toggle>
+      </ion-item>
 
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
