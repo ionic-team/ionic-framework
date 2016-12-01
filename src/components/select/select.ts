@@ -3,6 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
+import { Popover } from '../popover/popover';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
@@ -11,6 +12,7 @@ import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/ut
 import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
+import { SelectPopover, SelectPopoverOption } from './select-popover-component';
 
 export const SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -181,7 +183,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   @Input() selectOptions: any = {};
 
   /**
-   * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
+   * @input {string} The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
    */
   @Input() interface: string = '';
 
@@ -236,7 +238,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     }
     ev.preventDefault();
     ev.stopPropagation();
-    this.open();
+    this.open(ev);
   }
 
   @HostListener('keyup.space')
@@ -249,7 +251,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   /**
    * Open the select interface.
    */
-  open() {
+  open(ev?: UIEvent) {
     if (this._disabled) {
       return;
     }
@@ -285,6 +287,16 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       this.interface = 'alert';
     }
 
+    if (this.interface === 'popover' && this._multi) {
+      console.warn('Interface cannot be "popover" with a multi-value select. Using the "alert" interface.');
+      this.interface = 'alert';
+    }
+
+    if (this.interface === 'popover' && !ev) {
+      console.warn('Interface cannot be "popover" without UIEvent.');
+      this.interface = 'alert';
+    }
+
     let overlay: any;
     if (this.interface === 'action-sheet') {
       selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
@@ -305,6 +317,25 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
 
       selectOptions.cssClass = selectCssClass;
       overlay = new ActionSheet(this._app, selectOptions);
+
+    } else if (this.interface === 'popover') {
+      let popoverOptions: SelectPopoverOption[] = options.map(input => ({
+        text: input.text,
+        checked: input.selected,
+        disabled: input.disabled,
+        value: input.value
+      }));
+
+      overlay = new Popover(this._app, SelectPopover, {
+        options: popoverOptions
+      }, {
+        cssClass: 'select-popover'
+      });
+
+      // ev.target is readonly.
+      // place popover regarding to ion-select instead of .button-inner
+      Object.defineProperty(ev, 'target', { value: ev.currentTarget });
+      selectOptions.ev = ev;
 
     } else {
       // default to use the alert interface
@@ -359,8 +390,12 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     overlay.present(selectOptions);
 
     this._isOpen = true;
-    overlay.onDidDismiss(() => {
+    overlay.onDidDismiss((value: any) => {
       this._isOpen = false;
+      if (this.interface === 'popover' && value) {
+        this.onChange(value);
+        this.ionChange.emit(value);
+      }
     });
   }
 

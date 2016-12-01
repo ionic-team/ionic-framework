@@ -8,6 +8,11 @@ $select-md-padding-right:       ($item-md-padding-right / 2) !default;
 $select-md-padding-bottom:      $item-md-padding-bottom !default;
 $select-md-padding-left:        $item-md-padding-left !default;
 
+$select-md-popover-margin-top:         -1px !default;
+$select-md-popover-margin-right:       0 !default;
+$select-md-popover-margin-bottom:      -1px !default;
+$select-md-popover-margin-left:        0 !default;
+
 $select-md-icon-color:          #999 !default;
 $select-md-placeholder-color:   $select-md-icon-color !default;
 
@@ -47,4 +52,10 @@ $select-md-placeholder-color:   $select-md-icon-color !default;
   color: $select-md-icon-color;
 
   pointer-events: none;
+}
+
+.select-popover {
+  ion-list {
+    margin: $select-md-popover-margin-top $select-md-popover-margin-right $select-md-popover-margin-bottom $select-md-popover-margin-left;
+  }
 }
