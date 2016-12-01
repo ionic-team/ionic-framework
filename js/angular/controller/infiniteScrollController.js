@@ -61,17 +61,17 @@ function($scope, $attrs, $element, $timeout) {
     if (self.jsScrolling) {
       maxScroll = self.getJSMaxScroll();
       var scrollValues = self.scrollView.getValues();
-      if ((maxScroll.left !== -1 && scrollValues.left >= maxScroll.left) ||
-        (maxScroll.top !== -1 && scrollValues.top >= maxScroll.top)) {
+      if ((maxScroll.left !== null && scrollValues.left >= maxScroll.left) ||
+        (maxScroll.top !== null && scrollValues.top >= maxScroll.top)) {
         onInfinite();
       }
     } else {
       maxScroll = self.getNativeMaxScroll();
       if ((
-        maxScroll.left !== -1 &&
+        maxScroll.left !== null &&
         self.scrollEl.scrollLeft >= maxScroll.left - self.scrollEl.clientWidth
         ) || (
-        maxScroll.top !== -1 &&
+        maxScroll.top !== null &&
         self.scrollEl.scrollTop >= maxScroll.top - self.scrollEl.clientHeight
         )) {
         onInfinite();
@@ -86,10 +86,10 @@ function($scope, $attrs, $element, $timeout) {
     return {
       left: self.scrollView.options.scrollingX ?
         calculateMaxValue(maxValues.left) :
-        -1,
+        null,
       top: self.scrollView.options.scrollingY ?
         calculateMaxValue(maxValues.top) :
-        -1
+        null
     };
   };
 
@@ -104,12 +104,12 @@ function($scope, $attrs, $element, $timeout) {
         (computedStyle.overflowX === 'scroll' ||
         computedStyle.overflowX === 'auto' ||
         self.scrollEl.style['overflow-x'] === 'scroll') ?
-        calculateMaxValue(maxValues.left) : -1,
+        calculateMaxValue(maxValues.left) : null,
       top: maxValues.top &&
         (computedStyle.overflowY === 'scroll' ||
         computedStyle.overflowY === 'auto' ||
         self.scrollEl.style['overflow-y'] === 'scroll' ) ?
-        calculateMaxValue(maxValues.top) : -1
+        calculateMaxValue(maxValues.top) : null
     };
   };
 
