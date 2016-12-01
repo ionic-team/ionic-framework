@@ -3,16 +3,28 @@
 // iOS Radio
 // --------------------------------------------------
 
+/// @prop - Color of the checked radio
 $radio-ios-color-on:               color($colors-ios, primary) !default;
 
+/// @prop - Width of the radio icon
 $radio-ios-icon-width:             16px !default;
+
+/// @prop - Height of the radio icon
 $radio-ios-icon-height:            21px !default;
+
+/// @prop - Border width of the radio icon
 $radio-ios-icon-border-width:      2px !default;
+
+/// @prop - Border style of the radio icon
 $radio-ios-icon-border-style:      solid !default;
 
+/// @prop - Opacity of the disabled radio
 $radio-ios-disabled-opacity:       .3 !default;
 
+/// @prop - Margin of the item-left in a radio
 $radio-ios-item-left-margin:       8px 21px 8px 3px !default;
+
+/// @prop - Margin of the item-right in a radio
 $radio-ios-item-right-margin:      $item-ios-padding-media-top 11px $item-ios-padding-media-bottom ($item-ios-padding-left / 2) !default;
 
 

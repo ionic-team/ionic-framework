@@ -3,14 +3,22 @@
 // Refresher
 // --------------------------------------------------
 
+/// @prop - Height of the refresher
 $refresher-height:             60px !default;
 
+/// @prop - Color of the refresher icon
 $refresher-icon-color:         #000 !default;
+
+/// @prop - Font size of the refresher icon
 $refresher-icon-font-size:     30px !default;
 
+/// @prop - Text color of the refresher content
 $refresher-text-color:         #000 !default;
+
+/// @prop - Font size of the refresher content
 $refresher-text-font-size:     16px !default;
 
+/// @prop - Border color of the refresher
 $refresher-border-color:       #ddd !default;
 
 

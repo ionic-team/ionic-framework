@@ -3,14 +3,24 @@
 // Windows Phone Toast
 // --------------------------------------------------
 
-$toast-wp-text-align:                            left !default;
+/// @prop - Background of the toast wrapper
 $toast-wp-background:                            rgba(0, 0, 0, 1) !default;
+
+/// @prop - Border radius of the toast wrapper
 $toast-wp-border-radius:                         0 !default;
+
+/// @prop - Color of the toast button
 $toast-wp-button-color:                          #fff !default;
 
+/// @prop - Color of the toast title
 $toast-wp-title-color:                           #fff !default;
+
+/// @prop - Font size of the toast title
 $toast-wp-title-font-size:                       1.4rem !default;
+
+/// @prop - Padding of the toast title
 $toast-wp-title-padding:                         1.5rem !default;
+
 
 .toast-wp .toast-wrapper {
   position: absolute;
