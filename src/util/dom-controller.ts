@@ -12,14 +12,14 @@ export class DomController {
   private w: Function[] = [];
   private q: boolean;
 
-  read(fn: Function, ctx?: any): Function {
+  read(fn: {(timeStamp: number)}, ctx?: any): Function {
     const task = !ctx ? fn : fn.bind(ctx);
     this.r.push(task);
     this.queue();
     return task;
   }
 
-  write(fn: Function, ctx?: any): Function {
+  write(fn: {(timeStamp: number)}, ctx?: any): Function {
     const task = !ctx ? fn : fn.bind(ctx);
     this.w.push(task);
     this.queue();
@@ -30,28 +30,29 @@ export class DomController {
     return removeArrayItem(this.r, task) || removeArrayItem(this.w, task);
   }
 
-  private queue() {
-    if (!this.q) {
-      this.q = true;
-      nativeRaf(timestamp => {
-        this.flush(timestamp);
+  protected queue() {
+    const self = this;
+    if (!self.q) {
+      self.q = true;
+      nativeRaf(function rafCallback(timeStamp) {
+        self.flush(timeStamp);
       });
     }
   }
 
-  private flush(timestamp: number) {
+  protected flush(timeStamp: number) {
     let err;
     let task;
 
     try {
       // ******** DOM READS ****************
       while (task = this.r.shift()) {
-        task(timestamp);
+        task(timeStamp);
       }
 
       // ******** DOM WRITES ****************
       while (task = this.w.shift()) {
-        task(timestamp);
+        task(timeStamp);
       }
     } catch (e) {
       err = e;
