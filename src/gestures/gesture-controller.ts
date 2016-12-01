@@ -150,7 +150,7 @@ export class GestureController {
     this.disabledScroll.add(id);
     if (this._app && isEnabled && this.isScrollDisabled()) {
       console.debug('GestureController: Disabling scrolling');
-      this._app.setScrollDisabled(true);
+      this._app._setDisableScroll(true);
     }
   }
 
@@ -159,7 +159,7 @@ export class GestureController {
     this.disabledScroll.delete(id);
     if (this._app && isDisabled && !this.isScrollDisabled()) {
       console.debug('GestureController: Enabling scrolling');
-      this._app.setScrollDisabled(false);
+      this._app._setDisableScroll(false);
     }
   }
 

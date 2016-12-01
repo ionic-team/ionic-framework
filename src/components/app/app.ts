@@ -93,6 +93,7 @@ export class App {
   }
 
   /**
+   * @private
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
    * while views transition, a modal slides up, an action-sheet
@@ -119,11 +120,12 @@ export class App {
   }
 
   /**
+   * @private
    * Toggles whether an application can be scrolled
    * @param {boolean} disableScroll when set to `false`, the application's
    * scrolling is enabled. When set to `true`, scrolling is disabled.
    */
-  setScrollDisabled(disableScroll: boolean) {
+  _setDisableScroll(disableScroll: boolean) {
     if (this._disableScrollAssist) {
       this._appRoot._disableScroll(disableScroll);
     }
