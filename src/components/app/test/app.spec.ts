@@ -7,7 +7,7 @@ import { Platform } from '../../../platform/platform';
 
 describe('App', () => {
 
-  describe('navPop', () => {
+  describe('goBack', () => {
 
     it('should select the previous tab', () => {
       let nav = mockNavController();
@@ -29,7 +29,7 @@ describe('App', () => {
       spyOn(tab2, 'pop');
       spyOn(portal, 'pop');
 
-      app.navPop();
+      app.goBack();
 
       expect(tabs.select).toHaveBeenCalledWith(tab1);
       expect(tab1.pop).not.toHaveBeenCalled();
@@ -58,7 +58,7 @@ describe('App', () => {
       let view2 = mockView();
       tab2._views = [view1, view2];
 
-      app.navPop();
+      app.goBack();
 
       expect(tab2.pop).toHaveBeenCalled();
       expect(portal.pop).not.toHaveBeenCalled();
@@ -81,7 +81,7 @@ describe('App', () => {
       let view2 = mockView();
       tab2._views = [view1, view2];
 
-      app.navPop();
+      app.goBack();
 
       expect(tab2.pop).toHaveBeenCalled();
       expect(platform.exitApp).not.toHaveBeenCalled();
@@ -106,7 +106,7 @@ describe('App', () => {
       let nestedView1 = mockView();
       mockViews(nestedNav, [nestedView1]);
 
-      app.navPop();
+      app.goBack();
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(rootNav.pop).toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe('App', () => {
       let nestedView2 = mockView();
       mockViews(nestedNav, [nestedView1, nestedView2]);
 
-      app.navPop();
+      app.goBack();
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(rootNav.pop).not.toHaveBeenCalled();
@@ -156,7 +156,7 @@ describe('App', () => {
       let overlay1 = mockView();
       mockViews(portal, [overlay1]);
 
-      app.navPop();
+      app.goBack();
 
       expect(portal.pop).toHaveBeenCalled();
       expect(nav.pop).not.toHaveBeenCalled();
@@ -175,7 +175,7 @@ describe('App', () => {
       let view2 = mockView();
       mockViews(nav, [view1, view2]);
 
-      app.navPop();
+      app.goBack();
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(nav.pop).toHaveBeenCalled();
@@ -196,7 +196,7 @@ describe('App', () => {
       expect(app.getActiveNav()).toBe(nav);
       expect(nav.first()).toBe(view1);
 
-      app.navPop();
+      app.goBack();
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(nav.pop).not.toHaveBeenCalled();
@@ -219,7 +219,7 @@ describe('App', () => {
       expect(app.getActiveNav()).toBe(nav);
       expect(nav.first()).toBe(view1);
 
-      app.navPop();
+      app.goBack();
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(nav.pop).not.toHaveBeenCalled();
@@ -239,7 +239,7 @@ describe('App', () => {
 
       app.setEnabled(false, 10000);
 
-      app.navPop();
+      app.goBack();
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(nav.pop).not.toHaveBeenCalled();
@@ -249,7 +249,7 @@ describe('App', () => {
     it('should not go back if there is no root nav', () => {
       spyOn(platform, 'exitApp');
 
-      app.navPop();
+      app.goBack();
 
       expect(platform.exitApp).not.toHaveBeenCalled();
     });
