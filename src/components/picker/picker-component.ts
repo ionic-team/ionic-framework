@@ -10,8 +10,8 @@ import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
 import { Haptic } from '../../util/haptic';
 import { UIEventManager } from '../../util/ui-event-manager';
+import { DomController, DomDebouncer } from '../../util/dom-controller';
 import { ViewController } from '../../navigation/view-controller';
-import { Debouncer, NativeRafDebouncer } from '../../util/debouncer';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 
 /**
@@ -53,7 +53,7 @@ export class PickerColumnCmp {
   lastIndex: number;
   lastTempIndex: number;
   decelerateFunc: Function;
-  debouncer: Debouncer = new NativeRafDebouncer();
+  debouncer: DomDebouncer;
   events: UIEventManager = new UIEventManager(false);
 
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
@@ -63,11 +63,13 @@ export class PickerColumnCmp {
     private elementRef: ElementRef,
     private _sanitizer: DomSanitizer,
     private _zone: NgZone,
-    private _haptic: Haptic
+    private _haptic: Haptic,
+    domCtrl: DomController,
   ) {
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
     this.scaleFactor = config.getNumber('pickerScaleFactor', 1);
     this.decelerateFunc = this.decelerate.bind(this);
+    this.debouncer = domCtrl.debouncer();
   }
 
   ngAfterViewInit() {
@@ -145,7 +147,7 @@ export class PickerColumnCmp {
     let currentY = pointerCoord(ev).y;
     this.pos.push(currentY, Date.now());
 
-    this.debouncer.debounce(() => {
+    this.debouncer.write(() => {
       if (this.startY === null) {
         return;
       }
