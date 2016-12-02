@@ -24,11 +24,10 @@ function($scope, $element, $attrs, $compile, $rootScope) {
   self.init = function() {
     deregIonNavBarInit();
 
-    var modalCtrl = $element.inheritedData('$ionModalController');
     navViewCtrl = $element.inheritedData('$ionNavViewController');
 
-    // don't bother if inside a modal or there's no parent navView
-    if (!navViewCtrl || modalCtrl) return;
+    // don't bother if there's no parent navView
+    if (!navViewCtrl) return;
 
     // add listeners for when this view changes
     $scope.$on('$ionicView.beforeEnter', self.beforeEnter);

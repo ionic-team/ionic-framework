@@ -35,6 +35,11 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     $element.addClass('nav-bar-container');
     ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', $ionicConfig.views.transition());
 
+    // check if the navbar is within a modal view
+    var ele = $element[0];
+    while((ele = ele.parentNode) && !/ion-modal-view/i.test(ele.tagName));
+    self.inModal = !!ele;
+
     // create two nav bar blocks which will trade out which one is shown
     self.createHeaderBar(false);
     self.createHeaderBar(true);
@@ -372,7 +377,10 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
     // set non primary to hide second
     for (var x = 0; x < $ionicNavBarDelegate._instances.length; x++) {
-      if ($ionicNavBarDelegate._instances[x] !== self) $ionicNavBarDelegate._instances[x].visibleBar(false);
+      var instance = $ionicNavBarDelegate._instances[x];
+      if (instance !== self && self.inModal === instance.inModal) {
+        instance.visibleBar(false);
+      }
     }
   };
 
