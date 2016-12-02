@@ -1,3 +1,4 @@
+@import "../../themes/ionic.globals";
 
 // Spinners
 // --------------------------------------------------
@@ -31,7 +32,6 @@ ion-spinner.spinner-paused svg {
 
 .spinner-ios line,
 .spinner-ios-small line {
-  stroke: #69717d;
   stroke-width: 4px;
   stroke-linecap: round;
 }
@@ -45,10 +45,6 @@ ion-spinner.spinner-paused svg {
 // Spinner: bubbles
 // --------------------------------------------------
 
-.spinner-bubbles circle {
-  fill: #000;
-}
-
 .spinner-bubbles svg {
   animation: spinner-scale-out 1s linear infinite;
 }
@@ -56,10 +52,6 @@ ion-spinner.spinner-paused svg {
 
 // Spinner: circles
 // --------------------------------------------------
-
-.spinner-circles circle {
-  fill: #69717d;
-}
 
 .spinner-circles svg {
   animation: spinner-fade-out 1s linear infinite;
@@ -71,7 +63,6 @@ ion-spinner.spinner-paused svg {
 
 .spinner-crescent circle {
   fill: transparent;
-  stroke: #000;
   stroke-width: 4px;
   stroke-dasharray: 128px;
   stroke-dashoffset: 82px;
@@ -86,7 +77,6 @@ ion-spinner.spinner-paused svg {
 // --------------------------------------------------
 
 .spinner-dots circle {
-  fill: #444;
   stroke-width: 0;
 }
 

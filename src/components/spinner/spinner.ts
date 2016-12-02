@@ -119,7 +119,6 @@ export class Spinner extends Ion {
   _name: string;
   _dur: number = null;
   _init: boolean;
-  _applied: string;
   _paused: boolean = false;
 
   /**
@@ -200,8 +199,6 @@ export class Spinner extends Ion {
 
       const spinner = SPINNERS[name];
       if (spinner) {
-        this._applied = 'spinner-' + name;
-
         if (spinner.lines) {
           for (var i = 0, l = spinner.lines; i < l; i++) {
             this._l.push(this._loadEle(spinner, i, l));
@@ -213,7 +210,8 @@ export class Spinner extends Ion {
           }
         }
 
-        this.setElementClass(this._applied, true);
+        this.setElementClass(`spinner-${name}`, true);
+        this.setElementClass(`spinner-${this._mode}-${name}`, true);
       }
     }
   }
