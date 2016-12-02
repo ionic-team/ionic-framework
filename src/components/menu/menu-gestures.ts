@@ -1,9 +1,8 @@
 import { Menu } from './menu';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
-import { assign } from '../../util/util';
 import { GestureController, GesturePriority, GESTURE_MENU_SWIPE } from '../../gestures/gesture-controller';
-import { NativeRafDebouncer } from '../../util/debouncer';
+import { DomController } from '../../util/dom-controller';
 
 /**
  * Gesture attached to the content which the menu is assigned to
@@ -12,24 +11,23 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
   constructor(
     public menu: Menu,
-    contentEle: HTMLElement,
     gestureCtrl: GestureController,
-    options: any = {}
+    domCtrl: DomController,
   ) {
-    super(contentEle, assign({
+    super(document.body, {
       direction: 'x',
       edge: menu.side,
       threshold: 5,
       maxEdgeStart: menu.maxEdgeStart || 50,
       zone: false,
       passive: true,
-      debouncer: new NativeRafDebouncer(),
+      domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_MENU_SWIPE,
         priority: GesturePriority.MenuSwipe,
         disableScroll: true
       })
-    }, options));
+    });
   }
 
   canStart(ev: any): boolean {
@@ -48,19 +46,19 @@ export class MenuContentGesture extends SlideEdgeGesture {
   // Set CSS, then wait one frame for it to apply before sliding starts
   onSlideBeforeStart(ev: any) {
     console.debug('menu gesture, onSlideBeforeStart', this.menu.side);
-    this.menu.swipeBeforeStart();
+    this.menu._swipeBeforeStart();
   }
 
   onSlideStart() {
     console.debug('menu gesture, onSlideStart', this.menu.side);
-    this.menu.swipeStart();
+    this.menu._swipeStart();
   }
 
   onSlide(slide: SlideData, ev: any) {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
     let stepValue = (slide.distance / z);
 
-    this.menu.swipeProgress(stepValue);
+    this.menu._swipeProgress(stepValue);
   }
 
   onSlideEnd(slide: SlideData, ev: any) {
@@ -84,7 +82,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
       'shouldCompleteRight', shouldCompleteRight,
       'currentStepValue', currentStepValue);
 
-    this.menu.swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue, velocity);
+    this.menu._swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue, velocity);
   }
 
   getElementStartPos(slide: SlideData, ev: any) {

@@ -3,7 +3,7 @@ import { GestureDelegate } from '../gestures/gesture-controller';
 import { PanRecognizer } from './recognizers';
 import { PointerEvents, PointerEventsConfig, UIEventManager } from '../util/ui-event-manager';
 import { pointerCoord } from '../util/dom';
-import { Debouncer, FakeDebouncer } from '../util/debouncer';
+import { DomDebouncer, DomController } from '../util/dom-controller';
 
 /**
  * @private
@@ -13,7 +13,7 @@ export interface PanGestureConfig {
   maxAngle?: number;
   direction?: 'x' | 'y';
   gesture?: GestureDelegate;
-  debouncer?: Debouncer;
+  domController?: DomController;
   zone?: boolean;
   capture?: boolean;
   passive?: boolean;
@@ -24,7 +24,7 @@ export interface PanGestureConfig {
  */
 export class PanGesture {
 
-  private debouncer: Debouncer;
+  private debouncer: DomDebouncer;
   private events: UIEventManager = new UIEventManager(false);
   private pointerEvents: PointerEvents;
   private detector: PanRecognizer;
@@ -44,10 +44,9 @@ export class PanGesture {
       capture: false,
       passive: false,
     });
-
-    this.debouncer = (opts.debouncer)
-      ? opts.debouncer
-      : new FakeDebouncer();
+    if (opts.domController) {
+      this.debouncer = opts.domController.debouncer();
+    }
     this.gestute = opts.gesture;
     this.direction = opts.direction;
     this.eventsConfig = {
@@ -124,7 +123,7 @@ export class PanGesture {
   pointerMove(ev: any) {
     assert(this.started === true, 'started must be true');
     if (this.captured) {
-      this.debouncer.debounce(() => {
+      this.debouncer.write(() => {
         this.onDragMove(ev);
       });
       return;

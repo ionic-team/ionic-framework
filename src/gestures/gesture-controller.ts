@@ -120,6 +120,7 @@ export class GestureController {
     if (maxPriority === priority) {
       this.capturedID = id;
       this.requestedStart = {};
+      console.debug(`${gestureName} captured!`);
       return true;
     }
     delete requestedStart[id];
@@ -170,12 +171,13 @@ export class GestureController {
 
   canStart(gestureName: string): boolean {
     if (this.capturedID) {
+      console.debug(`${gestureName} can not start becuse gesture was already captured`);
       // a gesture already captured
       return false;
     }
 
     if (this.isDisabled(gestureName)) {
-      console.debug('GestureController: Disabled', gestureName);
+      console.debug(`${gestureName} is disabled`);
       return false;
     }
     return true;

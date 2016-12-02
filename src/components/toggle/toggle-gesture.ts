@@ -1,7 +1,7 @@
 import { GestureController, GesturePriority, GESTURE_TOGGLE } from '../../gestures/gesture-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
 import { pointerCoord } from '../../util/dom';
-import { NativeRafDebouncer } from '../../util/debouncer';
+import { DomController } from '../../util/dom-controller';
 import { Toggle } from './toggle';
 
 /**
@@ -9,11 +9,14 @@ import { Toggle } from './toggle';
  */
 export class ToggleGesture extends PanGesture {
 
-  constructor(public toogle: Toggle, gestureCtrl: GestureController) {
+  constructor(
+    public toogle: Toggle,
+    gestureCtrl: GestureController,
+    domCtrl: DomController
+  ) {
     super(toogle.getNativeElement(), {
-      maxAngle: 20,
       threshold: 0,
-      debouncer: new NativeRafDebouncer(),
+      domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_TOGGLE,
         priority: GesturePriority.Toggle,

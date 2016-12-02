@@ -22,6 +22,7 @@ import { ViewController } from '../navigation/view-controller';
 
 import { NavControllerBase } from '../navigation/nav-controller-base';
 import { Haptic } from './haptic';
+import { DomController } from './dom-controller';
 
 export const mockConfig = function(config?: any, url: string = '/', platform?: Platform) {
   const c = new Config();
@@ -246,6 +247,8 @@ export const mockNavController = function(): NavControllerBase {
 
   let trnsCtrl = mockTrasitionController(config);
 
+  let dom = new DomController();
+
   let nav = new NavControllerBase(
     null,
     app,
@@ -257,7 +260,8 @@ export const mockNavController = function(): NavControllerBase {
     componentFactoryResolver,
     gestureCtrl,
     trnsCtrl,
-    linker
+    linker,
+    dom,
   );
 
   nav._viewInit = function(enteringView: ViewController) {
@@ -296,6 +300,8 @@ export const mockOverlayPortal = function(app: App, config: Config, platform: Pl
 
   let deepLinker = new DeepLinker(app, serializer, location);
 
+  let dom = new DomController();
+
   return new OverlayPortal(
     app,
     config,
@@ -307,7 +313,8 @@ export const mockOverlayPortal = function(app: App, config: Config, platform: Pl
     gestureCtrl,
     null,
     deepLinker,
-    null
+    null,
+    dom
   );
 };
 
@@ -334,6 +341,8 @@ export const mockTab = function(parentTabs: Tabs): Tab {
 
   let linker = mockDeepLinker(null, app);
 
+  let dom = new DomController();
+
   let tab = new Tab(
     parentTabs,
     app,
@@ -346,7 +355,8 @@ export const mockTab = function(parentTabs: Tabs): Tab {
     changeDetectorRef,
     gestureCtrl,
     null,
-    linker
+    linker,
+    dom
   );
 
   tab.load = (opts: any, cb: Function) => {
@@ -371,7 +381,8 @@ export const mockTabs = function(app?: App): Tabs {
 export const mockMenu = function (): Menu {
   let app = mockApp();
   let gestureCtrl = new GestureController(app);
-  return new Menu(null, null, null, null, null, null, null, gestureCtrl, app);
+  let dom = new DomController();
+  return new Menu(null, null, null, null, null, null, null, gestureCtrl, dom, app);
 };
 
 export const mockDeepLinkConfig = function(links?: any[]): DeepLinkConfig {

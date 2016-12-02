@@ -13,7 +13,7 @@ import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
-
+import { DomController } from '../../util/dom-controller';
 
 /**
  * @name Tab
@@ -273,10 +273,11 @@ export class Tab extends NavControllerBase {
     private _cd: ChangeDetectorRef,
     gestureCtrl: GestureController,
     transCtrl: TransitionController,
-    @Optional() private linker: DeepLinker
+    @Optional() private linker: DeepLinker,
+    domCtrl: DomController,
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
 
     this.id = parent.add(this);
     this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');

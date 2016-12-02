@@ -17,7 +17,7 @@ import { NavParams } from './nav-params';
 import { SwipeBackGesture } from './swipe-back';
 import { Transition } from '../transitions/transition';
 import { TransitionController } from '../transitions/transition-controller';
-
+import { DomController } from '../util/dom-controller';
 
 /**
  * @private
@@ -32,7 +32,6 @@ export class NavControllerBase extends Ion implements NavController {
   _queue: TransitionInstruction[] = [];
   _sbEnabled: boolean;
   _sbGesture: SwipeBackGesture;
-  _sbThreshold: number;
   _sbTrns: Transition;
   _trnsId: number = null;
   _trnsTm: boolean = false;
@@ -60,12 +59,12 @@ export class NavControllerBase extends Ion implements NavController {
     public _cfr: ComponentFactoryResolver,
     public _gestureCtrl: GestureController,
     public _trnsCtrl: TransitionController,
-    public _linker: DeepLinker
+    public _linker: DeepLinker,
+    private _domCtrl: DomController
   ) {
     super(config, elementRef, renderer);
 
     this._sbEnabled = config.getBoolean('swipeBackEnabled');
-    this._sbThreshold = config.getNumber('swipeBackThreshold', 0);
 
     this.id = 'n' + (++ctrlIds);
   }
@@ -151,12 +150,12 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
-    let viewControllers = [convertToView(this._linker, pageOrViewCtrl, params)];
+    const viewControllers = [convertToView(this._linker, pageOrViewCtrl, params)];
     return this._setPages(viewControllers, opts, done);
   }
 
   setPages(pages: any[], opts?: NavOptions, done?: Function): Promise<any> {
-    let viewControllers = convertToViews(this._linker, pages);
+    const viewControllers = convertToViews(this._linker, pages);
     return this._setPages(viewControllers, opts, done);
   }
 
@@ -199,7 +198,7 @@ export class NavControllerBase extends Ion implements NavController {
 
       // let's see if there's another to kick off
       this.setTransitioning(false);
-      this._sbCheck();
+      this._swipeBackCheck();
       this._nextTrns();
     };
 
@@ -226,7 +225,7 @@ export class NavControllerBase extends Ion implements NavController {
 
       // let's see if there's another to kick off
       this.setTransitioning(false);
-      this._sbCheck();
+      this._swipeBackCheck();
       this._nextTrns();
     };
 
@@ -306,7 +305,7 @@ export class NavControllerBase extends Ion implements NavController {
       assert(isPresent(ti.removeStart), 'removeView needs removeStart');
       assert(isPresent(ti.removeCount), 'removeView needs removeCount');
 
-      let index = this._views.indexOf(ti.removeView);
+      var index = this._views.indexOf(ti.removeView);
       if (index >= 0) {
         ti.removeStart += index;
       }
@@ -342,10 +341,10 @@ export class NavControllerBase extends Ion implements NavController {
 
     const removeStart = ti.removeStart;
     if (isPresent(removeStart)) {
-      const views = this._views;
-      const removeEnd = removeStart + ti.removeCount;
-      let i: number;
-      let view: ViewController;
+      var views = this._views;
+      var removeEnd = removeStart + ti.removeCount;
+      var i: number;
+      var view: ViewController;
       for (i = views.length - 1; i >= 0; i--) {
         view = views[i];
         if ((i < removeStart || i >= removeEnd) && view !== leavingView) {
@@ -507,7 +506,7 @@ export class NavControllerBase extends Ion implements NavController {
     const promises: Promise<any>[] = [];
 
     if (leavingView) {
-      const leavingTestResult = leavingView._lifecycleTest('Leave');
+      var leavingTestResult = leavingView._lifecycleTest('Leave');
 
       if (leavingTestResult === false) {
         // synchronous reject
@@ -520,7 +519,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     if (enteringView) {
-      const enteringTestResult = enteringView._lifecycleTest('Enter');
+      var enteringTestResult = enteringView._lifecycleTest('Enter');
 
       if (enteringTestResult === false) {
         // synchronous reject
@@ -564,7 +563,7 @@ export class NavControllerBase extends Ion implements NavController {
       direction: opts.direction,
       duration: (opts.animate === false ? 0 : opts.duration),
       easing: opts.easing,
-      isRTL: this.config.platform.isRTL(),
+      isRTL: this._config.platform.isRTL(),
       ev: opts.ev,
     };
 
@@ -627,9 +626,9 @@ export class NavControllerBase extends Ion implements NavController {
 
     // we should animate (duration > 0) if the pushed page is not the first one (startup)
     // or if it is a portal (modal, actionsheet, etc.)
-    let isFirstPage = !this._init && this._views.length === 1;
-    let shouldNotAnimate = isFirstPage && !this._isPortal;
-    let canNotAnimate = this.config.get('animate') === false;
+    const isFirstPage = !this._init && this._views.length === 1;
+    const shouldNotAnimate = isFirstPage && !this._isPortal;
+    const canNotAnimate = this._config.get('animate') === false;
     if (shouldNotAnimate || canNotAnimate) {
       opts.animate = false;
     }
@@ -743,7 +742,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _insertViewAt(view: ViewController, index: number) {
-    var existingIndex = this._views.indexOf(view);
+    const existingIndex = this._views.indexOf(view);
     if (existingIndex > -1) {
       // this view is already in the stack!!
       // move it to its new location
@@ -897,10 +896,14 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   destroy() {
-    for (var view of this._views) {
+    const views = this._views;
+    let view: ViewController;
+    for (var i = 0; i < views.length; i++) {
+      view = views[i];
       view._willUnload();
       view._destroy(this._renderer);
     }
+
     // purge stack
     this._views.length = 0;
 
@@ -947,44 +950,35 @@ export class NavControllerBase extends Ion implements NavController {
   swipeBackEnd(shouldComplete: boolean, currentStepValue: number, velocity: number) {
     if (this._sbTrns && this._sbGesture) {
       // the swipe back gesture has ended
-      const dur = this._sbTrns.getDuration() / (Math.abs(velocity) + 1);
+      var dur = this._sbTrns.getDuration() / (Math.abs(velocity) + 1);
       this._sbTrns.progressEnd(shouldComplete, currentStepValue, dur);
     }
   }
 
-  _sbCheck() {
-    if (!this._sbEnabled && this._isPortal) {
-      return;
-    }
-
-    // this nav controller can have swipe to go back
-    if (!this._sbGesture) {
-      // create the swipe back gesture if we haven't already
-      const opts = {
-        edge: 'left',
-        threshold: this._sbThreshold
-      };
-      this._sbGesture = new SwipeBackGesture(this, document.body, this._gestureCtrl, opts);
-    }
-
+  _swipeBackCheck() {
     if (this.canSwipeBack()) {
+      if (!this._sbGesture) {
+        this._sbGesture = new SwipeBackGesture(this, this._gestureCtrl, this._domCtrl);
+      }
       this._sbGesture.listen();
-    } else {
+
+    } else if (this._sbGesture) {
       this._sbGesture.unlisten();
     }
   }
 
   canSwipeBack(): boolean {
     return (this._sbEnabled &&
-           !this._children.length &&
-           !this.isTransitioning() &&
+            !this._isPortal &&
+            !this._children.length &&
+            !this.isTransitioning() &&
             this._app.isEnabled() &&
             this.canGoBack());
   }
 
   canGoBack(): boolean {
     const activeView = this.getActive();
-    return !!(activeView && activeView.enableBack()) || false;
+    return !!(activeView && activeView.enableBack());
   }
 
   isTransitioning(): boolean {

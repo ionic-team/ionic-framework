@@ -2,14 +2,15 @@ import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Host
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Form, IonicTapInput } from '../../util/form';
-import { isTrueProperty, assert } from '../../util/util';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
-import { Key } from '../../util/key';
-import { Haptic } from '../../util/haptic';
 import { ToggleGesture } from './toggle-gesture';
 import { GestureController } from '../../gestures/gesture-controller';
+import { Key } from '../../util/key';
+import { Haptic } from '../../util/haptic';
+import { Form, IonicTapInput } from '../../util/form';
+import { isTrueProperty, assert } from '../../util/util';
+import { DomController } from '../../util/dom-controller';
 
 export const TOGGLE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -118,7 +119,8 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
     renderer: Renderer,
     private _haptic: Haptic,
     @Optional() public _item: Item,
-    private _gestureCtrl: GestureController
+    private _gestureCtrl: GestureController,
+    private _domCtrl: DomController
   ) {
     super(config, elementRef, renderer, 'toggle');
     _form.register(this);
@@ -135,7 +137,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    */
   ngAfterContentInit() {
     this._init = true;
-    this._gesture = new ToggleGesture(this, this._gestureCtrl);
+    this._gesture = new ToggleGesture(this, this._gestureCtrl, this._domCtrl);
     this._gesture.listen();
   }
 
@@ -143,6 +145,9 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    * @private
    */
   _onDragStart(startX: number) {
+    assert(startX, 'startX must be valid');
+    console.debug('toggle, _onDragStart', startX);
+
     this._startX = startX;
     this._activated = true;
   }
@@ -151,9 +156,12 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    * @private
    */
   _onDragMove(currentX: number) {
-    assert(this._startX, '_startX must be valid');
+    if (!this._startX) {
+      assert(false, '_startX must be valid');
+      return;
+    }
 
-    console.debug('toggle, pointerMove', currentX);
+    console.debug('toggle, _onDragMove', currentX);
 
     if (this._checked) {
       if (currentX + 15 < this._startX) {
@@ -175,7 +183,11 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    * @private
    */
   _onDragEnd(endX: number) {
-    assert(this._startX, '_startX must be valid');
+    if (!this._startX) {
+      assert(false, '_startX must be valid');
+      return;
+    }
+    console.debug('toggle, _onDragEnd', endX);
 
     if (this.checked) {
       if (this._startX + 4 > endX) {
