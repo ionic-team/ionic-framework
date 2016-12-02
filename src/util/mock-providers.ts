@@ -55,6 +55,7 @@ export const mockIonicApp = function(app: App, config: Config, platform: Platfor
   appRoot._loadingPortal = mockOverlayPortal(app, config, platform);
   appRoot._toastPortal = mockOverlayPortal(app, config, platform);
   appRoot._overlayPortal = mockOverlayPortal(app, config, platform);
+  appRoot._modalPortal = mockOverlayPortal(app, config, platform);
 
   return appRoot;
 };

@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 
 import { AppPortal, IonicApp } from './app-root';
 import { ClickBlock } from '../../util/click-block';
+import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
 import { isNav, isTabs, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
 import { NavController } from '../../navigation/nav-controller';
@@ -72,6 +73,14 @@ export class App {
     // register this back button action with a default priority
     _platform.registerBackButtonAction(this.navPop.bind(this));
     this._disableScrollAssist = _config.getBoolean('disableScrollAssist', false);
+
+    runInDev(() => {
+      // During developement, navPop can be triggered by calling
+      // window.ClickBackButton();
+      if (!window['HWBackButton']) {
+        window['HWBackButton'] = this.navPop.bind(this);
+      }
+    });
   }
 
   /**
@@ -228,6 +237,10 @@ export class App {
    * @private
    */
   navPop(): Promise<any> {
+    if (!this._rootNav || !this.isEnabled()) {
+      return Promise.resolve();
+    }
+
     // function used to climb up all parent nav controllers
     function navPop(nav: any): Promise<any> {
       if (nav) {
@@ -259,34 +272,30 @@ export class App {
 
     // app must be enabled and there must be a
     // root nav controller for go back to work
-    if (this._rootNav && this.isEnabled()) {
-      const portal = this._appRoot._getPortal();
+    const portal = this._appRoot._getActivePortal();
 
-      // first check if the root navigation has any overlays
-      // opened in it's portal, like alert/actionsheet/popup
-      if (portal.length() > 0) {
-        // there is an overlay view in the portal
-        // let's pop this one off to go back
-        console.debug('app, goBack pop overlay');
-        return portal.pop();
-      }
-
-      // next get the active nav, check itself and climb up all
-      // of its parent navs until it finds a nav that can pop
-      let navPromise = navPop(this.getActiveNav());
-      if (navPromise === null) {
-        // no views to go back to
-        // let's exit the app
-        if (this._config.getBoolean('navExitApp', true)) {
-          console.debug('app, goBack exitApp');
-          this._platform.exitApp();
-        }
-      }
-
-      return navPromise;
+    // first check if the root navigation has any overlays
+    // opened in it's portal, like alert/actionsheet/popup
+    if (portal) {
+      // there is an overlay view in the portal
+      // let's pop this one off to go back
+      console.debug('app, goBack pop overlay');
+      return portal.pop();
     }
 
-    return Promise.resolve();
+    // next get the active nav, check itself and climb up all
+    // of its parent navs until it finds a nav that can pop
+    let navPromise = navPop(this.getActiveNav());
+    if (navPromise === null) {
+      // no views to go back to
+      // let's exit the app
+      if (this._config.getBoolean('navExitApp', true)) {
+        console.debug('app, goBack exitApp');
+        this._platform.exitApp();
+      }
+    }
+
+    return navPromise;
   }
 
 }

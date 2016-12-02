@@ -6,6 +6,7 @@ import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
 import { nativeTimeout } from '../../util/dom';
+import { assert } from '../../util/util';
 
 export const AppRootToken = new OpaqueToken('USERROOT');
 
@@ -103,10 +104,48 @@ export class IonicApp extends Ion implements OnInit {
     if (portal === AppPortal.TOAST) {
       return this._toastPortal;
     }
+    // Modals need their own overlay becuase we don't want an ActionSheet
+    // or Alert to trigger lifecycle events inside a modal
     if (portal === AppPortal.MODAL) {
       return this._modalPortal;
     }
     return this._overlayPortal;
+  }
+
+  /**
+   * @private
+   */
+  _getActivePortal(): OverlayPortal {
+    const defaultPortal = this._overlayPortal;
+    const modalPortal = this._modalPortal;
+
+    assert(defaultPortal, 'default must be valid');
+        assert(modalPortal, 'modal must be valid');
+
+    const hasModal = modalPortal.length() > 0;
+    const hasDefault = defaultPortal.length() > 0;
+
+    if (!hasModal && !hasDefault) {
+      return null;
+
+    } else if (hasModal && hasDefault) {
+      var defaultIndex = defaultPortal.getActive().getZIndex();
+      var modalIndex = modalPortal.getActive().getZIndex();
+
+      if (defaultIndex > modalIndex) {
+        return defaultPortal;
+      } else {
+        assert(modalIndex > defaultIndex, 'modal and default zIndex can not be equal');
+        return modalPortal;
+      }
+
+    } if (hasModal) {
+      return modalPortal;
+
+    } else if (hasDefault) {
+      return defaultPortal;
+    }
+
   }
 
   /**

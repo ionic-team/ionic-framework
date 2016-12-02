@@ -44,31 +44,31 @@ export class ViewController {
    * Observable to be subscribed to when the current component will become active
    * @returns {Observable} Returns an observable
    */
-  willEnter: EventEmitter<any>;
+  willEnter: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component has become active
    * @returns {Observable} Returns an observable
    */
-  didEnter: EventEmitter<any>;
+  didEnter: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component will no longer be active
    * @returns {Observable} Returns an observable
    */
-  willLeave: EventEmitter<any>;
+  willLeave: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component is no long active
    * @returns {Observable} Returns an observable
    */
-  didLeave: EventEmitter<any>;
+  didLeave: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component has been destroyed
    * @returns {Observable} Returns an observable
    */
-  willUnload: EventEmitter<any>;
+  willUnload: EventEmitter<any> = new EventEmitter();
 
   /** @private */
   data: any;
@@ -105,12 +105,6 @@ export class ViewController {
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
     this._cssClass = rootCssClass;
-
-    this.willEnter = new EventEmitter();
-    this.didEnter = new EventEmitter();
-    this.willLeave = new EventEmitter();
-    this.didLeave = new EventEmitter();
-    this.willUnload = new EventEmitter();
   }
 
   /**
@@ -220,13 +214,13 @@ export class ViewController {
    */
   enableBack(): boolean {
     // update if it's possible to go back from this nav item
-    if (this._nav) {
-      let previousItem = this._nav.getPrevious(this);
-      // the previous view may exist, but if it's about to be destroyed
-      // it shouldn't be able to go back to
-      return !!(previousItem);
+    if (!this._nav) {
+      return false;
     }
-    return false;
+    // the previous view may exist, but if it's about to be destroyed
+    // it shouldn't be able to go back to
+    const previousItem = this._nav.getPrevious(this);
+    return !!(previousItem);
   }
 
   /**
@@ -276,6 +270,13 @@ export class ViewController {
         renderer.setElementAttribute(this.pageRef().nativeElement, 'hidden', value);
       }
     }
+  }
+
+  /**
+   * @private
+   */
+  getZIndex(): number {
+    return this._zIndex;
   }
 
   /**
