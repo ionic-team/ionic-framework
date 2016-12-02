@@ -119,6 +119,10 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * ```
  *
  * @demo /docs/v2/demos/src/select/
+ * ### Input Properties
+ * Attr       Type      Details
+ * disabled   boolean   Whether or not the select component is disabled. Default false. Place conditional statements for disabled within Angular interpolation braces. i.e. disabled="{{!someFunction()}}"
+ * required   boolean   Whether or not the select component is required. There is no default.
  */
 @Component({
   selector: 'ion-select',
