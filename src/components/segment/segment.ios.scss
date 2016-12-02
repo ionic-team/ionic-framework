@@ -3,32 +3,73 @@
 // iOS Segment
 // --------------------------------------------------
 
+/// @prop - Background of the segment button
 $segment-button-ios-background-color:           transparent !default;
+
+/// @prop - Background of the activated segment button
 $segment-button-ios-background-color-activated: $toolbar-ios-active-color !default;
 
+/// @prop - Text color of the segment button
 $segment-button-ios-text-color:                 color-contrast($colors-ios, $segment-button-ios-background-color-activated) !default;
+
+/// @prop - Transition of the activated segment button
 $segment-button-ios-transition-activated:       100ms all linear !default;
+
+/// @prop - Transition of the segment button on hover
 $segment-button-ios-transition-hover:           100ms all linear !default;
+
+/// @prop - Transition of the segment button when pressed
 $segment-button-ios-transition-active:          100ms all linear !default;
 
+/// @prop - Opacity of the segment button on hover
 $segment-button-ios-opacity-hover:              .1 !default;
+
+/// @prop - Opacity of the segment button when pressed
 $segment-button-ios-opacity-active:             .16 !default;
+
+/// @prop - Opacity of the activated segment button
 $segment-button-ios-opacity-activated:          1 !default;
+
+/// @prop - Opacity of the disabled segment button
 $segment-button-ios-opacity-disabled:           .3 !default;
 
+/// @prop - Border width of the segment button
 $segment-button-ios-border-width:               1px !default;
+
+/// @prop - Height of the segment button
 $segment-button-ios-height:                     3.2rem !default;
+
+/// @prop - Line height of the segment button
 $segment-button-ios-line-height:                3rem !default;
+
+/// @prop - Font size of the segment button
 $segment-button-ios-font-size:                  1.3rem !default;
+
+/// @prop - Border radius of the segment button
 $segment-button-ios-border-radius:              4px !default;
+
+/// @prop - Size of an icon in the segment button
 $segment-button-ios-icon-size:                  2.6rem !default;
+
+/// @prop - Line height of an icon in the segment button
 $segment-button-ios-icon-line-height:           2.8rem !default;
 
+/// @prop - Max width of the segment button in a toolbar
 $segment-button-ios-toolbar-button-max-width:   100px !default;
+
+/// @prop - Height of the segment button in a toolbar
 $segment-button-ios-toolbar-button-height:      2.6rem !default;
+
+/// @prop - Line height of the segment button in a toolbar
 $segment-button-ios-toolbar-line-height:        2.5rem !default;
+
+/// @prop - Font size of the segment button in a toolbar
 $segment-button-ios-toolbar-font-size:          1.2rem !default;
+
+/// @prop - Size of an icon in the segment button in a toolbar
 $segment-button-ios-toolbar-icon-size:          2.2rem !default;
+
+/// @prop - Line height of an icon in the segment button in a toolbar
 $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
 

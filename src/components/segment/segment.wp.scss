@@ -3,23 +3,48 @@
 // Windows Segment
 // --------------------------------------------------
 
-$segment-button-wp-text-color-activated:       $toolbar-wp-text-color !default;
-
-$segment-button-wp-padding:                    0 6px !default;
-$segment-button-wp-height:                     4rem !default;
-$segment-button-wp-line-height:                4rem !default;
-$segment-button-wp-font-size:                  1.3rem !default;
-$segment-button-wp-text-transform:             uppercase !default;
-$segment-button-wp-font-weight:                bold !default;
-$segment-button-wp-icon-size:                  2.6rem !default;
-$segment-button-wp-icon-line-height:           $segment-button-wp-line-height !default;
+/// @prop - Background of the segment button
 $segment-button-wp-background-color:           transparent !default;
 
+/// @prop - Text color of the activated segment button
+$segment-button-wp-text-color-activated:       $toolbar-wp-text-color !default;
+
+/// @prop - Padding of the segment button
+$segment-button-wp-padding:                    0 6px !default;
+
+/// @prop - Height of the segment button
+$segment-button-wp-height:                     4rem !default;
+
+/// @prop - Line height of the segment button
+$segment-button-wp-line-height:                4rem !default;
+
+/// @prop - Font size of the segment button
+$segment-button-wp-font-size:                  1.3rem !default;
+
+/// @prop - Text transform of the segment button
+$segment-button-wp-text-transform:             uppercase !default;
+
+/// @prop - Font weight of the segment button
+$segment-button-wp-font-weight:                bold !default;
+
+/// @prop - Opacity of the segment button
 $segment-button-wp-opacity:                    .5 !default;
+
+/// @prop - Opacity of the activated segment button
 $segment-button-wp-opacity-activated:          1 !default;
+
+/// @prop - Opacity of the disabled segment button
 $segment-button-wp-opacity-disabled:           .3 !default;
 
+/// @prop - Size of an icon in the segment button
+$segment-button-wp-icon-size:                  2.6rem !default;
+
+/// @prop - Line height of an icon in the segment button
+$segment-button-wp-icon-line-height:           $segment-button-wp-line-height !default;
+
+/// @prop - Position of the buttons in the segment
 $segment-button-wp-buttons-justify-content:    flex-start !default;
+
 
 .segment-wp {
   justify-content: $segment-button-wp-buttons-justify-content;

@@ -3,6 +3,7 @@
 // Material Design Toolbar
 // --------------------------------------------------
 
+/// @prop - Order of the toolbar elements
 $toolbar-order-md: (
   back-button: 0,
   menu-toggle-start: 1,
@@ -14,14 +15,22 @@ $toolbar-order-md: (
   menu-toggle-end: 7,
 );
 
+/// @prop - Font size of the toolbar title
 $toolbar-md-title-font-size:             2rem !default;
+
+/// @prop - Text color of the toolbar title
 $toolbar-md-title-text-color:            color-contrast($colors-md, $toolbar-md-background, md) !default;
 
+/// @prop - Font size of the toolbar button
 $toolbar-md-button-font-size:            1.4rem !default;
 
+/// @prop - Text color of the toolbar button
 $toolbar-md-button-color:                $toolbar-md-title-text-color !default;
+
+/// @prop - Border radius of the toolbar button
 $toolbar-md-button-border-radius:        2px !default;
 
+/// @prop - Height of the navigation bar
 $navbar-md-height:                       $toolbar-md-height !default;
 
 

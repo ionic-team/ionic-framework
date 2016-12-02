@@ -3,33 +3,67 @@
 // Windows Toggle
 // --------------------------------------------------
 
+/// @prop - Color of the toggle
 $toggle-wp-inactive-color:               #323232 !default;
+
+/// @prop - Color of the checked toggle
 $toggle-wp-active-color:                 color($colors-wp, primary) !default;
 
+/// @prop - Width of the toggle track
 $toggle-wp-track-width:                  40px !default;
+
+/// @prop - Height of the toggle track
 $toggle-wp-track-height:                 18px !default;
+
+/// @prop - Background color of the toggle track
 $toggle-wp-track-background-color-off:   transparent !default;
+
+/// @prop - Background color of the checked toggle track
 $toggle-wp-track-background-color-on:    $toggle-wp-active-color !default;
 
+/// @prop - Border width of the toggle track
 $toggle-wp-track-border-width:           2px !default;
+
+/// @prop - Border color of the toggle track
 $toggle-wp-track-border-color-off:       $toggle-wp-inactive-color !default;
+
+/// @prop - Border color of the checked toggle track
 $toggle-wp-track-border-color-on:        $toggle-wp-active-color !default;
 
+/// @prop - Width of the toggle handle
 $toggle-wp-handle-width:                 10px !default;
+
+/// @prop - Height of the toggle handle
 $toggle-wp-handle-height:                10px !default;
+
+/// @prop - Top of the toggle handle
 $toggle-wp-handle-top:                   2px !default;
+
+/// @prop - Left of the toggle handle
 $toggle-wp-handle-left:                  2px !default;
-$toggle-wp-handle-background-color-off:  $toggle-wp-inactive-color !default;
-$toggle-wp-handle-background-color-on:   color-contrast($colors-wp, $toggle-wp-active-color) !default;
+
+/// @prop - Border radius of the toggle handle
 $toggle-wp-handle-border-radius:         50% !default;
 
+/// @prop - Background color of the toggle handle
+$toggle-wp-handle-background-color-off:  $toggle-wp-inactive-color !default;
+
+/// @prop - Background color of the checked toggle handle
+$toggle-wp-handle-background-color-on:   color-contrast($colors-wp, $toggle-wp-active-color) !default;
+
+/// @prop - Margin of the toggle
 $toggle-wp-media-margin:                 0 !default;
 
+/// @prop - Transition duration of the toggle icon
 $toggle-wp-transition-duration:          300ms !default;
 
+/// @prop - Opacity of the disabled toggle
 $toggle-wp-disabled-opacity:             .3 !default;
 
+/// @prop - Padding of the toggle positioned on the left in an item
 $toggle-wp-item-left-padding:            12px 18px 12px 2px !default;
+
+/// @prop - Padding of the toggle positioned on the right in an item
 $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px $item-wp-padding-left !default;
 
 

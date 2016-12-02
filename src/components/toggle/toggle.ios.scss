@@ -3,30 +3,55 @@
 // iOS Toggle
 // --------------------------------------------------
 
+/// @prop - Width of the toggle
 $toggle-ios-width:                     51px !default;
+
+/// @prop - Height of the toggle
 $toggle-ios-height:                    32px !default;
+
+/// @prop - Border width of the toggle
 $toggle-ios-border-width:              2px !default;
+
+/// @prop - Border radius of the toggle
 $toggle-ios-border-radius:             $toggle-ios-height / 2 !default;
 
+/// @prop - Background color of the unchecked toggle
 $toggle-ios-background-color-off:      $list-ios-background-color !default;
+
+/// @prop - Border color of the unchecked toggle
 $toggle-ios-border-color-off:          grayscale(lighten($list-ios-border-color, 11%)) !default;
 
+/// @prop - Background color of the checked toggle
 $toggle-ios-background-color-on:       color($colors-ios, primary) !default;
 
+/// @prop - Width of the toggle handle
 $toggle-ios-handle-width:              $toggle-ios-height - ($toggle-ios-border-width * 2) !default;
+
+/// @prop - Height of the toggle handle
 $toggle-ios-handle-height:             $toggle-ios-handle-width !default;
+
+/// @prop - Border radius of the toggle handle
 $toggle-ios-handle-border-radius:      $toggle-ios-handle-height / 2 !default;
+
+/// @prop - Box shadow of the toggle handle
 $toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, .16), 0 3px 1px rgba(0, 0, 0, .1) !default;
 
+/// @prop - Background color of the toggle handle
 $toggle-ios-handle-background-color:   $toggle-ios-background-color-off !default;
 
+/// @prop - Margin of the toggle handle
 $toggle-ios-media-margin:              0 !default;
 
+/// @prop - Transition duration of the toggle icon
 $toggle-ios-transition-duration:       300ms !default;
 
+/// @prop - Opacity of the disabled toggle
 $toggle-ios-disabled-opacity:          .3 !default;
 
+/// @prop - Padding of the toggle positioned on the left in an item
 $toggle-ios-item-left-padding:         6px 16px 5px 0 !default;
+
+/// @prop - Padding of the toggle positioned on the right in an item
 $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($item-ios-padding-left) !default;
 
 
