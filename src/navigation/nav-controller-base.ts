@@ -25,7 +25,7 @@ import { DomController } from '../util/dom-controller';
  */
 export class NavControllerBase extends Ion implements NavController {
 
-  _children: any[] = [];
+  _children: NavController[] = [];
   _ids: number = -1;
   _init = false;
   _isPortal: boolean;
@@ -883,15 +883,15 @@ export class NavControllerBase extends Ion implements NavController {
     this._app.viewWillUnload.emit(view);
   }
 
-  getActiveChildNav(): any {
+  getActiveChildNav(): NavController {
     return this._children[this._children.length - 1];
   }
 
-  registerChildNav(nav: any) {
+  registerChildNav(nav: NavController) {
     this._children.push(nav);
   }
 
-  unregisterChildNav(nav: any) {
+  unregisterChildNav(nav: NavController) {
     removeArrayItem(this._children, nav);
   }
 

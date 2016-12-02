@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Optional } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { AppPortal, IonicApp } from './app-root';
@@ -9,7 +9,7 @@ import { isNav, isTabs, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '..
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
-
+import { MenuController } from '../menu/menu-controller';
 
 /**
  * @name App
@@ -67,18 +67,19 @@ export class App {
 
   constructor(
     private _config: Config,
-    private _platform: Platform
+    private _platform: Platform,
+    @Optional() private _menuCtrl?: MenuController
   ) {
     // listen for hardware back button events
     // register this back button action with a default priority
-    _platform.registerBackButtonAction(this.navPop.bind(this));
+    _platform.registerBackButtonAction(this.goBack.bind(this));
     this._disableScrollAssist = _config.getBoolean('disableScrollAssist', false);
 
     runInDev(() => {
       // During developement, navPop can be triggered by calling
       // window.ClickBackButton();
       if (!window['HWBackButton']) {
-        window['HWBackButton'] = this.navPop.bind(this);
+        window['HWBackButton'] = this.goBack.bind(this);
       }
     });
   }
@@ -233,6 +234,23 @@ export class App {
     return portal.insertPages(-1, [enteringView], opts);
   }
 
+  goBack(): Promise<any> {
+    if (this._menuCtrl && this._menuCtrl.isOpen()) {
+      return this._menuCtrl.close();
+    }
+
+    let navPromise = this.navPop();
+    if (navPromise === null) {
+      // no views to go back to
+      // let's exit the app
+      if (this._config.getBoolean('navExitApp', true)) {
+        console.debug('app, goBack exitApp');
+        this._platform.exitApp();
+      }
+    }
+    return navPromise;
+  }
+
   /**
    * @private
    */
@@ -275,7 +293,7 @@ export class App {
     const portal = this._appRoot._getActivePortal();
 
     // first check if the root navigation has any overlays
-    // opened in it's portal, like alert/actionsheet/popup
+    // opened in it's portal, like alert/actionsheet/popup/modals
     if (portal) {
       // there is an overlay view in the portal
       // let's pop this one off to go back
@@ -285,17 +303,7 @@ export class App {
 
     // next get the active nav, check itself and climb up all
     // of its parent navs until it finds a nav that can pop
-    let navPromise = navPop(this.getActiveNav());
-    if (navPromise === null) {
-      // no views to go back to
-      // let's exit the app
-      if (this._config.getBoolean('navExitApp', true)) {
-        console.debug('app, goBack exitApp');
-        this._platform.exitApp();
-      }
-    }
-
-    return navPromise;
+    return navPop(this.getActiveNav());
   }
 
 }

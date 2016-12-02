@@ -118,10 +118,6 @@ export class IonicApp extends Ion implements OnInit {
   _getActivePortal(): OverlayPortal {
     const defaultPortal = this._overlayPortal;
     const modalPortal = this._modalPortal;
-
-    assert(defaultPortal, 'default must be valid');
-        assert(modalPortal, 'modal must be valid');
-
     const hasModal = modalPortal.length() > 0;
     const hasDefault = defaultPortal.length() > 0;
 

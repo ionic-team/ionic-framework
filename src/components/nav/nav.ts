@@ -6,6 +6,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
+import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
 import { TransitionController } from '../../transitions/transition-controller';
@@ -57,7 +58,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
 
   constructor(
     @Optional() viewCtrl: ViewController,
-    @Optional() parent: NavControllerBase,
+    @Optional() parent: NavController,
     app: App,
     config: Config,
     keyboard: Keyboard,

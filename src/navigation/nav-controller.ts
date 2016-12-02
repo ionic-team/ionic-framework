@@ -597,4 +597,8 @@ export abstract class NavController {
    */
   abstract canGoBack(): boolean;
 
+  /**
+   * @private
+   */
+  abstract registerChildNav(nav: NavController);
 }

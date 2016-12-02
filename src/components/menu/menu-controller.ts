@@ -211,12 +211,17 @@ export class MenuController {
   }
 
   /**
-   * @param {string} [menuId]  Optionally get the menu by its id, or side.
-   * @return {boolean} Returns true if the menu is currently open, otherwise false.
+   * @param {string} [menuId] Optionally get the menu by its id, or side.
+   * @return {boolean} Returns true if the specified menu is currently open, otherwise false.
+   * If the menuId is not specified, it returns true if ANY menu is currenly open.
    */
   isOpen(menuId?: string): boolean {
-    let menu = this.get(menuId);
-    return menu && menu.isOpen || false;
+    if (menuId) {
+      var menu = this.get(menuId);
+      return menu && menu.isOpen || false;
+    } else {
+      return !!this.getOpen();
+    }
   }
 
   /**
