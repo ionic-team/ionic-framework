@@ -383,7 +383,7 @@ export class Tabs extends Ion implements AfterViewInit {
     let deselectedPage: ViewController;
     if (deselectedTab) {
       deselectedPage = deselectedTab.getActive();
-      deselectedPage && deselectedPage._willLeave();
+      deselectedPage && deselectedPage._willLeave(false);
     }
 
     opts.animate = false;
