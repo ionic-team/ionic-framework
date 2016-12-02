@@ -16,10 +16,10 @@
 // Material Design Content Padding
 // --------------------------------------------------
 
-@include content-padding($content-md-padding);
+@include content-padding('md', $content-md-padding);
 
 
 // Material Design Content Margin
 // --------------------------------------------------
 
-@include content-margin($content-md-margin);
+@include content-margin('md', $content-md-margin);
