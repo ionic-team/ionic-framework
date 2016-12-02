@@ -50,7 +50,7 @@ import { ViewController } from '../../navigation/view-controller';
         '<template ngSwitchDefault>' +
           '<div class="alert-input-group">' +
             '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
-              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
+              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" [id]="i.id" class="alert-input">' +
             '</div>' +
           '</div>' +
         '</template>' +
@@ -153,7 +153,7 @@ export class AlertCmp {
         label: input.label,
         checked: !!input.checked,
         disabled: !!input.disabled,
-        id: `alert-input-${this.id}-${index}`,
+        id: `alert-input-${input.id}-${index}`,
         handler: isPresent(input.handler) ? input.handler : null,
       };
     });
