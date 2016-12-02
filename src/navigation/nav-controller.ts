@@ -600,5 +600,5 @@ export abstract class NavController {
   /**
    * @private
    */
-  abstract registerChildNav(nav: NavController);
+  abstract registerChildNav(nav: any);
 }
