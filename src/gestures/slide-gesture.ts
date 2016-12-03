@@ -1,6 +1,6 @@
 import { PanGesture } from './drag-gesture';
 import { clamp, assert } from '../util/util';
-import { nativeRaf, pointerCoord } from '../util/dom';
+import { pointerCoord } from '../util/dom';
 
 /**
  * @private

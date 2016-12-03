@@ -9,7 +9,7 @@ describe('App', () => {
 
   describe('goBack', () => {
 
-    it('should select the previous tab', () => {
+    it('should not select the previous tab', () => {
       let nav = mockNavController();
       app._setRootNav(nav);
 
@@ -31,11 +31,11 @@ describe('App', () => {
 
       app.goBack();
 
-      expect(tabs.select).toHaveBeenCalledWith(tab1);
+      expect(tabs.select).not.toHaveBeenCalled();
       expect(tab1.pop).not.toHaveBeenCalled();
       expect(tab2.pop).not.toHaveBeenCalled();
       expect(portal.pop).not.toHaveBeenCalled();
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(platform.exitApp).toHaveBeenCalled();
     });
 
     it('should pop from the active tab, when tabs is nested is the root nav', () => {

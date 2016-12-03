@@ -264,14 +264,7 @@ export class App {
       if (nav) {
         if (isTabs(nav)) {
           // FYI, using "nav instanceof Tabs" throws a Promise runtime error for whatever reason, idk
-          // this is a Tabs container
-          // see if there is a valid previous tab to go to
-          let prevTab = nav.previousTab(true);
-          if (prevTab) {
-            console.debug('app, goBack previous tab');
-            nav.select(prevTab);
-            return Promise.resolve();
-          }
+          // on tabs, we do nothing. see issue #7611
 
         } else if (isNav(nav) && nav.length() > 1) {
           // this nav controller has more than one view
