@@ -178,7 +178,7 @@ export class IonicApp extends Ion implements OnInit {
 
 }
 
-export enum AppPortal {
+export const enum AppPortal {
   DEFAULT,
   MODAL,
   LOADING,

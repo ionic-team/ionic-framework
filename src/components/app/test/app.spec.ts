@@ -1,4 +1,5 @@
 import { App } from '../app';
+import { AppPortal } from '../app-root';
 import { Config } from '../../../config/config';
 import { mockApp, mockConfig, mockNavController, mockPlatform, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
 import { OverlayPortal } from '../../nav/overlay-portal';
@@ -432,7 +433,7 @@ describe('App', () => {
     config = mockConfig();
     platform = mockPlatform();
     app = mockApp(config, platform);
-    portal = app._appRoot._getPortal();
+    portal = app._appRoot._getPortal(AppPortal.MODAL);
   });
 
 });

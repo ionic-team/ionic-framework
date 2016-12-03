@@ -5,11 +5,12 @@ import { AppPortal, IonicApp } from './app-root';
 import { ClickBlock } from '../../util/click-block';
 import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
-import { isNav, isTabs, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { MenuController } from '../menu/menu-controller';
+
 
 /**
  * @name App
@@ -181,18 +182,11 @@ export class App {
    * @private
    */
   getActiveNav(): NavController {
-    var nav = this._rootNav || null;
-    var activeChildNav: any;
-
-    while (nav) {
-      activeChildNav = nav.getActiveChildNav();
-      if (!activeChildNav) {
-        break;
-      }
-      nav = activeChildNav;
+    const portal = this._appRoot._getPortal(MODAL);
+    if (portal.length() > 0) {
+      return findTopNav(portal);
     }
-
-    return nav;
+    return findTopNav(this._rootNav || null);
   }
 
   /**
@@ -259,47 +253,50 @@ export class App {
       return Promise.resolve();
     }
 
-    // function used to climb up all parent nav controllers
-    function navPop(nav: any): Promise<any> {
-      if (nav) {
-        if (isTabs(nav)) {
-          // FYI, using "nav instanceof Tabs" throws a Promise runtime error for whatever reason, idk
-          // on tabs, we do nothing. see issue #7611
-
-        } else if (isNav(nav) && nav.length() > 1) {
-          // this nav controller has more than one view
-          // pop the current view on this nav and we're done here
-          console.debug('app, goBack pop nav');
-          return nav.pop();
-        }
-
-        // try again using the parent nav (if there is one)
-        return navPop(nav.parent);
-      }
-
-      // nerp, never found nav that could pop off a view
-      return null;
+    // If there are any alert/actionsheet open, let's do nothing
+    const portal = this._appRoot._getPortal(DEFAULT);
+    if (portal.length() > 0) {
+      return Promise.resolve();
     }
-
-    // app must be enabled and there must be a
-    // root nav controller for go back to work
-    const portal = this._appRoot._getActivePortal();
-
-    // first check if the root navigation has any overlays
-    // opened in it's portal, like alert/actionsheet/popup/modals
-    if (portal) {
-      // there is an overlay view in the portal
-      // let's pop this one off to go back
-      console.debug('app, goBack pop overlay');
-      return portal.pop();
-    }
-
     // next get the active nav, check itself and climb up all
     // of its parent navs until it finds a nav that can pop
-    return navPop(this.getActiveNav());
+    return recursivePop(this.getActiveNav());
   }
 
 }
 
+function recursivePop(nav: any): Promise<any> {
+  if (!nav) {
+    return null;
+  }
+  if (isNav(nav)) {
+    var len = nav.length();
+    if (len > 1 || (nav._isPortal && len > 0)) {
+      // this nav controller has more than one view
+      // pop the current view on this nav and we're done here
+      console.debug('app, goBack pop nav');
+      return nav.pop();
+    }
+  }
+  // try again using the parent nav (if there is one)
+  return recursivePop(nav.parent);
+}
+
+function findTopNav(nav: NavController) {
+  var activeChildNav: any;
+
+  while (nav) {
+    activeChildNav = nav.getActiveChildNav();
+    if (!activeChildNav) {
+      break;
+    }
+    nav = activeChildNav;
+  }
+
+  return nav;
+}
+
+const DEFAULT = 0; // AppPortal.DEFAULT
+const MODAL = 1; // AppPortal.MODAL
 const ACTIVE_SCROLLING_TIME = 100;
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;
