@@ -322,6 +322,11 @@ export class Slides extends Ion {
    */
   @Output() ionDrag: EventEmitter<any> = new EventEmitter();
 
+  /**
+   * @output {any} Expression to evaluate when the slider initializes.
+   */
+  @Output() onInit: EventEmitter<any> = new EventEmitter();
+
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
     super(config, elementRef, renderer, 'slides');
@@ -390,6 +395,10 @@ export class Slides extends Ion {
     options.onSliderMove = (swiper: any, e: any) => {
       this.ionDrag.emit(swiper);
       return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
+    };
+    options.onInit = (swiper: any) => {
+      this.onInit.emit(swiper);
+      return this.options.onInit && this.options.onInit(swiper);
     };
 
 
