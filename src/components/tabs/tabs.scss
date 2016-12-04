@@ -24,6 +24,10 @@
   top: 0;
   bottom: auto;
 }
+/*fixed ipone4 bottom tabs do't display  */
+.tabs-ios[tabsPlacement=bottom] ion-tab {
+     height: calc(100% - 49px);
+ }
 
 .tab-button {
   position: relative;
