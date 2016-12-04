@@ -18,14 +18,12 @@ export class E2EPage {
   constructor(private alertCtrl: AlertController, private modalCtrl: ModalController) { }
 
   doAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'Alert',
-      subTitle: 'Subtitle',
-      message: 'This is an alert message.',
-      buttons: ['OK']
-    });
-
-    alert.present();
+    this.alertCtrl.create()
+      .setTitle('Alert')
+      .setSubTitle('Subtitle')
+      .setMessage('This is an alert message.')
+      .addButton('OK')
+      .present();
   }
 
   doConfirm() {
