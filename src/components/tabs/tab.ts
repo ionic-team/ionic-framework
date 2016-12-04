@@ -314,8 +314,12 @@ export class Tab extends NavControllerBase {
       // to refresh the tabbar and content dimensions to be sure
       // they're lined up correctly
       nativeRaf(() => {
-        var content = this.getActive().getIONContent();
-        content.resize();
+        const active = this.getActive();
+        if (!active) {
+          return;
+        }
+        const content = active.getIONContent();
+        content && content.resize();
       });
       done(true);
     }
