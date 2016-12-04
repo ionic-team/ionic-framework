@@ -30,7 +30,7 @@ export class Toast extends ViewController {
   /**
   * @private
   */
-  getTransitionName(direction: string) {
+  getTransitionName(direction: string): string {
     let key = 'toast' + (direction === 'back' ? 'Leave' : 'Enter');
     return this._nav && this._nav.config.get(key);
   }
@@ -38,15 +38,56 @@ export class Toast extends ViewController {
   /**
   * @private
   */
-  isValidPosition(position: string) {
+  isValidPosition(position: string): boolean {
     return position === TOAST_POSITION_TOP || position === TOAST_POSITION_MIDDLE || position === TOAST_POSITION_BOTTOM;
+  }
+
+//    * | duration              | `number`  | -               | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.  |
+//  * | position              | `string`  | "bottom"        | The position of the toast on the screen. Accepted values: "top", "middle", "bottom".                          |
+//  * | cssClass              | `string`  | -               | Additional classes for custom styles, separated by spaces.                                                    |
+//  * | showCloseButton       | `boolean` | false           | Whether or not to show a button to close the toast.                                                           |
+//  * | closeButtonText       | `string`  | "Close"         | Text to display in the close button.                                                                          |
+//  * | dismissOnPageChange   | `boolean` | false           | Whether to dismiss the toast when navigating to a new page.                                                   |
+
+
+  /**
+   * @param {string} message  Toast message content
+   */
+  setMessage(message: string): Toast {
+    this.data.message = message;
+    return this;
   }
 
   /**
    * @param {string} message  Toast message content
    */
-  setMessage(message: string) {
-    this.data.message = message;
+  setDuration(dur: number): Toast {
+    this.data.duration = dur;
+    return this;
+  }
+
+  /**
+   * @param {string} message  Toast message content
+   */
+  setPosition(pos: 'top' | 'middle' | 'bottom'): Toast {
+    this.data.position = pos;
+    return this;
+  }
+
+  /**
+   * @param {string} message  Toast message content
+   */
+  setCssClass(cssClass: string): Toast {
+    this.data.cssClass = cssClass;
+    return this;
+  }
+
+  /**
+   * @param {string} message  Toast message content
+   */
+  setShowCloseButton(closeButton: boolean): Toast {
+    this.data.showCloseButton = closeButton;
+    return this;
   }
 
   /**
@@ -55,7 +96,7 @@ export class Toast extends ViewController {
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  present(navOptions: NavOptions = {}) {
+  present(navOptions: NavOptions = {}): Promise<any> {
     navOptions.disableApp = false;
     return this._app.present(this, navOptions, AppPortal.TOAST);
   }
@@ -142,7 +183,7 @@ export class ToastController {
    * Create a new toast component. See options below
    * @param {ToastOptions} opts Toast options. See the below table for available options.
    */
-  create(opts: ToastOptions = {}) {
+  create(opts: ToastOptions = {}): Toast {
     return new Toast(this._app, opts);
   }
 
