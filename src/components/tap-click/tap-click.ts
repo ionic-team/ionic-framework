@@ -56,6 +56,12 @@ export class TapClick {
     if (this.startCoord) {
       return false;
     }
+    if (!this.app.isEnabled()) {
+      return false;
+    }
+
+    this.lastTouchEnd = 0;
+    this.dispatchClick = true;
 
     let activatableEle = getActivatableTarget(ev.target);
     if (!activatableEle) {
@@ -63,8 +69,6 @@ export class TapClick {
       return false;
     }
 
-    this.lastTouchEnd = 0;
-    this.dispatchClick = true;
     this.startCoord = pointerCoord(ev);
     this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
     return true;
@@ -102,6 +106,7 @@ export class TapClick {
 
   pointerCancel(ev: UIEvent) {
     console.debug(`pointerCancel from ${ev.type} ${Date.now()}`);
+
     this.startCoord = null;
     this.dispatchClick = false;
     this.activator && this.activator.clearState();
@@ -147,6 +152,10 @@ export class TapClick {
     }
     if (!this.app.isEnabled()) {
       console.debug('click prevent: appDisabled');
+      return true;
+    }
+    if (this.gestureCtrl.isCaptured()) {
+      console.debug('click prevent: tap-click (gesture is captured)');
       return true;
     }
     return false;
