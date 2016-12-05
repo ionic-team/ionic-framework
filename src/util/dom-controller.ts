@@ -95,32 +95,37 @@ export class DomController {
   }
 
   protected flush(timeStamp: number) {
+    let err;
+
     try {
-      this.dispatch(timeStamp);
-    } finally {
-      this.q = false;
+      dispatch(timeStamp, this.r, this.w);
+    } catch (e) {
+      err = e;
+    }
+
+    this.q = false;
+
+    if (this.r.length || this.w.length) {
+      this.queue();
+    }
+
+    if (err) {
+      throw err;
     }
   }
 
-  private dispatch(timeStamp: number) {
-    let i: number;
-    const r = this.r;
-    const rLen = r.length;
-    const w = this.w;
-    const wLen = w.length;
+}
 
-    // ******** DOM READS ****************
-    for (i = 0; i < rLen; i++) {
-      r[i](timeStamp);
-    }
+function dispatch(timeStamp: number, r: Function[], w: Function[]) {
+  let task;
 
-    // ******** DOM WRITES ****************
-    for (i = 0; i < wLen; i++) {
-      w[i](timeStamp);
-    }
-
-    r.length = 0;
-    w.length = 0;
+  // ******** DOM READS ****************
+  while (task = r.shift()) {
+    task(timeStamp);
   }
 
+  // ******** DOM WRITES ****************
+  while (task = w.shift()) {
+    task(timeStamp);
+  }
 }

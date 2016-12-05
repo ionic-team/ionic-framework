@@ -1,14 +1,19 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, AfterViewInit, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
-import { Ion } from '../ion';
 import { Config } from '../../config/config';
+import { DomController } from '../../util/dom-controller';
+import { eventOptions } from '../../util/ui-event-manager';
+import { Img } from '../img/img';
+import { Ion } from '../ion';
+import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
-import { nativeRaf, nativeTimeout, transitionEnd } from '../../util/dom';
-import { ScrollView } from '../../util/scroll-view';
+import { ScrollView, ScrollDirection } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
+import { transitionEnd } from '../../util/dom';
 import { ViewController } from '../../navigation/view-controller';
-import { isTrueProperty, assert } from '../../util/util';
+
+export { ScrollEvent, ScrollDirection } from '../../util/scroll-view';
 
 
 /**
@@ -116,32 +121,51 @@ import { isTrueProperty, assert } from '../../util/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class Content extends Ion {
-  _paddingTop: number;
-  _paddingRight: number;
-  _paddingBottom: number;
-  _paddingLeft: number;
-  _scrollPadding: number = 0;
-  _headerHeight: number;
-  _footerHeight: number;
-  _tabbarHeight: number;
-  _tabsPlacement: string;
-  _inputPolling: boolean = false;
-  _scroll: ScrollView;
-  _scLsn: Function;
+export class Content extends Ion implements AfterViewInit, OnDestroy {
+  /*  @private */
   _sbPadding: boolean;
+
+  /*  @internal */
+  _cTop: number;
+  /*  @internal */
+  _cBottom: number;
+  /*  @internal */
+  _pTop: number;
+  /*  @internal */
+  _pRight: number;
+  /*  @internal */
+  _pBottom: number;
+  /*  @internal */
+  _pLeft: number;
+  /*  @internal */
+  _scrollPadding: number = 0;
+  /*  @internal */
+  _hdrHeight: number;
+  /*  @internal */
+  _ftrHeight: number;
+  /*  @internal */
+  _tabbarHeight: number;
+  /*  @internal */
+  _tabsPlacement: string;
+  /*  @internal */
+  _inputPolling: boolean = false;
+  /*  @internal */
+  _scroll: ScrollView;
+  /*  @internal */
+  _scLsn: Function;
+  /*  @internal */
   _fullscreen: boolean;
+  /*  @internal */
+  _lazyLoadImages: boolean = true;
+  /*  @internal */
+  _imgs: Img[] = [];
+  /*  @internal */
   _footerEle: HTMLElement;
-  _dirty: boolean = false;
-
-  /*
-   * @private
-   */
+  /*  @internal */
+  _dirty: boolean;
+  /*  @internal */
   _scrollEle: HTMLElement;
-
-  /*
-   * @private
-   */
+  /*  @internal */
   _fixedEle: HTMLElement;
 
   /**
@@ -156,6 +180,100 @@ export class Content extends Ion {
    */
   contentBottom: number;
 
+  /**
+   * The height the content, including content not visible
+   * on the screen due to overflow.
+   */
+  scrollHeight: number = 0;
+
+  /**
+   * The width the content, including content not visible
+   * on the screen due to overflow.
+   */
+  scrollWidth: number = 0;
+
+
+  /**
+   * The distance of the content's top to its topmost visible content.
+   */
+  get scrollTop(): number {
+    return this._scroll.getTop();
+  }
+  set scrollTop(top: number) {
+    this._scroll.setTop(top);
+  }
+
+  /**
+   * The distance of the content's left to its leftmost visible content.
+   */
+  get scrollLeft(): number {
+    return this._scroll.getLeft();
+  }
+  set scrollLeft(top: number) {
+    this._scroll.setLeft(top);
+  }
+
+  /**
+   * If the scrollable area is actively scrolling or not.
+   */
+  get isScrolling(): boolean {
+    return this._scroll.isScrolling;
+  }
+
+  /**
+   * The current vertical scroll velocity.
+   */
+  get velocityY(): number {
+    return this._scroll.ev.velocityY || 0;
+  }
+
+  /**
+   * The current horizontal scroll velocity.
+   */
+  get velocityX(): number {
+    return this._scroll.ev.velocityX || 0;
+  }
+
+  /**
+   * The current, or last known, vertical scroll direction.
+   */
+  get directionY(): ScrollDirection {
+    return this._scroll.ev.directionY;
+  }
+
+  /**
+   * The current, or last known, horizontal scroll direction.
+   */
+  get directionX(): ScrollDirection {
+    return this._scroll.ev.directionX;
+  }
+
+  /**
+   * @private
+   */
+  @Output() ionScrollStart: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * @private
+   */
+  @Output() ionScroll: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * @private
+   */
+  @Output() ionScrollEnd: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * @private
+   */
+  @Output() readReady: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * @private
+   */
+  @Output() writeReady: EventEmitter<any> = new EventEmitter<any>();
+
+
   constructor(
     config: Config,
     elementRef: ElementRef,
@@ -164,7 +282,8 @@ export class Content extends Ion {
     public _keyboard: Keyboard,
     public _zone: NgZone,
     @Optional() viewCtrl: ViewController,
-    @Optional() public _tabs: Tabs
+    @Optional() public _tabs: Tabs,
+    private _dom: DomController
   ) {
     super(config, elementRef, renderer, 'content');
 
@@ -174,21 +293,43 @@ export class Content extends Ion {
       viewCtrl._setIONContent(this);
       viewCtrl._setIONContentRef(elementRef);
     }
+
+    this._scroll = new ScrollView(_dom);
   }
 
   /**
    * @private
    */
-  ngOnInit() {
-    let children = this._elementRef.nativeElement.children;
+  ngAfterViewInit() {
+    if (this._scrollEle) return;
+
+    const children = this._elementRef.nativeElement.children;
     assert(children && children.length >= 2, 'content needs at least two children');
 
     this._fixedEle = children[0];
     this._scrollEle = children[1];
 
-    this._zone.runOutsideAngular(() => {
-      this._scroll = new ScrollView(this._scrollEle);
-      this._scLsn = this.addScrollListener(this._app.setScrolling.bind(this._app));
+    // subscribe to the scroll start
+    this._scroll.scrollStart.subscribe(ev => {
+      this.ionScrollStart.emit(ev);
+    });
+
+    // subscribe to every scroll move
+    this._scroll.scroll.subscribe(ev => {
+      // remind the app that it's currently scrolling
+      this._app.setScrolling(ev.timeStamp);
+
+      // emit to all of our other friends things be scrolling
+      this.ionScroll.emit(ev);
+
+      this.imgsRefresh();
+    });
+
+    // subscribe to the scroll end
+    this._scroll.scrollEnd.subscribe(ev => {
+      this.ionScrollEnd.emit(ev);
+
+      this.imgsRefresh();
     });
   }
 
@@ -198,72 +339,67 @@ export class Content extends Ion {
   ngOnDestroy() {
     this._scLsn && this._scLsn();
     this._scroll && this._scroll.destroy();
-    this._scrollEle = this._footerEle = this._scLsn = this._scroll = null;
-  }
-
-  /**
-   * @private
-   */
-  addScrollListener(handler: any) {
-    return this._addListener('scroll', handler);
+    this._scrollEle = this._fixedEle = this._footerEle = this._scLsn = this._scroll = null;
   }
 
   /**
    * @private
    */
   addTouchStartListener(handler: any) {
-    return this._addListener('touchstart', handler);
+    return this._addListener('touchstart', handler, false);
   }
 
   /**
    * @private
    */
   addTouchMoveListener(handler: any) {
-    return this._addListener('touchmove', handler);
+    return this._addListener('touchmove', handler, true);
   }
 
   /**
    * @private
    */
   addTouchEndListener(handler: any) {
-    return this._addListener('touchend', handler);
+    return this._addListener('touchend', handler, false);
   }
 
   /**
    * @private
    */
   addMouseDownListener(handler: any) {
-    return this._addListener('mousedown', handler);
+    return this._addListener('mousedown', handler, false);
   }
 
   /**
    * @private
    */
   addMouseUpListener(handler: any) {
-    return this._addListener('mouseup', handler);
+    return this._addListener('mouseup', handler, false);
   }
 
   /**
    * @private
    */
   addMouseMoveListener(handler: any) {
-    return this._addListener('mousemove', handler);
+    return this._addListener('mousemove', handler, true);
   }
 
   /**
    * @private
    */
-  _addListener(type: string, handler: any): Function {
+  _addListener(type: string, handler: any, usePassive: boolean): Function {
     assert(handler, 'handler must be valid');
     assert(this._scrollEle, '_scrollEle must be valid');
 
+    const opts = eventOptions(false, usePassive);
+
     // ensure we're not creating duplicates
-    this._scrollEle.removeEventListener(type, handler);
-    this._scrollEle.addEventListener(type, handler);
+    this._scrollEle.removeEventListener(type, handler, opts);
+    this._scrollEle.addEventListener(type, handler, opts);
 
     return () => {
       if (this._scrollEle) {
-        this._scrollEle.removeEventListener(type, handler);
+        this._scrollEle.removeEventListener(type, handler, opts);
       }
     };
   }
@@ -273,42 +409,6 @@ export class Content extends Ion {
    */
   getScrollElement(): HTMLElement {
     return this._scrollEle;
-  }
-
-  /**
-   * @private
-   * Call a method when scrolling has stopped
-   * @param {Function} callback The method you want perform when scrolling has ended
-   */
-  onScrollEnd(callback: Function) {
-    let lastScrollTop: number = null;
-    let framesUnchanged: number = 0;
-    let _scrollEle = this._scrollEle;
-
-    function next() {
-      let currentScrollTop = _scrollEle.scrollTop;
-      if (lastScrollTop !== null) {
-
-        if (Math.round(lastScrollTop) === Math.round(currentScrollTop)) {
-          framesUnchanged++;
-
-        } else {
-          framesUnchanged = 0;
-        }
-
-        if (framesUnchanged > 9) {
-          return callback();
-        }
-      }
-
-      lastScrollTop = currentScrollTop;
-
-      nativeRaf(() => {
-        nativeRaf(next);
-      });
-    }
-
-    nativeTimeout(next, 100);
   }
 
   /**
@@ -343,23 +443,6 @@ export class Content extends Ion {
   }
 
   /**
-   * Get the `scrollTop` property of the content's scrollable element.
-   * @returns {number}
-   */
-  getScrollTop(): number {
-    return this._scroll.getTop();
-  }
-
-  /**
-   * Set the `scrollTop` property of the content's scrollable element.
-   * @param {number} top
-   */
-  setScrollTop(top: number) {
-    console.debug(`content, setScrollTop, top: ${top}`);
-    this._scroll.setTop(top);
-  }
-
-  /**
    * Scroll to the bottom of the content component.
    * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
    * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
@@ -372,8 +455,8 @@ export class Content extends Ion {
   /**
    * @private
    */
-  jsScroll(onScrollCallback: Function): Function {
-    return this._scroll.jsScroll(onScrollCallback);
+  enableJsScroll() {
+    this._scroll.enableJsScroll(this.contentTop, this.contentBottom);
   }
 
   /**
@@ -394,10 +477,41 @@ export class Content extends Ion {
 
   /**
    * @private
+   */
+  @Input()
+  get lazyLoadImages(): boolean {
+    return !!this._lazyLoadImages;
+  }
+  set lazyLoadImages(val: boolean) {
+    this._lazyLoadImages = isTrueProperty(val);
+  }
+
+  /**
+   * @private
+   */
+  addImg(img: Img) {
+    this._imgs.push(img);
+  }
+
+  /**
+   * @private
+   */
+  removeImg(img: Img) {
+    removeArrayItem(this._imgs, img);
+  }
+
+  /**
+   * @private
+   */
+
+  /**
+   * @private
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
-    (<any>this._scrollEle.style)[prop] = val;
+    this._dom.write(() => {
+      (<any>this._scrollEle.style)[prop] = val;
+    });
   }
 
   /**
@@ -448,7 +562,9 @@ export class Content extends Ion {
       console.debug(`content, addScrollPadding, newPadding: ${newPadding}, this._scrollPadding: ${this._scrollPadding}`);
 
       this._scrollPadding = newPadding;
-      this._scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
+      this._dom.write(() => {
+        this._scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
+      });
     }
   }
 
@@ -475,10 +591,8 @@ export class Content extends Ion {
    * after dynamically adding headers, footers, or tabs.
    */
   resize() {
-    nativeRaf(() => {
-      this.readDimensions();
-      this.writeDimensions();
-    });
+    this._dom.read(this.readDimensions, this);
+    this._dom.write(this.writeDimensions, this);
   }
 
   /**
@@ -486,20 +600,22 @@ export class Content extends Ion {
    * DOM READ
    */
   readDimensions() {
-    let cachePaddingTop = this._paddingTop;
-    let cachePaddingRight = this._paddingRight;
-    let cachePaddingBottom = this._paddingBottom;
-    let cachePaddingLeft = this._paddingLeft;
-    let cacheHeaderHeight = this._headerHeight;
-    let cacheFooterHeight = this._footerHeight;
+    let cachePaddingTop = this._pTop;
+    let cachePaddingRight = this._pRight;
+    let cachePaddingBottom = this._pBottom;
+    let cachePaddingLeft = this._pLeft;
+    let cacheHeaderHeight = this._hdrHeight;
+    let cacheFooterHeight = this._ftrHeight;
     let cacheTabsPlacement = this._tabsPlacement;
 
-    this._paddingTop = 0;
-    this._paddingRight = 0;
-    this._paddingBottom = 0;
-    this._paddingLeft = 0;
-    this._headerHeight = 0;
-    this._footerHeight = 0;
+    this.scrollWidth = 0;
+    this.scrollHeight = 0;
+    this._pTop = 0;
+    this._pRight = 0;
+    this._pBottom = 0;
+    this._pLeft = 0;
+    this._hdrHeight = 0;
+    this._ftrHeight = 0;
     this._tabsPlacement = null;
 
     let ele: HTMLElement = this._elementRef.nativeElement;
@@ -516,19 +632,27 @@ export class Content extends Ion {
       ele = <HTMLElement>children[i];
       tagName = ele.tagName;
       if (tagName === 'ION-CONTENT') {
+        // ******** DOM READ ****************
+        this.scrollWidth = ele.scrollWidth;
+        // ******** DOM READ ****************
+        this.scrollHeight = ele.scrollHeight;
+
         if (this._fullscreen) {
+          // ******** DOM READ ****************
           computedStyle = getComputedStyle(ele);
-          this._paddingTop = parsePxUnit(computedStyle.paddingTop);
-          this._paddingBottom = parsePxUnit(computedStyle.paddingBottom);
-          this._paddingRight = parsePxUnit(computedStyle.paddingRight);
-          this._paddingLeft = parsePxUnit(computedStyle.paddingLeft);
+          this._pTop = parsePxUnit(computedStyle.paddingTop);
+          this._pBottom = parsePxUnit(computedStyle.paddingBottom);
+          this._pRight = parsePxUnit(computedStyle.paddingRight);
+          this._pLeft = parsePxUnit(computedStyle.paddingLeft);
         }
 
       } else if (tagName === 'ION-HEADER') {
-        this._headerHeight = ele.clientHeight;
+        // ******** DOM READ ****************
+        this._hdrHeight = ele.clientHeight;
 
       } else if (tagName === 'ION-FOOTER') {
-        this._footerHeight = ele.clientHeight;
+        // ******** DOM READ ****************
+        this._ftrHeight = ele.clientHeight;
         this._footerEle = ele;
       }
     }
@@ -540,6 +664,7 @@ export class Content extends Ion {
 
       if (ele.tagName === 'ION-TABS') {
         tabbarEle = <HTMLElement>ele.firstElementChild;
+        // ******** DOM READ ****************
         this._tabbarHeight = tabbarEle.clientHeight;
 
         if (this._tabsPlacement === null) {
@@ -551,15 +676,42 @@ export class Content extends Ion {
       ele = ele.parentElement;
     }
 
+    // Toolbar height
+    this._cTop = this._hdrHeight;
+    this._cBottom = this._ftrHeight;
+
+    // Tabs height
+    if (this._tabsPlacement === 'top') {
+      this._cTop += this._tabbarHeight;
+
+    } else if (this._tabsPlacement === 'bottom') {
+      this._cBottom += this._tabbarHeight;
+    }
+
+    // Handle fullscreen viewport (padding vs margin)
+    if (this._fullscreen) {
+      this._cTop += this._pTop;
+      this._cBottom += this._pBottom;
+    }
+
     this._dirty = (
-      cachePaddingTop !== this._paddingTop ||
-      cachePaddingBottom !== this._paddingBottom ||
-      cachePaddingLeft !== this._paddingLeft ||
-      cachePaddingRight !== this._paddingRight ||
-      cacheHeaderHeight !== this._headerHeight ||
-      cacheFooterHeight !== this._footerHeight ||
-      cacheTabsPlacement !== this._tabsPlacement
+      cachePaddingTop !== this._pTop ||
+      cachePaddingBottom !== this._pBottom ||
+      cachePaddingLeft !== this._pLeft ||
+      cachePaddingRight !== this._pRight ||
+      cacheHeaderHeight !== this._hdrHeight ||
+      cacheFooterHeight !== this._ftrHeight ||
+      cacheTabsPlacement !== this._tabsPlacement ||
+      this._cTop !== this.contentTop ||
+      this._cBottom !== this.contentBottom
     );
+
+    this._scroll.init(this._scrollEle, this._cTop, this._cBottom);
+
+    // initial imgs refresh
+    this.imgsRefresh();
+
+    this.readReady.emit();
   }
 
   /**
@@ -572,91 +724,194 @@ export class Content extends Ion {
       return;
     }
 
-    let scrollEle = this._scrollEle as any;
+    const scrollEle = this._scrollEle as any;
     if (!scrollEle) {
       assert(false, 'this._scrollEle should be valid');
       return;
     }
 
-    let fixedEle = this._fixedEle;
+    const fixedEle = this._fixedEle;
     if (!fixedEle) {
       assert(false, 'this._fixedEle should be valid');
       return;
     }
 
-    // Toolbar height
-    let contentTop = this._headerHeight;
-    let contentBottom = this._footerHeight;
-
     // Tabs height
-    if (this._tabsPlacement === 'top') {
-      assert(this._tabbarHeight >= 0, '_tabbarHeight has to be positive');
-      contentTop += this._tabbarHeight;
-
-    } else if (this._tabsPlacement === 'bottom') {
-      assert(this._tabbarHeight >= 0, '_tabbarHeight has to be positive');
-      contentBottom += this._tabbarHeight;
-
-      // Update footer position
-      if (contentBottom > 0 && this._footerEle) {
-        let footerPos = contentBottom - this._footerHeight;
-        assert(footerPos >= 0, 'footerPos has to be positive');
-
-        this._footerEle.style.bottom = cssFormat(footerPos);
-      }
+    if (this._tabsPlacement === 'bottom' && this._cBottom > 0 && this._footerEle) {
+      var footerPos = this._cBottom - this._ftrHeight;
+      assert(footerPos >= 0, 'footerPos has to be positive');
+      // ******** DOM WRITE ****************
+      this._footerEle.style.bottom = cssFormat(footerPos);
     }
 
     // Handle fullscreen viewport (padding vs margin)
     let topProperty = 'marginTop';
     let bottomProperty = 'marginBottom';
-    let fixedTop: number = contentTop;
-    let fixedBottom: number = contentBottom;
+    let fixedTop: number = this._cTop;
+    let fixedBottom: number = this._cBottom;
+
     if (this._fullscreen) {
-      assert(this._paddingTop >= 0, '_paddingTop has to be positive');
-      assert(this._paddingBottom >= 0, '_paddingBottom has to be positive');
+      assert(this._pTop >= 0, '_paddingTop has to be positive');
+      assert(this._pBottom >= 0, '_paddingBottom has to be positive');
 
       // adjust the content with padding, allowing content to scroll under headers/footers
       // however, on iOS you cannot control the margins of the scrollbar (last tested iOS9.2)
       // only add inline padding styles if the computed padding value, which would
       // have come from the app's css, is different than the new padding value
-      contentTop += this._paddingTop;
-      contentBottom += this._paddingBottom;
       topProperty = 'paddingTop';
       bottomProperty = 'paddingBottom';
     }
 
     // Only update top margin if value changed
-    if (contentTop !== this.contentTop) {
-      assert(contentTop >= 0, 'contentTop has to be positive');
+    if (this._cTop !== this.contentTop) {
+      assert(this._cTop >= 0, 'contentTop has to be positive');
       assert(fixedTop >= 0, 'fixedTop has to be positive');
 
-      scrollEle.style[topProperty] = cssFormat(contentTop);
+      // ******** DOM WRITE ****************
+      scrollEle.style[topProperty] = cssFormat(this._cTop);
+      // ******** DOM WRITE ****************
       fixedEle.style.marginTop = cssFormat(fixedTop);
-      this.contentTop = contentTop;
+
+      this.contentTop = this._cTop;
     }
 
     // Only update bottom margin if value changed
-    if (contentBottom !== this.contentBottom) {
-      assert(contentBottom >= 0, 'contentBottom has to be positive');
+    if (this._cBottom !== this.contentBottom) {
+      assert(this._cBottom >= 0, 'contentBottom has to be positive');
       assert(fixedBottom >= 0, 'fixedBottom has to be positive');
 
-      scrollEle.style[bottomProperty] = cssFormat(contentBottom);
+      // ******** DOM WRITE ****************
+      scrollEle.style[bottomProperty] = cssFormat(this._cBottom);
+      // ******** DOM WRITE ****************
       fixedEle.style.marginBottom = cssFormat(fixedBottom);
-      this.contentBottom = contentBottom;
+
+      this.contentBottom = this._cBottom;
     }
 
     if (this._tabsPlacement !== null && this._tabs) {
       // set the position of the tabbar
       if (this._tabsPlacement === 'top') {
-        this._tabs.setTabbarPosition(this._headerHeight, -1);
+        // ******** DOM WRITE ****************
+        this._tabs.setTabbarPosition(this._hdrHeight, -1);
 
       } else {
         assert(this._tabsPlacement === 'bottom', 'tabsPlacement should be bottom');
+        // ******** DOM WRITE ****************
         this._tabs.setTabbarPosition(-1, 0);
       }
     }
+
+    this.writeReady.emit();
   }
 
+  /**
+   * @private
+   */
+  imgsRefresh() {
+    if (this._imgs.length && this.isImgsRefreshable()) {
+      loadImgs(this._imgs, this.scrollTop, this.scrollHeight, this.directionY, IMG_REQUESTABLE_BUFFER, IMG_RENDERABLE_BUFFER);
+    }
+  }
+
+  isImgsRefreshable() {
+    return Math.abs(this.velocityY) < 3;
+  }
+
+}
+
+export function loadImgs(imgs: Img[], scrollTop: number, scrollHeight: number, scrollDirectionY: ScrollDirection, requestableBuffer: number, renderableBuffer: number) {
+  const scrollBottom = (scrollTop + scrollHeight);
+  const priority1: Img[] = [];
+  const priority2: Img[] = [];
+  let img: Img;
+
+  // all images should be paused
+  for (var i = 0, ilen = imgs.length; i < ilen; i++) {
+    img = imgs[i];
+
+    if (scrollDirectionY === ScrollDirection.Up) {
+      // scrolling up
+      if (img.top < scrollBottom && img.bottom > scrollTop - renderableBuffer) {
+        // scrolling up, img is within viewable area
+        // or about to be viewable area
+        img.canRequest = img.canRender = true;
+        priority1.push(img);
+        continue;
+      }
+
+      if (img.bottom <= scrollTop && img.bottom > scrollTop - requestableBuffer) {
+        // scrolling up, img is within requestable area
+        img.canRequest = true;
+        img.canRender = false;
+        priority2.push(img);
+        continue;
+      }
+
+      if (img.top >= scrollBottom && img.top < scrollBottom + renderableBuffer) {
+        // scrolling up, img below viewable area
+        // but it's still within renderable area
+        // don't allow a reset
+        img.canRequest = img.canRender = false;
+        continue;
+      }
+
+    } else {
+      // scrolling down
+
+      if (img.bottom > scrollTop && img.top < scrollBottom + renderableBuffer) {
+        // scrolling down, img is within viewable area
+        // or about to be viewable area
+        img.canRequest = img.canRender = true;
+        priority1.push(img);
+        continue;
+      }
+
+      if (img.top >= scrollBottom && img.top < scrollBottom + requestableBuffer) {
+        // scrolling down, img is within requestable area
+        img.canRequest = true;
+        img.canRender = false;
+        priority2.push(img);
+        continue;
+      }
+
+      if (img.bottom <= scrollTop && img.bottom > scrollTop - renderableBuffer) {
+        // scrolling down, img above viewable area
+        // but it's still within renderable area
+        // don't allow a reset
+        img.canRequest = img.canRender = false;
+        continue;
+      }
+    }
+
+    img.canRequest = img.canRender = false;
+    img.reset();
+  }
+
+  // update all imgs which are viewable
+  priority1.sort(sortTopToBottom).forEach(i => i.update());
+
+  if (scrollDirectionY === ScrollDirection.Up) {
+    // scrolling up
+    priority2.sort(sortTopToBottom).reverse().forEach(i => i.update());
+
+  } else {
+    // scrolling down
+    priority2.sort(sortTopToBottom).forEach(i => i.update());
+  }
+}
+
+const IMG_REQUESTABLE_BUFFER = 1200;
+const IMG_RENDERABLE_BUFFER = 200;
+
+
+function sortTopToBottom(a: Img, b: Img) {
+  if (a.top < b.top) {
+    return -1;
+  }
+  if (a.top > b.top) {
+    return 1;
+  }
+  return 0;
 }
 
 function parsePxUnit(val: string): number {

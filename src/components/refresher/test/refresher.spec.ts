@@ -1,7 +1,7 @@
 import { Refresher } from '../refresher';
 import { Content } from '../../content/content';
 import { GestureController } from '../../../gestures/gesture-controller';
-import { mockConfig, mockElementRef, mockRenderer, mockZone } from '../../../util/mock-providers';
+import { mockConfig, MockDomController, mockElementRef, mockRenderer, mockZone } from '../../../util/mock-providers';
 
 
 describe('Refresher', () => {
@@ -217,12 +217,14 @@ describe('Refresher', () => {
 
   let refresher: Refresher;
   let content: Content;
+  let dom: MockDomController;
 
   beforeEach(() => {
     let gestureController = new GestureController(null);
     let elementRef = mockElementRef();
+    dom = new MockDomController();
     elementRef.nativeElement.children.push('');
-    content = new Content(mockConfig(), mockElementRef(), mockRenderer(), null, null, mockZone(), null, null);
+    content = new Content(mockConfig(), mockElementRef(), mockRenderer(), null, null, mockZone(), null, null, dom);
     content._scrollEle = document.createElement('div');
     content._scrollEle.className = 'scroll-content';
 

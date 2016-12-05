@@ -1,6 +1,7 @@
 import { Directive, ElementRef, EventEmitter, Host, Input, NgZone, Output } from '@angular/core';
 
-import { Content } from '../content/content';
+import { Content, ScrollEvent } from '../content/content';
+import { DomController } from '../../util/dom-controller';
 
 
 /**
@@ -97,7 +98,7 @@ import { Content } from '../content/content';
 export class InfiniteScroll {
   _lastCheck: number = 0;
   _highestY: number = 0;
-  _scLsn: Function;
+  _scLsn: any;
   _thr: string = '15%';
   _thrPx: number = 0;
   _thrPc: number = 0.15;
@@ -156,31 +157,32 @@ export class InfiniteScroll {
   constructor(
     @Host() private _content: Content,
     private _zone: NgZone,
-    private _elementRef: ElementRef
+    private _elementRef: ElementRef,
+    private _dom: DomController
   ) {
     _content.setElementClass('has-infinite-scroll', true);
   }
 
-  _onScroll() {
+  _onScroll(ev: ScrollEvent) {
     if (this.state === STATE_LOADING || this.state === STATE_DISABLED) {
       return 1;
     }
 
-    let now = Date.now();
-
-    if (this._lastCheck + 32 > now) {
+    if (this._lastCheck + 32 > ev.timeStamp) {
       // no need to check less than every XXms
       return 2;
     }
-    this._lastCheck = now;
+    this._lastCheck = ev.timeStamp;
 
-    let infiniteHeight = this._elementRef.nativeElement.scrollHeight;
+    // ******** DOM READ ****************
+    const infiniteHeight = this._elementRef.nativeElement.scrollHeight;
     if (!infiniteHeight) {
       // if there is no height of this element then do nothing
       return 3;
     }
 
-    let d = this._content.getContentDimensions();
+    // ******** DOM READ ****************
+    const d = this._content.getContentDimensions();
 
     let reloadY = d.contentHeight;
     if (this._thrPc) {
@@ -189,13 +191,18 @@ export class InfiniteScroll {
       reloadY += this._thrPx;
     }
 
-    let distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - reloadY;
+    // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
+
+    const distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - reloadY;
     if (distanceFromInfinite < 0) {
-      this._zone.run(() => {
-        if (this.state !== STATE_LOADING && this.state !== STATE_DISABLED) {
-          this.state = STATE_LOADING;
-          this.ionInfinite.emit(this);
-        }
+      // ******** DOM WRITE ****************
+      this._dom.write(() => {
+        this._zone.run(() => {
+          if (this.state !== STATE_LOADING && this.state !== STATE_DISABLED) {
+            this.state = STATE_LOADING;
+            this.ionInfinite.emit(this);
+          }
+        });
       });
       return 5;
     }
@@ -238,12 +245,12 @@ export class InfiniteScroll {
     if (this._init) {
       if (shouldListen) {
         if (!this._scLsn) {
-          this._zone.runOutsideAngular(() => {
-            this._scLsn = this._content.addScrollListener( this._onScroll.bind(this) );
+          this._scLsn = this._content.ionScroll.subscribe((ev: ScrollEvent) => {
+            this._onScroll(ev);
           });
         }
       } else {
-        this._scLsn && this._scLsn();
+        this._scLsn && this._scLsn.unsubscribe();
         this._scLsn = null;
       }
     }

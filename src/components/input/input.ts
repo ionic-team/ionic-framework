@@ -4,6 +4,7 @@ import { NgControl } from '@angular/forms';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
+import { DomController } from '../../util/dom-controller';
 import { Form } from '../../util/form';
 import { InputBase } from './input-base';
 import { isTrueProperty } from '../../util/util';
@@ -91,9 +92,10 @@ export class TextInput extends InputBase {
     renderer: Renderer,
     @Optional() scrollView: Content,
     @Optional() nav: NavController,
-    @Optional() ngControl: NgControl
+    @Optional() ngControl: NgControl,
+    dom: DomController
   ) {
-    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl);
+    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl, dom);
 
     this.mode = config.get('mode');
   }
@@ -238,6 +240,8 @@ export class TextInput extends InputBase {
    */
   ngOnDestroy() {
     this._form.deregister(this);
+    this._scrollStart.unsubscribe();
+    this._scrollEnd.unsubscribe();
   }
 
   /**
@@ -314,9 +318,10 @@ export class TextArea extends InputBase {
     renderer: Renderer,
     @Optional() scrollView: Content,
     @Optional() nav: NavController,
-    @Optional() ngControl: NgControl
+    @Optional() ngControl: NgControl,
+    dom: DomController
   ) {
-    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl);
+    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl, dom);
 
     this.mode = config.get('mode');
   }
@@ -405,6 +410,8 @@ export class TextArea extends InputBase {
    */
   ngOnDestroy() {
     this._form.deregister(this);
+    this._scrollStart.unsubscribe();
+    this._scrollEnd.unsubscribe();
   }
 
   /**

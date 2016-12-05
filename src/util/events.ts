@@ -133,21 +133,22 @@ export function setupEvents(platform: Platform, dom: DomController): Events {
       let el = <HTMLElement>document.elementFromPoint(platform.width() / 2, platform.height() / 2);
       if (!el) { return; }
 
-      let content = <HTMLElement>el.closest('.scroll-content');
-      if (content) {
-        var scroll = new ScrollView(content);
+      let contentEle = <HTMLElement>el.closest('.scroll-content');
+      if (contentEle) {
+        var scroll = new ScrollView(dom);
+        scroll.init(contentEle, 0, 0);
           // We need to stop scrolling if it's happening and scroll up
 
-        content.style['WebkitBackfaceVisibility'] = 'hidden';
-        content.style['WebkitTransform'] = 'translate3d(0,0,0)';
+        contentEle.style['WebkitBackfaceVisibility'] = 'hidden';
+        contentEle.style['WebkitTransform'] = 'translate3d(0,0,0)';
 
         nativeRaf(function() {
-          content.style.overflow = 'hidden';
+          contentEle.style.overflow = 'hidden';
 
           function finish() {
-            content.style.overflow = '';
-            content.style['WebkitBackfaceVisibility'] = '';
-            content.style['WebkitTransform'] = '';
+            contentEle.style.overflow = '';
+            contentEle.style['WebkitBackfaceVisibility'] = '';
+            contentEle.style['WebkitTransform'] = '';
           }
 
           let didScrollTimeout = setTimeout(() => {

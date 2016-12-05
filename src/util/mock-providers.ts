@@ -3,13 +3,16 @@ import { Location } from '@angular/common';
 
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
-import { IonicApp } from '../components/app/app-root';
 import { Config } from '../config/config';
+import { Content } from '../components/content/content';
 import { DeepLinker } from '../navigation/deep-linker';
+import { DomController } from './dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
+import { Haptic } from './haptic';
+import { IonicApp } from '../components/app/app-root';
 import { Keyboard } from './keyboard';
 import { Menu } from '../components/menu/menu';
-import { ViewState, DeepLinkConfig } from '../navigation/nav-util';
+import { NavControllerBase } from '../navigation/nav-controller-base';
 import { OverlayPortal } from '../components/nav/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
 import { Platform } from '../platform/platform';
@@ -19,10 +22,8 @@ import { Tabs }  from '../components/tabs/tabs';
 import { TransitionController } from '../transitions/transition-controller';
 import { UrlSerializer } from '../navigation/url-serializer';
 import { ViewController } from '../navigation/view-controller';
+import { ViewState, DeepLinkConfig } from '../navigation/nav-util';
 
-import { NavControllerBase } from '../navigation/nav-controller-base';
-import { Haptic } from './haptic';
-import { DomController } from './dom-controller';
 
 export const mockConfig = function(config?: any, url: string = '/', platform?: Platform) {
   const c = new Config();
@@ -70,6 +71,10 @@ export const mockTrasitionController = function(config: Config) {
     return trns;
   };
   return trnsCtrl;
+};
+
+export const mockContent = function(): Content {
+  return new Content(mockConfig(), mockElementRef(), mockRenderer(), null, null, mockZone(), null, null, new MockDomController());
 };
 
 export const mockZone = function(): NgZone {
@@ -234,7 +239,9 @@ export const mockNavController = function(): NavControllerBase {
 
   let zone = mockZone();
 
-  let keyboard = new Keyboard(config, zone);
+  let dom = new MockDomController();
+
+  let keyboard = new Keyboard(config, zone, dom);
 
   let elementRef = mockElementRef();
 
@@ -248,8 +255,6 @@ export const mockNavController = function(): NavControllerBase {
 
   let trnsCtrl = mockTrasitionController(config);
 
-  let dom = new DomController();
-
   let nav = new NavControllerBase(
     null,
     app,
@@ -262,7 +267,7 @@ export const mockNavController = function(): NavControllerBase {
     gestureCtrl,
     trnsCtrl,
     linker,
-    dom,
+    dom
   );
 
   nav._viewInit = function(enteringView: ViewController) {
@@ -285,7 +290,9 @@ export const mockNavController = function(): NavControllerBase {
 export const mockOverlayPortal = function(app: App, config: Config, platform: Platform): OverlayPortal {
   let zone = mockZone();
 
-  let keyboard = new Keyboard(config, zone);
+  let dom = new MockDomController();
+
+  let keyboard = new Keyboard(config, zone, dom);
 
   let elementRef = mockElementRef();
 
@@ -300,8 +307,6 @@ export const mockOverlayPortal = function(app: App, config: Config, platform: Pl
   let location = mockLocation();
 
   let deepLinker = new DeepLinker(app, serializer, location);
-
-  let dom = new DomController();
 
   return new OverlayPortal(
     app,
@@ -328,7 +333,9 @@ export const mockTab = function(parentTabs: Tabs): Tab {
 
   let zone = mockZone();
 
-  let keyboard = new Keyboard(config, zone);
+  let dom = new MockDomController();
+
+  let keyboard = new Keyboard(config, zone, dom);
 
   let elementRef = mockElementRef();
 
@@ -341,8 +348,6 @@ export const mockTab = function(parentTabs: Tabs): Tab {
   let gestureCtrl = new GestureController(app);
 
   let linker = mockDeepLinker(null, app);
-
-  let dom = new DomController();
 
   let tab = new Tab(
     parentTabs,
@@ -401,6 +406,22 @@ export const mockDeepLinkConfig = function(links?: any[]): DeepLinkConfig {
 export const mockHaptic = function (): Haptic {
   return new Haptic(null);
 };
+
+
+
+export class MockDomController extends DomController {
+  private timeStamp = 0;
+
+  protected queue() {}
+
+  flush(done: any) {
+    setTimeout(() => {
+      const timeStamp = ++this.timeStamp;
+      super.flush(timeStamp);
+      done(timeStamp);
+    }, 0);
+  }
+}
 
 export class MockView {}
 export class MockView1 {}
