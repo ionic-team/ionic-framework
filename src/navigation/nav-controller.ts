@@ -55,7 +55,7 @@ import { ViewController } from './view-controller';
  * Behind the scenes, when Ionic instantiates a new NavController, it creates an
  * injector with NavController bound to that instance (usually either a Nav or
  * Tab) and adds the injector to its own providers.  For more information on
- * providers and dependency injection, see [Providers and DI]().
+ * providers and dependency injection, see [Dependency Injection](https://angular.io/docs/ts/latest/guide/dependency-injection.html).
  *
  * Instead, you can inject NavController and know that it is the correct
  * navigation controller for most situations (for more advanced situations, see
