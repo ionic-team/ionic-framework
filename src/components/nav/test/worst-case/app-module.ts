@@ -1,10 +1,12 @@
 import { Component, NgModule } from '@angular/core';
 import { IonicApp, IonicModule, NavController, NavParams } from '../../../..';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 let LOG = '';
-function log(message: string) {
-  console.log(message);
-  LOG += message;
+function log(page: string, message: string, color: string) {
+  console.log(`${page}: ${message}`);
+  LOG += `${page}:<span style="background:${color};">${message}</span>`;
   LOG += '\n';
 }
 
@@ -25,32 +27,32 @@ const TEMPLATE: string = `
 export class Base {
   constructor(public _name: string) { }
   ionViewWillLoad() {
-    log(`${this._name} willLoad`);
+    log(this._name, 'willLoad', 'green');
   }
   ionViewDidLoad() {
-    log(`${this._name} didLoad`);
+    log(this._name, 'didLoad', 'green');
   }
   ionViewWillEnter() {
-    log(`${this._name} willEnter`);
+    log(this._name, 'willEnter', 'greenyellow');
   }
   ionViewDidEnter() {
-    log(`${this._name} didEnter`);
+    log(this._name, 'didEnter', 'cyan');
   }
   ionViewWillLeave() {
-    log(`${this._name} willLeave`);
+    log(this._name, 'willLeave', 'greenyellow');
   }
   ionViewDidLeave() {
-    log(`${this._name} didLeave`);
+    log(this._name, 'didLeave', 'cyan');
   }
   ionViewWillUnload() {
-    log(`${this._name} willUnload`);
+    log(this._name, 'willUnload', 'lightgray');
   }
   ionViewCanLeave(): boolean|Promise<any> {
-    log(`${this._name} canLeave`);
+    log(this._name, 'canLeave', 'deeppink');
     return true;
   }
   ionViewCanEnter(): boolean|Promise<any> {
-    log(`${this._name} canEnter`);
+    log(this._name, 'canEnter', '#ff78c1');
     return true;
   }
 }
@@ -76,9 +78,9 @@ export class Page2 extends Base {
   ionViewWillEnter() {
     super.ionViewWillEnter();
     if (this.counter > 0) {
-      this.nav.push(Page3);
+      this.nav.push(Page3, { animated: (this.counter !== 2)});
     } else if (this.counter === 0) {
-      this.nav.push(Page4);
+      this.nav.push(Page4, {animate: false});
     } else {
       throw new Error('should not be here!');
     }
@@ -90,12 +92,15 @@ export class Page2 extends Base {
   template: TEMPLATE
 })
 export class Page3 extends Base {
-  constructor(private nav: NavController) {
+  animated: boolean;
+  constructor(private nav: NavController, params: NavParams) {
     super('Page3');
+    this.animated = params.get('animated');
   }
+
   ionViewDidEnter() {
-    super.ionViewWillEnter();
-    this.nav.pop();
+    super.ionViewDidEnter();
+    this.nav.pop({animate: this.animated});
   }
 }
 
@@ -262,16 +267,16 @@ export class Page8 extends Base {
     </ion-navbar>
   </ion-header>
   <ion-content padding>
-    <pre style="font-size: 0.72em; column-count: 3;">{{result}}</pre>
+    <pre style="font-size: 0.72em; column-count: 3;" [innerHTML]="result"></pre>
   </ion-content>
 `
 })
 export class Results {
-  result: string = 'Loading...';
-  constructor(private nav: NavController) {
+  result: any;
+  constructor(private nav: NavController, private sanitizer: DomSanitizer) {
   }
   ionViewDidEnter() {
-    this.result = LOG;
+    this.result = this.sanitizer.bypassSecurityTrustHtml(LOG);
   }
 }
 

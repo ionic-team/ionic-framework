@@ -38,6 +38,8 @@ export class ViewController {
   private _nb: Navbar;
   private _onDidDismiss: Function;
   private _onWillDismiss: Function;
+  private _dismissData: any;
+  private _dismissRole: any;
   private _detached: boolean;
 
   /**
@@ -164,20 +166,16 @@ export class ViewController {
    * @param {any} [role ]
    * @param {NavOptions} NavOptions Options for the dismiss navigation.
    * @returns {any} data Returns the data passed in, if any.
-   *
    */
   dismiss(data?: any, role?: any, navOptions: NavOptions = {}): Promise<any> {
     if (!this._nav) {
       return Promise.resolve(false);
     }
+    this._dismissData = data;
+    this._dismissRole = role;
 
-    let options = assign({}, this._leavingOpts, navOptions);
-    this._onWillDismiss && this._onWillDismiss(data, role);
-    return this._nav.removeView(this, options).then(() => {
-      this._onDidDismiss && this._onDidDismiss(data, role);
-      this._onDidDismiss = null;
-      return data;
-    });
+    const options = assign({}, this._leavingOpts, navOptions);
+    return this._nav.removeView(this, options).then(() => data);
   }
 
   /**
@@ -489,9 +487,14 @@ export class ViewController {
    * @private
    * The view has is about to leave and no longer be the active view.
    */
-  _willLeave() {
+  _willLeave(willUnload: boolean) {
     this.willLeave.emit(null);
     this._lifecycle('WillLeave');
+
+    if (willUnload && this._onWillDismiss) {
+      this._onWillDismiss(this._dismissData, this._dismissRole);
+      this._onWillDismiss = null;
+    }
   }
 
   /**
@@ -517,6 +520,11 @@ export class ViewController {
   _willUnload() {
     this.willUnload.emit(null);
     this._lifecycle('WillUnload');
+
+    this._onDidDismiss && this._onDidDismiss(this._dismissData, this._dismissRole);
+    this._onDidDismiss = null;
+    this._dismissData = null;
+    this._dismissRole = null;
   }
 
   /**
@@ -537,7 +545,7 @@ export class ViewController {
       this._cmp.destroy();
     }
 
-    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onWillDismiss = null;
+    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onDidDismiss = this._onWillDismiss = null;
   }
 
   /**

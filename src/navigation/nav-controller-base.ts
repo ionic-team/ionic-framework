@@ -270,7 +270,10 @@ export class NavControllerBase extends Ion implements NavController {
     const leavingView = this.getActive();
     const enteringView = this._getEnteringView(ti, leavingView);
 
-    assert(leavingView || enteringView, 'both leavingView and enteringView are null');
+    if (!leavingView && !enteringView) {
+      ti.reject('leavingView and enteringView are null. stack is already empty');
+      return false;
+    }
 
     // set that this nav is actively transitioning
     this.setTransitioning(true);
@@ -423,7 +426,7 @@ export class NavControllerBase extends Ion implements NavController {
       this._zone.run(() => {
         for (i = 0; i < destroyQueue.length; i++) {
           view = destroyQueue[i];
-          this._willLeave(view);
+          this._willLeave(view, true);
           this._didLeave(view);
           this._willUnload(view);
         }
@@ -682,7 +685,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (enteringView || leavingView) {
       this._zone.run(() => {
         // Here, the order is important. WillLeave must called before WillEnter.
-        leavingView && this._willLeave(leavingView);
+        leavingView && this._willLeave(leavingView, !enteringView);
         enteringView && this._willEnter(enteringView);
       });
     }
@@ -856,11 +859,11 @@ export class NavControllerBase extends Ion implements NavController {
     this._app.viewDidEnter.emit(view);
   }
 
-  _willLeave(view: ViewController) {
+  _willLeave(view: ViewController, willUnload: boolean) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
     assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
-    view._willLeave();
+    view._willLeave(willUnload);
     this.viewWillLeave.emit(view);
     this._app.viewWillLeave.emit(view);
   }

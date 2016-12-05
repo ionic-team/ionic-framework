@@ -80,7 +80,10 @@ export class App {
       // During developement, navPop can be triggered by calling
       // window.ClickBackButton();
       if (!window['HWBackButton']) {
-        window['HWBackButton'] = this.goBack.bind(this);
+        window['HWBackButton'] = () => {
+          let p = this.goBack();
+          p && p.catch(() => console.debug('hardware go back cancelled'));
+        };
       }
     });
   }
@@ -233,7 +236,7 @@ export class App {
       return this._menuCtrl.close();
     }
 
-    let navPromise = this.navPop();
+    const navPromise = this.navPop();
     if (navPromise === null) {
       // no views to go back to
       // let's exit the app
