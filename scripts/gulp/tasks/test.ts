@@ -26,12 +26,18 @@ task('test.imageserver', () => {
   function handleRequest(req, res) {
     const urlParse = url.parse(req.url, true);
 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('Age', '0');
+    res.setHeader('cache-control', 'no-store');
+
     if (urlParse.pathname === '/reset') {
       console.log('Image Server Reset');
       console.log('---------------------------');
       requestedUrls.length = 0;
       start = Date.now();
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Content-Type', 'text/plain');
       res.end('reset');
       return;
     }
@@ -48,9 +54,8 @@ task('test.imageserver', () => {
 
     setTimeout(() => {
       res.setHeader('Content-Type', 'image/svg+xml');
-      res.setHeader('Access-Control-Allow-Origin', '*');
       res.end(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                   style="background-color: ${color}; width: ${width}px; height: ${height}px;">
+                   viewBox="0 0 ${width} ${height}" style="background-color: ${color};">
                  <text x="5" y="22" style="font-family: Courier; font-size: 24px">${id}</text>
                </svg>`);
     }, delay);
