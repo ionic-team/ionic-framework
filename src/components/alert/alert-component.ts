@@ -194,7 +194,12 @@ export class AlertCmp {
   }
 
   ionViewDidLeave() {
+    focusOutActiveElement();
     this.gestureBlocker.unblock();
+  }
+
+  ionViewWillLeave() {
+    focusOutActiveElement();
   }
 
   ionViewDidEnter() {
@@ -254,7 +259,6 @@ export class AlertCmp {
 
     if (shouldDismiss) {
       this.dismiss(button.role);
-      focusOutActiveElement();
     }
   }
 
@@ -294,7 +298,6 @@ export class AlertCmp {
   }
 
   dismiss(role: any): Promise<any> {
-    focusOutActiveElement();
     return this._viewCtrl.dismiss(this.getValues(), role);
   }
 
