@@ -438,7 +438,7 @@ export class PickerColumnCmp {
     <div class="picker-wrapper">
       <div class="picker-toolbar">
         <div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">
-          <button ion-button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>
+          <button ion-button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear [strong]="b.strong">
             {{b.text}}
           </button>
         </div>
@@ -500,6 +500,9 @@ export class PickerCmp {
       }
       return button;
     });
+    if (data.buttons.length > 0) {
+      data.buttons[data.buttons.length - 1].strong = true;
+    }
 
     // clean up dat data
     data.columns = data.columns.map(column => {
