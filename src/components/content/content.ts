@@ -502,10 +502,6 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
 
   /**
    * @private
-   */
-
-  /**
-   * @private
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {

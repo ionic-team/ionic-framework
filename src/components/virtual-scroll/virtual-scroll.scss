@@ -2,6 +2,10 @@
 // Virtual Scroll
 // --------------------------------------------------
 
+.virtual-loading {
+  opacity: 0;
+}
+
 .virtual-scroll {
   position: relative;
 
@@ -20,6 +24,6 @@
   contain: content;
 }
 
-.virtual-scroll .virtual-hidden {
+.virtual-scroll .virtual-last {
   display: none;
 }

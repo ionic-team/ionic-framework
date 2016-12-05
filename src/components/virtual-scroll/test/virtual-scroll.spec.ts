@@ -289,7 +289,7 @@ describe('VirtualScroll', () => {
                        cells, records, nodes, viewContainer,
                        itmTmp, hdrTmp, ftrTmp, true);
 
-      expect(nodes.length).toBe(6);
+      expect(nodes.length).toBe(3);
 
       expect(nodes[0].cell).toBe(2);
       expect(nodes[1].cell).toBe(3);
