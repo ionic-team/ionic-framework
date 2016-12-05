@@ -410,8 +410,7 @@ export class Menu {
    * @private
    */
   setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
-    // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
-    // or swiping open the menu while pressing down on the MenuToggle button
+    // If the menu is disabled or it is currenly being animated, let's do nothing
     if ((shouldOpen === this.isOpen) || !this._isEnabled || this._isAnimating) {
       return Promise.resolve(this.isOpen);
     }

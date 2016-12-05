@@ -15,7 +15,6 @@ export class RippleActivator implements ActivatorBase {
 
   constructor(app: App, config: Config) {
     this.highlight = new Activator(app, config);
-    this.highlight.activatedDelay = 0;
   }
 
   clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
