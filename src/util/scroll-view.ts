@@ -487,10 +487,9 @@ export class ScrollView {
     this.scrollStart.unsubscribe();
     this.scroll.unsubscribe();
     this.scrollEnd.unsubscribe();
-
     this.stop();
-    this._lsn();
     this._endTmr && this._endTmr();
+    this._lsn && this._lsn();
     this._el = this._dom = null;
   }
 
