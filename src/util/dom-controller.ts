@@ -7,7 +7,7 @@ import { nativeRaf } from './dom';
 import { removeArrayItem } from './util';
 
 
-export type DomCallback = { (timeStamp: number) };
+export type DomCallback = { (timeStamp: number): void };
 
 export class DomDebouncer {
 
