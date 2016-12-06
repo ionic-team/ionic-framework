@@ -3,7 +3,7 @@ import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angul
 import { Footer, Header } from '../components/toolbar/toolbar';
 import { isPresent, assign } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
-import { NavControllerBase } from './nav-controller-base';
+import { NavController } from './nav-controller';
 import { NavOptions, ViewState } from './nav-util';
 import { NavParams } from './nav-params';
 import { Content } from '../components/content/content';
@@ -27,6 +27,7 @@ import { Content } from '../components/content/content';
  * ```
  */
 export class ViewController {
+
   private _cntDir: any;
   private _cntRef: ElementRef;
   private _ionCntDir: Content;
@@ -41,6 +42,12 @@ export class ViewController {
   private _dismissData: any;
   private _dismissRole: any;
   private _detached: boolean;
+
+  _cmp: ComponentRef<any>;
+  _nav: NavController;
+  _zIndex: number;
+  _state: ViewState;
+  _cssClass: string;
 
   /**
    * Observable to be subscribed to when the current component will become active
@@ -85,21 +92,6 @@ export class ViewController {
   isOverlay: boolean = false;
 
   /** @private */
-  _cmp: ComponentRef<any>;
-
-  /** @private */
-  _nav: NavControllerBase;
-
-  /** @private */
-  _zIndex: number;
-
-  /** @private */
-  _state: ViewState;
-
-  /** @private */
-  _cssClass: string;
-
-  /** @private */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
@@ -118,16 +110,10 @@ export class ViewController {
     this._detached = false;
   }
 
-  /**
-   * @private
-   */
-  _setNav(navCtrl: NavControllerBase) {
+  _setNav(navCtrl: NavController) {
     this._nav = navCtrl;
   }
 
-  /**
-   * @private
-   */
   _setInstance(instance: any) {
     this.instance = instance;
   }
@@ -181,7 +167,7 @@ export class ViewController {
   /**
    * @private
    */
-  getNav() {
+  getNav(): NavController {
     return this._nav;
   }
 
@@ -299,9 +285,6 @@ export class ViewController {
     return this._cmp && this._cmp.location;
   }
 
-  /**
-   * @private
-   */
   _setContent(directive: any) {
     this._cntDir = directive;
   }
@@ -313,9 +296,6 @@ export class ViewController {
     return this._cntDir;
   }
 
-  /**
-   * @private
-   */
   _setContentRef(elementRef: ElementRef) {
     this._cntRef = elementRef;
   }
@@ -327,9 +307,6 @@ export class ViewController {
     return this._cntRef;
   }
 
-  /**
-   * @private
-   */
   _setIONContent(content: Content) {
     this._setContent(content);
     this._ionCntDir = content;
@@ -342,9 +319,6 @@ export class ViewController {
     return this._ionCntDir;
   }
 
-  /**
-   * @private
-   */
   _setIONContentRef(elementRef: ElementRef) {
     this._setContentRef(elementRef);
     this._ionCntRef = elementRef;
@@ -357,9 +331,6 @@ export class ViewController {
     return this._ionCntRef;
   }
 
-  /**
-   * @private
-   */
   _setHeader(directive: Header) {
     this._hdrDir = directive;
   }
@@ -367,13 +338,10 @@ export class ViewController {
   /**
    * @private
    */
-  getHeader() {
+  getHeader(): Header {
     return this._hdrDir;
   }
 
-  /**
-   * @private
-   */
   _setFooter(directive: Footer) {
     this._ftrDir = directive;
   }
@@ -381,13 +349,10 @@ export class ViewController {
   /**
    * @private
    */
-  getFooter() {
+  getFooter(): Footer {
     return this._ftrDir;
   }
 
-  /**
-   * @private
-   */
   _setNavbar(directive: Navbar) {
     this._nb = directive;
   }
@@ -429,9 +394,6 @@ export class ViewController {
     }
   }
 
-  /**
-   * @private
-   */
   _preLoad() {
     this._lifecycle('PreLoad');
   }
@@ -536,7 +498,7 @@ export class ViewController {
       if (renderer) {
         // ensure the element is cleaned up for when the view pool reuses this element
         // ******** DOM WRITE ****************
-        const cmpEle = this._cmp.location.nativeElement;
+        var cmpEle = this._cmp.location.nativeElement;
         renderer.setElementAttribute(cmpEle, 'class', null);
         renderer.setElementAttribute(cmpEle, 'style', null);
       }
@@ -552,8 +514,8 @@ export class ViewController {
    * @private
    */
   _lifecycleTest(lifecycle: string): boolean | Promise<any> {
-    let instance = this.instance;
-    let methodName = 'ionViewCan' + lifecycle;
+    const instance = this.instance;
+    const methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
       try {
         let result = instance[methodName]();
@@ -574,8 +536,8 @@ export class ViewController {
   }
 
   _lifecycle(lifecycle: string) {
-    let instance = this.instance;
-    let methodName = 'ionView' + lifecycle;
+    const instance = this.instance;
+    const methodName = 'ionView' + lifecycle;
     if (instance && instance[methodName]) {
       try {
         instance[methodName]();
@@ -588,7 +550,7 @@ export class ViewController {
 
 }
 
-export function isViewController(viewCtrl: any) {
+export function isViewController(viewCtrl: any): boolean {
   return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
 }
 
