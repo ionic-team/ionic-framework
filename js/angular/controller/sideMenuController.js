@@ -212,7 +212,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
       self.right && self.right.pushDown && self.right.pushDown();
       // Bring the z-index of the left menu up
       self.left && self.left.bringUp && self.left.bringUp();
-    } else {
+    } else if (amount < 0) {
       // Bring the z-index of the right menu up
       self.right && self.right.bringUp && self.right.bringUp();
       // Push the z-index of the left menu down
