@@ -438,7 +438,7 @@ export class PickerColumnCmp {
     <div class="picker-wrapper">
       <div class="picker-toolbar">
         <div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">
-          <button ion-button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear [strong]="b.strong">
+          <button ion-button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>
             {{b.text}}
           </button>
         </div>
