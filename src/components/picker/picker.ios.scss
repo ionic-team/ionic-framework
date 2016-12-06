@@ -94,7 +94,7 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
 }
 
 .picker-columns {
-  height: $picker-ios-height - $picker-ios-toolbar-height;
+  height: $picker-ios-height - $picker-ios-toolbar-height - 1;
 
   perspective: $picker-ios-column-perspective;
 }
