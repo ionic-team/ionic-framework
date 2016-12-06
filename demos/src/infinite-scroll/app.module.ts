@@ -66,7 +66,7 @@ export class MockProvider {
 @Component({
   templateUrl: 'page.html'
 })
-export class ApiDemoApp {
+export class ApiDemoPage {
   items: string[];
 
   constructor(private mockProvider: MockProvider) {
@@ -74,34 +74,41 @@ export class ApiDemoApp {
   }
 
   doInfinite(infiniteScroll: InfiniteScroll) {
-    console.log('Called doinfinite');
-
     this.mockProvider.getAsyncData().then((newData) => {
       for (var i = 0; i < newData.length; i++) {
         this.items.push( newData[i] );
       }
 
-      // infiniteScroll.complete();
+      infiniteScroll.complete();
 
-      // if (this.items.length > 90) {
-      //   infiniteScroll.enable(false);
-      // }
+      if (this.items.length > 90) {
+        infiniteScroll.enable(false);
+      }
     });
   }
 
 }
 
+@Component({
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
+})
+export class ApiDemoApp {
+  rootPage = ApiDemoPage;
+}
+
 
 @NgModule({
   declarations: [
-    ApiDemoApp
+    ApiDemoApp,
+    ApiDemoPage
   ],
   imports: [
     IonicModule.forRoot(ApiDemoApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    ApiDemoApp
+    ApiDemoApp,
+    ApiDemoPage
   ],
   providers: [
     MockProvider
