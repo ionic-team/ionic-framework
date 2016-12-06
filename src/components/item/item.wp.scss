@@ -22,10 +22,10 @@ $item-wp-paragraph-text-color:       #666 !default;
 $item-wp-font-size:                  1.6rem !default;
 
 /// @prop - Size of the avatar in the item
-$item-wp-avatar-size:                4rem !default;
+$item-wp-avatar-size:                40px !default;
 
 /// @prop - Size of the thumbnail in the item
-$item-wp-thumbnail-size:             8rem !default;
+$item-wp-thumbnail-size:             80px !default;
 
 /// @prop - Shows the detail arrow icon on an item
 $item-wp-detail-push-show:           false !default;
@@ -188,26 +188,42 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   margin: ($item-wp-padding-right / 2);
 }
 
+
+// Windows Item Avatar
+// --------------------------------------------------
+
 .item-wp ion-avatar {
   min-width: $item-wp-avatar-size;
   min-height: $item-wp-avatar-size;
 }
 
-.item-wp ion-avatar img {
-  max-width: $item-wp-avatar-size;
-  max-height: $item-wp-avatar-size;
+.item-wp ion-avatar ion-img {
+  overflow: hidden;
+
+  width: $item-wp-avatar-size;
+  height: $item-wp-avatar-size;
 
   border-radius: $item-wp-avatar-size / 2;
 }
+
+.item-wp ion-avatar img {
+  width: $item-wp-avatar-size;
+  height: $item-wp-avatar-size;
+}
+
+
+// Windows Item Thumbnail
+// --------------------------------------------------
 
 .item-wp ion-thumbnail {
   min-width: $item-wp-thumbnail-size;
   min-height: $item-wp-thumbnail-size;
 }
 
+.item-wp ion-thumbnail ion-img,
 .item-wp ion-thumbnail img {
-  max-width: $item-wp-thumbnail-size;
-  max-height: $item-wp-thumbnail-size;
+  width: $item-wp-thumbnail-size;
+  height: $item-wp-thumbnail-size;
 }
 
 

@@ -16,10 +16,10 @@ $item-md-paragraph-text-color:       #666 !default;
 $item-md-font-size:                  1.6rem !default;
 
 /// @prop - Size of the avatar in the item
-$item-md-avatar-size:                4rem !default;
+$item-md-avatar-size:                40px !default;
 
 /// @prop - Size of the thumbnail in the item
-$item-md-thumbnail-size:             8rem !default;
+$item-md-thumbnail-size:             80px !default;
 
 /// @prop - Shows the detail arrow icon on an item
 $item-md-detail-push-show:           false !default;
@@ -178,26 +178,42 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   margin: ($item-md-padding-right / 2);
 }
 
+
+// Material Design Item Avatar
+// --------------------------------------------------
+
 .item-md ion-avatar {
   min-width: $item-md-avatar-size;
   min-height: $item-md-avatar-size;
 }
 
-.item-md ion-avatar img {
-  max-width: $item-md-avatar-size;
-  max-height: $item-md-avatar-size;
+.item-md ion-avatar ion-img {
+  width: $item-md-avatar-size;
+  height: $item-md-avatar-size;
 
   border-radius: $item-md-avatar-size / 2;
+
+  overflow: hidden;
 }
+
+.item-ios ion-avatar img {
+  width: $item-md-avatar-size;
+  height: $item-md-avatar-size;
+}
+
+
+// Material Design Item Thumbnail
+// --------------------------------------------------
 
 .item-md ion-thumbnail {
   min-width: $item-md-thumbnail-size;
   min-height: $item-md-thumbnail-size;
 }
 
+.item-md ion-thumbnail ion-img,
 .item-md ion-thumbnail img {
-  max-width: $item-md-thumbnail-size;
-  max-height: $item-md-thumbnail-size;
+  width: $item-md-thumbnail-size;
+  height: $item-md-thumbnail-size;
 }
 
 
