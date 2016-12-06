@@ -500,9 +500,6 @@ export class PickerCmp {
       }
       return button;
     });
-    if (data.buttons.length > 0) {
-      data.buttons[data.buttons.length - 1].strong = true;
-    }
 
     // clean up dat data
     data.columns = data.columns.map(column => {
