@@ -391,9 +391,8 @@ export class ScrollView {
     if (done === undefined) {
       // only create a promise if a done callback wasn't provided
       // done can be a null, which avoids any functions
-      promise = new Promise((res, rej) => {
-        done = res;
-        done = rej;
+      promise = new Promise(resolve => {
+        done = resolve;
       });
     }
 
