@@ -7,7 +7,7 @@ import { Ion } from '../ion';
 import { isBlank } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
-import { NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
+import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabHighlight } from './tab-highlight';
@@ -501,9 +501,9 @@ export class Tabs extends Ion implements AfterViewInit {
 
       } else if (tab.length() > 1) {
         // if we're a few pages deep, pop to root
-        tab.popToRoot(null, null);
+        tab.popToRoot();
 
-      } else if (tab.root !== active.component) {
+      } else if (getComponent(this._linker, tab.root) !== active.component) {
         // Otherwise, if the page we're on is not our real root, reset it to our
         // default root type
         tab.setRoot(tab.root);
