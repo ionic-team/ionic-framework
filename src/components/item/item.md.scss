@@ -187,18 +187,14 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   min-height: $item-md-avatar-size;
 }
 
-.item-md ion-avatar ion-img {
+.item-md ion-avatar ion-img,
+.item-md ion-avatar img {
   width: $item-md-avatar-size;
   height: $item-md-avatar-size;
 
-  border-radius: $item-md-avatar-size / 2;
+  border-radius: 50%;
 
   overflow: hidden;
-}
-
-.item-ios ion-avatar img {
-  width: $item-md-avatar-size;
-  height: $item-md-avatar-size;
 }
 
 

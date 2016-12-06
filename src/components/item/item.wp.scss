@@ -197,18 +197,14 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   min-height: $item-wp-avatar-size;
 }
 
-.item-wp ion-avatar ion-img {
+.item-wp ion-avatar ion-img,
+.item-wp ion-avatar img {
   overflow: hidden;
 
   width: $item-wp-avatar-size;
   height: $item-wp-avatar-size;
 
-  border-radius: $item-wp-avatar-size / 2;
-}
-
-.item-wp ion-avatar img {
-  width: $item-wp-avatar-size;
-  height: $item-wp-avatar-size;
+  border-radius: 50%;
 }
 
 

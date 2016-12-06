@@ -165,18 +165,14 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   min-height: $item-ios-avatar-size;
 }
 
-.item-ios ion-avatar ion-img {
-  width: $item-ios-avatar-size;
-  height: $item-ios-avatar-size;
-
-  border-radius: $item-ios-avatar-size / 2;
-
-  overflow: hidden;
-}
-
+.item-ios ion-avatar ion-img,
 .item-ios ion-avatar img {
   width: $item-ios-avatar-size;
   height: $item-ios-avatar-size;
+
+  border-radius: 50%;
+
+  overflow: hidden;
 }
 
 
