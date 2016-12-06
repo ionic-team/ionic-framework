@@ -424,11 +424,3 @@ $button-md-round-border-radius:                 $button-round-border-radius !def
   @include md-button-outline($color-name, $color-base, $color-contrast);
   @include md-button-clear($color-name, $color-base, $color-contrast);
 }
-
-
-// MD strong Button
-// --------------------------------------------------
-
-.button-strong-md {
-  font-weight: bold;
-}

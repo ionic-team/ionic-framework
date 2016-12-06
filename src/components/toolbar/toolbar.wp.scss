@@ -344,11 +344,3 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
   @include wp-bar-button-outline($color-name, $color-base, $color-contrast);
   @include wp-bar-button-solid($color-name, $color-base, $color-contrast);
 }
-
-
-// WP strong Button
-// --------------------------------------------------
-
-.bar-button-strong-wp {
-  font-weight: bold;
-}
