@@ -1,14 +1,13 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, AfterViewInit, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DomController } from '../../util/dom-controller';
-import { eventOptions } from '../../util/ui-event-manager';
 import { Img } from '../img/img';
 import { Ion } from '../ion';
 import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
-import { ScrollView, ScrollDirection } from '../../util/scroll-view';
+import { ScrollView, ScrollDirection, ScrollEvent } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
 import { transitionEnd } from '../../util/dom';
 import { ViewController } from '../../navigation/view-controller';
@@ -116,85 +115,92 @@ export { ScrollEvent, ScrollDirection } from '../../util/scroll-view';
     '</div>' +
     '<ng-content select="ion-refresher"></ng-content>',
   host: {
-    '[class.statusbar-padding]': '_sbPadding'
+    '[class.statusbar-padding]': 'statusbarPadding'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class Content extends Ion implements AfterViewInit, OnDestroy {
-  /*  @private */
-  _sbPadding: boolean;
-
-  /*  @internal */
+export class Content extends Ion implements OnDestroy, OnInit {
+  /** @internal */
   _cTop: number;
-  /*  @internal */
+  /** @internal */
   _cBottom: number;
-  /*  @internal */
+  /** @internal */
   _pTop: number;
-  /*  @internal */
+  /** @internal */
   _pRight: number;
-  /*  @internal */
+  /** @internal */
   _pBottom: number;
-  /*  @internal */
+  /** @internal */
   _pLeft: number;
-  /*  @internal */
+  /** @internal */
   _scrollPadding: number = 0;
-  /*  @internal */
+  /** @internal */
   _hdrHeight: number;
-  /*  @internal */
+  /** @internal */
   _ftrHeight: number;
-  /*  @internal */
+  /** @internal */
   _tabbarHeight: number;
-  /*  @internal */
+  /** @internal */
   _tabsPlacement: string;
-  /*  @internal */
+  /** @internal */
   _inputPolling: boolean = false;
-  /*  @internal */
+  /** @internal */
   _scroll: ScrollView;
-  /*  @internal */
+  /** @internal */
   _scLsn: Function;
-  /*  @internal */
+  /** @internal */
   _fullscreen: boolean;
-  /*  @internal */
-  _lazyLoadImages: boolean = true;
-  /*  @internal */
+  /** @internal */
   _imgs: Img[] = [];
-  /*  @internal */
+  /** @internal */
   _footerEle: HTMLElement;
-  /*  @internal */
+  /** @internal */
   _dirty: boolean;
-  /*  @internal */
+  /** @internal */
   _scrollEle: HTMLElement;
-  /*  @internal */
+  /** @internal */
   _fixedEle: HTMLElement;
+
+  /** @private */
+  statusbarPadding: boolean;
 
   /**
    * A number representing how many pixels the top of the content has been
    * adjusted, which could be by either padding or margin.
+   *
+   * @return {number}
    */
   contentTop: number;
 
   /**
    * A number representing how many pixels the bottom of the content has been
    * adjusted, which could be by either padding or margin.
+   *
+   * @return {number}
    */
   contentBottom: number;
 
   /**
    * The height the content, including content not visible
    * on the screen due to overflow.
+   *
+   * @return {number}
    */
   scrollHeight: number = 0;
 
   /**
    * The width the content, including content not visible
    * on the screen due to overflow.
+   *
+   * @return {number}
    */
   scrollWidth: number = 0;
 
-
   /**
    * The distance of the content's top to its topmost visible content.
+   *
+   * @return {number}
    */
   get scrollTop(): number {
     return this._scroll.getTop();
@@ -205,6 +211,8 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
 
   /**
    * The distance of the content's left to its leftmost visible content.
+   *
+   * @return {number}
    */
   get scrollLeft(): number {
     return this._scroll.getLeft();
@@ -215,6 +223,8 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
 
   /**
    * If the scrollable area is actively scrolling or not.
+   *
+   * @return {boolean}
    */
   get isScrolling(): boolean {
     return this._scroll.isScrolling;
@@ -222,6 +232,8 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
 
   /**
    * The current vertical scroll velocity.
+   *
+   * @return {number}
    */
   get velocityY(): number {
     return this._scroll.ev.velocityY || 0;
@@ -229,6 +241,8 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
 
   /**
    * The current horizontal scroll velocity.
+   *
+   * @return {number}
    */
   get velocityX(): number {
     return this._scroll.ev.velocityX || 0;
@@ -236,6 +250,8 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
 
   /**
    * The current, or last known, vertical scroll direction.
+   *
+   * @return {ScrollDirection}
    */
   get directionY(): ScrollDirection {
     return this._scroll.ev.directionY;
@@ -243,25 +259,27 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
 
   /**
    * The current, or last known, horizontal scroll direction.
+   *
+   * @return {ScrollDirection}
    */
   get directionX(): ScrollDirection {
     return this._scroll.ev.directionX;
   }
 
   /**
-   * @private
+   * @output {ScrollEvent} Emitted when the scrolling first starts.
    */
-  @Output() ionScrollStart: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ionScrollStart: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
 
   /**
-   * @private
+   * @output {ScrollEvent} Emitted on every scroll event.
    */
-  @Output() ionScroll: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ionScroll: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
 
   /**
-   * @private
+   * @output {ScrollEvent} Emitted when scrolling ends.
    */
-  @Output() ionScrollEnd: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ionScrollEnd: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
 
   /**
    * @private
@@ -287,7 +305,7 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
   ) {
     super(config, elementRef, renderer, 'content');
 
-    this._sbPadding = config.getBoolean('statusbarPadding', false);
+    this.statusbarPadding = config.getBoolean('statusbarPadding', false);
 
     if (viewCtrl) {
       viewCtrl._setIONContent(this);
@@ -300,7 +318,7 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
   /**
    * @private
    */
-  ngAfterViewInit() {
+  ngOnInit() {
     if (this._scrollEle) return;
 
     const children = this._elementRef.nativeElement.children;
@@ -345,68 +363,6 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
   /**
    * @private
    */
-  addTouchStartListener(handler: any) {
-    return this._addListener('touchstart', handler, false);
-  }
-
-  /**
-   * @private
-   */
-  addTouchMoveListener(handler: any) {
-    return this._addListener('touchmove', handler, true);
-  }
-
-  /**
-   * @private
-   */
-  addTouchEndListener(handler: any) {
-    return this._addListener('touchend', handler, false);
-  }
-
-  /**
-   * @private
-   */
-  addMouseDownListener(handler: any) {
-    return this._addListener('mousedown', handler, false);
-  }
-
-  /**
-   * @private
-   */
-  addMouseUpListener(handler: any) {
-    return this._addListener('mouseup', handler, false);
-  }
-
-  /**
-   * @private
-   */
-  addMouseMoveListener(handler: any) {
-    return this._addListener('mousemove', handler, true);
-  }
-
-  /**
-   * @private
-   */
-  _addListener(type: string, handler: any, usePassive: boolean): Function {
-    assert(handler, 'handler must be valid');
-    assert(this._scrollEle, '_scrollEle must be valid');
-
-    const opts = eventOptions(false, usePassive);
-
-    // ensure we're not creating duplicates
-    this._scrollEle.removeEventListener(type, handler, opts);
-    this._scrollEle.addEventListener(type, handler, opts);
-
-    return () => {
-      if (this._scrollEle) {
-        this._scrollEle.removeEventListener(type, handler, opts);
-      }
-    };
-  }
-
-  /**
-   * @private
-   */
   getScrollElement(): HTMLElement {
     return this._scrollEle;
   }
@@ -444,6 +400,7 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
 
   /**
    * Scroll to the bottom of the content component.
+   *
    * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
    * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
@@ -466,6 +423,8 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
    * fullscreen option may not look any different than the default, however,
    * by adding a transparency effect to a header then the content can be
    * seen under the header as the user scrolls.
+   *
+   * @returns {boolean}
    */
   @Input()
   get fullscreen(): boolean {
@@ -473,17 +432,6 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
   }
   set fullscreen(val: boolean) {
     this._fullscreen = isTrueProperty(val);
-  }
-
-  /**
-   * @private
-   */
-  @Input()
-  get lazyLoadImages(): boolean {
-    return !!this._lazyLoadImages;
-  }
-  set lazyLoadImages(val: boolean) {
-    this._lazyLoadImages = isTrueProperty(val);
   }
 
   /**
@@ -720,7 +668,7 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
       return;
     }
 
-    const scrollEle = this._scrollEle as any;
+    const scrollEle = this._scrollEle;
     if (!scrollEle) {
       assert(false, 'this._scrollEle should be valid');
       return;
@@ -809,6 +757,9 @@ export class Content extends Ion implements AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+   * @private
+   */
   isImgsRefreshable() {
     return Math.abs(this.velocityY) < 3;
   }
