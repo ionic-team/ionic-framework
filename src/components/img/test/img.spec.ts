@@ -6,7 +6,7 @@ import { mockContent, MockDomController, mockElementRef, mockPlatform, mockRende
 import { Platform } from '../../../platform/platform';
 
 
-fdescribe('Img', () => {
+describe('Img', () => {
 
   describe('reset', () => {
 
