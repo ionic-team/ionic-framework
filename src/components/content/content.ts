@@ -506,9 +506,13 @@ export class Content extends Ion implements OnDestroy, OnInit {
       console.debug(`content, addScrollPadding, newPadding: ${newPadding}, this._scrollPadding: ${this._scrollPadding}`);
 
       this._scrollPadding = newPadding;
-      this._dom.write(() => {
-        this._scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
-      });
+      if (this._scrollEle) {
+        this._dom.write(() => {
+          if (this._scrollEle) {
+            this._scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
+          }
+        });
+      }
     }
   }
 
