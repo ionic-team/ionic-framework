@@ -144,6 +144,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /** @internal */
   _tabsPlacement: string;
   /** @internal */
+  _tTop: number;
+  /** @internal */
   _inputPolling: boolean = false;
   /** @internal */
   _scroll: ScrollView;
@@ -555,6 +557,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     let cacheHeaderHeight = this._hdrHeight;
     let cacheFooterHeight = this._ftrHeight;
     let cacheTabsPlacement = this._tabsPlacement;
+    let tabsTop = 0;
 
     this.scrollWidth = 0;
     this.scrollHeight = 0;
@@ -565,6 +568,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._hdrHeight = 0;
     this._ftrHeight = 0;
     this._tabsPlacement = null;
+    this._tTop = 0;
 
     let ele: HTMLElement = this._elementRef.nativeElement;
     if (!ele) {
@@ -624,6 +628,12 @@ export class Content extends Ion implements OnDestroy, OnInit {
       ele = ele.parentElement;
     }
 
+    // Tabs top
+    if (this._tabs && this._tabsPlacement === 'top') {
+      this._tTop = this._hdrHeight;
+      tabsTop = this._tabs._top;
+    }
+
     // Toolbar height
     this._cTop = this._hdrHeight;
     this._cBottom = this._ftrHeight;
@@ -650,6 +660,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
       cacheHeaderHeight !== this._hdrHeight ||
       cacheFooterHeight !== this._ftrHeight ||
       cacheTabsPlacement !== this._tabsPlacement ||
+      tabsTop !== this._tTop ||
       this._cTop !== this.contentTop ||
       this._cBottom !== this.contentBottom
     );
@@ -668,7 +679,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    */
   writeDimensions() {
     if (!this._dirty) {
-      console.debug('Skipping writeDimenstions');
+      console.debug('Skipping writeDimensions');
       return;
     }
 
@@ -740,7 +751,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
       // set the position of the tabbar
       if (this._tabsPlacement === 'top') {
         // ******** DOM WRITE ****************
-        this._tabs.setTabbarPosition(this._hdrHeight, -1);
+        this._tabs.setTabbarPosition(this._tTop, -1);
 
       } else {
         assert(this._tabsPlacement === 'bottom', 'tabsPlacement should be bottom');
