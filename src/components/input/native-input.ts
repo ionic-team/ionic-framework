@@ -146,7 +146,7 @@ export class NativeInput {
 
     if (shouldHideFocus) {
       cloneInputComponent(focusedInputEle);
-      focusedInputEle.style.transform = 'scale(0)';
+      (<any>focusedInputEle.style)[CSS.transform] = 'scale(0)';
 
     } else {
       removeClone(focusedInputEle);
@@ -209,7 +209,7 @@ function cloneInputComponent(srcNativeInputEle: HTMLInputElement) {
     srcComponentEle.style.pointerEvents = 'none';
   }
 
-  srcNativeInputEle.style.transform = 'scale(0)';
+  (<any>srcNativeInputEle.style)[CSS.transform] = 'scale(0)';
 }
 
 function removeClone(srcNativeInputEle: HTMLElement) {
@@ -222,7 +222,7 @@ function removeClone(srcNativeInputEle: HTMLElement) {
 
     srcComponentEle.style.pointerEvents = '';
   }
-  srcNativeInputEle.style.transform = '';
+  (<any>srcNativeInputEle.style)[CSS.transform] = '';
   srcNativeInputEle.style.opacity = '';
 }
 
