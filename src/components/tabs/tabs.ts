@@ -374,54 +374,69 @@ export class Tabs extends Ion implements AfterViewInit {
       return;
     }
 
-    const deselectedTab = this.getSelected();
-    if (selectedTab === deselectedTab) {
-      // no change
+    // If the selected tab is the current selected tab, we do not switch
+    const currentTab = this.getSelected();
+    if (selectedTab === currentTab) {
       return this._touchActive(selectedTab);
     }
 
-    let deselectedPage: ViewController;
-    if (deselectedTab) {
-      deselectedPage = deselectedTab.getActive();
-      deselectedPage && deselectedPage._willLeave(false);
+    // If the selected tab does not have a root, we do not switch (#9392)
+    // it's possible the tab is only for opening modal's or signing out
+    // and doesn't actually have content. In the case there's no content
+    // for a tab then do nothing and leave the current view as is
+    if (!selectedTab.root) {
+      selectedTab.ionSelect.emit(selectedTab);
+      this.ionChange.emit(selectedTab);
+      return;
     }
 
-    opts.animate = false;
+    // At this point we are going to perform a page switch
+    // Let's fire willLeave in the current tab page
+    let currentPage: ViewController;
+    if (currentTab) {
+      currentPage = currentTab.getActive();
+      currentPage && currentPage._willLeave(false);
+    }
 
+    // Fire willEnter in the new selected tab
     const selectedPage = selectedTab.getActive();
     selectedPage && selectedPage._willEnter();
 
-    selectedTab.load(opts, (alreadyLoaded: boolean) => {
-      selectedTab.ionSelect.emit(selectedTab);
-      this.ionChange.emit(selectedTab);
-
-      if (selectedTab.root) {
-        // only show the selectedTab if it has a root
-        // it's possible the tab is only for opening modal's or signing out
-        // and doesn't actually have content. In the case there's no content
-        // for a tab then do nothing and leave the current view as is
-        this._tabs.forEach(tab => {
-          tab.setSelected(tab === selectedTab);
-        });
-
-        if (this.tabsHighlight) {
-          this._highlight.select(selectedTab);
-        }
-
-        if (opts.updateUrl !== false) {
-          this._linker.navChange(DIRECTION_SWITCH);
-        }
+    // Let's start the transition
+    opts.animate = false;
+    selectedTab.load(opts, () => {
+      if (opts.updateUrl !== false) {
+        this._linker.navChange(DIRECTION_SWITCH);
       }
-
-      selectedPage && selectedPage._didEnter();
-      deselectedPage && deselectedPage._didLeave();
-
-      // track the order of which tabs have been selected, by their index
-      // do not track if the tab index is the same as the previous
-      if (this._selectHistory[this._selectHistory.length - 1] !== selectedTab.id) {
-        this._selectHistory.push(selectedTab.id);
-      }
+      this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
     });
+  }
+
+  _tabSwitchEnd(selectedTab: Tab, selectedPage: ViewController, currentPage: ViewController) {
+    selectedTab.ionSelect.emit(selectedTab);
+    this.ionChange.emit(selectedTab);
+
+    // Update tabs selection state
+    const tabs = this._tabs;
+    let tab: Tab;
+    for (var i = 0; i < tabs.length; i++) {
+      tab = tabs[i];
+      tab.setSelected(tab === selectedTab);
+    }
+
+    if (this.tabsHighlight) {
+      this._highlight.select(selectedTab);
+    }
+
+    // Fire didEnter/didLeave lifecycle events
+    selectedPage && selectedPage._didEnter();
+    currentPage && currentPage._didLeave();
+
+    // track the order of which tabs have been selected, by their index
+    // do not track if the tab index is the same as the previous
+    if (this._selectHistory[this._selectHistory.length - 1] !== selectedTab.id) {
+      this._selectHistory.push(selectedTab.id);
+    }
   }
 
   /**

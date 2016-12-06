@@ -1,5 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { /*DeepLink,*/ DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../..';
+import { /*DeepLink,*/AlertController, DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../..';
 
 
 // @DeepLink({ name: 'sign-in' })
@@ -35,7 +35,12 @@ export class TabsPage {
 
   @ViewChild(Tabs) tabs: Tabs;
 
-  constructor(public modalCtrl: ModalController, public params: NavParams) {}
+  constructor(
+    public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    public params: NavParams,
+    public alertCtrl: AlertController
+  ) { }
 
   ngAfterViewInit() {
     this.tabs.ionChange.subscribe((tab: Tab) => {
@@ -49,6 +54,39 @@ export class TabsPage {
     // wired up through the template
     // <ion-tabs (ionChange)="onTabChange()">
     console.log('onTabChange');
+  }
+
+  logout() {
+    this.navCtrl.pop().catch(() => {
+      console.log('Cannot go back.');
+    });
+  }
+
+  ionViewCanLeave() {
+    return new Promise((resolve, reject) => {
+      let alert = this.alertCtrl.create({
+        title: 'Log out',
+        subTitle: 'Are you sure you want to log out?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            handler: () => {
+              reject();
+            }
+          },
+          {
+            text: 'Yes',
+            handler: () => {
+              alert.dismiss().then(() => {
+                resolve();
+              });
+            }
+          }
+        ]
+      });
+      alert.present();
+    });
   }
 
   chat() {
@@ -104,7 +142,9 @@ export class Tab1Page1 {
   }
 
   logout() {
-    this.app.getRootNav().setRoot(SignIn, null, { animate: true, direction: 'back' });
+    this.app.getRootNav().setRoot(SignIn, null, { animate: true, direction: 'back' }).catch(() => {
+      console.debug('logout cancelled');
+    });
   }
 
   ionViewWillEnter() {
