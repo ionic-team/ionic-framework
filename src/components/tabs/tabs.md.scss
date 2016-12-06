@@ -221,7 +221,7 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
     color: $color-contrast;
   }
 
-  .tabs-md-#{$color-name} .tab-highlight {
+  .tabs-md-#{$color-name}[tabsHighlight=true] .tab-highlight {
     background: $color-contrast;
   }
 

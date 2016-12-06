@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, App, AlertController, ModalController, ViewController, Tab, Tabs } from '../../../..';
+import { Config, IonicApp, IonicModule, App, AlertController, ModalController, ViewController, Tab, Tabs } from '../../../..';
 
 //
 // Modal
@@ -233,7 +233,7 @@ export class Tab3 {
       </ion-content>
     </ion-menu>
 
-    <ion-tabs #content (ionChange)="onChange($event)">
+    <ion-tabs #content (ionChange)="onChange($event)" [color]="myColor">
       <ion-tab tabTitle="Plain List" tabIcon="star" [root]="root1" (ionSelect)="onSelect($event)"></ion-tab>
       <ion-tab tabTitle="Schedule" tabIcon="globe" [root]="root2"></ion-tab>
       <ion-tab tabTitle="Stopwatch" tabIcon="logo-facebook" [root]="root3"></ion-tab>
@@ -246,6 +246,11 @@ export class TabsPage {
   root1 = Tab1;
   root2 = Tab2;
   root3 = Tab3;
+  myColor: string;
+
+  constructor(config: Config) {
+    this.myColor = (config.get('mode') !== 'ios') ? 'primary' : null;
+  }
 
   onChange(ev: Tab) {
     console.log('Changed tab', ev);
