@@ -71,5 +71,9 @@ $fab-md-list-button-background-color-activated:   color-shade($fab-md-list-butto
   .fab-md-#{$color-name}.activated {
     background-color: $bg-color-activated;
   }
+
+  .fab-md-#{$color-name} .button-effect {
+    background-color: $fg-color;
+  }
 }
 
