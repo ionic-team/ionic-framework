@@ -341,7 +341,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     // subscribe to every scroll move
     this._scroll.scroll.subscribe(ev => {
       // remind the app that it's currently scrolling
-      this._app.setScrolling(ev.timeStamp);
+      this._app.setScrolling();
 
       // emit to all of our other friends things be scrolling
       this.ionScroll.emit(ev);

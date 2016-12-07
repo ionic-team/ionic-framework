@@ -162,8 +162,8 @@ export class App {
   /**
    * @private
    */
-  setScrolling(timeStamp: number) {
-    this._scrollTime = timeStamp + ACTIVE_SCROLLING_TIME;
+  setScrolling() {
+    this._scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
   }
 
   /**
