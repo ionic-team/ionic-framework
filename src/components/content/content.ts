@@ -777,7 +777,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @private
    */
   imgsUpdate() {
-    if (this._imgs.length && this.isImgsUpdatable()) {
+    if (this._scroll.initialized && this._imgs.length && this.isImgsUpdatable()) {
       updateImgs(this._imgs, this.scrollTop, this.scrollHeight, this.directionY, IMG_REQUESTABLE_BUFFER, IMG_RENDERABLE_BUFFER);
     }
   }

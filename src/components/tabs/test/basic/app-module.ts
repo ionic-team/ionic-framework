@@ -187,7 +187,7 @@ export class Tab2 {
         <button ion-button (click)="appNavPop()">App Nav Pop</button>
       </p>
 
-      <ion-list [virtualScroll]="items" [headerFn]="headerFn">
+      <ion-list [virtualScroll]="items">
 
         <ion-item *virtualItem="let item">
           Item: {{item}}

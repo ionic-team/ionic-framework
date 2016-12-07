@@ -11,6 +11,7 @@ export class ScrollView {
   scrollStart = new Subject<ScrollEvent>();
   scroll = new Subject<ScrollEvent>();
   scrollEnd = new Subject<ScrollEvent>();
+  initialized: boolean;
 
   private _el: HTMLElement;
   private _js: boolean;
@@ -28,7 +29,9 @@ export class ScrollView {
   constructor(private _dom: DomController) {}
 
   init(ele: HTMLElement, contentTop: number, contentBottom: number) {
-    if (!this._el) {
+    if (!this.initialized) {
+      this.initialized = true;
+
       assert(ele, 'scroll-view, element can not be null');
       this._el = ele;
 
