@@ -620,10 +620,10 @@ export interface VirtualHtmlElement {
   offsetHeight: number;
   style: any;
   classList: {
-    add: {(name: string)};
-    remove: {(name: string)};
+    add: {(name: string): void};
+    remove: {(name: string): void};
   };
-  setAttribute: {(name: string, value: any)};
+  setAttribute: {(name: string, value: any): void};
   parentElement: VirtualHtmlElement;
 }
 
