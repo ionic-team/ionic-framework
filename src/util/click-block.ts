@@ -12,7 +12,7 @@ import { Config } from '../config/config';
   selector: '.click-block'
 })
 export class ClickBlock {
-  private _tmrId: number;
+  private _tmr: number;
   private _showing: boolean = false;
   isEnabled: boolean;
 
@@ -23,30 +23,32 @@ export class ClickBlock {
     private renderer: Renderer
   ) {
     app._clickBlock = this;
-    let enabled = this.isEnabled = config.getBoolean('clickBlock', true);
+
+    const enabled = this.isEnabled = config.getBoolean('clickBlock', true);
     if (enabled) {
-      this.setElementClass('click-block-enabled', true);
+      this._setElementClass('click-block-enabled', true);
     }
   }
 
   activate(shouldShow: boolean, expire: number = 100) {
     if (this.isEnabled) {
-      clearNativeTimeout(this._tmrId);
+      clearNativeTimeout(this._tmr);
       if (shouldShow) {
         this._activate(true);
       }
-      this._tmrId = nativeTimeout(this._activate.bind(this, false), expire);
+      this._tmr = nativeTimeout(this._activate.bind(this, false), expire);
     }
   }
 
+  /** @internal */
   _activate(shouldShow: boolean) {
     if (this._showing !== shouldShow) {
-      this.setElementClass('click-block-active', shouldShow);
+      this._setElementClass('click-block-active', shouldShow);
       this._showing = shouldShow;
     }
   }
 
-  setElementClass(className: string, add: boolean) {
+  private _setElementClass(className: string, add: boolean) {
     this.renderer.setElementClass(this.elementRef.nativeElement, className, add);
   }
 
