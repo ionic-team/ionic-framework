@@ -247,7 +247,6 @@ export function writePolyfills(outputDirectory: string) {
     'node_modules/core-js/es6/object.js',
     'node_modules/core-js/es6/parse-float.js',
     'node_modules/core-js/es6/parse-int.js',
-    'node_modules/core-js/es6/promise.js',
     'node_modules/core-js/es6/set.js',
     'node_modules/core-js/es6/string.js',
     'node_modules/core-js/es7/reflect.js',
@@ -257,7 +256,23 @@ export function writePolyfills(outputDirectory: string) {
   ];
 
   const ALL_ENTRIES = [
-    'node_modules/core-js/es6/index.js',
+    'node_modules/core-js/es6/array.js',
+    'node_modules/core-js/es6/date.js',
+    'node_modules/core-js/es6/function.js',
+    'node_modules/core-js/es6/map.js',
+    'node_modules/core-js/es6/math.js',
+    'node_modules/core-js/es6/number.js',
+    'node_modules/core-js/es6/object.js',
+    'node_modules/core-js/es6/parse-float.js',
+    'node_modules/core-js/es6/parse-int.js',
+    'node_modules/core-js/es6/reflect.js',
+    'node_modules/core-js/es6/regexp.js',
+    'node_modules/core-js/es6/set.js',
+    'node_modules/core-js/es6/string.js',
+    'node_modules/core-js/es6/symbol.js',
+    'node_modules/core-js/es6/typed.js',
+    'node_modules/core-js/es6/weak-map.js',
+    'node_modules/core-js/es6/weak-set.js',
     'node_modules/core-js/es7/reflect.js',
     'node_modules/zone.js/dist/zone.js',
     'scripts/polyfill/polyfill.dom.js'
