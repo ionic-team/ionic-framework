@@ -84,10 +84,10 @@ $navbar-md-height:                       $toolbar-md-height !default;
   background-position: 0 0;
 }
 
-.header-md[no-shadow]::after,
-.footer-md[no-shadow]::before,
-.tabs-md[tabsPlacement="top"][no-shadow] > .tabbar::after,
-.tabs-md[tabsPlacement="bottom"][no-shadow] > .tabbar::before {
+.header-md[no-border]::after,
+.footer-md[no-border]::before,
+.tabs-md[tabsPlacement="top"][no-border] > .tabbar::after,
+.tabs-md[tabsPlacement="bottom"][no-border] > .tabbar::before {
   display: none;
 }
 
