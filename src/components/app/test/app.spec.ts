@@ -354,7 +354,7 @@ describe('App', () => {
   });
 
   describe('setEnabled', () => {
-    it('should disable click block when app is enabled', () => {
+    it('should disable click block when app is enabled', (done) => {
       // arrange
       let mockClickBlock: any = {
         activate: () => {}
@@ -368,25 +368,14 @@ describe('App', () => {
       app.setEnabled(true);
 
       // assert
-      expect(mockClickBlock.activate).toHaveBeenCalledWith(false, 0);
-    });
+      expect(mockClickBlock.activate).not.toHaveBeenCalled();
 
-    it('should disable click block when app is disabled but duration of less than 32 passed', () => {
-      // arrange
-      let mockClickBlock: any = {
-        activate: () => {}
-      };
+      setTimeout(() => {
+        expect(mockClickBlock.activate).toHaveBeenCalledWith(false, 0);
+        done();
+      }, 120);
+    }, 1000);
 
-      spyOn(mockClickBlock, 'activate');
-
-      app._clickBlock = mockClickBlock;
-
-      // act
-      app.setEnabled(false, 20);
-
-      // assert
-      expect(mockClickBlock.activate).toHaveBeenCalledWith(false, 0);
-    });
 
     it('should enable click block when false is passed with duration', () => {
       // arrange

@@ -48,6 +48,10 @@ ion-input :focus {
 // to avoid full-page reflows and paints which can cause flickers
 
 .click-block {
+  display: none;
+}
+
+.click-block-enabled {
   position: absolute;
   top: 0;
   right: 0;
@@ -61,6 +65,7 @@ ion-input :focus {
 
   // background: red;
   // opacity: .3;
+  contain: strict;
 }
 
 .click-block-active {

@@ -4,8 +4,6 @@ import { App } from '../components/app/app';
 import { clearNativeTimeout, nativeTimeout } from './dom';
 import { Config } from '../config/config';
 
-const DEFAULT_EXPIRE = 330;
-
 
 /**
  * @private
@@ -25,22 +23,31 @@ export class ClickBlock {
     private renderer: Renderer
   ) {
     app._clickBlock = this;
-    this.isEnabled = config.getBoolean('clickBlock', true);
+    let enabled = this.isEnabled = config.getBoolean('clickBlock', true);
+    if (enabled) {
+      this.setElementClass('click-block-enabled', true);
+    }
   }
 
-  activate(shouldShow: boolean, expire: number) {
+  activate(shouldShow: boolean, expire: number = 100) {
     if (this.isEnabled) {
       clearNativeTimeout(this._tmrId);
-
       if (shouldShow) {
-        this._tmrId = nativeTimeout(this.activate.bind(this, false), expire || DEFAULT_EXPIRE);
+        this._activate(true);
       }
-
-      if (this._showing !== shouldShow) {
-        this.renderer.setElementClass(this.elementRef.nativeElement, 'click-block-active', shouldShow);
-        this._showing = shouldShow;
-      }
+      this._tmrId = nativeTimeout(this._activate.bind(this, false), expire);
     }
+  }
+
+  _activate(shouldShow: boolean) {
+    if (this._showing !== shouldShow) {
+      this.setElementClass('click-block-active', shouldShow);
+      this._showing = shouldShow;
+    }
+  }
+
+  setElementClass(className: string, add: boolean) {
+    this.renderer.setElementClass(this.elementRef.nativeElement, className, add);
   }
 
 }
