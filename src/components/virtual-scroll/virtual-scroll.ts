@@ -518,7 +518,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
       );
 
-      this._content.imgsRefresh();
+      this._content.imgsUpdate();
     });
 
   }

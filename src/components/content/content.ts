@@ -342,14 +342,14 @@ export class Content extends Ion implements OnDestroy, OnInit {
       // emit to all of our other friends things be scrolling
       this.ionScroll.emit(ev);
 
-      this.imgsRefresh();
+      this.imgsUpdate();
     });
 
     // subscribe to the scroll end
     this._scroll.scrollEnd.subscribe(ev => {
       this.ionScrollEnd.emit(ev);
 
-      this.imgsRefresh();
+      this.imgsUpdate();
     });
   }
 
@@ -668,7 +668,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._scroll.init(this._scrollEle, this._cTop, this._cBottom);
 
     // initial imgs refresh
-    this.imgsRefresh();
+    this.imgsUpdate();
 
     this.readReady.emit();
   }
@@ -766,22 +766,30 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /**
    * @private
    */
-  imgsRefresh() {
-    if (this._imgs.length && this.isImgsRefreshable()) {
-      loadImgs(this._imgs, this.scrollTop, this.scrollHeight, this.directionY, IMG_REQUESTABLE_BUFFER, IMG_RENDERABLE_BUFFER);
+  imgsUpdate() {
+    if (this._imgs.length && this.isImgsUpdatable()) {
+      updateImgs(this._imgs, this.scrollTop, this.scrollHeight, this.directionY, IMG_REQUESTABLE_BUFFER, IMG_RENDERABLE_BUFFER);
     }
   }
 
   /**
    * @private
    */
-  isImgsRefreshable() {
+  isImgsUpdatable() {
+    // an image is only "updatable" if the content
+    // isn't scrolling too fast
     return Math.abs(this.velocityY) < 3;
   }
 
 }
 
-export function loadImgs(imgs: Img[], scrollTop: number, scrollHeight: number, scrollDirectionY: ScrollDirection, requestableBuffer: number, renderableBuffer: number) {
+export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number, scrollDirectionY: ScrollDirection, requestableBuffer: number, renderableBuffer: number) {
+  // ok, so it's time to see which images, if any, should be requested and rendered
+  // ultimately, if we're scrolling fast then don't bother requesting or rendering
+  // when scrolling is done, then it needs to do a check to see which images are
+  // important to request and render, and which image requests should be aborted.
+  // Additionally, images which are not near the viewable area should not be
+  // rendered at all in order to save browser resources.
   const scrollBottom = (scrollTop + scrollHeight);
   const priority1: Img[] = [];
   const priority2: Img[] = [];
@@ -863,7 +871,7 @@ export function loadImgs(imgs: Img[], scrollTop: number, scrollHeight: number, s
 }
 
 const IMG_REQUESTABLE_BUFFER = 1200;
-const IMG_RENDERABLE_BUFFER = 200;
+const IMG_RENDERABLE_BUFFER = 300;
 
 
 function sortTopToBottom(a: Img, b: Img) {
