@@ -39,7 +39,7 @@
     "zone.js": "~0.6.26"
   },
   "devDependencies": {
-    "@ionic/commit-hooks": "^1.0.1",
+    "@ionic/commit-hooks": "1.0.2",
     "@types/connect": "3.4.30",
     "@types/del": "2.2.31",
     "@types/glob": "5.0.30",
@@ -132,7 +132,7 @@
       "path": "node_modules/ionic-cz-conventional-changelog"
     }
   },
-  "pre-commit": [
+  "pre-push": [
     "test"
   ]
 }
