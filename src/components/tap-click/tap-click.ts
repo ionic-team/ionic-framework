@@ -109,7 +109,7 @@ export class TapClick {
 
     this.startCoord = null;
     this.dispatchClick = false;
-    this.activator && this.activator.clearState();
+    this.activator && this.activator.clearState(false);
     this.pointerEvents.stop();
   }
 

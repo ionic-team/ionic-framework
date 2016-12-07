@@ -41,9 +41,9 @@ export class RippleActivator implements ActivatorBase {
     this._upAction(ev, activatableEle, startCoord);
   }
 
-  clearState() {
+  clearState(animated: boolean) {
     // Highlight
-    this.highlight && this.highlight.clearState();
+    this.highlight && this.highlight.clearState(animated);
   }
 
   _downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {

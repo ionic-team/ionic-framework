@@ -8,7 +8,7 @@ export abstract class ActivatorBase {
 
   abstract upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates);
 
-  abstract clearState();
+  abstract clearState(animated: boolean);
 }
 
 export function isActivatedDisabled(ev: any, activatableEle: any): boolean {
