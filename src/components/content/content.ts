@@ -146,6 +146,10 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /** @internal */
   _tTop: number;
   /** @internal */
+  _fTop: number;
+  /** @internal */
+  _fBottom: number;
+  /** @internal */
   _inputPolling: boolean = false;
   /** @internal */
   _scroll: ScrollView;
@@ -569,6 +573,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._ftrHeight = 0;
     this._tabsPlacement = null;
     this._tTop = 0;
+    this._fTop = 0;
+    this._fBottom = 0;
 
     let ele: HTMLElement = this._elementRef.nativeElement;
     if (!ele) {
@@ -646,6 +652,10 @@ export class Content extends Ion implements OnDestroy, OnInit {
       this._cBottom += this._tabbarHeight;
     }
 
+    // Fixed content shouldn't include content padding
+    this._fTop = this._cTop;
+    this._fBottom = this._cBottom;
+
     // Handle fullscreen viewport (padding vs margin)
     if (this._fullscreen) {
       this._cTop += this._pTop;
@@ -706,8 +716,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
     // Handle fullscreen viewport (padding vs margin)
     let topProperty = 'marginTop';
     let bottomProperty = 'marginBottom';
-    let fixedTop: number = this._cTop;
-    let fixedBottom: number = this._cBottom;
+    let fixedTop: number = this._fTop;
+    let fixedBottom: number = this._fBottom;
 
     if (this._fullscreen) {
       assert(this._pTop >= 0, '_paddingTop has to be positive');
