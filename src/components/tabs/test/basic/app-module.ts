@@ -184,15 +184,28 @@ export class Tab2 {
       </p>
       <p>
         <button ion-button (click)="selectPrevious()">Select Previous Tab</button>
-      </p>
-      <p>
         <button ion-button (click)="appNavPop()">App Nav Pop</button>
       </p>
+
+      <ion-list [virtualScroll]="items" [headerFn]="headerFn">
+
+        <ion-item *virtualItem="let item">
+          Item: {{item}}
+        </ion-item>
+
+      </ion-list>
+
     </ion-content>
     `
 })
 export class Tab3 {
-  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private tabs: Tabs, private app: App) {}
+  items: number[] = [];
+
+  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private tabs: Tabs, private app: App) {
+    for (var i = 0; i < 100; i++) {
+      this.items.push(i);
+    }
+  }
 
   presentAlert() {
     let alert = this.alertCtrl.create({
