@@ -19,6 +19,7 @@ import { MenuController } from '../menu/menu-controller';
  */
 @Injectable()
 export class App {
+
   private _disTime: number = 0;
   private _scrollTime: number = 0;
   private _title: string = '';
@@ -122,9 +123,9 @@ export class App {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
     if (this._clickBlock) {
-      if (isEnabled || duration <= 32) {
+      if (isEnabled) {
         // disable the click block if it's enabled, or the duration is tiny
-        this._clickBlock.activate(false, 0);
+        this._clickBlock.activate(false,  CLICK_BLOCK_BUFFER_IN_MILLIS);
 
       } else {
         // show the click block for duration + some number

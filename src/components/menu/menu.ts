@@ -508,6 +508,7 @@ export class Menu {
   private _after(isOpen: boolean) {
     assert(this._isAnimating, '_before() should be called while animating');
 
+    this._app.setEnabled(false, 100);
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
