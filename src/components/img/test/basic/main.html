@@ -7,7 +7,7 @@
 
 <ion-content>
 
-  <ion-list>
+  <ion-list no-margin>
 
     <ion-item>
 
@@ -69,8 +69,20 @@
 
   <div padding>
     Default ion-img w/in content, display: inline-block.
-    <ion-img alt="Smokey" width="220" height="165" src="http://localhost:8000/dist/e2e/img/img/bandit.jpg"></ion-img>
+    <ion-img alt="Smokey" width="150" height="112" src="http://localhost:8000/dist/e2e/img/img/bandit.jpg"></ion-img>
     has width, height and alt set.
   </div>
 
+  <p margin>
+    custom component <code>&lt;my-img&gt;</code> inside of a loop of <code>&lt;ion-col&gt;</code> elements
+    which passes the width, height, and img src from an array of data to the <code>&lt;ion-img&gt;</code>
+  </p>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let image of images">
+        <my-img [width]="image.width" [height]="image.height" [src]="image.src"></my-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
