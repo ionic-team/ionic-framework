@@ -132,7 +132,7 @@
       "path": "node_modules/ionic-cz-conventional-changelog"
     }
   },
-  "pre-push": [
+  "pre-push#master": [
     "test"
   ]
 }
