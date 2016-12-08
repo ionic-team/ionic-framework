@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from '../../../..';
+import { IonicApp, IonicModule, ScrollEvent } from '../../../..';
 
 
 @Component({
@@ -51,6 +51,18 @@ export class Page1 {
 })
 export class E2EPage {
   page1 = Page1;
+
+  onScrollStart(ev: ScrollEvent) {
+    console.log(`scroll start: scrollTop: ${ev.scrollTop}, directionY: ${ev.directionY}`);
+  }
+
+  onScroll(ev: ScrollEvent) {
+    console.log(`scroll move: scrollTop: ${ev.scrollTop}, directionY: ${ev.directionY}, velocityY: ${ev.velocityY}`);
+  }
+
+  onScrollEnd(ev: ScrollEvent) {
+    console.log(`scroll end: scrollTop: ${ev.scrollTop}, directionY: ${ev.directionY}`);
+  }
 }
 
 
