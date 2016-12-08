@@ -41,7 +41,7 @@ export class ScrollView {
       velocityX: 0,
       directionY: 'down',
       directionX: null,
-      domWrite: function(fn: DomCallback, ctx?: any) {
+      domWrite: function(fn: DomCallback, ctx?: any): void {
         _dom.write(fn, ctx);
       }
     };
