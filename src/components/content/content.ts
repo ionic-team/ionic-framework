@@ -516,9 +516,9 @@ export class Content extends Ion implements OnDestroy, OnInit {
     const parentElement = scrollEle.parentElement;
 
     return {
-      contentHeight: parentElement.offsetHeight - this.contentTop - this.contentBottom,
-      contentTop: this.contentTop,
-      contentBottom: this.contentBottom,
+      contentHeight: parentElement.offsetHeight - this._cTop - this._cBottom,
+      contentTop: this._cTop,
+      contentBottom: this._cBottom,
 
       contentWidth: parentElement.offsetWidth,
       contentLeft: parentElement.offsetLeft,
