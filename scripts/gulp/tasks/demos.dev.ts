@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { dirname, join, sep } from 'path';
+import { dirname, join } from 'path';
 
 import { dest, src, start, task } from 'gulp';
 import * as babel from 'gulp-babel';
@@ -10,79 +10,15 @@ import * as gulpif from 'gulp-if';
 import * as remember from 'gulp-remember';
 import * as tsc from 'gulp-typescript';
 import * as watch from 'gulp-watch';
-import * as del from 'del';
 import { template } from 'lodash';
 import * as merge from 'merge2';
 import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
 
-import { DEMOS_NAME, DEMOS_SRC_ROOT, DIST_DEMOS_ROOT, DIST_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, SCRIPTS_ROOT } from '../constants';
-import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
+import { DEMOS_NAME, DIST_DEMOS_ROOT, DIST_NAME, ES5, ES_2015, SCRIPTS_ROOT } from '../constants';
 
 const buildConfig = require('../../build/config');
-
-task('demos.clean', (done: Function) => {
-  del([`${DIST_DEMOS_ROOT}/**`]).then(() => {
-    done();
-  }).catch(err => {
-    done(err);
-  });
-});
-
-task('demos.polyfill', (done: Function) => {
-  writePolyfills(`${DIST_DEMOS_ROOT}/polyfills`).then(() => {
-    done();
-  }).catch(err => {
-    done(err);
-  });
-});
-
-// task('demos.polyfills', (done: Function) => {
-//   generatePolyfills().then(() => {
-//     done();
-//   }).catch(err => {
-//     done(err);
-//   });
-// });
-
-
-task('demos.copyAndCompile', (done: (err: any) => void) => {
-  runSequence(
-    'demos.copySource',
-    'demos.compileTests',
-    'demos.bundle',
-    done);
-});
-
-task('demos.copyExternalDependencies', () => {
-  src([`${SCRIPTS_ROOT}/${DEMOS_NAME}/*.css`]).pipe(dest(`${DIST_DEMOS_ROOT}/css`));
-});
-
-task('demos.sass', () => {
-  // ensure there is a version.scss file
-  setSassIonicVersion(`E2E-${createTimestamp()}`);
-  return compileSass(`${DIST_DEMOS_ROOT}/css`);
-});
-
-task('demos.fonts', () => {
-  return copyFonts(`${DIST_DEMOS_ROOT}/fonts`);
-});
-
-task('demos.serve', function() {
-  connect.server({
-    root: './',
-    port: LOCAL_SERVER_PORT,
-    livereload: {
-      port: 35700
-    }
-  });
-});
-
-
-
-
-
 
 /**
  * Builds Ionic demos tests to dist/demos and creates the necessary files for tests
