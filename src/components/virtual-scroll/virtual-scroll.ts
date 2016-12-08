@@ -188,6 +188,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _scrollSub: any;
   _scrollEndSub: any;
   _init: boolean;
+  _lastEle: boolean;
   _hdrFn: Function;
   _ftrFn: Function;
   _records: any[] = [];
@@ -354,24 +355,25 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     // wait for the content to be rendered and has readable dimensions
     _content.readReady.subscribe(() => {
-      this.readUpdate(true);
+      if (this._hasChanges()) {
+        this.readUpdate();
 
-      if (!this._scrollSub) {
-        // listen for scroll events
-        this.addScrollListener(config.getBoolean('virtualScrollEventAssist'));
+        // wait for the content to be writable
+        var subscription = _content.writeReady.subscribe(() => {
+          subscription.unsubscribe();
+          this.writeUpdate();
+        });
+
+        if (!this._scrollSub) {
+          // listen for scroll events
+          this.addScrollListener(config.getBoolean('virtualScrollEventAssist'));
+        }
       }
-    });
-
-    // wait for the content to be writable
-    _content.writeReady.subscribe(() => {
-      this.writeUpdate();
     });
   }
 
-  readUpdate(dimensionsUpdated: boolean) {
-    if (!this._records) return;
-
-    console.debug(`virtual-scroll, readUpdate, dimensionsUpdated: ${dimensionsUpdated}`);
+  readUpdate() {
+    console.debug(`virtual-scroll, readUpdate`);
 
     // reset everything
     this._cells.length = 0;
@@ -384,12 +386,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
                    this.approxHeaderWidth, this.approxHeaderHeight,
                    this.approxFooterWidth, this.approxFooterHeight,
                    this.bufferRatio);
-
   }
 
   writeUpdate() {
-    if (!this._records) return;
-
     console.debug(`virtual-scroll, writeUpdate`);
 
     processRecords(this._data.renderHeight,
@@ -414,7 +413,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     if (this._init && this._hasChanges()) {
       // only continue if we've already initialized
       // and if there actually are changes
-      this.readUpdate(false);
+      this.readUpdate();
       this.writeUpdate();
     }
   }
@@ -485,10 +484,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         (<any>nodes[i].view).detectChanges();
       }
 
-      // add an element at the end so :last-child css doesn't get messed up
-      // ******** DOM WRITE ****************
-      const lastEle: HTMLElement = renderer.createElement(ele, 'div');
-      lastEle.className = 'virtual-last';
+      if (!this._lastEle) {
+        // add an element at the end so :last-child css doesn't get messed up
+        // ******** DOM WRITE ****************
+        var lastEle: HTMLElement = renderer.createElement(ele, 'div');
+        lastEle.className = 'virtual-last';
+        this._lastEle = true;
+      }
 
       // ******** DOM WRITE ****************
       renderer.setElementClass(ele, 'virtual-scroll', true);
