@@ -639,7 +639,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       if (isPresent(selectedMonth)) {
         // enable/disable which days are valid
         // to show within the min/max date range
-        for (i = 0; i < 31; i++) {
+        for (i = 0; i < dayCol.options.length; i++) {
           dayOpt = dayCol.options[i];
 
           // loop through each day and see if it
@@ -653,7 +653,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 
       } else {
         // enable/disable which numbers of days to show in this month
-        for (i = 0; i < 31; i++) {
+        for (i = 0; i < dayCol.options.length; i++) {
           dayCol.options[i].disabled = (numDaysInMonth <= i);
         }
       }

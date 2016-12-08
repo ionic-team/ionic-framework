@@ -62,6 +62,11 @@
     <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [yearValues]="leapYearsArray" monthValues="6,7,8" [(ngModel)]="leapYearsSummerMonths"></ion-datetime>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Specific days/months/years</ion-label>
+    <ion-datetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06" displayFormat="DD/MMM/YYYY"></ion-datetime>
+  </ion-item>
+
   <p aria-hidden="true" padding>
     <code>wwwInvented: {{wwwInvented}}</code><br>
     <code>netscapeReleased: {{netscapeReleased}}</code><br>
