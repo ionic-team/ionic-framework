@@ -1,6 +1,6 @@
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { PointerCoordinates, nativeTimeout, rafFrames } from '../../util/dom';
+import { CSS, PointerCoordinates, nativeTimeout, rafFrames } from '../../util/dom';
 import { ActivatorBase, isActivatedDisabled } from './activator-base';
 
 
@@ -106,11 +106,7 @@ export class Activator implements ActivatorBase {
     let ele: HTMLElement;
     for (var i = 0; i < this._active.length; i++) {
       ele = this._active[i];
-      if (!animated) {
-        ele.style.transition = 'none';
-      } else {
-        ele.style.transition = '';
-      }
+      ele.style[CSS.transition] = animated ? '' : 'none';
       ele.classList.remove(this._css);
     }
     this._active.length = 0;
