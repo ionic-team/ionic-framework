@@ -514,7 +514,7 @@ export abstract class NavController {
    * by passing options to the navigation controller.You can also pass any
    * navigation params to the individual pages in the array.
    *
-   * @param {array<Page>} pages  An arry of page components and their params to load in the stack.
+   * @param {array} pages An array of objects, each with a `page` and optionally `params` property to load in the stack.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
