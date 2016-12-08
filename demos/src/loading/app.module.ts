@@ -3,8 +3,7 @@ import { IonicApp, IonicModule, LoadingController, NavController } from 'ionic-a
 
 
 @Component({
-  templateUrl: 'page.html',
-  styleUrls: ['style.css']
+  templateUrl: 'page.html'
 })
 export class Page1 {
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController) {}
@@ -72,8 +71,8 @@ export class Page1 {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: `
-        <div class="custom-spinner-container">
-          <div class="custom-spinner-box"></div>
+        <div class="loading-custom-spinner-container">
+          <div class="loading-custom-spinner-box"></div>
         </div>
         <div>This is a custom spinner. It will dismiss after 3 seconds.</div>`,
       duration: 3000

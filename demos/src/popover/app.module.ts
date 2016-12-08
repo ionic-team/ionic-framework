@@ -3,55 +3,56 @@ import { IonicApp, IonicModule, NavParams, PopoverController } from 'ionic-angul
 
 
 @Component({
+  selector: 'page-api-radio-popover',
   template: `
     <ion-list radio-group [(ngModel)]="fontFamily" (ionChange)="changeFontFamily()">
       <ion-row>
         <ion-col>
-          <button (click)="changeFontSize('smaller')" ion-item detail-none class="text-button text-smaller">A</button>
+          <button (click)="changeFontSize('smaller')" ion-item detail-none class="popover-text-button popover-text-smaller">A</button>
         </ion-col>
         <ion-col>
-          <button (click)="changeFontSize('larger')" ion-item detail-none class="text-button text-larger">A</button>
+          <button (click)="changeFontSize('larger')" ion-item detail-none class="popover-text-button popover-text-larger">A</button>
         </ion-col>
       </ion-row>
-      <ion-row class="row-dots">
+      <ion-row class="popover-row-dots">
         <ion-col>
-          <button (click)="changeBackground('white')" ion-button="dot" class="dot-white" [class.selected]="background == 'white'"></button>
+          <button (click)="changeBackground('white')" ion-button="popover-dot" class="popover-dot-white" [class.selected]="background == 'white'"></button>
         </ion-col>
         <ion-col>
-          <button (click)="changeBackground('tan')" ion-button="dot" class="dot-tan" [class.selected]="background == 'tan'"></button>
+          <button (click)="changeBackground('tan')" ion-button="popover-dot" class="popover-dot-tan" [class.selected]="background == 'tan'"></button>
         </ion-col>
         <ion-col>
-          <button (click)="changeBackground('grey')" ion-button="dot" class="dot-grey" [class.selected]="background == 'grey'"></button>
+          <button (click)="changeBackground('grey')" ion-button="popover-dot" class="popover-dot-grey" [class.selected]="background == 'grey'"></button>
         </ion-col>
         <ion-col>
-          <button (click)="changeBackground('black')" ion-button="dot" class="dot-black" [class.selected]="background == 'black'"></button>
+          <button (click)="changeBackground('black')" ion-button="popover-dot" class="popover-dot-black" [class.selected]="background == 'black'"></button>
         </ion-col>
       </ion-row>
-      <ion-item class="text-athelas">
+      <ion-item class="popover-text-athelas">
         <ion-label>Athelas</ion-label>
         <ion-radio value="Athelas"></ion-radio>
       </ion-item>
-      <ion-item class="text-charter">
+      <ion-item class="popover-text-charter">
         <ion-label>Charter</ion-label>
         <ion-radio value="Charter"></ion-radio>
       </ion-item>
-      <ion-item class="text-iowan">
+      <ion-item class="popover-text-iowan">
         <ion-label>Iowan</ion-label>
         <ion-radio value="Iowan"></ion-radio>
       </ion-item>
-      <ion-item class="text-palatino">
+      <ion-item class="popover-text-palatino">
         <ion-label>Palatino</ion-label>
         <ion-radio value="Palatino"></ion-radio>
       </ion-item>
-      <ion-item class="text-san-francisco">
+      <ion-item class="popover-text-san-francisco">
         <ion-label>San Francisco</ion-label>
         <ion-radio value="San Francisco"></ion-radio>
       </ion-item>
-      <ion-item class="text-seravek">
+      <ion-item class="popover-text-seravek">
         <ion-label>Seravek</ion-label>
         <ion-radio value="Seravek"></ion-radio>
       </ion-item>
-      <ion-item class="text-times-new-roman">
+      <ion-item class="popover-text-times-new-roman">
         <ion-label>Times New Roman</ion-label>
         <ion-radio value="Times New Roman"></ion-radio>
       </ion-item>
