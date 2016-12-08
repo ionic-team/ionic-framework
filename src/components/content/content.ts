@@ -172,8 +172,30 @@ export class Content extends Ion implements OnDestroy, OnInit {
   statusbarPadding: boolean;
 
   /**
+   * Content height of the viewable area. This does not include content
+   * which is outside the overflow area, or content area which is under
+   * headers and footers. Read-only.
+   *
+   * @return {number}
+   */
+  get contentHeight(): number {
+    return this._scroll.ev.contentHeight;
+  }
+
+  /**
+   * Content width including content which is not visible on the screen
+   * due to overflow. Read-only.
+   *
+   * @return {number}
+   */
+  get contentWidth(): number {
+    return this._scroll.ev.contentWidth;
+  }
+
+  /**
    * A number representing how many pixels the top of the content has been
-   * adjusted, which could be by either padding or margin.
+   * adjusted, which could be by either padding or margin. This adjustment
+   * is to account for the space needed for the header.
    *
    * @return {number}
    */
@@ -181,27 +203,32 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
   /**
    * A number representing how many pixels the bottom of the content has been
-   * adjusted, which could be by either padding or margin.
+   * adjusted, which could be by either padding or margin. This adjustment
+   * is to account for the space needed for the footer.
    *
    * @return {number}
    */
   contentBottom: number;
 
   /**
-   * The height the content, including content not visible
-   * on the screen due to overflow.
+   * Content height including content which is not visible on the screen
+   * due to overflow. Read-only.
    *
    * @return {number}
    */
-  scrollHeight: number = 0;
+  get scrollHeight(): number {
+    return this._scroll.ev.scrollHeight;
+  }
 
   /**
-   * The width the content, including content not visible
-   * on the screen due to overflow.
+   * Content width including content which is not visible due to
+   * overflow. Read-only.
    *
    * @return {number}
    */
-  scrollWidth: number = 0;
+  get scrollWidth(): number {
+    return this._scroll.ev.scrollWidth;
+  }
 
   /**
    * The distance of the content's top to its topmost visible content.
@@ -209,7 +236,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @return {number}
    */
   get scrollTop(): number {
-    return this._scroll.getTop();
+    return this._scroll.ev.scrollTop;
   }
   set scrollTop(top: number) {
     this._scroll.setTop(top);
@@ -221,14 +248,14 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @return {number}
    */
   get scrollLeft(): number {
-    return this._scroll.getLeft();
+    return this._scroll.ev.scrollLeft;
   }
   set scrollLeft(top: number) {
     this._scroll.setLeft(top);
   }
 
   /**
-   * If the scrollable area is actively scrolling or not.
+   * If the content is actively scrolling or not.
    *
    * @return {boolean}
    */
@@ -255,7 +282,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * The current, or last known, vertical scroll direction.
+   * The current, or last known, vertical scroll direction. Possible
+   * string values include `down` and `up`.
    *
    * @return {string}
    */
@@ -264,7 +292,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * The current, or last known, horizontal scroll direction.
+   * The current, or last known, horizontal scroll direction. Possible
+   * string values include `right` and `left`.
    *
    * @return {string}
    */
@@ -564,9 +593,6 @@ export class Content extends Ion implements OnDestroy, OnInit {
     let cacheFooterHeight = this._ftrHeight;
     let cacheTabsPlacement = this._tabsPlacement;
     let tabsTop = 0;
-
-    this.scrollWidth = 0;
-    this.scrollHeight = 0;
     this._pTop = 0;
     this._pRight = 0;
     this._pBottom = 0;
@@ -595,11 +621,6 @@ export class Content extends Ion implements OnDestroy, OnInit {
       tagName = ele.tagName;
       if (tagName === 'ION-CONTENT') {
         scrollEvent.contentElement = ele;
-
-        // ******** DOM READ ****************
-        this.scrollWidth = ele.scrollWidth;
-        // ******** DOM READ ****************
-        this.scrollHeight = ele.scrollHeight;
 
         if (this._fullscreen) {
           // ******** DOM READ ****************
@@ -671,6 +692,15 @@ export class Content extends Ion implements OnDestroy, OnInit {
       this._cTop += this._pTop;
       this._cBottom += this._pBottom;
     }
+
+    // ******** DOM READ ****************
+    const contentDimensions = this.getContentDimensions();
+    scrollEvent.scrollHeight = contentDimensions.scrollHeight;
+    scrollEvent.scrollWidth = contentDimensions.scrollWidth;
+    scrollEvent.contentHeight = contentDimensions.contentHeight;
+    scrollEvent.contentWidth = contentDimensions.contentWidth;
+    scrollEvent.contentTop = contentDimensions.contentTop;
+    scrollEvent.contentBottom = contentDimensions.contentBottom;
 
     this._dirty = (
       cachePaddingTop !== this._pTop ||

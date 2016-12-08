@@ -27,6 +27,12 @@ export class ScrollView {
       timeStamp: 0,
       scrollTop: 0,
       scrollLeft: 0,
+      scrollHeight: 0,
+      scrollWidth: 0,
+      contentHeight: 0,
+      contentWidth: 0,
+      contentTop: 0,
+      contentBottom: 0,
       startY: 0,
       startX: 0,
       deltaY: 0,
@@ -37,12 +43,7 @@ export class ScrollView {
       directionX: null,
       domWrite: function(fn: DomCallback, ctx?: any) {
         _dom.write(fn, ctx);
-      },
-      contentElement: null,
-      fixedElement: null,
-      scrollElement: null,
-      headerElement: null,
-      footerElement: null
+      }
     };
   }
 
@@ -522,6 +523,12 @@ export interface ScrollEvent {
   timeStamp: number;
   scrollTop: number;
   scrollLeft: number;
+  scrollHeight: number;
+  scrollWidth: number;
+  contentHeight: number;
+  contentWidth: number;
+  contentTop: number;
+  contentBottom: number;
   startY: number;
   startX: number;
   deltaY: number;
@@ -531,11 +538,11 @@ export interface ScrollEvent {
   directionY: string;
   directionX: string;
   domWrite: {(fn: DomCallback, ctx?: any)};
-  contentElement: HTMLElement;
-  fixedElement: HTMLElement;
-  scrollElement: HTMLElement;
-  headerElement: HTMLElement;
-  footerElement: HTMLElement;
+  contentElement?: HTMLElement;
+  fixedElement?: HTMLElement;
+  scrollElement?: HTMLElement;
+  headerElement?: HTMLElement;
+  footerElement?: HTMLElement;
 }
 
 
