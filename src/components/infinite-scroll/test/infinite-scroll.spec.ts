@@ -96,7 +96,7 @@ describe('Infinite Scroll', () => {
   let content: Content;
   let contentElementRef;
   let infiniteElementRef;
-  let ev: ScrollEvent = {};
+  let ev: ScrollEvent = (<any>{});
   let dom: MockDomController;
 
   beforeEach(() => {

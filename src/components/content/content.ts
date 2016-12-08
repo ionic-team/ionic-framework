@@ -7,12 +7,12 @@ import { Img } from '../img/img';
 import { Ion } from '../ion';
 import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
-import { ScrollView, ScrollDirection, ScrollEvent } from '../../util/scroll-view';
+import { ScrollView, ScrollEvent } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
 import { transitionEnd } from '../../util/dom';
 import { ViewController } from '../../navigation/view-controller';
 
-export { ScrollEvent, ScrollDirection } from '../../util/scroll-view';
+export { ScrollEvent } from '../../util/scroll-view';
 
 
 /**
@@ -242,7 +242,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @return {number}
    */
   get velocityY(): number {
-    return this._scroll.ev.velocityY || 0;
+    return this._scroll.ev.velocityY;
   }
 
   /**
@@ -251,24 +251,24 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @return {number}
    */
   get velocityX(): number {
-    return this._scroll.ev.velocityX || 0;
+    return this._scroll.ev.velocityX;
   }
 
   /**
    * The current, or last known, vertical scroll direction.
    *
-   * @return {ScrollDirection}
+   * @return {string}
    */
-  get directionY(): ScrollDirection {
+  get directionY(): string {
     return this._scroll.ev.directionY;
   }
 
   /**
    * The current, or last known, horizontal scroll direction.
    *
-   * @return {ScrollDirection}
+   * @return {string}
    */
-  get directionX(): ScrollDirection {
+  get directionX(): string {
     return this._scroll.ev.directionX;
   }
 
@@ -330,16 +330,18 @@ export class Content extends Ion implements OnDestroy, OnInit {
     const children = this._elementRef.nativeElement.children;
     assert(children && children.length >= 2, 'content needs at least two children');
 
-    this._fixedEle = children[0];
-    this._scrollEle = children[1];
+    const scroll = this._scroll;
+
+    scroll.ev.fixedElement = this._fixedEle = children[0];
+    scroll.ev.scrollElement = this._scrollEle = children[1];
 
     // subscribe to the scroll start
-    this._scroll.scrollStart.subscribe(ev => {
+    scroll.scrollStart.subscribe(ev => {
       this.ionScrollStart.emit(ev);
     });
 
     // subscribe to every scroll move
-    this._scroll.scroll.subscribe(ev => {
+    scroll.scroll.subscribe(ev => {
       // remind the app that it's currently scrolling
       this._app.setScrolling();
 
@@ -350,7 +352,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     });
 
     // subscribe to the scroll end
-    this._scroll.scrollEnd.subscribe(ev => {
+    scroll.scrollEnd.subscribe(ev => {
       this.ionScrollEnd.emit(ev);
 
       this.imgsUpdate();
@@ -576,6 +578,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._fTop = 0;
     this._fBottom = 0;
 
+    const scrollEvent = this._scroll.ev;
+
     let ele: HTMLElement = this._elementRef.nativeElement;
     if (!ele) {
       assert(false, 'ele should be valid');
@@ -590,6 +594,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
       ele = <HTMLElement>children[i];
       tagName = ele.tagName;
       if (tagName === 'ION-CONTENT') {
+        scrollEvent.contentElement = ele;
+
         // ******** DOM READ ****************
         this.scrollWidth = ele.scrollWidth;
         // ******** DOM READ ****************
@@ -605,10 +611,14 @@ export class Content extends Ion implements OnDestroy, OnInit {
         }
 
       } else if (tagName === 'ION-HEADER') {
+        scrollEvent.headerElement = ele;
+
         // ******** DOM READ ****************
         this._hdrHeight = ele.clientHeight;
 
       } else if (tagName === 'ION-FOOTER') {
+        scrollEvent.footerElement = ele;
+
         // ******** DOM READ ****************
         this._ftrHeight = ele.clientHeight;
         this._footerEle = ele;
@@ -793,7 +803,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
 }
 
-export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number, scrollDirectionY: ScrollDirection, requestableBuffer: number, renderableBuffer: number) {
+export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number, scrollDirectionY: string, requestableBuffer: number, renderableBuffer: number) {
   // ok, so it's time to see which images, if any, should be requested and rendered
   // ultimately, if we're scrolling fast then don't bother requesting or rendering
   // when scrolling is done, then it needs to do a check to see which images are
@@ -809,7 +819,7 @@ export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number,
   for (var i = 0, ilen = imgs.length; i < ilen; i++) {
     img = imgs[i];
 
-    if (scrollDirectionY === ScrollDirection.Up) {
+    if (scrollDirectionY === 'up') {
       // scrolling up
       if (img.top < scrollBottom && img.bottom > scrollTop - renderableBuffer) {
         // scrolling up, img is within viewable area
@@ -870,7 +880,7 @@ export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number,
   // update all imgs which are viewable
   priority1.sort(sortTopToBottom).forEach(i => i.update());
 
-  if (scrollDirectionY === ScrollDirection.Up) {
+  if (scrollDirectionY === 'up') {
     // scrolling up
     priority2.sort(sortTopToBottom).reverse().forEach(i => i.update());
 

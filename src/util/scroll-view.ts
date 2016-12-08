@@ -2,11 +2,12 @@ import { Subject } from 'rxjs/Subject';
 
 import { assert } from './util';
 import { CSS, nativeRaf, pointerCoord, rafFrames } from './dom';
-import { DomController } from './dom-controller';
+import { DomController, DomCallback } from './dom-controller';
 import { eventOptions, listenEvent } from './ui-event-manager';
 
 
 export class ScrollView {
+  ev: ScrollEvent;
   isScrolling = false;
   scrollStart = new Subject<ScrollEvent>();
   scroll = new Subject<ScrollEvent>();
@@ -20,13 +21,30 @@ export class ScrollView {
   private _lsn: Function;
   private _endTmr: Function;
 
-  ev: ScrollEvent = {
-    directionY: ScrollDirection.Down,
-    directionX: null
-  };
 
-
-  constructor(private _dom: DomController) {}
+  constructor(private _dom: DomController) {
+    this.ev = {
+      timeStamp: 0,
+      scrollTop: 0,
+      scrollLeft: 0,
+      startY: 0,
+      startX: 0,
+      deltaY: 0,
+      deltaX: 0,
+      velocityY: 0,
+      velocityX: 0,
+      directionY: 'down',
+      directionX: null,
+      domWrite: function(fn: DomCallback, ctx?: any) {
+        _dom.write(fn, ctx);
+      },
+      contentElement: null,
+      fixedElement: null,
+      scrollElement: null,
+      headerElement: null,
+      footerElement: null
+    };
+  }
 
   init(ele: HTMLElement, contentTop: number, contentBottom: number) {
     if (!this.initialized) {
@@ -111,8 +129,8 @@ export class ScrollView {
           ev.velocityX = ((movedLeft / timeOffset) * FRAME_MS);
 
           // figure out which direction we're scrolling
-          ev.directionY = (movedTop > 0 ? ScrollDirection.Up : ScrollDirection.Down);
-          ev.directionX = (movedLeft > 0 ? ScrollDirection.Left : ScrollDirection.Right);
+          ev.directionY = (movedTop > 0 ? 'up' : 'down');
+          ev.directionX = (movedLeft > 0 ? 'left' : 'right');
         }
       }
 
@@ -121,7 +139,7 @@ export class ScrollView {
 
       // debounce for a moment after the last scroll event
       self._endTmr && self._endTmr();
-      self._endTmr = rafFrames(5, function scrollEnd() {
+      self._endTmr = rafFrames(6, function scrollEnd() {
         // haven't scrolled in a while, so it's a scrollend
         self.isScrolling = false;
 
@@ -345,7 +363,7 @@ export class ScrollView {
     if (this._js) {
       return this._t;
     }
-    return this._t = this._el.scrollTop || 0;
+    return this._t = this._el.scrollTop;
   }
 
   /**
@@ -355,7 +373,7 @@ export class ScrollView {
     if (this._js) {
       return 0;
     }
-    return this._l = this._el.scrollLeft || 0;
+    return this._l = this._el.scrollLeft;
   }
 
   /**
@@ -492,34 +510,32 @@ export class ScrollView {
     this.stop();
     this._endTmr && this._endTmr();
     this._lsn && this._lsn();
-    this._el = this._dom = null;
+    let ev = this.ev;
+    ev.domWrite = ev.contentElement = ev.fixedElement = ev.scrollElement = ev.headerElement = null;
+    this._lsn = this._el = this._dom = this.ev = ev = null;
   }
 
 }
 
 
 export interface ScrollEvent {
-  scrollTop?: number;
-  scrollLeft?: number;
-  startY?: number;
-  startX?: number;
-  deltaY?: number;
-  deltaX?: number;
-  timeStamp?: number;
-  velocityY?: number;
-  velocityX?: number;
-  directionY?: ScrollDirection;
-  directionX?: ScrollDirection;
-}
-
-
-export enum ScrollDirection {
-  Up, Down, Left, Right
-}
-
-
-export interface DomFn {
-  (callback: Function): void;
+  timeStamp: number;
+  scrollTop: number;
+  scrollLeft: number;
+  startY: number;
+  startX: number;
+  deltaY: number;
+  deltaX: number;
+  velocityY: number;
+  velocityX: number;
+  directionY: string;
+  directionX: string;
+  domWrite: {(fn: DomCallback, ctx?: any)};
+  contentElement: HTMLElement;
+  fixedElement: HTMLElement;
+  scrollElement: HTMLElement;
+  headerElement: HTMLElement;
+  footerElement: HTMLElement;
 }
 
 
