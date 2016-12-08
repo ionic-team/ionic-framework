@@ -73,7 +73,7 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 }
 
 .header-ios[no-border] {
-  border-top-width: 0;
+  border-bottom-width: 0;
 }
 
 .footer-ios[no-border] {
@@ -378,5 +378,5 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 // --------------------------------------------------
 
 .bar-button-strong-ios {
-  font-weight: bold;
+  font-weight: $button-ios-strong-font-weight;
 }

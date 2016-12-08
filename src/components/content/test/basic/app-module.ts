@@ -1,5 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { IonicApp, IonicModule, Content } from '../../../..';
+import { IonicApp, IonicModule, Content, ScrollEvent } from '../../../..';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -52,6 +52,10 @@ export class E2EPage {
   @ViewChild(Content) content: Content;
   page1 = Page1;
   showToolbar: boolean = false;
+
+  onScroll(ev: ScrollEvent) {
+    console.log(`scroll move: scrollTop: ${ev.scrollTop}, directionY: ${ev.directionY}, velocityY: ${ev.velocityY}`);
+  }
 
   toggleToolbar() {
     this.showToolbar = !this.showToolbar;

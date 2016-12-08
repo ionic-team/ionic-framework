@@ -22,6 +22,7 @@ declare module 'rollup-plugin-node-resolve';
 declare module 'rollup-plugin-uglify';
 declare module 'through2';
 declare module 'semver';
+declare module 'uglify-js';
 declare module 'vinyl';
 declare module 'yargs';
 declare module 'strip-function';

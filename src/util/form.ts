@@ -58,7 +58,7 @@ export class Form {
 
 export abstract class IonicTapInput implements IonicFormInput {
 
-  abstract initFocus();
+  abstract initFocus(): void;
 
   abstract get checked(): boolean;
 
@@ -72,6 +72,6 @@ export abstract class IonicTapInput implements IonicFormInput {
 
 export abstract class IonicFormInput {
 
-  abstract initFocus();
+  abstract initFocus(): void;
 
 }

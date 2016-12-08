@@ -1,6 +1,6 @@
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { PointerCoordinates, nativeTimeout, rafFrames } from '../../util/dom';
+import { CSS, PointerCoordinates, nativeTimeout, rafFrames } from '../../util/dom';
 import { ActivatorBase, isActivatedDisabled } from './activator-base';
 
 
@@ -42,7 +42,7 @@ export class Activator implements ActivatorBase {
     }
 
     this.unscheduleClear();
-    this.deactivate();
+    this.deactivate(true);
 
     // queue to have this element activated
     this._queue.push(activatableEle);
@@ -69,7 +69,7 @@ export class Activator implements ActivatorBase {
       return;
     }
     this._clearRafDefer = rafFrames(this.clearDelay, () => {
-      this.clearState();
+      this.clearState(true);
       this._clearRafDefer = null;
     });
   }
@@ -82,29 +82,32 @@ export class Activator implements ActivatorBase {
   }
 
   // all states should return to normal
-  clearState() {
+  clearState(animated: boolean) {
     if (!this.app.isEnabled()) {
       // the app is actively disabled, so don't bother deactivating anything.
       // this makes it easier on the GPU so it doesn't have to redraw any
       // buttons during a transition. This will retry in XX milliseconds.
       nativeTimeout(() => {
-        this.clearState();
+        this.clearState(animated);
       }, 600);
 
     } else {
       // not actively transitioning, good to deactivate any elements
-      this.deactivate();
+      this.deactivate(animated);
     }
   }
 
   // remove the active class from all active elements
-  deactivate() {
+  deactivate(animated: boolean) {
     this._clearDeferred();
 
     this._queue.length = 0;
 
+    let ele: HTMLElement;
     for (var i = 0; i < this._active.length; i++) {
-      this._active[i].classList.remove(this._css);
+      ele = this._active[i];
+      ele.style[CSS.transition] = animated ? '' : 'none';
+      ele.classList.remove(this._css);
     }
     this._active.length = 0;
   }

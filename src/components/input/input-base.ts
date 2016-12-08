@@ -4,7 +4,8 @@ import { NgControl } from '@angular/forms';
 import { App } from '../app/app';
 import { copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { Config } from '../../config/config';
-import { Content, ContentDimensions } from '../content/content';
+import { Content, ContentDimensions, ScrollEvent } from '../content/content';
+import { DomController } from '../../util/dom-controller';
 import { Form, IonicFormInput } from '../../util/form';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
@@ -21,10 +22,8 @@ import { Platform } from '../../platform/platform';
  */
 export class InputBase extends Ion implements IonicFormInput {
   _coord: PointerCoordinates;
-  _deregScroll: Function;
   _disabled: boolean = false;
   _keyboardHeight: number;
-  _scrollMove: EventListener;
   _type: string = 'text';
   _useAssist: boolean;
   _usePadding: boolean;
@@ -35,6 +34,8 @@ export class InputBase extends Ion implements IonicFormInput {
   _autoCorrect: string;
   _nav: NavControllerBase;
   _native: NativeInput;
+  _scrollStart: any;
+  _scrollEnd: any;
 
   // Whether to clear after the user returns to the input and resumes editing
   _clearOnEdit: boolean;
@@ -51,9 +52,10 @@ export class InputBase extends Ion implements IonicFormInput {
     protected _platform: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
-    protected _scrollView: Content,
+    protected _content: Content,
     nav: NavController,
-    ngControl: NgControl
+    ngControl: NgControl,
+    protected _dom: DomController
   ) {
     super(config, elementRef, renderer, 'input');
 
@@ -72,29 +74,27 @@ export class InputBase extends Ion implements IonicFormInput {
     }
 
     _form.register(this);
+
+    this._scrollStart = _content.ionScrollStart.subscribe((ev: ScrollEvent) => {
+      this.scrollHideFocus(ev, true);
+    });
+    this._scrollEnd = _content.ionScrollEnd.subscribe((ev: ScrollEvent) => {
+      this.scrollHideFocus(ev, false);
+    });
   }
 
-  scrollMove(ev: UIEvent) {
-    // scroll move event listener this instance can reuse
-    console.debug(`input-base, scrollMove`);
+  scrollHideFocus(ev: ScrollEvent, shouldHideFocus: boolean) {
+    // do not continue if there's no nav, or it's transitioning
+    if (!this._nav) return;
 
-    if (!(this._nav && this._nav.isTransitioning())) {
-      this.deregScrollMove();
-
-      if (this.hasFocus()) {
-        this._native.hideFocus(true);
-
-        this._scrollView.onScrollEnd(() => {
-          this._native.hideFocus(false);
-
-          if (this.hasFocus()) {
-            // if it still has focus then keep listening
-            this.regScrollMove();
-          }
-        });
-      }
+    // DOM READ: check if this input has focus
+    if (this.hasFocus()) {
+      // if it does have focus, then do the dom write
+      this._dom.write(() => {
+        this._native.hideFocus(shouldHideFocus);
+      });
     }
-  };
+  }
 
   setItemInputControlCss() {
     let item = this._item;
@@ -322,9 +322,6 @@ export class InputBase extends Ion implements IonicFormInput {
       console.debug(`input-base, focusChange, inputHasFocus: ${inputHasFocus}, ${this._item.getNativeElement().nodeName}.${this._item.getNativeElement().className}`);
       this._item.setElementClass('input-has-focus', inputHasFocus);
     }
-    if (!inputHasFocus) {
-      this.deregScrollMove();
-    }
 
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
     if (this._clearOnEdit && !inputHasFocus && this.hasValue()) {
@@ -379,11 +376,11 @@ export class InputBase extends Ion implements IonicFormInput {
    */
   initFocus() {
     // begin the process of setting focus to the inner input element
-    const scrollView = this._scrollView;
+    const content = this._content;
 
-    console.debug(`input-base, initFocus(), scrollView: ${!!scrollView}`);
+    console.debug(`input-base, initFocus(), scrollView: ${!!content}`);
 
-    if (scrollView) {
+    if (content) {
       // this input is inside of a scroll view
       // find out if text input should be manually scrolled into view
 
@@ -391,7 +388,7 @@ export class InputBase extends Ion implements IonicFormInput {
       let ele: HTMLElement = this._elementRef.nativeElement;
       ele = <HTMLElement>ele.closest('ion-item,[ion-item]') || ele;
 
-      const scrollData = getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this._keyboardHeight, this._platform.height());
+      const scrollData = getScrollData(ele.offsetTop, ele.offsetHeight, content.getContentDimensions(), this._keyboardHeight, this._platform.height());
       if (Math.abs(scrollData.scrollAmount) < 4) {
         // the text input is in a safe position that doesn't
         // require it to be scrolled into view, just set focus now
@@ -400,17 +397,16 @@ export class InputBase extends Ion implements IonicFormInput {
         // all good, allow clicks again
         this._app.setEnabled(true);
         this._nav && this._nav.setTransitioning(false);
-        this.regScrollMove();
 
         if (this._usePadding) {
-          this._scrollView.clearScrollPaddingFocusOut();
+          content.clearScrollPaddingFocusOut();
         }
         return;
       }
 
       if (this._usePadding) {
         // add padding to the bottom of the scroll view (if needed)
-        scrollView.addScrollPadding(scrollData.scrollPadding);
+        content.addScrollPadding(scrollData.scrollPadding);
       }
 
       // manually scroll the text input to the top
@@ -425,7 +421,7 @@ export class InputBase extends Ion implements IonicFormInput {
       this._native.beginFocus(true, scrollData.inputSafeY);
 
       // scroll the input into place
-      scrollView.scrollTo(0, scrollData.scrollTo, scrollDuration, () => {
+      content.scrollTo(0, scrollData.scrollTo, scrollDuration, () => {
         console.debug(`input-base, scrollTo completed, scrollTo: ${scrollData.scrollTo}, scrollDuration: ${scrollDuration}`);
         // the scroll view is in the correct position now
         // give the native text input focus
@@ -437,17 +433,15 @@ export class InputBase extends Ion implements IonicFormInput {
         // all good, allow clicks again
         this._app.setEnabled(true);
         this._nav && this._nav.setTransitioning(false);
-        this.regScrollMove();
 
         if (this._usePadding) {
-          this._scrollView.clearScrollPaddingFocusOut();
+          content.clearScrollPaddingFocusOut();
         }
       });
 
     } else {
       // not inside of a scroll view, just focus it
       this.setFocus();
-      this.regScrollMove();
     }
   }
 
@@ -482,26 +476,6 @@ export class InputBase extends Ion implements IonicFormInput {
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
-  /**
-   * @private
-   */
-  regScrollMove() {
-    // register scroll move listener
-    if (this._useAssist && this._scrollView) {
-      setTimeout(() => {
-        this.deregScrollMove();
-        this._deregScroll = this._scrollView.addScrollListener(this.scrollMove.bind(this));
-      }, 80);
-    }
-  }
-
-  /**
-   * @private
-   */
-  deregScrollMove() {
-    // deregister the scroll move listener
-    this._deregScroll && this._deregScroll();
-  }
 
   focusNext() {
     this._form.tabFocus(this);

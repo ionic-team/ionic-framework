@@ -1,8 +1,8 @@
 
 
 export interface Debouncer {
-  debounce(Function);
-  cancel();
+  debounce(callback: Function): void;
+  cancel(): void;
 }
 
 export class TimeoutDebouncer implements Debouncer {

@@ -73,6 +73,10 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
   text-align: right;
 }
 
+.picker-ios .picker-toolbar-button:last-child .picker-button {
+  font-weight: $button-ios-strong-font-weight;
+}
+
 .picker-ios .picker-toolbar-cancel {
   font-weight: normal;
 
@@ -90,7 +94,7 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
 }
 
 .picker-columns {
-  height: $picker-ios-height - $picker-ios-toolbar-height;
+  height: $picker-ios-height - $picker-ios-toolbar-height - 1;
 
   perspective: $picker-ios-column-perspective;
 }
@@ -123,6 +127,7 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
 
   font-size: $picker-ios-option-font-size;
   line-height: $picker-ios-option-height;
+  color: $picker-ios-option-text-color;
 
   background: transparent;
   transform-origin: center center;

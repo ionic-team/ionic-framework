@@ -1,7 +1,8 @@
 import { App } from '../app';
 import { AppPortal } from '../app-root';
+import { ClickBlock } from '../../../util/click-block';
 import { Config } from '../../../config/config';
-import { mockApp, mockConfig, mockNavController, mockPlatform, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
+import { mockApp, mockConfig, mockElementRef, mockNavController, mockPlatform, mockRenderer, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
 import { OverlayPortal } from '../../nav/overlay-portal';
 import { Platform } from '../../../platform/platform';
 
@@ -354,39 +355,21 @@ describe('App', () => {
   });
 
   describe('setEnabled', () => {
-    it('should disable click block when app is enabled', () => {
-      // arrange
-      let mockClickBlock: any = {
-        activate: () => {}
-      };
 
-      spyOn(mockClickBlock, 'activate');
+    it('should disable click block when app is enabled', (done) => {
+      app._clickBlock = new ClickBlock(app, mockConfig(), mockElementRef(), mockRenderer());
 
-      app._clickBlock = mockClickBlock;
+      spyOn(app._clickBlock, '_activate');
 
-      // act
       app.setEnabled(true);
 
-      // assert
-      expect(mockClickBlock.activate).toHaveBeenCalledWith(false, 0);
-    });
+      expect(app._clickBlock._activate).not.toHaveBeenCalledWith();
 
-    it('should disable click block when app is disabled but duration of less than 32 passed', () => {
-      // arrange
-      let mockClickBlock: any = {
-        activate: () => {}
-      };
-
-      spyOn(mockClickBlock, 'activate');
-
-      app._clickBlock = mockClickBlock;
-
-      // act
-      app.setEnabled(false, 20);
-
-      // assert
-      expect(mockClickBlock.activate).toHaveBeenCalledWith(false, 0);
-    });
+      setTimeout(() => {
+        expect(app._clickBlock._activate).toHaveBeenCalledWith(false);
+        done();
+      }, 120);
+    }, 1000);
 
     it('should enable click block when false is passed with duration', () => {
       // arrange

@@ -84,7 +84,7 @@ export { Card, CardContent, CardHeader, CardTitle } from './components/card/card
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { ClickBlock } from './util/click-block';
-export { Content } from './components/content/content';
+export { Content, ScrollEvent } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
 export { FabContainer, FabButton, FabList } from './components/fab/fab';
 export { Grid, Row, Col } from './components/grid/grid';

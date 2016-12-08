@@ -191,14 +191,14 @@ export class UIEventManager {
       return;
     }
     let zone = config.zone || this.zoneWrapped;
-    let opts;
+    let opts: any;
     if (supportsOptions) {
       opts = {};
       if (config.passive === true) {
-        opts['passive'] = true;
+        opts.passive = true;
       }
       if (config.capture === true) {
-        opts['capture'] = true;
+        opts.capture = true;
       }
     } else {
       if (config.passive === true) {
@@ -244,13 +244,13 @@ export class UIEventManager {
 }
 
 export function listenEvent(ele: any, eventName: string, zoneWrapped: boolean, option: any, callback: any): Function {
-  let rawEvent = (!zoneWrapped && '__zone_symbol__addEventListener' in ele);
+  const rawEvent = (!zoneWrapped && !!ele.__zone_symbol__addEventListener);
   if (rawEvent) {
     ele.__zone_symbol__addEventListener(eventName, callback, option);
-    assert('__zone_symbol__removeEventListener' in ele, 'native removeEventListener does not exist');
+    assert(!!ele.__zone_symbol__removeEventListener, 'native removeEventListener does not exist');
     return () => ele.__zone_symbol__removeEventListener(eventName, callback, option);
-  } else {
-    ele.addEventListener(eventName, callback, option);
-    return () => ele.removeEventListener(eventName, callback, option);
   }
+
+  ele.addEventListener(eventName, callback, option);
+  return () => ele.removeEventListener(eventName, callback, option);
 }

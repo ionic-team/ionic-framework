@@ -162,6 +162,13 @@ $button-md-round-padding:                       $button-round-padding !default;
 $button-md-round-border-radius:                 $button-round-border-radius !default;
 
 
+// Material Design Decorator Button
+// --------------------------------------------------
+
+/// @prop - Font weight of the strong button
+$button-md-strong-font-weight:                  bold !default;
+
+
 // Material Design Default Button
 // --------------------------------------------------
 
@@ -430,5 +437,5 @@ $button-md-round-border-radius:                 $button-round-border-radius !def
 // --------------------------------------------------
 
 .button-strong-md {
-  font-weight: bold;
+  font-weight: $button-md-strong-font-weight;
 }

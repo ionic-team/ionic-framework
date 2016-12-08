@@ -350,5 +350,5 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
 // --------------------------------------------------
 
 .bar-button-strong-wp {
-  font-weight: bold;
+  font-weight: $button-wp-strong-font-weight;
 }

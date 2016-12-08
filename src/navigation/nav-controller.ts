@@ -473,6 +473,14 @@ export abstract class NavController {
   abstract popTo(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
+   * @private
+   * Pop sequently all the pages in the stack.
+   *
+   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
+   */
+  abstract popAll(): Promise<any[]>;
+
+  /**
    * Removes a page from the nav stack at the specified index.
    *
    * @param {number} [startIndex]  The starting index to remove pages from the stack. Default is the index of the last page.

@@ -7,7 +7,7 @@ import { nativeRaf } from './dom';
 import { removeArrayItem } from './util';
 
 
-export type DomCallback = { (timeStamp: number) };
+export type DomCallback = { (timeStamp?: number): void };
 
 export class DomDebouncer {
 
@@ -88,39 +88,44 @@ export class DomController {
     const self = this;
     if (!self.q) {
       self.q = true;
-      nativeRaf(function rafCallback(timeStamp) {
+      nativeRaf(function rafCallback(timeStamp: number) {
         self.flush(timeStamp);
       });
     }
   }
 
   protected flush(timeStamp: number) {
+    let err: any;
+
     try {
-      this.dispatch(timeStamp);
-    } finally {
-      this.q = false;
+      dispatch(timeStamp, this.r, this.w);
+    } catch (e) {
+      err = e;
+    }
+
+    this.q = false;
+
+    if (this.r.length || this.w.length) {
+      this.queue();
+    }
+
+    if (err) {
+      throw err;
     }
   }
 
-  private dispatch(timeStamp: number) {
-    let i: number;
-    const r = this.r;
-    const rLen = r.length;
-    const w = this.w;
-    const wLen = w.length;
+}
 
-    // ******** DOM READS ****************
-    for (i = 0; i < rLen; i++) {
-      r[i](timeStamp);
-    }
+function dispatch(timeStamp: number, r: Function[], w: Function[]) {
+  let task: Function;
 
-    // ******** DOM WRITES ****************
-    for (i = 0; i < wLen; i++) {
-      w[i](timeStamp);
-    }
-
-    r.length = 0;
-    w.length = 0;
+  // ******** DOM READS ****************
+  while (task = r.shift()) {
+    task(timeStamp);
   }
 
+  // ******** DOM WRITES ****************
+  while (task = w.shift()) {
+    task(timeStamp);
+  }
 }

@@ -373,7 +373,7 @@ export class FullPage {
           <button ion-button>S1g</button>
         </ion-buttons>
       </ion-navbar>
-      <ion-toolbar no-border-top>
+      <ion-toolbar>
         <ion-title>{{subheader}}</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -387,14 +387,14 @@ export class FullPage {
       <p><button ion-button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
       <div class="yellow"><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div></div>
 
-      <button ion-button ion-fixed (click)="presentAlert()">fixed button (alert)</button>
-      <div ion-fixed style="position: absolute; pointer-events: none; top:10px; bottom:10px; right:10px; width:50%; background: rgba(0,0,0,0.5);"></div>
+      <button ion-button ion-fixed no-margin color="danger" (click)="presentAlert()">fixed button (alert)</button>
+      <div ion-fixed style="position: absolute; pointer-events: none; top:0; bottom:0; right:0; width:50%; background: rgba(0,0,0,0.5);"></div>
     </ion-content>
     <ion-footer>
-      <ion-toolbar no-border-bottom>
+      <ion-toolbar>
         I'm a sub footer!
       </ion-toolbar>
-      <ion-toolbar no-border-top>
+      <ion-toolbar>
         <ion-title>Footer</ion-title>
       </ion-toolbar>
     </ion-footer>
@@ -472,7 +472,7 @@ export class PrimaryHeaderPage {
       </ion-navbar>
     </ion-header>
     <ion-content>
-      <ion-toolbar no-border-top>
+      <ion-toolbar>
         I'm a sub header in the content!
       </ion-toolbar>
       <ion-list>
@@ -490,10 +490,10 @@ export class PrimaryHeaderPage {
         <button ion-item (click)="setBackButtonText()">Set Back Button Text</button>
         <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       </ion-list>
-      <ion-toolbar no-border-bottom>
+      <ion-toolbar>
         I'm a sub footer in the content!
       </ion-toolbar>
-      <ion-toolbar no-border-bottom no-border-top>
+      <ion-toolbar>
         And I'm a sub footer in the content too!
       </ion-toolbar>
     </ion-content>

@@ -13,6 +13,14 @@ export class E2EPage {
   text = 'Text';
   checkbox = true;
   range = 10;
+
+  boolDisabled(): boolean {
+    return this.disabled;
+  }
+
+  strDisabled(): string {
+    return this.disabled + '';
+  }
 }
 
 @Component({

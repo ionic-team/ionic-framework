@@ -8,7 +8,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
-    "removeComments": true,
+    "removeComments": false,
     "sourceMap": true,
     "target": "es5",
     "types": ["jasmine"]

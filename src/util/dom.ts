@@ -1,16 +1,16 @@
+const win: any = window;
 
 // RequestAnimationFrame Polyfill (Android 4.3 and below)
 /*! @author Paul Irish */
 /*! @source https://gist.github.com/paulirish/1579671 */
 (function() {
   var rafLastTime = 0;
-  const win: any = window;
   if (!win.requestAnimationFrame) {
     win.requestAnimationFrame = function(callback: Function) {
       var currTime = Date.now();
       var timeToCall = Math.max(0, 16 - (currTime - rafLastTime));
 
-      var id = window.setTimeout(function() {
+      var id = win.setTimeout(function() {
         callback(currTime + timeToCall);
       }, timeToCall);
 
@@ -25,16 +25,16 @@
 })();
 
 // use native raf rather than the zone wrapped one
-let originalRaf = (window[window['Zone']['__symbol__']('requestAnimationFrame')] || window[window['Zone']['__symbol__']('webkitRequestAnimationFrame')]);
+const originalRaf = (win[win['Zone']['__symbol__']('requestAnimationFrame')] || win[win['Zone']['__symbol__']('webkitRequestAnimationFrame')]);
 // if the originalRaf from the Zone symbol is not available, we need to provide the polyfilled version
-export const nativeRaf = originalRaf !== undefined ? originalRaf['bind'](window) : window.requestAnimationFrame.bind(window);
+export const nativeRaf = originalRaf !== undefined ? originalRaf['bind'](win) : win.requestAnimationFrame.bind(win);
 
 // zone wrapped raf
-export const raf = window.requestAnimationFrame.bind(window);
-export const cancelRaf = window.cancelAnimationFrame.bind(window);
+export const raf = win.requestAnimationFrame.bind(win);
+export const cancelRaf = win.cancelAnimationFrame.bind(win);
 
-export const nativeTimeout = window[window['Zone']['__symbol__']('setTimeout')]['bind'](window);
-export const clearNativeTimeout = window[window['Zone']['__symbol__']('clearTimeout')]['bind'](window);
+export const nativeTimeout = win[win['Zone']['__symbol__']('setTimeout')]['bind'](win);
+export const clearNativeTimeout = win[win['Zone']['__symbol__']('clearTimeout')]['bind'](win);
 
 /**
  * Run a function in an animation frame after waiting `framesToWait` frames.
@@ -176,14 +176,14 @@ export function ready(callback?: Function) {
 
   } else {
     document.addEventListener('DOMContentLoaded', completed, false);
-    window.addEventListener('load', completed, false);
+    win.addEventListener('load', completed, false);
   }
 
   return promise;
 
   function completed() {
     document.removeEventListener('DOMContentLoaded', completed, false);
-    window.removeEventListener('load', completed, false);
+    win.removeEventListener('load', completed, false);
     callback();
   }
 }
@@ -201,13 +201,13 @@ export function windowLoad(callback?: Function) {
 
   } else {
 
-    window.addEventListener('load', completed, false);
+    win.addEventListener('load', completed, false);
   }
 
   return promise;
 
   function completed() {
-    window.removeEventListener('load', completed, false);
+    win.removeEventListener('load', completed, false);
     callback();
   }
 }
@@ -318,10 +318,10 @@ export function clearDimensions(id: string) {
 export function windowDimensions(): {width: number, height: number} {
   if (!dimensionCache.win) {
     // make sure we got good values before caching
-    if (window.innerWidth && window.innerHeight) {
+    if (win.innerWidth && win.innerHeight) {
       dimensionCache.win = {
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: win.innerWidth,
+        height: win.innerHeight
       };
     } else {
       // do not cache bad values

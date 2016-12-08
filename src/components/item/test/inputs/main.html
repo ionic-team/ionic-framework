@@ -26,7 +26,7 @@
 
     <ion-item>
       <ion-label>Select</ion-label>
-      <ion-select [(ngModel)]="select" [disabled]='disabled'>
+      <ion-select [(ngModel)]="select" [disabled]='strDisabled()'>
         <ion-option value="nes">NES</ion-option>
         <ion-option value="n64">Nintendo64</ion-option>
         <ion-option value="ps">PlayStation</ion-option>
@@ -38,7 +38,7 @@
 
     <ion-item>
       <ion-label>Toggle</ion-label>
-      <ion-toggle name="Actually" [(ngModel)]="toggle" [disabled]='disabled'></ion-toggle>
+      <ion-toggle name="Actually" [(ngModel)]="toggle" [disabled]='boolDisabled()'></ion-toggle>
     </ion-item>
 
     <ion-item>
@@ -48,7 +48,7 @@
 
     <ion-item>
       <ion-label>Input (placeholder)</ion-label>
-      <ion-input placeholder="Placeholder" [disabled]='disabled'></ion-input>
+      <ion-input placeholder="Placeholder" [disabled]='strDisabled()'></ion-input>
     </ion-item>
 
     <ion-item>
@@ -63,7 +63,7 @@
 
     <ion-item>
       <ion-label>Range</ion-label>
-      <ion-range [(ngModel)]="range" [disabled]='disabled'></ion-range>
+      <ion-range [(ngModel)]="range" [disabled]='strDisabled()'></ion-range>
     </ion-item>
   </ion-list>
 

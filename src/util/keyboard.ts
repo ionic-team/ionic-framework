@@ -1,7 +1,8 @@
 import { Injectable, NgZone } from '@angular/core';
 
 import { Config } from '../config/config';
-import { focusOutActiveElement, hasFocusedTextInput, nativeRaf, nativeTimeout, zoneRafFrames } from './dom';
+import { DomController } from './dom-controller';
+import { focusOutActiveElement, hasFocusedTextInput, nativeTimeout, clearNativeTimeout } from './dom';
 import { Key } from './key';
 
 
@@ -22,19 +23,28 @@ import { Key } from './key';
  */
 @Injectable()
 export class Keyboard {
+  private _tmr: any;
 
-  constructor(config: Config, private _zone: NgZone) {
+  constructor(config: Config, private _zone: NgZone, private _dom: DomController) {
     _zone.runOutsideAngular(() => {
       this.focusOutline(config.get('focusOutline'), document);
 
       window.addEventListener('native.keyboardhide', () => {
-        // this custom cordova plugin event fires when the keyboard will hide
-        // useful when the virtual keyboard is closed natively
-        // https://github.com/driftyco/ionic-plugin-keyboard
-        if (hasFocusedTextInput()) {
-          focusOutActiveElement();
-        }
+        clearNativeTimeout(this._tmr);
+        this._tmr = nativeTimeout(() => {
+          // this custom cordova plugin event fires when the keyboard will hide
+          // useful when the virtual keyboard is closed natively
+          // https://github.com/driftyco/ionic-plugin-keyboard
+          if (hasFocusedTextInput()) {
+            focusOutActiveElement();
+          }
+        }, 80);
       });
+
+      window.addEventListener('native.keyboardshow', () => {
+        clearNativeTimeout(this._tmr);
+      });
+
     });
   }
 
@@ -92,10 +102,12 @@ export class Keyboard {
     function checkKeyboard() {
       console.debug(`keyboard, isOpen: ${self.isOpen()}`);
       if (!self.isOpen() || checks > pollingChecksMax) {
-        zoneRafFrames(30, () => {
-          console.debug(`keyboard, closed`);
-          callback();
-        });
+        nativeTimeout(function() {
+          self._zone.run(function() {
+            console.debug(`keyboard, closed`);
+            callback();
+          });
+        }, 400);
 
       } else {
         nativeTimeout(checkKeyboard, pollingInternval);
@@ -112,11 +124,13 @@ export class Keyboard {
    * Programmatically close the keyboard.
    */
   close() {
-    console.debug(`keyboard, close()`);
-    nativeRaf(() => {
+    this._dom.read(() => {
       if (hasFocusedTextInput()) {
         // only focus out when a text input has focus
-        focusOutActiveElement();
+        console.debug(`keyboard, close()`);
+        this._dom.write(() => {
+          focusOutActiveElement();
+        });
       }
     });
   }
@@ -141,7 +155,7 @@ export class Keyboard {
     let isKeyInputEnabled = false;
 
     function cssClass() {
-      nativeRaf(() => {
+      this._dom.write(() => {
         document.body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
       });
     }

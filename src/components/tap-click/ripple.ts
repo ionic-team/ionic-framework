@@ -15,7 +15,6 @@ export class RippleActivator implements ActivatorBase {
 
   constructor(app: App, config: Config) {
     this.highlight = new Activator(app, config);
-    this.highlight.activatedDelay = 0;
   }
 
   clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
@@ -42,9 +41,9 @@ export class RippleActivator implements ActivatorBase {
     this._upAction(ev, activatableEle, startCoord);
   }
 
-  clearState() {
+  clearState(animated: boolean) {
     // Highlight
-    this.highlight && this.highlight.clearState();
+    this.highlight && this.highlight.clearState(animated);
   }
 
   _downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {

@@ -225,7 +225,7 @@ export class ItemReorder {
   }
 
   _scrollContent(scroll: number) {
-    let scrollTop = this._content.getScrollTop() + scroll;
+    const scrollTop = this._content.scrollTop + scroll;
     if (scroll !== 0) {
       this._content.scrollTo(0, scrollTop, 0);
     }

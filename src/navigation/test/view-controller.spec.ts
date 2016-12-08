@@ -50,7 +50,7 @@ describe('ViewController', () => {
       });
 
       // act
-      viewController._willLeave();
+      viewController._willLeave(false);
     }, 10000);
   });
 
@@ -92,6 +92,7 @@ describe('ViewController', () => {
       // arrange
       let viewController = mockView();
       let navControllerBase = mockNavController();
+      navControllerBase._isPortal = true;
       mockViews(navControllerBase, [viewController]);
 
       viewController.onWillDismiss((data: any) => {
