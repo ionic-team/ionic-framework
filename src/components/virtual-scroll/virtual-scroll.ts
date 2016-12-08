@@ -481,7 +481,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       updateNodeContext(nodes, cells, data);
 
       // ******** DOM WRITE ****************
-      this._cd.detectChanges();
+      for (var i = 0; i < nodes.length; i++) {
+        (<any>nodes[i].view).detectChanges();
+      }
 
       // add an element at the end so :last-child css doesn't get messed up
       // ******** DOM WRITE ****************
@@ -613,7 +615,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       updateNodeContext(nodes, cells, data);
 
       // ******** DOM WRITE ****************
-      this._cd.detectChanges();
+      for (var i = 0; i < nodes.length; i++) {
+        (<any>nodes[i].view).detectChanges();
+      }
 
       // ******** DOM WRITE ****************
       writeToNodes(nodes, cells, this._records.length);

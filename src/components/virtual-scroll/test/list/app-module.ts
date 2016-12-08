@@ -9,7 +9,7 @@ export class E2EPage {
   items: Array<{id: number, url: string, gif: string}> = [];
   imgDomain = 'http://localhost:8900';
   responseDelay = 1500;
-  itemCount = 15;
+  itemCount = 1000;
   showGifs = false;
 
   constructor() {
