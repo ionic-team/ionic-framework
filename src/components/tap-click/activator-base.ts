@@ -2,13 +2,13 @@ import { PointerCoordinates } from '../../util/dom';
 
 export abstract class ActivatorBase {
 
-  abstract clickAction(ev, activatableEle: HTMLElement, startCoord: PointerCoordinates);
+  abstract clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates): void;
 
-  abstract downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates);
+  abstract downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates): void;
 
-  abstract upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates);
+  abstract upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates): void;
 
-  abstract clearState(animated: boolean);
+  abstract clearState(animated: boolean): void;
 }
 
 export function isActivatedDisabled(ev: any, activatableEle: any): boolean {

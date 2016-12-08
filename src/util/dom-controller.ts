@@ -88,14 +88,14 @@ export class DomController {
     const self = this;
     if (!self.q) {
       self.q = true;
-      nativeRaf(function rafCallback(timeStamp) {
+      nativeRaf(function rafCallback(timeStamp: number) {
         self.flush(timeStamp);
       });
     }
   }
 
   protected flush(timeStamp: number) {
-    let err;
+    let err: any;
 
     try {
       dispatch(timeStamp, this.r, this.w);
@@ -117,7 +117,7 @@ export class DomController {
 }
 
 function dispatch(timeStamp: number, r: Function[], w: Function[]) {
-  let task;
+  let task: Function;
 
   // ******** DOM READS ****************
   while (task = r.shift()) {

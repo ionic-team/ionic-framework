@@ -183,7 +183,7 @@ export class Animation {
   }
 
   private _addProp(state: string, prop: string, val: any): EffectProperty {
-    let fxProp = this._getProp(prop);
+    let fxProp: any = this._getProp(prop);
 
     if (!fxProp) {
       // first time we've see this EffectProperty
@@ -636,7 +636,7 @@ export class Animation {
     if (this._rv) {
       stepValue = ((stepValue * -1) + 1);
     }
-    var i, j;
+    var i: number, j: number;
     var finalTransform: string = '';
     var elements = this._e;
     for (i = 0; i < effects.length; i++) {
@@ -678,7 +678,7 @@ export class Animation {
           } else {
             for (j = 0; j < nuElements; j++) {
               // ******** DOM WRITE ****************
-              elements[j].style[prop] = val;
+              (<any>elements[j].style)[prop] = val;
             }
           }
         }
@@ -694,7 +694,7 @@ export class Animation {
       var cssTransform = CSS.transform;
       for (i = 0; i < elements.length; i++) {
         // ******** DOM WRITE ****************
-        elements[i].style[cssTransform] = finalTransform;
+        (<any>elements[i].style)[cssTransform] = finalTransform;
       }
     }
   }
@@ -718,7 +718,7 @@ export class Animation {
     const cssTransitionDuration = CSS.transitionDuration;
     const cssTransitionTimingFn = CSS.transitionTimingFn;
 
-    let eleStyle;
+    let eleStyle: any;
     for (var i = 0; i < this._eL; i++) {
       eleStyle = elements[i].style;
       if (dur > 0) {
@@ -783,7 +783,7 @@ export class Animation {
 
     let ele: HTMLElement;
     let eleClassList: DOMTokenList;
-    let prop;
+    let prop: string;
     for (i = 0; i < this._eL; i++) {
       ele = this._e[i];
       eleClassList = ele.classList;

@@ -103,7 +103,7 @@ export class Activator implements ActivatorBase {
 
     this._queue.length = 0;
 
-    let ele;
+    let ele: HTMLElement;
     for (var i = 0; i < this._active.length; i++) {
       ele = this._active[i];
       if (!animated) {

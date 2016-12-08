@@ -777,7 +777,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
       assert(fixedTop >= 0, 'fixedTop has to be positive');
 
       // ******** DOM WRITE ****************
-      scrollEle.style[topProperty] = cssFormat(this._cTop);
+      (<any>scrollEle.style)[topProperty] = cssFormat(this._cTop);
       // ******** DOM WRITE ****************
       fixedEle.style.marginTop = cssFormat(fixedTop);
 
@@ -790,7 +790,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
       assert(fixedBottom >= 0, 'fixedBottom has to be positive');
 
       // ******** DOM WRITE ****************
-      scrollEle.style[bottomProperty] = cssFormat(this._cBottom);
+      (<any>scrollEle.style)[bottomProperty] = cssFormat(this._cBottom);
       // ******** DOM WRITE ****************
       fixedEle.style.marginBottom = cssFormat(fixedBottom);
 

@@ -477,7 +477,7 @@ export class ScrollView {
     self.isScrolling = true;
 
     // chill out for a frame first
-    rafFrames(2, (timeStamp) => {
+    rafFrames(2, (timeStamp: number) => {
       startTime = timeStamp;
       step(timeStamp);
     });
@@ -537,7 +537,7 @@ export interface ScrollEvent {
   velocityX: number;
   directionY: string;
   directionX: string;
-  domWrite: {(fn: DomCallback, ctx?: any)};
+  domWrite: {(fn: DomCallback, ctx?: any): void};
   contentElement?: HTMLElement;
   fixedElement?: HTMLElement;
   scrollElement?: HTMLElement;
