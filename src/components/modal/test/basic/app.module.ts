@@ -441,6 +441,9 @@ export class ContactUs {
       <p>
         <button ion-button (click)="openActionSheet()">Open Action Sheet</button>
       </p>
+      <p>
+        <button ion-button (click)="openModal()">Open same modal</button>
+      </p>
       <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       <ion-list>
@@ -460,8 +463,9 @@ export class ModalFirstPage {
     public app: App,
     public actionSheetCtrl: ActionSheetController,
     public toastCtrl: ToastController,
-    public alertCtrl: AlertController) {
-
+    public alertCtrl: AlertController,
+    public modalCtrl: ModalController,
+  ) {
     for (let i = 0; i < 50; i++) {
       this.items.push({
         value: (i + 1)
@@ -548,6 +552,10 @@ export class ModalFirstPage {
   ionViewDidLeave() {
     console.log('ModalFirstPage ionViewDidLeave fired');
     this.called.ionViewDidLeave++;
+  }
+
+  openModal() {
+    this.modalCtrl.create(ContactUs).present();
   }
 
   openActionSheet() {
