@@ -77,7 +77,7 @@ module.exports = function(currentVersion, initialVersionBuild) {
     //Instead set latest version in docs root if not initial build
     var folder = (version == latestVersion) && !initialVersionBuild ? '' : version;
     return {
-      href: path.join('/' + config.v2DocsDir, folder),
+      href: path.join('/' + config.v2DocsDir, folder).replace('/content',''),
       folder: folder,
       name: version
     };
