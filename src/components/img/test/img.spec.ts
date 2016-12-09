@@ -2,7 +2,7 @@ import { ElementRef, Renderer } from '@angular/core';
 import { Content } from '../../content/content';
 import { Img } from '../img';
 import { ImgLoader } from '../img-loader';
-import { mockContent, MockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
+import { mockConfig, mockContent, MockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
 import { Platform } from '../../../platform/platform';
 
 
@@ -79,7 +79,7 @@ describe('Img', () => {
 
   beforeEach(() => {
     content = mockContent();
-    ldr = new ImgLoader();
+    ldr = new ImgLoader(mockConfig());
     elementRef = mockElementRef();
     renderer = mockRenderer();
     platform = mockPlatform();
