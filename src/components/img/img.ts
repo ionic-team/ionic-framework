@@ -273,7 +273,9 @@ export class Img implements OnDestroy {
 
     } else {
       // error :(
-      console.error(`img, status: ${msg.status} ${msg.msg}`);
+      if (msg.status) {
+        console.error(`img, status: ${msg.status} ${msg.msg}`);
+      }
       this._renderedSrc = this._tmpDataUri = null;
       this._dom.write(() => {
         this._isLoaded(false);

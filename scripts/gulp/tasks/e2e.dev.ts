@@ -204,6 +204,10 @@ task('e2e.watch', ['e2e'], function () {
   watch('src/components/*/test/**/*', function (file) {
     start('e2e.build');
   });
+
+  watch('scripts/workers/**/*', function (file) {
+    start('e2e.workers');
+  });
 });
 
 function watchTask(task) {
