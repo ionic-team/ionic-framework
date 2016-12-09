@@ -1,5 +1,5 @@
 import { Component, ElementRef, NgModule, ViewChild } from '@angular/core';
-import { IonicApp, IonicModule, NavParams, PopoverController } from '../../ionic-angular';
+import { IonicApp, IonicModule, NavParams, PopoverController } from '../';
 
 
 @Component({

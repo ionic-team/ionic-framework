@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { AlertController, IonicApp, IonicModule } from '../../ionic-angular';
+import { AlertController, IonicApp, IonicModule } from '../';
 
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, Injectable, NgModule } from '@angular/core';
-import { InfiniteScroll, IonicApp, IonicModule } from '../../ionic-angular';
+import { InfiniteScroll, IonicApp, IonicModule } from '../';
 
 
 /**
