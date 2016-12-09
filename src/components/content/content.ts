@@ -818,7 +818,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    */
   imgsUpdate() {
     if (this._scroll.initialized && this._imgs.length && this.isImgsUpdatable()) {
-      updateImgs(this._imgs, this.scrollTop, this.scrollHeight, this.directionY, IMG_REQUESTABLE_BUFFER, IMG_RENDERABLE_BUFFER);
+      updateImgs(this._imgs, this.scrollTop, this.contentHeight, this.directionY, IMG_REQUESTABLE_BUFFER, IMG_RENDERABLE_BUFFER);
     }
   }
 
@@ -833,14 +833,14 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
 }
 
-export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number, scrollDirectionY: string, requestableBuffer: number, renderableBuffer: number) {
+export function updateImgs(imgs: Img[], viewableTop: number, contentHeight: number, scrollDirectionY: string, requestableBuffer: number, renderableBuffer: number) {
   // ok, so it's time to see which images, if any, should be requested and rendered
   // ultimately, if we're scrolling fast then don't bother requesting or rendering
   // when scrolling is done, then it needs to do a check to see which images are
   // important to request and render, and which image requests should be aborted.
   // Additionally, images which are not near the viewable area should not be
   // rendered at all in order to save browser resources.
-  const scrollBottom = (scrollTop + scrollHeight);
+  const viewableBottom = (viewableTop + contentHeight);
   const priority1: Img[] = [];
   const priority2: Img[] = [];
   let img: Img;
@@ -851,7 +851,7 @@ export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number,
 
     if (scrollDirectionY === 'up') {
       // scrolling up
-      if (img.top < scrollBottom && img.bottom > scrollTop - renderableBuffer) {
+      if (img.top < viewableBottom && img.bottom > viewableTop - renderableBuffer) {
         // scrolling up, img is within viewable area
         // or about to be viewable area
         img.canRequest = img.canRender = true;
@@ -859,7 +859,7 @@ export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number,
         continue;
       }
 
-      if (img.bottom <= scrollTop && img.bottom > scrollTop - requestableBuffer) {
+      if (img.bottom <= viewableTop && img.bottom > viewableTop - requestableBuffer) {
         // scrolling up, img is within requestable area
         img.canRequest = true;
         img.canRender = false;
@@ -867,7 +867,7 @@ export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number,
         continue;
       }
 
-      if (img.top >= scrollBottom && img.top < scrollBottom + renderableBuffer) {
+      if (img.top >= viewableBottom && img.top < viewableBottom + renderableBuffer) {
         // scrolling up, img below viewable area
         // but it's still within renderable area
         // don't allow a reset
@@ -878,7 +878,7 @@ export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number,
     } else {
       // scrolling down
 
-      if (img.bottom > scrollTop && img.top < scrollBottom + renderableBuffer) {
+      if (img.bottom > viewableTop && img.top < viewableBottom + renderableBuffer) {
         // scrolling down, img is within viewable area
         // or about to be viewable area
         img.canRequest = img.canRender = true;
@@ -886,7 +886,7 @@ export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number,
         continue;
       }
 
-      if (img.top >= scrollBottom && img.top < scrollBottom + requestableBuffer) {
+      if (img.top >= viewableBottom && img.top < viewableBottom + requestableBuffer) {
         // scrolling down, img is within requestable area
         img.canRequest = true;
         img.canRender = false;
@@ -894,7 +894,7 @@ export function updateImgs(imgs: Img[], scrollTop: number, scrollHeight: number,
         continue;
       }
 
-      if (img.bottom <= scrollTop && img.bottom > scrollTop - renderableBuffer) {
+      if (img.bottom <= viewableTop && img.bottom > viewableTop - renderableBuffer) {
         // scrolling down, img above viewable area
         // but it's still within renderable area
         // don't allow a reset
