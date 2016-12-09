@@ -20,17 +20,17 @@ export class E2EPage {
     {
       width: '100',
       height: '44',
-      src: 'http://localhost:8000/dist/e2e/img/img/batmobile.jpg'
+      src: '../img/img/batmobile.jpg'
     },
     {
       width: '100',
       height: '75',
-      src: 'http://localhost:8000/dist/e2e/img/img/knight-rider.jpg'
+      src: '../img/img/knight-rider.jpg'
     },
     {
       width: '100',
       height: '68',
-      src: 'http://localhost:8000/dist/e2e/img/img/general-lee.jpg'
+      src: '../img/img/general-lee.jpg'
     }
   ];
 
@@ -52,7 +52,9 @@ export class E2EApp {
     MyImg
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp, {
+      imgWorkerUrl: '/dist/e2e/workers/ion-img-worker.js'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

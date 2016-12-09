@@ -33,7 +33,7 @@
     button[ion-item] danger
   </button>
 
-  <ion-item>
+  <ion-item (click)="testClickOutsize($event)">
     <button ion-button item-left (click)="testClick($event)">Default</button>
     Inner Buttons
     <button ion-button outline item-right (click)="testClick($event)">Outline</button>
@@ -110,6 +110,17 @@
     <h3>ng-for {{i}}</h3>
     <ion-badge item-right>260k</ion-badge>
   </button>
+
+  <ion-item (click)="testClickOutsize($event)">
+    <div>
+      <button ion-button icon-only clear item-right (click)="testClick($event)">
+          <ion-icon name="remove-circle"></ion-icon>
+      </button>
+      <button ion-button icon-only clear item-right (click)="testClick($event)">
+          <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </div>
+  </ion-item>
 
 </ion-content>
 

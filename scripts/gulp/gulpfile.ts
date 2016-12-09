@@ -14,4 +14,4 @@ import './tasks/snapshot';
 import './tasks/test';
 import './tasks/polyfill';
 import './tasks/polyfill.source';
-//import './tasks/theme';
+import './tasks/workers';

@@ -381,7 +381,7 @@ function readElements(cell: VirtualCell, element: VirtualHtmlElement) {
   const styles = window.getComputedStyle(<any>element);
 
   // ******** DOM READ ****************
-  cell.left = (element.offsetLeft - parseFloat(styles.marginLeft));
+  cell.left = (element.clientLeft - parseFloat(styles.marginLeft));
 
   // ******** DOM READ ****************
   cell.width = (element.offsetWidth + parseFloat(styles.marginLeft) + parseFloat(styles.marginRight));
@@ -508,7 +508,7 @@ export function getVirtualHeight(totalRecords: number, lastCell: VirtualCell): n
  * NO DOM
  */
 export function estimateHeight(totalRecords: number, lastCell: VirtualCell, existingHeight: number, difference: number): number {
-  if (!totalRecords) {
+  if (!totalRecords || !lastCell) {
     return 0;
   }
 

@@ -79,11 +79,12 @@ export class App {
 
     runInDev(() => {
       // During developement, navPop can be triggered by calling
-      // window.ClickBackButton();
+      // window.HWBackButton();
       if (!(<any>window)['HWBackButton']) {
         (<any>window)['HWBackButton'] = () => {
           let p = this.goBack();
           p && p.catch(() => console.debug('hardware go back cancelled'));
+          return p;
         };
       }
     });
@@ -194,7 +195,7 @@ export class App {
   }
 
   /**
-   * @return {NavController} Retuns the root NavController
+   * @return {NavController} Returns the root NavController
    */
   getRootNav(): NavController {
     return this._rootNav;
@@ -232,6 +233,9 @@ export class App {
     return portal.insertPages(-1, [enteringView], opts);
   }
 
+  /**
+   * @private
+   */
   goBack(): Promise<any> {
     if (this._menuCtrl && this._menuCtrl.isOpen()) {
       return this._menuCtrl.close();

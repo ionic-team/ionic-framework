@@ -188,6 +188,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _scrollSub: any;
   _scrollEndSub: any;
   _init: boolean;
+  _lastEle: boolean;
   _hdrFn: Function;
   _ftrFn: Function;
   _records: any[] = [];
@@ -207,7 +208,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
   /**
    * @input {array} The data that builds the templates within the virtual scroll.
-   * This is the same data that you'd pass to `ngFor`. It's important to note
+   * This is the same data that you'd pass to `*ngFor`. It's important to note
    * that when this data has changed, then the entire virtual scroll is reset,
    * which is an expensive operation and should be avoided if possible.
    */
@@ -224,12 +225,12 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * should get created when initially rendered. The number is a
    * multiplier against the viewable area's height. For example, if it
    * takes `20` cells to fill up the height of the viewable area, then
-   * with a buffer ratio of `2` it will create `40` cells that are
+   * with a buffer ratio of `3` it will create `60` cells that are
    * available for reuse while scrolling. For better performance, it's
    * better to have more cells than what are required to fill the
-   * viewable area. Default is `2`.
+   * viewable area. Default is `3`.
    */
-  @Input() bufferRatio: number = 2;
+  @Input() bufferRatio: number = 3;
 
   /**
    * @input {string} The approximate width of each item template's cell.
@@ -238,12 +239,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This value can use either `px` or `%` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `100%`.
+   * initial dimensions before the item has been rendered. Default is
+   * `100%`.
    */
   @Input() approxItemWidth: string = '100%';
 
   /**
-   * @input {string} Default is `40px`. It is important to provide this
+   * @input {string} It is important to provide this
    * if virtual item height will be significantly larger than the default
    * The approximate height of each virtual item template's cell.
    * This dimension is used to help determine how many cells should
@@ -251,7 +253,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions.
+   * initial dimensions before the item has been rendered. Default is
+   * `40px`.
    */
   @Input() approxItemHeight: string;
 
@@ -273,7 +276,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `40px`.
+   * initial dimensions before the item has been rendered. Default is `40px`.
    */
   @Input() approxHeaderHeight: string = '40px';
 
@@ -284,7 +287,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This value can use either `px` or `%` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `100%`.
+   * initial dimensions before the item has been rendered. Default is `100%`.
    */
   @Input() approxFooterWidth: string = '100%';
 
@@ -295,7 +298,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `40px`.
+   * initial dimensions before the item has been rendered. Default is `40px`.
    */
   @Input() approxFooterHeight: string = '40px';
 
@@ -344,7 +347,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     private _content: Content,
     private _platform: Platform,
     @Optional() private _ctrl: ViewController,
-    config: Config,
+    private _config: Config,
     private _dom: DomController) {
 
     // hide the virtual scroll element with opacity so we don't
@@ -354,24 +357,36 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     // wait for the content to be rendered and has readable dimensions
     _content.readReady.subscribe(() => {
-      this.readUpdate(true);
+      this._init = true;
 
-      if (!this._scrollSub) {
-        // listen for scroll events
-        this.addScrollListener(config.getBoolean('virtualScrollEventAssist'));
+      if (this._hasChanges()) {
+        this.readUpdate();
+
+        // wait for the content to be writable
+        var subscription = _content.writeReady.subscribe(() => {
+          subscription.unsubscribe();
+          this.writeUpdate();
+        });
       }
-    });
 
-    // wait for the content to be writable
-    _content.writeReady.subscribe(() => {
-      this.writeUpdate();
+      this._listeners();
     });
   }
 
-  readUpdate(dimensionsUpdated: boolean) {
-    if (!this._records) return;
+  /**
+   * @private
+   */
+  ngDoCheck() {
+    if (this._init && this._hasChanges()) {
+      // only continue if we've already initialized
+      // and if there actually are changes
+      this.readUpdate();
+      this.writeUpdate();
+    }
+  }
 
-    console.debug(`virtual-scroll, readUpdate, dimensionsUpdated: ${dimensionsUpdated}`);
+  readUpdate() {
+    console.debug(`virtual-scroll, readUpdate`);
 
     // reset everything
     this._cells.length = 0;
@@ -384,12 +399,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
                    this.approxHeaderWidth, this.approxHeaderHeight,
                    this.approxFooterWidth, this.approxFooterHeight,
                    this.bufferRatio);
-
   }
 
   writeUpdate() {
-    if (!this._records) return;
-
     console.debug(`virtual-scroll, writeUpdate`);
 
     processRecords(this._data.renderHeight,
@@ -405,37 +417,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
   private _hasChanges() {
     return (isPresent(this._records) && isPresent(this._differ) && isPresent(this._differ.diff(this._records)));
-  }
-
-  /**
-   * @private
-   */
-  ngDoCheck() {
-    if (this._init && this._hasChanges()) {
-      // only continue if we've already initialized
-      // and if there actually are changes
-      this.readUpdate(false);
-      this.writeUpdate();
-    }
-  }
-
-  /**
-   * @private
-   */
-  ngAfterContentInit() {
-    if (!this._init) {
-
-      if (!this._itmTmp) {
-        throw 'virtualItem required within virtualScroll';
-      }
-
-      this._init = true;
-
-      if (!this.approxItemHeight) {
-        this.approxItemHeight = '40px';
-        console.warn('Virtual Scroll: Please provide an "approxItemHeight" input to ensure proper virtual scroll rendering');
-      }
-    }
   }
 
   /**
@@ -485,10 +466,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         (<any>nodes[i].view).detectChanges();
       }
 
-      // add an element at the end so :last-child css doesn't get messed up
-      // ******** DOM WRITE ****************
-      const lastEle: HTMLElement = renderer.createElement(ele, 'div');
-      lastEle.className = 'virtual-last';
+      if (!this._lastEle) {
+        // add an element at the end so :last-child css doesn't get messed up
+        // ******** DOM WRITE ****************
+        var lastEle: HTMLElement = renderer.createElement(ele, 'div');
+        lastEle.className = 'virtual-last';
+        this._lastEle = true;
+      }
 
       // ******** DOM WRITE ****************
       renderer.setElementClass(ele, 'virtual-scroll', true);
@@ -500,7 +484,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       writeToNodes(nodes, cells, recordsLength);
 
       // ******** DOM WRITE ****************
-      this.setVirtualHeight(
+      this._setHeight(
         estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
       );
 
@@ -523,13 +507,14 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     data.scrollTop = ev.scrollTop;
 
     if (this._queue === ScrollQueue.RequiresDomWrite) {
+      // there are DOM writes we need to take care of in this frame
 
       this._dom.write(() => {
         // ******** DOM WRITE ****************
         writeToNodes(nodes, cells, this._records.length);
 
         // ******** DOM WRITE ****************
-        this.setVirtualHeight(
+        this._setHeight(
           estimateHeight(this._records.length, cells[cells.length - 1], this._vHeight, 0.25)
         );
 
@@ -538,6 +523,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       });
 
     } else if (this._queue === ScrollQueue.RequiresChangeDetection) {
+      // we need to do some change detection in this frame
 
       this._dom.write(() => {
         // we've got work painting do, let's throw it in the
@@ -554,7 +540,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       });
 
     } else {
-
+      // no dom writes or change detection to take care of
+      // let's see if we've scroll far enough to require another check
       data.scrollDiff = (data.scrollTop - this._lastCheck);
 
       if (Math.abs(data.scrollDiff) > SCROLL_DIFFERENCE_MINIMUM) {
@@ -623,7 +610,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       writeToNodes(nodes, cells, this._records.length);
 
       // ******** DOM WRITE ****************
-      this.setVirtualHeight(
+      this._setHeight(
         estimateHeight(this._records.length, cells[cells.length - 1], this._vHeight, 0.05)
       );
 
@@ -632,10 +619,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
    * DOM WRITE
    */
-  setVirtualHeight(newVirtualHeight: number) {
+  private _setHeight(newVirtualHeight: number) {
     if (newVirtualHeight !== this._vHeight) {
       // ******** DOM WRITE ****************
       this._renderer.setElementStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
@@ -645,31 +631,42 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
   }
 
-  /**
-   * @private
-   * NO DOM
-   */
-  addScrollListener(eventAssist: boolean) {
-    if (eventAssist) {
-      // use JS scrolling for iOS UIWebView
-      // goal is to completely remove this when iOS
-      // fully supports scroll events
-      // listen to JS scroll events
-      this._content.enableJsScroll();
+  private _listeners() {
+    if (!this._scrollSub) {
+      if (this._config.getBoolean('virtualScrollEventAssist')) {
+        // use JS scrolling for iOS UIWebView
+        // goal is to completely remove this when iOS
+        // fully supports scroll events
+        // listen to JS scroll events
+        this._content.enableJsScroll();
+      }
+
+      this._scrollSub = this._content.ionScroll.subscribe((ev: ScrollEvent) => {
+        this.scrollUpdate(ev);
+      });
+
+      this._scrollEndSub = this._content.ionScrollEnd.subscribe((ev: ScrollEvent) => {
+        this.scrollEnd(ev);
+      });
     }
-
-    this._scrollSub = this._content.ionScroll.subscribe((ev: ScrollEvent) => {
-      this.scrollUpdate(ev);
-    });
-
-    this._scrollEndSub = this._content.ionScrollEnd.subscribe((ev: ScrollEvent) => {
-      this.scrollEnd(ev);
-    });
   }
 
   /**
    * @private
-   * NO DOM
+   */
+  ngAfterContentInit() {
+    if (!this._itmTmp) {
+      throw 'virtualItem required within virtualScroll';
+    }
+
+    if (!this.approxItemHeight) {
+      this.approxItemHeight = '40px';
+      console.warn('Virtual Scroll: Please provide an "approxItemHeight" input to ensure proper virtual scroll rendering');
+    }
+  }
+
+  /**
+   * @private
    */
   ngOnDestroy() {
     this._scrollSub && this._scrollSub.unsubscribe();
@@ -678,7 +675,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
 }
 
-const SCROLL_DIFFERENCE_MINIMUM = 20;
+const SCROLL_DIFFERENCE_MINIMUM = 40;
 
 export const enum ScrollQueue {
   NoChanges,

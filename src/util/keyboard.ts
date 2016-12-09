@@ -155,7 +155,7 @@ export class Keyboard {
     let isKeyInputEnabled = false;
 
     function cssClass() {
-      this._dom.write(() => {
+      self._dom.write(() => {
         document.body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
       });
     }

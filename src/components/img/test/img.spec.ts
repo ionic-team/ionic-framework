@@ -2,7 +2,7 @@ import { ElementRef, Renderer } from '@angular/core';
 import { Content } from '../../content/content';
 import { Img } from '../img';
 import { ImgLoader } from '../img-loader';
-import { mockContent, MockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
+import { mockConfig, mockContent, MockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
 import { Platform } from '../../../platform/platform';
 
 
@@ -42,6 +42,14 @@ describe('Img', () => {
       expect(img._tmpDataUri).toEqual(null);
     });
 
+    it('should set datauri src', () => {
+      spyOn(img, 'update');
+      img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==';
+      expect(img.src).toEqual('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==');
+      expect(img._tmpDataUri).toEqual(`data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==`);
+      expect(img.update).toHaveBeenCalled();
+    });
+
     it('should set src', () => {
       spyOn(img, 'update');
       img.src = 'image.jpg';
@@ -71,7 +79,7 @@ describe('Img', () => {
 
   beforeEach(() => {
     content = mockContent();
-    ldr = new ImgLoader();
+    ldr = new ImgLoader(mockConfig());
     elementRef = mockElementRef();
     renderer = mockRenderer();
     platform = mockPlatform();

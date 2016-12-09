@@ -8,7 +8,6 @@ import * as commonjs from 'rollup-plugin-commonjs';
 import * as multiEntry from 'rollup-plugin-multi-entry';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as through from 'through2';
-import * as uglifyJS from 'uglify-js';
 import * as uglifyPlugin from 'rollup-plugin-uglify';
 
 export function mergeObjects(obj1: any, obj2: any ) {
@@ -63,43 +62,6 @@ function removeDebugStatements() {
   });
 }
 
-function minifyInlineStrings() {
-  // used to manually minify the inline web workers
-  // which are strings of code and not actual code
-
-  const start = '/** minify-start **/';
-  const end = '/** minify-end **/';
-
-  return through.obj(function (file, encoding, callback) {
-    let content: string = file.contents.toString();
-
-    const startIndex = content.indexOf(start);
-    const endIndex = content.indexOf(end);
-
-    if (startIndex > -1 && endIndex > startIndex) {
-      let startContent = content.substring(0, startIndex);
-      let minifyContent = content.substring(startIndex, endIndex + end.length);
-      let endContent = content.substring(endIndex + end.length);
-
-      minifyContent = uglifyJS.minify(minifyContent, {
-          fromString: true,
-          compress: {
-              dead_code: true,
-              global_defs: {
-                  DEBUG: false
-              }
-          }
-      }).code;
-
-      content = startContent + minifyContent + endContent;
-
-      file.contents = new Buffer(content, 'utf8');
-    }
-
-    callback(null, file);
-  });
-}
-
 export function copySourceToDest(destinationPath: string, excludeSpecs: boolean, excludeE2e: boolean, stripDebug: boolean) {
   let glob = [`${SRC_ROOT}/**/*.ts`];
   if (excludeSpecs) {
@@ -115,8 +77,6 @@ export function copySourceToDest(destinationPath: string, excludeSpecs: boolean,
     console.log('Removing debug statements:', destinationPath);
     stream = stream.pipe(removeDebugStatements());
   }
-  console.log('Minifying inline web-worker strings:', destinationPath);
-  stream = stream.pipe(minifyInlineStrings());
 
   return stream.pipe(dest(destinationPath));
 }
