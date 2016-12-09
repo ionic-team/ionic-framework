@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, PickerController } from '../../../..';
+import { IonicApp, IonicModule, NavController, PickerController } from '../../../..';
 
 
 @Component({
@@ -10,7 +10,14 @@ export class E2EPage {
   smoothie: string;
   timer: string;
 
-  constructor(private pickerCtrl: PickerController) {}
+  constructor(
+    public navCtrl: NavController,
+    private pickerCtrl: PickerController
+  ) { }
+
+  push() {
+    this.navCtrl.push(E2EPage);
+  }
 
   twoColumns() {
     let picker = this.pickerCtrl.create({
