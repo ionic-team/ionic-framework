@@ -42,8 +42,18 @@ The following commands take longer to run because they use AoT compilation. They
 
 ### Building & Running API Demos
 
+#### Development
+
 1. Run `gulp demos` or `gulp demos.watch` to watch for changes.
 2. Navigate to `http://localhost:8000/dist/demos`
+
+#### Validation
+
+The following commands take longer to run because they use AoT compilation. They should really only be used to validate that our components work with AoT, and fix them if not.
+
+1. Run `gulp demos.prod` to bundle all demos tests, or pass a folder for a specific test. For example, `gulp demos.prod --f=alert` will build the test in `demos/alert/`.
+2. Run `gulp demos.watchProd` with a folder passed to watch a test. For example, `gulp demos.watchProd --f=select` will watch the test in `demos/select/`.
+3. Navigate to `http://localhost:8000/dist/demos`
 
 
 ### Building API Docs
