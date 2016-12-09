@@ -1,6 +1,6 @@
 import { task } from 'gulp';
 import { DIST_BUILD_ROOT, DIST_BUILD_ES2015_ROOT, DIST_BUILD_UMD_ROOT, ES5, ES_2015, UMD_MODULE } from '../constants';
-import { copySourceToDest, copySwiperToPath, createTempTsConfig, deleteFiles, runNgc} from '../util';
+import { copySourceToDest, copySwiperToPath, createTempTsConfig, deleteFiles, runNgc } from '../util';
 
 
 export function buildIonicAngularUmd(excludeSpec: boolean, stripDebug: boolean, done: Function) {
