@@ -95,9 +95,9 @@ task('demos.bundleProd', (done) => {
     });
 
     let indexFileContents = directories.map(function (dir) {
-      let testName = dir.replace(`${DIST_DEMOS_ROOT}/components/`, '');
+      let testName = dir.replace(`${DIST_DEMOS_ROOT}/`, '');
       let fileName = dir.replace(`${PROJECT_ROOT}`, '');
-      return `<p><a href="${fileName}/index.html">${testName}</a></p>`;
+      return `<p><a href="${fileName}">${testName}</a></p>`;
     }, []);
 
     writeFileSync(`${DIST_DEMOS_ROOT}/index.html`,
