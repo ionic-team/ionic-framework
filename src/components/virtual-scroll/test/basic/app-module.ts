@@ -1,5 +1,5 @@
-import { Component, ViewChild, ElementRef, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Platform } from '../../../..';
+import { Component, NgModule } from '@angular/core';
+import { IonicApp, IonicModule, NavController, Platform } from '../../../..';
 
 
 @Component({
@@ -7,11 +7,9 @@ import { IonicApp, IonicModule, Platform } from '../../../..';
 })
 export class E2EPage {
   items: any[] = [];
-  webview: string;
+  webview: string = '';
 
-  @ViewChild('content') content: ElementRef;
-
-  constructor(platform: Platform) {
+  constructor(platform: Platform, public navCtrl: NavController) {
     for (var i = 0; i < 200; i++) {
       this.items.push({
         value: i,
@@ -22,11 +20,14 @@ export class E2EPage {
     }
 
     if (platform.is('ios')) {
-      if (window.indexedDB) {
-        this.webview = ': WKWebView';
+      if (platform.testUserAgent('Safari')) {
+        this.webview = ': iOS Safari';
+
+      } else if (!!window['webkit']) {
+        this.webview = ': iOS WKWebView';
 
       } else {
-        this.webview = ': UIWebView';
+        this.webview = ': iOS UIWebView';
       }
     }
   }
@@ -35,8 +36,11 @@ export class E2EPage {
     if (index % 4 === 0) {
       return index + ' is divisible by 4';
     }
-
     return null;
+  }
+
+  pushPage() {
+    this.navCtrl.push(E2EPage);
   }
 
   reload() {
