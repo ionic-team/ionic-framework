@@ -1,9 +1,7 @@
 import { exec, spawnSync, spawn } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
-
+import { writeFileSync } from 'fs';
 import * as changelog from 'conventional-changelog';
 import * as GithubApi from 'github';
-import * as glob from 'glob';
 import { dest, src, task } from 'gulp';
 import { rollup } from 'rollup';
 import * as commonjs from 'rollup-plugin-commonjs';
@@ -108,6 +106,7 @@ task('release.copyProdVersion', () => {
 task('release.prepareReleasePackage', (done: (err: any) => void) => {
   runSequence('clean',
           'release.polyfill',
+          'release.workers',
           'compile.release',
           'release.copyTemplates',
           'release.copyNpmInfo',

@@ -31,6 +31,7 @@ function e2eBuild(done: (err: any) => void) {
   runSequence(
     'e2e.clean',
     'e2e.build',
+    'e2e.workers',
     'e2e.polyfill',
     'e2e.copyExternalDependencies',
     'e2e.sass',

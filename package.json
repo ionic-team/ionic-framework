@@ -88,6 +88,7 @@
     "gulp-strip-debug": "1.1.0",
     "gulp-tslint": "6.1.1",
     "gulp-typescript": "2.13.6",
+    "gulp-uglify": "2.0.0",
     "gulp-util": "3.0.7",
     "gulp-watch": "4.3.9",
     "html-entities": "1.2.0",
@@ -122,7 +123,6 @@
     "tslint": "3.15.1",
     "tslint-ionic-rules": "0.0.7",
     "typescript": "2.0.9",
-    "uglify-js": "2.7.5",
     "vinyl": "1.2.0",
     "webpack": "2.1.0-beta.26",
     "yargs": "5.0.0"
