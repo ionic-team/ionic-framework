@@ -21,8 +21,9 @@ import { ItemReorder } from './item-reorder';
  * ## Common Usage
  * There are a few elements that are considered items, but not all of them are styled to look the same.
  * The basic item can be written as an `<ion-item>` element or it can be added to any element by adding
- * `ion-item` as an attribute. List headers and item dividers, although styled differently, are also items
- * and can be written as `<ion-list-header>` and `<ion-item-divider>`, respectively.
+ * `ion-item` as an attribute. List headers, list footer and item dividers, although styled differently,
+ * are also items and can be written as `<ion-list-header>`, `<ion-list-footer>`
+ * and `<ion-item-divider>`, respectively.
  *
  * ### As an Element
  * A basic item should be written as a `<ion-item>` element when it is not clickable.
@@ -39,6 +40,14 @@ import { ItemReorder } from './item-reorder';
  * <ion-list-header>
  *   List Header
  * </ion-list-header>
+ * ```
+ *
+ * A list footer should be written as `<ion-list-footer>`.
+ *
+ * ```html
+ * <ion-list-footer>
+ *   List Footer
+ * </ion-list-footer>
  * ```
  *
  * An item divider should be written as `<ion-item-divider>`.
@@ -64,8 +73,9 @@ import { ItemReorder } from './item-reorder';
  * </a>
  * ```
  *
- * Note: do not add `ion-item` as an attribute to an `<ion-list-header>` or `<ion-item-divider>` element
- * as they are already items and their styling will be changed to look like a basic item.
+ * Note: do not add `ion-item` as an attribute to an `<ion-list-header>`, `<ion-list-footer>`
+ * or `<ion-item-divider>` element as they are already items and their styling will be
+ * changed to look like a basic item.
  *
  * ## Detail Arrows
  * By default, `<button>` and `<a>` elements with the `ion-item` attribute will display a right arrow icon
@@ -171,6 +181,10 @@ import { ItemReorder } from './item-reorder';
  *     to fit on one line in the item.
  *   </ion-item>
  *
+ *   <ion-list-footer>
+ *     Footer
+ *   </ion-list-footer>
+ *
  * </ion-list>
  * ```
  *
@@ -272,7 +286,7 @@ import { ItemReorder } from './item-reorder';
  * @see {@link ../ItemSliding ItemSliding API Docs}
  */
 @Component({
-  selector: 'ion-list-header,ion-item,[ion-item],ion-item-divider',
+  selector: 'ion-list-header,ion-list-footer,ion-item,[ion-item],ion-item-divider',
   template:
     '<ng-content select="[item-left],ion-checkbox:not([item-right])"></ng-content>' +
     '<div class="item-inner">' +
@@ -388,7 +402,7 @@ export class Item extends Ion {
   _setName(elementRef: ElementRef) {
     let nodeName = elementRef.nativeElement.nodeName.replace('ION-', '');
 
-    if (nodeName === 'LIST-HEADER' || nodeName === 'ITEM-DIVIDER') {
+    if (nodeName === 'LIST-HEADER' || nodeName === 'LIST-FOOTER' || nodeName === 'ITEM-DIVIDER') {
       this._name = nodeName;
     }
   }

@@ -54,6 +54,35 @@ $list-ios-header-color:               #333 !default;
 /// @prop - Background color of the header in a list
 $list-ios-header-background-color:    transparent !default;
 
+/// @prop - Padding left of the footer in a list
+$list-ios-footer-padding-left:        $item-ios-padding-left !default;
+
+/// @prop - Border bottom of the footer in a list
+$list-ios-footer-border-bottom:       $hairlines-width solid $list-ios-border-color !default;
+
+/// @prop - Font size of the footer in a list
+$list-ios-footer-font-size:           1rem !default;
+
+/// @prop - Font weight of the footer in a list
+$list-ios-footer-font-weight:         normal !default;
+
+/// @prop - Letter spacing of the footer in a list
+$list-ios-footer-letter-spacing:      0rem !default;
+
+/// @prop - Text transform of the footer in a list
+$list-ios-footer-text-transform:      uppercase !default;
+
+/// @prop - Text color of the footer in a list
+$list-ios-footer-color:               #333 !default;
+
+/// @prop - Background color of the footer in a list
+$list-ios-footer-background-color:    transparent !default;
+
+/// @prop - Margin-Top of ion-label child of the footer list
+$list-ios-footer-margin-top:          $item-ios-padding-top / 2;
+
+/// @prop - Margin-Bottom of ion-label child of the footer list
+$list-ios-footer-margin-bottom:       $item-ios-padding-bottom / 2;
 
 // iOS Default List
 // --------------------------------------------------
@@ -66,13 +95,13 @@ $list-ios-header-background-color:    transparent !default;
   border-top: $hairlines-width solid $list-ios-border-color;
 }
 
-.list-ios > .item-block:last-child,
-.list-ios > .item-wrapper:last-child .item-block {
+.list-ios > .item-block:last-of-type,
+.list-ios > .item-wrapper:last-of-type .item-block {
   border-bottom: $hairlines-width solid $list-ios-border-color;
 }
 
-.list-ios > .item-block:last-child .item-inner,
-.list-ios > .item-wrapper:last-child .item-block .item-inner {
+.list-ios > .item-block:last-of-type .item-inner,
+.list-ios > .item-wrapper:last-of-type .item-block .item-inner {
   border-bottom: 0;
 }
 
@@ -84,7 +113,7 @@ $list-ios-header-background-color:    transparent !default;
 // the item itself (for last-child items)
 // the item-inner class (if it is not last)
 .list-ios .item[no-lines],
-.list-ios .item[no-lines] .item-inner, {
+.list-ios .item[no-lines] .item-inner {
   border-width: 0;
 }
 
@@ -127,7 +156,8 @@ $list-ios-header-background-color:    transparent !default;
   border-radius: $list-inset-ios-border-radius;
 }
 
-.list-ios[inset] ion-list-header {
+.list-ios[inset] ion-list-header,
+.list-ios[inset] ion-list-footer {
   background-color: $list-ios-background-color;
 }
 
@@ -183,11 +213,37 @@ $list-ios-header-background-color:    transparent !default;
 }
 
 
-// Generate iOS List Header Colors
+// iOS List Footer
+// --------------------------------------------------
+
+.list-footer-ios {
+  position: relative;
+
+  padding-left: $list-ios-footer-padding-left;
+
+  font-size: $list-ios-footer-font-size;
+  font-weight: $list-ios-footer-font-weight;
+  letter-spacing: $list-ios-footer-letter-spacing;
+  color: $list-ios-footer-color;
+  background: $list-ios-footer-background-color;
+}
+
+.list-footer-ios .label-ios {
+  margin-top: $list-ios-footer-margin-top;
+  margin-bottom: $list-ios-footer-margin-bottom;
+}
+
+
+// Generate iOS List Header and Footer Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
   .list-header-ios-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+
+  .list-footer-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

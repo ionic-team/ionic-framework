@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>List Footers Borders</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-list class="outer-content" *ngFor="let person of people">
+    <ion-list-header>
+      {{person.name}}
+    </ion-list-header>
+    <ion-item *ngFor="let component of person.components">
+      {{component}}
+      <div item-right>
+        <ion-icon name="pin"></ion-icon>
+      </div>
+    </ion-item>
+    <ion-list-footer>
+      {{person.job}}
+    </ion-list-footer>
+
+  </ion-list>
+
+</ion-content>
