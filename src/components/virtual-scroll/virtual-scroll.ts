@@ -199,7 +199,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _data: VirtualData = {
     scrollTop: 0,
   };
-  _queue: ScrollQueue = null;
+  _queue: number;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
@@ -506,23 +506,25 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // set the scroll top from the scroll event
     data.scrollTop = ev.scrollTop;
 
-    if (this._queue === ScrollQueue.RequiresDomWrite) {
+    if (this._queue === SCROLL_QUEUE_DOM_WRITE) {
       // there are DOM writes we need to take care of in this frame
 
       this._dom.write(() => {
+        const recordsLength = this._records.length;
+
         // ******** DOM WRITE ****************
-        writeToNodes(nodes, cells, this._records.length);
+        writeToNodes(nodes, cells, recordsLength);
 
         // ******** DOM WRITE ****************
         this._setHeight(
-          estimateHeight(this._records.length, cells[cells.length - 1], this._vHeight, 0.25)
+          estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
         );
 
         // we're done here, good work
-        this._queue = ScrollQueue.NoChanges;
+        this._queue = SCROLL_QUEUE_NO_CHANGES;
       });
 
-    } else if (this._queue === ScrollQueue.RequiresChangeDetection) {
+    } else if (this._queue === SCROLL_QUEUE_CHANGE_DETECTION) {
       // we need to do some change detection in this frame
 
       this._dom.write(() => {
@@ -536,7 +538,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         }
 
         // on the next frame we need write to the dom nodes manually
-        this._queue = ScrollQueue.RequiresDomWrite;
+        this._queue = SCROLL_QUEUE_DOM_WRITE;
       });
 
     } else {
@@ -571,7 +573,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
         if (hasChanges) {
           // queue making updates in the next frame
-          this._queue = ScrollQueue.RequiresChangeDetection;
+          this._queue = SCROLL_QUEUE_CHANGE_DETECTION;
 
           // update the bound context for each node
           updateNodeContext(nodes, cells, data);
@@ -598,6 +600,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
 
     this._dom.write(() => {
+      const recordsLength = this._records.length;
+
       // update the bound context for each node
       updateNodeContext(nodes, cells, data);
 
@@ -607,30 +611,20 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       }
 
       // ******** DOM WRITE ****************
-      writeToNodes(nodes, cells, this._records.length);
+      writeToNodes(nodes, cells, recordsLength);
 
       // ******** DOM WRITE ****************
       this._setHeight(
-        estimateHeight(this._records.length, cells[cells.length - 1], this._vHeight, 0.05)
+        estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.05)
       );
 
-      this._queue = ScrollQueue.NoChanges;
+      this._queue = SCROLL_QUEUE_NO_CHANGES;
     });
   }
 
   /**
-   * DOM WRITE
+   * NO DOM
    */
-  private _setHeight(newVirtualHeight: number) {
-    if (newVirtualHeight !== this._vHeight) {
-      // ******** DOM WRITE ****************
-      this._renderer.setElementStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
-
-      this._vHeight = newVirtualHeight;
-      console.debug('VirtualScroll, height', newVirtualHeight);
-    }
-  }
-
   private _listeners() {
     if (!this._scrollSub) {
       if (this._config.getBoolean('virtualScrollEventAssist')) {
@@ -648,6 +642,19 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this._scrollEndSub = this._content.ionScrollEnd.subscribe((ev: ScrollEvent) => {
         this.scrollEnd(ev);
       });
+    }
+  }
+
+  /**
+   * DOM WRITE
+   */
+  private _setHeight(newVirtualHeight: number) {
+    if (newVirtualHeight !== this._vHeight) {
+      // ******** DOM WRITE ****************
+      this._renderer.setElementStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
+
+      this._vHeight = newVirtualHeight;
+      console.debug('VirtualScroll, height', newVirtualHeight);
     }
   }
 
@@ -676,9 +683,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 }
 
 const SCROLL_DIFFERENCE_MINIMUM = 40;
-
-export const enum ScrollQueue {
-  NoChanges,
-  RequiresChangeDetection,
-  RequiresDomWrite
-}
+const SCROLL_QUEUE_NO_CHANGES = 1;
+const SCROLL_QUEUE_CHANGE_DETECTION = 2;
+const SCROLL_QUEUE_DOM_WRITE = 3;

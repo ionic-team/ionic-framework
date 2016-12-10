@@ -450,7 +450,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @private
    */
   enableJsScroll() {
-    this._scroll.enableJsScroll(this.contentTop, this.contentBottom);
+    this._scroll.enableJsScroll(this._cTop, this._cBottom);
   }
 
   /**

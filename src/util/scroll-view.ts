@@ -186,16 +186,10 @@ export class ScrollView {
 
     console.debug(`ScrollView, enableJsScroll`);
 
+    const ev = self.ev;
     const positions: number[] = [];
     let rafCancel: Function;
     let max: number;
-
-    const ev = self.ev;
-    ev.scrollLeft = 0;
-    ev.startX = 0;
-    ev.deltaX = 0;
-    ev.velocityX = 0;
-    ev.directionX = null;
 
     function setMax() {
       if (!max) {
@@ -330,7 +324,7 @@ export class ScrollView {
 
       } else {
         self.isScrolling = false;
-        ev.velocityY = ev.velocityX = 0;
+        ev.velocityY = 0;
         self.scrollEnd.next(ev);
       }
 
