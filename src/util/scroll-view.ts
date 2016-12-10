@@ -194,7 +194,7 @@ export class ScrollView {
     function setMax() {
       if (!max) {
         // ******** DOM READ ****************
-        max = (ele.scrollHeight - ele.offsetHeight) + contentTop + contentBottom;
+        max = ele.scrollHeight - ele.parentElement.offsetHeight + contentTop + contentBottom;
       }
     };
 
@@ -208,6 +208,7 @@ export class ScrollView {
 
         // update top with updated velocity
         // clamp top within scroll limits
+        // ******** DOM READ ****************
         setMax();
         self._t = Math.min(Math.max(self._t + ev.velocityY, 0), max);
 
@@ -242,6 +243,7 @@ export class ScrollView {
     function jsScrollTouchStart(touchEvent: TouchEvent) {
       positions.length = 0;
       max = null;
+      self._dom.cancel(rafCancel);
       positions.push(pointerCoord(touchEvent).y, touchEvent.timeStamp);
     }
 
