@@ -158,8 +158,6 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /** @internal */
   _fullscreen: boolean;
   /** @internal */
-  _imgs: Img[] = [];
-  /** @internal */
   _footerEle: HTMLElement;
   /** @internal */
   _dirty: boolean;
@@ -167,6 +165,12 @@ export class Content extends Ion implements OnDestroy, OnInit {
   _scrollEle: HTMLElement;
   /** @internal */
   _fixedEle: HTMLElement;
+  /** @internal */
+  _imgs: Img[] = [];
+
+  private _imgReqBfr: number;
+  private _imgRndBfr: number;
+  private _imgVelMax: number;
 
   /** @private */
   statusbarPadding: boolean;
@@ -264,24 +268,6 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * The current vertical scroll velocity.
-   *
-   * @return {number}
-   */
-  get velocityY(): number {
-    return this._scroll.ev.velocityY;
-  }
-
-  /**
-   * The current horizontal scroll velocity.
-   *
-   * @return {number}
-   */
-  get velocityX(): number {
-    return this._scroll.ev.velocityX;
-  }
-
-  /**
    * The current, or last known, vertical scroll direction. Possible
    * string values include `down` and `up`.
    *
@@ -341,6 +327,9 @@ export class Content extends Ion implements OnDestroy, OnInit {
     super(config, elementRef, renderer, 'content');
 
     this.statusbarPadding = config.getBoolean('statusbarPadding', false);
+    this._imgReqBfr = config.getNumber('imgRequestBuffer', 1400);
+    this._imgRndBfr = config.getNumber('imgRenderBuffer', 400);
+    this._imgVelMax = config.getNumber('imgVelocityMax', 3);
 
     if (viewCtrl) {
       viewCtrl._setIONContent(this);
@@ -818,7 +807,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    */
   imgsUpdate() {
     if (this._scroll.initialized && this._imgs.length && this.isImgsUpdatable()) {
-      updateImgs(this._imgs, this.scrollTop, this.contentHeight, this.directionY, IMG_REQUESTABLE_BUFFER, IMG_RENDERABLE_BUFFER);
+      updateImgs(this._imgs, this.scrollTop, this.contentHeight, this.directionY, this._imgReqBfr, this._imgRndBfr);
     }
   }
 
@@ -826,9 +815,12 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @private
    */
   isImgsUpdatable() {
-    // an image is only "updatable" if the content
-    // isn't scrolling too fast
-    return Math.abs(this.velocityY) < 3;
+    // an image is only "updatable" if the content isn't scrolling too fast
+    // if scroll speed is above the maximum velocity, then let current
+    // requests finish, but do not start new requets or render anything
+    // if scroll speed is below the maximum velocity, then it's ok
+    // to start new requests and render images
+    return Math.abs(this._scroll.ev.velocityY) < this._imgVelMax;
   }
 
 }
@@ -919,9 +911,6 @@ export function updateImgs(imgs: Img[], viewableTop: number, contentHeight: numb
     priority2.sort(sortTopToBottom).forEach(i => i.update());
   }
 }
-
-const IMG_REQUESTABLE_BUFFER = 1200;
-const IMG_RENDERABLE_BUFFER = 300;
 
 
 function sortTopToBottom(a: Img, b: Img) {
