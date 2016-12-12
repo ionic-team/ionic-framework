@@ -3,21 +3,40 @@
 // Windows Select
 // --------------------------------------------------
 
+/// @prop - Padding top and bottom of the select
 $select-wp-padding-vertical:    0 !default;
+
+/// @prop - Padding left and right of the select
 $select-wp-padding-horizontal:  ($item-wp-padding-right / 2) !default;
 
+/// @prop - Margin top of the select
 $select-wp-margin-top:          $item-wp-padding-top !default;
+
+/// @prop - Margin right of the select
 $select-wp-margin-right:        ($item-wp-padding-right / 2) !default;
+
+/// @prop - Margin bottom of the select
 $select-wp-margin-bottom:       $item-wp-padding-bottom !default;
+
+/// @prop - Margin left of the select
 $select-wp-margin-left:         ($item-wp-padding-left / 2) !default;
 
+/// @prop - Border width of the select
 $select-wp-border-width:        2px !default;
+
+/// @prop - Border color of the select
 $select-wp-border-color:        $input-wp-border-color !default;
 
+/// @prop - Width of the select icon
 $select-wp-icon-width:          18px !default;
+
+/// @prop - Width of the select icon arrow
 $select-wp-icon-arrow-width:    2px !default;
 
+/// @prop - Color of the select icon
 $select-wp-icon-color:          $select-wp-border-color !default;
+
+/// @prop - Color of the select placeholder
 $select-wp-placeholder-color:   $select-wp-icon-color !default;
 
 

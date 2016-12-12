@@ -3,19 +3,43 @@
 // Windows List
 // --------------------------------------------------
 
+/// @prop - Margin top of the list
 $list-wp-margin-top:             16px !default;
+
+/// @prop - Margin right of the list
 $list-wp-margin-right:           0 !default;
+
+/// @prop - Margin bottom of the list
 $list-wp-margin-bottom:          16px !default;
+
+/// @prop - Margin left of the list
 $list-wp-margin-left:            0 !default;
 
+/// @prop - Margin top of the inset list
 $list-inset-wp-margin-top:       16px !default;
+
+/// @prop - Margin right of the inset list
 $list-inset-wp-margin-right:     16px !default;
+
+/// @prop - Margin bottom of the inset list
 $list-inset-wp-margin-bottom:    16px !default;
+
+/// @prop - Margin left of the inset list
 $list-inset-wp-margin-left:      16px !default;
+
+/// @prop - Border radius of the inset list
 $list-inset-wp-border-radius:    2px !default;
 
+/// @prop - Padding left of the header in a list
 $list-wp-header-padding-left:    $item-wp-padding-left !default;
+
+/// @prop - Border bottom of the header in a list
+$list-wp-header-border-bottom:   1px solid $list-wp-border-color !default;
+
+/// @prop - Font size of the header in a list
 $list-wp-header-font-size:       2rem !default;
+
+/// @prop - Text color of the header in a list
 $list-wp-header-color:           $list-wp-text-color !default;
 
 
@@ -130,15 +154,24 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 
-// Windows List Header / Divider
+// Windows List Header
 // --------------------------------------------------
 
-.list-header-wp,
-.list-wp ion-item-divider {
-  margin-left: 0;
+.list-header-wp {
   padding-left: $list-wp-header-padding-left;
 
-  border-bottom: 1px solid $list-wp-border-color;
+  border-bottom: $list-wp-header-border-bottom;
   font-size: $list-wp-header-font-size;
   color: $list-wp-header-color;
+}
+
+
+// Generate Windows List Header Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  .list-header-wp-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
 }

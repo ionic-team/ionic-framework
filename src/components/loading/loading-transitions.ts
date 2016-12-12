@@ -87,7 +87,7 @@ export class LoadingWpPopIn extends Transition {
     backdrop.fromTo('opacity', 0.01, 0.16);
 
     this
-      .easing('cubic-bezier(0,0 0.05,1)')
+      .easing('cubic-bezier(0,0,0.05,1)')
       .duration(200)
       .add(backdrop)
       .add(wrapper);

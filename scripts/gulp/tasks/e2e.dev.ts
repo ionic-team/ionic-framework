@@ -31,6 +31,7 @@ function e2eBuild(done: (err: any) => void) {
   runSequence(
     'e2e.clean',
     'e2e.build',
+    'e2e.workers',
     'e2e.polyfill',
     'e2e.copyExternalDependencies',
     'e2e.sass',
@@ -202,6 +203,10 @@ task('e2e.watch', ['e2e'], function () {
 
   watch('src/components/*/test/**/*', function (file) {
     start('e2e.build');
+  });
+
+  watch('scripts/workers/**/*', function (file) {
+    start('e2e.workers');
   });
 });
 

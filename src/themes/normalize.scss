@@ -107,6 +107,10 @@ textarea {
   color: inherit;
 }
 
+textarea::placeholder {
+  padding-left: 2px;
+}
+
 form,
 input,
 optgroup,
@@ -152,8 +156,7 @@ textarea {
 }
 
 a ion-label,
-button ion-label,
-[tappable] ion-label {
+button ion-label {
   pointer-events: none;
 }
 
@@ -167,6 +170,10 @@ button {
   cursor: pointer;
 
   -webkit-appearance: button;
+}
+
+[tappable] {
+  cursor: pointer;
 }
 
 // Re-set default cursor for disabled elements.

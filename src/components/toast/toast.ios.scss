@@ -3,13 +3,21 @@
 // iOS Toast
 // --------------------------------------------------
 
-$toast-ios-text-align:                            left !default;
+/// @prop - Background of the toast wrapper
 $toast-ios-background:                            rgba(0, 0, 0, .9) !default;
+
+/// @prop - Border radius of the toast wrapper
 $toast-ios-border-radius:                         .65rem !default;
 
+/// @prop - Color of the toast title
 $toast-ios-title-color:                           #fff !default;
+
+/// @prop - Font size of the toast title
 $toast-ios-title-font-size:                       1.4rem !default;
+
+/// @prop - Padding of the toast title
 $toast-ios-title-padding:                         1.5rem !default;
+
 
 .toast-ios .toast-wrapper {
   position: absolute;

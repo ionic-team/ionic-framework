@@ -4,12 +4,15 @@ import { Content } from '../content/content';
 import { CSS, zoneRafFrames } from '../../util/dom';
 import { Item } from './item';
 import { ItemReorderGesture } from '../item/item-reorder-gesture';
-import { isTrueProperty } from '../../util/util';
+import { isTrueProperty, reorderArray } from '../../util/util';
 
 
-export interface ReorderIndexes {
-  from: number;
-  to: number;
+export class ReorderIndexes {
+  constructor(public from: number, public to: number) {}
+
+  applyTo(array: any) {
+    reorderArray(array, this);
+  }
 }
 
 /**
@@ -118,6 +121,16 @@ export interface ReorderIndexes {
  *   }
  * }
  * ```
+ * Alternatevely you can execute helper function inside template:
+ *
+ * ```html
+ * <ion-list>
+ *   <ion-list-header>Header</ion-list-header>
+ *   <ion-item-group reorder="true" (ionItemReorder)="$event.applyTo(items)">
+ *     <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
+ *   </ion-item-group>
+ * </ion-list>
+ * ```
  *
  * @demo /docs/v2/demos/src/item-reorder/
  * @see {@link /docs/v2/components#lists List Component Docs}
@@ -133,19 +146,10 @@ export interface ReorderIndexes {
 })
 export class ItemReorder {
 
-  /** @private */
   _enableReorder: boolean = false;
-
-  /** @private */
   _visibleReorder: boolean = false;
-
-  /** @private */
   _reorderGesture: ItemReorderGesture;
-
-  /** @private */
   _lastToIndex: number = -1;
-
-  /** @private */
   _element: HTMLElement;
 
   /**
@@ -196,10 +200,7 @@ export class ItemReorder {
     }
   }
 
-  /**
-   * @private
-   */
-  reorderPrepare() {
+  _reorderPrepare() {
     let ele = this._element;
     let children: any = ele.children;
     for (let i = 0, ilen = children.length; i < ilen; i++) {
@@ -209,43 +210,29 @@ export class ItemReorder {
     }
   }
 
-  /**
-   * @private
-   */
-  reorderStart() {
+  _reorderStart() {
     this.setElementClass('reorder-list-active', true);
   }
 
-  /**
-   * @private
-   */
-  reorderEmit(fromIndex: number, toIndex: number) {
-    this.reorderReset();
+  _reorderEmit(fromIndex: number, toIndex: number) {
+    this._reorderReset();
     if (fromIndex !== toIndex) {
       this._zone.run(() => {
-        this.ionItemReorder.emit({
-          from: fromIndex,
-          to: toIndex,
-        });
+        const indexes = new ReorderIndexes(fromIndex, toIndex);
+        this.ionItemReorder.emit(indexes);
       });
     }
   }
 
-  /**
-   * @private
-   */
-  scrollContent(scroll: number) {
-    let scrollTop = this._content.getScrollTop() + scroll;
+  _scrollContent(scroll: number) {
+    const scrollTop = this._content.scrollTop + scroll;
     if (scroll !== 0) {
       this._content.scrollTo(0, scrollTop, 0);
     }
     return scrollTop;
   }
 
-  /**
-   * @private
-   */
-  reorderReset() {
+  _reorderReset() {
     let children = this._element.children;
     let len = children.length;
 
@@ -257,10 +244,7 @@ export class ItemReorder {
     this._lastToIndex = -1;
   }
 
-  /**
-   * @private
-   */
-  reorderMove(fromIndex: number, toIndex: number, itemHeight: number) {
+  _reorderMove(fromIndex: number, toIndex: number, itemHeight: number) {
     if (this._lastToIndex === -1) {
       this._lastToIndex = fromIndex;
     }
@@ -368,4 +352,3 @@ export function indexForItem(element: any): number {
 export function reorderListForItem(element: any): any {
   return element['$ionReorderList'];
 }
-

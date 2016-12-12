@@ -3,35 +3,29 @@
 // Img
 // --------------------------------------------------
 
-ion-img {
-  position: relative;
-  display: flex;
-  overflow: hidden;
+/// @prop - Color of the image when it hasn't fully loaded yet
+$img-placeholder-background:         #eee !default;
 
-  align-items: center;
-  justify-content: center;
+
+ion-img {
+  display: inline-block;
+
+  min-width: 20px;
+  min-height: 20px;
+
+  background: $img-placeholder-background;
+
+  contain: strict;
 }
 
 ion-img img {
-  flex-shrink: 0;
-
-  min-width: 100%;
-  min-height: 100%;
+  object-fit: cover;
 }
 
-ion-img .img-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background: #eee;
-
-  transition: opacity 200ms;
+ion-img.img-unloaded img {
+  display: none;
 }
 
-ion-img.img-loaded .img-placeholder {
-  opacity: 0;
+ion-img.img-loaded img {
+  display: block;
 }

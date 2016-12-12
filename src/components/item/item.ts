@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Button } from '../button/button';
 import { Config } from '../../config/config';
@@ -6,6 +6,7 @@ import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
 import { Label } from '../label/label';
+import { ItemReorder } from './item-reorder';
 
 
 /**
@@ -283,7 +284,7 @@ import { Label } from '../label/label';
         '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
       '</div>' +
       '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
-      '<ion-reorder></ion-reorder>' +
+      '<ion-reorder *ngIf="_shouldHaveReorder"></ion-reorder>' +
     '</div>' +
     '<div class="button-effect"></div>',
   host: {
@@ -297,6 +298,8 @@ export class Item extends Ion {
   _inputs: Array<string> = [];
   _label: Label;
   _viewLabel: boolean = true;
+  _name: string = 'item';
+  _shouldHaveReorder: boolean = false;
 
   /**
    * @private
@@ -313,7 +316,7 @@ export class Item extends Ion {
    */
   @Input()
   set color(val: string) {
-    this._updateColor(val);
+    this._updateColor(val, this._name);
   }
 
   /**
@@ -321,14 +324,32 @@ export class Item extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('item', val);
+    this._setMode(val);
   }
 
-  constructor(form: Form, config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer);
+  constructor(
+    form: Form,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    @Optional() reorder: ItemReorder
+  ) {
+    super(config, elementRef, renderer, 'item');
 
-    this.mode = config.get('mode');
+    this._setName(elementRef);
+    this._shouldHaveReorder = !!reorder;
     this.id = form.nextId().toString();
+
+    // auto add "tappable" attribute to ion-item components that have a click listener
+    if (!(<any>renderer).orgListen) {
+      (<any>renderer).orgListen = renderer.listen;
+      renderer.listen = function(renderElement: HTMLElement, name: string, callback: Function): Function {
+        if (name === 'click' && renderElement.setAttribute) {
+          renderElement.setAttribute('tappable', '');
+        }
+        return (<any>renderer).orgListen(renderElement, name, callback);
+      };
+    }
   }
 
   /**
@@ -353,9 +374,23 @@ export class Item extends Ion {
     }
   }
 
-  _updateColor(newColor: string, colorClass?: string) {
-    colorClass = colorClass || 'item'; // item-radio
-    this._setColor(colorClass, newColor);
+  /**
+   * @private
+   */
+  _updateColor(newColor: string, componentName?: string) {
+    componentName = componentName || 'item'; // item-radio
+    this._setColor(newColor, componentName);
+  }
+
+  /**
+   * @private
+   */
+  _setName(elementRef: ElementRef) {
+    let nodeName = elementRef.nativeElement.nodeName.replace('ION-', '');
+
+    if (nodeName === 'LIST-HEADER' || nodeName === 'ITEM-DIVIDER') {
+      this._name = nodeName;
+    }
   }
 
   /**
@@ -411,6 +446,38 @@ export class Item extends Ion {
       icon.setElementClass('item-icon', true);
     });
   }
+}
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'ion-item-divider',
+  host: {
+    'class': 'item-divider'
+  }
+})
+export class ItemDivider extends Ion {
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor(val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode(val);
+  }
+
+  constructor(form: Form, config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer, 'item-divider');
+  }
 
 }
 
@@ -423,7 +490,7 @@ export class Item extends Ion {
     'class': 'item-block'
   }
 })
-export class ItemContent {}
+export class ItemContent { }
 
 
 /**
@@ -432,4 +499,4 @@ export class ItemContent {}
 @Directive({
   selector: 'ion-item-group'
 })
-export class ItemGroup {}
+export class ItemGroup { }

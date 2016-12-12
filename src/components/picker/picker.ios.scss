@@ -3,24 +3,49 @@
 // iOS Picker
 // --------------------------------------------------
 
+/// @prop - Height of the picker wrapper
 $picker-ios-height:                            260px !default;
+
+/// @prop - Border color of the picker wrapper
 $picker-ios-border-color:                      $list-ios-border-color !default;
+
+/// @prop - Background of the picker wrapper
 $picker-ios-background-color:                  $list-ios-background-color !default;
 
+/// @prop - Height of the picker toolbar
 $picker-ios-toolbar-height:                    44px !default;
+
+/// @prop - Background color of the picker toolbar
 $picker-ios-toolbar-background-color:          $picker-ios-background-color !default;
 
+/// @prop - Height of the picker button
 $picker-ios-button-height:                     $picker-ios-toolbar-height !default;
+
+/// @prop - Text color of the picker button
 $picker-ios-button-text-color:                 color($colors-ios, primary) !default;
+
+/// @prop - Background of the picker button
 $picker-ios-button-background-color:           transparent !default;
 
+/// @prop - Padding of the picker column
 $picker-ios-column-padding:                    0 4px !default;
+
+/// @prop - Perspective of the picker column
 $picker-ios-column-perspective:                1000px !default;
 
+/// @prop - Padding of the picker option
 $picker-ios-option-padding:                    0 !default;
+
+/// @prop - Text color of the picker option
 $picker-ios-option-text-color:                 $list-ios-text-color !default;
+
+/// @prop - Font size of the picker option
 $picker-ios-option-font-size:                  20px !default;
+
+/// @prop - Height of the picker option
 $picker-ios-option-height:                     42px !default;
+
+/// @prop - Offset y of the picker option
 $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-ios-toolbar-height) / 2) - ($picker-ios-option-height / 2) - 10 !default;
 
 
@@ -48,6 +73,10 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
   text-align: right;
 }
 
+.picker-ios .picker-toolbar-button:last-child .picker-button {
+  font-weight: $button-ios-strong-font-weight;
+}
+
 .picker-ios .picker-toolbar-cancel {
   font-weight: normal;
 
@@ -65,7 +94,7 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
 }
 
 .picker-columns {
-  height: $picker-ios-height - $picker-ios-toolbar-height;
+  height: $picker-ios-height - $picker-ios-toolbar-height - 1;
 
   perspective: $picker-ios-column-perspective;
 }
@@ -94,8 +123,11 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
   margin: 0;
   padding: $picker-ios-option-padding;
 
+  height: 4.6rem;
+
   font-size: $picker-ios-option-font-size;
   line-height: $picker-ios-option-height;
+  color: $picker-ios-option-text-color;
 
   background: transparent;
   transform-origin: center center;

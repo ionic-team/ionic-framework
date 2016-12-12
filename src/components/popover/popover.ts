@@ -62,7 +62,7 @@ export class Popover extends ViewController {
  * below for all available options.
  *
  * ### Presenting
- * To present a popover, call the `present` method on a [PopoverController](../../nav/PopoverConroller) instance.
+ * To present a popover, call the `present` method on a PopoverController instance.
  * In order to position the popover relative to the element clicked, a click event
  * needs to be passed into the options of the the `present method. If the event
  * is not passed, the popover will be positioned in the center of the current
@@ -71,7 +71,7 @@ export class Popover extends ViewController {
  * ### Dismissing
  * To dismiss the popover after creation, call the `dismiss()` method on the
  * `Popover` instance. The popover can also be dismissed from within the popover's
- * view by calling the `dismiss()` method on the [ViewController](../../nav/ViewController).
+ * view by calling the `dismiss()` method on the [ViewController](../../navigation/ViewController).
  * The `dismiss()` call accepts an optional parameter that will be passed to the callback described
  * as follows. The `onDidDismiss(<func>)` function can be called to set up a callback action that will
  * be performed after the popover is dismissed, receiving the parameter passed to `dismiss()`.

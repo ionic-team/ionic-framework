@@ -3,22 +3,55 @@
 // iOS List
 // --------------------------------------------------
 
+/// @prop - Margin top of the list
 $list-ios-margin-top:                 10px !default;
+
+/// @prop - Margin right of the list
 $list-ios-margin-right:               0 !default;
+
+/// @prop - Margin bottom of the list
 $list-ios-margin-bottom:              32px !default;
+
+/// @prop - Margin left of the list
 $list-ios-margin-left:                0 !default;
 
+/// @prop - Margin top of the inset list
 $list-inset-ios-margin-top:           16px !default;
+
+/// @prop - Margin right of the inset list
 $list-inset-ios-margin-right:         16px !default;
+
+/// @prop - Margin bottom of the inset list
 $list-inset-ios-margin-bottom:        16px !default;
+
+/// @prop - Margin left of the inset list
 $list-inset-ios-margin-left:          16px !default;
+
+/// @prop - Border radius of the inset list
 $list-inset-ios-border-radius:        4px !default;
 
+/// @prop - Padding left of the header in a list
 $list-ios-header-padding-left:        $item-ios-padding-left !default;
+
+/// @prop - Border bottom of the header in a list
+$list-ios-header-border-bottom:       $hairlines-width solid $list-ios-border-color !default;
+
+/// @prop - Font size of the header in a list
 $list-ios-header-font-size:           1.2rem !default;
+
+/// @prop - Font weight of the header in a list
 $list-ios-header-font-weight:         500 !default;
+
+/// @prop - Letter spacing of the header in a list
 $list-ios-header-letter-spacing:      .1rem !default;
+
+/// @prop - Text transform of the header in a list
+$list-ios-header-text-transform:      uppercase !default;
+
+/// @prop - Text color of the header in a list
 $list-ios-header-color:               #333 !default;
+
+/// @prop - Background color of the header in a list
 $list-ios-header-background-color:    transparent !default;
 
 
@@ -140,11 +173,22 @@ $list-ios-header-background-color:    transparent !default;
 
   padding-left: $list-ios-header-padding-left;
 
-  border-bottom: $hairlines-width solid $list-ios-border-color;
+  border-bottom: $list-ios-header-border-bottom;
   font-size: $list-ios-header-font-size;
   font-weight: $list-ios-header-font-weight;
   letter-spacing: $list-ios-header-letter-spacing;
-  text-transform: uppercase;
+  text-transform: $list-ios-header-text-transform;
   color: $list-ios-header-color;
   background: $list-ios-header-background-color;
+}
+
+
+// Generate iOS List Header Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+  .list-header-ios-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
 }

@@ -3,25 +3,55 @@
 // Windows Item
 // --------------------------------------------------
 
+/// @prop - Font size of the item text
 $item-wp-body-text-font-size:        1.4rem !default;
+
+/// @prop - line height of the item text
 $item-wp-body-text-line-height:      1.5 !default;
+
+/// @prop - Background color of the item
 $item-wp-body-background-color:      $list-wp-background-color !default;
+
+/// @prop - Color of the item text
 $item-wp-body-text-color:            $list-wp-text-color !default;
+
+/// @prop - Color of the item paragraph
 $item-wp-paragraph-text-color:       #666 !default;
 
+/// @prop - Font size of the item
 $item-wp-font-size:                  1.6rem !default;
-$item-wp-avatar-size:                4rem !default;
-$item-wp-thumbnail-size:             8rem !default;
-$item-wp-note-color:                 $input-wp-border-color !default;
 
+/// @prop - Size of the avatar in the item
+$item-wp-avatar-size:                40px !default;
+
+/// @prop - Size of the thumbnail in the item
+$item-wp-thumbnail-size:             80px !default;
+
+/// @prop - Shows the detail arrow icon on an item
 $item-wp-detail-push-show:           false !default;
+
+/// @prop - Color of the detail arrow icon
 $item-wp-detail-push-color:          $input-wp-border-color !default;
+
+/// @prop - Icon for the detail arrow
 $item-wp-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-wp-detail-push-color}'/></svg>" !default;
 
+/// @prop - Color for the divider
+$item-wp-divider-color:              $list-wp-text-color !default;
+
+/// @prop - Background for the divider
 $item-wp-divider-background:         #fff !default;
-$item-wp-divider-color:              #222 !default;
+
+/// @prop - Bodrer bottom for the divider
+$item-wp-divider-border-bottom:      1px solid $list-wp-border-color !default;
+
+/// @prop - Font size for the divider
+$item-wp-divider-font-size:          2rem !default;
+
+/// @prop - Padding for the divider
 $item-wp-divider-padding:            5px 15px !default;
 
+/// @prop - Background for the sliding content
 $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 
@@ -158,45 +188,56 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   margin: ($item-wp-padding-right / 2);
 }
 
+
+// Windows Item Avatar
+// --------------------------------------------------
+
 .item-wp ion-avatar {
   min-width: $item-wp-avatar-size;
   min-height: $item-wp-avatar-size;
 }
 
+.item-wp ion-avatar ion-img,
 .item-wp ion-avatar img {
-  max-width: $item-wp-avatar-size;
-  max-height: $item-wp-avatar-size;
+  overflow: hidden;
 
-  border-radius: $item-wp-avatar-size / 2;
+  width: $item-wp-avatar-size;
+  height: $item-wp-avatar-size;
+
+  border-radius: 50%;
 }
+
+
+// Windows Item Thumbnail
+// --------------------------------------------------
 
 .item-wp ion-thumbnail {
   min-width: $item-wp-thumbnail-size;
   min-height: $item-wp-thumbnail-size;
 }
 
+.item-wp ion-thumbnail ion-img,
 .item-wp ion-thumbnail img {
-  max-width: $item-wp-thumbnail-size;
-  max-height: $item-wp-thumbnail-size;
-}
-
-.item-wp ion-note {
-  color: $item-wp-note-color;
+  width: $item-wp-thumbnail-size;
+  height: $item-wp-thumbnail-size;
 }
 
 
 // Windows Item Divider
 // --------------------------------------------------
 
-ion-item-divider.item-wp {
+.item-divider-wp {
   padding-left: $item-wp-padding-left;
+
+  border-bottom: $item-wp-divider-border-bottom;
+  font-size: $item-wp-divider-font-size;
 
   color: $item-wp-divider-color;
   background-color: $item-wp-divider-background;
 }
 
 
-// Generate Windows Item Divider Colors
+// Generate Windows Item and Item Divider Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
@@ -206,9 +247,18 @@ ion-item-divider.item-wp {
     color: $color-base;
   }
 
-  .item-wp-#{$color-name} {
+  .item-wp-#{$color-name},
+  .item-divider-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    p {
+      color: $color-contrast;
+    }
+
+    &.activated {
+      background-color: color-shade($color-base);
+    }
   }
 }
 

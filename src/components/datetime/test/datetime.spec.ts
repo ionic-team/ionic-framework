@@ -107,7 +107,77 @@ describe('DateTime', () => {
 
   });
 
+  describe('writeValue', () => {
+
+    it('should updateText with default MMM D, YYYY when no displayFormat or pickerFormat', () => {
+      datetime.ngAfterContentInit();
+      datetime.writeValue('1994-12-15T13:47:20.789Z');
+
+      expect(datetime._text).toEqual('Dec 15, 1994');
+    });
+
+    it('should updateText with pickerFormat when no displayFormat', () => {
+      datetime.pickerFormat = 'YYYY';
+      datetime.ngAfterContentInit();
+      datetime.writeValue('1994-12-15T13:47:20.789Z');
+
+      expect(datetime._text).toEqual('1994');
+    });
+
+    it('should updateText with displayFormat when no pickerFormat', () => {
+      datetime.displayFormat = 'YYYY';
+      datetime.ngAfterContentInit();
+      datetime.writeValue('1994-12-15T13:47:20.789Z');
+
+      expect(datetime._text).toEqual('1994');
+    });
+
+  });
+
   describe('generate', () => {
+
+    it('should generate with default MMM D, YYYY when no displayFormat or pickerFormat', () => {
+      datetime.monthShortNames = customLocale.monthShortNames;
+      datetime.ngAfterContentInit();
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+
+      var picker = new Picker(mockApp());
+      datetime.generate(picker);
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(3);
+      expect(columns[0].name).toEqual('month');
+      expect(columns[1].name).toEqual('day');
+      expect(columns[2].name).toEqual('year');
+    });
+
+    it('should generate with only displayFormat', () => {
+      datetime.monthShortNames = customLocale.monthShortNames;
+      datetime.ngAfterContentInit();
+      datetime.displayFormat = 'YYYY';
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+
+      var picker = new Picker(mockApp());
+      datetime.generate(picker);
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(1);
+      expect(columns[0].name).toEqual('year');
+    });
+
+    it('should generate with only pickerFormat', () => {
+      datetime.monthShortNames = customLocale.monthShortNames;
+      datetime.ngAfterContentInit();
+      datetime.pickerFormat = 'YYYY';
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+
+      var picker = new Picker(mockApp());
+      datetime.generate(picker);
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(1);
+      expect(columns[0].name).toEqual('year');
+    });
 
     it('should generate with custom locale short month names from input property', () => {
       datetime.monthShortNames = customLocale.monthShortNames;
@@ -253,6 +323,68 @@ describe('DateTime', () => {
       expect(datetime._max.hour).toEqual(23);
       expect(datetime._max.minute).toEqual(59);
       expect(datetime._max.second).toEqual(59);
+    });
+
+    it('should set max and min date when neither set', () => {
+      const todaysDate = new Date();
+      todaysDate.setFullYear(1994);
+
+      datetime.calcMinMax(todaysDate);
+
+      expect(datetime._min.year).toEqual(1894);
+      expect(datetime._max.year).toEqual(1994);
+    });
+
+    it('should set max date when min date far back in time, and only min set', () => {
+      const todaysDate = new Date();
+      todaysDate.setFullYear(1994);
+
+      datetime.min = '1776';
+      datetime.calcMinMax(todaysDate);
+
+      expect(datetime._min.year).toEqual(1776);
+      expect(datetime._max.year).toEqual(1994);
+    });
+
+    it('should reset min.day when greater than max.day and the same year and month', () => {
+      datetime.min = '1994-12-18T13:47:20.789Z';
+      datetime.max = '1994-12-15T13:47:20.789Z';
+      datetime.calcMinMax();
+
+      expect(datetime._min.year).toEqual(1994);
+      expect(datetime._min.month).toEqual(12);
+      expect(datetime._min.day).toEqual(1);
+      expect(datetime._max.year).toEqual(1994);
+      expect(datetime._max.month).toEqual(12);
+      expect(datetime._max.day).toEqual(15);
+    });
+
+    it('should reset min.month when greater than max.month and the same year', () => {
+      datetime.min = '1994-12-15T13:47:20.789Z';
+      datetime.max = '1994-10-15T13:47:20.789Z';
+      datetime.calcMinMax();
+
+      expect(datetime._min.year).toEqual(1994);
+      expect(datetime._min.month).toEqual(1);
+      expect(datetime._max.year).toEqual(1994);
+      expect(datetime._max.month).toEqual(10);
+    });
+
+    it('should reset min.year when greater than max.year', () => {
+      datetime.min = '1876';
+      datetime.max = '1776';
+      datetime.calcMinMax();
+
+      expect(datetime._min.year).toEqual(1676);
+      expect(datetime._max.year).toEqual(1776);
+    });
+
+    it('should set min date when max date far back in time, and only max set', () => {
+      datetime.max = '1776';
+      datetime.calcMinMax();
+
+      expect(datetime._min.year).toEqual(1676);
+      expect(datetime._max.year).toEqual(1776);
     });
 
     it('should max date from max input string', () => {

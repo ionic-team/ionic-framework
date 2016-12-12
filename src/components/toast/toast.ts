@@ -56,6 +56,7 @@ export class Toast extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
+    navOptions.disableApp = false;
     return this._app.present(this, navOptions, AppPortal.TOAST);
   }
 

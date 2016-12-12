@@ -3,7 +3,8 @@ import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild,
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
-
+import { GestureController, BlockerDelegate, GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE } from '../../gestures/gesture-controller';
+import { assert } from '../../util/util';
 
 /**
  * @private
@@ -11,7 +12,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-modal',
   template:
-    '<ion-backdrop disableScroll="false" (click)="_bdClick()"></ion-backdrop>' +
+    '<ion-backdrop (click)="_bdClick()" [class.backdrop-no-tappable]="!_bdDismiss"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
       '<div #viewport nav-viewport></div>' +
     '</div>'
@@ -20,17 +21,27 @@ export class ModalCmp {
 
   @ViewChild('viewport', { read: ViewContainerRef }) _viewport: ViewContainerRef;
 
-  /** @private  */
   _bdDismiss: boolean;
-
-  /** @private */
   _enabled: boolean;
+  _gestureBlocker: BlockerDelegate;
 
-  constructor(public _cfr: ComponentFactoryResolver, public _renderer: Renderer, public _navParams: NavParams, public _viewCtrl: ViewController) {
-    this._bdDismiss = _navParams.data.opts.enableBackdropDismiss;
+  constructor(
+    public _cfr: ComponentFactoryResolver,
+    public _renderer: Renderer,
+    public _navParams: NavParams,
+    public _viewCtrl: ViewController,
+    gestureCtrl: GestureController
+  ) {
+    let opts = _navParams.get('opts');
+    assert(opts, 'modal data must be valid');
+
+    this._gestureBlocker = gestureCtrl.createBlocker({
+      disable: [GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE]
+    });
+    this._bdDismiss = opts.enableBackdropDismiss;
   }
 
-  ionViewWillLoad() {
+  ionViewPreLoad() {
     this._load(this._navParams.data.component);
   }
 
@@ -46,7 +57,18 @@ export class ModalCmp {
       this._setCssClass(componentRef, 'ion-page');
       this._setCssClass(componentRef, 'show-page');
       this._enabled = true;
+
+      this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
+      this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
     }
+  }
+
+  _viewWillEnter() {
+    this._gestureBlocker.block();
+  }
+
+  _viewDidLeave() {
+    this._gestureBlocker.unblock();
   }
 
   /** @private */
@@ -56,7 +78,9 @@ export class ModalCmp {
 
   _bdClick() {
     if (this._enabled && this._bdDismiss) {
-      return this._viewCtrl.dismiss(null, 'backdrop');
+      return this._viewCtrl.dismiss(null, 'backdrop').catch(() => {
+        console.debug('Dismiss modal by clicking backdrop was cancelled');
+      });
     }
   }
 
@@ -65,5 +89,10 @@ export class ModalCmp {
     if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE) {
       this._bdClick();
     }
+  }
+
+  ngOnDestroy() {
+    assert(this._gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
+    this._gestureBlocker.destroy();
   }
 }

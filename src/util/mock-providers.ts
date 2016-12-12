@@ -3,14 +3,16 @@ import { Location } from '@angular/common';
 
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
-import { IonicApp } from '../components/app/app-root';
 import { Config } from '../config/config';
+import { Content } from '../components/content/content';
 import { DeepLinker } from '../navigation/deep-linker';
-import { Form } from './form';
+import { DomController } from './dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
+import { Haptic } from './haptic';
+import { IonicApp } from '../components/app/app-root';
 import { Keyboard } from './keyboard';
 import { Menu } from '../components/menu/menu';
-import { ViewState, DeepLinkConfig } from '../navigation/nav-util';
+import { NavControllerBase } from '../navigation/nav-controller-base';
 import { OverlayPortal } from '../components/nav/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
 import { Platform } from '../platform/platform';
@@ -20,9 +22,8 @@ import { Tabs }  from '../components/tabs/tabs';
 import { TransitionController } from '../transitions/transition-controller';
 import { UrlSerializer } from '../navigation/url-serializer';
 import { ViewController } from '../navigation/view-controller';
+import { ViewState, DeepLinkConfig } from '../navigation/nav-util';
 
-import { NavControllerBase } from '../navigation/nav-controller-base';
-import { Haptic } from './haptic';
 
 export const mockConfig = function(config?: any, url: string = '/', platform?: Platform) {
   const c = new Config();
@@ -55,6 +56,7 @@ export const mockIonicApp = function(app: App, config: Config, platform: Platfor
   appRoot._loadingPortal = mockOverlayPortal(app, config, platform);
   appRoot._toastPortal = mockOverlayPortal(app, config, platform);
   appRoot._overlayPortal = mockOverlayPortal(app, config, platform);
+  appRoot._modalPortal = mockOverlayPortal(app, config, platform);
 
   return appRoot;
 };
@@ -71,16 +73,12 @@ export const mockTrasitionController = function(config: Config) {
   return trnsCtrl;
 };
 
+export const mockContent = function(): Content {
+  return new Content(mockConfig(), mockElementRef(), mockRenderer(), null, null, mockZone(), null, null, new MockDomController());
+};
+
 export const mockZone = function(): NgZone {
-  let zone: any = {
-    run: function(cb: any) {
-      cb();
-    },
-    runOutsideAngular: function(cb: any) {
-      cb();
-    }
-  };
-  return zone;
+  return new NgZone(false);
 };
 
 export const mockChangeDetectorRef = function(): ChangeDetectorRef {
@@ -239,11 +237,11 @@ export const mockNavController = function(): NavControllerBase {
 
   let app = mockApp(config, platform);
 
-  let form = new Form();
-
   let zone = mockZone();
 
-  let keyboard = new Keyboard(config, form, zone);
+  let dom = new MockDomController();
+
+  let keyboard = new Keyboard(config, zone, dom);
 
   let elementRef = mockElementRef();
 
@@ -268,7 +266,8 @@ export const mockNavController = function(): NavControllerBase {
     componentFactoryResolver,
     gestureCtrl,
     trnsCtrl,
-    linker
+    linker,
+    dom
   );
 
   nav._viewInit = function(enteringView: ViewController) {
@@ -289,11 +288,11 @@ export const mockNavController = function(): NavControllerBase {
 };
 
 export const mockOverlayPortal = function(app: App, config: Config, platform: Platform): OverlayPortal {
-  let form = new Form();
-
   let zone = mockZone();
 
-  let keyboard = new Keyboard(config, form, zone);
+  let dom = new MockDomController();
+
+  let keyboard = new Keyboard(config, zone, dom);
 
   let elementRef = mockElementRef();
 
@@ -320,7 +319,8 @@ export const mockOverlayPortal = function(app: App, config: Config, platform: Pl
     gestureCtrl,
     null,
     deepLinker,
-    null
+    null,
+    dom
   );
 };
 
@@ -331,11 +331,11 @@ export const mockTab = function(parentTabs: Tabs): Tab {
 
   let app = (<any>parentTabs)._app || mockApp(config, platform);
 
-  let form = new Form();
-
   let zone = mockZone();
 
-  let keyboard = new Keyboard(config, form, zone);
+  let dom = new MockDomController();
+
+  let keyboard = new Keyboard(config, zone, dom);
 
   let elementRef = mockElementRef();
 
@@ -361,7 +361,8 @@ export const mockTab = function(parentTabs: Tabs): Tab {
     changeDetectorRef,
     gestureCtrl,
     null,
-    linker
+    linker,
+    dom
   );
 
   tab.load = (opts: any, cb: Function) => {
@@ -382,8 +383,12 @@ export const mockTabs = function(app?: App): Tabs {
   return new Tabs(null, null, app, config, elementRef, platform, renderer, linker);
 };
 
-export const mockMenu = function(): Menu {
-  return new Menu(null, null, null, null, null, null, null, null);
+
+export const mockMenu = function (): Menu {
+  let app = mockApp();
+  let gestureCtrl = new GestureController(app);
+  let dom = new DomController();
+  return new Menu(null, null, null, null, null, null, null, gestureCtrl, dom, app);
 };
 
 export const mockDeepLinkConfig = function(links?: any[]): DeepLinkConfig {
@@ -401,6 +406,22 @@ export const mockDeepLinkConfig = function(links?: any[]): DeepLinkConfig {
 export const mockHaptic = function (): Haptic {
   return new Haptic(null);
 };
+
+
+
+export class MockDomController extends DomController {
+  private timeStamp = 0;
+
+  protected queue() {}
+
+  flush(done: any) {
+    setTimeout(() => {
+      const timeStamp = ++this.timeStamp;
+      super.flush(timeStamp);
+      done(timeStamp);
+    }, 0);
+  }
+}
 
 export class MockView {}
 export class MockView1 {}

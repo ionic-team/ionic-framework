@@ -117,6 +117,13 @@ $button-wp-round-padding:                                 $button-round-padding 
 $button-wp-round-border-radius:                           $button-round-border-radius !default;
 
 
+// Material Design Decorator Button
+// --------------------------------------------------
+
+/// @prop - Font weight of the strong button
+$button-wp-strong-font-weight:                            bold !default;
+
+
 // Windows Default Button
 // --------------------------------------------------
 
@@ -314,4 +321,12 @@ $button-wp-round-border-radius:                           $button-round-border-r
   @include wp-button-default($color-name, $color-base, $color-contrast);
   @include wp-button-outline($color-name, $color-base, $color-contrast);
   @include wp-button-clear($color-name, $color-base, $color-contrast);
+}
+
+
+// WP strong Button
+// --------------------------------------------------
+
+.button-strong-wp {
+  font-weight: $button-wp-strong-font-weight;
 }

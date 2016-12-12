@@ -3,25 +3,50 @@
 // iOS Input
 // --------------------------------------------------
 
+/// @prop - Background color of the input
 $text-input-ios-background-color:          $list-ios-background-color !default;
 
+/// @prop - Margin top of the input
 $text-input-ios-margin-top:                $item-ios-padding-top !default;
+
+/// @prop - Margin right of the input
 $text-input-ios-margin-right:              ($item-ios-padding-right / 2) !default;
+
+/// @prop - Margin bottom of the input
 $text-input-ios-margin-bottom:             $item-ios-padding-bottom !default;
+
+/// @prop - Margin left of the input
 $text-input-ios-margin-left:               0 !default;
 
+/// @prop - Width of the icon used to clear the input
 $text-input-ios-input-clear-icon-width:    30px !default;
+
+/// @prop - Color of the icon used to clear the input
 $text-input-ios-input-clear-icon-color:    rgba(0, 0, 0, .5) !default;
+
+/// @prop - Icon used to clear the input
 $text-input-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $text-input-ios-input-clear-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
+
+/// @prop - Size of the icon used to clear the input
 $text-input-ios-input-clear-icon-size:     18px !default;
 
+/// @prop - Show the focus highlight when the input has focus
 $text-input-ios-show-focus-highlight:      false !default;
+
+/// @prop - Show the valid highlight when it is valid and has a value
 $text-input-ios-show-valid-highlight:      $text-input-ios-show-focus-highlight !default;
+
+/// @prop - Show the invalid highlight when it is invalid and has value
 $text-input-ios-show-invalid-highlight:    $text-input-ios-show-focus-highlight !default;
 
+/// @prop - Color of the input highlight
 $text-input-ios-highlight-color:           color($colors-ios, primary) !default;
-$text-input-ios-highlight-color-valid:     color($colors-ios, secondary) !default;
-$text-input-ios-highlight-color-invalid:   color($colors-ios, danger) !default;
+
+/// @prop - Color of the input highlight when valid
+$text-input-ios-highlight-color-valid:     $text-input-highlight-color-valid !default;
+
+/// @prop - Color of the input highlight when invalid
+$text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !default;
 
 
 // iOS Default Input
@@ -119,11 +144,6 @@ $text-input-ios-highlight-color-invalid:   color($colors-ios, danger) !default;
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 0;
-}
-
-.item-label-floating .text-input-ios.cloned-input,
-.item-label-stacked .text-input-ios.cloned-input {
-  top: 30px;
 }
 
 

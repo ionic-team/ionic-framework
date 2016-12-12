@@ -24,11 +24,11 @@ export const MODE_IOS: any = {
   modalLeave: 'modal-slide-out',
 
   pageTransition: 'ios-transition',
-  pageTransitionDelay: 16,
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
   pickerRotateFactor: -0.46,
+  pickerScaleFactor: 1,
 
   popoverEnter: 'popover-pop-in',
   popoverLeave: 'popover-pop-out',
@@ -67,11 +67,11 @@ export const MODE_MD: any = {
   modalLeave: 'modal-md-slide-out',
 
   pageTransition: 'md-transition',
-  pageTransitionDelay: 64,
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
   pickerRotateFactor: 0,
+  pickerScaleFactor: 0.81,
 
   popoverEnter: 'popover-md-pop-in',
   popoverLeave: 'popover-md-pop-out',
@@ -110,11 +110,11 @@ export const MODE_WP: any = {
   modalLeave: 'modal-md-slide-out',
 
   pageTransition: 'wp-transition',
-  pageTransitionDelay: 96,
 
   pickerEnter: 'picker-slide-in',
   pickerLeave: 'picker-slide-out',
   pickerRotateFactor: 0,
+  pickerScaleFactor: 0.81,
 
   popoverEnter: 'popover-md-pop-in',
   popoverLeave: 'popover-md-pop-out',

@@ -7,8 +7,8 @@ import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
 import * as multiEntry from 'rollup-plugin-multi-entry';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
-import * as uglify from 'rollup-plugin-uglify';
 import * as through from 'through2';
+import * as uglifyPlugin from 'rollup-plugin-uglify';
 
 export function mergeObjects(obj1: any, obj2: any ) {
   if (! obj1) {
@@ -53,14 +53,14 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
 }
 
 function removeDebugStatements() {
-  let replacer = new Replacer(['console.debug', 'assert']);
+  let replacer = new Replacer(['console.debug', 'assert', 'runInDev']);
   return through.obj(function (file, encoding, callback) {
     const content = file.contents.toString();
     const cleanedJs = replacer.replace(content);
     file.contents =  new Buffer(cleanedJs, 'utf8');
     callback(null, file);
   });
-};
+}
 
 export function copySourceToDest(destinationPath: string, excludeSpecs: boolean, excludeE2e: boolean, stripDebug: boolean) {
   let glob = [`${SRC_ROOT}/**/*.ts`];
@@ -74,8 +74,10 @@ export function copySourceToDest(destinationPath: string, excludeSpecs: boolean,
   }
   let stream = src(glob);
   if (stripDebug) {
+    console.log('Removing debug statements:', destinationPath);
     stream = stream.pipe(removeDebugStatements());
   }
+
   return stream.pipe(dest(destinationPath));
 }
 
@@ -205,7 +207,6 @@ export function writePolyfills(outputDirectory: string) {
     'node_modules/core-js/es6/object.js',
     'node_modules/core-js/es6/parse-float.js',
     'node_modules/core-js/es6/parse-int.js',
-    'node_modules/core-js/es6/promise.js',
     'node_modules/core-js/es6/set.js',
     'node_modules/core-js/es6/string.js',
     'node_modules/core-js/es7/reflect.js',
@@ -215,7 +216,23 @@ export function writePolyfills(outputDirectory: string) {
   ];
 
   const ALL_ENTRIES = [
-    'node_modules/core-js/es6/index.js',
+    'node_modules/core-js/es6/array.js',
+    'node_modules/core-js/es6/date.js',
+    'node_modules/core-js/es6/function.js',
+    'node_modules/core-js/es6/map.js',
+    'node_modules/core-js/es6/math.js',
+    'node_modules/core-js/es6/number.js',
+    'node_modules/core-js/es6/object.js',
+    'node_modules/core-js/es6/parse-float.js',
+    'node_modules/core-js/es6/parse-int.js',
+    'node_modules/core-js/es6/reflect.js',
+    'node_modules/core-js/es6/regexp.js',
+    'node_modules/core-js/es6/set.js',
+    'node_modules/core-js/es6/string.js',
+    'node_modules/core-js/es6/symbol.js',
+    'node_modules/core-js/es6/typed.js',
+    'node_modules/core-js/es6/weak-map.js',
+    'node_modules/core-js/es6/weak-set.js',
     'node_modules/core-js/es7/reflect.js',
     'node_modules/zone.js/dist/zone.js',
     'scripts/polyfill/polyfill.dom.js'
@@ -245,7 +262,7 @@ function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) 
         main: true
       }),
       commonjs(),
-      uglify()
+      uglifyPlugin()
     ]
   }).then((bundle) => {
     return bundle.write({

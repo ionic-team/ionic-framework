@@ -4,7 +4,7 @@ import { NgControl }  from '@angular/forms';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isPresent, isTrueProperty } from '../../util/util';
-import { Debouncer } from '../../util/debouncer';
+import { TimeoutDebouncer } from '../../util/debouncer';
 
 
 /**
@@ -30,8 +30,8 @@ import { Debouncer } from '../../util/debouncer';
   selector: 'ion-searchbar',
   template:
     '<div class="searchbar-input-container">' +
-      '<button ion-button (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" clear color="dark" class="searchbar-md-cancel" type="button">' +
-        '<ion-icon name="arrow-back"></ion-icon>' +
+      '<button ion-button mode="md" (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" clear color="dark" class="searchbar-md-cancel" type="button">' +
+        '<ion-icon name="md-arrow-back"></ion-icon>' +
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
       '<input #searchbarInput class="searchbar-input" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" ' +
@@ -40,14 +40,14 @@ import { Debouncer } from '../../util/debouncer';
         '[attr.autocomplete]="_autocomplete" ' +
         '[attr.autocorrect]="_autocorrect" ' +
         '[attr.spellcheck]="_spellcheck">' +
-      '<button ion-button clear class="searchbar-clear-icon" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button"></button>' +
+      '<button ion-button clear class="searchbar-clear-icon" [mode]="_mode" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button"></button>' +
     '</div>' +
-    '<button ion-button #cancelButton [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
+    '<button ion-button #cancelButton mode="ios" [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
   host: {
-    '[class.searchbar-animated]': 'animated',
+    '[class.searchbar-animated]': '_animated',
     '[class.searchbar-has-value]': '_value',
     '[class.searchbar-active]': '_isActive',
-    '[class.searchbar-show-cancel]': 'showCancelButton',
+    '[class.searchbar-show-cancel]': '_showCancelButton',
     '[class.searchbar-left-aligned]': '_shouldAlignLeft'
   },
   encapsulation: ViewEncapsulation.None
@@ -61,14 +61,16 @@ export class Searchbar extends Ion {
   _autocomplete: string = 'off';
   _autocorrect: string = 'off';
   _isActive: boolean = false;
-  _debouncer: Debouncer = new Debouncer(250);
+  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(250);
+  _showCancelButton: boolean = false;
+  _animated: boolean = false;
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
   set color(val: string) {
-    this._setColor('searchbar', val);
+    this._setColor( val);
   }
 
   /**
@@ -76,7 +78,7 @@ export class Searchbar extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('searchbar', val);
+    this._setMode( val);
   }
 
   /**
@@ -87,7 +89,13 @@ export class Searchbar extends Ion {
   /**
    * @input {boolean} Whether to show the cancel button or not. Default: `"false"`.
    */
-  @Input() showCancelButton: any = false;
+  @Input()
+  get showCancelButton(): boolean {
+    return this._showCancelButton;
+  }
+  set showCancelButton(val: boolean) {
+    this._showCancelButton = isTrueProperty(val);
+  }
 
   /**
    * @input {number} How long, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
@@ -135,9 +143,15 @@ export class Searchbar extends Ion {
   @Input() type: string = 'search';
 
   /**
-   * @input {string|boolean} Configures if the searchbar is animated or no. By default, animation is disabled.
+   * @input {boolean} Configures if the searchbar is animated or no. By default, animation is `false`.
    */
-  @Input() animated: string | boolean = false;
+  @Input()
+  get animated(): boolean {
+    return this._animated;
+  }
+  set animated(val: boolean) {
+    this._animated = isTrueProperty(val);
+  }
 
   /**
    * @output {event} When the Searchbar input has changed including cleared.
@@ -175,9 +189,7 @@ export class Searchbar extends Ion {
     renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'searchbar');
 
     // If the user passed a ngControl we need to set the valueAccessor
     if (ngControl) {
@@ -234,12 +246,12 @@ export class Searchbar extends Ion {
    * based on the input value and if it is focused. (ios only)
    */
   positionElements() {
-    let isAnimated = isTrueProperty(this.animated);
+    let isAnimated = this._animated;
     let prevAlignLeft = this._shouldAlignLeft;
     let shouldAlignLeft = (!isAnimated || (this._value && this._value.toString().trim() !== '') || this._sbHasFocus === true);
     this._shouldAlignLeft = shouldAlignLeft;
 
-    if (this._config.get('mode') !== 'ios') {
+    if (this._mode !== 'ios') {
       return;
     }
 

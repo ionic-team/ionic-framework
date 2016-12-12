@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, forwardRef, Inject, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, forwardRef, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -7,12 +7,13 @@ import { GestureController } from '../../gestures/gesture-controller';
 import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { TransitionController } from '../../transitions/transition-controller';
+import { DomController } from '../../util/dom-controller';
 
 /**
  * @private
  */
 @Directive({
-  selector: '[overlay-portal]'
+  selector: '[overlay-portal]',
 })
 export class OverlayPortal extends NavControllerBase {
   constructor(
@@ -26,9 +27,10 @@ export class OverlayPortal extends NavControllerBase {
     gestureCtrl: GestureController,
     transCtrl: TransitionController,
     @Optional() linker: DeepLinker,
-    viewPort: ViewContainerRef
+    viewPort: ViewContainerRef,
+    domCtrl: DomController,
   ) {
-    super(null, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
+    super(null, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
     this._isPortal = true;
     this._init = true;
     this.setViewport(viewPort);
@@ -38,4 +40,10 @@ export class OverlayPortal extends NavControllerBase {
     app.viewDidLeave.subscribe(this.dismissPageChangeViews.bind(this));
   }
 
+  @Input('overlay-portal')
+  set _overlayPortal(val: number) {
+    this._zIndexOffset = (val || 0);
+  }
+
 }
+

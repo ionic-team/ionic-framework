@@ -1,5 +1,11 @@
 
-export class Debouncer {
+
+export interface Debouncer {
+  debounce(callback: Function): void;
+  cancel(): void;
+}
+
+export class TimeoutDebouncer implements Debouncer {
   private timer: number = null;
   callback: Function;
 
@@ -11,14 +17,18 @@ export class Debouncer {
   }
 
   schedule() {
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
+    this.cancel();
     if (this.wait <= 0) {
       this.callback();
     } else {
       this.timer = setTimeout(this.callback, this.wait);
+    }
+  }
+
+  cancel() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
     }
   }
 

@@ -70,6 +70,13 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
           if (!resolvedExport.declarations) return;
 
           var exportDoc = createExportDoc(exportSymbol.name, resolvedExport, moduleDoc, basePath, parseInfo.typeChecker);
+
+          // Ignore exports marked as "@private" in jsDoc content
+          var jsDocContainsPrivate = (exportDoc.content || '').split('\n').some(function(commentRow) {
+            return commentRow.search(/@private|@access private/) >= 0;
+          });
+          if (jsDocContainsPrivate) return;
+
           log.debug('>>>> EXPORT: ' + exportDoc.name + ' (' + exportDoc.docType + ') from ' + moduleDoc.id);
 
           // Add this export doc to its module doc

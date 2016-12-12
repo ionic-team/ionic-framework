@@ -53,7 +53,7 @@ export class MDTransition extends PageTransition {
       // leaving content
       this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
       const leavingPage = new Animation(leavingView.pageRef());
-      this.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fromTo('opacity', 0.99, 0));
+      this.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fromTo('opacity', 1, 0));
     }
 
   }

@@ -3,6 +3,7 @@
 // iOS Toolbar
 // --------------------------------------------------
 
+/// @prop - Order of the toolbar elements
 $toolbar-order-ios: (
   back-button: 0,
   menu-toggle-start: 1,
@@ -14,17 +15,28 @@ $toolbar-order-ios: (
   menu-toggle-end: 7,
 );
 
-$toolbar-ios-padding:                       4px !default;
+/// @prop - Font size of the toolbar button
 $toolbar-ios-button-font-size:              1.7rem !default;
 
+/// @prop - Font size of the toolbar title
 $toolbar-ios-title-font-size:               1.7rem !default;
+
+/// @prop - Font weight of the toolbar title
 $toolbar-ios-title-font-weight:             600 !default;
+
+/// @prop - Text alignment of the toolbar title
 $toolbar-ios-title-text-align:              center !default;
+
+/// @prop - Text color of the toolbar title
 $toolbar-ios-title-text-color:              color-contrast($colors-ios, $toolbar-ios-background) !default;
 
+/// @prop - Text color of the toolbar button
 $toolbar-ios-button-color:                  color-contrast($colors-ios, $toolbar-ios-background, ios) !default;
+
+/// @prop - Border radius of the toolbar button
 $toolbar-ios-button-border-radius:          4px !default;
 
+/// @prop - Height of the navigation bar
 $navbar-ios-height:                         $toolbar-ios-height !default;
 
 
@@ -39,30 +51,33 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 // --------------------------------------------------
 
 .toolbar-background-ios {
-  border-top-width: $hairlines-width;
-  border-bottom-width: $hairlines-width;
-  border-style: solid;
-  border-color: $toolbar-ios-border-color;
   background: $toolbar-ios-background;
 }
 
-// iOS Toolbar Borders
+
+// iOS Header / Footer Borders
 // --------------------------------------------------
 
-ion-header .toolbar-ios:first-child .toolbar-background,
-ion-menu > .toolbar-ios:first-child .toolbar-background,
-.toolbar-ios[no-border-top] .toolbar-background {
-  border-top-width: 0;
+.header-ios,
+.footer-ios {
+  border-style: solid;
+  border-color: $toolbar-ios-border-color;
 }
 
-ion-footer .toolbar-ios:last-child .toolbar-background,
-.toolbar-ios[no-border-bottom] .toolbar-background {
+.header-ios {
+  border-width: 0 0 $hairlines-width;
+}
+
+.footer-ios {
+  border-width: $hairlines-width 0 0;
+}
+
+.header-ios[no-border] {
   border-bottom-width: 0;
 }
 
-.toolbar-ios[no-border] .toolbar-background {
+.footer-ios[no-border] {
   border-top-width: 0;
-  border-bottom-width: 0;
 }
 
 
@@ -104,7 +119,6 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
   .toolbar-ios-#{$color-name} {
 
     .toolbar-background-ios {
-      border-color: darken($color-base, 10%);
       background: $color-base;
     }
 
@@ -112,6 +126,12 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
     .bar-button-clear-ios,
     .bar-button-default-ios {
       color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+      @include ios-bar-button-default($color-name, $color-base, $color-contrast);
+      @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
+      @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
     }
   }
 }
@@ -147,7 +167,7 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
 // --------------------------------------------------
 
 .bar-button-ios {
-  padding: 0 5px;
+  padding: 0 4px;
 
   height: 32px;
 
@@ -351,4 +371,12 @@ ion-footer .toolbar-ios:last-child .toolbar-background,
   @include ios-bar-button-default($color-name, $color-base, $color-contrast);
   @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
   @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
+}
+
+
+// iOS strong Button
+// --------------------------------------------------
+
+.bar-button-strong-ios {
+  font-weight: $button-ios-strong-font-weight;
 }

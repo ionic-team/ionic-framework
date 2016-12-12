@@ -29,7 +29,7 @@ import { Toolbar } from './toolbar';
  * <ion-header>
  *
  *   <ion-navbar>
- *     <ion-title>Main Heder</ion-title>
+ *     <ion-title>Main Header</ion-title>
  *   </ion-navbar>
  *
  *   <ion-toolbar>
@@ -58,8 +58,7 @@ export class ToolbarTitle extends Ion {
     @Optional() toolbar: Toolbar,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
-    super(config, elementRef, renderer);
-    this._setMode('title', this._mode = config.get('mode'));
+    super(config, elementRef, renderer, 'title');
 
     toolbar && toolbar._setTitle(this);
     navbar && navbar._setTitle(this);

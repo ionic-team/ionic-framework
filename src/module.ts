@@ -10,12 +10,16 @@ import { HttpModule } from '@angular/http';
 import { ActionSheetController } from './components/action-sheet/action-sheet';
 import { AlertController } from './components/alert/alert';
 import { App } from './components/app/app';
+import { AppRootToken } from './components/app/app-root';
+import { ClickBlock } from './util/click-block';
 import { Config, ConfigToken, setupConfig } from './config/config';
 import { DeepLinker, setupDeepLinker } from './navigation/deep-linker';
+import { DomController } from './util/dom-controller';
 import { Events, setupProvideEvents } from './util/events';
 import { Form } from './util/form';
 import { GestureController } from './gestures/gesture-controller';
 import { Haptic } from './util/haptic';
+import { ImgLoader } from './components/img/img-loader';
 import { IonicGestureConfig } from './gestures/gesture-config';
 import { Keyboard } from './util/keyboard';
 import { LoadingController } from './components/loading/loading';
@@ -28,13 +32,10 @@ import { PopoverController } from './components/popover/popover';
 import { QueryParams, setupQueryParams, UrlToken } from './platform/query-params';
 import { TapClick, setupTapClick } from './components/tap-click/tap-click';
 import { ToastController } from './components/toast/toast';
-import { Translate } from './translation/translate';
 import { registerModeConfigs } from './config/mode-registry';
 import { registerTransitions } from './transitions/transition-registry';
 import { TransitionController } from './transitions/transition-controller';
-import { AppRootToken } from './components/app/app-root';
 import { UrlSerializer, setupUrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
-
 /**
  * Import Overlay Entry Components
  */
@@ -52,8 +53,10 @@ import { ToastCmp } from './components/toast/toast-component';
  * Export Providers
  */
 export { Config, setupConfig, ConfigToken } from './config/config';
+export { DomController, DomCallback } from './util/dom-controller';
 export { Platform, setupPlatform, UserAgentToken, DocumentDirToken, DocLangToken, NavigatorPlatformToken } from './platform/platform';
 export { Haptic } from './util/haptic';
+export { ImgLoader } from './components/img/img-loader';
 export { QueryParams, setupQueryParams, UrlToken } from './platform/query-params';
 export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
@@ -66,7 +69,7 @@ export { ViewController } from './navigation/view-controller';
 /**
  * @name IonicModule
  * @description
- * IonicModule is a NgModule that helps bootstrap a whole Ionic App. By passing a root component, IonicModule will make sure that all the components and directives from the framework are provided. This includes components such as Tabs, Menus, and Slides, as well as classes like AlertController.
+ * IonicModule is an NgModule that helps bootstrap a whole Ionic App. By passing a root component, IonicModule will make sure that all the components and directives from the framework are provided. This includes components such as Tabs, Menus, and Slides, as well as classes like AlertController.
  *
  *
  * We're also able to pass any configuration to our app as a second argument for `.forRoot`. This is any valid config property from [the Config Class](/docs/v2/api/config/Config/).
@@ -103,6 +106,7 @@ export { ViewController } from './navigation/view-controller';
   declarations: [
     ActionSheetCmp,
     AlertCmp,
+    ClickBlock,
     IONIC_DIRECTIVES,
     LoadingCmp,
     ModalCmp,
@@ -154,8 +158,8 @@ export class IonicModule {
         // useFactory: ionic app initializers
         { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
         { provide: APP_INITIALIZER, useFactory: registerTransitions, deps: [ Config ], multi: true },
-        { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform ], multi: true },
-        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, App, NgZone ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, App, NgZone, GestureController ], multi: true },
 
         // useClass
         { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
@@ -167,10 +171,12 @@ export class IonicModule {
         ActionSheetController,
         AlertController,
         App,
+        DomController,
         Events,
         Form,
-        Haptic,
         GestureController,
+        Haptic,
+        ImgLoader,
         Keyboard,
         LoadingController,
         Location,
@@ -180,7 +186,6 @@ export class IonicModule {
         PopoverController,
         TapClick,
         ToastController,
-        Translate,
         TransitionController,
 
         { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [ new Inject(APP_BASE_HREF), new Optional()], Config ] },

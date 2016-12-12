@@ -2,10 +2,26 @@ import { NgModule, Component, ViewChild } from '@angular/core';
 import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule, NavController, NavParams, Tabs, Tab, ModalController, ViewController } from '../../../..';
 
 @Component({
-  selector: 'my-cmp',
-  template: `<p>My Custom Component Test <ion-icon name="star"></ion-icon></p>`
+  selector: 'my-cmp2',
+  template: `<span style="color:green">{{value}}</span>`
 })
-export class MyCmpTest {}
+export class MyCmpTest2 {
+  value: string = 'Test Failed';
+}
+
+@Component({
+  selector: 'my-cmp',
+  template: `<my-cmp2></my-cmp2> <span style="color:green">{{value}}</span>`
+})
+export class MyCmpTest {
+  @ViewChild(MyCmpTest2) _label: MyCmpTest2;
+  label: MyCmpTest2;
+  value: string = 'Test Failed';
+
+  ngOnInit() {
+    this.label = this._label;
+  }
+}
 
 
 @Component({
@@ -22,11 +38,22 @@ export class MyCmpTest {}
       </ion-navbar>
     </ion-header>
     <ion-content>
+      <div padding>
+        <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+        <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+        <p>ionViewWillLoad ({{called.ionViewWillLoad}})</p>
+        <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+        <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+        <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+        <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+        <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
+        <my-cmp></my-cmp>
+      </div>
       <ion-list>
         <ion-list-header>
           {{title}}
         </ion-list-header>
-        <button ion-item class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</button>
+        <ion-item class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</ion-item>
         <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
         <button ion-item (click)="pushRedirect()">Push to Redirect</button>
         <button ion-item (click)="pushTabsPage()">Push to Tabs Page</button>
@@ -53,7 +80,6 @@ export class MyCmpTest {}
         <button ion-item *ngFor="let i of pages" (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
         <button ion-item (click)="content.scrollToTop()">Scroll to top</button>
       </ion-list>
-      <my-cmp></my-cmp>
     </ion-content>`
 })
 export class FirstPage {
@@ -61,39 +87,68 @@ export class FirstPage {
   title = 'First Page';
   pages: Array<number> = [];
   @ViewChild(Content) content: Content;
+  @ViewChild(MyCmpTest) myCmp: MyCmpTest;
   canLeave = true;
+  called: any;
 
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
     public alertCtrl: AlertController
-  ) {}
+  ) {
+    this.called = {
+      ionViewCanEnter: 0,
+      ionViewCanLeave: 0,
+      ionViewWillLoad: 0,
+      ionViewDidLoad: 0,
+      ionViewWillEnter: 0,
+      ionViewDidEnter: 0,
+      ionViewWillLeave: 0,
+      ionViewDidLeave: 0
+    };
+  }
+
+  ionViewWillLoad() {
+    console.log('ionViewWillLoad, FirstPage', this.viewCtrl.id);
+    this.called.ionViewWillLoad++;
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad, FirstPage');
     for (var i = 1; i <= 50; i++) {
       this.pages.push(i);
     }
+    if (!this.myCmp || !this.content || !this.myCmp.label) {
+      throw new Error('children are not loaded');
+    }
+    this.myCmp.value = '👍 self test passed!';
+    this.myCmp.label.value = '👍 children test passed!';
+    this.called.ionViewDidLoad++;
   }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter, FirstPage', this.viewCtrl.id);
+    this.called.ionViewWillEnter++;
   }
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter, FirstPage', this.viewCtrl.id);
+    this.called.ionViewDidEnter++;
   }
 
   ionViewWillLeave() {
     console.log('ionViewWillLeave, FirstPage', this.viewCtrl.id);
+    this.called.ionViewWillLeave++;
   }
 
   ionViewDidLeave() {
     console.log('ionViewDidLeave, FirstPage', this.viewCtrl.id);
+    this.called.ionViewDidLeave++;
   }
 
   ionViewWillUnload() {
     console.log('ionViewWillUnload, FirstPage', this.viewCtrl.id);
+    this.called.ionViewWillUnload++;
   }
 
   ionViewCanLeave() {
@@ -106,7 +161,14 @@ export class FirstPage {
     alert.addButton({ text: 'Umm, ok', role: 'cancel', });
     alert.present();
 
+    this.called.ionViewCanLeave++;
+
     return false;
+  }
+
+  ionViewCanEnter() {
+    this.called.ionViewCanEnter++;
+    return true;
   }
 
   setPages() {
@@ -196,7 +258,7 @@ export class FirstPage {
 }
 
 
-@Component({template: ''})
+@Component({template: '<ion-content></ion-content>'})
 export class RedirectPage {
   constructor(public navCtrl: NavController) { }
   ionViewDidEnter() {
@@ -311,7 +373,7 @@ export class FullPage {
           <button ion-button>S1g</button>
         </ion-buttons>
       </ion-navbar>
-      <ion-toolbar no-border-top>
+      <ion-toolbar>
         <ion-title>{{subheader}}</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -325,14 +387,14 @@ export class FullPage {
       <p><button ion-button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
       <div class="yellow"><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div></div>
 
-      <button ion-button ion-fixed (click)="presentAlert()">fixed button (alert)</button>
-      <div ion-fixed style="position: absolute; pointer-events: none; top:10px; bottom:10px; right:10px; width:50%; background: rgba(0,0,0,0.5);"></div>
+      <button ion-button ion-fixed no-margin color="danger" (click)="presentAlert()">fixed button (alert)</button>
+      <div ion-fixed style="position: absolute; pointer-events: none; top:0; bottom:0; right:0; width:50%; background: rgba(0,0,0,0.5);"></div>
     </ion-content>
     <ion-footer>
-      <ion-toolbar no-border-bottom>
+      <ion-toolbar>
         I'm a sub footer!
       </ion-toolbar>
-      <ion-toolbar no-border-top>
+      <ion-toolbar>
         <ion-title>Footer</ion-title>
       </ion-toolbar>
     </ion-footer>
@@ -410,7 +472,7 @@ export class PrimaryHeaderPage {
       </ion-navbar>
     </ion-header>
     <ion-content>
-      <ion-toolbar no-border-top>
+      <ion-toolbar>
         I'm a sub header in the content!
       </ion-toolbar>
       <ion-list>
@@ -428,10 +490,10 @@ export class PrimaryHeaderPage {
         <button ion-item (click)="setBackButtonText()">Set Back Button Text</button>
         <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
       </ion-list>
-      <ion-toolbar no-border-bottom>
+      <ion-toolbar>
         I'm a sub footer in the content!
       </ion-toolbar>
-      <ion-toolbar no-border-bottom no-border-top>
+      <ion-toolbar>
         And I'm a sub footer in the content too!
       </ion-toolbar>
     </ion-content>
@@ -762,6 +824,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     RedirectPage,
     AnotherPage,
     MyCmpTest,
+    MyCmpTest2,
     FullPage,
     PrimaryHeaderPage,
     TabsPage,
@@ -771,7 +834,9 @@ export const deepLinkConfig: DeepLinkConfig = {
     TabItemPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, null, deepLinkConfig)
+    IonicModule.forRoot(E2EApp, {
+      swipeBackEnabled: true
+    }, deepLinkConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

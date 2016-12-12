@@ -48,7 +48,7 @@
       <ion-option value="enable">Enable</ion-option>
       <ion-option value="mute">Mute</ion-option>
       <ion-option value="mute_week">Mute for a week</ion-option>
-      <ion-option value="mute_year">Mute for a year</ion-option>
+      <ion-option value="mute_year" (ionSelect)="notificationSelect($event)">Mute for a year</ion-option>
     </ion-select>
   </ion-item>
 
@@ -61,7 +61,7 @@
       <ion-option>Pearl Jam</ion-option>
       <ion-option>Smashing Pumpkins</ion-option>
       <ion-option>Soundgarden</ion-option>
-      <ion-option (ionSelect)="stpSelect()">Stone Temple Pilots</ion-option>
+      <ion-option (ionSelect)="musicSelect($event)">Stone Temple Pilots</ion-option>
     </ion-select>
   </ion-item>
 

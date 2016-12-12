@@ -3,26 +3,49 @@
 // Windows Picker
 // --------------------------------------------------
 
+/// @prop - Height of the picker wrapper
 $picker-wp-height:                            260px !default;
+
+/// @prop - Border color of the picker wrapper
 $picker-wp-border-color:                      $list-wp-border-color !default;
+
+/// @prop - Background of the picker wrapper
 $picker-wp-background-color:                  $list-wp-background-color !default;
 
+/// @prop - Height of the picker toolbar
 $picker-wp-toolbar-height:                    44px !default;
+
+/// @prop - Background of the picker toolbar
 $picker-wp-toolbar-background-color:          $picker-wp-background-color !default;
 
+/// @prop - Height of the picker button
 $picker-wp-button-height:                     $picker-wp-toolbar-height !default;
+
+/// @prop - Text color of the picker button
 $picker-wp-button-text-color:                 color($colors-wp, primary) !default;
+
+/// @prop - Background of the picker button
 $picker-wp-button-background-color:           transparent !default;
 
+/// @prop - Padding of the picker column
 $picker-wp-column-padding:                    0 4px !default;
 
+/// @prop - Padding of the picker option
 $picker-wp-option-padding:                    0 !default;
+
+/// @prop - Text color of the picker option
 $picker-wp-option-text-color:                 $list-wp-text-color !default;
-$picker-wp-option-font-size:                  18px !default;
+
+/// @prop - Font size of the picker option
+$picker-wp-option-font-size:                  22px !default;
+
+/// @prop - Height of the picker option
 $picker-wp-option-height:                     42px !default;
+
+/// @prop - Offset y of the picker option
 $picker-wp-option-offset-y:                   (($picker-wp-height - $picker-wp-toolbar-height) / 2) - ($picker-wp-option-height / 2) - 10 !default;
 
-$picker-wp-option-selected-font-size:         22px !default;
+/// @prop - Text color of the selected picker option
 $picker-wp-option-selected-color:             color($colors-wp, primary) !default;
 
 
@@ -96,16 +119,15 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   pointer-events: none;
 }
 
-.picker-wp .picker-opts .button-effect {
-  display: none;
-}
-
 .picker-wp .picker-opt {
   margin: 0;
   padding: $picker-wp-option-padding;
 
+  height: 4.2rem;
+
   font-size: $picker-wp-option-font-size;
   line-height: $picker-wp-option-height;
+  color: $picker-wp-option-text-color;
 
   background: transparent;
 
@@ -116,15 +138,9 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   pointer-events: auto;
 }
 
-.picker-wp .picker-opt .button-inner {
-  transition: 200ms;
-}
-
 .picker-wp .picker-prefix,
 .picker-wp .picker-suffix,
 .picker-wp .picker-opt-selected {
-  font-size: $picker-wp-option-selected-font-size;
-
   color: $picker-wp-option-selected-color;
 }
 

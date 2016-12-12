@@ -1,13 +1,15 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Optional } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { AppPortal, IonicApp } from './app-root';
 import { ClickBlock } from '../../util/click-block';
+import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
-import { isNav, isTabs, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
+import { MenuController } from '../menu/menu-controller';
 
 
 /**
@@ -17,12 +19,13 @@ import { ViewController } from '../../navigation/view-controller';
  */
 @Injectable()
 export class App {
+
   private _disTime: number = 0;
   private _scrollTime: number = 0;
   private _title: string = '';
   private _titleSrv: Title = new Title();
   private _rootNav: NavController = null;
-  private _canDisableScroll: boolean;
+  private _disableScrollAssist: boolean;
 
   /**
    * @private
@@ -66,12 +69,25 @@ export class App {
 
   constructor(
     private _config: Config,
-    private _platform: Platform
+    private _platform: Platform,
+    @Optional() private _menuCtrl?: MenuController
   ) {
     // listen for hardware back button events
     // register this back button action with a default priority
-    _platform.registerBackButtonAction(this.navPop.bind(this));
-    this._canDisableScroll = _config.get('canDisableScroll', true);
+    _platform.registerBackButtonAction(this.goBack.bind(this));
+    this._disableScrollAssist = _config.getBoolean('disableScrollAssist', false);
+
+    runInDev(() => {
+      // During developement, navPop can be triggered by calling
+      // window.HWBackButton();
+      if (!(<any>window)['HWBackButton']) {
+        (<any>window)['HWBackButton'] = () => {
+          let p = this.goBack();
+          p && p.catch(() => console.debug('hardware go back cancelled'));
+          return p;
+        };
+      }
+    });
   }
 
   /**
@@ -93,6 +109,7 @@ export class App {
   }
 
   /**
+   * @private
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
    * while views transition, a modal slides up, an action-sheet
@@ -107,9 +124,9 @@ export class App {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
     if (this._clickBlock) {
-      if (isEnabled || duration <= 32) {
+      if (isEnabled) {
         // disable the click block if it's enabled, or the duration is tiny
-        this._clickBlock.activate(false, 0);
+        this._clickBlock.activate(false,  CLICK_BLOCK_BUFFER_IN_MILLIS);
 
       } else {
         // show the click block for duration + some number
@@ -119,12 +136,13 @@ export class App {
   }
 
   /**
+   * @private
    * Toggles whether an application can be scrolled
    * @param {boolean} disableScroll when set to `false`, the application's
    * scrolling is enabled. When set to `true`, scrolling is disabled.
    */
-  setScrollDisabled(disableScroll: boolean) {
-    if (this._canDisableScroll) {
+  _setDisableScroll(disableScroll: boolean) {
+    if (this._disableScrollAssist) {
       this._appRoot._disableScroll(disableScroll);
     }
   }
@@ -135,14 +153,18 @@ export class App {
    * @return {boolean}
    */
   isEnabled(): boolean {
-    return (this._disTime < Date.now());
+    const disTime = this._disTime;
+    if (disTime === 0) {
+      return true;
+    }
+    return (disTime < Date.now());
   }
 
   /**
    * @private
    */
   setScrolling() {
-    this._scrollTime = Date.now();
+    this._scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
   }
 
   /**
@@ -150,29 +172,30 @@ export class App {
    * @return {boolean} returns true or false
    */
   isScrolling(): boolean {
-    return ((this._scrollTime + ACTIVE_SCROLLING_TIME) > Date.now());
+    const scrollTime = this._scrollTime;
+    if (scrollTime === 0) {
+      return false;
+    }
+    if (scrollTime < Date.now()) {
+      this._scrollTime = 0;
+      return false;
+    }
+    return true;
   }
 
   /**
    * @private
    */
   getActiveNav(): NavController {
-    var nav = this._rootNav || null;
-    var activeChildNav: any;
-
-    while (nav) {
-      activeChildNav = nav.getActiveChildNav();
-      if (!activeChildNav) {
-        break;
-      }
-      nav = activeChildNav;
+    const portal = this._appRoot._getPortal(MODAL);
+    if (portal.length() > 0) {
+      return findTopNav(portal);
     }
-
-    return nav;
+    return findTopNav(this._rootNav || null);
   }
 
   /**
-   * @return {NavController} Retuns the root NavController
+   * @return {NavController} Returns the root NavController
    */
   getRootNav(): NavController {
     return this._rootNav;
@@ -213,69 +236,75 @@ export class App {
   /**
    * @private
    */
+  goBack(): Promise<any> {
+    if (this._menuCtrl && this._menuCtrl.isOpen()) {
+      return this._menuCtrl.close();
+    }
+
+    const navPromise = this.navPop();
+    if (navPromise === null) {
+      // no views to go back to
+      // let's exit the app
+      if (this._config.getBoolean('navExitApp', true)) {
+        console.debug('app, goBack exitApp');
+        this._platform.exitApp();
+      }
+    }
+    return navPromise;
+  }
+
+  /**
+   * @private
+   */
   navPop(): Promise<any> {
-    // function used to climb up all parent nav controllers
-    function navPop(nav: any): Promise<any> {
-      if (nav) {
-        if (isTabs(nav)) {
-          // FYI, using "nav instanceof Tabs" throws a Promise runtime error for whatever reason, idk
-          // this is a Tabs container
-          // see if there is a valid previous tab to go to
-          let prevTab = nav.previousTab(true);
-          if (prevTab) {
-            console.debug('app, goBack previous tab');
-            nav.select(prevTab);
-            return Promise.resolve();
-          }
-
-        } else if (isNav(nav) && nav.length() > 1) {
-          // this nav controller has more than one view
-          // pop the current view on this nav and we're done here
-          console.debug('app, goBack pop nav');
-          return nav.pop();
-        }
-
-        // try again using the parent nav (if there is one)
-        return navPop(nav.parent);
-      }
-
-      // nerp, never found nav that could pop off a view
-      return null;
+    if (!this._rootNav || !this.isEnabled()) {
+      return Promise.resolve();
     }
 
-    // app must be enabled and there must be a
-    // root nav controller for go back to work
-    if (this._rootNav && this.isEnabled()) {
-      const portal = this._appRoot._getPortal();
-
-      // first check if the root navigation has any overlays
-      // opened in it's portal, like alert/actionsheet/popup
-      if (portal.length() > 0) {
-        // there is an overlay view in the portal
-        // let's pop this one off to go back
-        console.debug('app, goBack pop overlay');
-        return portal.pop();
-      }
-
-      // next get the active nav, check itself and climb up all
-      // of its parent navs until it finds a nav that can pop
-      let navPromise = navPop(this.getActiveNav());
-      if (navPromise === null) {
-        // no views to go back to
-        // let's exit the app
-        if (this._config.getBoolean('navExitApp', true)) {
-          console.debug('app, goBack exitApp');
-          this._platform.exitApp();
-        }
-      }
-
-      return navPromise;
+    // If there are any alert/actionsheet open, let's do nothing
+    const portal = this._appRoot._getPortal(DEFAULT);
+    if (portal.length() > 0) {
+      return Promise.resolve();
     }
-
-    return Promise.resolve();
+    // next get the active nav, check itself and climb up all
+    // of its parent navs until it finds a nav that can pop
+    return recursivePop(this.getActiveNav());
   }
 
 }
 
+function recursivePop(nav: any): Promise<any> {
+  if (!nav) {
+    return null;
+  }
+  if (isNav(nav)) {
+    var len = nav.length();
+    if (len > 1 || (nav._isPortal && len > 0)) {
+      // this nav controller has more than one view
+      // pop the current view on this nav and we're done here
+      console.debug('app, goBack pop nav');
+      return nav.pop();
+    }
+  }
+  // try again using the parent nav (if there is one)
+  return recursivePop(nav.parent);
+}
+
+function findTopNav(nav: NavController) {
+  var activeChildNav: any;
+
+  while (nav) {
+    activeChildNav = nav.getActiveChildNav();
+    if (!activeChildNav) {
+      break;
+    }
+    nav = activeChildNav;
+  }
+
+  return nav;
+}
+
+const DEFAULT = 0; // AppPortal.DEFAULT
+const MODAL = 1; // AppPortal.MODAL
 const ACTIVE_SCROLLING_TIME = 100;
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;

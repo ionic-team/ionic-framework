@@ -3,21 +3,43 @@
 // iOS Item
 // --------------------------------------------------
 
-$item-ios-body-text-font-size:            1.6rem !default;
-$item-ios-paragraph-text-color:           #666 !default;
+/// @prop - Font size of the item text
+$item-ios-body-text-font-size:            1.7rem !default;
 
-$item-ios-avatar-size:                    3.6rem !default;
-$item-ios-thumbnail-size:                 5.6rem !default;
-$item-ios-note-color:                     darken($list-ios-border-color, 10%) !default;
+/// @prop - Margin of the item paragraph
+$item-ios-paragraph-margin:               0 0 2px !default;
 
+/// @prop - Font size of the item paragraph
+$item-ios-paragraph-font-size:            1.4rem !default;
+
+/// @prop - Color of the item paragraph
+$item-ios-paragraph-text-color:           #8e9093 !default;
+
+/// @prop - Size of the avatar in the item
+$item-ios-avatar-size:                    36px !default;
+
+/// @prop - Size of the thumbnail in the item
+$item-ios-thumbnail-size:                 56px !default;
+
+/// @prop - Shows the detail arrow icon on an item
 $item-ios-detail-push-show:               true !default;
+
+/// @prop - Color of the detail arrow icon
 $item-ios-detail-push-color:              $list-ios-border-color !default;
+
+/// @prop - Icon for the detail arrow
 $item-ios-detail-push-svg:                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-ios-detail-push-color}'/></svg>" !default;
 
+/// @prop - Background for the divider
 $item-ios-divider-background:             #f7f7f7 !default;
+
+/// @prop - Color for the divider
 $item-ios-divider-color:                  #222 !default;
+
+/// @prop - Padding for the divider
 $item-ios-divider-padding:                5px 15px !default;
 
+/// @prop - Background for the sliding content
 $item-ios-sliding-content-background:     $list-ios-background-color !default;
 
 
@@ -51,7 +73,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 .item-ios h2 {
   margin: 0 0 2px;
 
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: normal;
 }
 
@@ -69,9 +91,9 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 .item-ios p {
   overflow: inherit;
 
-  margin: 0 0 2px;
+  margin: $item-ios-paragraph-margin;
 
-  font-size: 1.2rem;
+  font-size: $item-ios-paragraph-font-size;
   line-height: normal;
   text-overflow: inherit;
   color: $item-ios-paragraph-text-color;
@@ -111,16 +133,6 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   margin-left: 0;
 }
 
-.item-ios ion-avatar[item-left],
-.item-ios ion-thumbnail[item-left] {
-  margin: ($item-ios-padding-right / 2) $item-ios-padding-right ($item-ios-padding-right / 2) 0;
-}
-
-.item-ios ion-avatar[item-right],
-.item-ios ion-thumbnail[item-right] {
-  margin: ($item-ios-padding-right / 2);
-}
-
 .item-ios .item-button {
   padding: 0 .5em;
 
@@ -134,30 +146,48 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   padding: 0 1px;
 }
 
+.item-ios ion-avatar[item-left],
+.item-ios ion-thumbnail[item-left] {
+  margin: ($item-ios-padding-right / 2) $item-ios-padding-right ($item-ios-padding-right / 2) 0;
+}
+
+.item-ios ion-avatar[item-right],
+.item-ios ion-thumbnail[item-right] {
+  margin: ($item-ios-padding-right / 2);
+}
+
+
+// iOS Item Avatar
+// --------------------------------------------------
+
 .item-ios ion-avatar {
   min-width: $item-ios-avatar-size;
   min-height: $item-ios-avatar-size;
 }
 
+.item-ios ion-avatar ion-img,
 .item-ios ion-avatar img {
-  max-width: $item-ios-avatar-size;
-  max-height: $item-ios-avatar-size;
+  width: $item-ios-avatar-size;
+  height: $item-ios-avatar-size;
 
-  border-radius: $item-ios-avatar-size / 2;
+  border-radius: 50%;
+
+  overflow: hidden;
 }
+
+
+// iOS Item Thumbnail
+// --------------------------------------------------
 
 .item-ios ion-thumbnail {
   min-width: $item-ios-thumbnail-size;
   min-height: $item-ios-thumbnail-size;
 }
 
+.item-ios ion-thumbnail ion-img,
 .item-ios ion-thumbnail img {
-  max-width: $item-ios-thumbnail-size;
-  max-height: $item-ios-thumbnail-size;
-}
-
-.item-ios ion-note {
-  color: $item-ios-note-color;
+  width: $item-ios-thumbnail-size;
+  height: $item-ios-thumbnail-size;
 }
 
 
@@ -196,7 +226,7 @@ ion-item-group .item-wrapper:last-child .item-ios .item-inner {
 // iOS Item Divider
 // --------------------------------------------------
 
-ion-item-divider.item-ios {
+.item-divider-ios {
   padding-left: $item-ios-padding-left;
 
   color: $item-ios-divider-color;
@@ -204,7 +234,7 @@ ion-item-divider.item-ios {
 }
 
 
-// Generate iOS Item Divider Colors
+// Generate iOS Item and Item Divider Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
@@ -214,9 +244,18 @@ ion-item-divider.item-ios {
     color: $color-base;
   }
 
-  .item-ios-#{$color-name} {
+  .item-ios-#{$color-name},
+  .item-divider-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    p {
+      color: $color-contrast;
+    }
+
+    &.activated {
+     background-color: color-shade($color-base);
+    }
   }
 }
 

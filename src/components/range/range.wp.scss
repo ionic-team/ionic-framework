@@ -3,32 +3,67 @@
 // Windows Range
 // --------------------------------------------------
 
+/// @prop - Padding top/bottom of the range
 $range-wp-padding-vertical:                  8px !default;
+
+/// @prop - Padding left/right of the range
 $range-wp-padding-horizontal:                8px !default;
 
+/// @prop - Height of the range slider
 $range-wp-slider-height:                     42px !default;
 
+/// @prop - Width of the area that will select the range knob
 $range-wp-hit-width:                         42px !default;
+
+/// @prop - Height of the area that will select the range knob
 $range-wp-hit-height:                        $range-wp-slider-height !default;
 
+/// @prop - Height of the range bar
 $range-wp-bar-height:                        2px !default;
+
+/// @prop - Background of the range bar
 $range-wp-bar-background-color:              #bdbdbd !default;
+
+/// @prop - Background of the active range bar
 $range-wp-bar-active-background-color:       color($colors-wp, primary) !default;
 
+/// @prop - Width of the range knob
 $range-wp-knob-width:                        8px !default;
+
+/// @prop - Height of the range knob
 $range-wp-knob-height:                       $range-wp-knob-width * 3 !default;
+
+/// @prop - Background of the range knob
 $range-wp-knob-background-color:             $range-wp-bar-active-background-color !default;
+
+/// @prop - Border radius of the range knob
 $range-wp-knob-border-radius:                $range-wp-knob-width / 2 !default;
 
+/// @prop - Width of the range tick
 $range-wp-tick-width:                        $range-wp-bar-height !default;
+
+/// @prop - Height of the range tick
 $range-wp-tick-height:                       $range-wp-tick-width * 3 !default;
+
+/// @prop - Border radius of the range tick
 $range-wp-tick-border-radius:                $range-wp-knob-width / 2 !default;
+
+/// @prop - Background of the range tick
 $range-wp-tick-background-color:             $range-wp-bar-background-color !default;
+
+/// @prop - Background of the active range tick
 $range-wp-tick-active-background-color:      $range-wp-bar-active-background-color !default;
 
+/// @prop - Background of the range pin
 $range-wp-pin-background-color:              $range-wp-bar-active-background-color !default;
+
+/// @prop - Color of the range pin
 $range-wp-pin-color:                         color-contrast($colors-wp, $range-wp-bar-active-background-color) !default;
+
+/// @prop - Font size of the range pin
 $range-wp-pin-font-size:                     12px !default;
+
+/// @prop - Padding of the range pin
 $range-wp-pin-padding:                       8px !default;
 
 

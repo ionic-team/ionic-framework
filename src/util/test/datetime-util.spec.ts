@@ -321,6 +321,13 @@ describe('parseTemplate', () => {
     expect(formats[2]).toEqual('a');
   });
 
+  it('should allow am/pm when using only 12-hour', () => {
+    var formats = datetime.parseTemplate('hh a');
+    expect(formats.length).toEqual(2);
+    expect(formats[0]).toEqual('hh');
+    expect(formats[1]).toEqual('a');
+  });
+
   it('should allow am/pm when using 12-hour', () => {
     var formats = datetime.parseTemplate('hh:mm a');
     expect(formats.length).toEqual(3);
@@ -329,7 +336,7 @@ describe('parseTemplate', () => {
     expect(formats[2]).toEqual('a');
   });
 
-  it('should not add am/pm when not using 24-hour', () => {
+  it('should not add am/pm when using 24-hour', () => {
     var formats = datetime.parseTemplate('HH:mm a');
     expect(formats.length).toEqual(2);
     expect(formats[0]).toEqual('HH');

@@ -3,7 +3,7 @@ import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angul
 import { Footer, Header } from '../components/toolbar/toolbar';
 import { isPresent, assign } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
-import { NavControllerBase } from './nav-controller-base';
+import { NavController } from './nav-controller';
 import { NavOptions, ViewState } from './nav-util';
 import { NavParams } from './nav-params';
 import { Content } from '../components/content/content';
@@ -27,6 +27,7 @@ import { Content } from '../components/content/content';
  * ```
  */
 export class ViewController {
+
   private _cntDir: any;
   private _cntRef: ElementRef;
   private _ionCntDir: Content;
@@ -38,37 +39,45 @@ export class ViewController {
   private _nb: Navbar;
   private _onDidDismiss: Function;
   private _onWillDismiss: Function;
+  private _dismissData: any;
+  private _dismissRole: any;
   private _detached: boolean;
+
+  _cmp: ComponentRef<any>;
+  _nav: NavController;
+  _zIndex: number;
+  _state: ViewState;
+  _cssClass: string;
 
   /**
    * Observable to be subscribed to when the current component will become active
    * @returns {Observable} Returns an observable
    */
-  willEnter: EventEmitter<any>;
+  willEnter: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component has become active
    * @returns {Observable} Returns an observable
    */
-  didEnter: EventEmitter<any>;
+  didEnter: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component will no longer be active
    * @returns {Observable} Returns an observable
    */
-  willLeave: EventEmitter<any>;
+  willLeave: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component is no long active
    * @returns {Observable} Returns an observable
    */
-  didLeave: EventEmitter<any>;
+  didLeave: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component has been destroyed
    * @returns {Observable} Returns an observable
    */
-  willUnload: EventEmitter<any>;
+  willUnload: EventEmitter<any> = new EventEmitter();
 
   /** @private */
   data: any;
@@ -83,21 +92,6 @@ export class ViewController {
   isOverlay: boolean = false;
 
   /** @private */
-  _cmp: ComponentRef<any>;
-
-  /** @private */
-  _nav: NavControllerBase;
-
-  /** @private */
-  _zIndex: number;
-
-  /** @private */
-  _state: ViewState;
-
-  /** @private */
-  _cssClass: string;
-
-  /** @private */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
@@ -105,12 +99,6 @@ export class ViewController {
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
     this._cssClass = rootCssClass;
-
-    this.willEnter = new EventEmitter();
-    this.didEnter = new EventEmitter();
-    this.willLeave = new EventEmitter();
-    this.didLeave = new EventEmitter();
-    this.willUnload = new EventEmitter();
   }
 
   /**
@@ -122,16 +110,10 @@ export class ViewController {
     this._detached = false;
   }
 
-  /**
-   * @private
-   */
-  _setNav(navCtrl: NavControllerBase) {
+  _setNav(navCtrl: NavController) {
     this._nav = navCtrl;
   }
 
-  /**
-   * @private
-   */
   _setInstance(instance: any) {
     this.instance = instance;
   }
@@ -170,26 +152,22 @@ export class ViewController {
    * @param {any} [role ]
    * @param {NavOptions} NavOptions Options for the dismiss navigation.
    * @returns {any} data Returns the data passed in, if any.
-   *
    */
-  dismiss(data?: any, role?: any, navOptions: NavOptions = {}) {
+  dismiss(data?: any, role?: any, navOptions: NavOptions = {}): Promise<any> {
     if (!this._nav) {
       return Promise.resolve(false);
     }
+    this._dismissData = data;
+    this._dismissRole = role;
 
-    let options = assign({}, this._leavingOpts, navOptions);
-    this._onWillDismiss && this._onWillDismiss(data, role);
-    return this._nav.remove(this._nav.indexOf(this), 1, options).then(() => {
-      this._onDidDismiss && this._onDidDismiss(data, role);
-      this._onDidDismiss = null;
-      return data;
-    });
+    const options = assign({}, this._leavingOpts, navOptions);
+    return this._nav.removeView(this, options).then(() => data);
   }
 
   /**
    * @private
    */
-  getNav() {
+  getNav(): NavController {
     return this._nav;
   }
 
@@ -216,18 +194,17 @@ export class ViewController {
 
   /**
    * Check to see if you can go back in the navigation stack.
-   * @param {boolean} Check whether or not you can go back from this page
    * @returns {boolean} Returns if it's possible to go back from this Page.
    */
   enableBack(): boolean {
     // update if it's possible to go back from this nav item
-    if (this._nav) {
-      let previousItem = this._nav.getPrevious(this);
-      // the previous view may exist, but if it's about to be destroyed
-      // it shouldn't be able to go back to
-      return !!(previousItem);
+    if (!this._nav) {
+      return false;
     }
-    return false;
+    // the previous view may exist, but if it's about to be destroyed
+    // it shouldn't be able to go back to
+    const previousItem = this._nav.getPrevious(this);
+    return !!(previousItem);
   }
 
   /**
@@ -281,6 +258,13 @@ export class ViewController {
 
   /**
    * @private
+   */
+  getZIndex(): number {
+    return this._zIndex;
+  }
+
+  /**
+   * @private
    * DOM WRITE
    */
   _setZIndex(zIndex: number, renderer: Renderer) {
@@ -301,9 +285,6 @@ export class ViewController {
     return this._cmp && this._cmp.location;
   }
 
-  /**
-   * @private
-   */
   _setContent(directive: any) {
     this._cntDir = directive;
   }
@@ -315,9 +296,6 @@ export class ViewController {
     return this._cntDir;
   }
 
-  /**
-   * @private
-   */
   _setContentRef(elementRef: ElementRef) {
     this._cntRef = elementRef;
   }
@@ -329,9 +307,6 @@ export class ViewController {
     return this._cntRef;
   }
 
-  /**
-   * @private
-   */
   _setIONContent(content: Content) {
     this._setContent(content);
     this._ionCntDir = content;
@@ -344,9 +319,6 @@ export class ViewController {
     return this._ionCntDir;
   }
 
-  /**
-   * @private
-   */
   _setIONContentRef(elementRef: ElementRef) {
     this._setContentRef(elementRef);
     this._ionCntRef = elementRef;
@@ -359,9 +331,6 @@ export class ViewController {
     return this._ionCntRef;
   }
 
-  /**
-   * @private
-   */
   _setHeader(directive: Header) {
     this._hdrDir = directive;
   }
@@ -369,13 +338,10 @@ export class ViewController {
   /**
    * @private
    */
-  getHeader() {
+  getHeader(): Header {
     return this._hdrDir;
   }
 
-  /**
-   * @private
-   */
   _setFooter(directive: Footer) {
     this._ftrDir = directive;
   }
@@ -383,13 +349,10 @@ export class ViewController {
   /**
    * @private
    */
-  getFooter() {
+  getFooter(): Footer {
     return this._ftrDir;
   }
 
-  /**
-   * @private
-   */
   _setNavbar(directive: Navbar) {
     this._nb = directive;
   }
@@ -431,8 +394,14 @@ export class ViewController {
     }
   }
 
+  _preLoad() {
+    this._lifecycle('PreLoad');
+  }
+
   /**
    * @private
+   * The view has loaded. This event only happens once per view will be created.
+   * This event is fired before the component and his children have been initialized.
    */
   _willLoad() {
     this._lifecycle('WillLoad');
@@ -480,9 +449,14 @@ export class ViewController {
    * @private
    * The view has is about to leave and no longer be the active view.
    */
-  _willLeave() {
+  _willLeave(willUnload: boolean) {
     this.willLeave.emit(null);
     this._lifecycle('WillLeave');
+
+    if (willUnload && this._onWillDismiss) {
+      this._onWillDismiss(this._dismissData, this._dismissRole);
+      this._onWillDismiss = null;
+    }
   }
 
   /**
@@ -508,6 +482,11 @@ export class ViewController {
   _willUnload() {
     this.willUnload.emit(null);
     this._lifecycle('WillUnload');
+
+    this._onDidDismiss && this._onDidDismiss(this._dismissData, this._dismissRole);
+    this._onDidDismiss = null;
+    this._dismissData = null;
+    this._dismissRole = null;
   }
 
   /**
@@ -519,7 +498,7 @@ export class ViewController {
       if (renderer) {
         // ensure the element is cleaned up for when the view pool reuses this element
         // ******** DOM WRITE ****************
-        const cmpEle = this._cmp.location.nativeElement;
+        var cmpEle = this._cmp.location.nativeElement;
         renderer.setElementAttribute(cmpEle, 'class', null);
         renderer.setElementAttribute(cmpEle, 'style', null);
       }
@@ -528,15 +507,15 @@ export class ViewController {
       this._cmp.destroy();
     }
 
-    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onWillDismiss = null;
+    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onDidDismiss = this._onWillDismiss = null;
   }
 
   /**
    * @private
    */
   _lifecycleTest(lifecycle: string): boolean | Promise<any> {
-    let instance = this.instance;
-    let methodName = 'ionViewCan' + lifecycle;
+    const instance = this.instance;
+    const methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
       try {
         let result = instance[methodName]();
@@ -557,8 +536,8 @@ export class ViewController {
   }
 
   _lifecycle(lifecycle: string) {
-    let instance = this.instance;
-    let methodName = 'ionView' + lifecycle;
+    const instance = this.instance;
+    const methodName = 'ionView' + lifecycle;
     if (instance && instance[methodName]) {
       try {
         instance[methodName]();
@@ -571,7 +550,7 @@ export class ViewController {
 
 }
 
-export function isViewController(viewCtrl: any) {
+export function isViewController(viewCtrl: any): boolean {
   return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
 }
 

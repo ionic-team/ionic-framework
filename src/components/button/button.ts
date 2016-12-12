@@ -127,9 +127,6 @@ export class Button extends Ion {
   _role: string = 'button'; // bar-button
 
   /** @private */
-  _mt: boolean; // menutoggle
-
-  /** @private */
   _size: string; // large/small/default
 
   /** @private */
@@ -140,6 +137,9 @@ export class Button extends Ion {
 
   /** @private */
   _display: string; // block/full
+
+  /** @private */
+  _decorator: string; // strong
 
   /** @private */
   _init: boolean;
@@ -217,6 +217,14 @@ export class Button extends Ion {
   }
 
   /**
+   * @input {boolean} A button that has strong importance, ie. it represents an important action.
+   */
+  @Input()
+  set strong(val: boolean) {
+    this._attr('_decorator', 'strong', val);
+  }
+
+  /**
    * @input {string} The mode to apply to this component.
    */
   @Input()
@@ -229,7 +237,7 @@ export class Button extends Ion {
   /** @private */
   _attr(type: string, attrName: string, attrValue: boolean) {
     if (type === '_style') {
-      this._updateColor(this._color, isTrueProperty(attrValue));
+      this._updateColor(this._color, false);
     }
     this._setClass((<any>this)[type], false);
     if (isTrueProperty(attrValue)) {
@@ -241,6 +249,10 @@ export class Button extends Ion {
       (<any>this)[type] = (type === '_style' ? 'default' : null);
       this._setClass((<any>this)[type], true);
     }
+    if (type === '_style') {
+      this._updateColor(this._color, true);
+    }
+
   }
 
   /**
@@ -251,10 +263,10 @@ export class Button extends Ion {
     this._updateColor(this._color, false);
     this._updateColor(val, true);
     this._color = val;
+
   }
 
   constructor(
-    @Attribute('menuToggle') menuToggle: string,
     @Attribute('ion-button') ionButton: string,
     config: Config,
     elementRef: ElementRef,
@@ -269,12 +281,6 @@ export class Button extends Ion {
 
     if (ionButton.trim().length > 0) {
       this.setRole(ionButton);
-    }
-
-    // menuToggle can be added with or without a string
-    // but if the attribute isn't added it will be null
-    if (menuToggle !== null) {
-      this._mt = true;
     }
   }
 
@@ -302,11 +308,11 @@ export class Button extends Ion {
       this.setElementClass(role, assignCssClass); // button
       this.setElementClass(`${role}-${this._mode}`, assignCssClass); // button
 
-      this._setClass('menutoggle', this._mt); // menutoggle
       this._setClass(this._style, assignCssClass); // button-clear
       this._setClass(this._shape, assignCssClass); // button-round
       this._setClass(this._display, assignCssClass); // button-full
       this._setClass(this._size, assignCssClass); // button-small
+      this._setClass(this._decorator, assignCssClass); // button-strong
       this._updateColor(this._color, assignCssClass); // button-secondary, bar-button-secondary
     }
   }

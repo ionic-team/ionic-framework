@@ -27,10 +27,15 @@ $content-padding:            16px !default;
 $content-margin:             16px !default;
 
 $toolbar-background:         #151515 !default;
-$toolbar-border-color:       color($colors, dark) !default;
+$toolbar-border-color:       #222 !default;
 $toolbar-text-color:         $text-color !default;
 $toolbar-active-color:       $link-color !default;
 $toolbar-inactive-color:     #8c8c8c !default;
+
+$tabs-background:            #151515 !default;
+$tabs-border-color:          #222 !default;
+$tabs-tab-color-inactive:    #8c8c8c !default;
+$tabs-tab-color-active:      $link-color !default;
 
 $list-text-color:            $text-color !default;
 $list-background-color:      #242424 !default;

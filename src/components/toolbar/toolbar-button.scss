@@ -53,10 +53,10 @@
 
 .back-button {
   display: none;
+}
 
-  &.show-back-button {
-    display: inline-block;
-  }
+.back-button.show-back-button {
+  display: inline-block;
 }
 
 .back-button-text {

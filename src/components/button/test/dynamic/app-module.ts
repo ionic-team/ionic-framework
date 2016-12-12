@@ -17,6 +17,14 @@ export class E2EPage {
   myColor2: string;
   multiColor: Array<string>;
   showIf: boolean = true;
+  liked: boolean = false;
+  value: string;
+
+   public buttons = [
+    {selected: false, value: 'primary', text: 'Primary'},
+    {selected: false, value: 'secondary', text: 'Secondary'},
+    {selected: false, value: 'dark', text: 'Dark'}
+  ];
 
   constructor() {
     this.reset();
@@ -49,6 +57,18 @@ export class E2EPage {
   toggle() {
     this.isClicked = !this.isClicked;
   }
+
+  reportLike(liked: boolean): void {
+    this.liked = liked;
+  }
+
+  setValue(value: any) {
+    if (this.value !== value) {
+      this.buttons.forEach((btn: any) => btn.selected = (value === btn.value));
+      this.value = value;
+    }
+  }
+
 }
 
 @Component({

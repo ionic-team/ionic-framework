@@ -15,6 +15,8 @@ ion-menu {
   left: 0;
 
   display: none;
+
+  contain: strict;
 }
 
 ion-menu.show-menu {
@@ -32,8 +34,11 @@ ion-menu.show-menu {
   display: block;
 
   width: $menu-width;
+  height: 100%;
 
   transform: translate3d(-9999px, 0, 0);
+
+  contain: strict;
 }
 
 .menu-inner > ion-header,
@@ -51,11 +56,17 @@ ion-menu ion-backdrop {
   z-index: -1;
   display: none;
 
-  opacity: .1;
+  opacity: .01;
 }
 
 .menu-content {
   transform: translate3d(0, 0, 0);
+}
+
+.menu-content-open {
+  cursor: pointer;
+
+  touch-action: manipulation;
 }
 
 .menu-content-open ion-pane,

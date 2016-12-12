@@ -7,7 +7,7 @@
 $cordova-statusbar-padding-modal-max-width:         767px !default;
 
 
-@mixin statusbar-padding($toolbar-height, $content-padding, $cordova-statusbar-padding, $modal-max-width, $style-title: false) {
+@mixin statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $cordova-statusbar-padding, $modal-max-width, $style-title: false) {
 
   ion-nav > .ion-page,
   ion-nav > .ion-page > ion-header,
@@ -16,7 +16,7 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
   ion-menu > .menu-inner,
   ion-menu > .menu-inner > ion-header {
 
-    @include toolbar-statusbar-padding($toolbar-height, $content-padding, $cordova-statusbar-padding);
+    @include toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $cordova-statusbar-padding);
 
     // If we should style the title elements in the toolbar
     @if ($style-title) {
@@ -26,7 +26,7 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 
   @media only screen and (max-width: $modal-max-width) {
     .modal-wrapper > .ion-page > ion-header {
-      @include toolbar-statusbar-padding($toolbar-height, $content-padding, $cordova-statusbar-padding);
+      @include toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $cordova-statusbar-padding);
 
       // If we should style the title elements in the toolbar
       @if ($style-title) {
@@ -40,12 +40,11 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 // The first-child should get modified padding-top for the status bar
 // --------------------------------------------------------------------------------
 
-@mixin toolbar-statusbar-padding($toolbar-height, $content-padding, $cordova-statusbar-padding) {
+@mixin toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $cordova-statusbar-padding) {
 
   > .toolbar.statusbar-padding:first-child {
-    padding-top: $cordova-statusbar-padding;
+    padding-top: calc(#{$cordova-statusbar-padding} + #{$toolbar-padding});
 
-    height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
   }
 

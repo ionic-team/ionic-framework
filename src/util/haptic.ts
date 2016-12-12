@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Platform } from '../platform/platform';
 
-declare var window;
+declare var window: any;
 
 /**
  * @name Haptic

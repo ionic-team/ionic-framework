@@ -5,6 +5,7 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
+import { nativeRaf } from '../../util/dom';
 import { Keyboard } from '../../util/keyboard';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
@@ -12,7 +13,7 @@ import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
-
+import { DomController } from '../../util/dom-controller';
 
 /**
  * @name Tab
@@ -34,7 +35,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```html
  * <ion-tabs>
- *  <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="chat"><ion-tab>
+ *  <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="chat"></ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -59,7 +60,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```html
  * <ion-tabs>
- *  <ion-tab [root]="chatRoot" [rootParams]="chatParams" tabTitle="Chat" tabIcon="chat"><ion-tab>
+ *  <ion-tab [root]="chatRoot" [rootParams]="chatParams" tabTitle="Chat" tabIcon="chat"></ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -96,7 +97,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```html
  * <ion-tabs>
- *   <ion-tab (ionSelect)="chat()"></ion-tab>
+ *   <ion-tab (ionSelect)="chat()" tabTitle="Show Modal"></ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -166,6 +167,11 @@ export class Tab extends NavControllerBase {
    * @private
    */
   btn: TabButton;
+
+  /**
+   * @private
+   */
+  _tabsHideOnSubPages: boolean;
 
   /**
    * @input {Page} Set the root page for this tab.
@@ -240,6 +246,17 @@ export class Tab extends NavControllerBase {
   }
 
   /**
+   * @input {boolean} Whether it's possible to swipe-to-go-back on this tab or not.
+   */
+  @Input()
+  get tabsHideOnSubPages(): boolean {
+    return this._tabsHideOnSubPages;
+  }
+  set tabsHideOnSubPages(val: boolean) {
+    this._tabsHideOnSubPages = isTrueProperty(val);
+  }
+
+  /**
    * @output {Tab} Method to call when the current tab is selected
    */
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
@@ -256,13 +273,14 @@ export class Tab extends NavControllerBase {
     private _cd: ChangeDetectorRef,
     gestureCtrl: GestureController,
     transCtrl: TransitionController,
-    @Optional() private linker: DeepLinker
+    @Optional() private linker: DeepLinker,
+    domCtrl: DomController,
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
 
     this.id = parent.add(this);
-
+    this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');
     this._tabId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
   }
@@ -287,10 +305,22 @@ export class Tab extends NavControllerBase {
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
+      this.setElementClass('show-tab', true);
       this.push(this.root, this.rootParams, opts, done);
       this._loaded = true;
 
     } else {
+      // if this is not the Tab's initial load then we need
+      // to refresh the tabbar and content dimensions to be sure
+      // they're lined up correctly
+      nativeRaf(() => {
+        const active = this.getActive();
+        if (!active) {
+          return;
+        }
+        const content = active.getIONContent();
+        content && content.resize();
+      });
       done(true);
     }
   }
@@ -299,7 +329,7 @@ export class Tab extends NavControllerBase {
    * @private
    */
   _viewAttachToDOM(viewCtrl: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
-    const isTabSubPage = (this.parent._subPages && viewCtrl.index > 0);
+    const isTabSubPage = (this._tabsHideOnSubPages && viewCtrl.index > 0);
 
     if (isTabSubPage) {
       viewport = this.parent.portal;

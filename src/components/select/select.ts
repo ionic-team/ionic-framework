@@ -195,7 +195,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
    */
   @Input()
   set mode(val: string) {
-    this._setMode('select', val);
+    this._setMode(val);
   }
 
   /**
@@ -217,9 +217,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     @Optional() public _item: Item,
     @Optional() private _nav: NavController
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'select');
 
     _form.register(this);
 
@@ -296,6 +294,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
           handler: () => {
             this.onChange(input.value);
             this.ionChange.emit(input.value);
+            input.ionSelect.emit(input.value);
           }
         };
       }));
@@ -319,7 +318,14 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
           label: input.text,
           value: input.value,
           checked: input.selected,
-          disabled: input.disabled
+          disabled: input.disabled,
+          handler: (selectedOption: any) => {
+            // Only emit the select event if it is being checked
+            // For multi selects this won't emit when unchecking
+            if (selectedOption.checked) {
+              input.ionSelect.emit(input.value);
+            }
+          }
         };
       });
 

@@ -3,22 +3,42 @@
 // Material Design Radio
 // --------------------------------------------------
 
+/// @prop - Color of the checked radio
 $radio-md-color-on:               color($colors-md, primary) !default;
+
+/// @prop - Color of the unchecked radio
 $radio-md-color-off:              darken($list-md-border-color, 40%) !default;
 
+/// @prop - Width of the radio icon
 $radio-md-icon-width:             16px !default;
+
+/// @prop - Height of the radio icon
 $radio-md-icon-height:            16px !default;
+
+/// @prop - Border width of the radio icon
 $radio-md-icon-border-width:      2px !default;
+
+/// @prop - Border style of the radio icon
 $radio-md-icon-border-style:      solid !default;
+
+/// @prop - Border radius of the radio icon
 $radio-md-icon-border-radius:     50% !default;
 
+/// @prop - Transition duration of the radio
 $radio-md-transition-duration:    280ms !default;
+
+/// @prop - Transition easing of the radio
 $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 
+/// @prop - Opacity of the disabled radio
 $radio-md-disabled-opacity:       .3 !default;
 
+/// @prop - Margin of the item-left in a radio
 $radio-md-item-left-margin:       11px 36px 10px 4px !default;
+
+/// @prop - Margin of the item-right in a radio
 $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-padding-media-bottom 0 !default;
+
 
 .radio-md {
   position: relative;

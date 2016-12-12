@@ -309,7 +309,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    * the datetime picker's columns. See the `pickerFormat` input description for
    * more info. Defaults to `MMM D, YYYY`.
    */
-  @Input() displayFormat: string = 'MMM D, YYYY';
+  @Input() displayFormat: string;
 
   /**
    * @input {string} The format of the date and time picker columns the user selects.
@@ -412,7 +412,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    */
   @Input()
   set mode(val: string) {
-    this._setMode('datetime', val);
+    this._setMode(val);
   }
 
   /**
@@ -433,9 +433,8 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     @Optional() private _item: Item,
     @Optional() private _pickerCtrl: PickerController
   ) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'datetime');
 
-    this.mode = config.get('mode');
     _form.register(this);
 
     if (_item) {
@@ -516,7 +515,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   generate(picker: Picker) {
     // if a picker format wasn't provided, then fallback
     // to use the display format
-    let template = this.pickerFormat || this.displayFormat;
+    let template = this.pickerFormat || this.displayFormat || DEFAULT_FORMAT;
 
     if (isPresent(template)) {
       // make sure we've got up to date sizing information
@@ -632,7 +631,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
         // loop through each month and see if it
         // is within the min/max date range
         monthOpt.disabled = (dateSortValue(selectedYear, monthOpt.value, 31) < minCompareVal ||
-                             dateSortValue(selectedYear, monthOpt.value, 1) > maxCompareVal);
+          dateSortValue(selectedYear, monthOpt.value, 1) > maxCompareVal);
       }
     }
 
@@ -648,8 +647,8 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
           var compareVal = dateSortValue(selectedYear, selectedMonth, dayOpt.value);
 
           dayOpt.disabled = (compareVal < minCompareVal ||
-                             compareVal > maxCompareVal ||
-                             numDaysInMonth <= i);
+            compareVal > maxCompareVal ||
+            numDaysInMonth <= i);
         }
 
       } else {
@@ -683,17 +682,16 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 
     if (columns.length === 2) {
       var width = Math.max(columns[0], columns[1]);
-      pickerColumns[0].columnWidth = pickerColumns[1].columnWidth = `${width * 16}px`;
+      pickerColumns[0].align = 'right';
+      pickerColumns[1].align = 'left';
+      pickerColumns[0].optionsWidth = pickerColumns[1].optionsWidth = `${width * 17}px`;
 
     } else if (columns.length === 3) {
       var width = Math.max(columns[0], columns[2]);
-      pickerColumns[1].columnWidth = `${columns[1] * 16}px`;
-      pickerColumns[0].columnWidth = pickerColumns[2].columnWidth = `${width * 16}px`;
-
-    } else if (columns.length > 3) {
-      columns.forEach((col, i) => {
-        pickerColumns[i].columnWidth = `${col * 12}px`;
-      });
+      pickerColumns[0].align = 'right';
+      pickerColumns[1].columnWidth = `${columns[1] * 17}px`;
+      pickerColumns[0].optionsWidth = pickerColumns[2].optionsWidth = `${width * 17}px`;
+      pickerColumns[2].align = 'left';
     }
   }
 
@@ -725,14 +723,15 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    */
   updateText() {
     // create the text of the formatted data
-    this._text = renderDateTime(this.displayFormat, this._value, this._locale);
+    const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
+    this._text = renderDateTime(template, this._value, this._locale);
   }
 
   /**
    * @private
    */
-  calcMinMax() {
-    let todaysYear = new Date().getFullYear();
+  calcMinMax(now?: Date) {
+    const todaysYear = (now || new Date()).getFullYear();
 
     if (isBlank(this.min)) {
       if (isPresent(this.yearValues)) {
@@ -752,8 +751,18 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       }
     }
 
-    let min = this._min = parseDate(this.min);
-    let max = this._max = parseDate(this.max);
+    const min = this._min = parseDate(this.min);
+    const max = this._max = parseDate(this.max);
+
+    if (min.year > max.year) {
+      min.year = max.year - 100;
+    } else if (min.year === max.year) {
+      if (min.month > max.month) {
+        min.month = 1;
+      } else if (min.month === max.month && min.day > max.day) {
+        min.day = 1;
+      }
+    }
 
     min.month = min.month || 1;
     min.day = min.day || 1;
@@ -916,3 +925,5 @@ function convertToArrayOfStrings(input: any, type: string): string[] {
     return values;
   }
 }
+
+const DEFAULT_FORMAT = 'MMM D, YYYY';

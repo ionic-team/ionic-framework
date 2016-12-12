@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostBinding, Input, Renderer } from '@angular/core';
 
+import { isTrueProperty } from '../../util/util';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 
@@ -45,7 +46,7 @@ export class Icon extends Ion {
   /** @private */
   _iconMode: string;
   /** @private */
-  _isActive: any;
+  _isActive: boolean = true;
   /** @private */
   _name: string = '';
   /** @private */
@@ -63,7 +64,7 @@ export class Icon extends Ion {
     return this._color;
   }
   set color(value: string) {
-    this._setColor('icon', value);
+    this._setColor(value);
   }
 
   /**
@@ -71,7 +72,7 @@ export class Icon extends Ion {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('icon', val);
+    this._setMode(val);
   }
 
   constructor(
@@ -79,9 +80,7 @@ export class Icon extends Ion {
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'icon');
     this._iconMode = config.get('iconMode');
   }
 
@@ -145,11 +144,11 @@ export class Icon extends Ion {
    */
   @Input()
   get isActive(): boolean {
-    return (this._isActive === undefined || this._isActive === true || this._isActive === 'true');
+    return this._isActive;
   }
 
   set isActive(val: boolean) {
-    this._isActive = val;
+    this._isActive = isTrueProperty(val);
     this.update();
   }
 
@@ -178,7 +177,7 @@ export class Icon extends Ion {
     let iconMode = name.split('-', 2)[0];
     if (
       iconMode === 'ios' &&
-      !this.isActive &&
+      !this._isActive &&
       name.indexOf('logo-') < 0 &&
       name.indexOf('-outline') < 0) {
       name += '-outline';

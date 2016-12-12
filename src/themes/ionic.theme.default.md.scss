@@ -21,11 +21,20 @@ $content-md-margin:                   $content-margin !default;
 // --------------------------------------------------
 
 $toolbar-md-height:                   56px !default;
+$toolbar-md-padding:                  4px !default;
 $toolbar-md-background:               $toolbar-background !default;
 $toolbar-md-border-color:             $toolbar-border-color !default;
 $toolbar-md-text-color:               #424242 !default;
 $toolbar-md-active-color:             $toolbar-active-color !default;
 $toolbar-md-inactive-color:           $toolbar-inactive-color !default;
+
+
+// Material Design Tabs
+// --------------------------------------------------
+
+$tabs-md-background:                  $tabs-background !default;
+$tabs-md-tab-color-inactive:          #3c3c3c !default;
+$tabs-md-tab-color-active:            $tabs-tab-color-active !default;
 
 
 // Material Design List

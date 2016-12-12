@@ -4,16 +4,19 @@
 // --------------------------------------------------
 
 /// @prop - Width and height of the FAB button
-$fab-size:            56px !default;
+$fab-size:                              56px !default;
 
 /// @prop - Width and height of the FAB button mini
-$fab-mini-size:       40px !default;
+$fab-mini-size:                         40px !default;
 
 /// @prop - Margin of the FAB Container
-$fab-content-margin:  10px !default;
+$fab-content-margin:                    10px !default;
 
 /// @prop - Margin of the FAB List
-$fab-list-margin:     10px !default;
+$fab-list-margin:                       10px !default;
+
+/// @prop - Background color of the button in a list
+$fab-list-button-background-color:      #f4f4f4 !default;
 
 
 .fab {
@@ -41,11 +44,13 @@ $fab-list-margin:     10px !default;
   font-kerning: none;
   user-select: none;
 
-  ion-icon {
-    flex: 1;
+  contain: strict;
+}
 
-    font-size: 2.4rem;
-  }
+.fab ion-icon {
+  flex: 1;
+
+  font-size: 2.4rem;
 }
 
 // FAB mini
@@ -58,10 +63,10 @@ $fab-list-margin:     10px !default;
   height: $fab-mini-size;
 
   line-height: $fab-mini-size;
+}
 
-  .fab-close-icon {
-    line-height: $fab-mini-size;
-  }
+.fab[mini] .fab-close-icon {
+  line-height: $fab-mini-size;
 }
 
 
@@ -127,7 +132,7 @@ ion-fab-list {
   min-height: $fab-size;
 }
 
-ion-fab-list .fab-in-list {
+.fab-in-list {
   margin: 8px 0;
 
   width: $fab-mini-size;
@@ -136,12 +141,9 @@ ion-fab-list .fab-in-list {
   opacity: 0;
   visibility: hidden;
   transform: scale(0);
-  transition: all 200ms ease;
-  transition-delay: 10ms;
-  transition-property: transform, opacity;
 }
 
-ion-fab-list .fab-in-list.show {
+.fab-in-list.show {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
@@ -153,7 +155,7 @@ ion-fab-list[side=right] .fab-in-list {
 }
 
 ion-fab-list[side=top] {
-  top: initial;
+  top: auto;
   bottom: 0;
 
   flex-direction: column-reverse;
@@ -193,10 +195,12 @@ ion-fab-list[side=right] {
   opacity: 0;
   transform: scale(.4) rotateZ(-45deg);
   transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
 }
 
 .fab .button-inner {
   transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
 }
 
 .fab-close-active .fab-close-icon {

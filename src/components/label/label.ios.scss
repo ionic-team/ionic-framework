@@ -3,7 +3,7 @@
 // iOS Label
 // --------------------------------------------------
 
-$label-ios-text-color:         #7f7f7f !default;
+/// @prop - Margin of the label
 $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0 !default;
 
 
@@ -18,14 +18,9 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
 // iOS Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-input .label-ios,
-.item-select .label-ios,
-.item-datetime .label-ios {
-  color: $label-ios-text-color;
-}
-
 .label-ios + ion-input .text-input,
-.label-ios + ion-textarea .text-input {
+.label-ios + ion-textarea .text-input,
+.label-ios + .input + .cloned-input {
   margin-left: $item-ios-padding-left;
 
   width: calc(100% - (#{$item-ios-padding-right} / 2) - #{$item-ios-padding-left});

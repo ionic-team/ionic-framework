@@ -12,6 +12,10 @@
 
 <ion-content>
 
+  <div padding>
+    <button ion-button (click)="pushPage()">Push Virtual Scroll Page</button>
+  </div>
+
   <ion-list [virtualScroll]="items"
             [headerFn]="headerFn">
 
@@ -24,5 +28,9 @@
     </ion-item>
 
   </ion-list>
+
+  <div padding>
+    <button ion-button (click)="pushPage()">Push Virtual Scroll Page</button>
+  </div>
 
 </ion-content>

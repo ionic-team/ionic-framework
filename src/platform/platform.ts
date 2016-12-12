@@ -2,6 +2,7 @@ import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
 
 import { QueryParams } from './query-params';
 import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
+import { removeArrayItem } from '../util/util';
 
 
 /**
@@ -42,6 +43,11 @@ export class Platform {
   private _bbActions: BackButtonAction[] = [];
   private _registry: {[name: string]: PlatformConfig};
   private _default: string;
+  private _pW = 0;
+  private _pH = 0;
+  private _lW = 0;
+  private _lH = 0;
+  private _isPortrait: boolean = null;
 
   /** @private */
   zone: NgZone;
@@ -368,10 +374,7 @@ export class Platform {
 
     // return a function to unregister this back button action
     return () => {
-      let index = this._bbActions.indexOf(action);
-      if (index > -1) {
-        this._bbActions.splice(index, 1);
-      }
+      removeArrayItem(this._bbActions, action);
     };
   }
 
@@ -436,7 +439,8 @@ export class Platform {
    * which reduces the chance of multiple and expensive DOM reads.
    */
   width(): number {
-    return windowDimensions().width;
+    this._calcDim();
+    return this._isPortrait ? this._pW : this._lW;
   }
 
   /**
@@ -445,14 +449,16 @@ export class Platform {
    * which reduces the chance of multiple and expensive DOM reads.
    */
   height(): number {
-    return windowDimensions().height;
+    this._calcDim();
+    return this._isPortrait ? this._pH : this._lH;
   }
 
   /**
    * Returns `true` if the app is in portait mode.
    */
   isPortrait(): boolean {
-    return this.width() < this.height();
+    this._calcDim();
+    return this._isPortrait;
   }
 
   /**
@@ -465,16 +471,46 @@ export class Platform {
   /**
    * @private
    */
+  _calcDim() {
+    if (this._isPortrait === null) {
+      const winDimensions = windowDimensions();
+      const screenWidth = window.screen.width || winDimensions.width;
+      const screenHeight = window.screen.height || winDimensions.height;
+
+      if (screenWidth < screenHeight) {
+        this._isPortrait = true;
+        if (this._pW < winDimensions.width) {
+          this._pW = winDimensions.width;
+        }
+        if (this._pH < winDimensions.height) {
+          this._pH = winDimensions.height;
+        }
+
+      } else {
+        this._isPortrait = false;
+        if (this._lW < winDimensions.width) {
+          this._lW = winDimensions.width;
+        }
+        if (this._lH < winDimensions.height) {
+          this._lH = winDimensions.height;
+        }
+      }
+    }
+  }
+
+  /**
+   * @private
+   */
   windowResize() {
-    const self = this;
-    clearTimeout(self._resizeTm);
+    clearTimeout(this._resizeTm);
 
-    self._resizeTm = setTimeout(() => {
+    this._resizeTm = setTimeout(() => {
       flushDimensionCache();
+      this._isPortrait = null;
 
-      for (let i = 0; i < self._onResizes.length; i++) {
+      for (let i = 0; i < this._onResizes.length; i++) {
         try {
-          self._onResizes[i]();
+          this._onResizes[i]();
         } catch (e) {
           console.error(e);
         }
@@ -486,14 +522,11 @@ export class Platform {
    * @private
    */
   onResize(cb: Function): Function {
-    let self = this;
+    const self = this;
     self._onResizes.push(cb);
 
     return function() {
-      const index = self._onResizes.indexOf(cb);
-      if (index > -1) {
-        self._onResizes.splice(index, 1);
-      }
+      removeArrayItem(self._onResizes, cb);
     };
   }
 
@@ -558,6 +591,13 @@ export class Platform {
         };
       }
     }
+  }
+
+  testUserAgent(expression: string): boolean {
+    if (this._ua) {
+      return this._ua.indexOf(expression) >= 0;
+    }
+    return false;
   }
 
   /**

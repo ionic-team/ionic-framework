@@ -9,6 +9,7 @@ import { Button } from './components/button/button';
 import { Card, CardContent, CardHeader, CardTitle } from './components/card/card';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
+import { ClickBlock } from './util/click-block';
 import { Content } from './components/content/content';
 import { DateTime } from './components/datetime/datetime';
 import { FabContainer, FabButton, FabList } from './components/fab/fab';
@@ -18,7 +19,7 @@ import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
 import { IonicApp } from './components/app/app-root';
-import { Item, ItemContent, ItemGroup } from './components/item/item';
+import { Item, ItemContent, ItemDivider, ItemGroup } from './components/item/item';
 import { ItemReorder, Reorder } from './components/item/item-reorder';
 import { ItemSliding, ItemOptions } from './components/item/item-sliding';
 import { Label } from './components/label/label';
@@ -62,6 +63,10 @@ import { Typography } from './components/typography/typography';
 import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
 import { VirtualItem, VirtualHeader, VirtualFooter } from './components/virtual-scroll/virtual-item';
 
+/**
+ * Export Abstract Class Components
+ */
+export { Ion } from './components/ion';
 
 /**
  * Export Components
@@ -78,7 +83,8 @@ export { Button } from './components/button/button';
 export { Card, CardContent, CardHeader, CardTitle } from './components/card/card';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
-export { Content } from './components/content/content';
+export { ClickBlock } from './util/click-block';
+export { Content, ScrollEvent } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
 export { FabContainer, FabButton, FabList } from './components/fab/fab';
 export { Grid, Row, Col } from './components/grid/grid';
@@ -88,7 +94,7 @@ export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 export { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
 export { TextArea, TextInput } from './components/input/input';
 export { IonicApp } from './components/app/app-root';
-export { Item, ItemContent, ItemGroup } from './components/item/item';
+export { Item, ItemContent, ItemDivider, ItemGroup } from './components/item/item';
 export { ItemReorder, Reorder } from './components/item/item-reorder';
 export { ItemSliding, ItemOptions, ItemSideFlags } from './components/item/item-sliding';
 export { Label } from './components/label/label';
@@ -136,6 +142,7 @@ export { Toast, ToastController } from './components/toast/toast';
 export { ToastOptions } from './components/toast/toast-options';
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar, ToolbarBase, Header, Footer } from './components/toolbar/toolbar';
+export { ToolbarItem } from './components/toolbar/toolbar-item';
 export { ToolbarTitle } from'./components/toolbar/toolbar-title';
 export { Thumbnail } from './components/thumbnail/thumbnail';
 export { Typography } from './components/typography/typography';
@@ -169,6 +176,7 @@ export const IONIC_DIRECTIVES: any[] = [
   CardTitle,
   Checkbox,
   Chip,
+  ClickBlock,
   Col,
   Content,
   DateTime,
@@ -186,6 +194,7 @@ export const IONIC_DIRECTIVES: any[] = [
   IonicApp,
   Item,
   ItemContent,
+  ItemDivider,
   ItemGroup,
   ItemOptions,
   ItemReorder,

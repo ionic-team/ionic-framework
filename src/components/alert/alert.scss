@@ -22,6 +22,14 @@ ion-alert {
 
   align-items: center;
   justify-content: center;
+
+  contain: strict;
+}
+
+ion-alert.alert-top {
+  align-items: flex-start;
+
+  padding-top: 50px;
 }
 
 ion-alert input {
@@ -38,6 +46,8 @@ ion-alert input {
   max-height: $alert-max-height;
 
   opacity: 0;
+
+  contain: content;
 }
 
 .alert-title {

@@ -63,14 +63,14 @@ import { nativeTimeout } from '../../util/dom';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class FabButton extends Ion  {
+export class FabButton extends Ion {
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
   set color(val: string) {
-    this._setColor('fab', val);
+    this._setColor(val);
   }
 
   /**
@@ -78,7 +78,7 @@ export class FabButton extends Ion  {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('fab', val);
+    this._setMode(val);
   }
 
   constructor(
@@ -86,9 +86,7 @@ export class FabButton extends Ion  {
     elementRef: ElementRef,
     renderer: Renderer,
   ) {
-    super(config, elementRef, renderer);
-    this.setElementClass('fab', true); // set role
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'fab');
   }
 
 
@@ -130,14 +128,23 @@ export class FabButton extends Ion  {
 export class FabList {
   _visible: boolean = false;
   _fabs: FabButton[] = [];
+  _mode: string;
 
-  constructor(private _elementRef: ElementRef, private _renderer: Renderer) { }
+  constructor(
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
+    config: Config
+  ) {
+    this._mode = config.get('mode');
+  }
 
   @ContentChildren(FabButton)
   set _setbuttons(query: QueryList<FabButton>) {
-    let fabs = this._fabs = query.toArray();
+    const fabs = this._fabs = query.toArray();
+    const className = `fab-${this._mode}-in-list`;
     for (var fab of fabs) {
       fab.setElementClass('fab-in-list', true);
+      fab.setElementClass(className, true);
     }
   }
 
@@ -286,13 +293,17 @@ export class FabContainer {
    * @private
    */
   ngAfterContentInit() {
-    this._events.listen(this._mainButton.getNativeElement(), 'click', this.pointerUp.bind(this));
+    if (!this._mainButton || !this._mainButton.getNativeElement()) {
+      console.error('FAB container needs a main <button ion-fab>');
+      return;
+    }
+    this._events.listen(this._mainButton.getNativeElement(), 'click', this.clickHandler.bind(this));
   }
 
   /**
    * @private
    */
-  pointerUp(ev: any) {
+  clickHandler(ev: any) {
     if (this.canActivateList(ev)) {
       this.toggleList();
     }
@@ -303,7 +314,7 @@ export class FabContainer {
    */
   canActivateList(ev: any): boolean {
     if (this._fabLists.length > 0 && this._mainButton && ev.target) {
-      let ele = ev.target.closest('ion-fab>button');
+      let ele = ev.target.closest('ion-fab>[ion-fab]');
       return (ele && ele === this._mainButton.getNativeElement());
     }
     return false;
@@ -324,7 +335,7 @@ export class FabContainer {
       return;
     }
     let lists = this._fabLists.toArray();
-    for (let list of lists) {
+    for (let list of lists) {
       list.setVisible(isActive);
     }
     this._mainButton.setActiveClose(isActive);

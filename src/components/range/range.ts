@@ -3,7 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
 import { Config } from '../../config/config';
-import { Debouncer } from '../../util/debouncer';
+import { TimeoutDebouncer } from '../../util/debouncer';
 import { Form } from '../../util/form';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
@@ -41,11 +41,18 @@ export class RangeKnob implements OnInit {
   _ratio: number;
   _val: number;
   _x: string;
+  _upper: boolean = false;
   pressed: boolean;
 
-  @Input() upper: boolean;
+  @Input()
+  get upper(): boolean {
+    return this._upper;
+  }
+  set upper(val: boolean) {
+    this._upper = isTrueProperty(val);
+  }
 
-  constructor(@Inject(forwardRef(() => Range)) public range: Range) {}
+  constructor( @Inject(forwardRef(() => Range)) public range: Range) { }
 
   get ratio(): number {
     return this._ratio;
@@ -81,7 +88,7 @@ export class RangeKnob implements OnInit {
       // we already have a value
       if (this.range.dualKnobs) {
         // we have a value and there are two knobs
-        if (this.upper) {
+        if (this._upper) {
           // this is the upper knob
           this.value = this.range.value.upper;
 
@@ -217,7 +224,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   _step: number = 1;
   _snaps: boolean = false;
 
-  _debouncer: Debouncer = new Debouncer(0);
+  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
   _events: UIEventManager = new UIEventManager();
   /**
    * @private
@@ -229,7 +236,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   @Input()
   set color(val: string) {
-    this._setColor('range', val);
+    this._setColor(val);
   }
 
   /**
@@ -237,7 +244,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   @Input()
   set mode(val: string) {
-    this._setMode('range', val);
+    this._setMode(val);
   }
 
   @ViewChild('bar') public _bar: ElementRef;
@@ -350,9 +357,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    super(config, elementRef, renderer);
-
-    this.mode = config.get('mode');
+    super(config, elementRef, renderer, 'range');
     _form.register(this);
 
     if (_item) {
@@ -581,17 +586,18 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    * @private
    */
   updateTicks() {
-    if (this._snaps && this._ticks) {
-      let ratio = this.ratio;
+    const ticks = this._ticks;
+    if (this._snaps && ticks) {
+      var ratio = this.ratio;
       if (this._dual) {
-        let upperRatio = this.ratioUpper;
+        var upperRatio = this.ratioUpper;
 
-        this._ticks.forEach(t => {
+        ticks.forEach(t => {
           t.active = (t.ratio >= ratio && t.ratio <= upperRatio);
         });
 
       } else {
-        this._ticks.forEach(t => {
+        ticks.forEach(t => {
           t.active = (t.ratio <= ratio);
         });
       }
@@ -700,7 +706,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   /**
    * @private
    */
-  onTouched() {}
+  onTouched() { }
 
   /**
    * @private

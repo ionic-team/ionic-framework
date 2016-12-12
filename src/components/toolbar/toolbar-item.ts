@@ -23,9 +23,7 @@ export class ToolbarItem extends Ion {
     @Optional() toolbar: Toolbar,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
-    super(config, elementRef, renderer);
-
-    this._setMode('bar-buttons', config.get('mode'));
+    super(config, elementRef, renderer, 'bar-buttons');
     this.inToolbar = !!(toolbar || navbar);
   }
 

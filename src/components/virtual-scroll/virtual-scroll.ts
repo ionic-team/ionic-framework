@@ -1,10 +1,9 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, ContentChildren, Directive, DoCheck, ElementRef, Input, IterableDiffers, IterableDiffer, NgZone, OnDestroy, Optional, QueryList, Renderer, TrackByFn } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffers, IterableDiffer, NgZone, OnDestroy, Optional, Renderer, TrackByFn } from '@angular/core';
 
-import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, writeToNodes } from './virtual-util';
-import { clearNativeTimeout, nativeRaf, nativeTimeout } from '../../util/dom';
+import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
-import { Content } from '../content/content';
-import { Img } from '../img/img';
+import { Content, ScrollEvent } from '../content/content';
+import { DomController } from '../../util/dom-controller';
 import { isBlank, isFunction, isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
@@ -101,16 +100,18 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * slightly different heights between platforms, which is perfectly fine.
  *
  *
- *
  * ### Images Within Virtual Scroll
  *
  * Ionic provides `<ion-img>` to manage HTTP requests and image rendering.
  * Additionally, it includes a customizable placeholder element which shows
  * before the image has finished loading. While scrolling through items
- * quickly, `<ion-img>` knows not to make any image requests, and only loads
- * the images that are viewable after scrolling. It's also important for app
- * developers to ensure image sizes are locked in, and after images have fully
- * loaded they do not change size and affect any other element sizes.
+ * quickly, `<ion-img>` knows not to make any image http requests, and only
+ * loads the images that are viewable after scrolling.
+ *
+ * It's also important for app developers to ensure image sizes are locked in,
+ * and after images have fully loaded they do not change size and affect any
+ * other element sizes. Simply put, to ensure rendering bugs are not introduced,
+ * it's vital that elements within a virtual item does not dynamically change.
  *
  * We recommend using our `<ion-img>` element over the native `<img>` element
  * because when an `<img>` element is added to the DOM, it immediately
@@ -135,12 +136,39 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * ```
  *
  *
+ * ### Custom Components
+ *
+ * If a custom component is going to be used within Virtual Scroll, it's best
+ * to wrap it with a good old `<div>` to ensure the component is rendered
+ * correctly. Since each custom component's implementation and internals can be
+ * quite different, wrapping within a `<div>` is a safe way to make sure
+ * dimensions are measured correctly.
+ *
+ * ```html
+ * <ion-list [virtualScroll]="items">
+ *
+ *   <div *virtualItem="let item">
+ *     <my-custom-item [item]="item">
+ *       {% raw %} {{ item }}{% endraw %}
+ *     </my-custom-item>
+ *   </div>
+ *
+ * </ion-list>
+ * ```
+ *
+ *
  * ### Performance Tips
  *
+ * - When deploying to iOS with Cordova, it's highly recommended to use the
+ *   [WKWebView plugin](http://blog.ionic.io/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
+ *   in order to take advantage of iOS's higher performimg webview.
  * - Use `<ion-img>` rather than `<img>` so images are lazy loaded
  *   while scrolling.
  * - Image sizes should be locked in, meaning the size of any element
  *   should not change after the image has loaded.
+ * - For the most part, ensure the element size for each virtual item
+ *   does not dynamically change, but rather, their size must already be
+ *   locked in via CSS at the time they are rendered.
  * - Provide an approximate width and height so the virtual scroll can
  *   best calculate the cell height.
  * - Changing the dataset requires the entire virtual scroll to be
@@ -157,10 +185,10 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
 export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _trackBy: TrackByFn;
   _differ: IterableDiffer;
-  _unreg: Function;
+  _scrollSub: any;
+  _scrollEndSub: any;
   _init: boolean;
-  _rafId: number;
-  _tmId: number;
+  _lastEle: boolean;
   _hdrFn: Function;
   _ftrFn: Function;
   _records: any[] = [];
@@ -171,17 +199,16 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _data: VirtualData = {
     scrollTop: 0,
   };
-  _eventAssist: boolean;
-  _queue: number = null;
+  _queue: number;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
   @ContentChild(VirtualFooter) _ftrTmp: VirtualFooter;
-  @ContentChildren(Img) _imgs: QueryList<Img>;
+
 
   /**
    * @input {array} The data that builds the templates within the virtual scroll.
-   * This is the same data that you'd pass to `ngFor`. It's important to note
+   * This is the same data that you'd pass to `*ngFor`. It's important to note
    * that when this data has changed, then the entire virtual scroll is reset,
    * which is an expensive operation and should be avoided if possible.
    */
@@ -198,12 +225,12 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * should get created when initially rendered. The number is a
    * multiplier against the viewable area's height. For example, if it
    * takes `20` cells to fill up the height of the viewable area, then
-   * with a buffer ratio of `2` it will create `40` cells that are
+   * with a buffer ratio of `3` it will create `60` cells that are
    * available for reuse while scrolling. For better performance, it's
    * better to have more cells than what are required to fill the
-   * viewable area. Default is `2`.
+   * viewable area. Default is `3`.
    */
-  @Input() bufferRatio: number = 2;
+  @Input() bufferRatio: number = 3;
 
   /**
    * @input {string} The approximate width of each item template's cell.
@@ -212,12 +239,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This value can use either `px` or `%` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `100%`.
+   * initial dimensions before the item has been rendered. Default is
+   * `100%`.
    */
   @Input() approxItemWidth: string = '100%';
 
   /**
-   * @input {string} Default is `40px`. It is important to provide this
+   * @input {string} It is important to provide this
    * if virtual item height will be significantly larger than the default
    * The approximate height of each virtual item template's cell.
    * This dimension is used to help determine how many cells should
@@ -225,7 +253,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions.
+   * initial dimensions before the item has been rendered. Default is
+   * `40px`.
    */
   @Input() approxItemHeight: string;
 
@@ -247,7 +276,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `40px`.
+   * initial dimensions before the item has been rendered. Default is `40px`.
    */
   @Input() approxHeaderHeight: string = '40px';
 
@@ -258,7 +287,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This value can use either `px` or `%` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `100%`.
+   * initial dimensions before the item has been rendered. Default is `100%`.
    */
   @Input() approxFooterWidth: string = '100%';
 
@@ -269,7 +298,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * the scrollable area. This height value can only use `px` units.
    * Note that the actual rendered size of each cell comes from the
    * app's CSS, whereas this approximation is used to help calculate
-   * initial dimensions. Default is `40px`.
+   * initial dimensions before the item has been rendered. Default is `40px`.
    */
   @Input() approxFooterHeight: string = '40px';
 
@@ -318,114 +347,76 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     private _content: Content,
     private _platform: Platform,
     @Optional() private _ctrl: ViewController,
-    config: Config) {
-      this._eventAssist = config.getBoolean('virtualScrollEventAssist');
-    }
+    private _config: Config,
+    private _dom: DomController) {
+
+    // hide the virtual scroll element with opacity so we don't
+    // see jank as it loads up, but we're still able to read
+    // dimensions because it's still rendered and only opacity hidden
+    this._renderer.setElementClass(_elementRef.nativeElement, 'virtual-loading', true);
+
+    // wait for the content to be rendered and has readable dimensions
+    _content.readReady.subscribe(() => {
+      this._init = true;
+
+      if (this._hasChanges()) {
+        this.readUpdate();
+
+        // wait for the content to be writable
+        var subscription = _content.writeReady.subscribe(() => {
+          subscription.unsubscribe();
+          this.writeUpdate();
+        });
+      }
+
+      this._listeners();
+    });
+  }
 
   /**
    * @private
    */
   ngDoCheck() {
-    if (this._init) {
-      this.update(true);
+    if (this._init && this._hasChanges()) {
+      // only continue if we've already initialized
+      // and if there actually are changes
+      this.readUpdate();
+      this.writeUpdate();
     }
   }
 
-  /**
-   * @private
-   */
-  ngAfterContentInit() {
-    if (!this._init) {
-
-      if (!this._itmTmp) {
-        throw 'virtualItem required within virtualScroll';
-      }
-
-      this._init = true;
-
-      if (!this.approxItemHeight) {
-        this.approxItemHeight = '40px';
-        console.warn('Virtual Scroll: Please provide an "approxItemHeight" input to ensure proper virtual scroll rendering');
-      }
-
-      this.update(true);
-
-      this._platform.onResize(() => {
-        console.debug('VirtualScroll, onResize');
-        this.update(false);
-      });
-
-    }
-  }
-
-  /**
-   * @private
-   * DOM READ THEN DOM WRITE
-   */
-  update(checkChanges: boolean) {
-    var self = this;
-
-    if (!self._records || !self._records.length) return;
-
-    if (checkChanges) {
-      if (isPresent(self._differ)) {
-        let changes = self._differ.diff(self._records);
-        if (!isPresent(changes)) return;
-      }
-    }
-
-    console.debug('VirtualScroll, update, records:', self._records.length);
+  readUpdate() {
+    console.debug(`virtual-scroll, readUpdate`);
 
     // reset everything
-    self._cells.length = 0;
-    self._nodes.length = 0;
-    self._itmTmp.viewContainer.clear();
-    self._elementRef.nativeElement.parentElement.scrollTop = 0;
-
-    let attempts = 0;
-    function readDimensions(done: Function/* cuz promises add unnecessary overhead here */) {
-      if (self._data.valid) {
-        // good to go, we already have good dimension data
-        done();
-
-      } else {
-        // ******** DOM READ ****************
-        calcDimensions(self._data, self._elementRef.nativeElement.parentElement,
-                      self.approxItemWidth, self.approxItemHeight,
-                      self.approxHeaderWidth, self.approxHeaderHeight,
-                      self.approxFooterWidth, self.approxFooterHeight,
-                      self.bufferRatio);
-
-        if (self._data.valid) {
-          // sweet, we got some good dimension data!
-          done();
-
-        } else if (attempts < 30) {
-          // oh no! the DOM doesn't have good data yet!
-          // let's try again in XXms, and give up eventually if we never get data
-          attempts++;
-          nativeRaf(function() {
-            readDimensions(done);
-          });
-        }
-      }
-    }
+    this._cells.length = 0;
+    this._nodes.length = 0;
+    this._itmTmp.viewContainer.clear();
 
     // ******** DOM READ ****************
-    readDimensions(function() {
-      processRecords(self._data.renderHeight,
-                    self._records,
-                    self._cells,
-                    self._hdrFn,
-                    self._ftrFn,
-                    self._data);
+    calcDimensions(this._data, this._elementRef.nativeElement,
+                   this.approxItemWidth, this.approxItemHeight,
+                   this.approxHeaderWidth, this.approxHeaderHeight,
+                   this.approxFooterWidth, this.approxFooterHeight,
+                   this.bufferRatio);
+  }
 
-      // ******** DOM WRITE ****************
-      self.renderVirtual();
+  writeUpdate() {
+    console.debug(`virtual-scroll, writeUpdate`);
 
-      // list for scroll events
-      self.addScrollListener();
-    });
+    processRecords(this._data.renderHeight,
+                   this._records,
+                   this._cells,
+                   this._hdrFn,
+                   this._ftrFn,
+                   this._data);
+
+    // ******** DOM WRITE ****************
+    this.renderVirtual();
+  }
+
+  private _hasChanges() {
+    return (isPresent(this._records) && isPresent(this._differ) && isPresent(this._differ.diff(this._records)));
   }
 
   /**
@@ -433,13 +424,18 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * DOM WRITE
    */
   renderVirtual() {
-    // initialize nodes with the correct cell data
-    this._data.topCell = 0;
-    this._data.bottomCell = (this._cells.length - 1);
+    const nodes = this._nodes;
+    const cells = this._cells;
+    const data = this._data;
+    const records = this._records;
 
-    populateNodeData(0, this._data.bottomCell,
-                      this._data.viewWidth, true,
-                      this._cells, this._records, this._nodes,
+    // initialize nodes with the correct cell data
+    data.topCell = 0;
+    data.bottomCell = (cells.length - 1);
+
+    populateNodeData(0, data.bottomCell,
+                      data.viewWidth, true,
+                      cells, records, nodes,
                       this._itmTmp.viewContainer,
                       this._itmTmp.templateRef,
                       this._hdrTmp && this._hdrTmp.templateRef,
@@ -448,59 +444,106 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // ******** DOM WRITE ****************
     this._cd.detectChanges();
 
+
+    // at this point, this fn was called from within another
+    // requestAnimationFrame, so the next dom reads/writes within the next frame
     // wait a frame before trying to read and calculate the dimensions
-    nativeRaf(this.postRenderVirtual.bind(this));
-  }
+    this._dom.read(() => {
+      // ******** DOM READ ****************
+      initReadNodes(nodes, cells, data);
+    });
 
-  /**
-   * @private
-   * DOM READ THEN DOM WRITE
-   */
-  postRenderVirtual() {
-    // ******** DOM READ THEN DOM WRITE ****************
-    initReadNodes(this._nodes, this._cells, this._data);
+    this._dom.write(() => {
+      const ele = this._elementRef.nativeElement;
+      const recordsLength = records.length;
+      const renderer = this._renderer;
 
-
-    // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
-
-
-    // ******** DOM WRITE ****************
-    this._renderer.setElementClass(this._elementRef.nativeElement, 'virtual-scroll', true);
-
-    // ******** DOM WRITE ****************
-    writeToNodes(this._nodes, this._cells, this._records.length);
-
-    // ******** DOM WRITE ****************
-    this.setVirtualHeight(
-      estimateHeight(this._records.length, this._cells[this._cells.length - 1], this._vHeight, 0.25)
-    );
-  }
-
-  /**
-   * @private
-   */
-  scrollUpdate() {
-    clearNativeTimeout(this._tmId);
-    this._tmId = nativeTimeout(this.onScrollEnd.bind(this), SCROLL_END_TIMEOUT_MS);
-
-    let data = this._data;
-
-    if (this._queue === QUEUE_CHANGE_DETECTION) {
-      // ******** DOM WRITE ****************
-      this._cd.detectChanges();
+      // update the bound context for each node
+      updateNodeContext(nodes, cells, data);
 
       // ******** DOM WRITE ****************
-      writeToNodes(this._nodes, this._cells, this._records.length);
+      for (var i = 0; i < nodes.length; i++) {
+        (<any>nodes[i].view).detectChanges();
+      }
+
+      if (!this._lastEle) {
+        // add an element at the end so :last-child css doesn't get messed up
+        // ******** DOM WRITE ****************
+        var lastEle: HTMLElement = renderer.createElement(ele, 'div');
+        lastEle.className = 'virtual-last';
+        this._lastEle = true;
+      }
 
       // ******** DOM WRITE ****************
-      this.setVirtualHeight(
-        estimateHeight(this._records.length, this._cells[this._cells.length - 1], this._vHeight, 0.25)
+      renderer.setElementClass(ele, 'virtual-scroll', true);
+
+      // ******** DOM WRITE ****************
+      renderer.setElementClass(ele, 'virtual-loading', false);
+
+      // ******** DOM WRITE ****************
+      writeToNodes(nodes, cells, recordsLength);
+
+      // ******** DOM WRITE ****************
+      this._setHeight(
+        estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
       );
 
-      this._queue = null;
+      this._content.imgsUpdate();
+    });
+
+  }
+
+  /**
+   * @private
+   */
+  scrollUpdate(ev: ScrollEvent) {
+    // there is a queue system so that we can
+    // spread out the work over multiple frames
+    const data = this._data;
+    const cells = this._cells;
+    const nodes = this._nodes;
+
+    // set the scroll top from the scroll event
+    data.scrollTop = ev.scrollTop;
+
+    if (this._queue === SCROLL_QUEUE_DOM_WRITE) {
+      // there are DOM writes we need to take care of in this frame
+
+      this._dom.write(() => {
+        const recordsLength = this._records.length;
+
+        // ******** DOM WRITE ****************
+        writeToNodes(nodes, cells, recordsLength);
+
+        // ******** DOM WRITE ****************
+        this._setHeight(
+          estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
+        );
+
+        // we're done here, good work
+        this._queue = SCROLL_QUEUE_NO_CHANGES;
+      });
+
+    } else if (this._queue === SCROLL_QUEUE_CHANGE_DETECTION) {
+      // we need to do some change detection in this frame
+
+      this._dom.write(() => {
+        // we've got work painting do, let's throw it in the
+        // domWrite callback so everyone plays nice
+        // ******** DOM WRITE ****************
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].hasChanges) {
+            (<any>nodes[i].view).detectChanges();
+          }
+        }
+
+        // on the next frame we need write to the dom nodes manually
+        this._queue = SCROLL_QUEUE_DOM_WRITE;
+      });
 
     } else {
-
+      // no dom writes or change detection to take care of
+      // let's see if we've scroll far enough to require another check
       data.scrollDiff = (data.scrollTop - this._lastCheck);
 
       if (Math.abs(data.scrollDiff) > SCROLL_DIFFERENCE_MINIMUM) {
@@ -509,36 +552,31 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
         if (data.scrollDiff > 0) {
           // load data we may not have processed yet
-          let stopAtHeight = (data.scrollTop + data.renderHeight);
+          var stopAtHeight = (data.scrollTop + data.renderHeight);
 
-          processRecords(stopAtHeight, this._records, this._cells,
+          processRecords(stopAtHeight, this._records, cells,
                          this._hdrFn, this._ftrFn, data);
         }
 
         // ******** DOM READ ****************
-        updateDimensions(this._nodes, this._cells, data, false);
+        updateDimensions(nodes, cells, data, false);
 
-        adjustRendered(this._cells, data);
+        adjustRendered(cells, data);
 
-        let madeChanges = populateNodeData(data.topCell, data.bottomCell,
-                              data.viewWidth, data.scrollDiff > 0,
-                              this._cells, this._records, this._nodes,
-                              this._itmTmp.viewContainer,
-                              this._itmTmp.templateRef,
-                              this._hdrTmp && this._hdrTmp.templateRef,
-                              this._ftrTmp && this._ftrTmp.templateRef, false);
+        var hasChanges = populateNodeData(data.topCell, data.bottomCell,
+                           data.viewWidth, data.scrollDiff > 0,
+                           cells, this._records, nodes,
+                           this._itmTmp.viewContainer,
+                           this._itmTmp.templateRef,
+                           this._hdrTmp && this._hdrTmp.templateRef,
+                           this._ftrTmp && this._ftrTmp.templateRef, false);
 
-        if (madeChanges) {
-          // do not update images while scrolling
-          this._imgs.forEach(img => {
-            img.enable(false);
-          });
-
+        if (hasChanges) {
           // queue making updates in the next frame
-          this._queue = QUEUE_CHANGE_DETECTION;
+          this._queue = SCROLL_QUEUE_CHANGE_DETECTION;
 
-        } else {
-          this._queue = null;
+          // update the bound context for each node
+          updateNodeContext(nodes, cells, data);
         }
       }
 
@@ -549,31 +587,68 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @private
    * DOM WRITE
    */
-  onScrollEnd() {
-    // scrolling is done, allow images to be updated now
-    this._imgs.forEach(img => {
-      img.enable(true);
-    });
+  scrollEnd(ev: ScrollEvent) {
+    const nodes = this._nodes;
+    const cells = this._cells;
+    const data = this._data;
 
     // ******** DOM READ ****************
-    updateDimensions(this._nodes, this._cells, this._data, false);
+    updateDimensions(nodes, cells, data, false);
 
-    adjustRendered(this._cells, this._data);
+    adjustRendered(cells, data);
 
-    // ******** DOM WRITE ****************
-    this._cd.detectChanges();
+    // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
 
-    // ******** DOM WRITE ****************
-    this.setVirtualHeight(
-      estimateHeight(this._records.length, this._cells[this._cells.length - 1], this._vHeight, 0.05)
-    );
+    this._dom.write(() => {
+      const recordsLength = this._records.length;
+
+      // update the bound context for each node
+      updateNodeContext(nodes, cells, data);
+
+      // ******** DOM WRITE ****************
+      for (var i = 0; i < nodes.length; i++) {
+        (<any>nodes[i].view).detectChanges();
+      }
+
+      // ******** DOM WRITE ****************
+      writeToNodes(nodes, cells, recordsLength);
+
+      // ******** DOM WRITE ****************
+      this._setHeight(
+        estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.05)
+      );
+
+      this._queue = SCROLL_QUEUE_NO_CHANGES;
+    });
   }
 
   /**
-   * @private
+   * NO DOM
+   */
+  private _listeners() {
+    if (!this._scrollSub) {
+      if (this._config.getBoolean('virtualScrollEventAssist')) {
+        // use JS scrolling for iOS UIWebView
+        // goal is to completely remove this when iOS
+        // fully supports scroll events
+        // listen to JS scroll events
+        this._content.enableJsScroll();
+      }
+
+      this._scrollSub = this._content.ionScroll.subscribe((ev: ScrollEvent) => {
+        this.scrollUpdate(ev);
+      });
+
+      this._scrollEndSub = this._content.ionScrollEnd.subscribe((ev: ScrollEvent) => {
+        this.scrollEnd(ev);
+      });
+    }
+  }
+
+  /**
    * DOM WRITE
    */
-  setVirtualHeight(newVirtualHeight: number) {
+  private _setHeight(newVirtualHeight: number) {
     if (newVirtualHeight !== this._vHeight) {
       // ******** DOM WRITE ****************
       this._renderer.setElementStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
@@ -585,49 +660,29 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
   /**
    * @private
-   * NO DOM
    */
-  addScrollListener() {
-    let self = this;
+  ngAfterContentInit() {
+    if (!this._itmTmp) {
+      throw 'virtualItem required within virtualScroll';
+    }
 
-    if (!self._unreg) {
-      self._zone.runOutsideAngular(() => {
-
-        function onScroll() {
-          // ******** DOM READ ****************
-          self._data.scrollTop = self._content.getScrollTop();
-
-          // ******** DOM READ THEN DOM WRITE ****************
-          self.scrollUpdate();
-        }
-
-        if (self._eventAssist) {
-          // use JS scrolling for iOS UIWebView
-          // goal is to completely remove this when iOS
-          // fully supports scroll events
-          // listen to JS scroll events
-          self._unreg = self._content.jsScroll(onScroll);
-
-        } else {
-          // listen to native scroll events
-          self._unreg = self._content.addScrollListener(onScroll);
-        }
-
-      });
+    if (!this.approxItemHeight) {
+      this.approxItemHeight = '40px';
+      console.warn('Virtual Scroll: Please provide an "approxItemHeight" input to ensure proper virtual scroll rendering');
     }
   }
 
   /**
    * @private
-   * NO DOM
    */
   ngOnDestroy() {
-    this._unreg && this._unreg();
-    this._unreg = null;
+    this._scrollSub && this._scrollSub.unsubscribe();
+    this._scrollEndSub && this._scrollEndSub.unsubscribe();
   }
 
 }
 
-const SCROLL_END_TIMEOUT_MS = 140;
-const SCROLL_DIFFERENCE_MINIMUM = 20;
-const QUEUE_CHANGE_DETECTION = 0;
+const SCROLL_DIFFERENCE_MINIMUM = 40;
+const SCROLL_QUEUE_NO_CHANGES = 1;
+const SCROLL_QUEUE_CHANGE_DETECTION = 2;
+const SCROLL_QUEUE_DOM_WRITE = 3;

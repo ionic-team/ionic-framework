@@ -1,3 +1,154 @@
+<a name="2.0.0-rc.3"></a>
+# [2.0.0-rc.3](https://github.com/driftyco/ionic/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2016-11-17)
+
+
+### Updating to 2.0.0-rc.3
+
+Update the following dependencies in your `package.json` file:
+
+```
+"dependencies": {
+  "@angular/common": "2.1.1",
+  "@angular/compiler": "2.1.1",
+  "@angular/compiler-cli": "2.1.1",
+  "@angular/core": "2.1.1",
+  "@angular/forms": "2.1.1",
+  "@angular/http": "2.1.1",
+  "@angular/platform-browser": "2.1.1",
+  "@angular/platform-browser-dynamic": "2.1.1",
+  "@angular/platform-server": "2.1.1",
+  "@ionic/storage": "1.1.6",
+  "ionic-angular": "2.0.0-rc.3",
+  "ionic-native": "2.2.3",
+  "ionicons": "3.0.0",
+  "rxjs": "5.0.0-beta.12",
+  "zone.js": "0.6.26"
+},
+"devDependencies": {
+  "@ionic/app-scripts": "0.0.45",
+}
+```
+
+### Bug Fixes
+
+* **animation:** always run before classes and functions ([d9e9ece](https://github.com/driftyco/ionic/commit/d9e9ece)), closes [#8842](https://github.com/driftyco/ionic/issues/8842) [#8769](https://github.com/driftyco/ionic/issues/8769)
+* **animation:** fix regression in _willChg() ([91f5087](https://github.com/driftyco/ionic/commit/91f5087))
+* **button:** fix ios buttons in colored toolbar so they don't use the default color ([0e53ec3](https://github.com/driftyco/ionic/commit/0e53ec3)), closes [#8566](https://github.com/driftyco/ionic/issues/8566)
+* **colors:** override element styling and tweak colors for card and item ([ee3decc](https://github.com/driftyco/ionic/commit/ee3decc)), closes [#9081](https://github.com/driftyco/ionic/issues/9081)
+* **components:** add a mode agnostic css class ([#9133](https://github.com/driftyco/ionic/issues/9133)) ([025c5cc](https://github.com/driftyco/ionic/commit/025c5cc)), closes [#8545](https://github.com/driftyco/ionic/issues/8545)
+* **datetime:** fix min/max displayFormat and pickerFormat ([c72b67d](https://github.com/driftyco/ionic/commit/c72b67d)), closes [#8729](https://github.com/driftyco/ionic/issues/8729)
+* **gestures:** gesture controller handled by components ([32ab817](https://github.com/driftyco/ionic/commit/32ab817)), closes [#9046](https://github.com/driftyco/ionic/issues/9046) [#9130](https://github.com/driftyco/ionic/issues/9130) [#9052](https://github.com/driftyco/ionic/issues/9052) [#7444](https://github.com/driftyco/ionic/issues/7444)
+* **item:** fix color input for item divider and list header ([5e5c33a](https://github.com/driftyco/ionic/commit/5e5c33a)), closes [#8376](https://github.com/driftyco/ionic/issues/8376)
+* **nav:** controller is initialized ([beab06f](https://github.com/driftyco/ionic/commit/beab06f))
+* **nav:** fixes empty stack condition ([909293a](https://github.com/driftyco/ionic/commit/909293a))
+* **nav:** it is not allowed to pop all the views ([0ab990c](https://github.com/driftyco/ionic/commit/0ab990c))
+* **nav:** returning Promise<false> in canLeave / canEnter works as expected ([5f1a862](https://github.com/driftyco/ionic/commit/5f1a862))
+* **nav:** transitioning state is a boolean not a timer ([63d495a](https://github.com/driftyco/ionic/commit/63d495a))
+* **nav:** willLeave is called before willEnter ([b77b2ae](https://github.com/driftyco/ionic/commit/b77b2ae)), closes [#9163](https://github.com/driftyco/ionic/issues/9163)
+* **nav:** zIndex in overlays ([70f8a8e](https://github.com/driftyco/ionic/commit/70f8a8e))
+* **picker:** prevents scrolling under the picker ([2348d22](https://github.com/driftyco/ionic/commit/2348d22))
+* **sass:** change default font path ([#8811](https://github.com/driftyco/ionic/issues/8811)) ([0940d5a](https://github.com/driftyco/ionic/commit/0940d5a))
+* **sass:** remove usage of colors other than primary, improve error ([#8907](https://github.com/driftyco/ionic/issues/8907)) ([eb0b05d](https://github.com/driftyco/ionic/commit/eb0b05d)), closes [#8266](https://github.com/driftyco/ionic/issues/8266)
+* **styles:** update ios and md styles closer to native ([9f7972b](https://github.com/driftyco/ionic/commit/9f7972b))
+* **typography:** Exclude ion-item on a tags selector ([#8340](https://github.com/driftyco/ionic/issues/8340)) ([b00860b](https://github.com/driftyco/ionic/commit/b00860b))
+
+
+### Features
+
+* **input:** clearOnEdit feature. Closes [#9187](https://github.com/driftyco/ionic/issues/9187) ([9469b4f](https://github.com/driftyco/ionic/commit/9469b4f))
+* **nav:** export NavControllerBase for building of components similar to ion-tab ([24b087c](https://github.com/driftyco/ionic/commit/24b087c))
+* **tappable:** auto add tappable attribute for ion-item clicks ([5c4838b](https://github.com/driftyco/ionic/commit/5c4838b))
+* **util:** custom ionic error handler provider ([6b77772](https://github.com/driftyco/ionic/commit/6b77772))
+
+
+### Performance Improvements
+
+* **animation:** improves _progress() hot function ([c44f6b6](https://github.com/driftyco/ionic/commit/c44f6b6))
+* **animation:** optimizing hot loops ([c78dc19](https://github.com/driftyco/ionic/commit/c78dc19))
+* **animation:** set after styles should not be recursive ([3a2ff85](https://github.com/driftyco/ionic/commit/3a2ff85))
+* **click:** increase number to find activatable elements ([c8aad56](https://github.com/driftyco/ionic/commit/c8aad56)), closes [#9190](https://github.com/driftyco/ionic/issues/9190)
+* **item:** improve performance of sliding item ([#9005](https://github.com/driftyco/ionic/issues/9005)) ([759e3ea](https://github.com/driftyco/ionic/commit/759e3ea))
+* **item:** reorder is only added to the DOM if needed ([dec5a0b](https://github.com/driftyco/ionic/commit/dec5a0b)), closes [#9065](https://github.com/driftyco/ionic/issues/9065)
+* **menu:** avoid change detection when it isn't needed ([#8986](https://github.com/driftyco/ionic/issues/8986)) ([d531ec2](https://github.com/driftyco/ionic/commit/d531ec2))
+* **nav:** avoid running zone when it is not needed ([be72d39](https://github.com/driftyco/ionic/commit/be72d39))
+* **picker:** improves performance of picker and datepicker ([fc2ee64](https://github.com/driftyco/ionic/commit/fc2ee64))
+* **picker:** improves picker UX feedback ([cfbc5ea](https://github.com/driftyco/ionic/commit/cfbc5ea))
+
+
+<a name="2.0.0-rc.2"></a>
+# [2.0.0-rc.2](https://github.com/driftyco/ionic/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2016-11-03)
+
+### Updating to 2.0.0-rc.2
+
+Update the following dependencies in your `package.json` file:
+
+```
+"dependencies": {
+  "@angular/common": "2.1.1",
+  "@angular/compiler": "2.1.1",
+  "@angular/compiler-cli": "2.1.1",
+  "@angular/core": "2.1.1",
+  "@angular/forms": "2.1.1",
+  "@angular/http": "2.1.1",
+  "@angular/platform-browser": "2.1.1",
+  "@angular/platform-browser-dynamic": "2.1.1",
+  "@angular/platform-server": "2.1.1",
+  "@ionic/storage": "1.1.6",
+  "ionic-angular": "2.0.0-rc.2"
+},
+"devDependencies": {
+  "@ionic/app-scripts": "0.0.39"
+}
+```
+
+_Note: you should have other dependencies in this file that are not listed above, these are only the dependencies that need to be updated._
+
+Remove the `node_modules` directory from your project, and then run `npm install` inside of your project. Then, you should be on the latest version!
+
+### Bug Fixes
+
+* **action-sheet:** Improve Action Sheet styles across all the platforms ([#8736](https://github.com/driftyco/ionic/issues/8736)) ([8d2c8b6](https://github.com/driftyco/ionic/commit/8d2c8b6)), closes [#8663](https://github.com/driftyco/ionic/issues/8663)
+* **config:** Cannot read property 'canDisableScroll' of undefined in unit tests ([90f9b5c](https://github.com/driftyco/ionic/commit/90f9b5c))
+* **content:** _scrollPadding is not undefined ([6484c50](https://github.com/driftyco/ionic/commit/6484c50)), closes [#8844](https://github.com/driftyco/ionic/issues/8844)
+* **cordova:** add Sass variables for md and wp statusbar padding ([#8788](https://github.com/driftyco/ionic/issues/8788)) ([8921cb1](https://github.com/driftyco/ionic/commit/8921cb1)), closes [#8712](https://github.com/driftyco/ionic/issues/8712)
+* **directives:** add missing export ([#8999](https://github.com/driftyco/ionic/issues/8999)) ([98d474b](https://github.com/driftyco/ionic/commit/98d474b))
+* **fab:** only animate transform and opacity ([f69e981](https://github.com/driftyco/ionic/commit/f69e981))
+* **input:** wrong width of text-input for iOS ([941e2d2](https://github.com/driftyco/ionic/commit/941e2d2)), closes [#7388](https://github.com/driftyco/ionic/issues/7388)
+* **navigation:** adds public willLoad lifecycle event ([033e1ea](https://github.com/driftyco/ionic/commit/033e1ea))
+* **navigation:** clickblock is disabled longer ([eb317d4](https://github.com/driftyco/ionic/commit/eb317d4)), closes [#8713](https://github.com/driftyco/ionic/issues/8713)
+* **navigation:** ion-nav inside ion-content work properly ([ba557ac](https://github.com/driftyco/ionic/commit/ba557ac))
+* **navigation:** ionViewDidLoad fires before children components have been loaded ([e89f3b0](https://github.com/driftyco/ionic/commit/e89f3b0)), closes [#8449](https://github.com/driftyco/ionic/issues/8449)
+* **navigation:** swipe to go back gesture ([04d61ee](https://github.com/driftyco/ionic/commit/04d61ee)), closes [#8919](https://github.com/driftyco/ionic/issues/8919) [#8958](https://github.com/driftyco/ionic/issues/8958) [#7934](https://github.com/driftyco/ionic/issues/7934)
+* **navigation:** view.id is not overridden ([8b65398](https://github.com/driftyco/ionic/commit/8b65398)), closes [#8794](https://github.com/driftyco/ionic/issues/8794)
+* **navigation:** willLoad() does not have to be zone wrapped ([17dbf69](https://github.com/driftyco/ionic/commit/17dbf69))
+* **navigation:** change detector exception ([8b07e6c](https://github.com/driftyco/ionic/commit/8b07e6c))
+* **picker:** fixes regression in picker but introduces new bug. ([c1ba120](https://github.com/driftyco/ionic/commit/c1ba120))
+* **range:** fixes when step size is bigger than range ([9895b86](https://github.com/driftyco/ionic/commit/9895b86)), closes [#8830](https://github.com/driftyco/ionic/issues/8830) [#8802](https://github.com/driftyco/ionic/issues/8802)
+* **range:** range with long label renders correctly ([f1f44eb](https://github.com/driftyco/ionic/commit/f1f44eb))
+* **refresher:** only animate transform property ([658c4d6](https://github.com/driftyco/ionic/commit/658c4d6))
+* **sass:** rename $background-color variable in our loops ([2003ae4](https://github.com/driftyco/ionic/commit/2003ae4)), closes [#8475](https://github.com/driftyco/ionic/issues/8475)
+* **scroll:** fix scroll to top on iOS ([2d165e1](https://github.com/driftyco/ionic/commit/2d165e1))
+* **searchbar:** looks good when mode is different ([0c0f32d](https://github.com/driftyco/ionic/commit/0c0f32d))
+* **searchbar:** positionElements to assign input mode fixes [#8855](https://github.com/driftyco/ionic/issues/8855) ([cd0e19a](https://github.com/driftyco/ionic/commit/cd0e19a))
+* **searchbar:** fix always hide button ([316c4f3](https://github.com/driftyco/ionic/commit/316c4f3))
+* **segment:** update broken link https://github.com/driftyco/ionic-site/issues/777 ([c66a440](https://github.com/driftyco/ionic/commit/c66a440))
+* **select:** emit the ionSelect option when selecting an option ([2eed5e2](https://github.com/driftyco/ionic/commit/2eed5e2))
+* **spinner:** working in firefox and edge ([ab93f3f](https://github.com/driftyco/ionic/commit/ab93f3f)), closes [#8714](https://github.com/driftyco/ionic/issues/8714)
+* **tabs:** $tabs-md-tab-font-size is taken into account ([4be5d83](https://github.com/driftyco/ionic/commit/4be5d83)), closes [#8820](https://github.com/driftyco/ionic/issues/8820)
+* **tabs:** regression in nav-controller-base ([d84d8a6](https://github.com/driftyco/ionic/commit/d84d8a6))
+* **tap-click:** several improvements ([35d12ef](https://github.com/driftyco/ionic/commit/35d12ef))
+* **templates:** suffix templates page [#8320](https://github.com/driftyco/ionic/issues/8320) ([#8368](https://github.com/driftyco/ionic/issues/8368)) ([61620f8](https://github.com/driftyco/ionic/commit/61620f8))
+* **transition:** syntax of cubic-bezier easing ([813d945](https://github.com/driftyco/ionic/commit/813d945))
+* **transition:** wrong easing ([09c08e9](https://github.com/driftyco/ionic/commit/09c08e9))
+
+
+### Features
+
+* **debug:** add IonicErrorHandler ([9397d6b](https://github.com/driftyco/ionic/commit/9397d6b))
+* **tabs:** tabsHideOnSubPages can be modified per tab ([4f6a9b1](https://github.com/driftyco/ionic/commit/4f6a9b1))
+
+
+
 <a name="2.0.0-rc.1"></a>
 # [2.0.0-rc.1](https://github.com/driftyco/ionic/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2016-10-13)
 
@@ -7,24 +158,24 @@
 
 ```
   "dependencies": {
-    "@angular/common": "^2.0.0",
-    "@angular/compiler": "^2.0.0",
+    "@angular/common": "2.0.0",
+    "@angular/compiler": "2.0.0",
     "@angular/compiler-cli": "0.6.2",
-    "@angular/core": "^2.0.0",
-    "@angular/forms": "^2.0.0",
-    "@angular/http": "^2.0.0",
-    "@angular/platform-browser": "^2.0.0",
-    "@angular/platform-browser-dynamic": "^2.0.0",
-    "@angular/platform-server": "^2.0.0",
-    "@ionic/storage": "^1.0.3",
-    "ionic-angular": "^2.0.0-rc.1",
-    "ionic-native": "^2.2.3",
-    "ionicons": "^3.0.0",
+    "@angular/core": "2.0.0",
+    "@angular/forms": "2.0.0",
+    "@angular/http": "2.0.0",
+    "@angular/platform-browser": "2.0.0",
+    "@angular/platform-browser-dynamic": "2.0.0",
+    "@angular/platform-server": "2.0.0",
+    "@ionic/storage": "1.0.3",
+    "ionic-angular": "2.0.0-rc.1",
+    "ionic-native": "2.2.3",
+    "ionicons": "3.0.0",
     "rxjs": "5.0.0-beta.12",
-    "zone.js": "^0.6.21"
+    "zone.js": "0.6.21"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^0.0.34",
+    "@ionic/app-scripts": "^0.0.36",
     "typescript": "^2.0.3"
   },
 ```

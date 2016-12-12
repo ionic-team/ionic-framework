@@ -1,12 +1,17 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, MenuController, NavController, AlertController, Nav } from '../../../..';
+import { AlertController, IonicApp, IonicModule, MenuController, ModalController, NavController, Nav, ViewController } from '../../../..';
 
 
 @Component({
   templateUrl: 'page1.html'
 })
 export class Page1 {
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {}
+  constructor(
+    public navCtrl: NavController,
+    public alertCtrl: AlertController,
+    public modalCtrl: ModalController) { }
+
+  myMenu: string = 'right';
 
   presentAlert() {
     let alert = this.alertCtrl.create({
@@ -18,19 +23,32 @@ export class Page1 {
     alert.present();
   }
 
+  presentModal() {
+    let modal = this.modalCtrl.create(Modal);
+    modal.present();
+  }
+
   goToPage2() {
     this.navCtrl.push(Page2);
   }
 }
 
+@Component({ templateUrl: 'modal.html' })
+export class Modal {
+  constructor(public viewController: ViewController) { }
+  close() {
+    this.viewController.dismiss();
+  }
+}
 
-@Component({templateUrl: 'page3.html'})
-export class Page3 {}
+
+@Component({ templateUrl: 'page3.html' })
+export class Page3 { }
 
 
-@Component({templateUrl: 'page2.html'})
+@Component({ templateUrl: 'page2.html' })
 export class Page2 {
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) { }
 
   page3() {
     this.navCtrl.push(Page3);
@@ -44,7 +62,7 @@ export class Page2 {
 export class E2EPage {
   rootPage: any;
   changeDetectionCount: number = 0;
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
   @ViewChild(Nav) nav: Nav;
 
   constructor(public menuCtrl: MenuController) {
@@ -106,7 +124,8 @@ export class E2EApp {
     E2EPage,
     Page1,
     Page2,
-    Page3
+    Page3,
+    Modal
   ],
   imports: [
     IonicModule.forRoot(E2EApp)
@@ -117,7 +136,8 @@ export class E2EApp {
     E2EPage,
     Page1,
     Page2,
-    Page3
+    Page3,
+    Modal
   ]
 })
-export class AppModule {}
+export class AppModule { }

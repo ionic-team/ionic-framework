@@ -3,21 +3,37 @@
 // Windows Radio
 // --------------------------------------------------
 
+/// @prop - Color of the checked radio
 $radio-wp-color-on:               color($colors-wp, primary) !default;
+
+/// @prop - Color of the unchecked radio
 $radio-wp-color-off:              #333 !default;
 
-// Places radio icon on the left of the item
+/// @prop - Order of the radio (places to the left of the item)
 $radio-wp-order:                  -1 !default;
 
+/// @prop - Width of the radio icon
 $radio-wp-icon-width:             16px !default;
+
+/// @prop - Height of the radio icon
 $radio-wp-icon-height:            16px !default;
+
+/// @prop - Border width of the radio icon
 $radio-wp-icon-border-width:      2px !default;
+
+/// @prop - Border style of the radio icon
 $radio-wp-icon-border-style:      solid !default;
+
+/// @prop - Border radius of the radio icon
 $radio-wp-icon-border-radius:     50% !default;
 
+/// @prop - Opacity of the disabled radio
 $radio-wp-disabled-opacity:       .3 !default;
 
+/// @prop - Margin of the item-left in a radio
 $radio-wp-item-left-margin:       9px 20px 9px 4px !default;
+
+/// @prop - Margin of the item-right in a radio
 $radio-wp-item-right-margin:      11px 10px 10px 0 !default;
 
 

@@ -21,11 +21,21 @@ $content-wp-margin:                   $content-margin !default;
 // --------------------------------------------------
 
 $toolbar-wp-height:                   46px !default;
+$toolbar-wp-padding:                  4px !default;
 $toolbar-wp-background:               $toolbar-background !default;
 $toolbar-wp-border-color:             $toolbar-border-color !default;
 $toolbar-wp-text-color:               $toolbar-text-color !default;
 $toolbar-wp-active-color:             $toolbar-active-color !default;
 $toolbar-wp-inactive-color:           $toolbar-inactive-color !default;
+
+
+// Windows Tabs
+// --------------------------------------------------
+
+$tabs-wp-background:                  $tabs-background !default;
+$tabs-wp-border-color:                transparent !default;
+$tabs-wp-tab-color-inactive:          $tabs-tab-color-inactive !default;
+$tabs-wp-tab-color-active:            $tabs-tab-color-active !default;
 
 
 // Windows List

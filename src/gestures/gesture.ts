@@ -38,7 +38,7 @@ export class Gesture {
 
   on(type: string, cb: Function) {
     if (type === 'pinch' || type === 'rotate') {
-      this._hammer.get('pinch').set({enable: true});
+      this._hammer.get(type).set({enable: true});
     }
     this._hammer.on(type, cb);
     (this._callbacks[type] || (this._callbacks[type] = [])).push(cb);

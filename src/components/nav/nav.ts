@@ -6,10 +6,12 @@ import { DeepLinker } from '../../navigation/deep-linker';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
+import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
+import { DomController } from '../../util/dom-controller';
 
 /**
  * @name Nav
@@ -56,7 +58,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
 
   constructor(
     @Optional() viewCtrl: ViewController,
-    @Optional() parent: NavControllerBase,
+    @Optional() parent: NavController,
     app: App,
     config: Config,
     keyboard: Keyboard,
@@ -66,9 +68,10 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     cfr: ComponentFactoryResolver,
     gestureCtrl: GestureController,
     transCtrl: TransitionController,
-    @Optional() linker: DeepLinker
+    @Optional() linker: DeepLinker,
+    domCtrl: DomController,
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
+    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
@@ -149,6 +152,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
   }
   set swipeBackEnabled(val: boolean) {
     this._sbEnabled = isTrueProperty(val);
+    this._swipeBackCheck();
   }
 
   /**

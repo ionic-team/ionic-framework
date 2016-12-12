@@ -22,7 +22,7 @@
       </button>
     </ion-buttons>
 
-    <button ion-button menuToggle="right" right color="secondary">
+    <button ion-button [menuToggle]="myMenu" right color="secondary">
       <ion-icon name="menu"></ion-icon>
     </button>
 
@@ -62,6 +62,10 @@
 
   <p>
     <button ion-button (click)="presentAlert()">Open alert</button>
+  </p>
+
+  <p>
+    <button ion-button (click)="presentModal()">Open modal</button>
   </p>
 
   <p>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 /*
   Generated class for the $CLASSNAME page.
@@ -13,10 +13,10 @@ import { NavController } from 'ionic-angular';
 })
 export class $CLASSNAMEPage {
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
-    console.log('Hello $CLASSNAMEPage Page');
+    console.log('ionViewDidLoad $CLASSNAMEPage');
   }
 
 }

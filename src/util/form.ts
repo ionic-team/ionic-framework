@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { removeArrayItem } from './util';
 
 
 /**
@@ -15,18 +16,10 @@ export class Form {
   }
 
   deregister(input: any) {
-    let index = this._inputs.indexOf(input);
-    if (index > -1) {
-      this._inputs.splice(index, 1);
-    }
+    removeArrayItem(this._inputs, input);
     if (input === this._focused) {
       this._focused = null;
     }
-  }
-
-  focusOut() {
-    let activeElement = <HTMLElement>document.activeElement;
-    activeElement && activeElement.blur && activeElement.blur();
   }
 
   setAsFocused(input: any) {
@@ -59,5 +52,26 @@ export class Form {
   nextId() {
     return ++this._ids;
   }
+
+}
+
+
+export abstract class IonicTapInput implements IonicFormInput {
+
+  abstract initFocus(): void;
+
+  abstract get checked(): boolean;
+
+  abstract set checked(val: boolean);
+
+  abstract get disabled(): boolean;
+
+  abstract set disabled(val: boolean);
+
+}
+
+export abstract class IonicFormInput {
+
+  abstract initFocus(): void;
 
 }

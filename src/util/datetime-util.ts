@@ -278,7 +278,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
 
 
 export function parseTemplate(template: string): string[] {
-  let formats: string[] = [];
+  const formats: string[] = [];
 
   template = template.replace(/[^\w\s]/gi, ' ');
 
@@ -288,17 +288,17 @@ export function parseTemplate(template: string): string[] {
     }
   });
 
-  let words = template.split(' ').filter(w => w.length > 0);
+  const words = template.split(' ').filter(w => w.length > 0);
   words.forEach((word, i) => {
     FORMAT_KEYS.forEach(format => {
       if (word === format.f) {
         if (word === FORMAT_A || word === FORMAT_a) {
           // this format is an am/pm format, so it's an "a" or "A"
           if ((formats.indexOf(FORMAT_h) < 0 && formats.indexOf(FORMAT_hh) < 0) ||
-              (words[i - 1] !== FORMAT_m && words[i - 1] !== FORMAT_mm)) {
+              VALID_AMPM_PREFIX.indexOf(words[i - 1]) === -1) {
             // template does not already have a 12-hour format
-            // or this am/pm format doesn't have a minute format immediately before it
-            // so do not treat this word "a" or "A" as an am/pm format
+            // or this am/pm format doesn't have a hour, minute, or second format immediately before it
+            // so do not treat this word "a" or "A" as the am/pm format
             return;
           }
         }
@@ -514,4 +514,8 @@ const MONTH_SHORT_NAMES = [
   'Oct',
   'Nov',
   'Dec',
+];
+
+const VALID_AMPM_PREFIX = [
+  FORMAT_hh, FORMAT_h, FORMAT_mm, FORMAT_m, FORMAT_ss, FORMAT_s
 ];

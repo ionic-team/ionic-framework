@@ -162,10 +162,19 @@ $button-md-round-padding:                       $button-round-padding !default;
 $button-md-round-border-radius:                 $button-round-border-radius !default;
 
 
+// Material Design Decorator Button
+// --------------------------------------------------
+
+/// @prop - Font weight of the strong button
+$button-md-strong-font-weight:                  bold !default;
+
+
 // Material Design Default Button
 // --------------------------------------------------
 
 .button-md {
+  overflow: hidden;
+
   margin: $button-md-margin;
   padding: $button-md-padding;
 
@@ -204,21 +213,21 @@ $button-md-round-border-radius:                 $button-round-border-radius !def
 // --------------------------------------------------
 
 @mixin md-button-default($color-name, $color-base, $color-contrast) {
-  $background-color: $color-base;
-  $background-color-activated: color-shade($background-color);
+  $bg-color: $color-base;
+  $bg-color-activated: color-shade($bg-color);
   $fg-color: $color-contrast;
 
   .button-md-#{$color-name} {
     color: $fg-color;
-    background-color: $background-color;
+    background-color: $bg-color;
   }
 
   .button-md-#{$color-name}:hover:not(.disable-hover) {
-    background-color: $background-color;
+    background-color: $bg-color;
   }
 
   .button-md-#{$color-name}.activated {
-    background-color: $background-color-activated;
+    background-color: $bg-color-activated;
     opacity: $button-md-opacity-activated;
   }
 
@@ -421,4 +430,12 @@ $button-md-round-border-radius:                 $button-round-border-radius !def
   @include md-button-default($color-name, $color-base, $color-contrast);
   @include md-button-outline($color-name, $color-base, $color-contrast);
   @include md-button-clear($color-name, $color-base, $color-contrast);
+}
+
+
+// MD strong Button
+// --------------------------------------------------
+
+.button-strong-md {
+  font-weight: $button-md-strong-font-weight;
 }

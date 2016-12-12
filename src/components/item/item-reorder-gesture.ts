@@ -47,7 +47,7 @@ export class ItemReorderGesture {
       console.error('ion-reorder does not contain $ionComponent');
       return false;
     }
-    this.reorderList.reorderPrepare();
+    this.reorderList._reorderPrepare();
 
     let item = reorderMark.getReorderNode();
     if (!item) {
@@ -63,13 +63,13 @@ export class ItemReorderGesture {
     this.lastToIndex = indexForItem(item);
 
     this.windowHeight = window.innerHeight - AUTO_SCROLL_MARGIN;
-    this.lastScrollPosition = this.reorderList.scrollContent(0);
+    this.lastScrollPosition = this.reorderList._scrollContent(0);
 
     this.offset = pointerCoord(ev);
     this.offset.y += this.lastScrollPosition;
 
     item.classList.add(ITEM_REORDER_ACTIVE);
-    this.reorderList.reorderStart();
+    this.reorderList._reorderStart();
     return true;
   }
 
@@ -97,7 +97,7 @@ export class ItemReorderGesture {
           this.lastToIndex = toIndex;
           this.lastYcoord = posY;
           this.emptyZone = false;
-          this.reorderList.reorderMove(fromIndex, toIndex, this.selectedItemHeight);
+          this.reorderList._reorderMove(fromIndex, toIndex, this.selectedItemHeight);
         }
       } else {
         this.emptyZone = true;
@@ -133,7 +133,7 @@ export class ItemReorderGesture {
     } else {
       reorderInactive();
     }
-    this.reorderList.reorderEmit(fromIndex, toIndex);
+    this.reorderList._reorderEmit(fromIndex, toIndex);
   }
 
   private itemForCoord(coord: PointerCoordinates): HTMLElement {
@@ -142,9 +142,9 @@ export class ItemReorderGesture {
 
   private scroll(posY: number): number {
     if (posY < AUTO_SCROLL_MARGIN) {
-      this.lastScrollPosition = this.reorderList.scrollContent(-SCROLL_JUMP);
+      this.lastScrollPosition = this.reorderList._scrollContent(-SCROLL_JUMP);
     } else if (posY > this.windowHeight) {
-      this.lastScrollPosition = this.reorderList.scrollContent(SCROLL_JUMP);
+      this.lastScrollPosition = this.reorderList._scrollContent(SCROLL_JUMP);
     }
     return this.lastScrollPosition;
   }

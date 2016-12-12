@@ -20,6 +20,6 @@ ion-backdrop {
   transform: translateZ(0);
 }
 
-ion-backdrop.hide-backdrop {
-  display: none;
+ion-backdrop.backdrop-no-tappable {
+  cursor: auto;
 }

@@ -11,5 +11,5 @@ $cordova-ios-statusbar-padding-modal-max-width:         $cordova-statusbar-paddi
 
 // Cordova mixins are in the main cordova file
 .ios {
-  @include statusbar-padding($toolbar-ios-height, $content-ios-padding, $cordova-ios-statusbar-padding, $cordova-ios-statusbar-padding-modal-max-width, true);
+  @include statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $cordova-ios-statusbar-padding, $cordova-ios-statusbar-padding-modal-max-width, true);
 }

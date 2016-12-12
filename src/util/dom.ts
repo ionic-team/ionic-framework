@@ -1,16 +1,16 @@
+const win: any = window;
 
 // RequestAnimationFrame Polyfill (Android 4.3 and below)
 /*! @author Paul Irish */
 /*! @source https://gist.github.com/paulirish/1579671 */
 (function() {
   var rafLastTime = 0;
-  const win: any = window;
   if (!win.requestAnimationFrame) {
     win.requestAnimationFrame = function(callback: Function) {
       var currTime = Date.now();
       var timeToCall = Math.max(0, 16 - (currTime - rafLastTime));
 
-      var id = window.setTimeout(function() {
+      var id = win.setTimeout(function() {
         callback(currTime + timeToCall);
       }, timeToCall);
 
@@ -25,35 +25,55 @@
 })();
 
 // use native raf rather than the zone wrapped one
-let originalRaf = (window[window['Zone']['__symbol__']('requestAnimationFrame')] || window[window['Zone']['__symbol__']('webkitRequestAnimationFrame')]);
+const originalRaf = (win[win['Zone']['__symbol__']('requestAnimationFrame')] || win[win['Zone']['__symbol__']('webkitRequestAnimationFrame')]);
 // if the originalRaf from the Zone symbol is not available, we need to provide the polyfilled version
-export const nativeRaf = originalRaf !== undefined ? originalRaf['bind'](window) : window.requestAnimationFrame.bind(window);
+export const nativeRaf = originalRaf !== undefined ? originalRaf['bind'](win) : win.requestAnimationFrame.bind(win);
 
 // zone wrapped raf
-export const raf = window.requestAnimationFrame.bind(window);
-export const cancelRaf = window.cancelAnimationFrame.bind(window);
+export const raf = win.requestAnimationFrame.bind(win);
+export const cancelRaf = win.cancelAnimationFrame.bind(win);
 
-export const nativeTimeout = window[window['Zone']['__symbol__']('setTimeout')]['bind'](window);
-export const clearNativeTimeout = window[window['Zone']['__symbol__']('clearTimeout')]['bind'](window);
+export const nativeTimeout = win[win['Zone']['__symbol__']('setTimeout')]['bind'](win);
+export const clearNativeTimeout = win[win['Zone']['__symbol__']('clearTimeout')]['bind'](win);
 
+/**
+ * Run a function in an animation frame after waiting `framesToWait` frames.
+ *
+ * @param framesToWait number how many frames to wait
+ * @param callback Function the function call to defer
+ * @return Function a function to call to cancel the wait
+ */
 export function rafFrames(framesToWait: number, callback: Function) {
   framesToWait = Math.ceil(framesToWait);
+  let rafId: any;
+  let timeoutId: any;
 
-  if (framesToWait < 2) {
-    nativeRaf(callback);
+  if (framesToWait === 0) {
+    callback();
+
+  } else if (framesToWait < 2) {
+    rafId = nativeRaf(callback);
 
   } else {
-    nativeTimeout(() => {
-      nativeRaf(callback);
+    timeoutId = nativeTimeout(() => {
+      rafId = nativeRaf(callback);
     }, (framesToWait - 1) * 16.6667);
   }
+
+  return function() {
+    clearNativeTimeout(timeoutId);
+    cancelRaf(raf);
+  };
 }
 
 // TODO: DRY rafFrames and zoneRafFrames
 export function zoneRafFrames(framesToWait: number, callback: Function) {
   framesToWait = Math.ceil(framesToWait);
 
-  if (framesToWait < 2) {
+  if (framesToWait === 0) {
+    callback();
+
+  } else if (framesToWait < 2) {
     raf(callback);
 
   } else {
@@ -63,7 +83,7 @@ export function zoneRafFrames(framesToWait: number, callback: Function) {
   }
 }
 
-export let CSS: {
+export const CSS: {
   transform?: string,
   transition?: string,
   transitionDuration?: string,
@@ -156,14 +176,14 @@ export function ready(callback?: Function) {
 
   } else {
     document.addEventListener('DOMContentLoaded', completed, false);
-    window.addEventListener('load', completed, false);
+    win.addEventListener('load', completed, false);
   }
 
   return promise;
 
   function completed() {
     document.removeEventListener('DOMContentLoaded', completed, false);
-    window.removeEventListener('load', completed, false);
+    win.removeEventListener('load', completed, false);
     callback();
   }
 }
@@ -181,13 +201,13 @@ export function windowLoad(callback?: Function) {
 
   } else {
 
-    window.addEventListener('load', completed, false);
+    win.addEventListener('load', completed, false);
   }
 
   return promise;
 
   function completed() {
-    window.removeEventListener('load', completed, false);
+    win.removeEventListener('load', completed, false);
     callback();
   }
 }
@@ -195,23 +215,28 @@ export function windowLoad(callback?: Function) {
 export function pointerCoord(ev: any): PointerCoordinates {
   // get coordinates for either a mouse click
   // or a touch depending on the given event
-  let c = { x: 0, y: 0 };
   if (ev) {
-    const touches = ev.touches && ev.touches.length ? ev.touches : [ev];
-    const e = (ev.changedTouches && ev.changedTouches[0]) || touches[0];
-    if (e) {
-      c.x = e.clientX || e.pageX || 0;
-      c.y = e.clientY || e.pageY || 0;
+    var changedTouches = ev.changedTouches;
+    if (changedTouches && changedTouches.length > 0) {
+      var touch = changedTouches[0];
+      return { x: touch.clientX, y: touch.clientY };
+    }
+    var pageX = ev.pageX;
+    if (pageX !== undefined) {
+      return { x: pageX, y: ev.pageY };
     }
   }
-  return c;
+  return { x: 0, y: 0 };
 }
 
 export function hasPointerMoved(threshold: number, startCoord: PointerCoordinates, endCoord: PointerCoordinates) {
-  let deltaX = (startCoord.x - endCoord.x);
-  let deltaY = (startCoord.y - endCoord.y);
-  let distance = deltaX * deltaX + deltaY * deltaY;
-  return distance > (threshold * threshold);
+  if (startCoord && endCoord) {
+    const deltaX = (startCoord.x - endCoord.x);
+    const deltaY = (startCoord.y - endCoord.y);
+    const distance = deltaX * deltaX + deltaY * deltaY;
+    return distance > (threshold * threshold);
+  }
+  return false;
 }
 
 export function isActive(ele: HTMLElement) {
@@ -226,15 +251,22 @@ export function isTextInput(ele: any) {
   return !!ele &&
          (ele.tagName === 'TEXTAREA' ||
           ele.contentEditable === 'true' ||
-          (ele.tagName === 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset|color|image|button)$/i).test(ele.type)));
+          (ele.tagName === 'INPUT' && !(NON_TEXT_INPUT_REGEX.test(ele.type))));
 }
 
+export const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|color|image|button)$/i;
+
 export function hasFocusedTextInput() {
-  let ele = <HTMLElement>document.activeElement;
+  const ele = <HTMLElement>document.activeElement;
   if (isTextInput(ele)) {
     return (ele.parentElement.querySelector(':focus') === ele);
   }
   return false;
+}
+
+export function focusOutActiveElement() {
+  const activeElement = <HTMLElement>document.activeElement;
+  activeElement && activeElement.blur && activeElement.blur();
 }
 
 const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id|autofocus|autocomplete|autocorrect)$/i;
@@ -286,10 +318,10 @@ export function clearDimensions(id: string) {
 export function windowDimensions(): {width: number, height: number} {
   if (!dimensionCache.win) {
     // make sure we got good values before caching
-    if (window.innerWidth && window.innerHeight) {
+    if (win.innerWidth && win.innerHeight) {
       dimensionCache.win = {
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: win.innerWidth,
+        height: win.innerHeight
       };
     } else {
       // do not cache bad values

@@ -14,8 +14,10 @@ export class ModalSlideIn extends PageTransition {
     const backdrop = new Animation(backdropEle);
     const wrapper = new Animation(ele.querySelector('.modal-wrapper'));
 
-    backdrop.fromTo('opacity', 0.01, 0.4);
+    wrapper.beforeStyles({ 'opacity': 1 });
     wrapper.fromTo('translateY', '100%', '0%');
+
+    backdrop.fromTo('opacity', 0.01, 0.4);
 
     this
       .element(this.enteringView.pageRef())

@@ -253,7 +253,7 @@ describe('button', () => {
 function mockButton(config?: Config, ionButton?: string) {
   config = config || mockConfig();
   ionButton = ionButton || '';
-  let b = new Button(null, ionButton, config, mockElementRef(), mockRenderer());
+  let b = new Button(ionButton, config, mockElementRef(), mockRenderer());
   b._init = true;
   b.mode = 'ios';
   return b;

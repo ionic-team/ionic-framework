@@ -1,4 +1,4 @@
-import { GestureController, DisableScroll } from '../gesture-controller';
+import { GestureController, GestureOptions } from '../gesture-controller';
 
 describe('gesture controller', () => {
   it('should create an instance of GestureController', () => {
@@ -80,41 +80,51 @@ describe('gesture controller', () => {
 
 
 
-  it('should initialize a delegate without options', () => {
+  it('should throw error if initializing without a name a gesture delegate without options', () => {
     let c = new GestureController(null);
-    let g = c.create('event');
+    expect(() => {
+      let a = {};
+      c.createGesture(<GestureOptions>a);
+    }).toThrowError();
+  });
+
+
+  it('should initialize without options', () => {
+    let c = new GestureController(null);
+
+    let g = c.createGesture({
+      name: 'event',
+    });
     expect(g['name']).toEqual('event');
-    expect(g.priority).toEqual(0);
-    expect(g['disable']).toEqual([]);
-    expect(g['disableScroll']).toEqual(DisableScroll.Never);
+    expect(g['priority']).toEqual(0);
+    expect(g['disableScroll']).toEqual(false);
     expect(g['controller']).toEqual(c);
     expect(g['id']).toEqual(1);
 
-    let g2 = c.create('event2');
+    let g2 = c.createGesture({ name: 'event2' });
     expect(g2['id']).toEqual(2);
   });
 
 
   it('should initialize a delegate with options', () => {
     let c = new GestureController(null);
-    let g = c.create('swipe', {
+    let g = c.createGesture({
+      name: 'swipe',
       priority: -123,
-      disableScroll: DisableScroll.DuringCapture,
-      disable: ['event2']
+      disableScroll: true,
     });
     expect(g['name']).toEqual('swipe');
-    expect(g.priority).toEqual(-123);
-    expect(g['disable']).toEqual(['event2']);
-    expect(g['disableScroll']).toEqual(DisableScroll.DuringCapture);
+    expect(g['priority']).toEqual(-123);
+    expect(g['disableScroll']).toEqual(true);
     expect(g['controller']).toEqual(c);
     expect(g['id']).toEqual(1);
   });
 
   it('should test if several gestures can be started', () => {
     let c = new GestureController(null);
-    let g1 = c.create('swipe');
-    let g2 = c.create('swipe1', {priority: 3});
-    let g3 = c.create('swipe2', {priority: 4});
+    let g1 = c.createGesture({ name: 'swipe' });
+    let g2 = c.createGesture({name: 'swipe1', priority: 3});
+    let g3 = c.createGesture({name: 'swipe2', priority: 4});
 
     for (var i = 0; i < 10; i++) {
       expect(g1.start()).toEqual(true);
@@ -137,6 +147,7 @@ describe('gesture controller', () => {
     expect(g1.start()).toEqual(true);
     expect(g2.start()).toEqual(true);
     g3.destroy();
+    expect(g3['controller']).toBeNull();
 
     expect(c['requestedStart']).toEqual({
       1: 0,
@@ -147,11 +158,11 @@ describe('gesture controller', () => {
 
   it('should test if several gestures try to capture at the same time', () => {
     let c = new GestureController(null);
-    let g1 = c.create('swipe1');
-    let g2 = c.create('swipe2', { priority: 2 });
-    let g3 = c.create('swipe3', { priority: 3 });
-    let g4 = c.create('swipe4', { priority: 4 });
-    let g5 = c.create('swipe5', { priority: 5 });
+    let g1 = c.createGesture({name: 'swipe1'});
+    let g2 = c.createGesture({name: 'swipe2', priority: 2 });
+    let g3 = c.createGesture({name: 'swipe3', priority: 3 });
+    let g4 = c.createGesture({name: 'swipe4', priority: 4 });
+    let g5 = c.createGesture({name: 'swipe5', priority: 5 });
 
     // Low priority capture() returns false
     expect(g2.start()).toEqual(true);
@@ -196,90 +207,13 @@ describe('gesture controller', () => {
     expect(g1.capture()).toEqual(true);
   });
 
-
-  it('should destroy correctly', () => {
-    let c = new GestureController(null);
-    let g = c.create('swipe', {
-      priority: 123,
-      disableScroll: DisableScroll.Always,
-      disable: ['event2']
-    });
-    expect(c.isScrollDisabled()).toEqual(true);
-
-    // Capturing
-    expect(g.capture()).toEqual(true);
-    expect(c.isCaptured()).toEqual(true);
-    expect(g.capture()).toEqual(false);
-    expect(c.isScrollDisabled()).toEqual(true);
-
-    // Releasing
-    g.release();
-    expect(c.isCaptured()).toEqual(false);
-    expect(c.isScrollDisabled()).toEqual(true);
-    expect(g.capture()).toEqual(true);
-    expect(c.isCaptured()).toEqual(true);
-
-    // Destroying
-    g.destroy();
-    expect(c.isCaptured()).toEqual(false);
-    expect(g['controller']).toBeNull();
-
-    // it should return false and not crash
-    expect(g.start()).toEqual(false);
-    expect(g.capture()).toEqual(false);
-    g.release();
-  });
-
-
-  it('should disable some events', () => {
-    let c = new GestureController(null);
-
-    let goback = c.create('goback');
-    expect(goback.canStart()).toEqual(true);
-
-    let g2 = c.create('goback2');
-    expect(g2.canStart()).toEqual(true);
-
-    let g3 = c.create('swipe', {
-      disable: ['range', 'goback', 'something']
-    });
-
-    let g4 = c.create('swipe2', {
-      disable: ['range']
-    });
-
-    // it should be noop
-    g3.release();
-
-    // goback is disabled
-    expect(c.isDisabled('range')).toEqual(true);
-    expect(c.isDisabled('goback')).toEqual(true);
-    expect(c.isDisabled('something')).toEqual(true);
-    expect(c.isDisabled('goback2')).toEqual(false);
-    expect(goback.canStart()).toEqual(false);
-    expect(goback.start()).toEqual(false);
-    expect(goback.capture()).toEqual(false);
-    expect(g3.canStart()).toEqual(true);
-
-    // Once g3 is destroyed, goback and something should be enabled
-    g3.destroy();
-    expect(c.isDisabled('range')).toEqual(true);
-    expect(c.isDisabled('goback')).toEqual(false);
-    expect(c.isDisabled('something')).toEqual(false);
-    expect(g3.canStart()).toEqual(false);
-
-    // Once g4 is destroyed, range is also enabled
-    g4.destroy();
-    expect(c.isDisabled('range')).toEqual(false);
-    expect(g4.canStart()).toEqual(false);
-  });
-
   it('should disable scrolling on capture', () => {
     let c = new GestureController(null);
-    let g = c.create('goback', {
-      disableScroll: DisableScroll.DuringCapture,
+    let g = c.createGesture({
+      name: 'goback',
+      disableScroll: true,
     });
-    let g1 = c.create('swipe');
+    let g1 = c.createGesture({ name: 'swipe' });
 
     g.start();
     expect(c.isScrollDisabled()).toEqual(false);
@@ -294,19 +228,116 @@ describe('gesture controller', () => {
     g.capture();
     expect(c.isScrollDisabled()).toEqual(true);
 
-    let g2 = c.create('swipe2', {
-      disableScroll: DisableScroll.Always,
-    });
-    g.release();
-    expect(c.isScrollDisabled()).toEqual(true);
-
-    g2.destroy();
-    expect(c.isScrollDisabled()).toEqual(false);
-
-    g.capture();
-    expect(c.isScrollDisabled()).toEqual(true);
-
     g.destroy();
     expect(c.isScrollDisabled()).toEqual(false);
   });
+
+  describe('BlockerDelegate', () => {
+    it('create one', () => {
+      let c = new GestureController(null);
+      let b = c.createBlocker({
+        disableScroll: true,
+        disable: ['event1', 'event2', 'event3', 'event4']
+      });
+
+      expect(b['disable']).toEqual(['event1', 'event2', 'event3', 'event4']);
+      expect(b['disableScroll']).toEqual(true);
+      expect(b['controller']).toEqual(c);
+      expect(b['id']).toEqual(1);
+
+      let b2 = c.createBlocker({
+        disable: ['event2', 'event3', 'event4', 'event5']
+      });
+
+      expect(b2['disable']).toEqual(['event2', 'event3', 'event4', 'event5']);
+      expect(b2['disableScroll']).toEqual(false);
+      expect(b2['controller']).toEqual(c);
+      expect(b2['id']).toEqual(2);
+
+
+      expect(c.isDisabled('event1')).toBeFalsy();
+      expect(c.isDisabled('event2')).toBeFalsy();
+      expect(c.isDisabled('event3')).toBeFalsy();
+      expect(c.isDisabled('event4')).toBeFalsy();
+      expect(c.isDisabled('event5')).toBeFalsy();
+
+      b.block();
+      b.block();
+
+      expect(c.isDisabled('event1')).toBeTruthy();
+      expect(c.isDisabled('event2')).toBeTruthy();
+      expect(c.isDisabled('event3')).toBeTruthy();
+      expect(c.isDisabled('event4')).toBeTruthy();
+      expect(c.isDisabled('event5')).toBeFalsy();
+
+      b2.block();
+      b2.block();
+      b2.block();
+
+      expect(c.isDisabled('event1')).toBeTruthy();
+      expect(c.isDisabled('event2')).toBeTruthy();
+      expect(c.isDisabled('event3')).toBeTruthy();
+      expect(c.isDisabled('event4')).toBeTruthy();
+      expect(c.isDisabled('event5')).toBeTruthy();
+
+      b.unblock();
+
+      expect(c.isDisabled('event1')).toBeFalsy();
+      expect(c.isDisabled('event2')).toBeTruthy();
+      expect(c.isDisabled('event3')).toBeTruthy();
+      expect(c.isDisabled('event4')).toBeTruthy();
+      expect(c.isDisabled('event5')).toBeTruthy();
+
+      b2.destroy();
+      expect(b2['controller']).toBeNull();
+
+      expect(c.isDisabled('event1')).toBeFalsy();
+      expect(c.isDisabled('event2')).toBeFalsy();
+      expect(c.isDisabled('event3')).toBeFalsy();
+      expect(c.isDisabled('event4')).toBeFalsy();
+      expect(c.isDisabled('event5')).toBeFalsy();
+    });
+
+
+    it('should disable some events', () => {
+      let c = new GestureController(null);
+
+      let goback = c.createGesture({ name: 'goback' });
+      expect(goback.canStart()).toEqual(true);
+
+      let g2 = c.createGesture({ name: 'goback2' });
+      expect(g2.canStart()).toEqual(true);
+
+      let g3 = c.createBlocker({
+        disable: ['range', 'goback', 'something']
+      });
+
+      let g4 = c.createBlocker({
+        disable: ['range']
+      });
+
+      g3.block();
+      g4.block();
+
+      // goback is disabled
+      expect(c.isDisabled('range')).toEqual(true);
+      expect(c.isDisabled('goback')).toEqual(true);
+      expect(c.isDisabled('something')).toEqual(true);
+      expect(c.isDisabled('goback2')).toEqual(false);
+      expect(goback.canStart()).toEqual(false);
+      expect(goback.start()).toEqual(false);
+      expect(goback.capture()).toEqual(false);
+
+      // Once g3 is destroyed, goback and something should be enabled
+      g3.destroy();
+      expect(c.isDisabled('range')).toEqual(true);
+      expect(c.isDisabled('goback')).toEqual(false);
+      expect(c.isDisabled('something')).toEqual(false);
+
+      // Once g4 is destroyed, range is also enabled
+      g4.unblock();
+      expect(c.isDisabled('range')).toEqual(false);
+    });
+  });
 });
+

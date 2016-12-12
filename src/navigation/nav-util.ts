@@ -7,23 +7,25 @@ import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
 
 
+export function getComponent(linker: DeepLinker, nameOrPageOrView: any): any {
+  if (typeof nameOrPageOrView === 'function') {
+    return nameOrPageOrView;
+  }
+  if (typeof nameOrPageOrView === 'string') {
+    return linker.getComponentFromName(nameOrPageOrView);
+  }
+  return null;
+}
+
 export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any): ViewController {
   if (nameOrPageOrView) {
     if (isViewController(nameOrPageOrView)) {
       // is already a ViewController
       return nameOrPageOrView;
     }
-    if (typeof nameOrPageOrView === 'function') {
-      // is a page component, now turn it into a ViewController
-      return new ViewController(nameOrPageOrView, params);
-    }
-    if (typeof nameOrPageOrView === 'string') {
-      // is a string, see if it matches a
-      const component = linker.getComponentFromName(nameOrPageOrView);
-      if (component) {
-        // found a page component in the link config by name
-        return new ViewController(component, params);
-      }
+    let component = getComponent(linker, nameOrPageOrView);
+    if (component) {
+      return new ViewController(component, params);
     }
   }
   console.error(`invalid page component: ${nameOrPageOrView}`);
@@ -51,8 +53,15 @@ export function convertToViews(linker: DeepLinker, pages: any[]): ViewController
   return views;
 }
 
+let portalZindex = 9999;
+
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
   if (enteringView) {
+    if (nav._isPortal) {
+      enteringView._setZIndex(nav._zIndexOffset + portalZindex, renderer);
+      portalZindex++;
+      return;
+    }
 
     leavingView = leavingView || nav.getPrevious(enteringView);
 
@@ -65,22 +74,22 @@ export function setZIndex(nav: NavControllerBase, enteringView: ViewController, 
       }
 
     } else {
-      enteringView._setZIndex(nav._isPortal ? PORTAL_ZINDEX : INIT_ZINDEX, renderer);
+      enteringView._setZIndex(INIT_ZINDEX + nav._zIndexOffset, renderer);
     }
   }
 }
 
-export function isTabs(nav: any) {
+export function isTabs(nav: any): boolean {
   // Tabs (ion-tabs)
   return !!nav && !!nav.getSelected;
 }
 
-export function isTab(nav: any) {
+export function isTab(nav: any): boolean {
   // Tab (ion-tab)
   return !!nav && isPresent(nav._tabId);
 }
 
-export function isNav(nav: any) {
+export function isNav(nav: any): boolean {
   // Nav (ion-nav), Tab (ion-tab), Portal (ion-portal)
   return !!nav && !!nav.push;
 }
@@ -152,6 +161,7 @@ export interface NavOptions {
   id?: string;
   keyboardClose?: boolean;
   progressAnimation?: boolean;
+  disableApp?: boolean;
   ev?: any;
   updateUrl?: boolean;
   isNavRoot?: boolean;
@@ -169,6 +179,7 @@ export interface TransitionInstruction {
   opts: NavOptions;
   insertStart?: number;
   insertViews?: ViewController[];
+  removeView?: ViewController;
   removeStart?: number;
   removeCount?: number;
   resolve?: TransitionResolveFn;
@@ -184,7 +195,6 @@ export enum ViewState {
 }
 
 export const INIT_ZINDEX = 100;
-export const PORTAL_ZINDEX = 9999;
 
 export const DIRECTION_BACK = 'back';
 export const DIRECTION_FORWARD = 'forward';

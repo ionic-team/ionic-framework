@@ -36,6 +36,7 @@ export const SCRIPTS_ROOT = join(PROJECT_ROOT, SCRIPTS_NAME);
 export const SRC_ROOT = join(PROJECT_ROOT, SRC_NAME);
 
 export const SRC_COMPONENTS_ROOT = join(SRC_ROOT, COMPONENTS_NAME);
+export const WORKERS_SRC = join(SCRIPTS_ROOT, 'workers');
 
 
 // NPM

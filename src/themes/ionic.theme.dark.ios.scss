@@ -27,17 +27,26 @@ $card-ios-header-color:                #ddd !default;
 // iOS Note
 // --------------------------------------------------
 
-$item-ios-note-color:                  color($colors-ios, light) !default;
+$item-ios-note-color:                  #f4f4f4 !default;
 
 
 // iOS Toolbar
 // --------------------------------------------------
 
 $toolbar-ios-background:               $toolbar-background !default;
-$toolbar-ios-border-color:             $toolbar-border-color !default;
+$toolbar-ios-border-color:             rgba(255, 255, 255, .1) !default;
 $toolbar-ios-text-color:               $toolbar-text-color !default;
 $toolbar-ios-active-color:             $toolbar-active-color !default;
 $toolbar-ios-inactive-color:           $toolbar-inactive-color !default;
+
+
+// iOS Tabs
+// --------------------------------------------------
+
+$tabs-ios-background:                  $tabs-background !default;
+$tabs-ios-border-color:                rgba(255, 255, 255, .1) !default;
+$tabs-ios-tab-color-inactive:          $tabs-tab-color-inactive !default;
+$tabs-ios-tab-color-active:            $tabs-tab-color-active !default;
 
 
 // iOS List
@@ -59,17 +68,17 @@ $item-ios-divider-color:               $text-color !default;
 // iOS Item
 // --------------------------------------------------
 
-$item-ios-padding-top:                12px !default;
+$item-ios-padding-top:                11px !default;
 $item-ios-padding-right:              16px !default;
-$item-ios-padding-bottom:             13px !default;
+$item-ios-padding-bottom:             11px !default;
 $item-ios-padding-left:               16px !default;
 $item-ios-padding-media-top:          10px !default;
 $item-ios-padding-media-bottom:       10px !default;
-$item-ios-padding-icon-top:           10px !default;
-$item-ios-padding-icon-bottom:        9px !default;
+$item-ios-padding-icon-top:           9px !default;
+$item-ios-padding-icon-bottom:        8px !default;
 
 
 // iOS Toggle
 // --------------------------------------------------
 
-$toggle-ios-handle-background-color:  color($colors-ios, light) !default;
+$toggle-ios-handle-background-color:  #f4f4f4 !default;

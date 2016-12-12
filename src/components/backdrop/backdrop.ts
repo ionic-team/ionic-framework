@@ -1,8 +1,4 @@
-import { Directive, ElementRef, Input, Renderer } from '@angular/core';
-
-import { GestureController } from '../../gestures/gesture-controller';
-import { isTrueProperty } from '../../util/util';
-
+import { Directive, ElementRef, Renderer } from '@angular/core';
 
 /**
  * @private
@@ -16,26 +12,11 @@ import { isTrueProperty } from '../../util/util';
   },
 })
 export class Backdrop {
-  private _gestureID: number = null;
-  @Input() disableScroll = true;
 
   constructor(
-    private _gestureCtrl: GestureController,
     private _elementRef: ElementRef,
-    private _renderer: Renderer) { }
-
-  ngOnInit() {
-    if (isTrueProperty(this.disableScroll)) {
-      this._gestureID = this._gestureCtrl.newID();
-      this._gestureCtrl.disableScroll(this._gestureID);
-    }
-  }
-
-  ngOnDestroy() {
-    if (this._gestureID) {
-      this._gestureCtrl.enableScroll(this._gestureID);
-    }
-  }
+    private _renderer: Renderer
+  ) { }
 
   getNativeElement(): HTMLElement {
     return this._elementRef.nativeElement;

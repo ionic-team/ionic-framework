@@ -3,6 +3,7 @@
 // Windows Toolbar
 // --------------------------------------------------
 
+/// @prop - Order of the toolbar elements
 $toolbar-order-wp: (
   back-button: 0,
   menu-toggle-start: 1,
@@ -14,17 +15,31 @@ $toolbar-order-wp: (
   menu-toggle-end: 7,
 );
 
-$toolbar-wp-padding:                     4px !default;
+/// @prop - Padding of the toolbar title
 $toolbar-wp-title-padding:               0 6px !default;
+
+/// @prop - Font size of the toolbar title
 $toolbar-wp-title-font-size:             1.5rem !default;
+
+/// @prop - Font weight of the toolbar title
 $toolbar-wp-title-font-weight:           bold !default;
+
+/// @prop - Text transform of the toolbar title
 $toolbar-wp-title-text-transform:        uppercase !default;
+
+/// @prop - Text color of the toolbar title
 $toolbar-wp-title-text-color:            color-contrast($colors-wp, $toolbar-wp-background, wp) !default;
 
+/// @prop - Font size of the toolbar button
 $toolbar-wp-button-font-size:            1.4rem !default;
+
+/// @prop - Text color of the toolbar button
 $toolbar-wp-button-color:                color-contrast($colors-wp, $toolbar-wp-background, wp) !default;
+
+/// @prop - Border radius of the toolbar button
 $toolbar-wp-button-border-radius:        2px !default;
 
+/// @prop - Height of the navigation bar
 $navbar-wp-height:                       $toolbar-wp-height !default;
 
 
@@ -328,4 +343,12 @@ $navbar-wp-height:                       $toolbar-wp-height !default;
   @include wp-bar-button-default($color-name, $color-base, $color-contrast);
   @include wp-bar-button-outline($color-name, $color-base, $color-contrast);
   @include wp-bar-button-solid($color-name, $color-base, $color-contrast);
+}
+
+
+// WP strong Button
+// --------------------------------------------------
+
+.bar-button-strong-wp {
+  font-weight: $button-wp-strong-font-weight;
 }

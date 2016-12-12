@@ -3,23 +3,49 @@
 // Material Design Item
 // --------------------------------------------------
 
+/// @prop - Font size of the item text
 $item-md-body-text-font-size:        1.4rem !default;
+
+/// @prop - line height of the item text
 $item-md-body-text-line-height:      1.5 !default;
+
+/// @prop - Color of the item paragraph
 $item-md-paragraph-text-color:       #666 !default;
 
+/// @prop - Font size of the item
 $item-md-font-size:                  1.6rem !default;
-$item-md-avatar-size:                4rem !default;
-$item-md-thumbnail-size:             8rem !default;
-$item-md-note-color:                 darken($list-md-border-color, 10%) !default;
 
+/// @prop - Size of the avatar in the item
+$item-md-avatar-size:                40px !default;
+
+/// @prop - Size of the thumbnail in the item
+$item-md-thumbnail-size:             80px !default;
+
+/// @prop - Shows the detail arrow icon on an item
 $item-md-detail-push-show:           false !default;
+
+/// @prop - Color of the detail arrow icon
 $item-md-detail-push-color:          $list-md-border-color !default;
+
+/// @prop - Icon for the detail arrow
 $item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
 
+/// @prop - Color for the divider
+$item-md-divider-color:              #858585 !default;
+
+/// @prop - Background for the divider
 $item-md-divider-background:         #fff !default;
-$item-md-divider-color:              #222 !default;
+
+/// @prop - Font size for the divider
+$item-md-divider-font-size:          $item-md-body-text-font-size !default;
+
+/// @prop - Border bottom for the divider
+$item-md-divider-border-bottom:      1px solid $list-md-border-color !default;
+
+/// @prop - Padding for the divider
 $item-md-divider-padding:            5px 15px !default;
 
+/// @prop - Background for the sliding content
 $item-md-sliding-content-background: $list-md-background-color !default;
 
 
@@ -152,30 +178,38 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   margin: ($item-md-padding-right / 2);
 }
 
+
+// Material Design Item Avatar
+// --------------------------------------------------
+
 .item-md ion-avatar {
   min-width: $item-md-avatar-size;
   min-height: $item-md-avatar-size;
 }
 
+.item-md ion-avatar ion-img,
 .item-md ion-avatar img {
-  max-width: $item-md-avatar-size;
-  max-height: $item-md-avatar-size;
+  width: $item-md-avatar-size;
+  height: $item-md-avatar-size;
 
-  border-radius: $item-md-avatar-size / 2;
+  border-radius: 50%;
+
+  overflow: hidden;
 }
+
+
+// Material Design Item Thumbnail
+// --------------------------------------------------
 
 .item-md ion-thumbnail {
   min-width: $item-md-thumbnail-size;
   min-height: $item-md-thumbnail-size;
 }
 
+.item-md ion-thumbnail ion-img,
 .item-md ion-thumbnail img {
-  max-width: $item-md-thumbnail-size;
-  max-height: $item-md-thumbnail-size;
-}
-
-.item-md ion-note {
-  color: $item-md-note-color;
+  width: $item-md-thumbnail-size;
+  height: $item-md-thumbnail-size;
 }
 
 
@@ -195,15 +229,18 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
 // Material Design Item Divider
 // --------------------------------------------------
 
-ion-item-divider.item-md {
+.item-divider-md {
   padding-left: $item-md-padding-left;
 
   color: $item-md-divider-color;
   background-color: $item-md-divider-background;
+
+  border-bottom: $item-md-divider-border-bottom;
+  font-size: $item-md-divider-font-size;
 }
 
 
-// Generate Material Design Item Divider Colors
+// Generate Material Design Item and Item Divider Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
@@ -213,9 +250,18 @@ ion-item-divider.item-md {
     color: $color-base;
   }
 
-  .item-md-#{$color-name} {
+  .item-md-#{$color-name},
+  .item-divider-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    p {
+      color: $color-contrast;
+    }
+
+    &.activated {
+     background-color: color-shade($color-base);
+    }
   }
 }
 

@@ -2,13 +2,12 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Opti
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { Content } from '../content/content';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
 import { isBlank } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
-import { NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
+import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabHighlight } from './tab-highlight';
@@ -130,14 +129,14 @@ import { ViewController } from '../../navigation/view-controller';
  * }
  *```
  *
- * You can also switch tabs from a child component by calling `select()` on the 
+ * You can also switch tabs from a child component by calling `select()` on the
  * parent view using the `NavController` instance. For example, assuming you have
- * a `TabsPage` component, you could call the following from any of the child 
+ * a `TabsPage` component, you could call the following from any of the child
  * components to switch to `TabsRoot3`:
  *
  *```ts
  * switchTabs() {
- *   this.navCtrl.parent.switch(2);
+ *   this.navCtrl.parent.select(2);
  * }
  *```
  * @demo /docs/v2/demos/src/tabs/
@@ -178,15 +177,13 @@ export class Tabs extends Ion implements AfterViewInit {
   id: string;
   /** @internal */
   _selectHistory: string[] = [];
-  /** @internal */
-  _subPages: boolean;
 
   /**
    * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
   set color(value: string) {
-    this._setColor('tabs', value);
+    this._setColor( value);
   }
 
   /**
@@ -194,7 +191,7 @@ export class Tabs extends Ion implements AfterViewInit {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('tabs', val);
+    this._setMode( val);
   }
 
   /**
@@ -252,13 +249,11 @@ export class Tabs extends Ion implements AfterViewInit {
     renderer: Renderer,
     private _linker: DeepLinker
   ) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'tabs');
 
-    this.mode = config.get('mode');
     this.parent = <NavControllerBase>parent;
     this.id = 't' + (++tabIds);
     this._sbPadding = config.getBoolean('statusbarPadding');
-    this._subPages = config.getBoolean('tabsHideOnSubPages');
     this.tabsHighlight = config.getBoolean('tabsHighlight');
 
     if (this.parent) {
@@ -388,7 +383,7 @@ export class Tabs extends Ion implements AfterViewInit {
     let deselectedPage: ViewController;
     if (deselectedTab) {
       deselectedPage = deselectedTab.getActive();
-      deselectedPage && deselectedPage._willLeave();
+      deselectedPage && deselectedPage._willLeave(false);
     }
 
     opts.animate = false;
@@ -425,16 +420,6 @@ export class Tabs extends Ion implements AfterViewInit {
       // do not track if the tab index is the same as the previous
       if (this._selectHistory[this._selectHistory.length - 1] !== selectedTab.id) {
         this._selectHistory.push(selectedTab.id);
-      }
-
-      // if this is not the Tab's initial load then we need
-      // to refresh the tabbar and content dimensions to be sure
-      // they're lined up correctly
-      if (alreadyLoaded && selectedPage) {
-        let content = <Content>selectedPage.getIONContent();
-        if (content) {
-          content.resize();
-        }
       }
     });
   }
@@ -516,9 +501,9 @@ export class Tabs extends Ion implements AfterViewInit {
 
       } else if (tab.length() > 1) {
         // if we're a few pages deep, pop to root
-        tab.popToRoot(null, null);
+        tab.popToRoot();
 
-      } else if (tab.root !== active.component) {
+      } else if (getComponent(this._linker, tab.root) !== active.component) {
         // Otherwise, if the page we're on is not our real root, reset it to our
         // default root type
         tab.setRoot(tab.root);

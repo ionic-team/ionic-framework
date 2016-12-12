@@ -5,6 +5,8 @@ import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
+import { nativeTimeout } from '../../util/dom';
+import { assert } from '../../util/util';
 
 export const AppRootToken = new OpaqueToken('USERROOT');
 
@@ -18,11 +20,13 @@ export const AppRootToken = new OpaqueToken('USERROOT');
     '<div #modalPortal overlay-portal></div>' +
     '<div #overlayPortal overlay-portal></div>' +
     '<div #loadingPortal class="loading-portal" overlay-portal></div>' +
-    '<div #toastPortal class="toast-portal" overlay-portal></div>' +
+    '<div #toastPortal class="toast-portal" [overlay-portal]="10000"></div>' +
     '<div class="click-block"></div>'
 })
 export class IonicApp extends Ion implements OnInit {
 
+  private _stopScrollPlugin: any;
+  private _rafId: number;
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
   @ViewChild('modalPortal', { read: OverlayPortal }) _modalPortal: OverlayPortal;
@@ -45,6 +49,7 @@ export class IonicApp extends Ion implements OnInit {
     super(config, elementRef, renderer);
     // register with App that this is Ionic's appRoot component. tada!
     app._appRoot = this;
+    this._stopScrollPlugin = (<any>window)['IonicStopScroll'];
   }
 
   ngOnInit() {
@@ -99,6 +104,8 @@ export class IonicApp extends Ion implements OnInit {
     if (portal === AppPortal.TOAST) {
       return this._toastPortal;
     }
+    // Modals need their own overlay becuase we don't want an ActionSheet
+    // or Alert to trigger lifecycle events inside a modal
     if (portal === AppPortal.MODAL) {
       return this._modalPortal;
     }
@@ -108,13 +115,70 @@ export class IonicApp extends Ion implements OnInit {
   /**
    * @private
    */
+  _getActivePortal(): OverlayPortal {
+    const defaultPortal = this._overlayPortal;
+    const modalPortal = this._modalPortal;
+    const hasModal = modalPortal.length() > 0;
+    const hasDefault = defaultPortal.length() > 0;
+
+    if (!hasModal && !hasDefault) {
+      return null;
+
+    } else if (hasModal && hasDefault) {
+      var defaultIndex = defaultPortal.getActive().getZIndex();
+      var modalIndex = modalPortal.getActive().getZIndex();
+
+      if (defaultIndex > modalIndex) {
+        return defaultPortal;
+      } else {
+        assert(modalIndex > defaultIndex, 'modal and default zIndex can not be equal');
+        return modalPortal;
+      }
+
+    } if (hasModal) {
+      return modalPortal;
+
+    } else if (hasDefault) {
+      return defaultPortal;
+    }
+
+  }
+
+  /**
+   * @private
+   */
   _disableScroll(shouldDisableScroll: boolean) {
-    this.setElementClass('disable-scroll', shouldDisableScroll);
+    if (shouldDisableScroll) {
+      this.stopScroll().then(() => {
+        this._rafId = nativeTimeout(() => {
+          console.debug('App Root: adding .disable-scroll');
+          this.setElementClass('disable-scroll', true);
+        }, 16 * 2);
+      });
+    } else {
+      let plugin = this._stopScrollPlugin;
+      if (plugin && plugin.cancel) {
+        plugin.cancel();
+      }
+      clearTimeout(this._rafId);
+      console.debug('App Root: removing .disable-scroll');
+      this.setElementClass('disable-scroll', false);
+    }
+  }
+
+  stopScroll(): Promise<boolean> {
+    if (this._stopScrollPlugin) {
+      return new Promise((resolve, reject) => {
+        this._stopScrollPlugin.stop(() => resolve(true));
+      });
+    } else {
+      return Promise.resolve(false);
+    }
   }
 
 }
 
-export enum AppPortal {
+export const enum AppPortal {
   DEFAULT,
   MODAL,
   LOADING,

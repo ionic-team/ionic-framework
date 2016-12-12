@@ -4,6 +4,7 @@ import { NgControl } from '@angular/forms';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
+import { DomController } from '../../util/dom-controller';
 import { Form } from '../../util/form';
 import { InputBase } from './input-base';
 import { isTrueProperty } from '../../util/util';
@@ -91,9 +92,10 @@ export class TextInput extends InputBase {
     renderer: Renderer,
     @Optional() scrollView: Content,
     @Optional() nav: NavController,
-    @Optional() ngControl: NgControl
+    @Optional() ngControl: NgControl,
+    dom: DomController
   ) {
-    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl);
+    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl, dom);
 
     this.mode = config.get('mode');
   }
@@ -120,7 +122,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @private
+   * @input {string} The text value of the input
    */
   @Input()
   get value() {
@@ -142,7 +144,7 @@ export class TextInput extends InputBase {
   }
 
   /**
-   * @private
+   * @input {bool} If the input should be disabled or not
    */
   @Input()
   get disabled() {
@@ -157,8 +159,20 @@ export class TextInput extends InputBase {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('input', val);
+    this._setMode(val);
   }
+
+  /**
+   * @input {boolean} whether to clear the input upon editing or not
+   */
+  @Input()
+  get clearOnEdit() {
+    return this._clearOnEdit;
+  }
+  set clearOnEdit(val: any) {
+    super.setClearOnEdit(val);
+  }
+
 
   /**
    * @private
@@ -207,6 +221,11 @@ export class TextInput extends InputBase {
       this._item.setElementClass('item-input', true);
       this._item.registerInput(this._type);
     }
+
+    // By default, password inputs clear after focus when they have content
+    if (this.type === 'password' && this.clearOnEdit !== false) {
+      this.clearOnEdit = true;
+    }
   }
 
   /**
@@ -221,6 +240,8 @@ export class TextInput extends InputBase {
    */
   ngOnDestroy() {
     this._form.deregister(this);
+    this._scrollStart.unsubscribe();
+    this._scrollEnd.unsubscribe();
   }
 
   /**
@@ -297,20 +318,21 @@ export class TextArea extends InputBase {
     renderer: Renderer,
     @Optional() scrollView: Content,
     @Optional() nav: NavController,
-    @Optional() ngControl: NgControl
+    @Optional() ngControl: NgControl,
+    dom: DomController
   ) {
-    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl);
+    super(config, form, item, app, platform, elementRef, renderer, scrollView, nav, ngControl, dom);
 
     this.mode = config.get('mode');
   }
 
   /**
-   * @private
+   * @input {string} The placeholder for the textarea
    */
   @Input() placeholder: string = '';
 
   /**
-   * @private
+   * @input {string} The value of the textarea
    */
   @Input()
   get value() {
@@ -321,18 +343,7 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
-   */
-  @Input()
-  get type() {
-    return this._type;
-  }
-  set type(val: any) {
-    super.setType(val);
-  }
-
-  /**
-   * @private
+   * @input {bool} Whether the textarea should be disabled or not
    */
   @Input()
   get disabled() {
@@ -347,7 +358,7 @@ export class TextArea extends InputBase {
    */
   @Input()
   set mode(val: string) {
-    this._setMode('input', val);
+    this._setMode(val);
   }
 
   /**
@@ -367,12 +378,12 @@ export class TextArea extends InputBase {
   }
 
   /**
-   * @private
+   * @output {event} Expression to call when the textarea no longer has focus
    */
   @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @private
+   * @output {event} Expression to call when the textarea has focus
    */
   @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 
@@ -399,6 +410,8 @@ export class TextArea extends InputBase {
    */
   ngOnDestroy() {
     this._form.deregister(this);
+    this._scrollStart.unsubscribe();
+    this._scrollEnd.unsubscribe();
   }
 
   /**

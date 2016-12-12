@@ -85,11 +85,20 @@ ion-tabs {
 }
 
 ion-tab {
-  transform: translateY(-200%);
+  display: none;
 }
 
 ion-tab.show-tab {
-  transform: translateY(0);
+  display: block;
+}
+
+ion-app,
+ion-nav,
+ion-tab,
+ion-tabs,
+.app-root,
+.ion-page {
+  contain: strict;
 }
 
 

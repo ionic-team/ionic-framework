@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, PickerController } from '../../../..';
+import { IonicApp, IonicModule, NavController, PickerController } from '../../../..';
 
 
 @Component({
@@ -10,7 +10,14 @@ export class E2EPage {
   smoothie: string;
   timer: string;
 
-  constructor(private pickerCtrl: PickerController) {}
+  constructor(
+    public navCtrl: NavController,
+    private pickerCtrl: PickerController
+  ) { }
+
+  push() {
+    this.navCtrl.push(E2EPage);
+  }
 
   twoColumns() {
     let picker = this.pickerCtrl.create({
@@ -183,8 +190,8 @@ export class E2EPage {
     picker.addColumn({
       name: 'hour',
       suffix: 'hour',
-      columnWidth: '30%',
       optionsWidth: '50px',
+      align: 'right',
       options: Array.apply(null, {length: 23}).map(Number.call, Number)
     });
 
@@ -200,8 +207,8 @@ export class E2EPage {
     picker.addColumn({
       name: 'min',
       suffix: 'min',
-      columnWidth: '40%',
       optionsWidth: '80px',
+      align: 'left',
       options: minuteOptions
     });
 

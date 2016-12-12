@@ -1,6 +1,7 @@
 import { Menu } from './menu';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
+import { removeArrayItem } from '../../util/util';
 
 
 /**
@@ -124,15 +125,14 @@ export class MenuController {
    * @return {Promise} returns a promise when the menu is fully opened
    */
   open(menuId?: string): Promise<boolean> {
-    let menu = this.get(menuId);
-    if (menu) {
+    const menu = this.get(menuId);
+    if (menu && !this.isAnimating()) {
       let openedMenu = this.getOpen();
       if (openedMenu && menu !== openedMenu) {
         openedMenu.setOpen(false, false);
       }
       return menu.open();
     }
-
     return Promise.resolve(false);
   }
 
@@ -171,9 +171,9 @@ export class MenuController {
    * @return {Promise} returns a promise when the menu has been toggled
    */
   toggle(menuId?: string): Promise<boolean> {
-    let menu = this.get(menuId);
-    if (menu) {
-      let openedMenu = this.getOpen();
+    const menu = this.get(menuId);
+    if (menu && !this.isAnimating()) {
+      var openedMenu = this.getOpen();
       if (openedMenu && menu !== openedMenu) {
         openedMenu.setOpen(false, false);
       }
@@ -191,7 +191,7 @@ export class MenuController {
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
   enable(shouldEnable: boolean, menuId?: string): Menu {
-    let menu = this.get(menuId);
+    const menu = this.get(menuId);
     if (menu) {
       return menu.enable(shouldEnable);
     }
@@ -204,19 +204,24 @@ export class MenuController {
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
   swipeEnable(shouldEnable: boolean, menuId?: string): Menu {
-    let menu = this.get(menuId);
+    const menu = this.get(menuId);
     if (menu) {
       return menu.swipeEnable(shouldEnable);
     }
   }
 
   /**
-   * @param {string} [menuId]  Optionally get the menu by its id, or side.
-   * @return {boolean} Returns true if the menu is currently open, otherwise false.
+   * @param {string} [menuId] Optionally get the menu by its id, or side.
+   * @return {boolean} Returns true if the specified menu is currently open, otherwise false.
+   * If the menuId is not specified, it returns true if ANY menu is currenly open.
    */
   isOpen(menuId?: string): boolean {
-    let menu = this.get(menuId);
-    return menu && menu.isOpen || false;
+    if (menuId) {
+      var menu = this.get(menuId);
+      return menu && menu.isOpen || false;
+    } else {
+      return !!this.getOpen();
+    }
   }
 
   /**
@@ -224,7 +229,7 @@ export class MenuController {
    * @return {boolean} Returns true if the menu is currently enabled, otherwise false.
    */
   isEnabled(menuId?: string): boolean {
-    let menu = this.get(menuId);
+    const menu = this.get(menuId);
     return menu && menu.enabled || false;
   }
 
@@ -273,12 +278,19 @@ export class MenuController {
     return this._menus.find(m => m.isOpen);
   }
 
-
   /**
    * @return {Array<Menu>}  Returns an array of all menu instances.
    */
   getMenus(): Array<Menu> {
     return this._menus;
+  }
+
+  /**
+   * @private
+   * @return {boolean} if any menu is currently animating
+   */
+  isAnimating(): boolean {
+    return this._menus.some(menu => menu.isAnimating());
   }
 
   /**
@@ -292,10 +304,7 @@ export class MenuController {
    * @private
    */
   unregister(menu: Menu) {
-    let index = this._menus.indexOf(menu);
-    if (index > -1) {
-      this._menus.splice(index, 1);
-    }
+    removeArrayItem(this._menus, menu);
   }
 
   /**

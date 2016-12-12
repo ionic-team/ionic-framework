@@ -1,10 +1,14 @@
 
 <ion-content>
-  <ion-toolbar no-border-top>
+  <ion-toolbar no-padding>
+    <ion-title>This should have no padding</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
     <ion-title>This is the title that never ends. It just goes on and on my friend.</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons start>
       <button ion-button icon-only>
         <ion-icon name="contact"></ion-icon>
@@ -21,7 +25,7 @@
     <ion-title>This is a long title with buttons. It just goes on and on my friend.</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons start>
       <button ion-button icon-only>
         <ion-icon name="contact"></ion-icon>
@@ -38,7 +42,7 @@
     <ion-title>Defaults</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons start>
       <button ion-button icon-only class="activated">
         <ion-icon name="contact"></ion-icon>
@@ -55,7 +59,7 @@
     <ion-title>Defaults.activated</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons start>
       <button ion-button icon-only solid>
         <ion-icon name="contact"></ion-icon>
@@ -74,7 +78,7 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons start>
       <a ion-button icon-only solid class="activated">
         <ion-icon name="contact"></ion-icon>
@@ -93,7 +97,7 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons start>
       <button ion-button icon-only outline>
         <ion-icon name="contact"></ion-icon>
@@ -111,7 +115,7 @@
     <ion-title>Outline</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons start>
       <button ion-button icon-only outline class="activated">
         <ion-icon name="contact"></ion-icon>
@@ -129,7 +133,7 @@
     <ion-title>Outline.activated</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons start>
       <button ion-button icon-left>
         <ion-icon name="contact"></ion-icon>
@@ -145,7 +149,7 @@
     <ion-title>Icon/Color Attr</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons start>
       <button ion-button>
         Go Back
@@ -159,7 +163,7 @@
     <ion-title>Text Only</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -171,7 +175,7 @@
     <ion-title>Left side menu toggle</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons end>
       <button ion-button icon-only #button1 (click)="buttonClick(button1)">
         <ion-icon name="star"></ion-icon>
@@ -183,7 +187,7 @@
     </button>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-buttons end>
       <button ion-button icon-only #button2 (click)="buttonClick(button2)">
         <ion-icon name="search"></ion-icon>
@@ -199,7 +203,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-segment>
       <ion-segment-button value="light">
         Light

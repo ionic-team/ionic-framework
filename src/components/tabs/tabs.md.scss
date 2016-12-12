@@ -3,131 +3,175 @@
 // Material Design Tabs
 // --------------------------------------------------
 
-/// @prop - Background color of the tabbar
-$tabs-md-background:                   $toolbar-md-background !default;
-
 /// @prop - Padding on the tab button
-$tabs-md-tab-padding:                  8px 0 10px 0 !default;
+$tabs-md-tab-padding:                         0 !default;
 
-/// @prop - Min height of the tab button
-$tabs-md-tab-min-height:               5.6rem !default;
+/// @prop - Minimum height of the tab button
+$tabs-md-tab-min-height:                      5.6rem !default;
 
 /// @prop - Font size of the inactive tab button text
-$tabs-md-tab-font-size:                1.2rem !default;
+$tabs-md-tab-font-size:                       1.2rem !default;
 
 /// @prop - Font weight of the tab button text
-$tabs-md-tab-font-weight:              normal !default;
+$tabs-md-tab-font-weight:                     normal !default;
 
 /// @prop - Opacity of the inactive tab button
-$tabs-md-tab-opacity:                  .7 !default;
+$tabs-md-tab-opacity:                         .7 !default;
 
 /// @prop - Text color of the inactive tab button
-$tabs-md-tab-color:                    rgba($toolbar-md-inactive-color, $tabs-md-tab-opacity) !default;
-
-/// @prop - Padding of the active tab button
-$tabs-md-tab-padding-active:           6px 0 10px 0 !default;
-
-/// @prop - Font size of the active tab button text
-$tabs-md-tab-font-size-active:         1.4rem !default;
+$tabs-md-tab-text-color:                      rgba($tabs-md-tab-color-inactive, $tabs-md-tab-opacity) !default;
 
 /// @prop - Text color of the active tab button
-$tabs-md-tab-color-active:             $toolbar-md-active-color !default;
+$tabs-md-tab-text-color-active:               $tabs-md-tab-color-active !default;
+
+/// @prop - Icon color of the inactive tab button
+$tabs-md-tab-icon-color:                      rgba($tabs-md-tab-color-inactive, $tabs-md-tab-opacity) !default;
+
+/// @prop - Icon color of the active tab button
+$tabs-md-tab-icon-color-active:               $tabs-md-tab-color-active !default;
+
+/// @prop - Padding of the active tab button
+$tabs-md-tab-padding-active:                  0 !default;
+
+/// @prop - Font size of the active tab button text
+$tabs-md-tab-font-size-active:                1.4rem !default;
 
 /// @prop - Margin on the tab button text
-$tabs-md-tab-text-margin:              6px 0 !default;
+$tabs-md-tab-text-margin:                     0 !default;
 
 /// @prop - Capitalization of the tab button text
-$tabs-md-tab-text-capitalization:      none !default;
-
-/// @prop - Transform for the tab button text
-$tabs-md-tab-text-transform:           scale($tabs-md-tab-font-size / $tabs-md-tab-font-size-active) !default;
+$tabs-md-tab-text-capitalization:             none !default;
 
 /// @prop - Transform origin for the tab button text
-$tabs-md-tab-text-transform-origin:    bottom center !default;
-
-/// @prop - Margin on the active tab button text
-$tabs-md-tab-text-margin-active:       7px 0 !default;
+$tabs-md-tab-text-transform-origin:           50% 80% !default;
 
 /// @prop - Transform for the active tab button text
-$tabs-md-tab-text-transform-active:    scale(1) !default;
+$tabs-md-tab-text-transform-active:           scale3d($tabs-md-tab-font-size-active / $tabs-md-tab-font-size, $tabs-md-tab-font-size-active / $tabs-md-tab-font-size, 1) !default;
 
 /// @prop - Text transition for the tab button text
-$tabs-md-tab-text-transition:          transform 200ms ease-in-out !default;
+$tabs-md-tab-text-transition:                 transform .3s ease-in-out !default;
+
+/// @prop - Transform for the active tab button icon when the layout is icon-top, icon-only, or title-only
+$tabs-md-tab-icon-transform-active:           translate3d(0, -2px, 0) !default;
+
+/// @prop - Transform for the active tab button icon when the layout is icon-right
+$tabs-md-tab-icon-right-transform-active:     translate3d(2px, 0, 0) !default;
+
+/// @prop - Transform for the active tab button icon when the layout is icon-bottom
+$tabs-md-tab-icon-bottom-transform-active:    translate3d(0, 2px, 0) !default;
+
+/// @prop - Transform for the active tab button icon when the layout is icon-left
+$tabs-md-tab-icon-left-transform-active:      translate3d(-2px, 0, 0) !default;
+
+/// @prop - Transform origin for the tab button text
+$tabs-md-tab-icon-transform-origin:           50% 150% !default;
+
+/// @prop - Text transition for the tab button icon
+$tabs-md-tab-icon-transition:                 transform .3s ease-in-out !default;
 
 /// @prop - Size of the tab button icon
-$tabs-md-tab-icon-size:                2.4rem !default;
+$tabs-md-tab-icon-size:                       2.4rem !default;
 
 
 .tabs-md .tabbar {
   background: $tabs-md-background;
 }
 
+
+// Material Design Tab Button
+// --------------------------------------------------
+
 .tabs-md .tab-button {
   padding: $tabs-md-tab-padding;
 
   min-height: $tabs-md-tab-min-height;
 
-  font-size: $tabs-md-tab-font-size-active;
   font-weight: $tabs-md-tab-font-weight;
-  color: $tabs-md-tab-color;
+  color: $tabs-md-tab-text-color;
 }
 
 .tabs-md .tab-button[aria-selected=true] {
   padding: $tabs-md-tab-padding-active;
 
-  color: $tabs-md-tab-color-active;
+  color: $tabs-md-tab-text-color-active;
 }
+
+
+// Material Design Tab Button Text
+// --------------------------------------------------
 
 .tabs-md .tab-button-text {
   margin: $tabs-md-tab-text-margin;
 
-  text-transform: $tabs-md-tab-text-capitalization;
-  transform: $tabs-md-tab-text-transform;
-  transform-origin: $tabs-md-tab-text-transform-origin;
+  font-size: $tabs-md-tab-font-size;
 
+  text-transform: $tabs-md-tab-text-capitalization;
+  transform-origin: $tabs-md-tab-text-transform-origin;
   transition: $tabs-md-tab-text-transition;
 }
 
 .tabs-md .tab-button[aria-selected=true] .tab-button-text {
-  margin: $tabs-md-tab-text-margin-active;
-
   transform: $tabs-md-tab-text-transform-active;
-}
-
-.tabs-md .tab-button-icon {
-  min-width: $tabs-md-tab-icon-size + 5;
-
-  font-size: $tabs-md-tab-icon-size;
+  transition: $tabs-md-tab-text-transition;
 }
 
 .tabs-md[tabsLayout=icon-top] .has-icon .tab-button-text {
+  margin-top: 4px;
   margin-bottom: 0;
-}
-
-.tabs-md[tabsLayout=icon-bottom] .tab-button {
-  padding-top: 8px;
-  padding-bottom: 8px;
 }
 
 .tabs-md[tabsLayout=icon-bottom] .tab-button .tab-button-text {
   margin-top: 0;
 }
 
-.tabs-md[tabsLayout=icon-right] .tab-button,
-.tabs-md[tabsLayout=icon-left] .tab-button {
-  padding-bottom: 10px;
+
+// Material Design Tab Button Icon
+// --------------------------------------------------
+
+.tabs-md .tab-button-icon {
+  margin-top: 1px;
+
+  min-width: $tabs-md-tab-icon-size;
+
+  font-size: $tabs-md-tab-icon-size;
+
+  color: $tabs-md-tab-icon-color;
+
+  transform-origin: $tabs-md-tab-icon-transform-origin;
+  transition: $tabs-md-tab-icon-transition;
 }
 
-.tabs-md[tabsLayout=icon-right] .tab-button ion-icon,
-.tabs-md[tabsLayout=icon-left] .tab-button ion-icon {
-  min-width: 24px;
+// Tab layout: icon-top, icon-only, title-only
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+  color: $tabs-md-tab-icon-color-active;
+
+  transform: $tabs-md-tab-icon-transform-active;
 }
+
+// Tab layout: icon-right
+.tabs-md[tabsLayout=icon-right] .tab-button[aria-selected=true] .tab-button-icon {
+  transform: $tabs-md-tab-icon-right-transform-active;
+}
+
+// Tab layout: icon-bottom
+.tabs-md[tabsLayout=icon-bottom] .tab-button[aria-selected=true] .tab-button-icon {
+  transform: $tabs-md-tab-icon-bottom-transform-active;
+}
+
+// Tab layout: icon-left
+.tabs-md[tabsLayout=icon-left] .tab-button[aria-selected=true] .tab-button-icon {
+  transform: $tabs-md-tab-icon-left-transform-active;
+}
+
+
+// Material Design Tab with Icon or Title only
+// --------------------------------------------------
 
 .tabs-md[tabsLayout=icon-hide] .tab-button,
 .tabs-md[tabsLayout=title-hide] .tab-button,
 .tabs-md .tab-button.icon-only,
 .tabs-md .tab-button.has-title-only {
-  padding: 6px 10px;
+  padding: 0 10px;
 }
 
 
@@ -166,16 +210,18 @@ $tabs-md-tab-icon-size:                2.4rem !default;
     background-color: $color-base;
   }
 
-  .tabs-md-#{$color-name} .tabbar .tab-button {
+  .tabs-md-#{$color-name} .tab-button,
+  .tabs-md-#{$color-name} .tab-button-icon {
     color: rgba($color-contrast, $tabs-md-tab-opacity);
   }
 
-  .tabs-md-#{$color-name} .tabbar .tab-button:hover:not(.disable-hover),
-  .tabs-md-#{$color-name} .tabbar .tab-button[aria-selected=true] {
+  .tabs-md-#{$color-name} .tab-button:hover:not(.disable-hover),
+  .tabs-md-#{$color-name} .tab-button[aria-selected=true],
+  .tabs-md-#{$color-name} .tab-button[aria-selected=true] .tab-button-icon {
     color: $color-contrast;
   }
 
-  .tabs-md-#{$color-name} .tabbar .tab-highlight {
+  .tabs-md-#{$color-name}[tabsHighlight=true] .tab-highlight {
     background: $color-contrast;
   }
 

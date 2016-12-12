@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, App, AlertController, ModalController, ViewController, Tab, Tabs } from '../../../..';
+import { Config, IonicApp, IonicModule, App, AlertController, ModalController, ViewController, Tab, Tabs } from '../../../..';
 
 //
 // Modal
@@ -70,7 +70,7 @@ export class MyModal {
   template: `
     <ion-header>
       <ion-navbar>
-        <ion-title>Heart</ion-title>
+        <ion-title>Settings</ion-title>
       </ion-navbar>
     </ion-header>
 
@@ -184,15 +184,28 @@ export class Tab2 {
       </p>
       <p>
         <button ion-button (click)="selectPrevious()">Select Previous Tab</button>
-      </p>
-      <p>
         <button ion-button (click)="appNavPop()">App Nav Pop</button>
       </p>
+
+      <ion-list [virtualScroll]="items">
+
+        <ion-item *virtualItem="let item">
+          Item: {{item}}
+        </ion-item>
+
+      </ion-list>
+
     </ion-content>
     `
 })
 export class Tab3 {
-  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private tabs: Tabs, private app: App) {}
+  items: number[] = [];
+
+  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private tabs: Tabs, private app: App) {
+    for (var i = 0; i < 100; i++) {
+      this.items.push(i);
+    }
+  }
 
   presentAlert() {
     let alert = this.alertCtrl.create({
@@ -233,7 +246,7 @@ export class Tab3 {
       </ion-content>
     </ion-menu>
 
-    <ion-tabs #content (ionChange)="onChange($event)">
+    <ion-tabs #content (ionChange)="onChange($event)" [color]="myColor">
       <ion-tab tabTitle="Plain List" tabIcon="star" [root]="root1" (ionSelect)="onSelect($event)"></ion-tab>
       <ion-tab tabTitle="Schedule" tabIcon="globe" [root]="root2"></ion-tab>
       <ion-tab tabTitle="Stopwatch" tabIcon="logo-facebook" [root]="root3"></ion-tab>
@@ -246,6 +259,11 @@ export class TabsPage {
   root1 = Tab1;
   root2 = Tab2;
   root3 = Tab3;
+  myColor: string;
+
+  constructor(config: Config) {
+    this.myColor = (config.get('mode') !== 'ios') ? 'primary' : null;
+  }
 
   onChange(ev: Tab) {
     console.log('Changed tab', ev);

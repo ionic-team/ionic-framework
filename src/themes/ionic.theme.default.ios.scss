@@ -21,11 +21,21 @@ $content-ios-margin:                   $content-margin !default;
 // --------------------------------------------------
 
 $toolbar-ios-height:                   44px !default;
+$toolbar-ios-padding:                  4px !default;
 $toolbar-ios-background:               $toolbar-background !default;
-$toolbar-ios-border-color:             $toolbar-border-color !default;
+$toolbar-ios-border-color:             rgba(0, 0, 0, .3) !default;
 $toolbar-ios-text-color:               $toolbar-text-color !default;
 $toolbar-ios-active-color:             $toolbar-active-color !default;
 $toolbar-ios-inactive-color:           $toolbar-inactive-color !default;
+
+
+// iOS Tabs
+// --------------------------------------------------
+
+$tabs-ios-background:                  $tabs-background !default;
+$tabs-ios-border-color:                rgba(0, 0, 0, .3) !default;
+$tabs-ios-tab-color-inactive:          $tabs-tab-color-inactive !default;
+$tabs-ios-tab-color-active:            $tabs-tab-color-active !default;
 
 
 // iOS List
@@ -40,11 +50,11 @@ $list-ios-activated-background-color:  #d9d9d9 !default;
 // iOS Item
 // --------------------------------------------------
 
-$item-ios-padding-top:                12px !default;
+$item-ios-padding-top:                11px !default;
 $item-ios-padding-right:              16px !default;
-$item-ios-padding-bottom:             13px !default;
+$item-ios-padding-bottom:             11px !default;
 $item-ios-padding-left:               16px !default;
 $item-ios-padding-media-top:          8px !default;
 $item-ios-padding-media-bottom:       8px !default;
-$item-ios-padding-icon-top:           10px !default;
-$item-ios-padding-icon-bottom:        9px !default;
+$item-ios-padding-icon-top:           9px !default;
+$item-ios-padding-icon-bottom:        8px !default;
