@@ -43,7 +43,7 @@ import { ViewController } from './view-controller';
  * ```
  *
  * DeepLinker implements `DeepLinkerConfig`, which is an object with an array of links.
- * So for basic example based on the blank starer, a link setup like so:
+ * So for basic example based on the blank starter, a link setup like so:
  *
  * ```ts
  *  imports: [
