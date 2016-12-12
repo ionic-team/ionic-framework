@@ -88,6 +88,10 @@ import { isTrueProperty } from '../../util/util';
   *   Dark (Solid + Round)
   * </button>
   *
+  * <!-- Bind the click event to a method -->
+  * <button ion-button (click)="logEvent($event)">
+  *   Click me!
+  * </button>
   * ```
   *
   * ```ts
@@ -102,6 +106,10 @@ import { isTrueProperty } from '../../util/util';
   *   isClear: boolean = true;
   *   myColor: string = 'secondary';
   *   myColor2: string = 'dark';
+  *
+  *   logEvent(event) {
+  *     console.log(event)
+  *   }
   * }
   *
   * ```
