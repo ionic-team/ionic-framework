@@ -1,12 +1,54 @@
 import { ElementRef, Renderer } from '@angular/core';
 import { Content } from '../../content/content';
 import { Img } from '../img';
-import { ImgLoader } from '../img-loader';
+import { ImgLoader, ImgData, ImgLoadCallback, cleanCache, onXhrLoad } from '../img-loader';
 import { mockContent, MockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
 import { Platform } from '../../../platform/platform';
 
 
 describe('Img', () => {
+
+  describe('cleanCache', () => {
+
+    it('should clean out oldest img data when passing cache limit', () => {
+      const imgs: ImgData[] = [
+        { src: 'img1.jpg', len: 100 },
+        { src: 'img2.jpg', len: 0 },
+        { src: 'img3.jpg', len: 100 },
+        { src: 'img4.jpg', len: 100 },
+      ];
+      cleanCache(imgs, 100);
+      expect(imgs.length).toEqual(1);
+      expect(imgs[0].src).toEqual('img4.jpg');
+    });
+
+  });
+
+  describe('onXhrLoad', () => {
+
+    it('should cache img response', () => {
+      const callback: ImgLoadCallback = () => {};
+      const status = 200;
+      const contentType = 'image/jpeg';
+      const responseData = new ArrayBuffer(0);
+      const useCache = true;
+      const imgData: ImgData = {
+        src: 'image.jpg'
+      };
+      const imgs: ImgData[] = [];
+
+      onXhrLoad(callback, status, contentType, responseData, useCache, imgData, imgs);
+
+      expect(imgData.datauri).toEqual('data:image/jpeg;base64,');
+      expect(imgData.len).toEqual(imgData.datauri.length);
+    });
+
+    it('should do nothing when theres no callback', () => {
+      const r = onXhrLoad(null, 0, 'image/jpeg', new ArrayBuffer(0), true, null, null);
+      expect(r).toEqual(null);
+    });
+
+  });
 
   describe('reset', () => {
 

@@ -20,7 +20,9 @@ export class ImgLoader {
       // looks like there's already an active http request going on
       // for this same source, so let's just add another listener
       img.xhr.addEventListener('load', (xhrEvent) => {
-        onXhrLoad(callback, xhrEvent, useCache, img, this.imgs);
+        const target: any = xhrEvent.target;
+        const contentType = target.getResponseHeader('Content-Type');
+        onXhrLoad(callback, target.status, contentType, target.response, useCache, img, this.imgs);
       });
       img.xhr.addEventListener('error', (xhrErrorEvent) => {
         onXhrError(callback, img, xhrErrorEvent);
@@ -30,7 +32,7 @@ export class ImgLoader {
 
     if (!img) {
       // no image data yet, so let's create it
-      img = { src: src };
+      img = { src: src, len: 0 };
       this.imgs.push(img);
     }
 
@@ -41,7 +43,9 @@ export class ImgLoader {
 
     // add the listeners if it loaded or errored
     img.xhr.addEventListener('load', (xhrEvent) => {
-      onXhrLoad(callback, xhrEvent, useCache, img, this.imgs);
+      const target: any = xhrEvent.target;
+      const contentType = target.getResponseHeader('Content-Type');
+      onXhrLoad(callback, target.status, contentType, target.response, useCache, img, this.imgs);
     });
     img.xhr.addEventListener('error', (xhrErrorEvent) => {
       onXhrError(callback, img, xhrErrorEvent);
@@ -64,20 +68,19 @@ export class ImgLoader {
 }
 
 
-function onXhrLoad(callback: ImgLoadCallback, ev: any, useCache: boolean, img: ImgData, imgs: ImgData[]) {
+export function onXhrLoad(callback: ImgLoadCallback, status: number, contentType: string, responseData: ArrayBuffer, useCache: boolean, img: ImgData, imgs: ImgData[]) {
   if (!callback) {
-    return;
+    return null;
   }
 
   // the http request has been loaded
   // create a rsp object to send back to the main thread
-  const status: number = ev.target.status;
   let datauri: string = null;
 
   if (status === 200) {
     // success!!
     // now let's convert the response arraybuffer data into a datauri
-    datauri = getDataUri(ev.target.getResponseHeader('Content-Type'), ev.target.response);
+    datauri = getDataUri(contentType, responseData);
 
     if (useCache) {
       // if the image was successfully downloaded
@@ -86,22 +89,28 @@ function onXhrLoad(callback: ImgLoadCallback, ev: any, useCache: boolean, img: I
       img.datauri = datauri;
       img.len = datauri.length;
 
-      // let's loop through all our cached data and if we go
-      // over our limit then let's clean it out a bit
-      // oldest data should go first
-      var cacheSize = 0;
-      for (var i = imgs.length - 1; i >= 0; i--) {
-        cacheSize += imgs[i].len;
-        if (cacheSize > CACHE_LIMIT) {
-          console.debug(`img-loader, clear: ${imgs[i].src}, len: ${imgs[i].len}`);
-          imgs.splice(i, 1);
-        }
-      }
+      cleanCache(imgs, CACHE_LIMIT);
     }
   }
 
   // fire the callback with what we've learned today
   callback(status, null, datauri);
+}
+
+
+export function cleanCache(imgs: ImgData[], cacheLimit: number) {
+  // let's loop through all our cached data and if we go
+  // over our limit then let's clean it out a bit
+  // oldest data should go first
+  let cacheSize = 0;
+  for (var i = imgs.length - 1; i >= 0; i--) {
+    cacheSize += imgs[i].len;
+    if (cacheSize > cacheLimit) {
+      console.debug(`img-loader, clear cache`);
+      imgs.splice(0, i + 1);
+      break;
+    }
+  }
 }
 
 
