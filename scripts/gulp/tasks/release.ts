@@ -106,7 +106,6 @@ task('release.copyProdVersion', () => {
 task('release.prepareReleasePackage', (done: (err: any) => void) => {
   runSequence('clean',
           'release.polyfill',
-          'release.workers',
           'compile.release',
           'release.copyTemplates',
           'release.copyNpmInfo',
