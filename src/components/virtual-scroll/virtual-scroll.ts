@@ -102,25 +102,25 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * ### Images Within Virtual Scroll
  *
- * Ionic provides `<ion-img>` to manage HTTP requests and image rendering.
- * Additionally, it includes a customizable placeholder element which shows
- * before the image has finished loading. While scrolling through items
- * quickly, `<ion-img>` knows not to make any image http requests, and only
- * loads the images that are viewable after scrolling.
+ * HTTP requests, image decoding, and image rendering can cause jank while
+ * scrolling. In order to better control images, Ionic provides `<ion-img>`
+ * to manage HTTP requests and image rendering. While scrolling through items
+ * quickly, `<ion-img>` knows when and when not to make requests, when and
+ * when not to render images, and only loads the images that are viewable
+ * after scrolling. [Read more about `ion-img`.](../img/Img/)
  *
  * It's also important for app developers to ensure image sizes are locked in,
  * and after images have fully loaded they do not change size and affect any
  * other element sizes. Simply put, to ensure rendering bugs are not introduced,
  * it's vital that elements within a virtual item does not dynamically change.
  *
- * We recommend using our `<ion-img>` element over the native `<img>` element
- * because when an `<img>` element is added to the DOM, it immediately
- * makes a HTTP request for the image file. HTTP requests, image
- * decoding, and image rendering can cause issues while scrolling. For virtual
- * scrolling, the natural effects of the `<img>` are not desirable features.
- *
- * Note: `<ion-img>` should only be used with Virtual Scroll. If you are using
- * an image outside of Virtual Scroll you should use the standard `<img>` tag.
+ * For virtual scrolling, the natural effects of the `<img>` are not desirable
+ * features. We recommend using the `<ion-img>` component over the native
+ * `<img>` element because when an `<img>` element is added to the DOM, it
+ * immediately makes a HTTP request for the image file. Additionally, `<img>`
+ * renders whenever it wants which could be while the user is scrolling. However,
+ * `<ion-img>` is governed by the containing `ion-content` and does not render
+ * images while scrolling quickly.
  *
  * ```html
  * <ion-list [virtualScroll]="items">
@@ -157,33 +157,62 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * ```
  *
  *
- * ### Performance Tips
+ * ## Virtual Scroll Performance Tips
  *
- * - When deploying to iOS with Cordova, it's highly recommended to use the
- *   [WKWebView plugin](http://blog.ionic.io/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
- *   in order to take advantage of iOS's higher performimg webview.
- * - Use `<ion-img>` rather than `<img>` so images are lazy loaded
- *   while scrolling.
- * - Image sizes should be locked in, meaning the size of any element
- *   should not change after the image has loaded.
- * - For the most part, ensure the element size for each virtual item
- *   does not dynamically change, but rather, their size must already be
- *   locked in via CSS at the time they are rendered.
- * - Provide an approximate width and height so the virtual scroll can
- *   best calculate the cell height.
- * - Changing the dataset requires the entire virtual scroll to be
- *   reset, which is an expensive operation and should be avoided
- *   if possible.
- * - Do not perform any DOM manipulation within section header and
- *   footer functions. These functions are called for every record in the
- *   dataset, so please make sure they're performant.
+ * #### iOS Cordova WKWebView
+ *
+ * When deploying to iOS with Cordova, it's highly recommended to use the
+ * [WKWebView plugin](http://blog.ionic.io/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
+ * in order to take advantage of iOS's higher performimg webview. Additionally,
+ * WKWebView is superior at scrolling efficiently in comparision to the older
+ * UIWebView.
+ *
+ * #### Lock in element dimensions and locations
+ *
+ * In order for virtual scroll to efficiently size and locate every item, it's
+ * very important every element within each virtual item does not dynamically
+ * change its dimensions or location. The best way to ensure size and location
+ * does not change, it's recommended each virtual item has locked in its size
+ * via CSS.
+ *
+ * #### Use `ion-img` for images
+ *
+ * When including images within Virtual Scroll, be sure to use
+ * [`ion-img`](../img/Img/) rather than the standard `<img>` HTML element.
+ * With `ion-img`, images are lazy loaded so only the viewable ones are
+ * rendered, and HTTP requests are efficiently controlled while scrolling.
+ *
+ * #### Set Approximate Widths and Heights
+ *
+ * As mentioned above, all elements should lock in their dimensions. However,
+ * virtual scroll isn't aware of the dimensions until after they have been
+ * rendered. For the initial render, virtual scroll still needs to set
+ * how many items should be built. With "approx" property inputs, such as
+ * `approxItemHeight`, we're able to give virtual sroll an approximate size,
+ * therefore allowing virtual scroll to decide how many items should be
+ * created.
+ *
+ * #### Changing dataset should use `virtualTrackBy`
+ *
+ * It is possible for the identities of elements in the iterator to change
+ * while the data does not. This can happen, for example, if the iterator
+ * produced from an RPC to the server, and that RPC is re-run. Even if the
+ * "data" hasn't changed, the second response will produce objects with
+ * different identities, and Ionic will tear down the entire DOM and rebuild
+ * it. This is an expensive operation and should be avoided if possible.
+ *
+ * #### Efficient headers and footer functions
+ *
+ * Each virtual item must stay extremely efficient, but one way to really
+ * kill its performance is to perform any DOM operations within section header
+ * and footer functions. These functions are called for every record in the
+ * dataset, so please make sure they're performant.
  *
  */
 @Directive({
   selector: '[virtualScroll]'
 })
 export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
-  _trackBy: TrackByFn;
   _differ: IterableDiffer;
   _scrollSub: any;
   _scrollEndSub: any;
@@ -216,7 +245,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   set virtualScroll(val: any) {
     this._records = val;
     if (isBlank(this._differ) && isPresent(val)) {
-      this._differ = this._iterableDiffers.find(val).create(this._cd, this._trackBy);
+      this._differ = this._iterableDiffers.find(val).create(this._cd, this.virtualTrackBy);
     }
   }
 
@@ -334,9 +363,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   /**
    * @input {function} Same as `ngForTrackBy` which can be used on `ngFor`.
    */
-  @Input() set virtualTrackBy(val: TrackByFn) {
-    this._trackBy = val;
-  }
+  @Input() virtualTrackBy: TrackByFn;
+
 
   constructor(
     private _iterableDiffers: IterableDiffers,
