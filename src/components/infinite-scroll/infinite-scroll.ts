@@ -1,6 +1,7 @@
 import { Directive, ElementRef, EventEmitter, Host, Input, NgZone, Output } from '@angular/core';
 
-import { Content } from '../content/content';
+import { Content, ScrollEvent } from '../content/content';
+import { DomController } from '../../util/dom-controller';
 
 
 /**
@@ -35,7 +36,7 @@ import { Content } from '../content/content';
  *   items = [];
  *
  *   constructor() {
- *     for (var i = 0; i < 30; i++) {
+ *     for (let i = 0; i < 30; i++) {
  *       this.items.push( this.items.length );
  *     }
  *   }
@@ -44,7 +45,7 @@ import { Content } from '../content/content';
  *     console.log('Begin async operation');
  *
  *     setTimeout(() => {
- *       for (var i = 0; i < 30; i++) {
+ *       for (let i = 0; i < 30; i++) {
  *         this.items.push( this.items.length );
  *       }
  *
@@ -88,21 +89,25 @@ import { Content } from '../content/content';
  * developers to create their own infinite scroll content components.
  * You could replace our default content with custom SVG or CSS animations.
  *
- * @demo /docs/v2/demos/infinite-scroll/
+ * @demo /docs/v2/demos/src/infinite-scroll/
  *
  */
 @Directive({
   selector: 'ion-infinite-scroll'
 })
 export class InfiniteScroll {
-  private _lastCheck: number = 0;
-  private _highestY: number = 0;
-  private _scLsn: Function;
-  private _thr: string = '15%';
-  private _thrPx: number = 0;
-  private _thrPc: number = 0.15;
-  private _init: boolean = false;
+  _lastCheck: number = 0;
+  _highestY: number = 0;
+  _scLsn: any;
+  _thr: string = '15%';
+  _thrPx: number = 0;
+  _thrPc: number = 0.15;
+  _init: boolean = false;
 
+
+  /**
+   * @internal
+   */
   state: string = STATE_ENABLED;
 
   /**
@@ -132,6 +137,16 @@ export class InfiniteScroll {
   }
 
   /**
+   * @input {boolean} Whether or not the infinite scroll should be
+   * enabled or not. Setting to `false` will remove scroll event listeners
+   * and hide the display.
+   */
+  @Input()
+  set enabled(shouldEnable: boolean) {
+    this.enable(shouldEnable);
+  }
+
+  /**
    * @output {event} The expression to call when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
@@ -142,31 +157,32 @@ export class InfiniteScroll {
   constructor(
     @Host() private _content: Content,
     private _zone: NgZone,
-    private _elementRef: ElementRef
+    private _elementRef: ElementRef,
+    private _dom: DomController
   ) {
-    _content.addCssClass('has-infinite-scroll');
+    _content.setElementClass('has-infinite-scroll', true);
   }
 
-  private _onScroll() {
+  _onScroll(ev: ScrollEvent) {
     if (this.state === STATE_LOADING || this.state === STATE_DISABLED) {
       return 1;
     }
 
-    let now = Date.now();
-
-    if (this._lastCheck + 32 > now) {
+    if (this._lastCheck + 32 > ev.timeStamp) {
       // no need to check less than every XXms
       return 2;
     }
-    this._lastCheck = now;
+    this._lastCheck = ev.timeStamp;
 
-    let infiniteHeight = this._elementRef.nativeElement.scrollHeight;
+    // ******** DOM READ ****************
+    const infiniteHeight = this._elementRef.nativeElement.scrollHeight;
     if (!infiniteHeight) {
       // if there is no height of this element then do nothing
       return 3;
     }
 
-    let d = this._content.getContentDimensions();
+    // ******** DOM READ ****************
+    const d = this._content.getContentDimensions();
 
     let reloadY = d.contentHeight;
     if (this._thrPc) {
@@ -175,13 +191,18 @@ export class InfiniteScroll {
       reloadY += this._thrPx;
     }
 
-    let distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - reloadY;
+    // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
+
+    const distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - reloadY;
     if (distanceFromInfinite < 0) {
-      this._zone.run(() => {
-        if (this.state !== STATE_LOADING && this.state !== STATE_DISABLED) {
-          this.state = STATE_LOADING;
-          this.ionInfinite.emit(this);
-        }
+      // ******** DOM WRITE ****************
+      this._dom.write(() => {
+        this._zone.run(() => {
+          if (this.state !== STATE_LOADING && this.state !== STATE_DISABLED) {
+            this.state = STATE_LOADING;
+            this.ionInfinite.emit(this);
+          }
+        });
       });
       return 5;
     }
@@ -217,16 +238,19 @@ export class InfiniteScroll {
     this._setListeners(shouldEnable);
   }
 
-  private _setListeners(shouldListen: boolean) {
+  /**
+   * @private
+   */
+  _setListeners(shouldListen: boolean) {
     if (this._init) {
       if (shouldListen) {
         if (!this._scLsn) {
-          this._zone.runOutsideAngular(() => {
-            this._scLsn = this._content.addScrollListener( this._onScroll.bind(this) );
+          this._scLsn = this._content.ionScroll.subscribe((ev: ScrollEvent) => {
+            this._onScroll(ev);
           });
         }
       } else {
-        this._scLsn && this._scLsn();
+        this._scLsn && this._scLsn.unsubscribe();
         this._scLsn = null;
       }
     }

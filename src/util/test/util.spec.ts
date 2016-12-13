@@ -1,6 +1,6 @@
-import * as util from '../../../src/util';
+import * as util from '../util';
 
-export function run() {
+describe('util', () => {
 
   describe('isPrimitive', () => {
 
@@ -264,74 +264,6 @@ export function run() {
 
   });
 
-  describe('getQuerystring', () => {
-    it('should have no entries for empty url', () => {
-      expect(util.getQuerystring('')).toEqual({});
-      expect(util.getQuerystring(null)).toEqual({});
-      expect(util.getQuerystring(undefined)).toEqual({});
-    });
-
-    it('should have no entries when without ?', () => {
-      expect(util.getQuerystring('http://localhost:1234/')).toEqual({});
-    });
-
-    it('should have no entries with only ?', () => {
-      expect(util.getQuerystring('http://localhost:1234/?')).toEqual({});
-    });
-
-    it('should have no entries for key with no =', () => {
-      expect(util.getQuerystring('http://localhost:1234/?key')).toEqual({});
-    });
-
-    it('should have no entries with only #?', () => {
-      expect(util.getQuerystring('http://localhost:1234/#?')).toEqual({});
-    });
-
-    it('should have no entries with only #?=', () => {
-      expect(util.getQuerystring('http://localhost:1234/#?=')).toEqual({});
-    });
-
-    it('should have no entries for url with no "?" character', () => {
-      expect(util.getQuerystring('http://localhost:1234/#key1=1&key2=2')).toEqual({});
-    });
-
-    it('should contain key/value entries for all the parameters after "?" character', () => {
-      expect(util.getQuerystring('http://localhost:1234/#key1=1&key2x=2x?key3=3&key4=4')).toEqual({
-        key3: '3',
-        key4: '4'
-      });
-    });
-
-    it('should lowercase param keys', () => {
-      expect(util.getQuerystring('http://localhost:1234/#?KEY1=1&kEy2=2')).toEqual({
-        key1: '1',
-        key2: '2'
-      });
-    });
-
-    it('should not include any values when # comes after ?', () => {
-      expect(util.getQuerystring('http://localhost:1234/?key1=1#key2=2')).toEqual({
-        key1: '1'
-      });
-    });
-
-    it('should ignore empty ?& and &&', () => {
-      expect(util.getQuerystring('http://localhost:1234/#?&&')).toEqual({});
-
-      expect(util.getQuerystring('http://localhost:1234/#?&&key1=1&key2=2&&')).toEqual({
-        key1: '1',
-        key2: '2'
-      });
-    });
-
-    it('should get "" when key has no value', () => {
-      expect(util.getQuerystring('http://localhost:1234/#?key=')).toEqual({
-        key: ''
-      });
-    });
-
-  });
-
   describe('isTrueProperty', () => {
 
     it('should be true from boolean true', () => {
@@ -430,4 +362,5 @@ export function run() {
     });
 
   });
-}
+
+});

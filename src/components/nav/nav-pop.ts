@@ -1,6 +1,9 @@
-import { Directive, HostListener, Input, Optional } from '@angular/core';
-import { NavController } from './nav-controller';
-import { noop } from '../../util/util';
+import { AfterContentInit, Directive, HostListener, Optional } from '@angular/core';
+
+import { DeepLinker } from '../../navigation/deep-linker';
+import { NavController } from '../../navigation/nav-controller';
+import { ViewController } from '../../navigation/view-controller';
+
 
 /**
  * @name NavPop
@@ -12,13 +15,13 @@ import { noop } from '../../util/util';
  * ```html
  * <ion-content>
  *
- *  <button navPop>Go Back</button>
+ *  <button ion-button navPop>Go Back</button>
  *
  * </ion-content>
  * ```
  *
  * Similar to {@link /docs/v2/api/components/nav/NavPush/ `NavPush` }
- * @demo /docs/v2/demos/navigation/
+ * @demo /docs/v2/demos/src/navigation/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  * @see {@link ../NavPush NavPush API Docs}
  */
@@ -27,21 +30,59 @@ import { noop } from '../../util/util';
 })
 export class NavPop {
 
-  constructor(@Optional() private _nav: NavController) {
+  constructor(@Optional() public _nav: NavController) {
     if (!_nav) {
-      console.error('nav-pop must be within a NavController');
+      console.error('navPop must be within a NavController');
     }
   }
 
+/**
+ * @private
+ */
   @HostListener('click')
   onClick(): boolean {
     // If no target, or if target is _self, prevent default browser behavior
     if (this._nav) {
-      this._nav.pop(null, noop);
+      this._nav.pop(null, null);
       return false;
     }
 
     return true;
+  }
+
+}
+
+
+/**
+ * @private
+ */
+@Directive({
+  selector: 'a[navPop]',
+  host: {
+    '[attr.href]': '_href'
+  }
+})
+export class NavPopAnchor implements AfterContentInit {
+
+  _href: string;
+
+  constructor(
+    @Optional() public host: NavPop,
+    public linker: DeepLinker,
+    @Optional() public viewCtrl: ViewController) {}
+
+  updateHref() {
+    if (this.host && this.viewCtrl) {
+      const previousView = this.host._nav.getPrevious(this.viewCtrl);
+      this._href = (previousView && this.linker.createUrl(this.host._nav, this.viewCtrl.component, this.viewCtrl.data)) || '#';
+
+    } else {
+      this._href = '#';
+    }
+  }
+
+  ngAfterContentInit() {
+    this.updateHref();
   }
 
 }

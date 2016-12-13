@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
 
 import { CSS, nativeRaf, nativeTimeout, clearNativeTimeout } from '../../util/dom';
 import { Item } from './item';
-import { isPresent } from '../../util/util';
+import { isPresent, swipeShouldReset, assert } from '../../util/util';
 import { List } from '../list/list';
 
 const SWIPE_MARGIN = 30;
@@ -19,7 +19,7 @@ export const enum ItemSideFlags {
  * @name ItemOptions
  * @description
  * The option buttons for an `ion-item-sliding`. These buttons can be placed either on the left or right side.
- * You can combind the `(ionSiwpe)` event plus the `expandable` directive to create a full swipe action for the item.
+ * You can combine the `(ionSwipe)` event plus the `expandable` directive to create a full swipe action for the item.
  *
  * @usage
  *
@@ -29,7 +29,7 @@ export const enum ItemSideFlags {
  *     Item 1
  *   </ion-item>
  *   <ion-item-options side="right" (ionSwipe)="saveItem(item)">
- *     <button expandable (click)="saveItem(item)">
+ *     <button ion-button expandable (click)="saveItem(item)">
  *       <ion-icon name="star"></ion-icon>
  *     </button>
  *   </ion-item-options>
@@ -40,7 +40,6 @@ export const enum ItemSideFlags {
   selector: 'ion-item-options',
 })
 export class ItemOptions {
-
   /**
    * @input {string} the side the option button should be on. Defaults to right
    * If you have multiple `ion-item-options`, a side must be provided for each.
@@ -53,13 +52,6 @@ export class ItemOptions {
   @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
   constructor(private _elementRef: ElementRef, private _renderer: Renderer) {}
-
-  /**
-   * @private
-   */
-  setCssStyle(property: string, value: string) {
-    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
-  }
 
   /**
    * @private
@@ -81,7 +73,7 @@ export class ItemOptions {
 
 }
 
-const enum SlidingState {
+export const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
   Right = 1 << 3,
@@ -107,12 +99,12 @@ const enum SlidingState {
  *       Item
  *     </ion-item>
  *     <ion-item-options side="left">
- *       <button (click)="favorite(item)">Favorite</button>
- *       <button danger (click)="share(item)">Share</button>
+ *       <button ion-button (click)="favorite(item)">Favorite</button>
+ *       <button ion-button color="danger" (click)="share(item)">Share</button>
  *     </ion-item-options>
 
  *     <ion-item-options side="right">
- *       <button (click)="unread(item)">Unread</button>
+ *       <button ion-button (click)="unread(item)">Unread</button>
  *     </ion-item-options>
  *   </ion-item-sliding>
  * </ion-list>
@@ -127,14 +119,14 @@ const enum SlidingState {
  *
  * ```html
  * <ion-item-options side="right">
- *   <button (click)="archive(item)">
+ *   <button ion-button (click)="archive(item)">
  *     <ion-icon name="archive"></ion-icon>
  *     Archive
  *   </button>
  * </ion-item-options>
 
  * <ion-item-options side="left">
- *   <button (click)="archive(item)">
+ *   <button ion-button (click)="archive(item)">
  *     <ion-icon name="archive"></ion-icon>
  *     Archive
  *   </button>
@@ -149,7 +141,7 @@ const enum SlidingState {
  * <ion-item-sliding (ionDrag)="logDrag($event)">
  *   <ion-item>Item</ion-item>
  *   <ion-item-options>
- *     <button>Favorite</button>
+ *     <button ion-button>Favorite</button>
  *   </ion-item-options>
  * </ion-item-sliding>
  * ```
@@ -162,7 +154,7 @@ const enum SlidingState {
  *
  * ```html
  * <ion-item-options icon-left>
- *    <button (click)="archive(item)">
+ *    <button ion-button (click)="archive(item)">
  *      <ion-icon name="archive"></ion-icon>
  *      Archive
  *    </button>
@@ -171,7 +163,7 @@ const enum SlidingState {
  * ```
  *
  *
- * @demo /docs/v2/demos/item-sliding/
+ * @demo /docs/v2/demos/src/item-sliding/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../Item Item API Docs}
  * @see {@link ../../list/List List API Docs}
@@ -200,7 +192,7 @@ export class ItemSliding {
   /**
    * @private
    */
-  @ContentChild(Item) private item: Item;
+  @ContentChild(Item) item: Item;
 
   /**
    * @output {event} Expression to evaluate when the sliding position changes.
@@ -225,14 +217,18 @@ export class ItemSliding {
    */
   @Output() ionDrag: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
-  constructor( @Optional() list: List, private _renderer: Renderer, private _elementRef: ElementRef) {
+  constructor(
+    @Optional() list: List,
+    private _renderer: Renderer,
+    private _elementRef: ElementRef,
+    private _zone: NgZone) {
     list && list.containsSlidingItem(true);
     _elementRef.nativeElement.$ionComponent = this;
-    this.setCssClass('item-wrapper', true);
+    this.setElementClass('item-wrapper', true);
   }
 
   @ContentChildren(ItemOptions)
-  private set _itemOptions(itemOptions: QueryList<ItemOptions>) {
+  set _itemOptions(itemOptions: QueryList<ItemOptions>) {
     let sides = 0;
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();
@@ -281,7 +277,7 @@ export class ItemSliding {
       this._setState(SlidingState.Enabled);
     }
     this._startX = startX + this._openAmount;
-    this.item.setCssStyle(CSS.transition, 'none');
+    this.item.setElementStyle(CSS.transition, 'none');
   }
 
   /**
@@ -298,7 +294,7 @@ export class ItemSliding {
       case ItemSideFlags.Right: openAmount = Math.max(0, openAmount); break;
       case ItemSideFlags.Left: openAmount = Math.min(0, openAmount); break;
       case ItemSideFlags.Both: break;
-      default: return;
+      default: assert(false, 'invalid ItemSideFlags value'); break;
     }
 
     if (openAmount > this._optsWidthRightSide) {
@@ -324,10 +320,10 @@ export class ItemSliding {
 
     // Check if the drag didn't clear the buttons mid-point
     // and we aren't moving fast enough to swipe open
-    let isCloseDirection = (this._openAmount > 0) === !(velocity < 0);
+    let isResetDirection = (this._openAmount > 0) === !(velocity < 0);
     let isMovingFast = Math.abs(velocity) > 0.3;
     let isOnCloseZone = Math.abs(this._openAmount) < Math.abs(restingPoint / 2);
-    if (shouldClose(isCloseDirection, isMovingFast, isOnCloseZone)) {
+    if (swipeShouldReset(isResetDirection, isMovingFast, isOnCloseZone)) {
       restingPoint = 0;
     }
 
@@ -341,9 +337,9 @@ export class ItemSliding {
    */
   private fireSwipeEvent() {
     if (this._state & SlidingState.SwipeRight) {
-      this._rightOptions.ionSwipe.emit(this);
+      this._zone.run(() => this._rightOptions.ionSwipe.emit(this));
     } else if (this._state & SlidingState.SwipeLeft) {
-      this._leftOptions.ionSwipe.emit(this);
+      this._zone.run(() => this._leftOptions.ionSwipe.emit(this));
     }
   }
 
@@ -358,11 +354,13 @@ export class ItemSliding {
       this._optsWidthRightSide = 0;
       if (this._rightOptions) {
         this._optsWidthRightSide = this._rightOptions.width();
+        assert(this._optsWidthRightSide > 0, '_optsWidthRightSide should not be zero');
       }
 
       this._optsWidthLeftSide = 0;
       if (this._leftOptions) {
         this._optsWidthLeftSide = this._leftOptions.width();
+        assert(this._optsWidthLeftSide > 0, '_optsWidthLeftSide should not be zero');
       }
       this._optsDirty = false;
     });
@@ -376,7 +374,7 @@ export class ItemSliding {
     this._openAmount = openAmount;
 
     if (isFinal) {
-      this.item.setCssStyle(CSS.transition, '');
+      this.item.setElementStyle(CSS.transition, '');
 
     } else {
       if (openAmount > 0) {
@@ -399,23 +397,26 @@ export class ItemSliding {
         this._setState(SlidingState.Disabled);
         this._timer = null;
       }, 600);
-      this.item.setCssStyle(CSS.transform, '');
+      this.item.setElementStyle(CSS.transform, '');
       return;
     }
 
-    this.item.setCssStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
-    this.ionDrag.emit(this);
+    this.item.setElementStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
+    let ionDrag = this.ionDrag;
+    if (ionDrag.observers.length > 0) {
+      ionDrag.emit(this);
+    }
   }
 
   private _setState(state: SlidingState) {
     if (state === this._state) {
       return;
     }
-    this.setCssClass('active-slide', (state !== SlidingState.Disabled));
-    this.setCssClass('active-options-right', !!(state & SlidingState.Right));
-    this.setCssClass('active-options-left', !!(state & SlidingState.Left));
-    this.setCssClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
-    this.setCssClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
+    this.setElementClass('active-slide', (state !== SlidingState.Disabled));
+    this.setElementClass('active-options-right', !!(state & SlidingState.Right));
+    this.setElementClass('active-options-left', !!(state & SlidingState.Left));
+    this.setElementClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
+    this.setElementClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
     this._state = state;
   }
 
@@ -434,7 +435,7 @@ export class ItemSliding {
    *       Item
    *     </ion-item>
    *     <ion-item-options>
-   *       <button (click)="share(slidingItem)">Share</button>
+   *       <button ion-button (click)="share(slidingItem)">Share</button>
    *     </ion-item-options>
    *   </ion-item-sliding>
    * </ion-list>
@@ -461,33 +462,7 @@ export class ItemSliding {
   /**
    * @private
    */
-  setCssClass(cssClass: string, shouldAdd: boolean) {
+  setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
-
-  /**
-   * @private
-   */
-  setCssStyle(property: string, value: string) {
-    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
-  }
-}
-
-function shouldClose(isCloseDirection: boolean, isMovingFast: boolean, isOnCloseZone: boolean): boolean {
-  // The logic required to know when the sliding item should close (openAmount=0)
-  // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
-  // and it ended up being too complicated to be written manually without errors
-  // so the truth table is attached below: (0=false, 1=true)
-  // isCloseDirection | isMovingFast | isOnCloseZone || shouldClose
-  //         0        |       0      |       0       ||    0
-  //         0        |       0      |       1       ||    1
-  //         0        |       1      |       0       ||    0
-  //         0        |       1      |       1       ||    0
-  //         1        |       0      |       0       ||    0
-  //         1        |       0      |       1       ||    1
-  //         1        |       1      |       0       ||    1
-  //         1        |       1      |       1       ||    1
-  // The resulting expression was generated by resolving the K-map (Karnaugh map):
-  let shouldClose = (!isMovingFast && isOnCloseZone) || (isCloseDirection && isMovingFast);
-  return shouldClose;
 }

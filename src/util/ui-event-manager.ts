@@ -1,14 +1,46 @@
 import { ElementRef } from '@angular/core';
+import { assert } from './util';
 
 export interface PointerEventsConfig {
   element?: HTMLElement;
   elementRef?: ElementRef;
   pointerDown: (ev: any) => boolean;
-  pointerMove: (ev: any) => void;
-  pointerUp: (ev: any) => void;
-  nativeOptions?: any;
+  pointerMove?: (ev: any) => void;
+  pointerUp?: (ev: any) => void;
   zone?: boolean;
+
+  capture?: boolean;
+  passive?: boolean;
 }
+
+export const enum PointerEventType {
+  UNDEFINED,
+  MOUSE,
+  TOUCH
+}
+
+// Test via a getter in the options object to see if the passive property is accessed
+var supportsOptions = false;
+try {
+  var opts = Object.defineProperty({}, 'passive', {
+    get: function() {
+      supportsOptions = true;
+    }
+  });
+  window.addEventListener('test', null, opts);
+} catch (e) { }
+
+
+export function eventOptions(useCapture = false, usePassive = false): any {
+  if (supportsOptions && usePassive) {
+    return {
+      capture: useCapture,
+      passive: usePassive
+    };
+  }
+  return useCapture;
+}
+
 
 /**
  * @private
@@ -29,6 +61,7 @@ export class PointerEvents {
   private lastTouchEvent: number = 0;
 
   mouseWait: number = 2 * 1000;
+  lastEventType: PointerEventType = PointerEventType.UNDEFINED;
 
   constructor(private ele: any,
     private pointerDown: any,
@@ -37,6 +70,8 @@ export class PointerEvents {
     private zone: boolean,
     private option: any
   ) {
+    assert(ele, 'element can not be null');
+    assert(pointerDown, 'pointerDown can not be null');
 
     this.bindTouchEnd = this.handleTouchEnd.bind(this);
     this.bindMouseUp = this.handleMouseUp.bind(this);
@@ -46,11 +81,15 @@ export class PointerEvents {
   }
 
   private handleTouchStart(ev: any) {
+    assert(this.ele, 'element can not be null');
+    assert(this.pointerDown, 'pointerDown can not be null');
+
     this.lastTouchEvent = Date.now() + this.mouseWait;
-    if (!this.pointerDown(ev)) {
+    this.lastEventType = PointerEventType.TOUCH;
+    if (!this.pointerDown(ev, PointerEventType.TOUCH)) {
       return;
     }
-    if (!this.rmTouchMove) {
+    if (!this.rmTouchMove && this.pointerMove) {
       this.rmTouchMove = listenEvent(this.ele, 'touchmove', this.zone, this.option, this.pointerMove);
     }
     if (!this.rmTouchEnd) {
@@ -62,29 +101,33 @@ export class PointerEvents {
   }
 
   private handleMouseDown(ev: any) {
+    assert(this.ele, 'element can not be null');
+    assert(this.pointerDown, 'pointerDown can not be null');
+
     if (this.lastTouchEvent > Date.now()) {
       console.debug('mousedown event dropped because of previous touch');
       return;
     }
-    if (!this.pointerDown(ev)) {
+    this.lastEventType = PointerEventType.MOUSE;
+    if (!this.pointerDown(ev, PointerEventType.MOUSE)) {
       return;
     }
-    if (!this.rmMouseMove) {
-      this.rmMouseMove = listenEvent(window, 'mousemove', this.zone, this.option, this.pointerMove);
+    if (!this.rmMouseMove && this.pointerMove) {
+      this.rmMouseMove = listenEvent(document, 'mousemove', this.zone, this.option, this.pointerMove);
     }
     if (!this.rmMouseUp) {
-      this.rmMouseUp = listenEvent(window, 'mouseup', this.zone, this.option, this.bindMouseUp);
+      this.rmMouseUp = listenEvent(document, 'mouseup', this.zone, this.option, this.bindMouseUp);
     }
   }
 
   private handleTouchEnd(ev: any) {
     this.stopTouch();
-    this.pointerUp(ev);
+    this.pointerUp && this.pointerUp(ev, PointerEventType.TOUCH);
   }
 
   private handleMouseUp(ev: any) {
     this.stopMouse();
-    this.pointerUp(ev);
+    this.pointerUp && this.pointerUp(ev, PointerEventType.MOUSE);
   }
 
   private stopTouch() {
@@ -137,34 +180,50 @@ export class UIEventManager {
 
   constructor(public zoneWrapped: boolean = true) {}
 
-  listenRef(ref: ElementRef, eventName: string, callback: any, option?: any): Function {
-    return this.listen(ref.nativeElement, eventName, callback, option);
-  }
-
   pointerEvents(config: PointerEventsConfig): PointerEvents {
     let element = config.element;
     if (!element) {
       element = config.elementRef.nativeElement;
     }
 
-    if (!element || !config.pointerDown || !config.pointerMove || !config.pointerUp) {
+    if (!element || !config.pointerDown) {
       console.error('PointerEvents config is invalid');
       return;
     }
     let zone = config.zone || this.zoneWrapped;
-    let options = config.nativeOptions || false;
+    let opts: any;
+    if (supportsOptions) {
+      opts = {};
+      if (config.passive === true) {
+        opts.passive = true;
+      }
+      if (config.capture === true) {
+        opts.capture = true;
+      }
+    } else {
+      if (config.passive === true) {
+        console.debug('passive event listeners are not supported by this browser');
+      }
+      if (config.capture === true) {
+        opts = true;
+      }
+    }
 
-    let submanager = new PointerEvents(
+    let pointerEvents = new PointerEvents(
       element,
       config.pointerDown,
       config.pointerMove,
       config.pointerUp,
       zone,
-      options);
+      opts);
 
-    let removeFunc = () => submanager.destroy();
+    let removeFunc = () => pointerEvents.destroy();
     this.events.push(removeFunc);
-    return submanager;
+    return pointerEvents;
+  }
+
+  listenRef(ref: ElementRef, eventName: string, callback: any, option?: any): Function {
+    return this.listen(ref.nativeElement, eventName, callback, option);
   }
 
   listen(element: any, eventName: string, callback: any, option: any = false): Function {
@@ -184,13 +243,14 @@ export class UIEventManager {
   }
 }
 
-function listenEvent(ele: any, eventName: string, zoneWrapped: boolean, option: any, callback: any): Function {
-  let rawEvent = ('__zone_symbol__addEventListener' in ele && !zoneWrapped);
+export function listenEvent(ele: any, eventName: string, zoneWrapped: boolean, option: any, callback: any): Function {
+  const rawEvent = (!zoneWrapped && !!ele.__zone_symbol__addEventListener);
   if (rawEvent) {
     ele.__zone_symbol__addEventListener(eventName, callback, option);
-    return () => ele.__zone_symbol__removeEventListener(eventName, callback);
-  } else {
-    ele.addEventListener(eventName, callback, option);
-    return () => ele.removeEventListener(eventName, callback);
+    assert(!!ele.__zone_symbol__removeEventListener, 'native removeEventListener does not exist');
+    return () => ele.__zone_symbol__removeEventListener(eventName, callback, option);
   }
+
+  ele.addEventListener(eventName, callback, option);
+  return () => ele.removeEventListener(eventName, callback, option);
 }

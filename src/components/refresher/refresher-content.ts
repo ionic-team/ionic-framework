@@ -1,10 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 import { Config } from '../../config/config';
-import { Icon } from '../icon/icon';
 import { Refresher } from './refresher';
-import { Spinner } from '../spinner/spinner';
 
 
 /**
@@ -12,21 +9,19 @@ import { Spinner } from '../spinner/spinner';
  */
 @Component({
   selector: 'ion-refresher-content',
-  template: `
-    <div class="refresher-pulling">
-      <div class="refresher-pulling-icon" *ngIf="pullingIcon">
-        <ion-icon [name]="pullingIcon"></ion-icon>
-      </div>
-      <div class="refresher-pulling-text" [innerHTML]="pullingText" *ngIf="pullingText"></div>
-    </div>
-    <div class="refresher-refreshing">
-      <div class="refresher-refreshing-icon">
-        <ion-spinner [name]="refreshingSpinner"></ion-spinner>
-      </div>
-      <div class="refresher-refreshing-text" [innerHTML]="refreshingText" *ngIf="refreshingText"></div>
-    </div>
-  `,
-  directives: [Icon, NgIf, Spinner],
+  template:
+    '<div class="refresher-pulling">' +
+      '<div class="refresher-pulling-icon" *ngIf="pullingIcon">' +
+        '<ion-icon [name]="pullingIcon"></ion-icon>' +
+      '</div>' +
+      '<div class="refresher-pulling-text" [innerHTML]="pullingText" *ngIf="pullingText"></div>' +
+    '</div>' +
+    '<div class="refresher-refreshing">' +
+      '<div class="refresher-refreshing-icon">' +
+        '<ion-spinner [name]="refreshingSpinner"></ion-spinner>' +
+      '</div>' +
+      '<div class="refresher-refreshing-text" [innerHTML]="refreshingText" *ngIf="refreshingText"></div>' +
+    '</div>',
   host: {
     '[attr.state]': 'r.state'
   },
@@ -55,7 +50,7 @@ export class RefresherContent {
   @Input() refreshingText: string;
 
 
-  constructor(private r: Refresher, private _config: Config) {}
+  constructor(public r: Refresher, private _config: Config) {}
 
   /**
    * @private

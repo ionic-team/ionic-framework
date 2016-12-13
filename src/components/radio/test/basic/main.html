@@ -12,7 +12,7 @@
 
   <form (submit)="doSubmit($event)" [formGroup]="fruitsForm">
 
-    <ion-list radio-group formControlName="fruits">
+    <ion-list radio-group formControlName="fruitsCtrl">
 
       <ion-list-header>
         Fruits
@@ -35,7 +35,7 @@
 
       <ion-item>
         <ion-label>Cherry (secondary color)</ion-label>
-        <ion-radio value="cherry" secondary></ion-radio>
+        <ion-radio value="cherry" color="secondary"></ion-radio>
       </ion-item>
 
       <ion-item>
@@ -58,14 +58,14 @@
   </form>
 
   <div aria-hidden="true" text-center>
-    <button (click)="setApple()" outline small>Select Apple</button>
-    <button (click)="setBanana()" outline small>Select Banana</button>
-    <button class="e2eCherry" (click)="setCherry()" outline small>Select Cherry</button>
+    <button ion-button (click)="setApple()" outline small>Select Apple</button>
+    <button ion-button (click)="setBanana()" outline small>Select Banana</button>
+    <button ion-button class="e2eCherry" (click)="setCherry()" outline small>Select Cherry</button>
   </div>
 
   <div padding>
-    <code><b>fruits.dirty:</b> {{fruitsForm.controls.fruits.dirty}}</code><br>
-    <code><b>fruits.value:</b> {{fruitsForm.controls.fruits.value}}</code><br>
+    <code><b>fruits.dirty:</b> {{fruitsCtrl.dirty}}</code><br>
+    <code><b>fruits.value:</b> {{fruitsCtrl.value}}</code><br>
   </div>
 
   <form (submit)="doSubmit($event)" [formGroup]="currencyForm">
@@ -81,7 +81,7 @@
   </form>
 
   <div padding>
-    <code><b>currenciesControl.value:</b> {{currencyForm.controls.currenciesControl.value}}</code>
+    <code><b>currenciesControl.value:</b> {{currenciesControl.value}}</code>
   </div>
 
   <ion-list radio-group [(ngModel)]="relationship">

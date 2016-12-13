@@ -1,12 +1,12 @@
 <ion-header>
 
-  <ion-navbar no-border-bottom>
+  <ion-navbar>
     <ion-title>
       Segment Swipeable under Navbar
     </ion-title>
   </ion-navbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-segment [(ngModel)]="selectedSegment" (ionChange)="onSegmentChanged($event)">
       <ion-segment-button value="first">
         First

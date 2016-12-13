@@ -1,6 +1,8 @@
-import { Refresher, Content, Config, GestureController, Ion } from '../../../../src';
+import { Refresher } from '../refresher';
+import { Content } from '../../content/content';
+import { GestureController } from '../../../gestures/gesture-controller';
+import { mockConfig, MockDomController, mockElementRef, mockRenderer, mockZone } from '../../../util/mock-providers';
 
-export function run() {
 
 describe('Refresher', () => {
 
@@ -20,19 +22,19 @@ describe('Refresher', () => {
 
     it('should do nothing if state=cancelling', () => {
       refresher.state = 'cancelling';
-      var results = refresher._onEnd();
+      refresher._onEnd();
       expect(refresher.state).toEqual('cancelling');
     });
 
     it('should do nothing if state=completing', () => {
       refresher.state = 'completing';
-      var results = refresher._onEnd();
+      refresher._onEnd();
       expect(refresher.state).toEqual('completing');
     });
 
     it('should do nothing if state=refreshing', () => {
       refresher.state = 'refreshing';
-      var results = refresher._onEnd();
+      refresher._onEnd();
       expect(refresher.state).toEqual('refreshing');
     });
 
@@ -89,15 +91,18 @@ describe('Refresher', () => {
 
   describe('_onMove', () => {
 
-    it('should set scrollElement inline styles when pulling down, but not past threshold', () => {
+    it('should set scrollElement inline styles when pulling down, but not past threshold', (done) => {
       setContentScrollTop(0);
       refresher.startY = 100;
       refresher.pullMin = 80;
-      let result = refresher._onMove( touchEv(125) );
+      refresher._onMove( <TouchEvent> <any> touchEv(125) );
 
-      expect(getScrollElementStyles().transform).toEqual('translateY(25px) translateZ(0px)');
-      expect(getScrollElementStyles().transitionDuration).toEqual('0ms');
-      expect(getScrollElementStyles().overflow).toEqual('hidden');
+      dom.flush(() => {
+        expect(getScrollElementStyles().transform).toEqual('translateY(25px) translateZ(0px)');
+        expect(getScrollElementStyles().transitionDuration).toEqual('0ms');
+        expect(getScrollElementStyles().overflow).toEqual('hidden');
+        done();
+      });
     });
 
     it('should set scrollElement inline styles when pulling up above startY', () => {
@@ -106,7 +111,7 @@ describe('Refresher', () => {
 
       setContentScrollTop(1);
       refresher.startY = 100;
-      let result = refresher._onMove( touchEv(95) );
+      let result = refresher._onMove( <TouchEvent> <any> touchEv(95) );
 
       expect(result).toEqual(6);
     });
@@ -116,7 +121,7 @@ describe('Refresher', () => {
 
       setContentScrollTop(50);
       refresher.startY = 100;
-      let result = refresher._onMove( touchEv(125) );
+      let result = refresher._onMove( <TouchEvent> <any> touchEv(125) );
 
       expect(refresher.state).toEqual('inactive');
       expect(refresher.progress).toEqual(0);
@@ -124,89 +129,91 @@ describe('Refresher', () => {
       expect(result).toEqual(7);
     });
 
-    it('should reset styles when _appliedStyles=true, delta<=0', () => {
+    it('should reset styles when _appliedStyles=true, delta<=0', (done) => {
       refresher._appliedStyles = true;
 
       refresher.startY = 100;
-      let result = refresher._onMove( touchEv(85) );
+      let result = refresher._onMove( <TouchEvent> <any> touchEv(85) );
 
-      expect(refresher.state).toEqual('inactive');
-      expect(getScrollElementStyles().transform).toEqual('translateZ(0px)');
-      expect(getScrollElementStyles().transitionDuration).toEqual('');
-      expect(getScrollElementStyles().overflow).toEqual('');
-      expect(result).toEqual(5);
+      dom.flush(() => {
+        expect(refresher.state).toEqual('inactive');
+        expect(getScrollElementStyles().transform).toEqual('translateZ(0px)');
+        expect(getScrollElementStyles().transitionDuration).toEqual('');
+        expect(getScrollElementStyles().overflow).toEqual('');
+        expect(result).toEqual(5);
+        done();
+      });
     });
 
     it('should not run when scrollTop is > 0', () => {
       setContentScrollTop(50);
       refresher.startY = 100;
 
-      var results = refresher._onMove(touchEv(80));
+      var results = refresher._onMove(<TouchEvent> <any> touchEv(80));
       expect(results).toEqual(6);
     });
 
     it('should not run when scrolling up, but isnt actively dragging', () => {
       setContentScrollTop(1);
       refresher.startY = 100;
-      refresher._isDragging = false
 
-      var results = refresher._onMove(touchEv(85));
+      var results = refresher._onMove(<TouchEvent> <any> touchEv(85));
       expect(results).toEqual(6);
     });
 
     it('should set the deltaY', () => {
       setContentScrollTop(1);
       refresher.startY = 100;
-      refresher._onMove( touchEv(133) );
+      refresher._onMove( <TouchEvent> <any> touchEv(133) );
       expect(refresher.deltaY).toEqual(33);
 
       refresher._lastCheck = 0; // force allow next check
       refresher.startY = 100;
 
-      var results = refresher._onMove( touchEv(50) );
+      var results = refresher._onMove( <TouchEvent> <any> touchEv(50) );
       expect(results).toEqual(6);
       expect(refresher.deltaY).toEqual(-50);
     });
 
     it('should not run if it already ran less than 16ms ago', () => {
       refresher.startY = 100;
-      var results = refresher._onMove(touchEv(88));
+      var results = refresher._onMove(<TouchEvent> <any> touchEv(88));
       expect(results).toEqual(6);
 
-      results = refresher._onMove(touchEv(88));
+      results = refresher._onMove(<TouchEvent> <any> touchEv(88));
       expect(results).toEqual(3);
     });
 
     it('should not run if state=refreshing', () => {
       refresher.startY = 100;
       refresher.state = 'refreshing';
-      var results = refresher._onMove( touchEv(88) );
+      var results = refresher._onMove( <TouchEvent> <any> touchEv(88) );
       expect(results).toEqual(2);
     });
 
     it('should not run if state=completing', () => {
       refresher.startY = 100;
       refresher.state = 'completing';
-      var results = refresher._onMove( touchEv(88) );
+      var results = refresher._onMove( <TouchEvent> <any> touchEv(88) );
       expect(results).toEqual(2);
     });
 
     it('should not run if state=cancelling', () => {
       refresher.startY = 100;
       refresher.state = 'cancelling';
-      var results = refresher._onMove( touchEv(88) );
+      var results = refresher._onMove( <TouchEvent> <any> touchEv(88) );
       expect(results).toEqual(2);
     });
 
     it('should not run if no startY', () => {
       refresher.startY = null;
-      var results = refresher._onMove( touchEv(88) );
+      var results = refresher._onMove( <TouchEvent> <any> touchEv(88) );
       expect(results).toEqual(2);
     });
 
     it('should not run if multiple touches', () => {
-      var results = refresher._onMove({
-        touches: [{},{}]
+      var results = refresher._onMove(<TouchEvent> <any> {
+        touches: [{}, {}]
       });
       expect(results).toEqual(1);
     });
@@ -214,48 +221,46 @@ describe('Refresher', () => {
   });
 
 
-  let config = new Config();
   let refresher: Refresher;
   let content: Content;
-  let contentElementRef;
-  let gestureController: GestureController;
-  let zone = {
-    run: function (cb) { cb(); },
-    runOutsideAngular: function (cb) { cb(); }
-  };
+  let dom: MockDomController;
 
   beforeEach(() => {
-    contentElementRef = mockElementRef();
-    gestureController = new GestureController();
-    content = new Content(contentElementRef, config, null, null, zone, null, null);
-    content._scrollEle = document.createElement('scroll-content');
+    let gestureController = new GestureController(null);
+    let elementRef = mockElementRef();
+    dom = new MockDomController();
+    elementRef.nativeElement.children.push('');
+    content = new Content(mockConfig(), mockElementRef(), mockRenderer(), null, null, mockZone(), null, null, dom);
+    content._scrollEle = document.createElement('div');
+    content._scrollEle.className = 'scroll-content';
 
-    refresher = new Refresher(content, zone, gestureController);
+    refresher = new Refresher(content, mockZone(), gestureController);
   });
 
   function touchEv(y: number) {
     return {
       type: 'mockTouch',
-      touches: [{clientY: y}],
+      pageX: 0,
+      pageY: y,
       preventDefault: function(){}
-    }
-  }
-
-  function mockElementRef() {
-    return {
-      nativeElement: {
-        classList: { add: function(){}, remove: function(){} },
-        scrollTop: 0,
-        hasAttribute: function(){},
-        children: {length: 1 }
-      }
-    }
+    };
   }
 
   function setContentScrollTop(scrollTop) {
     content.getContentDimensions = function() {
       return {
-        scrollTop: scrollTop
+        scrollTop: scrollTop,
+        scrollHeight: null,
+        contentHeight: null,
+        contentTop: null,
+        contentBottom: null,
+        contentWidth: null,
+        contentLeft: null,
+        contentRight: null,
+        scrollBottom: null,
+        scrollWidth: null,
+        scrollLeft: null,
+        scrollRight: null
       };
     };
   }
@@ -265,5 +270,3 @@ describe('Refresher', () => {
   }
 
 });
-
-}

@@ -4,8 +4,8 @@ import { ActionSheetCmp } from './action-sheet-component';
 import { ActionSheetOptions } from './action-sheet-options';
 import { App } from '../app/app';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-interfaces';
-import { ViewController } from '../nav/view-controller';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @private
@@ -17,14 +17,9 @@ export class ActionSheet extends ViewController {
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(ActionSheetCmp, opts);
+    super(ActionSheetCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
-
-    // by default, actionsheets should not fire lifecycle events of other views
-    // for example, when an actionsheets enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**
@@ -66,15 +61,6 @@ export class ActionSheet extends ViewController {
     return this._app.present(this, navOptions);
   }
 
-  /**
-   * @private
-   * DEPRECATED: Please inject ActionSheetController instead
-   */
-  private static create(opt: any) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('ActionSheet.create(..) has been deprecated. Please inject ActionSheetController instead');
-  }
-
 }
 
 
@@ -112,7 +98,7 @@ export class ActionSheet extends ViewController {
  *
  * export class MyClass{
  *
- *  constructor(private actionSheetCtrl: ActionSheetController) {}
+ *  constructor(public actionSheetCtrl: ActionSheetController) {}
  *
  *  presentActionSheet() {
  *    let actionSheet = this.actionSheetCtrl.create({
@@ -150,24 +136,23 @@ export class ActionSheet extends ViewController {
  *
  * ActionSheet create options
  *
- * | Option                | Type       | Description                                                     |
- * |-----------------------|------------|-----------------------------------------------------------------|
- * | title                 |`string`    | The title for the actionsheet                                   |
- * | subTitle              |`string`    | The sub-title for the actionsheet                               |
- * | cssClass              |`string`    | An additional class for custom styles                           |
- * | enableBackdropDismiss |`boolean`   | If the actionsheet should close when the user taps the backdrop |
- * | buttons               |`array<any>`| An array of buttons to display                                  |
+ * | Option                | Type       | Description                                                        |
+ * |-----------------------|------------|--------------------------------------------------------------------|
+ * | title                 |`string`    | The title for the Action Sheet.                                    |
+ * | subTitle              |`string`    | The sub-title for the Action Sheet.                                |
+ * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.         |
+ * | enableBackdropDismiss |`boolean`   | If the Action Sheet should close when the user taps the backdrop.  |
+ * | buttons               |`array<any>`| An array of buttons to display.                                    |
  *
  * ActionSheet button options
  *
  * | Option   | Type     | Description                                                                                                                                      |
  * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
- * | text     | `string` | The buttons text                                                                                                                                 |
- * | icon     | `icon`   | The buttons icons                                                                                                                                |
- * | handler  | `any`    | An express the button should evaluate                                                                                                            |
- * | cssClass | `string` | An additional class for custom styles                                                                                                            |
- * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles |
- *
+ * | text     | `string` | The buttons text.                                                                                                                                |
+ * | icon     | `icon`   | The buttons icons.                                                                                                                               |
+ * | handler  | `any`    | An express the button should evaluate.                                                                                                           |
+ * | cssClass | `string` | Additional classes for custom styles, separated by spaces.                                                                                       |
+ * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles.|
  *
  *
  * ### Dismissing And Async Navigation
@@ -225,7 +210,7 @@ export class ActionSheet extends ViewController {
  * out before starting a new transition.
  *
  *
- * @demo /docs/v2/demos/action-sheet/
+ * @demo /docs/v2/demos/src/action-sheet/
  * @see {@link /docs/v2/components#action-sheets ActionSheet Component Docs}
  */
 @Injectable()

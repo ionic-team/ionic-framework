@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>Virtual Scroll{{webview}}</ion-title>
     <ion-buttons end>
-      <button (click)="reload()">
+      <button ion-button (click)="reload()">
         Reload
       </button>
     </ion-buttons>
@@ -11,6 +11,10 @@
 
 
 <ion-content>
+
+  <div padding>
+    <button ion-button (click)="pushPage()">Push Virtual Scroll Page</button>
+  </div>
 
   <ion-list [virtualScroll]="items"
             [headerFn]="headerFn">
@@ -24,5 +28,9 @@
     </ion-item>
 
   </ion-list>
+
+  <div padding>
+    <button ion-button (click)="pushPage()">Push Virtual Scroll Page</button>
+  </div>
 
 </ion-content>

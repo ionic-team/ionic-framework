@@ -1,8 +1,12 @@
-@import "../../globals.core";
-
+@import "../../themes/ionic.globals";
 
 // Toolbar
 // --------------------------------------------------
+
+ion-toolbar {
+  position: relative;
+  z-index: $z-index-toolbar;
+}
 
 .toolbar {
   display: flex;
@@ -13,6 +17,8 @@
   justify-content: space-between;
 
   width: 100%;
+
+  contain: content;
 }
 
 .toolbar-background {
@@ -28,6 +34,8 @@
   transform: translateZ(0);
 
   pointer-events: none;
+
+  contain: strict;
 }
 
 ion-title {
@@ -92,10 +100,5 @@ ion-buttons,
 ion-navbar.toolbar {
   display: flex;
 
-  opacity: 0;
   transform: translateZ(0);
-
-  &.show-navbar {
-    opacity: 1;
-  }
 }

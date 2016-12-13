@@ -1,7 +1,9 @@
-import { EventEmitter, NgZone } from '@angular/core';
+import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
 
-import { getQuerystring } from '../util/util';
+import { QueryParams } from './query-params';
 import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
+import { removeArrayItem } from '../util/util';
+
 
 /**
  * @name Platform
@@ -25,27 +27,35 @@ import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
  *   }
  * }
  * ```
- * @demo /docs/v2/demos/platform/
+ * @demo /docs/v2/demos/src/platform/
  */
 export class Platform {
-  private _platforms: Array<string>;
   private _versions: {[name: string]: PlatformVersion} = {};
   private _dir: string;
   private _lang: string;
-  private _url: string;
-  private _qs: any;
   private _ua: string;
+  private _qp: QueryParams;
   private _bPlt: string;
   private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
   private _resizeTm: any;
   private _bbActions: BackButtonAction[] = [];
+  private _registry: {[name: string]: PlatformConfig};
+  private _default: string;
+  private _pW = 0;
+  private _pH = 0;
+  private _lW = 0;
+  private _lH = 0;
+  private _isPortrait: boolean = null;
 
+  /** @private */
   zone: NgZone;
 
-  constructor(platforms: string[] = []) {
-    this._platforms = platforms;
+  /** @private */
+  _platforms: string[] = [];
+
+  constructor() {
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
 
     this.backButton.subscribe(() => {
@@ -172,7 +182,7 @@ export class Platform {
    * @private
    */
   version(): PlatformVersion {
-    for (let platformName in this._versions) {
+    for (var platformName in this._versions) {
       if (this._versions[platformName]) {
         return this._versions[platformName];
       }
@@ -358,16 +368,13 @@ export class Platform {
    * the its back button action.
    */
   registerBackButtonAction(fn: Function, priority: number = 0): Function {
-    let action: BackButtonAction = {fn, priority};
+    const action: BackButtonAction = {fn, priority};
 
     this._bbActions.push(action);
 
     // return a function to unregister this back button action
     return () => {
-      let index = this._bbActions.indexOf(action);
-      if (index > -1) {
-        this._bbActions.splice(index, 1);
-      }
+      removeArrayItem(this._bbActions, action);
     };
   }
 
@@ -394,30 +401,15 @@ export class Platform {
   /**
    * @private
    */
-  setUrl(url: string) {
-    this._url = url;
-    this._qs = getQuerystring(url);
-  }
-
-  /**
-   * @private
-   */
-  url(): string {
-    return this._url;
-  }
-
-  /**
-   * @private
-   */
-  query(key: string): string {
-    return (this._qs || {})[key];
-  }
-
-  /**
-   * @private
-   */
   setUserAgent(userAgent: string) {
     this._ua = userAgent;
+  }
+
+  /**
+   * @private
+   */
+  setQueryParams(queryParams: QueryParams) {
+    this._qp = queryParams;
   }
 
   /**
@@ -447,7 +439,8 @@ export class Platform {
    * which reduces the chance of multiple and expensive DOM reads.
    */
   width(): number {
-    return windowDimensions().width;
+    this._calcDim();
+    return this._isPortrait ? this._pW : this._lW;
   }
 
   /**
@@ -456,14 +449,16 @@ export class Platform {
    * which reduces the chance of multiple and expensive DOM reads.
    */
   height(): number {
-    return windowDimensions().height;
+    this._calcDim();
+    return this._isPortrait ? this._pH : this._lH;
   }
 
   /**
    * Returns `true` if the app is in portait mode.
    */
   isPortrait(): boolean {
-    return this.width() < this.height();
+    this._calcDim();
+    return this._isPortrait;
   }
 
   /**
@@ -476,16 +471,46 @@ export class Platform {
   /**
    * @private
    */
+  _calcDim() {
+    if (this._isPortrait === null) {
+      const winDimensions = windowDimensions();
+      const screenWidth = window.screen.width || winDimensions.width;
+      const screenHeight = window.screen.height || winDimensions.height;
+
+      if (screenWidth < screenHeight) {
+        this._isPortrait = true;
+        if (this._pW < winDimensions.width) {
+          this._pW = winDimensions.width;
+        }
+        if (this._pH < winDimensions.height) {
+          this._pH = winDimensions.height;
+        }
+
+      } else {
+        this._isPortrait = false;
+        if (this._lW < winDimensions.width) {
+          this._lW = winDimensions.width;
+        }
+        if (this._lH < winDimensions.height) {
+          this._lH = winDimensions.height;
+        }
+      }
+    }
+  }
+
+  /**
+   * @private
+   */
   windowResize() {
-    let self = this;
-    clearTimeout(self._resizeTm);
+    clearTimeout(this._resizeTm);
 
-    self._resizeTm = setTimeout(() => {
+    this._resizeTm = setTimeout(() => {
       flushDimensionCache();
+      this._isPortrait = null;
 
-      for (let i = 0; i < self._onResizes.length; i++) {
+      for (let i = 0; i < this._onResizes.length; i++) {
         try {
-          self._onResizes[i]();
+          this._onResizes[i]();
         } catch (e) {
           console.error(e);
         }
@@ -497,14 +522,11 @@ export class Platform {
    * @private
    */
   onResize(cb: Function): Function {
-    let self = this;
+    const self = this;
     self._onResizes.push(cb);
 
     return function() {
-      let index = self._onResizes.indexOf(cb);
-      if (index > -1) {
-        self._onResizes.splice(index, 1);
-      }
+      removeArrayItem(self._onResizes, cb);
     };
   }
 
@@ -515,36 +537,36 @@ export class Platform {
   /**
    * @private
    */
-  static register(platformConfig: PlatformConfig) {
-    platformRegistry[platformConfig.name] = platformConfig;
+  setPlatformConfigs(platformConfigs: {[key: string]: PlatformConfig}) {
+    this._registry = platformConfigs || {};
   }
 
   /**
    * @private
    */
-  static registry() {
-    return platformRegistry;
+  getPlatformConfig(platformName: string): PlatformConfig {
+    return this._registry[platformName] || {};
   }
 
   /**
    * @private
    */
-  static get(platformName: string): PlatformConfig {
-    return platformRegistry[platformName] || {};
+  registry() {
+    return this._registry;
   }
 
   /**
    * @private
    */
-  static setDefault(platformName: string) {
-    platformDefault = platformName;
+  setDefault(platformName: string) {
+    this._default = platformName;
   }
 
   /**
    * @private
    */
   testQuery(queryValue: string, queryTestValue: string): boolean {
-    let valueSplit = queryValue.toLowerCase().split(';');
+    const valueSplit = queryValue.toLowerCase().split(';');
     return valueSplit.indexOf(queryTestValue) > -1;
   }
 
@@ -552,7 +574,7 @@ export class Platform {
    * @private
    */
   testNavigatorPlatform(navigatorPlatformExpression: string): boolean {
-    let rgx = new RegExp(navigatorPlatformExpression, 'i');
+    const rgx = new RegExp(navigatorPlatformExpression, 'i');
     return rgx.test(this._bPlt);
   }
 
@@ -561,7 +583,7 @@ export class Platform {
    */
   matchUserAgentVersion(userAgentExpression: RegExp): any {
     if (this._ua && userAgentExpression) {
-      let val = this._ua.match(userAgentExpression);
+      const val = this._ua.match(userAgentExpression);
       if (val) {
         return {
           major: val[1],
@@ -571,18 +593,25 @@ export class Platform {
     }
   }
 
+  testUserAgent(expression: string): boolean {
+    if (this._ua) {
+      return this._ua.indexOf(expression) >= 0;
+    }
+    return false;
+  }
+
   /**
    * @private
    */
   isPlatformMatch(queryStringName: string, userAgentAtLeastHas?: string[], userAgentMustNotHave: string[] = []): boolean {
-    let queryValue = this.query('ionicplatform');
+    const queryValue = this._qp.get('ionicplatform');
     if (queryValue) {
       return this.testQuery(queryValue, queryStringName);
     }
 
     userAgentAtLeastHas = userAgentAtLeastHas || [queryStringName];
 
-    let userAgent = this._ua.toLowerCase();
+    const userAgent = this._ua.toLowerCase();
 
     for (var i = 0; i < userAgentAtLeastHas.length; i++) {
       if (userAgent.indexOf(userAgentAtLeastHas[i]) > -1) {
@@ -598,17 +627,14 @@ export class Platform {
     return false;
   }
 
-  /**
-   * @private
-   */
-  load() {
+  /** @private */
+  init() {
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;
-    let self = this;
 
     // figure out the most specific platform and active engine
     let tmpPlatform: PlatformNode;
-    for (let platformName in platformRegistry) {
+    for (let platformName in this._registry) {
 
       tmpPlatform = this.matchPlatform(platformName);
       if (tmpPlatform) {
@@ -630,7 +656,7 @@ export class Platform {
     }
 
     if (!rootPlatformNode) {
-      rootPlatformNode = new PlatformNode(platformDefault);
+      rootPlatformNode = new PlatformNode(this._registry, this._default);
     }
 
     // build a Platform instance filled with the
@@ -650,7 +676,7 @@ export class Platform {
 
       let platformNode = rootPlatformNode;
       while (platformNode) {
-        insertSuperset(platformNode);
+        insertSuperset(this._registry, platformNode);
         platformNode = platformNode.child;
       }
 
@@ -690,7 +716,7 @@ export class Platform {
     // build a PlatformNode and assign config data to it
     // use it's getRoot method to build up its hierarchy
     // depending on which platforms match
-    let platformNode = new PlatformNode(platformName);
+    let platformNode = new PlatformNode(this._registry, platformName);
     let rootNode = platformNode.getRoot(this);
 
     if (rootNode) {
@@ -706,12 +732,12 @@ export class Platform {
 
 }
 
-function insertSuperset(platformNode: PlatformNode) {
+function insertSuperset(registry: any, platformNode: PlatformNode) {
   let supersetPlaformName = platformNode.superset();
   if (supersetPlaformName) {
     // add a platform in between two exist platforms
     // so we can build the correct hierarchy of active platforms
-    let supersetPlatform = new PlatformNode(supersetPlaformName);
+    let supersetPlatform = new PlatformNode(registry, supersetPlaformName);
     supersetPlatform.parent = platformNode.parent;
     supersetPlatform.child = platformNode;
     if (supersetPlatform.parent) {
@@ -733,8 +759,8 @@ class PlatformNode {
   isEngine: boolean;
   depth: number;
 
-  constructor(platformName: string) {
-    this.c = Platform.get(platformName);
+  constructor(public registry: {[name: string]: PlatformConfig}, platformName: string) {
+    this.c = registry[platformName];
     this.name = platformName;
     this.isEngine = this.c.isEngine;
   }
@@ -757,9 +783,9 @@ class PlatformNode {
 
   version(p: Platform): PlatformVersion {
     if (this.c.versionParser) {
-      let v = this.c.versionParser(p);
+      const v = this.c.versionParser(p);
       if (v) {
-        let str = v.major + '.' + v.minor;
+        const str = v.major + '.' + v.minor;
         return {
           str: str,
           num: parseFloat(str),
@@ -779,17 +805,17 @@ class PlatformNode {
         return this;
       }
 
-      let platform: PlatformNode = null;
-      let rootPlatform: PlatformNode = null;
+      let platformNode: PlatformNode = null;
+      let rootPlatformNode: PlatformNode = null;
 
       for (let i = 0; i < parents.length; i++) {
-        platform = new PlatformNode(parents[i]);
-        platform.child = this;
+        platformNode = new PlatformNode(this.registry, parents[i]);
+        platformNode.child = this;
 
-        rootPlatform = platform.getRoot(p);
-        if (rootPlatform) {
-          this.parent = platform;
-          return rootPlatform;
+        rootPlatformNode = platformNode.getRoot(p);
+        if (rootPlatformNode) {
+          this.parent = platformNode;
+          return rootPlatformNode;
         }
       }
     }
@@ -798,13 +824,11 @@ class PlatformNode {
   }
 
   getSubsetParents(subsetPlatformName: string): string[] {
-    let platformRegistry = Platform.registry();
-
-    let parentPlatformNames: string[] = [];
+    const parentPlatformNames: string[] = [];
     let platform: PlatformConfig = null;
 
-    for (let platformName in platformRegistry) {
-      platform = platformRegistry[platformName];
+    for (let platformName in this.registry) {
+      platform = this.registry[platformName];
 
       if (platform.subsets && platform.subsets.indexOf(subsetPlatformName) > -1) {
         parentPlatformNames.push(platformName);
@@ -816,11 +840,8 @@ class PlatformNode {
 
 }
 
-let platformRegistry: {[name: string]: PlatformConfig} = {};
-let platformDefault: string = null;
 
 export interface PlatformConfig {
-  name?: string;
   isEngine?: boolean;
   initialize?: Function;
   isMatch?: Function;
@@ -841,3 +862,39 @@ interface BackButtonAction {
   fn: Function;
   priority: number;
 }
+
+
+/**
+ * @private
+ */
+export function setupPlatform(platformConfigs: {[key: string]: PlatformConfig}, queryParams: QueryParams, userAgent: string, navigatorPlatform: string, docDirection: string, docLanguage: string, zone: NgZone): Platform {
+  const p = new Platform();
+  p.setDefault('core');
+  p.setPlatformConfigs(platformConfigs);
+  p.setUserAgent(userAgent);
+  p.setQueryParams(queryParams);
+  p.setNavigatorPlatform(navigatorPlatform);
+  p.setDir(docDirection, false);
+  p.setLang(docLanguage, false);
+  p.setZone(zone);
+  p.init();
+  return p;
+}
+
+
+/**
+ * @private
+ */
+export const UserAgentToken = new OpaqueToken('USERAGENT');
+/**
+ * @private
+ */
+export const NavigatorPlatformToken = new OpaqueToken('NAVPLT');
+/**
+ * @private
+ */
+export const DocumentDirToken = new OpaqueToken('DOCDIR');
+/**
+ * @private
+ */
+export const DocLangToken = new OpaqueToken('DOCLANG');

@@ -1,0 +1,57 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Outline Buttons</ion-title>
+    <ion-buttons end>
+      <button ion-button [strong]="strong" (click)="strong = !strong" class="e2eButtonEdit">
+        {{strong ? 'Done' : 'Edit' }}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding style="text-align:center" class="outer-content">
+
+  <p>
+    <button ion-button [strong]="strong" small>Default (small)</button>
+    <button ion-button strong small>Default (small)</button>
+  </p>
+
+  <p>
+    <button ion-button outline [strong]="strong" color="secondary">Outline</button>
+    <button ion-button outline strong color="secondary">Outline</button>
+  </p>
+
+  <p>
+    <button ion-button block [strong]="strong" color="danger" large>Block (large)</button>
+    <button ion-button block strong color="danger" large>Block (large)</button>
+  </p>
+
+  <p>
+    <button ion-button full [strong]="strong" color="dark">Full</button>
+    <button ion-button full strong color="dark">Default</button>
+  </p>
+
+  <p>
+    <button ion-button raised [strong]="strong" color="light">Raised</button>
+    <button ion-button raised strong color="light">Raised</button>
+  </p>
+
+  <p>
+    <button ion-button round [strong]="strong">Round</button>
+    <button ion-button round strong>Round</button>
+  </p>
+
+  <p>
+    <button ion-button clear [strong]="strong">Clear</button>
+    <button ion-button clear strong>Clear</button>
+  </p>
+
+  <p>
+    <button ion-button clear [strong]="strong">Default</button>
+    <button ion-button clear strong>Default</button>
+  </p>
+
+</ion-content>

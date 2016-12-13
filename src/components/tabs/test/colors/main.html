@@ -1,3 +1,4 @@
+<div class="e2e-stacked-tabbars">
 
 <!-- Default -->
 <ion-tabs no-navbar>
@@ -8,7 +9,7 @@
 
 
 <!-- Icons -->
-<ion-tabs no-navbar selectedIndex="1" primary>
+<ion-tabs no-navbar selectedIndex="1" color="primary">
   <ion-tab tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabIcon="settings" [root]="root"></ion-tab>
@@ -16,7 +17,7 @@
 
 
 <!-- Icons on top of text -->
-<ion-tabs no-navbar selectedIndex="2" secondary>
+<ion-tabs no-navbar selectedIndex="2" color="secondary">
   <ion-tab tabTitle="Location" tabIcon="navigate" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="star" [root]="root"></ion-tab>
   <ion-tab tabTitle="Radio" tabIcon="musical-notes" [root]="root"></ion-tab>
@@ -24,7 +25,7 @@
 
 
 <!-- Icons below text -->
-<ion-tabs tabsLayout="icon-bottom" no-navbar selectedIndex="1" dark>
+<ion-tabs tabsLayout="icon-bottom" no-navbar selectedIndex="1" color="dark">
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -32,7 +33,7 @@
 
 
 <!-- Icons right of text -->
-<ion-tabs tabsLayout="icon-right" no-navbar selectedIndex="0" danger>
+<ion-tabs tabsLayout="icon-right" no-navbar selectedIndex="0" color="danger">
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -40,7 +41,7 @@
 
 
 <!-- Icons left of text -->
-<ion-tabs tabsLayout="icon-left" no-navbar light>
+<ion-tabs tabsLayout="icon-left" no-navbar color="light">
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -48,7 +49,7 @@
 
 
 <!-- No icons -->
-<ion-tabs tabsLayout="icon-hide" no-navbar primary>
+<ion-tabs tabsLayout="icon-hide" no-navbar color="primary">
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -56,7 +57,7 @@
 
 
 <!-- No title -->
-<ion-tabs tabsLayout="title-hide" no-navbar secondary>
+<ion-tabs tabsLayout="title-hide" no-navbar color="secondary">
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="heart" [root]="root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="root"></ion-tab>
@@ -64,8 +65,10 @@
 
 
 <!-- No overflow text -->
-<ion-tabs no-navbar danger>
+<ion-tabs no-navbar color="danger">
   <ion-tab tabTitle="Indiana Jones and the Raiders of the Lost Ark" [root]="root"></ion-tab>
   <ion-tab tabTitle="Indiana Jones and the Temple of Doom" [root]="root"></ion-tab>
   <ion-tab tabTitle="Indiana Jones and the Last Crusade" [root]="root"></ion-tab>
 </ion-tabs>
+
+</div>

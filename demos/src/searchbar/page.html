@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-navbar no-border-bottom>
+    <ion-title>Searchbar</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-searchbar placeholder="Filter Items" (ionInput)="filterItems($event)"></ion-searchbar>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-searchbar placeholder="Filter Items with Cancel" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
+
+  <p padding-left padding-right>Searchbars can be placed in a toolbar or anywhere in the content.</p>
+
+  <ion-list>
+    <ion-item *ngFor="let item of items">
+      {{ item }}
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+
+<ion-footer>
+
+  <ion-toolbar color="danger">
+    <ion-searchbar placeholder="Search" (ionInput)="filterItems($event)"></ion-searchbar>
+  </ion-toolbar>
+
+</ion-footer>

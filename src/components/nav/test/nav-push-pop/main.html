@@ -1,0 +1,128 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>navPush use cases</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <p>
+    Is visible: {{visible}}
+  </p>
+  <p>
+    <button ion-button
+      [navPush]="pushPage"
+      [navParams]="{msg:'button (always visible)'}">button (always visible)</button>
+  </p>
+
+  <p *ngIf="visible">
+    <button ion-button
+      [navPush]="pushPage"
+      [navParams]="{msg:'button (p *ngIf=visible)'}">button (p *ngIf="visible")</button>
+  </p>
+
+  <p>
+    <button ion-button
+      *ngIf="visible"
+      [navPush]="pushPage"
+      [navParams]="{msg:'button (button *ngIf=visible)'}">button (button *ngIf="visible")</button>
+  </p>
+
+  <p *ngIf="!visible">
+    <button ion-button color="danger"
+      [navPush]="pushPage"
+      [navParams]="{msg:'button (p *ngIf=!visible)'}">button (p *ngIf="!visible")</button>
+  </p>
+
+  <p>
+    <button ion-button color="danger"
+      *ngIf="!visible"
+      [navPush]="pushPage"
+      [navParams]="{msg:'button (button *ngIf=!visible)'}">button (button *ngIf="!visible")</button>
+  </p>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Toggle Visible</ion-label>
+      <ion-toggle [(ngModel)]="visible"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <p>
+    <a ion-button
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (always visible)'}">a (always visible)</a>
+  </p>
+
+  <p *ngIf="visible">
+    <a ion-button
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (p *ngIf=visible)'}">a (p *ngIf="visible")</a>
+  </p>
+
+  <p>
+    <a ion-button
+      *ngIf="visible"
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (a *ngIf=visible)'}">a (a *ngIf="visible")</a>
+  </p>
+
+  <p *ngIf="!visible">
+    <a ion-button color="danger"
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (p *ngIf=!visible)'}">a (p *ngIf="!visible")</a>
+  </p>
+
+  <p>
+    <a ion-button color="danger"
+      *ngIf="!visible"
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (a *ngIf=!visible)'}">a (a *ngIf="!visible")</a>
+  </p>
+
+  <p>
+    NO ion-button
+  </p>
+
+  <p>
+    <a
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (always visible)'}">a (always visible)</a>
+  </p>
+
+  <p *ngIf="visible">
+    <a
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (p *ngIf=visible)'}">a (p *ngIf="visible")</a>
+  </p>
+
+  <p>
+    <a
+      *ngIf="visible"
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (a *ngIf=visible)'}">a (a *ngIf="visible")</a>
+  </p>
+
+  <p *ngIf="!visible">
+    <a ion-text color="danger"
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (p *ngIf=!visible)'}">a (p *ngIf="!visible")</a>
+  </p>
+
+  <p>
+    <a ion-text color="danger"
+      *ngIf="!visible"
+      [navPush]="pushPage"
+      [navParams]="{msg:'a (a *ngIf=!visible)'}">a (a *ngIf="!visible")</a>
+  </p>
+
+  <p *ngFor="let i of buttons">
+    <a
+    [navPush]="pushPage"
+    [navParams]="{msg:'ngFor'}">a (*ngFor {{i}})</a>
+  </p>
+
+</ion-content>

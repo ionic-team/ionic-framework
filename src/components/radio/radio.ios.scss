@@ -1,22 +1,34 @@
-@import "../../globals.ios";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Radio
 // --------------------------------------------------
 
+/// @prop - Color of the checked radio
 $radio-ios-color-on:               color($colors-ios, primary) !default;
 
+/// @prop - Width of the radio icon
 $radio-ios-icon-width:             16px !default;
+
+/// @prop - Height of the radio icon
 $radio-ios-icon-height:            21px !default;
+
+/// @prop - Border width of the radio icon
 $radio-ios-icon-border-width:      2px !default;
+
+/// @prop - Border style of the radio icon
 $radio-ios-icon-border-style:      solid !default;
 
+/// @prop - Opacity of the disabled radio
 $radio-ios-disabled-opacity:       .3 !default;
 
+/// @prop - Margin of the item-left in a radio
 $radio-ios-item-left-margin:       8px 21px 8px 3px !default;
+
+/// @prop - Margin of the item-right in a radio
 $radio-ios-item-right-margin:      $item-ios-padding-media-top 11px $item-ios-padding-media-bottom ($item-ios-padding-left / 2) !default;
 
 
-ion-radio {
+.radio-ios {
   position: relative;
   display: inline-block;
 }
@@ -25,7 +37,7 @@ ion-radio {
 // iOS Radio Circle: Unchecked
 // -----------------------------------------
 
-.radio-icon {
+.radio-ios .radio-icon {
   position: relative;
   display: block;
 
@@ -37,7 +49,7 @@ ion-radio {
 // iOS Radio Checkmark: Checked
 // -----------------------------------------
 
-.radio-checked .radio-inner {
+.radio-ios .radio-checked .radio-inner {
   position: absolute;
   top: 4px;
   left: 7px;
@@ -57,8 +69,8 @@ ion-radio {
 // iOS Radio: Disabled
 // -----------------------------------------
 
-.radio-disabled,
-.item-radio-disabled ion-label {
+.radio-ios.radio-disabled,
+.item-ios.item-radio-disabled ion-label {
   opacity: $radio-ios-disabled-opacity;
 
   pointer-events: none;
@@ -68,7 +80,7 @@ ion-radio {
 // iOS Radio Within An Item
 // -----------------------------------------
 
-.item ion-radio {
+.item-ios .radio-ios {
   position: static;
   display: block;
 
@@ -79,7 +91,7 @@ ion-radio {
   }
 }
 
-.item-radio ion-label {
+.item-radio.item-ios ion-label {
   margin-left: 0;
 }
 
@@ -87,7 +99,7 @@ ion-radio {
 // iOS Radio Item Label: Checked
 // -----------------------------------------
 
-.item-radio-checked ion-label {
+.item-radio-checked.item-ios ion-label {
   color: $radio-ios-color-on;
 }
 
@@ -97,13 +109,16 @@ ion-radio {
 
 @mixin radio-theme-ios($color-name, $color-base) {
 
-  ion-radio[#{$color-name}] .radio-checked {
+  .item-radio-ios-#{$color-name}.item-radio-checked ion-label {
     color: $color-base;
+  }
 
-    .radio-inner {
-      border-color: $color-base;
-    }
+  .radio-ios-#{$color-name} .radio-checked {
+    color: $color-base;
+  }
 
+  .radio-ios-#{$color-name} .radio-checked  .radio-inner {
+    border-color: $color-base;
   }
 
 }
@@ -113,7 +128,5 @@ ion-radio {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-
   @include radio-theme-ios($color-name, $color-base);
-
 }

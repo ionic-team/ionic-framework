@@ -19,24 +19,36 @@
     </ion-item>
     <ion-item>
       Primary Badge
-      <ion-badge item-right primary>99</ion-badge>
+      <ion-badge item-right color="primary">99</ion-badge>
     </ion-item>
     <ion-item>
       Secondary Badge
-      <ion-badge item-right secondary>99</ion-badge>
+      <ion-badge item-right color="secondary">99</ion-badge>
     </ion-item>
     <ion-item>
       Danger Badge
-      <ion-badge item-right danger>99</ion-badge>
+      <ion-badge item-right color="danger">99</ion-badge>
     </ion-item>
     <ion-item>
       Light Badge
-      <ion-badge item-right light>99</ion-badge>
+      <ion-badge item-right color="light">99</ion-badge>
     </ion-item>
     <ion-item>
       Dark Badge
-      <ion-badge item-right dark>99</ion-badge>
+      <ion-badge item-right color="dark">99</ion-badge>
     </ion-item>
+    <button ion-item (click)="toggleColor()" class="e2eBadgeToggleColor">
+      Dynamic Badge Color (Toggle)
+      <ion-badge item-right [color]="dynamicColor">{{dynamicColor}}</ion-badge>
+    </button>
+    <button ion-item (click)="toggleMode()">
+      Dynamic Badge Mode (Toggle)
+      <ion-badge item-right color="secondary" [mode]="dynamicMode">{{dynamicMode}}</ion-badge>
+    </button>
+    <button ion-item (click)="toggleBoth()">
+      Dynamic Badge Both (Toggle)
+      <ion-badge item-right [color]="dynamicColor" [mode]="dynamicMode">{{dynamicMode}}</ion-badge>
+    </button>
   </ion-list>
 
   <ion-list>
@@ -49,24 +61,32 @@
     </ion-item>
     <ion-item>
       Primary Badge
-      <ion-badge item-left primary>99</ion-badge>
+      <ion-badge item-left color="primary">99</ion-badge>
     </ion-item>
     <ion-item>
       Secondary Badge
-      <ion-badge item-left secondary>99</ion-badge>
+      <ion-badge item-left color="secondary">99</ion-badge>
     </ion-item>
     <ion-item>
       Danger Badge
-      <ion-badge item-left danger>99</ion-badge>
+      <ion-badge item-left color="danger">99</ion-badge>
     </ion-item>
     <ion-item>
       Light Badge
-      <ion-badge item-left light>99</ion-badge>
+      <ion-badge item-left color="light">99</ion-badge>
     </ion-item>
     <ion-item>
       Dark Badge
-      <ion-badge item-left dark>99</ion-badge>
+      <ion-badge item-left color="dark">99</ion-badge>
     </ion-item>
+    <button ion-item (click)="toggleColor()">
+      Dynamic Badge Color (Toggle)
+      <ion-badge item-left [color]="dynamicColor">{{dynamicColor}}</ion-badge>
+    </button>
+    <button ion-item (click)="toggleMode()">
+      Dynamic Badge Mode (Toggle)
+      <ion-badge item-left [mode]="dynamicMode">{{dynamicMode}}</ion-badge>
+    </button>
   </ion-list>
 
 </ion-content>

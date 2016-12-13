@@ -1,10 +1,10 @@
-import { Component, Directive, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgControl, NgModel }  from '@angular/forms';
+import { Component, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NgControl }  from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Icon } from '../icon/icon';
-import { isPresent } from '../../util/util';
-import { Debouncer } from '../../util/debouncer';
+import { Ion } from '../ion';
+import { isPresent, isTrueProperty } from '../../util/util';
+import { TimeoutDebouncer } from '../../util/debouncer';
 
 
 /**
@@ -23,36 +23,63 @@ import { Debouncer } from '../../util/debouncer';
  * </ion-searchbar>
  * ```
  *
- * @demo /docs/v2/demos/searchbar/
+ * @demo /docs/v2/demos/src/searchbar/
  * @see {@link /docs/v2/components#searchbar Searchbar Component Docs}
  */
 @Component({
   selector: 'ion-searchbar',
   template:
     '<div class="searchbar-input-container">' +
-      '<button (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" clear dark class="searchbar-md-cancel">' +
-        '<ion-icon name="arrow-back"></ion-icon>' +
+      '<button ion-button mode="md" (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" clear color="dark" class="searchbar-md-cancel" type="button">' +
+        '<ion-icon name="md-arrow-back"></ion-icon>' +
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
-      '<input #searchbarInput [(ngModel)]="_value" [attr.placeholder]="placeholder" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" class="searchbar-input">' +
-      '<button clear class="searchbar-clear-icon" (click)="clearInput($event)" (mousedown)="clearInput($event)"></button>' +
+      '<input #searchbarInput class="searchbar-input" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" ' +
+        '[attr.placeholder]="placeholder" ' +
+        '[attr.type]="type" ' +
+        '[attr.autocomplete]="_autocomplete" ' +
+        '[attr.autocorrect]="_autocorrect" ' +
+        '[attr.spellcheck]="_spellcheck">' +
+      '<button ion-button clear class="searchbar-clear-icon" [mode]="_mode" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button"></button>' +
     '</div>' +
-    '<button #cancelButton [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
-  directives: [Icon, NgModel],
+    '<button ion-button #cancelButton mode="ios" [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
   host: {
+    '[class.searchbar-animated]': '_animated',
     '[class.searchbar-has-value]': '_value',
     '[class.searchbar-active]': '_isActive',
-    '[class.searchbar-show-cancel]': 'showCancelButton',
-    '[class.searchbar-left-aligned]': 'shouldAlignLeft()'
+    '[class.searchbar-show-cancel]': '_showCancelButton',
+    '[class.searchbar-left-aligned]': '_shouldAlignLeft'
   },
   encapsulation: ViewEncapsulation.None
 })
-export class Searchbar {
-  private _value: string|number = '';
-  private _shouldBlur: boolean = true;
-  private _isActive: boolean = false;
-  private _searchbarInput: ElementRef;
-  private _debouncer: Debouncer = new Debouncer(250);
+export class Searchbar extends Ion {
+  _value: string|number = '';
+  _shouldBlur: boolean = true;
+  _shouldAlignLeft: boolean = true;
+  _isCancelVisible: boolean = false;
+  _spellcheck: boolean = false;
+  _autocomplete: string = 'off';
+  _autocorrect: string = 'off';
+  _isActive: boolean = false;
+  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(250);
+  _showCancelButton: boolean = false;
+  _animated: boolean = false;
+
+  /**
+   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor( val);
+  }
+
+  /**
+   * @input {string} The mode to apply to this component.
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode( val);
+  }
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
@@ -62,10 +89,16 @@ export class Searchbar {
   /**
    * @input {boolean} Whether to show the cancel button or not. Default: `"false"`.
    */
-  @Input() showCancelButton: any = false;
+  @Input()
+  get showCancelButton(): boolean {
+    return this._showCancelButton;
+  }
+  set showCancelButton(val: boolean) {
+    this._showCancelButton = isTrueProperty(val);
+  }
 
   /**
-   * @input {number} How long, in milliseconds, to wait to trigger the `input` event after each keystroke. Default `250`.
+   * @input {number} How long, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
    */
   @Input()
   get debounce(): number {
@@ -83,22 +116,42 @@ export class Searchbar {
   /**
    * @input {string} Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
    */
-  @Input() autocomplete: string;
+  @Input()
+  set autocomplete(val: string) {
+    this._autocomplete = (val === '' || val === 'on') ? 'on' : this._config.get('autocomplete', 'off');
+  }
 
   /**
    * @input {string} Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
    */
-  @Input() autocorrect: string;
+  @Input()
+  set autocorrect(val: string) {
+    this._autocorrect = (val === '' || val === 'on') ? 'on' : this._config.get('autocorrect', 'off');
+  }
 
   /**
    * @input {string|boolean} Set the input's spellcheck property. Values: `true`, `false`. Default `false`.
    */
-  @Input() spellcheck: string|boolean;
+  @Input()
+  set spellcheck(val: string | boolean) {
+    this._spellcheck = (val === '' || val === 'true' || val === true) ? true : this._config.getBoolean('spellcheck', false);
+  }
 
   /**
    * @input {string} Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
    */
   @Input() type: string = 'search';
+
+  /**
+   * @input {boolean} Configures if the searchbar is animated or no. By default, animation is `false`.
+   */
+  @Input()
+  get animated(): boolean {
+    return this._animated;
+  }
+  set animated(val: boolean) {
+    this._animated = isTrueProperty(val);
+  }
 
   /**
    * @output {event} When the Searchbar input has changed including cleared.
@@ -131,40 +184,20 @@ export class Searchbar {
   @HostBinding('class.searchbar-has-focus') _sbHasFocus: boolean;
 
   constructor(
-    private _elementRef: ElementRef,
-    private _config: Config,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
+    super(config, elementRef, renderer, 'searchbar');
+
     // If the user passed a ngControl we need to set the valueAccessor
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
   }
 
-  /**
-   * @private
-   */
-  @ViewChild('searchbarInput')
-  private set searchbarInput(searchbarInput: ElementRef) {
-    this._searchbarInput = searchbarInput;
-
-    let inputEle = searchbarInput.nativeElement;
-
-    // By defalt set autocomplete="off" unless specified by the input
-    let autoComplete = (this.autocomplete === '' || this.autocomplete === 'on') ? 'on' : this._config.get('autocomplete', 'off');
-    inputEle.setAttribute('autocomplete', autoComplete);
-
-    // by default set autocorrect="off" unless specified by the input
-    let autoCorrect = (this.autocorrect === '' || this.autocorrect === 'on') ? 'on' : this._config.get('autocorrect', 'off');
-    inputEle.setAttribute('autocorrect', autoCorrect);
-
-    // by default set spellcheck="false" unless specified by the input
-    let spellCheck = (this.spellcheck === '' || this.spellcheck === 'true' || this.spellcheck === true) ? true : this._config.getBoolean('spellcheck', false);
-    inputEle.setAttribute('spellcheck', spellCheck);
-
-    // by default set type="search" unless specified by the input
-    inputEle.setAttribute('type', this.type);
-  }
+  @ViewChild('searchbarInput') _searchbarInput: ElementRef;
 
   @ViewChild('searchbarIcon') _searchbarIcon: ElementRef;
 
@@ -180,6 +213,12 @@ export class Searchbar {
 
   set value(val) {
     this._value = val;
+    if (this._searchbarInput) {
+      let ele = this._searchbarInput.nativeElement;
+      if (ele) {
+        ele.value = val;
+      }
+    }
   }
 
   /**
@@ -195,9 +234,9 @@ export class Searchbar {
 
   /**
    * @private
-   * After View Initialization position the elements
+   * After View Checked position the elements
    */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this.positionElements();
   }
 
@@ -207,26 +246,31 @@ export class Searchbar {
    * based on the input value and if it is focused. (ios only)
    */
   positionElements() {
-    if (this._config.get('mode') !== 'ios') return;
+    let isAnimated = this._animated;
+    let prevAlignLeft = this._shouldAlignLeft;
+    let shouldAlignLeft = (!isAnimated || (this._value && this._value.toString().trim() !== '') || this._sbHasFocus === true);
+    this._shouldAlignLeft = shouldAlignLeft;
 
-    // Position the input placeholder & search icon
-    if (this._searchbarInput && this._searchbarIcon) {
-      this.positionInputPlaceholder(this._searchbarInput.nativeElement, this._searchbarIcon.nativeElement);
+    if (this._mode !== 'ios') {
+      return;
     }
 
-    // Position the cancel button
-    if (this._cancelButton && this._cancelButton.nativeElement) {
-      this.positionCancelButton(this._cancelButton.nativeElement);
+    if (prevAlignLeft !== shouldAlignLeft) {
+      this.positionPlaceholder();
+    }
+    if (isAnimated) {
+      this.positionCancelButton();
     }
   }
 
-  /**
-   * @private
-   * Calculates the amount of padding/margin left for the elements
-   * in order to center them based on the placeholder width
-   */
-  positionInputPlaceholder(inputEle: HTMLElement, iconEle: HTMLElement) {
-    if (this.shouldAlignLeft()) {
+  positionPlaceholder() {
+    if (!this._searchbarInput || !this._searchbarIcon) {
+      return;
+    }
+    let inputEle = this._searchbarInput.nativeElement;
+    let iconEle = this._searchbarIcon.nativeElement;
+
+    if (this._shouldAlignLeft) {
       inputEle.removeAttribute('style');
       iconEle.removeAttribute('style');
     } else {
@@ -253,32 +297,34 @@ export class Searchbar {
    * @private
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
-  positionCancelButton(cancelButtonEle: HTMLElement) {
-    if (cancelButtonEle.offsetWidth > 0) {
-      if (this._sbHasFocus) {
-        cancelButtonEle.style.marginRight = '0';
+  positionCancelButton() {
+    if (!this._cancelButton || !this._cancelButton.nativeElement) {
+      return;
+    }
+    let showShowCancel = this._sbHasFocus;
+    if (showShowCancel !== this._isCancelVisible) {
+      let cancelStyleEle = this._cancelButton.nativeElement;
+      let cancelStyle = cancelStyleEle.style;
+      this._isCancelVisible = showShowCancel;
+      if (showShowCancel) {
+        cancelStyle.marginRight = '0';
       } else {
-        cancelButtonEle.style.marginRight = -cancelButtonEle.offsetWidth + 'px';
+        let offset = cancelStyleEle.offsetWidth;
+        if (offset > 0) {
+          cancelStyle.marginRight = -offset + 'px';
+        }
       }
     }
   }
 
-  /**
-   * @private
-   * Align the input placeholder left on focus or if a value exists
-   */
-  shouldAlignLeft() {
-    return ( (this._value && this._value.toString().trim() !== '') || this._sbHasFocus === true );
-  }
 
   /**
    * @private
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev: any) {
-    let value = ev.target.value;
+    this._value = ev.target.value;
     this._debouncer.debounce(() => {
-      this._value = value;
       this.onChange(this._value);
       this.ionInput.emit(ev);
     });
@@ -322,12 +368,16 @@ export class Searchbar {
   clearInput(ev: UIEvent) {
     this.ionClear.emit(ev);
 
-    if (isPresent(this._value) && this._value !== '') {
-      this._value = '';
-      this.onChange(this._value);
-      this.ionInput.emit(ev);
-    }
-
+    // setTimeout() fixes https://github.com/driftyco/ionic/issues/7527
+    // wait for 4 frames
+    setTimeout(() => {
+      let value = this._value;
+      if (isPresent(value) && value !== '') {
+        this.value = ''; // DOM WRITE
+        this.onChange(this._value);
+        this.ionInput.emit(ev);
+      }
+    }, 16 * 4);
     this._shouldBlur = false;
   }
 
@@ -350,7 +400,7 @@ export class Searchbar {
    * Write a new value to the element.
    */
   writeValue(val: any) {
-    this._value = val;
+    this.value = val;
     this.positionElements();
   }
 
@@ -378,5 +428,9 @@ export class Searchbar {
    */
   registerOnTouched(fn: () => {}): void {
     this.onTouched = fn;
+  }
+
+  setFocus() {
+    this._renderer.invokeElementMethod(this._searchbarInput.nativeElement, 'focus');
   }
 }

@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Modals</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div padding>
+    <button ion-button block (click)="openBasicModal()">Open Basic Modal</button>
+  </div>
+
+  <ion-list no-margin>
+    <ion-list-header>
+      Enter Parameters to Pass to the Modal
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Parameters</ion-label>
+      <ion-select [(ngModel)]="myParam" multiple="true">
+        <ion-option value="nes">NES</ion-option>
+        <ion-option value="n64">Nintendo64</ion-option>
+        <ion-option value="ps">PlayStation</ion-option>
+        <ion-option value="genesis">Sega Genesis</ion-option>
+        <ion-option value="saturn">Sega Saturn</ion-option>
+        <ion-option value="snes">SNES</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <button ion-button block color="danger" (click)="openModalWithParams()">Open with Parameters</button>
+  </div>
+
+</ion-content>

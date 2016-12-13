@@ -1,3 +1,8 @@
+import { DomController } from '../util/dom-controller';
+import { nativeTimeout, nativeRaf } from '../util/dom';
+import { Platform } from '../platform/platform';
+import { ScrollView } from '../util/scroll-view';
+
 /**
  * @name Events
  * @description
@@ -13,17 +18,17 @@
  * // first page (publish an event when a user is created)
  * function createUser(user) {
  *   console.log('User created!')
- *   events.publish('user:created', user);
+ *   events.publish('user:created', user, Date.now());
  * }
  *
  * // second page (listen for the user created event)
- * events.subscribe('user:created', (userEventData) => {
- *   // userEventData is an array of parameters, so grab our first and only arg
- *   console.log('Welcome', userEventData[0]);
+ * events.subscribe('user:created', (user, time) => {
+ *   // user and time are the same arguments passed in `events.publish(user, time)`
+ *   console.log('Welcome', user, 'at', time);
  * });
  *
  * ```
- * @demo /docs/v2/demos/events/
+ * @demo /docs/v2/demos/src/events/
  */
 export class Events {
   private _channels: Array<any> = [];
@@ -51,7 +56,7 @@ export class Events {
    *
    * @return true if a handler was removed
    */
-  unsubscribe(topic: string, handler: Function) {
+  unsubscribe(topic: string, handler: Function = null) {
     let t = this._channels[topic];
     if (!t) {
       // Wasn't found, wasn't removed
@@ -96,8 +101,82 @@ export class Events {
 
     let responses: any[] = [];
     t.forEach((handler: any) => {
-      responses.push(handler(args));
+      responses.push(handler(...args));
     });
     return responses;
   }
+}
+
+/**
+ * @private
+ */
+export function setupEvents(platform: Platform, dom: DomController): Events {
+  const events = new Events();
+
+  // start listening for resizes XXms after the app starts
+  nativeTimeout(() => {
+    window.addEventListener('online', (ev) => {
+      events.publish('app:online', ev);
+    }, false);
+
+    window.addEventListener('offline', (ev) => {
+      events.publish('app:offline', ev);
+    }, false);
+
+    window.addEventListener('orientationchange', (ev) => {
+      events.publish('app:rotated', ev);
+    });
+
+    // When that status taps, we respond
+    window.addEventListener('statusTap', (ev) => {
+      // TODO: Make this more better
+      let el = <HTMLElement>document.elementFromPoint(platform.width() / 2, platform.height() / 2);
+      if (!el) { return; }
+
+      let contentEle = <HTMLElement>el.closest('.scroll-content');
+      if (contentEle) {
+        var scroll = new ScrollView(dom);
+        scroll.init(contentEle, 0, 0);
+          // We need to stop scrolling if it's happening and scroll up
+
+        (<any>contentEle.style)['WebkitBackfaceVisibility'] = 'hidden';
+        (<any>contentEle.style)['WebkitTransform'] = 'translate3d(0,0,0)';
+
+        nativeRaf(function() {
+          contentEle.style.overflow = 'hidden';
+
+          function finish() {
+            contentEle.style.overflow = '';
+            (<any>contentEle.style)['WebkitBackfaceVisibility'] = '';
+            (<any>contentEle.style)['WebkitTransform'] = '';
+          }
+
+          let didScrollTimeout = setTimeout(() => {
+            finish();
+          }, 400);
+
+          scroll.scrollTo(0, 0, 300).then(() => {
+            clearTimeout(didScrollTimeout);
+            finish();
+          });
+        });
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      platform.windowResize();
+    });
+
+  }, 2000);
+
+  return events;
+}
+
+/**
+ * @private
+ */
+export function setupProvideEvents(platform: Platform, dom: DomController) {
+  return function() {
+    return setupEvents(platform, dom);
+  };
 }

@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Close</button>
+    </ion-buttons>
+    <ion-title>Modals</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div [hidden]="!myParam">
+    <h5>Parameters passed:</h5>
+
+    <pre style="background-color: #f8f8f8">selections: [
+  {{myParam}}
+]</pre>
+
+  </div>
+  <div [hidden]="myParam">
+    <p>No parameters passed.</p>
+  </div>
+  <button ion-button color="danger" full (click)="dismiss()">Close Modal</button>
+
+</ion-content>

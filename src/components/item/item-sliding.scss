@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Item Sliding
 // --------------------------------------------------
@@ -10,10 +10,10 @@ ion-item-sliding {
   overflow: hidden;
 
   width: 100%;
+}
 
-  .item {
-    position: static;
-  }
+ion-item-sliding .item {
+  position: static;
 }
 
 ion-item-options {
@@ -51,7 +51,7 @@ ion-item-options .button {
   box-sizing: content-box;
 }
 
-ion-item-options:not([icon-left]) .button-icon-left {
+ion-item-options:not([icon-left]) .button:not([icon-only]) {
   .button-inner {
     flex-direction: column;
   }
@@ -98,7 +98,7 @@ ion-item-sliding.active-slide {
 // Item Expandable Animation
 // --------------------------------------------------
 
-.button-expandable {
+button[expandable] {
   flex-shrink: 0;
 
   transition-duration: 0;
@@ -106,7 +106,7 @@ ion-item-sliding.active-slide {
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
 }
 
-ion-item-sliding.active-swipe-right .button-expandable {
+ion-item-sliding.active-swipe-right button[expandable] {
   order: 1;
 
   padding-left: 90%;
@@ -115,7 +115,7 @@ ion-item-sliding.active-swipe-right .button-expandable {
   transition-property: padding-left;
 }
 
-ion-item-sliding.active-swipe-left .button-expandable {
+ion-item-sliding.active-swipe-left button[expandable] {
   order: -1;
 
   padding-right: 90%;

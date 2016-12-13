@@ -1,28 +1,46 @@
-@import "../../globals.wp";
-@import "./select";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Select
 // --------------------------------------------------
 
+/// @prop - Padding top and bottom of the select
 $select-wp-padding-vertical:    0 !default;
+
+/// @prop - Padding left and right of the select
 $select-wp-padding-horizontal:  ($item-wp-padding-right / 2) !default;
 
+/// @prop - Margin top of the select
 $select-wp-margin-top:          $item-wp-padding-top !default;
+
+/// @prop - Margin right of the select
 $select-wp-margin-right:        ($item-wp-padding-right / 2) !default;
+
+/// @prop - Margin bottom of the select
 $select-wp-margin-bottom:       $item-wp-padding-bottom !default;
+
+/// @prop - Margin left of the select
 $select-wp-margin-left:         ($item-wp-padding-left / 2) !default;
 
+/// @prop - Border width of the select
 $select-wp-border-width:        2px !default;
+
+/// @prop - Border color of the select
 $select-wp-border-color:        $input-wp-border-color !default;
 
+/// @prop - Width of the select icon
 $select-wp-icon-width:          18px !default;
+
+/// @prop - Width of the select icon arrow
 $select-wp-icon-arrow-width:    2px !default;
 
+/// @prop - Color of the select icon
 $select-wp-icon-color:          $select-wp-border-color !default;
+
+/// @prop - Color of the select placeholder
 $select-wp-placeholder-color:   $select-wp-icon-color !default;
 
 
-ion-select {
+.select-wp {
   flex: 1;
 
   margin: $select-wp-margin-top $select-wp-margin-right $select-wp-margin-bottom $select-wp-margin-left;
@@ -34,15 +52,15 @@ ion-select {
   line-height: 3rem;
 }
 
-.select-placeholder {
+.select-wp .select-placeholder {
   color: $select-wp-placeholder-color;
 }
 
-.item-select ion-label {
+.item-wp.item-select ion-label {
   margin-left: 0;
 }
 
-.select-icon {
+.select-wp .select-icon {
   position: relative;
 
   align-self: center;
@@ -51,7 +69,7 @@ ion-select {
   height: $select-wp-icon-width;
 }
 
-.select-icon .select-icon-inner {
+.select-wp .select-icon .select-icon-inner {
   position: absolute;
   top: 3px;
   left: 5px;
@@ -68,6 +86,6 @@ ion-select {
   pointer-events: none;
 }
 
-.select-text {
+.select-wp .select-text {
   min-height: 3rem;
 }

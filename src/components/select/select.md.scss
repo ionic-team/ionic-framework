@@ -1,38 +1,47 @@
-@import "../../globals.md";
-@import "./select";
+@import "../../themes/ionic.globals.md";
 
 // Material Design Select
 // --------------------------------------------------
 
+/// @prop - Padding top of the select
 $select-md-padding-top:         $item-md-padding-top !default;
+
+/// @prop - Padding right of the select
 $select-md-padding-right:       ($item-md-padding-right / 2) !default;
+
+/// @prop - Padding bottom of the select
 $select-md-padding-bottom:      $item-md-padding-bottom !default;
+
+/// @prop - Padding left of the select
 $select-md-padding-left:        $item-md-padding-left !default;
 
+/// @prop - Color of the select icon
 $select-md-icon-color:          #999 !default;
+
+/// @prop - Color of the select placeholder
 $select-md-placeholder-color:   $select-md-icon-color !default;
 
 
-ion-select {
+.select-md {
   padding: $select-md-padding-top $select-md-padding-right $select-md-padding-bottom $select-md-padding-left;
 }
 
-.select-placeholder {
+.select-md .select-placeholder {
   color: $select-md-placeholder-color;
 }
 
-.item-select ion-label {
+.select-md .item-select ion-label {
   margin-left: 0;
 }
 
-.select-icon {
+.select-md .select-icon {
   position: relative;
 
   width: 12px;
   height: 19px;
 }
 
-.select-icon .select-icon-inner {
+.select-md .select-icon .select-icon-inner {
   position: absolute;
   top: 50%;
   left: 5px;

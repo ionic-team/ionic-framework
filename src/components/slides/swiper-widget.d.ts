@@ -1,4 +1,3 @@
-
 export declare class Swiper {
   constructor(container: HTMLElement, params: any);
   slides: Array<HTMLElement>;

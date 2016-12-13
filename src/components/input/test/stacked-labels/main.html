@@ -20,8 +20,8 @@
     <ion-item>
       <ion-label stacked>Label 2</ion-label>
       <ion-input value="Text 2"></ion-input>
-      <button item-right clear><ion-icon name="heart-outline"></ion-icon></button>
-      <button item-right clear><ion-icon ios="ios-call-outline" md="md-call"></ion-icon></button>
+      <button ion-button icon-only item-right clear><ion-icon name="heart-outline"></ion-icon></button>
+      <button ion-button icon-only item-right clear><ion-icon ios="ios-call-outline" md="md-call"></ion-icon></button>
     </ion-item>
 
     <ion-item>
@@ -47,7 +47,7 @@
     <ion-item>
       <ion-label stacked>Label 6</ion-label>
       <ion-select [(ngModel)]="gender">
-        <ion-option value="f" checked="true">Female</ion-option>
+        <ion-option value="f" selected="true">Female</ion-option>
         <ion-option value="m">Male</ion-option>
       </ion-select>
     </ion-item>
