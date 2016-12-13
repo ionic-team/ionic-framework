@@ -1,6 +1,40 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
-import { ApiDemoApp, ApiDemoPage, PushPage } from './app.component';
+import { Component, NgModule } from '@angular/core';
+import { IonicApp, IonicModule, NavController, NavParams } from '../';
+
+
+@Component({
+  templateUrl: 'page.html'
+})
+export class ApiDemoPage {
+  myParam: string = '';
+
+  constructor(public navCtrl: NavController) {}
+
+  pushParams() {
+    this.navCtrl.push(PushPage, { 'myParam': this.myParam });
+  }
+}
+
+@Component({
+  templateUrl: 'push-page.html'
+})
+export class PushPage {
+  myParam: string;
+
+  constructor(params: NavParams) {
+    this.myParam = params.get('myParam');
+  }
+}
+
+
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+export class ApiDemoApp {
+  root = ApiDemoPage;
+}
+
+
 
 @NgModule({
   declarations: [
