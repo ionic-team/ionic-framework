@@ -223,6 +223,7 @@ export class Img implements OnDestroy {
           if (this._hasLoaded) {
             console.debug(`render ${this._src} ${Date.now()}`);
             this._isLoaded(true);
+            this._srcAttr(this._src);
           }
         });
       }
@@ -243,10 +244,13 @@ export class Img implements OnDestroy {
    * @internal
    */
   _srcAttr(srcAttr: string) {
+    const imgEle = this._img;
     const renderer = this._renderer;
 
-    renderer.setElementAttribute(this._img, 'src', srcAttr);
-    renderer.setElementAttribute(this._img, 'alt', this.alt);
+    if (imgEle.src !== srcAttr) {
+      renderer.setElementAttribute(this._img, 'src', srcAttr);
+      renderer.setElementAttribute(this._img, 'alt', this.alt);
+    }
   }
 
   /**
