@@ -64,10 +64,10 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
           let chromeVersion = p.matchUserAgentVersion(/Chrome\/(\d+).(\d+)?/);
           if (chromeVersion) {
             // linux android device using modern android chrome browser gets ripple
-            if (parseInt(chromeVersion.major, 10) < 36 && p.version().major < 5) {
-              return 'ripple';
-            } else {
+            if (parseInt(chromeVersion.major, 10) < 36 || p.version().major < 5) {
               return 'none';
+            } else {
+              return 'ripple';
             }
           }
           // linux android device not using chrome browser checks just android's version
