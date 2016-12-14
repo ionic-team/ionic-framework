@@ -1,4 +1,4 @@
-import { ElementRef, Renderer } from '@angular/core';
+import { ElementRef, Renderer, Optional } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { App } from '../app/app';
@@ -52,7 +52,7 @@ export class InputBase extends Ion implements IonicFormInput {
     protected _platform: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
-    protected _content: Content,
+    @Optional() protected _content: Content,
     nav: NavController,
     ngControl: NgControl,
     protected _dom: DomController
@@ -75,12 +75,15 @@ export class InputBase extends Ion implements IonicFormInput {
 
     _form.register(this);
 
-    this._scrollStart = _content.ionScrollStart.subscribe((ev: ScrollEvent) => {
-      this.scrollHideFocus(ev, true);
-    });
-    this._scrollEnd = _content.ionScrollEnd.subscribe((ev: ScrollEvent) => {
-      this.scrollHideFocus(ev, false);
-    });
+    // only listen to content scroll events if there is content
+    if (_content) {
+      this._scrollStart = _content.ionScrollStart.subscribe((ev: ScrollEvent) => {
+        this.scrollHideFocus(ev, true);
+      });
+      this._scrollEnd = _content.ionScrollEnd.subscribe((ev: ScrollEvent) => {
+        this.scrollHideFocus(ev, false);
+      });
+    }
   }
 
   scrollHideFocus(ev: ScrollEvent, shouldHideFocus: boolean) {
