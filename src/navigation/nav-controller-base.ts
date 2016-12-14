@@ -1045,7 +1045,10 @@ export class NavControllerBase extends Ion implements NavController {
   dismissPageChangeViews() {
     for (let view of this._views) {
       if (view.data && view.data.dismissOnPageChange) {
-        view.dismiss();
+        view.dismiss().catch(() => {
+          // dismissing the view failed, probably because it had already been dismissed
+          // so we catch it to avoid an unhandled exception
+        });
       }
     }
   }
