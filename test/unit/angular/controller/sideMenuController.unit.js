@@ -38,12 +38,12 @@ describe('$ionicSideMenus controller', function() {
       }, {}));
       angular.extend(ctrl, {});
       ctrl.left = new ionic.views.SideMenu({
-        width: 270,
+        width: 272,
         el: document.createElement('div'),
         isEnabled: true
       });
       ctrl.right = new ionic.views.SideMenu({
-        width: 270,
+        width: 272,
         el: document.createElement('div'),
         isEnabled: true
       });
@@ -71,8 +71,8 @@ describe('$ionicSideMenus controller', function() {
 
   // Menu widths
   it('should init widths', function() {
-    expect(ctrl.left.width).toEqual(270);
-    expect(ctrl.right.width).toEqual(270);
+    expect(ctrl.left.width).toEqual(272);
+    expect(ctrl.right.width).toEqual(272);
   });
 
   it('should have amount and percentage correct', function() {

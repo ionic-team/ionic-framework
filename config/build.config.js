@@ -48,7 +48,6 @@ module.exports = {
     'js/utils/tap.js',
     'js/utils/activator.js',
     'js/utils/utils.js',
-    'js/utils/list.js',
     'js/utils/keyboard.js',
     'js/utils/viewport.js',
 
