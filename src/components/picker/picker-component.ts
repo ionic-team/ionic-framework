@@ -4,15 +4,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CSS, cancelRaf, pointerCoord, nativeRaf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString, assert } from '../../util/util';
 import { Config } from '../../config/config';
+import { DomController, DomDebouncer } from '../../util/dom-controller';
+import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { Haptic } from '../../util/haptic';
 import { Key } from '../../util/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
-import { Haptic } from '../../util/haptic';
-import { UIEventManager } from '../../util/ui-event-manager';
-import { DomController, DomDebouncer } from '../../util/dom-controller';
+import { UIEventManager } from '../../gestures/ui-event-manager';
 import { ViewController } from '../../navigation/view-controller';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 
 /**
  * @private

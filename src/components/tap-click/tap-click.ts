@@ -1,14 +1,15 @@
 import { Injectable, NgZone } from '@angular/core';
 
-import { ActivatorBase } from './activator-base';
+import { assert, runInDev } from '../../util/util';
 import { Activator } from './activator';
+import { ActivatorBase } from './activator-base';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { assert, runInDev } from '../../util/util';
-import { hasPointerMoved, pointerCoord } from '../../util/dom';
-import { RippleActivator } from './ripple';
-import { UIEventManager, PointerEvents, PointerEventType } from '../../util/ui-event-manager';
 import { GestureController } from '../../gestures/gesture-controller';
+import { pointerCoord, hasPointerMoved } from '../../util/dom';
+import { PointerEvents, PointerEventType } from '../../gestures/pointer-events';
+import { RippleActivator } from './ripple';
+import { UIEventManager } from '../../gestures/ui-event-manager';
 
 /**
  * @private

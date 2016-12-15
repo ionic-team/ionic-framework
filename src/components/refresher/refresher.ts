@@ -4,7 +4,8 @@ import { Content } from '../content/content';
 import { CSS, pointerCoord } from '../../util/dom';
 import { GestureController, GestureDelegate, GesturePriority, GESTURE_REFRESHER } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { PointerEvents, UIEventManager } from '../../util/ui-event-manager';
+import { PointerEvents } from '../../gestures/pointer-events';
+import { UIEventManager } from '../../gestures/ui-event-manager';
 
 
 /**

@@ -3,16 +3,16 @@ import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmit
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
+import { Content } from '../content/content';
+import { DomController } from '../../util/dom-controller';
+import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../../gestures/gesture-controller';
 import { isTrueProperty, assert } from '../../util/util';
 import { Keyboard } from '../../util/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
-import { BlockerDelegate, GestureController, GESTURE_GO_BACK_SWIPE } from '../../gestures/gesture-controller';
-import { UIEventManager } from '../../util/ui-event-manager';
-import { Content } from '../content/content';
-import { DomController } from '../../util/dom-controller';
+import { UIEventManager } from '../../gestures/ui-event-manager';
 
 /**
  * @name Menu

@@ -3,7 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import { assert } from './util';
 import { CSS, nativeRaf, pointerCoord, rafFrames } from './dom';
 import { DomController, DomCallback } from './dom-controller';
-import { eventOptions, listenEvent } from './ui-event-manager';
+import { uiListenEvent, uiEventOptions } from './ui-event-listener';
 
 
 export class ScrollView {
@@ -161,8 +161,8 @@ export class ScrollView {
     // a scroll event callback will always be right before the raf callback
     // so there's little to no value of using raf here since it'll all ways immediately
     // call the raf if it was set within the scroll event, so this will save us some time
-    const opts = eventOptions(false, false);
-    self._lsn = listenEvent(self._el, 'scroll', false, opts, scrollCallback);
+    const opts = uiEventOptions(false, false);
+    self._lsn = uiListenEvent(self._el, 'scroll', false, opts, scrollCallback);
   }
 
 
@@ -333,10 +333,10 @@ export class ScrollView {
       positions.length = 0;
     }
 
-    const opts = eventOptions(false, true);
-    const unRegStart = listenEvent(ele, 'touchstart', false, opts, jsScrollTouchStart);
-    const unRegMove = listenEvent(ele, 'touchmove', false, opts, jsScrollTouchMove);
-    const unRegEnd = listenEvent(ele, 'touchend', false, opts, jsScrollTouchEnd);
+    const opts = uiEventOptions(false, true);
+    const unRegStart = uiListenEvent(ele, 'touchstart', false, opts, jsScrollTouchStart);
+    const unRegMove = uiListenEvent(ele, 'touchmove', false, opts, jsScrollTouchMove);
+    const unRegEnd = uiListenEvent(ele, 'touchend', false, opts, jsScrollTouchEnd);
 
     ele.parentElement.classList.add('js-scroll');
 

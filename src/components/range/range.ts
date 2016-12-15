@@ -3,13 +3,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
 import { Config } from '../../config/config';
-import { TimeoutDebouncer } from '../../util/debouncer';
+import { DomController } from '../../util/dom-controller';
 import { Form } from '../../util/form';
+import { Haptic } from '../../util/haptic';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
-import { PointerCoordinates, pointerCoord, raf } from '../../util/dom';
-import { Haptic } from '../../util/haptic';
-import { UIEventManager } from '../../util/ui-event-manager';
+import { PointerCoordinates, pointerCoord } from '../../util/dom';
+import { TimeoutDebouncer } from '../../util/debouncer';
+import { UIEventManager } from '../../gestures/ui-event-manager';
+
 
 export const RANGE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -355,7 +357,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     @Optional() private _item: Item,
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer,
+    private _dom: DomController
   ) {
     super(config, elementRef, renderer, 'range');
     _form.register(this);
@@ -567,7 +570,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   createTicks() {
     if (this._snaps) {
-      raf(() => {
+      this._dom.write(() => {
         // TODO: Fix to not use RAF
         this._ticks = [];
         for (var value = this._min; value <= this._max; value += this._step) {

@@ -2,10 +2,10 @@ import { Component, ContentChild, Input, ContentChildren, QueryList, ChangeDetec
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-
-import { UIEventManager } from '../../util/ui-event-manager';
 import { isTrueProperty } from '../../util/util';
 import { nativeTimeout } from '../../util/dom';
+import { UIEventManager } from '../../gestures/ui-event-manager';
+
 
 /**
   * @name FabButton

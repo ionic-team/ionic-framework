@@ -1,6 +1,6 @@
-import { PointerCoordinates, CSS, pointerCoord } from '../../util/dom';
+import { CSS, PointerCoordinates, pointerCoord } from '../../util/dom';
 import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
-import { UIEventManager } from '../../util/ui-event-manager';
+import { UIEventManager } from '../../gestures/ui-event-manager';
 
 
 const AUTO_SCROLL_MARGIN = 60;

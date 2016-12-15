@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, OnDestro
 import { Content } from '../content/content';
 import { DomController } from '../../util/dom-controller';
 import { isPresent, isTrueProperty } from '../../util/util';
-import { listenEvent, eventOptions } from '../../util/ui-event-manager';
+import { uiListenEvent, uiEventOptions } from '../../util/ui-event-listener';
 import { Platform } from '../../platform/platform';
 
 
@@ -365,8 +365,8 @@ export class Img implements OnDestroy {
     this._img = this._elementRef.nativeElement.firstChild;
 
     this._unreg && this._unreg();
-    const opts = eventOptions(false, true);
-    this._unreg = listenEvent(this._img, 'load', false, opts, () => {
+    const opts = uiEventOptions(false, true);
+    this._unreg = uiListenEvent(this._img, 'load', false, opts, () => {
       this._hasLoaded = true;
       this.update();
     });
