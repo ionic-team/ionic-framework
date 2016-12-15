@@ -314,29 +314,6 @@ describe('util', () => {
 
   });
 
-  describe('extend', () => {
-
-    it('should extend simple', () => {
-      var obj = { a: '0', c: '0' };
-      expect( util.assign(obj, { a: '1', b: '2' }) ).toBe(obj);
-      expect(obj).toEqual({ a: '1', b: '2', c: '0' });
-    });
-
-    it('should extend complex', () => {
-      expect(util.assign(
-        { a: '0', b: '0' },
-        { b: '1', c: '1' },
-        { c: '2', d: '2' }
-      )).toEqual({
-        a: '0',
-        b: '1',
-        c: '2',
-        d: '2'
-      });
-    });
-
-  });
-
   describe('defaults', () => {
 
     it('should simple defaults', () => {

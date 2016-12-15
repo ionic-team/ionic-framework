@@ -1,4 +1,4 @@
-import { defaults, assign } from '../util/util';
+import { defaults } from '../util/util';
 import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
 
 /**
@@ -33,7 +33,7 @@ export class Gesture {
   }
 
   options(opts: any) {
-    assign(this._options, opts);
+    Object.assign(this._options, opts);
   }
 
   on(type: string, cb: Function) {

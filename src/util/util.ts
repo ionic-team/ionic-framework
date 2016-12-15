@@ -11,24 +11,6 @@ export function clamp(min: number, n: number, max: number) {
 }
 
 /**
- * The assign() method is used to copy the values of all enumerable own
- * properties from one or more source objects to a target object. It will
- * return the target object. When available, this method will use
- * `Object.assign()` under-the-hood.
- * @param target  The target object
- * @param source(s)  The source object
- */
-export function assign(...args: any[]): any {
-  if (typeof Object.assign !== 'function') {
-    // use the old-school shallow extend method
-    return _baseExtend(args[0], [].slice.call(args, 1), false);
-  }
-
-  // use the built in ES6 Object.assign method
-  return Object.assign.apply(null, args);
-}
-
-/**
  * Do a deep extend (merge).
  * @param dst the destination
  * @param ... the param objects
@@ -187,9 +169,6 @@ export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolea
 
 
 const ASSERT_ENABLED = true;
-/**
- * @private
- */
 
 function _runInDev(fn: Function) {
   if (ASSERT_ENABLED === true) {

@@ -1,7 +1,7 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
 import { Footer, Header } from '../components/toolbar/toolbar';
-import { isPresent, assign } from '../util/util';
+import { isPresent } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
 import { NavController } from './nav-controller';
 import { NavOptions, ViewState } from './nav-util';
@@ -160,7 +160,7 @@ export class ViewController {
     this._dismissData = data;
     this._dismissRole = role;
 
-    const options = assign({}, this._leavingOpts, navOptions);
+    const options = Object.assign({}, this._leavingOpts, navOptions);
     return this._nav.removeView(this, options).then(() => data);
   }
 
