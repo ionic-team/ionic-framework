@@ -10,34 +10,8 @@ export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
 }
 
-/**
- * Do a deep extend (merge).
- * @param dst the destination
- * @param ... the param objects
- */
-export function merge(dst: any, ...args: any[]) {
-  return _baseExtend(dst, [].slice.call(arguments, 1), true);
-}
-
-function _baseExtend(dst: any, objs: any, deep: boolean) {
-  for (var i = 0, ii = objs.length; i < ii; ++i) {
-    var obj = objs[i];
-    if (!obj || !isObject(obj) && !isFunction(obj)) continue;
-    var keys = Object.keys(obj);
-    for (var j = 0, jj = keys.length; j < jj; j++) {
-      var key = keys[j];
-      var src = obj[key];
-
-      if (deep && isObject(src)) {
-        if (!isObject(dst[key])) dst[key] = isArray(src) ? [] : {};
-        _baseExtend(dst[key], [src], true);
-      } else {
-        dst[key] = src;
-      }
-    }
-  }
-
-  return dst;
+export function deepCopy(obj: any) {
+  return JSON.parse(JSON.stringify(obj));
 }
 
 export function debounce(fn: Function, wait: number, immediate: boolean = false): any {
