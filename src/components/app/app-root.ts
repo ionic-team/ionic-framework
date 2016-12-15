@@ -1,12 +1,12 @@
 import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, OpaqueToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { App } from './app';
+import { assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
-import { nativeTimeout } from '../../util/dom';
-import { assert } from '../../util/util';
+import { nativeTimeout } from '../../util/native-window';
 
 export const AppRootToken = new OpaqueToken('USERROOT');
 

@@ -1,5 +1,5 @@
 import { DomController } from '../util/dom-controller';
-import { nativeTimeout, nativeRaf } from '../util/dom';
+import { nativeRaf, nativeTimeout } from '../util/native-window';
 import { Platform } from '../platform/platform';
 import { ScrollView } from '../util/scroll-view';
 

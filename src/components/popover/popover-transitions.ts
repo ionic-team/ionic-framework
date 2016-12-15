@@ -1,5 +1,6 @@
 import { Animation } from '../../animations/animation';
-import { CSS, nativeRaf } from '../../util/dom';
+import { CSS } from '../../util/dom';
+import { nativeRaf } from '../../util/native-window';
 import { PageTransition } from '../../transitions/page-transition';
 
 

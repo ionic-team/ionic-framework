@@ -1,6 +1,6 @@
 import { Animation } from '../../animations/animation';
 import { PageTransition } from '../../transitions/page-transition';
-import { windowDimensions } from '../../util/dom';
+import { windowDimensions } from '../../util/native-window';
 
 
 /**
@@ -41,7 +41,7 @@ export class ModalSlideOut extends PageTransition {
     // height of the screen - top of the container tells us how much to scoot it down
     // so it's off-screen
     let screenDimensions = windowDimensions();
-    wrapper.fromTo('translateY', '0px', `${screenDimensions.height - wrapperEleRect.top}px`);
+    wrapper.fromTo('translateY', '0px', `${screenDimensions.innerHeight - wrapperEleRect.top}px`);
     backdrop.fromTo('opacity', 0.4, 0.0);
 
     this

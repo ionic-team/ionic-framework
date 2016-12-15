@@ -1,10 +1,11 @@
 import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Input, NgZone, Renderer, Inject, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
-import { CSS, zoneRafFrames } from '../../util/dom';
+import { CSS } from '../../util/dom';
 import { Item } from './item';
 import { ItemReorderGesture } from '../item/item-reorder-gesture';
 import { isTrueProperty, reorderArray } from '../../util/util';
+import { zoneRafFrames } from '../../util/native-window';
 
 
 export class ReorderIndexes {

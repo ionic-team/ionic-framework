@@ -1,8 +1,8 @@
 import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
 
 import { QueryParams } from './query-params';
-import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
 import { removeArrayItem } from '../util/util';
+import { windowDimensions, flushDimensionCache } from '../util/native-window';
 
 
 /**
@@ -245,9 +245,19 @@ export class Platform {
    * value is `dom`.
    */
   prepareReady() {
-    ready(() => {
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
       this.triggerReady('dom');
-    });
+
+    } else {
+      document.addEventListener('DOMContentLoaded', completed, false);
+      window.addEventListener('load', completed, false);
+    }
+
+    function completed() {
+      document.removeEventListener('DOMContentLoaded', completed, false);
+      window.removeEventListener('load', completed, false);
+      this.triggerReady('dom');
+    }
   }
 
   /**
@@ -473,26 +483,24 @@ export class Platform {
    */
   _calcDim() {
     if (this._isPortrait === null) {
-      const winDimensions = windowDimensions();
-      const screenWidth = window.screen.width || winDimensions.width;
-      const screenHeight = window.screen.height || winDimensions.height;
+      var winDimensions = windowDimensions();
 
-      if (screenWidth < screenHeight) {
+      if (winDimensions.screenWidth < winDimensions.screenHeight) {
         this._isPortrait = true;
-        if (this._pW < winDimensions.width) {
-          this._pW = winDimensions.width;
+        if (this._pW < winDimensions.innerWidth) {
+          this._pW = winDimensions.innerWidth;
         }
-        if (this._pH < winDimensions.height) {
-          this._pH = winDimensions.height;
+        if (this._pH < winDimensions.innerHeight) {
+          this._pH = winDimensions.innerHeight;
         }
 
       } else {
         this._isPortrait = false;
-        if (this._lW < winDimensions.width) {
-          this._lW = winDimensions.width;
+        if (this._lW < winDimensions.innerWidth) {
+          this._lW = winDimensions.innerWidth;
         }
-        if (this._lH < winDimensions.height) {
-          this._lH = winDimensions.height;
+        if (this._lH < winDimensions.innerHeight) {
+          this._lH = winDimensions.innerHeight;
         }
       }
     }

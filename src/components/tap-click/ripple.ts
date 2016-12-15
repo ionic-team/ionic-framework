@@ -1,8 +1,9 @@
 import { ActivatorBase, isActivatedDisabled } from './activator-base';
 import { Activator } from './activator';
 import { App } from '../app/app';
-import { PointerCoordinates, CSS, hasPointerMoved, pointerCoord, rafFrames } from '../../util/dom';
 import { Config } from '../../config/config';
+import { CSS, PointerCoordinates, hasPointerMoved, pointerCoord } from '../../util/dom';
+import { rafFrames } from '../../util/native-window';
 
 
 /**

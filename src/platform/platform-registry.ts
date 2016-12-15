@@ -1,7 +1,7 @@
 import { OpaqueToken } from '@angular/core';
 
 import { Platform, PlatformConfig } from './platform';
-import { windowLoad } from '../util/dom';
+import { windowLoad } from '../util/native-window';
 
 
 export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {

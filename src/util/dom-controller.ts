@@ -3,7 +3,7 @@
  * https://github.com/wilsonpage/fastdom
  * MIT License
  */
-import { nativeRaf } from './dom';
+import { nativeRaf } from './native-window';
 import { removeArrayItem } from './util';
 
 

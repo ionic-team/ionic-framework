@@ -1,5 +1,6 @@
-import { CSS, nativeRaf, transitionEnd, nativeTimeout } from '../util/dom';
+import { CSS, transitionEnd } from '../util/dom';
 import { isDefined, assert } from '../util/util';
+import { nativeRaf, nativeTimeout } from '../util/native-window';
 
 
 /**

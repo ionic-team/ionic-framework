@@ -1,8 +1,9 @@
 import { Subject } from 'rxjs/Subject';
 
 import { assert } from './util';
-import { CSS, nativeRaf, pointerCoord, rafFrames } from './dom';
+import { CSS, pointerCoord } from './dom';
 import { DomController, DomCallback } from './dom-controller';
+import { nativeRaf, rafFrames } from '../util/native-window';
 import { uiListenEvent, uiEventOptions } from './ui-event-listener';
 
 

@@ -3,7 +3,7 @@ import { Component, ContentChild, Input, ContentChildren, QueryList, ChangeDetec
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
-import { nativeTimeout } from '../../util/dom';
+import { nativeTimeout } from '../../util/native-window';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 
 

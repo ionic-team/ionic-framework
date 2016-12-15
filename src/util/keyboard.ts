@@ -2,8 +2,9 @@ import { Injectable, NgZone } from '@angular/core';
 
 import { Config } from '../config/config';
 import { DomController } from './dom-controller';
-import { focusOutActiveElement, hasFocusedTextInput, nativeTimeout, clearNativeTimeout } from './dom';
+import { focusOutActiveElement, hasFocusedTextInput } from './dom';
 import { Key } from './key';
+import { nativeTimeout, clearNativeTimeout } from './native-window';
 
 
 /**

@@ -1,6 +1,7 @@
 import { SlideGesture } from './slide-gesture';
 import { defaults } from '../util/util';
-import { pointerCoord, windowDimensions } from '../util/dom';
+import { pointerCoord } from '../util/dom';
+import { windowDimensions } from '../util/native-window';
 
 /**
  * @private
@@ -28,11 +29,12 @@ export class SlideEdgeGesture extends SlideGesture {
   }
 
   getContainerDimensions() {
+    const winDimensions = windowDimensions();
     return {
       left: 0,
       top: 0,
-      width: windowDimensions().width,
-      height: windowDimensions().height
+      width: winDimensions.innerWidth,
+      height: winDimensions.innerHeight
     };
   }
 

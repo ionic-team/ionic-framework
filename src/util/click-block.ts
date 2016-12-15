@@ -1,7 +1,7 @@
 import { Directive, ElementRef, forwardRef, Inject, Renderer } from '@angular/core';
 
 import { App } from '../components/app/app';
-import { clearNativeTimeout, nativeTimeout } from './dom';
+import { nativeTimeout, clearNativeTimeout } from './native-window';
 import { Config } from '../config/config';
 
 

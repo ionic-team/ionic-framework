@@ -1,7 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, NgZone, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { CSS, cancelRaf, pointerCoord, nativeRaf } from '../../util/dom';
+import { CSS, pointerCoord } from '../../util/dom';
+import { cancelRaf, nativeRaf } from '../../util/native-window';
 import { clamp, isNumber, isPresent, isString, assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { DomController, DomDebouncer } from '../../util/dom-controller';

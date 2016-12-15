@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
 
-import { CSS, nativeRaf, nativeTimeout, clearNativeTimeout } from '../../util/dom';
+import { CSS } from '../../util/dom';
 import { Item } from './item';
 import { isPresent, swipeShouldReset, assert } from '../../util/util';
 import { List } from '../list/list';
+import { nativeRaf, nativeTimeout, clearNativeTimeout } from '../../util/native-window';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;

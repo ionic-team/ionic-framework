@@ -1,7 +1,8 @@
+import { ActivatorBase, isActivatedDisabled } from './activator-base';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { CSS, PointerCoordinates, nativeTimeout, rafFrames } from '../../util/dom';
-import { ActivatorBase, isActivatedDisabled } from './activator-base';
+import { CSS, PointerCoordinates } from '../../util/dom';
+import { nativeTimeout, rafFrames } from '../../util/native-window';
 
 
 export class Activator implements ActivatorBase {
