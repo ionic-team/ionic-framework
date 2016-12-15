@@ -1,3 +1,213 @@
+<a name="2.0.0-rc.4"></a>
+# [2.0.0-rc.4](https://github.com/driftyco/ionic/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2016-12-15)
+
+
+### Updating to 2.0.0-rc.4
+
+1. Update the Ionic CLI to the latest version:
+
+  ```
+  npm install -g ionic
+  ```
+
+2. Update the following dependencies in your `package.json` file:
+
+  ```
+  "dependencies": {
+    "@angular/common": "2.2.1",
+    "@angular/compiler": "2.2.1",
+    "@angular/compiler-cli": "2.2.1",
+    "@angular/core": "2.2.1",
+    "@angular/forms": "2.2.1",
+    "@angular/http": "2.2.1",
+    "@angular/platform-browser": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/platform-server": "2.2.1",
+    "@ionic/storage": "1.1.6",
+    "ionic-angular": "2.0.0-rc.4",
+    "ionic-native": "2.2.11",
+    "ionicons": "3.0.0",
+    "rxjs": "5.0.0-beta.12",
+    "zone.js": "0.6.26"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "0.0.47",
+    "typescript": "2.0.9"
+  }
+  ```
+
+3. A major version of [`@ionic/app-scripts`](https://github.com/driftyco/ionic-app-scripts) was recently
+released. Please review the [changelog](https://github.com/driftyco/ionic-app-scripts/blob/master/CHANGELOG.md)
+for the details on the minor breaking changes to the release:
+https://github.com/driftyco/ionic-app-scripts/blob/master/CHANGELOG.md
+
+
+### Bug Fixes
+
+* **action-sheet:** set border bottom of last button to transparent ([ffdd8f4](https://github.com/driftyco/ionic/commit/ffdd8f4))
+* **activator:** cancel remove .activated timeout ([9510a2b](https://github.com/driftyco/ionic/commit/9510a2b))
+* **alert:** fix alert input focusing and keyboard ([29a56c4](https://github.com/driftyco/ionic/commit/29a56c4))
+* **alert:** close keyboard when alert leaves ([f354d91](https://github.com/driftyco/ionic/commit/f354d91)), closes [#8185](https://github.com/driftyco/ionic/issues/8185)
+* **animation:** improve menu and go back swipe ([4be47bd](https://github.com/driftyco/ionic/commit/4be47bd))
+* **app:** go back navigation can close menus ([8de253a](https://github.com/driftyco/ionic/commit/8de253a))
+* **app:** navPop() can go back inside modals ([2ac3b4a](https://github.com/driftyco/ionic/commit/2ac3b4a)), closes [#7611](https://github.com/driftyco/ionic/issues/7611)
+* **app:** navPop() does not go to previous tab ([eebb062](https://github.com/driftyco/ionic/commit/eebb062))
+* **app-root:** async disable-scroll is cancelled properly ([177a089](https://github.com/driftyco/ionic/commit/177a089))
+* **avatar:** make border-radius 50% so it is always circular ([e84f2e2](https://github.com/driftyco/ionic/commit/e84f2e2))
+* **backdrop:** remove click cursor when the backdrop is not tappable ([06938b6](https://github.com/driftyco/ionic/commit/06938b6))
+* **clickblock:** clickblock applies longer ([e0d876e](https://github.com/driftyco/ionic/commit/e0d876e))
+* **components:** set true/false inputs to booleans ([a796786](https://github.com/driftyco/ionic/commit/a796786)), closes [#9391](https://github.com/driftyco/ionic/issues/9391)
+* **components:** export ClickBlock ([6244b51](https://github.com/driftyco/ionic/commit/6244b51))
+* **content:** add a new variable for calculating fixed content top/bottom ([8037086](https://github.com/driftyco/ionic/commit/8037086))
+* **content:** get correct content dimensions ([1d245ec](https://github.com/driftyco/ionic/commit/1d245ec))
+* **content:** prefix utility attributes with ion-app and the mode ([abc7395](https://github.com/driftyco/ionic/commit/abc7395)), closes [#8765](https://github.com/driftyco/ionic/issues/8765)
+* **datetime:** fix am/pm in format w/out minutes or seconds ([95b3b38](https://github.com/driftyco/ionic/commit/95b3b38)), closes [#9269](https://github.com/driftyco/ionic/issues/9269)
+* **dateTime:** make sure picker-column is shown on retina screens ([b17950d](https://github.com/driftyco/ionic/commit/b17950d))
+* **fab:** add box shadow transition for md fab list buttons ([1e2374f](https://github.com/driftyco/ionic/commit/1e2374f)), closes [#9557](https://github.com/driftyco/ionic/issues/9557)
+* **fab:** fab list colors ([cbf59fa](https://github.com/driftyco/ionic/commit/cbf59fa)), closes [#9225](https://github.com/driftyco/ionic/issues/9225)
+* **fab:** position fab-list correctly on IE ([a0b61f2](https://github.com/driftyco/ionic/commit/a0b61f2))
+* **fab:** set ripple color to contrast color of the fab background ([0888dec](https://github.com/driftyco/ionic/commit/0888dec))
+* **fab:** using <a> as fab ([0e773fa](https://github.com/driftyco/ionic/commit/0e773fa))
+* **fonts:** auto-set ionicons font path if not already set ([7bbfb7e](https://github.com/driftyco/ionic/commit/7bbfb7e))
+* **gesture:** nativeRaf is unsafe ([b63344c](https://github.com/driftyco/ionic/commit/b63344c))
+* **gesture:** pass type to hammer.get() so pinch and rotate can be enabled ([66afe34](https://github.com/driftyco/ionic/commit/66afe34))
+* **header:** fix no-border on ios headers ([d53a38e](https://github.com/driftyco/ionic/commit/d53a38e)), closes [#9525](https://github.com/driftyco/ionic/issues/9525) [#9480](https://github.com/driftyco/ionic/issues/9480)
+* **img:** ensure scroll has been initialized ([39e1dce](https://github.com/driftyco/ionic/commit/39e1dce))
+* **img:** fix content viewable area ([903473e](https://github.com/driftyco/ionic/commit/903473e))
+* **img:** move img requests out of web workers ([5376318](https://github.com/driftyco/ionic/commit/5376318))
+* **img:** use img tag due to cordova limitations ([4f61ea5](https://github.com/driftyco/ionic/commit/4f61ea5))
+* **input:** add back old styles to fix input margin ([e09aee4](https://github.com/driftyco/ionic/commit/e09aee4))
+* **input:** apply transform css prefix ([eba2862](https://github.com/driftyco/ionic/commit/eba2862))
+* **input:** fix input margins while scrolling ([67473f2](https://github.com/driftyco/ionic/commit/67473f2))
+* **input:** fix tabbing between tappable inputs ([c4cf9df](https://github.com/driftyco/ionic/commit/c4cf9df))
+* **input:** improve scroll to input and focusing ([3b30497](https://github.com/driftyco/ionic/commit/3b30497))
+* **input:** prevent exception when input components outside Content ([e80f4cf](https://github.com/driftyco/ionic/commit/e80f4cf))
+* **input:** stop ios from hiding keyboard on focus change ([5bcd7f2](https://github.com/driftyco/ionic/commit/5bcd7f2))
+* **input:** test for null element before update ([f0327a9](https://github.com/driftyco/ionic/commit/f0327a9)), closes [#9278](https://github.com/driftyco/ionic/issues/9278)
+* **item:** disable scroll while sliding item ([c002b36](https://github.com/driftyco/ionic/commit/c002b36))
+* **item:** tappable does not make ion-label pointer-event:none ([4512c5c](https://github.com/driftyco/ionic/commit/4512c5c))
+* **keyboard:** fix keyboard tabbing context ([902a767](https://github.com/driftyco/ionic/commit/902a767)), closes [#9568](https://github.com/driftyco/ionic/issues/9568)
+* **labels:** consistent label styles on iOS ([b788ce6](https://github.com/driftyco/ionic/commit/b788ce6))
+* **list:** tweak list header color to match spec ([053c754](https://github.com/driftyco/ionic/commit/053c754))
+* **menu:** clicking the backdrop/content closes the menu ([eafd13f](https://github.com/driftyco/ionic/commit/eafd13f))
+* **menu:** disable menu swipe while transitioning ([168428e](https://github.com/driftyco/ionic/commit/168428e))
+* **menu:** improves menu swipe animation ([91478ed](https://github.com/driftyco/ionic/commit/91478ed))
+* **menu:** two menus can’t be animated at the same time ([1e95e85](https://github.com/driftyco/ionic/commit/1e95e85))
+* **menu-toggle:** move logic for css class to the menu toggle ([624cb35](https://github.com/driftyco/ionic/commit/624cb35)), closes [#8943](https://github.com/driftyco/ionic/issues/8943)
+* **modal:** app.navPop() can dismiss modals ([5567191](https://github.com/driftyco/ionic/commit/5567191)), closes [#8692](https://github.com/driftyco/ionic/issues/8692)
+* **modal:** backdrop click catches navigation promise ([e46d8d6](https://github.com/driftyco/ionic/commit/e46d8d6))
+* **modal:** using cross mode animations ([ccb6bf1](https://github.com/driftyco/ionic/commit/ccb6bf1)), closes [#9323](https://github.com/driftyco/ionic/issues/9323)
+* **module:** add ClickBlock to NgModule declarations ([960399a](https://github.com/driftyco/ionic/commit/960399a))
+* **nav:** async removing for views ([5ff7072](https://github.com/driftyco/ionic/commit/5ff7072))
+* **nav:** back button and title not aligned on baseline ([d82bb01](https://github.com/driftyco/ionic/commit/d82bb01)), closes [#8983](https://github.com/driftyco/ionic/issues/8983)
+* **nav:** popTo() uses the new removeView API ([6b3e2ed](https://github.com/driftyco/ionic/commit/6b3e2ed))
+* **nav:** prevents to remove all views in the nav stack ([16bfb49](https://github.com/driftyco/ionic/commit/16bfb49)), closes [#9140](https://github.com/driftyco/ionic/issues/9140)
+* **navbar:** go back text ([58189d2](https://github.com/driftyco/ionic/commit/58189d2))
+* **note:** separate note from item so its styles will alway be applied ([bf00803](https://github.com/driftyco/ionic/commit/bf00803)), closes [#9173](https://github.com/driftyco/ionic/issues/9173)
+* **picker:** add color to picker-opt so the variable will style correctly ([dc0659f](https://github.com/driftyco/ionic/commit/dc0659f)), closes [#9519](https://github.com/driftyco/ionic/issues/9519)
+* **picker:** making touchable fill all the available space ([448e020](https://github.com/driftyco/ionic/commit/448e020))
+* **picker:** mark main button as strong ([af7139b](https://github.com/driftyco/ionic/commit/af7139b))
+* **picker:** removes unused code ([44d772f](https://github.com/driftyco/ionic/commit/44d772f))
+* **picker:** stop picker once it is closed ([ecb8bee](https://github.com/driftyco/ionic/commit/ecb8bee))
+* **platform:** fix window width/height calculations ([4ed6b36](https://github.com/driftyco/ionic/commit/4ed6b36))
+* **popover:** remove css contain from popover ([db9f1a8](https://github.com/driftyco/ionic/commit/db9f1a8))
+* **ripple:** disable ripple on android 4.4 with chrome ([97ec20e](https://github.com/driftyco/ionic/commit/97ec20e))
+* **scroll:** correctly resolve promise ([c6fbb9c](https://github.com/driftyco/ionic/commit/c6fbb9c))
+* **scroll:** ensure listeners have been added before removing ([a237253](https://github.com/driftyco/ionic/commit/a237253))
+* **scroll:** fix content dimensions for js scrolling ([c510100](https://github.com/driftyco/ionic/commit/c510100))
+* **scroll:** fix js scrolling max and deceleration on touch start ([5bbbfb2](https://github.com/driftyco/ionic/commit/5bbbfb2))
+* **searchbar:** animated + no cancel works as expected ([851187a](https://github.com/driftyco/ionic/commit/851187a)), closes [#8903](https://github.com/driftyco/ionic/issues/8903)
+* **tab:** tab button without content does not crash ([81a0969](https://github.com/driftyco/ionic/commit/81a0969))
+* **tabs:** _touchActive() works when tab.root is a string ([cb65f79](https://github.com/driftyco/ionic/commit/cb65f79))
+* **tabs:** adjust the top of tabs each time the tab changes ([3b612d2](https://github.com/driftyco/ionic/commit/3b612d2))
+* **tabs:** make MD tab highlight the contrast color of tabs color ([bb3a57f](https://github.com/driftyco/ionic/commit/bb3a57f))
+* **tabs:** update UI to match material design spec ([e7275f2](https://github.com/driftyco/ionic/commit/e7275f2))
+* **tap-click:** do not dispatch click events if tap-click blocks them ([8f8185b](https://github.com/driftyco/ionic/commit/8f8185b))
+* **tap-click:** click to non-activable elements ([c6facf3](https://github.com/driftyco/ionic/commit/c6facf3))
+* **toast:** toast does not disable the app ([75186b4](https://github.com/driftyco/ionic/commit/75186b4)), closes [#9339](https://github.com/driftyco/ionic/issues/9339)
+* **toggle:** uses PanGesture abstraction ([6ef6f0a](https://github.com/driftyco/ionic/commit/6ef6f0a)), closes [#9428](https://github.com/driftyco/ionic/issues/9428)
+* **toolbar:** remove calculated height ([b7cac56](https://github.com/driftyco/ionic/commit/b7cac56))
+* **util:** click-block transform on IE ([fcba323](https://github.com/driftyco/ionic/commit/fcba323))
+* **util:** replace implicit any in dom-controller ([#9511](https://github.com/driftyco/ionic/issues/9511)) ([6c0593c](https://github.com/driftyco/ionic/commit/6c0593c))
+* **view-controller:** onDidDismiss() is always called ([68eb1b7](https://github.com/driftyco/ionic/commit/68eb1b7)), closes [#8223](https://github.com/driftyco/ionic/issues/8223)
+* **virtual-scroll:** ensure listeners added after init read ([76ff421](https://github.com/driftyco/ionic/commit/76ff421))
+* **virtual-scroll:** fix image rendering bug ([72276c3](https://github.com/driftyco/ionic/commit/72276c3)), closes [#6983](https://github.com/driftyco/ionic/issues/6983)
+* **virtual-scroll:** fix tabs content loading ([aec8f51](https://github.com/driftyco/ionic/commit/aec8f51))
+* **virtual-scroll:** only allow one readUpdate per update ([8104cfa](https://github.com/driftyco/ionic/commit/8104cfa))
+* **virtual-scroll:** redraw empty list when updated with no records ([288df86](https://github.com/driftyco/ionic/commit/288df86)), closes [#6512](https://github.com/driftyco/ionic/issues/6512)
+
+
+### Code Refactoring
+
+* **toolbar:** rename no-shadow to no-border for md mode ([b73304e](https://github.com/driftyco/ionic/commit/b73304e))
+
+
+### Features
+
+* **button:** add strong decorator ([fa0579f](https://github.com/driftyco/ionic/commit/fa0579f))
+* **button:** make strong configurable in Sass ([ac07c6f](https://github.com/driftyco/ionic/commit/ac07c6f))
+* **content:** add properties for img request/render buffers ([8867677](https://github.com/driftyco/ionic/commit/8867677))
+* **content:** content dimension properties w/out dom read ([19aa633](https://github.com/driftyco/ionic/commit/19aa633))
+* **dom-controller:** organize dom reads/writes ([cac7164](https://github.com/driftyco/ionic/commit/cac7164))
+* **keyboard:** blur input on native keyboard hide ([1809c40](https://github.com/driftyco/ionic/commit/1809c40))
+* **reorder:** add `applyTo` method to `ionItemReorder` event ([7e6d73b](https://github.com/driftyco/ionic/commit/7e6d73b))
+* **scroll:** add domWrite and content elements to scroll events ([bfd3314](https://github.com/driftyco/ionic/commit/bfd3314))
+* **template:** add NavParams to page template ([8587191](https://github.com/driftyco/ionic/commit/8587191))
+* **virtual-scroll:** apply contain:strict to  virtual scroll items ([947780e](https://github.com/driftyco/ionic/commit/947780e))
+
+
+### Performance Improvements
+
+* **activator:** cancelled touch does not cause layout thrashing ([22d6bc5](https://github.com/driftyco/ionic/commit/22d6bc5))
+* **activator:** improve activator response ([bb80033](https://github.com/driftyco/ionic/commit/bb80033))
+* **app:** adds fast path in isEnabled() and isScrolling() ([5526d70](https://github.com/driftyco/ionic/commit/5526d70))
+* **events:** ionDrag events are not zone wrapped ([a722107](https://github.com/driftyco/ionic/commit/a722107))
+* **menu:** improves menu performance and fixes some edge cases ([3209895](https://github.com/driftyco/ionic/commit/3209895))
+* **menu:** using passive events in menu ([788a7b6](https://github.com/driftyco/ionic/commit/788a7b6))
+* **nav:** minor performance improvements ([4aa1ada](https://github.com/driftyco/ionic/commit/4aa1ada))
+* **range:** generates inefficient JS ([d2ebac3](https://github.com/driftyco/ionic/commit/d2ebac3))
+* **rendering:** add css containment ([5ad7fd1](https://github.com/driftyco/ionic/commit/5ad7fd1))
+* **ripple:** prevents jank by using raf ([66bbd24](https://github.com/driftyco/ionic/commit/66bbd24))
+* **scroll:** efficient scroll events and properties ([c377236](https://github.com/driftyco/ionic/commit/c377236))
+* **tabs:** improve tab switching response ([907191b](https://github.com/driftyco/ionic/commit/907191b))
+* **tap-click:** tapPolyfill is only used in UIWebView! ([0c61c2a](https://github.com/driftyco/ionic/commit/0c61c2a))
+* **virtual-scroll:** improve virtual-scroll performance ([b70d13d](https://github.com/driftyco/ionic/commit/b70d13d))
+
+
+### BREAKING CHANGES
+
+#### Toolbar
+
+* Renamed the `no-shadow` attribute for Material Design header, footer, and
+tabs to `no-border`. This is the same attribute used by iOS mode.
+* Moved the border on iOS from each toolbar to the last toolbar in a header, and the
+first toolbar in a footer. Adding `no-border` to the header or footer will hide the border.
+
+  For example, the following code:
+
+  ```
+  <ion-header>
+    <ion-navbar no-border-bottom></ion-navbar>
+    <ion-toolbar no-border-top></ion-toolbar>
+  </ion-header>
+  ```
+
+  will now become:
+
+  ```
+  <ion-header>
+    <ion-navbar></ion-navbar>
+    <ion-toolbar></ion-toolbar>
+  </ion-header>
+  ```
+
+  and if you decide you don't want the border just add `no-border` to the header: `<ion-header no-border>`.
+
+* This means that `no-border-top` and `no-border-bottom` will not work on iOS and should
+be removed from any toolbars using it.
+
+
+
 <a name="2.0.0-rc.3"></a>
 # [2.0.0-rc.3](https://github.com/driftyco/ionic/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2016-11-17)
 
