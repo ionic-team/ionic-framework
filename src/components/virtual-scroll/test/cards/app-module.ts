@@ -41,9 +41,7 @@ export class E2EApp {
     E2EPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, {
-      imgWorkerUrl: '/dist/e2e/workers/ion-img-worker.js'
-    })
+    IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -69,7 +67,7 @@ const images = [
 ];
 
 function getImgSrc() {
-  let src = `../../img/img/${images[rotateImg]}.jpg?${Math.round(Math.random() * 10000000)}`;
+  let src = `../img/${images[rotateImg]}.jpg?${Math.round(Math.random() * 10000000)}`;
   rotateImg++;
   if (rotateImg === images.length) rotateImg = 0;
   return src;

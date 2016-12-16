@@ -4,7 +4,7 @@ import { Platform, PlatformConfig } from './platform';
 import { windowLoad } from '../util/dom';
 
 
-export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
+export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
 
   /**
    * core
@@ -29,7 +29,7 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
       let smallest = Math.min(p.width(), p.height());
       let largest = Math.max(p.width(), p.height());
       return (smallest > 390 && smallest < 520) &&
-            (largest > 620 && largest < 800);
+        (largest > 620 && largest < 800);
     }
   },
 
@@ -41,7 +41,7 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
       let smallest = Math.min(p.width(), p.height());
       let largest = Math.max(p.width(), p.height());
       return (smallest > 460 && smallest < 820) &&
-            (largest > 780 && largest < 1400);
+        (largest > 780 && largest < 1400);
     }
   },
 
@@ -64,7 +64,11 @@ export const PLATFORM_CONFIGS: {[key: string]: PlatformConfig} = {
           let chromeVersion = p.matchUserAgentVersion(/Chrome\/(\d+).(\d+)?/);
           if (chromeVersion) {
             // linux android device using modern android chrome browser gets ripple
-            return (parseInt(chromeVersion.major, 10) < 36 ? 'none' : 'ripple');
+            if (parseInt(chromeVersion.major, 10) < 36 || p.version().major < 5) {
+              return 'none';
+            } else {
+              return 'ripple';
+            }
           }
           // linux android device not using chrome browser checks just android's version
           if (p.version().major < 5) {

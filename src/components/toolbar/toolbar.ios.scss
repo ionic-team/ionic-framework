@@ -58,25 +58,25 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 // iOS Header / Footer Borders
 // --------------------------------------------------
 
-.header-ios,
-.footer-ios {
+.header-ios .toolbar-background-ios,
+.footer-ios .toolbar-background-ios {
   border-style: solid;
   border-color: $toolbar-ios-border-color;
 }
 
-.header-ios {
+.header-ios .toolbar-ios:last-child .toolbar-background-ios {
   border-width: 0 0 $hairlines-width;
 }
 
-.footer-ios {
+.footer-ios .toolbar-ios:first-child .toolbar-background-ios {
   border-width: $hairlines-width 0 0;
 }
 
-.header-ios[no-border] {
+.header-ios[no-border] .toolbar-ios:last-child .toolbar-background-ios {
   border-bottom-width: 0;
 }
 
-.footer-ios[no-border] {
+.footer-ios[no-border] .toolbar-ios:first-child .toolbar-background-ios {
   border-top-width: 0;
 }
 

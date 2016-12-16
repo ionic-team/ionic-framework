@@ -240,8 +240,12 @@ export class TextInput extends InputBase {
    */
   ngOnDestroy() {
     this._form.deregister(this);
-    this._scrollStart.unsubscribe();
-    this._scrollEnd.unsubscribe();
+
+    // only stop listening to content scroll events if there is content
+    if (this._content) {
+      this._scrollStart.unsubscribe();
+      this._scrollEnd.unsubscribe();
+    }
   }
 
   /**
@@ -410,8 +414,12 @@ export class TextArea extends InputBase {
    */
   ngOnDestroy() {
     this._form.deregister(this);
-    this._scrollStart.unsubscribe();
-    this._scrollEnd.unsubscribe();
+
+    // only stop listening to content scroll events if there is content
+    if (this._content) {
+      this._scrollStart.unsubscribe();
+      this._scrollEnd.unsubscribe();
+    }
   }
 
   /**

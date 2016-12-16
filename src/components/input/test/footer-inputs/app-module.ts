@@ -6,17 +6,14 @@ import { IonicApp, IonicModule } from '../../../..';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-
 }
-
 
 @Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
 export class E2EApp {
-  root = E2EPage;
+  rootPage = E2EPage;
 }
-
 
 @NgModule({
   declarations: [
@@ -28,7 +25,6 @@ export class E2EApp {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
     E2EPage
   ]
 })

@@ -9,7 +9,7 @@ import * as mkdirp from 'mkdirp';
 import { valid }from 'semver';
 import { argv } from 'yargs';
 
-import { DEMOS_ROOT } from '../constants';
+import { DIST_DEMOS_ROOT } from '../constants';
 
 task('docs', ['docs.dgeni', 'docs.demos', 'docs.sassVariables']);
 
@@ -30,7 +30,7 @@ task('docs.dgeni', () => {
   }
 });
 
-task('docs.demos', ['demos.build'], (done: Function) => {
+task('docs.demos', ['demos.prod'], (done: Function) => {
   const config = require('../../config.json');
   const outputDir = join(config.docsDest, 'demos');
   let promises = [];
@@ -47,7 +47,7 @@ task('docs.demos', ['demos.build'], (done: Function) => {
 
 function copyDemoCss(outputDir: string) {
   return new Promise((resolve, reject) => {
-    const stream = src(`${DEMOS_ROOT}/css/*`).pipe(dest(outputDir));
+    const stream = src(`${DIST_DEMOS_ROOT}/css/*`).pipe(dest(outputDir));
     stream.on('end', () => {
       resolve();
     });
@@ -56,7 +56,7 @@ function copyDemoCss(outputDir: string) {
 
 function copyDemoFonts(outputDir: string) {
   return new Promise((resolve, reject) => {
-    const stream = src(`${DEMOS_ROOT}/fonts/*`).pipe(dest(outputDir));
+    const stream = src(`${DIST_DEMOS_ROOT}/fonts/*`).pipe(dest(outputDir));
     stream.on('end', () => {
       resolve();
     });
@@ -65,7 +65,7 @@ function copyDemoFonts(outputDir: string) {
 
 function copyDemoPolyfills(outputDir: string) {
   return new Promise((resolve, reject) => {
-    const stream = src(`${DEMOS_ROOT}/polyfills/*`).pipe(dest(outputDir));
+    const stream = src(`${DIST_DEMOS_ROOT}/polyfills/*`).pipe(dest(outputDir));
     stream.on('end', () => {
       resolve();
     });
@@ -75,8 +75,7 @@ function copyDemoPolyfills(outputDir: string) {
 function copyDemoContent(outputDir: string) {
   return new Promise((resolve, reject) => {
     const stream = src([
-      `${DEMOS_ROOT}/src/**/*`,
-      `${DEMOS_ROOT}/src/scrollbar-fix.*`
+      `${DIST_DEMOS_ROOT}/**/*`
       ]).pipe(dest(outputDir));
     stream.on('end', () => {
       resolve();

@@ -19,7 +19,6 @@ import { Events, setupProvideEvents } from './util/events';
 import { Form } from './util/form';
 import { GestureController } from './gestures/gesture-controller';
 import { Haptic } from './util/haptic';
-import { ImgLoader } from './components/img/img-loader';
 import { IonicGestureConfig } from './gestures/gesture-config';
 import { Keyboard } from './util/keyboard';
 import { LoadingController } from './components/loading/loading';
@@ -56,7 +55,6 @@ export { Config, setupConfig, ConfigToken } from './config/config';
 export { DomController, DomCallback } from './util/dom-controller';
 export { Platform, setupPlatform, UserAgentToken, DocumentDirToken, DocLangToken, NavigatorPlatformToken } from './platform/platform';
 export { Haptic } from './util/haptic';
-export { ImgLoader } from './components/img/img-loader';
 export { QueryParams, setupQueryParams, UrlToken } from './platform/query-params';
 export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
@@ -176,7 +174,6 @@ export class IonicModule {
         Form,
         GestureController,
         Haptic,
-        ImgLoader,
         Keyboard,
         LoadingController,
         Location,

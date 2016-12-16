@@ -19,7 +19,7 @@ export class E2EApp {
   </ion-header>
 
   <ion-content>
-    <button ion-button color="primary" (click)="goToPage()" class="nested-children-test">
+    <button ion-button color="primary" (click)="goToPage()" class="e2eChildNavsNested">
       Nested Children Test
     </button>
   </ion-content>
@@ -31,10 +31,6 @@ export class LandingPage {
 
   goToPage() {
     this.navCtrl.push(FirstPage);
-  }
-
-  ionViewDidLoad() {
-    this.goToPage();
   }
 }
 

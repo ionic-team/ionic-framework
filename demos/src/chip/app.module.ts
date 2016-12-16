@@ -1,6 +1,23 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
-import { ApiDemoApp, ApiDemoPage } from './app.component';
+import { Component, NgModule } from '@angular/core';
+import { IonicApp, IonicModule } from '../';
+
+
+@Component({
+  templateUrl: 'page.html'
+})
+export class ApiDemoPage {
+  delete(chip: Element) {
+    chip.remove();
+  }
+}
+
+@Component({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+export class ApiDemoApp {
+  root = ApiDemoPage;
+}
+
 
 @NgModule({
   declarations: [

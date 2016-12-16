@@ -35,7 +35,7 @@ const images = [
 
 function getRandomImg(): string {
   let imgString = images[Math.floor(Math.random() * images.length)];
-  let src = '../img/img/' + imgString;
+  let src = '../img/' + imgString;
   return src;
 }
 
@@ -54,9 +54,7 @@ export class E2EApp {
     E2EPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, {
-      imgWorkerUrl: '/dist/e2e/workers/ion-img-worker.js'
-    })
+    IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
