@@ -31,3 +31,11 @@ ion-list[inset] {
 
   transform: translateZ(0);
 }
+
+
+// List with inputs
+// --------------------------------------------------
+
+ion-list .item-input:last-child {
+  border-bottom: 1px solid #dedede;
+}
