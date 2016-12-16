@@ -142,7 +142,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * @demo /docs/v2/demos/src/action-sheet/
- * @see {@link /docs/v2/api/action-sheet/ActionSheetController ActionSheetController API Docs}
+ * @see {@link ../ActionSheetController ActionSheetController API Docs}
  */
 export class ActionSheet extends ViewController {
   private _app: App;
@@ -210,7 +210,7 @@ export class ActionSheet extends ViewController {
  * For complete information on creating and using the Action Sheet component, see the 
  * [Action Sheet API docs](../ActionSheet)
  *
- * @see {@link /docs/v2/api/action-sheet/ActionSheet ActionSheet API Docs}
+ * @see {@link ../ActionSheet ActionSheet API Docs}
  */
 @Injectable()
 export class ActionSheetController {
@@ -218,9 +218,10 @@ export class ActionSheetController {
   constructor(private _app: App) {}
 
   /**
-   * Creates an instance of ActionSheet
-   * @param {Object} opts Action Sheet options. See [Action Sheet options](../ActionSheet#action-sheet-options) 
-   *                      in the ActionSheet API doc.
+   * Creates an instance of [ActionSheet](../ActionSheet).
+   * @param {Object} opts Options object that sets the appearance and behavior of the Action Sheet. 
+   *                      See [Action Sheet options](../ActionSheet#action-sheet-options) in the 
+   *                      ActionSheet API doc.
    */
   create(opts: ActionSheetOptions = {}): ActionSheet {
     return new ActionSheet(this._app, opts);
