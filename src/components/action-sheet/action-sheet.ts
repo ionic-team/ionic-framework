@@ -22,9 +22,8 @@ import { ViewController } from '../../navigation/view-controller';
  * 
  * An Action Sheet is defined by importing and creating an instance of ActionSheetController
  * then calling `create(options)` on the instance. Action Sheet options can also
- * be specified at a later time with [instance methods](#instance-members) provided 
- * by ActionSheetController. For a complete list of options see 
- * [Action Sheet Options](#action-sheet-options) below.
+ * be specified at a later time with [instance methods](#instance-members). For a complete
+ * list of options see [Action Sheet Options](#action-sheet-options) below.
  *
  * To display an Action Sheet call `present()` on a defined Action Sheet.
  *
