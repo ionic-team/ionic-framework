@@ -23,6 +23,10 @@ ion-textarea {
   width: 100%;
 }
 
+ion-input[disabled] .input-cover {
+  pointer-events: none;
+}
+
 
 .item-input ion-input,
 .item-input ion-textarea {
@@ -63,7 +67,6 @@ textarea.text-input {
 .text-input[disabled] {
   opacity: .4;
 }
-
 
 input.text-input:-webkit-autofill {
   background-color: transparent;
