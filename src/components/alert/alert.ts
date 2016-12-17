@@ -116,6 +116,8 @@ import { ViewController } from '../../navigation/view-controller';
  * | cssClass | `string` | An additional CSS class for the button.                         |
  * | role     | `string` | The buttons role - `null` or `cancel`.                          |
  *
+ *
+ * @advanced
  * ### Starting Page Transitions in Handler Functions
  *
  * If you want to start a page transition in your app from an Alert button's handler

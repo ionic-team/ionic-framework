@@ -100,6 +100,7 @@ import { ViewController } from '../../navigation/view-controller';
  * | cssClass | `string` | Additional classes for custom styles, separated by spaces.                                                                                                                                                                                                                                |
  * | role     | `string` | `destructive` or `cancel`. `destructive` styles the button in iOS mode only. It is recommended that `destructive` buttons be included at the start of the `buttons` array. `cancel` styles the button across all platform modes, and places the button at the bottom of the Action Sheet. |
  *
+ * @advanced
  * ### Starting Page Transitions in Handler Functions
  *
  * If you want to start a page transition in your app from an Action Sheet button's handler
