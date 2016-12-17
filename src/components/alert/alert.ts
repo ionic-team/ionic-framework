@@ -29,7 +29,7 @@ import { ViewController } from '../../navigation/view-controller';
  * A user must manually dismiss an Alert before they can resume interaction 
  * with the app. This is done by tapping one of the Alert's buttons, 
  * tapping the back button (Android), or tapping the background outside the 
- * Alert. To prevent tapping a button from dismissing the Action Sheet,
+ * Alert. To prevent tapping a button from dismissing the Alert,
  * set the handler function for that button to return `false`.
  *   
  *
@@ -137,13 +137,13 @@ import { ViewController } from '../../navigation/view-controller';
  * in the app.
  *
  * ```ts
- * let options = {
+ * let alert = this.alertCtrl.create({
  *   title: 'Hello',
  *   buttons: [{
  *     text: 'Transition Me!',
  *     handler: () => {
  *       // begin the Alert's dimiss transition
- *       let navTransition = actionSheet.dismiss();
+ *       let navTransition = alert.dismiss();
  *
  *       // start the page transition when dismissal of
  *       // the Alert is complete
@@ -155,7 +155,7 @@ import { ViewController } from '../../navigation/view-controller';
  *       return false;
  *     }
  *   }]
- * }
+ * });
  *
  * let alert = this.alertCtrl.create(options);
  *
