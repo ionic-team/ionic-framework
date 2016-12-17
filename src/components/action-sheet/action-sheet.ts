@@ -14,18 +14,22 @@ import { ViewController } from '../../navigation/view-controller';
  * usually used to present the user with a set of actions to choose from. Each button can be 
  * customized, and assigned a handler function that is called when the button is tapped.
  *
- * A user must manually dismiss an Action Sheet, before they can resume interaction 
- * with the app. This is done by tapping one of the Action Sheet's buttons, 
- * tapping the back button (Android), or tapping the background outside the 
- * Action Sheet. To prevent tapping a button from dismissing the Action Sheet,
- * set the handler function for that button to return `false`.
- * 
+ * ### Creating an Action Sheet
+ *
  * An Action Sheet is defined by importing and creating an instance of ActionSheetController
  * then calling `create(options)` on the instance. Action Sheet options can also
  * be specified at a later time with [instance methods](#instance-members). For a complete
  * list of options see [Action Sheet Options](#action-sheet-options) below.
  *
  * To display an Action Sheet call `present()` on a defined Action Sheet.
+ *
+ * ### Dismissing an Action Sheet
+ *
+ * A user must manually dismiss an Action Sheet, before they can resume interaction 
+ * with the app. This is done by tapping one of the Action Sheet's buttons, 
+ * tapping the back button (Android), or tapping the background outside the 
+ * Action Sheet. To prevent tapping a button from dismissing the Action Sheet,
+ * set the handler function for that button to return `false`.
  *
  * @usage
  * ```ts
@@ -78,22 +82,22 @@ import { ViewController } from '../../navigation/view-controller';
  * ### Action Sheet Options
  *
  *
- * | Option                | Type          | Description                                                |
- * |-----------------------|---------------|------------------------------------------------------------|
- * | title                 |`string`       | The title for the Action Sheet.                            |
- * | subTitle              |`string`       | The sub-title for the Action Sheet.                        |
- * | cssClass              |`string`       | Additional classes for custom styles, separated by spaces. |
- * | enableBackdropDismiss |`boolean`      | If the Action Sheet should close when the user taps the backdrop. Defaults to true. |
+ * | Option                | Type          | Description                                                                                                                                                                                           |
+ * |-----------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+ * | title                 |`string`       | The title for the Action Sheet.                                                                                                                                                                       |
+ * | subTitle              |`string`       | The sub-title for the Action Sheet.                                                                                                                                                                   |
+ * | cssClass              |`string`       | Additional classes for custom styles, separated by spaces.                                                                                                                                            |
+ * | enableBackdropDismiss |`boolean`      | If the Action Sheet should close when the user taps the backdrop. Defaults to true.                                                                                                                   |
  * | buttons               |`Array<any>`   | An array of [button options](#button-options). Buttons are displayed in the order they are included in the array, except buttons with `role: cancel`, which appear at the button of the Action Sheet. |
  *
  * ### Button Options
  *
- * | Option   | Type     | Description                                                                                                                                      |
- * |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
- * | text     | `string` | The button text.                                                                                                                                |
- * | icon     | `icon`   | The button icon.                                                                                                                               |
- * | handler  | `any`    | A callback function to execute when the button is tapped. If the user dismisses the Action Sheet by tapping the background, the handler for the button with `role: cancel` will be executed                                           |
- * | cssClass | `string` | Additional classes for custom styles, separated by spaces.                                                                                       |
+ * | Option   | Type     | Description                                                                                                                                                                                                                                                                               |
+ * |----------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+ * | text     | `string` | The button text.                                                                                                                                                                                                                                                                          |
+ * | icon     | `icon`   | The button icon.                                                                                                                                                                                                                                                                          |
+ * | handler  | `any`    | A callback function to execute when the button is tapped. If the user dismisses the Action Sheet by tapping the background, the handler for the button with `role: cancel` will be executed                                                                                               |
+ * | cssClass | `string` | Additional classes for custom styles, separated by spaces.                                                                                                                                                                                                                                |
  * | role     | `string` | `destructive` or `cancel`. `destructive` styles the button in iOS mode only. It is recommended that `destructive` buttons be included at the start of the `buttons` array. `cancel` styles the button across all platform modes, and places the button at the bottom of the Action Sheet. |
  *
  * ### Starting Page Transitions in Handler Functions
