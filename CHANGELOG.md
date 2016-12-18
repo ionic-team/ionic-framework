@@ -205,8 +205,29 @@ first toolbar in a footer. Adding `no-border` to the header or footer will hide 
 
 * This means that `no-border-top` and `no-border-bottom` will not work on iOS and should
 be removed from any toolbars using it.
+  
+  
+#### Events
+
+* The argument passed to the `events.subscribe(args)` function is no longer an array of parameters.
+Instead, it will be called with the same parameters used in `events.publish(arg1, arg2)`
+
+  For example, the following code:
 
 
+  ```
+  events.subscribe('user:created', args => {
+    console.log('Welcome ', args[0], ' at ', args[1]);
+  });
+  ```
+
+  will now become:
+
+  ```
+  events.subscribe('user:created', (user, time) => {
+    console.log('Welcome ', user, ' at ', time);
+  });
+  ```
 
 <a name="2.0.0-rc.3"></a>
 # [2.0.0-rc.3](https://github.com/driftyco/ionic/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2016-11-17)
