@@ -3,6 +3,7 @@ import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer
 import { Config } from '../../config/config';
 import { Key } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
+import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { assert } from '../../util/util';
@@ -43,6 +44,7 @@ export class PopoverCmp {
     public _elementRef: ElementRef,
     public _renderer: Renderer,
     public _config: Config,
+    private _platform: Platform,
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
     gestureCtrl: GestureController,
@@ -63,9 +65,7 @@ export class PopoverCmp {
   }
 
   ionViewPreLoad() {
-    let activeElement: any = document.activeElement;
-    activeElement && activeElement.blur();
-
+    this._platform.focusOutActiveElement();
     this._load(this._navParams.data.component);
   }
 

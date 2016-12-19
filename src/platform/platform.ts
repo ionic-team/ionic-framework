@@ -1,8 +1,8 @@
 import { EventEmitter, NgZone } from '@angular/core';
 
+import { initCss, isTextInput } from '../util/dom';
 import { QueryParams } from './query-params';
 import { removeArrayItem } from '../util/util';
-import { isTextInput } from '../util/dom';
 
 
 /**
@@ -517,6 +517,13 @@ export class Platform {
   }
 
   /**
+   * @private
+   */
+  getElementFromPoint(x: number, y: number) {
+    return <HTMLElement>this._doc.elementFromPoint(x, y);
+  }
+
+  /**
    * Returns `true` if the app is in portait mode.
    */
   isPortrait(): boolean {
@@ -653,14 +660,30 @@ export class Platform {
     };
   }
 
+  /**
+   * @private
+   */
   isActiveElement(ele: HTMLElement) {
     return !!(ele && (this._doc.activeElement === ele));
   }
 
-  hasFocus(ele: HTMLElement) {
-    return this.isActiveElement(ele) && (ele.parentElement.querySelector(':focus') === ele);
+  /**
+   * @private
+   */
+  getActiveElement() {
+    return this._doc.activeElement;
   }
 
+  /**
+   * @private
+   */
+  hasFocus(ele: HTMLElement) {
+    return !!((ele && (this.getActiveElement() === ele)) && (ele.parentElement.querySelector(':focus') === ele));
+  }
+
+  /**
+   * @private
+   */
   hasFocusedTextInput() {
     const ele = this._doc.activeElement;
     if (isTextInput(ele)) {
@@ -669,8 +692,11 @@ export class Platform {
     return false;
   }
 
+  /**
+   * @private
+   */
   focusOutActiveElement() {
-    const activeElement = <HTMLElement>document.activeElement;
+    const activeElement: any = this.getActiveElement();
     activeElement && activeElement.blur && activeElement.blur();
   }
 
@@ -1064,6 +1090,9 @@ export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]
   p.setDocument(doc);
   p.setDir(doc.documentElement.dir, false);
   p.setLang(doc.documentElement.lang, false);
+
+  // set css properties
+  initCss(doc.documentElement);
 
   // set values from "window"
   const win = doc.defaultView;

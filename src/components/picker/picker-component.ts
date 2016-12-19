@@ -462,6 +462,7 @@ export class PickerCmp {
     private _viewCtrl: ViewController,
     private _elementRef: ElementRef,
     config: Config,
+    private _platform: Platform,
     gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer
@@ -567,10 +568,7 @@ export class PickerCmp {
   }
 
   ionViewDidEnter() {
-    let activeElement: any = document.activeElement;
-    if (activeElement) {
-      activeElement.blur();
-    }
+    this._platform.focusOutActiveElement();
 
     let focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {

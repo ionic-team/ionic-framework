@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 
 import { Config } from '../config/config';
 import { DomController } from './dom-controller';
-import { focusOutActiveElement, hasFocusedTextInput } from '../util/dom';
+import { isTextInput } from '../util/dom';
 import { Key } from './key';
 import { Platform } from './platform';
 
@@ -37,8 +37,8 @@ export class Keyboard {
         // this custom cordova plugin event fires when the keyboard will hide
         // useful when the virtual keyboard is closed natively
         // https://github.com/driftyco/ionic-plugin-keyboard
-        if (hasFocusedTextInput()) {
-          focusOutActiveElement();
+        if (this.isOpen()) {
+          this._platform.focusOutActiveElement();
         }
       }, 80);
     }, { zone: false, passive: true });
@@ -67,7 +67,7 @@ export class Keyboard {
    * @return {boolean} returns a true or false value if the keyboard is open or not.
    */
   isOpen() {
-    return hasFocusedTextInput();
+    return this.hasFocusedTextInput();
   }
 
   /**
@@ -126,11 +126,11 @@ export class Keyboard {
    */
   close() {
     this._dom.read(() => {
-      if (hasFocusedTextInput()) {
+      if (this.isOpen()) {
         // only focus out when a text input has focus
         console.debug(`keyboard, close()`);
         this._dom.write(() => {
-          focusOutActiveElement();
+          this._platform.focusOutActiveElement();
         });
       }
     });
@@ -204,7 +204,16 @@ export class Keyboard {
     platform.addEventListener(platform.doc(), 'keydown', keyDown, evOpts);
   }
 
+  hasFocusedTextInput() {
+    const activeEle = this._platform.getActiveElement();
+    if (isTextInput(activeEle)) {
+      return (activeEle.parentElement.querySelector(':focus') === activeEle);
+    }
+    return false;
+  }
+
 }
+
 
 const KEYBOARD_CLOSE_POLLING = 150;
 const KEYBOARD_POLLING_CHECKS_MAX = 100;

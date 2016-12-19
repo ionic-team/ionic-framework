@@ -2,7 +2,8 @@ import { Directive, ElementRef, EventEmitter, HostListener, Output, Renderer } f
 import { NgControl } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { CSS, hasFocus }  from '../../util/dom';
+import { CSS }  from '../../util/dom';
+import { Platform } from '../../platform/platform';
 
 
 /**
@@ -25,6 +26,7 @@ export class NativeInput {
     public _elementRef: ElementRef,
     public _renderer: Renderer,
     config: Config,
+    private _platform: Platform,
     public ngControl: NgControl
   ) {
     this._clone = config.getBoolean('inputCloning', false);
@@ -49,25 +51,27 @@ export class NativeInput {
 
     self.focusChange.emit(true);
 
-    function docTouchEnd(ev: TouchEvent) {
-      var tapped = <HTMLElement>ev.target;
-      if (tapped && self.element()) {
-        if (tapped.tagName !== 'INPUT' && tapped.tagName !== 'TEXTAREA' && !tapped.classList.contains('input-cover')) {
-          self.element().blur();
-        }
-      }
-    }
-
     if (self._blurring) {
       // automatically blur input if:
       // 1) this input has focus
       // 2) the newly tapped document element is not an input
       console.debug(`native-input, blurring enabled`);
 
-      document.addEventListener('touchend', docTouchEnd, true);
+      var unregTouchEnd = this._platform.addEventListener(this._platform.doc(), 'touchend', (ev: TouchEvent) => {
+        var tapped = <HTMLElement>ev.target;
+        if (tapped && self.element()) {
+          if (tapped.tagName !== 'INPUT' && tapped.tagName !== 'TEXTAREA' && !tapped.classList.contains('input-cover')) {
+            self.element().blur();
+          }
+        }
+      }, {
+        capture: true,
+        zone: false
+      });
+
       self._unrefBlur = function() {
         console.debug(`native-input, blurring disabled`);
-        document.removeEventListener('touchend', docTouchEnd, true);
+        unregTouchEnd();
       };
     }
   }
@@ -92,7 +96,7 @@ export class NativeInput {
   setFocus() {
     // let's set focus to the element
     // but only if it does not already have focus
-    if (document.activeElement !== this.element()) {
+    if (this._platform.getActiveElement() !== this.element()) {
       this.element().focus();
     }
   }
@@ -151,10 +155,6 @@ export class NativeInput {
     } else {
       removeClone(focusedInputEle);
     }
-  }
-
-  hasFocus(): boolean {
-    return hasFocus(this.element());
   }
 
   getValue(): string {

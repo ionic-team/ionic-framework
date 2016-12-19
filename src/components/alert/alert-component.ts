@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { focusOutActiveElement, NON_TEXT_INPUT_REGEX } from '../../util/dom';
+import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { isPresent, assert } from '../../util/util';
 import { Key } from '../../platform/key';
@@ -194,17 +194,17 @@ export class AlertCmp {
   }
 
   ionViewDidLeave() {
-    focusOutActiveElement();
+    this._platform.focusOutActiveElement();
     this.gestureBlocker.unblock();
   }
 
   ionViewWillLeave() {
-    focusOutActiveElement();
+    this._platform.focusOutActiveElement();
   }
 
   ionViewDidEnter() {
     // focus out of the active element
-    focusOutActiveElement();
+    this._platform.focusOutActiveElement();
 
     // set focus on the first input or button in the alert
     // note that this does not always work and bring up the keyboard on

@@ -48,7 +48,7 @@ export class Animation {
   element(ele: any): Animation {
     if (ele) {
       if (typeof ele === 'string') {
-        ele = document.querySelectorAll(ele);
+        ele = this.platform.doc().querySelectorAll(ele);
         for (var i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }

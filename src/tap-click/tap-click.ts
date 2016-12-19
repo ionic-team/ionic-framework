@@ -204,7 +204,7 @@ export class TapClick {
       // dispatch a mouse click event
       console.debug(`create click from touch ${Date.now()}`);
 
-      let clickEvent: any = document.createEvent('MouseEvents');
+      let clickEvent: any = this.platform.doc().createEvent('MouseEvents');
       clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
       clickEvent.isIonicTap = true;
       ev.target.dispatchEvent(clickEvent);

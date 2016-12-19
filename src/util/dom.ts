@@ -1,5 +1,4 @@
 
-
 export const CSS: {
   transform?: string,
   transition?: string,
@@ -12,14 +11,14 @@ export const CSS: {
   animationDelay?: string;
 } = {};
 
-(function() {
+export function initCss(docEle: HTMLElement) {
   // transform
   var i: number;
   var keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
                  '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
   for (i = 0; i < keys.length; i++) {
-    if ((<any>document.documentElement.style)[keys[i]] !== undefined) {
+    if (docEle.style[keys[i]] !== undefined) {
       CSS.transform = keys[i];
       break;
     }
@@ -28,7 +27,7 @@ export const CSS: {
   // transition
   keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
   for (i = 0; i < keys.length; i++) {
-    if ((<any>document.documentElement.style)[keys[i]] !== undefined) {
+    if (docEle.style[keys[i]] !== undefined) {
       CSS.transition = keys[i];
       break;
     }
@@ -54,7 +53,7 @@ export const CSS: {
 
   // animation delay
   CSS.animationDelay = (isWebkit ? 'webkitAnimationDelay' : 'animationDelay');
-})();
+}
 
 
 export function transitionEnd(el: HTMLElement, callback: Function) {
@@ -108,14 +107,6 @@ export function hasPointerMoved(threshold: number, startCoord: PointerCoordinate
   return false;
 }
 
-export function isActive(ele: HTMLElement) {
-  return !!(ele && (document.activeElement === ele));
-}
-
-export function hasFocus(ele: HTMLElement) {
-  return isActive(ele) && (ele.parentElement.querySelector(':focus') === ele);
-}
-
 export function isTextInput(ele: any) {
   return !!ele &&
          (ele.tagName === 'TEXTAREA' ||
@@ -125,18 +116,6 @@ export function isTextInput(ele: any) {
 
 export const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|color|image|button)$/i;
 
-export function hasFocusedTextInput() {
-  const ele = <HTMLElement>document.activeElement;
-  if (isTextInput(ele)) {
-    return (ele.parentElement.querySelector(':focus') === ele);
-  }
-  return false;
-}
-
-export function focusOutActiveElement() {
-  const activeElement = <HTMLElement>document.activeElement;
-  activeElement && activeElement.blur && activeElement.blur();
-}
 
 const skipInputAttrsReg = /^(value|checked|disabled|type|class|style|id|autofocus|autocomplete|autocorrect)$/i;
 export function copyInputAttributes(srcElement: HTMLElement, destElement: HTMLElement) {

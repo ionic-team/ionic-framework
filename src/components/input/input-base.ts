@@ -295,7 +295,7 @@ export class InputBase extends Ion implements IonicFormInput {
    */
   hasFocus(): boolean {
     // check if an input has focus or not
-    return this._native.hasFocus();
+    return this._platform.hasFocus(this._native.element());
   }
 
   /**
@@ -460,7 +460,7 @@ export class InputBase extends Ion implements IonicFormInput {
     this._native.setFocus();
 
     // ensure the body hasn't scrolled down
-    document.body.scrollTop = 0;
+    this._platform.doc().body.scrollTop = 0;
   }
 
   /**
