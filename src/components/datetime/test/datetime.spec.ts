@@ -105,6 +105,34 @@ describe('DateTime', () => {
       expect(columns[1].options[30].disabled).toEqual(true);
     });
 
+    it('should enable all of the values given', () => {
+      datetime.monthValues = '6,7,8';
+      datetime.dayValues = '01,02,03,04,05,06,08,09,10, 11, 12, 13, 14';
+      datetime.yearValues = '2014,2015';
+
+      datetime.pickerFormat = 'MM DD YYYY';
+
+      var picker = new Picker(mockApp());
+      datetime.generate(picker);
+
+      var columns = picker.getColumns();
+
+      expect(columns[0].options.length).toEqual(3); // months
+      expect(columns[1].options.length).toEqual(13); // days
+      expect(columns[2].options.length).toEqual(2); // years
+
+      datetime.validate(picker);
+
+      // Months
+      for (var i = 0; i < columns[0].options.length; i++) {
+        expect(columns[0].options[i].disabled).toEqual(false);
+      }
+
+      // // Days
+      for (var i = 0; i < columns[1].options.length; i++) {
+        expect(columns[1].options[i].disabled).toEqual(false);
+      }
+    });
   });
 
   describe('writeValue', () => {
