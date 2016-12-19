@@ -1,6 +1,6 @@
 import { CSS, transitionEnd } from '../util/dom';
 import { isDefined, assert } from '../util/util';
-import { nativeRaf, nativeTimeout } from '../util/native-window';
+import { Platform } from '../platform/platform';
 
 
 /**
@@ -31,18 +31,18 @@ export class Animation {
   private _hasDur: boolean;
   private _isAsync: boolean;
   private _twn: boolean;
-  private _raf: Function;
 
+  platform: Platform;
   parent: Animation;
   opts: AnimationOptions;
   hasChildren: boolean = false;
   isPlaying: boolean = false;
   hasCompleted: boolean = false;
 
-  constructor(ele?: any, opts?: AnimationOptions, raf?: Function) {
+  constructor(platform: Platform, ele?: any, opts?: AnimationOptions) {
+    this.platform = platform;
     this.element(ele);
     this.opts = opts;
-    this._raf = raf || nativeRaf;
   }
 
   element(ele: any): Animation {
@@ -324,7 +324,7 @@ export class Animation {
    */
   play(opts?: PlayOptions) {
     // If the animation was already invalidated (it did finish), do nothing
-    if (!this._raf) {
+    if (!this.platform) {
       return;
     }
 
@@ -347,9 +347,8 @@ export class Animation {
     // from an input event, and just having one RAF would have this code
     // run within the same frame as the triggering input event, and the
     // input event probably already did way too much work for one frame
-    this._raf(() => {
-      assert(this._raf, '_raf has to be valid');
-      this._raf(this._playDomInspect.bind(this, opts));
+    this.platform.raf(() => {
+      this.platform.raf(this._playDomInspect.bind(this, opts));
     });
   }
 
@@ -392,8 +391,6 @@ export class Animation {
    * ROOT ANIMATION
    */
   _playDomInspect(opts: PlayOptions) {
-    assert(this._raf, '_raf has to be valid');
-
     // fire off all the "before" function that have DOM READS in them
     // elements will be in the DOM, however visibily hidden
     // so we can read their dimensions if need be
@@ -412,10 +409,10 @@ export class Animation {
     // ******** DOM WRITE ****************
     this._playProgress(opts);
 
-    if (this._isAsync && this._raf) {
+    if (this._isAsync && this.platform) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this._raf(this._playToStep.bind(this, 1));
+      this.platform.raf(this._playToStep.bind(this, 1));
     }
   }
 
@@ -521,7 +518,7 @@ export class Animation {
 
     // set a fallback timeout if the transition end event never fires, or is too slow
     // transition end fallback: (animation duration + XXms)
-    self._tm = nativeTimeout(onTransitionFallback, (dur + TRANSITION_END_FALLBACK_PADDING_MS));
+    self._tm = self.platform.timeout(onTransitionFallback, (dur + TRANSITION_END_FALLBACK_PADDING_MS));
   }
 
   /**
@@ -1051,7 +1048,7 @@ export class Animation {
 
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this._raf && this._raf(this._playToStep.bind(this, stepValue));
+      this.platform && this.platform.raf(this._playToStep.bind(this, stepValue));
     }
   }
 
@@ -1169,7 +1166,7 @@ export class Animation {
 
     this._clearAsync();
 
-    this.parent = this._e = this._rdFn = this._wrFn = this._raf = null;
+    this.parent = this.platform = this._e = this._rdFn = this._wrFn = null;
 
     if (this._c) {
       this._c.length = this._cL = 0;

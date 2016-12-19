@@ -2,7 +2,7 @@ import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from
 
 import { Config } from '../../config/config';
 import { focusOutActiveElement } from '../../util/dom';
-import { Key } from '../../util/key';
+import { Key } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
 import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';

@@ -1,7 +1,7 @@
 import { SlideGesture } from './slide-gesture';
 import { defaults } from '../util/util';
 import { pointerCoord } from '../util/dom';
-import { windowDimensions } from '../util/native-window';
+import { Platform } from '../platform/platform';
 
 /**
  * @private
@@ -11,12 +11,12 @@ export class SlideEdgeGesture extends SlideGesture {
   public maxEdgeStart: any;
   private _d: any;
 
-  constructor(element: HTMLElement, opts: any = {}) {
+  constructor(platform: Platform, element: HTMLElement, opts: any = {}) {
     defaults(opts, {
       edge: 'left',
       maxEdgeStart: 50
     });
-    super(element, opts);
+    super(platform, element, opts);
     // Can check corners through use of eg 'left top'
     this.edges = opts.edge.split(' ');
     this.maxEdgeStart = opts.maxEdgeStart;
@@ -29,12 +29,11 @@ export class SlideEdgeGesture extends SlideGesture {
   }
 
   getContainerDimensions() {
-    const winDimensions = windowDimensions();
     return {
       left: 0,
       top: 0,
-      width: winDimensions.innerWidth,
-      height: winDimensions.innerHeight
+      width: this.platform.width(),
+      height: this.platform.height()
     };
   }
 

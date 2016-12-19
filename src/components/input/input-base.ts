@@ -5,7 +5,7 @@ import { App } from '../app/app';
 import { copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { Config } from '../../config/config';
 import { Content, ContentDimensions, ScrollEvent } from '../content/content';
-import { DomController } from '../../util/dom-controller';
+import { DomController } from '../../platform/dom-controller';
 import { Form, IonicFormInput } from '../../util/form';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';

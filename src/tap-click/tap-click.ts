@@ -1,15 +1,17 @@
 import { Injectable, NgZone } from '@angular/core';
 
-import { assert, runInDev } from '../../util/util';
+import { assert, runInDev } from '../util/util';
 import { Activator } from './activator';
 import { ActivatorBase } from './activator-base';
-import { App } from '../app/app';
-import { Config } from '../../config/config';
-import { GestureController } from '../../gestures/gesture-controller';
-import { pointerCoord, hasPointerMoved } from '../../util/dom';
-import { PointerEvents, PointerEventType } from '../../gestures/pointer-events';
+import { App } from '../components/app/app';
+import { Config } from '../config/config';
+import { DomController } from '../platform/dom-controller';
+import { GestureController } from '../gestures/gesture-controller';
+import { Platform } from '../platform/platform';
+import { pointerCoord, hasPointerMoved } from '../util/dom';
+import { PointerEvents, PointerEventType } from '../gestures/pointer-events';
 import { RippleActivator } from './ripple';
-import { UIEventManager } from '../../gestures/ui-event-manager';
+import { UIEventManager } from '../gestures/ui-event-manager';
 
 /**
  * @private
@@ -20,23 +22,27 @@ export class TapClick {
   private usePolyfill: boolean;
   private activator: ActivatorBase;
   private startCoord: any;
-  private events: UIEventManager = new UIEventManager(false);
+  private events: UIEventManager;
   private pointerEvents: PointerEvents;
   private lastTouchEnd: number;
   private dispatchClick: boolean;
 
   constructor(
     config: Config,
+    private platform: Platform,
+    dom: DomController,
     private app: App,
     zone: NgZone,
     private gestureCtrl: GestureController
   ) {
+    this.events = new UIEventManager(platform);
+
     let activator = config.get('activator');
     if (activator === 'ripple') {
-      this.activator = new RippleActivator(app, config);
+      this.activator = new RippleActivator(app, config, dom);
 
     } else if (activator === 'highlight') {
-      this.activator = new Activator(app, config);
+      this.activator = new Activator(app, config, dom);
     }
 
     this.usePolyfill = config.getBoolean('tapPolyfill');
@@ -242,9 +248,3 @@ const ACTIVATABLE_ELEMENTS = ['A', 'BUTTON'];
 const ACTIVATABLE_ATTRIBUTES = ['tappable', 'ion-button'];
 const POINTER_TOLERANCE = 100;
 const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
-
-export function setupTapClick(config: Config, app: App, zone: NgZone, gestureCtrl: GestureController) {
-  return function() {
-    return new TapClick(config, app, zone, gestureCtrl);
-  };
-}

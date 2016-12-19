@@ -12,10 +12,11 @@ import { Platform } from '../../platform/platform';
  * and registers itself with Menu.
  */
 export class MenuType {
-  ani: Animation = new Animation();
+  ani: Animation;
   isOpening: boolean;
 
-  constructor() {
+  constructor(platform: Platform) {
+    this.ani = new Animation(platform);
     this.ani
       .easing('cubic-bezier(0.0, 0.0, 0.2, 1)')
       .easingReverse('cubic-bezier(0.4, 0.0, 0.6, 1)')
@@ -80,10 +81,10 @@ export class MenuType {
  */
 class MenuRevealType extends MenuType {
   constructor(menu: Menu, platform: Platform) {
-    super();
+    super(platform);
 
     let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
-    let contentOpen = new Animation(menu.getContentElement());
+    let contentOpen = new Animation(platform, menu.getContentElement());
     contentOpen.fromTo('translateX', '0px', openedX);
     this.ani.add(contentOpen);
   }
@@ -99,7 +100,7 @@ MenuController.registerType('reveal', MenuRevealType);
  */
 class MenuPushType extends MenuType {
   constructor(menu: Menu, platform: Platform) {
-    super();
+    super(platform);
 
     let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
 
@@ -115,11 +116,11 @@ class MenuPushType extends MenuType {
       menuClosedX = -menu.width() + 'px';
     }
 
-    let menuAni = new Animation(menu.getMenuElement());
+    let menuAni = new Animation(platform, menu.getMenuElement());
     menuAni.fromTo('translateX', menuClosedX, menuOpenedX);
     this.ani.add(menuAni);
 
-    let contentApi = new Animation(menu.getContentElement());
+    let contentApi = new Animation(platform, menu.getContentElement());
     contentApi.fromTo('translateX', '0px', contentOpenedX);
     this.ani.add(contentApi);
   }
@@ -135,7 +136,7 @@ MenuController.registerType('push', MenuPushType);
  */
 class MenuOverlayType extends MenuType {
   constructor(menu: Menu, platform: Platform) {
-    super();
+    super(platform);
 
     let closedX: string, openedX: string;
     if (menu.side === 'right') {
@@ -149,11 +150,11 @@ class MenuOverlayType extends MenuType {
       openedX = '0px';
     }
 
-    let menuAni = new Animation(menu.getMenuElement());
+    let menuAni = new Animation(platform, menu.getMenuElement());
     menuAni.fromTo('translateX', closedX, openedX);
     this.ani.add(menuAni);
 
-    let backdropApi = new Animation(menu.getBackdropElement());
+    let backdropApi = new Animation(platform, menu.getBackdropElement());
     backdropApi.fromTo('opacity', 0.01, 0.35);
     this.ani.add(backdropApi);
   }

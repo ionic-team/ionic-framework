@@ -4,10 +4,10 @@ import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
-import { DomController } from '../../util/dom-controller';
+import { DomController } from '../../platform/dom-controller';
 import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../../gestures/gesture-controller';
 import { isTrueProperty, assert } from '../../util/util';
-import { Keyboard } from '../../util/keyboard';
+import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
@@ -200,7 +200,7 @@ export class Menu {
   private _isAnimating: boolean = false;
   private _isPersistent: boolean = false;
   private _init: boolean = false;
-  private _events: UIEventManager = new UIEventManager();
+  private _events: UIEventManager;
   private _gestureBlocker: BlockerDelegate;
 
   /**
@@ -310,6 +310,7 @@ export class Menu {
     private _domCtrl: DomController,
     private _app: App,
   ) {
+    this._events = new UIEventManager(_platform);
     this._gestureBlocker = _gestureCtrl.createBlocker({
       disable: [GESTURE_GO_BACK_SWIPE]
     });
@@ -342,7 +343,7 @@ export class Menu {
     this.setElementAttribute('type', this.type);
 
     // add the gestures
-    this._gesture = new MenuContentGesture(this, this._gestureCtrl, this._domCtrl);
+    this._gesture = new MenuContentGesture(this._platform, this, this._gestureCtrl, this._domCtrl);
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side
@@ -516,7 +517,7 @@ export class Menu {
     this.isOpen = isOpen;
     this._isAnimating = false;
 
-    this._events.unlistenAll();
+    this._events.destroy();
     if (isOpen) {
       // Disable swipe to go back gesture
       this._gestureBlocker.block();
@@ -657,7 +658,7 @@ export class Menu {
    */
   ngOnDestroy() {
     this._menuCtrl.unregister(this);
-    this._events.unlistenAll();
+    this._events.destroy();
     this._gesture && this._gesture.destroy();
     this._type && this._type.destroy();
 

@@ -1,50 +1,38 @@
-import { defaults, assert } from '../util/util';
-import { DomDebouncer, DomController } from '../util/dom-controller';
+import { assert, defaults } from '../util/util';
+import { DomDebouncer, DomController } from '../platform/dom-controller';
 import { GestureDelegate } from '../gestures/gesture-controller';
 import { PanRecognizer } from './recognizers';
+import { Platform } from '../platform/platform';
 import { pointerCoord } from '../util/dom';
 import { PointerEvents, PointerEventsConfig } from './pointer-events';
 import { UIEventManager } from './ui-event-manager';
 
-/**
- * @private
- */
-export interface PanGestureConfig {
-  threshold?: number;
-  maxAngle?: number;
-  direction?: 'x' | 'y';
-  gesture?: GestureDelegate;
-  domController?: DomController;
-  zone?: boolean;
-  capture?: boolean;
-  passive?: boolean;
-}
 
 /**
  * @private
  */
 export class PanGesture {
-
   private debouncer: DomDebouncer;
-  private events: UIEventManager = new UIEventManager(false);
+  private events: UIEventManager;
   private pointerEvents: PointerEvents;
   private detector: PanRecognizer;
-  protected started: boolean = false;
-  private captured: boolean = false;
-  public isListening: boolean = false;
+  protected started: boolean;
+  private captured: boolean;
+  public isListening: boolean;
   protected gestute: GestureDelegate;
   protected direction: string;
   private eventsConfig: PointerEventsConfig;
 
-  constructor(private element: HTMLElement, opts: PanGestureConfig = {}) {
+  constructor(public platform: Platform, private element: HTMLElement, opts: PanGestureConfig = {}) {
     defaults(opts, {
       threshold: 20,
       maxAngle: 40,
       direction: 'x',
-      zone: true,
+      zone: false,
       capture: false,
       passive: false,
     });
+    this.events = new UIEventManager(platform);
     if (opts.domController) {
       this.debouncer = opts.domController.debouncer();
     }
@@ -65,20 +53,18 @@ export class PanGesture {
   }
 
   listen() {
-    if (this.isListening) {
-      return;
+    if (!this.isListening) {
+      this.pointerEvents = this.events.pointerEvents(this.eventsConfig);
+      this.isListening = true;
     }
-    this.pointerEvents = this.events.pointerEvents(this.eventsConfig);
-    this.isListening = true;
   }
 
   unlisten() {
-    if (!this.isListening) {
-      return;
+    if (this.isListening) {
+      this.gestute && this.gestute.release();
+      this.events.destroy();
+      this.isListening = false;
     }
-    this.gestute && this.gestute.release();
-    this.events.unlistenAll();
-    this.isListening = false;
   }
 
   destroy() {
@@ -186,4 +172,19 @@ export class PanGesture {
   onDragMove(ev: any) { }
   onDragEnd(ev: any) { }
   notCaptured(ev: any) { }
+}
+
+
+/**
+ * @private
+ */
+export interface PanGestureConfig {
+  threshold?: number;
+  maxAngle?: number;
+  direction?: 'x' | 'y';
+  gesture?: GestureDelegate;
+  domController?: DomController;
+  zone?: boolean;
+  capture?: boolean;
+  passive?: boolean;
 }

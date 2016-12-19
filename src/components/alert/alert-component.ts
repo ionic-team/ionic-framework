@@ -4,7 +4,7 @@ import { Config } from '../../config/config';
 import { focusOutActiveElement, NON_TEXT_INPUT_REGEX } from '../../util/dom';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { isPresent, assert } from '../../util/util';
-import { Key } from '../../util/key';
+import { Key } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';

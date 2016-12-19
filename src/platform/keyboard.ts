@@ -2,9 +2,9 @@ import { Injectable, NgZone } from '@angular/core';
 
 import { Config } from '../config/config';
 import { DomController } from './dom-controller';
-import { focusOutActiveElement, hasFocusedTextInput } from './dom';
+import { focusOutActiveElement, hasFocusedTextInput } from '../util/dom';
 import { Key } from './key';
-import { nativeTimeout, clearNativeTimeout } from './native-window';
+import { Platform } from './platform';
 
 
 /**
@@ -26,27 +26,27 @@ import { nativeTimeout, clearNativeTimeout } from './native-window';
 export class Keyboard {
   private _tmr: any;
 
-  constructor(config: Config, private _zone: NgZone, private _dom: DomController) {
-    _zone.runOutsideAngular(() => {
-      this.focusOutline(config.get('focusOutline'), document);
+  constructor(config: Config, private _platform: Platform, private _zone: NgZone, private _dom: DomController) {
+    this.focusOutline(config.get('focusOutline'));
 
-      window.addEventListener('native.keyboardhide', () => {
-        clearNativeTimeout(this._tmr);
-        this._tmr = nativeTimeout(() => {
-          // this custom cordova plugin event fires when the keyboard will hide
-          // useful when the virtual keyboard is closed natively
-          // https://github.com/driftyco/ionic-plugin-keyboard
-          if (hasFocusedTextInput()) {
-            focusOutActiveElement();
-          }
-        }, 80);
-      });
+    const win = _platform.win();
 
-      window.addEventListener('native.keyboardshow', () => {
-        clearNativeTimeout(this._tmr);
-      });
+    _platform.addEventListener(win, 'native.keyboardhide', () => {
+      _platform.cancelTimeout(this._tmr);
+      this._tmr = _platform.timeout(() => {
+        // this custom cordova plugin event fires when the keyboard will hide
+        // useful when the virtual keyboard is closed natively
+        // https://github.com/driftyco/ionic-plugin-keyboard
+        if (hasFocusedTextInput()) {
+          focusOutActiveElement();
+        }
+      }, 80);
+    }, { zone: false, passive: true });
 
-    });
+    _platform.addEventListener(win, 'native.keyboardshow', () => {
+      _platform.cancelTimeout(this._tmr);
+    }, { zone: false, passive: true });
+
   }
 
   /**
@@ -103,7 +103,7 @@ export class Keyboard {
     function checkKeyboard() {
       console.debug(`keyboard, isOpen: ${self.isOpen()}`);
       if (!self.isOpen() || checks > pollingChecksMax) {
-        nativeTimeout(function() {
+        self._platform.timeout(function() {
           self._zone.run(function() {
             console.debug(`keyboard, closed`);
             callback();
@@ -111,12 +111,12 @@ export class Keyboard {
         }, 400);
 
       } else {
-        nativeTimeout(checkKeyboard, pollingInternval);
+        self._platform.timeout(checkKeyboard, pollingInternval);
       }
       checks++;
     }
 
-    nativeTimeout(checkKeyboard, pollingInternval);
+    self._platform.timeout(checkKeyboard, pollingInternval);
 
     return promise;
   }
@@ -139,7 +139,7 @@ export class Keyboard {
   /**
    * @private
    */
-  focusOutline(setting: any, document: any) {
+  focusOutline(setting: any) {
     /* Focus Outline
      * --------------------------------------------------
      * By default, when a keydown event happens from a tab key, then
@@ -153,11 +153,16 @@ export class Keyboard {
      */
 
     const self = this;
+    const platform = self._platform;
+    const doc = platform.doc();
     let isKeyInputEnabled = false;
+    let unRegMouse: Function;
+    let unRegTouch: Function;
+    const evOpts = { passive: true, zone: false };
 
     function cssClass() {
       self._dom.write(() => {
-        document.body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
+        platform.doc().body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
       });
     }
 
@@ -185,18 +190,18 @@ export class Keyboard {
     function enableKeyInput() {
       cssClass();
 
-      self._zone.runOutsideAngular(() => {
-        document.removeEventListener('mousedown', pointerDown);
-        document.removeEventListener('touchstart', pointerDown);
+      unRegMouse && unRegMouse();
+      unRegTouch && unRegTouch();
 
-        if (isKeyInputEnabled) {
-          document.addEventListener('mousedown', pointerDown);
-          document.addEventListener('touchstart', pointerDown);
-        }
-      });
+      if (isKeyInputEnabled) {
+        // listen for when a mousedown or touchstart event happens
+        unRegMouse = platform.addEventListener(doc, 'mousedown', pointerDown, evOpts);
+        unRegTouch = platform.addEventListener(doc, 'touchstart', pointerDown, evOpts);
+      }
     }
 
-    document.addEventListener('keydown', keyDown);
+    // always listen for tab keydown events
+    platform.addEventListener(platform.doc(), 'keydown', keyDown, evOpts);
   }
 
 }

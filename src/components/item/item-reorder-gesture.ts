@@ -1,11 +1,8 @@
 import { CSS, PointerCoordinates, pointerCoord } from '../../util/dom';
 import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
+import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 
-
-const AUTO_SCROLL_MARGIN = 60;
-const SCROLL_JUMP = 10;
-const ITEM_REORDER_ACTIVE = 'reorder-active';
 
 /**
  * @private
@@ -13,23 +10,22 @@ const ITEM_REORDER_ACTIVE = 'reorder-active';
 export class ItemReorderGesture {
   private selectedItemEle: HTMLElement = null;
   private selectedItemHeight: number;
-
   private offset: PointerCoordinates;
   private lastToIndex: number;
   private lastYcoord: number;
   private lastScrollPosition: number;
   private emptyZone: boolean;
-
   private windowHeight: number;
+  private events: UIEventManager;
 
-  private events: UIEventManager = new UIEventManager(false);
-
-  constructor(public reorderList: ItemReorder) {
+  constructor(public platform: Platform, public reorderList: ItemReorder) {
+    this.events = new UIEventManager(platform);
     this.events.pointerEvents({
       element: this.reorderList.getNativeElement(),
       pointerDown: this.onDragStart.bind(this),
       pointerMove: this.onDragMove.bind(this),
-      pointerUp: this.onDragEnd.bind(this)
+      pointerUp: this.onDragEnd.bind(this),
+      zone: false
     });
   }
 
@@ -62,7 +58,7 @@ export class ItemReorderGesture {
     this.lastYcoord = -100;
     this.lastToIndex = indexForItem(item);
 
-    this.windowHeight = window.innerHeight - AUTO_SCROLL_MARGIN;
+    this.windowHeight = this.platform.height() - AUTO_SCROLL_MARGIN;
     this.lastScrollPosition = this.reorderList._scrollContent(0);
 
     this.offset = pointerCoord(ev);
@@ -154,7 +150,7 @@ export class ItemReorderGesture {
    */
   destroy() {
     this.onDragEnd(null);
-    this.events.unlistenAll();
+    this.events.destroy();
     this.events = null;
     this.reorderList = null;
   }
@@ -164,3 +160,8 @@ function itemForPosition(x: number, y: number, list: any): HTMLElement {
   let element = <HTMLElement>document.elementFromPoint(x, y);
   return findReorderItem(element, list);
 }
+
+
+const AUTO_SCROLL_MARGIN = 60;
+const SCROLL_JUMP = 10;
+const ITEM_REORDER_ACTIVE = 'reorder-active';

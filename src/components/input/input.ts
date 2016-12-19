@@ -4,7 +4,7 @@ import { NgControl } from '@angular/forms';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
-import { DomController } from '../../util/dom-controller';
+import { DomController } from '../../platform/dom-controller';
 import { Form } from '../../util/form';
 import { InputBase } from './input-base';
 import { isTrueProperty } from '../../util/util';

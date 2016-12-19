@@ -2,10 +2,11 @@ import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListene
 
 import { Content } from '../content/content';
 import { CSS } from '../../util/dom';
+import { DomController } from '../../platform/dom-controller';
 import { Item } from './item';
 import { ItemReorderGesture } from '../item/item-reorder-gesture';
 import { isTrueProperty, reorderArray } from '../../util/util';
-import { zoneRafFrames } from '../../util/native-window';
+import { Platform } from '../../platform/platform';
 
 
 export class ReorderIndexes {
@@ -160,10 +161,13 @@ export class ItemReorder {
   @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();
 
   constructor(
+    private _platform: Platform,
+    private _dom: DomController,
     elementRef: ElementRef,
     private _rendered: Renderer,
     private _zone: NgZone,
-    @Optional() private _content: Content) {
+    @Optional() private _content: Content
+  ) {
     this._element = elementRef.nativeElement;
   }
 
@@ -194,10 +198,15 @@ export class ItemReorder {
 
     } else if (enabled && !this._reorderGesture) {
       console.debug('enableReorderItems');
-      this._reorderGesture = new ItemReorderGesture(this);
+      this._reorderGesture = new ItemReorderGesture(this._platform, this);
 
       this._enableReorder = true;
-      zoneRafFrames(2, () => this._visibleReorder = true);
+
+      this._dom.write(() => {
+        this._zone.run(() => {
+          this._visibleReorder = true;
+        });
+      }, 16);
     }
   }
 

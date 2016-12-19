@@ -1,60 +1,52 @@
-import { ElementRef } from '@angular/core';
 import { PointerEvents, PointerEventsConfig } from './pointer-events';
-import { uiListenEvent, uiEventOptions } from '../util/ui-event-listener';
+import { Platform, EventListenerOptions } from '../platform/platform';
 
 
 /**
  * @private
  */
 export class UIEventManager {
-  private events: Function[] = [];
+  private evts: Function[] = [];
 
-  constructor(public zoneWrapped: boolean = true) {}
+  constructor(public platform: Platform) {}
 
   pointerEvents(config: PointerEventsConfig): PointerEvents {
-    let element = config.element;
-    if (!element) {
-      element = config.elementRef.nativeElement;
-    }
-
-    if (!element || !config.pointerDown) {
+    if (!config.element || !config.pointerDown) {
       console.error('PointerEvents config is invalid');
       return;
     }
-    const zone = config.zone || this.zoneWrapped;
 
-    const opts = uiEventOptions(config.capture, config.passive);
+    const eventListnerOpts: EventListenerOptions = {
+      capture: config.capture,
+      passive: config.passive,
+      zone: config.zone
+    };
 
     const pointerEvents = new PointerEvents(
-      element,
+      this.platform,
+      config.element,
       config.pointerDown,
       config.pointerMove,
       config.pointerUp,
-      zone,
-      opts);
+      eventListnerOpts);
 
-    let removeFunc = () => pointerEvents.destroy();
-    this.events.push(removeFunc);
+    const removeFunc = () => pointerEvents.destroy();
+    this.evts.push(removeFunc);
     return pointerEvents;
   }
 
-  listenRef(ref: ElementRef, eventName: string, callback: any, option?: any): Function {
-    return this.listen(ref.nativeElement, eventName, callback, option);
-  }
-
-  listen(element: any, eventName: string, callback: any, option: any = false): Function {
-    if (!element) {
-      return;
+  listen(ele: any, eventName: string, callback: any, opts: EventListenerOptions): Function {
+    if (ele) {
+      var removeFunc = this.platform.addEventListener(ele, eventName, callback, opts);
+      this.evts.push(removeFunc);
+      return removeFunc;
     }
-    let removeFunc = uiListenEvent(element, eventName, this.zoneWrapped, option, callback);
-    this.events.push(removeFunc);
-    return removeFunc;
   }
 
-  unlistenAll() {
-    this.events.forEach(event => {
-      event();
+  destroy() {
+    this.evts.forEach(unRegEvent => {
+      unRegEvent();
     });
-    this.events.length = 0;
+    this.evts.length = 0;
   }
 }

@@ -2,9 +2,8 @@ import { Subject } from 'rxjs/Subject';
 
 import { assert } from './util';
 import { CSS, pointerCoord } from './dom';
-import { DomController, DomCallback } from './dom-controller';
-import { nativeRaf, rafFrames } from '../util/native-window';
-import { uiListenEvent, uiEventOptions } from './ui-event-listener';
+import { DomController, DomCallback } from '../platform/dom-controller';
+import { Platform, EventListenerOptions } from '../platform/platform';
 
 
 export class ScrollView {
@@ -23,7 +22,7 @@ export class ScrollView {
   private _endTmr: Function;
 
 
-  constructor(private _dom: DomController) {
+  constructor(private _platform: Platform, private _dom: DomController) {
     this.ev = {
       timeStamp: 0,
       scrollTop: 0,
@@ -141,7 +140,7 @@ export class ScrollView {
 
       // debounce for a moment after the last scroll event
       self._endTmr && self._endTmr();
-      self._endTmr = rafFrames(6, function scrollEnd() {
+      self._endTmr = self._dom.read(function scrollEnd() {
         // haven't scrolled in a while, so it's a scrollend
         self.isScrolling = false;
 
@@ -150,7 +149,7 @@ export class ScrollView {
 
         // emit that the scroll has ended
         self.scrollEnd.next(ev);
-      });
+      }, 80);
 
     };
 
@@ -162,8 +161,7 @@ export class ScrollView {
     // a scroll event callback will always be right before the raf callback
     // so there's little to no value of using raf here since it'll all ways immediately
     // call the raf if it was set within the scroll event, so this will save us some time
-    const opts = uiEventOptions(false, false);
-    self._lsn = uiListenEvent(self._el, 'scroll', false, opts, scrollCallback);
+    self._lsn = self._platform.addEventListener(self._el, 'scroll', scrollCallback, EVENT_OPTS);
   }
 
 
@@ -334,10 +332,10 @@ export class ScrollView {
       positions.length = 0;
     }
 
-    const opts = uiEventOptions(false, true);
-    const unRegStart = uiListenEvent(ele, 'touchstart', false, opts, jsScrollTouchStart);
-    const unRegMove = uiListenEvent(ele, 'touchmove', false, opts, jsScrollTouchMove);
-    const unRegEnd = uiListenEvent(ele, 'touchend', false, opts, jsScrollTouchEnd);
+    const platform = self._platform;
+    const unRegStart = platform.addEventListener(ele, 'touchstart', jsScrollTouchStart, EVENT_OPTS);
+    const unRegMove = platform.addEventListener(ele, 'touchmove', jsScrollTouchMove, EVENT_OPTS);
+    const unRegEnd = platform.addEventListener(ele, 'touchend', jsScrollTouchEnd, EVENT_OPTS);
 
     ele.parentElement.classList.add('js-scroll');
 
@@ -461,7 +459,7 @@ export class ScrollView {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        nativeRaf(step);
+        self._platform.raf(step);
 
       } else {
         self.isScrolling = false;
@@ -474,10 +472,10 @@ export class ScrollView {
     self.isScrolling = true;
 
     // chill out for a frame first
-    rafFrames(2, (timeStamp: number) => {
+    self._dom.write(timeStamp => {
       startTime = timeStamp;
       step(timeStamp);
-    });
+    }, 16);
 
     return promise;
   }
@@ -547,3 +545,7 @@ const MIN_VELOCITY_START_DECELERATION = 4;
 const MIN_VELOCITY_CONTINUE_DECELERATION = 0.12;
 const DECELERATION_FRICTION = 0.97;
 const FRAME_MS = (1000 / 60);
+const EVENT_OPTS: EventListenerOptions = {
+  passive: true,
+  zone: false
+};

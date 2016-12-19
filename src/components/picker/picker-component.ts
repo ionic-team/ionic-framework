@@ -1,17 +1,16 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, NgZone, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 
-import { CSS, pointerCoord } from '../../util/dom';
-import { cancelRaf, nativeRaf } from '../../util/native-window';
 import { clamp, isNumber, isPresent, isString, assert } from '../../util/util';
+import { CSS, pointerCoord } from '../../util/dom';
 import { Config } from '../../config/config';
-import { DomController, DomDebouncer } from '../../util/dom-controller';
+import { DomController, DomDebouncer } from '../../platform/dom-controller';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
-import { Haptic } from '../../util/haptic';
-import { Key } from '../../util/key';
+import { Haptic } from '../../tap-click/haptic';
+import { Key } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
+import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -55,18 +54,20 @@ export class PickerColumnCmp {
   lastTempIndex: number;
   decelerateFunc: Function;
   debouncer: DomDebouncer;
-  events: UIEventManager = new UIEventManager(false);
+  events: UIEventManager;
 
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   constructor(
     config: Config,
+    private _platform: Platform,
     private elementRef: ElementRef,
-    private _sanitizer: DomSanitizer,
     private _zone: NgZone,
     private _haptic: Haptic,
+    platform: Platform,
     domCtrl: DomController,
   ) {
+    this.events = new UIEventManager(platform);
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
     this.scaleFactor = config.getNumber('pickerScaleFactor', 1);
     this.decelerateFunc = this.decelerate.bind(this);
@@ -87,20 +88,18 @@ export class PickerColumnCmp {
 
     // Listening for pointer events
     this.events.pointerEvents({
-      elementRef: this.elementRef,
+      element: this.elementRef.nativeElement,
       pointerDown: this.pointerStart.bind(this),
       pointerMove: this.pointerMove.bind(this),
       pointerUp: this.pointerEnd.bind(this),
-      capture: true
+      capture: true,
+      zone: false
     });
   }
 
   ngOnDestroy() {
-    this.events.unlistenAll();
-    if (this.rafId) {
-      cancelRaf(this.rafId);
-      this.rafId = null;
-    }
+    this._platform.cancelRaf(this.rafId);
+    this.events.destroy();
   }
 
   pointerStart(ev: UIEvent): boolean {
@@ -113,10 +112,7 @@ export class PickerColumnCmp {
     ev.preventDefault();
 
     // cancel any previous raf's that haven't fired yet
-    if (this.rafId) {
-      cancelRaf(this.rafId);
-      this.rafId = null;
-    }
+    this._platform.cancelRaf(this.rafId);
 
     // remember where the pointer started from`
     this.startY = pointerCoord(ev).y;
@@ -271,7 +267,7 @@ export class PickerColumnCmp {
 
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
-        this.rafId = nativeRaf(this.decelerateFunc);
+        this.rafId =  this._platform.raf(this.decelerateFunc);
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -307,10 +303,7 @@ export class PickerColumnCmp {
     // if there isn't a selected index, then just use the top y position
     let y = (selectedIndex > -1) ? ((selectedIndex * this.optHeight) * -1) : 0;
 
-    if (this.rafId) {
-      cancelRaf(this.rafId);
-      this.rafId = null;
-    }
+    this._platform.cancelRaf(this.rafId);
     this.velocity = 0;
 
     // so what y position we're at

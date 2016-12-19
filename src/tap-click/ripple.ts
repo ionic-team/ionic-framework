@@ -1,9 +1,9 @@
 import { ActivatorBase, isActivatedDisabled } from './activator-base';
 import { Activator } from './activator';
-import { App } from '../app/app';
-import { Config } from '../../config/config';
-import { CSS, PointerCoordinates, hasPointerMoved, pointerCoord } from '../../util/dom';
-import { rafFrames } from '../../util/native-window';
+import { App } from '../components/app/app';
+import { Config } from '../config/config';
+import { CSS, PointerCoordinates, hasPointerMoved, pointerCoord } from '../util/dom';
+import { DomController } from '../platform/dom-controller';
 
 
 /**
@@ -14,8 +14,8 @@ export class RippleActivator implements ActivatorBase {
   protected _active: HTMLElement[] = [];
   protected highlight: Activator;
 
-  constructor(app: App, config: Config) {
-    this.highlight = new Activator(app, config);
+  constructor(app: App, config: Config, private dom: DomController) {
+    this.highlight = new Activator(app, config, dom);
   }
 
   clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
@@ -126,13 +126,13 @@ export class RippleActivator implements ActivatorBase {
     let transform = `translate3d(${clientPointerX}px, ${clientPointerY}px, 0px) scale(1)`;
     let transition = `transform ${scaleTransitionDuration}ms,opacity ${opacityTransitionDuration}ms ${opacityTransitionDelay}ms`;
 
-    rafFrames(2, () => {
+    this.dom.write(() => {
       // DOM WRITE
       rippleEle.style.width = rippleEle.style.height = diameter + 'px';
       rippleEle.style.opacity = '0';
       rippleEle.style[CSS.transform] = transform;
       rippleEle.style[CSS.transition] = transition;
-    });
+    }, 16);
   }
 
 }

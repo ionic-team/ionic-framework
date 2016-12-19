@@ -1,7 +1,6 @@
 import { OpaqueToken } from '@angular/core';
 
 import { Platform, PlatformConfig } from './platform';
-import { windowLoad } from '../util/native-window';
 
 
 export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
@@ -182,23 +181,23 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       // prepare a custom "ready" for cordova "deviceready"
       p.prepareReady = function() {
         // 1) ionic bootstrapped
-        windowLoad(function() {
+        p.windowLoad(function(win: Window, doc: HTMLDocument) {
           // 2) window onload triggered or completed
-          document.addEventListener('deviceready', function() {
+          doc.addEventListener('deviceready', function() {
             // 3) cordova deviceready event triggered
 
             // add cordova listeners to emit platform events
-            document.addEventListener('backbutton', function(ev: Event) {
+            doc.addEventListener('backbutton', function(ev: Event) {
               p.zone.run(() => {
                 p.backButton.emit(ev);
               });
             });
-            document.addEventListener('pause', function(ev: Event) {
+            doc.addEventListener('pause', function(ev: Event) {
               p.zone.run(() => {
                 p.pause.emit(ev);
               });
             });
-            document.addEventListener('resume', function(ev: Event) {
+            doc.addEventListener('resume', function(ev: Event) {
               p.zone.run(() => {
                 p.resume.emit(ev);
               });
@@ -206,7 +205,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
 
             // cordova has its own exitApp method
             p.exitApp = function() {
-              (<any>window.navigator).app.exitApp();
+              (<any>win.navigator).app.exitApp();
             };
 
             // cordova has fully loaded and we've added listeners
@@ -216,14 +215,15 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       };
 
     },
-    isMatch(): boolean {
-      return !!((<any>window).cordova || (<any>window).PhoneGap || (<any>window).phonegap);
+    isMatch(p: Platform): boolean {
+      return isCordova(p);
     }
   }
 };
 
-function isCordova(): boolean {
-  return !!((<any>window).cordova);
+function isCordova(p: Platform): boolean {
+  const win: any = p.win();
+  return !!win.cordova || win.PhoneGap || win.phonegap;
 }
 
 function isIOS(p: Platform): boolean {
@@ -239,8 +239,8 @@ function isSafari(p: Platform): boolean {
 }
 
 
-function isWK(): boolean {
-  return !!window['webkit'];
+function isWK(p: Platform): boolean {
+  return !!p.win()['webkit'];
 }
 
 // Commented out becuase it is not used yet
@@ -249,7 +249,7 @@ function isWK(): boolean {
 // }
 
 function isIOSUI(p: Platform): boolean {
-  return isIOS(p) && !isWK() && !isSafari(p);
+  return isIOS(p) && !isWK(p) && !isSafari(p);
 }
 
 

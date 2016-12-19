@@ -1,6 +1,5 @@
 import { assert } from '../util/util';
-import { ElementRef } from '@angular/core';
-import { uiListenEvent } from '../util/ui-event-listener';
+import { Platform, EventListenerOptions } from '../platform/platform';
 
 /**
  * @private
@@ -23,12 +22,13 @@ export class PointerEvents {
   mouseWait: number = 2 * 1000;
   lastEventType: PointerEventType = PointerEventType.UNDEFINED;
 
-  constructor(private ele: any,
+  constructor(
+    private platform: Platform,
+    private ele: any,
     private pointerDown: any,
     private pointerMove: any,
     private pointerUp: any,
-    private zone: boolean,
-    private option: any
+    private option: EventListenerOptions
   ) {
     assert(ele, 'element can not be null');
     assert(pointerDown, 'pointerDown can not be null');
@@ -36,8 +36,8 @@ export class PointerEvents {
     this.bindTouchEnd = this.handleTouchEnd.bind(this);
     this.bindMouseUp = this.handleMouseUp.bind(this);
 
-    this.rmTouchStart = uiListenEvent(ele, 'touchstart', zone, option, this.handleTouchStart.bind(this));
-    this.rmMouseStart = uiListenEvent(ele, 'mousedown', zone, option, this.handleMouseDown.bind(this));
+    this.rmTouchStart = this.platform.addEventListener(ele, 'touchstart', this.handleTouchStart.bind(this), option);
+    this.rmMouseStart = this.platform.addEventListener(ele, 'mousedown', this.handleMouseDown.bind(this), option);
   }
 
   private handleTouchStart(ev: any) {
@@ -50,13 +50,13 @@ export class PointerEvents {
       return;
     }
     if (!this.rmTouchMove && this.pointerMove) {
-      this.rmTouchMove = uiListenEvent(this.ele, 'touchmove', this.zone, this.option, this.pointerMove);
+      this.rmTouchMove = this.platform.addEventListener(this.ele, 'touchmove', this.pointerMove, this.option);
     }
     if (!this.rmTouchEnd) {
-      this.rmTouchEnd = uiListenEvent(this.ele, 'touchend', this.zone, this.option, this.bindTouchEnd);
+      this.rmTouchEnd = this.platform.addEventListener(this.ele, 'touchend', this.bindTouchEnd, this.option);
     }
     if (!this.rmTouchCancel) {
-      this.rmTouchCancel = uiListenEvent(this.ele, 'touchcancel', this.zone, this.option, this.bindTouchEnd);
+      this.rmTouchCancel = this.platform.addEventListener(this.ele, 'touchcancel', this.bindTouchEnd, this.option);
     }
   }
 
@@ -73,10 +73,10 @@ export class PointerEvents {
       return;
     }
     if (!this.rmMouseMove && this.pointerMove) {
-      this.rmMouseMove = uiListenEvent(this.ele.documentElement.parentNode, 'mousemove', this.zone, this.option, this.pointerMove);
+      this.rmMouseMove = this.platform.addEventListener(this.platform.doc(), 'mousemove', this.pointerMove, this.option);
     }
     if (!this.rmMouseUp) {
-      this.rmMouseUp = uiListenEvent(this.ele.documentElement.parentNode, 'mouseup', this.zone, this.option, this.bindMouseUp);
+      this.rmMouseUp = this.platform.addEventListener(this.platform.doc(), 'mouseup', this.bindMouseUp, this.option);
     }
   }
 
@@ -95,17 +95,14 @@ export class PointerEvents {
     this.rmTouchEnd && this.rmTouchEnd();
     this.rmTouchCancel && this.rmTouchCancel();
 
-    this.rmTouchMove = null;
-    this.rmTouchEnd = null;
-    this.rmTouchCancel = null;
+    this.rmTouchMove = this.rmTouchEnd = this.rmTouchCancel = null;
   }
 
   private stopMouse() {
     this.rmMouseMove && this.rmMouseMove();
     this.rmMouseUp && this.rmMouseUp();
 
-    this.rmMouseMove = null;
-    this.rmMouseUp = null;
+    this.rmMouseMove = this.rmMouseUp = null;
   }
 
   stop() {
@@ -115,18 +112,9 @@ export class PointerEvents {
 
   destroy() {
     this.rmTouchStart && this.rmTouchStart();
-    this.rmTouchStart = null;
-
     this.rmMouseStart && this.rmMouseStart();
-    this.rmMouseStart = null;
-
     this.stop();
-
-    this.pointerDown = null;
-    this.pointerMove = null;
-    this.pointerUp = null;
-
-    this.ele = null;
+    this.ele = this.pointerUp = this.pointerMove = this.pointerDown = this.rmTouchStart = this.rmMouseStart = null;
   }
 
 }
@@ -140,12 +128,10 @@ export const enum PointerEventType {
 
 export interface PointerEventsConfig {
   element?: HTMLElement;
-  elementRef?: ElementRef;
   pointerDown: (ev: any) => boolean;
   pointerMove?: (ev: any) => void;
   pointerUp?: (ev: any) => void;
   zone?: boolean;
-
   capture?: boolean;
   passive?: boolean;
 }

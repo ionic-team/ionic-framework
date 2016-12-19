@@ -3,7 +3,7 @@ import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
 import { Content, ScrollEvent } from '../content/content';
-import { DomController } from '../../util/dom-controller';
+import { DomController } from '../../platform/dom-controller';
 import { isBlank, isFunction, isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
@@ -478,7 +478,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // wait a frame before trying to read and calculate the dimensions
     this._dom.read(() => {
       // ******** DOM READ ****************
-      initReadNodes(nodes, cells, data);
+      initReadNodes(this._platform, nodes, cells, data);
     });
 
     this._dom.write(() => {
@@ -587,7 +587,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         }
 
         // ******** DOM READ ****************
-        updateDimensions(nodes, cells, data, false);
+        updateDimensions(this._platform, nodes, cells, data, false);
 
         adjustRendered(cells, data);
 
@@ -621,7 +621,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     const data = this._data;
 
     // ******** DOM READ ****************
-    updateDimensions(nodes, cells, data, false);
+    updateDimensions(this._platform, nodes, cells, data, false);
 
     adjustRendered(cells, data);
 

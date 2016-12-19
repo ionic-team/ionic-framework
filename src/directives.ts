@@ -134,10 +134,10 @@ export { ShowWhen, HideWhen, DisplayWhen } from './components/show-hide-when/sho
 export { Slides, Slide, SlideLazy } from './components/slides/slides';
 export { Spinner } from './components/spinner/spinner';
 export { Tab } from './components/tabs/tab';
-export { Tabs } from './components/tabs/tabs';
 export { TabButton } from './components/tabs/tab-button';
 export { TabHighlight } from './components/tabs/tab-highlight';
-export { TapClick, isActivatable } from './components/tap-click/tap-click';
+export { Tabs } from './components/tabs/tabs';
+export { TapClick, isActivatable } from './tap-click/tap-click';
 export { Toast, ToastController } from './components/toast/toast';
 export { ToastOptions } from './components/toast/toast-options';
 export { Toggle } from './components/toggle/toggle';

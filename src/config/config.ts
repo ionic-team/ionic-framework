@@ -5,9 +5,7 @@
 * @description
 * Config allows you to set the modes of your components
 */
-import { OpaqueToken } from '@angular/core';
 import { Platform } from '../platform/platform';
-import { QueryParams } from '../platform/query-params';
 import { isObject, isDefined, isFunction, isArray } from '../util/util';
 
 /**
@@ -127,7 +125,6 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
 export class Config {
   private _c: any = {};
   private _s: any = {};
-  private _qp: QueryParams;
   private _modes: any = {};
   private _trns: any = {};
 
@@ -139,9 +136,8 @@ export class Config {
   /**
    * @private
    */
-  init(config: any, queryParams: QueryParams, platform: Platform) {
+  init(config: any, platform: Platform) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
-    this._qp = queryParams;
     this.platform = platform;
   }
 
@@ -157,6 +153,7 @@ export class Config {
    *  defaults to `null`.
    */
   get(key: string, fallbackValue: any = null): any {
+    const platform = this.platform;
 
     if (!isDefined(this._c[key])) {
       if (!isDefined(key)) {
@@ -168,16 +165,16 @@ export class Config {
       // the user config's platforms, which already contains
       // settings from default platform configs
 
-      let userPlatformValue: any = undefined;
-      let userDefaultValue: any = this._s[key];
-      let userPlatformModeValue: any = undefined;
-      let userDefaultModeValue: any = undefined;
-      let platformValue: any = undefined;
-      let platformModeValue: any = undefined;
-      let configObj: any = null;
+      var userPlatformValue: any = undefined;
+      var userDefaultValue: any = this._s[key];
+      var userPlatformModeValue: any = undefined;
+      var userDefaultModeValue: any = undefined;
+      var platformValue: any = undefined;
+      var platformModeValue: any = undefined;
+      var configObj: any = null;
 
-      if (this.platform) {
-        const queryStringValue = this._qp.get('ionic' + key);
+      if (platform) {
+        var queryStringValue = platform.getQueryParam('ionic' + key);
         if (isDefined(queryStringValue)) {
           return this._c[key] = (queryStringValue === 'true' ? true : queryStringValue === 'false' ? false : queryStringValue);
         }
@@ -187,7 +184,7 @@ export class Config {
 
         // array of active platforms, which also knows the hierarchy,
         // with the last one the most important
-        const activePlatformKeys = this.platform.platforms();
+        var activePlatformKeys = platform.platforms();
 
         // loop through all of the active platforms we're on
         for (var i = 0, ilen = activePlatformKeys.length; i < ilen; i++) {
@@ -207,7 +204,7 @@ export class Config {
           }
 
           // get default platform's setting
-          configObj = this.platform.getPlatformConfig(activePlatformKeys[i]);
+          configObj = platform.getPlatformConfig(activePlatformKeys[i]);
           if (configObj && configObj.settings) {
 
             if (isDefined(configObj.settings[key])) {
@@ -247,9 +244,9 @@ export class Config {
     // or it was from the users platform configs
     // or it was from the default platform configs
     // in that order
-    let rtnVal: any = this._c[key];
+    var rtnVal: any = this._c[key];
     if (isFunction(rtnVal)) {
-      rtnVal = rtnVal(this.platform);
+      rtnVal = rtnVal(platform);
     }
 
     return (rtnVal !== null ? rtnVal : fallbackValue);
@@ -396,13 +393,8 @@ export class Config {
 /**
  * @private
  */
-export const ConfigToken = new OpaqueToken('USERCONFIG');
-
-/**
- * @private
- */
-export function setupConfig(userConfig: any, queryParams: QueryParams, platform: Platform): Config {
+export function setupConfig(userConfig: any, platform: Platform): Config {
   const config = new Config();
-  config.init(userConfig, queryParams, platform);
+  config.init(userConfig, platform);
   return config;
 }

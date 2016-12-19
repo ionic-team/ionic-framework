@@ -4,7 +4,7 @@ import { CSS } from '../../util/dom';
 import { Item } from './item';
 import { isPresent, swipeShouldReset, assert } from '../../util/util';
 import { List } from '../list/list';
-import { nativeRaf, nativeTimeout, clearNativeTimeout } from '../../util/native-window';
+import { Platform } from '../../platform/platform';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -184,7 +184,7 @@ export class ItemSliding {
   private _optsWidthRightSide: number = 0;
   private _optsWidthLeftSide: number = 0;
   private _sides: ItemSideFlags;
-  private _timer: number = null;
+  private _tmr: number = null;
   private _leftOptions: ItemOptions;
   private _rightOptions: ItemOptions;
   private _optsDirty: boolean = true;
@@ -220,6 +220,7 @@ export class ItemSliding {
 
   constructor(
     @Optional() list: List,
+    private _platform: Platform,
     private _renderer: Renderer,
     private _elementRef: ElementRef,
     private _zone: NgZone) {
@@ -269,9 +270,9 @@ export class ItemSliding {
    * @private
    */
   startSliding(startX: number) {
-    if (this._timer) {
-      clearNativeTimeout(this._timer);
-      this._timer = null;
+    if (this._tmr) {
+      this._platform.cancelTimeout(this._tmr);
+      this._tmr = null;
     }
     if (this._openAmount === 0) {
       this._optsDirty = true;
@@ -348,7 +349,7 @@ export class ItemSliding {
    * @private
    */
   private calculateOptsWidth() {
-    nativeRaf(() => {
+    this._platform.raf(() => {
       if (!this._optsDirty) {
         return;
       }
@@ -368,10 +369,7 @@ export class ItemSliding {
   }
 
   private _setOpenAmount(openAmount: number, isFinal: boolean) {
-    if (this._timer) {
-      clearNativeTimeout(this._timer);
-      this._timer = null;
-    }
+    this._platform.cancelTimeout(this._tmr);
     this._openAmount = openAmount;
 
     if (isFinal) {
@@ -394,9 +392,9 @@ export class ItemSliding {
       }
     }
     if (openAmount === 0) {
-      this._timer = nativeTimeout(() => {
+      this._tmr = this._platform.timeout(() => {
         this._setState(SlidingState.Disabled);
-        this._timer = null;
+        this._tmr = null;
       }, 600);
       this.item.setElementStyle(CSS.transform, '');
       return;

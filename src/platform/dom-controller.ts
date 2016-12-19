@@ -3,8 +3,9 @@
  * https://github.com/wilsonpage/fastdom
  * MIT License
  */
-import { nativeRaf } from './native-window';
-import { removeArrayItem } from './util';
+import { Injectable } from '@angular/core';
+import { Platform } from './platform';
+import { removeArrayItem } from '../util/util';
 
 
 export type DomCallback = { (timeStamp?: number): void };
@@ -39,62 +40,74 @@ export class DomDebouncer {
 
   cancel() {
     const writeTask = this.writeTask;
-    writeTask && this.dom.cancelW(writeTask);
-    this.writeTask = null;
+    writeTask && this.dom.cancel(writeTask);
 
     const readTask = this.readTask;
-    readTask && this.dom.cancelR(readTask);
-    this.readTask = null;
+    readTask && this.dom.cancel(readTask);
+    this.readTask = this.writeTask = null;
   }
 }
 
+@Injectable()
 export class DomController {
-
   private r: Function[] = [];
   private w: Function[] = [];
   private q: boolean;
+
+  constructor(private platform: Platform) {}
 
   debouncer(): DomDebouncer {
     return new DomDebouncer(this);
   }
 
-  read(fn: DomCallback, ctx?: any): Function {
-    const task = !ctx ? fn : fn.bind(ctx);
-    this.r.push(task);
-    this.queue();
-    return task;
+  read(fn: DomCallback, timeout?: number): any {
+    if (timeout) {
+      (<any>fn).timeoutId = this.platform.timeout(() => {
+        this.r.push(fn);
+        this._queue();
+      }, timeout);
+
+    } else {
+      this.r.push(fn);
+      this._queue();
+    }
+    return fn;
   }
 
-  write(fn: DomCallback, ctx?: any): Function {
-    const task = !ctx ? fn : fn.bind(ctx);
-    this.w.push(task);
-    this.queue();
-    return task;
+  write(fn: DomCallback, timeout?: number): any {
+    if (timeout) {
+      (<any>fn).timeoutId = this.platform.timeout(() => {
+        this.w.push(fn);
+        this._queue();
+      }, timeout);
+
+    } else {
+      this.w.push(fn);
+      this._queue();
+    }
+    return fn;
   }
 
-  cancel(task: any): boolean {
-    return removeArrayItem(this.r, task) || removeArrayItem(this.w, task);
+  cancel(fn: any): void {
+    if (fn) {
+      if (fn.timeoutId) {
+        this.platform.cancelTimeout(fn.timeoutId);
+      }
+      removeArrayItem(this.r, fn) || removeArrayItem(this.w, fn);
+    }
   }
 
-  cancelW(task: any): boolean {
-    return removeArrayItem(this.w, task);
-  }
-
-  cancelR(task: any): boolean {
-    return removeArrayItem(this.r, task);
-  }
-
-  protected queue() {
+  private _queue() {
     const self = this;
     if (!self.q) {
       self.q = true;
-      nativeRaf(function rafCallback(timeStamp: number) {
-        self.flush(timeStamp);
+      self.platform.raf(function rafCallback(timeStamp) {
+        self._flush(timeStamp);
       });
     }
   }
 
-  protected flush(timeStamp: number) {
+  private _flush(timeStamp: number) {
     let err: any;
 
     try {
@@ -106,7 +119,7 @@ export class DomController {
     this.q = false;
 
     if (this.r.length || this.w.length) {
-      this.queue();
+      this._queue();
     }
 
     if (err) {
@@ -117,15 +130,15 @@ export class DomController {
 }
 
 function dispatch(timeStamp: number, r: Function[], w: Function[]) {
-  let task: Function;
+  let fn: Function;
 
   // ******** DOM READS ****************
-  while (task = r.shift()) {
-    task(timeStamp);
+  while (fn = r.shift()) {
+    fn(timeStamp);
   }
 
   // ******** DOM WRITES ****************
-  while (task = w.shift()) {
-    task(timeStamp);
+  while (fn = w.shift()) {
+    fn(timeStamp);
   }
 }

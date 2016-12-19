@@ -1,6 +1,5 @@
 import { Animation } from '../../animations/animation';
 import { CSS } from '../../util/dom';
-import { nativeRaf } from '../../util/native-window';
 import { PageTransition } from '../../transitions/page-transition';
 
 
@@ -22,8 +21,8 @@ export class PopoverTransition extends PageTransition {
     let popoverHeight = popoverDim.height;
 
     // Window body width and height
-    let bodyWidth = window.innerWidth;
-    let bodyHeight = window.innerHeight;
+    let bodyWidth = this.platform.width();
+    let bodyHeight = this.platform.height();
 
     // If ev was passed, use that for target element
     let targetDim = ev && ev.target && ev.target.getBoundingClientRect();
@@ -82,8 +81,8 @@ export class PopoverTransition extends PageTransition {
     let popoverHeight = popoverDim.height;
 
     // Window body width and height
-    let bodyWidth = window.innerWidth;
-    let bodyHeight = window.innerHeight;
+    let bodyWidth = this.platform.width();
+    let bodyHeight = this.platform.height();
 
     // If ev was passed, use that for target element
     let targetDim = ev && ev.target && ev.target.getBoundingClientRect();
@@ -155,8 +154,8 @@ export class PopoverPopIn extends PopoverTransition {
   init() {
     let ele = this.enteringView.pageRef().nativeElement;
 
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
+    let backdrop = new Animation(this.platform, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.platform, ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', 0.01, 1);
     backdrop.fromTo('opacity', 0.01, 0.08);
@@ -169,7 +168,7 @@ export class PopoverPopIn extends PopoverTransition {
   }
 
   play() {
-    nativeRaf(() => {
+    this.platform.raf(() => {
       this.iosPositionView(this.enteringView.pageRef().nativeElement, this.opts.ev);
       super.play();
     });
@@ -180,8 +179,8 @@ export class PopoverPopIn extends PopoverTransition {
 export class PopoverPopOut extends PopoverTransition {
   init() {
     let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
+    let backdrop = new Animation(this.platform, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.platform, ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', 0.99, 0);
     backdrop.fromTo('opacity', 0.08, 0);
@@ -198,8 +197,8 @@ export class PopoverPopOut extends PopoverTransition {
 export class PopoverMdPopIn extends PopoverTransition {
   init() {
     let ele = this.enteringView.pageRef().nativeElement;
-    let content = new Animation(ele.querySelector('.popover-content'));
-    let viewport = new Animation(ele.querySelector('.popover-viewport'));
+    let content = new Animation(this.platform, ele.querySelector('.popover-content'));
+    let viewport = new Animation(this.platform, ele.querySelector('.popover-viewport'));
 
     content.fromTo('scale', 0.001, 1);
     viewport.fromTo('opacity', 0.01, 1);
@@ -212,7 +211,7 @@ export class PopoverMdPopIn extends PopoverTransition {
   }
 
   play() {
-    nativeRaf(() => {
+    this.platform.raf(() => {
       this.mdPositionView(this.enteringView.pageRef().nativeElement, this.opts.ev);
       super.play();
     });
@@ -223,7 +222,7 @@ export class PopoverMdPopIn extends PopoverTransition {
 export class PopoverMdPopOut extends PopoverTransition {
   init() {
     let ele = this.leavingView.pageRef().nativeElement;
-    let wrapper = new Animation(ele.querySelector('.popover-wrapper'));
+    let wrapper = new Animation(this.platform, ele.querySelector('.popover-wrapper'));
 
     wrapper.fromTo('opacity', 0.99, 0);
 

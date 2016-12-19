@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { Platform } from '../platform/platform';
 
-declare var window: any;
-
 /**
  * @name Haptic
  * @description
@@ -35,7 +33,7 @@ export class Haptic {
   constructor(platform: Platform) {
     if (platform) {
       platform.ready().then(() => {
-        this.plugin = window.TapticEngine;
+        this.plugin = (<any>platform.win()).TapticEngine;
       });
     }
   }

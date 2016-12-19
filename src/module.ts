@@ -1,6 +1,6 @@
-import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, Inject, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, Inject, ModuleWithProviders, NgModule, NgZone, OpaqueToken, Optional } from '@angular/core';
 import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
-import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { DOCUMENT, BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -12,24 +12,23 @@ import { AlertController } from './components/alert/alert';
 import { App } from './components/app/app';
 import { AppRootToken } from './components/app/app-root';
 import { ClickBlock } from './util/click-block';
-import { Config, ConfigToken, setupConfig } from './config/config';
+import { Config, setupConfig } from './config/config';
 import { DeepLinker, setupDeepLinker } from './navigation/deep-linker';
-import { DomController } from './util/dom-controller';
+import { DomController } from './platform/dom-controller';
 import { Events, setupProvideEvents } from './util/events';
 import { Form } from './util/form';
 import { GestureController } from './gestures/gesture-controller';
-import { Haptic } from './util/haptic';
+import { Haptic } from './tap-click/haptic';
 import { IonicGestureConfig } from './gestures/gesture-config';
-import { Keyboard } from './util/keyboard';
+import { Keyboard } from './platform/keyboard';
 import { LoadingController } from './components/loading/loading';
 import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal';
 import { PickerController } from './components/picker/picker';
-import { Platform, setupPlatform, UserAgentToken, NavigatorPlatformToken, DocumentDirToken, DocLangToken } from './platform/platform';
+import { Platform, setupPlatform } from './platform/platform';
 import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
 import { PopoverController } from './components/popover/popover';
-import { QueryParams, setupQueryParams, UrlToken } from './platform/query-params';
-import { TapClick, setupTapClick } from './components/tap-click/tap-click';
+import { TapClick } from './tap-click/tap-click';
 import { ToastController } from './components/toast/toast';
 import { registerModeConfigs } from './config/mode-registry';
 import { registerTransitions } from './transitions/transition-registry';
@@ -51,17 +50,19 @@ import { ToastCmp } from './components/toast/toast-component';
 /**
  * Export Providers
  */
-export { Config, setupConfig, ConfigToken } from './config/config';
-export { DomController, DomCallback } from './util/dom-controller';
-export { Platform, setupPlatform, UserAgentToken, DocumentDirToken, DocLangToken, NavigatorPlatformToken } from './platform/platform';
-export { Haptic } from './util/haptic';
-export { QueryParams, setupQueryParams, UrlToken } from './platform/query-params';
+export { Config, setupConfig } from './config/config';
+export { DomController, DomCallback } from './platform/dom-controller';
+export { Platform, setupPlatform } from './platform/platform';
+export { Haptic } from './tap-click/haptic';
 export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
 export { NavParams } from './navigation/nav-params';
 export { NavLink, NavOptions, DeepLink, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataType } from './navigation/nav-util';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
+
+/** @private */
+export const ConfigToken = new OpaqueToken('USERCONFIG');
 
 
 /**
@@ -123,7 +124,6 @@ export { ViewController } from './navigation/view-controller';
     ToastCmp
   ]
 })
-
 export class IonicModule {
     /**
      * Set the root app component for you IonicModule
@@ -141,23 +141,17 @@ export class IonicModule {
         { provide: DeepLinkConfigToken, useValue: deepLinkConfig },
 
         // useFactory: user values
-        { provide: UserAgentToken, useFactory: provideUserAgent },
-        { provide: DocumentDirToken, useFactory: provideDocumentDirection },
-        { provide: DocLangToken, useFactory: provideDocumentLang },
-        { provide: NavigatorPlatformToken, useFactory: provideNavigatorPlatform },
-        { provide: UrlToken, useFactory: provideLocationHref },
         { provide: PlatformConfigToken, useFactory: providePlatformConfigs },
 
         // useFactory: ionic core providers
-        { provide: QueryParams, useFactory: setupQueryParams, deps: [ UrlToken ] },
-        { provide: Platform, useFactory: setupPlatform, deps: [ PlatformConfigToken, QueryParams, UserAgentToken, NavigatorPlatformToken, DocumentDirToken, DocLangToken, NgZone ] },
-        { provide: Config, useFactory: setupConfig, deps: [ ConfigToken, QueryParams, Platform ] },
+        { provide: Platform, useFactory: setupPlatform, deps: [ DOCUMENT, PlatformConfigToken, NgZone ] },
+        { provide: Config, useFactory: setupConfig, deps: [ ConfigToken, Platform ] },
 
         // useFactory: ionic app initializers
         { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
         { provide: APP_INITIALIZER, useFactory: registerTransitions, deps: [ Config ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
-        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, App, NgZone, GestureController ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, NgZone, GestureController ], multi: true },
 
         // useClass
         { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
@@ -204,37 +198,12 @@ export function provideLocationStrategy(platformLocationStrategy: PlatformLocati
          new HashLocationStrategy(platformLocationStrategy, baseHref);
 }
 
-/**
- * @private
- */
-export function provideUserAgent() {
-  return window && window.navigator.userAgent;
-}
 
 /**
  * @private
  */
-export function provideNavigatorPlatform() {
-  return window && window.navigator.platform;
-}
-
-/**
- * @private
- */
-export function provideLocationHref() {
-  return window && window.location.href;
-}
-
-/**
- * @private
- */
-export function provideDocumentDirection() {
-  return document && document.documentElement.dir;
-}
-
-/**
- * @private
- */
-export function provideDocumentLang() {
-  return document && document.documentElement.lang;
+export function setupTapClick(config: Config, platform: Platform, dom: DomController, app: App, zone: NgZone, gestureCtrl: GestureController) {
+  return function() {
+    return new TapClick(config, platform, dom, app, zone, gestureCtrl);
+  };
 }

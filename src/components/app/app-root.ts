@@ -6,7 +6,6 @@ import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
-import { nativeTimeout } from '../../util/native-window';
 
 export const AppRootToken = new OpaqueToken('USERROOT');
 
@@ -24,9 +23,8 @@ export const AppRootToken = new OpaqueToken('USERROOT');
     '<div class="click-block"></div>'
 })
 export class IonicApp extends Ion implements OnInit {
-
   private _stopScrollPlugin: any;
-  private _rafId: number;
+  private _tmr: number;
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
   @ViewChild('modalPortal', { read: OverlayPortal }) _modalPortal: OverlayPortal;
@@ -150,17 +148,17 @@ export class IonicApp extends Ion implements OnInit {
   _disableScroll(shouldDisableScroll: boolean) {
     if (shouldDisableScroll) {
       this.stopScroll().then(() => {
-        this._rafId = nativeTimeout(() => {
+        this._tmr = this._platform.timeout(() => {
           console.debug('App Root: adding .disable-scroll');
           this.setElementClass('disable-scroll', true);
-        }, 16 * 2);
+        }, 32);
       });
     } else {
       let plugin = this._stopScrollPlugin;
       if (plugin && plugin.cancel) {
         plugin.cancel();
       }
-      clearTimeout(this._rafId);
+      clearTimeout(this._tmr);
       console.debug('App Root: removing .disable-scroll');
       this.setElementClass('disable-scroll', false);
     }

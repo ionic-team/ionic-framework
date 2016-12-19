@@ -5,6 +5,7 @@ import { CSS, pointerCoord } from '../../util/dom';
 import { GestureController, GestureDelegate, GesturePriority, GESTURE_REFRESHER } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { PointerEvents } from '../../gestures/pointer-events';
+import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 
 
@@ -101,7 +102,7 @@ export class Refresher {
   _lastCheck: number = 0;
   _isEnabled: boolean = true;
   _gesture: GestureDelegate;
-  _events: UIEventManager = new UIEventManager(false);
+  _events: UIEventManager;
   _pointerEvents: PointerEvents;
   _top: string = '';
 
@@ -199,7 +200,8 @@ export class Refresher {
   @Output() ionStart: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 
 
-  constructor(@Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
+  constructor(platform: Platform, @Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
+    this._events = new UIEventManager(platform);
     _content.setElementClass('has-refresher', true);
     this._gesture = gestureCtrl.createGesture({
       name: GESTURE_REFRESHER,
@@ -474,14 +476,15 @@ export class Refresher {
   }
 
   _setListeners(shouldListen: boolean) {
-    this._events.unlistenAll();
+    this._events.destroy();
     this._pointerEvents = null;
     if (shouldListen) {
       this._pointerEvents = this._events.pointerEvents({
         element: this._content.getScrollElement(),
         pointerDown: this._onStart.bind(this),
         pointerMove: this._onMove.bind(this),
-        pointerUp: this._onEnd.bind(this)
+        pointerUp: this._onEnd.bind(this),
+        zone: false
       });
     }
   }
