@@ -8,6 +8,7 @@ import { IonicApp, IonicModule } from '../../../..';
 })
 export class E2EPage {
   myDate: any;
+  monthOnly = '2012-12-15T13:47:20.789';
   wwwInvented = '1989';
   time = '13:47:00';
   netscapeReleased = '1994-12-15T13:47:20.789';
