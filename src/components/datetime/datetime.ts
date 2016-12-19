@@ -593,9 +593,27 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     let yearOpt: PickerColumnOption;
     let monthOpt: PickerColumnOption;
     let dayOpt: PickerColumnOption;
+   
+    // default to max date (if set) to be sure to have a proper date
+  
+    let selectedYear = this._max ? this._max.year : today.getFullYear();
 
-    // default to assuming today's year
-    let selectedYear = today.getFullYear();
+    if (this._max &&  monthCol.selectedIndex == undefined) {
+    	 for (i = 0; i < monthCol.options.length; i++) {
+         	if (monthCol.options[i].value ==this._max.month ) {
+         		monthCol.selectedIndex = i
+         	}
+         }
+    }
+
+    if (this._max &&  dayCol.selectedIndex == undefined) {
+        for (i = 0; i < dayCol.options.length; i++) {
+         	if (dayCol.options[i].value ==this._max.day ) {
+         		dayCol.selectedIndex = i
+         	}
+         }
+    }
+
     if (yearCol) {
       yearOpt = yearCol.options[yearCol.selectedIndex];
       if (yearOpt) {
