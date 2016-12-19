@@ -599,9 +599,9 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 
     if (yearCol) {
       // default to the first value if the current year doesn't exist in the options
-      // if (!yearCol.options.find(col => col.value === today.getFullYear())) {
-      //   selectedYear = yearCol.options[0].value;
-      // }
+      if (!yearCol.options.find(col => col.value === today.getFullYear())) {
+        selectedYear = yearCol.options[0].value;
+      }
 
       yearOpt = yearCol.options[yearCol.selectedIndex];
       if (yearOpt) {
