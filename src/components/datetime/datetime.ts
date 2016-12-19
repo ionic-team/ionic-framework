@@ -594,8 +594,12 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     let monthOpt: PickerColumnOption;
     let dayOpt: PickerColumnOption;
 
-    // default to assuming today's year
-    let selectedYear = today.getFullYear();
+    // default to today's year if it exists in the yearValues
+    let selectedYear: number = yearCol.options[0].value;
+    if (yearCol.options.find(col => col.value === today.getFullYear())) {
+      selectedYear = today.getFullYear();
+    }
+
     if (yearCol) {
       yearOpt = yearCol.options[yearCol.selectedIndex];
       if (yearOpt) {
