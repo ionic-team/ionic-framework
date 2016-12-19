@@ -4,7 +4,28 @@ import { Config } from '../../config/config';
 import { Ion } from '../ion';
 
 /**
-  * @private
+  * @name Note
+  * @module ionic
+  * @description
+  * A note is detailed item in an ion-item. It creates greyed out element that can be on the left or right side of an item.
+  * @usage
+  *
+  * ```html
+  * <ion-content>
+  *   <ion-list>
+  *     <ion-item>
+  *       <ion-note item-left>
+  *         Left Note
+  *       </ion-note>
+  *       My Item
+  *       <ion-note item-right>
+  *         Right Note
+  *       </ion-note>
+  *     </ion-item>
+  *   </ion-list>
+  * </ion-content>
+  *```
+ * {@link /docs/v2/api/components/api/components/item/item ion-item}
   */
 @Directive({
   selector: 'ion-note'
