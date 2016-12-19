@@ -1,82 +1,59 @@
 
-export const CSS: {
-  transform?: string,
-  transition?: string,
-  transitionDuration?: string,
-  transitionDelay?: string,
-  transitionTimingFn?: string,
-  transitionStart?: string,
-  transitionEnd?: string,
-  transformOrigin?: string
-  animationDelay?: string;
-} = {};
+export function getCss(docEle: HTMLElement) {
+  const css: {
+    transform?: string;
+    transition?: string;
+    transitionDuration?: string;
+    transitionDelay?: string;
+    transitionTimingFn?: string;
+    transitionStart?: string;
+    transitionEnd?: string;
+    transformOrigin?: string;
+    animationDelay?: string;
+  } = {};
 
-export function initCss(docEle: HTMLElement) {
   // transform
   var i: number;
-  var keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
-                 '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
+  var keys = ['webkitTransform', '-webkit-transform', 'webkit-transform', 'transform'];
 
   for (i = 0; i < keys.length; i++) {
     if (docEle.style[keys[i]] !== undefined) {
-      CSS.transform = keys[i];
+      css.transform = keys[i];
       break;
     }
   }
 
   // transition
-  keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
+  keys = ['webkitTransition', 'transition'];
   for (i = 0; i < keys.length; i++) {
     if (docEle.style[keys[i]] !== undefined) {
-      CSS.transition = keys[i];
+      css.transition = keys[i];
       break;
     }
   }
 
   // The only prefix we care about is webkit for transitions.
-  var isWebkit = CSS.transition.indexOf('webkit') > -1;
+  var isWebkit = css.transition.indexOf('webkit') > -1;
 
   // transition duration
-  CSS.transitionDuration = (isWebkit ? '-webkit-' : '') + 'transition-duration';
+  css.transitionDuration = (isWebkit ? '-webkit-' : '') + 'transition-duration';
 
   // transition timing function
-  CSS.transitionTimingFn = (isWebkit ? '-webkit-' : '') + 'transition-timing-function';
+  css.transitionTimingFn = (isWebkit ? '-webkit-' : '') + 'transition-timing-function';
 
   // transition delay
-  CSS.transitionDelay = (isWebkit ? '-webkit-' : '') + 'transition-delay';
+  css.transitionDelay = (isWebkit ? '-webkit-' : '') + 'transition-delay';
 
   // To be sure transitionend works everywhere, include *both* the webkit and non-webkit events
-  CSS.transitionEnd = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
+  css.transitionEnd = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
 
   // transform origin
-  CSS.transformOrigin = (isWebkit ? '-webkit-' : '') + 'transform-origin';
+  css.transformOrigin = (isWebkit ? '-webkit-' : '') + 'transform-origin';
 
   // animation delay
-  CSS.animationDelay = (isWebkit ? 'webkitAnimationDelay' : 'animationDelay');
-}
+  css.animationDelay = (isWebkit ? 'webkitAnimationDelay' : 'animationDelay');
 
-
-export function transitionEnd(el: HTMLElement, callback: Function) {
-  if (el) {
-    CSS.transitionEnd.split(' ').forEach(eventName => {
-      el.addEventListener(eventName, onEvent);
-    });
-
-    return unregister;
-  }
-
-  function unregister() {
-    CSS.transitionEnd.split(' ').forEach(eventName => {
-      el.removeEventListener(eventName, onEvent);
-    });
-  }
-
-  function onEvent(ev: UIEvent) {
-    if (el === ev.target) {
-      unregister();
-      callback(ev);
-    }
-  }
+  return css;
 }
 
 

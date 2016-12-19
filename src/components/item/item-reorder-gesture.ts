@@ -1,6 +1,6 @@
-import { CSS, PointerCoordinates, pointerCoord } from '../../util/dom';
 import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
 import { Platform } from '../../platform/platform';
+import { PointerCoordinates, pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 
 
@@ -102,7 +102,7 @@ export class ItemReorderGesture {
 
     // Update selected item position
     let ydiff = Math.round(posY - this.offset.y + scrollPosition);
-    (<any>selectedItem.style)[CSS.transform] = `translateY(${ydiff}px)`;
+    (<any>selectedItem.style)[this.platform.Css.transform] = `translateY(${ydiff}px)`;
   }
 
   private onDragEnd(ev: any) {

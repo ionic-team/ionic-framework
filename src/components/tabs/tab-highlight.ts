@@ -1,6 +1,5 @@
 import { Directive, ElementRef } from '@angular/core';
 
-import { CSS } from '../../util/dom';
 import { DomController } from '../../platform/dom-controller';
 import { Tab } from './tab';
 
@@ -24,7 +23,7 @@ export class TabHighlight {
 
       dom.write(() => {
         const ele = this._elementRef.nativeElement;
-        (<any>ele.style)[CSS.transform] = transform;
+        (<any>ele.style)[dom.platform.Css.transform] = transform;
 
         if (!this._init) {
           this._init = true;

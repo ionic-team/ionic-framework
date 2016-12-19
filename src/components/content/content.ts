@@ -10,7 +10,6 @@ import { Keyboard } from '../../platform/keyboard';
 import { Platform } from '../../platform/platform';
 import { ScrollView, ScrollEvent } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
-import { transitionEnd } from '../../util/dom';
 import { ViewController } from '../../navigation/view-controller';
 
 export { ScrollEvent } from '../../util/scroll-view';
@@ -316,7 +315,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
   constructor(
     config: Config,
-    platform: Platform,
+    private _platform: Platform,
     private _dom: DomController,
     elementRef: ElementRef,
     renderer: Renderer,
@@ -338,7 +337,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
       viewCtrl._setIONContentRef(elementRef);
     }
 
-    this._scroll = new ScrollView(platform, _dom);
+    this._scroll = new ScrollView(_platform, _dom);
   }
 
   /**
@@ -399,7 +398,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @private
    */
   onScrollElementTransitionEnd(callback: Function) {
-    transitionEnd(this._scrollEle, callback);
+    this._platform.transitionEnd(this._scrollEle, callback);
   }
 
   /**

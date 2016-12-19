@@ -1,6 +1,6 @@
 import { EventEmitter, NgZone } from '@angular/core';
 
-import { initCss, isTextInput } from '../util/dom';
+import { getCss, isTextInput } from '../util/dom';
 import { QueryParams } from './query-params';
 import { removeArrayItem } from '../util/util';
 
@@ -55,6 +55,19 @@ export class Platform {
   zone: NgZone;
 
   /** @private */
+  Css: {
+    transform?: string;
+    transition?: string;
+    transitionDuration?: string;
+    transitionDelay?: string;
+    transitionTimingFn?: string;
+    transitionStart?: string;
+    transitionEnd?: string;
+    transformOrigin?: string;
+    animationDelay?: string;
+  };
+
+  /** @private */
   _platforms: string[] = [];
 
   constructor() {
@@ -102,6 +115,13 @@ export class Platform {
    */
   setZone(zone: NgZone) {
     this.zone = zone;
+  }
+
+  /**
+   * @private
+   */
+  setCssProps(docElement: HTMLElement) {
+    this.Css = getCss(docElement);
   }
 
 
@@ -631,6 +651,32 @@ export class Platform {
   /**
    * @private
    */
+  transitionEnd(el: HTMLElement, callback: Function) {
+    function unregister() {
+      this.Css.transitionEnd.split(' ').forEach(eventName => {
+        el.removeEventListener(eventName, onEvent);
+      });
+    }
+
+    if (el) {
+      this.Css.transitionEnd.split(' ').forEach(eventName => {
+        el.addEventListener(eventName, onEvent);
+      });
+
+      return unregister;
+    }
+
+    function onEvent(ev: UIEvent) {
+      if (el === ev.target) {
+        unregister();
+        callback(ev);
+      }
+    }
+  }
+
+  /**
+   * @private
+   */
   windowLoad(callback: Function) {
     const win = this._win;
     const doc = this._doc;
@@ -1087,12 +1133,13 @@ export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]
   p.setZone(zone);
 
   // set values from "document"
+  const docElement = doc.documentElement;
   p.setDocument(doc);
-  p.setDir(doc.documentElement.dir, false);
-  p.setLang(doc.documentElement.lang, false);
+  p.setDir(docElement.dir, false);
+  p.setLang(docElement.lang, false);
 
   // set css properties
-  initCss(doc.documentElement);
+  p.setCssProps(docElement);
 
   // set values from "window"
   const win = doc.defaultView;

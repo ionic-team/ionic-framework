@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
 
-import { CSS } from '../../util/dom';
-import { Item } from './item';
 import { isPresent, swipeShouldReset, assert } from '../../util/util';
+import { Item } from './item';
 import { List } from '../list/list';
 import { Platform } from '../../platform/platform';
 
@@ -279,7 +278,7 @@ export class ItemSliding {
       this._setState(SlidingState.Enabled);
     }
     this._startX = startX + this._openAmount;
-    this.item.setElementStyle(CSS.transition, 'none');
+    this.item.setElementStyle(this._platform.Css.transition, 'none');
   }
 
   /**
@@ -369,11 +368,13 @@ export class ItemSliding {
   }
 
   private _setOpenAmount(openAmount: number, isFinal: boolean) {
-    this._platform.cancelTimeout(this._tmr);
+    const platform = this._platform;
+
+    platform.cancelTimeout(this._tmr);
     this._openAmount = openAmount;
 
     if (isFinal) {
-      this.item.setElementStyle(CSS.transition, '');
+      this.item.setElementStyle(platform.Css.transition, '');
 
     } else {
       if (openAmount > 0) {
@@ -392,15 +393,15 @@ export class ItemSliding {
       }
     }
     if (openAmount === 0) {
-      this._tmr = this._platform.timeout(() => {
+      this._tmr = platform.timeout(() => {
         this._setState(SlidingState.Disabled);
         this._tmr = null;
       }, 600);
-      this.item.setElementStyle(CSS.transform, '');
+      this.item.setElementStyle(platform.Css.transform, '');
       return;
     }
 
-    this.item.setElementStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
+    this.item.setElementStyle(platform.Css.transform, `translate3d(${-openAmount}px,0,0)`);
     let ionDrag = this.ionDrag;
     if (ionDrag.observers.length > 0) {
       ionDrag.emit(this);

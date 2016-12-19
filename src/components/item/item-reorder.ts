@@ -1,11 +1,10 @@
-import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Input, NgZone, Renderer, Inject, Optional, Output } from '@angular/core';
+import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Inject, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
-import { CSS } from '../../util/dom';
 import { DomController } from '../../platform/dom-controller';
+import { isTrueProperty, reorderArray } from '../../util/util';
 import { Item } from './item';
 import { ItemReorderGesture } from '../item/item-reorder-gesture';
-import { isTrueProperty, reorderArray } from '../../util/util';
 import { Platform } from '../../platform/platform';
 
 
@@ -247,7 +246,7 @@ export class ItemReorder {
     let len = children.length;
 
     this.setElementClass('reorder-list-active', false);
-    let transform = CSS.transform;
+    let transform = this._platform.Css.transform;
     for (let i = 0; i < len; i++) {
       (<any>children[i]).style[transform] = '';
     }
@@ -268,7 +267,7 @@ export class ItemReorder {
     let children = this._element.children;
 
     /********* DOM WRITE ********* */
-    let transform = CSS.transform;
+    let transform = this._platform.Css.transform;
     if (toIndex >= lastToIndex) {
       for (var i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {

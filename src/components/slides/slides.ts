@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, Directive, ElementRef, EventEmitter
 
 import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
-import { CSS } from '../../util/dom';
 import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
 import { Gesture } from '../../gestures/gesture';
 import { Ion } from '../ion';
@@ -492,7 +491,7 @@ export class Slides extends Ion {
     this.zoomGesture.on('pinch', (e: any) => {
       this.scale = Math.max(1, Math.min(lastScale * e.scale, 10));
       console.debug('Scaling', this.scale);
-      (<any>this.zoomElement.style)[CSS.transform] = 'scale(' + this.scale + ')';
+      (<any>this.zoomElement.style)[this.platform.Css.transform] = 'scale(' + this.scale + ')';
 
       zoomRect = this.zoomElement.getBoundingClientRect();
     });
@@ -517,8 +516,8 @@ export class Slides extends Ion {
    */
   resetZoom() {
     if (this.zoomElement) {
-      (<any>this.zoomElement.parentElement.style)[CSS.transform] = '';
-      (<any>this.zoomElement.style)[CSS.transform] = 'scale(1)';
+      (<any>this.zoomElement.parentElement.style)[this.platform.Css.transform] = '';
+      (<any>this.zoomElement.style)[this.platform.Css.transform] = 'scale(1)';
     }
 
     this.scale = 1;
@@ -684,7 +683,7 @@ export class Slides extends Ion {
     } else {
       console.debug('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
       // this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
-      (<any>this.touch.target.style)[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
+      (<any>this.touch.target.style)[this.platform.Css.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
       e.preventDefault();
       e.stopPropagation();
       return false;

@@ -1,8 +1,8 @@
 import { ActivatorBase, isActivatedDisabled } from './activator-base';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
-import { CSS, PointerCoordinates } from '../util/dom';
 import { DomController } from '../platform/dom-controller';
+import { PointerCoordinates } from '../util/dom';
 
 
 export class Activator implements ActivatorBase {
@@ -107,7 +107,7 @@ export class Activator implements ActivatorBase {
     let ele: HTMLElement;
     for (var i = 0; i < this._active.length; i++) {
       ele = this._active[i];
-      ele.style[CSS.transition] = animated ? '' : 'none';
+      ele.style[this.dom.platform.Css.transition] = animated ? '' : 'none';
       ele.classList.remove(this._css);
     }
     this._active.length = 0;

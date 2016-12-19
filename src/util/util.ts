@@ -1,5 +1,6 @@
 
 /**
+ * @private
  * Given a min and max, restrict the given number
  * to the range.
  * @param min the minimum
@@ -10,10 +11,12 @@ export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
 }
 
+/** @private */
 export function deepCopy(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }
 
+/** @private */
 export function debounce(fn: Function, wait: number, immediate: boolean = false): any {
  var timeout: number, args: any, context: any, timestamp: number, result: any;
  return function() {
@@ -38,8 +41,8 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
  };
 }
 
-
 /**
+ * @private
  * Apply default arguments if they don't exist in
  * the first object.
  * @param the destination to apply defaults to.
@@ -58,22 +61,37 @@ export function defaults(dest: any, ...args: any[]) {
   return dest;
 }
 
-export const isBoolean = (val: any) => typeof val === 'boolean';
-export const isString = (val: any) => typeof val === 'string';
-export const isNumber = (val: any) => typeof val === 'number';
-export const isFunction = (val: any) => typeof val === 'function';
-export const isDefined = (val: any) => typeof val !== 'undefined';
-export const isUndefined = (val: any) => typeof val === 'undefined';
-export const isPresent = (val: any) => val !== undefined && val !== null;
-export const isBlank = (val: any) => val === undefined || val === null;
-export const isObject = (val: any) => typeof val === 'object';
-export const isArray = Array.isArray;
 
-export const isPrimitive = function(val: any) {
+/** @private */
+export function isBoolean(val: any) { return typeof val === 'boolean'; }
+/** @private */
+export function isString(val: any) { return typeof val === 'string'; }
+/** @private */
+export function isNumber(val: any) { return typeof val === 'number'; }
+/** @private */
+export function isFunction(val: any) { return typeof val === 'function'; }
+/** @private */
+export function isDefined(val: any) { return typeof val !== 'undefined'; }
+/** @private */
+export function isUndefined(val: any) { return typeof val === 'undefined'; }
+/** @private */
+export function isPresent(val: any) { return val !== undefined && val !== null; }
+/** @private */
+export function isBlank(val: any) { return val === undefined || val === null; }
+/** @private */
+export function isObject(val: any) { return typeof val === 'object'; }
+/** @private */
+export function isArray(val: any) { return Array.isArray(val); };
+
+
+/** @private */
+export function isPrimitive(val: any) {
   return isString(val) || isBoolean(val) || (isNumber(val) && !isNaN(val));
 };
 
-export const isTrueProperty = function(val: any): boolean {
+
+/** @private */
+export function isTrueProperty(val: any): boolean {
   if (typeof val === 'string') {
     val = val.toLowerCase().trim();
     return (val === 'true' || val === 'on' || val === '');
@@ -81,7 +99,9 @@ export const isTrueProperty = function(val: any): boolean {
   return !!val;
 };
 
-export const isCheckedProperty = function(a: any, b: any): boolean {
+
+/** @private */
+export function isCheckedProperty(a: any, b: any): boolean {
   if (a === undefined || a === null || a === '') {
     return (b === undefined || b === null || b === '');
 
@@ -100,9 +120,7 @@ export const isCheckedProperty = function(a: any, b: any): boolean {
 };
 
 
-/**
- * @private
- */
+/** @private */
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
   const element = array[indexes.from];
   array.splice(indexes.from, 1);
@@ -111,17 +129,14 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
 }
 
 
-/**
- * @private
- */
+/** @private */
 export function removeArrayItem(array: any[], item: any) {
   const index = array.indexOf(item);
   return !!~index && !!array.splice(index, 1);
 }
 
-/**
- * @private
- */
+
+/** @private */
 export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
   // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
@@ -142,14 +157,19 @@ export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolea
 }
 
 
+/** @private */
 const ASSERT_ENABLED = true;
 
+
+/** @private */
 function _runInDev(fn: Function) {
   if (ASSERT_ENABLED === true) {
     return fn();
   }
 }
 
+
+/** @private */
 function _assert(actual: any, reason?: string) {
   if (!actual && ASSERT_ENABLED === true) {
     let message = 'IONIC ASSERT: ' + reason;
@@ -159,5 +179,8 @@ function _assert(actual: any, reason?: string) {
   }
 }
 
+/** @private */
 export { _assert as assert};
+
+/** @private */
 export { _runInDev as runInDev};

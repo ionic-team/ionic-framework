@@ -1,11 +1,11 @@
-import { Directive, EventEmitter, Host, Input, Output, NgZone } from '@angular/core';
+import { Directive, EventEmitter, Host, Input, NgZone, Output } from '@angular/core';
 
 import { Content } from '../content/content';
-import { CSS, pointerCoord } from '../../util/dom';
 import { GestureController, GestureDelegate, GesturePriority, GESTURE_REFRESHER } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { PointerEvents } from '../../gestures/pointer-events';
 import { Platform } from '../../platform/platform';
+import { pointerCoord } from '../../util/dom';
+import { PointerEvents } from '../../gestures/pointer-events';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 
 
@@ -200,8 +200,8 @@ export class Refresher {
   @Output() ionStart: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 
 
-  constructor(platform: Platform, @Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
-    this._events = new UIEventManager(platform);
+  constructor(private _platform: Platform, @Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
+    this._events = new UIEventManager(_platform);
     _content.setElementClass('has-refresher', true);
     this._gesture = gestureCtrl.createGesture({
       name: GESTURE_REFRESHER,
@@ -468,10 +468,11 @@ export class Refresher {
   _setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {
     this._appliedStyles = (y > 0);
 
-    var content = this._content;
-    content.setScrollElementStyle(CSS.transform, ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)'));
-    content.setScrollElementStyle(CSS.transitionDuration, duration);
-    content.setScrollElementStyle(CSS.transitionDelay, delay);
+    const content = this._content;
+    const Css = this._platform.Css;
+    content.setScrollElementStyle(Css.transform, ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)'));
+    content.setScrollElementStyle(Css.transitionDuration, duration);
+    content.setScrollElementStyle(Css.transitionDelay, delay);
     content.setScrollElementStyle('overflow', (overflowVisible ? 'hidden' : ''));
   }
 

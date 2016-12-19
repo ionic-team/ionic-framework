@@ -2,7 +2,6 @@ import { Directive, ElementRef, EventEmitter, HostListener, Output, Renderer } f
 import { NgControl } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { CSS }  from '../../util/dom';
 import { Platform } from '../../platform/platform';
 
 
@@ -122,7 +121,7 @@ export class NativeInput {
           // move the native input to a location safe to receive focus
           // according to the browser, the native input receives focus in an
           // area which doesn't require the browser to scroll the input into place
-          (<any>focusedInputEle.style)[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+          (<any>focusedInputEle.style)[this._platform.Css.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
           focusedInputEle.style.opacity = '0';
         }
 
@@ -150,7 +149,7 @@ export class NativeInput {
 
     if (shouldHideFocus) {
       cloneInputComponent(focusedInputEle);
-      (<any>focusedInputEle.style)[CSS.transform] = 'scale(0)';
+      (<any>focusedInputEle.style)[this._platform.Css.transform] = 'scale(0)';
 
     } else {
       removeClone(focusedInputEle);
@@ -209,7 +208,7 @@ function cloneInputComponent(srcNativeInputEle: HTMLInputElement) {
     srcComponentEle.style.pointerEvents = 'none';
   }
 
-  (<any>srcNativeInputEle.style)[CSS.transform] = 'scale(0)';
+  (<any>srcNativeInputEle.style)[this._platform.Css.transform] = 'scale(0)';
 }
 
 function removeClone(srcNativeInputEle: HTMLElement) {
@@ -222,7 +221,7 @@ function removeClone(srcNativeInputEle: HTMLElement) {
 
     srcComponentEle.style.pointerEvents = '';
   }
-  (<any>srcNativeInputEle.style)[CSS.transform] = '';
+  (<any>srcNativeInputEle.style)[this._platform.Css.transform] = '';
   srcNativeInputEle.style.opacity = '';
 }
 

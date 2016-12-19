@@ -509,7 +509,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       renderer.setElementClass(ele, 'virtual-loading', false);
 
       // ******** DOM WRITE ****************
-      writeToNodes(nodes, cells, recordsLength);
+      writeToNodes(this._platform, nodes, cells, recordsLength);
 
       // ******** DOM WRITE ****************
       this._setHeight(
@@ -541,7 +541,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         const recordsLength = this._records.length;
 
         // ******** DOM WRITE ****************
-        writeToNodes(nodes, cells, recordsLength);
+        writeToNodes(this._platform, nodes, cells, recordsLength);
 
         // ******** DOM WRITE ****************
         this._setHeight(
@@ -639,7 +639,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       }
 
       // ******** DOM WRITE ****************
-      writeToNodes(nodes, cells, recordsLength);
+      writeToNodes(this._platform, nodes, cells, recordsLength);
 
       // ******** DOM WRITE ****************
       this._setHeight(

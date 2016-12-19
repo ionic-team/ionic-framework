@@ -1,6 +1,5 @@
 import { ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
 
-import { CSS } from '../../util/dom';
 import { Platform } from '../../platform/platform';
 
 /**
@@ -394,7 +393,7 @@ function readElements(platform: Platform, cell: VirtualCell, element: VirtualHtm
 /**
  * DOM WRITE
  */
-export function writeToNodes(nodes: VirtualNode[], cells: VirtualCell[], totalRecords: number) {
+export function writeToNodes(platform: Platform, nodes: VirtualNode[], cells: VirtualCell[], totalRecords: number) {
   let node: VirtualNode;
   let element: VirtualHtmlElement;
   let cell: VirtualCell;
@@ -412,7 +411,7 @@ export function writeToNodes(nodes: VirtualNode[], cells: VirtualCell[], totalRe
 
       if (element) {
         // ******** DOM WRITE ****************
-        element.style[CSS.transform] = node.lastTransform = transform;
+        element.style[platform.Css.transform] = node.lastTransform = transform;
 
         // ******** DOM WRITE ****************
         element.classList.add('virtual-position');

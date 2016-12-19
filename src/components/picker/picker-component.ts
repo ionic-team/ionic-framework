@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, NgZone, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 
 import { clamp, isNumber, isPresent, isString, assert } from '../../util/util';
-import { CSS, pointerCoord } from '../../util/dom';
 import { Config } from '../../config/config';
 import { DomController, DomDebouncer } from '../../platform/dom-controller';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
@@ -11,6 +10,7 @@ import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
 import { Platform } from '../../platform/platform';
+import { pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -361,12 +361,12 @@ export class PickerColumnCmp {
       // Update transition duration
       if (duration !== opt._dur) {
         opt._dur = duration;
-        button.style[CSS.transitionDuration] = durationStr;
+        button.style[this._platform.Css.transitionDuration] = durationStr;
       }
       // Update transform
       if (transform !== opt._trans) {
         opt._trans = transform;
-        button.style[CSS.transform] = transform;
+        button.style[this._platform.Css.transform] = transform;
       }
       // Update selected item
       if (selected !== opt._selected) {

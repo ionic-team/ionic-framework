@@ -1,9 +1,9 @@
 import { Subject } from 'rxjs/Subject';
 
 import { assert } from './util';
-import { CSS, pointerCoord } from './dom';
 import { DomController, DomCallback } from '../platform/dom-controller';
 import { Platform, EventListenerOptions } from '../platform/platform';
+import { pointerCoord } from './dom';
 
 
 export class ScrollView {
@@ -379,7 +379,7 @@ export class ScrollView {
     this._t = top;
 
     if (this._js) {
-      (<any>this._el.style)[CSS.transform] = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
+      (<any>this._el.style)[this._platform.Css.transform] = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
 
     } else {
       this._el.scrollTop = top;
@@ -393,7 +393,7 @@ export class ScrollView {
     this._l = left;
 
     if (this._js) {
-      (<any>this._el.style)[CSS.transform] = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
+      (<any>this._el.style)[this._platform.Css.transform] = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
 
     } else {
       this._el.scrollLeft = left;
@@ -437,7 +437,7 @@ export class ScrollView {
 
       if (!self._el || !self.isScrolling || attempts > maxAttempts) {
         self.isScrolling = false;
-        (<any>self._el.style)[CSS.transform] = '';
+        (<any>self._el.style)[this._platform.Css.transform] = '';
         done();
         return;
       }
@@ -463,7 +463,7 @@ export class ScrollView {
 
       } else {
         self.isScrolling = false;
-        (<any>self._el.style)[CSS.transform] = '';
+        (<any>self._el.style)[this._platform.Css.transform] = '';
         done();
       }
     }

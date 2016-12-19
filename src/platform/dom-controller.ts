@@ -54,7 +54,7 @@ export class DomController {
   private w: Function[] = [];
   private q: boolean;
 
-  constructor(private platform: Platform) {}
+  constructor(public platform: Platform) {}
 
   debouncer(): DomDebouncer {
     return new DomDebouncer(this);

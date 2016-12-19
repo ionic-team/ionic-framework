@@ -2,7 +2,7 @@ import { ActivatorBase, isActivatedDisabled } from './activator-base';
 import { Activator } from './activator';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
-import { CSS, PointerCoordinates, hasPointerMoved, pointerCoord } from '../util/dom';
+import { PointerCoordinates, hasPointerMoved, pointerCoord } from '../util/dom';
 import { DomController } from '../platform/dom-controller';
 
 
@@ -112,9 +112,10 @@ export class RippleActivator implements ActivatorBase {
 
     // Reset ripple
     // DOM WRITE
+    const Css = this.dom.platform.Css;
     rippleEle.style.opacity = '';
-    rippleEle.style[CSS.transform] = `translate3d(${clientPointerX}px, ${clientPointerY}px, 0px) scale(0.001)`;
-    rippleEle.style[CSS.transition] = '';
+    rippleEle.style[Css.transform] = `translate3d(${clientPointerX}px, ${clientPointerY}px, 0px) scale(0.001)`;
+    rippleEle.style[Css.transition] = '';
 
     // Start ripple animation
     let radius = Math.sqrt(rippleEle.$width + rippleEle.$height);
@@ -130,8 +131,8 @@ export class RippleActivator implements ActivatorBase {
       // DOM WRITE
       rippleEle.style.width = rippleEle.style.height = diameter + 'px';
       rippleEle.style.opacity = '0';
-      rippleEle.style[CSS.transform] = transform;
-      rippleEle.style[CSS.transition] = transition;
+      rippleEle.style[Css.transform] = transform;
+      rippleEle.style[Css.transition] = transition;
     }, 16);
   }
 

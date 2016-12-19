@@ -1,5 +1,4 @@
 import { Animation } from '../../animations/animation';
-import { CSS } from '../../util/dom';
 import { PageTransition } from '../../transitions/page-transition';
 
 
@@ -61,7 +60,7 @@ export class PopoverTransition extends PageTransition {
     popoverEle.style.top = popoverCSS.top + 'px';
     popoverEle.style.left = popoverCSS.left + 'px';
 
-    (<any>popoverEle.style)[CSS.transformOrigin] = originY + ' ' + originX;
+    (<any>popoverEle.style)[this.platform.Css.transformOrigin] = originY + ' ' + originX;
 
     // Since the transition starts before styling is done we
     // want to wait for the styles to apply before showing the wrapper
@@ -141,7 +140,7 @@ export class PopoverTransition extends PageTransition {
     popoverEle.style.top = popoverCSS.top + 'px';
     popoverEle.style.left = popoverCSS.left + 'px';
 
-    (<any>popoverEle.style)[CSS.transformOrigin] = originY + ' ' + originX;
+    (<any>popoverEle.style)[this.platform.Css.transformOrigin] = originY + ' ' + originX;
 
     // Since the transition starts before styling is done we
     // want to wait for the styles to apply before showing the wrapper

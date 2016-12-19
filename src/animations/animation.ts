@@ -1,4 +1,3 @@
-import { CSS, transitionEnd } from '../util/dom';
 import { isDefined, assert } from '../util/util';
 import { Platform } from '../platform/platform';
 
@@ -156,7 +155,7 @@ export class Animation {
     if (clearProperyAfterTransition) {
       // if this effect is a transform then clear the transform effect
       // otherwise just clear the actual property
-      this.afterClearStyles([ fx.trans ? CSS.transform : prop]);
+      this.afterClearStyles([ fx.trans ? this.platform.Css.transform : prop]);
     }
 
     return this;
@@ -188,13 +187,13 @@ export class Animation {
 
     if (!fxProp) {
       // first time we've see this EffectProperty
-      var shouldTrans = (TRANSFORMS[prop] === 1);
+      var shouldTrans = (ANIMATION_TRANSFORMS[prop] === 1);
       fxProp = {
         name: prop,
         trans: shouldTrans,
 
         // add the will-change property for transforms or opacity
-        wc: (shouldTrans ? CSS.transform : prop)
+        wc: (shouldTrans ? this.platform.Css.transform : prop)
       };
       this._fx.push(fxProp);
     }
@@ -208,7 +207,7 @@ export class Animation {
     fxProp[state] = fxState;
 
     if (typeof val === 'string' && val.indexOf(' ') < 0) {
-      let r = val.match(CSS_VALUE_REGEX);
+      let r = val.match(ANIMATION_CSS_VALUE_REGEX);
       let num = parseFloat(r[1]);
 
       if (!isNaN(num)) {
@@ -514,11 +513,11 @@ export class Animation {
     }
 
     // set the TRANSITION END event on one of the transition elements
-    self._unrgTrns = transitionEnd(self._transEl(), onTransitionEnd);
+    self._unrgTrns = this.platform.transitionEnd(self._transEl(), onTransitionEnd);
 
     // set a fallback timeout if the transition end event never fires, or is too slow
     // transition end fallback: (animation duration + XXms)
-    self._tm = self.platform.timeout(onTransitionFallback, (dur + TRANSITION_END_FALLBACK_PADDING_MS));
+    self._tm = self.platform.timeout(onTransitionFallback, (dur + ANIMATION_TRANSITION_END_FALLBACK_PADDING_MS));
   }
 
   /**
@@ -689,7 +688,7 @@ export class Animation {
         finalTransform += 'translateZ(0px)';
       }
 
-      var cssTransform = CSS.transform;
+      var cssTransform = this.platform.Css.transform;
       for (i = 0; i < elements.length; i++) {
         // ******** DOM WRITE ****************
         (<any>elements[i].style)[cssTransform] = finalTransform;
@@ -712,9 +711,10 @@ export class Animation {
     const elements = this._e;
     const easing = (forcedLinearEasing ? 'linear' : this.getEasing());
     const durString = dur + 'ms';
-    const cssTransform = CSS.transition;
-    const cssTransitionDuration = CSS.transitionDuration;
-    const cssTransitionTimingFn = CSS.transitionTimingFn;
+    const Css = this.platform.Css;
+    const cssTransform = Css.transition;
+    const cssTransitionDuration = Css.transitionDuration;
+    const cssTransitionTimingFn = Css.transitionTimingFn;
 
     let eleStyle: any;
     for (var i = 0; i < this._eL; i++) {
@@ -869,7 +869,7 @@ export class Animation {
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
-      (<any>ele).style[CSS.transitionDuration] = (<any>ele).style[CSS.transitionTimingFn] = '';
+      (<any>ele).style[this.platform.Css.transitionDuration] = (<any>ele).style[this.platform.Css.transitionTimingFn] = '';
 
       if (this._rv) {
         // finished in reverse direction
@@ -1226,7 +1226,7 @@ export interface EffectState {
   unit: string;
 }
 
-const TRANSFORMS: {[key: string]: number} = {
+const ANIMATION_TRANSFORMS: {[key: string]: number} = {
   'translateX': 1,
   'translateY': 1,
   'translateZ': 1,
@@ -1246,6 +1246,6 @@ const TRANSFORMS: {[key: string]: number} = {
   'perspective': 1
 };
 
-const CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
+const ANIMATION_CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
 const ANIMATION_DURATION_MIN = 32;
-const TRANSITION_END_FALLBACK_PADDING_MS = 400;
+const ANIMATION_TRANSITION_END_FALLBACK_PADDING_MS = 400;
