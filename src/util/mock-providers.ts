@@ -52,8 +52,10 @@ export class MockPlatform extends Platform {
 
   constructor() {
     super();
+    const doc = document.implementation.createHTMLDocument('');
     this.setWindow(window);
-    this.setDocument(document);
+    this.setDocument(doc);
+    this.setCssProps(doc.documentElement);
   }
 
   timeout(callback: Function, timeout: number) {
