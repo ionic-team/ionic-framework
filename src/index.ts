@@ -1,5 +1,114 @@
+import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, Inject, ModuleWithProviders, NgModule, NgZone, OpaqueToken, Optional } from '@angular/core';
+import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
+import { DOCUMENT, BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
-/* mMdule exports start*/
+/**
+ * Import Providers
+ */
+import { ActionSheetController } from './components/action-sheet/action-sheet';
+import { AlertController } from './components/alert/alert';
+import { App } from './components/app/app';
+import { AppRootToken } from './components/app/app-root';
+import { Config, setupConfig } from './config/config';
+import { DeepLinker, setupDeepLinker } from './navigation/deep-linker';
+import { DomController } from './platform/dom-controller';
+import { Events, setupProvideEvents } from './util/events';
+import { Form } from './util/form';
+import { GestureController } from './gestures/gesture-controller';
+import { Haptic } from './tap-click/haptic';
+import { IonicGestureConfig } from './gestures/gesture-config';
+import { Keyboard } from './platform/keyboard';
+import { LoadingController } from './components/loading/loading';
+import { MenuController } from './components/menu/menu-controller';
+import { ModalController } from './components/modal/modal';
+import { PickerController } from './components/picker/picker';
+import { Platform, setupPlatform } from './platform/platform';
+import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
+import { PopoverController } from './components/popover/popover';
+import { TapClick } from './tap-click/tap-click';
+import { ToastController } from './components/toast/toast';
+import { registerModeConfigs } from './config/mode-registry';
+import { registerTransitions } from './transitions/transition-registry';
+import { TransitionController } from './transitions/transition-controller';
+import { UrlSerializer, setupUrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
+/**
+ * Import Overlay Entry Components
+ */
+import { ActionSheetCmp } from './components/action-sheet/action-sheet-component';
+import { AlertCmp } from './components/alert/alert-component';
+import { IonicApp } from './components/app/app-root';
+import { LoadingCmp } from './components/loading/loading-component';
+import { ModalCmp } from './components/modal/modal-component';
+import { PickerCmp } from './components/picker/picker-component';
+import { PopoverCmp } from './components/popover/popover-component';
+import { ToastCmp } from './components/toast/toast-component';
+
+/**
+ * Import Components
+ */
+import { Avatar } from './components/avatar/avatar';
+import { Backdrop } from './components/backdrop/backdrop';
+import { Badge } from './components/badge/badge';
+import { Button } from './components/button/button';
+import { Card, CardContent, CardHeader, CardTitle } from './components/card/card';
+import { Checkbox } from './components/checkbox/checkbox';
+import { Chip } from './components/chip/chip';
+import { ClickBlock } from './util/click-block';
+import { Content } from './components/content/content';
+import { DateTime } from './components/datetime/datetime';
+import { FabContainer, FabButton, FabList } from './components/fab/fab';
+import { Grid, Row, Col } from './components/grid/grid';
+import { Icon } from './components/icon/icon';
+import { Img } from './components/img/img';
+import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
+import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
+import { Item, ItemContent, ItemDivider, ItemGroup } from './components/item/item';
+import { ItemReorder, Reorder } from './components/item/item-reorder';
+import { ItemSliding, ItemOptions } from './components/item/item-sliding';
+import { Label } from './components/label/label';
+import { List } from './components/list/list';
+import { ListHeader } from './components/list/list-header';
+import { Menu } from './components/menu/menu';
+import { MenuClose } from './components/menu/menu-close';
+import { MenuToggle } from './components/menu/menu-toggle';
+import { NativeInput, NextInput } from './components/input/native-input';
+import { Nav } from './components/nav/nav';
+import { NavPop, NavPopAnchor } from './components/nav/nav-pop';
+import { NavPush, NavPushAnchor } from './components/nav/nav-push';
+import { Navbar } from './components/navbar/navbar';
+import { Note } from './components/note/note';
+import { Option } from './components/option/option';
+import { OverlayPortal } from './components/nav/overlay-portal';
+import { PickerColumnCmp } from './components/picker/picker-component';
+import { RadioButton } from './components/radio/radio-button';
+import { RadioGroup } from './components/radio/radio-group';
+import { Range, RangeKnob } from './components/range/range';
+import { Refresher } from './components/refresher/refresher';
+import { RefresherContent } from './components/refresher/refresher-content';
+import { Scroll } from './components/scroll/scroll';
+import { Searchbar } from './components/searchbar/searchbar';
+import { Segment, SegmentButton } from './components/segment/segment';
+import { Select } from './components/select/select';
+import { ShowWhen, HideWhen } from './components/show-hide-when/show-hide-when';
+import { Slides, Slide, SlideLazy } from './components/slides/slides';
+import { Spinner } from './components/spinner/spinner';
+import { Tab } from './components/tabs/tab';
+import { Tabs } from './components/tabs/tabs';
+import { TabButton } from './components/tabs/tab-button';
+import { TabHighlight } from './components/tabs/tab-highlight';
+import { TextInput, TextArea } from './components/input/input';
+import { Thumbnail } from './components/thumbnail/thumbnail';
+import { Toggle } from './components/toggle/toggle';
+import { Toolbar, Header, Footer } from './components/toolbar/toolbar';
+import { ToolbarItem } from './components/toolbar/toolbar-item';
+import { ToolbarTitle } from './components/toolbar/toolbar-title';
+import { Typography } from './components/typography/typography';
+import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
+import { VirtualItem, VirtualHeader, VirtualFooter } from './components/virtual-scroll/virtual-item';
+
+/* module exports start*/
 export { Config, setupConfig } from './config/config';
 export { DomController, DomCallback } from './platform/dom-controller';
 export { Platform, setupPlatform } from './platform/platform';
@@ -10,7 +119,6 @@ export { NavParams } from './navigation/nav-params';
 export { NavLink, NavOptions, DeepLink, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataType } from './navigation/nav-util';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
-export { ConfigToken, IonicModule, provideLocationStrategy, setupTapClick } from './module';
 /* Module exports done
 
 /* Directives exports start */
@@ -137,3 +245,321 @@ export { PageTransition } from './transitions/page-transition';
 export { Transition } from './transitions/transition';
 
 export { NavControllerBase } from './navigation/nav-controller-base';
+
+
+/** @private */
+export const ConfigToken = new OpaqueToken('USERCONFIG');
+/**
+ * @name IonicModule
+ * @description
+ * IonicModule is an NgModule that helps bootstrap a whole Ionic App. By passing a root component, IonicModule will make sure that all the components and directives from the framework are provided. This includes components such as Tabs, Menus, and Slides, as well as classes like AlertController.
+ *
+ *
+ * We're also able to pass any configuration to our app as a second argument for `.forRoot`. This is any valid config property from [the Config Class](/docs/v2/api/config/Config/).
+ *
+ * The last functionality that IonicModule allows you to configure is optional routes for DeepLinker. For more information on DeepLinker, please see the [DeepLinker Docs](/docs/v2/api/navigation/DeepLinker/)
+ *
+ * @usage
+ * ```ts
+ * import { NgModule } from '@angular/core';
+ * import { IonicApp, IonicModule } from 'ionic-angular';
+ * import { MyApp } from './app.component';
+ * import { HomePage } from '../pages/home/home';
+ * @NgModule({
+ *   declarations: [
+ *     MyApp,
+ *     HomePage
+ *   ],
+ *   imports: [
+ *     IonicModule.forRoot(MyApp)
+ *   ],
+ *   bootstrap: [IonicApp],
+ *   entryComponents: [
+ *     MyApp,
+ *     HomePage
+ *   ],
+ *   providers: []
+ * })
+ * export class AppModule {}
+ * ```
+ */
+@NgModule({
+  imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule],
+  exports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule,
+  Avatar,
+  Backdrop,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Checkbox,
+  Chip,
+  ClickBlock,
+  Col,
+  Content,
+  DateTime,
+  FabContainer,
+  FabButton,
+  FabList,
+  Footer,
+  Grid,
+  Header,
+  HideWhen,
+  Icon,
+  Img,
+  InfiniteScroll,
+  InfiniteScrollContent,
+  IonicApp,
+  Item,
+  ItemContent,
+  ItemDivider,
+  ItemGroup,
+  ItemOptions,
+  ItemReorder,
+  ItemSliding,
+  Label,
+  List,
+  ListHeader,
+  Menu,
+  MenuClose,
+  MenuToggle,
+  NativeInput,
+  Nav,
+  Navbar,
+  NavPop,
+  NavPopAnchor,
+  NavPush,
+  NavPushAnchor,
+  NextInput,
+  Note,
+  Option,
+  OverlayPortal,
+  PickerColumnCmp,
+  RadioButton,
+  RadioGroup,
+  Range,
+  RangeKnob,
+  Refresher,
+  RefresherContent,
+  Reorder,
+  Row,
+  Scroll,
+  Searchbar,
+  Segment,
+  SegmentButton,
+  Select,
+  ShowWhen,
+  Slide,
+  Slides,
+  SlideLazy,
+  Spinner,
+  Tab,
+  Tabs,
+  TabButton,
+  TabHighlight,
+  TextArea,
+  TextInput,
+  Thumbnail,
+  Toggle,
+  Toolbar,
+  ToolbarItem,
+  ToolbarTitle,
+  Typography,
+  VirtualFooter,
+  VirtualHeader,
+  VirtualItem,
+  VirtualScroll,
+
+  ],
+  declarations: [
+    ActionSheetCmp,
+    AlertCmp,
+    ClickBlock,
+    LoadingCmp,
+    ModalCmp,
+    PickerCmp,
+    PopoverCmp,
+    ToastCmp,
+
+    Avatar,
+    Backdrop,
+    Badge,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    Checkbox,
+    Chip,
+    ClickBlock,
+    Col,
+    Content,
+    DateTime,
+    FabContainer,
+    FabButton,
+    FabList,
+    Footer,
+    Grid,
+    Header,
+    HideWhen,
+    Icon,
+    Img,
+    InfiniteScroll,
+    InfiniteScrollContent,
+    IonicApp,
+    Item,
+    ItemContent,
+    ItemDivider,
+    ItemGroup,
+    ItemOptions,
+    ItemReorder,
+    ItemSliding,
+    Label,
+    List,
+    ListHeader,
+    Menu,
+    MenuClose,
+    MenuToggle,
+    NativeInput,
+    Nav,
+    Navbar,
+    NavPop,
+    NavPopAnchor,
+    NavPush,
+    NavPushAnchor,
+    NextInput,
+    Note,
+    Option,
+    OverlayPortal,
+    PickerColumnCmp,
+    RadioButton,
+    RadioGroup,
+    Range,
+    RangeKnob,
+    Refresher,
+    RefresherContent,
+    Reorder,
+    Row,
+    Scroll,
+    Searchbar,
+    Segment,
+    SegmentButton,
+    Select,
+    ShowWhen,
+    Slide,
+    Slides,
+    SlideLazy,
+    Spinner,
+    Tab,
+    Tabs,
+    TabButton,
+    TabHighlight,
+    TextArea,
+    TextInput,
+    Thumbnail,
+    Toggle,
+    Toolbar,
+    ToolbarItem,
+    ToolbarTitle,
+    Typography,
+    VirtualFooter,
+    VirtualHeader,
+    VirtualItem,
+    VirtualScroll,
+  ],
+  entryComponents: [
+    ActionSheetCmp,
+    AlertCmp,
+    IonicApp,
+    LoadingCmp,
+    ModalCmp,
+    PickerCmp,
+    PopoverCmp,
+    ToastCmp
+  ]
+})
+export class IonicModule {
+    /**
+     * Set the root app component for you IonicModule
+     * @param {any} appRoot The root AppComponent for this app.
+     * @param {any} config Config Options for the app. Accepts any config property.
+     * @param {any} deepLinkConfig Any configuration needed for the Ionic Deeplinker.
+     */
+  static forRoot(appRoot: any, config: any = null, deepLinkConfig: any = null): ModuleWithProviders {
+    return {
+      ngModule: IonicModule,
+      providers: [
+        // useValue: bootstrap values
+        { provide: AppRootToken, useValue: appRoot },
+        { provide: ConfigToken, useValue: config },
+        { provide: DeepLinkConfigToken, useValue: deepLinkConfig },
+
+        // useFactory: user values
+        { provide: PlatformConfigToken, useFactory: providePlatformConfigs },
+
+        // useFactory: ionic core providers
+        { provide: Platform, useFactory: setupPlatform, deps: [ DOCUMENT, PlatformConfigToken, NgZone ] },
+        { provide: Config, useFactory: setupConfig, deps: [ ConfigToken, Platform ] },
+
+        // useFactory: ionic app initializers
+        { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: registerTransitions, deps: [ Config ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, NgZone, GestureController ], multi: true },
+
+        // useClass
+        { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
+
+        // useValue
+        { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: appRoot, multi: true },
+
+        // ionic providers
+        ActionSheetController,
+        AlertController,
+        App,
+        DomController,
+        Events,
+        Form,
+        GestureController,
+        Haptic,
+        Keyboard,
+        LoadingController,
+        Location,
+        MenuController,
+        ModalController,
+        PickerController,
+        PopoverController,
+        TapClick,
+        ToastController,
+        TransitionController,
+
+        { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [ new Inject(APP_BASE_HREF), new Optional()], Config ] },
+        { provide: UrlSerializer, useFactory: setupUrlSerializer, deps: [ DeepLinkConfigToken ] },
+        { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location ] },
+      ]
+    };
+  }
+
+}
+
+/**
+ * @private
+ */
+export function provideLocationStrategy(platformLocationStrategy: PlatformLocation,
+                                        baseHref: string, config: Config) {
+  return config.get('locationStrategy') === 'path' ?
+         new PathLocationStrategy(platformLocationStrategy, baseHref) :
+         new HashLocationStrategy(platformLocationStrategy, baseHref);
+}
+
+
+/**
+ * @private
+ */
+export function setupTapClick(config: Config, platform: Platform, dom: DomController, app: App, zone: NgZone, gestureCtrl: GestureController) {
+  return function() {
+    return new TapClick(config, platform, dom, app, zone, gestureCtrl);
+  };
+}
