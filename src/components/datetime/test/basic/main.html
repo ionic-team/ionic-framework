@@ -10,6 +10,11 @@
 <ion-content class="outer-content">
 
   <ion-item>
+    <ion-label>MMMM</ion-label>
+    <ion-datetime displayFormat="MMMM" [(ngModel)]="monthOnly"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
     <ion-label>YYYY</ion-label>
     <ion-datetime displayFormat="YYYY" min="1981" max="2002" [(ngModel)]="wwwInvented"></ion-datetime>
   </ion-item>
@@ -68,6 +73,7 @@
   </ion-item>
 
   <p aria-hidden="true" padding>
+    <code>monthOnly: {{monthOnly}}</code><br>
     <code>wwwInvented: {{wwwInvented}}</code><br>
     <code>netscapeReleased: {{netscapeReleased}}</code><br>
     <code>operaReleased: {{operaReleased}}</code><br>
