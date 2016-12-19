@@ -1,3 +1,5 @@
+import { OpaqueToken } from '@angular/core';
+
 /**
 * @ngdoc service
 * @name Config
@@ -398,3 +400,8 @@ export function setupConfig(userConfig: any, platform: Platform): Config {
   config.init(userConfig, platform);
   return config;
 }
+
+/**
+ * @private
+ */
+export const ConfigToken = new OpaqueToken('USERCONFIG');

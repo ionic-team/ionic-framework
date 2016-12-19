@@ -248,3 +248,13 @@ const ACTIVATABLE_ELEMENTS = ['A', 'BUTTON'];
 const ACTIVATABLE_ATTRIBUTES = ['tappable', 'ion-button'];
 const POINTER_TOLERANCE = 100;
 const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
+
+
+/**
+ * @private
+ */
+export function setupTapClick(config: Config, platform: Platform, dom: DomController, app: App, zone: NgZone, gestureCtrl: GestureController) {
+  return function() {
+    return new TapClick(config, platform, dom, app, zone, gestureCtrl);
+  };
+}
