@@ -652,14 +652,15 @@ export class Platform {
    * @private
    */
   transitionEnd(el: HTMLElement, callback: Function) {
+    const self = this;
     function unregister() {
-      this.Css.transitionEnd.split(' ').forEach(eventName => {
+      self.Css.transitionEnd.split(' ').forEach(eventName => {
         el.removeEventListener(eventName, onEvent);
       });
     }
 
     if (el) {
-      this.Css.transitionEnd.split(' ').forEach(eventName => {
+      self.Css.transitionEnd.split(' ').forEach(eventName => {
         el.addEventListener(eventName, onEvent);
       });
 
