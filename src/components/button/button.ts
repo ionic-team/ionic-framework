@@ -9,23 +9,23 @@ import { isTrueProperty } from '../../util/util';
   * @name Button
   * @module ionic
   * @description
-  * Buttons are simple components in Ionic. They can consist of text and icons
-  * and be enhanced by a wide range of attributes.
+  * Buttons are simple components that are optimized to handle touch
+  * events on mobile. Buttons can contain text and icons, and can 
+  * be customized with a wide range of attributes. A button
+  * can be styled with multiple attributes. For a complete list of
+  * attributes, see [Input Attributes](@input-attributes) below.
+  * 
+  * To use the Button component, add the `ion-button` attribute to an
+  * HTML `<button>`.
   *
   * @usage
   *
   * ```html
-  *
-  *  <!-- Colors -->
+  *  <!-- Basic button -->
   *  <button ion-button>Default</button>
-  *
-  *  <button ion-button color="secondary">Secondary</button>
-  *
-  *  <button ion-button color="danger">Danger</button>
-  *
-  *  <button ion-button color="light">Light</button>
-  *
-  *  <button ion-button color="dark">Dark</button>
+  *  
+  *  <!-- Custom Color -->
+  *  <button ion-button ion-color color="secondary">Secondary</button>
   *
   *  <!-- Shapes -->
   *  <button ion-button full>Full Button</button>
@@ -37,25 +37,6 @@ import { isTrueProperty } from '../../util/util';
   *  <!-- Outline -->
   *  <button ion-button full outline>Outline + Full</button>
   *
-  *  <button ion-button block outline>Outline + Block</button>
-  *
-  *  <button ion-button round outline>Outline + Round</button>
-  *
-  *  <!-- Icons -->
-  *  <button ion-button icon-left>
-  *    <ion-icon name="star"></ion-icon>
-  *    Left Icon
-  *  </button>
-  *
-  *  <button ion-button icon-right>
-  *    Right Icon
-  *    <ion-icon name="star"></ion-icon>
-  *  </button>
-  *
-  *  <button ion-button icon-only>
-  *    <ion-icon name="star"></ion-icon>
-  *  </button>
-  *
   *  <!-- Sizes -->
   *  <button ion-button large>Large</button>
   *
@@ -64,56 +45,98 @@ import { isTrueProperty } from '../../util/util';
   *  <button ion-button small>Small</button>
   * ```
   *
-  * @advanced
+  * ### Styling Buttons Dynamically
+  * 
+  * All of the [input attributes](#input-attributes) that determine a buttons appearance can be 
+  * set dynamically by binding them to a value on the component's model. For example, most attributes
+  * can be toggled by binding them to a `boolean` value on the model:
   *
   * ```html
+  * <!-- Dynamically set rounded corners -->
+  * <button ion-button [round]="isRound">Round Button</button>
   *
-  * <!-- Bind the color and outline inputs to an expression -->
-  * <button ion-button [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline">
-  *   Danger (Solid)
+  * <!-- Dynamically set clear background -->
+  * <button ion-button [clear]="isClear">Clear Button</button>
+  * ```
+  *
+  * To set the color of a button, bind the `color` attribute to a value on the model
+  * of the component. Any string that corresponds to a Sass variable defined in your 
+  * [$color map](/docs/v2/theming/theming-your-app/) is valid for the `color` attribute.  
+  * 
+  * ```html
+  * <!-- Bind the color to a variable -->
+  * <button ion-button ion-color [color]="isDanger">
+  *   Dangerous?
   * </button>
   *
-  * <!-- Bind the color and round inputs to an expression -->
-  * <button ion-button [color]="myColor" [round]="isRound">
-  *   Secondary (Round)
-  * </button>
+  * <!-- Bind the color to a ternary expression -->
+  * <button ion-button ion-color [color]="isDanger ? 'danger' : 'primary'">
+  *   Also Dangerous?
+  * </button>  
+  * ```
   *
-  * <!-- Bind the color and clear inputs to an expression -->
-  * <button ion-button [color]="isSecondary ? 'secondary' : 'primary'"  [clear]="isClear">
-  *   Primary (Clear)
-  * </button>
+  * ## Common Usage Patterns
   *
-  * <!-- Bind the color, outline and round inputs to an expression -->
-  * <button ion-button [color]="myColor2" [outline]="isOutline" [round]="isRound">
-  *   Dark (Solid + Round)
+  * ### Using Icons in Buttons
+  * 
+  * To add icons to a button, add an `ion-icon` component inside of it and either the `icon-left`
+  * or `icon-right` position attribute. If you want a button with only an icon in it, you can also
+  * use the `icon-only` attribute, which will increase the size of the icon to better fill the button:
+  * 
+  * ```html
+  * <!-- Float the icon left -->
+  * <button ion-button icon-left>
+  *   <ion-icon name="home"></ion-icon>
+  *   Left Icon
   * </button>
-  *
-  * <!-- Bind the click event to a method -->
-  * <button ion-button (click)="logEvent($event)">
-  *   Click me!
+  * 
+  * <!-- Float the icon right -->
+  * <button ion-button icon-right>
+  *   Right Icon
+  *   <ion-icon name="home"></ion-icon>
+  * </button>
+  * 
+  * <!-- Only icon (no text) -->
+  * <button ion-button icon-only>
+  *   <ion-icon name="home"></ion-icon>
   * </button>
   * ```
   *
-  * ```ts
-  * @Component({
-  *   templateUrl: 'main.html'
-  * })
-  * class E2EPage {
-  *   isDanger: boolean = true;
-  *   isSecondary: boolean = false;
-  *   isRound: boolean = true;
-  *   isOutline: boolean = false;
-  *   isClear: boolean = true;
-  *   myColor: string = 'secondary';
-  *   myColor2: string = 'dark';
+  * ### Using Buttons In Components
+  * 
+  * Although buttons can be used on their own, they can easily be used within other components. 
+  * For example, the following positions buttons on the left and right side of the navbar:
+  * 
+  * ```html
+  * <ion-header>
+  *   <ion-navbar>
+  *     <ion-buttons start>
+  *       <button ion-button icon-only>
+  *         <ion-icon name="contact"></ion-icon>
+  *       </button>
+  *     </ion-buttons>
+  * 
+  *     <ion-buttons end>
+  *       <button ion-button icon-only>
+  *         <ion-icon name="search"></ion-icon>
+  *       </button>
+  *     </ion-buttons>
+  *   </ion-navbar>
+  * </ion-header>
+  *```
   *
-  *   logEvent(event) {
-  *     console.log(event)
-  *   }
-  * }
-  *
+  * Similarly, the following positions a button on the right side of a list item:
+  *```html
+  * <ion-list>
+  *   <ion-item>
+  *     Left Icon Button
+  *     <button ion-button outline item-right icon-left>
+  *       <ion-icon name="star"></ion-icon>
+  *       Left Icon
+  *     </button>
+  *   </ion-item>
+  * </ion-list>
   * ```
-  *
   * @demo /docs/v2/demos/src/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
   * @see {@link /docs/v2/components#fabs FabButton Docs}
@@ -153,7 +176,7 @@ export class Button extends Ion {
   _init: boolean;
 
   /**
-   * @input {boolean} Large button.
+   * @input {boolean} Whether the button should be larger.
    */
   @Input()
   set large(val: boolean) {
@@ -161,7 +184,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} Small button.
+   * @input {boolean} Whether the button should be smaller.
    */
   @Input()
   set small(val: boolean) {
@@ -169,7 +192,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} Default button.
+   * @input {boolean} Whether the button should be the default size.
    */
   @Input()
   set default(val: boolean) {
@@ -177,7 +200,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A transparent button with a border.
+   * @input {boolean} Whether the button should be button transparent with a border.
    */
   @Input()
   set outline(val: boolean) {
@@ -185,7 +208,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A transparent button without a border.
+   * @input {boolean} Whether the button should be transparent without a border.
    */
   @Input()
   set clear(val: boolean) {
@@ -193,7 +216,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} Force a solid button. Useful for buttons within an item.
+   * @input {boolean} Whether the button should be solid. Useful for buttons within an item.
    */
   @Input()
   set solid(val: boolean) {
@@ -201,7 +224,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button with rounded corners.
+   * @input {boolean} Whether the button should have rounded corners.
    */
   @Input()
   set round(val: boolean) {
@@ -209,7 +232,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button that fills its parent container with a border-radius.
+   * @input {boolean} Whether the button should fill its parent container with a border-radius.
    */
   @Input()
   set block(val: boolean) {
@@ -217,7 +240,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button that fills its parent container without a border-radius or borders on the left/right.
+   * @input {boolean} Whether the button should fill its parent container. Button will have no border-radius or left/right borders.
    */
   @Input()
   set full(val: boolean) {
@@ -225,7 +248,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button that has strong importance, ie. it represents an important action.
+   * @input {boolean} Whether the button should have a strong visual appearance, ie. it represents an important action.
    */
   @Input()
   set strong(val: boolean) {
@@ -233,7 +256,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} Sets the platform mode styling for this button: md, ios, or wp.
    */
   @Input()
   set mode(val: string) {
@@ -264,7 +287,8 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The default color to use. For most buttons this will set the background color,
+   * for outline buttons it will set the border color. For example: `"primary"`, `"secondary"`, `"danger"`.
    */
   @Input()
   set color(val: string) {
