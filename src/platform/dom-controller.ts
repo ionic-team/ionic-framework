@@ -8,8 +8,9 @@ import { Platform } from './platform';
 import { removeArrayItem } from '../util/util';
 
 
-export type DomCallback = { (timeStamp?: number): void };
-
+/**
+ * @private
+ */
 export class DomDebouncer {
 
   private writeTask: Function = null;
@@ -48,6 +49,10 @@ export class DomDebouncer {
   }
 }
 
+
+/**
+ * @private
+ */
 @Injectable()
 export class DomController {
   private r: Function[] = [];
@@ -142,3 +147,9 @@ function dispatch(timeStamp: number, r: Function[], w: Function[]) {
     fn(timeStamp);
   }
 }
+
+
+/**
+ * @private
+ */
+export type DomCallback = { (timeStamp?: number): void };

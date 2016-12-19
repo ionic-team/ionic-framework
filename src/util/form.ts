@@ -55,7 +55,9 @@ export class Form {
 
 }
 
-
+/**
+ * @private
+ */
 export abstract class IonicTapInput implements IonicFormInput {
 
   abstract initFocus(): void;
@@ -70,6 +72,9 @@ export abstract class IonicTapInput implements IonicFormInput {
 
 }
 
+/**
+ * @private
+ */
 export abstract class IonicFormInput {
 
   abstract initFocus(): void;
