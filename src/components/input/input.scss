@@ -23,11 +23,11 @@ ion-textarea {
   width: 100%;
 }
 
-
 .item-input ion-input,
 .item-input ion-textarea {
   position: static;
 }
+
 
 // Textarea Within An Item
 // --------------------------------------------------
@@ -64,7 +64,6 @@ textarea.text-input {
   opacity: .4;
 }
 
-
 input.text-input:-webkit-autofill {
   background-color: transparent;
 }
@@ -81,6 +80,7 @@ input.text-input:-webkit-autofill {
 // This make it so the native input element is not clickable.
 // This will only show when the scroll assist is configured
 // otherwise the .input-cover will not be rendered at all
+// The input cover is not clickable when the input is disabled
 
 .input-cover {
   position: absolute;
@@ -89,6 +89,10 @@ input.text-input:-webkit-autofill {
 
   width: 100%;
   height: 100%;
+}
+
+ion-input[disabled] .input-cover {
+  pointer-events: none;
 }
 
 
