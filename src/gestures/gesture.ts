@@ -1,11 +1,59 @@
 import { defaults, assign } from '../util/util';
 import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
 
+// TODO(mlynch): Re-enable the DOM event simulation that was causing issues (or verify hammer does this already, it might);
+
 /**
- * @private
- * A gesture recognizer class.
- *
- * TODO(mlynch): Re-enable the DOM event simulation that was causing issues (or verify hammer does this already, it might);
+ * @name Gesture
+ * @description
+ * Ionic supports a variety of touch events and gestures. Basic gestures can 
+ * be accessed from HTML by binding to `tap`, `press`, `pan`, `swipe`, `rotate`, 
+ * and `pinch` events.
+ * 
+ * @usage
+ * ```html
+ * <ion-card (tap)="tapEvent($event)">
+ *   <ion-item>
+ *     Tapped: {{tap}} times
+ *   </ion-item>
+ * </ion-card>
+ * ```
+ * 
+ * ### Using Rotate and Pinch
+ * 
+ * The `rotate` and `pinch` gestures are disabled by default because they are blocking. To enable, import and create an instance of `Gesture`, then assign an event listener to the desired DOM element.
+ * 
+ * ```ts
+ * import { Gesture } from 'ionic-angular';
+ * 
+ * ...
+ * 
+ * export class HomePage {
+ * 
+ *   //get elementRef for DOM element we want to assign to
+ *   @ViewChild('myTouchElement') element;
+ *   gesture: Gesture
+ * 
+ * ...
+ * 
+ *   ionViewDidLoad() {
+ *     //create gesture obj w/ ref to DOM element
+ *     this.gesture = new Gesture(this.element.nativeElement);    
+ *     
+ *     //listen for the gesture
+ *     this.gesture.listen();
+ *     
+ *     //turn on listening for pinch or rotate events
+ *     this.gesture.on('pinch', e => console.log(e));
+ *     
+ *     //add event listener
+ *     this.gesture.on('pinch', () => console.log('pinch end event'));
+ *   }
+ *   
+ * }
+ * ```
+ * 
+ * Event listeners can be added for any event supported by hammer.js, e.g. `pinchstart`, `pinchend`, `rotatestart`, `rotateend`, etc. For a full list, see the [hammer.js recognizers docs](http://hammerjs.github.io/recognizer-pinch/). 
  */
 
 export class Gesture {
